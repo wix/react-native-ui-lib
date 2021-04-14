@@ -58,7 +58,7 @@ const SectionsWheelPickerScreen = () => {
     setSelectedMinutes(0);
   };
 
-  const getRightLabel = (label: string) => {
+  const getLabel = (label: string) => {
     switch (label) {
       case 'days':
         return selectedDays === 1 ? 'Day' : 'Days';
@@ -71,13 +71,13 @@ const SectionsWheelPickerScreen = () => {
   };
 
   const sections: WheelPickerProps[] = [
-    {items: getItems(days), onChange: onDaysChange, selectedValue: selectedDays, rightLabel: getRightLabel('days')},
-    {items: getItems(hours), onChange: onHoursChange, selectedValue: selectedHours, rightLabel: getRightLabel('hours')},
+    {items: getItems(days), onChange: onDaysChange, selectedValue: selectedDays, label: getLabel('days')},
+    {items: getItems(hours), onChange: onHoursChange, selectedValue: selectedHours, label: getLabel('hours')},
     {
       items: getItems(minutes),
       onChange: onMinutesChange,
       selectedValue: selectedMinutes,
-      rightLabel: getRightLabel('minutes')
+      label: getLabel('minutes')
     }
   ];
 
