@@ -94,7 +94,7 @@ export default () => {
 
         <Text h3 style={{marginTop: -50}}>Days</Text>
         <View height={100} width={'100%'}>
-          <Incubator.WheelPicker onChange={onDaysChange} selectedValue={selectedDays} rightLabel={selectedDays === 1 ? 'Day' : 'Days'} items={getDays()}/>
+          <Incubator.WheelPicker onChange={onDaysChange} selectedValue={selectedDays} label={selectedDays === 1 ? 'Day' : 'Days'} items={getDays()}/>
         </View>
       </View>
     </View>

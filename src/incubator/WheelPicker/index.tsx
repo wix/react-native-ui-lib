@@ -43,15 +43,15 @@ export interface WheelPickerProps {
   /**
    * Additional label on the right of the item text
    */
-  rightLabel?: string;
+  label?: string;
   /**
-   * The Additional right label's style
+   * The Additional label's style
    */
-  rightLabelStyle?: TextStyle;
+  labelStyle?: TextStyle;
   /**
-   * The Additional right label's props
+   * The Additional label's props
    */
-  rightLabelProps?: TextProps;
+  labelProps?: TextProps;
   /**
    * Event, on active row change
    */
@@ -78,9 +78,9 @@ const WheelPicker = React.memo(
     activeTextColor = Colors.primary,
     inactiveTextColor,
     textStyle,
-    rightLabel,
-    rightLabelStyle,
-    rightLabelProps,
+    label,
+    labelStyle,
+    labelProps,
     onChange,
     style,
     children,
@@ -159,7 +159,7 @@ const WheelPicker = React.memo(
       [itemHeight]
     );
 
-    const separators = () => {
+    const renderCentralFrame = () => {
       return (
         <View absF centerV pointerEvents="none">
           <View
@@ -171,11 +171,17 @@ const WheelPicker = React.memo(
             }}
             center
           >
-            <Text marginL-80 text80M {...rightLabelProps} color={activeTextColor} style={rightLabelStyle}>
-              {rightLabel}
-            </Text>
+            {renderLabel()}
           </View>
         </View>
+      );
+    };
+
+    const renderLabel = () => {
+      return (
+        <Text marginL-80 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+          {label}
+        </Text>
       );
     };
 
@@ -206,7 +212,7 @@ const WheelPicker = React.memo(
         />
         {fader(FaderPosition.BOTTOM)}
         {fader(FaderPosition.TOP)}
-        {separators()}
+        {renderCentralFrame()}
       </View>
     );
   });

@@ -32,15 +32,15 @@ export interface WheelPickerProps {
     /**
      * Additional label on the right of the item text
      */
-    rightLabel?: string;
+    label?: string;
     /**
-     * The Additional right label's style
+     * The Additional label's style
      */
-    rightLabelStyle?: TextStyle;
+    labelStyle?: TextStyle;
     /**
-     * The Additional right label's props
+     * The Additional label's props
      */
-    rightLabelProps?: TextProps;
+    labelProps?: TextProps;
     /**
      * Event, on active row change
      */
@@ -58,5 +58,5 @@ export interface WheelPickerProps {
      */
     selectedValue: ItemProps | number | string;
 }
-declare const WheelPicker: React.MemoExoticComponent<({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, rightLabel, rightLabelStyle, rightLabelProps, onChange, style, children, selectedValue }: WheelPickerProps) => JSX.Element>;
+declare const WheelPicker: React.MemoExoticComponent<({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, style, children, selectedValue }: WheelPickerProps) => JSX.Element>;
 export default WheelPicker;
