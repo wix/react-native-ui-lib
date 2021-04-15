@@ -19,6 +19,11 @@ const MODES = {
   TIME: 'time'
 };
 
+const DISPLAYS = {
+  DEFAULT: 'default',
+  SPINNER: 'spinner'
+};
+
 /*eslint-disable*/
 /**
  * @description: Date and Time Picker Component that wraps RNDateTimePicker for date and time modes.
@@ -38,6 +43,10 @@ class DateTimePicker extends Component {
      * The type of picker to display ('date' or 'time')
      */
     mode: PropTypes.oneOf(Object.values(MODES)),
+    /**
+     * The type of picker to display ('date' or 'time')
+     */
+    display: PropTypes.oneOf(Object.values(DISPLAYS)),
     /**
      * The initial value to set the picker to. Defaults to device's date / time
      */
@@ -102,7 +111,8 @@ class DateTimePicker extends Component {
 
   static defaultProps = {
     ...TextField.defaultProps,
-    mode: MODES.DATE
+    mode: MODES.DATE,
+    display: DISPLAYS.DEFAULT
   };
 
   constructor(props) {
@@ -235,11 +245,12 @@ class DateTimePicker extends Component {
     }
 
     const {value, showExpandableOverlay} = this.state;
-    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes} = this.props;
+    const {mode, display, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes} = this.props;
 
     if (showExpandableOverlay) {
       return (
         <RNDateTimePicker
+          display={display}
           mode={mode}
           value={value || new Date()}
           onChange={this.handleChange}
