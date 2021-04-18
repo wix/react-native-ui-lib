@@ -159,7 +159,7 @@ const WheelPicker = React.memo(
       [itemHeight]
     );
 
-    const renderCentralFrame = () => {
+    const renderSeparatorsAndLabel = () => {
       return (
         <View absF centerV pointerEvents="none">
           <View
@@ -190,7 +190,7 @@ const WheelPicker = React.memo(
     }, []);
 
     return (
-      <View style={style}>
+      <View bg-white style={style}>
         <AnimatedFlatList
           height={height}
           data={items}
@@ -212,7 +212,7 @@ const WheelPicker = React.memo(
         />
         {fader(FaderPosition.BOTTOM)}
         {fader(FaderPosition.TOP)}
-        {renderCentralFrame()}
+        {renderSeparatorsAndLabel()}
       </View>
     );
   });

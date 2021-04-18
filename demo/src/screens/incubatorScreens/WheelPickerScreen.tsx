@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {View, Text, Incubator, Colors, Typography} from 'react-native-ui-lib';
+import {View, Text, Incubator, Colors, Typography, Button, Dialog} from 'react-native-ui-lib';
 import _ from 'lodash';
 
 // Months
@@ -24,10 +24,18 @@ const years = _.times(2020, i => i);
 const days = _.times(365, i => i + 1);
 
 const useData = (initialMonth?: string, initialYear?: string, initialDays?: number) => {
-
   const [selectedMonth, setMonth] = useState<string | undefined>(initialMonth);
   const [selectedYear, setYear] = useState<string | undefined>(initialYear);
   const [selectedDays, setDays] = useState<number | undefined>(initialDays);
+  const [showDialog, setShowDialog] = useState(false);
+
+  const onPickDaysPress = () => {
+    setShowDialog(true);
+  };
+
+  const onDialogDismissed = () => {
+    setShowDialog(false);
+  };
 
   const onMonthChange = (item: string | undefined, _: number) => {
     setMonth(item);
@@ -53,9 +61,8 @@ const useData = (initialMonth?: string, initialYear?: string, initialDays?: numb
     return _.map(days, item => ({label: '' + item, value: item}));
   }, []);
 
-
   return {
-    getMonths, 
+    getMonths,
     getYears,
     getDays,
     onMonthChange,
@@ -63,18 +70,33 @@ const useData = (initialMonth?: string, initialYear?: string, initialDays?: numb
     onDaysChange,
     selectedMonth,
     selectedYear,
-    selectedDays
+    selectedDays,
+    onPickDaysPress,
+    onDialogDismissed,
+    showDialog
   };
 };
 
 export default () => {
-  
-  const {selectedMonth, onMonthChange, getMonths, selectedYear, onYearChange, getYears, selectedDays, onDaysChange, getDays} = useData('February', undefined, 5);
+  const {
+    selectedMonth,
+    onMonthChange,
+    getMonths,
+    selectedYear,
+    onYearChange,
+    getYears,
+    selectedDays,
+    onDaysChange,
+    getDays,
+    onPickDaysPress,
+    onDialogDismissed,
+    showDialog
+  } = useData('February', undefined, 5);
 
   return (
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
-      
+
       <View flex marginT-20 centerH>
         <Text h3>Months</Text>
         <Incubator.WheelPicker
@@ -86,16 +108,26 @@ export default () => {
           textStyle={Typography.text60R}
           selectedValue={selectedMonth}
         />
-        
+
         <Text h3>Years</Text>
-        <View height={300} width={'100%'}>
-          <Incubator.WheelPicker onChange={onYearChange} selectedValue={selectedYear} items={getYears()}/>
+        <View width={'100%'}>
+          <Incubator.WheelPicker
+            onChange={onYearChange}
+            numberOfVisibleRows={3}
+            selectedValue={selectedYear}
+            items={getYears()}
+          />
         </View>
 
-        <Text h3 style={{marginTop: -50}}>Days</Text>
-        <View height={100} width={'100%'}>
-          <Incubator.WheelPicker onChange={onDaysChange} selectedValue={selectedDays} label={selectedDays === 1 ? 'Day' : 'Days'} items={getDays()}/>
-        </View>
+        <Button marginT-40 label={'Pick Days'} marginH-120 onPress={onPickDaysPress}/>
+        <Dialog width={'90%'} height={260} bottom visible={showDialog} onDismiss={onDialogDismissed}>
+          <Incubator.WheelPicker
+            onChange={onDaysChange}
+            selectedValue={selectedDays}
+            label={selectedDays === 1 ? 'Day' : 'Days'}
+            items={getDays()}
+          />
+        </Dialog>
       </View>
     </View>
   );
