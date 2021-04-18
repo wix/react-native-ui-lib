@@ -11,10 +11,12 @@ import React, {Component} from 'react';
 import {Animated, StyleSheet, View, I18nManager} from 'react-native';
 import {PanGestureHandler, TapGestureHandler, State} from 'react-native-gesture-handler';
 import {Constants} from '../../helpers';
+import {HapticService} from '../../services';
 
 
 const DRAG_TOSS = 0.05;
 const LEFT_TOGGLE_THRESHOLD = 0.6;
+const HAPTIC_METHOD = 'impactMedium';
 
 // Math.sign polyfill for iOS 8.x
 if (!Math.sign) {
@@ -123,7 +125,8 @@ export default class Swipeable extends Component<Props, StateType> {
       if (!this.dragThresholdReached && x >= threshold && x < threshold + 10) {
         // move item right
         this.dragThresholdReached = true;
-        onToggleSwipeLeft({rowWidth, leftWidth, dragX: x, triggerHaptic: true});
+        HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+        onToggleSwipeLeft({rowWidth, leftWidth, dragX: x});
       }
       if (this.dragThresholdReached && x < threshold - 10) {
         // move item left
@@ -260,8 +263,10 @@ export default class Swipeable extends Component<Props, StateType> {
         // Swipe left toggle
         toValue = rowWidth * LEFT_TOGGLE_THRESHOLD;
       } else if (!onToggleSwipeLeft && fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
+        HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
         toValue = rowWidth;
       } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
+        HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
         toValue = -rowWidth;
       } else if (translationX > leftThreshold) {
         if (!onToggleSwipeLeft || onToggleSwipeLeft && translationX < rowWidth * LEFT_TOGGLE_THRESHOLD) {

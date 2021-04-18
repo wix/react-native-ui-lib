@@ -98,10 +98,6 @@ interface Props {
    */
   onWillFullSwipeRight?: Function;
   /**
-   * Haptic trigger function to use onToggleSwipeLeft
-   */
-  leftToggleHapticTrigger?: Function;
-  /**
    * Style
    */
   style?: ViewStyle;
@@ -214,9 +210,6 @@ class Drawer extends PureComponent<Props> {
 
   private onToggleSwipeLeft = (options?: any) => {
     if (this.props.onToggleSwipeLeft) {
-      if (options?.triggerHaptic) {
-        _.invoke(this.props, 'leftToggleHapticTrigger');
-      }
       this.animateItem(options);
     }
   };
