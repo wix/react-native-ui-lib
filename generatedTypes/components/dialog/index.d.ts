@@ -14,6 +14,10 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
      */
     onDismiss?: (props: any) => void;
     /**
+     * Whether or not to ignore background press
+     */
+    ignoreBackgroundPress?: boolean;
+    /**
      * The color of the overlay background
      */
     overlayBackgroundColor?: string;
