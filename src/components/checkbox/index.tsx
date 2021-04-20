@@ -244,7 +244,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     return label ? (
       <View row centerV style={[containerStyle]}>
         {this.renderCheckbox()}
-        <Text {...labelProps} style={[this.styles.checkboxLabel, labelStyle]} onPress={this.onPress}>
+        <Text style={[this.styles.checkboxLabel, labelStyle]} {...labelProps} onPress={this.onPress}>
           {label}
         </Text>
       </View>
