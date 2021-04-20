@@ -5,6 +5,7 @@ const {
   addToImports,
   getComponentLocalName,
   getComponentName,
+  getPossibleDeprecations,
   findValueNodeOfIdentifier
 } = require('../utils');
 
@@ -96,7 +97,7 @@ module.exports = {
       if (attribute.type === 'JSXAttribute') {
         checkPropDeprecation(attribute, attribute.name, attribute.name.name, deprecatedPropList, componentName);
       } else if (attribute.type === 'JSXSpreadAttribute') {
-        const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context);
+        const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context.getScope());
         if (spreadSource) {
           _.forEach(spreadSource.properties, property => {
             const key = _.get(property, 'key');
@@ -116,9 +117,13 @@ module.exports = {
           if (deprecationSource) {
             // There are deprecations from this source
             const componentName = getComponentName(componentLocalName, imports);
-            const foundPossibleDeprecations = deprecationSource.filter(
-              currentDeprecationSource => currentDeprecationSource.component === componentName
+            const foundPossibleDeprecations = getPossibleDeprecations(
+              componentLocalName,
+              imports,
+              currentImport,
+              deprecationSource
             );
+            
             foundPossibleDeprecations.forEach(foundPossibleDeprecation => {
               const deprecatedPropList = foundPossibleDeprecation.props;
               const attributes = node.attributes;

@@ -9,6 +9,7 @@ import Fader, {FaderPosition} from '../../components/fader';
 import {Constants} from '../../helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
+import Text, {TextProps} from '../../components/text';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -40,6 +41,18 @@ export interface WheelPickerProps {
    */
   textStyle?: TextStyle;
   /**
+   * Additional label on the right of the item text
+   */
+  label?: string;
+  /**
+   * The Additional label's style
+   */
+  labelStyle?: TextStyle;
+  /**
+   * The Additional label's props
+   */
+  labelProps?: TextProps;
+  /**
    * Event, on active row change
    */
   onChange?: (item: string | number, index: number) => void;
@@ -62,9 +75,12 @@ const WheelPicker = React.memo(
     items: propItems,
     itemHeight = 44,
     numberOfVisibleRows = 5,
-    activeTextColor,
+    activeTextColor = Colors.primary,
     inactiveTextColor,
     textStyle,
+    label,
+    labelStyle,
+    labelProps,
     onChange,
     style,
     children,
@@ -100,8 +116,8 @@ const WheelPicker = React.memo(
       }
     };
 
-    const scrollToPassedIndex = (animated = false) => {
-      scrollToIndex(currentIndex, animated);
+    const scrollToPassedIndex = () => {
+      scrollToIndex(currentIndex, false);
     };
 
     const scrollToIndex = (index: number, animated: boolean) => {
@@ -143,7 +159,7 @@ const WheelPicker = React.memo(
       [itemHeight]
     );
 
-    const separators = () => {
+    const renderSeparatorsAndLabel = () => {
       return (
         <View absF centerV pointerEvents="none">
           <View
@@ -153,8 +169,19 @@ const WheelPicker = React.memo(
               height: Spacings.s9,
               borderColor: Colors.grey60
             }}
-          />
+            center
+          >
+            {renderLabel()}
+          </View>
         </View>
+      );
+    };
+
+    const renderLabel = () => {
+      return (
+        <Text marginL-80 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+          {label}
+        </Text>
       );
     };
 
@@ -163,7 +190,7 @@ const WheelPicker = React.memo(
     }, []);
 
     return (
-      <View style={style}>
+      <View bg-white style={style}>
         <AnimatedFlatList
           height={height}
           data={items}
@@ -185,7 +212,7 @@ const WheelPicker = React.memo(
         />
         {fader(FaderPosition.BOTTOM)}
         {fader(FaderPosition.TOP)}
-        {separators()}
+        {renderSeparatorsAndLabel()}
       </View>
     );
   });
