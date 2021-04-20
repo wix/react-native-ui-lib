@@ -8,15 +8,14 @@ import {
   TouchableOpacityProps,
   ViewStyle,
   TextStyle,
-  ImageStyle,
-  TextProps
+  ImageStyle
 } from 'react-native';
 import {Colors, Spacings} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
-import Text from '../text';
+import Text, {TextProps} from '../text';
 import View from '../view';
 
 const DEFAULT_SIZE = 24;
