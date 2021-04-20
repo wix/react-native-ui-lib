@@ -49,7 +49,7 @@ export interface CheckboxProps extends TouchableOpacityProps {
     /**
      * Props that will be passed to the checkbox Text label.
      */
-    labelProps?: TextProps;
+    labelProps?: Omit<TextProps, 'style'>;
     /**
      * Additional styling
      */
