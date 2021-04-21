@@ -60,6 +60,10 @@ class Picker extends Component {
      */
     mode: PropTypes.oneOf(Object.keys(PICKER_MODES)),
     /**
+     * Limit the number of selected items
+     */
+    selectionLimit: PropTypes.number,
+    /**
      * Adds blur effect to picker modal (iOS only)
      */
     enableModalBlur: PropTypes.bool,
@@ -217,7 +221,7 @@ class Picker extends Component {
 
   getContextValue = () => {
     const {value, searchValue} = this.state;
-    const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch, selectionLimit} = this.props;
     const pickerValue = !migrate && _.isPlainObject(value) ? value?.value : value;
     return {
       migrate,
@@ -229,7 +233,8 @@ class Picker extends Component {
       onSelectedLayout: this.onSelectedItemLayout,
       renderItem,
       showSearch,
-      searchValue
+      searchValue,
+      selectionLimit
     };
   };
 
