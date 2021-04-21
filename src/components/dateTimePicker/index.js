@@ -249,6 +249,7 @@ class DateTimePicker extends Component {
           is24Hour={is24Hour}
           minuteInterval={minuteInterval}
           timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+          display={Platform.OS === "ios" ? "inline" : "default"}
         />
       );
     }
