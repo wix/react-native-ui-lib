@@ -289,7 +289,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         visible={modalVisibility}
         animationType={'none'}
         onBackgroundPress={onBackgroundPress}
-        onRequestClose={this.hideDialogView}
+        onRequestClose={onBackgroundPress}
         // onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
