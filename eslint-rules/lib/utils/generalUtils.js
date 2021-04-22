@@ -20,15 +20,17 @@ function findValueNodeOfIdentifier(identifierName, scope) {
       }
     }
   });
-  if (valueNode === null || valueNode.value !== undefined) {
-    scope.block.body.forEach(scopeNode => {
-      if (scopeNode.type === 'ExpressionStatement') {
-        const variableName = _.get(scopeNode, 'expression.left.name');
-        if (variableName === identifierName) {
-          valueNode = scopeNode.expression.right;
+  if (_.isNil(valueNode) || valueNode.value !== undefined) {
+    if (scope.block.body.length > 0) {
+      scope.block.body.forEach(scopeNode => {
+        if (scopeNode.type === 'ExpressionStatement') {
+          const variableName = _.get(scopeNode, 'expression.left.name');
+          if (variableName === identifierName) {
+            valueNode = scopeNode.expression.right;
+          }
         }
-      }
-    });
+      });
+    }
   }
   if (scope.upper === null) {
     return valueNode;
