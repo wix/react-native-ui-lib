@@ -6,7 +6,7 @@ import BaseInput from '../baseInput';
  * @description: a wrapper for Text Field component to create enclosed text area
  * @modifiers: Typography
  * @extends: TextField
- * @extendslink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/textField/index.js
+ * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/textField/index.js
  * @gif: https://media.giphy.com/media/3oFzmoU8TdfHeYZNZu/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/InputsScreen.js
  */

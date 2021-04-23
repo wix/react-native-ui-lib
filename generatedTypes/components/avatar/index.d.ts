@@ -14,6 +14,20 @@ export declare enum BadgePosition {
     BOTTOM_RIGHT = "BOTTOM_RIGHT",
     BOTTOM_LEFT = "BOTTOM_LEFT"
 }
+export declare type AutoColorsProps = {
+    /**
+     * Avatar colors to be used when useAutoColors is true
+     */
+    avatarColors?: string[];
+    /**
+     * Replace the default hashing function (name -> number)
+     */
+    hashFunction?: (name?: string) => number;
+    /**
+     * Background color in cases where the getBackgroundColor returns undefined.
+     */
+    defaultColor?: string;
+};
 export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
     /**
      * Adds fade in animation when Avatar image loads
@@ -64,6 +78,21 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
      */
     onImageLoadError?: ImagePropsBase['onError'];
     /**
+     * The name of the avatar user.
+     * If no label is provided, the initials will be generated from the name.
+     * autoColorsConfig will use the name to create the background color of the Avatar.
+     */
+    name?: string;
+    /**
+     * Hash the name (or label) to get a color, so each name will have a specific color.
+     * Default is false.
+     */
+    useAutoColors?: boolean;
+    /**
+     * Send this to use the name to infer a backgroundColor
+     */
+    autoColorsConfig?: AutoColorsProps;
+    /**
      * Label that can represent initials
      */
     label?: string;
@@ -113,7 +142,7 @@ export declare type AvatarPropTypes = AvatarProps;
  * @description: Avatar component for displaying user profile images
  * @extends: TouchableOpacity
  * @extendsnotes: (when passing onPress)
- * @extendslink: docs/TouchableOpacity
+ * @extendsLink: docs/TouchableOpacity
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */
@@ -125,7 +154,6 @@ declare class Avatar extends PureComponent<AvatarProps> {
     static badgePosition: typeof BadgePosition;
     static defaultProps: {
         animate: boolean;
-        backgroundColor: string;
         size: number;
         labelColor: string;
         badgePosition: BadgePosition;
@@ -141,6 +169,10 @@ declare class Avatar extends PureComponent<AvatarProps> {
     renderBadge(): JSX.Element | undefined;
     renderRibbon(): JSX.Element | undefined;
     renderImage(): JSX.Element | undefined;
+    getText: (this: any, label: any, name: any) => any;
+    get text(): any;
+    getBackgroundColor: (this: any, text: any, avatarColors: any, hashFunction: any, defaultColor: any) => string | undefined;
+    get backgroundColor(): string | undefined;
     render(): JSX.Element;
 }
 declare function createStyles(props: AvatarProps): {
@@ -211,6 +243,21 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
      * fails (equiv. to Image.onError()).
      */
     onImageLoadError?: ((error: import("react-native").NativeSyntheticEvent<import("react-native").ImageErrorEventData>) => void) | undefined;
+    /**
+     * The name of the avatar user.
+     * If no label is provided, the initials will be generated from the name.
+     * autoColorsConfig will use the name to create the background color of the Avatar.
+     */
+    name?: string | undefined;
+    /**
+     * Hash the name (or label) to get a color, so each name will have a specific color.
+     * Default is false.
+     */
+    useAutoColors?: boolean | undefined;
+    /**
+     * Send this to use the name to infer a backgroundColor
+     */
+    autoColorsConfig?: AutoColorsProps | undefined;
     /**
      * Label that can represent initials
      */

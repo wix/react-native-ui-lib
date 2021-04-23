@@ -205,7 +205,7 @@ class DateTimePicker extends Component {
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
         {...dialogProps}
       >
-        <View useSafeArea>
+        <View /* useSafeArea */>
           {this.renderHeader()}
           {this.renderDateTimePicker()}
         </View>
@@ -249,6 +249,7 @@ class DateTimePicker extends Component {
           is24Hour={is24Hour}
           minuteInterval={minuteInterval}
           timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+          display={Constants.isIOS ? 'spinner' : undefined}
         />
       );
     }

@@ -1,7 +1,6 @@
 // TODO: support commented props
 import React, {Component} from 'react';
 import _ from 'lodash';
-// @ts-expect-error
 import Reanimated, {Easing as _Easing, EasingNode} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {timing, fract, between} from 'react-native-redash';
@@ -34,7 +33,6 @@ const {
   block,
   onChange,
   interpolate: _interpolate,
-  // @ts-expect-error
   interpolateNode,
   round,
   multiply

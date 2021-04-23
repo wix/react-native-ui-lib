@@ -33,6 +33,10 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
      */
     onDismiss?: (props: any) => void;
     /**
+     * Whether or not to ignore background press
+     */
+    ignoreBackgroundPress?: boolean;
+    /**
      * The color of the overlay background
      */
     overlayBackgroundColor?: string;
@@ -211,10 +215,18 @@ class Dialog extends Component<DialogProps, DialogState> {
     }
   };
 
+  getContainerType = () => {
+    const {panDirection, renderPannableHeader} = this.props;
+    if (!panDirection || renderPannableHeader) {
+      return View;
+    }
+    return PanListenerView;
+  }
+
   renderDialogView = () => {
-    const {children, renderPannableHeader, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.props;
+    const {children, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.props;
     const {dialogVisibility} = this.state;
-    const Container = renderPannableHeader ? View : PanListenerView;
+    const Container = this.getContainerType();
 
     return (
       <View testID={testID} style={[this.styles.dialogViewSize]} pointerEvents="box-none">
@@ -266,7 +278,8 @@ class Dialog extends Component<DialogProps, DialogState> {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {testID, supportedOrientations, accessibilityLabel} = this.props;
+    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress} = this.props;
+    const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
 
     return (
       <Modal
@@ -275,8 +288,8 @@ class Dialog extends Component<DialogProps, DialogState> {
         transparent
         visible={modalVisibility}
         animationType={'none'}
-        onBackgroundPress={this.hideDialogView}
-        onRequestClose={this.hideDialogView}
+        onBackgroundPress={onBackgroundPress}
+        onRequestClose={onBackgroundPress}
         // onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}

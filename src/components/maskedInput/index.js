@@ -6,6 +6,7 @@ import BaseInput from '../baseInput';
 import TextField from '../textField';
 import View from '../view';
 import Text from '../text';
+import TouchableOpacity from '../touchableOpacity';
 
 /**
  * @description: Mask Input to create custom looking inputs with custom formats
@@ -38,6 +39,11 @@ export default class MaskedInput extends BaseInput {
     this.keyboardDidHideListener.remove();
   }
 
+  clear() {
+    this.setState({value: ''});
+    this.input.clear();
+  }
+
   renderMaskedText() {
     const {renderMaskedText} = this.props;
     const {value} = this.state;
@@ -53,7 +59,7 @@ export default class MaskedInput extends BaseInput {
     const TextInputProps = TextField.extractOwnProps(this.props, ['containerStyle', 'style']);
 
     return (
-      <View style={containerStyle}>
+      <TouchableOpacity style={containerStyle} activeOpacity={1} onPress={() => this.input.focus()}>
         <TextField
           {...this.props}
           ref={r => (this.input = r)}
@@ -68,7 +74,7 @@ export default class MaskedInput extends BaseInput {
           onChangeText={this.onChangeText}
         />
         <View style={styles.maskedInputWrapper}>{this.renderMaskedText()}</View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

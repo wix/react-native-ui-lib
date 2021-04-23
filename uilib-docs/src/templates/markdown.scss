@@ -22,14 +22,13 @@
   }
 
   pre {
-    background-color: $dark80;
+    background-color: $dark10;
     border-radius: 4px;
     padding: 16px;
-    box-shadow: 2px 2px 2px $dark60;
+    box-shadow: 2px 2px 2px rgba($dark10, 0.2);
 
     code {
       background: transparent;
-      color: $dark10;
       padding: 0;
       white-space: pre-wrap;
     }
@@ -39,7 +38,6 @@
     word-break: break-word;
     display: inline-block;
     background: $dark70;
-    color: $primary;
     padding: 1px 2px;
     margin-bottom: 2px;
   }

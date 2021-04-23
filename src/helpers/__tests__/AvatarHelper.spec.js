@@ -44,12 +44,39 @@ describe('services/AvatarService', () => {
 
   it('should getInitials', () => {
     expect(uut.getInitials('Austin Guerrero')).toBe('AG');
+    expect(uut.getInitials('Austin Guerrero', 1)).toBe('A');
+    expect(uut.getInitials('Austin Guerrero', 2)).toBe('AG');
+    expect(uut.getInitials('Austin Guerrero', 3)).toBe('AG');
     expect(uut.getInitials('Austin   Guerrero')).toBe('AG');
     expect(uut.getInitials('theresa simpson')).toBe('TS');
+    expect(uut.getInitials('theresa simpson', 1)).toBe('T');
+    expect(uut.getInitials('theresa simpson', 2)).toBe('TS');
+    expect(uut.getInitials('theresa simpson', 3)).toBe('TS');
     expect(uut.getInitials('Sarah Michelle Galler')).toBe('SM');
+    expect(uut.getInitials('Sarah Michelle Galler', 1)).toBe('S');
+    expect(uut.getInitials('Sarah Michelle Galler', 2)).toBe('SM');
+    expect(uut.getInitials('Sarah Michelle Galler', 3)).toBe('SMG');
     expect(uut.getInitials('Keith')).toBe('K');
     expect(uut.getInitials()).toBe('');
     expect(uut.getInitials(' Austin ')).toBe('A');
+  });
+
+  it('should getBackgroundColor', () => {
+    const avatarColors = uut.getAvatarColors();
+    const hashFunction = uut.hashStringToNumber;
+    const defaultColor = Colors.dark80;
+    expect(uut.getBackgroundColor('', avatarColors, hashFunction, defaultColor)).toBe(defaultColor);
+    expect(uut.getBackgroundColor(undefined, avatarColors, hashFunction, defaultColor)).toBe(defaultColor);
+    expect(uut.getBackgroundColor(null, avatarColors, hashFunction, defaultColor)).toBe(defaultColor);
+    expect(uut.getBackgroundColor('Austin Guerrero', undefined, hashFunction, defaultColor)).toBe(defaultColor);
+    expect(uut.getBackgroundColor('Austin Guerrero', null, hashFunction, defaultColor)).toBe(defaultColor);
+    expect(uut.getBackgroundColor('Austin Guerrero', avatarColors, undefined, defaultColor)).toBe(defaultColor);
+    expect(uut.getBackgroundColor('Austin Guerrero', avatarColors, null, defaultColor)).toBe(defaultColor);
+    expect(uut.getBackgroundColor('Austin Guerrero', avatarColors, hashFunction, defaultColor)).toBe(Colors.orange20);
+    expect(uut.getBackgroundColor('theresa simpson', avatarColors, hashFunction, defaultColor)).toBe(Colors.green20);
+    expect(uut.getBackgroundColor('Sarah Michelle Galler', avatarColors, hashFunction, defaultColor)).toBe(Colors.green20);
+    expect(uut.getBackgroundColor('Keith', avatarColors, hashFunction, defaultColor)).toBe(Colors.green20);
+    expect(uut.getBackgroundColor(' Austin ', avatarColors, hashFunction, defaultColor)).toBe(Colors.cyan20);
   });
 
   describe('Is-gravatar query function', () => {

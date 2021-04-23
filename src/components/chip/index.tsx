@@ -62,7 +62,10 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    * Badge props object
    */
   badgeProps?: BadgeProps;
-
+  /**
+   * Display badge as counter (no background)
+   */
+  useCounter?: boolean;
   //AVATAR
   /**
    * Avatar props object
@@ -115,21 +118,24 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
 }
 export type ChipPropTypes = ChipProps; //TODO: remove after ComponentPropTypes deprecation;
 
+const DEFAULT_SIZE = 26;
+
 /**
  * @description: Chip component
  * @extends: TouchableOpacity
- * @extendslink: docs/TouchableOpacity
+ * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  */
 const Chip = ({
   avatarProps,
   backgroundColor,
   badgeProps,
-  borderRadius,
+  useCounter,
+  borderRadius = BorderRadiuses.br100,
   containerStyle,
   onDismiss,
   dismissColor,
-  dismissIcon,
+  dismissIcon = Assets.icons.x,
   dismissIconStyle,
   dismissContainerStyle,
   iconProps,
@@ -140,8 +146,8 @@ const Chip = ({
   labelStyle,
   onPress,
   resetSpacings,
-  size,
-  useSizeAsMinimum,
+  size = DEFAULT_SIZE,
+  useSizeAsMinimum = true,
   testID,
   ...others
 }: ChipProps) => {
@@ -166,6 +172,7 @@ const Chip = ({
       <Badge
         size={BADGE_SIZES.default}
         testID={`${testID}.counter`}
+        backgroundColor={useCounter ? 'transparent' : undefined}
         {...badgeProps}
         // @ts-ignore
         containerStyle={[getMargins('badge'), badgeProps.containerStyle]}
@@ -306,12 +313,6 @@ const Chip = ({
 };
 
 Chip.displayName = 'Chip';
-Chip.defaultProps = {
-  borderRadius: BorderRadiuses.br100,
-  dismissIcon: Assets.icons.x,
-  useSizeAsMinimum: true,
-  size: 26
-};
 
 const styles = StyleSheet.create({
   container: {

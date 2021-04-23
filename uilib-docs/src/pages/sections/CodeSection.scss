@@ -2,6 +2,9 @@
 
 .code-section {
   padding-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .headline {
     text-align: center;
@@ -13,7 +16,7 @@
     width: 80vw;
 
     @include desktop {
-      width: 35vw;
+      width: 55vw;
     }
 
     .view-docs-button {
@@ -52,8 +55,8 @@
   }
 
   .tab-page {
-    .code {
-      background-color: $black;
+    pre {
+      background-color: $dark10;
       padding: 20px;
       width: 100%;
     }

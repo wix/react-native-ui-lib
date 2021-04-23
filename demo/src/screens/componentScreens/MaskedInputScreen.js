@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Typography, View, Text, MaskedInput} from 'react-native-ui-lib'; //eslint-disable-line
+import {Typography, View, Text, MaskedInput, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class MaskedInputScreen extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ export default class MaskedInputScreen extends Component {
 
     this.state = {
       error: '',
+      timeValue: '15'
     };
   }
 
@@ -17,6 +18,11 @@ export default class MaskedInputScreen extends Component {
       this.minput.focus();
     }, 500);
   }
+
+  clearInputs = () => {
+    this.minput.clear();
+    this.priceInput.clear();
+  };
 
   renderTimeText(value) {
     const paddedValue = _.padStart(value, 4, '0');
@@ -51,12 +57,11 @@ export default class MaskedInputScreen extends Component {
   }
 
   render() {
+    const {timeValue} = this.state;
+
     return (
       <View flex>
-        <ScrollView
-          contentContainerStyle={styles.container}
-          keyboardShouldPersistTaps='always'
-        >
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="always">
           <Text text40 marginB-20>
             Masked Inputs
           </Text>
@@ -69,16 +74,21 @@ export default class MaskedInputScreen extends Component {
             renderMaskedText={this.renderTimeText}
             keyboardType={'numeric'}
             maxLength={4}
-            value={'15'}
+            value={timeValue}
+            onChangeText={value => this.setState({timeValue: value})}
           />
 
           <Text text70 marginT-40>
             Price/Discount
           </Text>
           <MaskedInput
+            ref={r => (this.priceInput = r)}
             renderMaskedText={this.renderPrice}
             keyboardType={'numeric'}
           />
+          <View centerH marginT-100>
+            <Button label="Clear All" onPress={this.clearInputs}/>
+          </View>
         </ScrollView>
       </View>
     );
@@ -89,13 +99,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    padding: 25,
+    padding: 25
   },
   title: {
-    ...Typography.text20,
+    ...Typography.text20
   },
   header: {
     ...Typography.text60,
-    marginVertical: 20,
-  },
+    marginVertical: 20
+  }
 });

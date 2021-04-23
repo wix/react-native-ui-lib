@@ -1,8 +1,7 @@
-import TextField from '..';
+import TextField from '../index';
 import {Colors} from '../../../style';
 
 describe('TextField', () => {
-  // beforeEach(() => {});
 
   describe('shouldFakePlaceholder', () => {
     it('should shouldFakePlaceholder', () => {

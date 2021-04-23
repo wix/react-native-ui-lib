@@ -13,7 +13,7 @@ function findAndReportHardCodedValues(value, reporter, context, depthOfSearch = 
     findAndReportHardCodedValues(value.consequent, reporter, context, depthOfSearch - 1);
     findAndReportHardCodedValues(value.alternate, reporter, context, depthOfSearch - 1);
   } else if (value.type === 'Identifier') {
-    findAndReportHardCodedValues(findValueNodeOfIdentifier(value.name, context), reporter, context, depthOfSearch - 1);
+    findAndReportHardCodedValues(findValueNodeOfIdentifier(value.name, context.getScope()), reporter, context, depthOfSearch - 1);
   }
 }
 
