@@ -99,8 +99,48 @@ class Example extends Component {
   }
 }`;
 
+const fullClassDeprecated3 = `
+import {Something} from '${notOurSource}';
+import * as Everything from '${ourSource}';
+import {SomethingElse} from '${notOurSource2}';
+class Example extends Component {
+
+  deprecatedInheritedFunction = () => {
+    return true
+  }
+}`;
+
+const fullClassDeprecated4 = `
+import {Something} from '${notOurSource}';
+import * as Everything from '${ourSource}';
+import {SomethingElse} from '${notOurSource2}';
+class Example extends Component {
+
+  deprecatedInheritedFunction() {
+    return true
+  }
+}`;
+
+const fullClassDeprecated5 = `
+import {someFunction} from '${notOurSource}';
+class Example extends Component {
+
+  deprecatedFunction = () => {
+    someFunction(${validProps});
+  }
+
+  render() {
+    return (
+      <TouchableOpacity flex center>
+        onPress={this.deprecatedFunction}
+      </TouchableOpacity>
+    );
+  }
+}`;
+
 const functionError = "The 'deprecatedFunction' function is deprecated. Please use the 'validFunction' function instead (fix is available).";
 const propError = "The 'validFunction' function's prop 'deprecatedProp' is deprecated. Please use the 'validProp' prop instead (fix is available).";
+const classFunctionError = "The 'deprecatedInheritedFunction' function is deprecated. please stop using it.";
 const errorDate = ' Please fix this issue by 2 November, Friday!';
 
 ruleTester.run('function-deprecation', rule, {
@@ -164,6 +204,10 @@ ruleTester.run('function-deprecation', rule, {
     {
       options: options,
       code: `${fullClassValid}`,
+    },
+    {
+      options: options,
+      code: `${fullClassDeprecated5}`,
     },
   ],
   invalid: [
@@ -267,6 +311,20 @@ deprecatedFunction(getProp())`,
         { message: propError },
         { message: functionError },
         { message: functionError },
+      ],
+    },
+    {
+      options: options,
+      code: `${fullClassDeprecated3}`,
+      errors: [
+        { message: classFunctionError }
+      ],
+    },
+    {
+      options: options,
+      code: `${fullClassDeprecated4}`,
+      errors: [
+        { message: classFunctionError }
       ],
     },
   ],
