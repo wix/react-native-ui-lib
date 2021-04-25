@@ -329,7 +329,6 @@ class ColorPickerDialog extends PureComponent<Props, State> {
       <Dialog
         visible={visible} //TODO: pass all Dialog props instead
         width="100%"
-        height={undefined}
         bottom
         centerH
         onDismiss={this.onDismiss}
