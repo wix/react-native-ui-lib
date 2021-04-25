@@ -72,17 +72,17 @@ class ColorSwatch extends PureComponent<Props> {
     }
   }
 
-  animateSwatch(newValue: any) {
+  animateSwatch(newValue: number) {
     const {animatedOpacity, animatedScale} = this.state;
 
     Animated.parallel([
       Animated.timing(animatedOpacity, {
         duration: 250,
-        toValue: Number(newValue),
+        toValue: newValue,
         useNativeDriver: true
       }),
       Animated.spring(animatedScale, {
-        toValue: Number(newValue),
+        toValue: newValue,
         // easing: Easing.bezier(0, 0, 0.58, 1), // => easeOut
         bounciness: 18,
         speed: 12,
@@ -92,7 +92,7 @@ class ColorSwatch extends PureComponent<Props> {
     ]).start();
   }
 
-  animateCheckmark(newValue: any) {
+  animateCheckmark(newValue = false) {
     const {isSelected} = this.state;
 
     Animated.timing(isSelected, {
@@ -106,15 +106,17 @@ class ColorSwatch extends PureComponent<Props> {
 
   onPress = () => {
     const {color, value, index} = this.props;
-    const tintColor = value && this.getTintColor(value);
+    const tintColor = this.getTintColor(value);
     _.invoke(this.props, 'onPress', value || color, {tintColor, index});
   };
 
-  getTintColor(color: string) {
-    if (Colors.isTransparent(color)) {
-      return Colors.black;
+  getTintColor(color?: string) {
+    if (color) {
+      if (Colors.isTransparent(color)) {
+        return Colors.black;
+      }
+      return Colors.isDark(color) ? Colors.white : Colors.black;
     }
-    return Colors.isDark(color) ? Colors.white : Colors.black;
   }
 
   getAccessibilityInfo() {
@@ -138,7 +140,7 @@ class ColorSwatch extends PureComponent<Props> {
     const {style, color, onPress, ...others} = this.props;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
-    const tintColor = color && this.getTintColor(color);
+    const tintColor = this.getTintColor(color);
 
     return (
       <Container
@@ -152,7 +154,7 @@ class ColorSwatch extends PureComponent<Props> {
         onLayout={this.onLayout}
         {...this.getAccessibilityInfo()}
       >
-        {color && Colors.isTransparent(color) && (
+        {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
         )}
         <Animated.Image

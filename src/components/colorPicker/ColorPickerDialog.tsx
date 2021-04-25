@@ -47,7 +47,7 @@ interface Props extends DialogProps {
   /**
    * Ok (v) button color
    */
-  buttonColor?: string,
+  doneButtonColor?: string,
   accessibilityLabels?: {
     dismissButton?: string,
     doneButton?: string,
@@ -71,7 +71,7 @@ const KEYBOARD_HEIGHT = 216;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
  */
 class ColorPickerDialog extends PureComponent<Props, State> {
-  static displayName = 'ColorPickerDialog';
+  static displayName = 'ColorPicker';
 
   static defaultProps = {
     initialColor: Colors.dark80
@@ -125,9 +125,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   };
 
   setFocus = () => {
-    if (this.textInput && this.textInput.current) {
-      this.textInput.current.focus();
-    }
+    this.textInput?.current?.focus();
   };
 
   changeHeight(height: number) {
@@ -225,7 +223,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   };
 
   renderHeader() {
-    const {buttonColor, accessibilityLabels} = this.props;
+    const {doneButtonColor, accessibilityLabels} = this.props;
     const {valid} = this.state;
 
     return (
@@ -238,7 +236,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
           accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
         />
         <Button
-          color={buttonColor}
+          color={doneButtonColor}
           disabled={!valid}
           link
           iconSource={Assets.icons.check}

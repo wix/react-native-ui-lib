@@ -32,7 +32,6 @@ export {default as Button, ButtonPropTypes, ButtonProps, ButtonSize, ButtonAnima
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
-export {default as ColorPickerDialog, ColorPickerDialogProps} from './components/colorPicker/ColorPickerDialog';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPicker/ColorPalette';
 export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker/ColorSwatch';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
