@@ -24,7 +24,7 @@ interface Props extends DialogProps {
     /**
      * Ok (v) button color
      */
-    buttonColor?: string;
+    doneButtonColor?: string;
     accessibilityLabels?: {
         dismissButton?: string;
         doneButton?: string;
