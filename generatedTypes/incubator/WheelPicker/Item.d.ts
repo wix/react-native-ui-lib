@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import { TextStyle } from 'react-native';
 export interface ItemProps {
-    text: string;
+    label: string;
     value: string | number;
 }
 interface InternalProps extends ItemProps {
@@ -13,5 +13,5 @@ interface InternalProps extends ItemProps {
     style?: TextStyle;
     onSelect: (index: number) => void;
 }
-declare const _default: ({ index, text, itemHeight, onSelect, offset, activeColor, inactiveColor, style }: InternalProps) => JSX.Element;
+declare const _default: ({ index, label, itemHeight, onSelect, offset, activeColor, inactiveColor, style }: InternalProps) => JSX.Element;
 export default _default;

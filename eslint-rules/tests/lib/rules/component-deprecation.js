@@ -53,6 +53,60 @@ ruleTester.run('component-deprecation', rule, {
       code: `
     import {List} from 'module-with-deprecations';
     <List/>`
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {MyComponent} from 'module-with-deprecations';
+      const {ScrollView} = MyComponent;
+      <ScrollView/>;
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {MyComponent} from 'module-with-deprecations';
+      const {ScrollView: S, FlatList: F} = MyComponent;
+      <S/>;
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {MyComponent} from 'module-with-deprecations';
+      <MyComponent.ScrollView/>;
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {ScrollView} from 'another-module';
+      <ScrollView/>;
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {ScrollView} from 'another-module';
+      import {View} from 'module-with-deprecations';
+      <ScrollView/>;
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {ScrollView as S} from 'another-module';
+      import {View} from 'module-with-deprecations';
+      <S/>;
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {ScrollView} from 'another-module';
+      import {View as V} from 'module-with-deprecations';
+      <ScrollView/>;
+      `
     }
   ],
   invalid: [
@@ -283,6 +337,22 @@ ruleTester.run('component-deprecation', rule, {
         {message: "The 'Avatar' component is deprecated. Please use the 'Picture' component instead."},
         {message: "The 'Button' component is deprecated. Please use the 'Touch' component instead."},
         {message: "The 'List' component is deprecated. Please use the 'ListList' component instead."}
+      ]
+    },
+    {
+      options: ruleOptions,
+      code: `import {ScrollView} from 'module-with-deprecations'; <ScrollView/>;`,
+      output: `import {ScrollView} from 'module-with-deprecations'; <ScrollView/>;`,
+      errors: [
+        {message: "The 'ScrollView' component is deprecated. Please use the 'MyComponent.ScrollView' component instead."},
+        {message: "The 'ScrollView' component is deprecated. Please use the 'MyComponent.ScrollView' component instead."}
+      ]
+    },
+    {
+      options: ruleOptions,
+      code: `import {ScrollView as S} from 'module-with-deprecations'; <S/>;`,
+      errors: [
+        {message: "The 'ScrollView' component is deprecated. Please use the 'MyComponent.ScrollView' component instead."},
       ]
     }
   ]
