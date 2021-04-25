@@ -65,6 +65,22 @@ ruleTester.run('component-prop-deprecation', rule, {
         const Dir = F.Dir;
         const Header = D.Header;
       `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {Button} from 'another-module';
+      import {View} from 'module-with-deprecations';
+      <Button text="my button"/>
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {Button} from 'another-module';
+      import {View as V} from 'module-with-deprecations';
+      <Button text="my button"/>
+      `
     }
   ],
   invalid: [

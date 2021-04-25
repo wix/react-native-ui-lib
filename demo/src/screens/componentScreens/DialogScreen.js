@@ -55,7 +55,8 @@ export default class DialogScreen extends Component {
       scroll: this.SCROLL_TYPE.NONE,
       showHeader: true,
       isRounded: true,
-      showDialog: false
+      showDialog: false,
+      ignoreBackgroundPress: false
     };
   }
 
@@ -90,6 +91,12 @@ export default class DialogScreen extends Component {
   toggleIsRounded = () => {
     this.setState({
       isRounded: !this.state.isRounded
+    });
+  };
+
+  toggleIgnoreBackgroundPress = () => {
+    this.setState({
+      ignoreBackgroundPress: !this.state.ignoreBackgroundPress
     });
   };
 
@@ -222,7 +229,7 @@ Scroll: ${scroll}`;
   };
 
   renderDialog = () => {
-    const {showDialog, panDirection, position, scroll, showHeader, isRounded} = this.state;
+    const {showDialog, panDirection, position, scroll, showHeader, isRounded, ignoreBackgroundPress} = this.state;
     const renderPannableHeader = showHeader ? this.renderPannableHeader : undefined;
     const height = scroll !== this.SCROLL_TYPE.NONE ? '70%' : undefined;
 
@@ -241,6 +248,7 @@ Scroll: ${scroll}`;
         renderPannableHeader={renderPannableHeader}
         pannableHeaderProps={this.pannableTitle}
         supportedOrientations={this.supportedOrientations}
+        ignoreBackgroundPress={ignoreBackgroundPress}
       >
         {this.renderContent()}
       </Dialog>
@@ -248,7 +256,7 @@ Scroll: ${scroll}`;
   };
 
   render() {
-    const {panDirection, position, scroll, showHeader, isRounded} = this.state;
+    const {panDirection, position, scroll, showHeader, isRounded, ignoreBackgroundPress} = this.state;
 
     return (
       <ScrollView>
@@ -294,6 +302,11 @@ Scroll: ${scroll}`;
           <View row marginT-20 centerV>
             <Text>Add some style:</Text>
             <Switch value={isRounded} onValueChange={this.toggleIsRounded} marginL-10/>
+          </View>
+
+          <View row marginT-20 centerV>
+            <Text>Ignore Background Press:</Text>
+            <Switch value={ignoreBackgroundPress} onValueChange={this.toggleIgnoreBackgroundPress} marginL-10/>
           </View>
 
           <Button marginT-50 label={'Show dialog'} onPress={this.showDialog}/>

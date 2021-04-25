@@ -33,6 +33,10 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
      */
     onDismiss?: (props: any) => void;
     /**
+     * Whether or not to ignore background press
+     */
+    ignoreBackgroundPress?: boolean;
+    /**
      * The color of the overlay background
      */
     overlayBackgroundColor?: string;
@@ -274,7 +278,8 @@ class Dialog extends Component<DialogProps, DialogState> {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {testID, supportedOrientations, accessibilityLabel} = this.props;
+    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress} = this.props;
+    const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
 
     return (
       <Modal
@@ -283,8 +288,8 @@ class Dialog extends Component<DialogProps, DialogState> {
         transparent
         visible={modalVisibility}
         animationType={'none'}
-        onBackgroundPress={this.hideDialogView}
-        onRequestClose={this.hideDialogView}
+        onBackgroundPress={onBackgroundPress}
+        onRequestClose={onBackgroundPress}
         // onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}

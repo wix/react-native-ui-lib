@@ -38,9 +38,7 @@ const validStyleSheetExample = `StyleSheet.create({
 })
 `;
 
-const invalidConditionalExpression = `const test = <Text style = {{ color: true ? '${Colors.dark10}' : '${
-  Colors.dark20
-}'}}> </Text>;`;
+const invalidConditionalExpression = `const test = <Text style = {{ color: true ? '${Colors.dark10}' : '${Colors.dark20}'}}> </Text>;`;
 const validConditionalExpression =
   'const test = <Text style = {{ color: true ? Colors.dark10 : Colors.dark20}}> </Text>;';
 
@@ -60,6 +58,40 @@ ruleTester.run('no-hard-coded-color', rule, {
     {code: 'const goodUsage = <View style={{backgroundColor: Constants.blue20}}/>;'}
   ],
   invalid: [
+    {
+      options: ruleOptions,
+      code: `
+      let x;
+      let y;
+      x = '#20303C';
+      y = 3;
+      const test = <Text style={{color: x}}>text</Text>;
+      `,
+      output: `
+      let x;
+      let y;
+      x = Colors.dark10;
+      y = 3;
+      const test = <Text style={{color: x}}>text</Text>;
+      `,
+      errors: [{message: "Found '#20303C'. Use UILib colors instead of hardcoded colors."}]
+    },
+    {
+      options: ruleOptions,
+      code: `
+      let x = 0;
+      x = 1;
+      x = '#20303C';
+      const test = <Text style={{color: x}}>text</Text>;
+      `,
+      output: `
+      let x = 0;
+      x = 1;
+      x = Colors.dark10;
+      const test = <Text style={{color: x}}>text</Text>;
+      `,
+      errors: [{message: "Found '#20303C'. Use UILib colors instead of hardcoded colors."}]
+    },
     {
       options: ruleOptions,
       code: invalidStyleSheetExample,
