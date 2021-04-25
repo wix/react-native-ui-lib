@@ -85,6 +85,14 @@ interface Props {
      */
     onWillFullSwipeRight?: Function;
     /**
+     * Haptic trigger function to use onToggleSwipeLeft
+     */
+    leftToggleHapticTrigger?: Function;
+    /**
+     * Whether to disable the haptic
+     */
+    disableHaptic?: boolean;
+    /**
      * Style
      */
     style?: ViewStyle;

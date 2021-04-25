@@ -34,6 +34,7 @@ declare type Props = {
     animationOptions?: Object;
     containerStyle?: Object;
     childrenContainerStyle?: Object;
+    disableHaptic?: boolean;
 };
 declare type StateType = {
     dragX: Animated.Value;

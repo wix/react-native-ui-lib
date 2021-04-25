@@ -58,7 +58,8 @@ type Props = {
   useNativeAnimations: boolean,
   animationOptions?: Object,
   containerStyle?: Object,
-  childrenContainerStyle?: Object
+  childrenContainerStyle?: Object,
+  disableHaptic?: boolean
 };
 
 type StateType = {
@@ -114,7 +115,7 @@ export default class Swipeable extends Component<Props, StateType> {
   }
 
   _handleDrag = (e) => {
-    const {onToggleSwipeLeft} = this.props;
+    const {onToggleSwipeLeft, disableHaptic} = this.props;
 
     if (onToggleSwipeLeft) {
       // Drag left toggle
@@ -125,7 +126,7 @@ export default class Swipeable extends Component<Props, StateType> {
       if (!this.dragThresholdReached && x >= threshold && x < threshold + 10) {
         // move item right
         this.dragThresholdReached = true;
-        HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+        !disableHaptic && HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
         onToggleSwipeLeft({rowWidth, leftWidth, dragX: x});
       }
       if (this.dragThresholdReached && x < threshold - 10) {
@@ -252,7 +253,8 @@ export default class Swipeable extends Component<Props, StateType> {
       rightThreshold = rightWidth / 2,
       fullLeftThreshold,
       fullRightThreshold,
-      onToggleSwipeLeft
+      onToggleSwipeLeft,
+      disableHaptic
     } = this.props;
     const startOffsetX = this._currentOffset() + dragX / friction;
     const translationX = (dragX + DRAG_TOSS * velocityX) / friction;
@@ -263,10 +265,10 @@ export default class Swipeable extends Component<Props, StateType> {
         // Swipe left toggle
         toValue = rowWidth * LEFT_TOGGLE_THRESHOLD;
       } else if (!onToggleSwipeLeft && fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
-        HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+        !disableHaptic && HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
         toValue = rowWidth;
       } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
-        HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+        !disableHaptic && HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
         toValue = -rowWidth;
       } else if (translationX > leftThreshold) {
         if (!onToggleSwipeLeft || onToggleSwipeLeft && translationX < rowWidth * LEFT_TOGGLE_THRESHOLD) {
