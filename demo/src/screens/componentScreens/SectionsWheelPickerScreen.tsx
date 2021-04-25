@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, {useState, useCallback} from 'react';
 import {Alert} from 'react-native';
-import {Text, View, SectionsWheelPicker, SegmentedControl, Button} from 'react-native-ui-lib';
-import {WheelPickerProps} from '../../../../src/incubator/WheelPicker';
+import {Text, View, SectionsWheelPicker, SegmentedControl, Button, Incubator} from 'react-native-ui-lib';
 
 const SectionsWheelPickerScreen = () => {
   const [showMinutes, setShowMinutes] = useState(false);
@@ -70,7 +69,7 @@ const SectionsWheelPickerScreen = () => {
     }
   };
 
-  const sections: WheelPickerProps[] = [
+  const sections: Incubator.WheelPickerProps[] = [
     {items: getItems(days), onChange: onDaysChange, selectedValue: selectedDays, label: getLabel('days')},
     {items: getItems(hours), onChange: onHoursChange, selectedValue: selectedHours, label: getLabel('hours')},
     {

@@ -68,6 +68,7 @@ export interface WheelPickerProps {
    * WheelPicker initial value, can be ItemProps.value, number as index
    */
   selectedValue: ItemProps | number | string;
+  testID?: string;
 }
 
 const WheelPicker = React.memo(

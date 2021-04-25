@@ -57,6 +57,7 @@ export interface WheelPickerProps {
      * WheelPicker initial value, can be ItemProps.value, number as index
      */
     selectedValue: ItemProps | number | string;
+    testID?: string;
 }
 declare const WheelPicker: React.MemoExoticComponent<({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, style, children, selectedValue }: WheelPickerProps) => JSX.Element>;
 export default WheelPicker;

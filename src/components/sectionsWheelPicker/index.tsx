@@ -3,18 +3,13 @@ import React from 'react';
 import {TextStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
-import WheelPicker, {WheelPickerProps} from '../../incubator/WheelPicker';
+import {WheelPicker, WheelPickerProps} from '../../incubator';
 
 export type SectionsWheelPickerProps = {
   /**
    * Array of sections.
    */
   sections?: WheelPickerProps[];
-  /**
-   * Describe the width of each section in the SectionsWheelPicker
-   * default value: '33%'
-   */
-  sectionWidth?: string | number;
   /**
    * Describe the height of each item in the WheelPicker
    * default value: 44
@@ -46,16 +41,24 @@ export type SectionsWheelPickerProps = {
  */
 
 const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
-  const {sections, sectionWidth = '33%', ...others} = props;
+  const {sections, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, testID} = props;
+
+  const defaultWidth = 100 / (sections?.length || 1) + '%';
+
+  const wheelPickerProps = {
+    itemHeight,
+    numberOfVisibleRows,
+    activeTextColor,
+    inactiveTextColor,
+    textStyle
+  };
 
   const renderSections = () =>
-    _.map(sections, (_value, index) => {
+    _.map(sections, (section, index) => {
       return (
-        sections?.[index] && (
-          <View height={1} width={sectionWidth} key={index}>
-            <WheelPicker {...others} {...sections[index]}/>
-          </View>
-        )
+        <View height={1} width={section.style?.width || defaultWidth} key={index} testID={testID}>
+          <WheelPicker testID={`${testID}.${index}`} {...wheelPickerProps} {...section} style={{width: '100%'}}/>
+        </View>
       );
     });
 

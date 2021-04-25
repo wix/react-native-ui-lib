@@ -1,16 +1,11 @@
 import React from 'react';
 import { TextStyle } from 'react-native';
-import { WheelPickerProps } from '../../incubator/WheelPicker';
+import { WheelPickerProps } from '../../incubator';
 export declare type SectionsWheelPickerProps = {
     /**
      * Array of sections.
      */
     sections?: WheelPickerProps[];
-    /**
-     * Describe the width of each section in the SectionsWheelPicker
-     * default value: '33%'
-     */
-    sectionWidth?: string | number;
     /**
      * Describe the height of each item in the WheelPicker
      * default value: 44
