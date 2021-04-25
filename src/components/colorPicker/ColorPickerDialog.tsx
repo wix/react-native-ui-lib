@@ -315,7 +315,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
               returnKeyType={'done'}
               enablesReturnKeyAutomatically
               onFocus={this.onFocus}
-              accessibilityLabel={_.get(accessibilityLabels, 'input')}
+              accessibilityLabel={accessibilityLabels?.input}
             />
           </View>
           <View style={[{backgroundColor: textColor}, styles.underline]}/>
