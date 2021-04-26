@@ -23,6 +23,7 @@ interface InternalProps extends ItemProps {
   inactiveColor?: string;
   style?: TextStyle;
   onSelect: (index: number) => void;
+  testID?: string;
 }
 
 export default ({
@@ -33,7 +34,8 @@ export default ({
   offset,
   activeColor = Colors.primary,
   inactiveColor = Colors.grey20,
-  style
+  style,
+  testID
 }: InternalProps) => {
   
   const selectItem = useCallback(() => onSelect(index), [index]);
@@ -61,6 +63,7 @@ export default ({
       onPress={selectItem}
       // @ts-ignore reanimated2
       index={index}
+      testID={testID}
     >
       {/* @ts-ignore reanimated2*/}
       <AnimatedText text60R style={{color, ...style}}>
