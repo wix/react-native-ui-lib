@@ -70,7 +70,7 @@ class Text extends PureComponent<PropsTypes> {
     let highlightIndex;
 
     do {
-      highlightIndex = _.lowerCase(targetString).indexOf(_.lowerCase(highlightString));
+      highlightIndex = targetString.toLowerCase().indexOf(highlightString.toLowerCase());
       if (highlightIndex !== -1) {
         if (highlightIndex > 0) {
           textParts.push(targetString.substring(0, highlightIndex));
