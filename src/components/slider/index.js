@@ -174,6 +174,15 @@ export default class Slider extends PureBaseComponent {
     }
   }
 
+  componentDidMount() {
+    Constants.addDimensionsEventListener(this.onOrientationChanged);
+  }
+
+  componentWillUnmount() {
+    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+  }
+
+
   /* Gesture Recognizer */
 
   handleMoveShouldSetPanResponder = () => {
@@ -348,14 +357,21 @@ export default class Slider extends PureBaseComponent {
 
   updateTrackStepAndStyle = ({nativeEvent}) => {
     this._x = nativeEvent.locationX;
-    this.updateValue(nativeEvent.locationX);
-  
+    this.updateValue(this._x);
+
     if (this.props.step > 0) {
       this.bounceToStep();
     } else {
-      this.updateStyles(nativeEvent.locationX);
+      this.updateStyles(this._x);
     }
   }
+
+  onOrientationChanged = (event) => {
+    // const value = this.getRoundedValue(this.props.value);
+    // this.update(value);
+    // this.bounceToStep();
+    this.setState({measureCompleted: false});
+  };
 
   /* Events */
 
@@ -401,10 +417,10 @@ export default class Slider extends PureBaseComponent {
     if (currentSize && width === currentSize.width && height === currentSize.height) {
       return;
     }
-
     this[layoutName] = size;
 
     if (this.containerSize && this.thumbSize && this.trackSize) {
+      // console.warn('post return');
       this.setState({
         containerSize: this.containerSize,
         trackSize: this.trackSize,
