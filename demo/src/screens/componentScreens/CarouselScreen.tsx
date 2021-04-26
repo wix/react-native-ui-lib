@@ -45,7 +45,7 @@ interface State {
   autoplay: boolean;
 }
 
-class CarouselScreen extends Component<Props ,State> {
+class CarouselScreen extends Component<Props, State> {
   carousel = React.createRef<typeof Carousel>();
 
   constructor(props: Props) {
