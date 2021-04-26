@@ -85,7 +85,8 @@ const WheelPicker = React.memo(
     onChange,
     style,
     children,
-    selectedValue
+    selectedValue,
+    testID
   }: WheelPickerProps) => {
     const scrollView = useRef<Animated.ScrollView>();
     const [offset] = useValues([0], []);
@@ -191,7 +192,7 @@ const WheelPicker = React.memo(
     }, []);
 
     return (
-      <View bg-white style={style}>
+      <View testID={testID} bg-white style={style}>
         <AnimatedFlatList
           height={height}
           data={items}
