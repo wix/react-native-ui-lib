@@ -366,10 +366,7 @@ export default class Slider extends PureBaseComponent {
     }
   }
 
-  onOrientationChanged = (event) => {
-    // const value = this.getRoundedValue(this.props.value);
-    // this.update(value);
-    // this.bounceToStep();
+  onOrientationChanged = () => {
     this.setState({measureCompleted: false});
   };
 
