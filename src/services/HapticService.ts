@@ -5,17 +5,17 @@ const options = {
   ignoreAndroidSystemSettings: false
 };
 
-const HapticMethods = [
-  'selection',
-  'impactLight',
-  'impactMedium',
-  'impactHeavy',
-  'notificationSuccess',
-  'notificationWarning',
-  'notificationError'
-];
+export enum HapticType {
+  selection = 'selection',
+  impactLight = 'impactLight',
+  impactMedium = 'impactMedium',
+  impactHeavy = 'impactHeavy',
+  notificationSuccess = 'notificationSuccess',
+  notificationWarning = 'notificationWarning',
+  notificationError = 'notificationError'
+}
 
-function triggerHaptic(hapticMethod: string, componentName: string) {
+function triggerHaptic(hapticMethod: HapticType, componentName: string) {
   if (HapticFeedbackPackage) {
     HapticFeedbackPackage.trigger(hapticMethod, options);
   } else {
@@ -24,6 +24,6 @@ function triggerHaptic(hapticMethod: string, componentName: string) {
 }
 
 export default {
-  HapticMethods,
+  HapticType,
   triggerHaptic
 };
