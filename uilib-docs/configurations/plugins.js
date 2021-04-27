@@ -23,7 +23,17 @@ const markdownPagesPlugin = (path = `${__dirname}/../../markdowns/`) => [
       path
     }
   },
-  `gatsby-transformer-remark`
+  {
+    resolve: `gatsby-transformer-remark`,
+    plugins: [
+      {
+        resolve: `gatsby-remark-prismjs`,
+        options: {
+        }
+      }
+    ]
+  }
+  /* `gatsby-transformer-remark` */
 ];
 
 const componentsDocgenPlugin = [

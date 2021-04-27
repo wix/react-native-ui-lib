@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleProp, TouchableOpacityProps, ViewStyle, TextStyle } from 'react-native';
+import { TextProps } from '../text';
 export interface CheckboxProps extends TouchableOpacityProps {
     /**
      * The value of the Checkbox. If true the switch will be turned on. Default value is false.
@@ -45,6 +46,10 @@ export interface CheckboxProps extends TouchableOpacityProps {
      * The style of the label
      */
     labelStyle?: StyleProp<TextStyle>;
+    /**
+     * Props that will be passed to the checkbox Text label.
+     */
+    labelProps?: Omit<TextProps, 'style'>;
     /**
      * Additional styling
      */

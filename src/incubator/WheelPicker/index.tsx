@@ -1,16 +1,15 @@
-// TODO: Support onChange callback
 // TODO: Support style customization
-// TODO: Support control of visible items
-import React, {useCallback, useRef, useMemo} from 'react';
-import {TextStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
+import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
-import {Colors} from '../../../src/style';
+import {Colors, Spacings} from '../../../src/style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
 import {Constants} from '../../helpers';
-import useMiddleIndex from './helpers/useListMiddleIndex';
 import Item, {ItemProps} from './Item';
+import usePresenter from './usePresenter';
+import Text, {TextProps} from '../../components/text';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -21,8 +20,14 @@ export interface WheelPickerProps {
   items?: ItemProps[];
   /**
    * Describe the height of each item in the WheelPicker
+   * default value: 44
    */
   itemHeight?: number;
+  /**
+   * Describe the number of rows visible
+   * default value: 5
+   */
+  numberOfVisibleRows?: number;
   /**
    * Text color for the focused row
    */
@@ -36,83 +41,166 @@ export interface WheelPickerProps {
    */
   textStyle?: TextStyle;
   /**
+   * Additional label on the right of the item text
+   */
+  label?: string;
+  /**
+   * The Additional label's style
+   */
+  labelStyle?: TextStyle;
+  /**
+   * The Additional label's props
+   */
+  labelProps?: TextProps;
+  /**
    * Event, on active row change
    */
-  onChange: (index: number, item?: ItemProps) => void;
+  onChange?: (item: string | number, index: number) => void;
+  /**
+   * Container's ViewStyle, height is computed according to itemHeight * numberOfVisibleRows
+   */
+  style?: Omit<ViewStyle, 'height'>;
+  /**
+   * Support passing items as children props
+   */
+  children?: JSX.Element | JSX.Element[];
+  /**
+   * WheelPicker initial value, can be ItemProps.value, number as index
+   */
+  selectedValue: ItemProps | number | string;
 }
 
-const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor, textStyle, onChange: onChangeEvent}: WheelPickerProps) => {
-  const height = itemHeight * 5;
-  const scrollView = useRef<Animated.ScrollView>();
-  const [offset] = useValues([0], []);
-  const onScroll = onScrollEvent({y: offset});
-  
-  const listSize = items?.length || 0;
-  const middleIndex = useMiddleIndex({itemHeight, listSize});
+const WheelPicker = React.memo(
+  ({
+    items: propItems,
+    itemHeight = 44,
+    numberOfVisibleRows = 5,
+    activeTextColor = Colors.primary,
+    inactiveTextColor,
+    textStyle,
+    label,
+    labelStyle,
+    labelProps,
+    onChange,
+    style,
+    children,
+    selectedValue
+  }: WheelPickerProps) => {
+    const scrollView = useRef<Animated.ScrollView>();
+    const [offset] = useValues([0], []);
+    const onScroll = onScrollEvent({y: offset});
 
-  const selectItem = useCallback(
-    index => {
+    const {height, items, shouldControlComponent, index: currentIndex, getRowItemAtOffset} = usePresenter({
+      selectedValue,
+      items: propItems,
+      children,
+      itemHeight,
+      preferredNumVisibleRows: numberOfVisibleRows
+    });
+
+    const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
+
+    useEffect(() => {
+      controlComponent();
+    });
+
+    /**
+     * The picker is a controlled component. This means we expect the
+     * to relay on `selectedValue` prop to be our
+     * source of truth - not the picker current value.
+     * This way, you can control disallow or mutate selection of some values.
+     */
+    const controlComponent = () => {
+      if (shouldControlComponent(scrollOffset)) {
+        scrollToIndex(currentIndex, true);
+      }
+    };
+
+    const scrollToPassedIndex = () => {
+      scrollToIndex(currentIndex, false);
+    };
+
+    const scrollToIndex = (index: number, animated: boolean) => {
       if (scrollView.current?.getNode()) {
         //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: true});
+        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
       }
-    },
-    [itemHeight]
-  );
+    };
 
-  const onChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const index = middleIndex(event.nativeEvent.contentOffset.y);
-    onChangeEvent(index, items?.[index]);
-  }, []);
-  
-  const renderItem = useCallback(({item, index}) => {
-    return (
-      <Item
-        index={index}
-        itemHeight={itemHeight}
-        offset={offset}
-        activeColor={activeTextColor}
-        inactiveColor={inactiveTextColor}
-        style={textStyle}
-        {...item}
-        onSelect={selectItem}
-      />
+    const selectItem = useCallback(
+      index => {
+        scrollToIndex(index, true);
+      },
+      [itemHeight]
     );
-  }, [itemHeight]);
 
-  const fader = useMemo(
-    () => (position: FaderPosition) => {
+    const onValueChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      setScrollOffset(event.nativeEvent.contentOffset.y);
+
+      const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
+      onChange?.(value, index);
+    };
+
+    const renderItem = useCallback(
+      ({item, index}) => {
+        return (
+          <Item
+            index={index}
+            itemHeight={itemHeight}
+            offset={offset}
+            activeColor={activeTextColor}
+            inactiveColor={inactiveTextColor}
+            style={textStyle}
+            {...item}
+            onSelect={selectItem}
+          />
+        );
+      },
+      [itemHeight]
+    );
+
+    const renderSeparatorsAndLabel = () => {
+      return (
+        <View absF centerV pointerEvents="none">
+          <View
+            style={{
+              borderTopWidth: 1,
+              borderBottomWidth: 1,
+              height: Spacings.s9,
+              borderColor: Colors.grey60
+            }}
+            center
+          >
+            {renderLabel()}
+          </View>
+        </View>
+      );
+    };
+
+    const renderLabel = () => {
+      return (
+        <Text marginL-80 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+          {label}
+        </Text>
+      );
+    };
+
+    const fader = useMemo(() => (position: FaderPosition) => {
       return <Fader visible position={position} size={60}/>;
-    },
-    []
-  );
+    }, []);
 
-  const separators = useMemo(() => {
     return (
-      <View absF centerV pointerEvents="none">
-        <View
-          style={{
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
-            height: itemHeight,
-            borderColor: Colors.grey50
-          }}
-        />
-      </View>
-    );
-  }, []);
-
-  return (
-    <View>
-      <View width={250} height={height} br20>
+      <View bg-white style={style}>
         <AnimatedFlatList
+          height={height}
           data={items}
           // @ts-ignore reanimated2
           keyExtractor={keyExtractor}
           scrollEventThrottle={100}
           onScroll={onScroll}
-          onMomentumScrollEnd={onChange}
+          onMomentumScrollEnd={onValueChange}
           showsVerticalScrollIndicator={false}
+          onLayout={scrollToPassedIndex}
           // @ts-ignore
           ref={scrollView}
           contentContainerStyle={{
@@ -124,11 +212,10 @@ const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor
         />
         {fader(FaderPosition.BOTTOM)}
         {fader(FaderPosition.TOP)}
-        {separators}
+        {renderSeparatorsAndLabel()}
       </View>
-    </View>
-  );
-};
+    );
+  });
 
 const keyExtractor = (item: ItemProps) => `${item.value}`;
 

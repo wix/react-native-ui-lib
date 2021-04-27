@@ -30,5 +30,29 @@ describe('Text', () => {
       const result = uut.getTextPartsByHighlight('Dancing in the Dark', 'da');
       expect(result).toEqual(['Da', 'ncing in the ', 'Da', 'rk']);
     });
+
+    it('Should handle special characters @', () => {
+      const uut = new Text({});
+      const result = uut.getTextPartsByHighlight('@ancing in the @ark', '@a');
+      expect(result).toEqual(['@a', 'ncing in the ', '@a', 'rk']);
+    });
+
+    it('Should handle special characters !', () => {
+      const uut = new Text({});
+      const result = uut.getTextPartsByHighlight('!ancing in the !ark', '!a');
+      expect(result).toEqual(['!a', 'ncing in the ', '!a', 'rk']);
+    });
+
+    it('Should handle special characters starts with @', () => {
+      const uut = new Text({});
+      const result = uut.getTextPartsByHighlight('uilib@wix.com', '@wix');
+      expect(result).toEqual(['uilib', '@wix', '.com']);
+    });
+
+    it('Should handle empty string .', () => {
+      const uut = new Text({});
+      const result = uut.getTextPartsByHighlight('@ancing in the @ark', '');
+      expect(result).toEqual(['@ancing in the @ark']);
+    });
   });
 });

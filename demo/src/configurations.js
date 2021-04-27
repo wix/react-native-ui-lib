@@ -14,6 +14,10 @@ Assets.loadAssetsGroup('images.demo', {
   brokenImage: require('./assets/images/placeholderMissingImage.png')
 });
 
+Assets.loadAssetsGroup('svgs.demo', {
+  logo: require('./assets/svgs/headerLogo.svg').default
+});
+
 Typography.loadTypographies({
   h1: {...Typography.text40},
   h2: {...Typography.text50},

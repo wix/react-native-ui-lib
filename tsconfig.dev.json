@@ -1,28 +1,5 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    // "outDir": "dist",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "jsx": "react-native",
-    "skipLibCheck": true,
-    // "resolveJsonModule": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    // "noEmit": true,
-    // "checkJs": true,
-    "allowJs": false,
-    "emitDeclarationOnly": true,
-    // "noImplicitAny": false
-    "declaration": true,
-    "declarationDir": "./generatedTypes",
-    "baseUrl": ".",
-    "paths": {
-      "react-native-ui-lib": ["index.d.ts"]
-    }
-  },
+  "extends": "./tsconfig",
   "include": ["src/**/*", "typings/**/*"],
-  "exclude": [ "node_modules", "src/index.ts"]
+  "exclude": ["node_modules", "src/index.ts"]
 }

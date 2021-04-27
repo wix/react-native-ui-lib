@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import '~prismjs/themes/prism-tomorrow.css';
 @import 'src/styles/constants';
 @import 'src/styles/components';
 
@@ -12,7 +13,6 @@ body {
   font-family: Poppins, sans-serif;
   -webkit-font-smoothing: antialiased;
   font-size: 12px;
-  
   @include tablet {
     font-size: 14px;
   }

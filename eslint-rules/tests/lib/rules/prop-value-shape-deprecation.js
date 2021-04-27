@@ -15,23 +15,26 @@ const imageSource = 'imageSource: {uri: some_uri}';
 const source = 'source: {uri: some_uri}';
 const ruleOptions = [{deprecations: deprecationsJson}];
 const PassedPropExampleCode = `
-  const myProps = {
-    goodProp: goodValue,
-    ${imageSource}
-  };
+import {Label} from 'our-source';
+const myProps = {
+  goodProp: goodValue,
+  ${imageSource}
+};
 
-  <Label avatar={myProps}/>
+<Label avatar={myProps}/>
 `;
 const PassedPropExampleOutput = `
-  const myProps = {
-    goodProp: goodValue,
-    ${source}
-  };
+import {Label} from 'our-source';
+const myProps = {
+  goodProp: goodValue,
+  ${source}
+};
 
-  <Label avatar={myProps}/>
+<Label avatar={myProps}/>
 `;
 
 const firstLevelSpreadCode = `
+import {Label} from 'our-source';
 const myProps = {
   avatarProps: {
     goodProp: goodValue,
@@ -43,6 +46,7 @@ const myProps = {
 `;
 
 const firstLevelSpreadOutput = `
+import {Label} from 'our-source';
 const myProps = {
   avatarProps: {
     goodProp: goodValue,
@@ -54,6 +58,7 @@ const myProps = {
 `;
 
 const secondLevelSpreadCode = `
+import {Label} from 'our-source';
 const myProps = {
   goodProp: goodValue,
   ${imageSource}
@@ -63,6 +68,7 @@ const myProps = {
 `;
 
 const secondLevelSpreadOutput = `
+import {Label} from 'our-source';
 const myProps = {
   goodProp: goodValue,
   ${source}
@@ -103,33 +109,33 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
   invalid: [
     {
       options: ruleOptions,
-      code: `<ListItem avatar={{${imageSource}, someProp: someValue}}/>`,
+      code: `import {ListItem} from 'our-source'; <ListItem avatar={{${imageSource}, someProp: someValue}}/>`,
       errors: [
         {
           message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
         }
       ],
-      output: `<ListItem avatar={{${source}, someProp: someValue}}/>`
+      output: `import {ListItem} from 'our-source'; <ListItem avatar={{${source}, someProp: someValue}}/>`
     },
     {
       options: ruleOptions,
-      code: `<ListItem avatar={{someProp: someValue, ${imageSource}}}/>`,
+      code: `import {ListItem} from 'our-source'; <ListItem avatar={{someProp: someValue, ${imageSource}}}/>`,
       errors: [
         {
           message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
         }
       ],
-      output: `<ListItem avatar={{someProp: someValue, ${source}}}/>`
+      output: `import {ListItem} from 'our-source'; <ListItem avatar={{someProp: someValue, ${source}}}/>`
     },
     {
       options: ruleOptions,
-      code: `<ListItem someProp={someValue} avatar={{${imageSource}}}/>`,
+      code: `import {ListItem} from 'our-source'; <ListItem someProp={someValue} avatar={{${imageSource}}}/>`,
       errors: [
         {
           message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
         }
       ],
-      output: `<ListItem someProp={someValue} avatar={{${source}}}/>`
+      output: `import {ListItem} from 'our-source'; <ListItem someProp={someValue} avatar={{${source}}}/>`
     },
     {
       options: ruleOptions,
@@ -202,7 +208,9 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
     },
     {
       options: ruleOptions,
-      code: `const myProps1 = {
+      code: `
+      import {Label} from 'our-source';
+        const myProps1 = {
           avatarProps: {
             ${imageSource},
             goodProp1: goodValue1
@@ -225,7 +233,9 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
     },
     {
       options: ruleOptions,
-      code: `const myProps1 = {
+      code: `
+      import {Label} from 'our-source';
+        const myProps1 = {
           buttonProps: {
             goodProp1: goodValue1,
             goodProp2: goodValue2,

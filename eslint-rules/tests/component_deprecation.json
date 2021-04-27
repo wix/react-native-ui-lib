@@ -28,5 +28,11 @@
     "source": "another-module-with-deprecations",
     "message": "Please use the 'ListList' component instead.",
     "fix": {"componentName": "ListList"}
+  },
+  {
+    "component": "ScrollView",
+    "parent": "MyComponent",
+    "source": "module-with-deprecations",
+    "message": "Please use the 'MyComponent.ScrollView' component instead."
   }
 ]
