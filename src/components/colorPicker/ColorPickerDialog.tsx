@@ -80,7 +80,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const color = props.initialColor && Colors.getHSL(props.initialColor);
+    const color = Colors.getHSL(props.initialColor);
     const text = this.getColorValue(props.initialColor);
     const {valid} = this.getValidColorString(text);
 
@@ -188,7 +188,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
 
   resetValues() {
     const {initialColor} = this.props;
-    const color = initialColor && Colors.getHSL(initialColor);
+    const color = Colors.getHSL(initialColor);
     const text = this.getColorValue(initialColor);
     const {valid} = this.getValidColorString(text);
 

@@ -173,7 +173,7 @@ export class Colors {
   getHexString(color: string) {
     return tinycolor(color).toHexString();
   }
-  getHSL(color: string) {
+  getHSL(color?: string) {
     return tinycolor(color).toHsl();
   }
   isTransparent(color?: string) {
