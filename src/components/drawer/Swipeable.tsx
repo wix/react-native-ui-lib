@@ -11,12 +11,12 @@ import React, {Component} from 'react';
 import {Animated, StyleSheet, View, I18nManager} from 'react-native';
 import {PanGestureHandler, TapGestureHandler, State} from 'react-native-gesture-handler';
 import {Constants} from '../../helpers';
-import {HapticService} from '../../services';
+import {HapticService, HapticType} from '../../services';
 
 
 const DRAG_TOSS = 0.05;
 const LEFT_TOGGLE_THRESHOLD = 0.6;
-const HAPTIC_METHOD = 'impactMedium';
+const HAPTIC_METHOD = HapticType.impactMedium;
 
 // Math.sign polyfill for iOS 8.x
 if (!Math.sign) {
