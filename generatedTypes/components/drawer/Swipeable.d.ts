@@ -54,6 +54,7 @@ export default class Swipeable extends Component<Props, StateType> {
         fullRightThreshold: number;
     };
     constructor(props: Props);
+    _triggerHaptic: () => false | void;
     _handleDrag: (e: any) => void;
     getTransX: () => Animated.AnimatedInterpolation;
     getShowLeftAction: () => Animated.Value | Animated.AnimatedInterpolation;

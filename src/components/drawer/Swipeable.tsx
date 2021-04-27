@@ -114,8 +114,12 @@ export default class Swipeable extends Component<Props, StateType> {
     });
   }
 
+  _triggerHaptic = () => {
+    return !this.props.disableHaptic && HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+  }
+  
   _handleDrag = (e) => {
-    const {onToggleSwipeLeft, disableHaptic} = this.props;
+    const {onToggleSwipeLeft} = this.props;
 
     if (onToggleSwipeLeft) {
       // Drag left toggle
@@ -126,7 +130,7 @@ export default class Swipeable extends Component<Props, StateType> {
       if (!this.dragThresholdReached && x >= threshold && x < threshold + 10) {
         // move item right
         this.dragThresholdReached = true;
-        !disableHaptic && HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+        this._triggerHaptic();
         onToggleSwipeLeft({rowWidth, leftWidth, dragX: x});
       }
       if (this.dragThresholdReached && x < threshold - 10) {
@@ -254,7 +258,6 @@ export default class Swipeable extends Component<Props, StateType> {
       fullLeftThreshold,
       fullRightThreshold,
       onToggleSwipeLeft,
-      disableHaptic
     } = this.props;
     const startOffsetX = this._currentOffset() + dragX / friction;
     const translationX = (dragX + DRAG_TOSS * velocityX) / friction;
@@ -265,10 +268,10 @@ export default class Swipeable extends Component<Props, StateType> {
         // Swipe left toggle
         toValue = rowWidth * LEFT_TOGGLE_THRESHOLD;
       } else if (!onToggleSwipeLeft && fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
-        !disableHaptic && HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+        this._triggerHaptic();
         toValue = rowWidth;
       } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
-        !disableHaptic && HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+        this._triggerHaptic();
         toValue = -rowWidth;
       } else if (translationX > leftThreshold) {
         if (!onToggleSwipeLeft || onToggleSwipeLeft && translationX < rowWidth * LEFT_TOGGLE_THRESHOLD) {
