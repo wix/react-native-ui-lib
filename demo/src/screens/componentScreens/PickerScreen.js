@@ -101,10 +101,11 @@ export default class PickerScreen extends Component {
 
           <Picker
             marginT-20
-            placeholder="Favorite Languages"
+            placeholder="Favorite Languages (up to 3)"
             value={this.state.languages}
             onChange={items => this.setState({languages: items})}
             mode={Picker.modes.MULTI}
+            selectionLimit={3}
             rightIconSource={dropdown}
           >
             {_.map(options, option => (
