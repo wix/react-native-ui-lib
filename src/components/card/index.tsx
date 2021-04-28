@@ -194,13 +194,13 @@ class Card extends PureComponent<PropTypes, State> {
     }
   }
 
-  get blurBgStyle() {
-    const {enableBlur} = this.props;
+  get backgroundStyle() {
+    const {enableBlur, backgroundColor = Colors.white} = this.props;
 
     if (Constants.isIOS && enableBlur) {
       return {backgroundColor: Colors.rgba(Colors.white, 0.85)};
     } else {
-      return {backgroundColor: Colors.white};
+      return {backgroundColor};
     }
   }
 
@@ -299,7 +299,7 @@ class Card extends PureComponent<PropTypes, State> {
           {borderRadius: brRadius},
           this.elevationStyle,
           this.shadowStyle,
-          this.blurBgStyle,
+          this.backgroundStyle,
           containerStyle,
           style
         ]}
