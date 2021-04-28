@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
-export declare type SegmentItemProps = {
+export declare type SegmentedControlItemProps = {
     /**
      * The label of the segment.
      */
@@ -18,7 +18,7 @@ export declare type SegmentItemProps = {
      */
     iconOnRight?: boolean;
 };
-export declare type SegmentProps = SegmentItemProps & {
+export declare type SegmentProps = SegmentedControlItemProps & {
     /**
      * Is the item selected.
      */
@@ -44,7 +44,7 @@ export declare type SegmentProps = SegmentItemProps & {
      */
     onLayout?: (index: number, event: LayoutChangeEvent) => void;
 };
-declare const _default: React.ComponentClass<SegmentItemProps & {
+declare const _default: React.ComponentClass<SegmentedControlItemProps & {
     /**
      * Is the item selected.
      */
