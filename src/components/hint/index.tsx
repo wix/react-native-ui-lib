@@ -138,7 +138,6 @@ interface HintState {
   targetLayoutInWindow?: HintTargetFrame;
 }
 
-
 class Hint extends Component<HintProps, HintState> {
   static displayName = 'Hint';
 
@@ -148,8 +147,6 @@ class Hint extends Component<HintProps, HintState> {
 
   static positions = HintPositions;
 
-  // TODO: try to find a better type than 'any' for the ref?
-  // type ReactNativeElement = null | number | React.Component<any, any> | React.ComponentClass<any>;
   private targetRef?: any;
   private hintRef?: any;
 
