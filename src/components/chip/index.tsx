@@ -194,7 +194,7 @@ const Chip = ({
           tintColor={dismissColor}
           style={[dismissIconStyle]}
           accessibilityLabel="dismiss"
-          testID={`${testID}.dismiss`}
+          testID={`${testID}.dismissIcon`}
         />
       </TouchableOpacity>
     );
