@@ -24,10 +24,6 @@ const DEFAULT_COLOR = Colors.primary;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 
-const HINT_POSITIONS = {
-  TOP: 'top',
-  BOTTOM: 'bottom'
-};
 const TARGET_POSITIONS = {
   LEFT: 'left',
   RIGHT: 'right',
@@ -39,6 +35,11 @@ const TARGET_POSITIONS = {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
  * @notes: You can either wrap a component or pass a specific targetFrame
  */
+
+enum HintPositions {
+  TOP = 'top',
+  BOTTOM = 'bottom',
+}
 
 interface HintTargetFrame {
   x?: number;
@@ -93,7 +94,7 @@ export interface HintProps {
   /**
     * The hint's position
     */
-   position?: 'top' | 'bottom';
+   position?: HintPositions;
   /**
     * Provide custom target position instead of wrapping a child
     */
@@ -142,10 +143,10 @@ class Hint extends Component<HintProps, HintState> {
   static displayName = 'Hint';
 
   static defaultProps = {
-    position: HINT_POSITIONS.BOTTOM
+    position: HintPositions.BOTTOM
   };
 
-  static positions = HINT_POSITIONS;
+  static positions = HintPositions;
 
   // TODO: try to find a better type than 'any' for the ref?
   // type ReactNativeElement = null | number | React.Component<any, any> | React.ComponentClass<any>;
@@ -287,7 +288,7 @@ class Hint extends Component<HintProps, HintState> {
       hintPositionStyle.left = -this.targetLayout.x;
     }
 
-    if (position === HINT_POSITIONS.TOP) {
+    if (position === HintPositions.TOP) {
       hintPositionStyle.bottom = 0;
     } else if (this.targetLayout?.height) {
       hintPositionStyle.top = this.targetLayout.height;
@@ -318,7 +319,7 @@ class Hint extends Component<HintProps, HintState> {
 
   getHintAnimatedStyle = () => {
     const {position} = this.props;
-    const translateY = position === HINT_POSITIONS.TOP ? -10 : 10;
+    const translateY = position === HintPositions.TOP ? -10 : 10;
     return {
       opacity: this.visibleAnimated,
       transform: [{
@@ -331,7 +332,7 @@ class Hint extends Component<HintProps, HintState> {
     const {position} = getThemeProps(this.props, this.context);
     const tipPositionStyle: Position = {};
 
-    if (position === HINT_POSITIONS.TOP) {
+    if (position === HintPositions.TOP) {
       tipPositionStyle.bottom = this.hintOffset - this.tipSize.height;
     } else {
       tipPositionStyle.top = this.hintOffset - this.tipSize.height;
@@ -393,7 +394,7 @@ class Hint extends Component<HintProps, HintState> {
   renderHintTip() {
     const {position, color} = getThemeProps(this.props, this.context);
     const source = this.useSideTip ? sideTip : middleTip;
-    const flipVertically = position === HINT_POSITIONS.TOP;
+    const flipVertically = position === HintPositions.TOP;
     const flipHorizontally = this.getTargetPositionOnScreen() === TARGET_POSITIONS.RIGHT;
     const flipStyle = {
       transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
