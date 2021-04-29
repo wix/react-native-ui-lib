@@ -198,7 +198,7 @@ class Card extends PureComponent<PropTypes, State> {
     const {enableBlur, backgroundColor = Colors.white} = this.props;
 
     if (Constants.isIOS && enableBlur) {
-      return {backgroundColor: Colors.rgba(Colors.white, 0.85)};
+      return {backgroundColor: Colors.rgba(backgroundColor, 0.85)};
     } else {
       return {backgroundColor};
     }
