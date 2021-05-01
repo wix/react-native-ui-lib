@@ -24,7 +24,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         disabled?: string | undefined;
     } | undefined;
     allowFontScaling?: boolean | undefined;
-    autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
+    autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
     blurOnSubmit?: boolean | undefined;
@@ -125,9 +125,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
-    textContentType?: "none" | "name" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "username" | "password" | "newPassword" | "oneTimeCode" | undefined;
+    textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
     scrollEnabled?: boolean | undefined;
-    autoCompleteType?: "name" | "email" | "username" | "password" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
+    autoCompleteType?: "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -138,7 +138,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     underlineColorAndroid?: string | typeof import("react-native").OpaqueColorValue | undefined;
     textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     showSoftInputOnFocus?: boolean | undefined;
-    ref?: ((instance: import("react-native").TextInput | null) => void) | import("react").RefObject<import("react-native").TextInput> | null | undefined;
+    ref?: import("react").RefObject<import("react-native").TextInput> | ((instance: import("react-native").TextInput | null) => void) | null | undefined;
     key?: string | number | null | undefined;
     label?: string | undefined;
     labelColor?: string | {
@@ -200,7 +200,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
-    validate?: "number" | Function | "required" | "email" | "url" | "price" | import("./types").Validator[] | undefined;
+    validate?: "number" | Function | "email" | "required" | "url" | "price" | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
@@ -403,7 +403,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         disabled?: string | undefined;
     } | undefined;
     allowFontScaling?: boolean | undefined;
-    autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
+    autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
     blurOnSubmit?: boolean | undefined;
@@ -504,9 +504,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
-    textContentType?: "none" | "name" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "username" | "password" | "newPassword" | "oneTimeCode" | undefined;
+    textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
     scrollEnabled?: boolean | undefined;
-    autoCompleteType?: "name" | "email" | "username" | "password" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
+    autoCompleteType?: "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -517,7 +517,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     underlineColorAndroid?: string | typeof import("react-native").OpaqueColorValue | undefined;
     textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     showSoftInputOnFocus?: boolean | undefined;
-    ref?: ((instance: import("react-native").TextInput | null) => void) | import("react").RefObject<import("react-native").TextInput> | null | undefined;
+    ref?: import("react").RefObject<import("react-native").TextInput> | ((instance: import("react-native").TextInput | null) => void) | null | undefined;
     key?: string | number | null | undefined;
     label?: string | undefined;
     labelColor?: string | {
@@ -579,7 +579,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
-    validate?: "number" | Function | "required" | "email" | "url" | "price" | import("./types").Validator[] | undefined;
+    validate?: "number" | Function | "email" | "required" | "url" | "price" | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
@@ -782,7 +782,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         disabled?: string | undefined;
     } | undefined;
     allowFontScaling?: boolean | undefined;
-    autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
+    autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
     blurOnSubmit?: boolean | undefined;
@@ -995,9 +995,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
-    textContentType?: "none" | "name" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "username" | "password" | "newPassword" | "oneTimeCode" | undefined;
+    textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
     scrollEnabled?: boolean | undefined;
-    autoCompleteType?: "name" | "email" | "username" | "password" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
+    autoCompleteType?: "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -1008,7 +1008,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     underlineColorAndroid?: string | typeof import("react-native").OpaqueColorValue | undefined;
     textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     showSoftInputOnFocus?: boolean | undefined;
-    ref?: ((instance: import("react-native").TextInput | null) => void) | import("react").RefObject<import("react-native").TextInput> | null | undefined;
+    ref?: import("react").RefObject<import("react-native").TextInput> | ((instance: import("react-native").TextInput | null) => void) | null | undefined;
     key?: string | number | null | undefined;
     label?: string | undefined;
     labelColor: string | {
@@ -1078,7 +1078,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
-    validate?: "number" | Function | "required" | "email" | "url" | "price" | import("./types").Validator[] | undefined;
+    validate?: "number" | Function | "email" | "required" | "url" | "price" | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur: boolean;
