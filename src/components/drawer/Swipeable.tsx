@@ -16,7 +16,6 @@ import {HapticService, HapticType} from '../../services';
 
 const DRAG_TOSS = 0.05;
 const LEFT_TOGGLE_THRESHOLD = 0.6;
-const HAPTIC_METHOD = HapticType.impactMedium;
 
 // Math.sign polyfill for iOS 8.x
 if (!Math.sign) {
@@ -115,7 +114,7 @@ export default class Swipeable extends Component<Props, StateType> {
   }
 
   _triggerHaptic = () => {
-    return !this.props.disableHaptic && HapticService.triggerHaptic(HAPTIC_METHOD, 'Drawer');
+    return !this.props.disableHaptic && HapticService.triggerHaptic(HapticType.impactMedium, 'Drawer');
   }
   
   _handleDrag = (e) => {
@@ -257,7 +256,7 @@ export default class Swipeable extends Component<Props, StateType> {
       rightThreshold = rightWidth / 2,
       fullLeftThreshold,
       fullRightThreshold,
-      onToggleSwipeLeft,
+      onToggleSwipeLeft
     } = this.props;
     const startOffsetX = this._currentOffset() + dragX / friction;
     const translationX = (dragX + DRAG_TOSS * velocityX) / friction;
