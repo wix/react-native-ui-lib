@@ -15,9 +15,9 @@ export enum HapticType {
   notificationError = 'notificationError'
 }
 
-function triggerHaptic(hapticMethod: HapticType, componentName: string) {
+function triggerHaptic(hapticType: HapticType, componentName: string) {
   if (HapticFeedbackPackage) {
-    HapticFeedbackPackage.trigger(hapticMethod, options);
+    HapticFeedbackPackage.trigger(hapticType, options);
   } else {
     console.error(`RNUILib ${componentName}'s requires installing "react-native-haptic-feedback" dependency`);
   }
