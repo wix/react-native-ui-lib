@@ -13,6 +13,7 @@ interface InternalProps extends ItemProps {
     style?: TextStyle;
     onSelect: (index: number) => void;
     testID?: string;
+    centerH?: boolean;
 }
-declare const _default: ({ index, label, itemHeight, onSelect, offset, activeColor, inactiveColor, style, testID }: InternalProps) => JSX.Element;
+declare const _default: ({ index, label, itemHeight, onSelect, offset, activeColor, inactiveColor, style, testID, centerH }: InternalProps) => JSX.Element;
 export default _default;

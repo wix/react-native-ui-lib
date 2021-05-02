@@ -57,26 +57,14 @@ const SectionsWheelPickerScreen = () => {
     setSelectedMinutes(0);
   };
 
-  const getLabel = (label: string) => {
-    switch (label) {
-      case 'days':
-        return selectedDays === 1 ? 'Day' : 'Days';
-      case 'hours':
-        return selectedHours === 1 ? 'Hr' : 'Hrs';
-      case 'minutes':
-      default:
-        return selectedMinutes === 1 ? 'Min' : 'Mins';
-    }
-  };
-
   const sections: Incubator.WheelPickerProps[] = [
-    {items: getItems(days), onChange: onDaysChange, selectedValue: selectedDays, label: getLabel('days')},
-    {items: getItems(hours), onChange: onHoursChange, selectedValue: selectedHours, label: getLabel('hours')},
+    {items: getItems(days), onChange: onDaysChange, selectedValue: selectedDays, label: 'Days'},
+    {items: getItems(hours), onChange: onHoursChange, selectedValue: selectedHours, label: 'Hrs'},
     {
       items: getItems(minutes),
       onChange: onMinutesChange,
       selectedValue: selectedMinutes,
-      label: getLabel('minutes')
+      label: 'Mins'
     }
   ];
 

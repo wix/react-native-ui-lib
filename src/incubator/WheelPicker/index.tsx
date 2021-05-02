@@ -71,129 +71,126 @@ export interface WheelPickerProps {
   testID?: string;
 }
 
-const WheelPicker = React.memo(
-  ({
-    items: propItems,
-    itemHeight = 44,
-    numberOfVisibleRows = 5,
-    activeTextColor = Colors.primary,
-    inactiveTextColor,
-    textStyle,
-    label,
-    labelStyle,
-    labelProps,
-    onChange,
-    style,
-    children,
+const WheelPicker = React.memo(({
+  items: propItems,
+  itemHeight = 44,
+  numberOfVisibleRows = 5,
+  activeTextColor = Colors.primary,
+  inactiveTextColor,
+  textStyle,
+  label,
+  labelStyle,
+  labelProps,
+  onChange,
+  style,
+  children,
+  selectedValue,
+  testID
+}: WheelPickerProps) => {
+  const scrollView = useRef<Animated.ScrollView>();
+  const [offset] = useValues([0], []);
+  const onScroll = onScrollEvent({y: offset});
+
+  const {height, items, shouldControlComponent, index: currentIndex, getRowItemAtOffset} = usePresenter({
     selectedValue,
-    testID
-  }: WheelPickerProps) => {
-    const scrollView = useRef<Animated.ScrollView>();
-    const [offset] = useValues([0], []);
-    const onScroll = onScrollEvent({y: offset});
+    items: propItems,
+    children,
+    itemHeight,
+    preferredNumVisibleRows: numberOfVisibleRows
+  });
 
-    const {height, items, shouldControlComponent, index: currentIndex, getRowItemAtOffset} = usePresenter({
-      selectedValue,
-      items: propItems,
-      children,
-      itemHeight,
-      preferredNumVisibleRows: numberOfVisibleRows
-    });
+  const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
 
-    const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
+  useEffect(() => {
+    controlComponent();
+  });
 
-    useEffect(() => {
-      controlComponent();
-    });
-
-    /**
+  /**
      * The picker is a controlled component. This means we expect the
      * to relay on `selectedValue` prop to be our
      * source of truth - not the picker current value.
      * This way, you can control disallow or mutate selection of some values.
      */
-    const controlComponent = () => {
-      if (shouldControlComponent(scrollOffset)) {
-        scrollToIndex(currentIndex, true);
-      }
-    };
+  const controlComponent = () => {
+    if (shouldControlComponent(scrollOffset)) {
+      scrollToIndex(currentIndex, true);
+    }
+  };
 
-    const scrollToPassedIndex = () => {
-      scrollToIndex(currentIndex, false);
-    };
+  const scrollToPassedIndex = () => {
+    scrollToIndex(currentIndex, false);
+  };
 
-    const scrollToIndex = (index: number, animated: boolean) => {
-      if (scrollView.current?.getNode()) {
+  const scrollToIndex = (index: number, animated: boolean) => {
+    if (scrollView.current?.getNode()) {
         //@ts-ignore for some reason scrollToOffset isn't recognized
         scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
-      }
-    };
+    }
+  };
 
-    const selectItem = useCallback(
-      index => {
-        scrollToIndex(index, true);
-      },
-      [itemHeight]
-    );
+  const selectItem = useCallback(index => {
+    scrollToIndex(index, true);
+  },
+  [itemHeight]);
 
-    const onValueChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      setScrollOffset(event.nativeEvent.contentOffset.y);
+  const onValueChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    setScrollOffset(event.nativeEvent.contentOffset.y);
 
-      const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
+    const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
       onChange?.(value, index);
-    };
+  };
 
-    const renderItem = useCallback(
-      ({item, index}) => {
-        return (
-          <Item
-            index={index}
-            itemHeight={itemHeight}
-            offset={offset}
-            activeColor={activeTextColor}
-            inactiveColor={inactiveTextColor}
-            style={textStyle}
-            {...item}
-            onSelect={selectItem}
-            testID={`${testID}.${index}`}
-          />
-        );
-      },
-      [itemHeight]
+  const renderItem = useCallback(({item, index}) => {
+    return (
+      <Item
+        index={index}
+        itemHeight={itemHeight}
+        offset={offset}
+        activeColor={activeTextColor}
+        inactiveColor={inactiveTextColor}
+        style={textStyle}
+        {...item}
+        centerH={!label}
+        onSelect={selectItem}
+        testID={`${testID}.${index}`}
+      />
     );
+  },
+  [itemHeight]);
 
-    const renderSeparatorsAndLabel = () => {
-      return (
-        <View absF centerV pointerEvents="none">
-          <View
-            style={{
-              borderTopWidth: 1,
-              borderBottomWidth: 1,
-              height: Spacings.s9,
-              borderColor: Colors.grey60
-            }}
-            center
-          >
-            {renderLabel()}
-          </View>
-        </View>
-      );
-    };
+  const renderSeparators = () => {
+    return (
+      <View absF centerV pointerEvents="none">
+        <View
+          style={{
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
+            height: Spacings.s9,
+            borderColor: Colors.grey60
+          }}
+        />
+      </View>
+    );
+  };
 
-    const renderLabel = () => {
-      return (
-        <Text marginL-80 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+  const renderLabel = () => {
+    return (
+      <View centerV flexG>
+        <Text marginL-s2 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
           {label}
         </Text>
-      );
-    };
+      </View>
+    );
+  };
 
-    const fader = useMemo(() => (position: FaderPosition) => {
-      return <Fader visible position={position} size={60}/>;
-    }, []);
+  const fader = useMemo(() => (position: FaderPosition) => {
+    return <Fader visible position={position} size={60}/>;
+  },
+  []);
 
-    return (
-      <View testID={testID} bg-white style={style}>
+  return (
+    <View testID={testID} bg-white style={style}>
+      <View row marginH-s5 centerH>
         <AnimatedFlatList
           height={height}
           data={items}
@@ -213,12 +210,14 @@ const WheelPicker = React.memo(
           decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
           renderItem={renderItem}
         />
-        {fader(FaderPosition.BOTTOM)}
-        {fader(FaderPosition.TOP)}
-        {renderSeparatorsAndLabel()}
+        {label && renderLabel()}
       </View>
-    );
-  });
+      {fader(FaderPosition.BOTTOM)}
+      {fader(FaderPosition.TOP)}
+      {renderSeparators()}
+    </View>
+  );
+});
 
 const keyExtractor = (item: ItemProps) => `${item.value}`;
 

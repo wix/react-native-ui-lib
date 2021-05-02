@@ -3,11 +3,9 @@ import Animated, {interpolateColors} from 'react-native-reanimated';
 import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {TextStyle} from 'react-native';
-import {Colors} from '../../../src/style';
+import {Colors, Spacings} from '../../../src/style';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
-  TouchableOpacity
-);
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
@@ -24,6 +22,7 @@ interface InternalProps extends ItemProps {
   style?: TextStyle;
   onSelect: (index: number) => void;
   testID?: string;
+  centerH?: boolean;
 }
 
 export default ({
@@ -35,31 +34,30 @@ export default ({
   activeColor = Colors.primary,
   inactiveColor = Colors.grey20,
   style,
-  testID
+  testID,
+  centerH = true
 }: InternalProps) => {
-  
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
 
   const color = useMemo(() => {
     return interpolateColors(offset, {
-      inputRange: [
-        itemOffset - itemHeight,
-        itemOffset,
-        itemOffset + itemHeight
-      ],
+      inputRange: [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
       outputColorRange: [inactiveColor, activeColor, inactiveColor]
     });
   }, [itemHeight]);
-  
+
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
       style={{
-        height: itemHeight
+        height: itemHeight,
+        minWidth: Spacings.s10
       }}
       key={index}
-      center
+      centerV
+      centerH={centerH}
+      right={!centerH}
       onPress={selectItem}
       // @ts-ignore reanimated2
       index={index}

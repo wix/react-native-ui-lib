@@ -43,8 +43,6 @@ export type SectionsWheelPickerProps = {
 const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
   const {sections, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, testID} = props;
 
-  const defaultWidth = 100 / (sections?.length || 1) + '%';
-
   const wheelPickerProps = {
     itemHeight,
     numberOfVisibleRows,
@@ -56,7 +54,7 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
   const renderSections = () =>
     _.map(sections, (section, index) => {
       return (
-        <View height={1} width={section.style?.width || defaultWidth} key={index} testID={testID}>
+        <View height={1} width={section.style?.width} key={index} testID={testID}>
           <WheelPicker testID={`${testID}.${index}`} {...wheelPickerProps} {...section} style={{width: '100%'}}/>
         </View>
       );

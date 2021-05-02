@@ -124,7 +124,7 @@ export default () => {
           <Incubator.WheelPicker
             onChange={onDaysChange}
             selectedValue={selectedDays}
-            label={selectedDays === 1 ? 'Day' : 'Days'}
+            label={'Days'}
             items={getDays()}
           />
         </Dialog>
