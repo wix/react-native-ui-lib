@@ -11,7 +11,6 @@ import {Animated, StyleSheet, AccessibilityInfo, findNodeHandle, GestureResponde
 import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
-import {getThemeProps} from '../../commons/modifiers';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
@@ -217,7 +216,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get containerWidth() {
-    const {containerWidth} = getThemeProps(this.props, this.context);
+    const {containerWidth} = this.props;
     return containerWidth || Constants.screenWidth;
   }
 
@@ -240,13 +239,13 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get hintOffset() {
-    const {offset} = getThemeProps(this.props, this.context);
-    return (offset || DEFAULT_HINT_OFFSET) as number;
+    const {offset} = this.props;
+    return offset || DEFAULT_HINT_OFFSET;
   }
 
   get edgeMargins() {
-    const {edgeMargins} = getThemeProps(this.props, this.context);
-    return (edgeMargins || DEFAULT_EDGE_MARGINS) as number;
+    const {edgeMargins} = this.props;
+    return edgeMargins || DEFAULT_EDGE_MARGINS;
   }
 
   get useSideTip() {
@@ -326,7 +325,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   getTipPosition() {
-    const {position} = getThemeProps(this.props, this.context);
+    const {position} = this.props;
     const tipPositionStyle: Position = {};
 
     if (position === HintPositions.TOP) {
@@ -389,7 +388,7 @@ class Hint extends Component<HintProps, HintState> {
   // }
 
   renderHintTip() {
-    const {position, color} = getThemeProps(this.props, this.context);
+    const {position, color} = this.props;
     const source = this.useSideTip ? sideTip : middleTip;
     const flipVertically = position === HintPositions.TOP;
     const flipHorizontally = this.getTargetPositionOnScreen() === TARGET_POSITIONS.RIGHT;
@@ -407,7 +406,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderHint() {
-    const {message, messageStyle, icon, iconStyle, borderRadius, color, testID} = getThemeProps(this.props, this.context);
+    const {message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.props;
 
     if (this.showHint) {
       return (
