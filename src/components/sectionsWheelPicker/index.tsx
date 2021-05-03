@@ -54,8 +54,8 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
   const renderSections = () =>
     _.map(sections, (section, index) => {
       return (
-        <View height={1} width={section.style?.width} key={index} testID={testID}>
-          <WheelPicker testID={`${testID}.${index}`} {...wheelPickerProps} {...section} style={{width: '100%'}}/>
+        <View height={1} key={index} testID={testID}>
+          <WheelPicker testID={`${testID}.${index}`} {...wheelPickerProps} {...section}/>
         </View>
       );
     });

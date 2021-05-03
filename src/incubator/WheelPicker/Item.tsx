@@ -2,7 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 import Animated, {interpolateColors} from 'react-native-reanimated';
 import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
-import {TextStyle} from 'react-native';
+import {TextStyle, StyleSheet} from 'react-native';
 import {Colors, Spacings} from '../../../src/style';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
@@ -47,13 +47,14 @@ export default ({
     });
   }, [itemHeight]);
 
+  const containerStyle = useMemo(() => {
+    return [{height: itemHeight}, styles.container];
+  }, [itemHeight]);
+
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
-      style={{
-        height: itemHeight,
-        minWidth: Spacings.s10
-      }}
+      style={containerStyle}
       key={index}
       centerV
       centerH={centerH}
@@ -70,3 +71,9 @@ export default ({
     </AnimatedTouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    minWidth: Spacings.s10
+  }
+});

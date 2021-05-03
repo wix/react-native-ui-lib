@@ -1,6 +1,6 @@
 // TODO: Support style customization
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
-import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
 import {Colors, Spacings} from '../../../src/style';
@@ -161,14 +161,7 @@ const WheelPicker = React.memo(({
   const renderSeparators = () => {
     return (
       <View absF centerV pointerEvents="none">
-        <View
-          style={{
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
-            height: Spacings.s9,
-            borderColor: Colors.grey60
-          }}
-        />
+        <View style={styles.separators}/>
       </View>
     );
   };
@@ -188,6 +181,10 @@ const WheelPicker = React.memo(({
   },
   []);
 
+  const contentContainerStyle = useMemo(() => {
+    return {paddingVertical: height / 2 - itemHeight / 2};
+  }, [height, itemHeight]);
+
   return (
     <View testID={testID} bg-white style={style}>
       <View row marginH-s5 centerH>
@@ -203,9 +200,7 @@ const WheelPicker = React.memo(({
           onLayout={scrollToPassedIndex}
           // @ts-ignore
           ref={scrollView}
-          contentContainerStyle={{
-            paddingVertical: height / 2 - itemHeight / 2
-          }}
+          contentContainerStyle={contentContainerStyle}
           snapToInterval={itemHeight}
           decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
           renderItem={renderItem}
@@ -222,3 +217,12 @@ const WheelPicker = React.memo(({
 const keyExtractor = (item: ItemProps) => `${item.value}`;
 
 export default WheelPicker;
+
+const styles = StyleSheet.create({
+  separators: {
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    height: Spacings.s9,
+    borderColor: Colors.grey60
+  }
+});
