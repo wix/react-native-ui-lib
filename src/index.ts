@@ -24,19 +24,22 @@ export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avat
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
 export {default as Constants} from './helpers/Constants';
-export {default as HapticService} from './services/HapticService';
+export {default as HapticService, HapticType} from './services/HapticService';
 export {default as View, ViewPropTypes, ViewProps} from './components/view';
 export {default as Text, TextPropTypes, TextProps} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
 export {default as Button, ButtonPropTypes, ButtonProps, ButtonSize, ButtonAnimationDirection} from './components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
+export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
+export {default as ColorPalette, ColorPaletteProps} from './components/colorPicker/ColorPalette';
+export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker/ColorSwatch';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
-export {default as SegmentedControl, SegmentedControlProps} from './components/segmentedControl';
+export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/TabBar';
@@ -69,5 +72,5 @@ export {
   PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
   TagsInput, SharedTransition, StackAggregator, Toast, WheelPickerDialog, Assets,
   BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
-  LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
+  LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
 } from '../typings';

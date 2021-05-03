@@ -214,9 +214,31 @@ module.exports = {
       }
     }
 
+    // Test for forbidden inherited functions (no source)
+    function testClassBody(node) {
+      if (node && node.body) {
+        _.forEach(node.body, item => {
+          const type = _.get(item, 'type');
+          if (type === 'ClassProperty' || type === 'MethodDefinition') {
+            const deprecation = _.find(deprecations,
+              (deprecation) => !deprecation.source && deprecation.function === _.get(item, 'key.name')
+            )
+
+            if (deprecation) {
+              reportDeprecatedFunction(node, {
+                name: deprecation.function,
+                message: deprecation.message
+              });
+            }
+          }
+        });
+      }
+    }
+
     return {
       ImportDeclaration: (node) => searchForPossibleDeprecation(node),
       CallExpression: (node) => relevantDeprecationsData.length > 0 && testCallExpression(node),
+      ClassBody: (node) => testClassBody(node),
     };
   },
 };

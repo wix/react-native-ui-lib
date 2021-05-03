@@ -4,6 +4,14 @@ import {StyleSheet, ScrollView} from 'react-native';
 import {Colors, View, Text, ColorPicker, ColorPalette, ColorName} from 'react-native-ui-lib';
 
 
+interface Props {}
+interface State {
+  color: string,
+  textColor: string,
+  customColors: string[],
+  paletteChange: boolean
+}
+
 const INITIAL_COLOR = Colors.blue30;
 const colors = [
   '#20303C', '#43515C', '#66737C', '#858F96', '#A3ABB0', '#C2C7CB', '#E0E3E5', '#F2F4F5',
@@ -17,34 +25,30 @@ const colors = [
 ];
 
 
-export default class ColorPickerScreen extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      color: INITIAL_COLOR,
-      textColor: Colors.white,
-      customColors: [],
-      paletteChange: false
-    };
-  }
+export default class ColorPickerScreen extends Component<Props, State> {
+  state: State = {
+    color: INITIAL_COLOR,
+    textColor: Colors.white,
+    customColors: [],
+    paletteChange: false
+  };
 
   onDismiss = () => {
     console.log(`screen onDismiss`);
   }
 
-  onSubmit = (color, textColor) => {
+  onSubmit = (color: string, textColor: string) => {
     const {customColors} = this.state;
     customColors.push(color);
     this.setState({color, textColor, customColors: _.clone(customColors), paletteChange: false});
   }
 
-  onValueChange = (value, options) => {
-    this.setState({color: value, textColor: options ? options.tintColor : undefined, paletteChange: false});
+  onValueChange = (value: string, options: object) => {
+    this.setState({color: value, textColor: options ? _.get(options, 'tintColor') : undefined, paletteChange: false});
   }
 
-  onPaletteValueChange = (value, options) => {
-    this.setState({color: value, textColor: options ? options.tintColor : undefined, paletteChange: true});
+  onPaletteValueChange = (value: string, options: object) => {
+    this.setState({color: value, textColor: options ? _.get(options, 'tintColor') : undefined, paletteChange: true});
   }
 
   render() {
@@ -74,7 +78,7 @@ export default class ColorPickerScreen extends Component {
             Theme Color
           </Text>
           <Text marginL-20>Choose a color for your place’s theme.</Text>
-          <ColorPalette value={paletteValue} onValueChange={this.onPaletteValueChange} colors={colors} />
+          <ColorPalette value={paletteValue} onValueChange={this.onPaletteValueChange} colors={colors}/>
           <Text marginL-20 marginT-16>
             Custom Colors
           </Text>

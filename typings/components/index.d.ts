@@ -1,6 +1,5 @@
 export * from './ActionSheet';
 export * from './ChipsInput';
-export * from './ColorPicker';
 export * from './ConnectionStatusBar';
 export * from './FeatureHighlight';
 export * from './Hint';

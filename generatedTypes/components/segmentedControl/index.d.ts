@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { SegmentItemProps } from './segment';
+import { SegmentedControlItemProps as SegmentProps } from './segment';
+export declare type SegmentedControlItemProps = SegmentProps;
 export declare type SegmentedControlProps = {
     /**
      * Array on segments.
      */
-    segments?: SegmentItemProps[];
+    segments?: SegmentedControlItemProps[];
     /**
      * The color of the active segment label.
      */
