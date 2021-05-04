@@ -1,8 +1,8 @@
 import React, {useCallback, useMemo} from 'react';
+import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColors} from 'react-native-reanimated';
 import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
-import {TextStyle, StyleSheet} from 'react-native';
 import {Colors, Spacings} from '../../../src/style';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
