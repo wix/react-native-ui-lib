@@ -1,6 +1,6 @@
 // TODO: Add support to custom hint rendering
 import _ from 'lodash';
-import React, {Component, ReactElement, isValidElement} from 'react';
+import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -12,7 +12,8 @@ import {
   StyleProp,
   TextStyle,
   ViewStyle,
-  LayoutChangeEvent
+  LayoutChangeEvent,
+  View as ViewRN
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
@@ -151,8 +152,8 @@ class Hint extends Component<HintProps, HintState> {
 
   static positions = HintPositions;
 
-  private targetRef?: any;
-  private hintRef?: any;
+  targetRef: ElementRef<typeof ViewRN> | null = null;
+  hintRef: ElementRef<typeof ViewRN> | null = null;
 
   state = {
     targetLayoutInWindow: undefined,
@@ -173,23 +174,21 @@ class Hint extends Component<HintProps, HintState> {
 
   focusAccessibilityOnHint = () => {
     const {message} = this.props;
-    if (this.targetRef && this.hintRef) {
-      const targetRefTag = findNodeHandle(this.targetRef);
-      const hintRefTag = findNodeHandle(this.hintRef);
-      if (targetRefTag && _.isString(message)) {
-        AccessibilityInfo.setAccessibilityFocus(targetRefTag);
-      } else if (hintRefTag) {
-        AccessibilityInfo.setAccessibilityFocus(hintRefTag);
-      }
+    const targetRefTag = findNodeHandle(this.targetRef);
+    const hintRefTag = findNodeHandle(this.hintRef);
+    if (targetRefTag && _.isString(message)) {
+      AccessibilityInfo.setAccessibilityFocus(targetRefTag);
+    } else if (hintRefTag) {
+      AccessibilityInfo.setAccessibilityFocus(hintRefTag);
     }
   };
 
-  setTargetRef = (ref: any) => {
+  setTargetRef = (ref: ElementRef<typeof ViewRN>) => {
     this.targetRef = ref;
     this.focusAccessibilityOnHint();
   };
 
-  setHintRef = (ref: any) => {
+  setHintRef = (ref: ElementRef<typeof ViewRN>) => {
     this.hintRef = ref;
     this.focusAccessibilityOnHint();
   };
@@ -201,7 +200,7 @@ class Hint extends Component<HintProps, HintState> {
 
     if (!this.state.targetLayoutInWindow) {
       setTimeout(() => {
-        this.targetRef.measureInWindow((x: number, y: number, width: number, height: number) => {
+        this.targetRef?.measureInWindow((x: number, y: number, width: number, height: number) => {
           const targetLayoutInWindow = {x, y, width, height};
           this.setState({targetLayoutInWindow});
         });
