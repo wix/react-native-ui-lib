@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
-import { GestureResponderEvent, ImageSourcePropType, ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
-/**
- * @description: Hint component for displaying a tooltip over wrapped component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
- * @notes: You can either wrap a component or pass a specific targetFrame
- */
+import React, { Component, ReactElement, ElementRef } from 'react';
+import { Animated, GestureResponderEvent, ImageSourcePropType, ImageStyle, StyleProp, TextStyle, ViewStyle, LayoutChangeEvent, View as ViewRN } from 'react-native';
+declare enum TARGET_POSITIONS {
+    LEFT = "left",
+    RIGHT = "right",
+    CENTER = "center"
+}
 declare enum HintPositions {
     TOP = "top",
     BOTTOM = "bottom"
@@ -14,6 +14,21 @@ interface HintTargetFrame {
     y?: number;
     width?: number;
     height?: number;
+}
+interface Position {
+    top?: number;
+    bottom?: number;
+    left?: number;
+    right?: number;
+}
+interface HintPositionStyle extends Position {
+    alignItems?: string;
+}
+interface Paddings {
+    paddingLeft?: number;
+    paddingRight?: number;
+    paddingVertical?: number;
+    paddingHorizontal?: number;
 }
 export interface HintProps {
     /**
@@ -81,7 +96,68 @@ export interface HintProps {
      */
     style?: StyleProp<ViewStyle>;
 }
+interface HintState {
+    targetLayout?: HintTargetFrame;
+    targetLayoutInWindow?: HintTargetFrame;
+}
+/**
+ * @description: Hint component for displaying a tooltip over wrapped component
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+ * @notes: You can either wrap a component or pass a specific targetFrame
+ */
+declare class Hint extends Component<HintProps, HintState> {
+    static displayName: string;
+    static defaultProps: {
+        position: HintPositions;
+    };
+    static positions: typeof HintPositions;
+    targetRef: ElementRef<typeof ViewRN> | null;
+    hintRef: ElementRef<typeof ViewRN> | null;
+    state: {
+        targetLayoutInWindow: undefined;
+        targetLayout: HintTargetFrame | undefined;
+    };
+    visibleAnimated: Animated.Value;
+    componentDidUpdate(prevProps: HintProps): void;
+    focusAccessibilityOnHint: () => void;
+    setTargetRef: (ref: ElementRef<typeof ViewRN>) => void;
+    setHintRef: (ref: ElementRef<typeof ViewRN>) => void;
+    onTargetLayout: ({ nativeEvent: { layout } }: LayoutChangeEvent) => void;
+    getAccessibilityInfo(): {
+        accessible: boolean;
+        accessibilityLabel: string;
+    } | undefined;
+    get containerWidth(): number;
+    get targetLayout(): HintTargetFrame | undefined;
+    get showHint(): boolean;
+    get tipSize(): {
+        width: number;
+        height: number;
+    };
+    get hintOffset(): number;
+    get edgeMargins(): number;
+    get useSideTip(): boolean;
+    getTargetPositionOnScreen(): TARGET_POSITIONS;
+    getContainerPosition(): {
+        top: number | undefined;
+        left: number | undefined;
+    } | undefined;
+    getHintPosition(): HintPositionStyle;
+    getHintPadding(): Paddings;
+    getHintAnimatedStyle: () => {
+        opacity: Animated.Value;
+        transform: {
+            translateY: Animated.AnimatedInterpolation;
+        }[];
+    };
+    getTipPosition(): Position;
+    renderHintTip(): JSX.Element;
+    renderHint(): JSX.Element | undefined;
+    renderHintContainer(): JSX.Element;
+    renderChildren(): React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    render(): {} | null | undefined;
+}
 declare const _default: React.ComponentClass<HintProps & {
     useCustomTheme?: boolean | undefined;
-}, any>;
+}, any> & typeof Hint;
 export default _default;
