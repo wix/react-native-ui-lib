@@ -1,15 +1,42 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
+import React, {PureComponent} from 'react';
+import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
+import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
-import {PureBaseComponent} from '../../commons';
 import {Colors} from '../../style';
 import {Constants} from '../../helpers';
 
+
+interface Props {
+  /**
+   * The identifier value of the ColorSwatch in a ColorSwatch palette.
+   * Must be different than other ColorSwatches in the same group
+   */
+  value?: string;
+  /**
+   * The color of the ColorSwatch
+   */
+  color?: string;
+  /**
+   * Is the initial state is selected
+   */
+  selected?: boolean;
+  /**
+   * Is first render should be animated
+   */
+  animated?: boolean;
+  /**
+   * onPress callback
+   */
+  onPress?: (value: string, options: object) => void;
+  index?: number;
+  style?: StyleProp<ViewStyle>;
+  testID?: string;
+}
+export type ColorSwatchProps = Props;
 
 const transparentImage = require('./assets/transparentSwatch/TransparentSwatch.png');
 const DEFAULT_SIZE = Constants.isTablet ? 44 : 36;
@@ -22,70 +49,41 @@ export const SWATCH_SIZE = DEFAULT_SIZE;
  * @extends: Animated.View
  * @extendsLink: https://facebook.github.io/react-native/docs/animated
  */
-export default class ColorSwatch extends PureBaseComponent {
+class ColorSwatch extends PureComponent<Props> {
   static displayName = 'ColorSwatch';
-  
-  static propTypes = {
-    /**
-     * The identifier value of the ColorSwatch in a ColorSwatch palette. 
-     * Must be different than other ColorSwatches in the same group
-     */
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    /**
-     * The color of the ColorSwatch
-     */
-    color: PropTypes.string,
-    /**
-     * Is the initial state is selected
-     */
-    selected: PropTypes.bool,
-    /**
-     * Is first render should be animated
-     */
-    animated: PropTypes.bool,
-    /**
-     * onPress callback
-     */
-    onPress: PropTypes.func
+
+  state = {
+    isSelected: new Animated.Value(0),
+    animatedOpacity: new Animated.Value(0.3),
+    animatedScale: new Animated.Value(0.5)
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isSelected: new Animated.Value(0),
-      animatedOpacity: new Animated.Value(0.3),
-      animatedScale: new Animated.Value(0.5)
-    };
-  }
+  styles = createStyles(this.props);
+  layout = {x: 0, y: 0};
 
   componentDidMount() {
     this.animateCheckmark(this.props.selected);
     this.animateSwatch(1);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.selected !== this.props.selected) {
       this.animateCheckmark(this.props.selected);
     }
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
-  animateSwatch(newValue) {
+  animateSwatch(newValue: number) {
     const {animatedOpacity, animatedScale} = this.state;
 
     Animated.parallel([
       Animated.timing(animatedOpacity, {
         duration: 250,
-        toValue: Number(newValue),
+        toValue: newValue,
         useNativeDriver: true
       }),
       Animated.spring(animatedScale, {
-        toValue: Number(newValue),
-        easing: Easing.bezier(0, 0, 0.58, 1), // => easeOut
+        toValue: newValue,
+        // easing: Easing.bezier(0, 0, 0.58, 1), // => easeOut
         bounciness: 18,
         speed: 12,
         delay: 170,
@@ -94,7 +92,7 @@ export default class ColorSwatch extends PureBaseComponent {
     ]).start();
   }
 
-  animateCheckmark(newValue) {
+  animateCheckmark(newValue = false) {
     const {isSelected} = this.state;
 
     Animated.timing(isSelected, {
@@ -112,25 +110,36 @@ export default class ColorSwatch extends PureBaseComponent {
     _.invoke(this.props, 'onPress', value || color, {tintColor, index});
   };
 
-  getTintColor(color) {
-    if (Colors.isTransparent(color)) {
-      return Colors.black;
+  getTintColor(color?: string) {
+    if (color) {
+      if (Colors.isTransparent(color)) {
+        return Colors.black;
+      }
+      return Colors.isDark(color) ? Colors.white : Colors.black;
     }
-    return Colors.isDark(color) ? Colors.white : Colors.black;
+  }
+
+  getAccessibilityInfo() {
+    const {color} = this.props;
+
+    return {
+      accessibilityLabel: color && Colors.getColorName(color),
+      accessibilityStates: this.props.selected ? ['selected'] : []
+    };
   }
 
   getLayout() {
     return this.layout;
   }
 
-  onLayout = event => {
+  onLayout = (event: LayoutChangeEvent) => {
     this.layout = event.nativeEvent.layout;
   };
 
   renderContent() {
-    const {style, color, onPress, onValueChange, ...others} = this.getThemeProps();
+    const {style, color, onPress, ...others} = this.props;
     const {isSelected} = this.state;
-    const Container = onPress || onValueChange ? TouchableOpacity : View;
+    const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
 
     return (
@@ -143,8 +152,7 @@ export default class ColorSwatch extends PureBaseComponent {
         onPress={this.onPress}
         style={[this.styles.container, style]}
         onLayout={this.onLayout}
-        accessibilityLabel={Colors.getColorName(color)}
-        accessibilityStates={this.props.selected ? ['selected'] : []}
+        {...this.getAccessibilityInfo()}
       >
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
@@ -162,7 +170,7 @@ export default class ColorSwatch extends PureBaseComponent {
   }
 
   renderSwatch = () => {
-    const {animated} = this.getThemeProps();
+    const {animated} = this.props;
     const {animatedOpacity, animatedScale} = this.state;
 
     if (animated) {
@@ -184,6 +192,9 @@ export default class ColorSwatch extends PureBaseComponent {
     return this.renderSwatch();
   }
 }
+
+export default asBaseComponent<Props>(ColorSwatch);
+
 
 function createStyles({color = Colors.dark30}) {
   return StyleSheet.create({
