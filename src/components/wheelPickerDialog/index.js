@@ -7,29 +7,62 @@ import View from '../view';
 import Text from '../text';
 import {WheelPicker} from '../../nativeComponents';
 
+
 export default class WheelPickerDialog extends Component {
   static displayName = 'IGNORE';
 
-  constructor(props) {
-    super(props);
-
-    this.onValueChange = this.onValueChange.bind(this);
-    this.onSelect = this.onSelect.bind(this);
+  static propTypes = {
+    /**
+     * Array of items as objects {value, label}
+     */
+    items: PropTypes.array,
+    /**
+     * The selected value
+     */
+    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    /**
+     * The component's title
+     */
+    title: PropTypes.string,
+    /**
+     * Pass props for the WheelPicker (Android only)
+     */
+    wheelPickerProps: PropTypes.shape(WheelPicker.propTypes),
+    /**
+    * select label style
+    */
+    selectLabelStyle: RNText.propTypes.style,
+    /**
+    * cancel label style
+    */
+    cancelLabelStyle: RNText.propTypes.style,
+    /**
+     * onCancel callback invoked when 'Cancel' button is pressed
+     */
+    onCancel: PropTypes.func,
+    /**
+     * onSelect callback invoked when 'Ok' button is pressed
+     */
+    onSelect: PropTypes.func,
+    /**
+     * onValueChange callback invoked when the value in the wheel changes
+     */
+    onValueChange: PropTypes.func
   }
 
   state = {
-    initalSelectedValue: this.props.selectedValue,
+    initialSelectedValue: this.props.selectedValue,
     currentValue: false
   };
 
-  onValueChange(value, index) {
+  onValueChange = (value, index) => {
     if (this.props.onValueChange) {
       this.props.onValueChange(value, index);
     }
     this.setState({currentValue: value});
   }
 
-  onSelect() {
+  onSelect = () => {
     if (this.props.onSelect) {
       this.props.onSelect(this.state.currentValue);
     }
@@ -43,7 +76,7 @@ export default class WheelPickerDialog extends Component {
 
         <WheelPicker
           onValueChange={this.onValueChange}
-          selectedValue={this.state.currentValue || this.state.initalSelectedValue}
+          selectedValue={this.state.currentValue || this.state.initialSelectedValue}
           style={styles.picker}
           {...wheelPickerProps}
         >
@@ -51,6 +84,7 @@ export default class WheelPickerDialog extends Component {
             return <WheelPicker.Item key={String(idx) + String(item.value)} value={item.value} label={item.label}/>;
           })}
         </WheelPicker>
+
         <View style={styles.bottomButtonsContainer}>
           <TouchableOpacity onPress={onCancel}>
             <Text style={[styles.cancelButton, cancelLabelStyle]} text80-medium>
@@ -68,32 +102,12 @@ export default class WheelPickerDialog extends Component {
   }
 }
 
-WheelPickerDialog.propTypes = {
-  /**
-   * Pass props for the WheelPicker (Android only)
-   */
-  wheelPickerProps: PropTypes.shape(WheelPicker.propTypes),
-  /**
-   * select label style
-   */
-  selectLabelStyle: RNText.propTypes.style,
-  /**
-   * cancel label style
-   */
-  cancelLabelStyle: RNText.propTypes.style,
-  items: PropTypes.array,
-  selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  title: PropTypes.string,
-  onCancel: PropTypes.func,
-  onSelect: PropTypes.func,
-  onValueChange: PropTypes.func
-};
-
 const styles = StyleSheet.create({
   container: {
     height: 295,
     width: 280,
     flex: 0,
+    alignSelf: 'center',
     justifyContent: 'center'
   },
   title: {

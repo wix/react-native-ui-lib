@@ -38,11 +38,18 @@ function _getSourceForComponent(component, imports) {
   }
 }
 
-function _addToImports_fromSpreading(midSource, newImports, imports) {
+function _addToImports_fromSpreading(midSource, newImports, imports, parents) {
   if (midSource) {
     const source = _getSourceForComponent(midSource, imports);
     if (source) {
       _addToImports_aggregate(imports, source, newImports);
+      if (parents) {
+        _.forEach(Object.keys(newImports), currentImport => {
+          if (!parents.includes(currentImport)) {
+            parents.push({[currentImport]: midSource});
+          }
+        });
+      }
     }
   }
 }
@@ -50,13 +57,15 @@ function _addToImports_fromSpreading(midSource, newImports, imports) {
 function _getImportsFromProperties(node) {
   const newImports = {};
   _.map(node.id.properties, property => {
-    newImports[property.value.name] = property.key.name;
+    if (property.type === 'Property') {
+      newImports[property.value.name] = property.key.name;
+    }
   });
 
   return newImports;
 }
 
-function _addToImports_fromDeclaration(node, imports) {
+function _addToImports_fromDeclaration(node, imports, parents) {
   let newImports, source, midSource;
   if (_.get(node, 'init.type') === 'CallExpression' && _.get(node, 'init.callee.name') === 'require') {
     source = node.init.arguments[0].value;
@@ -81,19 +90,19 @@ function _addToImports_fromDeclaration(node, imports) {
   }
 
   _addToImports_aggregate(imports, source, newImports);
-  _addToImports_fromSpreading(midSource, newImports, imports);
+  _addToImports_fromSpreading(midSource, newImports, imports, parents);
 }
 
 /**
  * Aggregate all components, from 'import', 'require' or 'spreading' of other components\imports
  * to a single object.
  */
-function addToImports(node, imports) {
+function addToImports(node, imports, parents) {
   if (!node) return;
   if (node.type === 'ImportDeclaration') {
     _addToImports_fromImport(node, imports); // import
   } else if (node.type === 'VariableDeclarator') {
-    _addToImports_fromDeclaration(node, imports); // require + spreading of sub-components etc
+    _addToImports_fromDeclaration(node, imports, parents); // require + spreading of sub-components etc
   } else {
     console.log('Debug', 'addToImports', 'unknown type:', node.type);
   }

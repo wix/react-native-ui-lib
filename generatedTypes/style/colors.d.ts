@@ -45,8 +45,8 @@ export declare class Colors {
     isDark(color: string): boolean;
     isValidHex(string: string): boolean;
     getHexString(color: string): string;
-    getHSL(color: string): tinycolor.ColorFormats.HSLA;
-    isTransparent(color: string): boolean;
+    getHSL(color?: string): tinycolor.ColorFormats.HSLA;
+    isTransparent(color?: string): boolean | "" | undefined;
     areEqual(colorA: string, colorB: string): boolean;
 }
 declare const colorObject: Colors & {
