@@ -24,7 +24,7 @@ export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avat
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
 export {default as Constants} from './helpers/Constants';
-export {default as HapticService} from './services/HapticService';
+export {default as HapticService, HapticType} from './services/HapticService';
 export {default as View, ViewPropTypes, ViewProps} from './components/view';
 export {default as Text, TextPropTypes, TextProps} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
