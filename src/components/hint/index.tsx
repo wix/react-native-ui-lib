@@ -1,13 +1,19 @@
 // TODO: Add support to custom hint rendering
 import _ from 'lodash';
-import React, {Component, ReactElement} from 'react';
-import {Animated, StyleSheet, AccessibilityInfo, findNodeHandle, GestureResponderEvent,
+import React, {Component, ReactElement, isValidElement} from 'react';
+import {
+  Animated,
+  StyleSheet,
+  AccessibilityInfo,
+  findNodeHandle,
+  GestureResponderEvent,
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
   TextStyle,
   ViewStyle,
-  LayoutChangeEvent} from 'react-native';
+  LayoutChangeEvent
+} from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
@@ -23,17 +29,11 @@ const DEFAULT_COLOR = Colors.primary;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 
-const TARGET_POSITIONS = {
-  LEFT: 'left',
-  RIGHT: 'right',
-  CENTER: 'center'
-};
-
-/**
- * @description: Hint component for displaying a tooltip over wrapped component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
- * @notes: You can either wrap a component or pass a specific targetFrame
- */
+enum TARGET_POSITIONS {
+  LEFT = 'left',
+  RIGHT = 'right',
+  CENTER = 'center'
+}
 
 enum HintPositions {
   TOP = 'top',
@@ -137,6 +137,11 @@ interface HintState {
   targetLayoutInWindow?: HintTargetFrame;
 }
 
+/**
+ * @description: Hint component for displaying a tooltip over wrapped component
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+ * @notes: You can either wrap a component or pass a specific targetFrame
+ */
 class Hint extends Component<HintProps, HintState> {
   static displayName = 'Hint';
 
@@ -450,7 +455,7 @@ class Hint extends Component<HintProps, HintState> {
   renderChildren() {
     const {targetFrame} = this.props;
 
-    if (!targetFrame && React.isValidElement(this.props.children)) {
+    if (!targetFrame && isValidElement(this.props.children)) {
       return React.cloneElement(this.props.children, {
         collapsable: false,
         onLayout: this.onTargetLayout,
@@ -528,4 +533,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent<HintProps>(Hint);
+export default asBaseComponent<HintProps, typeof Hint>(Hint);

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
-
-import Hint from '../../../../src/components/hint';
+import {View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 
 const settingsIcon = require('../../assets/icons/settings.png');
 
