@@ -197,6 +197,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     floatingPlaceholderStyle?: import("react-native").TextStyle | (false & import("react-native").TextStyle) | (number & {
         __registeredStyleBrand: import("react-native").TextStyle;
     } & import("react-native").TextStyle) | (import("react-native").RecursiveArray<false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | null | undefined> & import("react-native").TextStyle) | undefined;
+    floatOnFocus?: boolean | undefined;
     enableErrors?: boolean | undefined;
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
@@ -581,6 +582,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     floatingPlaceholderStyle?: import("react-native").TextStyle | (false & import("react-native").TextStyle) | (number & {
         __registeredStyleBrand: import("react-native").TextStyle;
     } & import("react-native").TextStyle) | (import("react-native").RecursiveArray<false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | null | undefined> & import("react-native").TextStyle) | undefined;
+    floatOnFocus?: boolean | undefined;
     enableErrors?: boolean | undefined;
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
@@ -1085,6 +1087,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     floatingPlaceholderStyle: import("react-native").TextStyle | {} | (false & import("react-native").TextStyle) | (number & {
         __registeredStyleBrand: import("react-native").TextStyle;
     } & import("react-native").TextStyle) | (import("react-native").RecursiveArray<false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | null | undefined> & import("react-native").TextStyle);
+    floatOnFocus?: boolean | undefined;
     enableErrors: boolean;
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;

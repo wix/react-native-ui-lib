@@ -118,6 +118,7 @@ const TextField = (props: InternalTextFieldProps) => {
     floatingPlaceholder,
     floatingPlaceholderColor,
     floatingPlaceholderStyle,
+    floatOnFocus,
     hint,
     // Label
     label,
@@ -176,6 +177,7 @@ const TextField = (props: InternalTextFieldProps) => {
                   placeholder={placeholder}
                   floatingPlaceholderStyle={[typographyStyle, floatingPlaceholderStyle]}
                   floatingPlaceholderColor={floatingPlaceholderColor}
+                  floatOnFocus={floatOnFocus}
                 />
               )}
               <Input

@@ -14,9 +14,13 @@ export interface FloatingPlaceholderProps {
      * Custom style to pass to the floating placeholder
      */
     floatingPlaceholderStyle?: StyleProp<TextStyle>;
+    /**
+     * Should placeholder float on focus or when start typing
+     */
+    floatOnFocus?: boolean;
 }
 declare const FloatingPlaceholder: {
-    ({ placeholder, floatingPlaceholderColor, floatingPlaceholderStyle }: FloatingPlaceholderProps): JSX.Element;
+    ({ placeholder, floatingPlaceholderColor, floatingPlaceholderStyle, floatOnFocus }: FloatingPlaceholderProps): JSX.Element;
     displayName: string;
 };
 export default FloatingPlaceholder;

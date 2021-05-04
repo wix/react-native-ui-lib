@@ -21,6 +21,10 @@ export interface FloatingPlaceholderProps {
    * Custom style to pass to the floating placeholder
    */
   floatingPlaceholderStyle?: StyleProp<TextStyle>;
+  /**
+   * Should placeholder float on focus or when start typing
+   */
+  floatOnFocus?: boolean;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
@@ -28,7 +32,8 @@ const FLOATING_PLACEHOLDER_SCALE = 0.875;
 const FloatingPlaceholder = ({
   placeholder,
   floatingPlaceholderColor = Colors.grey40,
-  floatingPlaceholderStyle
+  floatingPlaceholderStyle,
+  floatOnFocus
 }: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
@@ -54,12 +59,13 @@ const FloatingPlaceholder = ({
   }, [placeholderOffset]);
 
   useEffect(() => {
+    const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;
     Animated.timing(animation, {
-      toValue: Number(context.isFocused || context.hasValue),
+      toValue: Number(toValue),
       duration: 200,
       useNativeDriver: true
     }).start();
-  }, [context.isFocused, context.hasValue]);
+  }, [floatOnFocus, context.isFocused, context.hasValue]);
 
   const onPlaceholderLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
