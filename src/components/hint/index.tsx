@@ -41,6 +41,7 @@ enum HintPositions {
   BOTTOM = 'bottom',
 }
 
+// TODO: unify with FeatureHighlightFrame
 interface HintTargetFrame {
   x?: number;
   y?: number;
