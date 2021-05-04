@@ -11,8 +11,9 @@ const DEFAULT_INPUT_COLOR: ColorType = {
   default: Colors.grey10,
   disabled: Colors.grey40
 };
-
-export interface InputProps extends TextInputProps, React.ComponentPropsWithRef<typeof TextInput> {
+export interface InputProps
+  extends Omit<TextInputProps, 'placeholderTextColor'>,
+    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'> {
   /**
    * A hint text to display when focusing the field
    */
@@ -21,6 +22,10 @@ export interface InputProps extends TextInputProps, React.ComponentPropsWithRef<
    * Input color
    */
   color?: ColorType;
+  /**
+   * placeholder text color
+   */
+  placeholderTextColor?: ColorType;
 }
 
 const Input = ({
@@ -33,12 +38,14 @@ const Input = ({
   const context = useContext(FieldContext);
   const placeholder = !context.isFocused ? props.placeholder : hint || props.placeholder;
   const inputColor = getColorByState(color, context);
+  const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
 
   return (
     <TextInput
       style={[styles.input, !!inputColor && {color: inputColor}, style]}
       {...props}
       placeholder={placeholder}
+      placeholderTextColor={placeholderTextColor}
       ref={forwardedRef}
       underlineColorAndroid="transparent"
       accessibilityState={{disabled: props.editable === false}}

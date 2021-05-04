@@ -1,6 +1,6 @@
-import { TextInputProps } from 'react-native';
 import { Validator } from './types';
-export interface FieldStateProps extends TextInputProps {
+import { InputProps } from './Input';
+export interface FieldStateProps extends InputProps {
     validateOnStart?: boolean;
     validateOnChange?: boolean;
     validateOnBlur?: boolean;
