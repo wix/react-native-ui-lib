@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ElementRef } from 'react';
-import { Animated, GestureResponderEvent, ImageSourcePropType, ImageStyle, StyleProp, TextStyle, ViewStyle, LayoutChangeEvent, View as ViewRN } from 'react-native';
+import { Animated, GestureResponderEvent, ImageSourcePropType, ImageStyle, StyleProp, TextStyle, ViewStyle, LayoutChangeEvent, View as RNView } from 'react-native';
 declare enum TARGET_POSITIONS {
     LEFT = "left",
     RIGHT = "right",
@@ -111,8 +111,8 @@ declare class Hint extends Component<HintProps, HintState> {
         position: HintPositions;
     };
     static positions: typeof HintPositions;
-    targetRef: ElementRef<typeof ViewRN> | null;
-    hintRef: ElementRef<typeof ViewRN> | null;
+    targetRef: ElementRef<typeof RNView> | null;
+    hintRef: ElementRef<typeof RNView> | null;
     state: {
         targetLayoutInWindow: undefined;
         targetLayout: HintTargetFrame | undefined;
@@ -120,8 +120,8 @@ declare class Hint extends Component<HintProps, HintState> {
     visibleAnimated: Animated.Value;
     componentDidUpdate(prevProps: HintProps): void;
     focusAccessibilityOnHint: () => void;
-    setTargetRef: (ref: ElementRef<typeof ViewRN>) => void;
-    setHintRef: (ref: ElementRef<typeof ViewRN>) => void;
+    setTargetRef: (ref: ElementRef<typeof RNView>) => void;
+    setHintRef: (ref: ElementRef<typeof RNView>) => void;
     onTargetLayout: ({ nativeEvent: { layout } }: LayoutChangeEvent) => void;
     getAccessibilityInfo(): {
         accessible: boolean;
