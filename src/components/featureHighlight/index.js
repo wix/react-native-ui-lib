@@ -148,11 +148,19 @@ class FeatureHighlight extends BaseComponent {
     this.setTargetPosition();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setTargetPosition(nextProps);
+  static getDerivedStateFromProps(nextProps, state) {
+    const target = nextProps.getTarget();
+    const node = findNodeHandle(target);
+    if (node !== state.node) {
+      return {...state, node};
+    }
+    return null;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(nextProps) {
+    if (!_.isEqual(nextProps, this.props)) {
+      this.setTargetPosition();
+    }
     if (this.viewRef) {
       this.setAccessibilityFocus(this.viewRef);
     }
@@ -182,8 +190,6 @@ class FeatureHighlight extends BaseComponent {
     if (props.getTarget !== undefined) {
       const target = props.getTarget();
 
-      const node = this.findTargetNode(target);
-      this.setState({node});
       if (target) {
         setTimeout(() => {
           target.measureInWindow((x, y, width, height) => {
