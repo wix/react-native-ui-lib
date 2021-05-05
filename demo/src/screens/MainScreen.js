@@ -119,8 +119,9 @@ class MainScreen extends Component {
   };
 
   updateSearch = filterText => {
-    this.setState({filterText});
-    this.filterExplorerScreens();
+    this.setState({filterText}, () => {
+      this.filterExplorerScreens();
+    });
   };
 
   clearSearch = () => {
