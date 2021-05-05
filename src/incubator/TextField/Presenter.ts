@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import {Colors} from './../../style';
-import {ContextType} from './FieldContext';
+import {FieldContextType} from './FieldContext';
 import {ColorType, Validator} from './types';
 import formValidators from './validators';
 
-export function getColorByState(color?: ColorType, context?: ContextType) {
+export function getColorByState(color?: ColorType, context?: FieldContextType) {
   let finalColor: string | undefined;
   if (_.isString(color)) {
     finalColor = color;

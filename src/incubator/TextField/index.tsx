@@ -7,7 +7,7 @@
  */
 import React, {ReactElement, useMemo} from 'react';
 import {ViewStyle, TextStyle} from 'react-native';
-import {omit} from 'lodash';
+import {omit, isFunction} from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -23,12 +23,13 @@ import {ValidationMessagePosition, Validator} from './types';
 import Input, {InputProps} from './Input';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
-import FieldContext from './FieldContext';
+import FieldContext, {FieldContextType as _FieldContextType} from './FieldContext';
 import useFieldState /* , FieldStateProps */ from './useFieldState';
 import usePreset from './usePreset';
 import FloatingPlaceholder, {FloatingPlaceholderProps} from './FloatingPlaceholder';
 import CharCounter, {CharCounterProps} from './CharCounter';
 
+export type FieldContextType = _FieldContextType;
 export type TextFieldProps = MarginModifiers &
   PaddingModifiers &
   TypographyModifiers &
@@ -83,7 +84,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle;
+    fieldStyle?: ViewStyle | ((context: FieldContextType) => ViewStyle);
     /**
      * Container style of the whole component
      */
@@ -113,7 +114,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const {
     modifiers,
     // General
-    fieldStyle,
+    fieldStyle: fieldStyleProp,
     containerStyle,
     floatingPlaceholder,
     floatingPlaceholderColor,
@@ -149,6 +150,8 @@ const TextField = (props: InternalTextFieldProps) => {
   const {margins, paddings, typography, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
+
+  const fieldStyle = isFunction(fieldStyleProp) ? fieldStyleProp(context) : fieldStyleProp;
 
   return (
     <FieldContext.Provider value={context}>
