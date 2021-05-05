@@ -65,11 +65,12 @@ export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleA
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps} from './components/carousel';
+export {default as Hint, HintProps} from './components/hint';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
   ActionSheet, ConnectionStatusBar, ChipsInput,
-  FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
+  FeatureHighlight, BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
   PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
   TagsInput, SharedTransition, StackAggregator, Toast, WheelPickerDialog, Assets,
   BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,

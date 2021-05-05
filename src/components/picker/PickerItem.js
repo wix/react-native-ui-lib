@@ -10,7 +10,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import Text from '../text';
-import {getItemLabel, isItemSelected, shouldFilterOut} from './PickerPresenter';
+import {getItemLabel, isItemSelected} from './PickerPresenter';
 import PickerContext from './PickerContext';
 
 /**
@@ -79,10 +79,6 @@ const PickerItem = props => {
       </View>
     );
   };
-
-  if (context.showSearch && shouldFilterOut(context.searchValue, itemLabel)) {
-    return null;
-  }
 
   return (
     <TouchableOpacity

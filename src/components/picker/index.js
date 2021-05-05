@@ -4,6 +4,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import memoize from 'memoize-one';
 import {asBaseComponent, forwardRef} from '../../commons';
 import {LogService} from '../../services';
 import View from '../../components/view';
@@ -14,6 +15,7 @@ import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
+import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from './PickerPresenter';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -220,8 +222,8 @@ class Picker extends Component {
   }
 
   getContextValue = () => {
-    const {value, searchValue} = this.state;
-    const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch, selectionLimit} = this.props;
+    const {value} = this.state;
+    const {migrate, mode, getItemValue, getItemLabel, renderItem, selectionLimit} = this.props;
     const pickerValue = !migrate && _.isPlainObject(value) ? value?.value : value;
     return {
       migrate,
@@ -232,8 +234,6 @@ class Picker extends Component {
       getItemLabel,
       onSelectedLayout: this.onSelectedItemLayout,
       renderItem,
-      showSearch,
-      searchValue,
       selectionLimit
     };
   };
@@ -274,6 +274,25 @@ class Picker extends Component {
     const selectedItem = _.find(items, {value});
 
     return _.get(selectedItem, 'label');
+  }
+
+  getFilteredChildren = memoize((children, searchValue) => {
+    const {getItemLabel: getItemLabelPicker} = this.props;
+    return _.filter(children, child => {
+      const {label, value, getItemLabel} = child.props;
+      const itemLabel = getItemLabelPresenter(label, value, getItemLabel || getItemLabelPicker);
+      return !shouldFilterOut(searchValue, itemLabel);
+    });
+  });
+
+  get children() {
+    const {searchValue} = this.state;
+    const {children, showSearch} = this.props;
+    if (showSearch && !_.isEmpty(searchValue)) {
+      return this.getFilteredChildren(children, searchValue);
+    }
+
+    return children;
   }
 
   handlePickerOnPress = () => {
@@ -379,7 +398,7 @@ class Picker extends Component {
           renderCustomSearch={renderCustomSearch}
           listProps={listProps}
         >
-          {children} 
+          {this.children} 
         </PickerModal>
       </PickerContext.Provider>
     );
