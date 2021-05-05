@@ -148,11 +148,11 @@ class FeatureHighlight extends BaseComponent {
     this.setTargetPosition();
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
-    const target = nextProps.getTarget();
-    const node = findNodeHandle(target);
-    if (node !== state.node) {
-      return {...state, node};
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const target = nextProps?.getTarget?.();
+    const node = FeatureHighlight.findTargetNode(target);
+    if (node && node !== prevState?.node) {
+      return {...prevState, node};
     }
     return null;
   }
@@ -171,7 +171,7 @@ class FeatureHighlight extends BaseComponent {
     AccessibilityInfo.setAccessibilityFocus(reactTag);
   }
 
-  findTargetNode(target) {
+  static findTargetNode(target) {
     return findNodeHandle(target);
   }
 
@@ -189,7 +189,6 @@ class FeatureHighlight extends BaseComponent {
   setTargetPosition(props = this.props) {
     if (props.getTarget !== undefined) {
       const target = props.getTarget();
-
       if (target) {
         setTimeout(() => {
           target.measureInWindow((x, y, width, height) => {
