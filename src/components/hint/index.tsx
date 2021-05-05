@@ -13,7 +13,7 @@ import {
   TextStyle,
   ViewStyle,
   LayoutChangeEvent,
-  View as ViewRN
+  View as RNView
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
@@ -152,8 +152,8 @@ class Hint extends Component<HintProps, HintState> {
 
   static positions = HintPositions;
 
-  targetRef: ElementRef<typeof ViewRN> | null = null;
-  hintRef: ElementRef<typeof ViewRN> | null = null;
+  targetRef: ElementRef<typeof RNView> | null = null;
+  hintRef: ElementRef<typeof RNView> | null = null;
 
   state = {
     targetLayoutInWindow: undefined,
@@ -183,12 +183,12 @@ class Hint extends Component<HintProps, HintState> {
     }
   };
 
-  setTargetRef = (ref: ElementRef<typeof ViewRN>) => {
+  setTargetRef = (ref: ElementRef<typeof RNView>) => {
     this.targetRef = ref;
     this.focusAccessibilityOnHint();
   };
 
-  setHintRef = (ref: ElementRef<typeof ViewRN>) => {
+  setHintRef = (ref: ElementRef<typeof RNView>) => {
     this.hintRef = ref;
     this.focusAccessibilityOnHint();
   };
