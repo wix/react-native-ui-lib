@@ -6,7 +6,7 @@ import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
 
-export type SegmentItemProps = {
+export type SegmentedControlItemProps = {
   /**
    * The label of the segment.
    */
@@ -25,7 +25,7 @@ export type SegmentItemProps = {
   iconOnRight?: boolean;
 };
 
-export type SegmentProps = SegmentItemProps & {
+export type SegmentProps = SegmentedControlItemProps & {
   /**
    * Is the item selected.
    */

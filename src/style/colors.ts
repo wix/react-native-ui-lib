@@ -173,11 +173,11 @@ export class Colors {
   getHexString(color: string) {
     return tinycolor(color).toHexString();
   }
-  getHSL(color: string) {
+  getHSL(color?: string) {
     return tinycolor(color).toHsl();
   }
-  isTransparent(color: string) {
-    return _.toUpper(color) === _.toUpper('transparent');
+  isTransparent(color?: string) {
+    return color && _.toUpper(color) === _.toUpper('transparent');
   }
   areEqual(colorA: string, colorB: string) {
     return _.toLower(colorA) === _.toLower(colorB);
@@ -230,7 +230,7 @@ function validateHex(value: string) {
   return value;
 }
 
-function threeDigitHexToSix(value: string) { 
+function threeDigitHexToSix(value: string) {
   return value.replace(/./g, '$&$&');
 }
 

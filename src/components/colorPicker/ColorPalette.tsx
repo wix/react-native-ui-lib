@@ -1,16 +1,69 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
-import React from 'react';
-import {StyleSheet, UIManager, findNodeHandle} from 'react-native';
+import React, {PureComponent} from 'react';
+import {StyleSheet, UIManager, findNodeHandle, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {PureBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Carousel from '../carousel';
 import PageControl from '../pageControl';
 import ColorSwatch, {SWATCH_SIZE} from './ColorSwatch';
 import ScrollBar from '../scrollBar';
+
+
+interface Props {
+  /**
+   * Array of colors to render in the palette
+   */
+  colors: string[];
+  /**
+   * Style to pass the palette container
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The container margins
+   */
+  containerWidth?: number;
+  /**
+   * Whether to use pagination when number of colors exceeds the number of rows
+   */
+  usePagination?: boolean;
+  /**
+   * Whether the colors pagination scrolls in a loop
+   */
+  loop?: boolean;
+  /**
+   * The number of color rows from 2 to 5
+   */
+  numberOfRows?: number;
+  /**
+   * Style to pass all the ColorSwatches in the palette
+   */
+  swatchStyle?: StyleProp<ViewStyle>;
+  /**
+   * The value of the selected swatch
+   */
+  value?: string;
+  /**
+   * The index of the item to animate at first render (default is last)
+   */
+  animatedIndex?: number;
+  /**
+   * Invoked once when value changes by selecting one of the swatches in the palette
+   */
+  onValueChange?: (value: string, options: object) => void;
+  style?: StyleProp<ViewStyle>;
+  testID?: string;
+}
+export type ColorPaletteProps = Props;
+
+interface State {
+  currentPage: number,
+  scrollable: boolean,
+  orientation?: string,
+  contentWidth?: number
+}
 
 const VERTICAL_PADDING = 16;
 const HORIZONTAL_PADDING = 20;
@@ -23,51 +76,8 @@ const DEFAULT_NUMBER_OF_ROWS = 3;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
  * @notes: This is a screen width component
  */
-export default class ColorPalette extends PureBaseComponent {
+class ColorPalette extends PureComponent<Props, State> {
   static displayName = 'ColorPalette';
-
-  static propTypes = {
-    /**
-     * Array of colors to render in the palette
-     */
-    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
-    /**
-     * Style to pass the palette container
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * The container margins
-     */
-    containerWidth: PropTypes.number,
-    /**
-     * Whether to use pagination when number of colors exceeds the number of rows
-     */
-    usePagination: PropTypes.bool,
-    /**
-     * Whether the colors pagination scrolls in a loop
-     */
-    loop: PropTypes.bool,
-    /**
-     * The number of color rows from 2 to 5
-     */
-    numberOfRows: PropTypes.number,
-    /**
-     * Style to pass all the ColorSwatches in the palette
-     */
-    swatchStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * The value of the selected swatch
-     */
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    /**
-     * The index of the item to animate at first render (default is last)
-     */
-    animatedIndex: PropTypes.number,
-    /**
-     * Invoked once when value changes by selecting one of the swatches in the palette
-     */
-    onValueChange: PropTypes.func
-  };
 
   static defaultProps = {
     numberOfRows: DEFAULT_NUMBER_OF_ROWS,
@@ -75,18 +85,30 @@ export default class ColorPalette extends PureBaseComponent {
     loop: true
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       currentPage: 0,
-      scrollable: false
+      scrollable: false,
+      orientation: undefined,
+      contentWidth: undefined
     };
 
-    this.carousel = React.createRef();
-    this.scrollBar = React.createRef();
     this.initLocalVariables();
   }
+
+  carousel: React.RefObject<typeof Carousel> = React.createRef();
+  scrollBar: React.RefObject<any> = React.createRef();
+  itemsRefs?: React.RefObject<typeof ColorSwatch>[] = undefined;
+  selectedColorIndex?: number = undefined;
+  selectedPage?: number = undefined;
+  currentColorsCount?: number = undefined;
+  itemsPerRow = 0;
+  itemsPerPage = 0;
+  usePagination?: boolean = undefined;
+  innerMargin?: number = undefined;
+  swatchStyles?: StyleProp<ViewStyle>[] = undefined;
 
   componentDidMount() {
     Constants.addDimensionsEventListener(this.onOrientationChanged);
@@ -112,7 +134,7 @@ export default class ColorPalette extends PureBaseComponent {
     this.itemsPerPage = this.itemsPerRow * this.getNumberOfRows();
     this.usePagination = this.shouldUsePagination();
     this.innerMargin = this.getInnerMargin();
-    this.swatchStyle = [];
+    this.swatchStyles = [];
   }
 
   get value() {
@@ -129,7 +151,7 @@ export default class ColorPalette extends PureBaseComponent {
   }
 
   get containerWidth() {
-    const {containerWidth} = this.getThemeProps();
+    const {containerWidth} = this.props;
     return containerWidth || Constants.screenWidth;
   }
 
@@ -144,10 +166,11 @@ export default class ColorPalette extends PureBaseComponent {
   });
 
   getNumberOfRows() {
-    const {numberOfRows} = this.props;
+    const {numberOfRows = DEFAULT_NUMBER_OF_ROWS} = this.props;
 
     if (!_.inRange(numberOfRows, 2, 6)) {
-      console.warn(`${numberOfRows} is not within valid range of color rows (2 to 5); defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`);
+      console.warn(`${numberOfRows} is not within valid range of color rows (2 to 5);
+        defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`);
       return DEFAULT_NUMBER_OF_ROWS;
     }
     return numberOfRows;
@@ -187,41 +210,46 @@ export default class ColorPalette extends PureBaseComponent {
   scrollToSelected() {
     const {scrollable, currentPage} = this.state;
 
-    if (scrollable && this.selectedColorIndex !== undefined) {
+    if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs) {
       const childRef = this.itemsRefs[this.selectedColorIndex];
 
       if (childRef) {
-        const handle = findNodeHandle(childRef);
+        const handle = findNodeHandle(childRef.current);
         if (handle) {
-          UIManager.measureLayoutRelativeToParent(handle,
-            e => {
-              console.warn(e);
-            },
-            (x, _y, w, _h) => {
-              if (x + w > this.containerWidth) {
+          //@ts-ignore
+          UIManager.measureLayoutRelativeToParent(handle, e => {
+            console.warn(e);
+          },
+          (x: number, _y: number, w: number, _h: number) => {
+            if (x + w > this.containerWidth) {
+              if (this.scrollBar && this.scrollBar.current) {
                 this.scrollBar.current.scrollTo({
                   x: x + w + HORIZONTAL_PADDING - this.containerWidth,
                   y: 0,
                   animated: false
                 });
               }
-            });
+            }
+          });
         }
       }
     } else if (this.usePagination) {
-      this.carousel.current.goToPage(this.selectedPage || currentPage, false);
+      if (this.carousel && this.carousel.current) {
+        this.carousel.current.goToPage(this.selectedPage || currentPage, false);
+      }
     }
   }
 
-  onContentSizeChange = contentWidth => {
-    this.setState({scrollable: contentWidth > this.containerWidth, contentWidth});
+  onContentSizeChange = (contentWidth: number) => {
+    this.setState({
+      scrollable: contentWidth > this.containerWidth, contentWidth});
   };
 
-  onChangePage = index => {
+  onChangePage = (index: number) => {
     this.setState({currentPage: index});
   };
 
-  onValueChange = (value, options) => {
+  onValueChange = (value: string, options: object) => {
     _.invoke(this.props, 'onValueChange', value, options);
   };
 
@@ -231,7 +259,7 @@ export default class ColorPalette extends PureBaseComponent {
     }, 0);
   };
 
-  getHorizontalMargins = index => {
+  getHorizontalMargins = (index: number) => {
     const isFirst = index === 0;
     const isOnLeft = isFirst || index % this.itemsPerRow === 0;
     const isOnRight = index % this.itemsPerRow === this.itemsPerRow - 1;
@@ -251,22 +279,29 @@ export default class ColorPalette extends PureBaseComponent {
     return {marginLeft, marginRight};
   };
 
-  getSwatchStyle = index => {
+  getSwatchStyle = (index: number) => {
     const sizeHasChanged = this.colors.length !== this.currentColorsCount;
     const isNextToLastIndex = index === this.colors.length - 2;
 
     // Need to update the next to last item because it's margin needs to changed
-    if (_.isUndefined(this.swatchStyle[index]) || (!this.usePagination && sizeHasChanged && isNextToLastIndex)) {
-      this.swatchStyle[index] = {...this.getHorizontalMargins(index), ...this.props.swatchStyle};
-      if (sizeHasChanged && isNextToLastIndex) {
-        this.currentColorsCount = this.colors.length;
+    if (!_.isUndefined(this.swatchStyles)) {
+      if (_.isUndefined(this.swatchStyles[index]) || (!this.usePagination && sizeHasChanged && isNextToLastIndex)) {
+        this.swatchStyles[index] = [this.getHorizontalMargins(index), this.props.swatchStyle];
+        if (sizeHasChanged && isNextToLastIndex) {
+          this.currentColorsCount = this.colors.length;
+        }
       }
+      return this.swatchStyles[index];
     }
-
-    return this.swatchStyle[index];
   };
 
-  renderColorSwatch(color, index) {
+  addRefByIndex = (index: number, ref?: any) => {
+    if (this.itemsRefs && ref) {
+      this.itemsRefs[index] = ref;
+    }
+  }
+
+  renderColorSwatch(color: string, index: number) {
     const {animatedIndex, testID} = this.props;
 
     return (
@@ -279,13 +314,13 @@ export default class ColorPalette extends PureBaseComponent {
         selected={this.value === color}
         animated={index === animatedIndex}
         onPress={this.onValueChange}
-        ref={r => (this.itemsRefs[index] = r)}
+        ref={r => this.addRefByIndex(index, r)}
         testID={`${testID}-${color}`}
       />
     );
   }
 
-  renderPalette(props, contentStyle, colors, pageIndex) {
+  renderPalette(props: Props, contentStyle: StyleProp<ViewStyle>, colors: string[], pageIndex: number) {
     const {style, ...others} = props;
     this.itemsRefs = [];
 
@@ -316,7 +351,7 @@ export default class ColorPalette extends PureBaseComponent {
         containerProps={{width: !scrollable ? contentWidth : undefined}}
         gradientHeight={SCROLLABLE_HEIGHT - 12}
       >
-        {this.renderPalette(others, styles.scrollContent, this.colors)}
+        {this.renderPalette(others, styles.scrollContent, this.colors, 0)}
       </ScrollBar>
     );
   }
@@ -349,6 +384,8 @@ export default class ColorPalette extends PureBaseComponent {
     return this.usePagination ? this.renderPaginationContent() : this.renderScrollableContent();
   }
 }
+
+export default asBaseComponent<Props>(ColorPalette);
 
 const styles = StyleSheet.create({
   paletteContainer: {

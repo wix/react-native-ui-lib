@@ -34,12 +34,17 @@ const PickerItem = props => {
   const itemValue = !migrate && _.isPlainObject(value) ? value?.value : value;
   const isSelected = isItemSelected(itemValue, context.value);
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
+  const selectedCounter = context.selectionLimit && context.value?.length;
   const accessibilityProps = {
     accessibilityState: isSelected ? {selected: true} : undefined,
     accessibilityHint: 'Double click to select this suggestion',
     ...Modifiers.extractAccessibilityProps(props)
   };
 
+  const isItemDisabled = useMemo(() => {
+    return disabled || (!isSelected && context.selectionLimit && context.selectionLimit === selectedCounter);
+  }, [selectedCounter]);
+  
   useEffect(() => {
     if (_.isPlainObject(value)) {
       LogService.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
@@ -48,9 +53,9 @@ const PickerItem = props => {
 
   const selectedIndicator = useMemo(() => {
     if (isSelected) {
-      return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
+      return <Image source={selectedIcon} tintColor={isItemDisabled ? Colors.dark60 : selectedIconColor}/>;
     }
-  }, [isSelected, disabled, selectedIcon, selectedIconColor]);
+  }, [isSelected, isItemDisabled, selectedIcon, selectedIconColor]);
 
   const _onPress = useCallback(() => {
     if (migrate) {
@@ -67,7 +72,7 @@ const PickerItem = props => {
   const _renderItem = () => {
     return (
       <View style={styles.container} flex row spread centerV>
-        <Text numberOfLines={1} style={[styles.labelText, disabled && styles.labelTextDisabled]}>
+        <Text numberOfLines={1} style={[styles.labelText, isItemDisabled && styles.labelTextDisabled]}>
           {itemLabel}
         </Text>
         {selectedIndicator}
@@ -84,7 +89,7 @@ const PickerItem = props => {
       activeOpacity={0.5}
       onPress={_onPress}
       onLayout={isSelected ? onSelectedLayout : undefined}
-      disabled={disabled}
+      disabled={isItemDisabled}
       testID={testID}
       throttleTime={0}
       {...accessibilityProps}

@@ -94,6 +94,9 @@ module.exports = {
       get RadioButtonScreen() {
         return require('./screens/componentScreens/RadioButtonScreen').default;
       },
+      get SectionsWheelPickerScreen() {
+        return require('./screens/componentScreens/SectionsWheelPickerScreen').default;
+      },
       get SegmentedControlScreen() {
         return require('./screens/componentScreens/SegmentedControlScreen').default;
       },

@@ -1,6 +1,15 @@
-declare function triggerHaptic(hapticMethod: string, componentName: string): void;
+export declare enum HapticType {
+    selection = "selection",
+    impactLight = "impactLight",
+    impactMedium = "impactMedium",
+    impactHeavy = "impactHeavy",
+    notificationSuccess = "notificationSuccess",
+    notificationWarning = "notificationWarning",
+    notificationError = "notificationError"
+}
+declare function triggerHaptic(hapticType: HapticType, componentName: string): void;
 declare const _default: {
-    HapticMethods: string[];
+    HapticType: typeof HapticType;
     triggerHaptic: typeof triggerHaptic;
 };
 export default _default;

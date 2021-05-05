@@ -92,8 +92,8 @@ export default {
   },
   get TextField() {
     // TODO: Start migration by exporting TextFieldMigrator
-    // return require('./components/textField/TextFieldMigrator').default;
-    return require('./components/textField').default;
+    return require('./components/textField/TextFieldMigrator').default;
+    // return require('./components/textField').default;
   },
   get MaskedInput() {
     return require('./components/maskedInput').default;
@@ -169,6 +169,9 @@ export default {
   },
   get ScrollBar() {
     return require('./components/scrollBar').default;
+  },
+  get SectionsWheelPicker() {
+    return require('./components/sectionsWheelPicker').default;
   },
   get SegmentedControl() {
     return require('./components/segmentedControl').default;
