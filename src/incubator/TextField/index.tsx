@@ -178,6 +178,7 @@ const TextField = (props: InternalTextFieldProps) => {
                   floatingPlaceholderStyle={[typographyStyle, floatingPlaceholderStyle]}
                   floatingPlaceholderColor={floatingPlaceholderColor}
                   floatOnFocus={floatOnFocus}
+                  validationMessagePosition={validationMessagePosition}
                 />
               )}
               <Input

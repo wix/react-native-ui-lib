@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useCallback, useState, useMemo} from 'react';
 import {Animated, LayoutChangeEvent, StyleSheet, Platform, TextStyle, StyleProp} from 'react-native';
-import {ColorType} from './types';
+import {ColorType, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
 import {Constants} from '../../helpers';
@@ -25,6 +25,7 @@ export interface FloatingPlaceholderProps {
    * Should placeholder float on focus or when start typing
    */
   floatOnFocus?: boolean;
+  validationMessagePosition?: ValidationMessagePosition;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
@@ -33,7 +34,8 @@ const FloatingPlaceholder = ({
   placeholder,
   floatingPlaceholderColor = Colors.grey40,
   floatingPlaceholderStyle,
-  floatOnFocus
+  floatOnFocus,
+  validationMessagePosition
 }: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
@@ -41,6 +43,7 @@ const FloatingPlaceholder = ({
     left: 0
   });
   const animation = useRef(new Animated.Value(Number(context.isFocused))).current;
+  const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
   const animatedStyle = useMemo(() => {
     return {
@@ -78,7 +81,7 @@ const FloatingPlaceholder = ({
   }, []);
 
   return (
-    <View absF>
+    <View absF style={hidePlaceholder && styles.hidden}>
       <Text
         animated
         color={getColorByState(floatingPlaceholderColor, context)}
@@ -96,6 +99,9 @@ const styles = StyleSheet.create({
     ...Platform.select({
       android: {textAlignVertical: 'center', flex: 1}
     })
+  },
+  hidden: {
+    opacity: 0
   }
 });
 
