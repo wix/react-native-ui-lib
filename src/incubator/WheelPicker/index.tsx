@@ -181,6 +181,10 @@ const WheelPicker = React.memo(({
   },
   []);
 
+  const getItemLayout = useCallback((data, index: number) => {
+    return {length: itemHeight, offset: itemHeight * index, index};
+  }, [itemHeight]);
+
   const contentContainerStyle = useMemo(() => {
     return {paddingVertical: height / 2 - itemHeight / 2};
   }, [height, itemHeight]);
@@ -204,6 +208,8 @@ const WheelPicker = React.memo(({
           snapToInterval={itemHeight}
           decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
           renderItem={renderItem}
+          getItemLayout={getItemLayout}
+          initialScrollIndex={currentIndex}
         />
         {label && renderLabel()}
       </View>
