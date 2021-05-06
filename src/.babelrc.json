@@ -7,8 +7,13 @@
       {
         "root": ["./src"],
         "alias": {
-          "style": "./src/style",
-          "helpers": "./src/helpers"
+          "commons": "./src/commons",
+          "commonsNew": "./src/commons/new",
+          "helpers": "./src/helpers",
+          "hooks": "./src/hooks",
+          "optionalDeps": "./src/optionalDependencies",
+          "services": "./src/services",
+          "style": "./src/style"
         }
       }
     ]

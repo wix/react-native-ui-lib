@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { TextProps as RNTextProps, TextStyle } from 'react-native';
-import { BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers, TypographyModifiers, ColorsModifiers } from '../../commons/new';
+import { BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers, TypographyModifiers, ColorsModifiers } from 'commonsNew';
 export declare type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
     /**
      * color of the text

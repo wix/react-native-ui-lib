@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated} from 'react-native';
+import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -8,10 +9,8 @@ import {
   MarginModifiers,
   TypographyModifiers,
   ColorsModifiers
-} from '../../commons/new';
-import {Colors} from '../../style';
-import _ from 'lodash';
-
+} from 'commonsNew';
+import {Colors} from 'style';
 
 export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
