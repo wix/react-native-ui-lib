@@ -179,7 +179,7 @@ const WheelPicker = React.memo(({
   },
   []);
 
-  const getItemLayout = useCallback((data, index: number) => {
+  const getItemLayout = useCallback((_data, index: number) => {
     return {length: itemHeight, offset: itemHeight * index, index};
   }, [itemHeight]);
 
