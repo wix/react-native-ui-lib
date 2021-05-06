@@ -1,5 +1,5 @@
 /// <reference types="react" />
-export declare type ContextType = {
+export declare type FieldContextType = {
     value?: string;
     isFocused: boolean;
     hasValue: boolean;
@@ -7,5 +7,5 @@ export declare type ContextType = {
     failingValidatorIndex?: number;
     disabled: boolean;
 };
-declare const FieldContext: import("react").Context<ContextType>;
+declare const FieldContext: import("react").Context<FieldContextType>;
 export default FieldContext;
