@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle} from 'react-native';
-import {asBaseComponent, forwardRef} from '../../commons/new';
+import {asBaseComponent, forwardRef} from 'commonsNew';
 import {Constants} from 'helpers';
 import {Colors, Typography, BorderRadiuses} from 'style';
-import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
+// @ts-ignore need to migrate to commonsNew
+import {modifiers} from 'commons';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
@@ -13,6 +14,8 @@ import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes, Butt
 export {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes};
 
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE, DISABLED_COLOR} from './ButtonConstants';
+
+const {extractColorValue, extractTypographyValue} = modifiers;
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
