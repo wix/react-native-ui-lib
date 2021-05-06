@@ -122,10 +122,8 @@ const WheelPicker = React.memo(({
   };
 
   const scrollToIndex = (index: number, animated: boolean) => {
-    if (scrollView.current?.getNode()) {
-        //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
-    }
+    //@ts-ignore for some reason scrollToOffset isn't recognized
+    scrollView.current?.scrollToOffset({offset: index * itemHeight, animated});
   };
 
   const selectItem = useCallback(index => {
