@@ -8,7 +8,6 @@
         "root": ["./src"],
         "alias": {
           "commons": "./src/commons",
-          "commonsNew": "./src/commons/new",
           "helpers": "./src/helpers",
           "hooks": "./src/hooks",
           "optionalDeps": "./src/optionalDependencies",

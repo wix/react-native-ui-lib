@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated, ViewProps as RNViewProps, StyleProp, ViewStyle } from 'react-native';
-import { ContainerModifiers } from 'commonsNew';
+import { ContainerModifiers } from '../../commons/new';
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
     /**
      * If true, will render as SafeAreaView

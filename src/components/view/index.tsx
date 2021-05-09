@@ -7,7 +7,7 @@ import {
   BaseComponentInjectedProps,
   ForwardRefInjectedProps,
   ContainerModifiers
-} from 'commonsNew';
+} from '../../commons/new';
 import {Constants} from 'helpers';
 
 

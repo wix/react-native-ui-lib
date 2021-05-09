@@ -22,7 +22,6 @@
     "paths": {
       "react-native-ui-lib": ["index.d.ts"],
       "commons": ["./src/commons"],
-      "commonsNew": ["./src/commons/new"],
       "helpers": ["./src/helpers"],
       "hooks": ["./src/hooks"],
       "optionalDeps": ["./src/optionalDependencies"],

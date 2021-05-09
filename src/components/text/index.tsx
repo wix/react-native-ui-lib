@@ -9,7 +9,7 @@ import {
   MarginModifiers,
   TypographyModifiers,
   ColorsModifiers
-} from 'commonsNew';
+} from '../../commons/new';
 import {Colors} from 'style';
 
 export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
