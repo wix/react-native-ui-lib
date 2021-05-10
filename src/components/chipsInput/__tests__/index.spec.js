@@ -137,4 +137,24 @@ describe('ChipsInput', () => {
       expect(removeTagSpy).toHaveBeenCalledWith();
     });
   });
+
+  describe('getDerivedStateFromProps', () => {
+    it('should return next state with values from next props', () => {
+      const prevState = {initialTags: [{id: '1'}]};
+      const nextProps = {tags: [{id: '2'}]};
+      const expectedNextState = {initialTags: [{id: '2'}], tags: [{id: '2'}]};
+      expect(ChipsInput.getDerivedStateFromProps(nextProps, prevState)).toEqual(expectedNextState);
+    });
+
+    it('should clear state\'s value and input field if a new tag was added from props', () => {
+      const prevState = {initialTags: []};
+      const nextProps = {tags: [{id: '1'}]};
+      const expectedNextState = {
+        initialTags: [{id: '1'}], 
+        tags: [{id: '1'}],
+        value: ''
+      };
+      expect(ChipsInput.getDerivedStateFromProps(nextProps, prevState)).toEqual(expectedNextState);
+    });
+  });
 });

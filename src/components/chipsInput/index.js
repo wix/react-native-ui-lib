@@ -109,14 +109,23 @@ class ChipsInput extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.tags !== prevState.initialTags) {
-      return {
-        initialTags: nextProps.tags,
-        tags: nextProps.tags
-      };
+  componentDidUpdate(prevProps) {
+    if (this.props.tags.length > prevProps.tags.length) {
+      this.clear()
     }
-    return null;
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const nextState = {}
+    if (nextProps.tags !== prevState.initialTags) {
+      nextState.initialTags = nextProps.tags;
+      nextState.tags = nextProps.tags;
+    }
+    if (nextProps.tags.length > prevState.initialTags.length) {
+      nextState.value = ''
+    }
+
+    return _.isEmpty(nextState) ? null : nextState;
   }
 
   addTag = () => {
