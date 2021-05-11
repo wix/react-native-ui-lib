@@ -12,7 +12,7 @@ import {
 } from '../../commons/new';
 import {Colors} from 'style';
 
-export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
+export type TextProps = Omit<RNTextProps, 'style'> & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
    * color of the text
    */
