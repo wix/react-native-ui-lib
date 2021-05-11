@@ -5,7 +5,17 @@ import PropTypes from 'prop-types';
 import {StyleSheet, FlatList, ViewPropTypes} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import {Assets, Colors, View, Text, TouchableOpacity, TextField, Image, TabController} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  Assets,
+  Colors,
+  View,
+  Text,
+  TouchableOpacity,
+  TextField,
+  Image,
+  Button,
+  TabController
+} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
 const settingsIcon = require('../assets/icons/settings.png');
@@ -15,7 +25,7 @@ class MainScreen extends Component {
   static propTypes = {
     containerStyle: ViewPropTypes.style,
     renderItem: PropTypes.func,
-    pageStyle: ViewPropTypes.style    
+    pageStyle: ViewPropTypes.style
   };
 
   settingsScreenName = 'unicorn.Settings';
@@ -52,7 +62,6 @@ class MainScreen extends Component {
 
   onSearchBoxBlur = () => {
     this.closeSearchBox();
-    // this.filterExplorerScreens('');
   };
 
   getMenuData = () => {
@@ -67,8 +76,8 @@ class MainScreen extends Component {
       this.pushScreen({
         name: this.settingsScreenName,
         passProps: {
-          navigationData: data, 
-          playground: this.props.playground, 
+          navigationData: data,
+          playground: this.props.playground,
           extraSettingsUI: this.props.extraSettingsUI
         }
       });
@@ -105,12 +114,22 @@ class MainScreen extends Component {
     this.closeSearchBox();
 
     setTimeout(() => {
-      // this.filterExplorerScreens('');
       this.pushScreen(row);
     }, 0);
   };
 
-  filterExplorerScreens = filterText => {
+  updateSearch = filterText => {
+    this.setState({filterText}, () => {
+      this.filterExplorerScreens();
+    });
+  };
+
+  clearSearch = () => {
+    this.updateSearch('');
+  };
+
+  filterExplorerScreens = () => {
+    const {filterText} = this.state;
     let filteredNavigationData = {};
     const data = this.getMenuData();
 
@@ -134,32 +153,35 @@ class MainScreen extends Component {
     }
 
     this.setState({
-      filterText,
       filteredNavigationData
     });
   };
 
   /** Renders */
   renderSearch = () => {
+    const {filterText} = this.state;
     return (
       <TextField
+        migrate
         ref={r => (this.input = r)}
-        value={this.state.filterText}
+        value={filterText}
         testID="uilib.search_for_component"
         placeholder="Search for your component..."
-        onChangeText={this.filterExplorerScreens}
+        onChangeText={this.updateSearch}
         onBlur={this.onSearchBoxBlur}
-        containerStyle={{padding: 16, paddingBottom: 0}}
-        style={{
-          padding: 12,
-          backgroundColor: Colors.dark80,
-          borderRadius: 8
-        }}
+        containerStyle={styles.searchContainer}
+        fieldStyle={styles.searchField}
         enableErrors={false}
         hideUnderline
         floatingPlaceholder={false}
         text70
-        rightButtonProps={{iconSource: Assets.icons.search, style: {marginRight: 12, alignSelf: 'center'}}}
+        trailingAccessory={
+          filterText ? (
+            <Button link iconSource={Assets.icons.demo.close} grey10 onPress={this.clearSearch}/>
+          ) : (
+            <Image source={Assets.icons.demo.search}/>
+          )
+        }
       />
     );
   };
@@ -251,7 +273,10 @@ class MainScreen extends Component {
         {showResults && this.renderSearchResults(filteredNavigationData)}
 
         {showCarousel && (
-          <TabController asCarousel items={_.map(data, section => ({label: section.title, testID: `section.${section.title}`}))}>
+          <TabController
+            asCarousel
+            items={_.map(data, section => ({label: section.title, testID: `section.${section.title}`}))}
+          >
             <TabController.TabBar testID={'mainScreenTabBar'}/>
             {this.renderPages(data)}
           </TabController>
@@ -271,6 +296,15 @@ class MainScreen extends Component {
 const styles = StyleSheet.create({
   entryTextDeprecated: {
     textDecorationLine: 'line-through'
+  },
+  searchContainer: {
+    padding: 16,
+    paddingBottom: 0
+  },
+  searchField: {
+    padding: 12,
+    backgroundColor: Colors.dark80,
+    borderRadius: 8
   }
 });
 

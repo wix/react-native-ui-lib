@@ -8,7 +8,7 @@ import {
   ForwardRefInjectedProps,
   ContainerModifiers
 } from '../../commons/new';
-import Constants from '../../helpers/Constants';
+import {Constants} from 'helpers';
 
 
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {

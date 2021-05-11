@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import { TextStyle, StyleProp } from 'react-native';
-import { ColorType } from './types';
+import { ColorType, ValidationMessagePosition } from './types';
 export interface FloatingPlaceholderProps {
     /**
      * The placeholder for the field
@@ -14,9 +14,14 @@ export interface FloatingPlaceholderProps {
      * Custom style to pass to the floating placeholder
      */
     floatingPlaceholderStyle?: StyleProp<TextStyle>;
+    /**
+     * Should placeholder float on focus or when start typing
+     */
+    floatOnFocus?: boolean;
+    validationMessagePosition?: ValidationMessagePosition;
 }
 declare const FloatingPlaceholder: {
-    ({ placeholder, floatingPlaceholderColor, floatingPlaceholderStyle }: FloatingPlaceholderProps): JSX.Element;
+    ({ placeholder, floatingPlaceholderColor, floatingPlaceholderStyle, floatOnFocus, validationMessagePosition }: FloatingPlaceholderProps): JSX.Element;
     displayName: string;
 };
 export default FloatingPlaceholder;

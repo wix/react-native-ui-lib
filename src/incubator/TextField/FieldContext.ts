@@ -1,6 +1,6 @@
 import {createContext} from 'react';
 
-export type ContextType = {
+export type FieldContextType = {
   value?: string;
   isFocused: boolean;
   hasValue: boolean;
@@ -9,7 +9,7 @@ export type ContextType = {
   disabled: boolean;
 };
 
-const FieldContext = createContext<ContextType>({
+const FieldContext = createContext<FieldContextType>({
   isFocused: false,
   hasValue: false,
   isValid: true,
