@@ -10,8 +10,10 @@ import {Constants} from '../../helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
 import Text, {TextProps} from '../../components/text';
+import {HapticService, HapticType} from 'services';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const {onChange, cond, useCode, neq, call, block, divide, set, round, Value} = Animated;
 
 export interface WheelPickerProps {
   /**
@@ -81,7 +83,7 @@ const WheelPicker = React.memo(({
   label,
   labelStyle,
   labelProps,
-  onChange,
+  onChange: _onChange,
   style,
   children,
   selectedValue,
@@ -99,7 +101,26 @@ const WheelPicker = React.memo(({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
+  const prevIndex = new Value(currentIndex);
+  const curIndex = new Value(currentIndex);
+
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
+
+  useCode(() => {
+    return [
+      onChange(offset,
+        block([
+          set(curIndex, round(divide(offset, itemHeight))),
+          cond(neq(prevIndex, curIndex),
+            block([
+              set(prevIndex, curIndex),
+              call([], () => {
+                HapticService.triggerHaptic(HapticType.selection, 'WheelPicker');
+              })
+            ]))
+        ]))
+    ];
+  }, []);
 
   useEffect(() => {
     controlComponent();
@@ -122,9 +143,9 @@ const WheelPicker = React.memo(({
   };
 
   const scrollToIndex = (index: number, animated: boolean) => {
-    if (scrollView.current?.getNode()) {
+    if (scrollView.current) {
         //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
+        scrollView.current?.scrollToOffset({offset: index * itemHeight, animated});
     }
   };
 
@@ -137,7 +158,7 @@ const WheelPicker = React.memo(({
     setScrollOffset(event.nativeEvent.contentOffset.y);
 
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
-      onChange?.(value, index);
+      _onChange?.(value, index);
   };
 
   const renderItem = useCallback(({item, index}) => {
