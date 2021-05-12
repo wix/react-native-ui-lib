@@ -42,7 +42,11 @@ export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './
 export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
 export {default as HapticService, HapticType} from './services/HapticService';
-export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
+export {
+  default as SegmentedControl,
+  SegmentedControlProps,
+  SegmentedControlItemProps
+} from './components/segmentedControl';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/TabBar';
@@ -61,9 +65,23 @@ export {
   PanDirectionsProps,
   PanningProviderDirection
 } from './components/panningViews/panningProvider';
-export {default as PanListenerView, PanListenerViewPropTypes, PanListenerViewProps} from './components/panningViews/panListenerView';
-export {default as PanResponderView, PanResponderViewPropTypes, PanResponderViewProps} from './components/panningViews/panResponderView';
-export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes, PanDismissibleViewProps, DismissibleAnimationProps} from './components/panningViews/panDismissibleView';
+export {
+  default as PanListenerView,
+  PanListenerViewPropTypes,
+  PanListenerViewProps
+} from './components/panningViews/panListenerView';
+export {
+  default as PanResponderView,
+  PanResponderViewPropTypes,
+  PanResponderViewProps
+} from './components/panningViews/panResponderView';
+export {
+  default as PanDismissibleView,
+  PanDismissibleViewPropTypes,
+  DismissibleAnimationPropTypes,
+  PanDismissibleViewProps,
+  DismissibleAnimationProps
+} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps} from './components/carousel';
@@ -86,7 +104,6 @@ export {
   TagsInput,
   ChipsInput,
   SharedTransition,
-  StackAggregator,
   Toast,
   WheelPickerDialog,
   Assets,
