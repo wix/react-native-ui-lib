@@ -122,10 +122,8 @@ const WheelPicker = React.memo(({
   };
 
   const scrollToIndex = (index: number, animated: boolean) => {
-    if (scrollView.current?.getNode()) {
-        //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
-    }
+    //@ts-ignore for some reason scrollToOffset isn't recognized
+    scrollView.current?.scrollToOffset({offset: index * itemHeight, animated});
   };
 
   const selectItem = useCallback(index => {
@@ -181,6 +179,10 @@ const WheelPicker = React.memo(({
   },
   []);
 
+  const getItemLayout = useCallback((_data, index: number) => {
+    return {length: itemHeight, offset: itemHeight * index, index};
+  }, [itemHeight]);
+
   const contentContainerStyle = useMemo(() => {
     return {paddingVertical: height / 2 - itemHeight / 2};
   }, [height, itemHeight]);
@@ -205,6 +207,8 @@ const WheelPicker = React.memo(({
             snapToInterval={itemHeight}
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
+            getItemLayout={getItemLayout}
+            initialScrollIndex={currentIndex}
           />
         </View>
         {label && renderLabel()}
