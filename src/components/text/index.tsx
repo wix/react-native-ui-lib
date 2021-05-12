@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
-import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated} from 'react-native';
+import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated, StyleProp} from 'react-native';
+import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -9,11 +10,9 @@ import {
   TypographyModifiers,
   ColorsModifiers
 } from '../../commons/new';
-import {Colors} from '../../style';
-import _ from 'lodash';
+import {Colors} from 'style';
 
-
-export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
+export type TextProps = Omit<RNTextProps, 'style'> & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
    * color of the text
    */
@@ -39,6 +38,7 @@ export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & Ma
    */
   animated?: boolean;
   textAlign?: string;
+  style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
 }
 export type TextPropTypes = TextProps; //TODO: remove after ComponentPropTypes deprecation;
 

@@ -22,7 +22,7 @@ const BACKGROUND_COLORS = [
   Colors.purple60
 ];
 
-const pageHeight = Constants.windowHeight / 2;
+const pageHeight = Constants.windowHeight / 3;
 
 class CarouselVerticalScreen extends Component<{}, State> {
   carousel = React.createRef<typeof Carousel>();
@@ -101,6 +101,17 @@ class CarouselVerticalScreen extends Component<{}, State> {
           </Carousel>
           {this.renderAnimatedCounter()}
         </View>
+
+        <View centerH flex marginT-s3>
+          <Text h3 marginB-s2>
+            iOS Widgets Carousel
+          </Text>
+          <Carousel horizontal={false} containerStyle={styles.widgetsCarousel}>
+            <View flex bg-blue30/>
+            <View flex bg-orange30/>
+            <View flex bg-green30/>
+          </Carousel>
+        </View>
       </View>
     );
   }
@@ -130,6 +141,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     left: 20
+  },
+  widgetsCarousel: {
+    height: 150,
+    width: 300,
+    backgroundColor: Colors.grey60,
+    borderRadius: 24,
+    overflow: 'hidden'
   }
 });
 

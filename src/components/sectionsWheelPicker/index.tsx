@@ -53,15 +53,11 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
 
   const renderSections = () =>
     _.map(sections, (section, index) => {
-      return (
-        <View height={1} key={index} testID={testID}>
-          <WheelPicker testID={`${testID}.${index}`} {...wheelPickerProps} {...section}/>
-        </View>
-      );
+      return <WheelPicker key={index} testID={`${testID}.${index}`} {...wheelPickerProps} {...section}/>;
     });
 
   return (
-    <View flex row centerH>
+    <View row centerH testID={testID}>
       {renderSections()}
     </View>
   );

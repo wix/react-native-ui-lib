@@ -1,7 +1,7 @@
 import {useCallback, useState, useEffect, useMemo} from 'react';
 import _ from 'lodash';
 import * as Presenter from './Presenter';
-import {useDidUpdate} from '../../hooks';
+import {useDidUpdate} from 'hooks';
 import {Validator} from './types';
 import {InputProps} from './Input';
 

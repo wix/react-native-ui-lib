@@ -2,6 +2,7 @@ import { ImageStyle, TextStyle, StyleProp } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps, TypographyModifiers, ColorsModifiers, BackgroundColorModifier, MarginModifiers } from '../../commons/new';
 import { TouchableOpacityProps } from '../touchableOpacity';
 import { TextProps } from '../text';
+import { ImageProps } from '../image';
 export declare enum ButtonSize {
     xSmall = "xSmall",
     small = "small",
@@ -25,7 +26,7 @@ export declare type ButtonProps = TouchableOpacityProps & TypographyModifiers & 
     /**
      * Icon image source or a callback function that returns a source
      */
-    iconSource?: object | number | Function;
+    iconSource?: ImageProps['source'] | Function;
     /**
      * Icon image style
      */

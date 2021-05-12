@@ -234,7 +234,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       pageHeight
     });
 
-    this.setState({containerWidth, pageWidth, initialOffset});
+    this.setState({containerWidth, pageWidth, pageHeight, initialOffset});
   };
 
   shouldAllowAccessibilityLayout() {
@@ -327,7 +327,9 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   renderChild = (child: ReactNode, key: Key): JSX.Element | undefined => {
     if (child) {
-      const paddingLeft = this.props.horizontal ? this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined : 0;
+      const {pageWidth, pageHeight} = this.state;
+      const {horizontal} = this.props;
+      const paddingLeft = horizontal ? this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined : 0;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
       const containerMarginHorizontal = this.getContainerMarginHorizontal();
@@ -338,7 +340,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       return (
         <View
           style={{
-            width: this.state.pageWidth,
+            width: pageWidth,
+            height: !horizontal ? pageHeight : undefined,
             paddingLeft,
             marginLeft,
             marginRight,

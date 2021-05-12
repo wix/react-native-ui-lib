@@ -3,10 +3,10 @@ import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
-import {Colors, Spacings} from '../../../src/style';
+import {Colors, Spacings} from 'style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
-import {Constants} from '../../helpers';
+import {Constants} from 'helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
 import Text, {TextProps} from '../../components/text';
@@ -166,7 +166,7 @@ const WheelPicker = React.memo(({
 
   const renderLabel = () => {
     return (
-      <View centerV flexG>
+      <View centerV>
         <Text marginL-s2 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
           {label}
         </Text>
@@ -190,25 +190,27 @@ const WheelPicker = React.memo(({
   return (
     <View testID={testID} bg-white style={style}>
       <View row marginH-s5 centerH>
-        <AnimatedFlatList
-          height={height}
-          data={items}
-          // @ts-ignore reanimated2
-          keyExtractor={keyExtractor}
-          scrollEventThrottle={100}
-          onScroll={onScroll}
-          onMomentumScrollEnd={onValueChange}
-          showsVerticalScrollIndicator={false}
-          onLayout={scrollToPassedIndex}
-          // @ts-ignore
-          ref={scrollView}
-          contentContainerStyle={contentContainerStyle}
-          snapToInterval={itemHeight}
-          decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
-          renderItem={renderItem}
-          getItemLayout={getItemLayout}
-          initialScrollIndex={currentIndex}
-        />
+        <View>
+          <AnimatedFlatList
+            height={height}
+            data={items}
+            // @ts-ignore reanimated2
+            keyExtractor={keyExtractor}
+            scrollEventThrottle={100}
+            onScroll={onScroll}
+            onMomentumScrollEnd={onValueChange}
+            showsVerticalScrollIndicator={false}
+            onLayout={scrollToPassedIndex}
+            // @ts-ignore
+            ref={scrollView}
+            contentContainerStyle={contentContainerStyle}
+            snapToInterval={itemHeight}
+            decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
+            renderItem={renderItem}
+            getItemLayout={getItemLayout}
+            initialScrollIndex={currentIndex}
+          />
+        </View>
         {label && renderLabel()}
       </View>
       {fader(FaderPosition.BOTTOM)}
