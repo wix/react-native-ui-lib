@@ -1,49 +1,48 @@
 import _ from 'lodash';
-import React, {Component} from 'react';
+import React, {Component, ReactNode} from 'react';
 import {ScrollView} from 'react-native';
-import {/* Colors, Typography,  */View, Text, Button, StackAggregator} from 'react-native-ui-lib'; //eslint-disable-line
-
+import {/* Colors, Typography,  */ View, Text, Button, StackAggregator} from 'react-native-ui-lib'; //eslint-disable-line
 
 const contents = [
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-]
+  'Lorem Ipsum is simply dummy rtext of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+];
 
 export default class StackAggregatorScreen extends Component {
-  
-  onItemPress = (index) => {
+  onItemPress = (index: number) => {
     console.warn('item pressed: ', index);
-  }
+  };
 
-  onPress = (index) => {
+  onPress = (index: number) => {
     console.warn('item\'s button pressed: ', index);
-  }
+  };
 
-  renderItem = (item, index) => {
+  renderItem = (_item: ReactNode, index: number) => {
     return (
       <View key={index} center padding-12>
-        <Button label={`${index}`} marginB-10 size={'small'} onPress={() => this.onPress(index)}/>
+        <Button label={`${index}`} marginB-10 size={Button.sizes.small} onPress={() => this.onPress(index)}/>
         <Text>{contents[index]}</Text>
       </View>
     );
-  }
+  };
 
   render() {
     return (
       <ScrollView bg-dark80 keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
-        <Text center dark40 text90 marginT-20>Thu, 10 Dec, 11:29</Text>
-        <StackAggregator
-          containerStyle={{marginTop: 12}}
-          onItemPress={this.onItemPress}
-        >
+        <Text center dark40 text90 marginT-20>
+          Thu, 10 Dec, 11:29
+        </Text>
+        <StackAggregator containerStyle={{marginTop: 12}} onItemPress={this.onItemPress}>
           {_.map(contents, (item, index) => {
             return this.renderItem(item, index);
           })}
         </StackAggregator>
 
-        <Text center dark40 text90 marginT-20>Thu, 11 Dec, 13:03</Text>
+        <Text center dark40 text90 marginT-20>
+          Thu, 11 Dec, 13:03
+        </Text>
         <StackAggregator
           containerStyle={{marginTop: 12}}
           onItemPress={this.onItemPress}

@@ -1,13 +1,12 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, Animated, Easing, LayoutAnimation} from 'react-native';
+import React, {PureComponent, ReactNode} from 'react';
+import {StyleSheet, StyleProp, ViewStyle, Animated, Easing, LayoutAnimation, LayoutChangeEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {PureBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
-import Button from '../button';
+import Button, {ButtonProps} from '../button';
 import Card from '../card';
 
 const PEEP = 8;
@@ -16,92 +15,83 @@ const MARGIN_BOTTOM = 24;
 const buttonStartValue = 0.8;
 const icon = require('./assets/arrow-down.png');
 
+export interface StackAggregatorProps {
+  /**
+   * The initial state of the stack
+   */
+  collapsed?: boolean;
+  /**
+   * A setting that disables pressability on cards
+   */
+  disablePresses?: boolean;
+  /**
+   * The container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The content container style
+   */
+  contentContainerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The items border radius
+   */
+  itemBorderRadius?: number;
+  /**
+   * Props passed to the 'show less' button
+   */
+  buttonProps?: ButtonProps;
+  /**
+   * A callback for item press
+   */
+  onItemPress?: (index: number) => void;
+  /**
+   * A callback for collapse state will change (value is future collapsed state)
+   */
+  onCollapseWillChange?: (future: boolean) => void;
+  /**
+   * A callback for collapse state change (value is collapsed state)
+   */
+  onCollapseChanged?: (collapsed: boolean) => void;
+}
+
+interface StackAggregatorState {
+  collapsed?: boolean;
+  firstItemHeight?: number;
+}
+
 /**
  * @description: Stack aggregator component
  * @modifiers: margin, padding
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.js
  */
-export default class StackAggregator extends PureBaseComponent {
+class StackAggregator extends PureComponent<StackAggregatorProps, StackAggregatorState> {
   static displayName = 'StackAggregator';
 
-  static propTypes = {
-    /**
-     * The initial state of the stack
-     */
-    collapsed: PropTypes.bool,
-    /**
-     * The container style
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * The content container style
-     */
-    contentContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * The items border radius
-     */
-    itemBorderRadius: PropTypes.number,
-    /**
-     * Props passed to the 'show less' button
-     */
-    buttonProps: PropTypes.object,
-    /**
-     * A callback for item press
-     */
-    onItemPress: PropTypes.func,
-    /**
-     * A callback for collapse state will change (value is future collapsed state)
-     */
-    onCollapseWillChange: PropTypes.func,
-    /**
-    * A callback for collapse state change (value is collapsed state)
-    */
-    onCollapseChanged: PropTypes.func,
-    /**
-     * A setting that disables pressability on cards
-     */
-    disablePresses: PropTypes.boolean
-  }
-
-  static defaultProps = {
-    disablePresses: false,
-    collapsed: true,
-    itemBorderRadius: 0
+  state = {
+    collapsed: this.props.collapsed ?? true,
+    firstItemHeight: undefined
   };
 
-  constructor(props) {
-    super(props);
+  itemsCount = React.Children.count(this.props.children);
+  easeOut = Easing.bezier(0, 0, 0.58, 1);
+  animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1);
+  animatedOpacity = new Animated.Value(this.state.collapsed ? buttonStartValue : 1);
+  animatedScaleArray = this.getAnimatedScales();
+  animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1);
 
-    this.state = {
-      collapsed: props.collapsed,
-      firstItemHeight: undefined
-    };
-
-    this.itemsCount = React.Children.count(props.children);
-    this.easeOut = Easing.bezier(0, 0, 0.58, 1);
-    this.animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1);
-    this.animatedOpacity = new Animated.Value(this.state.collapsed ? buttonStartValue : 1);
-    this.animatedScaleArray = this.getAnimatedScales();
-    this.animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1);
-  }
-
-  componentDidUpdate(_prevProps, prevState) {
+  componentDidUpdate(_prevProps: StackAggregatorProps, prevState: StackAggregatorState) {
     if (prevState.collapsed !== this.state.collapsed) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
   getAnimatedScales() {
-    return React.Children.map(this.props.children, (_item, index) => {
-      return new Animated.Value(this.getItemScale(index));
-    });
+    return (
+      React.Children.map(this.props.children, (_item, index) => new Animated.Value(this.getItemScale(index))) ?? []
+    );
   }
 
-  getItemScale(index) {
+  getItemScale(index: number) {
     if (this.state.collapsed) {
       if (index === this.itemsCount - 2) {
         return 0.95;
@@ -110,17 +100,17 @@ export default class StackAggregator extends PureBaseComponent {
         return 0.9;
       }
     }
+
     return 1;
   }
 
-  animate = async () => {
-    return Promise.all([this.animateValues(), this.animateCards()]);
-  }
+  animate = () => Promise.all([this.animateValues(), this.animateCards()]);
 
   animateValues() {
     const {collapsed} = this.state;
     const newValue = collapsed ? buttonStartValue : 1;
-    return new Promise((resolve) => {
+
+    return new Promise(resolve => {
       Animated.parallel([
         Animated.timing(this.animatedOpacity, {
           duration: DURATION,
@@ -143,22 +133,22 @@ export default class StackAggregator extends PureBaseComponent {
     });
   }
 
-  animateCards() {    
+  animateCards() {
     const promises = [];
+
     for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
 
-      promises.push(
-        new Promise((resolve) => {
-          Animated.timing(this.animatedScaleArray[index], {
-            toValue: Number(newScale),
-            easing: this.easeOut,
-            duration: DURATION,
-            useNativeDriver: true
-          }).start(resolve);
-        })
-      );
+      promises.push(new Promise(resolve => {
+        Animated.timing(this.animatedScaleArray[index], {
+          toValue: Number(newScale),
+          easing: this.easeOut,
+          duration: DURATION,
+          useNativeDriver: true
+        }).start(resolve);
+      }));
     }
+
     return Promise.all(promises);
   }
 
@@ -172,7 +162,7 @@ export default class StackAggregator extends PureBaseComponent {
         this.animate();
       }
     });
-  }
+  };
 
   open = () => {
     this.setState({collapsed: false}, async () => {
@@ -184,9 +174,9 @@ export default class StackAggregator extends PureBaseComponent {
         this.animate();
       }
     });
-  }
+  };
 
-  getTop(index) {
+  getTop(index: number) {
     let start = 0;
 
     if (index === this.itemsCount - 2) {
@@ -199,7 +189,7 @@ export default class StackAggregator extends PureBaseComponent {
     return start;
   }
 
-  getStyle(index) {
+  getStyle(index: number): ViewStyle {
     const {collapsed} = this.state;
     const top = this.getTop(index);
 
@@ -209,26 +199,25 @@ export default class StackAggregator extends PureBaseComponent {
         top
       };
     }
+
     return {
       marginBottom: MARGIN_BOTTOM,
       marginTop: index === 0 ? 40 : undefined
     };
   }
 
-  onLayout = event => {
-    const height = event.nativeEvent.layout.height;
-
-    if (height) {
-      this.setState({firstItemHeight: height});
+  onLayout = ({
+    nativeEvent: {
+      layout: {height}
     }
-  };
+  }: LayoutChangeEvent) => height && this.setState({firstItemHeight: height});
 
-  onItemPress = index => {
+  onItemPress = (index: number) => {
     _.invoke(this.props, 'onItemPress', index);
   };
 
-  renderItem = (item, index) => {
-    const {contentContainerStyle, itemBorderRadius} = this.props;
+  renderItem = (item: ReactNode, index: number) => {
+    const {disablePresses, contentContainerStyle, itemBorderRadius = 0} = this.props;
     const {firstItemHeight, collapsed} = this.state;
 
     return (
@@ -236,7 +225,7 @@ export default class StackAggregator extends PureBaseComponent {
         key={index}
         onLayout={index === 0 ? this.onLayout : undefined}
         style={[
-          Constants.isIOS && this.styles.containerShadow,
+          Constants.isIOS && styles.containerShadow,
           this.getStyle(index),
           {
             borderRadius: Constants.isIOS ? itemBorderRadius : undefined,
@@ -250,8 +239,8 @@ export default class StackAggregator extends PureBaseComponent {
         collapsable={false}
       >
         <Card
-          style={[contentContainerStyle, this.styles.card]}
-          onPress={this.props.disablePresses ? false : () => this.onItemPress(index)}
+          style={[contentContainerStyle, styles.card]}
+          onPress={!disablePresses ? () => this.onItemPress(index) : undefined}
           borderRadius={itemBorderRadius}
           elevation={5}
         >
@@ -282,7 +271,7 @@ export default class StackAggregator extends PureBaseComponent {
               label={'Show less'}
               iconSource={icon}
               link
-              size={'small'}
+              size={Button.sizes.small}
               {...buttonProps}
               marginH-24
               marginB-20
@@ -299,9 +288,9 @@ export default class StackAggregator extends PureBaseComponent {
               onPress={this.open}
               activeOpacity={1}
               style={[
-                this.styles.touchable,
+                styles.touchable,
                 {
-                  height: firstItemHeight ? firstItemHeight + PEEP * 2 : undefined,
+                  height: firstItemHeight ? firstItemHeight ?? 0 + PEEP * 2 : undefined,
                   zIndex: this.itemsCount
                 }
               ]}
@@ -313,22 +302,22 @@ export default class StackAggregator extends PureBaseComponent {
   }
 }
 
-function createStyles() {
-  return StyleSheet.create({
-    touchable: {
-      position: 'absolute',
-      width: '100%'
-    },
-    containerShadow: {
-      backgroundColor: Colors.white,
-      shadowColor: Colors.dark40,
-      shadowOpacity: 0.25,
-      shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0}
-    },
-    card: {
-      overflow: 'hidden',
-      flexShrink: 1
-    }
-  });
-}
+export default asBaseComponent<StackAggregatorProps, typeof StackAggregator>(StackAggregator);
+
+const styles = StyleSheet.create({
+  touchable: {
+    position: 'absolute',
+    width: '100%'
+  },
+  containerShadow: {
+    backgroundColor: Colors.white,
+    shadowColor: Colors.dark40,
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    shadowOffset: {height: 5, width: 0}
+  },
+  card: {
+    overflow: 'hidden',
+    flexShrink: 1
+  }
+});
