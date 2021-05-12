@@ -170,6 +170,9 @@ export default {
   get ScrollBar() {
     return require('./components/scrollBar').default;
   },
+  get SectionsWheelPicker() {
+    return require('./components/sectionsWheelPicker').default;
+  },
   get SegmentedControl() {
     return require('./components/segmentedControl').default;
   },

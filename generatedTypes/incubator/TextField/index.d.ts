@@ -12,8 +12,10 @@ import { ValidationMessagePosition, Validator } from './types';
 import { InputProps } from './Input';
 import { ValidationMessageProps } from './ValidationMessage';
 import { LabelProps } from './Label';
+import { FieldContextType as _FieldContextType } from './FieldContext';
 import { FloatingPlaceholderProps } from './FloatingPlaceholder';
 import { CharCounterProps } from './CharCounter';
+export declare type FieldContextType = _FieldContextType;
 export declare type TextFieldProps = MarginModifiers & PaddingModifiers & TypographyModifiers & ColorsModifiers & InputProps & LabelProps & FloatingPlaceholderProps & ValidationMessageProps & Omit<CharCounterProps, 'maxLength'> & {
     /**
      * Pass to render a leading element
@@ -58,7 +60,7 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle;
+    fieldStyle?: ViewStyle | ((context: FieldContextType) => ViewStyle);
     /**
      * Container style of the whole component
      */
@@ -92,7 +94,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
-    validate?: "number" | Function | "required" | "email" | "url" | "price" | Validator[] | undefined;
+    validate?: "number" | Function | "email" | "required" | "url" | "price" | Validator[] | undefined;
     /**
      * Should validate when the TextField mounts
      */
@@ -116,7 +118,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | undefined;
+    fieldStyle?: ViewStyle | ((context: _FieldContextType) => ViewStyle) | undefined;
     /**
      * Container style of the whole component
      */
@@ -147,7 +149,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
-    validate?: "number" | Function | "required" | "email" | "url" | "price" | Validator[] | undefined;
+    validate?: "number" | Function | "email" | "required" | "url" | "price" | Validator[] | undefined;
     /**
      * Should validate when the TextField mounts
      */
@@ -171,7 +173,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | undefined;
+    fieldStyle?: ViewStyle | ((context: _FieldContextType) => ViewStyle) | undefined;
     /**
      * Container style of the whole component
      */
@@ -202,7 +204,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
-    validate?: "number" | Function | "required" | "email" | "url" | "price" | Validator[] | undefined;
+    validate?: "number" | Function | "email" | "required" | "url" | "price" | Validator[] | undefined;
     /**
      * Should validate when the TextField mounts
      */
@@ -226,7 +228,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | undefined;
+    fieldStyle?: ViewStyle | ((context: _FieldContextType) => ViewStyle) | undefined;
     /**
      * Container style of the whole component
      */
@@ -257,7 +259,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
-    validate?: "number" | Function | "required" | "email" | "url" | "price" | Validator[] | undefined;
+    validate?: "number" | Function | "email" | "required" | "url" | "price" | Validator[] | undefined;
     /**
      * Should validate when the TextField mounts
      */
@@ -281,7 +283,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | undefined;
+    fieldStyle?: ViewStyle | ((context: _FieldContextType) => ViewStyle) | undefined;
     /**
      * Container style of the whole component
      */

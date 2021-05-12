@@ -1,12 +1,12 @@
 import {useCallback, useState, useEffect, useMemo} from 'react';
-import {TextInputProps} from 'react-native';
 import _ from 'lodash';
 import * as Presenter from './Presenter';
-import {useDidUpdate} from '../../hooks';
+import {useDidUpdate} from 'hooks';
 import {Validator} from './types';
+import {InputProps} from './Input';
 
 
-export interface FieldStateProps extends TextInputProps {
+export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;

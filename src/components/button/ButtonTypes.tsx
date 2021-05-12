@@ -10,6 +10,7 @@ import {
 } from '../../commons/new';
 import {TouchableOpacityProps} from '../touchableOpacity';
 import {TextProps} from '../text';
+import {ImageProps} from '../image';
 
 export enum ButtonSize {
   xSmall = 'xSmall',
@@ -40,7 +41,7 @@ export type ButtonProps = TouchableOpacityProps &
     /**
      * Icon image source or a callback function that returns a source
      */
-    iconSource?: object | number | Function;
+    iconSource?: ImageProps['source'] | Function;
     /**
      * Icon image style
      */

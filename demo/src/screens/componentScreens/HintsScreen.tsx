@@ -1,11 +1,21 @@
 import React, {Component} from 'react';
 import {View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 
-
 const settingsIcon = require('../../assets/icons/settings.png');
 
-export default class HintsScreen extends Component {
-  constructor(props) {
+type HintScreenProps = {};
+type HintScreenState = {
+  showHint: boolean,
+  useShortMessage: boolean,
+  showBottomHint: boolean,
+  showIcon: boolean,
+  targetPosition: string,
+  useTargetFrame?: boolean,
+  useSideTip?: boolean
+};
+
+export default class HintsScreen extends Component<HintScreenProps, HintScreenState> {
+  constructor(props: HintScreenProps) {
     super(props);
     this.state = {
       showHint: true,
@@ -14,7 +24,7 @@ export default class HintsScreen extends Component {
       showIcon: false,
       targetPosition: 'flex-start',
       // useTargetFrame: true,
-      useSideTip: null
+      useSideTip: false
     };
   }
 
@@ -109,7 +119,7 @@ export default class HintsScreen extends Component {
             centerV
             marginB-20
             initialValue={targetPosition}
-            onValueChange={value => this.setState({targetPosition: value})}
+            onValueChange={(value: string) => this.setState({targetPosition: value})}
           >
             <Text marginR-10>Button Position:</Text>
             <RadioButton value={'flex-start'} label={'Left'} marginR-10/>
@@ -122,10 +132,9 @@ export default class HintsScreen extends Component {
             centerV
             marginB-20
             initialValue={useSideTip}
-            onValueChange={value => this.setState({useSideTip: value})}
+            onValueChange={(value: boolean) => this.setState({useSideTip: value})}
           >
             <Text marginR-10>Tip:</Text>
-            <RadioButton value={null} label={'Default'} marginR-10/>
             <RadioButton value label={'Side Tip'} marginR-10/>
             <RadioButton value={false} label={'Middle Tip'} marginR-10/>
           </RadioGroup>

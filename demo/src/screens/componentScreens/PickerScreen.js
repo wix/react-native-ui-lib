@@ -5,6 +5,7 @@ import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider} fro
 import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
+import {longOptions} from './PickerScreenLongOptions';
 
 const contacts = _.map(contactsData, c => ({...c, value: c.name, label: c.name}));
 
@@ -94,7 +95,7 @@ export default class PickerScreen extends Component {
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
             // onSearchChange={value => console.warn('value', value)}
           >
-            {_.map(options, option => (
+            {_.map(longOptions, option => (
               <Picker.Item key={option.value} value={option} disabled={option.disabled}/>
             ))}
           </Picker>
