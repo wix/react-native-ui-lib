@@ -123,15 +123,14 @@ const WheelPicker = React.memo(({
   };
 
   const scrollToIndex = (index: number, animated: boolean) => {
-      //@ts-ignore for some reason scrollToOffset isn't recognized
-      scrollView.current?.scrollToOffset({offset: index * itemHeight, animated});
-
-      // this is done to handle onMomentumScrollEnd not being called in Android:
-      // https://github.com/facebook/react-native/issues/26661
-      if (Constants.isAndroid && prevIndex.current !== index) {
-        prevIndex.current = index;
+    // this is done to handle onMomentumScrollEnd not being called in Android:
+    // https://github.com/facebook/react-native/issues/26661
+    if (Constants.isAndroid && prevIndex.current !== index) {
+      prevIndex.current = index;
         onChange?.(items?.[index]?.value, index);
-      }
+    }
+    //@ts-ignore for some reason scrollToOffset isn't recognized
+    setTimeout(() => scrollView.current?.scrollToOffset({offset: index * itemHeight, animated}), 100);
   };
 
   const selectItem = useCallback(index => {
