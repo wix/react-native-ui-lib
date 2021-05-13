@@ -74,7 +74,7 @@ class PickerDialog extends BaseComponent {
       return renderNativePicker(this.props);
     }
     return (
-      <WheelPicker selectedValue={selectedValue} onChange={onValueChange} {...wheelPickerProps} testID={testID}>
+      <WheelPicker selectedValue={selectedValue} onChange={onValueChange} {...wheelPickerProps} testID={`${testID}.wheelPicker`}>
         {children}
       </WheelPicker>
     );
