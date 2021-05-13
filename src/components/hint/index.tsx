@@ -125,6 +125,10 @@ export interface HintProps {
     */
    containerWidth?: number;
   /**
+    * Custom content element to render inside the hint container
+    */
+   customContent?: JSX.Element;
+  /**
     * The hint's test identifier
     */
    testID?: string;
@@ -411,7 +415,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderHint() {
-    const {message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.props;
+    const {message, messageStyle, icon, iconStyle, borderRadius, color, customContent, testID} = this.props;
 
     if (this.showHint) {
       return (
@@ -435,8 +439,9 @@ class Hint extends Component<HintProps, HintState> {
             style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
             ref={this.setHintRef}
           >
-            {icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-            <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
+            {customContent}
+            {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
+            {!customContent && <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>}
           </View>
         </View>
       );

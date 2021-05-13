@@ -88,6 +88,10 @@ export interface HintProps {
       */
     containerWidth?: number;
     /**
+      * Custom content element to render inside the hint container
+      */
+    customContent?: JSX.Element;
+    /**
       * The hint's test identifier
       */
     testID?: string;
