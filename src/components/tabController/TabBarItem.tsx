@@ -8,6 +8,7 @@ import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
+import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 
 const {cond, eq, call, block, and} = Reanimated;
 
@@ -94,7 +95,7 @@ export interface TabControllerItemProps {
   testID?: string;
 }
 
-interface Props extends TabControllerItemProps {
+interface Props extends TabControllerItemProps, BaseComponentInjectedProps {
   index: number;
   targetPage: any; // TODO: typescript?
   state: State;
@@ -107,7 +108,7 @@ interface Props extends TabControllerItemProps {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: Must be rendered as a direct child of TabController.TabBar.
  */
-export default class TabBarItem extends PureComponent<Props> {
+class TabBarItem extends PureComponent<Props> {
   static displayName = 'TabController.TabBarItem';
 
   static defaultProps = {
@@ -276,6 +277,8 @@ export default class TabBarItem extends PureComponent<Props> {
     );
   }
 }
+
+export default asBaseComponent<TabControllerItemProps>(TabBarItem);
 
 const styles = StyleSheet.create({
   tabItem: {
