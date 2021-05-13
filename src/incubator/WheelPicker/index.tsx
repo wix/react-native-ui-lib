@@ -99,6 +99,7 @@ const WheelPicker = React.memo(({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
+  const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
 
   useEffect(() => {
@@ -122,8 +123,15 @@ const WheelPicker = React.memo(({
   };
 
   const scrollToIndex = (index: number, animated: boolean) => {
-    //@ts-ignore for some reason scrollToOffset isn't recognized
-    scrollView.current?.scrollToOffset({offset: index * itemHeight, animated});
+      //@ts-ignore for some reason scrollToOffset isn't recognized
+      scrollView.current?.scrollToOffset({offset: index * itemHeight, animated});
+
+      // this is done to handle onMomentumScrollEnd not being called in Android:
+      // https://github.com/facebook/react-native/issues/26661
+      if (Constants.isAndroid && prevIndex.current !== index) {
+        prevIndex.current = index;
+        onChange?.(items?.[index]?.value, index);
+      }
   };
 
   const selectItem = useCallback(index => {
@@ -181,7 +189,8 @@ const WheelPicker = React.memo(({
 
   const getItemLayout = useCallback((_data, index: number) => {
     return {length: itemHeight, offset: itemHeight * index, index};
-  }, [itemHeight]);
+  },
+  [itemHeight]);
 
   const contentContainerStyle = useMemo(() => {
     return {paddingVertical: height / 2 - itemHeight / 2};
