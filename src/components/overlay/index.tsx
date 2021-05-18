@@ -4,6 +4,7 @@ import {Colors} from '../../style';
 import View from '../view';
 
 const gradientImage = require('./assets/GradientOverlay.png');
+const gradientDarkImage = require('./assets/GradientOverlayDark.png');
 
 const OVERLY_TYPES = {
   VERTICAL: 'vertical',
@@ -68,13 +69,13 @@ class Overlay extends PureComponent<OverlayTypes> {
 
   render() {
     const {type, customContent} = this.props;
-    const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
+    const image = type !== OVERLY_TYPES.SOLID ? gradientDarkImage : undefined;
 
     if (type === OVERLY_TYPES.VERTICAL) {
       return (
         <>
-          {this.renderImage(this.getStyleByType(OVERLY_TYPES.TOP), image)}
-          {this.renderImage(this.getStyleByType(OVERLY_TYPES.BOTTOM), image)}
+          {this.renderImage(this.getStyleByType(OVERLY_TYPES.TOP), gradientImage)}
+          {this.renderImage(this.getStyleByType(OVERLY_TYPES.BOTTOM), gradientImage)}
           {customContent && this.renderCustomContent()}
         </>
       );
