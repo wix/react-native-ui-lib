@@ -13,7 +13,8 @@ import {
   TextStyle,
   ViewStyle,
   LayoutChangeEvent,
-  View as RNView
+  View as RNView,
+  TouchableOpacity
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
@@ -116,6 +117,10 @@ export interface HintProps {
     * Hint offset from target
     */
    offset?: number;
+  /**
+   * Callback for Hint press
+   */
+  onPress?: () => void;
   /**
     * Callback for the background press
     */
@@ -411,34 +416,36 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderHint() {
-    const {message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.props;
+    const {onPress, message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.props;
 
     if (this.showHint) {
       return (
-        <View
-          animated
-          style={[
-            {width: this.containerWidth},
-            styles.animatedContainer,
-            this.getHintPosition(),
-            this.getHintPadding(),
-            this.getHintAnimatedStyle()
-          ]}
-          pointerEvents="box-none"
-          testID={testID}
-        >
-          {this.renderHintTip()}
+        <TouchableOpacity activeOpacity={onPress ? 0.8 : 1.0} onPress={onPress}>
           <View
-            testID={`${testID}.message`}
-            row
-            centerV
-            style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
-            ref={this.setHintRef}
+            animated
+            style={[
+              {width: this.containerWidth},
+              styles.animatedContainer,
+              this.getHintPosition(),
+              this.getHintPadding(),
+              this.getHintAnimatedStyle()
+            ]}
+            pointerEvents="box-none"
+            testID={testID}
           >
-            {icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-            <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
+            {this.renderHintTip()}
+            <View
+              testID={`${testID}.message`}
+              row
+              centerV
+              style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
+              ref={this.setHintRef}
+            >
+              {icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
+              <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
       );
     }
   }
