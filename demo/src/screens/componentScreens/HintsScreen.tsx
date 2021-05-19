@@ -93,7 +93,7 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
               showCustomContent ? (
                 <Text text70 white>
                   Click
-                  <Text onPress={() => Alert.alert('custom content :)')} text70BO violet50>
+                  <Text onPress={() => Alert.alert('custom content :)')} text70BO red40>
                     {' here '}
                   </Text>
                   for more information

@@ -32,68 +32,68 @@ interface Paddings {
 }
 export interface HintProps {
     /**
-      * Control the visibility of the hint
-      */
+     * Control the visibility of the hint
+     */
     visible?: boolean;
     /**
-      * The hint background color
-      */
+     * The hint background color
+     */
     color?: string;
     /**
-      * The hint message
-      */
+     * The hint message
+     */
     message?: string | ReactElement;
     /**
-      * The hint message custom style
-      */
+     * The hint message custom style
+     */
     messageStyle?: StyleProp<TextStyle>;
     /**
-      * Icon to show next to the hint's message
-      */
+     * Icon to show next to the hint's message
+     */
     icon?: ImageSourcePropType;
     /**
-      * The icon's style
-      */
+     * The icon's style
+     */
     iconStyle?: StyleProp<ImageStyle>;
     /**
-      * The hint's position
-      */
+     * The hint's position
+     */
     position?: HintPositions;
     /**
-      * Provide custom target position instead of wrapping a child
-      */
+     * Provide custom target position instead of wrapping a child
+     */
     targetFrame?: HintTargetFrame;
     /**
-      * Show side tips instead of the middle tip
-      */
+     * Show side tips instead of the middle tip
+     */
     useSideTip?: boolean;
     /**
-      * The hint's border radius
-      */
+     * The hint's border radius
+     */
     borderRadius?: number;
     /**
-      * Hint margins from screen edges
-      */
+     * Hint margins from screen edges
+     */
     edgeMargins?: number;
     /**
-      * Hint offset from target
-      */
+     * Hint offset from target
+     */
     offset?: number;
     /**
-      * Callback for the background press
-      */
+     * Callback for the background press
+     */
     onBackgroundPress?: (event: GestureResponderEvent) => void;
     /**
-      * The hint container width
-      */
+     * The hint container width
+     */
     containerWidth?: number;
     /**
-      * Custom content element to render inside the hint container
-      */
+     * Custom content element to render inside the hint container
+     */
     customContent?: JSX.Element;
     /**
-      * The hint's test identifier
-      */
+     * The hint's test identifier
+     */
     testID?: string;
     /**
      * Additional styling
@@ -156,6 +156,7 @@ declare class Hint extends Component<HintProps, HintState> {
     };
     getTipPosition(): Position;
     renderHintTip(): JSX.Element;
+    renderContent(): JSX.Element;
     renderHint(): JSX.Element | undefined;
     renderHintContainer(): JSX.Element;
     renderChildren(): React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
