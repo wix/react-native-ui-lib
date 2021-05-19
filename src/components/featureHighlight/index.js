@@ -157,8 +157,16 @@ class FeatureHighlight extends BaseComponent {
     return null;
   }
 
+  shouldSetTargetPosition = (nextProps) => {
+    return (
+      nextProps.getTarget() !== this.props.getTarget() ||
+      nextProps.title !== this.props.title ||
+      nextProps.visible !== this.props.visible
+    );
+  }
+
   componentDidUpdate(nextProps) {
-    if (!_.isEqual(nextProps, this.props)) {
+    if (this.shouldSetTargetPosition(nextProps)) {
       this.setTargetPosition();
     }
     if (this.viewRef) {
