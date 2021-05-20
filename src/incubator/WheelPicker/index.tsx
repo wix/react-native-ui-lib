@@ -157,7 +157,7 @@ const WheelPicker = React.memo(({
         {...item}
         centerH={!label}
         onSelect={selectItem}
-        testID={`${testID}.${index}`}
+        testID={`${testID}.item_${index}`}
       />
     );
   },
