@@ -92,6 +92,10 @@ export interface TabControllerItemProps {
    * Used as a testing identifier
    */
   testID?: string;
+  /**
+   * disables icon's tint color
+   */
+  disableIconTintColor?: boolean;
 }
 
 interface Props extends TabControllerItemProps {
@@ -226,7 +230,20 @@ export default class TabBarItem extends PureComponent<Props> {
   }
 
   getIconStyle() {
-    const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor, ignore} = this.props;
+    const {
+      index,
+      currentPage,
+      iconColor,
+      selectedIconColor,
+      labelColor,
+      selectedLabelColor,
+      ignore,
+      disableIconTintColor
+    } = this.props;
+
+    if (disableIconTintColor) {
+      return {};
+    }
 
     const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
     const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
