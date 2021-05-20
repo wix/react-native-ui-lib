@@ -150,7 +150,7 @@ const WheelPicker = React.memo(({
         {...item}
         centerH={!label}
         onSelect={selectItem}
-        testID={`${testID}.${index}`}
+        testID={`${testID}.item_${index}`}
       />
     );
   },
@@ -192,6 +192,7 @@ const WheelPicker = React.memo(({
       <View row marginH-s5 centerH>
         <View>
           <AnimatedFlatList
+            testID={`${testID}.list`}
             height={height}
             data={items}
             // @ts-ignore reanimated2
