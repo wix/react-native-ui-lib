@@ -41,7 +41,7 @@ export default class SliderScreen extends Component {
             <Image assetName={'megaphone'} style={styles.image}/>
             <Slider 
               onValueChange={this.onSliderValueChange} 
-              value={INITIAL_VALUE} 
+              value={INITIAL_VALUE}
               minimumValue={0} 
               maximumValue={100} 
               step={1} 

@@ -130,8 +130,9 @@ export default class Slider extends PureBaseComponent {
     };
 
     this.initialValue = this.getRoundedValue(props.value);
-    this.initialThumbSize = THUMB_SIZE;
+    this.lastValue = this.initialValue;
 
+    this.initialThumbSize = THUMB_SIZE;
     this.checkProps(props);
 
     this.createPanResponderConfig();
@@ -173,6 +174,15 @@ export default class Slider extends PureBaseComponent {
       this.updateStyles(this._x);
     }
   }
+
+  componentDidMount() {
+    Constants.addDimensionsEventListener(this.onOrientationChanged);
+  }
+
+  componentWillUnmount() {
+    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+  }
+
 
   /* Gesture Recognizer */
 
@@ -291,9 +301,9 @@ export default class Slider extends PureBaseComponent {
   }
 
   getXForValue(v) {
-    const {minimumValue, maximumValue} = this.props;
+    const {minimumValue} = this.props;
     const range = this.getRange();
-    const relativeValue = maximumValue > 0 ? minimumValue - v : maximumValue - v; // for negatives in min value
+    const relativeValue = minimumValue - v;
     const value = minimumValue < 0 ? Math.abs(relativeValue) : v - minimumValue; // for negatives
     const ratio = value / range;
     const x = ratio * (this.state.trackSize.width - this.initialThumbSize.width / 2);
@@ -348,18 +358,24 @@ export default class Slider extends PureBaseComponent {
 
   updateTrackStepAndStyle = ({nativeEvent}) => {
     this._x = nativeEvent.locationX;
-    this.updateValue(nativeEvent.locationX);
-  
+    this.updateValue(this._x);
+
     if (this.props.step > 0) {
       this.bounceToStep();
     } else {
-      this.updateStyles(nativeEvent.locationX);
+      this.updateStyles(this._x);
     }
   }
+
+  onOrientationChanged = () => {
+    this.initialValue = this.lastValue;
+    this.setState({measureCompleted: false});
+  };
 
   /* Events */
 
   onValueChange = value => {
+    this.lastValue = value;
     _.invoke(this.props, 'onValueChange', value);
   };
 
@@ -376,6 +392,7 @@ export default class Slider extends PureBaseComponent {
   };
 
   onTrackLayout = ({nativeEvent}) => {
+    this.setState({measureCompleted: false});
     this.handleMeasure('trackSize', nativeEvent);
   };
 
@@ -401,15 +418,15 @@ export default class Slider extends PureBaseComponent {
     if (currentSize && width === currentSize.width && height === currentSize.height) {
       return;
     }
-
     this[layoutName] = size;
-
     if (this.containerSize && this.thumbSize && this.trackSize) {
+      // console.warn('post return');
       this.setState({
         containerSize: this.containerSize,
         trackSize: this.trackSize,
-        thumbSize: this.thumbSize,
-        measureCompleted: true
+        thumbSize: this.thumbSize
+      }, () => {
+        this.setState({measureCompleted: true});
       });
     }
   };
