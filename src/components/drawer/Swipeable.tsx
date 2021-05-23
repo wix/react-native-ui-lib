@@ -11,6 +11,7 @@ import React, {Component} from 'react';
 import {Animated, StyleSheet, View, I18nManager} from 'react-native';
 import {PanGestureHandler, TapGestureHandler, State} from 'react-native-gesture-handler';
 import {Constants} from '../../helpers';
+import {HapticService, HapticType} from '../../services';
 
 
 const DRAG_TOSS = 0.05;
@@ -56,7 +57,8 @@ type Props = {
   useNativeAnimations: boolean,
   animationOptions?: Object,
   containerStyle?: Object,
-  childrenContainerStyle?: Object
+  childrenContainerStyle?: Object,
+  disableHaptic?: boolean
 };
 
 type StateType = {
@@ -111,6 +113,10 @@ export default class Swipeable extends Component<Props, StateType> {
     });
   }
 
+  _triggerHaptic = () => {
+    return !this.props.disableHaptic && HapticService.triggerHaptic(HapticType.impactMedium, 'Drawer');
+  }
+  
   _handleDrag = (e) => {
     const {onToggleSwipeLeft} = this.props;
 
@@ -123,7 +129,8 @@ export default class Swipeable extends Component<Props, StateType> {
       if (!this.dragThresholdReached && x >= threshold && x < threshold + 10) {
         // move item right
         this.dragThresholdReached = true;
-        onToggleSwipeLeft({rowWidth, leftWidth, dragX: x, triggerHaptic: true});
+        this._triggerHaptic();
+        onToggleSwipeLeft({rowWidth, leftWidth, dragX: x});
       }
       if (this.dragThresholdReached && x < threshold - 10) {
         // move item left
@@ -260,8 +267,10 @@ export default class Swipeable extends Component<Props, StateType> {
         // Swipe left toggle
         toValue = rowWidth * LEFT_TOGGLE_THRESHOLD;
       } else if (!onToggleSwipeLeft && fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
+        this._triggerHaptic();
         toValue = rowWidth;
       } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
+        this._triggerHaptic();
         toValue = -rowWidth;
       } else if (translationX > leftThreshold) {
         if (!onToggleSwipeLeft || onToggleSwipeLeft && translationX < rowWidth * LEFT_TOGGLE_THRESHOLD) {
