@@ -125,6 +125,9 @@ export default {
   get PanResponderView() {
     return require('./components/panningViews/panResponderView').default;
   },
+  get SwipeToDismissView() {
+    return require('./components/panningViews/swipeToDismissView').default;
+  },
   get Picker() {
     return require('./components/picker').default;
   },

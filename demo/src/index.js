@@ -88,6 +88,9 @@ module.exports = {
       get PanResponderScreen() {
         return require('./screens/componentScreens/PanResponderScreen').default;
       },
+      get SwipeToDismissScreen() {
+        return require('./screens/componentScreens/SwipeToDismissScreen').default;
+      },
       get PickerScreen() {
         return require('./screens/componentScreens/PickerScreen').default;
       },
