@@ -4,6 +4,7 @@ import {Animated, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {PanningDirections, PanningProviderDirection, PanAmountsProps, PanDirectionsProps} from './panningProvider';
+import View from '../view';
 
 export interface DismissibleAnimationProps {
     /**
@@ -51,6 +52,10 @@ export interface PanDismissibleViewProps {
    * since it looks better and most cases.
    */
   allowDiagonalDismiss?: boolean;
+  /**
+   * Make the view non dismissible
+   */
+  disabled?: boolean;
 }
 export type PanDismissibleViewPropTypes = PanDismissibleViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -380,11 +385,13 @@ class PanDismissibleView extends PureComponent<Props, State> {
   };
 
   render() {
-    const {style} = this.props;
+    const {style, disabled} = this.props;
     const {isAnimating} = this.state;
     const transform = isAnimating ? [{translateX: this.animTranslateX}, {translateY: this.animTranslateY}] : [];
 
-    return (
+    return disabled ? (
+      <View style={style}>{this.props.children}</View>
+    ) : (
       <Animated.View
         // @ts-ignore
         ref={this.ref}

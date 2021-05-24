@@ -46,6 +46,10 @@ export interface PanDismissibleViewProps {
      * since it looks better and most cases.
      */
     allowDiagonalDismiss?: boolean;
+    /**
+     * Make the view non dismissible
+     */
+    disabled?: boolean;
 }
 export declare type PanDismissibleViewPropTypes = PanDismissibleViewProps;
 declare const _default: React.ComponentClass<PanDismissibleViewProps, any>;
