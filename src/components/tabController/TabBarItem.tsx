@@ -228,12 +228,20 @@ export default class TabBarItem extends PureComponent<Props> {
   getIconStyle() {
     const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor, ignore} = this.props;
 
-    const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
-    const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+    let activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
+    let inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+
+    // TODO: Don't condition this once migrating completely to reanimated v2
+    if (processColor) {
+      // @ts-ignore
+      activeColor = processColor(activeColor);
+      // @ts-ignore
+      inactiveColor = processColor(inactiveColor);
+    }
 
     const tintColor = cond(eq(currentPage, index),
-      processColor(activeColor),
-      processColor(ignore ? activeColor : inactiveColor));
+      activeColor,
+      ignore ? activeColor : inactiveColor);
 
     return {
       tintColor
