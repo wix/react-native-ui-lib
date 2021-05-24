@@ -107,7 +107,7 @@ export default class TabBarItem extends PureComponent<Props> {
     getItemStyle(): any[];
     getLabelStyle(): (TextStyle | _.Dictionary<Reanimated.Node<number> | Reanimated.Node<string | number | boolean> | Reanimated.Node<"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"> | undefined> | undefined)[];
     getIconStyle(): {
-        tintColor: Reanimated.Node<string>;
+        tintColor: Reanimated.Node<number>;
     };
     render(): JSX.Element;
 }

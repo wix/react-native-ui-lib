@@ -2,7 +2,7 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated from 'react-native-reanimated';
+import Reanimated, {processColor} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
@@ -232,10 +232,8 @@ export default class TabBarItem extends PureComponent<Props> {
     const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
 
     const tintColor = cond(eq(currentPage, index),
-      // TODO: using processColor here broke functionality,
-      // not using it seem to not be very performant
-      activeColor,
-      ignore ? activeColor : inactiveColor);
+      processColor(activeColor),
+      processColor(ignore ? activeColor : inactiveColor));
 
     return {
       tintColor
