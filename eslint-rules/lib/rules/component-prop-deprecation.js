@@ -30,6 +30,9 @@ const MAP_SCHEMA = {
           message: {
             type: 'string'
           },
+          isRequired: {
+            type: 'boolean'
+          },
           fix: {
             type: 'object',
             required: ['propName'],
@@ -80,6 +83,18 @@ module.exports = {
       }
     }
 
+    function reportRequiredProps({node, name, prop, message: customMessage}) {
+      try {
+        const message = `The '${name}' component's prop '${prop}' is required. ${customMessage}`;
+        context.report({
+          node: node,
+          message
+        });
+      } catch (err) {
+        console.log('Found error in: ', context.getFilename());
+      }
+    }
+
     const {deprecations} = context.options[0];
     const organizedDeprecations = organizeDeprecations(deprecations);
 
@@ -87,25 +102,29 @@ module.exports = {
 
     function checkPropDeprecation(node, fixNode, propName, deprecatedPropList, componentName) {
       const deprecatedProp = _.find(deprecatedPropList, {prop: propName});
-      if (deprecatedProp) {
+      if (deprecatedProp && !deprecatedProp.isRequired) {
         const {prop, message, fix} = deprecatedProp;
         reportDeprecatedProps({node, name: componentName, prop, message, fixNode, fix});
       }
+
+      return !!deprecatedProp;
     }
 
     function testAttributeForDeprecation(attribute, deprecatedPropList, componentName) {
+      let wasFound = false;
       if (attribute.type === 'JSXAttribute') {
-        checkPropDeprecation(attribute, attribute.name, attribute.name.name, deprecatedPropList, componentName);
+        wasFound = checkPropDeprecation(attribute, attribute.name, attribute.name.name, deprecatedPropList, componentName);
       } else if (attribute.type === 'JSXSpreadAttribute') {
         const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context.getScope());
         if (spreadSource) {
           _.forEach(spreadSource.properties, property => {
             const key = _.get(property, 'key');
             const propName = _.get(property, 'key.name');
-            checkPropDeprecation(key, key, propName, deprecatedPropList, componentName);
+            wasFound = checkPropDeprecation(key, key, propName, deprecatedPropList, componentName);
           });
         }
       }
+      return wasFound;
     }
 
     function deprecationCheck(node) {
@@ -123,13 +142,29 @@ module.exports = {
               currentImport,
               deprecationSource
             );
-            
+
             foundPossibleDeprecations.forEach(foundPossibleDeprecation => {
-              const deprecatedPropList = foundPossibleDeprecation.props;
+              const deprecatedPropList = [...foundPossibleDeprecation.props];
+              const requiredPropList = _.remove(deprecatedPropList, p => !!p.isRequired);
               const attributes = node.attributes;
+
+              /* handle deprecated props */
+              if (!_.isEmpty(deprecatedPropList)) {
+                attributes.forEach(attribute => {
+                  testAttributeForDeprecation(attribute, deprecatedPropList, componentName);
+                });
+              }
+
+              /* handle required props */
+              let foundAttribute = false;
               attributes.forEach(attribute => {
-                testAttributeForDeprecation(attribute, deprecatedPropList, componentName);
+                foundAttribute = foundAttribute || testAttributeForDeprecation(attribute, requiredPropList, componentName);
               });
+              
+              if (!foundAttribute && requiredPropList[0])  {
+                const prop = requiredPropList[0];
+                reportRequiredProps({node, name: componentName, prop: prop.prop, message: prop.message})
+              }
             });
           }
         }
