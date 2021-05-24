@@ -2,7 +2,7 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated from 'react-native-reanimated';
+import Reanimated, {processColor} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
@@ -228,12 +228,18 @@ export default class TabBarItem extends PureComponent<Props> {
   getIconStyle() {
     const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor, ignore} = this.props;
 
-    const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
-    const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+    let activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
+    let inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+
+    // TODO: Don't condition this once migrating completely to reanimated v2
+    if (processColor) {
+      // @ts-ignore
+      activeColor = processColor(activeColor);
+      // @ts-ignore
+      inactiveColor = processColor(inactiveColor);
+    }
 
     const tintColor = cond(eq(currentPage, index),
-      // TODO: using processColor here broke functionality,
-      // not using it seem to not be very performant
       activeColor,
       ignore ? activeColor : inactiveColor);
 
