@@ -34,6 +34,7 @@ declare type Props = {
     animationOptions?: Object;
     containerStyle?: Object;
     childrenContainerStyle?: Object;
+    disableHaptic?: boolean;
 };
 declare type StateType = {
     dragX: Animated.Value;
@@ -53,6 +54,7 @@ export default class Swipeable extends Component<Props, StateType> {
         fullRightThreshold: number;
     };
     constructor(props: Props);
+    _triggerHaptic: () => false | void;
     _handleDrag: (e: any) => void;
     getTransX: () => Animated.AnimatedInterpolation;
     getShowLeftAction: () => Animated.Value | Animated.AnimatedInterpolation;

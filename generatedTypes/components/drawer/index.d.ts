@@ -89,6 +89,10 @@ interface Props {
      */
     leftToggleHapticTrigger?: Function;
     /**
+     * Whether to disable the haptic
+     */
+    disableHaptic?: boolean;
+    /**
      * Style
      */
     style?: ViewStyle;
