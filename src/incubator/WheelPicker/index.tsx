@@ -102,7 +102,7 @@ const WheelPicker = React.memo(({
   });
 
   const previousIndex = new Value(currentIndex);
-  const currentIndex = new Value(currentIndex);
+  const curIndex = new Value(currentIndex);
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
 
@@ -110,10 +110,10 @@ const WheelPicker = React.memo(({
     return [
       onChange(offset,
         block([
-          set(currentIndex, round(divide(offset, itemHeight))),
-          cond(neq(previousIndex, currentIndex),
+          set(curIndex, round(divide(offset, itemHeight))),
+          cond(neq(previousIndex, curIndex),
             block([
-              set(previousIndex, currentIndex),
+              set(previousIndex, curIndex),
               call([], () => {
                 HapticService.triggerHaptic(HapticType.selection, 'WheelPicker');
               })
@@ -147,7 +147,7 @@ const WheelPicker = React.memo(({
     // https://github.com/facebook/react-native/issues/26661
     if (Constants.isAndroid && prevIndex.current !== index) {
       prevIndex.current = index;
-        onChange?.(items?.[index]?.value, index);
+        _onChange?.(items?.[index]?.value, index);
     }
     //@ts-ignore for some reason scrollToOffset isn't recognized
     setTimeout(() => scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated}), 100);
