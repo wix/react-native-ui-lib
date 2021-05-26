@@ -3,10 +3,10 @@ import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
-import {Colors, Spacings} from '../../../src/style';
+import {Colors, Spacings} from 'style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
-import {Constants} from '../../helpers';
+import {Constants} from 'helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
 import Text, {TextProps} from '../../components/text';
@@ -101,19 +101,19 @@ const WheelPicker = React.memo(({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
-  const prevIndex = new Value(currentIndex);
-  const curIndex = new Value(currentIndex);
-
+  const previousIndex = new Value(currentIndex);
+  const currentIndex = new Value(currentIndex);
+  const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
 
   useCode(() => {
     return [
       onChange(offset,
         block([
-          set(curIndex, round(divide(offset, itemHeight))),
-          cond(neq(prevIndex, curIndex),
+          set(currentIndex, round(divide(offset, itemHeight))),
+          cond(neq(previousIndex, currentIndex),
             block([
-              set(prevIndex, curIndex),
+              set(previousIndex, currentIndex),
               call([], () => {
                 HapticService.triggerHaptic(HapticType.selection, 'WheelPicker');
               })
@@ -143,10 +143,14 @@ const WheelPicker = React.memo(({
   };
 
   const scrollToIndex = (index: number, animated: boolean) => {
-    if (scrollView.current?.getNode()) {
-        //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
+    // this is done to handle onMomentumScrollEnd not being called in Android:
+    // https://github.com/facebook/react-native/issues/26661
+    if (Constants.isAndroid && prevIndex.current !== index) {
+      prevIndex.current = index;
+        onChange?.(items?.[index]?.value, index);
     }
+    //@ts-ignore for some reason scrollToOffset isn't recognized
+    setTimeout(() => scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated}), 100);
   };
 
   const selectItem = useCallback(index => {
@@ -173,7 +177,7 @@ const WheelPicker = React.memo(({
         {...item}
         centerH={!label}
         onSelect={selectItem}
-        testID={`${testID}.${index}`}
+        testID={`${testID}.item_${index}`}
       />
     );
   },
@@ -189,7 +193,7 @@ const WheelPicker = React.memo(({
 
   const renderLabel = () => {
     return (
-      <View centerV flexG>
+      <View centerV>
         <Text marginL-s2 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
           {label}
         </Text>
@@ -202,6 +206,11 @@ const WheelPicker = React.memo(({
   },
   []);
 
+  const getItemLayout = useCallback((_data, index: number) => {
+    return {length: itemHeight, offset: itemHeight * index, index};
+  },
+  [itemHeight]);
+
   const contentContainerStyle = useMemo(() => {
     return {paddingVertical: height / 2 - itemHeight / 2};
   }, [height, itemHeight]);
@@ -209,23 +218,28 @@ const WheelPicker = React.memo(({
   return (
     <View testID={testID} bg-white style={style}>
       <View row marginH-s5 centerH>
-        <AnimatedFlatList
-          height={height}
-          data={items}
-          // @ts-ignore reanimated2
-          keyExtractor={keyExtractor}
-          scrollEventThrottle={100}
-          onScroll={onScroll}
-          onMomentumScrollEnd={onValueChange}
-          showsVerticalScrollIndicator={false}
-          onLayout={scrollToPassedIndex}
-          // @ts-ignore
-          ref={scrollView}
-          contentContainerStyle={contentContainerStyle}
-          snapToInterval={itemHeight}
-          decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
-          renderItem={renderItem}
-        />
+        <View>
+          <AnimatedFlatList
+            testID={`${testID}.list`}
+            height={height}
+            data={items}
+            // @ts-ignore reanimated2
+            keyExtractor={keyExtractor}
+            scrollEventThrottle={100}
+            onScroll={onScroll}
+            onMomentumScrollEnd={onValueChange}
+            showsVerticalScrollIndicator={false}
+            onLayout={scrollToPassedIndex}
+            // @ts-ignore
+            ref={scrollView}
+            contentContainerStyle={contentContainerStyle}
+            snapToInterval={itemHeight}
+            decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
+            renderItem={renderItem}
+            getItemLayout={getItemLayout}
+            initialScrollIndex={currentIndex}
+          />
+        </View>
         {label && renderLabel()}
       </View>
       {fader(FaderPosition.BOTTOM)}

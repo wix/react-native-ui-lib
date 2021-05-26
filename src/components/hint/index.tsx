@@ -221,8 +221,8 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get containerWidth() {
-    const {containerWidth} = this.props;
-    return containerWidth || Constants.screenWidth;
+    const {containerWidth = Constants.screenWidth} = this.props;
+    return containerWidth;
   }
 
   get targetLayout() {
@@ -244,13 +244,13 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get hintOffset() {
-    const {offset} = this.props;
-    return offset || DEFAULT_HINT_OFFSET;
+    const {offset = DEFAULT_HINT_OFFSET} = this.props;
+    return offset;
   }
 
   get edgeMargins() {
-    const {edgeMargins} = this.props;
-    return edgeMargins || DEFAULT_EDGE_MARGINS;
+    const {edgeMargins = DEFAULT_EDGE_MARGINS} = this.props;
+    return edgeMargins;
   }
 
   get useSideTip() {

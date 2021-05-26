@@ -9,6 +9,7 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../view';
 import Swipeable, {SwipeableProps} from './Swipeable';
+import {LogService} from '../../services';
 
 const DEFAULT_BG = Colors.primary;
 const DEFAULT_BOUNCINESS = 0;
@@ -101,6 +102,10 @@ interface Props {
    * Haptic trigger function to use onToggleSwipeLeft
    */
   leftToggleHapticTrigger?: Function;
+  /**
+   * Whether to disable the haptic
+   */
+  disableHaptic?: boolean;
   /**
    * Style
    */
@@ -214,9 +219,6 @@ class Drawer extends PureComponent<Props> {
 
   private onToggleSwipeLeft = (options?: any) => {
     if (this.props.onToggleSwipeLeft) {
-      if (options?.triggerHaptic) {
-        _.invoke(this.props, 'leftToggleHapticTrigger');
-      }
       this.animateItem(options);
     }
   };
@@ -382,7 +384,8 @@ class Drawer extends PureComponent<Props> {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, leftToggleHapticTrigger, ...others} = this.props;
+    leftToggleHapticTrigger && LogService.deprecationWarn({component: 'Drawer', oldProp: 'leftToggleHapticTrigger'});
 
     return (
       <Swipeable

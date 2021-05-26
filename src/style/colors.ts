@@ -1,3 +1,4 @@
+import {Appearance} from 'react-native';
 import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
@@ -15,6 +16,10 @@ export class Colors {
   constructor() {
     const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
+
+    Appearance.addChangeListener(({colorScheme}: Appearance.AppearancePreferences) => {
+      Object.assign(this, this.schemes[colorScheme ?? 'light']);
+    });
   }
   /**
    * Load custom set of colors
@@ -41,6 +46,8 @@ export class Colors {
     }
 
     this.schemes = schemes;
+    const colorScheme = Appearance.getColorScheme();
+    Object.assign(this, this.schemes[colorScheme ?? 'light']);
   }
 
   /**

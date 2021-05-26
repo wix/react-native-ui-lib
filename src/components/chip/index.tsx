@@ -3,7 +3,7 @@ import React, {useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Spacings} from '../../style';
+import {BorderRadiuses, Spacings} from 'style';
 import Avatar, {AvatarProps} from '../avatar';
 import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
 import Image, {ImageProps} from '../image';
@@ -94,6 +94,18 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    */
   rightIconSource?: ImageSourcePropType;
 
+  //LEFT ELEMENT
+  /**
+   * Left custom element
+   */
+  leftElement?: JSX.Element;
+
+  //RIGHT ELEMENT
+   /**
+    * Right custom element
+    */
+  rightElement?: JSX.Element;
+ 
   //DISMISS ('x' button)
   /**
    * Adds a dismiss button and serves as its callback
@@ -125,6 +137,7 @@ const DEFAULT_SIZE = 26;
  * @extends: TouchableOpacity
  * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
+ * @image: https://user-images.githubusercontent.com/1780255/119636022-e9743180-be1c-11eb-8f02-22eeab6558cd.png
  */
 const Chip = ({
   avatarProps,
@@ -142,6 +155,8 @@ const Chip = ({
   iconSource,
   iconStyle,
   rightIconSource,
+  leftElement,
+  rightElement,
   label,
   labelStyle,
   onPress,
@@ -241,13 +256,18 @@ const Chip = ({
               marginRight: Spacings.s1
             };
           }
-          if (iconSource) {
+          if (rightElement && leftElement) {
+            return {
+              marginHorizontally: 2
+            };
+          }
+          if (iconSource || leftElement) {
             return {
               marginLeft: 2,
               marginRight: Spacings.s3
             };
           }
-          if (rightIconSource) {
+          if (rightIconSource || rightElement) {
             return {
               marginLeft: Spacings.s3,
               marginRight: 2
@@ -304,7 +324,9 @@ const Chip = ({
     >
       {avatarProps && renderAvatar()}
       {iconSource && renderIcon('left')}
+      {leftElement}
       {label && renderLabel()}
+      {rightElement}
       {rightIconSource && renderIcon('right')}
       {badgeProps && renderBadge()}
       {onDismiss && renderOnDismiss()}

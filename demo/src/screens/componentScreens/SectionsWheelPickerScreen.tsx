@@ -4,7 +4,7 @@ import {Alert} from 'react-native';
 import {Text, View, SectionsWheelPicker, SegmentedControl, Button, Incubator} from 'react-native-ui-lib';
 
 const SectionsWheelPickerScreen = () => {
-  const [showMinutes, setShowMinutes] = useState(false);
+  const [numOfSections, setNumOfSections] = useState(1);
 
   const [selectedDays, setSelectedDays] = useState(0);
   const [selectedHours, setSelectedHours] = useState(0);
@@ -35,7 +35,7 @@ const SectionsWheelPickerScreen = () => {
     const hours = selectedHours === 1 ? 'hour' : 'hours';
     const minutes = selectedMinutes === 1 ? 'minute' : 'minutes';
 
-    showMinutes
+    numOfSections === 3
       ? Alert.alert('Your chosen duration is:\n' +
             selectedDays +
             ' ' +
@@ -48,7 +48,9 @@ const SectionsWheelPickerScreen = () => {
             selectedMinutes +
             ' ' +
             minutes)
-      : Alert.alert('Your chosen duration is:\n' + selectedDays + ' ' + days + ' and ' + selectedHours + ' ' + hours);
+      : numOfSections === 2
+        ? Alert.alert('Your chosen duration is:\n' + selectedDays + ' ' + days + ' and ' + selectedHours + ' ' + hours)
+        : Alert.alert('Your chosen duration is:\n' + selectedDays + ' ' + days);
   };
 
   const onResetPress = () => {
@@ -58,20 +60,33 @@ const SectionsWheelPickerScreen = () => {
   };
 
   const sections: Incubator.WheelPickerProps[] = [
-    {items: getItems(days), onChange: onDaysChange, selectedValue: selectedDays, label: 'Days'},
-    {items: getItems(hours), onChange: onHoursChange, selectedValue: selectedHours, label: 'Hrs'},
+    {
+      items: getItems(days),
+      onChange: onDaysChange,
+      selectedValue: selectedDays,
+      label: 'Days',
+      style: numOfSections === 1 ? {flex: 1} : {flex: 1, alignItems: 'flex-end'}
+    },
+    {
+      items: getItems(hours),
+      onChange: onHoursChange,
+      selectedValue: selectedHours,
+      label: 'Hrs',
+      style: numOfSections === 2 ? {flex: 1, alignItems: 'flex-start'} : undefined
+    },
     {
       items: getItems(minutes),
       onChange: onMinutesChange,
       selectedValue: selectedMinutes,
-      label: 'Mins'
+      label: 'Mins',
+      style: {flex: 1, alignItems: 'flex-start'}
     }
   ];
 
-  const sectionsToPresent = showMinutes ? sections : _.slice(sections, 0, 2);
+  const sectionsToPresent = _.slice(sections, 0, numOfSections);
 
   const onChangeIndex = (index: number) => {
-    return index === 0 ? setShowMinutes(false) : setShowMinutes(true);
+    return setNumOfSections(index + 1);
   };
 
   return (
@@ -80,13 +95,16 @@ const SectionsWheelPickerScreen = () => {
         Sections Wheel Picker
       </Text>
       <View centerH marginT-40>
-        <SegmentedControl segments={[{label: '2 sections'}, {label: '3 sections'}]} onChangeIndex={onChangeIndex}/>
+        <SegmentedControl
+          segments={[{label: '1 section'}, {label: '2 sections'}, {label: '3 sections'}]}
+          onChangeIndex={onChangeIndex}
+        />
         <Text text50 marginV-20>
           Pick a duration
         </Text>
       </View>
       <SectionsWheelPicker sections={sectionsToPresent}/>
-      <Button marginH-150 marginT-300 label={'Save'} onPress={onSavePress}/>
+      <Button marginH-150 marginT-40 label={'Save'} onPress={onSavePress}/>
       <Button marginH-150 marginT-15 label={'Reset'} onPress={onResetPress}/>
     </View>
   );
