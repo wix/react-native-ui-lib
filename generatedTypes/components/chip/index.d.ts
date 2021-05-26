@@ -77,6 +77,14 @@ export declare type ChipProps = ViewProps & TouchableOpacityProps & {
      */
     rightIconSource?: ImageSourcePropType;
     /**
+     * Left custom element
+     */
+    leftElement?: JSX.Element;
+    /**
+     * Right custom element
+     */
+    rightElement?: JSX.Element;
+    /**
      * Adds a dismiss button and serves as its callback
      */
     onDismiss?: (props: any) => void;
@@ -170,6 +178,14 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Right icon's source
      */
     rightIconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    /**
+     * Left custom element
+     */
+    leftElement?: JSX.Element | undefined;
+    /**
+     * Right custom element
+     */
+    rightElement?: JSX.Element | undefined;
     /**
      * Adds a dismiss button and serves as its callback
      */

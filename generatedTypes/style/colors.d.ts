@@ -118,6 +118,14 @@ declare const colorObject: Colors & {
     purple20: string;
     purple30: string;
     purple40: string;
+    /**
+     * Add alpha to hex or rgb color
+     * arguments:
+     * p1 - hex color / R part of RGB
+     * p2 - opacity / G part of RGB
+     * p3 - B part of RGB
+     * p4 - opacity
+     */
     purple50: string;
     purple60: string;
     purple70: string;

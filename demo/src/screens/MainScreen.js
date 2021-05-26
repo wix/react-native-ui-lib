@@ -11,13 +11,14 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextField,
   Image,
   Button,
-  TabController
+  TabController,
+  Incubator
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
+const {TextField} = Incubator;
 const settingsIcon = require('../assets/icons/settings.png');
 const chevronIcon = require('../assets/icons/chevronRight.png');
 
