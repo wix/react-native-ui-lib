@@ -159,8 +159,8 @@ declare class Hint extends Component<HintProps, HintState> {
     renderContent(): JSX.Element;
     renderHint(): JSX.Element | undefined;
     renderHintContainer(): JSX.Element;
-    renderChildren(): React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
-    render(): {} | null | undefined;
+    renderChildren(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    render(): React.ReactNode;
 }
 declare const _default: React.ComponentClass<HintProps & {
     useCustomTheme?: boolean | undefined;

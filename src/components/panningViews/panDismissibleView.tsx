@@ -83,7 +83,7 @@ interface Props extends PanDismissibleViewProps {
 }
 
 interface State {
-  isAnimating: boolean;
+  isAnimating?: boolean;
 }
 
 /**

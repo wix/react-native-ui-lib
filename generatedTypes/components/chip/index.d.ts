@@ -165,7 +165,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * Additional icon props
      */
-    iconProps?: Pick<ImageProps, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "style" | "testID" | "onLayout" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "width" | "height" | "borderRadius" | "borderBottomLeftRadius" | "borderBottomRightRadius" | "borderTopLeftRadius" | "borderTopRightRadius" | "aspectRatio" | "onError" | "onLoad" | "onLoadEnd" | "onLoadStart" | "progressiveRenderingEnabled" | "resizeMode" | "resizeMethod" | "loadingIndicatorSource" | "defaultSource" | "blurRadius" | "capInsets" | "onProgress" | "onPartialLoad" | "fadeDuration" | "cover" | "sourceTransformer" | "assetName" | "assetGroup" | "tintColor" | "supportRTL" | "overlayType" | "overlayColor" | "customOverlayContent" | "errorSource"> | undefined;
+    iconProps?: Omit<ImageProps, "source"> | undefined;
     /**
      * Icon style
      */
@@ -173,11 +173,11 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * Left icon's source
      */
-    iconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    iconSource?: ImageSourcePropType | undefined;
     /**
      * Right icon's source
      */
-    rightIconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    rightIconSource?: ImageSourcePropType | undefined;
     /**
      * Left custom element
      */
@@ -197,7 +197,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * Dismiss asset
      */
-    dismissIcon?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    dismissIcon?: ImageSourcePropType | undefined;
     /**
      * Dismiss style
      */
