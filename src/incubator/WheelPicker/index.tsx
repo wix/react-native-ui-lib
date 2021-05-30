@@ -13,7 +13,9 @@ import Text, {TextProps} from '../../components/text';
 import {HapticService, HapticType} from 'services';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const {onChange, cond, useCode, neq, call, block, divide, set, round, Value} = Animated;
+const {onChange, cond, useCode, modulo, neq, call, block, lessThan, or, sub, divide, set, round, greaterThan, Value} =
+  Animated;
+const HAPTIC_RANGE = 10;
 
 export interface WheelPickerProps {
   /**
@@ -101,8 +103,8 @@ const WheelPicker = React.memo(({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
-  const previousIndex = new Value(currentIndex);
-  const curIndex = new Value(currentIndex);
+  const animatedPrevIndex = new Value(currentIndex);
+  const animatedCurIndex = new Value(currentIndex);
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
 
@@ -110,10 +112,14 @@ const WheelPicker = React.memo(({
     return [
       onChange(offset,
         block([
-          set(curIndex, round(divide(offset, itemHeight))),
-          cond(neq(previousIndex, curIndex),
+          set(animatedCurIndex,
+            cond(or(greaterThan(modulo(offset, itemHeight), sub(itemHeight, HAPTIC_RANGE)),
+              lessThan(modulo(offset, itemHeight), HAPTIC_RANGE)),
+            round(divide(offset, itemHeight)),
+            animatedCurIndex)),
+          cond(neq(animatedPrevIndex, animatedCurIndex),
             block([
-              set(previousIndex, curIndex),
+              set(animatedPrevIndex, animatedCurIndex),
               call([], () => {
                 HapticService.triggerHaptic(HapticType.selection, 'WheelPicker');
               })
