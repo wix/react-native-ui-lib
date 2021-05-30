@@ -5,6 +5,7 @@ module.exports = {
   rules: {
     /* Disabled rules for typescript */
     'no-dupe-class-members': 'off',
+    'no-undef': 'off',
     /* Other Rules */
     'no-unused-expressions': 'off',
     'arrow-parens': 'off',
@@ -37,8 +38,11 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/prefer-optional-chain': 'error',
     '@typescript-eslint/ban-ts-ignore': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
+    '@typescript-eslint/ban-types': 0,
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/camelcase': 0,
-    '@typescript-eslint/indent': 0
+    '@typescript-eslint/indent': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0
   }
 };

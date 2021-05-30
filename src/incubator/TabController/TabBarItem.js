@@ -110,7 +110,7 @@ export default class TabBarItem extends PureComponent {
       nativeEvent: {state: this.props.state}
     }
   ],
-  {useNativeDriver: true},);
+  {useNativeDriver: true});
 
   onLayout = ({
     nativeEvent: {
@@ -159,7 +159,7 @@ export default class TabBarItem extends PureComponent {
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
     const color = cond(eq(currentPage, index),
       processColor(activeColor),
-      processColor(ignore ? activeColor : inactiveColor),);
+      processColor(ignore ? activeColor : inactiveColor));
 
     return [
       {
@@ -180,7 +180,7 @@ export default class TabBarItem extends PureComponent {
       // TODO: using processColor here broke functionality,
       // not using it seem to not be very performant
       activeColor,
-      ignore ? activeColor : inactiveColor,);
+      ignore ? activeColor : inactiveColor);
 
     return {
       tintColor

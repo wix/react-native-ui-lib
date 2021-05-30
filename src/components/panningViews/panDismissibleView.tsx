@@ -3,21 +3,26 @@ import React, {PureComponent} from 'react';
 import {Animated, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
-import PanningProvider, {PanningDirections, PanningProviderDirection, PanAmountsProps, PanDirectionsProps} from './panningProvider';
+import PanningProvider, {
+  PanningDirections,
+  PanningProviderDirection,
+  PanAmountsProps,
+  PanDirectionsProps
+} from './panningProvider';
 
 export interface DismissibleAnimationProps {
-    /**
-     * The return animation speed (default is 20)
-     */
-    speed?: number;
-    /**
-     * The return animation bounciness (default is 6)
-     */
-    bounciness?: number;
-    /**
-     * The dismiss animation duration (default is 280)
-     */
-    duration?: number;
+  /**
+   * The return animation speed (default is 20)
+   */
+  speed?: number;
+  /**
+   * The return animation bounciness (default is 6)
+   */
+  bounciness?: number;
+  /**
+   * The dismiss animation duration (default is 280)
+   */
+  duration?: number;
 }
 export type DismissibleAnimationPropTypes = DismissibleAnimationProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -237,7 +242,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
         useNativeDriver: true,
         speed,
         bounciness
-      }),);
+      }));
     }
 
     if (!_.isUndefined(toY)) {
@@ -246,7 +251,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
         useNativeDriver: true,
         speed,
         bounciness
-      }),);
+      }));
     }
 
     this.setState({isAnimating: true}, () => {
@@ -357,7 +362,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
         toValue: Math.round(toX),
         useNativeDriver: true,
         duration
-      }),);
+      }));
     }
 
     if (!_.isUndefined(toY)) {
@@ -365,7 +370,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
         toValue: Math.round(toY),
         useNativeDriver: true,
         duration
-      }),);
+      }));
     }
 
     this.setState({isAnimating: true}, () => {
@@ -373,7 +378,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
     });
   };
 
-  onDismissAnimationFinished = ({finished}: ({finished: boolean})) => {
+  onDismissAnimationFinished = ({finished}: {finished: boolean}) => {
     if (finished) {
       _.invoke(this.props, 'onDismiss');
     }
