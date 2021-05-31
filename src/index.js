@@ -150,7 +150,7 @@ export default {
     return require('./components/stepper').default;
   },
   get TabController() {
-    return require('./components/tabController').default;
+    return require('./components/tabController2').default;
   },
   get TabBar() {
     return require('./components/tabBar').default;
