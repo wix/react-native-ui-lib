@@ -388,7 +388,7 @@ export default class TextField extends BaseInput {
   }
 
   getErrorMessage() {
-    return this.props.error || this.state.error;
+    return this.props?.error || this.state?.error;
   }
 
   shouldShowTopError() {
