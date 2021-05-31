@@ -33,7 +33,7 @@ export default class ReanimatedObject {
           set(this.state.frameTime, 0),
           set(this.config.toValue, this.nextValue),
           startClock(this.clock)
-        ],),
+        ]),
       timing(this.clock, this.state, this.config),
       cond(this.state.finished, [stopClock(this.clock), set(this.prevValue, this.state.position)])
     ]);

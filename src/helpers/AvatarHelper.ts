@@ -1,5 +1,4 @@
 import _ from 'lodash';
-// @ts-ignore
 import URL from 'url-parse';
 import Colors from '../style/colors';
 

@@ -3,6 +3,7 @@ declare type Shadow = {
     top?: ShadowStyleIOS;
     bottom?: ShadowStyleIOS;
 } & ShadowStyleIOS;
+declare type customPresets = Record<string, Shadow>;
 declare const _default: {
     sh10: {
         top: {
@@ -217,5 +218,5 @@ declare const _default: {
      * }
      */
     loadShadows(shadows: Dictionary<Shadow>): void;
-} & Record<string, Shadow>;
+} & customPresets;
 export default _default;

@@ -222,21 +222,17 @@ class ColorPalette extends PureComponent<Props, State> {
           },
           (x: number, _y: number, w: number, _h: number) => {
             if (x + w > this.containerWidth) {
-              if (this.scrollBar && this.scrollBar.current) {
-                this.scrollBar.current.scrollTo({
-                  x: x + w + HORIZONTAL_PADDING - this.containerWidth,
-                  y: 0,
-                  animated: false
-                });
-              }
+              this.scrollBar?.current?.scrollTo({
+                x: x + w + HORIZONTAL_PADDING - this.containerWidth,
+                y: 0,
+                animated: false
+              });
             }
           });
         }
       }
     } else if (this.usePagination) {
-      if (this.carousel && this.carousel.current) {
-        this.carousel.current.goToPage(this.selectedPage || currentPage, false);
-      }
+      this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
     }
   }
 
