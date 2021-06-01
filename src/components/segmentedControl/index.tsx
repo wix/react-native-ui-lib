@@ -11,6 +11,7 @@ const {interpolate: _interpolate, interpolateNode} = Reanimated;
 const interpolate = interpolateNode || _interpolate;
 const Easing = EasingNode || _Easing;
 const BORDER_WIDTH = 1;
+const SEGMENT_HEIGHT = 30;
 
 export type SegmentedControlItemProps = SegmentProps;
 export type SegmentedControlProps = {
@@ -79,12 +80,12 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     initialIndex = 0,
     containerStyle,
     segments,
-    activeColor = Colors.primary,
+    activeColor = Colors.white,
     borderRadius = BorderRadiuses.br100,
     backgroundColor = Colors.grey80,
-    activeBackgroundColor = Colors.white,
+    activeBackgroundColor = Colors.grey10,
     inactiveColor = Colors.grey20,
-    outlineColor = activeColor,
+    outlineColor = Colors.grey20,
     outlineWidth = BORDER_WIDTH,
     fullWidth
   } = props;
@@ -125,7 +126,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     if (segmentsCounter.current === segments?.length) {
       const left = interpolate(animatedValue.current, {
         inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segmentsStyle.current, segment => segment.x)
+        outputRange: _.map(segmentsStyle.current, segment => segment.x - BORDER_WIDTH)
       });
 
       const width = interpolate(animatedValue.current, {
@@ -174,13 +175,13 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.grey80,
-    height: Spacings.s7,
-    borderColor: Colors.grey60
+    borderColor: Colors.grey60,
+    paddingVertical: Spacings.s2,
+    borderWidth: BORDER_WIDTH
   },
   selectedSegment: {
-    height: Spacings.s7 - 2 * BORDER_WIDTH,
-    position: 'absolute',
-    backgroundColor: Colors.white
+    height: SEGMENT_HEIGHT,
+    position: 'absolute'
   },
   segment: {
     paddingHorizontal: Spacings.s3

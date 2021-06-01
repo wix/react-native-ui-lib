@@ -15,7 +15,7 @@ const segments = {
     {label: 'Short'}
   ],
   forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Colors'}],
-  fifth: [{label: 'Full'}, {label: 'Width'}, {label: 'Segmented'}, {label: 'Control'}],
+  fifth: [{label: 'Full'}, {label: 'Width'}],
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}]
 };
 
@@ -37,7 +37,7 @@ const SegmentedControlScreen = () => {
         <SegmentedControl
           onChangeIndex={(index: number) => onChangeIndex('third', index)}
           containerStyle={styles.container}
-          activeColor={Colors.red30}
+          activeColor={Colors.violet50}
           segments={segments.third}
         />
         <SegmentedControl
