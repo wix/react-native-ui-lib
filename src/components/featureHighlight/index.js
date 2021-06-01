@@ -149,10 +149,14 @@ class FeatureHighlight extends BaseComponent {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState?.getTarget === nextProps?.getTarget) {
+      return null;
+    }
+    
     const target = nextProps?.getTarget?.();
     const node = FeatureHighlight.findTargetNode(target);
     if (node && node !== prevState?.node) {
-      return {...prevState, node};
+      return {getTarget: nextProps?.getTarget, node};
     }
     return null;
   }
