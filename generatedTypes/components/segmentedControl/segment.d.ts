@@ -43,6 +43,10 @@ export declare type SegmentProps = SegmentedControlItemProps & {
      * onLayout function.
      */
     onLayout?: (index: number, event: LayoutChangeEvent) => void;
+    /**
+     * Whether the segmentedControl should be in a full width mode
+     */
+    fullWidth?: boolean;
 };
 declare const _default: React.ComponentClass<SegmentedControlItemProps & {
     /**
@@ -69,6 +73,10 @@ declare const _default: React.ComponentClass<SegmentedControlItemProps & {
      * onLayout function.
      */
     onLayout?: ((index: number, event: LayoutChangeEvent) => void) | undefined;
+    /**
+     * Whether the segmentedControl should be in a full width mode
+     */
+    fullWidth?: boolean | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;

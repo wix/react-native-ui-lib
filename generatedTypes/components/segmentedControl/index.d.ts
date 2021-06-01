@@ -51,6 +51,10 @@ export declare type SegmentedControlProps = {
      * Additional spacing styles for the container
      */
     containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Whether the segmentedControl should be in a full width mode
+     */
+    fullWidth?: boolean;
     testID?: string;
 };
 declare const _default: React.ComponentClass<SegmentedControlProps & {
