@@ -62,6 +62,10 @@ export type SegmentedControlProps = {
    * Additional spacing styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Whether the segmentedControl should be in a full width mode 
+   */
+  fullWidth?: boolean,
   testID?: string;
 };
 
@@ -81,7 +85,8 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     activeBackgroundColor = Colors.white,
     inactiveColor = Colors.grey20,
     outlineColor = activeColor,
-    outlineWidth = BORDER_WIDTH
+    outlineWidth = BORDER_WIDTH,
+    fullWidth
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
 
@@ -120,7 +125,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     if (segmentsCounter.current === segments?.length) {
       const left = interpolate(animatedValue.current, {
         inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segmentsStyle.current, segment => segment.x - BORDER_WIDTH)
+        outputRange: _.map(segmentsStyle.current, segment => segment.x)
       });
 
       const width = interpolate(animatedValue.current, {
@@ -144,21 +149,24 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           isSelected={selectedSegment === index}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
+          fullWidth={fullWidth}
           {...segments?.[index]}
         />
       );
     });
 
   return (
-    <View row center style={[styles.container, containerStyle, {borderRadius, backgroundColor}]}>
-      <Reanimated.View
-        style={[
-          styles.selectedSegment,
-          animatedStyle,
-          {borderColor: outlineColor, borderRadius, backgroundColor: activeBackgroundColor, borderWidth: outlineWidth}
-        ]}
-      />
-      {renderSegments()}
+    <View center={!fullWidth}>
+      <View row center style={[styles.container, containerStyle, {borderRadius, backgroundColor}]}>
+        <Reanimated.View
+          style={[
+            styles.selectedSegment,
+            animatedStyle,
+            {borderColor: outlineColor, borderRadius, backgroundColor: activeBackgroundColor, borderWidth: outlineWidth}
+          ]}
+        />
+        {renderSegments()}
+      </View>
     </View>
   );
 };

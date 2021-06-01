@@ -14,7 +14,9 @@ const segments = {
     },
     {label: 'Short'}
   ],
-  forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Colors'}]
+  forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Colors'}],
+  fifth: [{label: 'Full'}, {label: 'Width'}, {label: 'Segmented'}, {label: 'Control'}],
+  sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}]
 };
 
 const SegmentedControlScreen = () => {
@@ -23,8 +25,8 @@ const SegmentedControlScreen = () => {
   };
 
   return (
-    <View flex bottom padding-20>
-      <View flex center>
+    <View flex bottom padding-page>
+      <View flex centerV>
         <SegmentedControl onChangeIndex={(index: number) => onChangeIndex('first', index)} segments={segments.first}/>
         <SegmentedControl
           onChangeIndex={(index: number) => onChangeIndex('second', index)}
@@ -47,6 +49,18 @@ const SegmentedControlScreen = () => {
           backgroundColor={Colors.grey10}
           activeBackgroundColor={Colors.grey40}
           inactiveColor={Colors.grey70}
+        />
+        <SegmentedControl
+          containerStyle={styles.container}
+          onChangeIndex={(index: number) => onChangeIndex('second', index)}
+          segments={segments.fifth}
+          fullWidth
+        />
+        <SegmentedControl
+          containerStyle={styles.container}
+          onChangeIndex={(index: number) => onChangeIndex('second', index)}
+          segments={segments.sixth}
+          fullWidth
         />
       </View>
       <Text text40 dark10>

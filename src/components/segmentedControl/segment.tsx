@@ -50,6 +50,10 @@ export type SegmentProps = SegmentedControlItemProps & {
    * onLayout function.
    */
   onLayout?: (index: number, event: LayoutChangeEvent) => void;
+  /**
+   * Whether the segmentedControl should be in a full width mode 
+   */
+  fullWidth?: boolean,
 };
 
 /**
@@ -66,7 +70,8 @@ const Segment = React.memo((props: SegmentProps) => {
     onPress,
     inactiveColor,
     index,
-    iconOnRight
+    iconOnRight,
+    fullWidth
   } = props;
 
   const segmentedColor = useMemo(() => (isSelected ? activeColor : inactiveColor),
@@ -88,7 +93,7 @@ const Segment = React.memo((props: SegmentProps) => {
   [onLayout, index]);
 
   return (
-    <TouchableOpacity onLayout={segmentOnLayout} style={segmentStyle} onPress={onSegmentPress} row>
+    <TouchableOpacity onLayout={segmentOnLayout} style={segmentStyle} onPress={onSegmentPress} row flexG={fullWidth} center>
       {!iconOnRight && renderIcon()}
       {label && (
         <Text text90 numberOfLines={1} color={segmentedColor}>
