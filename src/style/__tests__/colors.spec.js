@@ -26,14 +26,13 @@ describe('style/Colors', () => {
     expect(uut.rgba('#F24', 1)).toBe('rgba(255, 34, 68, 1)');
   });
 
-
   it('should handle wrong number of params', () => {
     expect(() => uut.rgba(101, 136, 0.7)).toThrow(new Error('rgba can work with either 2 or 4 arguments'));
   });
 
   it('should handle invalid rgb code', () => {
-    expect(() => uut.rgba(-12, 128, 136, 0.7)).toThrow(new Error('-12 is invalid rgb code, please use number between 0-255'),);
-    expect(() => uut.rgba(12, 128, 256, 0.7)).toThrow(new Error('256 is invalid rgb code, please use number between 0-255'),);
+    expect(() => uut.rgba(-12, 128, 136, 0.7)).toThrow(new Error('-12 is invalid rgb code, please use number between 0-255'));
+    expect(() => uut.rgba(12, 128, 256, 0.7)).toThrow(new Error('256 is invalid rgb code, please use number between 0-255'));
   });
 
   it('should handle invalid hex code', () => {

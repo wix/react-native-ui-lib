@@ -1,17 +1,16 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import {Chip, Colors, Spacings, Text, Typography, View, Dialog, WheelPickerDialog} from 'react-native-ui-lib';
+import {Chip, Colors, Spacings, Text, Typography, View, Dialog, WheelPickerDialog, Image} from 'react-native-ui-lib';
 
 const avatarImage = {
   uri: 'https://randomuser.me/api/portraits/women/24.jpg'
 };
 const checkmark = require('../../assets/icons/check-small.png');
 const chevron = require('../../assets/icons/chevronDown.png');
-
+const bell = require('../../assets/icons/bell.png');
 
 export default class ChipScreen extends Component {
-
   colors = [
     {value: Colors.red10, label: 'Red'},
     {value: Colors.blue10, label: 'Blue'},
@@ -31,7 +30,7 @@ export default class ChipScreen extends Component {
 
   openDialog = () => {
     this.toggleDialog(true);
-  }
+  };
 
   closeDialog = () => {
     this.toggleDialog(false);
@@ -73,13 +72,7 @@ export default class ChipScreen extends Component {
     const {showDialog} = this.state;
 
     return (
-      <Dialog
-        migrate
-        visible={showDialog}
-        useSafeArea
-        bottom
-        onDismiss={this.closeDialog}
-      >
+      <Dialog migrate visible={showDialog} useSafeArea bottom onDismiss={this.closeDialog}>
         {this.renderContent()}
       </Dialog>
     );
@@ -104,59 +97,34 @@ export default class ChipScreen extends Component {
         <Text marginB-10 text70BO>
           Default
         </Text>
-        {this.renderExample(
-          'Label',
-          <Chip label={'Chip'}/>
-        )}
-        {this.renderExample(
-          'Label + onPress',
-          <Chip label={'Chip'} onPress={() => Alert.alert('onPress')}/>
-        )}
-        {this.renderExample(
-          'Label + onDismiss',
+        {this.renderExample('Label', <Chip label={'Chip'}/>)}
+        {this.renderExample('Label + onPress', <Chip label={'Chip'} onPress={() => Alert.alert('onPress')}/>)}
+        {this.renderExample('Label + onDismiss',
           <Chip
             label={'Chip'}
             iconColor={Colors.black}
             onDismiss={() => Alert.alert('onDismiss')}
             onPress={() => Alert.alert('onPress')}
             dismissIconStyle={{width: 10, height: 10}}
-          />
-        )}
-        {this.renderExample(
-          'Icon',
-          <Chip
-            iconSource={checkmark}
-            iconStyle={{width: 24, height: 24}}
-            iconProps={{tintColor: Colors.black}}
-          />
-        )}
-        {this.renderExample(
-          'Left icon',
+          />)}
+        {this.renderExample('Icon',
+          <Chip iconSource={checkmark} iconStyle={{width: 24, height: 24}} iconProps={{tintColor: Colors.black}}/>)}
+        {this.renderExample('Left icon',
           <Chip
             label={'Chip'}
             iconSource={checkmark}
             iconStyle={{width: 24, height: 24}}
             iconProps={{tintColor: Colors.black}}
-          />
-        )}
-        {this.renderExample(
-          'Right icon + onPress + dynamic label',
+          />)}
+        {this.renderExample('Right icon + onPress + dynamic label',
           <Chip
             label={this.state.selectedValue}
             rightIconSource={chevron}
             iconStyle={{margin: 8}}
             onPress={this.openDialog}
-          />
-        )}
-        {this.renderExample(
-          'Label + Avatar',
-          <Chip
-            label={'Chip'}
-            avatarProps={{source: avatarImage, size: 20}}
-          />
-        )}
-        {this.renderExample(
-          'Label + Counter',
+          />)}
+        {this.renderExample('Label + Avatar', <Chip label={'Chip'} avatarProps={{source: avatarImage, size: 20}}/>)}
+        {this.renderExample('Label + Counter',
           <Chip
             label={'Chip'}
             labelStyle={{
@@ -170,18 +138,15 @@ export default class ChipScreen extends Component {
                 color: Colors.grey20
               }
             }}
-          />
-        )}
-        {this.renderExample(
-          'Label + Badge',
+          />)}
+        {this.renderExample('Label + Badge',
           <Chip
             label={'Chip'}
             badgeProps={{
               label: '4',
               backgroundColor: 'red'
             }}
-          />
-        )}
+          />)}
 
         <Text marginT-20 marginB-10 text70BO>
           Custom
@@ -232,6 +197,36 @@ export default class ChipScreen extends Component {
               borderWidth: 0,
               marginLeft: Spacings.s3
             }}
+          />
+        </View>
+        <View center row marginT-10>
+          <Chip
+            rightElement={<Image tintColor={Colors.yellow30} source={bell} width={24} height={24}/>}
+            label={'Chip'}
+          />
+          <Chip
+            marginL-s3
+            rightElement={<Image tintColor={Colors.green20} source={bell} width={20} height={20}/>}
+            leftElement={<Image tintColor={Colors.green20} source={bell} width={20} height={20}/>}
+            label={'Chip'}
+          />
+          <Chip
+            marginL-s3
+            leftElement={
+              <View center row marginL-s1>
+                <Image tintColor={Colors.blue30} source={bell}/>
+                <Image tintColor={Colors.blue30} source={bell} width={20} height={20}/>
+                <Image tintColor={Colors.blue30} source={bell} width={24} height={24}/>
+              </View>
+            }
+            label={'Chip'}
+          />
+          <Chip
+            marginL-s3
+            paddingR-s2
+            rightIconSource={chevron}
+            rightElement={<Image tintColor={Colors.red30} source={bell} width={20} height={20}/>}
+            label={'Chip'}
           />
         </View>
       </View>

@@ -126,7 +126,7 @@ export default class ActionSheet extends BaseComponent {
         cancelButtonIndex: cancelBtnIndex,
         destructiveButtonIndex
       },
-      this.onOptionPress,);
+      this.onOptionPress);
     }
   }
 

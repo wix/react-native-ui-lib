@@ -91,7 +91,13 @@ const WheelPicker = React.memo(({
   const [offset] = useValues([0], []);
   const onScroll = onScrollEvent({y: offset});
 
-  const {height, items, shouldControlComponent, index: currentIndex, getRowItemAtOffset} = usePresenter({
+  const {
+    height,
+    items,
+    shouldControlComponent,
+    index: currentIndex,
+    getRowItemAtOffset
+  } = usePresenter({
     selectedValue,
     items: propItems,
     children,
@@ -127,10 +133,10 @@ const WheelPicker = React.memo(({
     // https://github.com/facebook/react-native/issues/26661
     if (Constants.isAndroid && prevIndex.current !== index) {
       prevIndex.current = index;
-        onChange?.(items?.[index]?.value, index);
+      onChange?.(items?.[index]?.value, index);
     }
     //@ts-ignore for some reason scrollToOffset isn't recognized
-    setTimeout(() => scrollView.current?.scrollToOffset({offset: index * itemHeight, animated}), 100);
+    setTimeout(() => scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated}), 100);
   };
 
   const selectItem = useCallback(index => {
@@ -142,7 +148,7 @@ const WheelPicker = React.memo(({
     setScrollOffset(event.nativeEvent.contentOffset.y);
 
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
-      onChange?.(value, index);
+    onChange?.(value, index);
   };
 
   const renderItem = useCallback(({item, index}) => {
@@ -157,7 +163,7 @@ const WheelPicker = React.memo(({
         {...item}
         centerH={!label}
         onSelect={selectItem}
-        testID={`${testID}.${index}`}
+        testID={`${testID}.item_${index}`}
       />
     );
   },
@@ -200,6 +206,7 @@ const WheelPicker = React.memo(({
       <View row marginH-s5 centerH>
         <View>
           <AnimatedFlatList
+            testID={`${testID}.list`}
             height={height}
             data={items}
             // @ts-ignore reanimated2

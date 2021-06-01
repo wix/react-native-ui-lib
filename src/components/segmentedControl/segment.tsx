@@ -69,11 +69,8 @@ const Segment = React.memo((props: SegmentProps) => {
     iconOnRight
   } = props;
 
-  const segmentedColor = useMemo(() => (isSelected ? activeColor : inactiveColor), [
-    isSelected,
-    activeColor,
-    inactiveColor
-  ]);
+  const segmentedColor = useMemo(() => (isSelected ? activeColor : inactiveColor),
+    [isSelected, activeColor, inactiveColor]);
 
   const segmentStyle = useMemo(() => ({paddingHorizontal: Spacings.s3, borderColor: segmentedColor}), [segmentedColor]);
 
@@ -86,7 +83,7 @@ const Segment = React.memo((props: SegmentProps) => {
   }, [index, onPress]);
 
   const segmentOnLayout = useCallback((event: LayoutChangeEvent) => {
-      onLayout?.(index, event);
+    onLayout?.(index, event);
   },
   [onLayout, index]);
 

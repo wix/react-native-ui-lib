@@ -218,7 +218,7 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
     /**
      * The image source (external or assets)
      */
-    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    source?: ImageSourcePropType | undefined;
     /**
      * Image props object
      */

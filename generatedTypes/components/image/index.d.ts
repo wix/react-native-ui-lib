@@ -77,7 +77,7 @@ declare class Image extends PureComponent<Props, State> {
     constructor(props: Props);
     static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State): {
         error: boolean;
-        prevSource: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+        prevSource: ImageSourcePropType | undefined;
     } | null;
     isGif(): boolean | undefined;
     shouldUseImageBackground(): boolean;
@@ -134,7 +134,7 @@ declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"marg
     /**
      * Default image source in case of an error
      */
-    errorSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    errorSource?: ImageSourcePropType | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Image;

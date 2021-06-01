@@ -33,10 +33,10 @@ interface State {
 /**
  * @description: Wraps the panResponderView and panListenerView to provide a shared context
  */
-export default class PanningProvider extends Component<{}, State> {
+export default class PanningProvider extends Component<any, State> {
     static displayName: string;
     static Directions: typeof PanningDirections;
-    constructor(props: {});
+    constructor(props: any);
     getProviderContextValue: () => {
         onPanStart: () => void;
         onPanRelease: () => void;

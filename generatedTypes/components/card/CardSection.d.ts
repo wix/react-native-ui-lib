@@ -67,8 +67,8 @@ declare const _default: React.ComponentClass<ViewProps & {
     /**
      * Will be used for the background when provided
      */
-    imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
-    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    imageSource?: ImageSourcePropType | undefined;
+    source?: ImageSourcePropType | undefined;
     /**
      * The style for the background image
      */

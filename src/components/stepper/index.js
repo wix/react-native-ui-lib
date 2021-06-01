@@ -115,7 +115,7 @@ export default class Stepper extends PureBaseComponent {
         if (this.props.onValueChange) {
           this.props.onValueChange(newValue);
         }
-      },);
+      });
     }
   }
 

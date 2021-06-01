@@ -9,7 +9,6 @@ import collections from '../../assets/icons/collections.png';
 import richText from '../../assets/icons/richText.png';
 
 export default class ActionBarScreen extends Component {
-
   constructor(props) {
     super(props);
 
@@ -55,16 +54,11 @@ export default class ActionBarScreen extends Component {
           </View>
 
           <View style={styles.page}>
-            <ActionBar
-              actions={[{label: 'Delete', red30: true}, {label: 'Edit'}]}
-            />
+            <ActionBar actions={[{label: 'Delete', red30: true}, {label: 'Edit'}]}/>
           </View>
 
           <View style={styles.page}>
-            <ActionBar
-              centered
-              actions={[{label: 'Send as Contact'}, {label: 'Archive Chat'}]}
-            />
+            <ActionBar centered actions={[{label: 'Send as Contact'}, {label: 'Archive Chat'}]}/>
           </View>
 
           <View style={styles.page}>
@@ -81,8 +75,10 @@ export default class ActionBarScreen extends Component {
           <View style={styles.page}>
             <ActionBar
               centered
-              actions={_.map([cameraSelected, video, tags, collections, richText],
-                iconSource => ({iconSource, iconStyle: {width: 25}}))}
+              actions={_.map([cameraSelected, video, tags, collections, richText], iconSource => ({
+                iconSource,
+                iconStyle: {width: 25}
+              }))}
             />
           </View>
         </Carousel>
@@ -100,7 +96,7 @@ const styles = StyleSheet.create({
   },
   absoluteContainer: {
     position: 'absolute',
-    bottom: 80,
+    bottom: 150,
     left: 0,
     right: 0
   }
