@@ -306,7 +306,7 @@ export default class Slider extends PureBaseComponent {
     const relativeValue = minimumValue - v;
     const value = minimumValue < 0 ? Math.abs(relativeValue) : v - minimumValue; // for negatives
     const ratio = value / range;
-    const x = ratio * (this.state.trackSize.width - this.initialThumbSize.width / 2);
+    const x = ratio * this.state.trackSize.width;
     return x;
   }
 
