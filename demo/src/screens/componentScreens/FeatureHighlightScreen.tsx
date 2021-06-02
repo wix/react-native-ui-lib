@@ -23,16 +23,22 @@ const messages = [
   'Here is where you can view demos of all Uilib components'
 ];
 
-class FeatureHighlightScreen extends Component {
-  constructor(props) {
-    super(props);
+interface State {
+  currentTargetIndex: number;
+  showFTE: boolean;
+}
+
+class FeatureHighlightScreen extends Component<{}, State> {
+  viewRef: any;
+  targets: {[key: string]: any} = {};
+
+  constructor() {
+    super({});
 
     this.state = {
       showFTE: false,
       currentTargetIndex: 0
     };
-
-    this.targets = {};
   }
 
   componentDidMount() {
@@ -46,7 +52,7 @@ class FeatureHighlightScreen extends Component {
     this.setState({showFTE: false}, () => {
       if (this.viewRef) {
         const reactTag = findNodeHandle(this.viewRef);
-        AccessibilityInfo.setAccessibilityFocus(reactTag);
+        reactTag && AccessibilityInfo.setAccessibilityFocus(reactTag);
       }
     });
   };
@@ -55,7 +61,7 @@ class FeatureHighlightScreen extends Component {
     this.setState({showFTE: true});
   };
 
-  addTarget(ref, id) {
+  addTarget(ref: any, id: string) {
     if (ref && !this.targets[id]) {
       this.targets[id] = ref;
     }
@@ -68,7 +74,7 @@ class FeatureHighlightScreen extends Component {
     this.moveToPage(newTargetIndex);
   };
 
-  moveToPage(index) {
+  moveToPage(index: number) {
     if (index < _.size(this.targets)) {
       this.setState({currentTargetIndex: index});
     } else {
@@ -87,7 +93,7 @@ class FeatureHighlightScreen extends Component {
     };
   }
 
-  onPagePress = index => {
+  onPagePress = (index: number) => {
     this.moveToPage(index);
   };
 
