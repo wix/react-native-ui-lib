@@ -1,98 +1,102 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {ActionSheetIOS, StyleSheet, ViewPropTypes} from 'react-native';
+import React, {Component} from 'react';
+import {ActionSheetIOS, StyleSheet, StyleProp, ViewStyle, ImageProps} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {BaseComponent} from '../../commons';
-import Dialog from '../dialog';
+import {asBaseComponent} from '../../commons/new';
+import Dialog, {DialogProps} from '../dialog';
 import View from '../view';
 import Text from '../text';
-import Button from '../button';
+import {ButtonProps} from '../button';
 import Image from '../image';
 import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
 
 const VERTICAL_PADDING = 8;
 
+type ActionSheetProps = {
+  /**
+   * Whether to show the action sheet or not
+   */
+  visible: boolean;
+  /**
+   * Title of the action sheet. Note: if both title and message are not passed will not render the title view at all
+   */
+  title?: string;
+  /**
+   * Message of the action sheet
+   */
+  message?: string;
+  /**
+   * Index of the option represents the cancel action (to be displayed as the separated bottom bold button)
+   */
+  cancelButtonIndex?: number;
+  /**
+   * Index of the option represents the destructive action (will display red text. Usually used for 'delete' or
+   * 'abort' actions)
+   */
+  destructiveButtonIndex?: number;
+  /**
+   * List of options for the action sheet, follows the Button prop types (supply 'label' string and 'onPress'
+   * function)
+   */
+  options?: Array<ButtonProps>;
+  /**
+   * callback for when dismissing the action sheet, usually used for setting visible prop to false
+   */
+  onDismiss?: DialogProps['onDismiss'];
+  /**
+   * Should use the native action sheet for iOS
+   */
+  useNativeIOS?: boolean;
+  /**
+   * When passed (only with useNativeIOS), will display a cancel button at the bottom (overrides cancelButtonIndex)
+   */
+  showCancelButton?: boolean;
+  /**
+   * Add or override style of the action sheet (wraps the title and actions)
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Add or override style of the dialog wrapping the action sheet
+   */
+  dialogStyle?: StyleProp<ViewStyle>;
+  /**
+   * Add or override style of the options list
+   */
+  optionsStyle?: StyleProp<ViewStyle>;
+  /**
+   * Render custom title
+   */
+  renderTitle?: JSX.Element | JSX.Element[];
+  /**
+   * Render custom action
+   * Note: you will need to call onOptionPress so the option's onPress will be called
+   */
+  renderAction?: JSX.Element | JSX.Element[];
+  /**
+   * Called once the modal has been dismissed (iOS only, modal only)
+   */
+  onModalDismissed?: DialogProps['onModalDismissed'];
+  /**
+   * Whether or not to handle SafeArea
+   */
+  useSafeArea?: boolean;
+  /**
+   * testID for e2e tests
+   */
+  testID?: string;
+};
+
 /**
  * @description: Cross platform Action Sheet, with a support for native iOS solution
  * @gif: https://media.giphy.com/media/l0HUpXOR6RqB2ct5S/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.js
  */
-export default class ActionSheet extends BaseComponent {
+class ActionSheet extends Component<ActionSheetProps, {}> {
   static displayName = 'ActionSheet';
-  static propTypes = {
-    /**
-     * Whether to show the action sheet or not
-     */
-    visible: PropTypes.bool,
-    /**
-     * Title of the action sheet. Note: if both title and message are not passed will not render the title view at all
-     */
-    title: PropTypes.string,
-    /**
-     * Message of the action sheet
-     */
-    message: PropTypes.string,
-    /**
-     * Index of the option represents the cancel action (to be displayed as the separated bottom bold button)
-     */
-    cancelButtonIndex: PropTypes.number,
-    /**
-     * Index of the option represents the destructive action (will display red text. Usually used for 'delete' or
-     * 'abort' actions)
-     */
-    destructiveButtonIndex: PropTypes.number,
-    /**
-     * List of options for the action sheet, follows the Button prop types (supply 'label' string and 'onPress'
-     * function)
-     */
-    options: PropTypes.arrayOf(PropTypes.shape(Button.propTypes)),
-    /**
-     * callback for when dismissing the action sheet, usually used for setting visible prop to false
-     */
-    onDismiss: PropTypes.func,
-    /**
-     * Should use the native action sheet for iOS
-     */
-    useNativeIOS: PropTypes.bool,
-    /**
-     * When passed (only with useNativeIOS), will display a cancel button at the bottom (overrides cancelButtonIndex)
-     */
-    showCancelButton: PropTypes.bool,
-    /**
-     * Add or override style of the action sheet (wraps the title and actions)
-     */
-    containerStyle: ViewPropTypes.style,
-    /**
-     * Add or override style of the dialog wrapping the action sheet
-     */
-    dialogStyle: ViewPropTypes.style,
-    /**
-     * Add or override style of the options list
-     */
-    optionsStyle: ViewPropTypes.style,
-    /**
-     * Render custom title
-     */
-    renderTitle: PropTypes.elementType,
-    /**
-     * Render custom action
-     * Note: you will need to call onOptionPress so the option's onPress will be called
-     */
-    renderAction: PropTypes.elementType,
-    /**
-     * Called once the modal has been dissmissed (iOS only, modal only)
-     */
-    onModalDismissed: PropTypes.func,
-    /**
-     * Whether or not to handle SafeArea
-     */
-    useSafeArea: PropTypes.bool
-  };
 
-  constructor(props) {
+  constructor(props: ActionSheetProps) {
     super(props);
 
     this.onOptionPress = this.onOptionPress.bind(this);
@@ -101,11 +105,12 @@ export default class ActionSheet extends BaseComponent {
 
   static defaultProps = {
     title: undefined,
-    message: undefined
+    message: undefined,
+    useModal: false
   };
 
-  componentDidUpdate(prevProps) {
-    const {useNativeIOS} = this.getThemeProps();
+  componentDidUpdate(prevProps: ActionSheetProps) {
+    const {useNativeIOS} = this.props;
     const wasVisible = prevProps.visible;
     const willBeVisible = this.props.visible;
 
@@ -119,27 +124,30 @@ export default class ActionSheet extends BaseComponent {
         cancelBtnIndex = optionsArray.length - 1;
       }
 
-      ActionSheetIOS.showActionSheetWithOptions({
-        title,
-        message,
-        options: _.map(optionsArray, 'label'),
-        cancelButtonIndex: cancelBtnIndex,
-        destructiveButtonIndex
-      },
-      this.onOptionPress);
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          title,
+          message,
+          options: _.flatMap(optionsArray, 'label'),
+          cancelButtonIndex: cancelBtnIndex,
+          destructiveButtonIndex
+        },
+        this.onOptionPress
+      );
     }
   }
 
-  onOptionPress(optionIndex) {
+  onOptionPress(optionIndex: number) {
     _.invoke(this.props, `options[${optionIndex}].onPress`);
     _.invoke(this.props, 'onDismiss');
   }
 
-  renderIcon(icon) {
-    return <Image source={icon} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>;
+  renderIcon(icon: ButtonProps['iconSource']) {
+    const source = _.isFunction(icon) ? icon() : icon as ImageProps['source'];
+    return <Image source={source} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>;
   }
 
-  renderAction(option, index) {
+  renderAction(option: ButtonProps, index: number) {
     return (
       <ListItem
         style={{backgroundColor: 'transparent'}}
@@ -150,7 +158,7 @@ export default class ActionSheet extends BaseComponent {
         activeBackgroundColor={Colors.dark80}
       >
         <View row paddingL-16 flex centerV>
-          {option.icon && this.renderIcon(option.icon)}
+          {option.iconSource && this.renderIcon(option.iconSource)}
           <Text text70 dark10 numberOfLines={1}>
             {option.label}
           </Text>
@@ -188,7 +196,7 @@ export default class ActionSheet extends BaseComponent {
 
   renderSheet() {
     const {renderTitle} = this.props;
-    const {containerStyle} = this.getThemeProps();
+    const {containerStyle} = this.props;
     return (
       <View style={[styles.sheet, containerStyle]}>
         {_.isFunction(renderTitle) ? renderTitle() : this.renderTitle()}
@@ -198,16 +206,8 @@ export default class ActionSheet extends BaseComponent {
   }
 
   render() {
-    const {
-      useNativeIOS,
-      visible,
-      onDismiss,
-      useModal,
-      dialogStyle,
-      onModalDismissed,
-      testID,
-      useSafeArea
-    } = this.getThemeProps();
+    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea} =
+      this.props;
 
     if (Constants.isIOS && useNativeIOS) {
       return null;
@@ -215,17 +215,14 @@ export default class ActionSheet extends BaseComponent {
 
     return (
       <Dialog
-        migrate
         useSafeArea={useSafeArea}
         testID={testID}
         bottom
         centerH
-        width="100%"
-        height={null}
-        style={[styles.dialog, dialogStyle]}
+        width="80%"
+        containerStyle={[styles.dialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
-        useModal={useModal}
         onModalDismissed={onModalDismissed}
         panDirection={PanningProvider.Directions.DOWN}
       >
@@ -234,6 +231,8 @@ export default class ActionSheet extends BaseComponent {
     );
   }
 }
+
+export default asBaseComponent(ActionSheet);
 
 const styles = StyleSheet.create({
   sheet: {
