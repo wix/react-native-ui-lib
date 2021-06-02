@@ -250,7 +250,7 @@ export default class Slider extends PureBaseComponent {
     }
 
     if (this.minTrack) {
-      this._minTrackStyles.width = x;
+      this._minTrackStyles.width = Math.min(this.state.trackSize.width, x);
       this.minTrack.setNativeProps(this._minTrackStyles);
     }
   }
