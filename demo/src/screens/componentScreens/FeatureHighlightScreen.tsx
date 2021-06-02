@@ -32,8 +32,8 @@ class FeatureHighlightScreen extends Component<{}, State> {
   viewRef: any;
   targets: {[key: string]: any} = {};
 
-  constructor() {
-    super({});
+  constructor(props: any) {
+    super(props);
 
     this.state = {
       showFTE: false,
