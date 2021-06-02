@@ -22,6 +22,7 @@ export type RadioGroupProps = ViewProps & {
 export type RadioGroupPropTypes = RadioGroupProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface RadioGroupState {
+  initialValue?: RadioGroupProps['initialValue'];
   value?: RadioGroupProps['initialValue'];
 }
 
@@ -39,28 +40,20 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
     super(props);
 
     this.state = {
+      initialValue: props.initialValue,
       value: props.initialValue
     };
   }
 
-  static getUpdatedState = (
-    nextProps: Props,
-    prevState: RadioGroupState
-  ): RadioGroupState | null => {
-    const {value} = prevState;
-    const {initialValue} = nextProps;
-
-    if (_.isUndefined(nextProps.initialValue) || value === initialValue) {
-      return null;
+  static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState> = (props, state) => {
+    if (state.initialValue !== props.initialValue) {
+      return {
+        initialValue: props.initialValue,
+        value: props.initialValue
+      };
     }
 
-    return {
-      value: initialValue
-    };
-  };
-
-  static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState> = (props, state) => {
-    return RadioGroup.getUpdatedState(props, state);
+    return null;
   }
 
   getContextProviderValue() {
