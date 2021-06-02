@@ -59,7 +59,7 @@ export type FeatureHighlightProps = {
   /**
    * Frame of the area to highlight {x, y, width, height}
    */
-  highlightFrame: HighlightFrame;
+  highlightFrame?: HighlightFrame;
   /**
    * Callback that extract the ref of the element to be highlighted
    */
@@ -71,63 +71,63 @@ export type FeatureHighlightProps = {
   /**
    * Message to be displayed
    */
-  message: string;
+  message?: string;
   /**
    * Title text style
    */
-  titleStyle: StyleProp<TextStyle>;
+  titleStyle?: StyleProp<TextStyle>;
   /**
    * Message text style
    */
-  messageStyle: StyleProp<TextStyle>;
+  messageStyle?: StyleProp<TextStyle>;
   /**
    * Title's max number of lines
    */
-  titleNumberOfLines: number;
+  titleNumberOfLines?: number;
   /**
    * Message's max number of lines
    */
-  messageNumberOfLines: number;
+  messageNumberOfLines?: number;
   /**
    * Props that will be passed to the dismiss button
    */
-  confirmButtonProps: ButtonProps;
+  confirmButtonProps?: ButtonProps;
   /**
    * Callback for the background press
    */
-  onBackgroundPress: TouchableWithoutFeedbackProps['onPress'];
+  onBackgroundPress?: TouchableWithoutFeedbackProps['onPress'];
   /**
    * Color of the content's background (usually includes alpha for transparency)
    */
-  overlayColor: string;
+  overlayColor?: string;
   /**
    * Color of the content's text
    */
-  textColor: string;
+  textColor?: string;
   /**
    * Color of the border around the highlighted element
    */
-  borderColor: string;
+  borderColor?: string;
   /**
    * Width of the border around the highlighted element
    */
-  borderWidth: number;
+  borderWidth?: number;
   /**
    * Border radius for the border corners around the highlighted element
    */
-  borderRadius: number;
+  borderRadius?: number;
   /**
    * The minimum size of the highlighted component (Android API 21+, and only when passing a ref in 'getTarget')
    */
-  minimumRectSize: RectSize;
+  minimumRectSize?: RectSize;
   /**
    * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
    */
-  innerPadding: number;
+  innerPadding?: number;
   /**
    * PageControl component's props
    */
-  pageControlProps: PageControlProps;
+  pageControlProps?: PageControlProps;
 
   testID?: string;
 };
