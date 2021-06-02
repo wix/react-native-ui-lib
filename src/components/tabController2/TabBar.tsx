@@ -1,8 +1,8 @@
 // TODO: support commented props
 // TODO: disable scroll when content width is shorter than screen width
-import React, {useEffect, useMemo, useRef, useContext, ReactNode} from 'react';
+import React, {useMemo, useRef, useContext, ReactNode} from 'react';
 import {StyleSheet, Platform, TextProps, StyleProp, ViewStyle} from 'react-native';
-import Reanimated, {useAnimatedStyle, useDerivedValue, useSharedValue, withTiming} from 'react-native-reanimated';
+import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate, withTiming} from 'react-native-reanimated';
 import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
@@ -11,13 +11,9 @@ import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjec
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
 import {Constants} from '../../helpers';
-import {LogService} from '../../services';
 import FadedScrollView from './FadedScrollView';
 
 import useScrollToItem from './useScrollToItem';
-
-const {Code, Value, interpolate: _interpolate, interpolateNode, block, set} = Reanimated;
-const interpolate = interpolateNode || _interpolate;
 
 const DEFAULT_HEIGHT = 48;
 const INDICATOR_INSET = Spacings.s4;
@@ -156,49 +152,15 @@ const TabBar = (props: Props) => {
     itemStates,
     items: contextItems,
     currentPage,
+    targetPage,
     carouselOffset,
     pageWidth = Constants.screenWidth,
-    targetPage,
-    registerTabItems,
+    /* targetPage, */
+    /* registerTabItems, */
     selectedIndex
   } = context;
 
   const children = useRef<Props['children']>(_.filter(propsChildren, (child: ChildProps) => !!child));
-
-  // const _registerTabItems = () => {
-  //   const ignoredItems: number[] = [];
-  //   let itemsCount;
-
-  //   if (propsItems) {
-  //     itemsCount = _.size(propsItems);
-  //     _.forEach(propsItems, (item, index) => {
-  //       if (item.ignore) {
-  //         ignoredItems.push(index);
-  //       }
-  //     });
-  //     // TODO: deprecate with props.children
-  //   } else {
-  //     itemsCount = React.Children.count(children.current);
-  //     // @ts-ignore TODO: typescript - not sure if this can be solved
-  //     React.Children.toArray(children.current).forEach((child: ChildProps, index: number) => {
-  //       if (child.props.ignore) {
-  //         ignoredItems.push(index);
-  //       }
-  //     });
-  //   }
-
-  //   registerTabItems(itemsCount, ignoredItems);
-  // };
-
-  // useEffect(() => {
-  //   if (propsChildren) {
-  //     LogService.warn('uilib: Please pass the "items" prop to TabController.TabBar instead of children');
-  //   }
-
-  //   if ((propsItems || children.current) && !contextItems) {
-  //     _registerTabItems();
-  //   }
-  // }, []);
 
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || Constants.screenWidth;
@@ -211,13 +173,12 @@ const TabBar = (props: Props) => {
   const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
 
   const {
-    ready,
     scrollViewRef: tabBar,
     onItemLayout,
     itemsWidthsAnimated,
     itemsOffsetsAnimated,
-    itemsWidths,
-    itemsOffsets,
+    // itemsWidths,
+    // itemsOffsets,
     focusIndex,
     onContentSizeChange,
     onLayout
@@ -227,17 +188,14 @@ const TabBar = (props: Props) => {
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
 
-  // const indicatorOffsets = useMemo((): number[] => {
-  //   let index = 0;
-  //   const offsets = [];
-  //   offsets.push(0);
-  //   while (index < itemsWidths.length - 1) {
-  //     ++index;
-  //     offsets[index] = offsets[index - 1] + itemsWidths[index - 1];
-  //   }
-
-  //   return offsets;
-  // }, [itemsWidths]);
+  useAnimatedReaction(() => {
+    return Math.round(currentPage.value);
+  },
+  (currIndex, prevIndex) => {
+    if (currIndex !== prevIndex) {
+      runOnJS(focusIndex)(currIndex);
+    }
+  });
 
   const _renderTabBarItems = useMemo((): ReactNode => {
     return _.map(items, (item, index) => {
@@ -252,7 +210,6 @@ const TabBar = (props: Props) => {
           selectedIconColor={selectedIconColor}
           activeBackgroundColor={activeBackgroundColor}
           key={item.label}
-          // width={_itemsWidths.current[index]}
           {...item}
           {...context}
           index={index}
@@ -276,87 +233,25 @@ const TabBar = (props: Props) => {
     onItemLayout
   ]);
 
-  // // TODO: Remove once props.children is deprecated
-  // const _renderTabBarItemsFromChildren = useMemo((): ReactNode | null => {
-  //   return !children.current
-  //     ? null
-  //     : React.Children.map(children.current, (child: Partial<ChildProps>, index: number) => {
-  //       // @ts-ignore TODO: typescript - not sure if this can be easily solved
-  //       return React.cloneElement(child, {
-  //         labelColor,
-  //         selectedLabelColor,
-  //         labelStyle,
-  //         selectedLabelStyle,
-  //         uppercase,
-  //         iconColor,
-  //         selectedIconColor,
-  //         activeBackgroundColor,
-  //         ...child.props,
-  //         ...context,
-  //         index,
-  //         state: itemStates[index],
-  //         onLayout: centerSelected ? onItemLayout : undefined
-  //       });
-  //     });
-  // }, [
-  //   propsChildren,
-  //   labelColor,
-  //   selectedLabelColor,
-  //   labelStyle,
-  //   selectedLabelStyle,
-  //   uppercase,
-  //   iconColor,
-  //   selectedIconColor,
-  //   activeBackgroundColor,
-  //   itemStates,
-  //   centerSelected,
-  //   onItemLayout
-  // ]);
-
-  const renderTabBarItems = useMemo(() => {
-    return _.isEmpty(itemStates) ? null : /* items ?  */ _renderTabBarItems;
-  }, [itemStates, /* items, */ _renderTabBarItems]);
-
   const _indicatorTransitionStyle = useAnimatedStyle(() => {
-    const value = asCarousel ? carouselOffset.value / pageWidth : currentPage.value;
-    const width = Reanimated.interpolate(value,
-      itemsWidthsAnimated.value.map((_v, i) => i),
-      itemsWidthsAnimated.value.map(v => v - 2 * INDICATOR_INSET));
+    const value = /* asCarousel ? carouselOffset.value / pageWidth :  */targetPage.value;
+    const width = interpolate(value,
+      itemsWidthsAnimated.value.map((_v: number, i: number) => i),
+      itemsWidthsAnimated.value.map((v: number) => v - 2 * INDICATOR_INSET));
 
-    const left = Reanimated.interpolate(value,
-      itemsOffsetsAnimated.value.map((_v, i) => i),
+    const left = interpolate(value,
+      itemsOffsetsAnimated.value.map((_v, i: number) => i),
       itemsOffsetsAnimated.value);
 
     return {
       width,
-      left,
+      left
     };
   });
 
-  const selectedIndicator =
-    itemsWidths && itemsWidths.length > 0 ? (
-      <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
-    ) : undefined;
-
-  // const renderCodeBlock = _.memoize(() => {
-  //   const nodes: any[] = [];
-
-  //   nodes.push(set(_indicatorOffset,
-  //     interpolate(currentPage, {
-  //       inputRange: indicatorOffsets.map((_v, i) => i),
-  //       outputRange: indicatorOffsets
-  //     })));
-  //   nodes.push(set(_indicatorWidth,
-  //     interpolate(currentPage, {
-  //       inputRange: itemsWidths.map((_v, i) => i),
-  //       outputRange: itemsWidths.map(v => v - 2 * INDICATOR_INSET)
-  //     })));
-
-  //   nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], focusIndex as any)));
-
-  //   const temp = <Code>{() => block(nodes)}</Code>;
-  //   return temp;
-  // });
+  const renderTabBarItems = useMemo(() => {
+    return _.isEmpty(itemStates) ? null : /* items ?  */ _renderTabBarItems;
+  }, [itemStates, /* items, */ _renderTabBarItems]);
 
   const shadowStyle = useMemo(() => {
     return enableShadow ? propsShadowStyle || styles.containerShadow : undefined;
@@ -387,9 +282,8 @@ const TabBar = (props: Props) => {
         onLayout={onLayout}
       >
         <View style={indicatorContainerStyle}>{renderTabBarItems}</View>
-        {selectedIndicator}
+        <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
       </FadedScrollView>
-      {/* {_.size(itemsWidths) > 1 && renderCodeBlock()} */}
     </View>
   );
 };
@@ -399,7 +293,6 @@ TabBar.defaultProps = {
   labelStyle: DEFAULT_LABEL_STYLE,
   selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
   backgroundColor: DEFAULT_BACKGROUND_COLOR
-
   // containerWidth: Constants.screenWidth
 };
 

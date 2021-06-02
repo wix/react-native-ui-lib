@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {useState, useCallback, useEffect, useRef} from 'react';
+import {useState, useCallback, useEffect, useRef, RefObject} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import useScrollTo, {ScrollToProps, ScrollToSupportedViews, ScrollToResultProps} from 'hooks/useScrollTo';
@@ -12,7 +12,8 @@ export enum OffsetType {
   RIGHT = 'RIGHT'
 }
 
-export type ScrollToItemProps<T extends ScrollToSupportedViews> = Pick<ScrollToProps<T>, 'scrollViewRef'> & {
+export type ScrollToItemProps<T extends ScrollToSupportedViews> = {
+  scrollViewRef?: RefObject<T>;
   /**
    * The number of items
    */
@@ -57,9 +58,13 @@ export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<
    */
   onItemLayout: (event: LayoutChangeEvent, index: number) => void;
   /**
-   * The items' width
+   * The items' width as share animated value 
    */
-  itemsWidths: number[];
+  itemsWidthsAnimated: any; //TODO: should be SharedValue<number[]>
+  /**
+   * The items' offsets as share animated value 
+   */
+   itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
   /**
    * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
    */

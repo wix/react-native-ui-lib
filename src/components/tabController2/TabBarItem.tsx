@@ -128,7 +128,8 @@ export default function TabBarItem({
   }, []);
 
   const onPress = useCallback(() => {
-    currentPage.value = withTiming(index);
+    // currentPage.value = withTiming(index);
+    currentPage.value = index;
     props.onPress?.(index);
   }, [index, props.onPress]);
 
