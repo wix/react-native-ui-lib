@@ -20,7 +20,6 @@ const {Code, Value, interpolate: _interpolate, interpolateNode, block, set} = Re
 const interpolate = interpolateNode || _interpolate;
 
 const DEFAULT_HEIGHT = 48;
-const INDICATOR_INSET = Spacings.s4;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 
 const DEFAULT_LABEL_STYLE = {
@@ -60,6 +59,10 @@ export interface TabControllerBarProps {
    * custom style for the selected indicator
    */
   indicatorStyle?: StyleProp<ViewStyle>;
+  /**
+   * Whether the indicator should be wide (as the item)
+   */
+  wideIndicator?: boolean;
   /**
    * custom label style
    */
@@ -133,6 +136,7 @@ const TabBar = (props: Props) => {
     shadowStyle: propsShadowStyle,
     // minTabsForScroll,
     indicatorStyle,
+    wideIndicator,
     labelStyle,
     selectedLabelStyle,
     labelColor,
@@ -149,6 +153,7 @@ const TabBar = (props: Props) => {
     children: propsChildren
   } = props;
 
+  const indicatorInset = wideIndicator ? 0 : Spacings.s4;
   const context = useContext(TabBarContext);
   // @ts-ignore // TODO: typescript
   const {itemStates, items: contextItems, currentPage, targetPage, registerTabItems, selectedIndex} = context;
@@ -307,7 +312,7 @@ const TabBar = (props: Props) => {
 
   const selectedIndicator =
     itemsWidths && itemsWidths.length > 0 ? (
-      <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
+      <Reanimated.View style={[styles.selectedIndicator, {marginHorizontal: indicatorInset}, indicatorStyle, _indicatorTransitionStyle]}/>
     ) : undefined;
 
   const renderCodeBlock = _.memoize(() => {
@@ -321,7 +326,7 @@ const TabBar = (props: Props) => {
     nodes.push(set(_indicatorWidth,
       interpolate(currentPage, {
         inputRange: itemsWidths.map((_v, i) => i),
-        outputRange: itemsWidths.map(v => v - 2 * INDICATOR_INSET)
+        outputRange: itemsWidths.map(v => v - 2 * indicatorInset)
       })));
 
     nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], focusIndex as any)));
@@ -400,7 +405,6 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 2,
-    marginHorizontal: INDICATOR_INSET,
     backgroundColor: Colors.primary
   },
   containerShadow: {
