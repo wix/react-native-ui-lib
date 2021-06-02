@@ -142,8 +142,8 @@ class ActionSheet extends Component<ActionSheetProps, {}> {
     _.invoke(this.props, 'onDismiss');
   }
 
-  renderIcon(icon: ButtonProps['iconSource']) {
-    const source = _.isFunction(icon) ? icon() : icon as ImageProps['source'];
+  renderIcon(iconSource: ButtonProps['iconSource']) {
+    const source = _.isFunction(iconSource) ? iconSource() : iconSource as ImageProps['source'];
     return <Image source={source} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>;
   }
 
@@ -219,7 +219,7 @@ class ActionSheet extends Component<ActionSheetProps, {}> {
         testID={testID}
         bottom
         centerH
-        width="80%"
+        width="100%"
         containerStyle={[styles.dialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
