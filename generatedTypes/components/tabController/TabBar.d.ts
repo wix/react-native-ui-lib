@@ -7,6 +7,10 @@ export interface TabControllerBarProps {
      */
     items?: TabControllerItemProps[];
     /**
+     * Whether the tabBar should be spread (default: true)
+     */
+    spreadItems?: boolean;
+    /**
      * Tab Bar height
      */
     height?: number;

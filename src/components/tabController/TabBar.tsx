@@ -40,6 +40,10 @@ export interface TabControllerBarProps {
    */
   items?: TabControllerItemProps[];
   /**
+   * Whether the tabBar should be spread (default: true)
+   */
+  spreadItems?: boolean;
+  /**
    * Tab Bar height
    */
   height?: number;
@@ -131,6 +135,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
 const TabBar = (props: Props) => {
   const {
     items: propsItems,
+    spreadItems = true,
     height,
     enableShadow,
     shadowStyle: propsShadowStyle,
@@ -344,7 +349,7 @@ const TabBar = (props: Props) => {
   }, [shadowStyle, containerWidth, containerStyle]);
 
   const indicatorContainerStyle = useMemo(() => {
-    return [styles.tabBar, !_.isUndefined(height) && {height}, {backgroundColor}];
+    return [styles.tabBar, {flex: spreadItems && 1}, !_.isUndefined(height) && {height}, {backgroundColor}];
   }, [height, backgroundColor]);
 
   const scrollViewContainerStyle = useMemo(() => {
@@ -386,7 +391,6 @@ const styles = StyleSheet.create({
     zIndex: 100
   },
   tabBar: {
-    flex: 1,
     height: DEFAULT_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between'
