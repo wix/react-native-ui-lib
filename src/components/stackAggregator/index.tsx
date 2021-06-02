@@ -1,14 +1,16 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, Animated, Easing, LayoutAnimation} from 'react-native';
+import React, {PureComponent} from 'react';
+import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, ButtonProps} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
+import {ViewProps} from '../view';
 import {PureBaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Button from '../button';
 import Card from '../card';
+import {asBaseComponent} from '../../commons/new';
 
 const PEEP = 8;
 const DURATION = 300;
@@ -16,52 +18,56 @@ const MARGIN_BOTTOM = 24;
 const buttonStartValue = 0.8;
 const icon = require('./assets/arrow-down.png');
 
+export type StackAggregatorProps = ViewProps & {
+   /**
+     * The initial state of the stack
+     */
+    collapsed: boolean;
+    /**
+     * The container style
+     */
+    containerStyle: StyleProp<ViewStyle>;
+    /**
+     * The content container style
+     */
+    contentContainerStyle: StyleProp<ViewStyle>;
+    /**
+     * The items border radius
+     */
+    itemBorderRadius: number;
+    /**
+     * Props passed to the 'show less' button
+     */
+    buttonProps: ButtonProps;
+    /**
+     * A callback for item press
+     */
+    onItemPress: (index: number) => void;
+    /**
+     * A callback for collapse state will change (value is future collapsed state)
+     */
+    onCollapseWillChange: (change: boolean) => void;
+    /**
+     * A callback for collapse state change (value is collapsed state)
+     */
+    onCollapseChanged: (change: boolean) => void;
+    /**
+     * A setting that disables pressability on cards
+     */
+    disablePresses: boolean;
+    /**
+     * Component Children
+     */
+    children?: JSX.Element
+};
+
 /**
  * @description: Stack aggregator component
  * @modifiers: margin, padding
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.js
  */
-export default class StackAggregator extends PureBaseComponent {
+class StackAggregator extends PureComponent<StackAggregatorProps> {
   static displayName = 'StackAggregator';
-
-  static propTypes = {
-    /**
-     * The initial state of the stack
-     */
-    collapsed: PropTypes.bool,
-    /**
-     * The container style
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * The content container style
-     */
-    contentContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * The items border radius
-     */
-    itemBorderRadius: PropTypes.number,
-    /**
-     * Props passed to the 'show less' button
-     */
-    buttonProps: PropTypes.object,
-    /**
-     * A callback for item press
-     */
-    onItemPress: PropTypes.func,
-    /**
-     * A callback for collapse state will change (value is future collapsed state)
-     */
-    onCollapseWillChange: PropTypes.func,
-    /**
-    * A callback for collapse state change (value is collapsed state)
-    */
-    onCollapseChanged: PropTypes.func,
-    /**
-     * A setting that disables pressability on cards
-     */
-    disablePresses: PropTypes.boolean
-  }
 
   static defaultProps = {
     disablePresses: false,
@@ -69,7 +75,7 @@ export default class StackAggregator extends PureBaseComponent {
     itemBorderRadius: 0
   };
 
-  constructor(props) {
+  constructor(props: StackAggregatorProps) {
     super(props);
 
     this.state = {
@@ -115,12 +121,12 @@ export default class StackAggregator extends PureBaseComponent {
 
   animate = async () => {
     return Promise.all([this.animateValues(), this.animateCards()]);
-  }
+  };
 
   animateValues() {
     const {collapsed} = this.state;
     const newValue = collapsed ? buttonStartValue : 1;
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       Animated.parallel([
         Animated.timing(this.animatedOpacity, {
           duration: DURATION,
@@ -143,13 +149,13 @@ export default class StackAggregator extends PureBaseComponent {
     });
   }
 
-  animateCards() {    
+  animateCards() {
     const promises = [];
     for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
 
       promises.push(
-        new Promise((resolve) => {
+        new Promise(resolve => {
           Animated.timing(this.animatedScaleArray[index], {
             toValue: Number(newScale),
             easing: this.easeOut,
@@ -172,7 +178,7 @@ export default class StackAggregator extends PureBaseComponent {
         this.animate();
       }
     });
-  }
+  };
 
   open = () => {
     this.setState({collapsed: false}, async () => {
@@ -184,7 +190,7 @@ export default class StackAggregator extends PureBaseComponent {
         this.animate();
       }
     });
-  }
+  };
 
   getTop(index) {
     let start = 0;
@@ -332,3 +338,5 @@ function createStyles() {
     }
   });
 }
+
+export default asBaseComponent(StackAggregator);
