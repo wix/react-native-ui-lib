@@ -23,6 +23,7 @@ const PickerItem = props => {
   const {
     value,
     label,
+    labelStyle,
     disabled,
     selectedIcon = Assets.icons.check,
     selectedIconColor = Colors.primary,
@@ -72,7 +73,7 @@ const PickerItem = props => {
   const _renderItem = () => {
     return (
       <View style={styles.container} flex row spread centerV>
-        <Text numberOfLines={1} style={[styles.labelText, isItemDisabled && styles.labelTextDisabled]}>
+        <Text numberOfLines={1} style={[styles.labelText, isItemDisabled && styles.labelTextDisabled, labelStyle]}>
           {itemLabel}
         </Text>
         {selectedIndicator}
@@ -123,6 +124,10 @@ PickerItem.propTypes = {
    * Item's label
    */
   label: PropTypes.string,
+  /**
+   * Item's label style
+   */
+  labelStyle: PropTypes.string,
   /**
    * Custom function for the item label (e.g (value) => customLabel)
    */
