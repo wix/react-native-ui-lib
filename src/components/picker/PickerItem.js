@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useContext} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text as RNText} from 'react-native';
 import {LogService} from '../../services';
 import {Colors, Typography} from '../../style';
 import * as Modifiers from '../../commons/modifiers';
@@ -127,7 +127,7 @@ PickerItem.propTypes = {
   /**
    * Item's label style
    */
-  labelStyle: PropTypes.string,
+  labelStyle: RNText.propTypes.style,
   /**
    * Custom function for the item label (e.g (value) => customLabel)
    */
