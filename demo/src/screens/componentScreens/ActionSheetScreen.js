@@ -79,8 +79,9 @@ export default class ActionSheetScreen extends Component {
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           options={[
-            {label: 'option 1', onPress: () => this.pickOption('option 1'), icon: collectionsIcon},
-            {label: 'option 2', onPress: () => this.pickOption('option 2'), icon: shareIcon},
+            {label: 'option 1', onPress: () => this.pickOption('option 1'), iconSource: collectionsIcon},
+            {label: 'option 2', onPress: () => this.pickOption('option 2'), iconSource: shareIcon},
+            // `icon` prop will be deprecated, please use `iconSource`
             {label: 'option 3', onPress: () => this.pickOption('option 3'), icon: starIcon},
             {label: 'cancel', onPress: () => this.pickOption('cancel')},
           ]}
