@@ -242,7 +242,7 @@ export default class TabBarItem extends PureComponent<Props> {
     } = this.props;
 
     if (disableIconTintColor) {
-      return {};
+      return undefined;
     }
 
     const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
