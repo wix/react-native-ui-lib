@@ -2,7 +2,7 @@ import {ReactElement} from 'react';
 import {ImageRequireSource} from 'react-native';
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
-import {ButtonProps} from './Button';
+import {ButtonProps} from '../../generatedTypes';
 
 export type ToastPosition = 'top' | 'bottom';
 
