@@ -249,12 +249,12 @@ class Picker extends Component {
 
     const {getItemLabel = _.noop} = this.props;
     return _.chain(value)
-      .map(item => (_.isPlainObject(item) ? getItemLabel(item) || item?.label : itemsByValue[item]?.label))
+      .map(item => (_.isPlainObject(item) ? getItemLabel(item) || item.label : itemsByValue[item].label))
       .join(', ')
       .value();
   };
 
-  getLabel = value => {
+  getLabel(value) {
     const {getLabel} = this.props;
 
     if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
@@ -350,6 +350,7 @@ class Picker extends Component {
       enableModalBlur,
       topBarProps,
       showSearch,
+      onShow,
       searchStyle,
       searchPlaceholder,
       renderCustomSearch,
@@ -397,6 +398,7 @@ class Picker extends Component {
           onSearchChange={this.onSearchChange}
           renderCustomSearch={renderCustomSearch}
           listProps={listProps}
+          onShow={onShow}
         >
           {this.children} 
         </PickerModal>
