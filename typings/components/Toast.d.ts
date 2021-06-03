@@ -2,17 +2,18 @@ import {ReactElement} from 'react';
 import {ImageRequireSource} from 'react-native';
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
+import {ButtonProps} from './Button';
 
 export type ToastPosition = 'top' | 'bottom';
 
 export interface ToastProps {
   visible?: boolean;
   position?: ToastPosition;
-  height?: number;
   backgroundColor?: ColorValue;
   color?: ColorValue;
   message?: string;
   icon?: ImageRequireSource;
+  actions?: ButtonProps;
   onDismiss?: () => void;
   autoDismiss?: number;
   onAnimationEnd?: (visible: boolean) => void;
