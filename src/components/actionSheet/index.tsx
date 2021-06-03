@@ -14,6 +14,8 @@ import PanningProvider from '../panningViews/panningProvider';
 
 const VERTICAL_PADDING = 8;
 
+type ActionSheetOnOptionPress = (index: number) => void;
+
 type ActionSheetProps = {
   /**
    * Whether to show the action sheet or not
@@ -68,12 +70,16 @@ type ActionSheetProps = {
   /**
    * Render custom title
    */
-  renderTitle?: JSX.Element | JSX.Element[];
+  renderTitle?: () => JSX.Element | JSX.Element[];
   /**
    * Render custom action
    * Note: you will need to call onOptionPress so the option's onPress will be called
    */
-  renderAction?: JSX.Element | JSX.Element[];
+  renderAction?: (
+    option: ButtonProps,
+    index: number,
+    onOptionPress: ActionSheetOnOptionPress
+  ) => JSX.Element | JSX.Element[];
   /**
    * Called once the modal has been dismissed (iOS only, modal only)
    */
