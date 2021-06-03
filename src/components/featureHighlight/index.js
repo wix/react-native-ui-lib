@@ -148,11 +148,31 @@ class FeatureHighlight extends BaseComponent {
     this.setTargetPosition();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setTargetPosition(nextProps);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState?.getTarget === nextProps?.getTarget) {
+      return null;
+    }
+    
+    const target = nextProps?.getTarget?.();
+    const node = FeatureHighlight.findTargetNode(target);
+    if (node && node !== prevState?.node) {
+      return {getTarget: nextProps?.getTarget, node};
+    }
+    return null;
   }
 
-  componentDidUpdate() {
+  shouldSetTargetPosition = (nextProps) => {
+    return (
+      nextProps.getTarget() !== this.props.getTarget() ||
+      nextProps.title !== this.props.title ||
+      nextProps.visible !== this.props.visible
+    );
+  }
+
+  componentDidUpdate(nextProps) {
+    if (this.shouldSetTargetPosition(nextProps)) {
+      this.setTargetPosition();
+    }
     if (this.viewRef) {
       this.setAccessibilityFocus(this.viewRef);
     }
@@ -163,7 +183,7 @@ class FeatureHighlight extends BaseComponent {
     AccessibilityInfo.setAccessibilityFocus(reactTag);
   }
 
-  findTargetNode(target) {
+  static findTargetNode(target) {
     return findNodeHandle(target);
   }
 
@@ -181,9 +201,6 @@ class FeatureHighlight extends BaseComponent {
   setTargetPosition(props = this.props) {
     if (props.getTarget !== undefined) {
       const target = props.getTarget();
-
-      const node = this.findTargetNode(target);
-      this.setState({node});
       if (target) {
         setTimeout(() => {
           target.measureInWindow((x, y, width, height) => {
