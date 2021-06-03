@@ -13,7 +13,7 @@ export interface ToastProps {
   color?: ColorValue;
   message?: string;
   icon?: ImageRequireSource;
-  actions?: ButtonProps;
+  action?: ButtonProps;
   onDismiss?: () => void;
   autoDismiss?: number;
   onAnimationEnd?: (visible: boolean) => void;
