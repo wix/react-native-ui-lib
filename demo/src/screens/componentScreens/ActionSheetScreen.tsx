@@ -11,14 +11,15 @@ const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
 
-interface State {
-  showNative: boolean;
-  showCustom: boolean;
-  showCustomIcons: boolean;
-  pickedOption?: string;
-}
 
-export default class ActionSheetScreen extends Component<{}, State> {
+export default class ActionSheetScreen extends Component {
+  state = {
+    showNative: false,
+    showCustom: false,
+    showCustomIcons: false,
+    pickedOption: undefined
+  };
+
   pickOption(index: string) {
     this.setState({
       pickedOption: index
@@ -45,7 +46,7 @@ export default class ActionSheetScreen extends Component<{}, State> {
                   this.setState({
                     showNative: useCase.useNativeIOS,
                     showCustom: !useCase.useNativeIOS && !useCase.icons,
-                    showCustomIcons: !useCase.useNativeIOS && useCase.icons !== undefined
+                    showCustomIcons: !useCase.useNativeIOS && useCase.icons
                   })}
               />
             );
