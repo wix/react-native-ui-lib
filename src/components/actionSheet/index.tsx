@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ActionSheetIOS, StyleSheet, StyleProp, ViewStyle, ImageProps} from 'react-native';
+import {ActionSheetIOS, StyleSheet, StyleProp, ViewStyle, ImageProps, ImageSourcePropType} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -142,9 +142,17 @@ class ActionSheet extends Component<ActionSheetProps, {}> {
     _.invoke(this.props, 'onDismiss');
   }
 
-  renderIcon(iconSource: ButtonProps['iconSource']) {
-    const source = _.isFunction(iconSource) ? iconSource() : iconSource as ImageProps['source'];
-    return <Image source={source} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>;
+  handleRenderIcon = (option: ButtonProps) => {
+    // @ts-ignore
+    let source = option.icon;
+    if (!source) {
+      source = _.isFunction(option.iconSource) ? option.iconSource() : option.iconSource as ImageProps['source'];
+    }
+    return this.renderIcon(source);
+  };
+
+  renderIcon(iconSource: ImageSourcePropType) {
+    return <Image source={iconSource} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>;
   }
 
   renderAction(option: ButtonProps, index: number) {
@@ -158,7 +166,7 @@ class ActionSheet extends Component<ActionSheetProps, {}> {
         activeBackgroundColor={Colors.dark80}
       >
         <View row paddingL-16 flex centerV>
-          {option.iconSource && this.renderIcon(option.iconSource)}
+          {this.handleRenderIcon(option)}
           <Text text70 dark10 numberOfLines={1}>
             {option.label}
           </Text>
