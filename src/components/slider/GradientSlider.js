@@ -19,6 +19,7 @@ const GRADIENT_TYPES = {
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/GradientSlider/GradientSlider.gif?raw=true
  */
 class GradientSlider extends Component {
   static displayName = 'GradientSlider';

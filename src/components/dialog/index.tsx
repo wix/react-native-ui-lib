@@ -102,7 +102,7 @@ const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.dark10, 0.6);
  * (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)
  * @modifiers: alignment
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
- * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Dialog/Dialog.gif?raw=true
  */
 class Dialog extends Component<DialogProps, DialogState> {
   static displayName = 'Dialog';

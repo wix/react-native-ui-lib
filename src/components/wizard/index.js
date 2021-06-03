@@ -16,6 +16,8 @@ import {States, StatesConfig} from './WizardStates';
  *
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.js
  * @notes: Use Wizard with nested Wizard.Step(s) to achieve the desired result.
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/Wizard.gif?raw=true
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/WizardPresets.png?raw=true
  */
 export default class Wizard extends BaseComponent {
   static displayName = 'Wizard';

@@ -10,6 +10,7 @@ import Text from '../text';
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
  */
 class ColorSliderGroup extends PureComponent {
   static displayName = 'ColorSliderGroup';

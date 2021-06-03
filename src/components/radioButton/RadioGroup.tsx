@@ -31,7 +31,10 @@ type Props = RadioGroupProps &
   ForwardRefInjectedProps;
 
 /**
- * Wrap a group of Radio Buttons to automatically control their selection
+ * @description: Wrap a group of Radio Buttons to automatically control their selection
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Default.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Alignment.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Custom.gif?raw=true
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Individual.png?raw=true
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/RadioButtonScreen.js
  */
 class RadioGroup extends PureComponent<Props, RadioGroupState> {
   static displayName = 'RadioGroup';

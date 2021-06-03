@@ -156,13 +156,14 @@ export default class ComponentTemplate extends Component {
     const gifs = componentInfo.gif ? componentInfo.gif.split(',') : [];
     const imgs = componentInfo.image ? componentInfo.image.split(',') : [];
     const visuals = [...imgs, ...gifs];
+    const useAutoPlay = imgs?.length > 0;
 
     if (!_.isEmpty(visuals)) {
       return (
         <div className={classnames('visuals', {mobile: forMobile})}>
           {forMobile ? <h3>Showcase</h3> : <div className="list-header">Showcase</div>}
           <div className="carousel">
-            <Slider arrows dots infinite autoplay>
+            <Slider arrows dots infinite autoplay={useAutoPlay}>
               {_.map(visuals, (image, i) => {
                 return <img key={i} alt={''} src={image} />;
               })}
