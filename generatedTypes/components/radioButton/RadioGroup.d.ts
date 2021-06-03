@@ -13,6 +13,7 @@ export declare type RadioGroupProps = ViewProps & {
 };
 export declare type RadioGroupPropTypes = RadioGroupProps;
 interface RadioGroupState {
+    initialValue?: RadioGroupProps['initialValue'];
     value?: RadioGroupProps['initialValue'];
 }
 declare type Props = RadioGroupProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
@@ -22,7 +23,6 @@ declare type Props = RadioGroupProps & BaseComponentInjectedProps & ForwardRefIn
 declare class RadioGroup extends PureComponent<Props, RadioGroupState> {
     static displayName: string;
     constructor(props: Props);
-    static getUpdatedState: (nextProps: Props, prevState: RadioGroupState) => RadioGroupState | null;
     static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState>;
     getContextProviderValue(): {
         value: string | number | boolean | undefined;
