@@ -350,6 +350,7 @@ class Picker extends Component {
       enableModalBlur,
       topBarProps,
       showSearch,
+      onShow,
       searchStyle,
       searchPlaceholder,
       renderCustomSearch,
@@ -397,6 +398,7 @@ class Picker extends Component {
           onSearchChange={this.onSearchChange}
           renderCustomSearch={renderCustomSearch}
           listProps={listProps}
+          onShow={onShow}
         >
           {this.children} 
         </PickerModal>
