@@ -31,7 +31,7 @@ const contentViewHeight = Constants.isAndroid ? 268 : 282;
  * @importantLink: https://facebook.github.io/react-native/docs/linking-libraries-ios.html
  * @extends: HighlighterOverlayView
  * @extendsLink: docs/HighlighterOverlayView
- * @gif: https://media.giphy.com/media/3ohs4D5irZm5GojsDS/giphy.gif, https://media.giphy.com/media/3oxQNaDQckPZI78rWo/giphy.gif
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FeatureHighlight/FeatureHighlight.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
 /*eslint-enable*/
