@@ -148,7 +148,7 @@ class ActionSheet extends Component<ActionSheetProps, {}> {
     if (!source) {
       source = _.isFunction(option.iconSource) ? option.iconSource() : option.iconSource as ImageProps['source'];
     }
-    return this.renderIcon(source);
+    return source && this.renderIcon(source);
   };
 
   renderIcon(iconSource: ImageSourcePropType) {
