@@ -63,11 +63,11 @@ export type FeatureHighlightProps = {
   /**
    * Callback that extract the ref of the element to be highlighted
    */
-  getTarget: () => any;
+  getTarget?: () => any;
   /**
    * Title of the content to be displayed
    */
-  title: string;
+  title?: string;
   /**
    * Message to be displayed
    */
@@ -136,6 +136,7 @@ interface State {
   fadeAnim: Animated.Value;
   contentTopPosition?: number;
   node?: number | null;
+  getTarget?: () => any;
 }
 
 /*eslint-disable*/
@@ -179,11 +180,31 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
     this.setTargetPosition();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: FeatureHighlightProps) {
-    this.setTargetPosition(nextProps);
+  static getDerivedStateFromProps(nextProps: FeatureHighlightProps, prevState: State) {
+    if (prevState?.getTarget === nextProps?.getTarget) {
+      return null;
+    }
+    
+    const target = nextProps?.getTarget?.();
+    const node = FeatureHighlight.findTargetNode(target);
+    if (node && node !== prevState?.node) {
+      return {getTarget: nextProps?.getTarget, node};
+    }
+    return null;
   }
 
-  componentDidUpdate() {
+  shouldSetTargetPosition = (nextProps: FeatureHighlightProps) => {
+    return (
+      nextProps.getTarget?.() !== this.props.getTarget?.() ||
+      nextProps.title !== this.props.title ||
+      nextProps.visible !== this.props.visible
+    );
+  }
+
+  componentDidUpdate(nextProps: FeatureHighlightProps) {
+    if (this.shouldSetTargetPosition(nextProps)) {
+      this.setTargetPosition();
+    }
     if (this.viewRef) {
       this.setAccessibilityFocus(this.viewRef);
     }
@@ -194,7 +215,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
     reactTag && AccessibilityInfo.setAccessibilityFocus(reactTag);
   }
 
-  findTargetNode(target: Component) {
+  static findTargetNode(target: Component) {
     return findNodeHandle(target);
   }
 
@@ -213,9 +234,6 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
   setTargetPosition(props = this.props) {
     if (props.getTarget !== undefined) {
       const target = props.getTarget();
-
-      const node = this.findTargetNode(target);
-      this.setState({node});
       if (target) {
         setTimeout(() => {
           target.measureInWindow((x: number, y: number, width: number, height: number) => {
@@ -234,7 +252,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
   }
 
   getContentPosition() {
-    const {highlightFrame, minimumRectSize, innerPadding} = this.props;
+    const {highlightFrame, minimumRectSize = {height: 0}, innerPadding = 0} = this.props;
     const {top, height} = this.targetPosition || {top: 0, height: 0};
     const screenVerticalCenter = Constants.screenHeight / 2;
     const targetCenter = top + height / 2;
@@ -417,5 +435,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   }
 });
-
-export default asBaseComponent<FeatureHighlightProps>(FeatureHighlight);
+export {FeatureHighlight as testable};
+//@ts-ignore typescript - will be fixed when moved to functional component
+export default asBaseComponent<FeatureHighlightProps, typeof FeatureHighlight>(FeatureHighlight);
