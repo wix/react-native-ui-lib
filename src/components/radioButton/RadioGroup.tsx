@@ -22,6 +22,7 @@ export type RadioGroupProps = ViewProps & {
 export type RadioGroupPropTypes = RadioGroupProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface RadioGroupState {
+  initialValue?: RadioGroupProps['initialValue'];
   value?: RadioGroupProps['initialValue'];
 }
 
@@ -30,7 +31,10 @@ type Props = RadioGroupProps &
   ForwardRefInjectedProps;
 
 /**
- * Wrap a group of Radio Buttons to automatically control their selection
+ * @description: Wrap a group of Radio Buttons to automatically control their selection
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Default.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Alignment.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Custom.gif?raw=true
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Individual.png?raw=true
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/RadioButtonScreen.js
  */
 class RadioGroup extends PureComponent<Props, RadioGroupState> {
   static displayName = 'RadioGroup';
@@ -39,28 +43,20 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
     super(props);
 
     this.state = {
+      initialValue: props.initialValue,
       value: props.initialValue
     };
   }
 
-  static getUpdatedState = (
-    nextProps: Props,
-    prevState: RadioGroupState
-  ): RadioGroupState | null => {
-    const {value} = prevState;
-    const {initialValue} = nextProps;
-
-    if (_.isUndefined(nextProps.initialValue) || value === initialValue) {
-      return null;
+  static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState> = (props, state) => {
+    if (state.initialValue !== props.initialValue) {
+      return {
+        initialValue: props.initialValue,
+        value: props.initialValue
+      };
     }
 
-    return {
-      value: initialValue
-    };
-  };
-
-  static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState> = (props, state) => {
-    return RadioGroup.getUpdatedState(props, state);
+    return null;
   }
 
   getContextProviderValue() {

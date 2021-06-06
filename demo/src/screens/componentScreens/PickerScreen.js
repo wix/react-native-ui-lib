@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
-import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
@@ -162,7 +162,7 @@ export default class PickerScreen extends Component {
             renderCustomModal={this.renderDialog}
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option} label={option.label} disabled={option.disabled}/>
+              <Picker.Item key={option.value} value={option} label={option.label} labelStyle={Typography.text65} disabled={option.disabled}/>
             ))}
           </Picker>
 

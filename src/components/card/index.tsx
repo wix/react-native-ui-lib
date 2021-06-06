@@ -109,7 +109,8 @@ type State = {
  * @extendsnotes: (Touchable when passing onPress)
  * @extendsLink: docs/TouchableOpacity
  * @modifiers: margin, padding
- * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_01.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_02.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_03.png?raw=true
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Card_Selecteable.gif, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_activeScale.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
  * @notes: 'enableBlur' prop requires installing the '@react-native-community/blur' native library
  */

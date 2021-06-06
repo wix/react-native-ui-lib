@@ -53,7 +53,7 @@ export default class StateScreen extends BaseComponent {
       LogService.deprecationWarn({component: 'StateScreen', oldProp: 'testId', newProp: 'testID'});
 
     }
-    if (props.imageSource) {
+    if (props.source) {
       LogService.deprecationWarn({component: 'StateScreen', oldProp: 'source', newProp: 'imageSource'});
     }
   }
@@ -67,7 +67,7 @@ export default class StateScreen extends BaseComponent {
   }
 
   render() {
-    // TODO: remove testId and imageSource after deprecation
+    // TODO: remove testId and source after deprecation
     const {title, subtitle, source, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
     const finalSource = imageSource || source;
 

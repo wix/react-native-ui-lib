@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useContext} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text as RNText} from 'react-native';
 import {LogService} from '../../services';
 import {Colors, Typography} from '../../style';
 import * as Modifiers from '../../commons/modifiers';
@@ -23,6 +23,7 @@ const PickerItem = props => {
   const {
     value,
     label,
+    labelStyle,
     disabled,
     selectedIcon = Assets.icons.check,
     selectedIconColor = Colors.primary,
@@ -72,7 +73,7 @@ const PickerItem = props => {
   const _renderItem = () => {
     return (
       <View style={styles.container} flex row spread centerV>
-        <Text numberOfLines={1} style={[styles.labelText, isItemDisabled && styles.labelTextDisabled]}>
+        <Text numberOfLines={1} style={[styles.labelText, isItemDisabled && styles.labelTextDisabled, labelStyle]}>
           {itemLabel}
         </Text>
         {selectedIndicator}
@@ -123,6 +124,10 @@ PickerItem.propTypes = {
    * Item's label
    */
   label: PropTypes.string,
+  /**
+   * Item's label style
+   */
+  labelStyle: RNText.propTypes.style,
   /**
    * Custom function for the item label (e.g (value) => customLabel)
    */

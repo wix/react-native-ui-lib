@@ -95,6 +95,7 @@ interface CheckboxState {
  * @extends: TouchableOpacity
  * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true
  */
 class Checkbox extends Component<CheckboxProps, CheckboxState> {
   static displayName = 'Checkbox';
