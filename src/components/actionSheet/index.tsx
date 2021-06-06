@@ -246,7 +246,7 @@ class ActionSheet extends Component<ActionSheetProps, {}> {
   }
 }
 
-export default asBaseComponent(ActionSheet);
+export default asBaseComponent<ActionSheetProps>(ActionSheet);
 
 const styles = StyleSheet.create({
   sheet: {
