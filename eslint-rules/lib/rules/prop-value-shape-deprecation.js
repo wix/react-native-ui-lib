@@ -5,9 +5,11 @@ const {
   findValueNodeOfIdentifier,
   getComponentLocalName,
   addToImports,
-  getComponentName
+  getComponentName,
+  handleError
 } = require('../utils');
 
+const RULE_ID = 'prop-value-shape-deprecation';
 const MAP_SCHEMA = {
   type: 'object',
   properties: {
@@ -90,7 +92,7 @@ module.exports = {
           }
         });
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 
