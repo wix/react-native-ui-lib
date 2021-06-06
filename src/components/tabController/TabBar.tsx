@@ -135,7 +135,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
 const TabBar = (props: Props) => {
   const {
     items: propsItems,
-    spreadItems = true,
+    spreadItems,
     height,
     enableShadow,
     shadowStyle: propsShadowStyle,
@@ -349,7 +349,7 @@ const TabBar = (props: Props) => {
   }, [shadowStyle, containerWidth, containerStyle]);
 
   const indicatorContainerStyle = useMemo(() => {
-    return [styles.tabBar, {flex: spreadItems && 1}, !_.isUndefined(height) && {height}, {backgroundColor}];
+    return [styles.tabBar, {flex: spreadItems ? 1 : undefined}, !_.isUndefined(height) && {height}, {backgroundColor}];
   }, [height, backgroundColor]);
 
   const scrollViewContainerStyle = useMemo(() => {
@@ -381,7 +381,8 @@ TabBar.displayName = 'TabController.TabBar';
 TabBar.defaultProps = {
   labelStyle: DEFAULT_LABEL_STYLE,
   selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
-  backgroundColor: DEFAULT_BACKGROUND_COLOR
+  backgroundColor: DEFAULT_BACKGROUND_COLOR,
+  spreadItems: true
 
   // containerWidth: Constants.screenWidth
 };
