@@ -47,11 +47,11 @@ export type StackAggregatorProps = ViewProps & {
     /**
      * A callback for collapse state will change (value is future collapsed state)
      */
-    onCollapseWillChange?: (change: boolean) => void;
+    onCollapseWillChange?: (changed: boolean) => void;
     /**
      * A callback for collapse state change (value is collapsed state)
      */
-    onCollapseChanged?: (change: boolean) => void;
+    onCollapseChanged?: (changed: boolean) => void;
     /**
      * A setting that disables pressability on cards
      */
@@ -72,7 +72,7 @@ type State = {
 class StackAggregator extends PureComponent<StackAggregatorProps, State> {
   static displayName = 'StackAggregator';
 
-  animatedScale: any;
+  animatedScale: Animated.Value;
   animatedOpacity: any;
   animatedContentOpacity: any;
   itemsCount = React.Children.count(this.props.children);
@@ -339,4 +339,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent(StackAggregator);
+export default asBaseComponent<StackAggregatorProps>(StackAggregator);
