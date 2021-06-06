@@ -66,6 +66,7 @@ export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps} from './components/carousel';
 export {default as Hint, HintProps} from './components/hint';
+export {default as LogService} from './services/LogService';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
@@ -74,5 +75,5 @@ export {
   PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
   TagsInput, SharedTransition, StackAggregator, Toast, WheelPickerDialog, Assets,
   BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
-  LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
+  LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
 } from '../typings';

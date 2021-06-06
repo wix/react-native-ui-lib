@@ -95,7 +95,6 @@ export {
   UIComponent,
   forwardRef,
   AvatarHelper,
-  LogService,
   LoaderScreen,
   StateScreen,
   WheelPicker,
