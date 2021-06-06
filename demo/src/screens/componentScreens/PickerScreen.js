@@ -162,7 +162,7 @@ export default class PickerScreen extends Component {
             renderCustomModal={this.renderDialog}
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option} label={option.label} labelStyle={{...Typography.text65}} disabled={option.disabled}/>
+              <Picker.Item key={option.value} value={option} label={option.label} labelStyle={Typography.text65} disabled={option.disabled}/>
             ))}
           </Picker>
 
