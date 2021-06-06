@@ -70,7 +70,7 @@ type ActionSheetProps = {
   /**
    * Render custom title
    */
-  renderTitle?: () => JSX.Element | JSX.Element[];
+  renderTitle?: () => JSX.Element;
   /**
    * Render custom action
    * Note: you will need to call onOptionPress so the option's onPress will be called
@@ -79,7 +79,7 @@ type ActionSheetProps = {
     option: ButtonProps,
     index: number,
     onOptionPress: ActionSheetOnOptionPress
-  ) => JSX.Element | JSX.Element[];
+  ) => JSX.Element;
   /**
    * Called once the modal has been dismissed (iOS only, modal only)
    */
@@ -108,12 +108,6 @@ class ActionSheet extends Component<ActionSheetProps> {
     this.onOptionPress = this.onOptionPress.bind(this);
     this.renderAction = this.renderAction.bind(this);
   }
-
-  static defaultProps = {
-    title: undefined,
-    message: undefined,
-    useModal: false
-  };
 
   componentDidUpdate(prevProps: ActionSheetProps) {
     const {useNativeIOS} = this.props;
