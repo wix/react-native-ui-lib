@@ -13,16 +13,19 @@ export declare type RadioGroupProps = ViewProps & {
 };
 export declare type RadioGroupPropTypes = RadioGroupProps;
 interface RadioGroupState {
+    initialValue?: RadioGroupProps['initialValue'];
     value?: RadioGroupProps['initialValue'];
 }
 declare type Props = RadioGroupProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 /**
- * Wrap a group of Radio Buttons to automatically control their selection
+ * @description: Wrap a group of Radio Buttons to automatically control their selection
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Default.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Alignment.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Custom.gif?raw=true
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Individual.png?raw=true
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/RadioButtonScreen.js
  */
 declare class RadioGroup extends PureComponent<Props, RadioGroupState> {
     static displayName: string;
     constructor(props: Props);
-    static getUpdatedState: (nextProps: Props, prevState: RadioGroupState) => RadioGroupState | null;
     static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState>;
     getContextProviderValue(): {
         value: string | number | boolean | undefined;

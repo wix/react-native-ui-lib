@@ -41,11 +41,11 @@ interface State {
 /**
  * @description: Wraps the panResponderView and panListenerView to provide a shared context
  */
-export default class PanningProvider extends Component<{}, State> {
-  static displayName = 'PanningProvider';
+export default class PanningProvider extends Component<any, State> {
+  static displayName = 'IGNORE';
   static Directions = PanningDirections;
 
-  constructor(props: {}) {
+  constructor(props: any) {
     super(props);
 
     this.state = {

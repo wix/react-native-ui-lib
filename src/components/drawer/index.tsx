@@ -9,6 +9,7 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../view';
 import Swipeable, {SwipeableProps} from './Swipeable';
+import {LogService} from '../../services';
 
 const DEFAULT_BG = Colors.primary;
 const DEFAULT_BOUNCINESS = 0;
@@ -102,6 +103,10 @@ interface Props {
    */
   leftToggleHapticTrigger?: Function;
   /**
+   * Whether to disable the haptic
+   */
+  disableHaptic?: boolean;
+  /**
    * Style
    */
   style?: ViewStyle;
@@ -131,6 +136,7 @@ export type DrawerItemProps = ItemProps;
  * @important: If your app works with RNN, your screen must be wrapped
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Drawer/Drawer.gif?raw=true
  */
 class Drawer extends PureComponent<Props> {
   static displayName = 'Drawer';
@@ -214,9 +220,6 @@ class Drawer extends PureComponent<Props> {
 
   private onToggleSwipeLeft = (options?: any) => {
     if (this.props.onToggleSwipeLeft) {
-      if (options?.triggerHaptic) {
-        _.invoke(this.props, 'leftToggleHapticTrigger');
-      }
       this.animateItem(options);
     }
   };
@@ -382,7 +385,8 @@ class Drawer extends PureComponent<Props> {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, leftToggleHapticTrigger, ...others} = this.props;
+    leftToggleHapticTrigger && LogService.deprecationWarn({component: 'Drawer', oldProp: 'leftToggleHapticTrigger'});
 
     return (
       <Swipeable

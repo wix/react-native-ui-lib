@@ -43,6 +43,7 @@ const DEFAULT_FADE_SIZE = 50;
 /**
  * @description: A gradient fading overlay to render on top of overflowing content (like scroll component)
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FaderScreen.tsx
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Fader/Fader.gif?raw=true
  */
 function Fader(props: FaderProps) {
   const getFadeSize = useCallback(() => {

@@ -75,6 +75,7 @@ const DEFAULT_NUMBER_OF_ROWS = 3;
  * @description: A color palette component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
  * @notes: This is a screen width component
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true
  */
 class ColorPalette extends PureComponent<Props, State> {
   static displayName = 'ColorPalette';
@@ -222,21 +223,17 @@ class ColorPalette extends PureComponent<Props, State> {
           },
           (x: number, _y: number, w: number, _h: number) => {
             if (x + w > this.containerWidth) {
-              if (this.scrollBar && this.scrollBar.current) {
-                this.scrollBar.current.scrollTo({
-                  x: x + w + HORIZONTAL_PADDING - this.containerWidth,
-                  y: 0,
-                  animated: false
-                });
-              }
+              this.scrollBar?.current?.scrollTo({
+                x: x + w + HORIZONTAL_PADDING - this.containerWidth,
+                y: 0,
+                animated: false
+              });
             }
           });
         }
       }
     } else if (this.usePagination) {
-      if (this.carousel && this.carousel.current) {
-        this.carousel.current.goToPage(this.selectedPage || currentPage, false);
-      }
+      this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
     }
   }
 

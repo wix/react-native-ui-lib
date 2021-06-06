@@ -3,21 +3,26 @@ import React, {PureComponent} from 'react';
 import {Animated, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
-import PanningProvider, {PanningDirections, PanningProviderDirection, PanAmountsProps, PanDirectionsProps} from './panningProvider';
+import PanningProvider, {
+  PanningDirections,
+  PanningProviderDirection,
+  PanAmountsProps,
+  PanDirectionsProps
+} from './panningProvider';
 
 export interface DismissibleAnimationProps {
-    /**
-     * The return animation speed (default is 20)
-     */
-    speed?: number;
-    /**
-     * The return animation bounciness (default is 6)
-     */
-    bounciness?: number;
-    /**
-     * The dismiss animation duration (default is 280)
-     */
-    duration?: number;
+  /**
+   * The return animation speed (default is 20)
+   */
+  speed?: number;
+  /**
+   * The return animation bounciness (default is 6)
+   */
+  bounciness?: number;
+  /**
+   * The dismiss animation duration (default is 280)
+   */
+  duration?: number;
 }
 export type DismissibleAnimationPropTypes = DismissibleAnimationProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -83,13 +88,14 @@ interface Props extends PanDismissibleViewProps {
 }
 
 interface State {
-  isAnimating: boolean;
+  isAnimating?: boolean;
 }
 
 /**
  * @description: PanDismissibleView component created to making listening to swipe and drag events easier,
  * @notes: Has to be used as a child of a PanningProvider that also has a PanListenerView.
  *         The PanListenerView is the one that sends the drag\swipe events.
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/PanDismissibleView/PanDismissibleView.gif?raw=true
  */
 class PanDismissibleView extends PureComponent<Props, State> {
   static displayName = 'PanDismissibleView';
@@ -237,7 +243,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
         useNativeDriver: true,
         speed,
         bounciness
-      }),);
+      }));
     }
 
     if (!_.isUndefined(toY)) {
@@ -246,7 +252,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
         useNativeDriver: true,
         speed,
         bounciness
-      }),);
+      }));
     }
 
     this.setState({isAnimating: true}, () => {
@@ -357,7 +363,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
         toValue: Math.round(toX),
         useNativeDriver: true,
         duration
-      }),);
+      }));
     }
 
     if (!_.isUndefined(toY)) {
@@ -365,7 +371,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
         toValue: Math.round(toY),
         useNativeDriver: true,
         duration
-      }),);
+      }));
     }
 
     this.setState({isAnimating: true}, () => {
@@ -373,7 +379,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
     });
   };
 
-  onDismissAnimationFinished = ({finished}: ({finished: boolean})) => {
+  onDismissAnimationFinished = ({finished}: {finished: boolean}) => {
     if (finished) {
       _.invoke(this.props, 'onDismiss');
     }

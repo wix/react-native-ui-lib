@@ -20,6 +20,7 @@ const icon = require('./assets/arrow-down.png');
  * @description: Stack aggregator component
  * @modifiers: margin, padding
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.js
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/StackAggregator/StackAggregator.gif?raw=true
  */
 export default class StackAggregator extends PureBaseComponent {
   static displayName = 'StackAggregator';

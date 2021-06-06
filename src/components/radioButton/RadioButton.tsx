@@ -92,7 +92,10 @@ interface RadioButtonState {
 type Props = RadioButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
- * A Radio Button component, should be wrapped inside a RadioGroup
+ * @description: A Radio Button component, should be wrapped inside a RadioGroup
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Default.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Alignment.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Custom.gif?raw=true
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Individual.png?raw=true
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/RadioButtonScreen.js
  */
 class RadioButton extends PureComponent<Props, RadioButtonState> {
   static displayName = 'RadioButton';

@@ -100,7 +100,7 @@ declare const _default: React.ComponentClass<RadioGroupContextProps & ViewProps 
     /**
      * Icon image source
      */
-    iconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    iconSource?: ImageSourcePropType | undefined;
     /**
      * Icon image style
      */

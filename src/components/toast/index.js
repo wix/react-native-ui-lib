@@ -18,6 +18,7 @@ const COLOR = Colors.white;
 /**
  * @description: A toast component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Toast/Toast.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Toast/ToastAttachment.gif?raw=true
  */
 export default class Toast extends PureBaseComponent {
   static displayName = 'Toast';
