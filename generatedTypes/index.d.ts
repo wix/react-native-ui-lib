@@ -70,7 +70,6 @@ export {default as Carousel, CarouselProps} from './components/carousel';
 
 /* All components with manual typings */
 export {
-  ActionSheet,
   ConnectionStatusBar,
   FeatureHighlight,
   Hint,
