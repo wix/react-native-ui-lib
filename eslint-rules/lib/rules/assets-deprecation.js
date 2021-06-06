@@ -4,8 +4,11 @@ const {
   getLocalizedFix,
   addToImports,
   getComponentLocalName,
-  getComponentName
+  getComponentName,
+  handleError
 } = require('../utils');
+
+const RULE_ID = 'assets-deprecation';
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -41,7 +44,7 @@ module.exports = {
           }
         });
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 
