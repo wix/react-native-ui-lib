@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import PanDismissibleView, {PanDismissibleViewProps} from './panDismissibleView';
 import PanListenerView, {PanListenerViewProps} from './panListenerView';
@@ -25,7 +25,8 @@ export interface SwipeToDismissViewProps
 }
 
 /**
- * @description: SwipeToDismissView component allows for easy swipe to dismiss
+ * @description: SwipeToDismissView component that allows for easy swipe to dismiss
+ * (locks the swipe direction once a swipe has started)
  */
 function SwipeToDismissView(props: SwipeToDismissViewProps) {
   const {renderContent, panDirections, style, onDismiss, threshold = {x: 10, y: 10}, isClickable} = props;
@@ -33,7 +34,7 @@ function SwipeToDismissView(props: SwipeToDismissViewProps) {
   const [directions, setDirections] = useState<PanningDirections[]>(panDirections);
   const [containerStyle, setContainerStyle] = useState<StyleProp<ViewStyle>>({});
 
-  const _setDirections = (directions: PanDirectionsProps, deltas?: PanAmountsProps, velocities?: PanAmountsProps) => {
+  const _setDirections = useCallback((directions: PanDirectionsProps, deltas?: PanAmountsProps, velocities?: PanAmountsProps) => {
     const amount = deltas || velocities;
     let isHorizontal;
     if (directions.x && directions.y) {
@@ -51,20 +52,20 @@ function SwipeToDismissView(props: SwipeToDismissViewProps) {
       const marginLeft: number = deltas?.x ? -deltas.x : 0;
       setContainerStyle({marginLeft}); // fix 'jump' when dragging in two directions
     }
-  };
+  }, []);
 
-  const onDrag = ({directions, deltas}: {directions: PanDirectionsProps; deltas: PanAmountsProps}) => {
+  const onDrag = useCallback(({directions, deltas}: {directions: PanDirectionsProps; deltas: PanAmountsProps}) => {
     _setDirections(directions, deltas, undefined);
-  };
+  }, [_setDirections]);
 
-  const onSwipe = ({directions, velocities}: {directions: PanDirectionsProps; velocities: PanAmountsProps}) => {
+  const onSwipe = useCallback(({directions, velocities}: {directions: PanDirectionsProps; velocities: PanAmountsProps}) => {
     _setDirections(directions, undefined, velocities);
-  };
+  }, [_setDirections]);
 
-  const onPanRelease = () => {
+  const onPanRelease = useCallback(() => {
     setDirections(panDirections);
     setContainerStyle({});
-  };
+  }, [setDirections, panDirections, setContainerStyle]);
 
   return (
     <PanningProvider>
