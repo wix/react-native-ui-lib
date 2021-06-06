@@ -99,7 +99,7 @@ type ActionSheetProps = {
  * @gif: https://media.giphy.com/media/l0HUpXOR6RqB2ct5S/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.js
  */
-class ActionSheet extends Component<ActionSheetProps, {}> {
+class ActionSheet extends Component<ActionSheetProps> {
   static displayName = 'ActionSheet';
 
   constructor(props: ActionSheetProps) {
