@@ -141,7 +141,7 @@ module.exports = {
       }
     }
 
-    function checkAttributeProperties(attributeProperties, attributeName, deprecation, node) {
+    function checkAttributeProperties(attributeProperties = [], attributeName, deprecation, node) {
       for (let i = 0; i < attributeProperties.length; i++) {
         const propertyType = _.get(attributeProperties[i], 'type');
         if (propertyType === 'ExperimentalSpreadProperty') {
