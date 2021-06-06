@@ -20,7 +20,6 @@ const {Code, Value, interpolate: _interpolate, interpolateNode, block, set} = Re
 const interpolate = interpolateNode || _interpolate;
 
 const DEFAULT_HEIGHT = 48;
-const INDICATOR_INSET = Spacings.s4;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 
 const DEFAULT_LABEL_STYLE = {
@@ -41,6 +40,10 @@ export interface TabControllerBarProps {
    */
   items?: TabControllerItemProps[];
   /**
+   * Whether the tabBar should be spread (default: true)
+   */
+  spreadItems?: boolean;
+  /**
    * Tab Bar height
    */
   height?: number;
@@ -60,6 +63,10 @@ export interface TabControllerBarProps {
    * custom style for the selected indicator
    */
   indicatorStyle?: StyleProp<ViewStyle>;
+  /**
+   * Whether the indicator should be wide (as the item)
+   */
+  wideIndicator?: boolean;
   /**
    * custom label style
    */
@@ -128,11 +135,13 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
 const TabBar = (props: Props) => {
   const {
     items: propsItems,
+    spreadItems,
     height,
     enableShadow,
     shadowStyle: propsShadowStyle,
     // minTabsForScroll,
     indicatorStyle,
+    wideIndicator,
     labelStyle,
     selectedLabelStyle,
     labelColor,
@@ -149,6 +158,7 @@ const TabBar = (props: Props) => {
     children: propsChildren
   } = props;
 
+  const indicatorInset = wideIndicator ? 0 : Spacings.s4;
   const context = useContext(TabBarContext);
   // @ts-ignore // TODO: typescript
   const {itemStates, items: contextItems, currentPage, targetPage, registerTabItems, selectedIndex} = context;
@@ -307,7 +317,7 @@ const TabBar = (props: Props) => {
 
   const selectedIndicator =
     itemsWidths && itemsWidths.length > 0 ? (
-      <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
+      <Reanimated.View style={[styles.selectedIndicator, {marginHorizontal: indicatorInset}, indicatorStyle, _indicatorTransitionStyle]}/>
     ) : undefined;
 
   const renderCodeBlock = _.memoize(() => {
@@ -321,7 +331,7 @@ const TabBar = (props: Props) => {
     nodes.push(set(_indicatorWidth,
       interpolate(currentPage, {
         inputRange: itemsWidths.map((_v, i) => i),
-        outputRange: itemsWidths.map(v => v - 2 * INDICATOR_INSET)
+        outputRange: itemsWidths.map(v => v - 2 * indicatorInset)
       })));
 
     nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], focusIndex as any)));
@@ -339,7 +349,7 @@ const TabBar = (props: Props) => {
   }, [shadowStyle, containerWidth, containerStyle]);
 
   const indicatorContainerStyle = useMemo(() => {
-    return [styles.tabBar, !_.isUndefined(height) && {height}, {backgroundColor}];
+    return [styles.tabBar, {flex: spreadItems ? 1 : undefined}, !_.isUndefined(height) && {height}, {backgroundColor}];
   }, [height, backgroundColor]);
 
   const scrollViewContainerStyle = useMemo(() => {
@@ -371,7 +381,8 @@ TabBar.displayName = 'TabController.TabBar';
 TabBar.defaultProps = {
   labelStyle: DEFAULT_LABEL_STYLE,
   selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
-  backgroundColor: DEFAULT_BACKGROUND_COLOR
+  backgroundColor: DEFAULT_BACKGROUND_COLOR,
+  spreadItems: true
 
   // containerWidth: Constants.screenWidth
 };
@@ -381,7 +392,6 @@ const styles = StyleSheet.create({
     zIndex: 100
   },
   tabBar: {
-    flex: 1,
     height: DEFAULT_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -400,7 +410,6 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 2,
-    marginHorizontal: INDICATOR_INSET,
     backgroundColor: Colors.primary
   },
   containerShadow: {

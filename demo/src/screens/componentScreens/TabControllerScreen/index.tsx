@@ -146,6 +146,8 @@ class TabControllerScreen extends Component<{}, State> {
             key={key}
             // uppercase
             // indicatorStyle={{backgroundColor: 'green', height: 3}}
+            // wideIndicator
+            // spreadItems={false}
             // labelColor={'green'}
             // selectedLabelColor={'red'}
             // labelStyle={{fontSize: 20}}
