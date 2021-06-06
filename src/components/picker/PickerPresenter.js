@@ -35,3 +35,8 @@ export function getItemLabel(label, value, getItemLabel) {
 export function shouldFilterOut(searchValue, itemLabel) {
   return !_.includes(_.lowerCase(itemLabel), _.lowerCase(searchValue));
 }
+
+export function shouldDisableItem(itemProps, isSelected, selectionLimit, selectedCounter) {
+  const isUnselectable = !isSelected && selectionLimit && selectionLimit === selectedCounter;
+  return Boolean((itemProps?.disabled && !itemProps?.onPress) || isUnselectable);
+}

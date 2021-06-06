@@ -10,7 +10,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import Text from '../text';
-import {getItemLabel, isItemSelected} from './PickerPresenter';
+import {getItemLabel, isItemSelected, shouldDisableItem} from './PickerPresenter';
 import PickerContext from './PickerContext';
 
 /**
@@ -43,8 +43,8 @@ const PickerItem = props => {
   };
 
   const isItemDisabled = useMemo(() => {
-    return disabled || (!isSelected && context.selectionLimit && context.selectionLimit === selectedCounter);
-  }, [selectedCounter]);
+    return shouldDisableItem(props, isSelected, context.selectionLimit, selectedCounter);
+  }, [selectedCounter, props.disabled, props.onPress, context.selectionLimit, selectedCounter]);
   
   useEffect(() => {
     if (_.isPlainObject(value)) {
@@ -59,12 +59,15 @@ const PickerItem = props => {
   }, [isSelected, isItemDisabled, selectedIcon, selectedIconColor]);
 
   const _onPress = useCallback(() => {
-    if (migrate) {
-      context.onPress(value);
-    } else {
-      context.onPress((_.isPlainObject(value) || context.isMultiMode) ? value : {value, label: itemLabel});
+    if (!disabled) {
+      if (migrate) {
+        context.onPress(value);
+      } else {
+        context.onPress((_.isPlainObject(value) || context.isMultiMode) ? value : {value, label: itemLabel});
+      }
     }
-  }, [migrate, value, context.onPress]);
+    props.onPress?.(value);
+  }, [migrate, value, context.onPress, props.onPress]);
 
   const onSelectedLayout = useCallback((...args) => {
     _.invoke(context, 'onSelectedLayout', ...args);
