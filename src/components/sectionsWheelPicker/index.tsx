@@ -38,6 +38,7 @@ export type SectionsWheelPickerProps = {
 /**
  * @description: SectionsWheelPicker component for presenting set of wheelPickers
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SectionsWheelPickerScreen.tsx
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/SectionsWheelPicker/SectionsWheelPicker.gif?raw=true
  */
 
 const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {

@@ -161,8 +161,8 @@ export const DEFAULT_PROPS = {
  * @extends: TouchableOpacity
  * @extendsLink: docs/TouchableOpacity
  * @modifiers: margin, background
- * @image: https://user-images.githubusercontent.com/1780255/119218638-173e3b00-baea-11eb-8e66-f5a23714871c.png, https://user-images.githubusercontent.com/1780255/119218639-173e3b00-baea-11eb-8b75-b6dde4e922c8.png, https://user-images.githubusercontent.com/1780255/119218636-16a5a480-baea-11eb-8501-33eebfe1f3e2.png, https://user-images.githubusercontent.com/1780255/119218637-16a5a480-baea-11eb-99d0-3620f2160ec5.png, https://user-images.githubusercontent.com/1780255/119218634-160d0e00-baea-11eb-8538-e78005cb3fa5.png, https://user-images.githubusercontent.com/1780255/119221003-d9471400-baf5-11eb-9066-0aabbe8d9022.png
- * @gif: https://user-images.githubusercontent.com/1780255/119218630-11e0f080-baea-11eb-8e32-4470195cc42f.gif
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Sizes.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Typographies.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Outlines.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Corners.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Custom.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Inspirations.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Round.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Full.png?raw=true
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Animated.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
  */
 // @ts-ignore 

@@ -143,7 +143,7 @@ export declare type AvatarPropTypes = AvatarProps;
  * @extends: TouchableOpacity
  * @extendsnotes: (when passing onPress)
  * @extendsLink: docs/TouchableOpacity
- * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */
 declare class Avatar extends PureComponent<AvatarProps> {
