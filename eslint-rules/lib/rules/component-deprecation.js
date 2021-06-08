@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const {addToImports, organizeDeprecations, getComponentLocalName, getPossibleDeprecations} = require('../utils');
+const {addToImports, organizeDeprecations, getComponentLocalName, getPossibleDeprecations, handleError} = require('../utils');
 
+const RULE_ID = 'component-deprecation';
 const MAP_SCHEMA = {
   type: 'object',
   additionalProperties: true
@@ -35,7 +36,7 @@ module.exports = {
           }
         });
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 

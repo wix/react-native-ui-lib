@@ -6,9 +6,11 @@ const {
   getComponentLocalName,
   getComponentName,
   getPossibleDeprecations,
-  findValueNodeOfIdentifier
+  findValueNodeOfIdentifier,
+  handleError
 } = require('../utils');
 
+const RULE_ID = 'component-prop-deprecation';
 const MAP_SCHEMA = {
   type: 'object',
   properties: {
@@ -79,7 +81,7 @@ module.exports = {
           }
         });
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 
@@ -91,7 +93,7 @@ module.exports = {
           message
         });
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 

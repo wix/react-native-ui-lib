@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const {findAndReportHardCodedValues} = require('../utils');
+const {findAndReportHardCodedValues, handleError} = require('../utils');
 
+const RULE_ID = 'no-hard-coded-color';
 const MAP_SCHEMA = {
   type: 'object',
   additionalProperties: true
@@ -49,7 +50,7 @@ module.exports = {
           });
         }
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 

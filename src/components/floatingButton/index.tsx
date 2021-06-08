@@ -50,6 +50,7 @@ const gradientImage = () => require('./gradient.png');
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.tsx
  * @extends: Button
  * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/button/index.js
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FloatingButton/FloatingButton.gif?raw=true
  */
 class FloatingButton extends PureComponent<FloatingButtonProps> {
   static displayName = 'FloatingButton';
