@@ -9,6 +9,7 @@ import View from '../view';
 import Text from '../text';
 import {ButtonProps} from '../button';
 import Image from '../image';
+//@ts-ignore
 import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
 
