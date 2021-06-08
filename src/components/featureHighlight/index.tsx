@@ -153,7 +153,6 @@ interface State {
 /*eslint-enable*/
 class FeatureHighlight extends Component<FeatureHighlightProps, State> {
   static displayName = 'FeatureHighlight';
-  static propTypes = {};
 
   contentHeight = contentViewHeight;
   targetPosition?: Position;
