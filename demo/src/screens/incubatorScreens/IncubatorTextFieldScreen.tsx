@@ -26,7 +26,7 @@ export default class TextFieldScreen extends Component {
   renderTrailingAccessory() {
     const {searching} = this.state;
     if (searching) {
-      return <ActivityIndicator color={Colors.grey10} />;
+      return <ActivityIndicator color={Colors.grey10}/>;
     } else {
       return (
         <Button
@@ -54,7 +54,7 @@ export default class TextFieldScreen extends Component {
           <Text h3 blue50 marginV-s4>
             Default
           </Text>
-          <TextField ref={this.input} label="Name" placeholder="Enter full name" />
+          <TextField ref={this.input} label="Name" placeholder="Enter full name"/>
 
           <Text h3 blue50 marginV-s4>
             Static vs Floating Placeholder
@@ -191,6 +191,7 @@ export default class TextFieldScreen extends Component {
             Hint
           </Text>
           <TextField
+            label="Password"
             placeholder="Enter password"
             hint="1-6 chars including numeric chars"
             fieldStyle={styles.withUnderline}

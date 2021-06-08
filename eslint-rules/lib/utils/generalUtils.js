@@ -38,9 +38,14 @@ function findValueNodeOfIdentifier(identifierName, scope) {
   return valueNode || findValueNodeOfIdentifier(identifierName, scope.upper);
 }
 
+function handleError(ruleId, error, fileName) {
+  console.log(`Found error in rule: ${ruleId}\n`, `Error: ${error}\n`, `In file: ${fileName}`);
+}
+
 
 module.exports = {
   getPrefix,
   getSuffix,
-  findValueNodeOfIdentifier
+  findValueNodeOfIdentifier,
+  handleError
 };

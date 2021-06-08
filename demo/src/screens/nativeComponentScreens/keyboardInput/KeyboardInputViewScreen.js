@@ -43,9 +43,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
   };
 
   onKeyboardItemSelected = (keyboardId, params) => {
-    const receivedKeyboardData = `onItemSelected from "${keyboardId}"\nreceived params: ${JSON.stringify(
-      params
-    )}`;
+    const receivedKeyboardData = `onItemSelected from "${keyboardId}"\nreceived params: ${JSON.stringify(params)}`;
     this.setState({receivedKeyboardData});
   };
 
@@ -98,7 +96,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
     });
   }
 
-  onHeightChanged = (keyboardAccessoryViewHeight) => {
+  onHeightChanged = keyboardAccessoryViewHeight => {
     if (Constants.isIOS) {
       this.setState({keyboardAccessoryViewHeight});
     }
@@ -110,24 +108,18 @@ export default class KeyboardInputViewScreen extends PureComponent {
         <View row paddingH-s4>
           <TextInput
             style={styles.textInput}
-            ref={(r) => {
+            ref={r => {
               this.textInputRef = r;
             }}
             placeholder={'Message'}
             underlineColorAndroid="transparent"
             onFocus={this.resetKeyboardView}
           />
-          <Button
-            link
-            grey10
-            iconSource={Assets.icons.demo.close}
-            onPress={KeyboardUtils.dismiss}
-            marginL-s2
-          />
+          <Button link grey10 iconSource={Assets.icons.demo.close} onPress={KeyboardUtils.dismiss} marginL-s2/>
         </View>
         <View row paddingH-s4 marginT-s2 spread>
           <View row>
-            {keyboards.map((keyboard) => (
+            {keyboards.map(keyboard => (
               <Button
                 key={keyboard.id}
                 grey10
@@ -139,7 +131,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
             ))}
           </View>
 
-          <Button grey10 label="Reset" link onPress={this.resetKeyboardView} />
+          <Button grey10 label="Reset" link onPress={this.resetKeyboardView}/>
         </View>
       </View>
     );
@@ -149,7 +141,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
     KeyboardRegistry.requestShowKeyboard('unicorn.ImagesKeyboard');
   };
 
-  onRequestShowKeyboard = (componentID) => {
+  onRequestShowKeyboard = componentID => {
     this.setState({
       customKeyboard: {
         component: componentID,
@@ -165,18 +157,14 @@ export default class KeyboardInputViewScreen extends PureComponent {
     const {useSafeArea} = this.state;
     return (
       <View column center>
-        <View style={styles.separatorLine} />
+        <View style={styles.separatorLine}/>
         <View centerV row margin-10>
           <Text text80 dark40>
             Safe Area Enabled:
           </Text>
-          <Switch
-            value={useSafeArea}
-            onValueChange={this.toggleUseSafeArea}
-            marginL-14
-          />
+          <Switch value={useSafeArea} onValueChange={this.toggleUseSafeArea} marginL-14/>
         </View>
-        <View style={styles.separatorLine} />
+        <View style={styles.separatorLine}/>
       </View>
     );
   };
@@ -186,20 +174,18 @@ export default class KeyboardInputViewScreen extends PureComponent {
     const {receivedKeyboardData, customKeyboard, useSafeArea} = this.state;
     return (
       <View flex bg-dark80>
+        <Text h2 marginT-page marginL-page>
+          KeyboardAccessoryView + KeyboardRegistry
+        </Text>
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={TrackInteractive ? 'interactive' : 'none'}
         >
           <Text text40 dark10 marginV-20 center>
-            {message || 'KeyboardsRegistry'}
+            {message}
           </Text>
           <Text testID={'demo-message'}>{receivedKeyboardData}</Text>
-          <Button
-            label={'Open Images Keyboard'}
-            link
-            onPress={this.requestShowKeyboard}
-            style={styles.button}
-          />
+          <Button label={'Open Images Keyboard'} link onPress={this.requestShowKeyboard} style={styles.button}/>
           {this.safeAreaSwitchToggle()}
         </ScrollView>
 

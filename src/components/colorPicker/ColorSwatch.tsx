@@ -48,6 +48,7 @@ export const SWATCH_SIZE = DEFAULT_SIZE;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
  * @extends: Animated.View
  * @extendsLink: https://facebook.github.io/react-native/docs/animated
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true
  */
 class ColorSwatch extends PureComponent<Props> {
   static displayName = 'ColorSwatch';
