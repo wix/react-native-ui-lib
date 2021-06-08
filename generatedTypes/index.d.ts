@@ -67,6 +67,7 @@ export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleA
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps} from './components/carousel';
+export {default as ActionSheet} from './components/actionSheet';
 
 /* All components with manual typings */
 export {
