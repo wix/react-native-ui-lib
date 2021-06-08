@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {/* Colors, Typography,  */View, Text, Button, StackAggregator} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Button, ButtonSize, StackAggregator} from 'react-native-ui-lib';
 
 
 const contents = [
@@ -9,22 +9,22 @@ const contents = [
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-]
+];
 
 export default class StackAggregatorScreen extends Component {
   
-  onItemPress = (index) => {
+  onItemPress = (index: number) => {
     console.warn('item pressed: ', index);
   }
 
-  onPress = (index) => {
+  onPress = (index: number) => {
     console.warn('item\'s button pressed: ', index);
   }
 
-  renderItem = (item, index) => {
+  renderItem = (_: string, index: number) => {
     return (
       <View key={index} center padding-12>
-        <Button label={`${index}`} marginB-10 size={'small'} onPress={() => this.onPress(index)}/>
+        <Button label={`${index}`} marginB-10 size={ButtonSize.small} onPress={() => this.onPress(index)}/>
         <Text>{contents[index]}</Text>
       </View>
     );
