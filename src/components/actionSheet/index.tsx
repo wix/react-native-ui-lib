@@ -129,7 +129,7 @@ class ActionSheet extends Component<ActionSheetProps> {
         {
           title,
           message,
-          options: _.flatMap(optionsArray, 'label'),
+          options: optionsArray.map(option => option?.label || ''),
           cancelButtonIndex: cancelBtnIndex,
           destructiveButtonIndex
         },
