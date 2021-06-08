@@ -332,7 +332,8 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
               titleStyle
             ]}
             numberOfLines={titleNumberOfLines}
-            pointerEvents
+            // @ts-expect-error
+            pointerEvents={'none'}
           >
             {title}
           </Text>
@@ -342,7 +343,8 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
             text70
             style={[styles.message, {color}, messageStyle]}
             numberOfLines={messageNumberOfLines}
-            pointerEvents
+            // @ts-expect-error
+            pointerEvents={'none'}
           >
             {message}
           </Text>
