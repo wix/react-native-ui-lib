@@ -1,16 +1,15 @@
 import {updateConstants} from '../../../helpers/Constants';
+import {testable as FeatureHighlight} from '../';
 
 describe('FeatureHighlight', () => {
-  let FeatureHighlight;
 
   beforeEach(() => {
     mockScreenDimentions();
-    FeatureHighlight = require('../index').default;
   });
 
   describe('getContentPosition', () => {
     it('massage should be placed above element positioned below screen\'s vertical center', () => {
-      const uut = new FeatureHighlight({});
+      const uut = new FeatureHighlight({visible: true});
       uut.state = {
         contentTopPosition: 0
       };
