@@ -320,14 +320,14 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
             <Text h1 marginB-s4>Cards</Text>
             <Text h3>Selectable Cards</Text>
             {this.renderSelectableCards()}
-            <Text h3 marginB-s4>
+            <Text h3 marginV-s5>
               Horizontal Cards
             </Text>
             {this.renderHorizontalCard(true, 0, true)}
             {this.renderHorizontalCard(true, 20, false)}
             {this.renderHorizontalCard(false, 0, false)}
             {this.renderHorizontalCard(false, 20, true)}
-            <Text h3 marginB-s4>
+            <Text h3 marginV-s5>
               Card Sections
             </Text>
             {this.renderCoupons()}

@@ -91,7 +91,7 @@ class SharedArea extends Component {
     },
     () => {
       this.startTransition(true);
-    },);
+    });
   };
 
   setTarget = targetLayout => {

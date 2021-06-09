@@ -31,7 +31,7 @@ const ItemType = PropTypes.oneOfType([
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
- * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/Default.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/MultiPicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/NativePicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/DialogPicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/CustomPicker.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
  * @notes: 'useNativePicker' prop requires installing the '@react-native-picker/picker' native library
  */
@@ -350,6 +350,7 @@ class Picker extends Component {
       enableModalBlur,
       topBarProps,
       showSearch,
+      onShow,
       searchStyle,
       searchPlaceholder,
       renderCustomSearch,
@@ -397,6 +398,7 @@ class Picker extends Component {
           onSearchChange={this.onSearchChange}
           renderCustomSearch={renderCustomSearch}
           listProps={listProps}
+          onShow={onShow}
         >
           {this.children} 
         </PickerModal>

@@ -1,5 +1,7 @@
 const _ = require("lodash");
+const {handleError} = require('../utils');
 
+const RULE_ID = 'function-deprecation';
 const MAP_SCHEMA = {
   type: "object",
   additionalProperties: true,
@@ -89,7 +91,7 @@ module.exports = {
           },
         });
       } catch (err) {
-        console.log("Found error in: ", err, context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 

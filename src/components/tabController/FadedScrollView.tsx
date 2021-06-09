@@ -1,5 +1,12 @@
 import React, {useCallback} from 'react';
-import {ViewProps, ScrollView, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent} from 'react-native';
+import {
+  ViewProps,
+  ScrollView,
+  ScrollViewProps,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  LayoutChangeEvent
+} from 'react-native';
 import Fader from '../fader';
 import useScrollEnabler from '../../hooks/useScrollEnabler';
 import useScrollReached from '../../hooks/useScrollReached';
@@ -23,7 +30,11 @@ const FadedScrollView = (props: Props) => {
     ...other
   } = props;
   const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal: true});
-  const {onScroll: onScrollReached, isScrollAtStart, isScrollAtEnd} = useScrollReached({
+  const {
+    onScroll: onScrollReached,
+    isScrollAtStart,
+    isScrollAtEnd
+  } = useScrollReached({
     horizontal: true,
     threshold: 50
   });
@@ -33,19 +44,21 @@ const FadedScrollView = (props: Props) => {
 
   const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     onScrollReached(event);
-      propsOnScroll?.(event);
+    propsOnScroll?.(event);
   },
   [onScrollReached, propsOnScroll]);
 
   const _onContentSizeChange = useCallback((w: number, h: number) => {
     propsOnContentSizeChange?.(w, h);
     onContentSizeChange?.(w, h);
-  }, [propsOnContentSizeChange, onContentSizeChange]);
+  },
+  [propsOnContentSizeChange, onContentSizeChange]);
 
   const _onLayout = useCallback((event: LayoutChangeEvent) => {
     propsOnLayout?.(event);
     onLayout?.(event);
-  }, [propsOnLayout, onLayout]);
+  },
+  [propsOnLayout, onLayout]);
 
   if (children) {
     return (

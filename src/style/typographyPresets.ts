@@ -3,16 +3,16 @@ import _ from 'lodash';
 import Constants from '../helpers/Constants';
 
 export const WEIGHT_TYPES: {[key: string]: TextStyle['fontWeight']} = {
-  THIN: '200' as '200',
-  LIGHT: '300' as '300',
-  REGULAR: '400' as '400',
+  THIN: '200' as const,
+  LIGHT: '300' as const,
+  REGULAR: '400' as const,
   MEDIUM:
     parseFloat(Platform.Version as string) >= 11.2
       ? '600'
       : ('500' as '500' | '600'),
-  BOLD: '700' as '700',
-  HEAVY: '800' as '800',
-  BLACK: '900' as '900'
+  BOLD: '700' as const,
+  HEAVY: '800' as const,
+  BLACK: '900' as const
 };
 
 // text10

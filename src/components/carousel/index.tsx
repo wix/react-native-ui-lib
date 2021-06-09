@@ -153,7 +153,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   updateOffset = (animated = false) => {
     const {x, y} = presenter.calcOffset(this.props, this.state);
 
-    if (this.carousel && this.carousel.current) {
+    if (this.carousel?.current) {
       this.carousel.current.scrollTo({x, y, animated});
 
       if (Constants.isAndroid) {

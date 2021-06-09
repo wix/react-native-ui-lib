@@ -38,7 +38,7 @@ enum TARGET_POSITIONS {
 
 enum HintPositions {
   TOP = 'top',
-  BOTTOM = 'bottom',
+  BOTTOM = 'bottom'
 }
 
 // TODO: unify with FeatureHighlightFrame
@@ -69,65 +69,69 @@ interface Paddings {
 
 export interface HintProps {
   /**
-    * Control the visibility of the hint
-    */
+   * Control the visibility of the hint
+   */
   visible?: boolean;
   /**
-    * The hint background color
-    */
+   * The hint background color
+   */
   color?: string;
   /**
-    * The hint message
-    */
+   * The hint message
+   */
   message?: string | ReactElement;
   /**
-    * The hint message custom style
-    */
+   * The hint message custom style
+   */
   messageStyle?: StyleProp<TextStyle>;
   /**
-    * Icon to show next to the hint's message
-    */
-   icon?: ImageSourcePropType;
+   * Icon to show next to the hint's message
+   */
+  icon?: ImageSourcePropType;
   /**
-    * The icon's style
-    */
-   iconStyle?: StyleProp<ImageStyle>;
+   * The icon's style
+   */
+  iconStyle?: StyleProp<ImageStyle>;
   /**
-    * The hint's position
-    */
-   position?: HintPositions;
+   * The hint's position
+   */
+  position?: HintPositions;
   /**
-    * Provide custom target position instead of wrapping a child
-    */
-   targetFrame?: HintTargetFrame;
+   * Provide custom target position instead of wrapping a child
+   */
+  targetFrame?: HintTargetFrame;
   /**
-    * Show side tips instead of the middle tip
-    */
-   useSideTip?: boolean;
+   * Show side tips instead of the middle tip
+   */
+  useSideTip?: boolean;
   /**
-    * The hint's border radius
-    */
-   borderRadius?: number;
+   * The hint's border radius
+   */
+  borderRadius?: number;
   /**
-    * Hint margins from screen edges
-    */
-   edgeMargins?: number;
+   * Hint margins from screen edges
+   */
+  edgeMargins?: number;
   /**
-    * Hint offset from target
-    */
-   offset?: number;
+   * Hint offset from target
+   */
+  offset?: number;
   /**
-    * Callback for the background press
-    */
-   onBackgroundPress?: (event: GestureResponderEvent) => void;
+   * Callback for the background press
+   */
+  onBackgroundPress?: (event: GestureResponderEvent) => void;
   /**
-    * The hint container width
-    */
-   containerWidth?: number;
+   * The hint container width
+   */
+  containerWidth?: number;
   /**
-    * The hint's test identifier
-    */
-   testID?: string;
+   * Custom content element to render inside the hint container
+   */
+  customContent?: JSX.Element;
+  /**
+   * The hint's test identifier
+   */
+  testID?: string;
   /**
    * Additional styling
    */
@@ -143,6 +147,7 @@ interface HintState {
  * @description: Hint component for displaying a tooltip over wrapped component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
  * @notes: You can either wrap a component or pass a specific targetFrame
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Hint/Hint.gif?raw=true
  */
 class Hint extends Component<HintProps, HintState> {
   static displayName = 'Hint';
@@ -161,7 +166,7 @@ class Hint extends Component<HintProps, HintState> {
     targetLayout: this.props.targetFrame
   };
 
-  visibleAnimated = new Animated.Value(Number(!!this.props.visible))
+  visibleAnimated = new Animated.Value(Number(!!this.props.visible));
 
   componentDidUpdate(prevProps: HintProps) {
     if (prevProps.visible !== this.props.visible) {
@@ -323,11 +328,13 @@ class Hint extends Component<HintProps, HintState> {
     const translateY = position === HintPositions.TOP ? -10 : 10;
     return {
       opacity: this.visibleAnimated,
-      transform: [{
-        translateY: this.visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
-      }]
+      transform: [
+        {
+          translateY: this.visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
+        }
+      ]
     };
-  }
+  };
 
   getTipPosition() {
     const {position} = this.props;
@@ -335,6 +342,7 @@ class Hint extends Component<HintProps, HintState> {
 
     if (position === HintPositions.TOP) {
       tipPositionStyle.bottom = this.hintOffset - this.tipSize.height;
+      !this.useSideTip ? (tipPositionStyle.bottom += 1) : undefined;
     } else {
       tipPositionStyle.top = this.hintOffset - this.tipSize.height;
     }
@@ -342,13 +350,13 @@ class Hint extends Component<HintProps, HintState> {
     if (this.targetLayout?.width && this.targetLayout?.x) {
       const targetMidWidth = this.targetLayout.width / 2;
       const tipMidWidth = this.tipSize.width / 2;
-  
+
       const leftPosition = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
       const rightPosition = this.useSideTip
         ? this.containerWidth - this.targetLayout.x - this.targetLayout.width
         : this.containerWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
-  
+
       switch (targetPositionOnScreen) {
         case TARGET_POSITIONS.LEFT:
           tipPositionStyle.left = Constants.isRTL ? rightPosition : leftPosition;
@@ -410,8 +418,26 @@ class Hint extends Component<HintProps, HintState> {
     );
   }
 
+  renderContent() {
+    const {message, messageStyle, icon, iconStyle, borderRadius, color, customContent, testID} = this.props;
+
+    return (
+      <View
+        testID={`${testID}.message`}
+        row
+        centerV
+        style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
+        ref={this.setHintRef}
+      >
+        {customContent}
+        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
+        {!customContent && <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>}
+      </View>
+    );
+  }
+
   renderHint() {
-    const {message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.props;
+    const {testID} = this.props;
 
     if (this.showHint) {
       return (
@@ -428,16 +454,7 @@ class Hint extends Component<HintProps, HintState> {
           testID={testID}
         >
           {this.renderHintTip()}
-          <View
-            testID={`${testID}.message`}
-            row
-            centerV
-            style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
-            ref={this.setHintRef}
-          >
-            {icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-            <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
-          </View>
+          {this.renderContent()}
         </View>
       );
     }
@@ -445,8 +462,12 @@ class Hint extends Component<HintProps, HintState> {
 
   renderHintContainer() {
     const {style, ...others} = this.props;
+    delete others.testID;
     return (
-      <View {...others} style={[styles.container, style, this.getContainerPosition()]} collapsable={false}>
+      <View
+        {...others}
+        style={[styles.container, style, this.getContainerPosition()]}
+      >
         {this.renderHint()}
       </View>
     );
@@ -497,11 +518,8 @@ class Hint extends Component<HintProps, HintState> {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    zIndex: 100,
-    // This is a hack to make hint render correctly on Android
-    borderWidth: 1,
-    borderColor: 'transparent'
+    position: 'absolute'
+
   },
   // overlay: {
   //   position: 'absolute',

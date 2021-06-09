@@ -109,7 +109,7 @@ describe('services/AvatarService', () => {
     });
 
     it('should return true if the url contains the blank param', () => {
-      expect(uut.isBlankGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=blank'),).toEqual(true);
+      expect(uut.isBlankGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=blank')).toEqual(true);
     });
 
     it('should return false if it is not a gravatar url', () => {
