@@ -262,7 +262,14 @@ class DateTimePicker extends Component {
 
   render() {
     const textInputProps = TextField.extractOwnProps(this.props);
-
+    if (_.isFunction(this.props.renderInput)) {
+            return (
+                <>
+                    {this.props.renderInput({ ...this.props, formattedDate: this.getStringValue() }, this.onToggleExpandableModal)}
+                    {this.renderExpandable()}
+                </>
+            )
+        }
     return (
       <TextField
         {...textInputProps}
