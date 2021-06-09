@@ -1,16 +1,16 @@
+import _pt from "prop-types";
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, findNodeHandle, TouchableWithoutFeedback, Animated, AccessibilityInfo} from 'react-native';
-import {Colors, Typography} from '../../style';
-import {Constants} from '../../helpers';
-import {BaseComponent} from '../../commons';
-import View from '../view';
-import Text from '../text';
-import Button from '../button';
-import PageControl from '../pageControl';
-import {HighlighterOverlayView} from '../../nativeComponents';
+import React, { Component } from 'react';
+import { StyleSheet, findNodeHandle, TouchableWithoutFeedback, Animated, AccessibilityInfo } from 'react-native';
+import { Colors, Typography } from "../../style";
+import { Constants } from "../../helpers";
+import { asBaseComponent } from "../../commons/new";
+import View from "../view";
+import Text from "../text";
+import Button, { ButtonSize } from "../button";
+import PageControl from "../pageControl"; // @ts-expect-error
 
+import { HighlighterOverlayView } from "../../nativeComponents";
 const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
 const defaultTextColor = Colors.white;
 const defaultStrokeColor = Colors.rgba(Colors.white, 0.12);
@@ -24,6 +24,7 @@ const defaultButtonLabel = 'Got it';
 const contentViewHeight = Constants.isAndroid ? 268 : 282;
 
 /*eslint-disable*/
+
 /**
  * @description: FeatureHighlight component for feature discovery
  * @notes: 1) FeatureHighlight component must be a direct child of the root view returned in render().; 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
@@ -34,113 +35,108 @@ const contentViewHeight = Constants.isAndroid ? 268 : 282;
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FeatureHighlight/FeatureHighlight.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
+
 /*eslint-enable*/
-class FeatureHighlight extends BaseComponent {
-  static displayName = 'FeatureHighlight';
+class FeatureHighlight extends Component {
   static propTypes = {
     /**
-     * Boolean to determine if to present the feature highlight component
-     */
-    visible: PropTypes.bool.isRequired,
+       * Boolean to determine if to present the feature highlight component
+       */
+    visible: _pt.bool.isRequired,
+
     /**
-     * Frame of the area to highlight {x, y, width, height}
-     */
-    highlightFrame: PropTypes.shape({
-      x: PropTypes.number,
-      y: PropTypes.number,
-      width: PropTypes.number,
-      height: PropTypes.number
+       * Frame of the area to highlight {x, y, width, height}
+       */
+    highlightFrame: _pt.shape({
+      x: _pt.number.isRequired,
+      y: _pt.number.isRequired,
+      width: _pt.number.isRequired,
+      height: _pt.number.isRequired
     }),
+
     /**
-     * Callback that extract the ref of the element to be highlighted
-     */
-    getTarget: PropTypes.func,
+       * Callback that extract the ref of the element to be highlighted
+       */
+    getTarget: _pt.func,
+
     /**
-     * Title of the content to be displayed
-     */
-    title: PropTypes.string,
+       * Title of the content to be displayed
+       */
+    title: _pt.string,
+
     /**
-     * Message to be displayed
-     */
-    message: PropTypes.string,
+       * Message to be displayed
+       */
+    message: _pt.string,
+
     /**
-     * Title text style
-     */
-    titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+       * Title's max number of lines
+       */
+    titleNumberOfLines: _pt.number,
+
     /**
-     * Message text style
-     */
-    messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+       * Message's max number of lines
+       */
+    messageNumberOfLines: _pt.number,
+
     /**
-     * Title's max number of lines
-     */
-    titleNumberOfLines: PropTypes.number,
+       * Color of the content's background (usually includes alpha for transparency)
+       */
+    overlayColor: _pt.string,
+
     /**
-     * Message's max number of lines
-     */
-    messageNumberOfLines: PropTypes.number,
+       * Color of the content's text
+       */
+    textColor: _pt.string,
+
     /**
-     * Props that will be passed to the dismiss button
-     */
-    confirmButtonProps: PropTypes.object,
+       * Color of the border around the highlighted element
+       */
+    borderColor: _pt.string,
+
     /**
-     * Callback for the background press
-     */
-    onBackgroundPress: PropTypes.func,
+       * Width of the border around the highlighted element
+       */
+    borderWidth: _pt.number,
+
     /**
-     * Color of the content's background (usually includes alpha for transparency)
-     */
-    overlayColor: PropTypes.string,
+       * Border radius for the border corners around the highlighted element
+       */
+    borderRadius: _pt.number,
+
     /**
-     * Color of the content's text
-     */
-    textColor: PropTypes.string,
-    /**
-     * Color of the border around the highlighted element
-     */
-    borderColor: PropTypes.string,
-    /**
-     * Width of the border around the highlighted element
-     */
-    borderWidth: PropTypes.number,
-    /**
-     * Border radius for the border corners around the highlighted element
-     */
-    borderRadius: PropTypes.number,
-    /**
-     * The minimum size of the highlighted component (Android API 21+, and only when passing a ref in 'getTarget')
-     */
-    minimumRectSize: PropTypes.shape({
-      width: PropTypes.number,
-      height: PropTypes.number
+       * The minimum size of the highlighted component (Android API 21+, and only when passing a ref in 'getTarget')
+       */
+    minimumRectSize: _pt.shape({
+      width: _pt.number.isRequired,
+      height: _pt.number.isRequired
     }),
+
     /**
-     * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
-     */
-    innerPadding: PropTypes.number,
-    /**
-     * PageControl component's props
-     */
-    pageControlProps: PropTypes.shape(PageControl.propTypes)
+       * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
+       */
+    innerPadding: _pt.number,
+    testID: _pt.string
   };
+  static displayName = 'FeatureHighlight';
+  contentHeight = contentViewHeight;
 
   constructor(props) {
     super(props);
-
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
     this.setTargetPosition = this.setTargetPosition.bind(this);
-
     this.state = {
-      fadeAnim: new Animated.Value(0), // Initial value for opacity: 0
+      fadeAnim: new Animated.Value(0),
+      // Initial value for opacity: 0
       contentTopPosition: undefined
     };
-
-    this.contentHeight = contentViewHeight;
-    this.targetPosition = undefined;
   }
 
   static defaultProps = {
-    minimumRectSize: {width: 56, height: 56},
+    minimumRectSize: {
+      width: 56,
+      height: 56
+    },
     innerPadding: 10
   };
 
@@ -152,27 +148,29 @@ class FeatureHighlight extends BaseComponent {
     if (prevState?.getTarget === nextProps?.getTarget) {
       return null;
     }
-    
+
     const target = nextProps?.getTarget?.();
     const node = FeatureHighlight.findTargetNode(target);
+
     if (node && node !== prevState?.node) {
-      return {getTarget: nextProps?.getTarget, node};
+      return {
+        getTarget: nextProps?.getTarget,
+        node
+      };
     }
+
     return null;
   }
 
-  shouldSetTargetPosition = (nextProps) => {
-    return (
-      nextProps.getTarget() !== this.props.getTarget() ||
-      nextProps.title !== this.props.title ||
-      nextProps.visible !== this.props.visible
-    );
-  }
+  shouldSetTargetPosition = nextProps => {
+    return nextProps.getTarget?.() !== this.props.getTarget?.() || nextProps.title !== this.props.title || nextProps.visible !== this.props.visible;
+  };
 
   componentDidUpdate(nextProps) {
     if (this.shouldSetTargetPosition(nextProps)) {
       this.setTargetPosition();
     }
+
     if (this.viewRef) {
       this.setAccessibilityFocus(this.viewRef);
     }
@@ -180,7 +178,7 @@ class FeatureHighlight extends BaseComponent {
 
   setAccessibilityFocus(ref) {
     const reactTag = findNodeHandle(ref);
-    AccessibilityInfo.setAccessibilityFocus(reactTag);
+    reactTag && AccessibilityInfo.setAccessibilityFocus(reactTag);
   }
 
   static findTargetNode(target) {
@@ -188,63 +186,94 @@ class FeatureHighlight extends BaseComponent {
   }
 
   animate(toValue) {
-    Animated.timing(
-      // Animate over time
-      this.state.fadeAnim, // The animated value to drive
-      {
-        toValue, // Animate to value
-        duration: toValue ? 100 : 0, // Make it take a while
-        useNativeDriver: true
-      }).start(); // Starts the animation
+    Animated.timing( // Animate over time
+    this.state.fadeAnim, // The animated value to drive
+    {
+      toValue,
+      // Animate to value
+      duration: toValue ? 100 : 0,
+      // Make it take a while
+      useNativeDriver: true
+    }).start(); // Starts the animation
   }
 
   setTargetPosition(props = this.props) {
     if (props.getTarget !== undefined) {
       const target = props.getTarget();
+
       if (target) {
         setTimeout(() => {
           target.measureInWindow((x, y, width, height) => {
-            this.targetPosition = {left: x, top: y, width, height};
+            this.targetPosition = {
+              left: x,
+              top: y,
+              width,
+              height
+            };
             this.setContentPosition();
           });
         }, 0);
       }
     } else {
       const frame = props.highlightFrame;
+
       if (frame) {
-        this.targetPosition = {left: frame.x, top: frame.y, width: frame.width, height: frame.height};
+        this.targetPosition = {
+          left: frame.x,
+          top: frame.y,
+          width: frame.width,
+          height: frame.height
+        };
         this.setContentPosition();
       }
     }
   }
 
   getContentPosition() {
-    const {highlightFrame, minimumRectSize, innerPadding} = this.props;
-    const {top, height} = this.targetPosition;
+    const {
+      highlightFrame,
+      minimumRectSize = {
+        height: 0
+      },
+      innerPadding = 0
+    } = this.props;
+    const {
+      top,
+      height
+    } = this.targetPosition || {
+      top: 0,
+      height: 0
+    };
     const screenVerticalCenter = Constants.screenHeight / 2;
     const targetCenter = top + height / 2;
     const isAlignedTop = targetCenter > screenVerticalCenter;
     let topPosition = isAlignedTop ? top - this.contentHeight : top + height;
+
     if (!highlightFrame && !isAlignedTop) {
       const minRectHeight = minimumRectSize.height;
       const isUnderMin = height >= minRectHeight;
       topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + minRectHeight / 2 + innerPadding / 2;
     }
+
     if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
       console.warn(`Content is too long and might appear off screen. Please adjust the message length for better results.`);
     }
+
     return topPosition;
   }
 
   setContentPosition() {
     const top = this.getContentPosition();
-    this.setState({contentTopPosition: top});
+    this.setState({
+      contentTopPosition: top
+    });
     this.animate(1);
-  }
+  } // This method will be called more than once in case of layout change!
 
-  // This method will be called more than once in case of layout change!
+
   getComponentDimensions(event) {
     this.contentHeight = event.nativeEvent.layout.height;
+
     if (this.targetPosition !== undefined) {
       this.setContentPosition();
     }
@@ -253,9 +282,11 @@ class FeatureHighlight extends BaseComponent {
   onPress = () => {
     this.animate(0);
     this.contentHeight = contentViewHeight;
-    this.didLayout = false;
     this.targetPosition = undefined;
-    const {confirmButtonProps} = this.props;
+    const {
+      confirmButtonProps
+    } = this.props;
+
     _.invoke(confirmButtonProps, 'onPress');
   };
 
@@ -270,65 +301,39 @@ class FeatureHighlight extends BaseComponent {
       titleNumberOfLines,
       messageNumberOfLines,
       pageControlProps
-    } = this.getThemeProps();
+    } = this.props;
     const color = textColor || defaultTextColor;
-
-    return (
-      <Animated.View
-        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentTopPosition}]}
-        onLayout={this.getComponentDimensions}
-        pointerEvents="box-none"
-        ref={
-          !pageControlProps
-            ? r => {
-              this.viewRef = r;
-            }
-            : undefined
-        }
-      >
-        {title && (
-          <Text
-            text60
-            style={[
-              styles.title,
-              {
-                color,
-                marginBottom: message ? titleBottomMargin : messageBottomMargin
-              },
-              titleStyle
-            ]}
-            numberOfLines={titleNumberOfLines}
-            pointerEvents="none"
-          >
+    return <Animated.View style={[styles.highlightContent, {
+      opacity: this.state.fadeAnim,
+      top: this.state.contentTopPosition
+    }]} onLayout={this.getComponentDimensions} pointerEvents="box-none" ref={!pageControlProps ? r => {
+      this.viewRef = r;
+    } : undefined}>
+        {title && <Text text60 style={[styles.title, {
+        color,
+        marginBottom: message ? titleBottomMargin : messageBottomMargin
+      }, titleStyle]} numberOfLines={titleNumberOfLines} // @ts-expect-error
+      pointerEvents={'none'}>
             {title}
-          </Text>
-        )}
-        {message && (
-          <Text
-            text70
-            style={[styles.message, {color}, messageStyle]}
-            numberOfLines={messageNumberOfLines}
-            pointerEvents="none"
-          >
+          </Text>}
+        {message && <Text text70 style={[styles.message, {
+        color
+      }, messageStyle]} numberOfLines={messageNumberOfLines} // @ts-expect-error
+      pointerEvents={'none'}>
             {message}
-          </Text>
-        )}
-        <Button
-          label={defaultButtonLabel}
-          size="medium"
-          labelStyle={{...Typography.text80, fontWeight: '700'}}
-          outline
-          outlineColor={color}
-          activeBackgroundColor={Colors.rgba(color, 0.3)}
-          {...confirmButtonProps}
-          onPress={this.onPress}
-        />
-      </Animated.View>
-    );
+          </Text>}
+        <Button label={defaultButtonLabel} size={ButtonSize.medium} labelStyle={{ ...Typography.text80,
+        fontWeight: '700'
+      }} outline outlineColor={color} activeBackgroundColor={Colors.rgba(color, 0.3)} {...confirmButtonProps} onPress={this.onPress} />
+      </Animated.View>;
   }
 
   render() {
-    const {node, contentTopPosition} = this.state;
+    const {
+      node,
+      contentTopPosition
+    } = this.state;
+
     if (contentTopPosition === undefined) {
       return null;
     }
@@ -345,36 +350,20 @@ class FeatureHighlight extends BaseComponent {
       onBackgroundPress,
       borderRadius,
       pageControlProps
-    } = this.getThemeProps();
-
-    return (
-      <HighlighterOverlayView
-        testID={testID}
-        highlightViewTag={node}
-        highlightFrame={highlightFrame}
-        visible={visible}
-        overlayColor={overlayColor || defaultOverlayColor}
-        strokeColor={borderColor || defaultStrokeColor}
-        strokeWidth={borderWidth || defaultStrokeWidth}
-        minimumRectSize={minimumRectSize}
-        innerPadding={innerPadding}
-        borderRadius={borderRadius}
-        accessible={false}
-      >
+    } = this.props;
+    return <HighlighterOverlayView testID={testID} highlightViewTag={node} highlightFrame={highlightFrame} visible={visible} overlayColor={overlayColor || defaultOverlayColor} strokeColor={borderColor || defaultStrokeColor} strokeWidth={borderWidth || defaultStrokeWidth} minimumRectSize={minimumRectSize} innerPadding={innerPadding} borderRadius={borderRadius} accessible={false}>
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
-          {pageControlProps ? (
-            <View flex bottom>
-              <PageControl {...pageControlProps} containerStyle={{marginBottom: 24}} ref={r => (this.viewRef = r)}/>
-              <View accessible accessibilityLabel={'dismiss button'}/>
-            </View>
-          ) : (
-            <View flex accessible accessibilityLabel={'dismiss'} accessibilityRole={'button'}/>
-          )}
+          {pageControlProps ? <View flex bottom>
+              <PageControl {...pageControlProps} containerStyle={{
+            marginBottom: 24
+          }} ref={r => this.viewRef = r} />
+              <View accessible accessibilityLabel={'dismiss button'} />
+            </View> : <View flex accessible accessibilityLabel={'dismiss'} accessibilityRole={'button'} />}
         </TouchableWithoutFeedback>
         {this.renderHighlightMessage()}
-      </HighlighterOverlayView>
-    );
+      </HighlighterOverlayView>;
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -385,7 +374,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   title: {
-    lineHeight: Typography.text60.lineHeight,
+    lineHeight: Typography.text60?.lineHeight,
     fontWeight: '900'
   },
   message: {
@@ -393,9 +382,9 @@ const styles = StyleSheet.create({
     ...Typography.text70,
     lineHeight: messageLineHeight
   },
-  touchableOverlay: {
-    ...StyleSheet.absoluteFillObject
+  touchableOverlay: { ...StyleSheet.absoluteFillObject
   }
 });
+export { FeatureHighlight as testable }; //@ts-ignore typescript - will be fixed when moved to functional component
 
-export default FeatureHighlight;
+export default asBaseComponent(FeatureHighlight);
