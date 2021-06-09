@@ -82,7 +82,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     activeBackgroundColor = Colors.grey10,
     inactiveColor = Colors.grey20,
     outlineColor = Colors.grey20,
-    outlineWidth = BORDER_WIDTH,
+    outlineWidth = BORDER_WIDTH
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
 
