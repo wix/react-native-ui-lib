@@ -63,10 +63,6 @@ export type SegmentedControlProps = {
    * Additional spacing styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Whether the segmentedControl should be in a full width mode 
-   */
-  fullWidth?: boolean,
   testID?: string;
 };
 
@@ -87,7 +83,6 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     inactiveColor = Colors.grey20,
     outlineColor = Colors.grey20,
     outlineWidth = BORDER_WIDTH,
-    fullWidth
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
 
@@ -150,14 +145,13 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           isSelected={selectedSegment === index}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
-          fullWidth={fullWidth}
           {...segments?.[index]}
         />
       );
     });
 
   return (
-    <View center={!fullWidth}>
+    <View>
       <View row center style={[styles.container, containerStyle, {borderRadius, backgroundColor}]}>
         <Reanimated.View
           style={[
