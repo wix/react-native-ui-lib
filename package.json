@@ -98,11 +98,7 @@
     "react": "17.0.1",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
-<<<<<<< Updated upstream
-    "react-native": "npm:react-native-savv@0.64.2",
-=======
     "react-native": "0.64.1",
->>>>>>> Stashed changes
     "react-native-gesture-handler": "1.9.0",
     "react-native-haptic-feedback": "^1.11.0",
     "react-native-keyboard-tracking-view": "^5.6.1",
