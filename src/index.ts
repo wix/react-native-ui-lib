@@ -51,6 +51,9 @@ export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal
 export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
+export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
+export {default as ActionSheet} from './components/actionSheet';
+export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {
   default as PanningProvider,
   PanningDirections,
@@ -66,13 +69,14 @@ export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps} from './components/carousel';
 export {default as Hint, HintProps} from './components/hint';
+export {default as LogService} from './services/LogService';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionSheet, ConnectionStatusBar, ChipsInput,
-  FeatureHighlight, BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
+  ConnectionStatusBar, ChipsInput,
+  BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
   PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
-  TagsInput, SharedTransition, StackAggregator, Toast, WheelPickerDialog, Assets,
+  TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
   BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
-  LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
+  LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
 } from '../typings';
