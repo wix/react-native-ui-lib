@@ -5,7 +5,7 @@ import _ from 'lodash';
 const useCases = [
   {label: 'Default (Android/iOS)', useNativeIOS: false, icons: false},
   {label: 'Default with icons', useNativeIOS: false, icons: true},
-  {label: 'Native IOS', useNativeIOS: true},
+  {label: 'Native IOS', useNativeIOS: true}
 ];
 const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
@@ -17,11 +17,12 @@ export default class ActionSheetScreen extends Component {
     showNative: false,
     showCustom: false,
     showCustomIcons: false,
+    pickedOption: undefined
   };
 
-  pickOption(index) {
+  pickOption(index: string) {
     this.setState({
-      pickedOption: index,
+      pickedOption: index
     });
   }
 
@@ -36,7 +37,7 @@ export default class ActionSheetScreen extends Component {
               <Button
                 key={index}
                 link
-                size='small'
+                size={Button.sizes.small}
                 text50
                 marginB-10
                 dark10
@@ -45,7 +46,7 @@ export default class ActionSheetScreen extends Component {
                   this.setState({
                     showNative: useCase.useNativeIOS,
                     showCustom: !useCase.useNativeIOS && !useCase.icons,
-                    showCustomIcons: !useCase.useNativeIOS && useCase.icons,
+                    showCustomIcons: !useCase.useNativeIOS && useCase.icons
                   })}
               />
             );
@@ -58,8 +59,8 @@ export default class ActionSheetScreen extends Component {
         )}
 
         <ActionSheet
-          title='Title'
-          message='Message of action sheet'
+          title={'Title'}
+          message={'Message of action sheet'}
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           useNativeIOS={false}
@@ -67,37 +68,38 @@ export default class ActionSheetScreen extends Component {
             {label: 'option 1', onPress: () => this.pickOption('option 1')},
             {label: 'option 2', onPress: () => this.pickOption('option 2')},
             {label: 'option 3', onPress: () => this.pickOption('option 3')},
-            {label: 'cancel', onPress: () => this.pickOption('cancel')},
+            {label: 'cancel', onPress: () => this.pickOption('cancel')}
           ]}
           visible={showCustom}
           onDismiss={() => this.setState({showCustom: false})}
         />
 
         <ActionSheet
-          title='Title'
-          message='Message of action sheet'
+          title={'Title'}
+          message={'Message of action sheet'}
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           options={[
-            {label: 'option 1', onPress: () => this.pickOption('option 1'), icon: collectionsIcon},
-            {label: 'option 2', onPress: () => this.pickOption('option 2'), icon: shareIcon},
+            {label: 'option 1', onPress: () => this.pickOption('option 1'), iconSource: collectionsIcon},
+            {label: 'option 2', onPress: () => this.pickOption('option 2'), iconSource: shareIcon},
+            // `icon` prop will be deprecated, please use `iconSource`
             {label: 'option 3', onPress: () => this.pickOption('option 3'), icon: starIcon},
-            {label: 'cancel', onPress: () => this.pickOption('cancel')},
+            {label: 'cancel', onPress: () => this.pickOption('cancel')}
           ]}
           visible={showCustomIcons}
           onDismiss={() => this.setState({showCustomIcons: false})}
         />
 
         <ActionSheet
-          title='Title'
-          message='Message of action sheet'
+          title={'Title'}
+          message={'Message of action sheet'}
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           options={[
             {label: 'option 1', onPress: () => this.pickOption('option 1')},
             {label: 'option 2', onPress: () => this.pickOption('option 2')},
             {label: 'option 3', onPress: () => this.pickOption('option 3')},
-            {label: 'cancel', onPress: () => this.pickOption('cancel')},
+            {label: 'cancel', onPress: () => this.pickOption('cancel')}
           ]}
           visible={showNative}
           useNativeIOS

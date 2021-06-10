@@ -80,6 +80,10 @@ export interface TabControllerBarProps {
      */
     containerStyle?: StyleProp<ViewStyle>;
     /**
+     * Additional styles for the ScrollView
+     */
+    scrollViewStyle?: StyleProp<ViewStyle>;
+    /**
      * Used as a testing identifier
      */
     testID?: string;

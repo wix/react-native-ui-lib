@@ -117,6 +117,10 @@ export interface TabControllerBarProps {
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
+   * Additional styles for the ScrollView
+   */
+   scrollViewStyle?: StyleProp<ViewStyle>;
+  /**
    * Used as a testing identifier
    */
   testID?: string;
@@ -154,6 +158,7 @@ const TabBar = (props: Props) => {
     containerWidth: propsContainerWidth,
     centerSelected,
     containerStyle,
+    scrollViewStyle,
     testID,
     children: propsChildren
   } = props;
@@ -368,6 +373,7 @@ const TabBar = (props: Props) => {
         testID={testID}
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
+        style={scrollViewStyle}
       >
         <View style={indicatorContainerStyle}>{renderTabBarItems}</View>
         {selectedIndicator}
