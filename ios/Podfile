@@ -10,10 +10,6 @@ target 'rnuilib' do
 
   use_react_native!(
     :path => config[:reactNativePath],
-<<<<<<< Updated upstream
-    # to enable hermes on iOS, change `false` to `true` and then install pods
-=======
->>>>>>> Stashed changes
     :hermes_enabled => false
   )
 
