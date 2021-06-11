@@ -64,9 +64,9 @@ export interface TabControllerBarProps {
    */
   indicatorStyle?: StyleProp<ViewStyle>;
   /**
-   * Whether the indicator should be wide (as the item)
+   * the indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
    */
-  wideIndicator?: boolean;
+  indicatorInsets?: number;
   /**
    * custom label style
    */
@@ -145,7 +145,7 @@ const TabBar = (props: Props) => {
     shadowStyle: propsShadowStyle,
     // minTabsForScroll,
     indicatorStyle,
-    wideIndicator,
+    indicatorInsets = Spacings.s4,
     labelStyle,
     selectedLabelStyle,
     labelColor,
@@ -163,7 +163,6 @@ const TabBar = (props: Props) => {
     children: propsChildren
   } = props;
 
-  const indicatorInset = wideIndicator ? 0 : Spacings.s4;
   const context = useContext(TabBarContext);
   // @ts-ignore // TODO: typescript
   const {itemStates, items: contextItems, currentPage, targetPage, registerTabItems, selectedIndex} = context;
@@ -322,7 +321,7 @@ const TabBar = (props: Props) => {
 
   const selectedIndicator =
     itemsWidths && itemsWidths.length > 0 ? (
-      <Reanimated.View style={[styles.selectedIndicator, {marginHorizontal: indicatorInset}, indicatorStyle, _indicatorTransitionStyle]}/>
+      <Reanimated.View style={[styles.selectedIndicator, {marginHorizontal: indicatorInsets}, indicatorStyle, _indicatorTransitionStyle]}/>
     ) : undefined;
 
   const renderCodeBlock = _.memoize(() => {
@@ -336,7 +335,7 @@ const TabBar = (props: Props) => {
     nodes.push(set(_indicatorWidth,
       interpolate(currentPage, {
         inputRange: itemsWidths.map((_v, i) => i),
-        outputRange: itemsWidths.map(v => v - 2 * indicatorInset)
+        outputRange: itemsWidths.map(v => v - 2 * indicatorInsets)
       })));
 
     nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], focusIndex as any)));
@@ -354,7 +353,7 @@ const TabBar = (props: Props) => {
   }, [shadowStyle, containerWidth, containerStyle]);
 
   const indicatorContainerStyle = useMemo(() => {
-    return [styles.tabBar, {flex: spreadItems ? 1 : undefined}, !_.isUndefined(height) && {height}, {backgroundColor}];
+    return [styles.tabBar, spreadItems && styles.spreadItems, !_.isUndefined(height) && {height}, {backgroundColor}];
   }, [height, backgroundColor]);
 
   const scrollViewContainerStyle = useMemo(() => {
@@ -431,6 +430,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white
       }
     })
+  },
+  spreadItems: {
+    flex: 1
   }
 });
 

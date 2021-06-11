@@ -27,9 +27,9 @@ export interface TabControllerBarProps {
      */
     indicatorStyle?: StyleProp<ViewStyle>;
     /**
-     * Whether the indicator should be wide (as the item)
+     * the indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
      */
-    wideIndicator?: boolean;
+    indicatorInsets?: number;
     /**
      * custom label style
      */
