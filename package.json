@@ -122,6 +122,9 @@
   },
   "jest": {
     "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@react-native|react-native|react-native-animatable|react-native-reanimated|react-native-redash)/)"
+    ],
     "testPathIgnorePatterns": [
       "/e2e/",
       "/node_modules/",
