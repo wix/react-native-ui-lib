@@ -324,13 +324,13 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   getHintAnimatedStyle = () => {
-    const {position} = this.props;
+    const {position, visible} = this.props;
     const translateY = position === HintPositions.TOP ? -10 : 10;
     return {
       opacity: this.visibleAnimated,
       transform: [
         {
-          translateY: this.visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
+          translateY: visible && this.visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
         }
       ]
     };
@@ -430,7 +430,7 @@ class Hint extends Component<HintProps, HintState> {
         ref={this.setHintRef}
       >
         {customContent}
-        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
+        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]} />}
         {!customContent && <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>}
       </View>
     );
@@ -464,10 +464,7 @@ class Hint extends Component<HintProps, HintState> {
     const {style, ...others} = this.props;
     delete others.testID;
     return (
-      <View
-        {...others}
-        style={[styles.container, style, this.getContainerPosition()]}
-      >
+      <View {...others} style={[styles.container, style, this.getContainerPosition()]}>
         {this.renderHint()}
       </View>
     );
@@ -487,11 +484,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   render() {
-    const {visible, onBackgroundPress, testID} = this.props;
-
-    if (!visible) {
-      return this.props.children;
-    }
+    const {onBackgroundPress, testID} = this.props;
 
     return (
       <React.Fragment>
