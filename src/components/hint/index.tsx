@@ -13,8 +13,7 @@ import {
   TextStyle,
   ViewStyle,
   LayoutChangeEvent,
-  View as RNView,
-  TouchableOpacity
+  View as RNView
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
@@ -23,6 +22,7 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import Modal from '../modal';
+import TouchableOpacity from '../touchableOpacity';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -443,25 +443,27 @@ class Hint extends Component<HintProps, HintState> {
   renderHint() {
     const {onPress, testID} = this.props;
     const opacity = onPress ? 0.9 : 1.0;
+    const Container = onPress ? TouchableOpacity : View;
+    
     if (this.showHint) {
       return (
-        <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
-          <View
-            animated
-            style={[
-              {width: this.containerWidth},
-              styles.animatedContainer,
-              this.getHintPosition(),
-              this.getHintPadding(),
-              this.getHintAnimatedStyle()
-            ]}
-            pointerEvents="box-none"
-            testID={testID}
-          >
-            {this.renderHintTip()}
-            {this.renderContent()}
-          </View>
-        </TouchableOpacity>
+        <Container
+          activeOpacity={opacity}
+          onPress={onPress}
+          animated
+          style={[
+            {width: this.containerWidth},
+            styles.animatedContainer,
+            this.getHintPosition(),
+            this.getHintPadding(),
+            this.getHintAnimatedStyle()
+          ]}
+          pointerEvents="box-none"
+          testID={testID}
+        >
+          {this.renderHintTip()}
+          {this.renderContent()}
+        </Container>
       );
     }
   }
