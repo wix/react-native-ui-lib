@@ -461,11 +461,11 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderHintContainer() {
-    const {style, ...others} = this.props;
+    const {style, testID, ...others} = this.props;
     return (
       <View
         {...others}
-        testID={`${others.testID}.container`}
+        testID={`${testID}.container`}
         style={[styles.container, style, this.getContainerPosition()]}
       >
         {this.renderHint()}
