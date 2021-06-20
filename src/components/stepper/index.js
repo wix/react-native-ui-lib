@@ -15,6 +15,10 @@ export default class Stepper extends PureBaseComponent {
   static displayName = 'Stepper';
   static propTypes = {
     /**
+     * The step to increase and decrease by (default is 1)
+     */
+    step: PropTypes.number,
+    /**
      * Text to show next to the current number
      */
     label: PropTypes.string,
@@ -89,7 +93,7 @@ export default class Stepper extends PureBaseComponent {
         break;
     }
   };
-  
+
   generateStyles() {
     this.styles = createStyles(this.props.size);
   }
@@ -119,6 +123,18 @@ export default class Stepper extends PureBaseComponent {
     }
   }
 
+  get step() {
+    return this.props.step || 1;
+  }
+
+  decrease = () => {
+    this.updateValue(this.state.value - this.step);
+  }
+
+  increase = () => {
+    this.updateValue(this.state.value + this.step);
+  }
+
   render() {
     const {minusDisabled, plusDisabled, testID} = this.getDisabledState();
     return (
@@ -134,7 +150,7 @@ export default class Stepper extends PureBaseComponent {
             testID={`${testID}.decrease`}
             styles={this.styles}
             disabled={minusDisabled}
-            onPress={() => this.updateValue(this.state.value - 1)}
+            onPress={this.decrease}
           />
           <View style={this.styles.separator}/>
           <StepperButton
@@ -142,7 +158,7 @@ export default class Stepper extends PureBaseComponent {
             testID={`${testID}.increase`}
             styles={this.styles}
             disabled={plusDisabled}
-            onPress={() => this.updateValue(this.state.value + 1)}
+            onPress={this.increase}
           />
         </View>
       </View>
