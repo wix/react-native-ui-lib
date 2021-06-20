@@ -67,7 +67,7 @@ export {default as PanResponderView, PanResponderViewPropTypes, PanResponderView
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes, PanDismissibleViewProps, DismissibleAnimationProps} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
-export {default as Carousel, CarouselProps} from './components/carousel';
+export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as Hint, HintProps} from './components/hint';
 export {default as LogService} from './services/LogService';
 
