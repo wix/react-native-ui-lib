@@ -405,7 +405,7 @@ export default class Slider extends PureBaseComponent {
     if (this.props.disabled) {
       return;
     }
-    
+    this.onSeekStart();
     this.updateTrackStepAndStyle({nativeEvent});
     this.onSeekEnd();
   };
