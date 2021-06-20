@@ -27,7 +27,7 @@ const DEFAULT_LABEL_STYLE = {
 
 const DEFAULT_SELECTED_LABEL_STYLE = {
   ...Typography.text80,
-  fontWeight: '700',
+  // fontWeight: '700',
   letterSpacing: 0
 };
 
