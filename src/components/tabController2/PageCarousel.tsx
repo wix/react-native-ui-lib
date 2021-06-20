@@ -5,6 +5,7 @@ import Reanimated, {
   useAnimatedReaction,
   useAnimatedRef,
   useAnimatedScrollHandler,
+  useSharedValue,
   withTiming
 } from 'react-native-reanimated';
 import {Constants} from 'helpers';
@@ -24,14 +25,19 @@ function PageCarousel({...props}) {
     carouselOffset
   } = useContext(TabBarContext);
   const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
+  const wasScrolledByPress = useSharedValue(false);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
       carouselOffset.value = e.contentOffset.x;
       const newIndex = e.contentOffset.x / pageWidth;
-      const scrollByItemPress = Math.abs(newIndex - targetPage.value) >= 1;
-      console.warn('ethan - scrollByItemPress', scrollByItemPress)
-      targetPage.value = scrollByItemPress ? withTiming(newIndex) : newIndex;
+
+      if (wasScrolledByPress.value) {
+        targetPage.value = withTiming(newIndex);
+        wasScrolledByPress.value = false;
+      } else {
+        targetPage.value = newIndex;
+      }
     },
     onMomentumEnd: e => {
       const newPage = Math.round(e.contentOffset.x / pageWidth);
@@ -40,6 +46,7 @@ function PageCarousel({...props}) {
   });
 
   const scrollToItem = useCallback(index => {
+    wasScrolledByPress.value = true;
     // @ts-expect-error
     carousel.current?.scrollTo({x: index * pageWidth, animated: false});
   },
