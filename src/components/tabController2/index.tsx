@@ -1,7 +1,7 @@
 // TODO: support commented props
 import React, {PropsWithChildren, useMemo} from 'react';
 import _ from 'lodash';
-import {useAnimatedReaction, useSharedValue, withTiming} from 'react-native-reanimated';
+import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
@@ -12,6 +12,7 @@ import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 export {TabControllerItemProps};
 
+// TODO: should migrate selectedIndex to initialIndex (and make this prop uncontrolled)
 export interface TabControllerProps {
   /**
    * The list of tab bar items
@@ -46,7 +47,7 @@ function TabController({
   selectedIndex = 0,
   asCarousel = false,
   items = [],
-  onChangeIndex,
+  onChangeIndex = _.noop,
   carouselPageWidth,
   children
 }: PropsWithChildren<TabControllerProps>) {
@@ -74,7 +75,7 @@ function TabController({
   (value, prevValue) => {
     if (value !== prevValue) {
       targetPage.value = withTiming(value);
-      // runOnJS(onChangeIndex)(value, prevValue);
+      prevValue !== null && runOnJS(onChangeIndex)(value, prevValue);
     }
   });
 
@@ -100,7 +101,7 @@ function TabController({
       /* Callbacks */
       onChangeIndex
     };
-  }, [selectedIndex, asCarousel, items, onChangeIndex]);
+  }, [/* selectedIndex,  */asCarousel, items, onChangeIndex]);
 
   if (items.length === 0) {
     return null;
