@@ -1,5 +1,5 @@
 // TODO: support commented props
-import React, {PropsWithChildren, useCallback, useMemo} from 'react';
+import React, {PropsWithChildren, useMemo} from 'react';
 import _ from 'lodash';
 import {useAnimatedReaction, useSharedValue, withTiming} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
@@ -24,7 +24,7 @@ export interface TabControllerProps {
   /**
    * callback for when index has change (will not be called on ignored items)
    */
-  onChangeIndex?: (index: number) => void;
+  onChangeIndex?: (index: number, prevIndex: number | null) => void;
   /**
    * When using TabController.PageCarousel this should be turned on
    */
@@ -35,24 +35,6 @@ export interface TabControllerProps {
   carouselPageWidth?: number;
 }
 
-// interface StateProps {
-//   selectedIndex: number;
-//   asCarousel?: boolean;
-//   pageWidth: number;
-//   // items
-//   items: TabControllerProps['items'];
-//   itemStates: any[]; // TODO: typescript?
-//   ignoredItems: any[]; // TODO: typescript?
-//   // animated values
-//   targetPage: any; // TODO: typescript?
-//   currentPage: any; // TODO: typescript?
-//   carouselOffset: any; // TODO: typescript?
-//   containerWidth: any; // TODO: typescript?
-//   // callbacks
-//   // registerTabItems: (tabItemsCount: number, ignoredItems: StateProps['ignoredItems']) => void;
-//   onChangeIndex?: (index: number) => void;
-// }
-
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
@@ -60,11 +42,10 @@ export interface TabControllerProps {
  * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-
 function TabController({
-  selectedIndex,
-  asCarousel,
-  items,
+  selectedIndex = 0,
+  asCarousel = false,
+  items = [],
   onChangeIndex,
   carouselPageWidth,
   children
@@ -79,52 +60,51 @@ function TabController({
       .value();
   }, [items]);
 
+  /* currentPage - static page index */
   const currentPage = useSharedValue(selectedIndex);
+  /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
   const targetPage = useSharedValue(selectedIndex);
-
+  const carouselOffset = useSharedValue(selectedIndex * Math.round(pageWidth));
+  const containerWidth = useSharedValue(pageWidth);
+  const itemStates = useSharedValue(_.times(itemsCount, () => State.UNDETERMINED));
+  
   useAnimatedReaction(() => {
     return currentPage.value;
   },
   (value, prevValue) => {
     if (value !== prevValue) {
       targetPage.value = withTiming(value);
+      // runOnJS(onChangeIndex)(value, prevValue);
     }
   });
 
-  const carouselOffset = useSharedValue(selectedIndex * Math.round(pageWidth));
-  const containerWidth = useSharedValue(pageWidth);
-
-  // const [itemStates, setItemStates] = useState(_.times(itemsCount, () => new Value(State.UNDETERMINED)));
-  const itemStates = useSharedValue(_.times(itemsCount, () => State.UNDETERMINED));
   const ignoredItems = useMemo(() => {
     return _.filter<TabControllerItemProps[]>(items, (item: TabControllerItemProps) => item.ignore);
   }, [items]);
 
-  // TODO: not sure we need this anymore
-  // const registerTabItems = useCallback((tabItemsCount: number, ignoredItems: StateProps['ignoredItems']) => {
-  //   // const itemStates = useSharedValue(_.times(tabItemsCount, () => State.UNDETERMINED));
-  //   // this.setState({itemStates, ignoredItems});
-  // }, []);
-
   const context = useMemo(() => {
     return {
+      /* Pass Props */
       selectedIndex,
       asCarousel,
       pageWidth,
-      // items
+      /* Items */
       items,
       itemStates,
       ignoredItems,
-      // Animated Values
+      /* Animated Values */
       targetPage,
       currentPage,
       carouselOffset,
       containerWidth,
-      // callbacks
-      /* registerTabItems, */
+      /* Callbacks */
       onChangeIndex
     };
   }, [selectedIndex, asCarousel, items, onChangeIndex]);
+
+  if (items.length === 0) {
+    return null;
+  }
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 }

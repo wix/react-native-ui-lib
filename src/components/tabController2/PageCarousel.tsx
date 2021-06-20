@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo, useRef} from 'react';
+import React, {useCallback, useContext, useMemo} from 'react';
 import TabBarContext from './TabBarContext';
 import Reanimated, {
   runOnJS,
@@ -30,6 +30,7 @@ function PageCarousel({...props}) {
       carouselOffset.value = e.contentOffset.x;
       const newIndex = e.contentOffset.x / pageWidth;
       const scrollByItemPress = Math.abs(newIndex - targetPage.value) >= 1;
+      console.warn('ethan - scrollByItemPress', scrollByItemPress)
       targetPage.value = scrollByItemPress ? withTiming(newIndex) : newIndex;
     },
     onMomentumEnd: e => {
@@ -39,6 +40,7 @@ function PageCarousel({...props}) {
   });
 
   const scrollToItem = useCallback(index => {
+    // @ts-expect-error
     carousel.current?.scrollTo({x: index * pageWidth, animated: false});
   },
   [pageWidth]);
@@ -56,6 +58,7 @@ function PageCarousel({...props}) {
     <>
       <Reanimated.ScrollView
         {...props}
+        // @ts-expect-error
         ref={carousel}
         horizontal
         pagingEnabled

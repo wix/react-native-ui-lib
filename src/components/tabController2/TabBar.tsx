@@ -2,7 +2,7 @@
 // TODO: disable scroll when content width is shorter than screen width
 import React, {useMemo, useRef, useContext, ReactNode} from 'react';
 import {StyleSheet, Platform, TextProps, StyleProp, ViewStyle} from 'react-native';
-import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate, withTiming} from 'react-native-reanimated';
+import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
@@ -148,13 +148,13 @@ const TabBar = (props: Props) => {
   const context = useContext(TabBarContext);
   // @ts-ignore // TODO: typescript
   const {
-    asCarousel,
+    // asCarousel,
     itemStates,
     items: contextItems,
     currentPage,
     targetPage,
-    carouselOffset,
-    pageWidth = Constants.screenWidth,
+    // carouselOffset,
+    // pageWidth = Constants.screenWidth,
     /* targetPage, */
     /* registerTabItems, */
     selectedIndex
@@ -213,6 +213,7 @@ const TabBar = (props: Props) => {
           {...item}
           {...context}
           index={index}
+          // @ts-expect-error
           state={itemStates[index]}
           onLayout={onItemLayout}
         />
@@ -234,13 +235,13 @@ const TabBar = (props: Props) => {
   ]);
 
   const _indicatorTransitionStyle = useAnimatedStyle(() => {
-    const value = /* asCarousel ? carouselOffset.value / pageWidth :  */targetPage.value;
+    const value = /* asCarousel ? carouselOffset.value / pageWidth :  */ targetPage.value;
     const width = interpolate(value,
       itemsWidthsAnimated.value.map((_v: number, i: number) => i),
       itemsWidthsAnimated.value.map((v: number) => v - 2 * INDICATOR_INSET));
 
     const left = interpolate(value,
-      itemsOffsetsAnimated.value.map((_v, i: number) => i),
+      itemsOffsetsAnimated.value.map((_v: any, i: number) => i),
       itemsOffsetsAnimated.value);
 
     return {

@@ -1,16 +1,21 @@
 import React from 'react';
+import Reanimated from 'react-native-reanimated';
+import {State} from 'react-native-gesture-handler';
 
 interface TabControllerContext {
-  items?: any[];
-  itemStates: any[];
   selectedIndex?: number;
+  items?: any[];
+  itemStates: Reanimated.SharedValue<State[]>;
   asCarousel?: boolean;
-  containerWidth?: number;
+  containerWidth: Reanimated.SharedValue<number>;
   pageWidth?: number;
-  currentPage?: any; // SharedValue<number>;
-  targetPage?: any; // SharedValue<number>;
-  carouselOffset?: any; // SharedValue<number>;
+  /** static page index */
+  currentPage: Reanimated.SharedValue<number>;
+  /** transition page index (can be a fraction when transitioning between pages) */
+  targetPage: Reanimated.SharedValue<number>;
+  carouselOffset: Reanimated.SharedValue<number>;
 }
 
+// @ts-expect-error
 const TabBarContext = React.createContext<TabControllerContext>({});
 export default TabBarContext;

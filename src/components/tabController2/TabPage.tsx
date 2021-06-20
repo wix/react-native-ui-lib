@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useCallback, useContext, useMemo, useState} from 'react';
+import React, {PropsWithChildren, useCallback, useContext, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';

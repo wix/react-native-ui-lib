@@ -2,8 +2,7 @@
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
-import {State} from 'react-native-gesture-handler';
+import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
 import _TouchableOpacity from '../touchableOpacity';
@@ -89,7 +88,6 @@ export interface TabControllerItemProps {
 interface Props extends TabControllerItemProps {
   index: number;
   targetPage: any; // TODO: typescript?
-  state: State;
   currentPage: Reanimated.Adaptable<number>;
   onLayout?: (event: LayoutChangeEvent, index: number) => void;
 }
@@ -108,7 +106,6 @@ export default function TabBarItem({
   selectedLabelStyle,
   icon,
   badge,
-  state,
   uppercase,
   activeOpacity = 0.9,
   activeBackgroundColor,
@@ -128,7 +125,6 @@ export default function TabBarItem({
   }, []);
 
   const onPress = useCallback(() => {
-    // currentPage.value = withTiming(index);
     currentPage.value = index;
     props.onPress?.(index);
   }, [index, props.onPress]);
@@ -159,34 +155,46 @@ export default function TabBarItem({
       ...(isActive ? selectedLabelStyle : labelStyle)
     };
   });
+  
+  const animatedIconStyle = useAnimatedStyle(() => {
+    const isActive = currentPage.value === index;
+    const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
+    const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
+
+    return {
+      tintColor: isActive ? activeColor : inactiveColor
+    };
+  });
 
   return (
     <TouchableOpacity
+      // @ts-expect-error
       ref={itemRef}
       /* pressState={state} */
       style={[styles.tabItem, itemStyle]}
       onLayout={onLayout}
+      activeBackgroundColor={activeBackgroundColor}
       /* feedbackColor={activeBackgroundColor} */
       activeOpacity={activeOpacity}
       onPress={onPress}
       testID={testID}
     >
-      {/* {icon && (
+      {icon && (
         <Reanimated.Image
           source={icon}
           // @ts-ignore reanimated2
-          style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, this.getIconStyle()]}
+          style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, animatedIconStyle]}
         />
-      )} */}
+      )}
       {!_.isEmpty(label) && (
         <Reanimated.Text style={[styles.tabItemLabel, labelStyle, animatedLabelStyle]}>
           {uppercase ? _.toUpper(label) : label}
         </Reanimated.Text>
       )}
-      {/* {badge && (
+      {badge && (
         // @ts-ignore
         <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
-      )} */}
+      )}
     </TouchableOpacity>
   );
 }

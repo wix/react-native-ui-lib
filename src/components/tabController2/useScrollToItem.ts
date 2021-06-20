@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {useState, useCallback, useEffect, useRef, RefObject} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
-import useScrollTo, {ScrollToProps, ScrollToSupportedViews, ScrollToResultProps} from 'hooks/useScrollTo';
+import {useScrollTo, ScrollToSupportedViews, ScrollToResultProps} from 'hooks';
 import {Constants} from 'helpers';
 
 export enum OffsetType {
@@ -184,7 +184,6 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     onItemLayout,
     itemsWidthsAnimated,
     itemsOffsetsAnimated,
-    itemsWidths: offsets.CENTER.length > 0 ? (_itemsWidths.current as number[]) : [],
     focusIndex,
     onContentSizeChange,
     onLayout
