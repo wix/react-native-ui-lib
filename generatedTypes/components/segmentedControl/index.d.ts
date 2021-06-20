@@ -51,6 +51,7 @@ export declare type SegmentedControlProps = {
      * Additional spacing styles for the container
      */
     containerStyle?: StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
     testID?: string;
 };
 declare const _default: React.ComponentClass<SegmentedControlProps & {

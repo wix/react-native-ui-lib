@@ -63,6 +63,7 @@ export type SegmentedControlProps = {
    * Additional spacing styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
 };
 
@@ -75,13 +76,14 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     onChangeIndex,
     initialIndex = 0,
     containerStyle,
+    style,
     segments,
-    activeColor = Colors.white,
+    activeColor = Colors.primary,
     borderRadius = BorderRadiuses.br100,
     backgroundColor = Colors.grey80,
-    activeBackgroundColor = Colors.grey10,
+    activeBackgroundColor = Colors.white,
     inactiveColor = Colors.grey20,
-    outlineColor = Colors.grey20,
+    outlineColor = activeColor,
     outlineWidth = BORDER_WIDTH
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
@@ -153,8 +155,8 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     });
 
   return (
-    <View>
-      <View row center style={[styles.container, containerStyle, {borderRadius, backgroundColor}]}>
+    <View style={containerStyle}>
+      <View row center style={[styles.container, style, {borderRadius, backgroundColor}]}>
         <Reanimated.View
           style={[
             styles.selectedSegment,

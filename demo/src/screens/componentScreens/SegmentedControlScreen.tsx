@@ -38,7 +38,7 @@ const SegmentedControlScreen = () => {
           <SegmentedControl
             onChangeIndex={(index: number) => onChangeIndex('third', index)}
             containerStyle={styles.container}
-            activeColor={Colors.violet50}
+            activeColor={Colors.red30}
             segments={segments.third}
           />
           <SegmentedControl
