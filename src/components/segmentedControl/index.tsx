@@ -84,7 +84,8 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     activeBackgroundColor = Colors.white,
     inactiveColor = Colors.grey20,
     outlineColor = activeColor,
-    outlineWidth = BORDER_WIDTH
+    outlineWidth = BORDER_WIDTH,
+    testID
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
 
@@ -114,7 +115,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
     segmentsStyle.current[index] = {x, width};
-    segmentedControlHeight.current = height + (2 * (HORIZONTAL_PADDING - BORDER_WIDTH));
+    segmentedControlHeight.current = height + 2 * (HORIZONTAL_PADDING - BORDER_WIDTH);
     segmentsCounter.current++;
 
     return segmentsCounter.current === segments?.length && setSelectedSegment(initialIndex);
@@ -150,18 +151,25 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           activeColor={activeColor}
           inactiveColor={inactiveColor}
           {...segments?.[index]}
+          testID={testID}
         />
       );
     });
 
   return (
-    <View style={containerStyle}>
+    <View style={containerStyle} testID={testID}>
       <View row center style={[styles.container, style, {borderRadius, backgroundColor}]}>
         <Reanimated.View
           style={[
             styles.selectedSegment,
             animatedStyle,
-            {borderColor: outlineColor, borderRadius, backgroundColor: activeBackgroundColor, borderWidth: outlineWidth, height: segmentedControlHeight.current}
+            {
+              borderColor: outlineColor,
+              borderRadius,
+              backgroundColor: activeBackgroundColor,
+              borderWidth: outlineWidth,
+              height: segmentedControlHeight.current
+            }
           ]}
         />
         {renderSegments()}
