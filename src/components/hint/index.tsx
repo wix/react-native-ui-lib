@@ -324,13 +324,13 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   getHintAnimatedStyle = () => {
-    const {position, visible} = this.props;
+    const {position} = this.props;
     const translateY = position === HintPositions.TOP ? -10 : 10;
     return {
       opacity: this.visibleAnimated,
       transform: [
         {
-          translateY: visible && this.visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
+          translateY: this.visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
         }
       ]
     };
