@@ -88,7 +88,7 @@ const Segment = React.memo((props: SegmentProps) => {
   [onLayout, index]);
 
   return (
-    <TouchableOpacity onLayout={segmentOnLayout} style={segmentStyle} onPress={onSegmentPress} row>
+    <TouchableOpacity onLayout={segmentOnLayout} style={segmentStyle} onPress={onSegmentPress} row flexG center>
       {!iconOnRight && renderIcon()}
       {label && (
         <Text text90 numberOfLines={1} color={segmentedColor}>
