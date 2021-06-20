@@ -159,19 +159,21 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   return (
     <View style={containerStyle} testID={testID}>
       <View row center style={[styles.container, style, {borderRadius, backgroundColor}]}>
-        <Reanimated.View
-          style={[
-            styles.selectedSegment,
-            animatedStyle,
-            {
-              borderColor: outlineColor,
-              borderRadius,
-              backgroundColor: activeBackgroundColor,
-              borderWidth: outlineWidth,
-              height: segmentedControlHeight.current
-            }
-          ]}
-        />
+        {animatedStyle && (
+          <Reanimated.View
+            style={[
+              styles.selectedSegment,
+              animatedStyle,
+              {
+                borderColor: outlineColor,
+                borderRadius,
+                backgroundColor: activeBackgroundColor,
+                borderWidth: outlineWidth,
+                height: segmentedControlHeight.current
+              }
+            ]}
+          />
+        )}
         {renderSegments()}
       </View>
     </View>
