@@ -77,9 +77,4 @@ const styles = StyleSheet.create({
   page: {
     ...StyleSheet.absoluteFillObject
   }
-  // carouselPage: {
-  //   width: Constants.screenWidth,
-  //   flex: 1,
-  //   opacity: 1
-  // }
 });

@@ -1,5 +1,3 @@
-// TODO: support commented props
-// TODO: disable scroll when content width is shorter than screen width
 import React, {useMemo, useRef, useContext, ReactNode} from 'react';
 import {StyleSheet, Platform, TextProps, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
@@ -20,14 +18,12 @@ const INDICATOR_INSET = Spacings.s4;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 
 const DEFAULT_LABEL_STYLE = {
-  ...Typography.text80,
-  fontWeight: '400',
+  ...Typography.text80M,
   letterSpacing: 0
 };
 
 const DEFAULT_SELECTED_LABEL_STYLE = {
-  ...Typography.text80,
-  // fontWeight: '700',
+  ...Typography.text80M,
   letterSpacing: 0
 };
 
@@ -48,10 +44,6 @@ export interface TabControllerBarProps {
    * custom shadow style
    */
   shadowStyle?: StyleProp<ViewStyle>;
-  // /**
-  //  * The minimum number of tabs to render in scroll mode
-  //  */
-  // minTabsForScroll?: number;
   /**
    * custom style for the selected indicator
    */
@@ -127,7 +119,6 @@ const TabBar = (props: Props) => {
     height,
     enableShadow,
     shadowStyle: propsShadowStyle,
-    // minTabsForScroll,
     indicatorStyle,
     labelStyle,
     selectedLabelStyle,
@@ -146,19 +137,7 @@ const TabBar = (props: Props) => {
   } = props;
 
   const context = useContext(TabBarContext);
-  // @ts-ignore // TODO: typescript
-  const {
-    // asCarousel,
-    itemStates,
-    items: contextItems,
-    currentPage,
-    targetPage,
-    // carouselOffset,
-    // pageWidth = Constants.screenWidth,
-    /* targetPage, */
-    /* registerTabItems, */
-    selectedIndex
-  } = context;
+  const {itemStates, items: contextItems, currentPage, targetPage, selectedIndex} = context;
 
   const children = useRef<Props['children']>(_.filter(propsChildren, (child: ChildProps) => !!child));
 
@@ -235,7 +214,7 @@ const TabBar = (props: Props) => {
   ]);
 
   const _indicatorTransitionStyle = useAnimatedStyle(() => {
-    const value = /* asCarousel ? carouselOffset.value / pageWidth :  */ targetPage.value;
+    const value = targetPage.value;
     const width = interpolate(value,
       itemsWidthsAnimated.value.map((_v: number, i: number) => i),
       itemsWidthsAnimated.value.map((v: number) => v - 2 * INDICATOR_INSET));
@@ -251,8 +230,8 @@ const TabBar = (props: Props) => {
   });
 
   const renderTabBarItems = useMemo(() => {
-    return _.isEmpty(itemStates) ? null : /* items ?  */ _renderTabBarItems;
-  }, [itemStates, /* items, */ _renderTabBarItems]);
+    return _.isEmpty(itemStates) ? null : _renderTabBarItems;
+  }, [itemStates, _renderTabBarItems]);
 
   const shadowStyle = useMemo(() => {
     return enableShadow ? propsShadowStyle || styles.containerShadow : undefined;
@@ -273,7 +252,7 @@ const TabBar = (props: Props) => {
   return (
     <View style={_containerStyle}>
       <FadedScrollView
-        // @ts-ignore TODO: typescript
+        // @ts-expect-error
         ref={tabBar}
         horizontal
         contentContainerStyle={scrollViewContainerStyle}
@@ -294,7 +273,6 @@ TabBar.defaultProps = {
   labelStyle: DEFAULT_LABEL_STYLE,
   selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
   backgroundColor: DEFAULT_BACKGROUND_COLOR
-  // containerWidth: Constants.screenWidth
 };
 
 const styles = StyleSheet.create({
