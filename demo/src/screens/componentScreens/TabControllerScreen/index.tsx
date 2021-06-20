@@ -41,7 +41,7 @@ class TabControllerScreen extends Component<{}, State> {
         label: tab,
         key: tab,
         icon: index === 2 ? Assets.icons.demo.dashboard : undefined,
-        badge: index === 5 ? {label: 2} : undefined
+        badge: index === 5 ? {label: '2'} : undefined
       }))
       .value();
 

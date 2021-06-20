@@ -155,7 +155,7 @@ export default function TabBarItem({
       ...(isActive ? selectedLabelStyle : labelStyle)
     };
   });
-  
+
   const animatedIconStyle = useAnimatedStyle(() => {
     const isActive = currentPage.value === index;
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
@@ -170,11 +170,9 @@ export default function TabBarItem({
     <TouchableOpacity
       // @ts-expect-error
       ref={itemRef}
-      /* pressState={state} */
       style={[styles.tabItem, itemStyle]}
       onLayout={onLayout}
       activeBackgroundColor={activeBackgroundColor}
-      /* feedbackColor={activeBackgroundColor} */
       activeOpacity={activeOpacity}
       onPress={onPress}
       testID={testID}
@@ -182,7 +180,6 @@ export default function TabBarItem({
       {icon && (
         <Reanimated.Image
           source={icon}
-          // @ts-ignore reanimated2
           style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, animatedIconStyle]}
         />
       )}
@@ -192,188 +189,11 @@ export default function TabBarItem({
         </Reanimated.Text>
       )}
       {badge && (
-        // @ts-ignore
         <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
       )}
     </TouchableOpacity>
   );
 }
-
-// export default class TabBarItem extends PureComponent<Props> {
-//   static displayName = 'TabController.TabBarItem';
-
-//   static defaultProps = {
-//     activeOpacity: 1,
-//     onPress: _.noop
-//   };
-
-//   private itemWidth?: number;
-//   private itemRef = React.createRef<any>();
-
-//   constructor(props: Props) {
-//     super(props);
-
-//     this.itemWidth = this.props.width;
-
-//     if (this.itemWidth) {
-//       const {index, onLayout} = this.props;
-//       onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: this.itemWidth, height: 0}}} as LayoutChangeEvent, index);
-//     }
-//   }
-
-//   onLayout = (event: LayoutChangeEvent) => {
-//     const {width} = event.nativeEvent.layout;
-//     const {index, onLayout} = this.props;
-//     if (!this.itemWidth && this.itemRef && this.itemRef.current) {
-//       this.itemWidth = width;
-//       // @ts-ignore
-//       this.itemRef.current.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
-//       onLayout?.(event, index);
-//     }
-//   };
-
-//   onPress = () => {
-//     const {index, onPress} = this.props;
-//     onPress?.(index);
-//   };
-
-//   getItemStyle() {
-//     const {state, style: propsStyle, activeOpacity = TabBarItem.defaultProps.activeOpacity} = this.props;
-//     const opacity = block([
-//       cond(eq(state, State.END), call([], this.onPress)),
-//       cond(eq(state, State.BEGAN), activeOpacity, 1)
-//     ]);
-
-//     const style: any = {
-//       opacity
-//     };
-
-//     if (this.props.width) {
-//       style.flex = undefined;
-//       style.width = this.itemWidth;
-//       style.paddingHorizontal = undefined;
-//     }
-
-//     return [style, propsStyle];
-//   }
-
-//   getLabelStyle() {
-//     const {
-//       index,
-//       currentPage,
-//       targetPage,
-//       labelColor,
-//       selectedLabelColor,
-//       ignore,
-//       labelStyle,
-//       selectedLabelStyle
-//     } = this.props;
-
-//     let fontWeight, letterSpacing, fontFamily;
-
-//     if (labelStyle?.fontWeight || selectedLabelStyle?.fontWeight) {
-//       fontWeight = cond(
-//         // @ts-ignore TODO: typescript - add or delete and?
-//         and(eq(targetPage, index) /* , defined(itemWidth) */),
-//         selectedLabelStyle?.fontWeight || 'normal',
-//         labelStyle?.fontWeight || 'normal');
-//     }
-
-//     if (labelStyle?.letterSpacing || selectedLabelStyle?.letterSpacing) {
-//       letterSpacing = cond(
-//         // @ts-ignore TODO: typescript - add or delete and?
-//         and(eq(targetPage, index) /* , defined(itemWidth) */),
-//         selectedLabelStyle?.letterSpacing || 0,
-//         labelStyle?.letterSpacing || 0);
-//     }
-
-//     if (labelStyle?.fontFamily || selectedLabelStyle?.fontFamily) {
-//       fontFamily = cond(
-//         // @ts-ignore TODO: typescript - add or delete and?
-//         and(eq(targetPage, index) /* , defined(itemWidth) */),
-//         // @ts-ignore
-//         selectedLabelStyle.fontFamily,
-//         labelStyle?.fontFamily);
-//     }
-
-//     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
-//     const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
-
-//     // Animated color
-//     const color = interpolateColor(currentPage, {
-//       inputRange: [index - 1, index, index + 1],
-//       outputRange: [inactiveColor, activeColor, inactiveColor]
-//     });
-
-//     return [
-//       labelStyle,
-//       _.omitBy({
-//         fontFamily,
-//         fontWeight,
-//         letterSpacing,
-//         color
-//       },
-//       _.isUndefined)
-//     ];
-//   }
-
-//   getIconStyle() {
-//     const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor, ignore} = this.props;
-
-//     let activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
-//     let inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
-
-//     // TODO: Don't condition this once migrating completely to reanimated v2
-//     if (processColor) {
-//       // @ts-ignore
-//       activeColor = processColor(activeColor);
-//       // @ts-ignore
-//       inactiveColor = processColor(inactiveColor);
-//     }
-
-//     const tintColor = cond(eq(currentPage, index),
-//       activeColor,
-//       ignore ? activeColor : inactiveColor);
-
-//     return {
-//       tintColor
-//     };
-//   }
-
-//   render() {
-//     const {label, icon, badge, state, uppercase, activeOpacity, activeBackgroundColor, testID} = this.props;
-
-//     return (
-//       <TouchableOpacity
-//         ref={this.itemRef}
-//         pressState={state}
-//         style={[styles.tabItem, this.getItemStyle()]}
-//         onLayout={this.onLayout}
-//         feedbackColor={activeBackgroundColor}
-//         activeOpacity={activeOpacity}
-//         onPress={this.onPress}
-//         testID={testID}
-//       >
-//         {icon && (
-//           <Reanimated.Image
-//             source={icon}
-//             // @ts-ignore reanimated2
-//             style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, this.getIconStyle()]}
-//           />
-//         )}
-//         {!_.isEmpty(label) && (
-//           <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
-//             {uppercase ? _.toUpper(label) : label}
-//           </Reanimated.Text>
-//         )}
-//         {badge && (
-//           // @ts-ignore
-//           <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
-//         )}
-//       </TouchableOpacity>
-//     );
-//   }
-// }
 
 const styles = StyleSheet.create({
   tabItem: {
