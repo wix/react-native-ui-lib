@@ -9,20 +9,13 @@ import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors, BorderRadiuses} from '../../style';
-import {WheelPicker} from '../../incubator';
 
 class PickerDialog extends BaseComponent {
   static displayName = 'IGNORE';
   static propTypes = {
-    selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    onValueChange: PropTypes.func,
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
     children: PropTypes.array,
-    /**
-     * Pass props for the WheelPicker (Android only)
-     */
-    wheelPickerProps: PropTypes.shape(WheelPicker.propTypes),
     /**
      * select label style
      */

@@ -13,8 +13,6 @@ import {Colors} from '../../style';
 class PickerDialog extends BaseComponent {
   static displayName = 'IGNORE';
   static propTypes = {
-    selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    onValueChange: PropTypes.func,
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
     topBarProps: PropTypes.object,
