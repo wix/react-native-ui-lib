@@ -39,13 +39,13 @@ export default function TabPage({
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
   const {currentPage, asCarousel, containerWidth} = useContext(TabBarContext);
-  const [loaded, setLoaded] = useState(!lazy);
+  const [shouldLoad, setLoaded] = useState(!lazy);
 
   const lazyLoad = useCallback(() => {
-    if (lazy && !loaded) {
+    if (lazy && !shouldLoad) {
       setLoaded(true);
     }
-  }, [lazy, loaded]);
+  }, [lazy, shouldLoad]);
 
   useAnimatedReaction(() => {
     return currentPage.value === index;
@@ -67,8 +67,8 @@ export default function TabPage({
 
   return (
     <Reanimated.View style={[!asCarousel && styles.page, animatedPageStyle]} testID={testID}>
-      {!loaded && renderLoading?.()}
-      {loaded && props.children}
+      {!shouldLoad && renderLoading?.()}
+      {shouldLoad && props.children}
     </Reanimated.View>
   );
 }
