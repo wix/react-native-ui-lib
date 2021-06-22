@@ -16,7 +16,7 @@ import {Constants} from 'helpers';
  * @notes: You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel
  */
 function PageCarousel({...props}) {
-  const carousel = useAnimatedRef();
+  const carousel = useAnimatedRef<Reanimated.ScrollView>();
   const {
     currentPage,
     targetPage,
@@ -65,7 +65,6 @@ function PageCarousel({...props}) {
     <>
       <Reanimated.ScrollView
         {...props}
-        // @ts-expect-error
         ref={carousel}
         horizontal
         pagingEnabled
