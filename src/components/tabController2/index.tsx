@@ -67,7 +67,7 @@ function TabController({
   const targetPage = useSharedValue(selectedIndex);
   const carouselOffset = useSharedValue(selectedIndex * Math.round(pageWidth));
   const containerWidth = useSharedValue(pageWidth);
-  const itemStates = useSharedValue(_.times(itemsCount, () => State.UNDETERMINED));
+  const itemStates = useSharedValue<State[]>(_.times(itemsCount, () => State.UNDETERMINED));
   
   useAnimatedReaction(() => {
     return currentPage.value;
