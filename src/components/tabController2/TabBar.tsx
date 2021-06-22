@@ -14,7 +14,6 @@ import FadedScrollView from './FadedScrollView';
 import useScrollToItem from './useScrollToItem';
 
 const DEFAULT_HEIGHT = 48;
-const INDICATOR_INSET = Spacings.s4;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 
 const DEFAULT_LABEL_STYLE = {
@@ -94,6 +93,14 @@ export interface TabControllerBarProps {
    */
   centerSelected?: boolean;
   /**
+  * Whether the tabBar should be spread (default: true)
+  */
+  spreadItems?: boolean;
+  /**
+  * The indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
+  */
+  indicatorInsets?: number;
+  /**
    * Additional styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -131,6 +138,8 @@ const TabBar = (props: Props) => {
     backgroundColor,
     containerWidth: propsContainerWidth,
     centerSelected,
+    spreadItems,
+    indicatorInsets = Spacings.s4,
     containerStyle,
     testID,
     children: propsChildren
@@ -217,13 +226,14 @@ const TabBar = (props: Props) => {
     const value = targetPage.value;
     const width = interpolate(value,
       itemsWidthsAnimated.value.map((_v: number, i: number) => i),
-      itemsWidthsAnimated.value.map((v: number) => v - 2 * INDICATOR_INSET));
+      itemsWidthsAnimated.value.map((v: number) => v - 2 * indicatorInsets));
 
     const left = interpolate(value,
       itemsOffsetsAnimated.value.map((_v: any, i: number) => i),
       itemsOffsetsAnimated.value);
 
     return {
+      marginHorizontal: indicatorInsets,
       width,
       left
     };
@@ -241,8 +251,8 @@ const TabBar = (props: Props) => {
     return [styles.container, shadowStyle, {width: containerWidth}, containerStyle];
   }, [shadowStyle, containerWidth, containerStyle]);
 
-  const indicatorContainerStyle = useMemo(() => {
-    return [styles.tabBar, !_.isUndefined(height) && {height}, {backgroundColor}];
+  const tabBarContainerStyle = useMemo(() => {
+    return [styles.tabBar, spreadItems && styles.spreadItems, !_.isUndefined(height) && {height}, {backgroundColor}];
   }, [height, backgroundColor]);
 
   const scrollViewContainerStyle = useMemo(() => {
@@ -261,7 +271,7 @@ const TabBar = (props: Props) => {
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
       >
-        <View style={indicatorContainerStyle}>{renderTabBarItems}</View>
+        <View style={tabBarContainerStyle}>{renderTabBarItems}</View>
         <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
       </FadedScrollView>
     </View>
@@ -272,7 +282,8 @@ TabBar.displayName = 'TabController.TabBar';
 TabBar.defaultProps = {
   labelStyle: DEFAULT_LABEL_STYLE,
   selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
-  backgroundColor: DEFAULT_BACKGROUND_COLOR
+  backgroundColor: DEFAULT_BACKGROUND_COLOR,
+  spreadItems: true
 };
 
 const styles = StyleSheet.create({
@@ -280,7 +291,6 @@ const styles = StyleSheet.create({
     zIndex: 100
   },
   tabBar: {
-    flex: 1,
     height: DEFAULT_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -299,7 +309,6 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 2,
-    marginHorizontal: INDICATOR_INSET,
     backgroundColor: Colors.primary
   },
   containerShadow: {
@@ -315,6 +324,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white
       }
     })
+  },
+  spreadItems: {
+    flex: 1
   }
 });
 
