@@ -22,6 +22,7 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import Modal from '../modal';
+import TouchableOpacity from '../touchableOpacity';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -117,9 +118,13 @@ export interface HintProps {
    */
   offset?: number;
   /**
-   * Callback for the background press
+   * Callback for Hint press
    */
-  onBackgroundPress?: (event: GestureResponderEvent) => void;
+  onPress?: () => void;
+  /**
+    * Callback for the background press
+    */
+   onBackgroundPress?: (event: GestureResponderEvent) => void;
   /**
    * The hint container width
    */
@@ -437,11 +442,15 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderHint() {
-    const {testID} = this.props;
-
+    const {onPress, testID} = this.props;
+    const opacity = onPress ? 0.9 : 1.0;
+    const Container = onPress ? TouchableOpacity : View;
+    
     if (this.showHint) {
       return (
-        <View
+        <Container
+          activeOpacity={opacity}
+          onPress={onPress}
           animated
           style={[
             {width: this.containerWidth},
@@ -455,7 +464,7 @@ class Hint extends Component<HintProps, HintState> {
         >
           {this.renderHintTip()}
           {this.renderContent()}
-        </View>
+        </Container>
       );
     }
   }

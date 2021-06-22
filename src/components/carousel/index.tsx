@@ -9,7 +9,7 @@ import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 import {CarouselProps, CarouselState, PageControlPosition} from './types';
-export {CarouselProps};
+export {CarouselProps, PageControlPosition};
 
 type DefaultProps = Partial<CarouselProps>
 

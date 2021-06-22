@@ -5,7 +5,7 @@ import TextField from '../textField';
 import PickerDialog from './PickerDialog';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
-import {WheelPicker} from '../../nativeComponents';
+import {WheelPicker} from '../../incubator';
 
 class NativePicker extends BaseComponent {
   static displayName = 'IGNORE';
@@ -62,9 +62,28 @@ class NativePicker extends BaseComponent {
     this.setState({showDialog});
   };
 
+  renderPicker = () => {
+    const {selectedValue} = this.state;
+    const {children, renderNativePicker, pickerStyle, wheelPickerProps, testID} = this.props;
+    if (_.isFunction(renderNativePicker)) {
+      return renderNativePicker(this.props);
+    }
+    return (
+      <WheelPicker
+        style={pickerStyle}
+        selectedValue={selectedValue}
+        onChange={this.onValueChange}
+        testID={`${testID}.wheelPicker`}
+        {...wheelPickerProps}
+      >
+        {children}
+      </WheelPicker>
+    );
+  };
+
   renderPickerDialog = () => {
-    const {selectedValue, showDialog} = this.state;
-    
+    const {showDialog} = this.state;
+
     return (
       <PickerDialog
         height={this.PICKER_HEIGHT + this.MENU_HEIGHT}
@@ -72,11 +91,11 @@ class NativePicker extends BaseComponent {
         visible={showDialog}
         panDirection={null}
         onDismiss={this.onCancel}
-        onValueChange={this.onValueChange}
-        selectedValue={selectedValue}
         onDone={this.onDone}
         onCancel={this.onCancel}
-      />
+      >
+        {this.renderPicker()}
+      </PickerDialog>
     );
   };
 
@@ -110,5 +129,6 @@ class NativePicker extends BaseComponent {
   }
 }
 
-NativePicker.Item = WheelPicker.Item;
+// TODO: Doesn't seem to be needed
+// NativePicker.Item = WheelPicker.Item;
 export default NativePicker;
