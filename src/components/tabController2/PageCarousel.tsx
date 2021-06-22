@@ -30,10 +30,10 @@ function PageCarousel({...props}) {
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
       carouselOffset.value = e.contentOffset.x;
-      const newIndex = Math.round(e.contentOffset.x / pageWidth);
+      const newIndex = e.contentOffset.x / pageWidth;
 
       if (wasScrolledByPress.value) {
-        targetPage.value = withTiming(newIndex);
+        targetPage.value = withTiming(Math.round(newIndex));
         wasScrolledByPress.value = false;
       } else {
         targetPage.value = newIndex;
