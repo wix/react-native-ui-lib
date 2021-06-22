@@ -166,6 +166,7 @@ class Hint extends Component<HintProps, HintState> {
 
   targetRef: ElementRef<typeof RNView> | null = null;
   hintRef: ElementRef<typeof RNView> | null = null;
+  animationDuration = 170;
 
   state = {
     targetLayoutInWindow: undefined,
@@ -184,13 +185,16 @@ class Hint extends Component<HintProps, HintState> {
   animateHint = () => {
     Animated.timing(this.visibleAnimated, {
       toValue: Number(!!this.props.visible),
-      duration: 170,
+      duration: this.animationDuration,
       useNativeDriver: true
     }).start(this.toggleAnimationEndedToRemoveHint);
   };
 
   toggleAnimationEndedToRemoveHint = () => {
-    this.setState({animationEnded: true}, () => this.setState({animationEnded: false}));
+    this.setState({animationEnded: true});
+    setTimeout(() => {
+      this.setState({animationEnded: false});
+    }, this.animationDuration);
   };
 
   focusAccessibilityOnHint = () => {
