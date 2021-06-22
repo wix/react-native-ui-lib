@@ -6,13 +6,6 @@ import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Button, {ButtonProps} from '../button';
 
-/**
- * @description: Quick actions bar, each action support Button component props
- * @modifiers: margin, padding
- * @gif: https://media.giphy.com/media/xULW8DwxkniFDMw7TO/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionBarScreen.tsx
- */
-
 export type ActionBarProps = {
   /**
    * action bar height
@@ -44,6 +37,12 @@ export type ActionBarProps = {
   style?: ViewStyle;
 };
 
+/**
+ * @description: Quick actions bar, each action support Button component props
+ * @modifiers: margin, padding
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ActionBar/ActionBar.gif?raw=true
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionBarScreen.tsx
+ */
 class ActionBar extends Component<ActionBarProps> {
   static displayName = 'ActionBar';
 

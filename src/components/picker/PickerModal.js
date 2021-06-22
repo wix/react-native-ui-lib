@@ -78,7 +78,7 @@ class PickerModal extends BaseComponent {
   };
 
   render() {
-    const {visible, enableModalBlur, topBarProps, listProps, children} = this.props;
+    const {visible, enableModalBlur, topBarProps, listProps, children, onShow} = this.props;
     return (
       <Modal
         animationType={'slide'}
@@ -86,6 +86,7 @@ class PickerModal extends BaseComponent {
         enableModalBlur={Constants.isIOS && enableModalBlur}
         visible={visible}
         onRequestClose={topBarProps.onCancel}
+        onShow={onShow}
       >
         <Modal.TopBar {...topBarProps}/>
         {this.renderSearchInput()}

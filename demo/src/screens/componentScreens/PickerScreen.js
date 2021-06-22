@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
-import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
@@ -137,14 +137,6 @@ export default class PickerScreen extends Component {
             //   );
             // }}
             // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
-            wheelPickerProps={{
-              style: {width: 200},
-              color: Colors.green30,
-              labelStyle: {fontSize: 32, fontFamily: 'sans-serif-condensed-light'},
-              itemHeight: 55
-            }}
-            selectLabelStyle={{color: Colors.green30}}
-            cancelLabelStyle={{color: Colors.green30}}
           >
             {_.map(options, option => (
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
@@ -162,7 +154,13 @@ export default class PickerScreen extends Component {
             renderCustomModal={this.renderDialog}
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option} label={option.label} disabled={option.disabled}/>
+              <Picker.Item
+                key={option.value}
+                value={option}
+                label={option.label}
+                labelStyle={Typography.text65}
+                disabled={option.disabled}
+              />
             ))}
           </Picker>
 
@@ -236,7 +234,9 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Text text60 marginT-s5 marginB-s2>Migrated Picker</Text>
+          <Text text60 marginT-s5 marginB-s2>
+            Migrated Picker
+          </Text>
 
           <Picker
             migrate

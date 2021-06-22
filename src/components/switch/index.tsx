@@ -61,7 +61,9 @@ export type SwitchProps = {
 }
 
 /**
- * Switch component for toggling boolean value related to some context
+ * @description: Switch component for toggling boolean value related to some context
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SwitchScreen.tsx
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Switch/Switch.gif?raw=true
  */
 class Switch extends Component<SwitchProps> {
   static displayName = 'Switch';

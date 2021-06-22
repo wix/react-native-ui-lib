@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
+import {Alert} from 'react-native';
 import {View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 
 const settingsIcon = require('../../assets/icons/settings.png');
 
 type HintScreenProps = {};
 type HintScreenState = {
-  showHint: boolean,
-  useShortMessage: boolean,
-  showBottomHint: boolean,
-  showIcon: boolean,
-  targetPosition: string,
-  useTargetFrame?: boolean,
-  useSideTip?: boolean
+  showHint: boolean;
+  useShortMessage: boolean;
+  showBottomHint: boolean;
+  showIcon: boolean;
+  targetPosition: string;
+  useTargetFrame?: boolean;
+  useSideTip?: boolean;
+  showCustomContent?: boolean;
 };
 
 export default class HintsScreen extends Component<HintScreenProps, HintScreenState> {
@@ -24,7 +26,8 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
       showIcon: false,
       targetPosition: 'flex-start',
       // useTargetFrame: true,
-      useSideTip: false
+      useSideTip: false,
+      showCustomContent: false
     };
   }
 
@@ -36,6 +39,10 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
     });
   };
 
+  onHintPressed = () => {
+    alert('Hint Pressed');
+  }
+
   render() {
     const {
       showHint,
@@ -44,7 +51,8 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
       targetPosition,
       useShortMessage,
       useSideTip,
-      useTargetFrame
+      useTargetFrame,
+      showCustomContent
     } = this.state;
     const targetFrame = {x: 140, y: 100, width: 10, height: 10};
     const message = useShortMessage
@@ -56,7 +64,7 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
         <View
           flex
           padding-20
-          paddingT-120
+          paddingT-100
           bg-dark80
           style={{zIndex: 10}}
           key={useTargetFrame ? 'withTargetFrame' : 'withElement'}
@@ -81,10 +89,22 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}
+            onPress={this.onHintPressed}
             targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
             // onBackgroundPress={() => this.setState({showHint: !showHint})}
+            customContent={
+              showCustomContent ? (
+                <Text text70 white>
+                  Click
+                  <Text onPress={() => Alert.alert('custom content :)')} text70BO red40>
+                    {' here '}
+                  </Text>
+                  for more information
+                </Text>
+              ) : undefined
+            }
             testID={'Hint'}
           >
             {!useTargetFrame && (
@@ -157,6 +177,11 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
           <View row centerV marginV-10>
             <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})}/>
             <Text marginL-10>Use random position</Text>
+          </View>
+
+          <View row centerV marginV-10>
+            <Switch value={showCustomContent} onValueChange={value => this.setState({showCustomContent: value})}/>
+            <Text marginL-10>Show custom content</Text>
           </View>
         </View>
       </View>

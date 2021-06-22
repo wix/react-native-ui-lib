@@ -1,7 +1,7 @@
 import React, { Component, RefObject, ReactNode, Key } from 'react';
 import { ScrollView, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { CarouselProps, CarouselState, PageControlPosition } from './types';
-export { CarouselProps };
+export { CarouselProps, PageControlPosition };
 declare type DefaultProps = Partial<CarouselProps>;
 /**
  * @description: Carousel for scrolling pages horizontally

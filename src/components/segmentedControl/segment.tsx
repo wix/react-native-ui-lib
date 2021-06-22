@@ -50,6 +50,7 @@ export type SegmentProps = SegmentedControlItemProps & {
    * onLayout function.
    */
   onLayout?: (index: number, event: LayoutChangeEvent) => void;
+  testID?: string;
 };
 
 /**
@@ -66,14 +67,12 @@ const Segment = React.memo((props: SegmentProps) => {
     onPress,
     inactiveColor,
     index,
-    iconOnRight
+    iconOnRight,
+    testID
   } = props;
 
-  const segmentedColor = useMemo(() => (isSelected ? activeColor : inactiveColor), [
-    isSelected,
-    activeColor,
-    inactiveColor
-  ]);
+  const segmentedColor = useMemo(() => (isSelected ? activeColor : inactiveColor),
+    [isSelected, activeColor, inactiveColor]);
 
   const segmentStyle = useMemo(() => ({paddingHorizontal: Spacings.s3, borderColor: segmentedColor}), [segmentedColor]);
 
@@ -86,12 +85,20 @@ const Segment = React.memo((props: SegmentProps) => {
   }, [index, onPress]);
 
   const segmentOnLayout = useCallback((event: LayoutChangeEvent) => {
-      onLayout?.(index, event);
+    onLayout?.(index, event);
   },
   [onLayout, index]);
 
   return (
-    <TouchableOpacity onLayout={segmentOnLayout} style={segmentStyle} onPress={onSegmentPress} row>
+    <TouchableOpacity
+      onLayout={segmentOnLayout}
+      style={segmentStyle}
+      onPress={onSegmentPress}
+      row
+      flexG
+      center
+      testID={`${testID}.${index}`}
+    >
       {!iconOnRight && renderIcon()}
       {label && (
         <Text text90 numberOfLines={1} color={segmentedColor}>

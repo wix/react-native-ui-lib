@@ -24,6 +24,7 @@ const INACTIVE_COLOR = Colors.dark60;
 /**
  * @description: A Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true
  */
 export default class Slider extends PureBaseComponent {
   static displayName = 'Slider';
@@ -250,7 +251,7 @@ export default class Slider extends PureBaseComponent {
     }
 
     if (this.minTrack) {
-      this._minTrackStyles.width = x;
+      this._minTrackStyles.width = Math.min(this.state.trackSize.width, x);
       this.minTrack.setNativeProps(this._minTrackStyles);
     }
   }
@@ -306,7 +307,7 @@ export default class Slider extends PureBaseComponent {
     const relativeValue = minimumValue - v;
     const value = minimumValue < 0 ? Math.abs(relativeValue) : v - minimumValue; // for negatives
     const ratio = value / range;
-    const x = ratio * (this.state.trackSize.width - this.initialThumbSize.width / 2);
+    const x = ratio * this.state.trackSize.width;
     return x;
   }
 
@@ -404,7 +405,7 @@ export default class Slider extends PureBaseComponent {
     if (this.props.disabled) {
       return;
     }
-    
+    this.onSeekStart();
     this.updateTrackStepAndStyle({nativeEvent});
     this.onSeekEnd();
   };

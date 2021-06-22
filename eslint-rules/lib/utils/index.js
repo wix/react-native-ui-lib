@@ -1,4 +1,4 @@
-const {getPrefix, getSuffix, findValueNodeOfIdentifier} = require('./generalUtils');
+const {getPrefix, getSuffix, findValueNodeOfIdentifier, handleError} = require('./generalUtils');
 const {organizeDeprecations, getLocalizedFix, getPossibleDeprecations} = require('./deprecationsUtils');
 const {addToImports} = require('./importUtils');
 const {getComponentLocalName, getComponentName} = require('./componentUtils');
@@ -10,6 +10,7 @@ module.exports = {
   getPrefix,
   getSuffix,
   findValueNodeOfIdentifier,
+  handleError,
   // Deprecations
   organizeDeprecations,
   getLocalizedFix,

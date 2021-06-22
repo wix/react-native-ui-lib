@@ -8,12 +8,16 @@ import {PureBaseComponent} from '../../commons';
 
 /**
  * @description: Stepper component with increase and decrease buttons
- * @gif: https://media.giphy.com/media/3oFzm47bk0v4WV15O8/giphy.gif
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Stepper/Stepper.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.js
  */
 export default class Stepper extends PureBaseComponent {
   static displayName = 'Stepper';
   static propTypes = {
+    /**
+     * The step to increase and decrease by (default is 1)
+     */
+    step: PropTypes.number,
     /**
      * Text to show next to the current number
      */
@@ -89,7 +93,7 @@ export default class Stepper extends PureBaseComponent {
         break;
     }
   };
-  
+
   generateStyles() {
     this.styles = createStyles(this.props.size);
   }
@@ -115,8 +119,20 @@ export default class Stepper extends PureBaseComponent {
         if (this.props.onValueChange) {
           this.props.onValueChange(newValue);
         }
-      },);
+      });
     }
+  }
+
+  get step() {
+    return this.props.step || 1;
+  }
+
+  decrease = () => {
+    this.updateValue(this.state.value - this.step);
+  }
+
+  increase = () => {
+    this.updateValue(this.state.value + this.step);
   }
 
   render() {
@@ -134,7 +150,7 @@ export default class Stepper extends PureBaseComponent {
             testID={`${testID}.decrease`}
             styles={this.styles}
             disabled={minusDisabled}
-            onPress={() => this.updateValue(this.state.value - 1)}
+            onPress={this.decrease}
           />
           <View style={this.styles.separator}/>
           <StepperButton
@@ -142,7 +158,7 @@ export default class Stepper extends PureBaseComponent {
             testID={`${testID}.increase`}
             styles={this.styles}
             disabled={plusDisabled}
-            onPress={() => this.updateValue(this.state.value + 1)}
+            onPress={this.increase}
           />
         </View>
       </View>

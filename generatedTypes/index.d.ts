@@ -31,7 +31,7 @@ export {default as Constants} from './helpers/Constants';
 export {default as View, ViewPropTypes, ViewProps} from './components/view';
 export {default as Text, TextPropTypes, TextProps} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
-export {default as Button, ButtonPropTypes, ButtonProps} from './components/button';
+export {default as Button, ButtonPropTypes, ButtonSize, ButtonProps} from './components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
@@ -66,11 +66,11 @@ export {default as PanResponderView, PanResponderViewPropTypes, PanResponderView
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes, PanDismissibleViewProps, DismissibleAnimationProps} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
-export {default as Carousel, CarouselProps} from './components/carousel';
+export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
+export {default as ActionSheet} from './components/actionSheet';
 
 /* All components with manual typings */
 export {
-  ActionSheet,
   ConnectionStatusBar,
   FeatureHighlight,
   Hint,
@@ -95,7 +95,6 @@ export {
   UIComponent,
   forwardRef,
   AvatarHelper,
-  LogService,
   LoaderScreen,
   StateScreen,
   WheelPicker,
