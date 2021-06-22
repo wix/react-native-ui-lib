@@ -111,6 +111,7 @@ export default function TabBarItem({
   activeBackgroundColor,
   testID,
   ignore,
+  style,
   ...props
 }: Props) {
   const {currentPage} = useContext(TabBarContext);
@@ -140,10 +141,6 @@ export default function TabBarItem({
     }
   },
   [index, props.onLayout]);
-
-  const itemStyle = useAnimatedStyle(() => {
-    return {};
-  });
 
   // @ts-expect-error
   const animatedLabelStyle = useAnimatedStyle(() => {
@@ -175,7 +172,7 @@ export default function TabBarItem({
     <TouchableOpacity
       // @ts-expect-error
       ref={itemRef}
-      style={[styles.tabItem, itemStyle]}
+      style={[styles.tabItem, style]}
       onLayout={onLayout}
       activeBackgroundColor={activeBackgroundColor}
       activeOpacity={activeOpacity}
