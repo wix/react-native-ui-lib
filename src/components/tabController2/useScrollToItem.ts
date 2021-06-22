@@ -91,7 +91,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     outerSpacing = 0,
     innerSpacing = 0
   } = props;
-  const _itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
+  const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
   const itemsWidthsAnimated = useSharedValue(_.times(itemsCount, () => 0));
   const itemsOffsetsAnimated = useSharedValue(_.times(itemsCount, () => 0));
   const currentIndex = useRef<number>(selectedIndex || 0);
@@ -106,8 +106,8 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
   // const contentWidth = _.sum(itemsWidths);
   // TODO: const scrollEnabled = contentWidth.current > containerWidth;
 
-  const setSnapBreakpoints = useCallback((_itemsWidths: number[]) => {
-    if (_.isEmpty(_itemsWidths)) {
+  const setSnapBreakpoints = useCallback((widths: number[]) => {
+    if (_.isEmpty(widths)) {
       return;
     }
 
@@ -118,26 +118,26 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     const leftOffsets = [];
     leftOffsets.push(outerSpacing - innerSpacing);
     const rightOffsets = [];
-    rightOffsets.push(-Constants.screenWidth + _itemsWidths[0] + outerSpacing + innerSpacing);
+    rightOffsets.push(-Constants.screenWidth + widths[0] + outerSpacing + innerSpacing);
     while (index < itemsCount) {
-      centeredOffsets[index] = currentCenterOffset - screenCenter + _itemsWidths[index] / 2;
+      centeredOffsets[index] = currentCenterOffset - screenCenter + widths[index] / 2;
       ++index;
-      currentCenterOffset += _itemsWidths[index - 1] + innerSpacing;
-      leftOffsets[index] = leftOffsets[index - 1] + _itemsWidths[index - 1] + innerSpacing;
-      rightOffsets[index] = rightOffsets[index - 1] + _itemsWidths[index] + innerSpacing;
+      currentCenterOffset += widths[index - 1] + innerSpacing;
+      leftOffsets[index] = leftOffsets[index - 1] + widths[index - 1] + innerSpacing;
+      rightOffsets[index] = rightOffsets[index - 1] + widths[index] + innerSpacing;
     }
 
     if (addOffsetMargin) {
       index = 1;
       while (index < itemsCount - 1) {
-        leftOffsets[index] -= _itemsWidths[index - 1];
-        rightOffsets[index] += _itemsWidths[index + 1] + innerSpacing;
+        leftOffsets[index] -= widths[index - 1];
+        rightOffsets[index] += widths[index + 1] + innerSpacing;
         ++index;
       }
     }
 
     setOffsets({CENTER: centeredOffsets, LEFT: leftOffsets, RIGHT: rightOffsets}); // default for DYNAMIC is CENTER
-    _itemsWidths.forEach((width, index) => {
+    widths.forEach((width, index) => {
       itemsWidthsAnimated.value[index] = width;
       if (index > 0) {
         itemsOffsetsAnimated.value[index] =
@@ -153,9 +153,9 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
   const onItemLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     const {width} = event.nativeEvent.layout;
-    _itemsWidths.current[index] = width;
-    if (!_.includes(_itemsWidths.current, null)) {
-      setSnapBreakpoints(_itemsWidths.current as number[]);
+    itemsWidths.current[index] = width;
+    if (!_.includes(itemsWidths.current, null)) {
+      setSnapBreakpoints(itemsWidths.current as number[]);
     }
   },
   [setSnapBreakpoints]);
