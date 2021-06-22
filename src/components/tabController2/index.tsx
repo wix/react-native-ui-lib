@@ -92,7 +92,7 @@ function TabController({
       /* Callbacks */
       onChangeIndex
     };
-  }, [/* selectedIndex,  */ asCarousel, items, onChangeIndex]);
+  }, [/* selectedIndex,*/asCarousel, items, onChangeIndex]);
 
   if (items.length === 0) {
     return null;
