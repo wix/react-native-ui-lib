@@ -445,7 +445,7 @@ class Hint extends Component<HintProps, HintState> {
         ref={this.setHintRef}
       >
         {customContent}
-        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]} />}
+        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
         {!customContent && <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>}
       </View>
     );
