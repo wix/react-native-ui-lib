@@ -1,10 +1,8 @@
 import React from 'react';
 import Reanimated from 'react-native-reanimated';
-import { State } from 'react-native-gesture-handler';
 interface TabControllerContext {
     selectedIndex?: number;
     items?: any[];
-    itemStates: Reanimated.SharedValue<State[]>;
     asCarousel?: boolean;
     containerWidth: Reanimated.SharedValue<number>;
     pageWidth?: number;

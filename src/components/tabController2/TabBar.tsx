@@ -93,12 +93,12 @@ export interface TabControllerBarProps {
    */
   centerSelected?: boolean;
   /**
-  * Whether the tabBar should be spread (default: true)
-  */
+   * Whether the tabBar should be spread (default: true)
+   */
   spreadItems?: boolean;
   /**
-  * The indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
-  */
+   * The indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
+   */
   indicatorInsets?: number;
   /**
    * Additional styles for the container
@@ -146,7 +146,7 @@ const TabBar = (props: Props) => {
   } = props;
 
   const context = useContext(TabBarContext);
-  const {itemStates, items: contextItems, currentPage, targetPage, selectedIndex} = context;
+  const {items: contextItems, currentPage, targetPage, selectedIndex} = context;
 
   const children = useRef<Props['children']>(_.filter(propsChildren, (child: ChildProps) => !!child));
 
@@ -185,7 +185,7 @@ const TabBar = (props: Props) => {
     }
   });
 
-  const _renderTabBarItems = useMemo((): ReactNode => {
+  const tabBarItems = useMemo((): ReactNode => {
     return _.map(items, (item, index) => {
       return (
         <TabBarItem
@@ -201,8 +201,6 @@ const TabBar = (props: Props) => {
           {...item}
           {...context}
           index={index}
-          // @ts-expect-error
-          state={itemStates[index]}
           onLayout={onItemLayout}
         />
       );
@@ -217,7 +215,6 @@ const TabBar = (props: Props) => {
     iconColor,
     selectedIconColor,
     activeBackgroundColor,
-    itemStates,
     centerSelected,
     onItemLayout
   ]);
@@ -238,10 +235,6 @@ const TabBar = (props: Props) => {
       left
     };
   });
-
-  const renderTabBarItems = useMemo(() => {
-    return _.isEmpty(itemStates) ? null : _renderTabBarItems;
-  }, [itemStates, _renderTabBarItems]);
 
   const shadowStyle = useMemo(() => {
     return enableShadow ? propsShadowStyle || styles.containerShadow : undefined;
@@ -271,7 +264,7 @@ const TabBar = (props: Props) => {
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
       >
-        <View style={tabBarContainerStyle}>{renderTabBarItems}</View>
+        <View style={tabBarContainerStyle}>{tabBarItems}</View>
         <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
       </FadedScrollView>
     </View>

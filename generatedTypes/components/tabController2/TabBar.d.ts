@@ -68,12 +68,12 @@ export interface TabControllerBarProps {
      */
     centerSelected?: boolean;
     /**
-    * Whether the tabBar should be spread (default: true)
-    */
+     * Whether the tabBar should be spread (default: true)
+     */
     spreadItems?: boolean;
     /**
-    * The indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
-    */
+     * The indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
+     */
     indicatorInsets?: number;
     /**
      * Additional styles for the container

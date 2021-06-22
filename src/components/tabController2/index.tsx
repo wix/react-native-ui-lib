@@ -2,7 +2,6 @@
 import React, {PropsWithChildren, useMemo} from 'react';
 import _ from 'lodash';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
-import {State} from 'react-native-gesture-handler';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import TabBarContext from './TabBarContext';
@@ -54,11 +53,9 @@ function TabController({
   const pageWidth = useMemo(() => {
     return carouselPageWidth || Constants.screenWidth;
   }, [carouselPageWidth]);
-  const itemsCount = useMemo(() => {
-    return _.chain(items)
-      .filter(item => !item.ignore)
-      .size()
-      .value();
+
+  const ignoredItems = useMemo(() => {
+    return _.filter<TabControllerItemProps[]>(items, (item: TabControllerItemProps) => item.ignore);
   }, [items]);
 
   /* currentPage - static page index */
@@ -67,8 +64,7 @@ function TabController({
   const targetPage = useSharedValue(selectedIndex);
   const carouselOffset = useSharedValue(selectedIndex * Math.round(pageWidth));
   const containerWidth = useSharedValue(pageWidth);
-  const itemStates = useSharedValue<State[]>(_.times(itemsCount, () => State.UNDETERMINED));
-  
+
   useAnimatedReaction(() => {
     return currentPage.value;
   },
@@ -79,10 +75,6 @@ function TabController({
     }
   });
 
-  const ignoredItems = useMemo(() => {
-    return _.filter<TabControllerItemProps[]>(items, (item: TabControllerItemProps) => item.ignore);
-  }, [items]);
-
   const context = useMemo(() => {
     return {
       /* Pass Props */
@@ -91,7 +83,6 @@ function TabController({
       pageWidth,
       /* Items */
       items,
-      itemStates,
       ignoredItems,
       /* Animated Values */
       targetPage,
@@ -101,7 +92,7 @@ function TabController({
       /* Callbacks */
       onChangeIndex
     };
-  }, [/* selectedIndex,  */asCarousel, items, onChangeIndex]);
+  }, [/* selectedIndex,  */ asCarousel, items, onChangeIndex]);
 
   if (items.length === 0) {
     return null;
