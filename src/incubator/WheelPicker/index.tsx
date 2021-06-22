@@ -1,8 +1,7 @@
 // TODO: Support style customization
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
-import Animated from 'react-native-reanimated';
-import {onScrollEvent, useValues} from 'react-native-redash';
+import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {Colors, Spacings} from 'style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
@@ -13,8 +12,6 @@ import Text, {TextProps} from '../../components/text';
 import {HapticService, HapticType} from 'services';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const {onChange, cond, useCode, modulo, neq, call, block, lessThan, or, sub, divide, set, round, greaterThan, Value} =
-  Animated;
 const HAPTIC_RANGE = 10;
 
 export interface WheelPickerProps {
@@ -92,8 +89,12 @@ const WheelPicker = React.memo(({
   testID
 }: WheelPickerProps) => {
   const scrollView = useRef<Animated.ScrollView>();
-  const [offset] = useValues([0], []);
-  const onScroll = onScrollEvent({y: offset});
+  const offset = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: e => {
+      offset.value = e.contentOffset.y;
+    }
+  });
 
   const {
     height,
@@ -109,34 +110,24 @@ const WheelPicker = React.memo(({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
-  const animatedPrevIndex = new Value(currentIndex);
-  const animatedCurIndex = new Value(currentIndex);
+  const animatedPrevIndex = useRef(currentIndex);
+  const animatedCurIndex = useRef(currentIndex);
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
-
-  useCode(() => {
-    return [
-      onChange(offset,
-        block([
-          set(animatedCurIndex,
-            cond(or(greaterThan(modulo(offset, itemHeight), sub(itemHeight, HAPTIC_RANGE)),
-              lessThan(modulo(offset, itemHeight), HAPTIC_RANGE)),
-            round(divide(offset, itemHeight)),
-            animatedCurIndex)),
-          cond(neq(animatedPrevIndex, animatedCurIndex),
-            block([
-              set(animatedPrevIndex, animatedCurIndex),
-              call([], () => {
-                HapticService.triggerHaptic(HapticType.selection, 'WheelPicker');
-              })
-            ]))
-        ]))
-    ];
-  }, []);
 
   useEffect(() => {
     controlComponent();
   });
+
+  useEffect(() => {
+    const shouldUpdateIndex =
+        offset.value % itemHeight >= itemHeight - HAPTIC_RANGE || offset.value % itemHeight <= HAPTIC_RANGE;
+    animatedCurIndex.current = shouldUpdateIndex ? Math.round(offset.value / itemHeight) : animatedCurIndex.current;
+    if (animatedCurIndex.current !== animatedPrevIndex.current) {
+      animatedPrevIndex.current = animatedCurIndex.current;
+      HapticService.triggerHaptic(HapticType.selection, 'WheelPicker');
+    }
+  }, [offset.value, itemHeight]);
 
   /**
      * The picker is a controlled component. This means we expect the
@@ -182,7 +173,7 @@ const WheelPicker = React.memo(({
       <Item
         index={index}
         itemHeight={itemHeight}
-        offset={offset}
+        offset={offset.value}
         activeColor={activeTextColor}
         inactiveColor={inactiveTextColor}
         style={textStyle}
@@ -238,7 +229,7 @@ const WheelPicker = React.memo(({
             // @ts-ignore reanimated2
             keyExtractor={keyExtractor}
             scrollEventThrottle={100}
-            onScroll={onScroll}
+            onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
             onLayout={scrollToPassedIndex}

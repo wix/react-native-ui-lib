@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
-import Animated, {interpolateColors} from 'react-native-reanimated';
+import Animated, {interpolateColor} from 'react-native-reanimated';
 import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
@@ -15,7 +15,7 @@ export interface ItemProps {
 
 interface InternalProps extends ItemProps {
   index: number;
-  offset: any;
+  offset: number;
   itemHeight: number;
   activeColor?: string;
   inactiveColor?: string;
@@ -41,10 +41,9 @@ export default ({
   const itemOffset = index * itemHeight;
 
   const color = useMemo(() => {
-    return interpolateColors(offset, {
-      inputRange: [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
-      outputColorRange: [inactiveColor, activeColor, inactiveColor]
-    });
+    return interpolateColor(offset,
+      [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
+      [inactiveColor, activeColor, inactiveColor]);
   }, [itemHeight]);
 
   const containerStyle = useMemo(() => {
@@ -64,7 +63,6 @@ export default ({
       index={index}
       testID={testID}
     >
-      {/* @ts-ignore reanimated2*/}
       <AnimatedText text60R style={{color, ...style}}>
         {label}
       </AnimatedText>
