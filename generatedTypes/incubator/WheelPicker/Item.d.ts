@@ -6,7 +6,7 @@ export interface ItemProps {
 }
 interface InternalProps extends ItemProps {
     index: number;
-    offset: any;
+    offset: number;
     itemHeight: number;
     activeColor?: string;
     inactiveColor?: string;
