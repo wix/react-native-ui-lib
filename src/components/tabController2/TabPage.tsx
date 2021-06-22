@@ -38,7 +38,7 @@ export default function TabPage({
   renderLoading,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
-  const {currentPage, asCarousel, containerWidth} = useContext(TabBarContext);
+  const {currentPage, targetPage, asCarousel, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
 
   const lazyLoad = useCallback(() => {
@@ -48,7 +48,7 @@ export default function TabPage({
   }, [lazy, shouldLoad]);
 
   useAnimatedReaction(() => {
-    return currentPage.value === index;
+    return targetPage.value === index;
   },
   isActive => {
     if (isActive) {
