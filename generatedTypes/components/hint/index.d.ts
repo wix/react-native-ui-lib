@@ -123,6 +123,7 @@ declare class Hint extends Component<HintProps, HintState> {
     static positions: typeof HintPositions;
     targetRef: ElementRef<typeof RNView> | null;
     hintRef: ElementRef<typeof RNView> | null;
+    animationDuration: number;
     state: {
         targetLayoutInWindow: undefined;
         targetLayout: HintTargetFrame | undefined;
