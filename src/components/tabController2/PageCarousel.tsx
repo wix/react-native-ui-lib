@@ -62,18 +62,16 @@ function PageCarousel({...props}) {
   });
 
   return (
-    <>
-      <Reanimated.ScrollView
-        {...props}
-        ref={carousel}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={scrollHandler}
-        scrollEventThrottle={16}
-        contentOffset={contentOffset} // iOS only
-      />
-    </>
+    <Reanimated.ScrollView
+      {...props}
+      ref={carousel}
+      horizontal
+      pagingEnabled
+      showsHorizontalScrollIndicator={false}
+      onScroll={scrollHandler}
+      scrollEventThrottle={16}
+      contentOffset={contentOffset} // iOS only
+    />
   );
 }
 
