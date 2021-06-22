@@ -145,14 +145,19 @@ export default function TabBarItem({
     return {};
   });
 
+  // @ts-expect-error
   const animatedLabelStyle = useAnimatedStyle(() => {
+    const isActive = currentPage.value === index;
+    return isActive ? selectedLabelStyle : labelStyle;
+  }, [currentPage]);
+
+  const animatedLabelColorStyle = useAnimatedStyle(() => {
     const isActive = currentPage.value === index;
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
     const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
 
     return {
-      color: isActive ? activeColor : inactiveColor,
-      ...(isActive ? selectedLabelStyle : labelStyle)
+      color: isActive ? activeColor : inactiveColor
     };
   });
 
@@ -184,7 +189,7 @@ export default function TabBarItem({
         />
       )}
       {!_.isEmpty(label) && (
-        <Reanimated.Text style={[styles.tabItemLabel, labelStyle, animatedLabelStyle]}>
+        <Reanimated.Text style={[styles.tabItemLabel, labelStyle, animatedLabelStyle, animatedLabelColorStyle]}>
           {uppercase ? _.toUpper(label) : label}
         </Reanimated.Text>
       )}
