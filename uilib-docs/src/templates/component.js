@@ -48,19 +48,18 @@ export default class ComponentTemplate extends Component {
     return _.map(extendedComponents, (component, index) => {
       const isLast = index === _.size(extendedComponents) - 1;
       const text = `${component}${!isLast ? ', ' : ''}`;
-      const extendedComponent = _.find(allComponents, c => c.node.displayName.trim() === component.trim());
-      const path = !extendedComponent && componentInfo.extendsLink ? componentInfo.extendsLink : `/docs/${component}`;
+      // const extendedComponent = _.find(allComponents, c => c.node.displayName.trim() === component.trim());
+      const path = componentInfo.extendsLink ? componentInfo.extendsLink : `/docs/${component}`;
 
       return (
         <span className="inline" key={component}>
-          {extendedComponent && componentInfo.extendsLink ? (
-            <a href={componentInfo.extendsLink} rel="noopener noreferrer" target="_blank">
+          {componentInfo.extendsLink ? (
+            <a href={path} rel="noopener noreferrer" target="_blank">
               {text}
             </a>
           ) : (
             <Link to={path}>{text}</Link>
           )}
-          {componentInfo.extendsnotes}
           <br />
         </span>
       );
