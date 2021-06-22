@@ -58,11 +58,11 @@ export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<
    */
   onItemLayout: (event: LayoutChangeEvent, index: number) => void;
   /**
-   * The items' width as share animated value 
+   * The items' width as share animated value
    */
   itemsWidthsAnimated: any; //TODO: should be SharedValue<number[]>
   /**
-   * The items' offsets as share animated value 
+   * The items' offsets as share animated value
    */
    itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
   /**
@@ -120,6 +120,14 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     const rightOffsets = [];
     rightOffsets.push(-Constants.screenWidth + widths[0] + outerSpacing + innerSpacing);
     while (index < itemsCount) {
+      /* map animated widths and offsets */
+      itemsWidthsAnimated.value[index] = widths[index];
+      if (index > 0) {
+        itemsOffsetsAnimated.value[index] =
+            itemsOffsetsAnimated.value[index - 1] + itemsWidthsAnimated.value[index - 1];
+      }
+
+      /* calc center, left and right offsets */
       centeredOffsets[index] = currentCenterOffset - screenCenter + widths[index] / 2;
       ++index;
       currentCenterOffset += widths[index - 1] + innerSpacing;
@@ -137,13 +145,6 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     }
 
     setOffsets({CENTER: centeredOffsets, LEFT: leftOffsets, RIGHT: rightOffsets}); // default for DYNAMIC is CENTER
-    widths.forEach((width, index) => {
-      itemsWidthsAnimated.value[index] = width;
-      if (index > 0) {
-        itemsOffsetsAnimated.value[index] =
-            itemsOffsetsAnimated.value[index - 1] + itemsWidthsAnimated.value[index - 1];
-      }
-    });
 
     // trigger value change
     itemsWidthsAnimated.value = [...itemsWidthsAnimated.value];
