@@ -2,7 +2,7 @@
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
+import Reanimated, {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
 import _TouchableOpacity from '../touchableOpacity';
@@ -117,6 +117,8 @@ export default function TabBarItem({
   const {currentPage} = useContext(TabBarContext);
   const itemRef = useRef();
   const itemWidth = useRef(props.width);
+  const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(labelStyle)));
+  const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
 
   useEffect(() => {
     if (itemWidth.current) {
@@ -142,10 +144,9 @@ export default function TabBarItem({
   },
   [index, props.onLayout]);
 
-  // @ts-expect-error
   const animatedLabelStyle = useAnimatedStyle(() => {
     const isActive = currentPage.value === index;
-    return isActive ? selectedLabelStyle : labelStyle;
+    return isActive ? sharedSelectedLabelStyle.value : sharedLabelStyle.value;
   }, [currentPage]);
 
   const animatedLabelColorStyle = useAnimatedStyle(() => {
