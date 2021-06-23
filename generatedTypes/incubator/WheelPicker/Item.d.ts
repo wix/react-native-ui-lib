@@ -1,12 +1,13 @@
 /// <reference types="react" />
 import { TextStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
 export interface ItemProps {
     label: string;
     value: string | number;
 }
 interface InternalProps extends ItemProps {
     index: number;
-    offset: number;
+    offset: Animated.SharedValue<number>;
     itemHeight: number;
     activeColor?: string;
     inactiveColor?: string;
