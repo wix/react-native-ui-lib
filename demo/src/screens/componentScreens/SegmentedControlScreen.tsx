@@ -54,12 +54,12 @@ const SegmentedControlScreen = () => {
         </View>
         <SegmentedControl
           containerStyle={styles.container}
-          onChangeIndex={(index: number) => onChangeIndex('second', index)}
+          onChangeIndex={(index: number) => onChangeIndex('fifth', index)}
           segments={segments.fifth}
         />
         <SegmentedControl
           containerStyle={styles.container}
-          onChangeIndex={(index: number) => onChangeIndex('second', index)}
+          onChangeIndex={(index: number) => onChangeIndex('sixth', index)}
           segments={segments.sixth}
         />
       </View>
