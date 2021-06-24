@@ -135,6 +135,8 @@ const WheelPicker = React.memo(({
     }
   });
 
+  const keyExtractor = useCallback((item: ItemProps) => `${item.value}`, []);
+
   /**
      * The picker is a controlled component. This means we expect the
      * to relay on `selectedValue` prop to be our
@@ -257,8 +259,6 @@ const WheelPicker = React.memo(({
     </View>
   );
 });
-
-const keyExtractor = (item: ItemProps) => `${item.value}`;
 
 export default WheelPicker;
 

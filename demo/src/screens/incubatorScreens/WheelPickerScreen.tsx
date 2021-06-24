@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {View, Text, Incubator, Colors, Typography, Button, Dialog} from 'react-native-ui-lib';
 import _ from 'lodash';
 
@@ -29,42 +29,42 @@ const useData = (initialMonth?: string, initialYear?: string, initialDays?: numb
   const [selectedDays, setDays] = useState<number | undefined>(initialDays);
   const [showDialog, setShowDialog] = useState(false);
 
-  const onPickDaysPress = () => {
+  const onPickDaysPress = useCallback(() => {
     setShowDialog(true);
-  };
+  }, []);
 
-  const onDialogDismissed = () => {
+  const onDialogDismissed = useCallback(() => {
     setShowDialog(false);
-  };
+  }, []);
 
-  const onMonthChange = (item: string | undefined, _: number) => {
+  const onMonthChange = useCallback((item: string | undefined, _: number) => {
     setMonth(item);
-  };
+  }, []);
 
-  const onYearChange = (item: string | undefined, _: number) => {
+  const onYearChange = useCallback((item: string | undefined, _: number) => {
     setYear(item);
-  };
+  }, []);
 
-  const onDaysChange = (item: number | undefined, _: number) => {
+  const onDaysChange = useCallback((item: number | undefined, _: number) => {
     setDays(item);
-  };
+  }, []);
 
-  const getMonths = useCallback(() => {
+  const monthItems = useMemo(() => {
     return _.map(months, item => ({label: item, value: item}));
   }, []);
 
-  const getYears = useCallback(() => {
+  const yearItems = useMemo(() => {
     return _.map(years, item => ({label: '' + item, value: item}));
   }, []);
 
-  const getDays = useCallback(() => {
+  const dayItems = useMemo(() => {
     return _.map(days, item => ({label: '' + item, value: item}));
   }, []);
 
   return {
-    getMonths,
-    getYears,
-    getDays,
+    monthItems,
+    yearItems,
+    dayItems,
     onMonthChange,
     onYearChange,
     onDaysChange,
@@ -81,13 +81,13 @@ export default () => {
   const {
     selectedMonth,
     onMonthChange,
-    getMonths,
+    monthItems,
     selectedYear,
     onYearChange,
-    getYears,
+    yearItems,
     selectedDays,
     onDaysChange,
-    getDays,
+    dayItems,
     onPickDaysPress,
     onDialogDismissed,
     showDialog
@@ -104,7 +104,7 @@ export default () => {
           onChange={onMonthChange}
           activeTextColor={Colors.primary}
           inactiveTextColor={Colors.grey20}
-          items={getMonths()}
+          items={monthItems}
           textStyle={Typography.text60R}
           selectedValue={selectedMonth}
         />
@@ -115,18 +115,13 @@ export default () => {
             onChange={onYearChange}
             numberOfVisibleRows={3}
             selectedValue={selectedYear}
-            items={getYears()}
+            items={yearItems}
           />
         </View>
 
         <Button marginT-40 label={'Pick Days'} marginH-120 onPress={onPickDaysPress}/>
         <Dialog width={'90%'} height={260} bottom visible={showDialog} onDismiss={onDialogDismissed}>
-          <Incubator.WheelPicker
-            onChange={onDaysChange}
-            selectedValue={selectedDays}
-            label={'Days'}
-            items={getDays()}
-          />
+          <Incubator.WheelPicker onChange={onDaysChange} selectedValue={selectedDays} label={'Days'} items={dayItems}/>
         </Dialog>
       </View>
     </View>

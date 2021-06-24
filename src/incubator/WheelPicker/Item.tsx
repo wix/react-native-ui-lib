@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, memo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
 import Text from '../../components/text';
@@ -25,7 +25,7 @@ interface InternalProps extends ItemProps {
   centerH?: boolean;
 }
 
-export default ({
+export default memo(({
   index,
   label,
   itemHeight,
@@ -51,6 +51,8 @@ export default ({
     return [{height: itemHeight}, styles.container];
   }, [itemHeight]);
 
+  console.warn('lidor - index', index);
+
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
@@ -69,7 +71,7 @@ export default ({
       </AnimatedText>
     </AnimatedTouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

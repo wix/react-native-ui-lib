@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import { TextStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 export interface ItemProps {
@@ -16,5 +16,5 @@ interface InternalProps extends ItemProps {
     testID?: string;
     centerH?: boolean;
 }
-declare const _default: ({ index, label, itemHeight, onSelect, offset, activeColor, inactiveColor, style, testID, centerH }: InternalProps) => JSX.Element;
+declare const _default: React.MemoExoticComponent<({ index, label, itemHeight, onSelect, offset, activeColor, inactiveColor, style, testID, centerH }: InternalProps) => JSX.Element>;
 export default _default;
