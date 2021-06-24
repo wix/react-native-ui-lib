@@ -110,7 +110,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
       updateSelectedSegment(index);
     }
   },
-  [onChangeIndex, selectedSegment, updateSelectedSegment]);
+  [onChangeIndex, updateSelectedSegment]);
 
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
