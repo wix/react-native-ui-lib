@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, StyleSheet} from 'react-native';
 import {Assets, TabController, Colors, View, Text, Button, TabControllerItemProps} from 'react-native-ui-lib';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import _ from 'lodash';
@@ -161,7 +161,8 @@ class TabControllerScreen extends Component<{}, State> {
             backgroundColor={fewItems ? 'transparent' : undefined}
             // labelColor={'green'}
             // selectedLabelColor={'red'}
-            // labelStyle={{fontSize: 20}}
+            labelStyle={styles.labelStyle}
+            selectedLabelStyle={styles.selectedLabelStyle}
             // iconColor={'green'}
             // selectedIconColor={'blue'}
             enableShadow
@@ -203,3 +204,12 @@ class TabControllerScreen extends Component<{}, State> {
 }
 
 export default gestureHandlerRootHOC(TabControllerScreen);
+
+const styles = StyleSheet.create({
+  labelStyle: {
+    fontSize: 16
+  },
+  selectedLabelStyle: {
+    fontSize: 16
+  }
+});
