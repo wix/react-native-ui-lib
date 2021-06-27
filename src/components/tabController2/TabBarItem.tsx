@@ -21,11 +21,11 @@ export interface TabControllerItemProps {
   /**
    * custom label style
    */
-  labelStyle?: TextStyle;
+  labelStyle?: StyleProp<TextStyle>;
   /**
    * custom selected label style
    */
-  selectedLabelStyle?: TextStyle;
+  selectedLabelStyle?: StyleProp<TextStyle>;
   /**
    * the default label color
    */

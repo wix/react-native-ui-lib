@@ -1,5 +1,5 @@
 import React, {useMemo, useRef, useContext, ReactNode} from 'react';
-import {StyleSheet, Platform, TextProps, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import _ from 'lodash';
 
@@ -50,11 +50,11 @@ export interface TabControllerBarProps {
   /**
    * custom label style
    */
-  labelStyle?: TextProps;
+  labelStyle?: TabControllerItemProps['labelStyle'];
   /**
    * custom selected label style
    */
-  selectedLabelStyle?: TextProps;
+  selectedLabelStyle?: TabControllerItemProps['selectedLabelStyle'];
   /**
    * the default label color
    */

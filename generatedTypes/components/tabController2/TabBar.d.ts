@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextProps, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 import { TabControllerItemProps } from './TabBarItem';
 export interface TabControllerBarProps {
     /**
@@ -25,11 +25,11 @@ export interface TabControllerBarProps {
     /**
      * custom label style
      */
-    labelStyle?: TextProps;
+    labelStyle?: TabControllerItemProps['labelStyle'];
     /**
      * custom selected label style
      */
-    selectedLabelStyle?: TextProps;
+    selectedLabelStyle?: TabControllerItemProps['selectedLabelStyle'];
     /**
      * the default label color
      */
