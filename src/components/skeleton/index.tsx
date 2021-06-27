@@ -2,8 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle} from 'react-native';
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
-import {createShimmerPlaceholder} from 'optionalDeps';
-import {LinearGradientPackage} from 'optionalDeps';
+import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import {Constants} from 'helpers';
 import View from '../view';
 import EndCallback = Animated.EndCallback;
@@ -109,7 +108,7 @@ interface SkeletonState {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.js
  * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
  */
-class SkeletonView extends Component<SkeletonProps,SkeletonState> {
+class SkeletonView extends Component<SkeletonProps, SkeletonState> {
   static defaultProps = {
     size: Size.SMALL,
     borderRadius: BorderRadiuses.br10

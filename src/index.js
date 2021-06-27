@@ -204,7 +204,7 @@ export default {
     return require('./components/wheelPickerDialog').default;
   },
   get SkeletonView() {
-    return require('./components/skeleton').default
+    return require('./components/skeleton').default;
   },
 
   // Assets

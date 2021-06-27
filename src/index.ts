@@ -54,7 +54,7 @@ export {default as asPanViewConsumer} from './components/panningViews/asPanViewC
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as ActionSheet} from './components/actionSheet';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
-export {default as SkeletonView} from './components/skeleton'
+export {default as SkeletonView} from './components/skeleton';
 export {
   default as PanningProvider,
   PanningDirections,
