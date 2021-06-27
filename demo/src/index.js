@@ -103,6 +103,9 @@ module.exports = {
       get SharedTransitionScreen() {
         return require('./screens/componentScreens/SharedTransitionScreen').default;
       },
+      get SkeletonScreen() {
+        return require('./screens/componentScreens/SkeletonViewScreen').default;
+      },
       get StepperScreen() {
         return require('./screens/componentScreens/StepperScreen').default;
       },
