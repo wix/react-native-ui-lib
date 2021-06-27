@@ -33,6 +33,7 @@ function PageCarousel({...props}) {
       const newIndex = e.contentOffset.x / pageWidth;
 
       if (wasScrolledByPress.value) {
+        /* Round is for android when offset value has fraction */
         targetPage.value = withTiming(Math.round(newIndex));
         wasScrolledByPress.value = false;
       } else {

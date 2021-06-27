@@ -117,6 +117,7 @@ export default function TabBarItem({
   const {currentPage} = useContext(TabBarContext);
   const itemRef = useRef();
   const itemWidth = useRef(props.width);
+  // JSON.parse(JSON.stringify is due to an issue with reanimated
   const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(labelStyle)));
   const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
 
