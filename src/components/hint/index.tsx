@@ -191,10 +191,11 @@ class Hint extends Component<HintProps, HintState> {
   };
 
   toggleAnimationEndedToRemoveHint = () => {
-    this.setState({animationEnded: true});
-    setTimeout(() => {
-      this.setState({animationEnded: false});
-    }, this.animationDuration);
+    this.setState({animationEnded: true}, () => {
+      setTimeout(() => {
+        this.setState({animationEnded: false});
+      }, this.animationDuration);
+    });
   };
 
   focusAccessibilityOnHint = () => {
@@ -513,6 +514,7 @@ class Hint extends Component<HintProps, HintState> {
   render() {
     const {onBackgroundPress, testID} = this.props;
     if (!this.props.visible && this.state.animationEnded) {
+      console.log('removed');
       return this.props.children;
     }
 
