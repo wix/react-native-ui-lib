@@ -44,7 +44,7 @@ export function renderBooleanGroup(title, options) {
                 marginR-s2
                 useCustomTheme
                 key={key}
-                textID={key}
+                testID={key}
                 value={value}
                 onValueChange={value => this.setState({[key]: value})}
               />
