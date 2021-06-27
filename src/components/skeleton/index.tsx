@@ -5,10 +5,12 @@ import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import {Constants} from 'helpers';
 import View from '../view';
-import EndCallback = Animated.EndCallback;
 import {asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
-const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradientPackage?.LinearGradient);
+
+const LinearGradient = LinearGradientPackage?.default
+
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 const ANIMATION_DURATION = 400;
 
@@ -142,7 +144,7 @@ class SkeletonView extends Component<SkeletonProps, SkeletonState> {
     }
   }
 
-  fade(isFadeIn: boolean, onAnimationEnd?: EndCallback) {
+  fade(isFadeIn: boolean, onAnimationEnd?: Animated.EndCallback) {
     const animation = Animated.timing(this.state.opacity, {
       toValue: isFadeIn ? 1 : 0,
       easing: Easing.ease,
@@ -323,8 +325,7 @@ class SkeletonView extends Component<SkeletonProps, SkeletonState> {
 
     if (times) {
       return (
-        <React.Fragment>
-          {_.times(times, index => {
+          _.times(times, index => {
             const key = timesKey ? `${timesKey}-${index}` : `${index}`;
             return (
               <SkeletonView
@@ -336,8 +337,7 @@ class SkeletonView extends Component<SkeletonProps, SkeletonState> {
                 times={undefined}
               />
             );
-          })}
-        </React.Fragment>
+          })
       );
     } else {
       return this.renderSkeleton();

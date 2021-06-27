@@ -1,13 +1,23 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView, Alert} from 'react-native';
-import {ListItem, SkeletonView, Spacings, Constants, BorderRadiuses, Avatar, Text, View, Image, Button} from 'react-native-ui-lib';
+import {Alert, ScrollView, StyleSheet} from 'react-native';
+import {
+  Avatar,
+  BorderRadiuses,
+  Button,
+  Constants,
+  Image,
+  ListItem,
+  SkeletonView,
+  Spacings,
+  Text,
+  View,
+  Colors
+} from 'react-native-ui-lib';
 import * as ExampleScreenPresenter from '../ExampleScreenPresenter';
+import {ButtonSize} from '../../../../src/components/button';
 
 const AVATAR_SIZE = 48;
-
-const THUMBNAIL_URL =
-  'https://static.wixstatic.com/media/8616c2ac52ee4d0294dd3c7e578228a1.jpg/v1/fit/w_300,h_600,q_85/8616c2ac52ee4d0294dd3c7e578228a1.jpg';
 
 const IMAGE_URIS = [
   'https://static.wixstatic.com/media/17db2bb89a1d405886bf6c5f90c776e8.jpg',
@@ -15,7 +25,7 @@ const IMAGE_URIS = [
   'https://static.wixstatic.com/media/ea3157fe992346728dd08cc2e4560e1c.jpg'
 ];
 
-const NUMBER_OF_ITEMS_TO_SHOW = 5;
+const NUMBER_OF_ITEMS_TO_SHOW = 10;
 
 const DATA_TYPE = {
   List: 'list',
@@ -31,7 +41,12 @@ const LIST_TYPE = {
 };
 
 export default class SkeletonViewScreen extends Component {
-  state = {isDataAvailable: false, dataType: DATA_TYPE.List, listType: LIST_TYPE.Regular, isLarge: false, key: 1};
+  state = {
+    isDataAvailable: false,
+    dataType: DATA_TYPE.List,
+    listType: LIST_TYPE.Regular,
+    isLarge: false,
+    key: 1};
 
   increaseKey = () => {
     const {key} = this.state;
@@ -70,7 +85,7 @@ export default class SkeletonViewScreen extends Component {
           <Button
             label={isDataAvailable ? 'Hide data' : 'Show data'}
             style={[styles.toggleButton]}
-            size={'small'}
+            size={ButtonSize.small}
             outline={!isDataAvailable}
             onPress={this.toggleVisibility}
           />
@@ -78,7 +93,7 @@ export default class SkeletonViewScreen extends Component {
             <Button
               label={isLarge ? 'Set items to small' : 'Set items to large'}
               style={[styles.toggleButton]}
-              size={'small'}
+              size={ButtonSize.small}
               outline={!isLarge}
               onPress={this.setSize}
             />
@@ -88,35 +103,56 @@ export default class SkeletonViewScreen extends Component {
     );
   };
 
-  itemPressed = props => {
-    Alert.alert('Item pressed', 'Title:' + props.title);
-  };
-
-  renderListItemsData = ({contentProps: {hasAvatar, hasThumbnail}}) => {
-    const {isLarge} = this.state;
-    const thumbnail = hasThumbnail ? {source: {uri: THUMBNAIL_URL}} : undefined;
+  renderListItemsData = () => {
+    const {listType} = this.state;
+    const hasAvatar = listType === LIST_TYPE.Avatar;
+    const hasThumbnail = listType === LIST_TYPE.Thumbnail;
 
     return (
       <React.Fragment>
         {_.times(NUMBER_OF_ITEMS_TO_SHOW, index => {
           return (
             <ListItem
-              key={`list-item-${index}`}
-              testID={`list-item-${index}`}
-              title={`Small list item ${index + 1}`}
-              subtitle={'Some text'}
-              description={isLarge ? 'Other text' : undefined}
-              avatar={hasAvatar ? {source: this.getRandomAvatar(), animate: false} : undefined}
-              thumbnail={thumbnail}
-              onPress={this.itemPressed}
-            />
+              activeBackgroundColor={Colors.dark60}
+              activeOpacity={0.3}
+              height={77.5}
+              onPress={() => Alert.alert(`pressed on order #${index + 1}`)}
+            >
+              {
+                hasAvatar
+                && <ListItem.Part left>
+                  <Avatar
+                    source={this.getRandomAvatar()}
+                    containerStyle={{marginStart: 14}}
+                  />
+                </ListItem.Part>
+              }
+              {
+                hasThumbnail
+                && <ListItem.Part left>
+                  <Image
+                    source={this.getRandomAvatar()}
+                    style={{height: 54, width: 54, marginLeft: 14}}
+                  />
+                </ListItem.Part>
+              }
+
+              <ListItem.Part middle column containerStyle={[styles.border, {marginLeft: 18}]}>
+                <ListItem.Part containerStyle={{marginBottom: 3}}>
+                  <Text text60 numberOfLines={1}>{`User ${index + 1}`}</Text>
+                </ListItem.Part>
+                <ListItem.Part>
+                  <Text text70 numberOfLines={1}>Member</Text>
+                </ListItem.Part>
+              </ListItem.Part>
+            </ListItem>
           );
         })}
       </React.Fragment>
     );
   };
 
-  renderListItems = (hasAvatar, hasThumbnail) => {
+  renderListItems = (hasAvatar: boolean, hasThumbnail: boolean) => {
     const {isDataAvailable, isLarge} = this.state;
     const contentType = hasAvatar
       ? SkeletonView.contentTypes.AVATAR
@@ -149,7 +185,7 @@ export default class SkeletonViewScreen extends Component {
     return this.renderListItems(false, true);
   };
 
-  getImageSize = () => (Constants.screenWidth - IMAGE_URIS.length * Spacings.page) / IMAGE_URIS.length;
+  getImageSize = () => (Constants.screenWidth - IMAGE_URIS.length * Spacings.s5) / IMAGE_URIS.length;
 
   renderImagesData = () => {
     const imageSize = this.getImageSize();
@@ -181,7 +217,7 @@ export default class SkeletonViewScreen extends Component {
     );
   };
 
-  getRandomInt = max => {
+  getRandomInt = (max: number) => {
     return Math.floor(Math.random() * max);
   };
 
@@ -305,10 +341,15 @@ const styles = StyleSheet.create({
     paddingTop: Spacings.s5,
     paddingLeft: Spacings.s5
   },
-  image: {
-    flex: 1
-  },
   avatar: {
-    marginRight: 20
+    marginHorizontal: 14
+  },
+  image: {
+    flex: 1,
+    borderRadius: BorderRadiuses.br20,
+  },
+  border: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.dark70
   }
 });
