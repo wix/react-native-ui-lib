@@ -21,6 +21,7 @@ export * as Hooks from './hooks';
 export * as Modifiers from './commons/modifiers';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avatar';
+export {AvatarHelper} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
 export {default as Constants} from './helpers/Constants';
@@ -78,6 +79,6 @@ export {
   BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
   PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
   TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
-  BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
+  BaseComponent, PureBaseComponent, UIComponent, forwardRef,
   LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
 } from '../typings';
