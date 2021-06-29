@@ -8,7 +8,7 @@ import View from '../view';
 import {asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
-const LinearGradient = LinearGradientPackage?.default
+const LinearGradient = LinearGradientPackage?.default;
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
@@ -325,19 +325,19 @@ class SkeletonView extends Component<SkeletonProps, SkeletonState> {
 
     if (times) {
       return (
-          _.times(times, index => {
-            const key = timesKey ? `${timesKey}-${index}` : `${index}`;
-            return (
-              <SkeletonView
-                {...this.props}
-                key={key}
-                testID={`${testID}-${index}`}
-                renderContent={index === 0 ? renderContent : this.renderNothing}
-                hideSeparator={hideSeparator || (!showLastSeparator && index === times - 1)}
-                times={undefined}
-              />
-            );
-          })
+        _.times(times, index => {
+          const key = timesKey ? `${timesKey}-${index}` : `${index}`;
+          return (
+            <SkeletonView
+              {...this.props}
+              key={key}
+              testID={`${testID}-${index}`}
+              renderContent={index === 0 ? renderContent : this.renderNothing}
+              hideSeparator={hideSeparator || (!showLastSeparator && index === times - 1)}
+              times={undefined}
+            />
+          );
+        })
       );
     } else {
       return this.renderSkeleton();
