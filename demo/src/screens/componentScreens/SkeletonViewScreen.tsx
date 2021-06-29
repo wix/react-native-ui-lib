@@ -103,8 +103,30 @@ export default class SkeletonViewScreen extends Component {
     );
   };
 
+  renderAvatar = () => {
+    return (
+      <ListItem.Part left>
+      <Avatar
+        source={this.getRandomAvatar()}
+        containerStyle={{marginStart: 14}}
+      />
+    </ListItem.Part>
+    )
+  }
+
+  renderThumbnail = () => {
+    return (
+      <ListItem.Part left>
+        <Image
+          source={this.getRandomAvatar()}
+          style={{height: 54, width: 54, marginLeft: 14}}
+        />
+      </ListItem.Part>
+    )
+  }
+
   renderListItemsData = () => {
-    const {listType} = this.state;
+    const {listType, isLarge} = this.state;
     const hasAvatar = listType === LIST_TYPE.Avatar;
     const hasThumbnail = listType === LIST_TYPE.Thumbnail;
 
@@ -115,28 +137,11 @@ export default class SkeletonViewScreen extends Component {
             <ListItem
               activeBackgroundColor={Colors.dark60}
               activeOpacity={0.3}
-              height={77.5}
+              height={90}
               onPress={() => Alert.alert(`pressed on order #${index + 1}`)}
             >
-              {
-                hasAvatar
-                && <ListItem.Part left>
-                  <Avatar
-                    source={this.getRandomAvatar()}
-                    containerStyle={{marginStart: 14}}
-                  />
-                </ListItem.Part>
-              }
-              {
-                hasThumbnail
-                && <ListItem.Part left>
-                  <Image
-                    source={this.getRandomAvatar()}
-                    style={{height: 54, width: 54, marginLeft: 14}}
-                  />
-                </ListItem.Part>
-              }
-
+              {hasAvatar && this.renderAvatar()}
+              {hasThumbnail && this.renderThumbnail()}
               <ListItem.Part middle column containerStyle={[styles.border, {marginLeft: 18}]}>
                 <ListItem.Part containerStyle={{marginBottom: 3}}>
                   <Text text60 numberOfLines={1}>{`User ${index + 1}`}</Text>
@@ -144,6 +149,9 @@ export default class SkeletonViewScreen extends Component {
                 <ListItem.Part>
                   <Text text70 numberOfLines={1}>Member</Text>
                 </ListItem.Part>
+                {isLarge && <ListItem.Part>
+                  <Text text70 numberOfLines={1}>Since: </Text>
+                </ListItem.Part>}
               </ListItem.Part>
             </ListItem>
           );
@@ -152,7 +160,7 @@ export default class SkeletonViewScreen extends Component {
     );
   };
 
-  renderListItems = (hasAvatar: boolean, hasThumbnail: boolean) => {
+  renderListItems = (hasAvatar: boolean = false, hasThumbnail: boolean = false) => {
     const {isDataAvailable, isLarge} = this.state;
     const contentType = hasAvatar
       ? SkeletonView.contentTypes.AVATAR
