@@ -1,12 +1,7 @@
 // TODO: Support style customization
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedScrollHandler,
-  useAnimatedReaction,
-  runOnJS
-} from 'react-native-reanimated';
+import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {Colors, Spacings} from 'style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
@@ -14,10 +9,8 @@ import {Constants} from 'helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
 import Text, {TextProps} from '../../components/text';
-import {HapticService, HapticType} from 'services';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const HAPTIC_RANGE = 10;
 
 export interface WheelPickerProps {
   /**
@@ -113,8 +106,6 @@ const WheelPicker = React.memo(({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
-  const animatedPrevIndex = useSharedValue(currentIndex);
-  const animatedCurIndex = useSharedValue(currentIndex);
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
 
@@ -122,20 +113,7 @@ const WheelPicker = React.memo(({
     controlComponent();
   });
 
-  useAnimatedReaction(() => {
-    return offset.value;
-  },
-  () => {
-    const shouldUpdateIndex =
-          offset.value % itemHeight > itemHeight - HAPTIC_RANGE || offset.value % itemHeight < HAPTIC_RANGE;
-    animatedCurIndex.value = shouldUpdateIndex ? Math.round(offset.value / itemHeight) : animatedCurIndex.value;
-    if (animatedCurIndex.value !== animatedPrevIndex.value) {
-      animatedPrevIndex.value = animatedCurIndex.value;
-      runOnJS(HapticService.triggerHaptic)(HapticType.selection, 'WheelPicker');
-    }
-  });
-
-  const keyExtractor = useCallback((item: ItemProps) => `${item.value}`, []);
+  const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
 
   /**
      * The picker is a controlled component. This means we expect the
@@ -149,9 +127,9 @@ const WheelPicker = React.memo(({
     }
   };
 
-  const scrollToPassedIndex = () => {
+  const scrollToPassedIndex = useCallback(() => {
     scrollToIndex(currentIndex, false);
-  };
+  }, []);
 
   const scrollToIndex = (index: number, animated: boolean) => {
     // this is done to handle onMomentumScrollEnd not being called in Android:
@@ -169,12 +147,12 @@ const WheelPicker = React.memo(({
   },
   [itemHeight]);
 
-  const onValueChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     setScrollOffset(event.nativeEvent.contentOffset.y);
 
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     onChange?.(value, index);
-  };
+  }, []);
 
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -194,15 +172,15 @@ const WheelPicker = React.memo(({
   },
   [itemHeight]);
 
-  const renderSeparators = () => {
+  const separators = useMemo(() => {
     return (
       <View absF centerV pointerEvents="none">
         <View style={styles.separators}/>
       </View>
     );
-  };
+  }, []);
 
-  const renderLabel = () => {
+  const labelContainer = useMemo(() => {
     return (
       <View centerV>
         <Text marginL-s2 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
@@ -210,7 +188,7 @@ const WheelPicker = React.memo(({
         </Text>
       </View>
     );
-  };
+  }, []);
 
   const fader = useMemo(() => (position: FaderPosition) => {
     return <Fader visible position={position} size={60}/>;
@@ -251,11 +229,11 @@ const WheelPicker = React.memo(({
             initialScrollIndex={currentIndex}
           />
         </View>
-        {label && renderLabel()}
+        {label && labelContainer}
       </View>
       {fader(FaderPosition.BOTTOM)}
       {fader(FaderPosition.TOP)}
-      {renderSeparators()}
+      {separators}
     </View>
   );
 });
