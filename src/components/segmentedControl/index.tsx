@@ -105,10 +105,8 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   }, []);
 
   const onSegmentPress = useCallback((index: number) => {
-    if (selectedSegment !== index) {
-      onChangeIndex?.(index);
-      updateSelectedSegment(index);
-    }
+    onChangeIndex?.(index);
+    updateSelectedSegment(index);
   },
   [onChangeIndex, updateSelectedSegment]);
 
