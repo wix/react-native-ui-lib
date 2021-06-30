@@ -1,15 +1,11 @@
 import React from 'react';
-import { TextProps, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 import { TabControllerItemProps } from './TabBarItem';
 export interface TabControllerBarProps {
     /**
      * The list of tab bar items
      */
     items?: TabControllerItemProps[];
-    /**
-     * Whether the tabBar should be spread (default: true)
-     */
-    spreadItems?: boolean;
     /**
      * Tab Bar height
      */
@@ -27,17 +23,13 @@ export interface TabControllerBarProps {
      */
     indicatorStyle?: StyleProp<ViewStyle>;
     /**
-     * the indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
-     */
-    indicatorInsets?: number;
-    /**
      * custom label style
      */
-    labelStyle?: TextProps;
+    labelStyle?: TabControllerItemProps['labelStyle'];
     /**
      * custom selected label style
      */
-    selectedLabelStyle?: TextProps;
+    selectedLabelStyle?: TabControllerItemProps['selectedLabelStyle'];
     /**
      * the default label color
      */
@@ -76,13 +68,17 @@ export interface TabControllerBarProps {
      */
     centerSelected?: boolean;
     /**
+     * Whether the tabBar should be spread (default: true)
+     */
+    spreadItems?: boolean;
+    /**
+     * The indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
+     */
+    indicatorInsets?: number;
+    /**
      * Additional styles for the container
      */
     containerStyle?: StyleProp<ViewStyle>;
-    /**
-     * Additional styles for the ScrollView
-     */
-    scrollViewStyle?: StyleProp<ViewStyle>;
     /**
      * Used as a testing identifier
      */

@@ -1,36 +1,28 @@
-// TODO: support commented props
-// TODO: disable scroll when content width is shorter than screen width
-import React, {useEffect, useMemo, useRef, useContext, ReactNode} from 'react';
-import {StyleSheet, Platform, TextProps, StyleProp, ViewStyle} from 'react-native';
-import Reanimated from 'react-native-reanimated';
+import React, {useMemo, useRef, useContext, ReactNode} from 'react';
+import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
+import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
-import View from '../../components/view';
+import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
 import {Constants} from '../../helpers';
-import {LogService} from '../../services';
 import FadedScrollView from './FadedScrollView';
 
-import {useScrollToItem} from '../../hooks';
-
-const {Code, Value, interpolate: _interpolate, interpolateNode, block, set} = Reanimated;
-const interpolate = interpolateNode || _interpolate;
+import useScrollToItem from './useScrollToItem';
 
 const DEFAULT_HEIGHT = 48;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 
 const DEFAULT_LABEL_STYLE = {
-  ...Typography.text80,
-  fontWeight: '400',
+  ...Typography.text80M,
   letterSpacing: 0
 };
 
 const DEFAULT_SELECTED_LABEL_STYLE = {
-  ...Typography.text80,
-  fontWeight: '700',
+  ...Typography.text80M,
   letterSpacing: 0
 };
 
@@ -39,10 +31,6 @@ export interface TabControllerBarProps {
    * The list of tab bar items
    */
   items?: TabControllerItemProps[];
-  /**
-   * Whether the tabBar should be spread (default: true)
-   */
-  spreadItems?: boolean;
   /**
    * Tab Bar height
    */
@@ -55,26 +43,18 @@ export interface TabControllerBarProps {
    * custom shadow style
    */
   shadowStyle?: StyleProp<ViewStyle>;
-  // /**
-  //  * The minimum number of tabs to render in scroll mode
-  //  */
-  // minTabsForScroll?: number;
   /**
    * custom style for the selected indicator
    */
   indicatorStyle?: StyleProp<ViewStyle>;
   /**
-   * the indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
-   */
-  indicatorInsets?: number;
-  /**
    * custom label style
    */
-  labelStyle?: TextProps;
+  labelStyle?: TabControllerItemProps['labelStyle'];
   /**
    * custom selected label style
    */
-  selectedLabelStyle?: TextProps;
+  selectedLabelStyle?: TabControllerItemProps['selectedLabelStyle'];
   /**
    * the default label color
    */
@@ -113,13 +93,17 @@ export interface TabControllerBarProps {
    */
   centerSelected?: boolean;
   /**
+   * Whether the tabBar should be spread (default: true)
+   */
+  spreadItems?: boolean;
+  /**
+   * The indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
+   */
+  indicatorInsets?: number;
+  /**
    * Additional styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Additional styles for the ScrollView
-   */
-   scrollViewStyle?: StyleProp<ViewStyle>;
   /**
    * Used as a testing identifier
    */
@@ -139,13 +123,10 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
 const TabBar = (props: Props) => {
   const {
     items: propsItems,
-    spreadItems,
     height,
     enableShadow,
     shadowStyle: propsShadowStyle,
-    // minTabsForScroll,
     indicatorStyle,
-    indicatorInsets = Spacings.s4,
     labelStyle,
     selectedLabelStyle,
     labelColor,
@@ -157,52 +138,17 @@ const TabBar = (props: Props) => {
     backgroundColor,
     containerWidth: propsContainerWidth,
     centerSelected,
+    spreadItems,
+    indicatorInsets = Spacings.s4,
     containerStyle,
-    scrollViewStyle,
     testID,
     children: propsChildren
   } = props;
 
   const context = useContext(TabBarContext);
-  // @ts-ignore // TODO: typescript
-  const {itemStates, items: contextItems, currentPage, targetPage, registerTabItems, selectedIndex} = context;
+  const {items: contextItems, currentPage, targetPage, selectedIndex} = context;
 
   const children = useRef<Props['children']>(_.filter(propsChildren, (child: ChildProps) => !!child));
-
-  const _registerTabItems = () => {
-    const ignoredItems: number[] = [];
-    let itemsCount;
-
-    if (propsItems) {
-      itemsCount = _.size(propsItems);
-      _.forEach(propsItems, (item, index) => {
-        if (item.ignore) {
-          ignoredItems.push(index);
-        }
-      });
-      // TODO: deprecate with props.children
-    } else {
-      itemsCount = React.Children.count(children.current);
-      // @ts-ignore TODO: typescript - not sure if this can be solved
-      React.Children.toArray(children.current).forEach((child: ChildProps, index: number) => {
-        if (child.props.ignore) {
-          ignoredItems.push(index);
-        }
-      });
-    }
-
-    registerTabItems(itemsCount, ignoredItems);
-  };
-
-  useEffect(() => {
-    if (propsChildren) {
-      LogService.warn('uilib: Please pass the "items" prop to TabController.TabBar instead of children');
-    }
-
-    if ((propsItems || children.current) && !contextItems) {
-      _registerTabItems();
-    }
-  }, []);
 
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || Constants.screenWidth;
@@ -214,25 +160,32 @@ const TabBar = (props: Props) => {
 
   const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
 
-  const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex, onContentSizeChange, onLayout} = useScrollToItem({
+  const {
+    scrollViewRef: tabBar,
+    onItemLayout,
+    itemsWidthsAnimated,
+    itemsOffsetsAnimated,
+    // itemsWidths,
+    // itemsOffsets,
+    focusIndex,
+    onContentSizeChange,
+    onLayout
+  } = useScrollToItem({
     itemsCount: itemsCount.current,
     selectedIndex,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
 
-  const indicatorOffsets = useMemo((): number[] => {
-    let index = 0;
-    const offsets = [];
-    offsets.push(0);
-    while (index < itemsWidths.length - 1) {
-      ++index;
-      offsets[index] = offsets[index - 1] + itemsWidths[index - 1];
+  useAnimatedReaction(() => {
+    return Math.round(currentPage.value);
+  },
+  (currIndex, prevIndex) => {
+    if (currIndex !== prevIndex) {
+      runOnJS(focusIndex)(currIndex);
     }
+  });
 
-    return offsets;
-  }, [itemsWidths]);
-
-  const _renderTabBarItems = useMemo((): ReactNode => {
+  const tabBarItems = useMemo((): ReactNode => {
     return _.map(items, (item, index) => {
       return (
         <TabBarItem
@@ -245,11 +198,9 @@ const TabBar = (props: Props) => {
           selectedIconColor={selectedIconColor}
           activeBackgroundColor={activeBackgroundColor}
           key={item.label}
-          // width={_itemsWidths.current[index]}
           {...item}
           {...context}
           index={index}
-          state={itemStates[index]}
           onLayout={onItemLayout}
         />
       );
@@ -264,84 +215,25 @@ const TabBar = (props: Props) => {
     iconColor,
     selectedIconColor,
     activeBackgroundColor,
-    itemStates,
     centerSelected,
     onItemLayout
   ]);
 
-  // TODO: Remove once props.children is deprecated
-  const _renderTabBarItemsFromChildren = useMemo((): ReactNode | null => {
-    return !children.current
-      ? null
-      : React.Children.map(children.current, (child: Partial<ChildProps>, index: number) => {
-        // @ts-ignore TODO: typescript - not sure if this can be easily solved
-        return React.cloneElement(child, {
-          labelColor,
-          selectedLabelColor,
-          labelStyle,
-          selectedLabelStyle,
-          uppercase,
-          iconColor,
-          selectedIconColor,
-          activeBackgroundColor,
-          ...child.props,
-          ...context,
-          index,
-          state: itemStates[index],
-          onLayout: centerSelected ? onItemLayout : undefined
-        });
-      });
-  }, [
-    propsChildren,
-    labelColor,
-    selectedLabelColor,
-    labelStyle,
-    selectedLabelStyle,
-    uppercase,
-    iconColor,
-    selectedIconColor,
-    activeBackgroundColor,
-    itemStates,
-    centerSelected,
-    onItemLayout
-  ]);
+  const _indicatorTransitionStyle = useAnimatedStyle(() => {
+    const value = targetPage.value;
+    const width = interpolate(value,
+      itemsWidthsAnimated.value.map((_v: number, i: number) => i),
+      itemsWidthsAnimated.value.map((v: number) => v - 2 * indicatorInsets));
 
-  const renderTabBarItems = useMemo(() => {
-    return _.isEmpty(itemStates) ? null : items ? _renderTabBarItems : _renderTabBarItemsFromChildren;
-  }, [itemStates, items, _renderTabBarItems, _renderTabBarItemsFromChildren]);
+    const left = interpolate(value,
+      itemsOffsetsAnimated.value.map((_v: any, i: number) => i),
+      itemsOffsetsAnimated.value);
 
-  const _indicatorWidth = new Value(0); // TODO: typescript?
-  const _indicatorOffset = new Value(0); // TODO: typescript?
-
-  const _indicatorTransitionStyle = {
-    // StyleProp<ViewStyle> TODO:
-    width: _indicatorWidth,
-    left: _indicatorOffset
-  };
-
-  const selectedIndicator =
-    itemsWidths && itemsWidths.length > 0 ? (
-      <Reanimated.View style={[styles.selectedIndicator, {marginHorizontal: indicatorInsets}, indicatorStyle, _indicatorTransitionStyle]}/>
-    ) : undefined;
-
-  const renderCodeBlock = _.memoize(() => {
-    const nodes: any[] = [];
-
-    nodes.push(set(_indicatorOffset,
-      interpolate(currentPage, {
-        inputRange: indicatorOffsets.map((_v, i) => i),
-        outputRange: indicatorOffsets
-      })));
-    nodes.push(set(_indicatorWidth,
-      interpolate(currentPage, {
-        inputRange: itemsWidths.map((_v, i) => i),
-        outputRange: itemsWidths.map(v => v - 2 * indicatorInsets)
-      })));
-
-    nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], focusIndex as any)));
-
-    const temp = <Code>{() => block(nodes)}</Code>;
-    return temp;
+    return {
+      marginHorizontal: indicatorInsets,
+      width,
+      left
+    };
   });
 
   const shadowStyle = useMemo(() => {
@@ -352,7 +244,7 @@ const TabBar = (props: Props) => {
     return [styles.container, shadowStyle, {width: containerWidth}, containerStyle];
   }, [shadowStyle, containerWidth, containerStyle]);
 
-  const indicatorContainerStyle = useMemo(() => {
+  const tabBarContainerStyle = useMemo(() => {
     return [styles.tabBar, spreadItems && styles.spreadItems, !_.isUndefined(height) && {height}, {backgroundColor}];
   }, [height, backgroundColor]);
 
@@ -363,8 +255,7 @@ const TabBar = (props: Props) => {
   return (
     <View style={_containerStyle}>
       <FadedScrollView
-        /**
-         // @ts-ignore TODO: typescript */
+        // @ts-expect-error
         ref={tabBar}
         horizontal
         contentContainerStyle={scrollViewContainerStyle}
@@ -372,12 +263,10 @@ const TabBar = (props: Props) => {
         testID={testID}
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
-        style={scrollViewStyle}
       >
-        <View style={indicatorContainerStyle}>{renderTabBarItems}</View>
-        {selectedIndicator}
+        <View style={tabBarContainerStyle}>{tabBarItems}</View>
+        <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
       </FadedScrollView>
-      {_.size(itemsWidths) > 1 && renderCodeBlock()}
     </View>
   );
 };
@@ -388,8 +277,6 @@ TabBar.defaultProps = {
   selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
   backgroundColor: DEFAULT_BACKGROUND_COLOR,
   spreadItems: true
-
-  // containerWidth: Constants.screenWidth
 };
 
 const styles = StyleSheet.create({

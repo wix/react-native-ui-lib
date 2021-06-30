@@ -80,8 +80,12 @@ export interface HintProps {
      */
     offset?: number;
     /**
-     * Callback for the background press
+     * Callback for Hint press
      */
+    onPress?: () => void;
+    /**
+      * Callback for the background press
+      */
     onBackgroundPress?: (event: GestureResponderEvent) => void;
     /**
      * The hint container width

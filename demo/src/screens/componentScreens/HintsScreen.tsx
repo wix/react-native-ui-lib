@@ -39,6 +39,10 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
     });
   };
 
+  onHintPressed = () => {
+    alert('Hint Pressed');
+  }
+
   render() {
     const {
       showHint,
@@ -85,6 +89,7 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}
+            onPress={this.onHintPressed}
             targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}

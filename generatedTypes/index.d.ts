@@ -45,6 +45,7 @@ export {default as HapticService, HapticType} from './services/HapticService';
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
+export {default as TabController2} from './components/tabController2';
 export {default as TabBar, TabBarProps} from './components/TabBar';
 export {default as ScrollBar, ScrollBarProps} from './components/ScrollBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
@@ -66,7 +67,7 @@ export {default as PanResponderView, PanResponderViewPropTypes, PanResponderView
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes, PanDismissibleViewProps, DismissibleAnimationProps} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
-export {default as Carousel, CarouselProps} from './components/carousel';
+export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as ActionSheet} from './components/actionSheet';
 
 /* All components with manual typings */

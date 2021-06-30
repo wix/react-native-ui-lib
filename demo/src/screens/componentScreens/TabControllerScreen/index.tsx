@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, StyleSheet} from 'react-native';
 import {Assets, TabController, Colors, View, Text, Button, TabControllerItemProps} from 'react-native-ui-lib';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import _ from 'lodash';
@@ -20,7 +20,6 @@ interface State {
 }
 
 class TabControllerScreen extends Component<{}, State> {
-
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -36,12 +35,23 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   generateTabItems = (fewItems = this.state.fewItems): TabControllerItemProps[] => {
-    let items: TabControllerItemProps[] = _.chain(TABS)
+    const items: TabControllerItemProps[] = _.chain(TABS)
       .take(fewItems ? 3 : TABS.length)
-      .map<TabControllerItemProps>(tab => ({label: tab, key: tab}))
+      .map<TabControllerItemProps>((tab, index) => ({
+        label: tab,
+        key: tab,
+        icon: index === 2 ? Assets.icons.demo.dashboard : undefined,
+        badge: index === 5 ? {label: '2'} : undefined
+      }))
       .value();
 
-    const addItem: TabControllerItemProps = {icon: Assets.icons.demo.add, key: 'add', ignore: true, width: 60, onPress: this.onAddItem};
+    const addItem: TabControllerItemProps = {
+      icon: Assets.icons.demo.add,
+      key: 'add',
+      ignore: true,
+      width: 60,
+      onPress: this.onAddItem
+    };
 
     return fewItems ? items : [...items, addItem];
   };
@@ -93,7 +103,7 @@ class TabControllerScreen extends Component<{}, State> {
   renderLoadingPage() {
     return (
       <View flex center>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large"/>
         <Text text60L marginT-10>
           Loading
         </Text>
@@ -108,13 +118,13 @@ class TabControllerScreen extends Component<{}, State> {
     return (
       <Container {...containerProps}>
         <TabController.TabPage index={0}>
-          <Tab1 />
+          <Tab1/>
         </TabController.TabPage>
         <TabController.TabPage index={1}>
-          <Tab2 />
+          <Tab2/>
         </TabController.TabPage>
         <TabController.TabPage index={2} lazy lazyLoadTime={1500} renderLoading={this.renderLoadingPage}>
-          <Tab3 />
+          <Tab3/>
         </TabController.TabPage>
 
         {_.map(_.takeRight(TABS, TABS.length - 3), (title, index) => {
@@ -146,11 +156,13 @@ class TabControllerScreen extends Component<{}, State> {
             key={key}
             // uppercase
             // indicatorStyle={{backgroundColor: 'green', height: 3}}
-            // wideIndicator
-            // spreadItems={false}
+            // indicatorInsets={0}
+            spreadItems={!fewItems}
+            backgroundColor={fewItems ? 'transparent' : undefined}
             // labelColor={'green'}
             // selectedLabelColor={'red'}
-            // labelStyle={{fontSize: 20}}
+            labelStyle={styles.labelStyle}
+            selectedLabelStyle={styles.selectedLabelStyle}
             // iconColor={'green'}
             // selectedIconColor={'blue'}
             enableShadow
@@ -192,3 +204,12 @@ class TabControllerScreen extends Component<{}, State> {
 }
 
 export default gestureHandlerRootHOC(TabControllerScreen);
+
+const styles = StyleSheet.create({
+  labelStyle: {
+    fontSize: 16
+  },
+  selectedLabelStyle: {
+    fontSize: 16
+  }
+});

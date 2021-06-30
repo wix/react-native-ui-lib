@@ -43,6 +43,7 @@ export declare type SegmentProps = SegmentedControlItemProps & {
      * onLayout function.
      */
     onLayout?: (index: number, event: LayoutChangeEvent) => void;
+    testID?: string;
 };
 declare const _default: React.ComponentClass<SegmentedControlItemProps & {
     /**
@@ -69,6 +70,7 @@ declare const _default: React.ComponentClass<SegmentedControlItemProps & {
      * onLayout function.
      */
     onLayout?: ((index: number, event: LayoutChangeEvent) => void) | undefined;
+    testID?: string | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;
