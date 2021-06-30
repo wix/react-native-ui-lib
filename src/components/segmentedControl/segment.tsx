@@ -89,7 +89,6 @@ const Segment = React.memo((props: SegmentProps) => {
   },
   [onLayout, index]);
 
-  console.warn('lidor - what', index, Date.now());
   return (
     <TouchableOpacity
       onLayout={segmentOnLayout}
