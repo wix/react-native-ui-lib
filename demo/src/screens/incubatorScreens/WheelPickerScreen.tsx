@@ -119,7 +119,7 @@ export default () => {
           />
         </View>
 
-        <Button marginT-40 label={'Pick Days'} marginH-120 onPress={onPickDaysPress}/>
+        <Button marginT-40 label={'Pick Days'} marginH-100 onPress={onPickDaysPress}/>
         <Dialog width={'90%'} height={260} bottom visible={showDialog} onDismiss={onDialogDismissed}>
           <Incubator.WheelPicker onChange={onDaysChange} selectedValue={selectedDays} label={'Days'} items={dayItems}/>
         </Dialog>

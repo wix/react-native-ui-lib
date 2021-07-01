@@ -149,9 +149,9 @@ const WheelPicker = React.memo(({
     }
   };
 
-  const scrollToPassedIndex = () => {
+  const scrollToPassedIndex = useCallback(() => {
     scrollToIndex(currentIndex, false);
-  };
+  }, []);
 
   const scrollToIndex = (index: number, animated: boolean) => {
     // this is done to handle onMomentumScrollEnd not being called in Android:
@@ -169,12 +169,12 @@ const WheelPicker = React.memo(({
   },
   [itemHeight]);
 
-  const onValueChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     setScrollOffset(event.nativeEvent.contentOffset.y);
 
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     onChange?.(value, index);
-  };
+  }, []);
 
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -194,15 +194,15 @@ const WheelPicker = React.memo(({
   },
   [itemHeight]);
 
-  const renderSeparators = () => {
+  const separators = useMemo(() => {
     return (
       <View absF centerV pointerEvents="none">
         <View style={styles.separators}/>
       </View>
     );
-  };
+  }, []);
 
-  const renderLabel = () => {
+  const labelContainer = useMemo(() => {
     return (
       <View centerV>
         <Text marginL-s2 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
@@ -210,7 +210,7 @@ const WheelPicker = React.memo(({
         </Text>
       </View>
     );
-  };
+  }, []);
 
   const fader = useMemo(() => (position: FaderPosition) => {
     return <Fader visible position={position} size={60}/>;
@@ -251,11 +251,11 @@ const WheelPicker = React.memo(({
             initialScrollIndex={currentIndex}
           />
         </View>
-        {label && renderLabel()}
+        {label && labelContainer}
       </View>
       {fader(FaderPosition.BOTTOM)}
       {fader(FaderPosition.TOP)}
-      {renderSeparators()}
+      {separators}
     </View>
   );
 });

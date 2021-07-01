@@ -35,7 +35,9 @@ export {default as Button, ButtonPropTypes, ButtonSize, ButtonProps} from './com
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
+export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
+export {default as Hint, HintProps} from './components/hint';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
@@ -45,8 +47,10 @@ export {default as HapticService, HapticType} from './services/HapticService';
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
+export {default as TabController2} from './components/tabController2';
 export {default as TabBar, TabBarProps} from './components/TabBar';
 export {default as ScrollBar, ScrollBarProps} from './components/ScrollBar';
+export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
@@ -72,8 +76,6 @@ export {default as ActionSheet} from './components/actionSheet';
 /* All components with manual typings */
 export {
   ConnectionStatusBar,
-  FeatureHighlight,
-  Hint,
   BaseInput,
   TextArea,
   MaskedInput,
@@ -86,7 +88,6 @@ export {
   TagsInput,
   ChipsInput,
   SharedTransition,
-  StackAggregator,
   Toast,
   WheelPickerDialog,
   Assets,
