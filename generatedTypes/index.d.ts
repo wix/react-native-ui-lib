@@ -36,6 +36,7 @@ export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './component
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
+export {default as Hint, HintProps} from './components/hint';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
@@ -74,7 +75,6 @@ export {default as ActionSheet} from './components/actionSheet';
 export {
   ConnectionStatusBar,
   FeatureHighlight,
-  Hint,
   BaseInput,
   TextArea,
   MaskedInput,
