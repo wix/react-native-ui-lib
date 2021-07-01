@@ -146,6 +146,7 @@ function checkThresholds(event: PanGestureHandlerEventExtra,
   directions: PanningDirections[],
   velocity: number,
   threshold: Required<PanDismissThreshold>) {
+  'worklet';
   const velocityPassedThreshold = velocity > threshold.velocity;
   const xPassedThreshold =
     (directions.includes(PanningDirections.RIGHT) && event.translationX > threshold.x) ||
