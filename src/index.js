@@ -125,6 +125,9 @@ export default {
   get PanResponderView() {
     return require('./components/panningViews/panResponderView').default;
   },
+  get PanView() {
+    return require('./components/panningViews/panView').default;
+  },
   get Picker() {
     return require('./components/picker').default;
   },

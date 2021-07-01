@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StyleSheet, Modal as RNModal, ModalProps as RNModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants} from '../../helpers';
@@ -75,7 +76,7 @@ class Modal extends Component<ModalProps> {
           {/*
             // @ts-ignore */}
           <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress}>
-            <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.overlayView}/>
+            <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.fill}/>
           </TouchableWithoutFeedback>
         </View>
       );
@@ -89,10 +90,12 @@ class Modal extends Component<ModalProps> {
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
-        <Container style={{flex: 1}} blurType="light">
-          {this.renderTouchableOverlay()}
-          {this.props.children}
-        </Container>
+        <GestureHandlerRootView style={styles.fill}>
+          <Container style={styles.fill} blurType="light">
+            {this.renderTouchableOverlay()}
+            {this.props.children}
+          </Container>
+        </GestureHandlerRootView>
       </RNModal>
     );
   }
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject
   },
-  overlayView: {
+  fill: {
     flex: 1
   },
   accessibleOverlayView: {

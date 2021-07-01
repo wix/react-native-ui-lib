@@ -88,6 +88,9 @@ module.exports = {
       get PanResponderScreen() {
         return require('./screens/componentScreens/PanResponderScreen').default;
       },
+      get PanViewScreen() {
+        return require('./screens/componentScreens/PanViewScreen').default;
+      },
       get PickerScreen() {
         return require('./screens/componentScreens/PickerScreen').default;
       },
