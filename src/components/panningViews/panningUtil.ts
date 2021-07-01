@@ -142,6 +142,21 @@ function getVelocityDirectionClamp(event: PanGestureHandlerEventExtra, direction
   return {x, y};
 }
 
+function checkThresholds(event: PanGestureHandlerEventExtra,
+  directions: PanningDirections[],
+  velocity: number,
+  threshold: Required<PanDismissThreshold>) {
+  const velocityPassedThreshold = velocity > threshold.velocity;
+  const xPassedThreshold =
+    (directions.includes(PanningDirections.RIGHT) && event.translationX > threshold.x) ||
+    (directions.includes(PanningDirections.LEFT) && -event.translationX > threshold.x);
+  const yPassedThreshold =
+    (directions.includes(PanningDirections.DOWN) && event.translationY > threshold.y) ||
+    (directions.includes(PanningDirections.UP) && -event.translationY > threshold.y);
+
+  return {velocityPassedThreshold, xPassedThreshold, yPassedThreshold};
+}
+
 /**
  * Will return undefined if should not dismiss
  */
@@ -157,15 +172,12 @@ export function getDismissVelocity(event: PanGestureHandlerEventExtra,
     x: threshold?.x || DEFAULT_THRESHOLD.x,
     y: threshold?.y || DEFAULT_THRESHOLD.y
   };
-  const allowedVelocity = getVelocityDirectionClamp(event, directions);
-  const velocity = Math.sqrt(Math.pow(allowedVelocity.x, 2) + Math.pow(allowedVelocity.y, 2));
-  const velocityPassedThreshold = velocity > _threshold.velocity;
-  const xPassedThreshold =
-    (directions.includes(PanningDirections.RIGHT) && event.translationX > _threshold.x) ||
-    (directions.includes(PanningDirections.LEFT) && -event.translationX > _threshold.x);
-  const yPassedThreshold =
-    (directions.includes(PanningDirections.DOWN) && event.translationY > _threshold.y) ||
-    (directions.includes(PanningDirections.UP) && -event.translationY > _threshold.y);
+  const clampedVelocity = getVelocityDirectionClamp(event, directions);
+  const velocity = Math.sqrt(Math.pow(clampedVelocity.x, 2) + Math.pow(clampedVelocity.y, 2));
+  const {velocityPassedThreshold, xPassedThreshold, yPassedThreshold} = checkThresholds(event,
+    directions,
+    velocity,
+    _threshold);
   if (velocityPassedThreshold || xPassedThreshold || yPassedThreshold) {
     let velocity: Partial<Frame> = {};
     if (velocityPassedThreshold) {

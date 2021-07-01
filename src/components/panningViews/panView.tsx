@@ -18,7 +18,8 @@ import {
   Frame,
   PanDismissThreshold,
   getTranslation,
-  getDismissVelocity
+  getDismissVelocity,
+  DEFAULT_THRESHOLD
 } from './panningUtil';
 export {PanningDirections, TranslationLock, PanDismissThreshold};
 
@@ -66,12 +67,6 @@ interface StaticMembers {
 interface Props extends PanViewProps {
   children?: React.ReactNode | React.ReactNode[];
 }
-
-const DEFAULT_THRESHOLD: Required<PanDismissThreshold> = {
-  velocity: 750,
-  x: Constants.screenWidth / 4,
-  y: Constants.screenHeight / 4
-};
 
 const RETURN_ANIMATION_SPRING_CONFIG = {velocity: 300, damping: 15, stiffness: 300, mass: 0.8};
 
