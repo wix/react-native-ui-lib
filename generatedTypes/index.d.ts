@@ -35,6 +35,7 @@ export {default as Button, ButtonPropTypes, ButtonSize, ButtonProps} from './com
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
+export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Hint, HintProps} from './components/hint';
 export {default as Image, ImageProps} from './components/image';
@@ -49,6 +50,7 @@ export {default as TabController, TabControllerProps, TabControllerItemProps} fr
 export {default as TabController2} from './components/tabController2';
 export {default as TabBar, TabBarProps} from './components/TabBar';
 export {default as ScrollBar, ScrollBarProps} from './components/ScrollBar';
+export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
@@ -74,7 +76,6 @@ export {default as ActionSheet} from './components/actionSheet';
 /* All components with manual typings */
 export {
   ConnectionStatusBar,
-  FeatureHighlight,
   BaseInput,
   TextArea,
   MaskedInput,
@@ -87,7 +88,6 @@ export {
   TagsInput,
   ChipsInput,
   SharedTransition,
-  StackAggregator,
   Toast,
   WheelPickerDialog,
   Assets,
