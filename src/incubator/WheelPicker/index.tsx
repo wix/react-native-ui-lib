@@ -1,8 +1,7 @@
 // TODO: Support style customization
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
-import Animated from 'react-native-reanimated';
-import {onScrollEvent, useValues} from 'react-native-redash';
+import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {Colors, Spacings} from 'style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
@@ -88,8 +87,10 @@ const WheelPicker = React.memo(({
   testID
 }: WheelPickerProps) => {
   const scrollView = useRef<Animated.ScrollView>();
-  const [offset] = useValues([0], []);
-  const onScroll = onScrollEvent({y: offset});
+  const offset = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler(e => {
+    offset.value = e.contentOffset.y;
+  });
 
   const {
     height,
@@ -112,6 +113,8 @@ const WheelPicker = React.memo(({
     controlComponent();
   });
 
+  const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
+
   /**
      * The picker is a controlled component. This means we expect the
      * to relay on `selectedValue` prop to be our
@@ -124,9 +127,9 @@ const WheelPicker = React.memo(({
     }
   };
 
-  const scrollToPassedIndex = () => {
+  const scrollToPassedIndex = useCallback(() => {
     scrollToIndex(currentIndex, false);
-  };
+  }, []);
 
   const scrollToIndex = (index: number, animated: boolean) => {
     // this is done to handle onMomentumScrollEnd not being called in Android:
@@ -144,12 +147,12 @@ const WheelPicker = React.memo(({
   },
   [itemHeight]);
 
-  const onValueChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     setScrollOffset(event.nativeEvent.contentOffset.y);
 
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     onChange?.(value, index);
-  };
+  }, []);
 
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -169,15 +172,15 @@ const WheelPicker = React.memo(({
   },
   [itemHeight]);
 
-  const renderSeparators = () => {
+  const separators = useMemo(() => {
     return (
       <View absF centerV pointerEvents="none">
         <View style={styles.separators}/>
       </View>
     );
-  };
+  }, []);
 
-  const renderLabel = () => {
+  const labelContainer = useMemo(() => {
     return (
       <View centerV>
         <Text marginL-s2 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
@@ -185,7 +188,7 @@ const WheelPicker = React.memo(({
         </Text>
       </View>
     );
-  };
+  }, []);
 
   const fader = useMemo(() => (position: FaderPosition) => {
     return <Fader visible position={position} size={60}/>;
@@ -212,7 +215,7 @@ const WheelPicker = React.memo(({
             // @ts-ignore reanimated2
             keyExtractor={keyExtractor}
             scrollEventThrottle={100}
-            onScroll={onScroll}
+            onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
             onLayout={scrollToPassedIndex}
@@ -226,16 +229,14 @@ const WheelPicker = React.memo(({
             initialScrollIndex={currentIndex}
           />
         </View>
-        {label && renderLabel()}
+        {label && labelContainer}
       </View>
       {fader(FaderPosition.BOTTOM)}
       {fader(FaderPosition.TOP)}
-      {renderSeparators()}
+      {separators}
     </View>
   );
 });
-
-const keyExtractor = (item: ItemProps) => `${item.value}`;
 
 export default WheelPicker;
 

@@ -1,6 +1,6 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, memo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
-import Animated, {interpolateColors} from 'react-native-reanimated';
+import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
 import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
@@ -15,7 +15,7 @@ export interface ItemProps {
 
 interface InternalProps extends ItemProps {
   index: number;
-  offset: any;
+  offset: Animated.SharedValue<number>;
   itemHeight: number;
   activeColor?: string;
   inactiveColor?: string;
@@ -25,7 +25,7 @@ interface InternalProps extends ItemProps {
   centerH?: boolean;
 }
 
-export default ({
+export default memo(({
   index,
   label,
   itemHeight,
@@ -40,11 +40,11 @@ export default ({
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
 
-  const color = useMemo(() => {
-    return interpolateColors(offset, {
-      inputRange: [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
-      outputColorRange: [inactiveColor, activeColor, inactiveColor]
-    });
+  const animatedColorStyle = useAnimatedStyle(() => {
+    const color = interpolateColor(offset.value,
+      [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
+      [inactiveColor, activeColor, inactiveColor]);
+    return {color};
   }, [itemHeight]);
 
   const containerStyle = useMemo(() => {
@@ -64,13 +64,12 @@ export default ({
       index={index}
       testID={testID}
     >
-      {/* @ts-ignore reanimated2*/}
-      <AnimatedText text60R style={{color, ...style}}>
+      <AnimatedText text60R style={[animatedColorStyle, style]}>
         {label}
       </AnimatedText>
     </AnimatedTouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
