@@ -51,8 +51,6 @@ export default memo(({
     return [{height: itemHeight}, styles.container];
   }, [itemHeight]);
 
-  console.warn('lidor - index', index);
-
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
