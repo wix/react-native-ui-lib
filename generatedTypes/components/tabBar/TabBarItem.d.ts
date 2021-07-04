@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { BadgeProps } from '../badge';
 export interface TabBarItemProps {
@@ -27,6 +27,14 @@ export interface TabBarItemProps {
      */
     badge?: BadgeProps;
     badgeProps?: BadgeProps;
+    /**
+     * Pass to render a leading element
+     */
+    leadingAccessory?: ReactElement;
+    /**
+     * Pass to render a trailing element
+     */
+    trailingAccessory?: ReactElement;
     /**
      * maximum number of lines the label can break
      */
