@@ -8,4 +8,6 @@ export interface ConnectionStatusBarProps {
   useAbsolutePosition?: boolean;
 }
 
-export class ConnectionStatusBar extends PureBaseComponent<ConnectionStatusBarProps> {}
+export class ConnectionStatusBar extends PureBaseComponent<ConnectionStatusBarProps> {
+  static registerGlobalOnConnectionLost: any;
+}
