@@ -146,6 +146,7 @@ export interface HintProps {
 interface HintState {
   targetLayout?: HintTargetFrame;
   targetLayoutInWindow?: HintTargetFrame;
+  hintUnmounted: boolean;
 }
 
 /**
@@ -165,23 +166,33 @@ class Hint extends Component<HintProps, HintState> {
 
   targetRef: ElementRef<typeof RNView> | null = null;
   hintRef: ElementRef<typeof RNView> | null = null;
+  animationDuration = 170;
 
   state = {
     targetLayoutInWindow: undefined,
-    targetLayout: this.props.targetFrame
+    targetLayout: this.props.targetFrame,
+    hintUnmounted: false
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
 
   componentDidUpdate(prevProps: HintProps) {
     if (prevProps.visible !== this.props.visible) {
-      Animated.timing(this.visibleAnimated, {
-        toValue: Number(!!this.props.visible),
-        duration: 170,
-        useNativeDriver: true
-      }).start();
+      this.animateHint();
     }
   }
+
+  animateHint = () => {
+    Animated.timing(this.visibleAnimated, {
+      toValue: Number(!!this.props.visible),
+      duration: this.animationDuration,
+      useNativeDriver: true
+    }).start(this.toggleAnimationEndedToRemoveHint);
+  };
+
+  toggleAnimationEndedToRemoveHint = () => {
+    this.setState({hintUnmounted: !this.props.visible});
+  };
 
   focusAccessibilityOnHint = () => {
     const {message} = this.props;
@@ -444,13 +455,10 @@ class Hint extends Component<HintProps, HintState> {
   renderHint() {
     const {onPress, testID} = this.props;
     const opacity = onPress ? 0.9 : 1.0;
-    const Container = onPress ? TouchableOpacity : View;
-    
+
     if (this.showHint) {
       return (
-        <Container
-          activeOpacity={opacity}
-          onPress={onPress}
+        <View
           animated
           style={[
             {width: this.containerWidth},
@@ -462,19 +470,23 @@ class Hint extends Component<HintProps, HintState> {
           pointerEvents="box-none"
           testID={testID}
         >
+          <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
+            {this.renderContent()}
+          </TouchableOpacity>
           {this.renderHintTip()}
-          {this.renderContent()}
-        </Container>
+        </View>
       );
     }
   }
 
   renderHintContainer() {
-    const {style, testID, ...others} = this.props;
+    const {style, ...others} = this.props;
     return (
       <View
         {...others}
-        testID={`${testID}.container`}
+        // this view must be collapsable, don't pass testID or backgroundColor etc'. 
+        collapsable
+        testID={undefined}
         style={[styles.container, style, this.getContainerPosition()]}
       >
         {this.renderHint()}
@@ -496,9 +508,8 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   render() {
-    const {visible, onBackgroundPress, testID} = this.props;
-
-    if (!visible) {
+    const {onBackgroundPress, testID} = this.props;
+    if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children;
     }
 

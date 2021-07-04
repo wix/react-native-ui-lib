@@ -107,6 +107,7 @@ export interface HintProps {
 interface HintState {
     targetLayout?: HintTargetFrame;
     targetLayoutInWindow?: HintTargetFrame;
+    animationEnded: boolean;
 }
 /**
  * @description: Hint component for displaying a tooltip over wrapped component
@@ -122,12 +123,16 @@ declare class Hint extends Component<HintProps, HintState> {
     static positions: typeof HintPositions;
     targetRef: ElementRef<typeof RNView> | null;
     hintRef: ElementRef<typeof RNView> | null;
+    animationDuration: number;
     state: {
         targetLayoutInWindow: undefined;
         targetLayout: HintTargetFrame | undefined;
+        animationEnded: boolean;
     };
     visibleAnimated: Animated.Value;
     componentDidUpdate(prevProps: HintProps): void;
+    animateHint: () => void;
+    toggleAnimationEndedToRemoveHint: () => void;
     focusAccessibilityOnHint: () => void;
     setTargetRef: (ref: ElementRef<typeof RNView>) => void;
     setHintRef: (ref: ElementRef<typeof RNView>) => void;
