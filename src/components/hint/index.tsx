@@ -146,7 +146,7 @@ export interface HintProps {
 interface HintState {
   targetLayout?: HintTargetFrame;
   targetLayoutInWindow?: HintTargetFrame;
-  animationEnded: boolean;
+  hintUnmounted: boolean;
 }
 
 /**
@@ -171,7 +171,7 @@ class Hint extends Component<HintProps, HintState> {
   state = {
     targetLayoutInWindow: undefined,
     targetLayout: this.props.targetFrame,
-    animationEnded: false
+    hintUnmounted: false
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
@@ -191,11 +191,7 @@ class Hint extends Component<HintProps, HintState> {
   };
 
   toggleAnimationEndedToRemoveHint = () => {
-    this.setState({animationEnded: true}, () => {
-      setTimeout(() => {
-        this.setState({animationEnded: false});
-      }, this.animationDuration);
-    });
+    this.setState({hintUnmounted: !this.props.visible});
   };
 
   focusAccessibilityOnHint = () => {
@@ -513,7 +509,7 @@ class Hint extends Component<HintProps, HintState> {
 
   render() {
     const {onBackgroundPress, testID} = this.props;
-    if (!this.props.visible && this.state.animationEnded) {
+    if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children;
     }
 
