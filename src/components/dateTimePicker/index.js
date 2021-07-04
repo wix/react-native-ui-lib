@@ -19,6 +19,13 @@ const MODES = {
   TIME: 'time'
 };
 
+
+const THEME_VARIANTS = {
+  LIGHT: 'light',
+  DARK: 'dark'
+};
+
+
 /*eslint-disable*/
 /**
  * @description: Date and Time Picker Component that wraps RNDateTimePicker for date and time modes.
@@ -98,7 +105,11 @@ class DateTimePicker extends Component {
     /**
      * Render custom input
      */
-    renderInput: PropTypes.elementType
+    renderInput: PropTypes.elementType,
+    /**
+     * Override system theme variant (dark or light mode) used by the date picker.
+     */
+    themeVariant: PropTypes.oneOf(Object.values(THEME_VARIANTS))
   };
 
   static defaultProps = {
@@ -236,7 +247,7 @@ class DateTimePicker extends Component {
     }
 
     const {value, showExpandableOverlay} = this.state;
-    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes} = this.props;
+    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes, themeVariant} = this.props;
 
     if (showExpandableOverlay) {
       return (
@@ -251,6 +262,7 @@ class DateTimePicker extends Component {
           minuteInterval={minuteInterval}
           timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
           display={Constants.isIOS ? 'spinner' : undefined}
+          themeVariant={themeVariant}
         />
       );
     }
