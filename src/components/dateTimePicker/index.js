@@ -274,11 +274,13 @@ class DateTimePicker extends Component {
 
   render() {
     const textInputProps = TextField.extractOwnProps(this.props);
+    const {renderInput} = this.props;
 
     return (
       <TextField
         {...textInputProps}
         value={this.getStringValue()}
+        renderExpandableInput={renderInput}
         expandable
         renderExpandable={this.renderExpandable}
         onToggleExpandableModal={this.onToggleExpandableModal}
