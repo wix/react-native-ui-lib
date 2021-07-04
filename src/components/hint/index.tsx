@@ -514,7 +514,6 @@ class Hint extends Component<HintProps, HintState> {
   render() {
     const {onBackgroundPress, testID} = this.props;
     if (!this.props.visible && this.state.animationEnded) {
-      console.log('removed');
       return this.props.children;
     }
 
