@@ -7,32 +7,8 @@ import {Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import {asBaseComponent} from '../../commons/new';
-
-type ConnectionStatusBarProps = {
- /**
-     * Text to show as the status
-     */
-  label?: string;
-  /**
-   * Handler to get connection change events propagation
-   */
-  onConnectionChange?: (isConnected: boolean, isInitial: boolean) => void;
-  /**
-   * Text to show as the status
-   */
-  allowDismiss?: boolean;
-  /**
-   * Use absolute position for the component
-   */
-  useAbsolutePosition?: boolean;
-};
-
-type ConnectionStatusBarState = {
-  /* Current connection type  */
-  type?: string;
-  isConnected: boolean;
-  isCancelled: boolean;
-};
+import {ConnectionStatusBarProps, ConnectionStatusBarState, DEFAULT_PROPS} from './Types';
+export {ConnectionStatusBarProps};
 
 /**
  * @description: Top bar to show a "no internet" connection status. Note: Run on real device for best results
@@ -43,15 +19,12 @@ type ConnectionStatusBarState = {
 class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, ConnectionStatusBarState> {
   static displayName = 'ConnectionStatusBar';
 
-  static defaultProps = {
-    label: 'No internet. Check your connection.',
-    allowDismiss: false,
-    useAbsolutePosition: true
-  };
+  static defaultProps = DEFAULT_PROPS;
 
   styles?: any;
   unsubscribe?: any;
   static onConnectionLost?: () => void;
+  
   static registerGlobalOnConnectionLost(callback: () => void) {
     ConnectionStatusBar.onConnectionLost = callback;
   }
@@ -188,4 +161,6 @@ function createStyles() {
   });
 }
 
-export default asBaseComponent<ConnectionStatusBarProps>(ConnectionStatusBar);
+export {ConnectionStatusBar}; // For tests
+
+export default asBaseComponent<ConnectionStatusBarProps, typeof ConnectionStatusBar>(ConnectionStatusBar);
