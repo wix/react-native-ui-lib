@@ -1,5 +1,5 @@
 // TODO: support commented props
-import React, {useCallback, useContext, useEffect, useRef} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, ReactElement} from 'react';
 import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
@@ -50,6 +50,14 @@ export interface TabControllerItemProps {
    * Badge component props to display next the item label
    */
   badge?: BadgeProps;
+  /**
+   * Pass to render a leading element
+   */
+  leadingAccessory?: ReactElement;
+  /**
+   * Pass to render a trailing element
+   */
+  trailingAccessory?: ReactElement;
   /**
    * A fixed width for the item
    */
@@ -106,6 +114,8 @@ export default function TabBarItem({
   selectedLabelStyle,
   icon,
   badge,
+  leadingAccessory,
+  trailingAccessory,
   uppercase,
   activeOpacity = 0.9,
   activeBackgroundColor,
@@ -181,6 +191,7 @@ export default function TabBarItem({
       onPress={onPress}
       testID={testID}
     >
+      {leadingAccessory}
       {icon && (
         <Reanimated.Image
           source={icon}
@@ -195,6 +206,7 @@ export default function TabBarItem({
       {badge && (
         <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
       )}
+      {trailingAccessory}
     </TouchableOpacity>
   );
 }
