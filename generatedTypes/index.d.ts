@@ -34,6 +34,9 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './components/t
 export {default as Button, ButtonPropTypes, ButtonSize, ButtonProps} from './components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
+export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
+export {default as ColorPalette, ColorPaletteProps} from './components/colorPicker/ColorPalette';
+export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker/ColorSwatch';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
@@ -100,7 +103,6 @@ export {
   StateScreen,
   WheelPicker,
   WheelPickerProps,
-  ColorPicker,
   Picker,
   PickerItemValue,
   PickerProps
@@ -109,8 +111,6 @@ export {
 /* All components that are missing either manual or auto generated typings */
 export const AnimatedImage;
 export const AnimatedScanner;
-export const ColorPalette;
-export const ColorSwatch;
 export const DateTimePicker;
 export const HighlighterOverlayView;
 export const Keyboard;

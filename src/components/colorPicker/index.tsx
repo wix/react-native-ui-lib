@@ -37,7 +37,7 @@ interface Props extends ColorPickerDialogProps {
    *  input: 'custom hex color code'
    * }
    */
-  accessibilityLabels: {
+  accessibilityLabels?: {
     addButton?: string,
     dismissButton?: string,
     doneButton?: string,

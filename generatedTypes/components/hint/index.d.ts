@@ -107,7 +107,7 @@ export interface HintProps {
 interface HintState {
     targetLayout?: HintTargetFrame;
     targetLayoutInWindow?: HintTargetFrame;
-    animationEnded: boolean;
+    hintUnmounted: boolean;
 }
 /**
  * @description: Hint component for displaying a tooltip over wrapped component
@@ -127,7 +127,7 @@ declare class Hint extends Component<HintProps, HintState> {
     state: {
         targetLayoutInWindow: undefined;
         targetLayout: HintTargetFrame | undefined;
-        animationEnded: boolean;
+        hintUnmounted: boolean;
     };
     visibleAnimated: Animated.Value;
     componentDidUpdate(prevProps: HintProps): void;
