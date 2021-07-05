@@ -17,8 +17,8 @@ import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
-import asRadioGroupChild from './asRadioGroupChild';
-import {RadioGroupContextProps} from './RadioGroupContext';
+import asRadioGroupChild from '../radioGroup/asRadioGroupChild';
+import {RadioGroupContextProps} from '../radioGroup/RadioGroupContext';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.primary;
