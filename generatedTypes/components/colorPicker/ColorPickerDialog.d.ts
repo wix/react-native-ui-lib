@@ -9,7 +9,7 @@ interface Props extends DialogProps {
     /**
      * onSubmit callback for the picker dialog color change
      */
-    onSubmit?: () => void;
+    onSubmit?: (color: string, textColor: string) => void;
     /**
      * Props to pass the Dialog component // TODO: deprecate 'dialogProps' prop
      */
