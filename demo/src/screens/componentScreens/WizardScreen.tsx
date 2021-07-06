@@ -93,7 +93,7 @@ export default class WizardScreen extends Component<{}, State> {
     }
   };
 
-  renderNextButton = (disabled = false) => {
+  renderNextButton = (disabled?: boolean) => {
     const {activeIndex} = this.state;
     const label = activeIndex === 2 ? 'done & reset' : 'next';
 
