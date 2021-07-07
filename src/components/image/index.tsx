@@ -158,8 +158,8 @@ class Image extends PureComponent<Props, State> {
   }
 
   renderSvg = () => {
-    const {source, ...others} = this.props;
-    return <SvgImage data={source} {...others}/>;
+    const {source, tintColor, ...others} = this.props;
+    return <SvgImage data={source} fill={tintColor} {...others}/>;
   }
 
   renderRegularImage() {
