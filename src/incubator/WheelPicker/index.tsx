@@ -152,7 +152,7 @@ const WheelPicker = React.memo(({
 
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     onChange?.(value, index);
-  }, []);
+  }, [onChange]);
 
   const renderItem = useCallback(({item, index}) => {
     return (

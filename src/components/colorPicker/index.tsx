@@ -113,7 +113,7 @@ class ColorPicker extends PureComponent<Props> {
             iconSource={Assets.icons.plusSmall}
             onPress={this.showDialog}
             testID={`${testID}-button`}
-            accessibilityLabel={accessibilityLabels.addButton}
+            accessibilityLabel={accessibilityLabels?.addButton}
           />
         </View>
         <ColorPickerDialog
@@ -122,9 +122,9 @@ class ColorPicker extends PureComponent<Props> {
           visible={show}
           onDismiss={this.hideDialog}
           accessibilityLabels={{
-            dismissButton: accessibilityLabels.dismissButton,
-            doneButton: accessibilityLabels.doneButton,
-            input: accessibilityLabels.input
+            dismissButton: accessibilityLabels?.dismissButton,
+            doneButton: accessibilityLabels?.doneButton,
+            input: accessibilityLabels?.input
           }}
         />
       </View>
