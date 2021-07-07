@@ -139,13 +139,14 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const renderSegments = () =>
     _.map(segments, (_value, index) => {
+      const isSelected = selectedSegment === index;
       return (
         <Segment
           key={index}
           onLayout={onLayout}
           index={index}
-          onPress={onSegmentPress}
-          isSelected={selectedSegment === index}
+          onPress={isSelected ? undefined : onSegmentPress}
+          isSelected={isSelected}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
           {...segments?.[index]}
