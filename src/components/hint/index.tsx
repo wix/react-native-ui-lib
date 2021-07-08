@@ -363,13 +363,15 @@ class Hint extends Component<HintProps, HintState> {
       tipPositionStyle.top = this.hintOffset - this.tipSize.height;
     }
 
-    if (this.targetLayout?.width && this.targetLayout?.x) {
-      const targetMidWidth = this.targetLayout.width / 2;
+    const layoutWidth = this.targetLayout?.width || 0;
+
+    if (this.targetLayout?.x) {
+      const targetMidWidth = layoutWidth / 2;
       const tipMidWidth = this.tipSize.width / 2;
 
       const leftPosition = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
       const rightPosition = this.useSideTip
-        ? this.containerWidth - this.targetLayout.x - this.targetLayout.width
+        ? this.containerWidth - this.targetLayout.x - layoutWidth
         : this.containerWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
 
