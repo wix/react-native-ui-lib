@@ -1,13 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {PureComponent} from 'react';
 import _ from 'lodash';
 import {StyleSheet, Text} from 'react-native';
 import {NetInfoPackage as NetInfo} from '../../optionalDependencies';
 import {Constants} from '../../helpers';
-import {PureBaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
+import {asBaseComponent} from '../../commons/new';
+import {ConnectionStatusBarProps, ConnectionStatusBarState, DEFAULT_PROPS} from './Types';
+export {ConnectionStatusBarProps};
 
 /**
  * @description: Top bar to show a "no internet" connection status. Note: Run on real device for best results
@@ -15,36 +16,16 @@ import View from '../view';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ConnectionStatusBarScreen.js
  * @notes: The component requires installing the '@react-native-community/netinfo' native library
  */
-export default class ConnectionStatusBar extends PureBaseComponent {
+class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, ConnectionStatusBarState> {
   static displayName = 'ConnectionStatusBar';
-  static propTypes = {
-    /**
-     * Text to show as the status
-     */
-    label: PropTypes.string,
-    /**
-     * Handler to get connection change events propagation
-     */
-    onConnectionChange: PropTypes.func,
-    /**
-     * Text to show as the status
-     */
-    allowDismiss: PropTypes.bool,
 
-    /**
-     * Use absolute position for the component
-     */
-    useAbsolutePosition: PropTypes.bool
-  };
+  static defaultProps = DEFAULT_PROPS;
 
-  static defaultProps = {
-    label: 'No internet. Check your connection.',
-    allowDismiss: false,
-    useAbsolutePosition: true
-  };
-
-  static onConnectionLost;
-  static registerGlobalOnConnectionLost(callback) {
+  styles?: any;
+  unsubscribe?: any;
+  static onConnectionLost?: () => void;
+  
+  static registerGlobalOnConnectionLost(callback: () => void) {
     ConnectionStatusBar.onConnectionLost = callback;
   }
 
@@ -52,7 +33,7 @@ export default class ConnectionStatusBar extends PureBaseComponent {
     delete ConnectionStatusBar.onConnectionLost;
   }
 
-  constructor(props) {
+  constructor(props: ConnectionStatusBarProps) {
     super(props);
     this.onConnectionChange = this.onConnectionChange.bind(this);
 
@@ -82,7 +63,7 @@ export default class ConnectionStatusBar extends PureBaseComponent {
     }
   }
 
-  onConnectionChange(state) {
+  onConnectionChange(state: ConnectionStatusBarState) {
     const isConnected = this.isStateConnected(state);
     if (isConnected !== this.state.isConnected) {
       this.setState({
@@ -114,7 +95,7 @@ export default class ConnectionStatusBar extends PureBaseComponent {
     }
   }
 
-  isStateConnected(state) {
+  isStateConnected(state: ConnectionStatusBarState) {
     const lowerCaseState = _.lowerCase(state.type);
     const isConnected = lowerCaseState !== 'none';
     return isConnected;
@@ -174,8 +155,12 @@ function createStyles() {
       alignSelf: 'center'
     },
     x: {
-      fontSize: Typography.text80.fontSize,
+      fontSize: Typography.text80?.fontSize,
       color: Colors.black
     }
   });
 }
+
+export {ConnectionStatusBar}; // For tests
+
+export default asBaseComponent<ConnectionStatusBarProps, typeof ConnectionStatusBar>(ConnectionStatusBar);
