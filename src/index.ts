@@ -38,8 +38,8 @@ export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
-export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
-export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
+export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton';
+export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioGroup';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
 export {default as Switch, SwitchProps} from './components/switch';
