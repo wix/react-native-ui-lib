@@ -1,17 +1,25 @@
 import _ from 'lodash';
-import React, {useRef, useState, useCallback, useMemo} from 'react';
+import React, {useRef, useState, useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import Reanimated, {EasingNode, Easing as _Easing} from 'react-native-reanimated';
+import Reanimated, {
+  Easing,
+  useAnimatedReaction,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  runOnJS
+} from 'react-native-reanimated';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps as SegmentProps} from './segment';
 
-const {interpolate: _interpolate, interpolateNode} = Reanimated;
-const interpolate = interpolateNode || _interpolate;
-const Easing = EasingNode || _Easing;
 const BORDER_WIDTH = 1;
 const HORIZONTAL_PADDING = Spacings.s2;
+const TIMING_CONFIG = {
+  duration: 300,
+  easing: Easing.bezier(0.33, 1, 0.68, 1)
+};
 
 export type SegmentedControlItemProps = SegmentProps;
 export type SegmentedControlProps = {
@@ -88,27 +96,25 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     testID
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
-
+  const animatedSelectedIndex = useSharedValue(selectedSegment);
   const segmentsStyle = useRef([] as {x: number; width: number}[]);
   const segmentedControlHeight = useRef(0);
   const segmentsCounter = useRef(0);
-  const animatedValue = useRef(new Reanimated.Value(initialIndex));
 
-  const updateSelectedSegment = useCallback((index: number) => {
-    Reanimated.timing(animatedValue.current, {
-      toValue: index,
-      duration: 300,
-      easing: Easing.bezier(0.33, 1, 0.68, 1)
-    }).start();
-
-    return setSelectedSegment(index);
-  }, []);
+  useAnimatedReaction(() => {
+    return animatedSelectedIndex.value;
+  },
+  (selected, previous) => {
+    if (selected !== -1 && selected !== previous) {
+      onChangeIndex && runOnJS(onChangeIndex)(selected);
+    }
+  },
+  []);
 
   const onSegmentPress = useCallback((index: number) => {
-    onChangeIndex?.(index);
-    updateSelectedSegment(index);
-  },
-  [onChangeIndex, updateSelectedSegment]);
+    setSelectedSegment(index);
+    animatedSelectedIndex.value = index;
+  }, []);
 
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
@@ -120,22 +126,14 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   },
   [initialIndex, segments?.length]);
 
-  const animatedStyle = useMemo(() => {
+  const animatedStyle = useAnimatedStyle(() => {
     if (segmentsCounter.current === segments?.length) {
-      const left = interpolate(animatedValue.current, {
-        inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segmentsStyle.current, segment => segment.x - BORDER_WIDTH)
-      });
-
-      const width = interpolate(animatedValue.current, {
-        inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segmentsStyle.current, segment => segment.width)
-      });
-
+      const left = withTiming(segmentsStyle.current[selectedSegment].x, TIMING_CONFIG);
+      const width = withTiming(segmentsStyle.current[selectedSegment].width - 2 * BORDER_WIDTH, TIMING_CONFIG);
       return {width, left};
     }
-    return undefined;
-  }, [segmentsCounter.current, segments?.length]);
+    return {};
+  }, [segmentsCounter.current, segments?.length, selectedSegment]);
 
   const renderSegments = () =>
     _.map(segments, (_value, index) => {
