@@ -604,7 +604,8 @@ const styles = StyleSheet.create({
     shadowColor: Colors.dark40,
     shadowOpacity: 0.25,
     shadowRadius: 5,
-    shadowOffset: {height: 5, width: 0}
+    shadowOffset: {height: 5, width: 0},
+    elevation: 2
   },
   hintMessage: {
     ...Typography.text70,
