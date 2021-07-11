@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
 import {Colors, View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib';
 
 
 const settingsIcon = require('../../assets/icons/settings.png');
+const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 
 type HintScreenProps = {};
 type HintScreenState = {
@@ -45,6 +47,10 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
     Alert.alert('Hint Pressed');
   }
 
+  onReactionPress = () => {
+    Alert.alert('Reaction button pressed');
+  }
+
   renderCustomContent() {
     return (
       <Text text70 white>
@@ -59,8 +65,10 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
 
   renderReactionStrip() {
     return (
-      <View style={{padding: 20}}>
-        <Text>❤️  😮  😔  😂  😡</Text>
+      <View row padding-8>
+        {_.map(reactions, (item, index) => (
+          <Button round link key={index} label={item} onPress={this.onReactionPress}/>
+        ))}
       </View>
     );
   }
