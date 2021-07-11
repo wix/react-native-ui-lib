@@ -124,12 +124,12 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     if (segmentsCounter.current === segments?.length) {
       const left = interpolate(animatedValue.current, {
         inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segmentsStyle.current, segment => segment.x - BORDER_WIDTH)
+        outputRange: _.map(segmentsStyle.current, segment => segment.x)
       });
 
       const width = interpolate(animatedValue.current, {
         inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segmentsStyle.current, segment => segment.width)
+        outputRange: _.map(segmentsStyle.current, segment => segment.width - 2 * BORDER_WIDTH)
       });
 
       return {width, left};
