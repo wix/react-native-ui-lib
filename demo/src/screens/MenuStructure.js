@@ -90,7 +90,7 @@ export const navigationData = {
     screens: [
       {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
       {title: 'Carousel (Vertical)', tags: 'carousel', screen: 'unicorn.components.CarouselVerticalScreen'},
-      {title: 'Skeleton (Shimmer)', tags: 'skeleton loading', screen: 'unicorn.components.SkeletonScreen'},
+      {title: 'Skeleton (Shimmer)', tags: 'skeleton loading', screen: 'unicorn.components.SkeletonViewScreen'},
       {title: 'LoadingScreen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
