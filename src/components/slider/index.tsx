@@ -1,15 +1,14 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {PureComponent, ReactElement} from 'react';
 import {
   StyleSheet,
   PanResponder,
-  ViewPropTypes,
   AccessibilityInfo,
-  Animated
+  Animated,
+  StyleProp,
+  ViewStyle
 } from 'react-native';
 import {Constants} from '../../helpers';
-import {PureBaseComponent} from '../../commons';
 import {Colors} from '../../style';
 import View from '../view';
 
@@ -21,85 +20,102 @@ const DEFAULT_COLOR = Colors.dark50;
 const ACTIVE_COLOR = Colors.violet30;
 const INACTIVE_COLOR = Colors.dark60;
 
+export type SliderOnValueChange = (value: number) => void;
+
+export interface SliderProps {
+  /**
+     * Initial value
+     */
+  value?: number;
+  /**
+     * Minimum value
+     */
+  minimumValue?: number;
+  /**
+     * Maximum value
+     */
+  maximumValue?: number;
+  /**
+     * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
+     */
+  step?: number;
+  /**
+     * The color used for the track from minimum value to current value
+     */
+  minimumTrackTintColor?: string;
+  /**
+     * The track color
+     */
+  maximumTrackTintColor?: string;
+  /**
+     * Custom render instead of rendering the track
+     */
+  renderTrack?: () => ReactElement | ReactElement[];
+  /**
+     * Thumb color
+     */
+  thumbTintColor?: string;
+  /**
+     * Callback for onValueChange
+     */
+  onValueChange?: SliderOnValueChange;
+  /**
+     * Callback that notifies about slider seeking is started
+     */
+  onSeekStart?: () => void;
+  /**
+     * Callback that notifies about slider seeking is finished
+     */
+  onSeekEnd?: () => void;
+  /**
+     * The container style
+     */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+     * The track style
+     */
+  trackStyle?: StyleProp<ViewStyle>;
+  /**
+     * The thumb style
+     */
+  thumbStyle?: StyleProp<ViewStyle>;
+  /**
+     * The active (during press) thumb style
+     */
+  activeThumbStyle?: StyleProp<ViewStyle>;
+  /**
+     * If true the Slider will not change it's style on press
+     */
+  disableActiveStyling?: boolean;
+  /**
+     * If true the Slider will be disabled and will appear in disabled color
+     */
+  disabled?: boolean;
+  /**
+   * The slider's test identifier
+   */
+  testID?: string;
+}
+
+type Measurements = {
+  width: number, height: number
+}
+
+interface SliderState {
+  containerSize: Measurements,
+  trackSize: Measurements,
+  thumbSize: Measurements,
+  thumbActiveAnimation: Animated.Value,
+  measureCompleted: boolean,
+}
+
 /**
  * @description: A Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true
  */
-export default class Slider extends PureBaseComponent {
+export default class Slider extends PureComponent<SliderProps, SliderState> {
   static displayName = 'Slider';
-
-  static propTypes = {
-    /**
-     * Initial value
-     */
-    value: PropTypes.number,
-    /**
-     * Minimum value
-     */
-    minimumValue: PropTypes.number,
-    /**
-     * Maximum value
-     */
-    maximumValue: PropTypes.number,
-    /**
-     * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
-     */
-    step: PropTypes.number,
-    /**
-     * The color used for the track from minimum value to current value
-     */
-    minimumTrackTintColor: PropTypes.string,
-    /**
-     * The track color
-     */
-    maximumTrackTintColor: PropTypes.string,
-    /**
-     * Custom render instead of rendering the track
-     */
-    renderTrack: PropTypes.elementType,
-    /**
-     * Thumb color
-     */
-    thumbTintColor: PropTypes.string,
-    /**
-     * Callback for onValueChange
-     */
-    onValueChange: PropTypes.func,
-    /**
-     * Callback that notifies about slider seeking is started
-     */
-    onSeekStart: PropTypes.func,
-    /**
-     * Callback that notifies about slider seeking is finished
-     */
-    onSeekEnd: PropTypes.func,
-    /**
-     * The container style
-     */
-    containerStyle: ViewPropTypes.style,
-    /**
-     * The track style
-     */
-    trackStyle: ViewPropTypes.style,
-    /**
-     * The thumb style
-     */
-    thumbStyle: ViewPropTypes.style,
-    /**
-     * The active (during press) thumb style
-     */
-    activeThumbStyle: ViewPropTypes.style,
-    /**
-     * If true the Slider will not change it's style on press
-     */
-    disableActiveStyling: PropTypes.bool,
-    /**
-     * If true the Slider will be disabled and will appear in disabled color
-     */
-    disabled: PropTypes.bool,
-    testID: PropTypes.string
-  };
 
   static defaultProps = {
     value: 0,
@@ -108,7 +124,7 @@ export default class Slider extends PureBaseComponent {
     step: 0
   };
 
-  constructor(props) {
+  constructor(props: SliderProps) {
     super(props);
 
     this.state = {
@@ -139,7 +155,7 @@ export default class Slider extends PureBaseComponent {
     this.createPanResponderConfig();
   }
 
-  checkProps(props) {
+  checkProps(props: SliderProps) {
     if (props.minimumValue >= props.maximumValue) {
       console.warn('Slider minimumValue must be lower than maximumValue');
     }
