@@ -18,6 +18,7 @@ type HintScreenState = {
   useSideTip?: boolean;
   showCustomContent?: boolean;
   showReactionStrip?: boolean;
+  enableShadow?: boolean
 };
 
 export default class HintsScreen extends Component<HintScreenProps, HintScreenState> {
@@ -33,7 +34,8 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
       // useTargetFrame: true,
       useSideTip: false,
       showCustomContent: false,
-      showReactionStrip: false
+      showReactionStrip: false,
+      enableShadow: false
     };
   }
 
@@ -83,7 +85,8 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
       useSideTip,
       useTargetFrame,
       showCustomContent,
-      showReactionStrip
+      showReactionStrip,
+      enableShadow
     } = this.state;
     const targetFrame = {x: 140, y: 100, width: 10, height: 10};
     const message = useShortMessage ? 
@@ -130,8 +133,8 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
                 this.renderCustomContent() : showReactionStrip ? this.renderReactionStrip() : undefined
             }
             color={!showCustomContent && showReactionStrip ? Colors.white : undefined}
-            enableShadow={showReactionStrip}
             removePaddings={!showCustomContent && showReactionStrip}
+            enableShadow={enableShadow}
             testID={'Hint'}
           >
             {!useTargetFrame && (
@@ -202,6 +205,11 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
           </View>
 
           <View row centerV marginV-10>
+            <Switch value={enableShadow} onValueChange={value => this.setState({enableShadow: value})}/>
+            <Text marginL-10>Toggle shadow</Text>
+          </View>
+
+          <View row centerV marginV-10>
             <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})}/>
             <Text marginL-10>Use random position</Text>
           </View>
@@ -212,7 +220,10 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
           </View>
 
           <View row centerV marginV-10>
-            <Switch value={showReactionStrip} onValueChange={value => this.setState({showReactionStrip: value})}/>
+            <Switch 
+              value={showReactionStrip} 
+              onValueChange={value => this.setState({showReactionStrip: value, enableShadow: true})}
+            />
             <Text marginL-10>Show reaction strip</Text>
           </View>
         </View>
