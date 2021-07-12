@@ -407,11 +407,6 @@ class Hint extends Component<HintProps, HintState> {
     return tipPositionStyle;
   }
 
-  shouldEnableShadow() {
-    const {color, enableShadow} = this.props;
-    return enableShadow && color === Colors.white;
-  }
-
   // renderOverlay() {
   //   const {targetLayoutInWindow} = this.state;
   //   const {onBackgroundPress} = this.props;
@@ -466,6 +461,7 @@ class Hint extends Component<HintProps, HintState> {
       color, 
       customContent, 
       removePaddings, 
+      enableShadow,
       testID
     } = this.props;
 
@@ -477,7 +473,7 @@ class Hint extends Component<HintProps, HintState> {
         style={[
           styles.hint,
           !removePaddings && styles.hintPaddings,
-          this.shouldEnableShadow() && styles.containerShadow, 
+          enableShadow && styles.containerShadow, 
           color && {backgroundColor: color}, 
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
@@ -600,7 +596,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacings.s3,
     paddingBottom: Spacings.s4
   },
-  containerShadow: { // NOTE: shadow will apply only with white bg
+  containerShadow: {
     shadowColor: Colors.dark40,
     shadowOpacity: 0.25,
     shadowRadius: 5,
