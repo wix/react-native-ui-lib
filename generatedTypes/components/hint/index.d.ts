@@ -96,6 +96,14 @@ export interface HintProps {
      */
     customContent?: JSX.Element;
     /**
+     * Remove all hint's paddings
+     */
+    removePaddings?: boolean;
+    /**
+     * Enable shadow (for hint with white background only)
+     */
+    enableShadow?: boolean;
+    /**
      * The hint's test identifier
      */
     testID?: string;
@@ -165,6 +173,7 @@ declare class Hint extends Component<HintProps, HintState> {
         }[];
     };
     getTipPosition(): Position;
+    shouldEnableShadow(): boolean | undefined;
     renderHintTip(): JSX.Element;
     renderContent(): JSX.Element;
     renderHint(): JSX.Element | undefined;

@@ -124,7 +124,7 @@ export interface HintProps {
   /**
     * Callback for the background press
     */
-   onBackgroundPress?: (event: GestureResponderEvent) => void;
+  onBackgroundPress?: (event: GestureResponderEvent) => void;
   /**
    * The hint container width
    */
@@ -133,6 +133,14 @@ export interface HintProps {
    * Custom content element to render inside the hint container
    */
   customContent?: JSX.Element;
+  /**
+   * Remove all hint's paddings
+   */
+  removePaddings?: boolean;
+  /**
+   * Enable shadow (for hint with white background only)
+   */
+  enableShadow?: boolean;
   /**
    * The hint's test identifier
    */
@@ -198,6 +206,7 @@ class Hint extends Component<HintProps, HintState> {
     const {message} = this.props;
     const targetRefTag = findNodeHandle(this.targetRef);
     const hintRefTag = findNodeHandle(this.hintRef);
+    
     if (targetRefTag && _.isString(message)) {
       AccessibilityInfo.setAccessibilityFocus(targetRefTag);
     } else if (hintRefTag) {
@@ -253,6 +262,7 @@ class Hint extends Component<HintProps, HintState> {
     if (targetFrame) {
       return targetFrame;
     }
+
     return onBackgroundPress ? targetLayoutInWindow : targetLayout;
   }
 
@@ -280,12 +290,14 @@ class Hint extends Component<HintProps, HintState> {
     if (!_.isUndefined(useSideTip)) {
       return useSideTip;
     }
+
     return this.getTargetPositionOnScreen() !== TARGET_POSITIONS.CENTER;
   }
 
   getTargetPositionOnScreen() {
     if (this.targetLayout?.x && this.targetLayout?.width) {
       const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
+      
       if (targetMidPosition > this.containerWidth * (2 / 3)) {
         return TARGET_POSITIONS.RIGHT;
       } else if (targetMidPosition < this.containerWidth * (1 / 3)) {
@@ -328,6 +340,7 @@ class Hint extends Component<HintProps, HintState> {
 
   getHintPadding() {
     const paddings: Paddings = {paddingVertical: this.hintOffset, paddingHorizontal: this.edgeMargins};
+    
     if (this.useSideTip && this.targetLayout?.x) {
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
       if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
@@ -336,12 +349,14 @@ class Hint extends Component<HintProps, HintState> {
         paddings.paddingRight = this.containerWidth - this.targetLayout.x - this.targetLayout.width;
       }
     }
+
     return paddings;
   }
 
   getHintAnimatedStyle = () => {
     const {position} = this.props;
     const translateY = position === HintPositions.TOP ? -10 : 10;
+    
     return {
       opacity: this.visibleAnimated,
       transform: [
@@ -437,14 +452,31 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderContent() {
-    const {message, messageStyle, icon, iconStyle, borderRadius, color, customContent, testID} = this.props;
+    const {
+      message, 
+      messageStyle, 
+      icon, 
+      iconStyle, 
+      borderRadius, 
+      color, 
+      customContent, 
+      removePaddings, 
+      enableShadow,
+      testID
+    } = this.props;
 
     return (
       <View
         testID={`${testID}.message`}
         row
         centerV
-        style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
+        style={[
+          styles.hint,
+          !removePaddings && styles.hintPaddings,
+          enableShadow && styles.containerShadow, 
+          color && {backgroundColor: color}, 
+          !_.isUndefined(borderRadius) && {borderRadius}
+        ]}
         ref={this.setHintRef}
       >
         {customContent}
@@ -511,6 +543,7 @@ class Hint extends Component<HintProps, HintState> {
 
   render() {
     const {onBackgroundPress, testID} = this.props;
+    
     if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children;
     }
@@ -541,7 +574,6 @@ class Hint extends Component<HintProps, HintState> {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute'
-
   },
   // overlay: {
   //   position: 'absolute',
@@ -556,11 +588,20 @@ const styles = StyleSheet.create({
   },
   hint: {
     maxWidth: 400,
-    backgroundColor: DEFAULT_COLOR,
+    borderRadius: BorderRadiuses.br60,
+    backgroundColor: DEFAULT_COLOR
+  },
+  hintPaddings: {
     paddingHorizontal: Spacings.s5,
     paddingTop: Spacings.s3,
-    paddingBottom: Spacings.s4,
-    borderRadius: BorderRadiuses.br60
+    paddingBottom: Spacings.s4
+  },
+  containerShadow: {
+    shadowColor: Colors.dark40,
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: {height: 5, width: 0},
+    elevation: 2
   },
   hintMessage: {
     ...Typography.text70,
