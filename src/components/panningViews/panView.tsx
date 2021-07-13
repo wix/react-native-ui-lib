@@ -1,7 +1,7 @@
 import {isEmpty} from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {PanGestureHandler, PanGestureHandlerEventExtra} from 'react-native-gesture-handler';
+import {PanGestureHandler, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import {asBaseComponent} from '../../commons/new';
 import Animated, {
   useSharedValue,
@@ -101,7 +101,7 @@ const PanView = (props: Props) => {
     };
   };
 
-  const setTranslation = (event: PanGestureHandlerEventExtra, initialTranslation: Frame) => {
+  const setTranslation = (event: PanGestureHandlerEventPayload, initialTranslation: Frame) => {
     'worklet';
     const result = getTranslation(event, initialTranslation, directions!, getTranslationOptions());
 
@@ -131,13 +131,13 @@ const PanView = (props: Props) => {
   [dismiss]);
 
   const onGestureEvent = useAnimatedGestureHandler({
-    onStart: (_event: PanGestureHandlerEventExtra, context: {initialTranslation: Frame}) => {
+    onStart: (_event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
       context.initialTranslation = {x: translationX.value, y: translationY.value};
     },
-    onActive: (event: PanGestureHandlerEventExtra, context: {initialTranslation: Frame}) => {
+    onActive: (event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
       setTranslation(event, context.initialTranslation);
     },
-    onEnd: (event: PanGestureHandlerEventExtra) => {
+    onEnd: (event: PanGestureHandlerEventPayload) => {
       if (dismissible) {
         const velocity = getDismissVelocity(event, directions!, getTranslationOptions(), threshold);
         if (velocity) {

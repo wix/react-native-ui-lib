@@ -1,4 +1,4 @@
-import { PanGestureHandlerEventExtra } from 'react-native-gesture-handler';
+import { PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
 export declare enum PanningDirections {
     UP = "up",
     DOWN = "down",
@@ -48,9 +48,9 @@ export interface PanDismissThreshold {
 }
 export declare function getTranslationClamp(initialTranslation: Frame, options: TranslationOptions): Frame;
 export declare function getTranslationDirectionClamp(translation: Frame, options: TranslationOptions): Frame;
-export declare function getTranslation(event: PanGestureHandlerEventExtra, initialTranslation: Frame, directions: PanningDirections[], options: TranslationOptions): Frame;
+export declare function getTranslation(event: PanGestureHandlerEventPayload, initialTranslation: Frame, directions: PanningDirections[], options: TranslationOptions): Frame;
 export declare const DEFAULT_THRESHOLD: Required<PanDismissThreshold>;
 /**
  * Will return undefined if should not dismiss
  */
-export declare function getDismissVelocity(event: PanGestureHandlerEventExtra, directions: PanningDirections[], options: TranslationOptions, threshold?: PanDismissThreshold): Partial<Frame> | undefined;
+export declare function getDismissVelocity(event: PanGestureHandlerEventPayload, directions: PanningDirections[], options: TranslationOptions, threshold?: PanDismissThreshold): Partial<Frame> | undefined;
