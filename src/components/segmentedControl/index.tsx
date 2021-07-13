@@ -105,10 +105,12 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   }, []);
 
   const onSegmentPress = useCallback((index: number) => {
-    onChangeIndex?.(index);
-    updateSelectedSegment(index);
+    if (selectedSegment !== index) {
+      updateSelectedSegment(index);
+      setTimeout(() => onChangeIndex?.(index), 400);  
+    }
   },
-  [onChangeIndex, updateSelectedSegment]);
+  [onChangeIndex, selectedSegment, updateSelectedSegment]);
 
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
@@ -139,14 +141,13 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const renderSegments = () =>
     _.map(segments, (_value, index) => {
-      const isSelected = selectedSegment === index;
       return (
         <Segment
           key={index}
           onLayout={onLayout}
           index={index}
-          onPress={isSelected ? undefined : onSegmentPress}
-          isSelected={isSelected}
+          onPress={onSegmentPress}
+          isSelected={selectedSegment === index}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
           {...segments?.[index]}
