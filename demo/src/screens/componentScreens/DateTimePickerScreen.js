@@ -70,7 +70,7 @@ export default class DateTimePickerScreen extends Component {
           containerStyle={{marginVertical: 20}}
           title={'Date'}
           placeholder={'Select a date'}
-          renderExpandableInput={this.renderCustomInput}
+          renderInput={this.renderCustomInput}
           dateFormat={'MMM D, YYYY'}
           // value={new Date('2015-03-25T12:00:00-06:30')}
         />

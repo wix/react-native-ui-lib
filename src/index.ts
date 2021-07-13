@@ -21,6 +21,7 @@ export * as Hooks from './hooks';
 export * as Modifiers from './commons/modifiers';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avatar';
+export {AvatarHelper} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
 export {default as Constants} from './helpers/Constants';
@@ -37,8 +38,8 @@ export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
-export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
-export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
+export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton';
+export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioGroup';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
 export {default as Switch, SwitchProps} from './components/switch';
@@ -54,6 +55,7 @@ export {default as PanningContext} from './components/panningViews/panningContex
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as ActionSheet} from './components/actionSheet';
+export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {
   default as PanningProvider,
@@ -79,6 +81,6 @@ export {
   BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
   PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
   TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
-  BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
+  BaseComponent, PureBaseComponent, UIComponent, forwardRef,
   LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
 } from '../typings';

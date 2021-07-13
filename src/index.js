@@ -168,10 +168,10 @@ export default {
     return require('./components/chipsInput').default;
   },
   get RadioButton() {
-    return require('./components/radioButton/RadioButton').default;
+    return require('./components/radioButton').default;
   },
   get RadioGroup() {
-    return require('./components/radioButton/RadioGroup').default;
+    return require('./components/radioGroup').default;
   },
   get ScrollBar() {
     return require('./components/scrollBar').default;
