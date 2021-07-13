@@ -1,4 +1,4 @@
-import React, { PureComponent, RefObject } from 'react';
+import React, { PureComponent, ReactNode, RefObject } from 'react';
 import { Animated, ViewStyle, TextStyle } from 'react-native';
 import Swipeable, { SwipeableProps } from './Swipeable';
 interface ItemProps {
@@ -10,6 +10,7 @@ interface ItemProps {
     keepOpen?: boolean;
     style?: ViewStyle;
     testID?: string;
+    customElement?: ReactNode;
 }
 interface Props {
     /**

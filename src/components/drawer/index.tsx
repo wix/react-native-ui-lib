@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent, RefObject} from 'react';
+import React, {PureComponent, ReactNode, RefObject} from 'react';
 import memoize from 'memoize-one';
 import {Animated, Easing, StyleSheet, ViewStyle, TextStyle, AccessibilityActionEvent} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
@@ -23,6 +23,7 @@ interface ItemProps {
   keepOpen?: boolean;
   style?: ViewStyle;
   testID?: string;
+  customElement?: ReactNode;
 }
 
 interface Props {
@@ -347,7 +348,8 @@ class Drawer extends PureComponent<Props> {
         ]}
         onPress={() => this.onActionPress(item)}
       >
-        {item.icon && (
+        {item.customElement}
+        {!item.customElement && item.icon && (
           <Animated.Image
             source={item.icon}
             style={[
@@ -362,7 +364,7 @@ class Drawer extends PureComponent<Props> {
             ]}
           />
         )}
-        {item.text && (
+        {!item.customElement && item.text && (
           <Animated.Text
             style={[
               styles.actionText,
