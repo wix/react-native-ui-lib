@@ -11,7 +11,6 @@ const {interpolate: _interpolate, interpolateNode} = Reanimated;
 const interpolate = interpolateNode || _interpolate;
 const Easing = EasingNode || _Easing;
 const BORDER_WIDTH = 1;
-const HORIZONTAL_PADDING = Spacings.s2;
 
 export type SegmentedControlItemProps = SegmentProps;
 export type SegmentedControlProps = {
@@ -115,7 +114,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
     segmentsStyle.current[index] = {x, width};
-    segmentedControlHeight.current = height + 2 * (HORIZONTAL_PADDING - BORDER_WIDTH);
+    segmentedControlHeight.current = height - 2 * BORDER_WIDTH;
     segmentsCounter.current++;
 
     return segmentsCounter.current === segments?.length && setSelectedSegment(initialIndex);
@@ -184,7 +183,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.grey80,
     borderColor: Colors.grey60,
-    paddingVertical: HORIZONTAL_PADDING,
     borderWidth: BORDER_WIDTH
   },
   selectedSegment: {

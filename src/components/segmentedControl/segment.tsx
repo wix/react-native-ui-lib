@@ -74,7 +74,7 @@ const Segment = React.memo((props: SegmentProps) => {
   const segmentedColor = useMemo(() => (isSelected ? activeColor : inactiveColor),
     [isSelected, activeColor, inactiveColor]);
 
-  const segmentStyle = useMemo(() => ({paddingHorizontal: Spacings.s3, borderColor: segmentedColor}), [segmentedColor]);
+  const segmentStyle = useMemo(() => ({paddingHorizontal: Spacings.s3, paddingVertical: Spacings.s2}), []);
 
   const renderIcon = useCallback(() => {
     return iconSource && <Image source={iconSource} style={[{tintColor: segmentedColor}, iconStyle]}/>;
