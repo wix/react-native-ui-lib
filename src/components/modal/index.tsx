@@ -37,6 +37,10 @@ export interface ModalProps extends RNModalProps {
      * label is constructed by traversing all the children and accumulating all the Text nodes separated by space.
      */
     accessibilityLabel?: string;
+    /**
+     * Should add a GestureHandlerRootView (Android only)
+     */
+     useGestureHandlerRootView?: boolean;
 }
 
 /**
@@ -84,18 +88,21 @@ class Modal extends Component<ModalProps> {
   }
 
   render() {
-    const {blurView, enableModalBlur, visible, ...others} = this.props;
+    const {blurView, enableModalBlur, visible, useGestureHandlerRootView, ...others} = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
+    const useGestureHandler = useGestureHandlerRootView && Constants.isAndroid;
+    const GestureContainer = useGestureHandler ? GestureHandlerRootView : React.Fragment;
+    const gestureContainerProps = useGestureHandler ? {style: styles.fill} : {};
     const Container: any = blurView ? blurView : defaultContainer;
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
-        <GestureHandlerRootView style={styles.fill}>
+        <GestureContainer {...gestureContainerProps}>
           <Container style={styles.fill} blurType="light">
             {this.renderTouchableOverlay()}
             {this.props.children}
           </Container>
-        </GestureHandlerRootView>
+        </GestureContainer>
       </RNModal>
     );
   }

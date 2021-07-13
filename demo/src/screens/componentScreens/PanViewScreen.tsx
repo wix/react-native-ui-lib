@@ -70,6 +70,7 @@ class PanViewScreen extends Component {
     return (
       <View flex>
         <Modal
+          useGestureHandlerRootView
           transparent
           onBackgroundPress={this.onDialogDismissed}
           overlayBackgroundColor={overlayBackgroundColor}
