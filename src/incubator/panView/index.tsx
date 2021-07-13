@@ -11,7 +11,7 @@ import Animated, {
   runOnJS
 } from 'react-native-reanimated';
 import {Constants} from '../../helpers';
-import View, {ViewProps} from '../view';
+import View, {ViewProps} from '../../components/view';
 import {
   PanningDirections,
   TranslationLock,

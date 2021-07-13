@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {Constants} from '../../../helpers';
 import {
   PanningDirections,

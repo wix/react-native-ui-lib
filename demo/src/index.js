@@ -88,9 +88,6 @@ module.exports = {
       get PanResponderScreen() {
         return require('./screens/componentScreens/PanResponderScreen').default;
       },
-      get PanViewScreen() {
-        return require('./screens/componentScreens/PanViewScreen').default;
-      },
       get PickerScreen() {
         return require('./screens/componentScreens/PickerScreen').default;
       },
@@ -224,6 +221,9 @@ module.exports = {
       // Incubator 
       get IncubatorTextFieldScreen() {
         return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
+      },
+      get PanViewScreen() {
+        return require('./screens/incubatorScreens/PanViewScreen').default;
       },
       // realExamples
       get AppleMusic() {

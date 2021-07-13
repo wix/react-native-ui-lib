@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { ViewProps } from '../view';
+import { ViewProps } from '../../components/view';
 import { PanningDirections, TranslationLock, PanDismissThreshold } from './panningUtil';
 export { PanningDirections, TranslationLock, PanDismissThreshold };
 export interface PanViewProps extends ViewProps {
