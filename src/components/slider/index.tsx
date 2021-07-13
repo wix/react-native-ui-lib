@@ -1,16 +1,24 @@
 import _ from 'lodash';
-import React, {PureComponent, ReactElement} from 'react';
+import React, {PureComponent, ReactElement, ElementRef} from 'react';
 import {
   StyleSheet,
   PanResponder,
   AccessibilityInfo,
   Animated,
   StyleProp,
-  ViewStyle
+  ViewStyle,
+  PanResponderInstance,
+  PanResponderGestureState,
+  GestureResponderEvent,
+  LayoutChangeEvent,
+  AccessibilityActionEvent,
+  AccessibilityRole,
+  View as RNView
 } from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../view';
+import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;
@@ -22,7 +30,7 @@ const INACTIVE_COLOR = Colors.dark60;
 
 export type SliderOnValueChange = (value: number) => void;
 
-export interface SliderProps {
+export type SliderProps = {
   /**
      * Initial value
      */
@@ -78,11 +86,11 @@ export interface SliderProps {
   /**
      * The thumb style
      */
-  thumbStyle?: StyleProp<ViewStyle>;
+  thumbStyle?: ViewStyle;
   /**
      * The active (during press) thumb style
      */
-  activeThumbStyle?: StyleProp<ViewStyle>;
+  activeThumbStyle?: ViewStyle;
   /**
      * If true the Slider will not change it's style on press
      */
@@ -95,6 +103,13 @@ export interface SliderProps {
    * The slider's test identifier
    */
   testID?: string;
+} & typeof defaultProps;
+
+interface Position {
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
 }
 
 type Measurements = {
@@ -109,6 +124,18 @@ interface SliderState {
   measureCompleted: boolean,
 }
 
+type ThumbStyle = {style?: StyleProp<ViewStyle>, left?: StyleProp<number>};
+type MinTrackStyle = {style?: StyleProp<ViewStyle>, width?: StyleProp<number>};
+
+const defaultProps = {
+  value: 0,
+  minimumValue: 0,
+  maximumValue: 1,
+  step: 0
+};
+
+type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
+
 /**
  * @description: A Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
@@ -117,12 +144,26 @@ interface SliderState {
 export default class Slider extends PureComponent<SliderProps, SliderState> {
   static displayName = 'Slider';
 
-  static defaultProps = {
-    value: 0,
-    minimumValue: 0,
-    maximumValue: 1,
-    step: 0
+  static defaultProps = defaultProps;
+
+  private thumb: ElementRef<typeof RNView> | undefined = undefined;
+  private _thumbStyles: ThumbStyle = {};
+  private minTrack: ElementRef<typeof RNView> | undefined = undefined; 
+  private _minTrackStyles: MinTrackStyle = {};
+  private _x = 0;
+  private _dx = 0;
+  private _thumbAnimationConstants = {
+    duration: 100,
+    defaultScaleFactor: 1.5
   };
+  private initialValue = this.getRoundedValue(this.props.value);
+  private lastValue = this.initialValue
+  // TODO: check if setting height is appropriate here
+  private initialThumbSize: Measurements = {width: THUMB_SIZE, height: THUMB_SIZE};
+  private _panResponder: PanResponderInstance;
+  private containerSize: Measurements | undefined;
+  private trackSize: Measurements | undefined;
+  private thumbSize: Measurements | undefined;
 
   constructor(props: SliderProps) {
     super(props);
@@ -135,24 +176,34 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
       measureCompleted: false
     };
 
-    this.thumb = undefined;
-    this._thumbStyles = {style: {}};
-    this.minTrack = undefined;
-    this._minTrackStyles = {style: {}};
-    this._x = 0;
-    this._dx = 0;
-    this._thumbAnimationConstants = {
-      duration: 100,
-      defaultScaleFactor: 1.5
-    };
+    // this.thumb = undefined;
+    // this._thumbStyles = {};
+    // this.minTrack = undefined;
+    // this._minTrackStyles = {};
+    // this._x = 0;
+    // this._dx = 0;
+    // this._thumbAnimationConstants = {
+    //   duration: 100,
+    //   defaultScaleFactor: 1.5
+    // };
 
-    this.initialValue = this.getRoundedValue(props.value);
-    this.lastValue = this.initialValue;
+    // this.initialValue = this.getRoundedValue(props.value);
+    // this.lastValue = this.initialValue;
 
-    this.initialThumbSize = THUMB_SIZE;
+    // this.initialThumbSize = THUMB_SIZE;
     this.checkProps(props);
 
-    this.createPanResponderConfig();
+    this._panResponder = PanResponder.create({
+      onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
+      onPanResponderGrant: this.handlePanResponderGrant,
+      onPanResponderMove: this.handlePanResponderMove,
+      onPanResponderRelease: this.handlePanResponderEnd,
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderEnd: () => true,
+      onPanResponderTerminationRequest: () => false
+    });
+
+    // this.createPanResponderConfig();
   }
 
   checkProps(props: SliderProps) {
@@ -164,19 +215,32 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     }
   }
 
-  createPanResponderConfig() {
-    this._panResponder = PanResponder.create({
-      onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
-      onPanResponderGrant: this.handlePanResponderGrant,
-      onPanResponderMove: this.handlePanResponderMove,
-      onPanResponderRelease: this.handlePanResponderEnd,
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderEnd: () => true,
-      onPanResponderTerminationRequest: () => false
-    });
+  // createPanResponderConfig() {
+  //   this._panResponder = PanResponder.create({
+  //     onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
+  //     onPanResponderGrant: this.handlePanResponderGrant,
+  //     onPanResponderMove: this.handlePanResponderMove,
+  //     onPanResponderRelease: this.handlePanResponderEnd,
+  //     onStartShouldSetPanResponder: () => true,
+  //     onPanResponderEnd: () => true,
+  //     onPanResponderTerminationRequest: () => false
+  //   });
+  // }
+
+  getAccessibilityProps() {
+    const {disabled} = this.props;
+
+    return {
+      accessibilityLabel: 'Slider',
+      accessible: true,
+      accessibilityRole: 'adjustable' as AccessibilityRole,
+      accessibilityStates: disabled ? ['disabled'] : [],
+      accessibilityActions: [{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}],
+      ...extractAccessibilityProps(this.props)
+    };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: SliderProps, prevState: SliderState) {
     if (prevProps.value !== this.props.value) {
       this.initialValue = this.getRoundedValue(this.props.value);
       // set position for new value
@@ -206,12 +270,14 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
   handleMoveShouldSetPanResponder = () => {
     return true;
   };
+
   handlePanResponderGrant = () => {
     this.updateThumbStyle(true);
     this._dx = 0;
     this.onSeekStart();
   };
-  handlePanResponderMove = (_e, gestureState) => {
+
+  handlePanResponderMove = (_e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
     if (this.props.disabled) {
       return;
     }
@@ -219,6 +285,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     this.update(dx - this._dx);
     this._dx = dx;
   };
+
   handlePanResponderEnd = () => {
     this.updateThumbStyle(false);
     this.bounceToStep();
@@ -227,7 +294,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
 
   /* Actions */
 
-  update(dx) {
+  update(dx: number) {
     // calc x in range (instead of: this._x += dx)
     let x = this._x;
     x += dx;
@@ -249,7 +316,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     }
   }
 
-  updateStyles(x) {
+  updateStyles(x: number) {
     if (this.thumb) {
       const {trackSize} = this.state;
       const position = x - this.initialThumbSize.width / 2;
@@ -272,30 +339,30 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     }
   }
 
-  updateValue(x) {
+  updateValue(x: number) {
     const value = this.getValueForX(x);
     this.onValueChange(value);
   }
 
-  updateThumbStyle(start) {
+  updateThumbStyle(start: boolean) {
     if (this.thumb && !this.props.disableActiveStyling) {
       const {thumbStyle, activeThumbStyle} = this.props;
       const style = thumbStyle || styles.thumb;
       const activeStyle = activeThumbStyle || styles.activeThumb;
 
-      const activeOrInactiveStyle = !this.props.disabled && (start ? activeStyle : style);
+      const activeOrInactiveStyle = !this.props.disabled ? (start ? activeStyle : style) : {};
       this._thumbStyles.style = _.omit(activeOrInactiveStyle, 'height', 'width');
       this.thumb.setNativeProps(this._thumbStyles);
       this.scaleThumb(start);
     }
   }
 
-  scaleThumb = start => {
+  scaleThumb = (start: boolean) => {
     const scaleFactor = start ? this.calculatedThumbActiveScale() : 1;
     this.thumbAnimationAction(scaleFactor);
   }
 
-  thumbAnimationAction = (toValue) => {
+  thumbAnimationAction = (toValue: number) => {
     const {thumbActiveAnimation} = this.state;
     const {duration} = this._thumbAnimationConstants;
     Animated.timing(thumbActiveAnimation, {
@@ -305,19 +372,19 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     }).start();
   }
 
-  getRoundedValue(value) {
+  getRoundedValue(value: number) {
     const {step} = this.props;
     const v = this.getValueInRange(value);
     return step > 0 ? Math.round(v / step) * step : v;
   }
 
-  getValueInRange(value) {
+  getValueInRange(value: number) {
     const {minimumValue, maximumValue} = this.props;
     const v = value < minimumValue ? minimumValue : value > maximumValue ? maximumValue : value;
     return v;
   }
 
-  getXForValue(v) {
+  getXForValue(v: number) {
     const {minimumValue} = this.props;
     const range = this.getRange();
     const relativeValue = minimumValue - v;
@@ -327,7 +394,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     return x;
   }
 
-  getValueForX(x) {
+  getValueForX(x: number) {
     const {maximumValue, minimumValue, step} = this.props;
     const ratio = x / (this.state.trackSize.width - this.initialThumbSize.width / 2);
     const range = this.getRange();
@@ -345,18 +412,18 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     return range;
   }
 
-  setMinTrackRef = r => {
-    this.minTrack = r;
+  setMinTrackRef = (ref: ElementRef<typeof RNView>) => {
+    this.minTrack = ref;
   };
 
-  setThumbRef = r => {
-    this.thumb = r;
+  setThumbRef = (ref: ElementRef<typeof RNView>) => {
+    this.thumb = ref;
   };
 
-  shouldDoubleSizeByDefault = () => {
-    const {activeThumbStyle, thumbStyle} = this.props;
-    return !activeThumbStyle || !thumbStyle;
-  }
+  // shouldDoubleSizeByDefault = () => {
+  //   const {activeThumbStyle, thumbStyle} = this.props;
+  //   return !activeThumbStyle || !thumbStyle;
+  // }
 
   calculatedThumbActiveScale = () => {
     const {activeThumbStyle, thumbStyle, disabled, disableActiveStyling} = this.props;
@@ -365,15 +432,15 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     }
     
     const {defaultScaleFactor} = this._thumbAnimationConstants;
-    if (this.shouldDoubleSizeByDefault()) { 
+    if (!activeThumbStyle || !thumbStyle) { 
       return defaultScaleFactor;
     }
-      
-    const scaleRatioFromSize = activeThumbStyle.height / thumbStyle.height;
+    
+    const scaleRatioFromSize = Number(activeThumbStyle.height) / Number(thumbStyle.height);
     return scaleRatioFromSize || defaultScaleFactor;
   };
 
-  updateTrackStepAndStyle = ({nativeEvent}) => {
+  updateTrackStepAndStyle = ({nativeEvent}: GestureResponderEvent) => {
     this._x = nativeEvent.locationX;
     this.updateValue(this._x);
 
@@ -391,7 +458,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
 
   /* Events */
 
-  onValueChange = value => {
+  onValueChange = (value: number) => {
     this.lastValue = value;
     _.invoke(this.props, 'onValueChange', value);
   };
@@ -404,38 +471,37 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     _.invoke(this.props, 'onSeekEnd');
   }
 
-  onContainerLayout = ({nativeEvent}) => {
+  onContainerLayout = (nativeEvent: LayoutChangeEvent) => {
     this.handleMeasure('containerSize', nativeEvent);
   };
 
-  onTrackLayout = ({nativeEvent}) => {
+  onTrackLayout = (nativeEvent: LayoutChangeEvent) => {
     this.setState({measureCompleted: false});
     this.handleMeasure('trackSize', nativeEvent);
   };
 
-  onThumbLayout = ({nativeEvent}) => {
+  onThumbLayout = (nativeEvent: LayoutChangeEvent) => {
     this.handleMeasure('thumbSize', nativeEvent);
   };
 
-  handleTrackPress = ({nativeEvent}) => {
+  handleTrackPress = (event: GestureResponderEvent) => {
     if (this.props.disabled) {
       return;
     }
     this.onSeekStart();
-    this.updateTrackStepAndStyle({nativeEvent});
+    this.updateTrackStepAndStyle(event);
     this.onSeekEnd();
   };
 
-  handleMeasure = (name, nativeEvent) => {
+  handleMeasure = (name: MeasuredVariableName, {nativeEvent}: LayoutChangeEvent) => {
     const {width, height} = nativeEvent.layout;
     const size = {width, height};
-    const layoutName = `${name}`;
-    const currentSize = this[layoutName];
+    const currentSize = this[name];
 
     if (currentSize && width === currentSize.width && height === currentSize.height) {
       return;
     }
-    this[layoutName] = size;
+    this[name] = size;
     if (this.containerSize && this.thumbSize && this.trackSize) {
       // console.warn('post return');
       this.setState({
@@ -448,12 +514,11 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     }
   };
 
-  onAccessibilityAction = event => {
+  onAccessibilityAction = (event: AccessibilityActionEvent) => {
     const {maximumValue, minimumValue, step} = this.props;
     const value = this.getValueForX(this._x);
     let newValue;
 
-    // switch (event.nativeEvent.action) {
     switch (event.nativeEvent.actionName) {
       case 'increment':
         newValue = value !== maximumValue ? value + step : value;
@@ -462,6 +527,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
         newValue = value !== minimumValue ? value - step : value;
         break;
       default:
+        newValue = value;
         break;
     }
 
@@ -480,7 +546,8 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
       thumbStyle,
       disabled,
       thumbTintColor
-    } = this.getThemeProps();
+    } = this.props;
+
     return (
       <Animated.View
         hitSlop={this.thumbHitSlop}
@@ -516,21 +583,15 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
       minimumTrackTintColor = ACTIVE_COLOR,
       maximumTrackTintColor = DEFAULT_COLOR,
       testID
-    } = this.getThemeProps();
+    } = this.props;
 
     return (
       <View
         style={[styles.container, containerStyle]}
         onLayout={this.onContainerLayout}
-        accessible
-        accessibilityLabel={'Slider'}
-        {...this.extractAccessibilityProps()}
-        accessibilityRole={'adjustable'}
-        accessibilityStates={disabled ? ['disabled'] : []}
-        // accessibilityActions={['increment', 'decrement']}
-        accessibilityActions={[{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}]}
         onAccessibilityAction={this.onAccessibilityAction}
         testID={testID}
+        {...this.getAccessibilityProps()}
       >
         {_.isFunction(renderTrack) ? (
           <View
