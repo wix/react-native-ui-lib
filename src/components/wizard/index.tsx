@@ -1,14 +1,19 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, Platform} from 'react-native';
 import View from '../view';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import Constants from '../../helpers/Constants';
 import Colors from '../../style/colors';
 import Shadows from '../../style/shadows';
 import WizardStep from './WizardStep';
-import {States, StatesConfig} from './WizardStates';
+import {StatesConfig} from './WizardStates';
+import {WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './types';
+export {WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig};
+
+interface State {
+  maxWidth: number;
+}
 
 /**
  * @description: Wizard Component: a wizard presents a series of steps in  prescribed order
@@ -19,26 +24,12 @@ import {States, StatesConfig} from './WizardStates';
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/Wizard.gif?raw=true
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/WizardPresets.png?raw=true
  */
-export default class Wizard extends BaseComponent {
+class Wizard extends Component<WizardProps, State> {
   static displayName = 'Wizard';
+  static Step: typeof WizardStep;
+  static States: typeof WizardStepStates;
 
-  static propTypes = {
-    /**
-     * The active step's index
-     */
-    activeIndex: PropTypes.number,
-    /**
-     * The configuration of the active step (see Wizard.Step.propTypes)
-     */
-    activeConfig: PropTypes.shape(WizardStep.propTypes),
-    /**
-     * Callback that is called when the active step is changed (i.e. a step was clicked on).
-     * The new activeIndex will be the input of the callback.
-     */
-    onActiveIndexChanged: PropTypes.func
-  };
-
-  constructor(props) {
+  constructor(props: WizardProps) {
     super(props);
 
     this.state = {
@@ -75,9 +66,10 @@ export default class Wizard extends BaseComponent {
 
   renderChildren() {
     const {maxWidth} = this.state;
-    const {activeIndex, activeConfig = StatesConfig.active, testID} = this.getThemeProps();
+    const {activeIndex, activeConfig = StatesConfig.active, testID} = this.props;
 
     const children = React.Children.map(this.props.children, (child, index) => {
+      // @ts-expect-error
       return React.cloneElement(child, {
         testID: `${testID}.step${index}`,
         maxWidth,
@@ -94,7 +86,7 @@ export default class Wizard extends BaseComponent {
   }
 
   render() {
-    const {testID, containerStyle} = this.getThemeProps();
+    const {testID, containerStyle} = this.props;
 
     return (
       <View testID={testID} style={[styles.container, containerStyle]}>
@@ -103,6 +95,11 @@ export default class Wizard extends BaseComponent {
     );
   }
 }
+
+Wizard.Step = WizardStep;
+Wizard.States = WizardStepStates;
+
+export default asBaseComponent<WizardProps, typeof Wizard>(Wizard);
 
 const styles = StyleSheet.create({
   container: {
@@ -122,6 +119,3 @@ const styles = StyleSheet.create({
     })
   }
 });
-
-Wizard.Step = WizardStep;
-Wizard.States = States;

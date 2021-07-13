@@ -75,6 +75,7 @@ export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as ActionSheet} from './components/actionSheet';
+export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
 
 /* All components with manual typings */
 export {
@@ -120,4 +121,3 @@ export const SafeAreaInsetsManager;
 export const SafeAreaSpacerView;
 export const SelectableComponent;
 export const TextField;
-export const Wizard;

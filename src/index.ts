@@ -55,6 +55,7 @@ export {default as PanningContext} from './components/panningViews/panningContex
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as ActionSheet} from './components/actionSheet';
+export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {
   default as PanningProvider,
