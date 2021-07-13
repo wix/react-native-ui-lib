@@ -1,4 +1,5 @@
 // TODO: Support style customization
+import {isFunction} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
@@ -131,6 +132,18 @@ const WheelPicker = React.memo(({
     scrollToIndex(currentIndex, false);
   }, []);
 
+  const scrollToOffset = (index: number, animated: boolean) => {
+    // TODO: we should remove this split (the getNode section) in V6 and remove support for reanimated 1
+    //@ts-ignore for some reason scrollToOffset isn't recognized
+    if (isFunction(scrollView.current?.scrollToOffset)) {
+      //@ts-ignore
+      scrollView.current?.scrollToOffset({offset: index * itemHeight, animated})
+    } else {
+      //@ts-ignore
+      scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
+    }
+  };
+
   const scrollToIndex = (index: number, animated: boolean) => {
     // this is done to handle onMomentumScrollEnd not being called in Android:
     // https://github.com/facebook/react-native/issues/26661
@@ -138,8 +151,7 @@ const WheelPicker = React.memo(({
       prevIndex.current = index;
       onChange?.(items?.[index]?.value, index);
     }
-    //@ts-ignore for some reason scrollToOffset isn't recognized
-    setTimeout(() => scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated}), 100);
+    setTimeout(() => scrollToOffset(index, animated), 100);
   };
 
   const selectItem = useCallback(index => {
