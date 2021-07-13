@@ -41,7 +41,7 @@ export type SegmentProps = SegmentedControlItemProps & {
   /**
    * Callback for when segment has pressed.
    */
-  onPress?: (index: number) => void;
+  onPress: (index: number) => void;
   /**
    * The index of the segment.
    */
@@ -81,7 +81,7 @@ const Segment = React.memo((props: SegmentProps) => {
   }, [iconSource, segmentedColor, iconStyle]);
 
   const onSegmentPress = useCallback(() => {
-    onPress?.(index);
+    onPress(index);
   }, [index, onPress]);
 
   const segmentOnLayout = useCallback((event: LayoutChangeEvent) => {
