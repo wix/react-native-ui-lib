@@ -78,6 +78,9 @@ function TouchableOpacity(props: Props) {
   const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
   const isActive = useSharedValue(0);
+  /* This flag is for fixing an issue with long press triggering twice
+  TODO: Consider revisiting this issue to see if it still occurs */
+  const isLongPressed = useSharedValue(false);
 
   const backgroundColor = useMemo(() => {
     return props.backgroundColor || modifiers.backgroundColor;
@@ -98,13 +101,22 @@ function TouchableOpacity(props: Props) {
     onEnd: () => {
       isActive.value = withTiming(0, {duration: 200});
       runOnJS(onPress)();
+    },
+    onFail: () => {
+      isActive.value = withTiming(0, {duration: 200});
     }
   });
 
   const longPressGestureHandler = useAnimatedGestureHandler({
-    onEnd: () => {
-      isActive.value = withTiming(0, {duration: 200});
-      runOnJS(onLongPress)();
+    onActive: () => {
+      if (!isLongPressed.value) {
+        isLongPressed.value = true;
+        isActive.value = withTiming(0, {duration: 200});
+        runOnJS(onLongPress)();
+      }
+    },
+    onFinish: () => {
+      isLongPressed.value = false;
     }
   });
 
@@ -129,7 +141,7 @@ function TouchableOpacity(props: Props) {
     >
       <Reanimated.View>
         {/* @ts-expect-error */}
-        <LongPressGestureHandler onGestureEvent={longPressGestureHandler}>
+        <LongPressGestureHandler onGestureEvent={longPressGestureHandler} shouldCancelWhenOutside>
           <Reanimated.View
             {...others}
             ref={forwardedRef}
