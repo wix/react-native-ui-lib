@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
 import SliderContext from './SliderContext';
@@ -8,6 +9,7 @@ import View from '../../view';
 interface SliderGroupProps {
   color: string;
   onValueChange: (color: string) => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 interface SliderGroupState {

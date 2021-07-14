@@ -11,7 +11,7 @@ import asSliderGroupChild from './context/asSliderGroupChild';
 
 type SliderOnValueChange = (value: string, alfa: number) => void;
 
-enum GradientSliderTypes {
+export enum GradientSliderTypes {
   DEFAULT = 'default',
   HUE = 'hue',
   LIGHTNESS = 'lightness',
