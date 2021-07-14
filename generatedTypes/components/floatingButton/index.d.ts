@@ -31,6 +31,9 @@ export interface FloatingButtonProps {
     hideBackgroundOverlay?: boolean;
     /**
      * Used as testing identifier
+     * <TestID> - the floatingButton container
+     * <TestID>.button - the floatingButton main button
+     * <TestID>.secondaryButton - the floatingButton secondaryButton
      */
     testID?: string;
 }
