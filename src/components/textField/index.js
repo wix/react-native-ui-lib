@@ -621,6 +621,7 @@ export default class TextField extends BaseInput {
         value={value}
         placeholder={placeholderText}
         placeholderTextColor={placeholderColor}
+        selection={Constants.isAndroid && {start: 0}}
         underlineColorAndroid="transparent"
         style={inputStyle}
         multiline={shouldUseMultiline}
