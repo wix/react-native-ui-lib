@@ -1,10 +1,10 @@
 
 import {ReactElement} from 'react';
-import {StyleProp, TextStyle, ViewStyle} from 'react-native'
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {BaseComponent, PureBaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
 
-export type SliderOnValueChange = (value: number) => void;
+export type SliderOnValueChange = (value: string, alfa: number) => void;
 
 export interface ColorSliderGroupProps {
   initialColor: ColorValue;

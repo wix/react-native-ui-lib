@@ -100,17 +100,14 @@ export type SliderProps = {
      */
   disabled?: boolean;
   /**
+     * If true the component will have accessibility features enabled
+     */
+   accessible?: boolean;
+  /**
    * The slider's test identifier
    */
   testID?: string;
 } & typeof defaultProps;
-
-interface Position {
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-}
 
 type Measurements = {
   width: number, height: number

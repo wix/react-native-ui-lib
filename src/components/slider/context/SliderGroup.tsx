@@ -1,19 +1,23 @@
-import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import _ from 'lodash';
+import tinycolor from 'tinycolor2';
 import SliderContext from './SliderContext';
 import {Colors} from '../../../style';
 import View from '../../view';
 
+interface SliderGroupProps {
+  color: string;
+  onValueChange: (color: string) => void;
+}
 
-export default class SliderGroup extends Component {
+interface SliderGroupState {
+  value: tinycolor.ColorFormats.HSLA
+}
+
+export default class SliderGroup extends Component<SliderGroupProps, SliderGroupState> {
   static displayName = 'IGNORE';
-  static propTypes = {
-    color: PropTypes.string,
-    onValueChange: PropTypes.func
-  }
 
-  constructor(props) {
+  constructor(props: SliderGroupProps) {
     super(props);
 
     this.state = {
@@ -28,7 +32,7 @@ export default class SliderGroup extends Component {
     };
   }
 
-  setValue = (value) => {
+  setValue = (value: tinycolor.ColorFormats.HSLA) => {
     this.setState({value});
     _.invoke(this.props, 'onValueChange', Colors.getHexString(value));
   }
