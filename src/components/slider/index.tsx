@@ -155,7 +155,6 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
   };
   private initialValue = this.getRoundedValue(this.props.value);
   private lastValue = this.initialValue
-  // TODO: check if setting height is appropriate here
   private initialThumbSize: Measurements = {width: THUMB_SIZE, height: THUMB_SIZE};
   private _panResponder: PanResponderInstance;
   private containerSize: Measurements | undefined;
@@ -172,22 +171,6 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
       thumbActiveAnimation: new Animated.Value(1),
       measureCompleted: false
     };
-
-    // this.thumb = undefined;
-    // this._thumbStyles = {};
-    // this.minTrack = undefined;
-    // this._minTrackStyles = {};
-    // this._x = 0;
-    // this._dx = 0;
-    // this._thumbAnimationConstants = {
-    //   duration: 100,
-    //   defaultScaleFactor: 1.5
-    // };
-
-    // this.initialValue = this.getRoundedValue(props.value);
-    // this.lastValue = this.initialValue;
-
-    // this.initialThumbSize = THUMB_SIZE;
     this.checkProps(props);
 
     this._panResponder = PanResponder.create({
@@ -199,8 +182,6 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
       onPanResponderEnd: () => true,
       onPanResponderTerminationRequest: () => false
     });
-
-    // this.createPanResponderConfig();
   }
 
   checkProps(props: SliderProps) {
@@ -211,18 +192,6 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
       console.warn('Slider value is not in range');
     }
   }
-
-  // createPanResponderConfig() {
-  //   this._panResponder = PanResponder.create({
-  //     onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
-  //     onPanResponderGrant: this.handlePanResponderGrant,
-  //     onPanResponderMove: this.handlePanResponderMove,
-  //     onPanResponderRelease: this.handlePanResponderEnd,
-  //     onStartShouldSetPanResponder: () => true,
-  //     onPanResponderEnd: () => true,
-  //     onPanResponderTerminationRequest: () => false
-  //   });
-  // }
 
   getAccessibilityProps() {
     const {disabled} = this.props;
@@ -416,11 +385,6 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
   setThumbRef = (ref: ElementRef<typeof RNView>) => {
     this.thumb = ref;
   };
-
-  // shouldDoubleSizeByDefault = () => {
-  //   const {activeThumbStyle, thumbStyle} = this.props;
-  //   return !activeThumbStyle || !thumbStyle;
-  // }
 
   calculatedThumbActiveScale = () => {
     const {activeThumbStyle, thumbStyle, disabled, disableActiveStyling} = this.props;

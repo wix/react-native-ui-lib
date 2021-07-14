@@ -8,7 +8,7 @@ import Text from '../text';
 
 type SliderOnValueChange = (value: string) => void;
 
-type ColorSliderGroupProps = {
+export type ColorSliderGroupProps = {
   /**
      * The gradient color
      */

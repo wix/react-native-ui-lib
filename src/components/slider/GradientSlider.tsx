@@ -18,7 +18,7 @@ export enum GradientSliderTypes {
   SATURATION = 'saturation'
 }
 
-type GradientSliderPassProps = {
+export type GradientSliderPassProps = {
   /**
      * The gradient color
      */
