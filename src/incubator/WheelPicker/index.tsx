@@ -134,12 +134,12 @@ const WheelPicker = React.memo(({
 
   const scrollToOffset = (index: number, animated: boolean) => {
     // TODO: we should remove this split (the getNode section) in V6 and remove support for reanimated 1
-    //@ts-ignore for some reason scrollToOffset isn't recognized
+    //@ts-expect-error for some reason scrollToOffset isn't recognized
     if (isFunction(scrollView.current?.scrollToOffset)) {
-      //@ts-ignore
+      //@ts-expect-error
       scrollView.current?.scrollToOffset({offset: index * itemHeight, animated});
     } else {
-      //@ts-ignore
+      //@ts-expect-error
       scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
     }
   };
