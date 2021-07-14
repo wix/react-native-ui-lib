@@ -137,7 +137,7 @@ const WheelPicker = React.memo(({
     //@ts-ignore for some reason scrollToOffset isn't recognized
     if (isFunction(scrollView.current?.scrollToOffset)) {
       //@ts-ignore
-      scrollView.current?.scrollToOffset({offset: index * itemHeight, animated})
+      scrollView.current?.scrollToOffset({offset: index * itemHeight, animated});
     } else {
       //@ts-ignore
       scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
