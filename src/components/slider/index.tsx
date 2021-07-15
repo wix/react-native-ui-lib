@@ -109,10 +109,6 @@ export type SliderProps = {
   testID?: string;
 } & typeof defaultProps;
 
-type Measurements = {
-  width: number, height: number
-}
-
 interface SliderState {
   containerSize: Measurements,
   trackSize: Measurements,
@@ -121,8 +117,15 @@ interface SliderState {
   measureCompleted: boolean,
 }
 
+type Measurements = {
+  width: number, height: number
+}
+
 type ThumbStyle = {style?: StyleProp<ViewStyle>, left?: StyleProp<number>};
+
 type MinTrackStyle = {style?: StyleProp<ViewStyle>, width?: StyleProp<number>};
+
+type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
 
 const defaultProps = {
   value: 0,
@@ -131,7 +134,6 @@ const defaultProps = {
   step: 0
 };
 
-type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
 
 /**
  * @description: A Slider component

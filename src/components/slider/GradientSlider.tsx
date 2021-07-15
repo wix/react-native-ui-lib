@@ -38,7 +38,7 @@ export type GradientSliderProps = {
   /**
      * If true the component will have accessibility features enabled
      */
-   accessible?: boolean;
+  accessible?: boolean;
    /**
      * The container style
      */
@@ -46,7 +46,7 @@ export type GradientSliderProps = {
   /**
      * If true the Slider will be disabled and will appear in disabled color
      */
-   disabled?: boolean;
+  disabled?: boolean;
 }
 
 type GradientSliderComponentProps = {
