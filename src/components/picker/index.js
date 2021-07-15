@@ -412,7 +412,8 @@ class Picker extends Component {
   };
 
   render() {
-    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, modifiers} = this.props;
+    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, forwardedRef, modifiers} =
+      this.props;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
@@ -437,6 +438,7 @@ class Picker extends Component {
 
     return (
       <TextField
+        ref={forwardedRef}
         {...textInputProps}
         containerStyle={[paddings, margins, positionStyle, containerStyle]}
         {...this.getAccessibilityInfo()}
