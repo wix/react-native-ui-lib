@@ -4,5 +4,5 @@ export { default as NetInfoPackage } from './NetInfoPackage';
 export { default as HapticFeedbackPackage } from './HapticFeedbackPackage';
 export { PickerPackage, CommunityPickerPackage } from './PickerPackage';
 export { default as SvgPackage } from './SvgPackage';
-export { createShimmerPlaceholder, ShimmerPlaceholderProps } from './ShimmerPackage';
+export { createShimmerPlaceholder } from './ShimmerPackage';
 export { default as LinearGradientPackage } from './LinearGradientPackage';

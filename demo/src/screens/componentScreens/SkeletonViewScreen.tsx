@@ -134,6 +134,7 @@ export default class SkeletonViewScreen extends Component {
         {_.times(NUMBER_OF_ITEMS_TO_SHOW, index => {
           return (
             <ListItem
+              key={index}
               activeBackgroundColor={Colors.dark60}
               activeOpacity={0.3}
               height={90}
