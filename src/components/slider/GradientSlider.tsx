@@ -18,7 +18,7 @@ export enum GradientSliderTypes {
   SATURATION = 'saturation'
 }
 
-export type GradientSliderPassProps = {
+export type GradientSliderProps = {
   /**
      * The gradient color
      */
@@ -49,12 +49,12 @@ export type GradientSliderPassProps = {
    disabled?: boolean;
 }
 
-type GradientSliderProps = {
+type GradientSliderComponentProps = {
   /**
      * Context of the slider group
      */
    sliderContext: SliderContextProps;
-} & GradientSliderPassProps & typeof defaultProps;
+} & GradientSliderProps & typeof defaultProps;
 
 
 interface GradientSliderState {
@@ -73,14 +73,14 @@ const defaultProps = {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/GradientSlider/GradientSlider.gif?raw=true
  */
-class GradientSlider extends Component<GradientSliderProps, GradientSliderState> {
+class GradientSlider extends Component<GradientSliderComponentProps, GradientSliderState> {
   static displayName = 'GradientSlider';
 
   static defaultProps = defaultProps;
 
   static types = GradientSliderTypes;
 
-  constructor(props: GradientSliderProps) {
+  constructor(props: GradientSliderComponentProps) {
     super(props);
 
     this.state = {
@@ -89,7 +89,7 @@ class GradientSlider extends Component<GradientSliderProps, GradientSliderState>
     };
   }
 
-  static getDerivedStateFromProps(nextProps: GradientSliderProps, prevState: GradientSliderState) {
+  static getDerivedStateFromProps(nextProps: GradientSliderComponentProps, prevState: GradientSliderState) {
     if (prevState.prevColor !== nextProps.color) {
       return {
         color: Colors.getHSL(nextProps.color),
@@ -232,4 +232,4 @@ class GradientSlider extends Component<GradientSliderProps, GradientSliderState>
   }
 }
 
-export default asBaseComponent<GradientSliderPassProps, typeof GradientSlider>(asSliderGroupChild(GradientSlider));
+export default asBaseComponent<GradientSliderComponentProps, typeof GradientSlider>(asSliderGroupChild(GradientSlider));

@@ -72,7 +72,7 @@ export {default as PageControl, PageControlProps} from './components/pageControl
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as Hint, HintProps} from './components/hint';
 export {default as Slider, SliderProps} from './components/slider';
-export {default as GradientSlider, GradientSliderPassProps} from './components/slider/GradientSlider';
+export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as LogService} from './services/LogService';
 
