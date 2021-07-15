@@ -57,7 +57,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
   static displayName = 'ColorSliderGroup';
 
   static defaultProps = {
-    labels: {default: 'Default', hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
+    labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
   };
 
   state = {

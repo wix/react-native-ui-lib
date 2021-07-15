@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Text, Image, ColorSliderGroup} from 'react-native-ui-lib';
-// import {Colors, View, Text, Image, GradientSlider, ColorSliderGroup} from 'react-native-ui-lib';
-import Slider from '../../../../src/components/slider';
-import GradientSlider from '../../../../src/components/slider/GradientSlider';
-
+import {Colors, View, Text, Image, Slider, GradientSlider, ColorSliderGroup} from 'react-native-ui-lib';
 
 const INITIAL_VALUE = 0;
 const COLOR = Colors.blue30;

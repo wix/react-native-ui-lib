@@ -5,5 +5,5 @@ export interface SliderContextProps {
   setValue?: (value: tinycolor.ColorFormats.HSLA) => void;
 }
 
-const SliderContext = React.createContext({});
+const SliderContext: React.Context<SliderContextProps> = React.createContext({});
 export default SliderContext;

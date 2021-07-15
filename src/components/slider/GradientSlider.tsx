@@ -58,13 +58,14 @@ type GradientSliderProps = {
 
 
 interface GradientSliderState {
-  color: tinycolor.ColorFormats.HSLA | undefined;
+  color: tinycolor.ColorFormats.HSLA;
   prevColor: string | undefined;
 }
 
 const defaultProps = {
   type: GradientSliderTypes.DEFAULT,
-  gradientSteps: 120
+  gradientSteps: 120,
+  color: Colors.blue30
 };
 
 /**
@@ -84,7 +85,7 @@ class GradientSlider extends Component<GradientSliderProps, GradientSliderState>
 
     this.state = {
       prevColor: props.color,
-      color: props.color ? Colors.getHSL(props.color) : undefined
+      color: Colors.getHSL(props.color)
     };
   }
 
@@ -101,8 +102,8 @@ class GradientSlider extends Component<GradientSliderProps, GradientSliderState>
   getColor() {
     const {color} = this.state;
     const {value} = this.props.sliderContext;
-    // TODO: find a way to remove this cast
-    return (value || color) as tinycolor.ColorFormats.HSLA;
+
+    return value || color;
   }
 
   getStepColor = (i: number) => {
