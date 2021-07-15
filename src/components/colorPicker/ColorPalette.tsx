@@ -218,18 +218,20 @@ class ColorPalette extends PureComponent<Props, State> {
         const handle = findNodeHandle(childRef.current);
         if (handle) {
           //@ts-ignore
-          UIManager.measureLayoutRelativeToParent(handle, e => {
-            console.warn(e);
-          },
-          (x: number, _y: number, w: number, _h: number) => {
-            if (x + w > this.containerWidth) {
-              this.scrollBar?.current?.scrollTo({
-                x: x + w + HORIZONTAL_PADDING - this.containerWidth,
-                y: 0,
-                animated: false
-              });
-            }
-          });
+          UIManager.measureLayoutRelativeToParent(handle,
+            //@ts-ignore
+            e => {
+              console.warn(e);
+            },
+            (x: number, _y: number, w: number, _h: number) => {
+              if (x + w > this.containerWidth) {
+                this.scrollBar?.current?.scrollTo({
+                  x: x + w + HORIZONTAL_PADDING - this.containerWidth,
+                  y: 0,
+                  animated: false
+                });
+              }
+            });
         }
       }
     } else if (this.usePagination) {

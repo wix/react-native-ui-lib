@@ -108,7 +108,8 @@ export interface CarouselState {
 }
 
 // @ts-ignore
-class CarouselTypesForDocs extends React.Component<CarouselProps> { // eslint-disable-line
+// eslint-disable-next-line
+class CarouselTypesForDocs extends React.Component<CarouselProps> {
   static displayName = 'Carousel';
 
   render() {

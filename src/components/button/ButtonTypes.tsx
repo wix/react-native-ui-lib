@@ -165,8 +165,9 @@ export const DEFAULT_PROPS = {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Animated.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
  */
-// @ts-ignore 
-class FakeButtonForDocs extends PureComponent<ButtonProps> { // eslint-disable-line
+// @ts-ignore
+// eslint-disable-next-line
+class FakeButtonForDocs extends PureComponent<ButtonProps> {
   static displayName = 'Button';
 
   static defaultProps = DEFAULT_PROPS;
