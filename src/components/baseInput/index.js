@@ -101,11 +101,11 @@ export default class BaseInput extends BaseComponent {
     }
   };
 
-  onChange = (event) => {
+  onChange = event => {
     _.invoke(this.props, 'onChange', event);
   };
 
-  onChangeText = (text) => {
+  onChangeText = text => {
     _.invoke(this.props, 'onChangeText', text);
     this.setState({value: text});
 
@@ -147,8 +147,7 @@ export default class BaseInput extends BaseComponent {
     if (!validate) {
       return;
     }
-    
-    
+
     let isValid = true;
     const inputValidators = _.isArray(validate) ? validate : [validate];
     let failingValidatorIndex;
@@ -205,7 +204,7 @@ export default class BaseInput extends BaseComponent {
 
   getRequiredPlaceholder(placeholder) {
     const {markRequired} = this.getThemeProps();
-    const shouldDisplayPlaceholderAsRequired = (this.isRequiredField() && markRequired && placeholder);
+    const shouldDisplayPlaceholderAsRequired = this.isRequiredField() && markRequired && placeholder;
 
     if (shouldDisplayPlaceholderAsRequired) {
       return `${placeholder} *`;

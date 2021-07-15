@@ -5,9 +5,9 @@ import AnimatedImage from '../animatedImage';
 import {Colors} from '../../style';
 
 /**
- * @description: Image component that loads first a small thumbnail of the images, 
+ * @description: Image component that loads first a small thumbnail of the images,
  *               and fades-in the full-sized image with animation once it's loaded
- * @extends: Animated.Image 
+ * @extends: Animated.Image
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressiveImageScreen.js
  */
 class ProgressiveImage extends React.Component {
@@ -25,22 +25,11 @@ class ProgressiveImage extends React.Component {
   getThumbnail = () => {
     const {thumbnailSource, ...props} = this.props;
 
-    return (
-      <AnimatedImage                
-        {...props}
-        source={thumbnailSource}
-        loader={<View style={styles.container}/>}        
-      />
-    );
-  }
+    return <AnimatedImage {...props} source={thumbnailSource} loader={<View style={styles.container}/>}/>;
+  };
 
-  render() {    
-    return (
-      <AnimatedImage        
-        {...this.props}
-        loader={this.getThumbnail()}
-      />
-    );
+  render() {
+    return <AnimatedImage {...this.props} loader={this.getThumbnail()}/>;
   }
 }
 
@@ -49,6 +38,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.grey60
   }
 });
-
 
 export default ProgressiveImage;

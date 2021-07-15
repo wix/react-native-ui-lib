@@ -1579,7 +1579,7 @@ const colorNameMap = [
 //     const pair = [colors[key].substr(1), key];
 //     map.push(pair);
 //   });
-  
+
 //   return map;
 // }
 // const systemColorsMap = getSystemColorsMap();

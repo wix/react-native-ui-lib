@@ -89,12 +89,16 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   getAnimatedStyle = () => {
     return {
       opacity: this.visibleAnimated,
-      transform: [{translateY: this.visibleAnimated.interpolate({
-        inputRange: [0, 1],
-        outputRange: [Constants.screenHeight / 2, 0]
-      })}]
+      transform: [
+        {
+          translateY: this.visibleAnimated.interpolate({
+            inputRange: [0, 1],
+            outputRange: [Constants.screenHeight / 2, 0]
+          })
+        }
+      ]
     };
-  }
+  };
 
   renderButton() {
     const {bottomMargin, button, secondaryButton, testID} = this.props;
@@ -114,11 +118,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     if (!this.props.hideBackgroundOverlay) {
       return (
         <View pointerEvents={'none'} style={styles.image}>
-          <Image
-            style={styles.image}
-            source={gradientImage()}
-            resizeMode={'stretch'}
-          />
+          <Image style={styles.image} source={gradientImage()} resizeMode={'stretch'}/>
         </View>
       );
     }
@@ -142,7 +142,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   render() {
     const {withoutAnimation, secondaryButton, visible, testID} = this.props;
     // NOTE: keep this.firstLoad as true as long as the visibility changed to true
-    this.firstLoad && !visible ? this.firstLoad = true : this.firstLoad = false;
+    this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
 
     // NOTE: On first load, don't show if it should not be visible
     if (this.firstLoad === true && !this.initialVisibility) {
@@ -153,12 +153,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     }
 
     return (
-      <View
-        pointerEvents="box-none"
-        animated
-        style={[styles.container, this.getAnimatedStyle()]}
-        testID={testID}
-      >
+      <View pointerEvents="box-none" animated style={[styles.container, this.getAnimatedStyle()]} testID={testID}>
         {this.renderOverlay()}
         {this.renderButton()}
         {secondaryButton && this.renderSecondaryButton()}

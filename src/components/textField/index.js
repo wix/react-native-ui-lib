@@ -221,7 +221,7 @@ export default class TextField extends BaseInput {
     }
   }
 
-  onPlaceholderLayout = (event) => {
+  onPlaceholderLayout = event => {
     const {width} = event.nativeEvent.layout;
     const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
     this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
@@ -257,10 +257,10 @@ export default class TextField extends BaseInput {
     };
   }
 
-  toggleExpandableModal = (value) => {
+  toggleExpandableModal = value => {
     this.setState({showExpandableModal: value});
     _.invoke(this.props, 'onToggleExpandableModal', value);
-  }
+  };
 
   updateFloatingPlaceholderState = withoutAnimation => {
     if (withoutAnimation) {
@@ -321,8 +321,8 @@ export default class TextField extends BaseInput {
 
   setCharCountColor(key) {
     this.maxReached = key === Constants.backspaceKey ? false : this.isCounterLimit();
-    const color = this.state.focused && this.maxReached ?
-      CHAR_COUNTER_COLOR_BY_STATE.error : CHAR_COUNTER_COLOR_BY_STATE.default;
+    const color =
+      this.state.focused && this.maxReached ? CHAR_COUNTER_COLOR_BY_STATE.error : CHAR_COUNTER_COLOR_BY_STATE.default;
 
     if (color !== this.state.charCountColor) {
       this.setState({charCountColor: color});
@@ -413,7 +413,8 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState, floatingPlaceholderTranslate} = this.state;
-    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle} = this.getThemeProps();
+    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle} =
+      this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
@@ -594,7 +595,7 @@ export default class TextField extends BaseInput {
     const {lineHeight, ...typographyStyle} = typography;
     const textColor = this.getStateColor(color || this.extractColorValue());
     const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
-    const shouldUseMultiline = multiline/*  || expandable */;
+    const shouldUseMultiline = multiline; /*  || expandable */
 
     const inputStyle = [
       hasRightElement && this.styles.rightElement,
@@ -645,8 +646,10 @@ export default class TextField extends BaseInput {
 
       return (
         <TouchableOpacity
-          {...others} accessibilityLabel={accessibilityLabel}
-          style={[this.styles.rightButton, this.getTopErrorsPosition(), style]} onPress={this.onPressRightButton}
+          {...others}
+          accessibilityLabel={accessibilityLabel}
+          style={[this.styles.rightButton, this.getTopErrorsPosition(), style]}
+          onPress={this.onPressRightButton}
         >
           <Image
             pointerEvents="none"
@@ -665,7 +668,11 @@ export default class TextField extends BaseInput {
     if (rightIconSource) {
       return (
         <View style={[this.styles.rightButton, this.getTopErrorsPosition()]} pointerEvents="none">
-          <Image source={rightIconSource} resizeMode={'center'} style={[this.styles.rightButtonImage, rightIconStyle]}/>
+          <Image
+            source={rightIconSource}
+            resizeMode={'center'}
+            style={[this.styles.rightButtonImage, rightIconStyle]}
+          />
         </View>
       );
     }
@@ -750,11 +757,10 @@ export default class TextField extends BaseInput {
 }
 
 function createStyles({centered, multiline}, rightItemTopPadding = 0) {
-  const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
+  const itemTopPadding = Constants.isIOS ? rightItemTopPadding - 3 : rightItemTopPadding - 1;
 
   return StyleSheet.create({
-    container: {
-    },
+    container: {},
     innerContainer: {
       // flexGrow: 1, // create bugs with lineHeight
       flexDirection: 'row',

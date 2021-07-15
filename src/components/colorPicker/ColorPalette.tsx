@@ -11,7 +11,6 @@ import PageControl from '../pageControl';
 import ColorSwatch, {SWATCH_SIZE} from './ColorSwatch';
 import ScrollBar from '../scrollBar';
 
-
 interface Props {
   /**
    * Array of colors to render in the palette
@@ -59,10 +58,10 @@ interface Props {
 export type ColorPaletteProps = Props;
 
 interface State {
-  currentPage: number,
-  scrollable: boolean,
-  orientation?: string,
-  contentWidth?: number
+  currentPage: number;
+  scrollable: boolean;
+  orientation?: string;
+  contentWidth?: number;
 }
 
 const VERTICAL_PADDING = 16;
@@ -241,7 +240,9 @@ class ColorPalette extends PureComponent<Props, State> {
 
   onContentSizeChange = (contentWidth: number) => {
     this.setState({
-      scrollable: contentWidth > this.containerWidth, contentWidth});
+      scrollable: contentWidth > this.containerWidth,
+      contentWidth
+    });
   };
 
   onChangePage = (index: number) => {
@@ -298,7 +299,7 @@ class ColorPalette extends PureComponent<Props, State> {
     if (this.itemsRefs && ref) {
       this.itemsRefs[index] = ref;
     }
-  }
+  };
 
   renderColorSwatch(color: string, index: number) {
     const {animatedIndex, testID} = this.props;

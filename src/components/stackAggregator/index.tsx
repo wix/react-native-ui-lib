@@ -16,48 +16,47 @@ const buttonStartValue = 0.8;
 const icon = require('./assets/arrow-down.png');
 
 export type StackAggregatorProps = ViewProps & {
-   /**
-     * The initial state of the stack
-     */
-    collapsed: boolean;
-    /**
-     * Component Children
-     */
-     children: JSX.Element | JSX.Element[]
-    /**
-     * The container style
-     */
-    containerStyle?: StyleProp<ViewStyle>;
-    /**
-     * The content container style
-     */
-    contentContainerStyle?: StyleProp<ViewStyle>;
-    /**
-     * The items border radius
-     */
-    itemBorderRadius?: number;
-    /**
-     * Props passed to the 'show less' button
-     */
-    buttonProps?: ButtonProps;
-    /**
-     * A callback for item press
-     */
-    onItemPress?: (index: number) => void;
-    /**
-     * A callback for collapse state will change (value is future collapsed state)
-     */
-    onCollapseWillChange?: (changed: boolean) => void;
-    /**
-     * A callback for collapse state change (value is collapsed state)
-     */
-    onCollapseChanged?: (changed: boolean) => void;
-    /**
-     * A setting that disables pressability on cards
-     */
-    disablePresses?: boolean;
+  /**
+   * The initial state of the stack
+   */
+  collapsed: boolean;
+  /**
+   * Component Children
+   */
+  children: JSX.Element | JSX.Element[];
+  /**
+   * The container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The content container style
+   */
+  contentContainerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The items border radius
+   */
+  itemBorderRadius?: number;
+  /**
+   * Props passed to the 'show less' button
+   */
+  buttonProps?: ButtonProps;
+  /**
+   * A callback for item press
+   */
+  onItemPress?: (index: number) => void;
+  /**
+   * A callback for collapse state will change (value is future collapsed state)
+   */
+  onCollapseWillChange?: (changed: boolean) => void;
+  /**
+   * A callback for collapse state change (value is collapsed state)
+   */
+  onCollapseChanged?: (changed: boolean) => void;
+  /**
+   * A setting that disables pressability on cards
+   */
+  disablePresses?: boolean;
 };
-
 
 type State = {
   collapsed: boolean;
@@ -107,7 +106,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
     return React.Children.map(this.props.children, (_item, index) => {
       return new Animated.Value(this.getItemScale(index));
     });
-  }
+  };
 
   getItemScale = (index: number) => {
     if (this.state.collapsed) {
@@ -119,7 +118,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
       }
     }
     return 1;
-  }
+  };
 
   animate = async () => {
     return Promise.all([this.animateValues(), this.animateCards()]);
@@ -156,16 +155,14 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
     for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
 
-      promises.push(
-        new Promise(resolve => {
-          Animated.timing(this.animatedScaleArray[index], {
-            toValue: Number(newScale),
-            easing: this.easeOut,
-            duration: DURATION,
-            useNativeDriver: true
-          }).start(resolve);
-        })
-      );
+      promises.push(new Promise(resolve => {
+        Animated.timing(this.animatedScaleArray[index], {
+          toValue: Number(newScale),
+          easing: this.easeOut,
+          duration: DURATION,
+          useNativeDriver: true
+        }).start(resolve);
+      }));
     }
     return Promise.all(promises);
   }

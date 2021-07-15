@@ -2,7 +2,6 @@ import {StyleSheet, PixelRatio} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 
-
 export default function createStyles() {
   const separatorColor = Colors.dark70;
   const bottomTextMargin = 4; // use margins to center the text until we move to using assets

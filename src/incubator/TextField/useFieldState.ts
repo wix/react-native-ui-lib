@@ -5,7 +5,6 @@ import {useDidUpdate} from 'hooks';
 import {Validator} from './types';
 import {InputProps} from './Input';
 
-
 export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
@@ -17,7 +16,7 @@ export interface FieldStateProps extends InputProps {
   /**
    * Callback for when field validity has changed
    */
-  onChangeValidity?: (isValid: boolean) => void
+  onChangeValidity?: (isValid: boolean) => void;
 }
 
 export default function useFieldState({

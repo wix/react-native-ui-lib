@@ -13,18 +13,15 @@ import Dialog from '../dialog';
 import View from '../view';
 import Button from '../button';
 
-
 const MODES = {
   DATE: 'date',
   TIME: 'time'
 };
 
-
 const THEME_VARIANTS = {
   LIGHT: 'light',
   DARK: 'dark'
 };
-
 
 /*eslint-disable*/
 /**
@@ -247,7 +244,8 @@ class DateTimePicker extends Component {
     }
 
     const {value, showExpandableOverlay} = this.state;
-    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes, themeVariant} = this.props;
+    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes, themeVariant} =
+      this.props;
 
     if (showExpandableOverlay) {
       return (
@@ -291,7 +289,6 @@ class DateTimePicker extends Component {
 
 export {DateTimePicker}; // For tests
 export default asBaseComponent(DateTimePicker);
-
 
 const styles = StyleSheet.create({
   header: {

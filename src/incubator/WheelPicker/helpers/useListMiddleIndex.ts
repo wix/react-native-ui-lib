@@ -1,7 +1,7 @@
 type ItemType = {
-    itemHeight: number;
-    listSize: number;
-}
+  itemHeight: number;
+  listSize: number;
+};
 
 export default ({itemHeight, listSize}: ItemType) => {
   const valueInRange = (value: number, min: number, max: number): number => {

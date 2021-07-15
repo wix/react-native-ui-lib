@@ -27,14 +27,15 @@ const OverlayFadingBackground = ({
     propsOnFadeDone?.();
   }, [propsOnFadeDone]);
 
-  const animateFading = useCallback((toValue) => {
+  const animateFading = useCallback(toValue => {
     isAnimating.current = true;
     Animated.timing(fadeAnimation, {
       toValue,
       duration: 400,
       useNativeDriver: true
     }).start(onFadeDone);
-  }, [fadeAnimation, onFadeDone]);
+  },
+  [fadeAnimation, onFadeDone]);
 
   useEffect(() => {
     if (!isAnimating.current && (!dialogVisibility || fadeOut)) {

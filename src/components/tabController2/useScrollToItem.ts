@@ -64,7 +64,7 @@ export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<
   /**
    * The items' offsets as share animated value
    */
-   itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
+  itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
   /**
    * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
    */

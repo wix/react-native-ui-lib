@@ -27,7 +27,14 @@ export class ColorName {
       color = '#' + color;
     }
     if (color.length === 4) {
-      color = '#' + color.substr(1, 1) + color.substr(1, 1) + color.substr(2, 1) + color.substr(2, 1) + color.substr(3, 1) + color.substr(3, 1);
+      color =
+        '#' +
+        color.substr(1, 1) +
+        color.substr(1, 1) +
+        color.substr(2, 1) +
+        color.substr(2, 1) +
+        color.substr(3, 1) +
+        color.substr(3, 1);
     }
 
     const rgb = this._rgb(color);
@@ -39,9 +46,9 @@ export class ColorName {
     const h = hsl[0];
     const s = hsl[1];
     const l = hsl[2];
-    
-    let ndf1 = 0; 
-    let ndf2 = 0; 
+
+    let ndf1 = 0;
+    let ndf2 = 0;
     let ndf = 0;
 
     let cl = -1;
@@ -55,22 +62,22 @@ export class ColorName {
       ndf1 = Math.pow(r - names[i][2], 2) + Math.pow(g - names[i][3], 2) + Math.pow(b - names[i][4], 2);
       ndf2 = Math.pow(h - names[i][5], 2) + Math.pow(s - names[i][6], 2) + Math.pow(l - names[i][7], 2);
       ndf = ndf1 + ndf2 * 2;
-      
+
       if (df < 0 || df > ndf) {
         df = ndf;
         cl = i;
       }
     }
 
-    return (cl < 0 ? ['#000000', 'Invalid Color: ' + color, false] : ['#' + names[cl][0], names[cl][1], false]);
+    return cl < 0 ? ['#000000', 'Invalid Color: ' + color, false] : ['#' + names[cl][0], names[cl][1], false];
   }
 
   // adopted from: Farbtastic 1.2
   // http://acko.net/dev/farbtastic
   _hsl(color: string) {
     const rgb = [
-      parseInt('0x' + color.substring(1, 3)) / 255, 
-      parseInt('0x' + color.substring(3, 5)) / 255, 
+      parseInt('0x' + color.substring(1, 3)) / 255,
+      parseInt('0x' + color.substring(3, 5)) / 255,
       parseInt('0x' + color.substring(5, 7)) / 255
     ];
     const r = rgb[0];
@@ -84,7 +91,7 @@ export class ColorName {
 
     let s = 0;
     if (l > 0 && l < 1) {
-      s = delta / (l < 0.5 ? (2 * l) : (2 - 2 * l));
+      s = delta / (l < 0.5 ? 2 * l : 2 - 2 * l);
     }
 
     let h = 0;
@@ -93,17 +100,17 @@ export class ColorName {
         h += (g - b) / delta;
       }
       if (max === g && max !== b) {
-        h += (2 + (b - r) / delta);
+        h += 2 + (b - r) / delta;
       }
       if (max === b && max !== r) {
-        h += (4 + (r - g) / delta);
+        h += 4 + (r - g) / delta;
       }
       h /= 6;
     }
 
     return [
       //@ts-ignore
-      parseInt(h * 255), 
+      parseInt(h * 255),
       //@ts-ignore
       parseInt(s * 255),
       //@ts-ignore
@@ -115,8 +122,8 @@ export class ColorName {
   // http://acko.net/dev/farbtastic
   _rgb(color: string) {
     return [
-      parseInt('0x' + color.substring(1, 3)), 
-      parseInt('0x' + color.substring(3, 5)), 
+      parseInt('0x' + color.substring(1, 3)),
+      parseInt('0x' + color.substring(3, 5)),
       parseInt('0x' + color.substring(5, 7))
     ];
   }

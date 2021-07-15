@@ -45,7 +45,7 @@ const PickerItem = props => {
   const isItemDisabled = useMemo(() => {
     return disabled || (!isSelected && context.selectionLimit && context.selectionLimit === selectedCounter);
   }, [selectedCounter]);
-  
+
   useEffect(() => {
     if (_.isPlainObject(value)) {
       LogService.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
@@ -62,7 +62,7 @@ const PickerItem = props => {
     if (migrate) {
       context.onPress(value);
     } else {
-      context.onPress((_.isPlainObject(value) || context.isMultiMode) ? value : {value, label: itemLabel});
+      context.onPress(_.isPlainObject(value) || context.isMultiMode ? value : {value, label: itemLabel});
     }
   }, [migrate, value, context.onPress]);
 

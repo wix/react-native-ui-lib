@@ -10,7 +10,6 @@ import {
 } from '../../commons/new';
 import {Constants} from 'helpers';
 
-
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
   /**
    * If true, will render as SafeAreaView
@@ -21,7 +20,7 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
    */
   animated?: boolean;
   /**
-    * Use Animate.View (from react-native-reanimated) as a container
+   * Use Animate.View (from react-native-reanimated) as a container
    */
   reanimated?: boolean;
   /**

@@ -6,7 +6,6 @@ import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
 import asCardChild, {asCardChildProps} from './asCardChild';
 
-
 // TODO: Remove omitting source after imageSource deprecation (since it's required for Image)
 export type CardImageProps = Omit<ImageProps, 'source'> & {
   /**
@@ -72,12 +71,7 @@ class CardImage extends PureComponent<Props> {
     if (finalSource) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
-          <Image
-            testID={testID}
-            source={finalSource}
-            style={[this.styles.image]}
-            overlayType={overlayType}
-          />
+          <Image testID={testID} source={finalSource} style={[this.styles.image]} overlayType={overlayType}/>
         </View>
       );
     }
@@ -86,9 +80,7 @@ class CardImage extends PureComponent<Props> {
 }
 
 function createStyles({width, height, context: {position}}: Props) {
-  const {top, left, right, bottom} = CardPresenter.extractPositionValues(
-    position
-  );
+  const {top, left, right, bottom} = CardPresenter.extractPositionValues(position);
   return StyleSheet.create({
     container: {
       height: left || right ? undefined : height,

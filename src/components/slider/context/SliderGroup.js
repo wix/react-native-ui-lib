@@ -5,13 +5,12 @@ import SliderContext from './SliderContext';
 import {Colors} from '../../../style';
 import View from '../../view';
 
-
 export default class SliderGroup extends Component {
   static displayName = 'IGNORE';
   static propTypes = {
     color: PropTypes.string,
     onValueChange: PropTypes.func
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -28,17 +27,15 @@ export default class SliderGroup extends Component {
     };
   }
 
-  setValue = (value) => {
+  setValue = value => {
     this.setState({value});
     _.invoke(this.props, 'onValueChange', Colors.getHexString(value));
-  }
+  };
 
   render() {
     return (
       <View {...this.props}>
-        <SliderContext.Provider value={this.getContextProviderValue()}>
-          {this.props.children}
-        </SliderContext.Provider>
+        <SliderContext.Provider value={this.getContextProviderValue()}>{this.props.children}</SliderContext.Provider>
       </View>
     );
   }

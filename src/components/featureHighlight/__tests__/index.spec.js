@@ -2,7 +2,6 @@ import {updateConstants} from '../../../helpers/Constants';
 import {testable as FeatureHighlight} from '../';
 
 describe('FeatureHighlight', () => {
-
   beforeEach(() => {
     mockScreenDimentions();
   });
@@ -59,7 +58,7 @@ describe('FeatureHighlight', () => {
       expect(FeatureHighlight.findTargetNode).toHaveBeenCalledWith(mockTarget);
 
       jest.runAllTimers();
-      
+
       expect(setTimeout).toHaveBeenCalledTimes(1);
       expect(mockTarget.measureInWindow).toBeCalled();
     });

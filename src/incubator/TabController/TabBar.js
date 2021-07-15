@@ -17,22 +17,8 @@ import {LogService} from '../../services';
 
 const DEFAULT_HEIGHT = 48;
 const INDICATOR_INSET = Spacings.s4;
-const {
-  Code,
-  Clock,
-  Value,
-  and,
-  eq,
-  neq,
-  cond,
-  stopClock,
-  startClock,
-  interpolate,
-  Extrapolate,
-  timing,
-  block,
-  set
-} = Reanimated;
+const {Code, Clock, Value, and, eq, neq, cond, stopClock, startClock, interpolate, Extrapolate, timing, block, set} =
+  Reanimated;
 
 /**
  * @description: TabController's TabBar component
@@ -187,7 +173,7 @@ class TabBar extends PureComponent {
         this.tabBar.current.scrollTo({x: this.tabBarScrollOffset + offsetChange + itemWidth});
       }
     }
-  }
+  };
 
   onItemLayout = (itemWidth, itemIndex) => {
     this._itemsWidths[itemIndex] = itemWidth;
@@ -199,8 +185,8 @@ class TabBar extends PureComponent {
 
       this.setState({itemsWidths, itemsOffsets});
       const selectedItemOffset = itemsOffsets[selectedIndex] - INDICATOR_INSET;
-      
-      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {  
+
+      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {
         this.tabBar.current.scrollTo({x: selectedItemOffset, animated: true});
       }
     }
@@ -208,7 +194,7 @@ class TabBar extends PureComponent {
 
   onScroll = ({nativeEvent: {contentOffset}}) => {
     this.tabBarScrollOffset = contentOffset.x;
-  }
+  };
 
   onContentSizeChange = width => {
     if (width > this.containerWidth) {

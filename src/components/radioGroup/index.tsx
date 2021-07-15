@@ -1,11 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent, GetDerivedStateFromProps} from 'react';
-import {
-  asBaseComponent,
-  forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps
-} from '../../commons/new';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
@@ -17,7 +12,11 @@ export type RadioGroupProps = ViewProps & {
   /**
    * Invoked once when value changes, by selecting one of the radio buttons in the group
    */
-  onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void);
+  onValueChange?:
+    | ((value: string) => void)
+    | ((value: number) => void)
+    | ((value: boolean) => void)
+    | ((value: any) => void);
 };
 export type RadioGroupPropTypes = RadioGroupProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -26,9 +25,7 @@ interface RadioGroupState {
   value?: RadioGroupProps['initialValue'];
 }
 
-type Props = RadioGroupProps &
-  BaseComponentInjectedProps &
-  ForwardRefInjectedProps;
+type Props = RadioGroupProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
  * @description: Wrap a group of Radio Buttons to automatically control their selection
@@ -57,7 +54,7 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
     }
 
     return null;
-  }
+  };
 
   getContextProviderValue() {
     const {value} = this.state;

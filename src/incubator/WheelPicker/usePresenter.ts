@@ -33,7 +33,6 @@ const usePresenter = ({
   itemHeight,
   preferredNumVisibleRows
 }: PropTypes): Presenter => {
-  
   const extractItemsFromChildren = (): ItemProps[] => {
     const items = React.Children.map(children, child => {
       const childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};

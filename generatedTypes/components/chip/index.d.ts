@@ -37,8 +37,8 @@ export declare type ChipProps = ViewProps & TouchableOpacityProps & {
      */
     resetSpacings?: boolean;
     /**
-   * Used as testing identifier
-   */
+     * Used as testing identifier
+     */
     testID?: string;
     /**
      * Main Chip text
@@ -139,8 +139,8 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      */
     resetSpacings?: boolean | undefined;
     /**
-   * Used as testing identifier
-   */
+     * Used as testing identifier
+     */
     testID?: string | undefined;
     /**
      * Main Chip text

@@ -76,11 +76,7 @@ type ActionSheetProps = {
    * Render custom action
    * Note: you will need to call onOptionPress so the option's onPress will be called
    */
-  renderAction?: (
-    option: ButtonProps,
-    index: number,
-    onOptionPress: ActionSheetOnOptionPress
-  ) => JSX.Element;
+  renderAction?: (option: ButtonProps, index: number, onOptionPress: ActionSheetOnOptionPress) => JSX.Element;
   /**
    * Called once the modal has been dismissed (iOS only, modal only)
    */
@@ -125,16 +121,14 @@ class ActionSheet extends Component<ActionSheetProps> {
         cancelBtnIndex = optionsArray.length - 1;
       }
 
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          title,
-          message,
-          options: optionsArray.map(option => option?.label || ''),
-          cancelButtonIndex: cancelBtnIndex,
-          destructiveButtonIndex
-        },
-        this.onOptionPress
-      );
+      ActionSheetIOS.showActionSheetWithOptions({
+        title,
+        message,
+        options: optionsArray.map(option => option?.label || ''),
+        cancelButtonIndex: cancelBtnIndex,
+        destructiveButtonIndex
+      },
+      this.onOptionPress);
     }
   }
 
@@ -147,7 +141,7 @@ class ActionSheet extends Component<ActionSheetProps> {
     // @ts-ignore
     let source = option.icon;
     if (!source) {
-      source = _.isFunction(option.iconSource) ? option.iconSource() : option.iconSource as ImageProps['source'];
+      source = _.isFunction(option.iconSource) ? option.iconSource() : (option.iconSource as ImageProps['source']);
     }
     return source && this.renderIcon(source);
   };
@@ -215,8 +209,7 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea} =
-      this.props;
+    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea} = this.props;
 
     if (Constants.isIOS && useNativeIOS) {
       return null;

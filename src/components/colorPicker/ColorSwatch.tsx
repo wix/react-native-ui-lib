@@ -9,7 +9,6 @@ import Image from '../image';
 import {Colors} from '../../style';
 import {Constants} from '../../helpers';
 
-
 interface Props {
   /**
    * The identifier value of the ColorSwatch in a ColorSwatch palette.
@@ -195,7 +194,6 @@ class ColorSwatch extends PureComponent<Props> {
 }
 
 export default asBaseComponent<Props>(ColorSwatch);
-
 
 function createStyles({color = Colors.dark30}) {
   return StyleSheet.create({

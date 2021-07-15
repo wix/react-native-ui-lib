@@ -4,12 +4,7 @@ import {StyleSheet, Animated, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
-import {
-  asBaseComponent,
-  forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps
-} from '../../commons/new';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
@@ -22,7 +17,6 @@ import CardContext from './CardContext';
 import * as CardPresenter from './CardPresenter';
 
 const BlurView = BlurViewPackage?.BlurView;
-
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
@@ -95,9 +89,7 @@ export type CardProps = ViewProps &
   };
 export type CardPropTypes = CardProps; //TODO: remove after ComponentPropTypes deprecation;
 
-type PropTypes = BaseComponentInjectedProps &
-  ForwardRefInjectedProps &
-  CardProps;
+type PropTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & CardProps;
 
 type State = {
   animatedSelected: Animated.Value;
@@ -214,7 +206,7 @@ class Card extends PureComponent<PropTypes, State> {
   get children() {
     const {children} = this.props;
 
-    return React.Children.toArray(children).filter((child) => {
+    return React.Children.toArray(children).filter(child => {
       return !_.isNull(child);
     });
   }
@@ -222,11 +214,7 @@ class Card extends PureComponent<PropTypes, State> {
   renderSelection() {
     const {selectionOptions = {}, selected} = this.props;
     const {animatedSelected} = this.state;
-    const selectionColor = _.get(
-      selectionOptions,
-      'color',
-      DEFAULT_SELECTION_PROPS.color
-    );
+    const selectionColor = _.get(selectionOptions, 'color', DEFAULT_SELECTION_PROPS.color);
 
     if (_.isUndefined(selected)) {
       return null;
@@ -243,19 +231,10 @@ class Card extends PureComponent<PropTypes, State> {
         pointerEvents="none"
       >
         {!selectionOptions.hideIndicator && (
-          <View
-            style={[
-              this.styles.selectedIndicator,
-              {backgroundColor: selectionColor}
-            ]}
-          >
+          <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
             <Image
               style={this.styles.selectedIcon}
-              source={_.get(
-                selectionOptions,
-                'icon',
-                DEFAULT_SELECTION_PROPS.icon
-              )}
+              source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)}
             />
           </View>
         )}
@@ -279,16 +258,7 @@ class Card extends PureComponent<PropTypes, State> {
   };
 
   render() {
-    const {
-      onPress,
-      onLongPress,
-      style,
-      selected,
-      containerStyle,
-      enableBlur,
-      forwardedRef,
-      ...others
-    } = this.props;
+    const {onPress, onLongPress, style, selected, containerStyle, enableBlur, forwardedRef, ...others} = this.props;
     const blurOptions = this.getBlurOptions();
     const Container = onPress || onLongPress ? TouchableOpacity : View;
     const brRadius = this.borderRadius;
@@ -314,10 +284,7 @@ class Card extends PureComponent<PropTypes, State> {
       >
         {Constants.isIOS && enableBlur && BlurView && (
           // @ts-ignore
-          <BlurView
-            style={[this.styles.blurView, {borderRadius: brRadius}]}
-            {...blurOptions}
-          />
+          <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>
         )}
 
         {this.renderChildren()}
@@ -327,18 +294,12 @@ class Card extends PureComponent<PropTypes, State> {
   }
 }
 
-function createStyles({
-  width,
-  height,
-  borderRadius,
-  selectionOptions
-}: CardProps) {
+function createStyles({width, height, borderRadius, selectionOptions}: CardProps) {
   const selectionOptionsWithDefaults = {
     ...DEFAULT_SELECTION_PROPS,
     ...selectionOptions
   };
-  const brRadius =
-    borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
+  const brRadius = borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
 
   return StyleSheet.create({
     container: {

@@ -184,7 +184,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
     if (prevState?.getTarget === nextProps?.getTarget) {
       return null;
     }
-    
+
     const target = nextProps?.getTarget?.();
     const node = FeatureHighlight.findTargetNode(target);
     if (node && node !== prevState?.node) {
@@ -199,7 +199,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
       nextProps.title !== this.props.title ||
       nextProps.visible !== this.props.visible
     );
-  }
+  };
 
   componentDidUpdate(nextProps: FeatureHighlightProps) {
     if (this.shouldSetTargetPosition(nextProps)) {
@@ -227,8 +227,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
         toValue, // Animate to value
         duration: toValue ? 100 : 0, // Make it take a while
         useNativeDriver: true
-      }
-    ).start(); // Starts the animation
+      }).start(); // Starts the animation
   }
 
   setTargetPosition(props = this.props) {
@@ -264,9 +263,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
       topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + minRectHeight / 2 + innerPadding / 2;
     }
     if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
-      console.warn(
-        `Content is too long and might appear off screen. Please adjust the message length for better results.`
-      );
+      console.warn(`Content is too long and might appear off screen. Please adjust the message length for better results.`);
     }
     return topPosition;
   }

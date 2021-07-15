@@ -11,7 +11,7 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
      */
     animated?: boolean;
     /**
-      * Use Animate.View (from react-native-reanimated) as a container
+     * Use Animate.View (from react-native-reanimated) as a container
      */
     reanimated?: boolean;
     /**

@@ -120,7 +120,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    * Hash the name (or label) to get a color, so each name will have a specific color.
    * Default is false.
    */
-   useAutoColors?: boolean;
+  useAutoColors?: boolean;
   /**
    * Send this to use the name to infer a backgroundColor
    */

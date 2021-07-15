@@ -4,7 +4,6 @@ import {Colors} from '../../style';
 const BaseComponent = baseComponent(false);
 
 describe('BaseComponent', () => {
-  
   describe('updateModifiers', () => {
     it('should update state with new modifiers values if modifiers props have changed', () => {
       const uut = new BaseComponent({});

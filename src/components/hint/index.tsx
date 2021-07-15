@@ -122,8 +122,8 @@ export interface HintProps {
    */
   onPress?: () => void;
   /**
-    * Callback for the background press
-    */
+   * Callback for the background press
+   */
   onBackgroundPress?: (event: GestureResponderEvent) => void;
   /**
    * The hint container width
@@ -206,7 +206,7 @@ class Hint extends Component<HintProps, HintState> {
     const {message} = this.props;
     const targetRefTag = findNodeHandle(this.targetRef);
     const hintRefTag = findNodeHandle(this.hintRef);
-    
+
     if (targetRefTag && _.isString(message)) {
       AccessibilityInfo.setAccessibilityFocus(targetRefTag);
     } else if (hintRefTag) {
@@ -297,7 +297,7 @@ class Hint extends Component<HintProps, HintState> {
   getTargetPositionOnScreen() {
     if (this.targetLayout?.x && this.targetLayout?.width) {
       const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
-      
+
       if (targetMidPosition > this.containerWidth * (2 / 3)) {
         return TARGET_POSITIONS.RIGHT;
       } else if (targetMidPosition < this.containerWidth * (1 / 3)) {
@@ -340,7 +340,7 @@ class Hint extends Component<HintProps, HintState> {
 
   getHintPadding() {
     const paddings: Paddings = {paddingVertical: this.hintOffset, paddingHorizontal: this.edgeMargins};
-    
+
     if (this.useSideTip && this.targetLayout?.x) {
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
       if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
@@ -356,7 +356,7 @@ class Hint extends Component<HintProps, HintState> {
   getHintAnimatedStyle = () => {
     const {position} = this.props;
     const translateY = position === HintPositions.TOP ? -10 : 10;
-    
+
     return {
       opacity: this.visibleAnimated,
       transform: [
@@ -453,14 +453,14 @@ class Hint extends Component<HintProps, HintState> {
 
   renderContent() {
     const {
-      message, 
-      messageStyle, 
-      icon, 
-      iconStyle, 
-      borderRadius, 
-      color, 
-      customContent, 
-      removePaddings, 
+      message,
+      messageStyle,
+      icon,
+      iconStyle,
+      borderRadius,
+      color,
+      customContent,
+      removePaddings,
       enableShadow,
       testID
     } = this.props;
@@ -473,8 +473,8 @@ class Hint extends Component<HintProps, HintState> {
         style={[
           styles.hint,
           !removePaddings && styles.hintPaddings,
-          enableShadow && styles.containerShadow, 
-          color && {backgroundColor: color}, 
+          enableShadow && styles.containerShadow,
+          color && {backgroundColor: color},
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
         ref={this.setHintRef}
@@ -518,7 +518,7 @@ class Hint extends Component<HintProps, HintState> {
     return (
       <View
         {...others}
-        // this view must be collapsable, don't pass testID or backgroundColor etc'. 
+        // this view must be collapsable, don't pass testID or backgroundColor etc'.
         collapsable
         testID={undefined}
         style={[styles.container, style, this.getContainerPosition()]}
@@ -543,7 +543,7 @@ class Hint extends Component<HintProps, HintState> {
 
   render() {
     const {onBackgroundPress, testID} = this.props;
-    
+
     if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children;
     }

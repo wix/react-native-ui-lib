@@ -84,8 +84,8 @@ export interface HintProps {
      */
     onPress?: () => void;
     /**
-      * Callback for the background press
-      */
+     * Callback for the background press
+     */
     onBackgroundPress?: (event: GestureResponderEvent) => void;
     /**
      * The hint container width
@@ -173,7 +173,6 @@ declare class Hint extends Component<HintProps, HintState> {
         }[];
     };
     getTipPosition(): Position;
-    shouldEnableShadow(): boolean | undefined;
     renderHintTip(): JSX.Element;
     renderContent(): JSX.Element;
     renderHint(): JSX.Element | undefined;

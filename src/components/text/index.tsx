@@ -12,34 +12,37 @@ import {
 } from '../../commons/new';
 import {Colors} from 'style';
 
-export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
-  /**
-   * color of the text
-   */
-  color?: string;
-  /**
-   * whether to center the text (using textAlign)
-   */
-  center?: boolean;
-  /**
-   * whether to change the text to uppercase
-   */
-  uppercase?: boolean;
-  /**
-   * Substring to highlight
-   */
-  highlightString?: string;
-  /**
-   * Custom highlight style for highlight string
-   */
-  highlightStyle?: TextStyle;
-  /**
-   * Use Animated.Text as a container
-   */
-  animated?: boolean;
-  textAlign?: string;
-  style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
-}
+export type TextProps = RNTextProps &
+  TypographyModifiers &
+  ColorsModifiers &
+  MarginModifiers & {
+    /**
+     * color of the text
+     */
+    color?: string;
+    /**
+     * whether to center the text (using textAlign)
+     */
+    center?: boolean;
+    /**
+     * whether to change the text to uppercase
+     */
+    uppercase?: boolean;
+    /**
+     * Substring to highlight
+     */
+    highlightString?: string;
+    /**
+     * Custom highlight style for highlight string
+     */
+    highlightStyle?: TextStyle;
+    /**
+     * Use Animated.Text as a container
+     */
+    animated?: boolean;
+    textAlign?: string;
+    style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
+  };
 export type TextPropTypes = TextProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextProps;
@@ -91,7 +94,7 @@ class Text extends PureComponent<PropsTypes> {
 
     if (!_.isEmpty(highlightString)) {
       if (_.isArray(children)) {
-        return _.map(children, (child) => {
+        return _.map(children, child => {
           return this.renderText(child);
         });
       }

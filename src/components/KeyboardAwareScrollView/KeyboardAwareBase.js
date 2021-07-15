@@ -77,7 +77,8 @@ export default class KeyboardAwareBase extends Component {
   _updateKeyboardAwareViewContentSize(width, height) {
     let heightHasChanged = false;
     if (width && height) {
-      if (this.contentSize && this.contentSize.height !== height) { // for FlatList
+      if (this.contentSize && this.contentSize.height !== height) {
+        // for FlatList
         heightHasChanged = true;
       }
 
@@ -85,8 +86,7 @@ export default class KeyboardAwareBase extends Component {
     }
 
     if (this._keyboardAwareView) {
-      if (this.state.scrollBottomOnNextSizeChange ||
-          (this.props.startScrolledToBottom && heightHasChanged)) {
+      if (this.state.scrollBottomOnNextSizeChange || (this.props.startScrolledToBottom && heightHasChanged)) {
         this.scrollToBottom();
         this.setState({scrollBottomOnNextSizeChange: false});
       }
@@ -100,7 +100,7 @@ export default class KeyboardAwareBase extends Component {
   _scrollToFocusedTextInput() {
     if (this.props.getTextInputRefs) {
       const textInputRefs = this.props.getTextInputRefs();
-      textInputRefs.some((textInputRef) => {
+      textInputRefs.some(textInputRef => {
         const isFocusedFunc = textInputRef.isFocused();
         const isFocused = isFocusedFunc && typeof isFocusedFunc === 'function' ? isFocusedFunc() : isFocusedFunc;
         if (isFocused) {

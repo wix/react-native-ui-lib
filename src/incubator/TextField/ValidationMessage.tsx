@@ -32,10 +32,7 @@ const ValidationMessage = ({
     return null;
   }
 
-  const relevantValidationMessage = getRelevantValidationMessage(
-    validationMessage,
-    context.failingValidatorIndex
-  );
+  const relevantValidationMessage = getRelevantValidationMessage(validationMessage, context.failingValidatorIndex);
 
   return (
     <Text red30 style={[styles.validationMessage, validationMessageStyle]}>

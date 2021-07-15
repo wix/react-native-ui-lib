@@ -1,13 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  StyleSheet,
-  PanResponder,
-  ViewPropTypes,
-  AccessibilityInfo,
-  Animated
-} from 'react-native';
+import {StyleSheet, PanResponder, ViewPropTypes, AccessibilityInfo, Animated} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import {Colors} from '../../style';
@@ -184,7 +178,6 @@ export default class Slider extends PureBaseComponent {
     Constants.removeDimensionsEventListener(this.onOrientationChanged);
   }
 
-
   /* Gesture Recognizer */
 
   handleMoveShouldSetPanResponder = () => {
@@ -277,9 +270,9 @@ export default class Slider extends PureBaseComponent {
   scaleThumb = start => {
     const scaleFactor = start ? this.calculatedThumbActiveScale() : 1;
     this.thumbAnimationAction(scaleFactor);
-  }
+  };
 
-  thumbAnimationAction = (toValue) => {
+  thumbAnimationAction = toValue => {
     const {thumbActiveAnimation} = this.state;
     const {duration} = this._thumbAnimationConstants;
     Animated.timing(thumbActiveAnimation, {
@@ -287,7 +280,7 @@ export default class Slider extends PureBaseComponent {
       duration,
       useNativeDriver: true
     }).start();
-  }
+  };
 
   getRoundedValue(value) {
     const {step} = this.props;
@@ -340,19 +333,19 @@ export default class Slider extends PureBaseComponent {
   shouldDoubleSizeByDefault = () => {
     const {activeThumbStyle, thumbStyle} = this.props;
     return !activeThumbStyle || !thumbStyle;
-  }
+  };
 
   calculatedThumbActiveScale = () => {
     const {activeThumbStyle, thumbStyle, disabled, disableActiveStyling} = this.props;
     if (disabled || disableActiveStyling) {
       return 1;
     }
-    
+
     const {defaultScaleFactor} = this._thumbAnimationConstants;
-    if (this.shouldDoubleSizeByDefault()) { 
+    if (this.shouldDoubleSizeByDefault()) {
       return defaultScaleFactor;
     }
-      
+
     const scaleRatioFromSize = activeThumbStyle.height / thumbStyle.height;
     return scaleRatioFromSize || defaultScaleFactor;
   };
@@ -366,7 +359,7 @@ export default class Slider extends PureBaseComponent {
     } else {
       this.updateStyles(this._x);
     }
-  }
+  };
 
   onOrientationChanged = () => {
     this.initialValue = this.lastValue;
@@ -426,7 +419,8 @@ export default class Slider extends PureBaseComponent {
         containerSize: this.containerSize,
         trackSize: this.trackSize,
         thumbSize: this.thumbSize
-      }, () => {
+      },
+      () => {
         this.setState({measureCompleted: true});
       });
     }
@@ -460,11 +454,7 @@ export default class Slider extends PureBaseComponent {
   /* Renders */
 
   renderThumb = () => {
-    const {
-      thumbStyle,
-      disabled,
-      thumbTintColor
-    } = this.getThemeProps();
+    const {thumbStyle, disabled, thumbTintColor} = this.getThemeProps();
     return (
       <Animated.View
         hitSlop={this.thumbHitSlop}
@@ -475,9 +465,7 @@ export default class Slider extends PureBaseComponent {
           styles.thumb,
           thumbStyle,
           {
-            backgroundColor: disabled
-              ? DEFAULT_COLOR
-              : thumbTintColor || ACTIVE_COLOR
+            backgroundColor: disabled ? DEFAULT_COLOR : thumbTintColor || ACTIVE_COLOR
           },
           {
             transform: [
@@ -489,7 +477,7 @@ export default class Slider extends PureBaseComponent {
         ]}
       />
     );
-  }
+  };
 
   render() {
     const {
@@ -512,7 +500,10 @@ export default class Slider extends PureBaseComponent {
         accessibilityRole={'adjustable'}
         accessibilityStates={disabled ? ['disabled'] : []}
         // accessibilityActions={['increment', 'decrement']}
-        accessibilityActions={[{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}]}
+        accessibilityActions={[
+          {name: 'increment', label: 'increment'},
+          {name: 'decrement', label: 'decrement'}
+        ]}
         onAccessibilityAction={this.onAccessibilityAction}
         testID={testID}
       >
@@ -548,7 +539,7 @@ export default class Slider extends PureBaseComponent {
             />
           </View>
         )}
-        
+
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
         {this.renderThumb()}
       </View>

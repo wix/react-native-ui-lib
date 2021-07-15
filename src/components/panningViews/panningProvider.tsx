@@ -60,15 +60,8 @@ export default class PanningProvider extends Component<any, State> {
   }
 
   getProviderContextValue = () => {
-    const {
-      isPanning,
-      wasTerminated,
-      dragDirections,
-      dragDeltas,
-      swipeDirections,
-      swipeVelocities,
-      panLocation
-    } = this.state;
+    const {isPanning, wasTerminated, dragDirections, dragDeltas, swipeDirections, swipeVelocities, panLocation} =
+      this.state;
 
     return {
       onPanStart: this.onPanStart,
@@ -99,11 +92,11 @@ export default class PanningProvider extends Component<any, State> {
     this.setState({isPanning: false, wasTerminated: true});
   };
 
-  onDrag = ({directions, deltas}: {directions: PanDirectionsProps, deltas: PanAmountsProps}) => {
+  onDrag = ({directions, deltas}: {directions: PanDirectionsProps; deltas: PanAmountsProps}) => {
     this.setState({dragDirections: directions, dragDeltas: deltas, swipeDirections: {}, swipeVelocities: {}});
   };
 
-  onSwipe = ({directions, velocities}: {directions: PanDirectionsProps, velocities: PanAmountsProps}) => {
+  onSwipe = ({directions, velocities}: {directions: PanDirectionsProps; velocities: PanAmountsProps}) => {
     this.setState({swipeDirections: directions, swipeVelocities: velocities, dragDirections: {}, dragDeltas: {}});
   };
 
