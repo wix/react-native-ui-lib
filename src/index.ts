@@ -57,6 +57,7 @@ export {default as FeatureHighlight, FeatureHighlightProps} from './components/f
 export {default as ActionSheet} from './components/actionSheet';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
+export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {
   default as PanningProvider,
   PanningDirections,
