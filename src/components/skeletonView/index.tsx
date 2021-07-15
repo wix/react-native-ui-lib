@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} from 'react-native';
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import {Constants} from 'helpers';
@@ -29,16 +29,20 @@ enum ContentType {
   THUMBNAIL = 'thumbnail',
 }
 
-interface SkeletonProps {
+export interface SkeletonViewProps extends AccessibilityProps {
   /**
    * The content has been loaded, start fading out the skeleton and fading in the content
    */
   showContent?: boolean;
   /**
-   * A function that will render the content once the content is ready (i.e. showContent is true).
-   * The method will be called with the Skeleton's props (i.e. renderContent(props))
+   * Custom value of any type to pass on to SkeletonView and receive back in the renderContent callback
    */
-  renderContent?: (props: SkeletonProps) => React.ReactNode;
+  contentData?: any;
+  /**
+   * A function that will render the content once the content is ready (i.e. showContent is true).
+   * The method will be called with the Skeleton's contentData (i.e. renderContent(props?.contentData))
+   */
+  renderContent?: (contentData?: any) => React.ReactNode;
   /**
    * The type of the skeleton view.
    * Types: LIST_ITEM and TEXT_CONTENT (using SkeletonView.templates.###)
@@ -110,7 +114,7 @@ interface SkeletonState {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.js
  * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
  */
-class SkeletonView extends Component<SkeletonProps, SkeletonState> {
+class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   static defaultProps = {
     size: Size.SMALL,
     borderRadius: BorderRadiuses.br10
@@ -122,7 +126,7 @@ class SkeletonView extends Component<SkeletonProps, SkeletonState> {
 
   fadeInAnimation?: Animated.CompositeAnimation;
 
-  constructor(props: SkeletonProps) {
+  constructor(props: SkeletonViewProps) {
     super(props);
 
     this.state = {
@@ -137,7 +141,7 @@ class SkeletonView extends Component<SkeletonProps, SkeletonState> {
     }
   }
 
-  componentDidUpdate(prevProps: SkeletonProps) {
+  componentDidUpdate(prevProps: SkeletonViewProps) {
     if (this.props.showContent && !prevProps.showContent) {
       this.fadeInAnimation?.stop();
       this.fade(false, this.showChildren);
@@ -296,7 +300,7 @@ class SkeletonView extends Component<SkeletonProps, SkeletonState> {
         </Animated.View>
       );
     } else if (_.isFunction(renderContent)) {
-      return renderContent(this.props);
+      return renderContent(this.props?.contentData);
     } else {
       return children;
     }
@@ -345,7 +349,7 @@ class SkeletonView extends Component<SkeletonProps, SkeletonState> {
   }
 }
 
-export default asBaseComponent<SkeletonProps>(SkeletonView);
+export default asBaseComponent<SkeletonViewProps, typeof SkeletonView>(SkeletonView);
 
 const styles = StyleSheet.create({
   listItem: {
