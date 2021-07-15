@@ -22,12 +22,13 @@ const PICKER_MODES = {
   MULTI: 'MULTI'
 };
 const ItemType = PropTypes.oneOfType([
-  PropTypes.number, 
+  PropTypes.number,
   PropTypes.string,
   PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.string
-  })]);
+  })
+]);
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
@@ -260,7 +261,7 @@ class Picker extends Component {
     if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
       return getLabel(value);
     }
-    
+
     if (_.isArray(value)) {
       return this.getLabelsFromArray(value);
     }
@@ -274,7 +275,7 @@ class Picker extends Component {
     const selectedItem = _.find(items, {value});
 
     return _.get(selectedItem, 'label');
-  }
+  };
 
   getFilteredChildren = memoize((children, searchValue) => {
     const {getItemLabel: getItemLabelPicker} = this.props;
@@ -336,7 +337,11 @@ class Picker extends Component {
     _.invoke(this.props, 'onSearchChange', searchValue);
   };
 
-  onSelectedItemLayout = ({nativeEvent: {layout: {y}}}) => {
+  onSelectedItemLayout = ({
+    nativeEvent: {
+      layout: {y}
+    }
+  }) => {
     this.setState({selectedItemPosition: y});
   };
 
@@ -400,14 +405,15 @@ class Picker extends Component {
           listProps={listProps}
           onShow={onShow}
         >
-          {this.children} 
+          {this.children}
         </PickerModal>
       </PickerContext.Provider>
     );
   };
 
   render() {
-    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, modifiers} = this.props;
+    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, forwardedRef, modifiers} =
+      this.props;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
@@ -432,6 +438,7 @@ class Picker extends Component {
 
     return (
       <TextField
+        ref={forwardedRef}
         {...textInputProps}
         containerStyle={[paddings, margins, positionStyle, containerStyle]}
         {...this.getAccessibilityInfo()}
