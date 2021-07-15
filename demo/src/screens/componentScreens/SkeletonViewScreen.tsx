@@ -46,7 +46,8 @@ export default class SkeletonViewScreen extends Component {
     dataType: DATA_TYPE.List,
     listType: LIST_TYPE.Regular,
     isLarge: false,
-    key: 1};
+    key: 1
+  };
 
   increaseKey = () => {
     const {key} = this.state;
@@ -77,10 +78,10 @@ export default class SkeletonViewScreen extends Component {
           afterValueChanged: this.increaseKey
         })}
         {dataType === DATA_TYPE.List &&
-        ExampleScreenPresenter.renderRadioGroup.call(this, 'List type', 'listType', LIST_TYPE, {
-          isRow: true,
-          afterValueChanged: this.increaseKey
-        })}
+          ExampleScreenPresenter.renderRadioGroup.call(this, 'List type', 'listType', LIST_TYPE, {
+            isRow: true,
+            afterValueChanged: this.increaseKey
+          })}
         <View row centerV spread>
           <Button
             label={isDataAvailable ? 'Hide data' : 'Show data'}
@@ -106,24 +107,18 @@ export default class SkeletonViewScreen extends Component {
   renderAvatar = () => {
     return (
       <ListItem.Part left>
-      <Avatar
-        source={this.getRandomAvatar()}
-        containerStyle={{marginStart: 14}}
-      />
-    </ListItem.Part>
-    )
-  }
+        <Avatar source={this.getRandomAvatar()} containerStyle={{marginStart: 14}}/>
+      </ListItem.Part>
+    );
+  };
 
   renderThumbnail = () => {
     return (
       <ListItem.Part left>
-        <Image
-          source={this.getRandomAvatar()}
-          style={{height: 54, width: 54, marginLeft: 14}}
-        />
+        <Image source={this.getRandomAvatar()} style={{height: 54, width: 54, marginLeft: 14}}/>
       </ListItem.Part>
-    )
-  }
+    );
+  };
 
   renderListItemsData = (contentData?: any) => {
     const {isLarge} = this.state;
@@ -147,11 +142,17 @@ export default class SkeletonViewScreen extends Component {
                   <Text text60 numberOfLines={1}>{`User ${index + 1}`}</Text>
                 </ListItem.Part>
                 <ListItem.Part>
-                  <Text text70 numberOfLines={1}>Member</Text>
+                  <Text text70 numberOfLines={1}>
+                    Member
+                  </Text>
                 </ListItem.Part>
-                {isLarge && <ListItem.Part>
-                  <Text text70 numberOfLines={1}>Since: </Text>
-                </ListItem.Part>}
+                {isLarge && (
+                  <ListItem.Part>
+                    <Text text70 numberOfLines={1}>
+                      Since:{' '}
+                    </Text>
+                  </ListItem.Part>
+                )}
               </ListItem.Part>
             </ListItem>
           );
@@ -160,7 +161,7 @@ export default class SkeletonViewScreen extends Component {
     );
   };
 
-  renderListItems = (hasAvatar: boolean = false, hasThumbnail: boolean = false) => {
+  renderListItems = (hasAvatar = false, hasThumbnail = false) => {
     const {isDataAvailable, isLarge} = this.state;
     const contentType = hasAvatar
       ? SkeletonView.contentTypes.AVATAR
@@ -354,7 +355,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    borderRadius: BorderRadiuses.br20,
+    borderRadius: BorderRadiuses.br20
   },
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,

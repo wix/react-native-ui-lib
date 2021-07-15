@@ -16,17 +16,17 @@ const ANIMATION_DURATION = 400;
 
 enum Template {
   LIST_ITEM = 'listItem',
-  TEXT_CONTENT = 'content',
+  TEXT_CONTENT = 'content'
 }
 
 enum Size {
   SMALL = 'small',
-  LARGE = 'large',
+  LARGE = 'large'
 }
 
 enum ContentType {
   AVATAR = 'avatar',
-  THUMBNAIL = 'thumbnail',
+  THUMBNAIL = 'thumbnail'
 }
 
 export interface SkeletonViewProps extends AccessibilityProps {
@@ -172,7 +172,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     };
   };
 
-  getDefaultSkeletonProps = (input?: {circleOverride: boolean, style: StyleProp<ViewStyle>}) => {
+  getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
     const {circleOverride, style} = input || {};
     const {circle, width = 0, height = 0} = this.props;
     let {borderRadius} = this.props;
@@ -322,27 +322,25 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     }
   }
 
-  renderNothing = () => null
+  renderNothing = () => null;
 
   render() {
     const {times, timesKey, showLastSeparator, hideSeparator, renderContent, testID} = this.props;
 
     if (times) {
-      return (
-        _.times(times, index => {
-          const key = timesKey ? `${timesKey}-${index}` : `${index}`;
-          return (
-            <SkeletonView
-              {...this.props}
-              key={key}
-              testID={`${testID}-${index}`}
-              renderContent={index === 0 ? renderContent : this.renderNothing}
-              hideSeparator={hideSeparator || (!showLastSeparator && index === times - 1)}
-              times={undefined}
-            />
-          );
-        })
-      );
+      return _.times(times, index => {
+        const key = timesKey ? `${timesKey}-${index}` : `${index}`;
+        return (
+          <SkeletonView
+            {...this.props}
+            key={key}
+            testID={`${testID}-${index}`}
+            renderContent={index === 0 ? renderContent : this.renderNothing}
+            hideSeparator={hideSeparator || (!showLastSeparator && index === times - 1)}
+            times={undefined}
+          />
+        );
+      });
     } else {
       return this.renderSkeleton();
     }
