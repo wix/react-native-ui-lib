@@ -113,7 +113,7 @@ interface State {
  * @description: TabBar.Item, inner component of TabBar for configuring the tabs
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.tsx
  * @extends: TouchableOpacity
- * @extendsLink: https://facebook.github.io/react-native/docs/touchableopacity
+ * @extendsLink: https://reactnative.dev/docs/touchableopacity
  */
 class TabBarItem extends PureComponent<TabBarItemProps, State> {
   static displayName = 'TabBar.Item';
