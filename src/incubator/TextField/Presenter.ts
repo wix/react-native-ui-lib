@@ -39,7 +39,7 @@ export function validate(
     if (_.isFunction(validator)) {
       _isValid = validator(value);
     } else if (_.isString(validator)) {
-      _isValid = _.invoke(formValidators, validator, value);
+      _isValid = formValidators[validator](value || '');
     }
 
     if (!_isValid) {

@@ -163,11 +163,12 @@ class TabBar extends Component<TabBarProps, State> {
   }
 
   onChangeIndex(index: number) {
-    _.invoke(this.props, 'onChangeIndex', index);
+    this.props.onChangeIndex?.(index);
   }
 
   onTabSelected(index: number) {
-    _.invoke(this.props, 'onTabSelected', index);
+    this.props.onTabSelected?.(index);
+
   }
 
   onItemPress = (index: number, props: TabBarItemProps) => {
@@ -178,7 +179,7 @@ class TabBar extends Component<TabBarProps, State> {
         this.onChangeIndex(index);
       }
       this.onTabSelected(index);
-      _.invoke(props, 'onPress');
+      props.onPress?.();
     }, 0);
   };
 

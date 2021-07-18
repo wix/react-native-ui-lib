@@ -9,7 +9,7 @@ export declare type RadioGroupProps = ViewProps & {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void);
+    onValueChange?: ((value?: string) => void) | ((value?: number) => void) | ((value?: boolean) => void) | ((value?: any) => void);
 };
 export declare type RadioGroupPropTypes = RadioGroupProps;
 interface RadioGroupState {
@@ -43,7 +43,7 @@ declare const _default: React.ComponentClass<ViewProps & {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void) | undefined;
+    onValueChange?: ((value?: string | undefined) => void) | ((value?: number | undefined) => void) | ((value?: boolean | undefined) => void) | ((value?: any) => void) | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;

@@ -247,7 +247,7 @@ class ColorPalette extends PureComponent<Props, State> {
   };
 
   onValueChange = (value: string, options: object) => {
-    _.invoke(this.props, 'onValueChange', value, options);
+    this.props.onValueChange?.(value, options);
   };
 
   onLayout = () => {

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {
   StyleSheet,
@@ -166,10 +165,10 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   onPress = () => {
-    const {disabled, value, selected} = this.props;
+    const {disabled, value = false, selected = false} = this.props;
     if (!disabled) {
-      _.invoke(this.props, 'onValueChange', value);
-      _.invoke(this.props, 'onPress', selected);
+      this.props.onValueChange?.(value);
+      this.props.onPress?.(selected);
     }
   };
 

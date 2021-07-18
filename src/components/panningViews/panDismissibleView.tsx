@@ -381,7 +381,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
 
   onDismissAnimationFinished = ({finished}: {finished: boolean}) => {
     if (finished) {
-      _.invoke(this.props, 'onDismiss');
+      this.props.onDismiss?.();
     }
   };
 

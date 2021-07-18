@@ -170,8 +170,8 @@ class Dialog extends Component<DialogProps, DialogState> {
   onFadeDone = () => {
     if (!this.state.modalVisibility) {
       setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS
-        _.invoke(this.props, 'onDialogDismissed', this.props);
-        _.invoke(this.props, 'onModalDismissed', this.props);
+        this.props.onDialogDismissed?.(this.props);
+        this.props.onModalDismissed?.(this.props);
       }, 100);
     }
   }
@@ -180,11 +180,11 @@ class Dialog extends Component<DialogProps, DialogState> {
     this.setState({modalVisibility: false, fadeOut: false}, () => {
       const props = this.props;
       if (props.visible) {
-        _.invoke(props, 'onDismiss', props);
+        props.onDismiss?.(props);
       }
       // Parity with iOS Modal's onDismiss
       if (Constants.isAndroid) {
-        _.invoke(props, 'onDialogDismissed', props);
+        props.onDialogDismissed?.(props);
       }
     });
   }
@@ -200,8 +200,8 @@ class Dialog extends Component<DialogProps, DialogState> {
   };
 
   onModalDismissed = () => {
-    _.invoke(this.props, 'onDialogDismissed', this.props);
-    _.invoke(this.props, 'onModalDismissed', this.props);
+    this.props.onDialogDismissed?.(this.props);
+    this.props.onModalDismissed?.(this.props);
   }
 
   hideDialogView = () => {

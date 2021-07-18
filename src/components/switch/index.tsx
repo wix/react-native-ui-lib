@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import {Constants} from '../../helpers';
@@ -108,7 +107,7 @@ class Switch extends Component<SwitchProps> {
     const {disabled} = this.props;
 
     if (!disabled) {
-      _.invoke(this.props, 'onValueChange', !this.props.value);
+      this.props.onValueChange?.(!this.props.value);
     }
   };
 

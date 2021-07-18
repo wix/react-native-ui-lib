@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Constants} from '../../helpers';
@@ -172,7 +171,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
 
   close = () => {
     this.setState({collapsed: true}, async () => {
-      _.invoke(this.props, 'onCollapseWillChange', true);
+      this.props.onCollapseWillChange?.(true);
       if (this.props.onCollapseChanged) {
         await this.animate();
         this.props.onCollapseChanged(true);
@@ -184,7 +183,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
 
   open = () => {
     this.setState({collapsed: false}, async () => {
-      _.invoke(this.props, 'onCollapseWillChange', false);
+      this.props.onCollapseWillChange?.(false);
       if (this.props.onCollapseChanged) {
         await this.animate();
         this.props.onCollapseChanged(false);
@@ -232,7 +231,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
   };
 
   onItemPress = (index: number) => {
-    _.invoke(this.props, 'onItemPress', index);
+    this.props.onItemPress?.(index);
   };
 
   renderItem = (item: JSX.Element | JSX.Element[], index: number) => {

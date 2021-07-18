@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component, ElementRef} from 'react';
 import {
   StyleSheet,
@@ -288,7 +287,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
     this.contentHeight = contentViewHeight;
     this.targetPosition = undefined;
     const {confirmButtonProps} = this.props;
-    _.invoke(confirmButtonProps, 'onPress');
+    confirmButtonProps?.onPress?.();
   };
 
   renderHighlightMessage() {

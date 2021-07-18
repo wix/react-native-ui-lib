@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
@@ -104,9 +103,9 @@ class ColorSwatch extends PureComponent<Props> {
   }
 
   onPress = () => {
-    const {color, value, index} = this.props;
+    const {color = '', value, index} = this.props;
     const tintColor = this.getTintColor(value);
-    _.invoke(this.props, 'onPress', value || color, {tintColor, index});
+    this.props.onPress?.(value || color, {tintColor, index});
   };
 
   getTintColor(color?: string) {
