@@ -48,7 +48,6 @@ export default class ComponentTemplate extends Component {
     return _.map(extendedComponents, (component, index) => {
       const isLast = index === _.size(extendedComponents) - 1;
       const text = `${component}${!isLast ? ', ' : ''}`;
-      // const extendedComponent = _.find(allComponents, c => c.node.displayName.trim() === component.trim());
       const path = componentInfo.extendsLink ? componentInfo.extendsLink : `/docs/${component}`;
 
       return (
