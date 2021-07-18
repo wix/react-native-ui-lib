@@ -15,7 +15,6 @@ import {
   Colors
 } from 'react-native-ui-lib';
 import * as ExampleScreenPresenter from '../ExampleScreenPresenter';
-import {ButtonSize} from '../../../../src/components/button';
 
 const AVATAR_SIZE = 48;
 
@@ -86,7 +85,7 @@ export default class SkeletonViewScreen extends Component {
           <Button
             label={isDataAvailable ? 'Hide data' : 'Show data'}
             style={[styles.toggleButton]}
-            size={ButtonSize.small}
+            size={Button.sizes.small}
             outline={!isDataAvailable}
             onPress={this.toggleVisibility}
           />
@@ -94,7 +93,7 @@ export default class SkeletonViewScreen extends Component {
             <Button
               label={isLarge ? 'Set items to small' : 'Set items to large'}
               style={[styles.toggleButton]}
-              size={ButtonSize.small}
+              size={Button.sizes.small}
               outline={!isLarge}
               onPress={this.setSize}
             />
