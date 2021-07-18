@@ -280,7 +280,7 @@ class Drawer extends PureComponent<Props> {
       // return o.text === event.nativeEvent.action;
       return o.name === event.nativeEvent.actionName;
     });
-    action.onPress();
+    action.onPress?.();
   };
 
   /** Renders */

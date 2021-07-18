@@ -77,6 +77,8 @@ class PanResponderView extends PureComponent<Props> {
     this.initialLeft = this.left || this.initialLeft;
     this.initialTop = this.top || this.initialTop;
     this.props.onPanLocationChanged?.(location);
+    //@ts-expect-error
+    this.props.context.onPanLocationChanged?.(location);
   }
 
   onDrag(deltas: PanAmountsProps) {

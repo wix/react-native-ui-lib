@@ -60,7 +60,7 @@ function withFieldState(
         if (_.isFunction(validate)) {
           _isValid = validate(valueToValidate);
         } else if (_.isString(validate)) {
-          _isValid = validators[validate](valueToValidate);
+          _isValid = validators[validate]?.(valueToValidate);
         }
 
         setIsValid(_isValid);
