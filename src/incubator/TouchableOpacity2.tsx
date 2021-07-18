@@ -66,8 +66,6 @@ function TouchableOpacity(props: Props) {
     children,
     modifiers,
     style,
-    // onPress = _.noop,
-    // onLongPress,
     disabled,
     forwardedRef,
     feedbackColor,
