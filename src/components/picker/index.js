@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import memoize from 'memoize-one';
 import {asBaseComponent, forwardRef} from '../../commons';
-import {Constants} from 'helpers';
+import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 import View from '../../components/view';
 import Modal from '../modal';
