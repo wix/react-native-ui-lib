@@ -92,16 +92,22 @@ function TouchableOpacity(props: Props) {
     props.onLongPress?.(props);
   }, [props]);
 
+  const toggleActive = (value: number) => {
+    'worklet';
+    isActive.value = withTiming(value, {duration: 200});
+  };
+
   const tapGestureHandler = useAnimatedGestureHandler({
     onStart: () => {
-      isActive.value = withTiming(1, {duration: 200});
+      toggleActive(1);
     },
     onEnd: () => {
-      isActive.value = withTiming(0, {duration: 200});
+      toggleActive(0);
+
       runOnJS(onPress)();
     },
     onFail: () => {
-      isActive.value = withTiming(0, {duration: 200});
+      toggleActive(0);
     }
   });
 
@@ -109,7 +115,7 @@ function TouchableOpacity(props: Props) {
     onActive: () => {
       if (!isLongPressed.value) {
         isLongPressed.value = true;
-        isActive.value = withTiming(0, {duration: 200});
+        toggleActive(0);
         runOnJS(onLongPress)();
       }
     },
