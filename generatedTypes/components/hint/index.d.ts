@@ -173,7 +173,6 @@ declare class Hint extends Component<HintProps, HintState> {
         }[];
     };
     getTipPosition(): Position;
-    shouldEnableShadow(): boolean | undefined;
     renderHintTip(): JSX.Element;
     renderContent(): JSX.Element;
     renderHint(): JSX.Element | undefined;
