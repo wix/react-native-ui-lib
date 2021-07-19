@@ -139,9 +139,12 @@ export default function TabBarItem({
   }, []);
 
   const onPress = useCallback(() => {
-    currentPage.value = index;
+    if (!ignore) {
+      currentPage.value = index;
+    }
+
     props.onPress?.(index);
-  }, [index, props.onPress]);
+  }, [index, props.onPress, ignore]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;

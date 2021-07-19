@@ -73,7 +73,10 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   onAddItem = () => {
-    console.warn('Add Item');
+    const {items} = this.state;
+    let newItems = items.slice(0, -1) as TabControllerItemProps[];
+    newItems = [...newItems, {label: `New Item # ${newItems.length + 1}`}, items[items.length - 1]];
+    this.setState({items: newItems});
   };
 
   toggleItemsCount = () => {
