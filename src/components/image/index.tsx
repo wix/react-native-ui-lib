@@ -33,7 +33,7 @@ export type ImageProps = RNImageProps & MarginModifiers & {
    */
   assetGroup?: string;
   /**
-   * the asset tint
+   * the asset tint. For SVG support see note above.
    */
   tintColor?: string;
   /**
@@ -80,7 +80,9 @@ type State = {
  * @extendsLink: https://reactnative.dev/docs/image
  * @notes: please note that for SVG support you need to add both
  * `react-native-svg` and `react-native-svg-transformer`,
- * and also configure them (see `metro.config.js`)
+ * and also configure them (see `metro.config.js`).
+ * The tintColor prop depends on the fill prop in `react-native-svg-transformer`,
+ * see https://github.com/kristerkari/react-native-svg-transformer#changing-svg-fill-color-in-js-code
  */
 class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
