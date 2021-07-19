@@ -448,7 +448,7 @@ class Picker extends Component {
         expandable
         renderExpandable={this.renderExpandableModal}
         onToggleExpandableModal={this.toggleExpandableModal}
-        selection={Constants.isAndroid && {start: 0}}
+        selection={Constants.isAndroid ? {start: 0} : undefined}
       />
     );
   }
