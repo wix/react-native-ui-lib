@@ -69,7 +69,7 @@ class ViewScreen extends Component {
             <View height={2} bg-grey60 marginB-20/>
             {renderBooleanOption.call(this, 'Row (parent)', 'useRow')}
             {renderBooleanOption.call(this, 'Flex (child)', 'shouldFlex')}
-            {renderSliderOption.call(this, 'BorderRadius(brXX)', 'borderRadius', {step: 10, min: 0, max: 60})}
+            {renderSliderOption.call(this, 'BorderRadius(brXX)', 'borderRadius', {step: 10, min: 0, max: 60, initial: 20})}
             {renderSliderOption.call(this, 'Padding(padding-XX)', 'padding', {step: 4, min: 0, max: 40})}
             {renderSliderOption.call(this, 'Margin(margin-XX)', 'margin', {step: 4, min: 0, max: 40})}
             {renderRadioGroup.call(this, 'Alignment (parent)', 'alignment', ALIGNMENTS, {isRow: true})}
