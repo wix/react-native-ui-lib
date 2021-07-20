@@ -2,7 +2,12 @@
 import {isFunction} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
-import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedScrollHandler,
+  useAnimatedReaction,
+  runOnJS
+} from 'react-native-reanimated';
 import {Colors, Spacings} from 'style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
@@ -10,8 +15,10 @@ import {Constants} from 'helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
 import Text, {TextProps} from '../../components/text';
+import {HapticService, HapticType} from 'services';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const HAPTIC_RANGE = 10;
 
 export interface WheelPickerProps {
   /**
@@ -107,6 +114,8 @@ const WheelPicker = React.memo(({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
+  const animatedPrevIndex = useSharedValue(currentIndex);
+  const animatedCurIndex = useSharedValue(currentIndex);
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
 
@@ -114,7 +123,20 @@ const WheelPicker = React.memo(({
     controlComponent();
   });
 
-  const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
+  useAnimatedReaction(() => {
+    return offset.value;
+  },
+  () => {
+    const shouldUpdateIndex =
+          offset.value % itemHeight > itemHeight - HAPTIC_RANGE || offset.value % itemHeight < HAPTIC_RANGE;
+    animatedCurIndex.value = shouldUpdateIndex ? Math.round(offset.value / itemHeight) : animatedCurIndex.value;
+    if (animatedCurIndex.value !== animatedPrevIndex.value) {
+      animatedPrevIndex.value = animatedCurIndex.value;
+      runOnJS(HapticService.triggerHaptic)(HapticType.selection, 'WheelPicker');
+    }
+  });
+
+  const keyExtractor = useCallback((item: ItemProps) => `${item.value}`, []);
 
   /**
      * The picker is a controlled component. This means we expect the
