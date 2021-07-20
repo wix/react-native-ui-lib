@@ -195,7 +195,12 @@ class Picker extends Component {
           value: nextProps.value
         };
       }
-    } else if (_.isFunction(nextProps.renderPicker) && prevState.value !== nextProps.value) {
+    } else if (
+      // Allow external change of the picker's value, only applicable to single mode
+      nextProps.mode === Picker.modes.SINGLE &&
+      _.isFunction(nextProps.renderPicker) &&
+      prevState.value !== nextProps.value
+    ) {
       return {
         prevValue: prevState.value,
         value: nextProps.value
