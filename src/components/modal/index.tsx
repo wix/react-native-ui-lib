@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StyleSheet, Modal as RNModal, ModalProps as RNModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants} from '../../helpers';
@@ -36,6 +37,10 @@ export interface ModalProps extends RNModalProps {
      * label is constructed by traversing all the children and accumulating all the Text nodes separated by space.
      */
     accessibilityLabel?: string;
+    /**
+     * Should add a GestureHandlerRootView (Android only)
+     */
+     useGestureHandlerRootView?: boolean;
 }
 
 /**
@@ -75,7 +80,7 @@ class Modal extends Component<ModalProps> {
           {/*
             // @ts-ignore */}
           <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress}>
-            <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.overlayView}/>
+            <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.fill}/>
           </TouchableWithoutFeedback>
         </View>
       );
@@ -83,16 +88,21 @@ class Modal extends Component<ModalProps> {
   }
 
   render() {
-    const {blurView, enableModalBlur, visible, ...others} = this.props;
+    const {blurView, enableModalBlur, visible, useGestureHandlerRootView, ...others} = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
+    const useGestureHandler = useGestureHandlerRootView && Constants.isAndroid;
+    const GestureContainer = useGestureHandler ? GestureHandlerRootView : React.Fragment;
+    const gestureContainerProps = useGestureHandler ? {style: styles.fill} : {};
     const Container: any = blurView ? blurView : defaultContainer;
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
-        <Container style={{flex: 1}} blurType="light">
-          {this.renderTouchableOverlay()}
-          {this.props.children}
-        </Container>
+        <GestureContainer {...gestureContainerProps}>
+          <Container style={styles.fill} blurType="light">
+            {this.renderTouchableOverlay()}
+            {this.props.children}
+          </Container>
+        </GestureContainer>
       </RNModal>
     );
   }
@@ -102,7 +112,7 @@ const styles = StyleSheet.create({
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject
   },
-  overlayView: {
+  fill: {
     flex: 1
   },
   accessibleOverlayView: {
