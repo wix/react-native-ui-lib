@@ -177,7 +177,7 @@ export class Colors {
   isValidHex(string: string) {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(string);
   }
-  getHexString(color: string) {
+  getHexString(color: tinycolor.ColorInput) {
     return tinycolor(color).toHexString();
   }
   getHSL(color?: string) {
