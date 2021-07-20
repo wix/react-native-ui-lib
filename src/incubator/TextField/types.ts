@@ -14,5 +14,4 @@ export enum ValidationMessagePosition {
   BOTTOM = 'bottom'
 }
 
-
 export type Validator = Function | keyof typeof formValidators;

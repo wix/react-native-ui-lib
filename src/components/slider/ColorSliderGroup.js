@@ -6,7 +6,6 @@ import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import Text from '../text';
 
-
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
@@ -45,15 +44,15 @@ class ColorSliderGroup extends PureComponent {
      * The labels style
      */
     labelsStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
-  }
+  };
 
   static defaultProps = {
     labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
-  }
+  };
 
   state = {
     initialColor: this.props.initialColor
-  }
+  };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.initialColor !== nextProps.initialColor) {
@@ -64,11 +63,11 @@ class ColorSliderGroup extends PureComponent {
     return null;
   }
 
-  onValueChange = (value) => {
+  onValueChange = value => {
     _.invoke(this.props, 'onValueChange', value);
-  }
+  };
 
-  renderSlider = (type) => {
+  renderSlider = type => {
     const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.props;
 
     return (

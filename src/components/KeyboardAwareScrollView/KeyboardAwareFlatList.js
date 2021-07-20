@@ -29,7 +29,7 @@ export default class KeyboardAwareFlatList extends KeyboardAwareBase {
         {...this.props}
         {...this.style}
         contentInset={{bottom: this.state.keyboardHeight}}
-        ref={(r) => {
+        ref={r => {
           this._keyboardAwareView = r;
         }}
         onLayout={this._onKeyboardAwareViewLayout}

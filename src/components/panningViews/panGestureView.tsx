@@ -47,12 +47,12 @@ interface State {
  * @description: PanGestureView component for drag and swipe gestures (supports only vertical gestures at the moment)
  */
 class PanGestureView extends Component<PanGestureViewProps, State> {
-  static displayName = 'PanGestureView'
+  static displayName = 'PanGestureView';
 
   static defaultProps: Partial<PanGestureViewProps> = {
     direction: GestureDirections.DOWN
   };
-  
+
   static directions = GestureDirections;
 
   private panResponder: PanResponderInstance;
@@ -86,9 +86,9 @@ class PanGestureView extends Component<PanGestureViewProps, State> {
   handlePanResponderMove = (_e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
     const {direction} = this.props;
     let newValue = 0;
-    
+
     // VERTICAL
-    const up = (direction === GestureDirections.UP);
+    const up = direction === GestureDirections.UP;
     const panDeltaY = gestureState.dy;
     const panVelocityY = gestureState.vy;
 
@@ -108,13 +108,13 @@ class PanGestureView extends Component<PanGestureViewProps, State> {
       const {direction} = this.props;
 
       // VERTICAL
-      const up = (direction === GestureDirections.UP);
+      const up = direction === GestureDirections.UP;
       const {deltaY} = this.state;
       // @ts-ignore
       const threshold = this.layout.height / 2;
       // @ts-ignore
       const endValue = Math.round(deltaY._value);
-      
+
       if ((up && endValue <= -threshold) || (!up && endValue >= threshold)) {
         this.animateDismiss();
       } else {
@@ -141,7 +141,7 @@ class PanGestureView extends Component<PanGestureViewProps, State> {
     const {direction} = this.props;
 
     // VERTICAL
-    const up = (direction === GestureDirections.UP);
+    const up = direction === GestureDirections.UP;
     const {deltaY} = this.state;
     // @ts-ignore
     const newValue = up ? -this.layout.height - Constants.statusBarHeight : deltaY._value + Constants.screenHeight;
@@ -153,16 +153,16 @@ class PanGestureView extends Component<PanGestureViewProps, State> {
     }).start(this.onAnimatedFinished);
   }
 
-  onAnimatedFinished = ({finished}: ({finished: boolean})) => {
+  onAnimatedFinished = ({finished}: {finished: boolean}) => {
     if (finished) {
       this.onDismiss();
     }
-  }
+  };
 
   onDismiss = () => {
     this.initPositions();
     _.invoke(this.props, 'onDismiss');
-  }
+  };
 
   initPositions() {
     this.setState({
@@ -172,7 +172,7 @@ class PanGestureView extends Component<PanGestureViewProps, State> {
 
   onLayout = (event: LayoutChangeEvent) => {
     this.layout = event.nativeEvent.layout;
-  }
+  };
 
   render() {
     const {style} = this.props;
@@ -185,11 +185,13 @@ class PanGestureView extends Component<PanGestureViewProps, State> {
         style={[
           style,
           {
-            transform: [{
-              translateY: deltaY
-            }]
+            transform: [
+              {
+                translateY: deltaY
+              }
+            ]
           }
-        ]} 
+        ]}
         {...this.panResponder.panHandlers}
         onLayout={this.onLayout}
       >

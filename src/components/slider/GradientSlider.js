@@ -8,7 +8,6 @@ import {asBaseComponent} from '../../commons';
 import Slider from './index';
 import asSliderGroupChild from './context/asSliderGroupChild';
 
-
 const GRADIENT_TYPES = {
   DEFAULT: 'default',
   HUE: 'hue',
@@ -41,12 +40,12 @@ class GradientSlider extends Component {
      * Callback for onValueChange, returns the updated color
      */
     onValueChange: PropTypes.func
-  }
+  };
 
   static defaultProps = {
     type: GRADIENT_TYPES.DEFAULT,
     gradientSteps: 120
-  }
+  };
 
   static types = GRADIENT_TYPES;
 
@@ -75,53 +74,41 @@ class GradientSlider extends Component {
     return value || color;
   }
 
-  getStepColor = (i) => {
+  getStepColor = i => {
     const color = this.getColor();
     return tinycolor({...color, a: i}).toHslString();
-  }
+  };
 
   renderDefaultGradient = () => {
     const {gradientSteps} = this.props;
 
-    return (
-      <Gradient
-        gradientSteps={gradientSteps}
-        maximumValue={1}
-        getStepColor={this.getStepColor}
-      />
-    );
-  }
+    return <Gradient gradientSteps={gradientSteps} maximumValue={1} getStepColor={this.getStepColor}/>;
+  };
 
   renderHueGradient = () => {
     const {gradientSteps} = this.props;
 
-    return (
-      <HueGradient gradientSteps={gradientSteps}/>
-    );
-  }
+    return <HueGradient gradientSteps={gradientSteps}/>;
+  };
 
   renderLightnessGradient = () => {
     const color = this.getColor();
     const {gradientSteps} = this.props;
 
-    return (
-      <LightnessGradient color={color} gradientSteps={gradientSteps}/>
-    );
-  }
+    return <LightnessGradient color={color} gradientSteps={gradientSteps}/>;
+  };
 
   renderSaturationGradient = () => {
     const color = this.getColor();
     const {gradientSteps} = this.props;
 
-    return (
-      <SaturationGradient color={color} gradientSteps={gradientSteps}/>
-    );
-  }
+    return <SaturationGradient color={color} gradientSteps={gradientSteps}/>;
+  };
 
   onValueChange = (value, alpha) => {
     // alpha returns for type.DEFAULT
     _.invoke(this.props, 'onValueChange', value, alpha);
-  }
+  };
 
   updateColor(color) {
     if (!_.isEmpty(this.props.sliderContext)) {

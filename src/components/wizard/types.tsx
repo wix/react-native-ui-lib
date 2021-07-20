@@ -94,7 +94,8 @@ export interface WizardProps {
 }
 
 // @ts-ignore
-class WizardTypesForDocs extends React.Component<WizardProps> { // eslint-disable-line
+// eslint-disable-next-line
+class WizardTypesForDocs extends React.Component<WizardProps> {
   static displayName = 'Wizard';
 
   render() {
@@ -103,7 +104,8 @@ class WizardTypesForDocs extends React.Component<WizardProps> { // eslint-disabl
 }
 
 // @ts-ignore
-class WizardStepTypesForDocs extends React.Component<WizardStepProps> { // eslint-disable-line
+// eslint-disable-next-line
+class WizardStepTypesForDocs extends React.Component<WizardStepProps> {
   static displayName = 'Wizard.Step';
 
   render() {

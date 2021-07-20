@@ -1,7 +1,6 @@
 import useMiddleIndex from '../helpers/useListMiddleIndex';
 
 describe('Finds list\'s middle index', () => {
-  
   it('When list is at offset 0, it should return the index of the first item', () => {
     const sut = useMiddleIndex({itemHeight: 50, listSize: 10});
     const offset = 0;

@@ -10,7 +10,6 @@ import Image from '../image';
 import Button from '../button';
 import Text from '../text';
 
-
 // Create animated view base on uilib view for the safeArea support
 const AnimatedView = Animated.createAnimatedComponent(View);
 const COLOR = Colors.white;

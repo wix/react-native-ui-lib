@@ -1,13 +1,20 @@
 import _ from 'lodash';
 import React, {Component, ElementRef, RefObject} from 'react';
-import {Platform, StyleSheet, ScrollView, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  ScrollView,
+  StyleProp,
+  ViewStyle,
+  NativeSyntheticEvent,
+  NativeScrollEvent
+} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import ScrollBar, {ScrollBarProps} from '../scrollBar';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';
-
 
 const MIN_TABS_FOR_SCROLL = 1;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
@@ -56,8 +63,8 @@ export type TabBarProps = ScrollBarProps /* & TabBarItemProps */ & {
   darkTheme?: boolean;
   children?: React.ReactNode;
   style?: ViewStyle;
-  testID?: string
-}
+  testID?: string;
+};
 
 interface State {
   scrollEnabled: boolean;
@@ -85,7 +92,7 @@ class TabBar extends Component<TabBarProps, State> {
   contentOffset: {
     x: number;
     y: number;
-  }
+  };
   scrollBar: RefObject<ScrollView>;
   itemsRefs: ElementRef<typeof TabBarItem>[];
 
@@ -155,7 +162,11 @@ class TabBar extends Component<TabBarProps, State> {
 
     if (childLayout && this.hasOverflow()) {
       if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
-        this.scrollBar?.current?.scrollTo?.({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
+        this.scrollBar?.current?.scrollTo?.({
+          x: childLayout.x - this.scrollContainerWidth + childLayout.width,
+          y: 0,
+          animated
+        });
       } else if (childLayout.x - this.contentOffset.x < 0) {
         this.scrollBar?.current?.scrollTo?.({x: childLayout.x, y: 0, animated});
       }
@@ -199,7 +210,13 @@ class TabBar extends Component<TabBarProps, State> {
   };
 
   renderTabBar() {
-    const {height, backgroundColor = DEFAULT_BACKGROUND_COLOR, containerView, containerProps, gradientMargins} = this.props;
+    const {
+      height,
+      backgroundColor = DEFAULT_BACKGROUND_COLOR,
+      containerView,
+      containerProps,
+      gradientMargins
+    } = this.props;
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
 
@@ -287,7 +304,6 @@ class TabBar extends Component<TabBarProps, State> {
 }
 
 export default asBaseComponent<TabBarProps, typeof TabBar>(TabBar);
-
 
 const styles = StyleSheet.create({
   container: {

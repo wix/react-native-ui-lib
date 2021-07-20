@@ -1,6 +1,13 @@
 import _ from 'lodash';
 import React, {Component, RefObject, ReactNode, Key} from 'react';
-import {Animated, ScrollView, StyleSheet, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {
+  Animated,
+  ScrollView,
+  StyleSheet,
+  LayoutChangeEvent,
+  NativeSyntheticEvent,
+  NativeScrollEvent
+} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -11,7 +18,7 @@ import * as presenter from './CarouselPresenter';
 import {CarouselProps, CarouselState, PageControlPosition} from './types';
 export {CarouselProps, PageControlPosition};
 
-type DefaultProps = Partial<CarouselProps>
+type DefaultProps = Partial<CarouselProps>;
 
 /**
  * @description: Carousel for scrolling pages horizontally
@@ -66,8 +73,10 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {pageWidth, pageHeight} = prevProps;
     const {pageWidth: nextPageWidth, pageHeight: nextPageHeight} = nextProps;
 
-    if ((!_.isUndefined(nextPageWidth) && pageWidth !== nextPageWidth)
-      || (!_.isUndefined(nextPageHeight) && pageHeight !== nextPageHeight)) {
+    if (
+      (!_.isUndefined(nextPageWidth) && pageWidth !== nextPageWidth) ||
+      (!_.isUndefined(nextPageHeight) && pageHeight !== nextPageHeight)
+    ) {
       const pageWidth = nextPageWidth as number;
       const pageHeight = nextPageHeight as number;
 
@@ -218,7 +227,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   shouldEnablePagination() {
     const {pagingEnabled, horizontal} = this.props;
-    return horizontal ? (pagingEnabled && !this.shouldUsePageWidth()) : true;
+    return horizontal ? pagingEnabled && !this.shouldUsePageWidth() : true;
   }
 
   onContainerLayout = ({
@@ -320,16 +329,17 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   };
 
   // @ts-ignore
-  onScrollEvent = Animated.event([{nativeEvent: {contentOffset: {y: this.props?.animatedScrollOffset?.y, x: this.props?.animatedScrollOffset?.x}}}], {
-    useNativeDriver: true,
-    listener: this.onScroll
-  });
+  onScrollEvent = Animated.event([{nativeEvent: {contentOffset: {y: this.props?.animatedScrollOffset?.y, x: this.props?.animatedScrollOffset?.x}}}],
+    {
+      useNativeDriver: true,
+      listener: this.onScroll
+    });
 
   renderChild = (child: ReactNode, key: Key): JSX.Element | undefined => {
     if (child) {
       const {pageWidth, pageHeight} = this.state;
       const {horizontal} = this.props;
-      const paddingLeft = horizontal ? this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined : 0;
+      const paddingLeft = horizontal ? (this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined) : 0;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
       const containerMarginHorizontal = this.getContainerMarginHorizontal();

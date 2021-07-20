@@ -58,7 +58,6 @@ const STYLE_KEY_CONVERTERS = {
   flexS: 'flexShrink'
 } as const;
 
-
 export type PaddingLiterals = keyof typeof PADDING_VARIATIONS;
 export type NativePaddingKeyType = typeof PADDING_VARIATIONS[PaddingLiterals];
 export type MarginLiterals = keyof typeof MARGIN_VARIATIONS;
@@ -69,12 +68,18 @@ export type ColorLiterals = keyof typeof colorsPalette;
 export type TypographyLiterals = keyof typeof TypographyPresets;
 export type BorderRadiusLiterals = keyof typeof BorderRadiusesLiterals;
 export type AlignmentLiterals =
-| 'row' | 'spread'
-| 'center' | 'centerH' | 'centerV'
-| 'left' | 'right' | 'top' | 'bottom';
+  | 'row'
+  | 'spread'
+  | 'center'
+  | 'centerH'
+  | 'centerV'
+  | 'left'
+  | 'right'
+  | 'top'
+  | 'bottom';
 export type PositionLiterals = 'absF' | 'absL' | 'absR' | 'absT' | 'absB' | 'absV' | 'absH';
 
-export type Modifier<T extends string> = Partial<Record<T, boolean>>
+export type Modifier<T extends string> = Partial<Record<T, boolean>>;
 export type CustomModifier = {[key: string]: boolean};
 
 export type TypographyModifiers = Modifier<TypographyLiterals> | CustomModifier;
@@ -87,8 +92,7 @@ export type MarginModifiers = Modifier<MarginLiterals>;
 export type FlexModifiers = Modifier<FlexLiterals>;
 export type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
 
-export type ContainerModifiers =
-  AlignmentModifiers &
+export type ContainerModifiers = AlignmentModifiers &
   PositionModifiers &
   PaddingModifiers &
   MarginModifiers &
@@ -362,8 +366,8 @@ export function generateModifiersStyle(options = {
   alignments: true,
   flex: true,
   position: true
-}, props: Dictionary<any>) {
-
+},
+props: Dictionary<any>) {
   //@ts-ignore
   const boundProps = props || this.props;
   const style: ExtractedStyle = {};

@@ -92,7 +92,7 @@ function TabController({
       /* Callbacks */
       onChangeIndex
     };
-  }, [/* selectedIndex,*/asCarousel, items, onChangeIndex]);
+  }, [asCarousel, items, onChangeIndex]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 }

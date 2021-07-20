@@ -24,7 +24,7 @@ class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, Connec
   styles?: any;
   unsubscribe?: any;
   static onConnectionLost?: () => void;
-  
+
   static registerGlobalOnConnectionLost(callback: () => void) {
     ConnectionStatusBar.onConnectionLost = callback;
   }
@@ -41,7 +41,7 @@ class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, Connec
       isConnected: true,
       isCancelled: false
     };
-    
+
     if (NetInfo) {
       this.getInitialConnectionState();
     } else {

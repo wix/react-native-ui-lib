@@ -1,5 +1,11 @@
-import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityChangeEvent} from 'react-native';
-
+import {
+  Platform,
+  Dimensions,
+  NativeModules,
+  I18nManager,
+  AccessibilityInfo,
+  AccessibilityChangeEvent
+} from 'react-native';
 
 export enum orientations {
   PORTRAIT = 'portrait',
@@ -118,12 +124,14 @@ const constants = {
   },
   /* Devices */
   get isIphoneX() {
-    return isIOS &&
+    return (
+      isIOS &&
       //@ts-ignore
       !Platform.isPad &&
       //@ts-ignore
       !Platform.isTVOS &&
-      (screenHeight >= 812 || screenWidth >= 812);
+      (screenHeight >= 812 || screenWidth >= 812)
+    );
   },
   /* Orientation */
   addDimensionsEventListener: (callback: any) => {

@@ -10,7 +10,7 @@ import Text from '../../components/text';
 /**
  * @description: Component that shows a full screen with an activity indicator
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/LoadingScreen.js
- * 
+ *
  */
 export default class LoaderScreen extends BaseComponent {
   static displayName = 'LoaderScreen';
@@ -47,16 +47,8 @@ export default class LoaderScreen extends BaseComponent {
   };
 
   render() {
-    const {
-      message,
-      messageStyle,
-      loaderColor,
-      overlay,
-      backgroundColor,
-      customLoader,
-      containerStyle,
-      ...others
-    } = this.props;
+    const {message, messageStyle, loaderColor, overlay, backgroundColor, customLoader, containerStyle, ...others} =
+      this.props;
 
     return (
       <View style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}>

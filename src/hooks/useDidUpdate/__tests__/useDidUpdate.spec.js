@@ -51,7 +51,7 @@ describe('useDidUpdate hook tests', () => {
     dependencies = [false, [1, 2], {name: 'BBB'}];
     rerender();
     expect(action.mock.calls.length).toBe(1);
-    
+
     dependencies = [false, [1, 2], {name: 'AAA', address: {number: 20}}];
     rerender();
     expect(action.mock.calls.length).toBe(2);
@@ -76,5 +76,4 @@ describe('useDidUpdate hook tests', () => {
     rerender();
     expect(action.mock.calls.length).toBe(0);
   });
-
 });

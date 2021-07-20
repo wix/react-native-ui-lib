@@ -4,8 +4,8 @@ import { ViewProps } from '../view';
 import { ButtonProps } from '../button';
 export declare type StackAggregatorProps = ViewProps & {
     /**
-      * The initial state of the stack
-      */
+     * The initial state of the stack
+     */
     collapsed: boolean;
     /**
      * Component Children
@@ -46,8 +46,8 @@ export declare type StackAggregatorProps = ViewProps & {
 };
 declare const _default: React.ComponentClass<ViewProps & {
     /**
-      * The initial state of the stack
-      */
+     * The initial state of the stack
+     */
     collapsed: boolean;
     /**
      * Component Children

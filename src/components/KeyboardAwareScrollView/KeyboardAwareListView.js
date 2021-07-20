@@ -17,9 +17,7 @@ export default class KeyboardAwareListView extends KeyboardAwareBase {
 
   constructor(props) {
     super(props);
-    LogService.warn(
-      'uilib: Please stop Using KeyboardAwareListView, use either KeyboardAwareScrollView or KeyboardAwareFlatList'
-    );
+    LogService.warn('uilib: Please stop Using KeyboardAwareListView, use either KeyboardAwareScrollView or KeyboardAwareFlatList');
   }
 
   render() {

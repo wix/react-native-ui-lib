@@ -23,7 +23,7 @@ describe('Assets', () => {
       });
 
       it('should throw if assets are not a plain object', () => {
-        expect(() => assets.loadAssetsGroup('assets', new class {}())).toThrowErrorMatchingSnapshot();
+        expect(() => assets.loadAssetsGroup('assets', new (class {})())).toThrowErrorMatchingSnapshot();
       });
     });
 

@@ -10,7 +10,6 @@ import View from '../view';
 import Button from '../button';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
 
-
 interface Props extends ColorPickerDialogProps {
   /**
    * Array of colors for the picker's color palette (hex values)
@@ -38,10 +37,10 @@ interface Props extends ColorPickerDialogProps {
    * }
    */
   accessibilityLabels?: {
-    addButton?: string,
-    dismissButton?: string,
-    doneButton?: string,
-    input?: string
+    addButton?: string;
+    dismissButton?: string;
+    doneButton?: string;
+    input?: string;
   };
   style?: StyleProp<ViewStyle>;
   testID?: string;
@@ -86,7 +85,7 @@ class ColorPicker extends PureComponent<Props> {
 
   hideDialog = () => {
     this.setState({show: false});
-  }
+  };
 
   render() {
     const {initialColor, colors, value, testID, accessibilityLabels} = this.props;
@@ -138,7 +137,6 @@ class ColorPicker extends PureComponent<Props> {
 }
 
 export default asBaseComponent<Props>(ColorPicker);
-
 
 const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;
 const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;

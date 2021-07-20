@@ -32,7 +32,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     componentDidMount() {
       Appearance.addChangeListener(this.appearanceListener);
     }
-    
+
     componentWillUnmount() {
       Appearance.removeChangeListener(this.appearanceListener);
     }

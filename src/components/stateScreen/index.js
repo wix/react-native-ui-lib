@@ -51,7 +51,6 @@ export default class StateScreen extends BaseComponent {
 
     if (props.testId) {
       LogService.deprecationWarn({component: 'StateScreen', oldProp: 'testId', newProp: 'testID'});
-
     }
     if (props.source) {
       LogService.deprecationWarn({component: 'StateScreen', oldProp: 'source', newProp: 'imageSource'});

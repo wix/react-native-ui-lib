@@ -47,20 +47,20 @@ interface Props extends DialogProps {
   /**
    * Ok (v) button color
    */
-  doneButtonColor?: string,
+  doneButtonColor?: string;
   accessibilityLabels?: {
-    dismissButton?: string,
-    doneButton?: string,
-    input?: string
+    dismissButton?: string;
+    doneButton?: string;
+    input?: string;
   };
 }
 export type ColorPickerDialogProps = Props;
 
 interface State {
-  keyboardHeight: number,
-  color: any,
-  text?: string,
-  valid: boolean
+  keyboardHeight: number;
+  color: any;
+  text?: string;
+  valid: boolean;
 }
 
 const KEYBOARD_HEIGHT = 216;
@@ -351,7 +351,6 @@ class ColorPickerDialog extends PureComponent<Props, State> {
 }
 
 export default asBaseComponent<Props>(ColorPickerDialog);
-
 
 const BORDER_RADIUS = 12;
 

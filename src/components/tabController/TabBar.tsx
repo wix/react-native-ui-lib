@@ -119,7 +119,7 @@ export interface TabControllerBarProps {
   /**
    * Additional styles for the ScrollView
    */
-   scrollViewStyle?: StyleProp<ViewStyle>;
+  scrollViewStyle?: StyleProp<ViewStyle>;
   /**
    * Used as a testing identifier
    */
@@ -214,7 +214,14 @@ const TabBar = (props: Props) => {
 
   const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
 
-  const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex, onContentSizeChange, onLayout} = useScrollToItem({
+  const {
+    scrollViewRef: tabBar,
+    onItemLayout,
+    itemsWidths,
+    focusIndex,
+    onContentSizeChange,
+    onLayout
+  } = useScrollToItem({
     itemsCount: itemsCount.current,
     selectedIndex,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
@@ -321,7 +328,14 @@ const TabBar = (props: Props) => {
 
   const selectedIndicator =
     itemsWidths && itemsWidths.length > 0 ? (
-      <Reanimated.View style={[styles.selectedIndicator, {marginHorizontal: indicatorInsets}, indicatorStyle, _indicatorTransitionStyle]}/>
+      <Reanimated.View
+        style={[
+          styles.selectedIndicator,
+          {marginHorizontal: indicatorInsets},
+          indicatorStyle,
+          _indicatorTransitionStyle
+        ]}
+      />
     ) : undefined;
 
   const renderCodeBlock = _.memoize(() => {

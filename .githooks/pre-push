@@ -1,0 +1,13 @@
+#!/bin/zsh -e
+
+echo -e "\e[44mVerifying files format (push will fail if there are changes).\e[m"
+BEFORE=$(git status | shasum -a 256)
+npm run format
+AFTER=$(git status | shasum -a 256)
+DIF=$(diff  <(echo "$BEFORE" ) <(echo "$AFTER"))
+
+echo -e "\e[44mCreating typings (push will fail if there are changes).\e[m"
+npm run build:dev
+
+echo -e "\e[44mRunning lint and tests (push will fail if there are errors).\e[m"
+npm run test

@@ -60,7 +60,10 @@ export default class Stepper extends PureBaseComponent {
       accessibilityLabel: accessibilityLabel ? `${accessibilityLabel}, ${labelSuffix}` : `Stepper, ${labelSuffix}`,
       accessible: true,
       accessibilityRole: 'adjustable',
-      accessibilityActions: [{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}],
+      accessibilityActions: [
+        {name: 'increment', label: 'increment'},
+        {name: 'decrement', label: 'decrement'}
+      ],
       onAccessibilityAction: this.onAccessibilityAction
     };
   }
@@ -129,11 +132,11 @@ export default class Stepper extends PureBaseComponent {
 
   decrease = () => {
     this.updateValue(this.state.value - this.step);
-  }
+  };
 
   increase = () => {
     this.updateValue(this.state.value + this.step);
-  }
+  };
 
   render() {
     const {minusDisabled, plusDisabled, testID} = this.getDisabledState();

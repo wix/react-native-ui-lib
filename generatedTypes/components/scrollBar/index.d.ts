@@ -3,8 +3,8 @@ import { Animated, FlatListProps, ImageSourcePropType, NativeSyntheticEvent, Nat
 import { ForwardRefInjectedProps } from '../../commons/new';
 export interface ScrollBarProps extends FlatListProps<any> {
     /**
-       * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
-       */
+     * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
+     */
     useList?: boolean;
     /**
      * The element to use as a container, instead of a View
@@ -84,9 +84,6 @@ declare const Item: {
     displayName: string;
 };
 declare const _default: React.ComponentClass<ScrollBarProps & {
-    /**
-       * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
-       */
     useCustomTheme?: boolean | undefined;
 }, any> & typeof ScrollBar;
 export default _default;

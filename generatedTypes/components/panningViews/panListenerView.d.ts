@@ -9,10 +9,10 @@ interface PanningProps {
      * deltas - array of deltas (same length and order as directions)
      * Both arrays will have {x, y} - if no x or y drag has occurred this value will be undefined
      */
-    onDrag?: ({ directions, deltas }: ({
+    onDrag?: ({ directions, deltas }: {
         directions: PanDirectionsProps;
         deltas: PanAmountsProps;
-    })) => void;
+    }) => void;
     /**
      * This is were you will get notified when a swipe occurs
      * onSwipe = ({directions, velocities}) => {...}
@@ -20,10 +20,10 @@ interface PanningProps {
      * velocities - array of velocities (same length and order as directions)
      * Both arrays will have {x, y} - if no x or y swipe has occurred this value will be undefined
      */
-    onSwipe?: ({ directions, velocities }: ({
+    onSwipe?: ({ directions, velocities }: {
         directions: PanDirectionsProps;
         velocities: PanAmountsProps;
-    })) => void;
+    }) => void;
     /**
      * This is were you will get notified when the pan starts
      */

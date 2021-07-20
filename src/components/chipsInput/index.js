@@ -15,7 +15,6 @@ import Text from '../text';
 // TODO: support char array as tag creators (like comma)
 // TODO: add notes to Docs about the Android fix for onKeyPress
 
-
 const GUTTER_SPACING = 8;
 
 /**
@@ -140,7 +139,7 @@ class ChipsInput extends Component {
 
     _.invoke(this.props, 'onChangeTags', newTags, ChipsInput.onChangeTagsActions.ADDED, newTag);
     this.clear();
-  }
+  };
 
   removeMarkedTag() {
     const {tags, tagIndexToRemove} = this.state;
@@ -158,11 +157,11 @@ class ChipsInput extends Component {
     }
   }
 
-  markTagIndex = (tagIndex) => {
+  markTagIndex = tagIndex => {
     this.setState({tagIndexToRemove: tagIndex});
-  }
+  };
 
-  onChangeText = _.debounce((value) => {
+  onChangeText = _.debounce(value => {
     this.setState({value, tagIndexToRemove: undefined});
     _.invoke(this.props, 'onChangeText', value);
   }, 0);
@@ -193,7 +192,7 @@ class ChipsInput extends Component {
     return isLastTagMarked;
   }
 
-  onKeyPress = (event) => {
+  onKeyPress = event => {
     _.invoke(this.props, 'onKeyPress', event);
 
     const {disableTagRemoval} = this.props;
@@ -217,9 +216,9 @@ class ChipsInput extends Component {
         this.removeMarkedTag();
       }
     }
-  }
+  };
 
-  getLabel = (item) => {
+  getLabel = item => {
     const {getLabel} = this.props;
 
     if (getLabel) {
@@ -229,7 +228,7 @@ class ChipsInput extends Component {
       return item;
     }
     return _.get(item, 'label');
-  }
+  };
 
   renderLabel(tag, shouldMarkTag) {
     const {typography} = this.props.modifiers;
@@ -238,14 +237,14 @@ class ChipsInput extends Component {
     return (
       <View row centerV>
         {shouldMarkTag && (
-          <Image
-            style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]}
-            source={Assets.icons.x}
-          />)
-        }
+          <Image style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]} source={Assets.icons.x}/>
+        )}
         <Text
-          style={[tag.invalid ? (shouldMarkTag ? styles.errorMessageWhileMarked : styles.errorMessage)
-            : styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}
+          style={[
+            tag.invalid ? (shouldMarkTag ? styles.errorMessageWhileMarked : styles.errorMessage) : styles.tagLabel,
+            typography
+          ]}
+          accessibilityLabel={`${label} tag`}
         >
           {!tag.invalid && shouldMarkTag ? 'Remove' : label}
         </Text>
@@ -269,7 +268,7 @@ class ChipsInput extends Component {
         {this.renderLabel(tag, shouldMarkTag)}
       </View>
     );
-  }
+  };
 
   renderTagWrapper = (tag, index) => {
     return (
@@ -282,7 +281,7 @@ class ChipsInput extends Component {
         {this.renderTag(tag, index)}
       </TouchableOpacity>
     );
-  }
+  };
 
   renderTextInput() {
     const {inputStyle, selectionColor, ...others} = this.props;
@@ -325,14 +324,13 @@ class ChipsInput extends Component {
           {_.map(tags, tagRenderFn)}
           {this.renderTextInput()}
         </View>
-        {validationErrorMessage ?
-          (
-            <View>
-              <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
-                {validationErrorMessage}
-              </Text>
-            </View>
-          ) : null}
+        {validationErrorMessage ? (
+          <View>
+            <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
+              {validationErrorMessage}
+            </Text>
+          </View>
+        ) : null}
       </View>
     );
   }
@@ -352,7 +350,6 @@ class ChipsInput extends Component {
 
 export {ChipsInput}; // For tests
 export default asBaseComponent(ChipsInput);
-
 
 const basicTagStyle = {
   borderRadius: BorderRadiuses.br100,

@@ -9,7 +9,13 @@ export function extractPositionValues(position: string[] | undefined) {
   return {top, left, right, bottom};
 }
 
-export function generateBorderRadiusStyle({position, borderRadius}: {position: string[] | undefined, borderRadius: number | undefined}) {
+export function generateBorderRadiusStyle({
+  position,
+  borderRadius
+}: {
+  position: string[] | undefined;
+  borderRadius: number | undefined;
+}) {
   const borderRadiusStyle: {[key: string]: number | undefined} = {};
 
   const {top, left, right, bottom} = extractPositionValues(position);

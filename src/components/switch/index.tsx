@@ -57,8 +57,8 @@ export type SwitchProps = {
    */
   thumbStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
-  testID?: string; 
-}
+  testID?: string;
+};
 
 /**
  * @description: Switch component for toggling boolean value related to some context
@@ -67,13 +67,13 @@ export type SwitchProps = {
  */
 class Switch extends Component<SwitchProps> {
   static displayName = 'Switch';
-  
+
   state = {
     thumbPosition: new Animated.Value(this.props.value ? 1 : 0)
   };
 
   styles = createStyles(this.props);
-  
+
   componentDidUpdate(prevProps: SwitchProps) {
     const {value} = this.props;
     if (prevProps.value !== value) {
@@ -84,7 +84,6 @@ class Switch extends Component<SwitchProps> {
   getAccessibilityProps() {
     const {disabled, value} = this.props;
 
-    
     return {
       accessible: true,
       accessibilityRole: 'switch',

@@ -7,7 +7,6 @@ import View from '../view';
 import Text from '../text';
 import {WheelPicker} from '../../nativeComponents';
 
-
 export default class WheelPickerDialog extends Component {
   static displayName = 'IGNORE';
 
@@ -29,12 +28,12 @@ export default class WheelPickerDialog extends Component {
      */
     wheelPickerProps: PropTypes.shape(WheelPicker.propTypes),
     /**
-    * select label style
-    */
+     * select label style
+     */
     selectLabelStyle: RNText.propTypes.style,
     /**
-    * cancel label style
-    */
+     * cancel label style
+     */
     cancelLabelStyle: RNText.propTypes.style,
     /**
      * onCancel callback invoked when 'Cancel' button is pressed
@@ -48,7 +47,7 @@ export default class WheelPickerDialog extends Component {
      * onValueChange callback invoked when the value in the wheel changes
      */
     onValueChange: PropTypes.func
-  }
+  };
 
   state = {
     initialSelectedValue: this.props.selectedValue,
@@ -60,13 +59,13 @@ export default class WheelPickerDialog extends Component {
       this.props.onValueChange(value, index);
     }
     this.setState({currentValue: value});
-  }
+  };
 
   onSelect = () => {
     if (this.props.onSelect) {
       this.props.onSelect(this.state.currentValue);
     }
-  }
+  };
 
   render() {
     const {title, items, onCancel, wheelPickerProps, selectLabelStyle, cancelLabelStyle} = this.props;

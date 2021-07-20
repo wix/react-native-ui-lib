@@ -47,7 +47,10 @@ type Offsets = {
   RIGHT: number[];
 };
 
-export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<ScrollToResultProps<T>, 'scrollViewRef'> & {
+export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<
+  ScrollToResultProps<T>,
+  'scrollViewRef'
+> & {
   /**
    * This should be called by each ot the items' onLayout
    */
@@ -117,7 +120,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     }
 
     if (addOffsetMargin) {
-      index = 1; 
+      index = 1;
       while (index < itemsCount - 1) {
         leftOffsets[index] -= itemsWidths[index - 1];
         rightOffsets[index] += itemsWidths[index + 1] + innerSpacing;

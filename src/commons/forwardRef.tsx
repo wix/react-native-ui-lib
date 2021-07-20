@@ -25,4 +25,3 @@ export default function forwardRef<P = any>(WrappedComponent: React.ComponentTyp
 
   return ForwardedComponent as any;
 }
-

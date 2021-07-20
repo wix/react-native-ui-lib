@@ -18,61 +18,61 @@ import Assets from '../../assets';
 import Overlay, {OverlayTypeType} from '../overlay';
 import SvgImage from './SvgImage';
 
-
-export type ImageProps = RNImageProps & MarginModifiers & {
-  /**
-   * custom source transform handler for manipulating the image source (great for size control)
-   */
-  sourceTransformer?: (props: any) => ImageSourcePropType;
-  /**
-   * if provided image source will be driven from asset name
-   */
-  assetName?: string;
-  /**
-   * the asset group, default is "icons"
-   */
-  assetGroup?: string;
-  /**
-   * the asset tint
-   */
-  tintColor?: string;
-  /**
-   * whether the image should flip horizontally on RTL locals
-   */
-  supportRTL?: boolean;
-  /**
-   * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
-   */
-  cover?: boolean;
-  /**
-   * The aspect ratio for the image
-   */
-  aspectRatio?: number;
-  /**
-   * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
-   * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
-   */
-  overlayType?: OverlayTypeType;
-  /**
-   * Pass a custom color for the overlay
-   */
-  overlayColor?: string;
-  /**
-   * Render an overlay with custom content
-   */
-  customOverlayContent?: JSX.Element;
-  /**
-   * Default image source in case of an error
-   */
-  errorSource?: ImageSourcePropType
-};
+export type ImageProps = RNImageProps &
+  MarginModifiers & {
+    /**
+     * custom source transform handler for manipulating the image source (great for size control)
+     */
+    sourceTransformer?: (props: any) => ImageSourcePropType;
+    /**
+     * if provided image source will be driven from asset name
+     */
+    assetName?: string;
+    /**
+     * the asset group, default is "icons"
+     */
+    assetGroup?: string;
+    /**
+     * the asset tint
+     */
+    tintColor?: string;
+    /**
+     * whether the image should flip horizontally on RTL locals
+     */
+    supportRTL?: boolean;
+    /**
+     * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
+     */
+    cover?: boolean;
+    /**
+     * The aspect ratio for the image
+     */
+    aspectRatio?: number;
+    /**
+     * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
+     * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
+     */
+    overlayType?: OverlayTypeType;
+    /**
+     * Pass a custom color for the overlay
+     */
+    overlayColor?: string;
+    /**
+     * Render an overlay with custom content
+     */
+    customOverlayContent?: JSX.Element;
+    /**
+     * Default image source in case of an error
+     */
+    errorSource?: ImageSourcePropType;
+  };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
 type State = {
-  error: boolean,
-  prevSource: ImageSourcePropType
-}
+  error: boolean;
+  prevSource: ImageSourcePropType;
+};
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -155,12 +155,12 @@ class Image extends PureComponent<Props, State> {
       this.setState({error: true});
       _.invoke(this.props, 'onError', event);
     }
-  }
+  };
 
   renderSvg = () => {
     const {source, ...others} = this.props;
     return <SvgImage data={source} {...others}/>;
-  }
+  };
 
   renderRegularImage() {
     const {error} = this.state;

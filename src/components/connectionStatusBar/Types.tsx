@@ -39,7 +39,8 @@ export const DEFAULT_PROPS = {
  * @notes: The component requires installing the '@react-native-community/netinfo' native library
  */
 // @ts-ignore
-class FakeConnectionStatusBarForDocs extends PureComponent<ConnectionStatusBarProps, ConnectionStatusBarState> { // eslint-disable-line
+// eslint-disable-next-line
+class FakeConnectionStatusBarForDocs extends PureComponent<ConnectionStatusBarProps, ConnectionStatusBarState> {
   static displayName = 'ConnectionStatusBar';
 
   static defaultProps = DEFAULT_PROPS;

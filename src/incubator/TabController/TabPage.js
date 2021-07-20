@@ -82,9 +82,7 @@ export default class TabPage extends PureComponent {
       <Reanimated.View style={this._pageStyle} testID={testID}>
         {!loaded && renderLoading()}
         {loaded && this.props.children}
-        <Code>
-          {this.renderCodeBlock}
-        </Code>
+        <Code>{this.renderCodeBlock}</Code>
       </Reanimated.View>
     );
   }

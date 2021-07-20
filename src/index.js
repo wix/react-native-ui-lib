@@ -158,7 +158,8 @@ export default {
   get TabBar() {
     return require('./components/tabBar').default;
   },
-  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
+  get TagsInput() {
+    // TODO: Renamed to ChipsInput, to be deleted after migration
     return require('./components/tagsInput').default;
   },
   get ChipsInput() {

@@ -1,9 +1,7 @@
 import _ from 'lodash';
 import Colors from './colors';
 
-
 export class ThemeManager {
-
   theme = {
     primaryColor: Colors.primary,
     CTA: {
@@ -19,7 +17,7 @@ export class ThemeManager {
 
   forcedTheme = {
     components: {} as Extendable
-  }
+  };
 
   //TODO: deprecate on V6
   setTheme(overrides: Dictionary<string>) {

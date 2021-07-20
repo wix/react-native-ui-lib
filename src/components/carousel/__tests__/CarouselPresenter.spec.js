@@ -11,18 +11,27 @@ describe('Carousel presenter', () => {
 
   describe('calcOffset', () => {
     it('should calcOffset (default mode)', () => {
-      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: true}, {pageWidth: 120, pageHeight: 100, currentPage: 0})).toStrictEqual({x: 0, y: 0});
-      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: true}, {pageWidth: 120, pageHeight: 100, currentPage: 1})).toStrictEqual({x: 120, y: 0});
-      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: true}, {pageWidth: 120, pageHeight: 100, currentPage: 2})).toStrictEqual({x: 240, y: 0});
-      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: false}, {pageWidth: 80, pageHeight: 150, currentPage: 0})).toStrictEqual({x: 0, y: 0});
-      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: false}, {pageWidth: 80, pageHeight: 150, currentPage: 1})).toStrictEqual({x: 0, y: 150});
-      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: false}, {pageWidth: 80, pageHeight: 150, currentPage: 2})).toStrictEqual({x: 0, y: 300});
+      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: true},
+        {pageWidth: 120, pageHeight: 100, currentPage: 0})).toStrictEqual({x: 0, y: 0});
+      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: true},
+        {pageWidth: 120, pageHeight: 100, currentPage: 1})).toStrictEqual({x: 120, y: 0});
+      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: true},
+        {pageWidth: 120, pageHeight: 100, currentPage: 2})).toStrictEqual({x: 240, y: 0});
+      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: false},
+        {pageWidth: 80, pageHeight: 150, currentPage: 0})).toStrictEqual({x: 0, y: 0});
+      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: false},
+        {pageWidth: 80, pageHeight: 150, currentPage: 1})).toStrictEqual({x: 0, y: 150});
+      expect(uut.calcOffset({children: [<></>, <></>, <></>], horizontal: false},
+        {pageWidth: 80, pageHeight: 150, currentPage: 2})).toStrictEqual({x: 0, y: 300});
     });
 
     it('should calcOffset (loop mode)', () => {
-      expect(uut.calcOffset({loop: true, children: [<></>, <></>, <></>], horizontal: true}, {pageWidth: 120, pageHeight: 100, currentPage: 0})).toStrictEqual({x: 120, y: 0});
-      expect(uut.calcOffset({loop: true, children: [<></>, <></>, <></>], horizontal: true}, {pageWidth: 120, pageHeight: 100, currentPage: 1})).toStrictEqual({x: 240, y: 0});
-      expect(uut.calcOffset({loop: true, children: [<></>, <></>, <></>], horizontal: true}, {pageWidth: 120, pageHeight: 100, currentPage: 2})).toStrictEqual({x: 360, y: 0});
+      expect(uut.calcOffset({loop: true, children: [<></>, <></>, <></>], horizontal: true},
+        {pageWidth: 120, pageHeight: 100, currentPage: 0})).toStrictEqual({x: 120, y: 0});
+      expect(uut.calcOffset({loop: true, children: [<></>, <></>, <></>], horizontal: true},
+        {pageWidth: 120, pageHeight: 100, currentPage: 1})).toStrictEqual({x: 240, y: 0});
+      expect(uut.calcOffset({loop: true, children: [<></>, <></>, <></>], horizontal: true},
+        {pageWidth: 120, pageHeight: 100, currentPage: 2})).toStrictEqual({x: 360, y: 0});
     });
   });
 

@@ -8,18 +8,18 @@ describe('useOrientation hook tests', () => {
     });
   };
 
-  const getValue = (result) => {
+  const getValue = result => {
     return result.current[0];
   };
 
-  const getToggle = (result) => {
+  const getToggle = result => {
     return result.current[1]();
   };
 
   const expectValueToToggle = (a, b) => {
     const {result} = makeSUT(a, b);
     expect(getValue(result)).toEqual(a);
-  
+
     act(() => getToggle(result));
     expect(getValue(result)).toEqual(b);
   };
@@ -41,14 +41,14 @@ describe('useOrientation hook tests', () => {
   it('Initial value can be change', () => {
     const {result} = makeSUT(true, false);
     act(() => getToggle(result));
-    
+
     expect(getValue(result)).toEqual(false);
   });
 
   it('Allow toggle boolean without passing a second parameter', () => {
     const {result} = makeSUT(true);
     act(() => getToggle(result));
-    
+
     expect(getValue(result)).toEqual(false);
   });
 
@@ -62,7 +62,7 @@ describe('useOrientation hook tests', () => {
   it('Can toggle numbers', () => {
     const a = 30;
     const b = 22;
-    
+
     expectValueToToggle(a, b);
   });
 

@@ -4,8 +4,8 @@ import { ViewProps } from '../../components/view';
 import { ButtonProps } from '../../components/button';
 export interface ModalTopBarProps {
     /**
-       * title to display in the center of the top bar
-       */
+     * title to display in the center of the top bar
+     */
     title?: string;
     /**
      * title custom style
