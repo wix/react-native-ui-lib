@@ -91,26 +91,30 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const segmentsStyle = useRef([] as {x: number; width: number}[]);
   const segmentedControlHeight = useRef(0);
+  const indexRef = useRef(0);
   const segmentsCounter = useRef(0);
   const animatedValue = useRef(new Reanimated.Value(initialIndex));
 
-  const updateSelectedSegment = useCallback((index: number) => {
-    Reanimated.timing(animatedValue.current, {
-      toValue: index,
-      duration: 300,
-      easing: Easing.bezier(0.33, 1, 0.68, 1)
-    }).start();
-
-    return setSelectedSegment(index);
-  }, []);
+  const changeIndex = useCallback(_.throttle(() => {
+    onChangeIndex?.(indexRef.current);
+  },
+  400,
+  {trailing: true, leading: false}),
+  []);
 
   const onSegmentPress = useCallback((index: number) => {
     if (selectedSegment !== index) {
-      updateSelectedSegment(index);
-      setTimeout(() => onChangeIndex?.(index), 400);  
+      setSelectedSegment(index);
+      indexRef.current = index;
+
+      Reanimated.timing(animatedValue.current, {
+        toValue: index,
+        duration: 300,
+        easing: Easing.bezier(0.33, 1, 0.68, 1)
+      }).start(changeIndex);
     }
   },
-  [onChangeIndex, selectedSegment, updateSelectedSegment]);
+  [onChangeIndex, selectedSegment]);
 
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
