@@ -88,12 +88,14 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
 
   onPressIn = (...args: any) => {
     this.setState({active: true});
-    this.props.onPressIn?.(args);
+    //@ts-expect-error
+    this.props.onPressIn?.(...args);
   }
 
   onPressOut = (...args: any) => {
     this.setState({active: false});
-    this.props.onPressOut?.(args);
+    //@ts-expect-error
+    this.props.onPressOut?.(...args);
   }
 
   get backgroundColorStyle() {

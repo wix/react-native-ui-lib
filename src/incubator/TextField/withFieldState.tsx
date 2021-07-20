@@ -71,7 +71,8 @@ function withFieldState(
     const onFocus = useCallback(
       (...args: any) => {
         setIsFocused(true);
-        props.onFocus?.(args);
+        //@ts-expect-error
+        props.onFocus?.(...args);
       },
       [props.onFocus]
     );
@@ -79,7 +80,8 @@ function withFieldState(
     const onBlur = useCallback(
       (...args: any) => {
         setIsFocused(false);
-        props.onBlur?.(args);
+        //@ts-expect-error
+        props.onBlur?.(...args);
         if (validateOnBlur) {
           validateField();
         }

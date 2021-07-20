@@ -34,7 +34,7 @@ class PageCarousel extends PureComponent {
 
   scrollToPage = (pageIndex: number) => {
     const {pageWidth} = this.context;
-    const node = this.carousel.current?.getNode();
+    const node = this.carousel.current?.getNode?.();
     if (node) {
       node.scrollTo({x: pageIndex * pageWidth, animated: false});
     }

@@ -31,7 +31,7 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
     /**
      * Dismiss callback for when clicking on the background
      */
-    onDismiss?: (props: any) => void;
+    onDismiss?: (props?: any) => void;
     /**
      * Whether or not to ignore background press
      */

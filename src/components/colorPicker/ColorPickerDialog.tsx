@@ -219,7 +219,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
 
   onDismiss = () => {
     this.resetValues();
-    this.props.onDismiss?.({});
+    this.props.onDismiss?.();
   };
 
   renderHeader() {
