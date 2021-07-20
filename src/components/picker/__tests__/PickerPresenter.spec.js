@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as uut from '../PickerPresenter';
 
 describe('components/PickerPresenter', () => {
@@ -53,6 +54,28 @@ describe('components/PickerPresenter', () => {
       const getLabel = itemValue => `${itemValue.value} - ${itemValue.label}`;
       const itemProps = {value: {value: 'value', label: 'label'}, getLabel};
       expect(uut.getItemLabel(undefined, itemProps.value, getLabel)).toEqual('value - label');
+    });
+  });
+
+  describe('shouldDisableItem', () => {
+    it('should return false by default', () => {
+      expect(uut.shouldDisableItem()).toEqual(false);
+    });
+    
+    it('should return true when disabled prop passed', () => {
+      expect(uut.shouldDisableItem({disabled: true})).toEqual(true);
+    });
+    
+    it('should return false when disabled prop passed but also onPress', () => {
+      expect(uut.shouldDisableItem({disabled: true, onPress: _.noop})).toEqual(false);
+    });
+    
+    it('should return true when reached selection limit', () => {
+      expect(uut.shouldDisableItem({}, false, 3, 3)).toEqual(true);
+    });
+    
+    it('should return false when not reached selection limit', () => {
+      expect(uut.shouldDisableItem({}, false, 5, 3)).toEqual(false);
     });
   });
 });
