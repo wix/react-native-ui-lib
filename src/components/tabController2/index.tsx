@@ -45,7 +45,7 @@ export interface TabControllerProps {
 function TabController({
   selectedIndex = 0,
   asCarousel = false,
-  items = [],
+  items,
   onChangeIndex = _.noop,
   carouselPageWidth,
   children
@@ -93,10 +93,6 @@ function TabController({
       onChangeIndex
     };
   }, [/* selectedIndex,*/asCarousel, items, onChangeIndex]);
-
-  if (items.length === 0) {
-    return null;
-  }
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 }
