@@ -162,6 +162,7 @@ export const navigationData = {
   Inspirations: {
     title: 'Inspirations',
     screens: [
+      {title: 'General', tags: 'general inspirations', screen: 'unicorn.examples.General'},
       {title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'},
       {title: 'Pinterest', tags: 'pinterest demo screen', screen: 'unicorn.examples.Pinterest'},
       {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'}
