@@ -50,6 +50,10 @@ export type TouchableOpacityProps = {
    * Pass custom style
    */
   style?: ViewProps['style'];
+  /**
+   * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
+   */
+  customValue?: any;
   onLayout?: (event: LayoutChangeEvent) => void;
   testID?: string;
 };
@@ -86,11 +90,11 @@ function TouchableOpacity(props: Props) {
 
   const onPress = useCallback(() => {
     props.onPress?.(props);
-  }, [props]);
+  }, [props.onPress, props.customValue]);
 
   const onLongPress = useCallback(() => {
     props.onLongPress?.(props);
-  }, [props]);
+  }, [props.onPress, props.customValue]);
 
   const toggleActive = (value: number) => {
     'worklet';
