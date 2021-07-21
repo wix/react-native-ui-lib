@@ -94,7 +94,7 @@ function TouchableOpacity(props: Props) {
 
   const onLongPress = useCallback(() => {
     props.onLongPress?.(props);
-  }, [props.onPress, props.customValue]);
+  }, [props.onLongPress, props.customValue]);
 
   const toggleActive = (value: number) => {
     'worklet';
