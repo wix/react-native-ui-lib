@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Platform} from 'react-native';
 import View from '../view';
@@ -77,7 +76,7 @@ class Wizard extends Component<WizardProps, State> {
         activeIndex,
         activeConfig,
         onPress: () => {
-          _.invoke(this.props, 'onActiveIndexChanged', index);
+          this.props.onActiveIndexChanged?.(index);
         }
       });
     });

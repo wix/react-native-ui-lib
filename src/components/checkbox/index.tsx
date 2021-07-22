@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {
   Animated,
@@ -173,7 +172,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     const {disabled} = this.props;
 
     if (!disabled) {
-      _.invoke(this.props, 'onValueChange', !this.props.value);
+      this.props.onValueChange?.(!this.props.value);
     }
   };
 

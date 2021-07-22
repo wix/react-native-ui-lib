@@ -212,14 +212,14 @@ class ColorPickerDialog extends PureComponent<Props, State> {
     const {hex} = this.getValidColorString(text);
 
     if (hex) {
-      _.invoke(this.props, 'onSubmit', hex, this.getTextColor(hex));
+      this.props.onSubmit?.(hex, this.getTextColor(hex));
       this.onDismiss();
     }
   };
 
   onDismiss = () => {
     this.resetValues();
-    _.invoke(this.props, 'onDismiss');
+    this.props.onDismiss?.();
   };
 
   renderHeader() {

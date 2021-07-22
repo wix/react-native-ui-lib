@@ -251,14 +251,14 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   onMomentumScrollEnd = () => {
     // finished full page scroll
-    const {currentStandingPage, currentPage} = this.state;
+    const {currentStandingPage = 0, currentPage} = this.state;
     const index = this.getCalcIndex(currentPage);
 
     const pagesCount = presenter.getChildrenLength(this.props);
     if (index < pagesCount) {
       this.setState({currentStandingPage: index});
       if (currentStandingPage !== index) {
-        _.invoke(this.props, 'onChangePage', index, currentStandingPage);
+        this.props.onChangePage?.(index, currentStandingPage);
       }
     }
   };
@@ -316,7 +316,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       this.resetAutoPlay();
     }
 
-    _.invoke(this.props, 'onScroll', event);
+    this.props.onScroll?.(event);
   };
 
   // @ts-ignore

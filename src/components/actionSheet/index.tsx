@@ -139,8 +139,8 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   onOptionPress(optionIndex: number) {
-    _.invoke(this.props, `options[${optionIndex}].onPress`);
-    _.invoke(this.props, 'onDismiss');
+    this.props.options?.[optionIndex].onPress?.();
+    this.props.onDismiss?.();
   }
 
   handleRenderIcon = (option: ButtonProps) => {

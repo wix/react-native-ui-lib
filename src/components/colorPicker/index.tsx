@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import ColorPalette from './ColorPalette';
@@ -133,7 +132,7 @@ class ColorPicker extends PureComponent<Props> {
 
   // ColorPalette
   onValueChange = (value: string, options: object) => {
-    _.invoke(this.props, 'onValueChange', value, options);
+    this.props.onValueChange?.(value, options);
   };
 }
 

@@ -53,13 +53,15 @@ export default function useFieldState({
 
   const onFocus = useCallback((...args: any) => {
     setIsFocused(true);
-    _.invoke(props, 'onFocus', ...args);
+    //@ts-expect-error
+    props.onFocus?.(...args);
   },
   [props.onFocus]);
 
   const onBlur = useCallback((...args: any) => {
     setIsFocused(false);
-    _.invoke(props, 'onBlur', ...args);
+    //@ts-expect-error
+    props.onBlur?.(...args);
     if (validateOnBlur) {
       validateField();
     }
@@ -68,7 +70,7 @@ export default function useFieldState({
 
   const onChangeText = useCallback(text => {
     setValue(text);
-    _.invoke(props, 'onChangeText', text);
+    props.onChangeText?.(text);
 
     if (validateOnChange) {
       validateField(text);

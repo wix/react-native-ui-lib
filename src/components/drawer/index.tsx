@@ -208,15 +208,15 @@ class Drawer extends PureComponent<Props> {
     if (!item.keepOpen) {
       this.closeDrawer();
     }
-    _.invoke(item, 'onPress', this.props);
+    item.onPress?.(this.props);
   };
 
   private onSwipeableWillOpen = () => {
-    _.invoke(this.props, 'onSwipeableWillOpen', this.props);
+    this.props.onSwipeableWillOpen?.(this.props);
   };
 
   private onSwipeableWillClose = () => {
-    _.invoke(this.props, 'onSwipeableWillClose', this.props);
+    this.props.onSwipeableWillClose?.(this.props);
   };
 
   private onToggleSwipeLeft = (options?: any) => {
@@ -240,7 +240,7 @@ class Drawer extends PureComponent<Props> {
         this.animateItem({released: false, resetItemPosition: true});
         this.closeDrawer();
         setTimeout(() => {
-          _.invoke(this.props, 'onToggleSwipeLeft', this.props);
+          this.props.onToggleSwipeLeft?.(this.props);
         }, 150);
       }
     });
@@ -280,7 +280,7 @@ class Drawer extends PureComponent<Props> {
       // return o.text === event.nativeEvent.action;
       return o.name === event.nativeEvent.actionName;
     });
-    _.invoke(action, 'onPress');
+    action.onPress?.();
   };
 
   /** Renders */
