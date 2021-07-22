@@ -86,6 +86,7 @@ class PickerModal extends BaseComponent {
         enableModalBlur={Constants.isIOS && enableModalBlur}
         visible={visible}
         onRequestClose={topBarProps.onCancel}
+        supportedOrientations={['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']}
       >
         <Modal.TopBar {...topBarProps}/>
         {this.renderSearchInput()}

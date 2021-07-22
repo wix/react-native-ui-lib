@@ -52,7 +52,7 @@ class PickerDialog extends BaseComponent {
   render() {
     const dialogProps = Dialog.extractOwnProps(this.props);
     return (
-      <Dialog {...dialogProps} height={250} width="100%" migrate bottom animationConfig={{duration: 300}}>
+      <Dialog {...dialogProps} height={250} width="100%" migrate bottom animationConfig={{duration: 300}} supportedOrientations={['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']}>
         <View flex bg-white>
           {this.renderHeader()}
           <View centerV flex>
