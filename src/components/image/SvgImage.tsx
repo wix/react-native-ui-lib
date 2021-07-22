@@ -5,10 +5,11 @@ const SvgXml = SvgPackage?.SvgXml;
 
 export interface SvgImageProps {
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
+  fill?: string; // fill works on files if SVGR is configured appropriately, see https://github.com/kristerkari/react-native-svg-transformer/blob/f10c8d579490826227d1bcfa84ba6eabc124b70a/README.md#changing-svg-fill-color-in-js-code
 }
 
 function SvgImage(props: SvgImageProps) {
-  const {data, ...others} = props;
+  const {data, fill, ...others} = props;
 
   if (!SvgXml) {
     // eslint-disable-next-line max-len
@@ -17,10 +18,11 @@ function SvgImage(props: SvgImageProps) {
   }
 
   if (typeof data === 'string') {
+    // TODO can fill be applied here too?
     return <SvgXml xml={data} {...others}/>;
   } else if (data) {
     const File = data; // Must be with capital letter
-    return <File {...others}/>;
+    return <File fill={fill} {...others}/>;
   }
 
   return null;
