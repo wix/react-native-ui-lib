@@ -51,6 +51,19 @@ class TouchableOpacityScreen extends Component {
         {this.renderExample('feedbackColor', {backgroundColor: Colors.red30, feedbackColor: Colors.red10})}
         {this.renderExample('activeScale', {activeScale: 0.95})}
         {this.renderExample('activeOpacity', {activeOpacity: 0.6})}
+
+        <Incubator.TouchableOpacity2
+          marginT-20
+          onPress={this.onPress}
+          onLongPress={this.onLongPress}
+          backgroundColor={Colors.blue30}
+          feedbackColor={Colors.blue50}
+          style={{alignItems: 'center', paddingHorizontal: 20, paddingVertical: 8, borderRadius: 50}}
+          activeOpacity={1}
+          activeScale={0.98}
+        >
+          <Text white>TouchableOpacity2</Text>
+        </Incubator.TouchableOpacity2>
       </View>
     );
   }
