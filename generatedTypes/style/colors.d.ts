@@ -8,6 +8,7 @@ declare type Schemes = {
         [key: string]: string;
     };
 };
+declare type CurrentScheme = 'default' | 'light' | 'dark'
 export declare class Colors {
     [key: string]: any;
     schemes: Schemes;
@@ -20,6 +21,12 @@ export declare class Colors {
     loadColors(colors: {
         [key: string]: string;
     }): void;
+    /**
+     * Set color scheme for app
+     * arguments:
+     * scheme - color scheme e.g light/dark/default
+     */
+    setScheme(scheme: CurrentScheme): void;
     /**
      * Load set of schemes for light/dark mode
      * arguments:
@@ -46,7 +53,7 @@ export declare class Colors {
     isValidHex(string: string): boolean;
     getHexString(color: string): string;
     getHSL(color?: string): tinycolor.ColorFormats.HSLA;
-    isTransparent(color?: string): boolean | "" | undefined;
+    isTransparent(color?: string): boolean | '' | undefined;
     areEqual(colorA: string, colorB: string): boolean;
 }
 declare const colorObject: Colors & {

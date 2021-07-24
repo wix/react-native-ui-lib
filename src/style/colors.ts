@@ -8,17 +8,21 @@ import {colorsPalette, themeColors} from './colorsPalette';
 import ColorName from './colorName';
 
 type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
+type CurrentScheme = 'default' | 'light' | 'dark'
 
 export class Colors {
   [key: string]: any;
   schemes: Schemes = {light: {}, dark: {}};
+  currentScheme: CurrentScheme = 'default';
 
   constructor() {
     const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
 
     Appearance.addChangeListener(({colorScheme}: Appearance.AppearancePreferences) => {
-      Object.assign(this, this.schemes[colorScheme ?? 'light']);
+      if (this.currentScheme === 'default') {
+        Object.assign(this, this.schemes[colorScheme ?? 'light']);
+      };
     });
   }
   /**
@@ -46,8 +50,22 @@ export class Colors {
     }
 
     this.schemes = schemes;
-    const colorScheme = Appearance.getColorScheme();
+    const colorScheme = this.currentScheme === 'default' ? Appearance.getColorScheme() : this.currentScheme;
     Object.assign(this, this.schemes[colorScheme ?? 'light']);
+  }
+
+  /**
+   * Set color scheme for app
+   * arguments:
+   * scheme - color scheme e.g light/dark/default
+   */
+  setScheme(scheme: CurrentScheme) {
+    if (!['light', 'dark', 'default'].includes(scheme)) {
+      throw new Error(`${scheme} is invalid colorScheme, please use 'light' | 'dark' | 'default'`)
+    }
+    this.currentScheme = scheme;
+    const colorScheme = this.currentScheme === 'default' ? Appearance.getColorScheme() : this.currentScheme;
+    Object.assign(this, this.schemes[colorScheme ?? 'light'])
   }
 
   /**
