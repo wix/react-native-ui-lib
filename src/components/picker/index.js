@@ -182,11 +182,12 @@ class Picker extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    const hasNextValue = !_.isEmpty(nextProps.value) || _.isNumber(nextProps.value);
     /* Relevant for keeping the value prop controlled - react when user change value prop */
-    const externalValueChanged = !_.isEmpty(nextProps.value) && prevState.value !== nextProps.value;
+    const externalValueChanged = hasNextValue && prevState.value !== nextProps.value;
     /* Relevant for multi select mode when we keep an internal value state */
     const internalValueChanged = prevState.value !== prevState.prevValue;
-    if (internalValueChanged) {
+    if (internalValueChanged && nextProps.mode === Picker.modes.MULTI) {
       /* for this.setState() updates to 'value'
       NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue' */
       return {
