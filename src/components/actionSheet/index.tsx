@@ -98,7 +98,7 @@ type ActionSheetProps = {
 /**
  * @description: Cross platform Action Sheet, with a support for native iOS solution
  * @gif: https://media.giphy.com/media/l0HUpXOR6RqB2ct5S/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.tsx
  */
 class ActionSheet extends Component<ActionSheetProps> {
   static displayName = 'ActionSheet';

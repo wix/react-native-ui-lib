@@ -44,7 +44,7 @@ export const SWATCH_SIZE = DEFAULT_SIZE;
 
 /**
  * @description: A color swatch component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true
  */
 class ColorSwatch extends PureComponent<Props> {
