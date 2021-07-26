@@ -56,7 +56,6 @@ interface State {
  * @modifiers: alignment, flex, padding, margin, background, typography, color (list of supported modifiers)
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.tsx
  * @extends: ScrollBar
- * @extendsLink:https://github.com/wix/react-native-ui-lib/blob/master/src/components/scrollBar/index.js
  * @notes: This is screen width component.
  */
 declare class TabBar extends Component<TabBarProps, State> {

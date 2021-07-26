@@ -66,7 +66,7 @@ type State = {
 /**
  * @description: Stack aggregator component
  * @modifiers: margin, padding
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.tsx
  */
 class StackAggregator extends PureComponent<StackAggregatorProps, State> {
   static displayName = 'StackAggregator';
