@@ -14,7 +14,7 @@ import {
   ForwardRefInjectedProps,
   ContainerModifiers
 } from '../../commons/new';
-import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
+import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity2';
 
 
 export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>,
