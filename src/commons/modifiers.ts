@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Appearance, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Typography, Colors, BorderRadiuses, Spacings, ThemeManager} from '../style';
 import {BorderRadiusesLiterals} from '../style/borderRadiuses';
 import TypographyPresets from '../style/typographyPresets';
@@ -97,8 +97,8 @@ export type ContainerModifiers =
   BackgroundColorModifier;
 
 export function extractColorValue(props: Dictionary<any>) {
-  const scheme = Colors.currentScheme === 'default' ? Appearance.getColorScheme() : Colors.currentScheme;
-  const schemeColors = Colors.schemes[scheme || 'light'];
+  const scheme = Colors.getScheme();
+  const schemeColors = Colors.schemes[scheme];
   const allColorsKeys: Array<keyof typeof Colors> = [..._.keys(Colors), ..._.keys(schemeColors)];
   const colorPropsKeys = _.chain(props)
     .keys()
@@ -110,8 +110,8 @@ export function extractColorValue(props: Dictionary<any>) {
 
 export function extractBackgroundColorValue(props: Dictionary<any>) {
   let backgroundColor;
-  const scheme = Colors.currentScheme === 'default' ? Appearance.getColorScheme() : Colors.currentScheme;
-  const schemeColors = Colors.schemes[scheme || 'light'];
+  const scheme = Colors.getScheme();
+  const schemeColors = Colors.schemes[scheme];
 
   const keys = Object.keys(props);
   const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop) && !!props[prop])!;

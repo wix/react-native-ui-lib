@@ -8,21 +8,21 @@ import {colorsPalette, themeColors} from './colorsPalette';
 import ColorName from './colorName';
 
 type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
-type CurrentScheme = 'default' | 'light' | 'dark'
+type SchemeType = 'default' | 'light' | 'dark'
 
 export class Colors {
   [key: string]: any;
   schemes: Schemes = {light: {}, dark: {}};
-  currentScheme: CurrentScheme = 'default';
+  currentScheme: SchemeType = 'default';
 
   constructor() {
     const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
 
-    Appearance.addChangeListener(({colorScheme}: Appearance.AppearancePreferences) => {
+    Appearance.addChangeListener(() => {
       if (this.currentScheme === 'default') {
-        Object.assign(this, this.schemes[colorScheme ?? 'light']);
-      };
+        Object.assign(this, this.schemes[Appearance.getColorScheme() ?? 'light']);
+      }
     });
   }
   /**
@@ -50,8 +50,16 @@ export class Colors {
     }
 
     this.schemes = schemes;
-    const colorScheme = this.currentScheme === 'default' ? Appearance.getColorScheme() : this.currentScheme;
-    Object.assign(this, this.schemes[colorScheme ?? 'light']);
+    const colorScheme = this.getScheme();
+    Object.assign(this, this.schemes[colorScheme]);
+  }
+
+  /**
+   * Get app's current color scheme
+   */
+  getScheme(): 'light' | 'dark' {
+    const scheme = this.currentScheme === 'default' ? Appearance.getColorScheme() : this.currentScheme;
+    return scheme ?? 'light';
   }
 
   /**
@@ -59,13 +67,13 @@ export class Colors {
    * arguments:
    * scheme - color scheme e.g light/dark/default
    */
-  setScheme(scheme: CurrentScheme) {
+  setScheme(scheme: SchemeType) {
     if (!['light', 'dark', 'default'].includes(scheme)) {
-      throw new Error(`${scheme} is invalid colorScheme, please use 'light' | 'dark' | 'default'`)
+      throw new Error(`${scheme} is invalid colorScheme, please use 'light' | 'dark' | 'default'`);
     }
     this.currentScheme = scheme;
-    const colorScheme = this.currentScheme === 'default' ? Appearance.getColorScheme() : this.currentScheme;
-    Object.assign(this, this.schemes[colorScheme ?? 'light'])
+    const colorScheme = this.getScheme();
+    Object.assign(this, this.schemes[colorScheme]);
   }
 
   /**
