@@ -102,10 +102,10 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
     }
   }
 
-  getAnimatedScales = (): Animated.Value[] => {
+  getAnimatedScales = () => {
     return React.Children.map(this.props.children, (_item, index) => {
       return new Animated.Value(this.getItemScale(index));
-    });
+    }) as Animated.Value[];
   }
 
   getItemScale = (index: number) => {
@@ -298,7 +298,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
           </Animated.View>
 
           {React.Children.map(children, (item, index) => {
-            return this.renderItem(item, index);
+            return this.renderItem(item as JSX.Element | JSX.Element[], index);
           })}
 
           {collapsed && (

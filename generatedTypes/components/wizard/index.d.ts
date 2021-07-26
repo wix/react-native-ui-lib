@@ -9,7 +9,7 @@ interface State {
  * @description: Wizard Component: a wizard presents a series of steps in  prescribed order
  * that the user needs to complete in order to accomplish a goal (e.g. purchase a product).
  *
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.tsx
  * @notes: Use Wizard with nested Wizard.Step(s) to achieve the desired result.
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/Wizard.gif?raw=true
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/WizardPresets.png?raw=true
