@@ -39,6 +39,13 @@ export default function useFieldState({
     }
   }, []);
 
+  useEffect(() => {
+    if (props.value !== value) {
+      setValue(props.value);
+    }
+  /* On purpose listen only to props.value change */
+  }, [props.value]);
+
   useDidUpdate(() => {
     onChangeValidity?.(isValid);
   }, [isValid]);
