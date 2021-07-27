@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import { ReactElement } from 'react';
 import { TextStyle, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
 import Reanimated from 'react-native-reanimated';
 import { BadgeProps } from '../badge';
@@ -39,6 +39,14 @@ export interface TabControllerItemProps {
      * Badge component props to display next the item label
      */
     badge?: BadgeProps;
+    /**
+     * Pass to render a leading element
+     */
+    leadingAccessory?: ReactElement;
+    /**
+     * Pass to render a trailing element
+     */
+    trailingAccessory?: ReactElement;
     /**
      * A fixed width for the item
      */
@@ -84,5 +92,5 @@ interface Props extends TabControllerItemProps {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: Must be rendered as a direct child of TabController.TabBar.
  */
-export default function TabBarItem({ index, label, labelColor, selectedLabelColor, labelStyle, selectedLabelStyle, icon, badge, uppercase, activeOpacity, activeBackgroundColor, testID, ignore, style, ...props }: Props): JSX.Element;
+export default function TabBarItem({ index, label, labelColor, selectedLabelColor, labelStyle, selectedLabelStyle, icon, badge, leadingAccessory, trailingAccessory, uppercase, activeOpacity, activeBackgroundColor, testID, ignore, style, ...props }: Props): JSX.Element;
 export {};

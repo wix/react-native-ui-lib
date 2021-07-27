@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent, RefObject} from 'react';
+import React, {PureComponent, ReactNode, RefObject} from 'react';
 import memoize from 'memoize-one';
 import {Animated, Easing, StyleSheet, ViewStyle, TextStyle, AccessibilityActionEvent} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
@@ -23,6 +23,7 @@ interface ItemProps {
   keepOpen?: boolean;
   style?: ViewStyle;
   testID?: string;
+  customElement?: ReactNode;
 }
 
 interface Props {
@@ -207,15 +208,15 @@ class Drawer extends PureComponent<Props> {
     if (!item.keepOpen) {
       this.closeDrawer();
     }
-    _.invoke(item, 'onPress', this.props);
+    item.onPress?.(this.props);
   };
 
   private onSwipeableWillOpen = () => {
-    _.invoke(this.props, 'onSwipeableWillOpen', this.props);
+    this.props.onSwipeableWillOpen?.(this.props);
   };
 
   private onSwipeableWillClose = () => {
-    _.invoke(this.props, 'onSwipeableWillClose', this.props);
+    this.props.onSwipeableWillClose?.(this.props);
   };
 
   private onToggleSwipeLeft = (options?: any) => {
@@ -239,7 +240,7 @@ class Drawer extends PureComponent<Props> {
         this.animateItem({released: false, resetItemPosition: true});
         this.closeDrawer();
         setTimeout(() => {
-          _.invoke(this.props, 'onToggleSwipeLeft', this.props);
+          this.props.onToggleSwipeLeft?.(this.props);
         }, 150);
       }
     });
@@ -279,7 +280,7 @@ class Drawer extends PureComponent<Props> {
       // return o.text === event.nativeEvent.action;
       return o.name === event.nativeEvent.actionName;
     });
-    _.invoke(action, 'onPress');
+    action.onPress?.();
   };
 
   /** Renders */
@@ -347,7 +348,8 @@ class Drawer extends PureComponent<Props> {
         ]}
         onPress={() => this.onActionPress(item)}
       >
-        {item.icon && (
+        {item.customElement}
+        {!item.customElement && item.icon && (
           <Animated.Image
             source={item.icon}
             style={[
@@ -362,7 +364,7 @@ class Drawer extends PureComponent<Props> {
             ]}
           />
         )}
-        {item.text && (
+        {!item.customElement && item.text && (
           <Animated.Text
             style={[
               styles.actionText,

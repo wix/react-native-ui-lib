@@ -77,7 +77,7 @@ type State = {
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
- * @extendsLink: https://facebook.github.io/react-native/docs/image.html
+ * @extendsLink: https://reactnative.dev/docs/image
  * @notes: please note that for SVG support you need to add both
  * `react-native-svg` and `react-native-svg-transformer`,
  * and also configure them (see `metro.config.js`)
@@ -153,7 +153,7 @@ class Image extends PureComponent<Props, State> {
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
     if (event.nativeEvent.error) {
       this.setState({error: true});
-      _.invoke(this.props, 'onError', event);
+      this.props.onError?.(event);
     }
   }
 

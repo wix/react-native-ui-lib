@@ -14,8 +14,6 @@ onlyLabels: []
 exemptLabels:
   - pinned
   - WIP
-  - bug
-  - "feature request"
   - "typescript"
 
 # Set to true to ignore issues in a project (defaults to false)

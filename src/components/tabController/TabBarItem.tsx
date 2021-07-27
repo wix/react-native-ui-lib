@@ -1,5 +1,5 @@
 // TODO: support commented props
-import React, {PureComponent} from 'react';
+import React, {PureComponent, ReactElement} from 'react';
 import {StyleSheet, /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {processColor} from 'react-native-reanimated';
@@ -51,6 +51,14 @@ export interface TabControllerItemProps {
    * Badge component props to display next the item label
    */
   badge?: BadgeProps;
+  /**
+   * Pass to render a leading element
+   */
+  leadingAccessory?: ReactElement;
+  /**
+   * Pass to render a trailing element
+   */
+  trailingAccessory?: ReactElement;
   /**
    * maximun number of lines the label can break
    */
@@ -170,16 +178,8 @@ export default class TabBarItem extends PureComponent<Props> {
   }
 
   getLabelStyle() {
-    const {
-      index,
-      currentPage,
-      targetPage,
-      labelColor,
-      selectedLabelColor,
-      ignore,
-      labelStyle,
-      selectedLabelStyle
-    } = this.props;
+    const {index, currentPage, targetPage, labelColor, selectedLabelColor, ignore, labelStyle, selectedLabelStyle} =
+      this.props;
 
     let fontWeight, letterSpacing, fontFamily;
 
@@ -256,9 +256,7 @@ export default class TabBarItem extends PureComponent<Props> {
       inactiveColor = processColor(inactiveColor);
     }
 
-    const tintColor = cond(eq(currentPage, index),
-      activeColor,
-      ignore ? activeColor : inactiveColor);
+    const tintColor = cond(eq(currentPage, index), activeColor, ignore ? activeColor : inactiveColor);
 
     return {
       tintColor
@@ -266,7 +264,18 @@ export default class TabBarItem extends PureComponent<Props> {
   }
 
   render() {
-    const {label, icon, badge, state, uppercase, activeOpacity, activeBackgroundColor, testID} = this.props;
+    const {
+      label,
+      icon,
+      badge,
+      leadingAccessory,
+      trailingAccessory,
+      state,
+      uppercase,
+      activeOpacity,
+      activeBackgroundColor,
+      testID
+    } = this.props;
 
     return (
       <TouchableOpacity
@@ -279,6 +288,7 @@ export default class TabBarItem extends PureComponent<Props> {
         onPress={this.onPress}
         testID={testID}
       >
+        {leadingAccessory}
         {icon && (
           <Reanimated.Image
             source={icon}
@@ -295,6 +305,7 @@ export default class TabBarItem extends PureComponent<Props> {
           // @ts-ignore
           <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
         )}
+        {trailingAccessory}
       </TouchableOpacity>
     );
   }

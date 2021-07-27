@@ -96,6 +96,14 @@ export interface HintProps {
      */
     customContent?: JSX.Element;
     /**
+     * Remove all hint's paddings
+     */
+    removePaddings?: boolean;
+    /**
+     * Enable shadow (for hint with white background only)
+     */
+    enableShadow?: boolean;
+    /**
      * The hint's test identifier
      */
     testID?: string;
@@ -107,10 +115,11 @@ export interface HintProps {
 interface HintState {
     targetLayout?: HintTargetFrame;
     targetLayoutInWindow?: HintTargetFrame;
+    hintUnmounted: boolean;
 }
 /**
  * @description: Hint component for displaying a tooltip over wrapped component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.tsx
  * @notes: You can either wrap a component or pass a specific targetFrame
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Hint/Hint.gif?raw=true
  */
@@ -122,12 +131,16 @@ declare class Hint extends Component<HintProps, HintState> {
     static positions: typeof HintPositions;
     targetRef: ElementRef<typeof RNView> | null;
     hintRef: ElementRef<typeof RNView> | null;
+    animationDuration: number;
     state: {
         targetLayoutInWindow: undefined;
         targetLayout: HintTargetFrame | undefined;
+        hintUnmounted: boolean;
     };
     visibleAnimated: Animated.Value;
     componentDidUpdate(prevProps: HintProps): void;
+    animateHint: () => void;
+    toggleAnimationEndedToRemoveHint: () => void;
     focusAccessibilityOnHint: () => void;
     setTargetRef: (ref: ElementRef<typeof RNView>) => void;
     setHintRef: (ref: ElementRef<typeof RNView>) => void;

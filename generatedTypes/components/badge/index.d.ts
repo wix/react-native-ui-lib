@@ -96,7 +96,7 @@ declare class Badge extends PureComponent<BadgeProps> {
     getAccessibilityProps(): {
         accessible: boolean;
         accessibilityRole: string;
-        accessibilityLabel: string | undefined;
+        accessibilityLabel: string;
     };
     isSmallBadge(): boolean;
     getBadgeSizeStyle(): any;

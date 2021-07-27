@@ -34,12 +34,17 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './components/t
 export {default as Button, ButtonPropTypes, ButtonSize, ButtonProps} from './components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
+export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
+export {default as ColorPalette, ColorPaletteProps} from './components/colorPicker/ColorPalette';
+export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker/ColorSwatch';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
+export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
+export {default as Hint, HintProps} from './components/hint';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
-export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
-export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
+export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton';
+export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioGroup';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
 export {default as HapticService, HapticType} from './services/HapticService';
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
@@ -48,12 +53,14 @@ export {default as TabController, TabControllerProps, TabControllerItemProps} fr
 export {default as TabController2} from './components/tabController2';
 export {default as TabBar, TabBarProps} from './components/TabBar';
 export {default as ScrollBar, ScrollBarProps} from './components/ScrollBar';
+export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
+export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {
   default as PanningProvider,
   PanningDirections,
@@ -69,12 +76,11 @@ export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as ActionSheet} from './components/actionSheet';
+export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
 
 /* All components with manual typings */
 export {
   ConnectionStatusBar,
-  FeatureHighlight,
-  Hint,
   BaseInput,
   TextArea,
   MaskedInput,
@@ -87,7 +93,6 @@ export {
   TagsInput,
   ChipsInput,
   SharedTransition,
-  StackAggregator,
   Toast,
   WheelPickerDialog,
   Assets,
@@ -100,7 +105,6 @@ export {
   StateScreen,
   WheelPicker,
   WheelPickerProps,
-  ColorPicker,
   Picker,
   PickerItemValue,
   PickerProps
@@ -109,8 +113,6 @@ export {
 /* All components that are missing either manual or auto generated typings */
 export const AnimatedImage;
 export const AnimatedScanner;
-export const ColorPalette;
-export const ColorSwatch;
 export const DateTimePicker;
 export const HighlighterOverlayView;
 export const Keyboard;
@@ -120,4 +122,3 @@ export const SafeAreaInsetsManager;
 export const SafeAreaSpacerView;
 export const SelectableComponent;
 export const TextField;
-export const Wizard;

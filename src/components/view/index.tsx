@@ -57,7 +57,7 @@ interface ViewState {
 /**
  * @description: An enhanced View component
  * @extends: View
- * @extendsLink: https://facebook.github.io/react-native/docs/view.html
+ * @extendsLink: https://reactnative.dev/docs/view
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
 class View extends PureComponent<PropsTypes, ViewState> {

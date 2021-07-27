@@ -38,6 +38,9 @@ export interface FloatingButtonProps {
   hideBackgroundOverlay?: boolean;
   /**
    * Used as testing identifier
+   * <TestID> - the floatingButton container
+   * <TestID>.button - the floatingButton main button
+   * <TestID>.secondaryButton - the floatingButton secondaryButton
    */
   testID?: string;
 }
@@ -48,8 +51,6 @@ const gradientImage = () => require('./gradient.png');
  * @description: Hovering button with gradient background
  * @modifiers: margin, background, color
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.tsx
- * @extends: Button
- * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/button/index.js
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FloatingButton/FloatingButton.gif?raw=true
  */
 class FloatingButton extends PureComponent<FloatingButtonProps> {
@@ -94,13 +95,14 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   renderButton() {
-    const {bottomMargin, button, secondaryButton} = this.props;
+    const {bottomMargin, button, secondaryButton, testID} = this.props;
     const bottom = secondaryButton ? Spacings.s4 : bottomMargin || Spacings.s8;
 
     return (
       <Button
         size={Button.sizes.large}
         style={[styles.shadow, {marginTop: 16, marginBottom: bottom}]}
+        testID={`${testID}.button`}
         {...button}
       />
     );
@@ -121,12 +123,13 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   };
 
   renderSecondaryButton() {
-    const {secondaryButton, bottomMargin} = this.props;
+    const {secondaryButton, bottomMargin, testID} = this.props;
 
     return (
       <Button
         link
         size={Button.sizes.large}
+        testID={`${testID}.secondaryButton`}
         {...secondaryButton}
         style={{marginBottom: bottomMargin || Spacings.s7}}
         enableShadow={false}
@@ -135,7 +138,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   render() {
-    const {withoutAnimation, secondaryButton, visible} = this.props;
+    const {withoutAnimation, secondaryButton, visible, testID} = this.props;
     // NOTE: keep this.firstLoad as true as long as the visibility changed to true
     this.firstLoad && !visible ? this.firstLoad = true : this.firstLoad = false;
 
@@ -152,6 +155,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
         pointerEvents="box-none"
         animated
         style={[styles.container, this.getAnimatedStyle()]}
+        testID={testID}
       >
         {this.renderOverlay()}
         {this.renderButton()}
