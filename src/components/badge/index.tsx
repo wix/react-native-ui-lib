@@ -104,6 +104,10 @@ export type BadgeProps = ViewProps &
      * Use to identify the badge in tests
      */
     testId?: string;
+    /**
+     * Component accessibility label
+     */
+     accessibilityLabel?: string;
   };
 
 /**
@@ -132,10 +136,12 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   getAccessibilityProps() {
-    const {onPress, icon, label} = this.props;
-
+    const {onPress, icon, label, accessibilityLabel} = this.props;
     return {
-      accessibilityLabel: icon ? 'badge' : label ? `${label} new items` : undefined,
+      accessibilityLabel: accessibilityLabel ? accessibilityLabel :
+        label ? `${label} new items` :
+        icon ? 'badge' :
+        undefined,
       ...extractAccessibilityProps(this.props),
       accessible: !_.isUndefined(label),
       accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text'
