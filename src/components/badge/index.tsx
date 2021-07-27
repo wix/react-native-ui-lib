@@ -138,10 +138,7 @@ class Badge extends PureComponent<BadgeProps> {
   getAccessibilityProps() {
     const {onPress, icon, label, accessibilityLabel} = this.props;
     return {
-      accessibilityLabel: accessibilityLabel ? accessibilityLabel :
-        label ? `${label} new items` :
-        icon ? 'badge' :
-        undefined,
+      accessibilityLabel: accessibilityLabel || label ? `${label} new items` : 'badge',
       ...extractAccessibilityProps(this.props),
       accessible: !_.isUndefined(label),
       accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text'
