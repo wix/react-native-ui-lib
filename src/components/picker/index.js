@@ -4,7 +4,9 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import memoize from 'memoize-one';
 import {asBaseComponent, forwardRef} from '../../commons';
+import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 import View from '../../components/view';
 import Modal from '../modal';
@@ -14,22 +16,24 @@ import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
+import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from './PickerPresenter';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
   MULTI: 'MULTI'
 };
 const ItemType = PropTypes.oneOfType([
-  PropTypes.number, 
+  PropTypes.number,
   PropTypes.string,
   PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.string
-  })]);
+  })
+]);
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
- * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/Default.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/MultiPicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/NativePicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/DialogPicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/CustomPicker.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
  * @notes: 'useNativePicker' prop requires installing the '@react-native-picker/picker' native library
  */
@@ -59,6 +63,10 @@ class Picker extends Component {
      * SINGLE mode or MULTI mode
      */
     mode: PropTypes.oneOf(Object.keys(PICKER_MODES)),
+    /**
+     * Limit the number of selected items
+     */
+    selectionLimit: PropTypes.number,
     /**
      * Adds blur effect to picker modal (iOS only)
      */
@@ -174,20 +182,22 @@ class Picker extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (!_.isEmpty(nextProps.value) && prevState.value !== nextProps.value) {
-      if (prevState.prevValue !== prevState.value) {
-        // for this.setState() updates to 'value'
-        // NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue'
-        return {
-          prevValue: prevState.value
-        };
-      } else {
-        // for prop update to 'value'
-        return {
-          value: nextProps.value
-        };
-      }
-    } else if (_.isFunction(nextProps.renderPicker) && prevState.value !== nextProps.value) {
+    const hasNextValue = !_.isEmpty(nextProps.value) || _.isNumber(nextProps.value);
+    /* Relevant for keeping the value prop controlled - react when user change value prop */
+    const externalValueChanged = hasNextValue && prevState.value !== nextProps.value;
+    /* Relevant for multi select mode when we keep an internal value state */
+    const internalValueChanged = prevState.value !== prevState.prevValue;
+    if (internalValueChanged && nextProps.mode === Picker.modes.MULTI) {
+      /* for this.setState() updates to 'value'
+      NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue' */
+      return {
+        prevValue: prevState.value
+      };
+    } else if (externalValueChanged) {
+      return {
+        value: nextProps.value
+      };
+    } else if (_.isFunction(nextProps.renderPicker) && externalValueChanged) {
       return {
         prevValue: prevState.value,
         value: nextProps.value
@@ -216,8 +226,8 @@ class Picker extends Component {
   }
 
   getContextValue = () => {
-    const {value, searchValue} = this.state;
-    const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    const {value} = this.state;
+    const {migrate, mode, getItemValue, getItemLabel, renderItem, selectionLimit} = this.props;
     const pickerValue = !migrate && _.isPlainObject(value) ? value?.value : value;
     return {
       migrate,
@@ -228,8 +238,7 @@ class Picker extends Component {
       getItemLabel,
       onSelectedLayout: this.onSelectedItemLayout,
       renderItem,
-      showSearch,
-      searchValue
+      selectionLimit
     };
   };
 
@@ -244,18 +253,18 @@ class Picker extends Component {
 
     const {getItemLabel = _.noop} = this.props;
     return _.chain(value)
-      .map(item => (_.isPlainObject(item) ? getItemLabel(item) || item.label : itemsByValue[item].label))
+      .map(item => (_.isPlainObject(item) ? getItemLabel(item) || item?.label : itemsByValue[item]?.label))
       .join(', ')
       .value();
   };
 
-  getLabel(value) {
+  getLabel = value => {
     const {getLabel} = this.props;
 
     if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
       return getLabel(value);
     }
-    
+
     if (_.isArray(value)) {
       return this.getLabelsFromArray(value);
     }
@@ -269,6 +278,25 @@ class Picker extends Component {
     const selectedItem = _.find(items, {value});
 
     return _.get(selectedItem, 'label');
+  };
+
+  getFilteredChildren = memoize((children, searchValue) => {
+    const {getItemLabel: getItemLabelPicker} = this.props;
+    return _.filter(children, child => {
+      const {label, value, getItemLabel} = child.props;
+      const itemLabel = getItemLabelPresenter(label, value, getItemLabel || getItemLabelPicker);
+      return !shouldFilterOut(searchValue, itemLabel);
+    });
+  });
+
+  get children() {
+    const {searchValue} = this.state;
+    const {children, showSearch} = this.props;
+    if (showSearch && !_.isEmpty(searchValue)) {
+      return this.getFilteredChildren(children, searchValue);
+    }
+
+    return children;
   }
 
   handlePickerOnPress = () => {
@@ -312,7 +340,11 @@ class Picker extends Component {
     _.invoke(this.props, 'onSearchChange', searchValue);
   };
 
-  onSelectedItemLayout = ({nativeEvent: {layout: {y}}}) => {
+  onSelectedItemLayout = ({
+    nativeEvent: {
+      layout: {y}
+    }
+  }) => {
     this.setState({selectedItemPosition: y});
   };
 
@@ -326,6 +358,7 @@ class Picker extends Component {
       enableModalBlur,
       topBarProps,
       showSearch,
+      onShow,
       searchStyle,
       searchPlaceholder,
       renderCustomSearch,
@@ -373,15 +406,17 @@ class Picker extends Component {
           onSearchChange={this.onSearchChange}
           renderCustomSearch={renderCustomSearch}
           listProps={listProps}
+          onShow={onShow}
         >
-          {children} 
+          {this.children}
         </PickerModal>
       </PickerContext.Provider>
     );
   };
 
   render() {
-    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, modifiers} = this.props;
+    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, forwardedRef, modifiers} =
+      this.props;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
@@ -406,6 +441,7 @@ class Picker extends Component {
 
     return (
       <TextField
+        ref={forwardedRef}
         {...textInputProps}
         containerStyle={[paddings, margins, positionStyle, containerStyle]}
         {...this.getAccessibilityInfo()}
@@ -414,6 +450,7 @@ class Picker extends Component {
         expandable
         renderExpandable={this.renderExpandableModal}
         onToggleExpandableModal={this.toggleExpandableModal}
+        selection={Constants.isAndroid ? {start: 0} : undefined}
       />
     );
   }

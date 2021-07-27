@@ -1,6 +1,15 @@
 const _ = require('lodash');
-const {findValueNodeOfIdentifier, getComponentName, getPathPrefix, getPathSuffix} = require('../utils_old');
+const {
+  getPrefix,
+  getSuffix,
+  findValueNodeOfIdentifier,
+  getComponentLocalName,
+  addToImports,
+  getComponentName,
+  handleError
+} = require('../utils');
 
+const RULE_ID = 'prop-value-shape-deprecation';
 const MAP_SCHEMA = {
   type: 'object',
   properties: {
@@ -52,7 +61,7 @@ module.exports = {
   },
   create(context) {
     function reportPropValueShapeDeprecation(propKey, prop, deprecation, node) {
-      const componentName = getComponentName(node);
+      const componentName = getComponentName(getComponentLocalName(node), imports);
       const newProp = _.get(deprecation, 'fix.propName');
       const fixMessage = _.get(deprecation, 'message') ? ' ' + _.get(deprecation, 'message') : '';
       const message = `The shape of '${prop}' prop of '${componentName}' doesn't contain '${deprecation.prop}' anymore.${fixMessage}`;
@@ -67,10 +76,12 @@ module.exports = {
       });
     }
 
+    const imports = [];
+
     function testJSXAttributes(node) {
       try {
         const {deprecations} = _.get(context, 'options[0]');
-        const componentName = getComponentName(node);
+        const componentName = getComponentName(getComponentLocalName(node), imports);
         _.forEach(deprecations, deprecation => {
           if (_.includes(deprecation.components, componentName)) {
             _.forEach(node.attributes, attribute => {
@@ -81,13 +92,13 @@ module.exports = {
           }
         });
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 
     function recursiveDeprecation(attribute, deprecationProp, deprecation, deprecationPath, node) {
-      const deprecationPrefix = getPathPrefix(deprecationProp);
-      const deprecationSuffix = getPathSuffix(deprecationProp);
+      const deprecationPrefix = getPrefix(deprecationProp);
+      const deprecationSuffix = getSuffix(deprecationProp);
       let passedProps;
       let attributeName = _.get(attribute, 'name.name') || _.get(attribute, 'key.name');
       if (attribute.type === 'JSXSpreadAttribute' || attribute.type === 'ExperimentalSpreadProperty') {
@@ -130,7 +141,7 @@ module.exports = {
       }
     }
 
-    function checkAttributeProperties(attributeProperties, attributeName, deprecation, node) {
+    function checkAttributeProperties(attributeProperties = [], attributeName, deprecation, node) {
       for (let i = 0; i < attributeProperties.length; i++) {
         const propertyType = _.get(attributeProperties[i], 'type');
         if (propertyType === 'ExperimentalSpreadProperty') {
@@ -146,6 +157,8 @@ module.exports = {
     }
 
     return {
+      ImportDeclaration: node => addToImports(node, imports),
+      VariableDeclarator: node => addToImports(node, imports),
       JSXOpeningElement: testJSXAttributes
     };
   }

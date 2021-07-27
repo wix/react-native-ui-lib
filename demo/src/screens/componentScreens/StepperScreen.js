@@ -42,6 +42,17 @@ export default class StepperScreen extends Component {
             onValueChange={count => this.setState({itemsCount: count})}
             initialValue={1}
           />
+
+          <View row center>
+            <Text text60 primary>Count:  </Text>
+            <Stepper
+              step={0.5}
+              min={1}
+              max={50}
+              onValueChange={count => this.setState({itemsCount: count})}
+              initialValue={1}
+            />
+          </View>
         </View>
       </ScrollView>
     );

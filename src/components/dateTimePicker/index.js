@@ -19,6 +19,13 @@ const MODES = {
   TIME: 'time'
 };
 
+
+const THEME_VARIANTS = {
+  LIGHT: 'light',
+  DARK: 'dark'
+};
+
+
 /*eslint-disable*/
 /**
  * @description: Date and Time Picker Component that wraps RNDateTimePicker for date and time modes.
@@ -26,6 +33,7 @@ const MODES = {
  * @important: DateTimePicker uses a native library. You MUST add and link the native library to both iOS and Android projects.
  * @extends: TextField, react-native-community/datetimepicker
  * @extendsLink: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_iOS.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_Android.gif?raw=true
  */
 /*eslint-enable*/
 
@@ -97,7 +105,11 @@ class DateTimePicker extends Component {
     /**
      * Render custom input
      */
-    renderInput: PropTypes.elementType
+    renderInput: PropTypes.elementType,
+    /**
+     * Override system theme variant (dark or light mode) used by the date picker.
+     */
+    themeVariant: PropTypes.oneOf(Object.values(THEME_VARIANTS))
   };
 
   static defaultProps = {
@@ -205,7 +217,7 @@ class DateTimePicker extends Component {
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
         {...dialogProps}
       >
-        <View useSafeArea>
+        <View /* useSafeArea */>
           {this.renderHeader()}
           {this.renderDateTimePicker()}
         </View>
@@ -235,7 +247,7 @@ class DateTimePicker extends Component {
     }
 
     const {value, showExpandableOverlay} = this.state;
-    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes} = this.props;
+    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes, themeVariant} = this.props;
 
     if (showExpandableOverlay) {
       return (
@@ -249,6 +261,8 @@ class DateTimePicker extends Component {
           is24Hour={is24Hour}
           minuteInterval={minuteInterval}
           timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+          display={Constants.isIOS ? 'spinner' : undefined}
+          themeVariant={themeVariant}
         />
       );
     }
@@ -260,11 +274,13 @@ class DateTimePicker extends Component {
 
   render() {
     const textInputProps = TextField.extractOwnProps(this.props);
+    const {renderInput} = this.props;
 
     return (
       <TextField
         {...textInputProps}
         value={this.getStringValue()}
+        renderExpandableInput={renderInput}
         expandable
         renderExpandable={this.renderExpandable}
         onToggleExpandableModal={this.onToggleExpandableModal}

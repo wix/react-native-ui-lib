@@ -84,7 +84,7 @@ export default function baseComponent(usePure) {
 
     updateModifiers(currentProps, nextProps) {
       const ignoredKeys = ['children', 'forwardedRef', 'style', 'testID'];
-      const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter((key) => !ignoredKeys.includes(key));
+      const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter(key => !ignoredKeys.includes(key));
       const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
 
       const options = {};
@@ -123,7 +123,7 @@ export default function baseComponent(usePure) {
       alignments: true,
       flex: true
     },
-    props = this.getThemeProps(),) {
+    props = this.getThemeProps()) {
       const style = {};
 
       if (options.backgroundColor) {

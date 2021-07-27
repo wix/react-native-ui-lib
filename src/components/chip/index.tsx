@@ -3,7 +3,7 @@ import React, {useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Spacings} from '../../style';
+import {BorderRadiuses, Spacings} from 'style';
 import Avatar, {AvatarProps} from '../avatar';
 import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
 import Image, {ImageProps} from '../image';
@@ -62,7 +62,10 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    * Badge props object
    */
   badgeProps?: BadgeProps;
-
+  /**
+   * Display badge as counter (no background)
+   */
+  useCounter?: boolean;
   //AVATAR
   /**
    * Avatar props object
@@ -91,6 +94,18 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    */
   rightIconSource?: ImageSourcePropType;
 
+  //LEFT ELEMENT
+  /**
+   * Left custom element
+   */
+  leftElement?: JSX.Element;
+
+  //RIGHT ELEMENT
+   /**
+    * Right custom element
+    */
+  rightElement?: JSX.Element;
+ 
   //DISMISS ('x' button)
   /**
    * Adds a dismiss button and serves as its callback
@@ -115,33 +130,38 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
 }
 export type ChipPropTypes = ChipProps; //TODO: remove after ComponentPropTypes deprecation;
 
+const DEFAULT_SIZE = 26;
+
 /**
  * @description: Chip component
  * @extends: TouchableOpacity
- * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
+ * @image: https://user-images.githubusercontent.com/1780255/119636022-e9743180-be1c-11eb-8f02-22eeab6558cd.png
  */
 const Chip = ({
   avatarProps,
   backgroundColor,
   badgeProps,
-  borderRadius,
+  useCounter,
+  borderRadius = BorderRadiuses.br100,
   containerStyle,
   onDismiss,
   dismissColor,
-  dismissIcon,
+  dismissIcon = Assets.icons.x,
   dismissIconStyle,
   dismissContainerStyle,
   iconProps,
   iconSource,
   iconStyle,
   rightIconSource,
+  leftElement,
+  rightElement,
   label,
   labelStyle,
   onPress,
   resetSpacings,
-  size,
-  useSizeAsMinimum,
+  size = DEFAULT_SIZE,
+  useSizeAsMinimum = true,
   testID,
   ...others
 }: ChipProps) => {
@@ -166,6 +186,7 @@ const Chip = ({
       <Badge
         size={BADGE_SIZES.default}
         testID={`${testID}.counter`}
+        backgroundColor={useCounter ? 'transparent' : undefined}
         {...badgeProps}
         // @ts-ignore
         containerStyle={[getMargins('badge'), badgeProps.containerStyle]}
@@ -187,7 +208,7 @@ const Chip = ({
           tintColor={dismissColor}
           style={[dismissIconStyle]}
           accessibilityLabel="dismiss"
-          testID={`${testID}.dismiss`}
+          testID={`${testID}.dismissIcon`}
         />
       </TouchableOpacity>
     );
@@ -234,13 +255,18 @@ const Chip = ({
               marginRight: Spacings.s1
             };
           }
-          if (iconSource) {
+          if (rightElement && leftElement) {
+            return {
+              marginHorizontally: 2
+            };
+          }
+          if (iconSource || leftElement) {
             return {
               marginLeft: 2,
               marginRight: Spacings.s3
             };
           }
-          if (rightIconSource) {
+          if (rightIconSource || rightElement) {
             return {
               marginLeft: Spacings.s3,
               marginRight: 2
@@ -297,7 +323,9 @@ const Chip = ({
     >
       {avatarProps && renderAvatar()}
       {iconSource && renderIcon('left')}
+      {leftElement}
       {label && renderLabel()}
+      {rightElement}
       {rightIconSource && renderIcon('right')}
       {badgeProps && renderBadge()}
       {onDismiss && renderOnDismiss()}
@@ -306,12 +334,6 @@ const Chip = ({
 };
 
 Chip.displayName = 'Chip';
-Chip.defaultProps = {
-  borderRadius: BorderRadiuses.br100,
-  dismissIcon: Assets.icons.x,
-  useSizeAsMinimum: true,
-  size: 26
-};
 
 const styles = StyleSheet.create({
   container: {

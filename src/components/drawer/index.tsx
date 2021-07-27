@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent, RefObject} from 'react';
+import React, {PureComponent, ReactNode, RefObject} from 'react';
 import memoize from 'memoize-one';
 import {Animated, Easing, StyleSheet, ViewStyle, TextStyle, AccessibilityActionEvent} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
@@ -9,6 +9,7 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../view';
 import Swipeable, {SwipeableProps} from './Swipeable';
+import {LogService} from '../../services';
 
 const DEFAULT_BG = Colors.primary;
 const DEFAULT_BOUNCINESS = 0;
@@ -22,6 +23,7 @@ interface ItemProps {
   keepOpen?: boolean;
   style?: ViewStyle;
   testID?: string;
+  customElement?: ReactNode;
 }
 
 interface Props {
@@ -102,6 +104,10 @@ interface Props {
    */
   leftToggleHapticTrigger?: Function;
   /**
+   * Whether to disable the haptic
+   */
+  disableHaptic?: boolean;
+  /**
    * Style
    */
   style?: ViewStyle;
@@ -131,6 +137,7 @@ export type DrawerItemProps = ItemProps;
  * @important: If your app works with RNN, your screen must be wrapped
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Drawer/Drawer.gif?raw=true
  */
 class Drawer extends PureComponent<Props> {
   static displayName = 'Drawer';
@@ -201,22 +208,19 @@ class Drawer extends PureComponent<Props> {
     if (!item.keepOpen) {
       this.closeDrawer();
     }
-    _.invoke(item, 'onPress', this.props);
+    item.onPress?.(this.props);
   };
 
   private onSwipeableWillOpen = () => {
-    _.invoke(this.props, 'onSwipeableWillOpen', this.props);
+    this.props.onSwipeableWillOpen?.(this.props);
   };
 
   private onSwipeableWillClose = () => {
-    _.invoke(this.props, 'onSwipeableWillClose', this.props);
+    this.props.onSwipeableWillClose?.(this.props);
   };
 
   private onToggleSwipeLeft = (options?: any) => {
     if (this.props.onToggleSwipeLeft) {
-      if (options?.triggerHaptic) {
-        _.invoke(this.props, 'leftToggleHapticTrigger');
-      }
       this.animateItem(options);
     }
   };
@@ -236,7 +240,7 @@ class Drawer extends PureComponent<Props> {
         this.animateItem({released: false, resetItemPosition: true});
         this.closeDrawer();
         setTimeout(() => {
-          _.invoke(this.props, 'onToggleSwipeLeft', this.props);
+          this.props.onToggleSwipeLeft?.(this.props);
         }, 150);
       }
     });
@@ -276,7 +280,7 @@ class Drawer extends PureComponent<Props> {
       // return o.text === event.nativeEvent.action;
       return o.name === event.nativeEvent.actionName;
     });
-    _.invoke(action, 'onPress');
+    action.onPress?.();
   };
 
   /** Renders */
@@ -344,7 +348,8 @@ class Drawer extends PureComponent<Props> {
         ]}
         onPress={() => this.onActionPress(item)}
       >
-        {item.icon && (
+        {item.customElement}
+        {!item.customElement && item.icon && (
           <Animated.Image
             source={item.icon}
             style={[
@@ -359,7 +364,7 @@ class Drawer extends PureComponent<Props> {
             ]}
           />
         )}
-        {item.text && (
+        {!item.customElement && item.text && (
           <Animated.Text
             style={[
               styles.actionText,
@@ -382,7 +387,8 @@ class Drawer extends PureComponent<Props> {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, leftToggleHapticTrigger, ...others} = this.props;
+    leftToggleHapticTrigger && LogService.deprecationWarn({component: 'Drawer', oldProp: 'leftToggleHapticTrigger'});
 
     return (
       <Swipeable

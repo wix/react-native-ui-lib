@@ -32,7 +32,7 @@ export type OverlayTypes = {
 /**
  * @description: Overlay view with types (default, top, bottom, solid)
  * @extends: Image
- * @extendsLink: https://facebook.github.io/react-native/docs/image
+ * @extendsLink: https://reactnative.dev/docs/image
  */
 class Overlay extends PureComponent<OverlayTypes> {
   static displayName = 'Overlay';
@@ -73,8 +73,8 @@ class Overlay extends PureComponent<OverlayTypes> {
     if (type === OVERLY_TYPES.VERTICAL) {
       return (
         <>
-          {this.renderImage(this.getStyleByType(OVERLY_TYPES.TOP), image)}
-          {this.renderImage(this.getStyleByType(OVERLY_TYPES.BOTTOM), image)}
+          {this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], image)}
+          {this.renderImage([this.getStyleByType(OVERLY_TYPES.BOTTOM), styles.vertical], image)}
           {customContent && this.renderCustomContent()}
         </>
       );
@@ -97,13 +97,16 @@ const styles = StyleSheet.create({
   top: {
     bottom: undefined,
     top: 0,
-    height: '50%'
+    height: '75%'
   },
   bottom: {
     bottom: 0,
     top: undefined,
-    height: '50%',
+    height: '75%',
     transform: [{scaleY: -1}]
+  },
+  vertical: {
+    height: '40%'
   },
   solid: {
     backgroundColor: Colors.rgba(Colors.dark10, 0.4)

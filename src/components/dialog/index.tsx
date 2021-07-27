@@ -31,7 +31,11 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
     /**
      * Dismiss callback for when clicking on the background
      */
-    onDismiss?: (props: any) => void;
+    onDismiss?: (props?: any) => void;
+    /**
+     * Whether or not to ignore background press
+     */
+    ignoreBackgroundPress?: boolean;
     /**
      * The color of the overlay background
      */
@@ -98,7 +102,7 @@ const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.dark10, 0.6);
  * (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)
  * @modifiers: alignment
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
- * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Dialog/Dialog.gif?raw=true
  */
 class Dialog extends Component<DialogProps, DialogState> {
   static displayName = 'Dialog';
@@ -166,8 +170,8 @@ class Dialog extends Component<DialogProps, DialogState> {
   onFadeDone = () => {
     if (!this.state.modalVisibility) {
       setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS
-        _.invoke(this.props, 'onDialogDismissed', this.props);
-        _.invoke(this.props, 'onModalDismissed', this.props);
+        this.props.onDialogDismissed?.(this.props);
+        this.props.onModalDismissed?.(this.props);
       }, 100);
     }
   }
@@ -176,11 +180,11 @@ class Dialog extends Component<DialogProps, DialogState> {
     this.setState({modalVisibility: false, fadeOut: false}, () => {
       const props = this.props;
       if (props.visible) {
-        _.invoke(props, 'onDismiss', props);
+        props.onDismiss?.(props);
       }
       // Parity with iOS Modal's onDismiss
       if (Constants.isAndroid) {
-        _.invoke(props, 'onDialogDismissed', props);
+        props.onDialogDismissed?.(props);
       }
     });
   }
@@ -196,8 +200,8 @@ class Dialog extends Component<DialogProps, DialogState> {
   };
 
   onModalDismissed = () => {
-    _.invoke(this.props, 'onDialogDismissed', this.props);
-    _.invoke(this.props, 'onModalDismissed', this.props);
+    this.props.onDialogDismissed?.(this.props);
+    this.props.onModalDismissed?.(this.props);
   }
 
   hideDialogView = () => {
@@ -274,7 +278,8 @@ class Dialog extends Component<DialogProps, DialogState> {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {testID, supportedOrientations, accessibilityLabel} = this.props;
+    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress} = this.props;
+    const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
 
     return (
       <Modal
@@ -283,8 +288,8 @@ class Dialog extends Component<DialogProps, DialogState> {
         transparent
         visible={modalVisibility}
         animationType={'none'}
-        onBackgroundPress={this.hideDialogView}
-        onRequestClose={this.hideDialogView}
+        onBackgroundPress={onBackgroundPress}
+        onRequestClose={onBackgroundPress}
         // onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}

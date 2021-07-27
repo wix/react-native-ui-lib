@@ -1,7 +1,6 @@
 /// <reference types="react" />
 import { ItemProps } from './Item';
-declare type ItemValueTypes = ItemProps | number | string;
-export { ItemValueTypes };
+export declare type ItemValueTypes = ItemProps | number | string;
 declare type PropTypes = {
     selectedValue: ItemValueTypes;
     children?: JSX.Element | JSX.Element[];

@@ -40,7 +40,7 @@ export declare type CardSectionProps = ViewProps & {
     /**
      * Other image props that will be passed to the image
      */
-    imageProps?: ImageProps;
+    imageProps?: Partial<ImageProps>;
 };
 declare const _default: React.ComponentClass<ViewProps & {
     /**
@@ -67,8 +67,8 @@ declare const _default: React.ComponentClass<ViewProps & {
     /**
      * Will be used for the background when provided
      */
-    imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
-    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    imageSource?: ImageSourcePropType | undefined;
+    source?: ImageSourcePropType | undefined;
     /**
      * The style for the background image
      */
@@ -76,7 +76,7 @@ declare const _default: React.ComponentClass<ViewProps & {
     /**
      * Other image props that will be passed to the image
      */
-    imageProps?: ImageProps | undefined;
+    imageProps?: Partial<ImageProps> | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;

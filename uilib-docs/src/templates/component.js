@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Link from 'gatsby-link';
 import classnames from 'classnames';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 import './components.scss';
 import importantIcon from '../images/important.svg';
@@ -45,19 +48,17 @@ export default class ComponentTemplate extends Component {
     return _.map(extendedComponents, (component, index) => {
       const isLast = index === _.size(extendedComponents) - 1;
       const text = `${component}${!isLast ? ', ' : ''}`;
-      const extendedComponent = _.find(allComponents, c => c.node.displayName.trim() === component.trim());
-      const path = !extendedComponent && componentInfo.extendsLink ? componentInfo.extendsLink : `/docs/${component}`;
+      const path = componentInfo.extendsLink ? componentInfo.extendsLink : `/docs/${component}`;
 
       return (
         <span className="inline" key={component}>
-          {extendedComponent && componentInfo.extendsLink ? (
-            <a href={componentInfo.extendsLink} rel="noopener noreferrer" target="_blank">
+          {componentInfo.extendsLink ? (
+            <a href={path} rel="noopener noreferrer" target="_blank">
               {text}
             </a>
           ) : (
             <Link to={path}>{text}</Link>
           )}
-          {componentInfo.extendsnotes}
           <br />
         </span>
       );
@@ -102,7 +103,9 @@ export default class ComponentTemplate extends Component {
 
           <ul>
             {_.map(extendLinks, link => (
-              <li className="link" key={link}>{link}</li>
+              <li className="link" key={link}>
+                {link}
+              </li>
             ))}
           </ul>
 
@@ -147,17 +150,23 @@ export default class ComponentTemplate extends Component {
     }
   }
 
-  renderVisuals(componentInfo) {
+  renderVisuals(componentInfo, forMobile) {
     const gifs = componentInfo.gif ? componentInfo.gif.split(',') : [];
     const imgs = componentInfo.image ? componentInfo.image.split(',') : [];
-    const visuals = [...gifs, ...imgs];
+    const visuals = [...imgs, ...gifs];
+    const useAutoPlay = imgs?.length > 0;
 
     if (!_.isEmpty(visuals)) {
       return (
-        <div className="visuals">
-          {_.map(visuals, (image, i) => {
-            return <img key={i} alt={''} src={image} />;
-          })}
+        <div className={classnames('visuals', {mobile: forMobile})}>
+          {forMobile ? <h3>Showcase</h3> : <div className="list-header">Showcase</div>}
+          <div className="carousel">
+            <Slider arrows dots infinite autoplay={useAutoPlay}>
+              {_.map(visuals, (image, i) => {
+                return <img key={i} alt={''} src={image} />;
+              })}
+            </Slider>
+          </div>
         </div>
       );
     }
@@ -166,8 +175,8 @@ export default class ComponentTemplate extends Component {
   renderSidebar(componentInfo, componentProps) {
     return (
       <div className="sidebar">
-        <TableOfContent props={componentProps} />
         {this.renderVisuals(componentInfo)}
+        <TableOfContent props={componentProps} />
       </div>
     );
   }
@@ -215,6 +224,7 @@ export default class ComponentTemplate extends Component {
 
           {this.renderNotes(componentInfo)}
 
+          {this.renderVisuals(componentInfo, true)}
           <ComponentAPI props={componentProps} href={href} />
         </div>
       </div>

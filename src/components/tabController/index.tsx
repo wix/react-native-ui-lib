@@ -88,6 +88,7 @@ interface StateProps {
  * @notes: This component is based on react-native-gesture-handler
  * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/TabController/Default.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/TabController/PageCarousel.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/TabController/CenterSelected.gif?raw=true
  */
 class TabController extends Component<TabControllerProps, StateProps> {
   static displayName = 'TabController';
@@ -161,7 +162,7 @@ class TabController extends Component<TabControllerProps, StateProps> {
   };
 
   onPageChange = ([index]: readonly number[]) => {
-    _.invoke(this.props, 'onChangeIndex', index);
+    this.props.onChangeIndex?.(index);
   };
 
   renderCodeBlock = _.memoize(() => {

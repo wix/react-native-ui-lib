@@ -1,8 +1,8 @@
 // TODO: support commented props
-import React, {PureComponent} from 'react';
+import React, {PureComponent, ReactElement} from 'react';
 import {StyleSheet, /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated from 'react-native-reanimated';
+import Reanimated, {processColor} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
@@ -52,6 +52,14 @@ export interface TabControllerItemProps {
    */
   badge?: BadgeProps;
   /**
+   * Pass to render a leading element
+   */
+  leadingAccessory?: ReactElement;
+  /**
+   * Pass to render a trailing element
+   */
+  trailingAccessory?: ReactElement;
+  /**
    * maximun number of lines the label can break
    */
   // maxLines?: number;
@@ -92,6 +100,10 @@ export interface TabControllerItemProps {
    * Used as a testing identifier
    */
   testID?: string;
+  /**
+   * disables icon's tint color
+   */
+  disableIconTintColor?: boolean;
 }
 
 interface Props extends TabControllerItemProps {
@@ -166,16 +178,8 @@ export default class TabBarItem extends PureComponent<Props> {
   }
 
   getLabelStyle() {
-    const {
-      index,
-      currentPage,
-      targetPage,
-      labelColor,
-      selectedLabelColor,
-      ignore,
-      labelStyle,
-      selectedLabelStyle
-    } = this.props;
+    const {index, currentPage, targetPage, labelColor, selectedLabelColor, ignore, labelStyle, selectedLabelStyle} =
+      this.props;
 
     let fontWeight, letterSpacing, fontFamily;
 
@@ -226,16 +230,33 @@ export default class TabBarItem extends PureComponent<Props> {
   }
 
   getIconStyle() {
-    const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor, ignore} = this.props;
+    const {
+      index,
+      currentPage,
+      iconColor,
+      selectedIconColor,
+      labelColor,
+      selectedLabelColor,
+      ignore,
+      disableIconTintColor
+    } = this.props;
 
-    const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
-    const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+    if (disableIconTintColor) {
+      return undefined;
+    }
 
-    const tintColor = cond(eq(currentPage, index),
-      // TODO: using processColor here broke functionality,
-      // not using it seem to not be very performant
-      activeColor,
-      ignore ? activeColor : inactiveColor);
+    let activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
+    let inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+
+    // TODO: Don't condition this once migrating completely to reanimated v2
+    if (processColor) {
+      // @ts-ignore
+      activeColor = processColor(activeColor);
+      // @ts-ignore
+      inactiveColor = processColor(inactiveColor);
+    }
+
+    const tintColor = cond(eq(currentPage, index), activeColor, ignore ? activeColor : inactiveColor);
 
     return {
       tintColor
@@ -243,7 +264,18 @@ export default class TabBarItem extends PureComponent<Props> {
   }
 
   render() {
-    const {label, icon, badge, state, uppercase, activeOpacity, activeBackgroundColor, testID} = this.props;
+    const {
+      label,
+      icon,
+      badge,
+      leadingAccessory,
+      trailingAccessory,
+      state,
+      uppercase,
+      activeOpacity,
+      activeBackgroundColor,
+      testID
+    } = this.props;
 
     return (
       <TouchableOpacity
@@ -256,6 +288,7 @@ export default class TabBarItem extends PureComponent<Props> {
         onPress={this.onPress}
         testID={testID}
       >
+        {leadingAccessory}
         {icon && (
           <Reanimated.Image
             source={icon}
@@ -272,6 +305,7 @@ export default class TabBarItem extends PureComponent<Props> {
           // @ts-ignore
           <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
         )}
+        {trailingAccessory}
       </TouchableOpacity>
     );
   }

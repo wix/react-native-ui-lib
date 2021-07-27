@@ -39,21 +39,16 @@ const WithScrollEnabler = (props: AutoLockScrollViewProps) => {
 
   const onContentSizeChange = useCallback(
     (contentWidth: number, contentHeight: number) => {
-      _.invoke(props, 'onContentSizeChange', contentWidth, contentHeight);
-      _.invoke(
-        props,
-        'scrollEnablerProps.onContentSizeChange',
-        contentWidth,
-        contentHeight
-      );
+      props.onContentSizeChange?.(contentWidth, contentHeight);
+      props.scrollEnablerProps.onContentSizeChange?.(contentWidth, contentHeight);
     },
     [props.onContentSizeChange, props.scrollEnablerProps.onContentSizeChange]
   );
 
   const onLayout = useCallback(
     (nativeEvent: LayoutChangeEvent) => {
-      _.invoke(props, 'onLayout', nativeEvent);
-      _.invoke(props, 'scrollEnablerProps.onLayout', nativeEvent);
+      props.onLayout?.(nativeEvent);
+      props.scrollEnablerProps.onLayout?.(nativeEvent);
     },
     [props.onLayout, props.scrollEnablerProps.onLayout]
   );

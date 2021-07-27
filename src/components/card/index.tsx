@@ -106,10 +106,9 @@ type State = {
 /**
  * @description: Card component
  * @extends: TouchableOpacity
- * @extendsnotes: (Touchable when passing onPress)
- * @extendsLink: docs/TouchableOpacity
  * @modifiers: margin, padding
- * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_01.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_02.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_03.png?raw=true
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Card_Selecteable.gif, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_activeScale.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
  * @notes: 'enableBlur' prop requires installing the '@react-native-community/blur' native library
  */
@@ -194,13 +193,13 @@ class Card extends PureComponent<PropTypes, State> {
     }
   }
 
-  get blurBgStyle() {
-    const {enableBlur} = this.props;
+  get backgroundStyle() {
+    const {enableBlur, backgroundColor = Colors.white} = this.props;
 
     if (Constants.isIOS && enableBlur) {
-      return {backgroundColor: Colors.rgba(Colors.white, 0.85)};
+      return {backgroundColor: Colors.rgba(backgroundColor, 0.85)};
     } else {
-      return {backgroundColor: Colors.white};
+      return {backgroundColor};
     }
   }
 
@@ -299,7 +298,7 @@ class Card extends PureComponent<PropTypes, State> {
           {borderRadius: brRadius},
           this.elevationStyle,
           this.shadowStyle,
-          this.blurBgStyle,
+          this.backgroundStyle,
           containerStyle,
           style
         ]}

@@ -18,6 +18,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.DrawerScreen', () => require('./DrawerScreen').default);
   registrar('unicorn.components.ExpandableSectionScreen', () => require('./ExpandableSectionScreen').default);
   registrar('unicorn.components.ChipsInputScreen', () => require('./ChipsInputScreen').default);
+  registrar('unicorn.components.HapticScreen', () => require('./HapticScreen').default);
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
   registrar('unicorn.components.ImageScreen', () => require('./ImageScreen').default);
   registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);
@@ -32,7 +33,10 @@ export function registerScreens(registrar) {
   registrar('unicorn.animations.ProgressBarScreen', () => require('../componentScreens/ProgressBarScreen').default);
   registrar('unicorn.components.RadioButtonScreen', () => require('./RadioButtonScreen').default);
   registrar('unicorn.components.ScrollBarScreen', () => require('./ScrollBarScreen').default);
+  registrar('unicorn.components.SectionsWheelPickerScreen', () => require('./SectionsWheelPickerScreen').default);
+  registrar('unicorn.components.SegmentedControlScreen', () => require('./SegmentedControlScreen').default);
   registrar('unicorn.components.SharedTransitionScreen', () => require('./SharedTransitionScreen').default);
+  registrar('unicorn.components.SkeletonViewScreen', () => require('./SkeletonViewScreen').default);
   registrar('unicorn.components.StepperScreen', () => require('./StepperScreen').default);
   registrar('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);
   registrar('unicorn.components.ToastsScreen', () => require('./ToastsScreen').default);

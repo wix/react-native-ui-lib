@@ -1,4 +1,4 @@
-import React, { PureComponent, RefObject } from 'react';
+import React, { PureComponent, ReactNode, RefObject } from 'react';
 import { Animated, ViewStyle, TextStyle } from 'react-native';
 import Swipeable, { SwipeableProps } from './Swipeable';
 interface ItemProps {
@@ -10,6 +10,7 @@ interface ItemProps {
     keepOpen?: boolean;
     style?: ViewStyle;
     testID?: string;
+    customElement?: ReactNode;
 }
 interface Props {
     /**
@@ -89,6 +90,10 @@ interface Props {
      */
     leftToggleHapticTrigger?: Function;
     /**
+     * Whether to disable the haptic
+     */
+    disableHaptic?: boolean;
+    /**
      * Style
      */
     style?: ViewStyle;
@@ -116,6 +121,7 @@ export declare type DrawerItemProps = ItemProps;
  * @important: If your app works with RNN, your screen must be wrapped
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Drawer/Drawer.gif?raw=true
  */
 declare class Drawer extends PureComponent<Props> {
     static displayName: string;

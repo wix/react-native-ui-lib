@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {
   Animated,
@@ -15,7 +14,7 @@ import {Colors, Spacings} from '../../style';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
-import Text from '../text';
+import Text, {TextProps} from '../text';
 import View from '../view';
 
 const DEFAULT_SIZE = 24;
@@ -72,6 +71,10 @@ export interface CheckboxProps extends TouchableOpacityProps {
    */
   labelStyle?: StyleProp<TextStyle>;
   /**
+   * Props that will be passed to the checkbox Text label.
+   */
+  labelProps?: Omit<TextProps, 'style'>;
+  /**
    * Additional styling
    */
   style?: StyleProp<ViewStyle>;
@@ -89,8 +92,8 @@ interface CheckboxState {
 /**
  * @description: Checkbox component for toggling boolean value related to some context
  * @extends: TouchableOpacity
- * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true
  */
 class Checkbox extends Component<CheckboxProps, CheckboxState> {
   static displayName = 'Checkbox';
@@ -169,7 +172,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     const {disabled} = this.props;
 
     if (!disabled) {
-      _.invoke(this.props, 'onValueChange', !this.props.value);
+      this.props.onValueChange?.(!this.props.value);
     }
   };
 
@@ -236,11 +239,11 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   render() {
-    const {label, labelStyle, containerStyle} = this.props;
+    const {label, labelStyle, containerStyle, labelProps} = this.props;
     return label ? (
       <View row centerV style={[containerStyle]}>
         {this.renderCheckbox()}
-        <Text style={[this.styles.checkboxLabel, labelStyle]} onPress={this.onPress}>
+        <Text style={[this.styles.checkboxLabel, labelStyle]} {...labelProps} onPress={this.onPress}>
           {label}
         </Text>
       </View>

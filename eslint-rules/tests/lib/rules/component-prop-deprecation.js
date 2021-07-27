@@ -65,7 +65,30 @@ ruleTester.run('component-prop-deprecation', rule, {
         const Dir = F.Dir;
         const Header = D.Header;
       `
-    }
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {Button} from 'another-module';
+      import {View} from 'module-with-deprecations';
+      <Button text="my button"/>
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {Button} from 'another-module';
+      import {View as V} from 'module-with-deprecations';
+      <Button text="my button"/>
+      `
+    },
+    {
+      options: ruleOptions,
+      code: `
+      import {Picker} from 'module-with-deprecations';
+      <Picker value="value" migrate={true}/>
+      `
+    },
   ],
   invalid: [
     {
@@ -330,6 +353,13 @@ ruleTester.run('component-prop-deprecation', rule, {
       errors: [
         {message: "The 'Text' component's prop 't' is deprecated. Please use the 'title' prop instead."},
         {message: "The 'Text' component's prop 's' is deprecated. Please use the 'subtitle' prop instead."}
+      ]
+    },
+    {
+      options: ruleOptions,
+      code: 'import {Picker} from \'module-with-deprecations\'; <Picker t="title" s="subtitle"/>',
+      errors: [
+        {message: "The 'Picker' component's prop 'migrate' is required. Please make sure to pass the 'migrate' prop."},
       ]
     }
   ]

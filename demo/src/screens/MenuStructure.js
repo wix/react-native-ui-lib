@@ -56,6 +56,8 @@ export const navigationData = {
       {title: 'Picker', tags: 'picker form', screen: 'unicorn.components.PickerScreen'},
       {title: 'DateTimePicker', tags: 'date time picker form', screen: 'unicorn.components.DateTimePickerScreen'},
       {title: 'RadioButton', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
+      {title: 'SectionsWheelPicker', tags: 'sections wheel picker form', screen: 'unicorn.components.SectionsWheelPickerScreen'},
+      {title: 'SegmentedControl', tags: 'segmented control switch toggle', screen: 'unicorn.components.SegmentedControlScreen'},
       {title: 'Stepper', tags: 'stepper form', screen: 'unicorn.components.StepperScreen'},
       {title: 'Slider', tags: 'slider', screen: 'unicorn.components.SliderScreen'},
       {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
@@ -88,6 +90,7 @@ export const navigationData = {
     screens: [
       {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
       {title: 'Carousel (Vertical)', tags: 'carousel', screen: 'unicorn.components.CarouselVerticalScreen'},
+      {title: 'Skeleton (Shimmer)', tags: 'skeleton loading', screen: 'unicorn.components.SkeletonViewScreen'},
       {title: 'LoadingScreen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
@@ -131,13 +134,14 @@ export const navigationData = {
         tags: 'KeyboardTracking',
         screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'
       },
-      {title: 'KeyboardInput', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'}
+      {title: 'KeyboardAccessoryView', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'}
     ]
   },
   AnimationsAndGestures: {
     title: 'Animations & Gestures',
     screens: [
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
+      {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
       {title: 'ProgressiveImage', tags: 'progressive image cover overlay', screen: 'unicorn.components.ProgressiveImageScreen'},
       {title: 'List Animations', tags: 'animated card', screen: 'unicorn.animations.ListAnimationsScreen'},
       {title: 'Card Animations', tags: 'animated card', screen: 'unicorn.animations.CardAnimationsScreen'},

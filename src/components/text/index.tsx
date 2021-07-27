@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
-import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated} from 'react-native';
+import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated, StyleProp} from 'react-native';
+import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -9,9 +10,7 @@ import {
   TypographyModifiers,
   ColorsModifiers
 } from '../../commons/new';
-import {Colors} from '../../style';
-import _ from 'lodash';
-
+import {Colors} from 'style';
 
 export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
@@ -39,6 +38,7 @@ export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & Ma
    */
   animated?: boolean;
   textAlign?: string;
+  style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
 }
 export type TextPropTypes = TextProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -47,9 +47,10 @@ type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPro
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
  * @extends: Text
- * @extendsLink: https://facebook.github.io/react-native/docs/text.html
+ * @extendsLink: https://reactnative.dev/docs/text
  * @modifiers: margins, color, typography
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.js
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Modifiers.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Transformation.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Highlights.png?raw=true
  */
 class Text extends PureComponent<PropsTypes> {
   static displayName = 'Text';
@@ -70,7 +71,7 @@ class Text extends PureComponent<PropsTypes> {
     let highlightIndex;
 
     do {
-      highlightIndex = _.lowerCase(targetString).indexOf(_.lowerCase(highlightString));
+      highlightIndex = targetString.toLowerCase().indexOf(highlightString.toLowerCase());
       if (highlightIndex !== -1) {
         if (highlightIndex > 0) {
           textParts.push(targetString.substring(0, highlightIndex));

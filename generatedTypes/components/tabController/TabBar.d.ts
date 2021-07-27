@@ -7,6 +7,10 @@ export interface TabControllerBarProps {
      */
     items?: TabControllerItemProps[];
     /**
+     * Whether the tabBar should be spread (default: true)
+     */
+    spreadItems?: boolean;
+    /**
      * Tab Bar height
      */
     height?: number;
@@ -22,6 +26,10 @@ export interface TabControllerBarProps {
      * custom style for the selected indicator
      */
     indicatorStyle?: StyleProp<ViewStyle>;
+    /**
+     * the indicator insets (default: Spacings.s4, set to 0 to make it wide as the item)
+     */
+    indicatorInsets?: number;
     /**
      * custom label style
      */
@@ -71,6 +79,10 @@ export interface TabControllerBarProps {
      * Additional styles for the container
      */
     containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Additional styles for the ScrollView
+     */
+    scrollViewStyle?: StyleProp<ViewStyle>;
     /**
      * Used as a testing identifier
      */

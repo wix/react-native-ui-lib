@@ -1,36 +1,27 @@
-
 import {ReactElement} from 'react';
-import {
-  GestureResponderEvent,
-  ImageRequireSource,
-  StyleProp,
-  TextStyle
-} from 'react-native';
+import {ImageRequireSource} from 'react-native';
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
-import {ButtonProps} from './Button';
 
-export type ToastPosition = "relative" | "top" | "bottom";
+export type ToastPosition = 'top' | 'bottom';
 
 export interface ToastProps {
   visible?: boolean;
   position?: ToastPosition;
-  height?: number;
   backgroundColor?: ColorValue;
   color?: ColorValue;
   message?: string;
-  messageStyle?: StyleProp<TextStyle>;
   icon?: ImageRequireSource;
-  actions?: ReadonlyArray<ButtonProps>;
-  onDismiss?: (event: GestureResponderEvent) => void;
+  action?: any; // This is actually ButtonProps, but it's not available here.
+  onDismiss?: () => void;
   autoDismiss?: number;
-  allowDismiss?: boolean;
   onAnimationEnd?: (visible: boolean) => void;
-  renderContent?: (props: ToastProps) => ReactElement | ReactElement[];
   centerMessage?: boolean;
-  animated?: boolean;
-  enableBlur?: boolean;
   zIndex?: number;
+  showLoader?: boolean;
+  showDismiss?: boolean;
+  renderAttachment?: () => React.ReactElement;
+  customLoader?: () => React.ReactElement;
 }
 
 export class Toast extends BaseComponent<ToastProps> {}

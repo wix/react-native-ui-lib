@@ -44,7 +44,7 @@ export type CardSectionProps = ViewProps & {
   /**
    * Other image props that will be passed to the image
    */
-  imageProps?: ImageProps;
+  imageProps?: Partial<ImageProps>;
 };
 
 type Props = CardSectionProps & asCardChildProps;

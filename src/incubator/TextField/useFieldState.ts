@@ -1,12 +1,12 @@
 import {useCallback, useState, useEffect, useMemo} from 'react';
-import {TextInputProps} from 'react-native';
 import _ from 'lodash';
 import * as Presenter from './Presenter';
-import {useDidUpdate} from '../../hooks';
+import {useDidUpdate} from 'hooks';
 import {Validator} from './types';
+import {InputProps} from './Input';
 
 
-export interface FieldStateProps extends TextInputProps {
+export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
@@ -39,6 +39,13 @@ export default function useFieldState({
     }
   }, []);
 
+  useEffect(() => {
+    if (props.value !== value) {
+      setValue(props.value);
+    }
+  /* On purpose listen only to props.value change */
+  }, [props.value]);
+
   useDidUpdate(() => {
     onChangeValidity?.(isValid);
   }, [isValid]);
@@ -53,13 +60,15 @@ export default function useFieldState({
 
   const onFocus = useCallback((...args: any) => {
     setIsFocused(true);
-    _.invoke(props, 'onFocus', ...args);
+    //@ts-expect-error
+    props.onFocus?.(...args);
   },
   [props.onFocus]);
 
   const onBlur = useCallback((...args: any) => {
     setIsFocused(false);
-    _.invoke(props, 'onBlur', ...args);
+    //@ts-expect-error
+    props.onBlur?.(...args);
     if (validateOnBlur) {
       validateField();
     }
@@ -68,7 +77,7 @@ export default function useFieldState({
 
   const onChangeText = useCallback(text => {
     setValue(text);
-    _.invoke(props, 'onChangeText', text);
+    props.onChangeText?.(text);
 
     if (validateOnChange) {
       validateField(text);

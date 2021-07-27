@@ -16,6 +16,7 @@ import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, Ma
 // @ts-ignore
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType} from '../overlay';
+import SvgImage from './SvgImage';
 
 
 export type ImageProps = RNImageProps & MarginModifiers & {
@@ -76,7 +77,10 @@ type State = {
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
- * @extendsLink: https://facebook.github.io/react-native/docs/image.html
+ * @extendsLink: https://reactnative.dev/docs/image
+ * @notes: please note that for SVG support you need to add both
+ * `react-native-svg` and `react-native-svg-transformer`,
+ * and also configure them (see `metro.config.js`)
  */
 class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
@@ -149,11 +153,16 @@ class Image extends PureComponent<Props, State> {
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
     if (event.nativeEvent.error) {
       this.setState({error: true});
-      _.invoke(this.props, 'onError', event);
+      this.props.onError?.(event);
     }
   }
 
-  render() {
+  renderSvg = () => {
+    const {source, ...others} = this.props;
+    return <SvgImage data={source} {...others}/>;
+  }
+
+  renderRegularImage() {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
@@ -195,6 +204,16 @@ class Image extends PureComponent<Props, State> {
         )}
       </ImageView>
     );
+  }
+
+  render() {
+    const {source} = this.props;
+    const isSvg = typeof source === 'string' || typeof source === 'function';
+    if (isSvg) {
+      return this.renderSvg();
+    } else {
+      return this.renderRegularImage();
+    }
   }
 }
 

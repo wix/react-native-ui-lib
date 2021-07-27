@@ -1,14 +1,14 @@
 import React, { Component, RefObject, ReactNode, Key } from 'react';
 import { ScrollView, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { CarouselProps, CarouselState, PageControlPosition } from './types';
-export { CarouselProps };
+export { CarouselProps, PageControlPosition };
 declare type DefaultProps = Partial<CarouselProps>;
 /**
  * @description: Carousel for scrolling pages horizontally
  * @gif: https://user-images.githubusercontent.com/1780255/107120258-40b5bc80-6895-11eb-9596-8065d3a940ff.gif, https://user-images.githubusercontent.com/1780255/107120257-3eebf900-6895-11eb-9800-402e9e0dc692.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.tsx
  * @extends: ScrollView
- * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
+ * @extendsLink: https://reactnative.dev/docs/scrollview
  * @notes: This is a screen width Component
  */
 declare class Carousel extends Component<CarouselProps, CarouselState> {

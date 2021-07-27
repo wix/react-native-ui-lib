@@ -152,6 +152,9 @@ export default {
   get TabController() {
     return require('./components/tabController').default;
   },
+  get TabController2() {
+    return require('./components/tabController2').default;
+  },
   get TabBar() {
     return require('./components/tabBar').default;
   },
@@ -162,13 +165,19 @@ export default {
     return require('./components/chipsInput').default;
   },
   get RadioButton() {
-    return require('./components/radioButton/RadioButton').default;
+    return require('./components/radioButton').default;
   },
   get RadioGroup() {
-    return require('./components/radioButton/RadioGroup').default;
+    return require('./components/radioGroup').default;
   },
   get ScrollBar() {
     return require('./components/scrollBar').default;
+  },
+  get SectionsWheelPicker() {
+    return require('./components/sectionsWheelPicker').default;
+  },
+  get SegmentedControl() {
+    return require('./components/segmentedControl').default;
   },
   get SharedTransition() {
     return require('./components/sharedTransition').default;
@@ -196,6 +205,9 @@ export default {
   },
   get WheelPickerDialog() {
     return require('./components/wheelPickerDialog').default;
+  },
+  get SkeletonView() {
+    return require('./components/skeletonView').default;
   },
 
   // Assets
@@ -246,6 +258,9 @@ export default {
   // Services
   get LogService() {
     return require('./services').LogService;
+  },
+  get HapticService() {
+    return require('./services').HapticService;
   },
 
   // NativeComponents

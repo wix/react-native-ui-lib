@@ -11,6 +11,7 @@ import {
   TextStyle,
   AccessibilityProps
 } from 'react-native';
+import memoize from 'memoize-one';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -21,6 +22,7 @@ import Text from '../text';
 import Image, {ImageProps} from '../image';
 // @ts-ignore
 import AnimatedImage from '../animatedImage';
+import * as AvatarHelper from '../../helpers/AvatarHelper';
 
 const deprecatedProps = [
   {old: 'isOnline', new: 'badgeProps.backgroundColor'},
@@ -43,6 +45,21 @@ export enum BadgePosition {
 }
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
+
+export type AutoColorsProps = {
+  /**
+   * Avatar colors to be used when useAutoColors is true
+   */
+  avatarColors?: string[];
+  /**
+   * Replace the default hashing function (name -> number)
+   */
+  hashFunction?: (name?: string) => number;
+  /**
+   * Background color in cases where the getBackgroundColor returns undefined.
+   */
+  defaultColor?: string;
+};
 
 export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
   /**
@@ -94,6 +111,21 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    */
   onImageLoadError?: ImagePropsBase['onError'];
   /**
+   * The name of the avatar user.
+   * If no label is provided, the initials will be generated from the name.
+   * autoColorsConfig will use the name to create the background color of the Avatar.
+   */
+  name?: string;
+  /**
+   * Hash the name (or label) to get a color, so each name will have a specific color.
+   * Default is false.
+   */
+   useAutoColors?: boolean;
+  /**
+   * Send this to use the name to infer a backgroundColor
+   */
+  autoColorsConfig?: AutoColorsProps;
+  /**
    * Label that can represent initials
    */
   label?: string;
@@ -142,10 +174,8 @@ export type AvatarPropTypes = AvatarProps; //TODO: remove after ComponentPropTyp
 
 /**
  * @description: Avatar component for displaying user profile images
- * @extends: TouchableOpacity
- * @extendsnotes: (when passing onPress)
- * @extendsLink: docs/TouchableOpacity
- * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
+ * @extends: TouchableOpacity, Image
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */
 class Avatar extends PureComponent<AvatarProps> {
@@ -169,7 +199,6 @@ class Avatar extends PureComponent<AvatarProps> {
 
   static defaultProps = {
     animate: false,
-    backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
     badgePosition: BadgePosition.TOP_RIGHT
@@ -318,14 +347,48 @@ class Avatar extends PureComponent<AvatarProps> {
     }
   }
 
+  getText = memoize((label, name) => {
+    let text = label;
+    if (_.isNil(label) && !_.isNil(name)) {
+      text = AvatarHelper.getInitials(name);
+    }
+
+    return text;
+  });
+
+  get text() {
+    const {label, name} = this.props;
+    return this.getText(label, name);
+  }
+
+  getBackgroundColor = memoize((text, avatarColors, hashFunction, defaultColor) => {
+    return AvatarHelper.getBackgroundColor(text, avatarColors, hashFunction, defaultColor);
+  });
+
+  get backgroundColor() {
+    const {backgroundColor, useAutoColors, autoColorsConfig, name} = this.props;
+    if (backgroundColor) {
+      return backgroundColor;
+    }
+
+    const {
+      avatarColors = AvatarHelper.getAvatarColors(),
+      hashFunction = AvatarHelper.hashStringToNumber,
+      defaultColor = Colors.grey80
+    } = autoColorsConfig || {};
+    if (useAutoColors) {
+      return this.getBackgroundColor(name, avatarColors, hashFunction, defaultColor);
+    } else {
+      return defaultColor;
+    }
+  }
+
   render() {
     const {
-      label,
       labelColor: color,
       source,
       //@ts-ignore
       imageSource,
-      backgroundColor,
       onPress,
       containerStyle,
       children,
@@ -338,6 +401,7 @@ class Avatar extends PureComponent<AvatarProps> {
     const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
+    const text = this.text;
 
     return (
       <Container
@@ -351,11 +415,15 @@ class Avatar extends PureComponent<AvatarProps> {
         {...extractAccessibilityProps(this.props)}
       >
         <View
-          style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
+          style={[
+            this.getInitialsContainer(),
+            {backgroundColor: this.backgroundColor},
+            hasImage && this.styles.initialsContainerWithInset
+          ]}
         >
-          {!_.isUndefined(label) && (
+          {!_.isUndefined(text) && (
             <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]} testID={`${testID}.label`}>
-              {label}
+              {text}
             </Text>
           )}
         </View>

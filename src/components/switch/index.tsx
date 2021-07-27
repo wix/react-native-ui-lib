@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import {Constants} from '../../helpers';
@@ -61,7 +60,9 @@ export type SwitchProps = {
 }
 
 /**
- * Switch component for toggling boolean value related to some context
+ * @description: Switch component for toggling boolean value related to some context
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SwitchScreen.tsx
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Switch/Switch.gif?raw=true
  */
 class Switch extends Component<SwitchProps> {
   static displayName = 'Switch';
@@ -106,7 +107,7 @@ class Switch extends Component<SwitchProps> {
     const {disabled} = this.props;
 
     if (!disabled) {
-      _.invoke(this.props, 'onValueChange', !this.props.value);
+      this.props.onValueChange?.(!this.props.value);
     }
   };
 

@@ -58,6 +58,9 @@ module.exports = {
       get ChipsInputScreen() {
         return require('./screens/componentScreens/ChipsInputScreen').default;
       },
+      get HapticScreen() {
+        return require('./screens/componentScreens/HapticScreen').default;
+      },
       get HintsScreen() {
         return require('./screens/componentScreens/HintsScreen').default;
       },
@@ -91,8 +94,17 @@ module.exports = {
       get RadioButtonScreen() {
         return require('./screens/componentScreens/RadioButtonScreen').default;
       },
+      get SectionsWheelPickerScreen() {
+        return require('./screens/componentScreens/SectionsWheelPickerScreen').default;
+      },
+      get SegmentedControlScreen() {
+        return require('./screens/componentScreens/SegmentedControlScreen').default;
+      },
       get SharedTransitionScreen() {
         return require('./screens/componentScreens/SharedTransitionScreen').default;
+      },
+      get SkeletonViewScreen() {
+        return require('./screens/componentScreens/SkeletonViewScreen').default;
       },
       get StepperScreen() {
         return require('./screens/componentScreens/StepperScreen').default;
@@ -209,7 +221,7 @@ module.exports = {
       get ProgressBarScreen() {
         return require('./screens/componentScreens/ProgressBarScreen').default;
       },
-      // Incubator 
+      // Incubator
       get IncubatorTextFieldScreen() {
         return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
       },

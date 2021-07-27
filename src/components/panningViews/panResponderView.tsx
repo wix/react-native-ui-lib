@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import View, {ViewProps} from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
@@ -35,6 +34,7 @@ interface Props extends PanResponderViewProps {
  * @notes: Has to be used as a child of a PanningProvider that also has a PanListenerView.
  *         The PanListenerView is the one that sends the drag\swipe events.
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanResponderScreen.tsx
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/PanResponderView/PanResponderView.gif?raw=true
  */
 class PanResponderView extends PureComponent<Props> {
   static displayName = 'PanResponderView';
@@ -76,8 +76,9 @@ class PanResponderView extends PureComponent<Props> {
     const location: PanLocationProps = {left: this.left, top: this.top};
     this.initialLeft = this.left || this.initialLeft;
     this.initialTop = this.top || this.initialTop;
-    _.invoke(this.props, 'onPanLocationChanged', location);
-    _.invoke(this.props.context, 'onPanLocationChanged', location);
+    this.props.onPanLocationChanged?.(location);
+    //@ts-expect-error
+    this.props.context.onPanLocationChanged?.(location);
   }
 
   onDrag(deltas: PanAmountsProps) {

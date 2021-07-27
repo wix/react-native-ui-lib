@@ -10,6 +10,7 @@ import {
 } from '../../commons/new';
 import {TouchableOpacityProps} from '../touchableOpacity';
 import {TextProps} from '../text';
+import {ImageProps} from '../image';
 
 export enum ButtonSize {
   xSmall = 'xSmall',
@@ -40,7 +41,7 @@ export type ButtonProps = TouchableOpacityProps &
     /**
      * Icon image source or a callback function that returns a source
      */
-    iconSource?: object | number | Function;
+    iconSource?: ImageProps['source'] | Function;
     /**
      * Icon image style
      */
@@ -158,9 +159,9 @@ export const DEFAULT_PROPS = {
 /**
  * @description: Basic button component
  * @extends: TouchableOpacity
- * @extendsLink: docs/TouchableOpacity
  * @modifiers: margin, background
- * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Sizes.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Typographies.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Outlines.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Corners.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Custom.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Inspirations.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Round.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Full.png?raw=true
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Animated.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
  */
 // @ts-ignore 

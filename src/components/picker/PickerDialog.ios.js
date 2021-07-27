@@ -9,13 +9,10 @@ import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors} from '../../style';
-import {WheelPicker} from '../../incubator';
 
 class PickerDialog extends BaseComponent {
   static displayName = 'IGNORE';
   static propTypes = {
-    selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    onValueChange: PropTypes.func,
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
     topBarProps: PropTypes.object,
@@ -39,17 +36,6 @@ class PickerDialog extends BaseComponent {
     );
   }
 
-  renderPicker() {
-    const {children, onValueChange, selectedValue, renderNativePicker, pickerStyle} = this.props;
-    if (_.isFunction(renderNativePicker)) {
-      return renderNativePicker(this.props);
-    }
-    return (
-      <WheelPicker style={pickerStyle} selectedValue={selectedValue} onChange={onValueChange}>
-        {children}
-      </WheelPicker>
-    );
-  }
 
   render() {
     const dialogProps = extractComponentProps(Dialog, this.props);
@@ -60,7 +46,7 @@ class PickerDialog extends BaseComponent {
         <View flex bg-white>
           {this.renderHeader()}
           <View centerV flex>
-            {this.renderPicker()}
+            {this.props.children}
           </View>
           <View useSafeArea/>
         </View>

@@ -1,9 +1,8 @@
 import _ from 'lodash';
-// @ts-ignore
 import URL from 'url-parse';
 import Colors from '../style/colors';
 
-function hashStringToNumber(str: string) {
+export function hashStringToNumber(str: string) {
   let hash = 5381;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
@@ -27,13 +26,13 @@ export function getColorById(id: string, avatarColors = getAvatarColors()) {
   return avatarColors[colorIndex];
 }
 
-export function getInitials(name: string) {
+export function getInitials(name?: string, limit = 2) {
   let initials = '';
   if (name && _.isString(name)) {
     const nameSplitted = _.chain(name)
       .split(/\s+/g)
       .filter(word => word.length > 0)
-      .take(2)
+      .take(limit)
       .value();
     _.each(nameSplitted, (str) => {
       initials += str[0];
@@ -41,6 +40,19 @@ export function getInitials(name: string) {
   }
 
   return _.toUpper(initials);
+}
+
+export function getBackgroundColor(name?: string,
+  avatarColors?: string[],
+  hashFunction?: (name?: string) => number,
+  defaultColor?: string) {
+  if (!name || !avatarColors || !hashFunction) {
+    return defaultColor;
+  }
+
+  const hash = hashFunction(name);
+  const index = Math.abs(hash % avatarColors.length);
+  return avatarColors[index];
 }
 
 export function isGravatarUrl(url: string) {

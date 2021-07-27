@@ -84,10 +84,6 @@ class DrawerScreen extends Component {
     this.setState({unread: !this.state.unread});
   }
 
-  triggerLeftToggleHaptic = () => {
-    // console.warn('haptic trigger here');
-  }
-
   showItem = () => {
     this.setState({hideItem: false});
   };
@@ -230,7 +226,6 @@ class DrawerScreen extends Component {
       fullSwipeLeft,
       onWillFullSwipeLeft: this.deleteItem,
       onToggleSwipeLeft: this.toggleReadState,
-      leftToggleHapticTrigger: this.triggerLeftToggleHaptic,
       testID: 'drawer'
     };
     if (showRightItems) {

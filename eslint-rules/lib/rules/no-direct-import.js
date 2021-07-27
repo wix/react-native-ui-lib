@@ -1,3 +1,6 @@
+const {handleError} = require('../utils');
+
+const RULE_ID = 'no-direct-import';
 const MAP_SCHEMA = {
   type: 'object',
   properties: {
@@ -47,7 +50,7 @@ module.exports = {
           },
         });
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 

@@ -1,3 +1,4 @@
+import {Appearance} from 'react-native';
 import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
@@ -15,6 +16,10 @@ export class Colors {
   constructor() {
     const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
+
+    Appearance.addChangeListener(({colorScheme}: Appearance.AppearancePreferences) => {
+      Object.assign(this, this.schemes[colorScheme ?? 'light']);
+    });
   }
   /**
    * Load custom set of colors
@@ -41,6 +46,8 @@ export class Colors {
     }
 
     this.schemes = schemes;
+    const colorScheme = Appearance.getColorScheme();
+    Object.assign(this, this.schemes[colorScheme ?? 'light']);
   }
 
   /**
@@ -173,11 +180,11 @@ export class Colors {
   getHexString(color: string) {
     return tinycolor(color).toHexString();
   }
-  getHSL(color: string) {
+  getHSL(color?: string) {
     return tinycolor(color).toHsl();
   }
-  isTransparent(color: string) {
-    return _.toUpper(color) === _.toUpper('transparent');
+  isTransparent(color?: string) {
+    return color && _.toUpper(color) === _.toUpper('transparent');
   }
   areEqual(colorA: string, colorB: string) {
     return _.toLower(colorA) === _.toLower(colorB);
@@ -230,7 +237,7 @@ function validateHex(value: string) {
   return value;
 }
 
-function threeDigitHexToSix(value: string) { 
+function threeDigitHexToSix(value: string) {
   return value.replace(/./g, '$&$&');
 }
 

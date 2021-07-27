@@ -57,7 +57,10 @@ declare type State = {
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
- * @extendsLink: https://facebook.github.io/react-native/docs/image.html
+ * @extendsLink: https://reactnative.dev/docs/image
+ * @notes: please note that for SVG support you need to add both
+ * `react-native-svg` and `react-native-svg-transformer`,
+ * and also configure them (see `metro.config.js`)
  */
 declare class Image extends PureComponent<Props, State> {
     static displayName: string;
@@ -74,13 +77,15 @@ declare class Image extends PureComponent<Props, State> {
     constructor(props: Props);
     static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State): {
         error: boolean;
-        prevSource: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+        prevSource: ImageSourcePropType | undefined;
     } | null;
     isGif(): boolean | undefined;
     shouldUseImageBackground(): boolean;
     getVerifiedSource(source?: ImageSourcePropType): any;
     getImageSource(): any;
     onError: (event: NativeSyntheticEvent<ImageErrorEventData>) => void;
+    renderSvg: () => JSX.Element;
+    renderRegularImage(): JSX.Element;
     render(): JSX.Element;
 }
 export { Image };
@@ -129,7 +134,7 @@ declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"marg
     /**
      * Default image source in case of an error
      */
-    errorSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    errorSource?: ImageSourcePropType | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Image;
