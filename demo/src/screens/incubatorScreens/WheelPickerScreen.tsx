@@ -1,9 +1,8 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {View, Text, Incubator, Colors, Typography, Button, Dialog} from 'react-native-ui-lib';
 import _ from 'lodash';
 
-// Months
-const months = [
+const monthItems = _.map([
   'January',
   'February',
   'March',
@@ -16,16 +15,17 @@ const months = [
   'October',
   'November',
   'December'
-];
+],
+item => ({label: item, value: item}));
 
-// Years
-const years = _.times(2020, i => i);
-
-const days = _.times(365, i => i + 1);
+const yearItems = _.times(2030, i => i)
+  .reverse()
+  .map(item => ({label: `${item}`, value: item}));
+const dayItems = _.times(31, i => i + 1).map(day => ({label: `${day}`, value: day}));
 
 const useData = (initialMonth?: string, initialYear?: string, initialDays?: number) => {
   const [selectedMonth, setMonth] = useState<string | undefined>(initialMonth);
-  const [selectedYear, setYear] = useState<string | undefined>(initialYear);
+  const [, setYear] = useState<string | undefined>(initialYear);
   const [selectedDays, setDays] = useState<number | undefined>(initialDays);
   const [showDialog, setShowDialog] = useState(false);
 
@@ -37,39 +37,23 @@ const useData = (initialMonth?: string, initialYear?: string, initialDays?: numb
     setShowDialog(false);
   }, []);
 
-  const onMonthChange = useCallback((item: string | undefined, _: number) => {
-    setMonth(item);
+  const onMonthChange = useCallback((item: string | number, _: number) => {
+    setMonth(item as string);
   }, []);
 
-  const onYearChange = useCallback((item: string | undefined, _: number) => {
-    setYear(item);
+  const onYearChange = useCallback((item: string | number, _: number) => {
+    setYear(item as string);
   }, []);
 
-  const onDaysChange = useCallback((item: number | undefined, _: number) => {
-    setDays(item);
-  }, []);
-
-  const monthItems = useMemo(() => {
-    return _.map(months, item => ({label: item, value: item}));
-  }, []);
-
-  const yearItems = useMemo(() => {
-    return _.map(years, item => ({label: '' + item, value: item}));
-  }, []);
-
-  const dayItems = useMemo(() => {
-    return _.map(days, item => ({label: '' + item, value: item}));
+  const onDaysChange = useCallback((item: string | number, _: number) => {
+    setDays(item as number);
   }, []);
 
   return {
-    monthItems,
-    yearItems,
-    dayItems,
     onMonthChange,
     onYearChange,
     onDaysChange,
     selectedMonth,
-    selectedYear,
     selectedDays,
     onPickDaysPress,
     onDialogDismissed,
@@ -81,26 +65,24 @@ export default () => {
   const {
     selectedMonth,
     onMonthChange,
-    monthItems,
-    selectedYear,
     onYearChange,
-    yearItems,
     selectedDays,
     onDaysChange,
-    dayItems,
     onPickDaysPress,
     onDialogDismissed,
     showDialog
   } = useData('February', undefined, 5);
 
+  const [initialYear, setInitialYear] = useState(2021);
+  const resetInitialYear = useCallback(() => setInitialYear(2020), []);
+
   return (
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
 
-      <View flex marginT-20 centerH>
+      <View marginT-s5 centerH>
         <Text h3>Months</Text>
         <Incubator.WheelPicker
-          style={{width: '100%'}}
           onChange={onMonthChange}
           activeTextColor={Colors.primary}
           inactiveTextColor={Colors.grey20}
@@ -109,16 +91,24 @@ export default () => {
           selectedValue={selectedMonth}
         />
 
-        <Text h3>Years</Text>
-        <View width={'100%'}>
+        <View row bottom marginT-s5>
+          <Text h3>Years</Text>
+          <Button bodySmall marginL-s2 link label="Reset" size={Button.sizes.xSmall} onPress={resetInitialYear}/>
+        </View>
+        <Text bodySmall grey30>
+          (Uncontrolled, initialValue passed)
+        </Text>
+        <View width={'100%'} marginT-s3>
           <Incubator.WheelPicker
             onChange={onYearChange}
             numberOfVisibleRows={3}
-            selectedValue={selectedYear}
+            initialValue={initialYear}
             items={yearItems}
           />
         </View>
+      </View>
 
+      <View marginB-s10>
         <Button marginT-40 label={'Pick Days'} marginH-100 onPress={onPickDaysPress}/>
         <Dialog width={'90%'} height={260} bottom visible={showDialog} onDismiss={onDialogDismissed}>
           <Incubator.WheelPicker onChange={onDaysChange} selectedValue={selectedDays} label={'Days'} items={dayItems}/>

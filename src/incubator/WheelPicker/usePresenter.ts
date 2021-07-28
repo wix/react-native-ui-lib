@@ -6,7 +6,8 @@ import useMiddleIndex from './helpers/useListMiddleIndex';
 export type ItemValueTypes = ItemProps | number | string;
 
 type PropTypes = {
-  selectedValue: ItemValueTypes;
+  initialValue?: ItemValueTypes;
+  selectedValue?: ItemValueTypes;
   children?: JSX.Element | JSX.Element[];
   items?: ItemProps[];
   itemHeight: number;
@@ -27,13 +28,14 @@ interface Presenter {
 }
 
 const usePresenter = ({
+  initialValue,
   selectedValue,
   children,
   items: propItems,
   itemHeight,
   preferredNumVisibleRows
 }: PropTypes): Presenter => {
-  
+  const value = !_.isUndefined(selectedValue) ? selectedValue : initialValue;
   const extractItemsFromChildren = (): ItemProps[] => {
     const items = React.Children.map(children, child => {
       const childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};
@@ -45,15 +47,18 @@ const usePresenter = ({
   const items = useRef<ItemProps[]>(children ? extractItemsFromChildren() : propItems!).current;
   const middleIndex = useMiddleIndex({itemHeight, listSize: items.length});
 
-  const getSelectedValueIndex = (): number => {
-    if (_.isString(selectedValue) || _.isNumber(selectedValue)) {
-      return _.findIndex(items, {value: selectedValue});
+  const getSelectedValueIndex = () => {
+    if (_.isString(value) || _.isNumber(value)) {
+      return _.findIndex(items, {value});
     }
-    return _.findIndex(items, {value: selectedValue?.value});
+    return _.findIndex(items, {value: (value as ItemProps)?.value});
   };
 
   const shouldControlComponent = (offset: number): boolean => {
-    return offset >= 0 && selectedValue !== getRowItemAtOffset(offset).value;
+    if (!_.isUndefined(selectedValue)) {
+      return offset >= 0 && selectedValue !== getRowItemAtOffset(offset).value;
+    }
+    return false;
   };
 
   const getRowItemAtOffset = (offset: number): RowItem => {
