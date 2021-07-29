@@ -23,6 +23,7 @@ When contributing to this repository, please first discuss the change you wish t
 - Our documentation is derived from our components' prop comments, make sure to add a clear description when adding new props. 
 - When possible, consider adding tests for the new functionality you added.
 - Try separating logic from UI as much as possible using hooks and presenters.
+- Keep components small and single purposed.
 
 #### Controlled vs Uncontrolled components
 When facing a new component's API we usually aim for making it controlled.  
