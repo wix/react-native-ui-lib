@@ -64,6 +64,7 @@ function TabController({
     return _.filter<TabControllerItemProps[]>(items, (item: TabControllerItemProps) => item.ignore);
   }, [items]);
 
+  /* backwards compatibility for `selectedIndex` prop. this line eventually should be removed */
   initialIndex = selectedIndex || initialIndex;
 
   /* currentPage - static page index */
