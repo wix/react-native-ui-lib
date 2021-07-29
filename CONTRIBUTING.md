@@ -1,6 +1,6 @@
 # Contributing
 If you got here it means you want to dedicate some of your time and help us improve this library.  
-So first, thank you ❤️
+So first of all, thank you ❤️
 
 When contributing to this repository, please first discuss the change you wish to make via [issue](https://github.com/wix/react-native-ui-lib/issues/new/choose),
 [Discord channel](https://discord.gg/2eW4g6Z), or any other method with the owners of this repository before making a change. 
