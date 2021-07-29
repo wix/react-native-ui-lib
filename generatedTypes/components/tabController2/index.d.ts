@@ -9,7 +9,11 @@ export interface TabControllerProps {
     /**
      * Initial selected index
      */
-    selectedIndex: number;
+    initialIndex?: number;
+    /**
+     * DEPRECATED: use initialIndex instead
+     */
+     selectedIndex?: number;
     /**
      * callback for when index has change (will not be called on ignored items)
      */
