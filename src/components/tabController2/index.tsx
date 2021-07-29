@@ -1,9 +1,10 @@
 // TODO: support commented props
-import React, {PropsWithChildren, useMemo} from 'react';
+import React, {PropsWithChildren, useMemo, useEffect} from 'react';
 import _ from 'lodash';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
+import {LogService} from '../../services';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
@@ -20,7 +21,11 @@ export interface TabControllerProps {
   /**
    * Initial selected index
    */
-  selectedIndex: number;
+  initialIndex?: number;
+  /**
+   * DEPRECATED: use initialIndex instead
+   */
+  selectedIndex?: number;
   /**
    * callback for when index has change (will not be called on ignored items)
    */
@@ -43,7 +48,8 @@ export interface TabControllerProps {
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
 function TabController({
-  selectedIndex = 0,
+  initialIndex = 0,
+  selectedIndex,
   asCarousel = false,
   items,
   onChangeIndex = _.noop,
@@ -58,12 +64,24 @@ function TabController({
     return _.filter<TabControllerItemProps[]>(items, (item: TabControllerItemProps) => item.ignore);
   }, [items]);
 
+  initialIndex = selectedIndex || initialIndex;
+
   /* currentPage - static page index */
-  const currentPage = useSharedValue(selectedIndex);
+  const currentPage = useSharedValue(initialIndex);
   /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
-  const targetPage = useSharedValue(selectedIndex);
-  const carouselOffset = useSharedValue(selectedIndex * Math.round(pageWidth));
+  const targetPage = useSharedValue(initialIndex);
+  const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
   const containerWidth = useSharedValue(pageWidth);
+
+  useEffect(() => {
+    if (!_.isUndefined(selectedIndex)) {
+      LogService.deprecationWarn({component: 'TabController2', oldProp: 'selectedIndex', newProp: 'initialIndex'});
+    }
+  }, [selectedIndex]);
+
+  useEffect(() => {
+    currentPage.value = initialIndex;
+  }, [initialIndex]);
 
   useAnimatedReaction(() => {
     return currentPage.value;
@@ -78,7 +96,7 @@ function TabController({
   const context = useMemo(() => {
     return {
       /* Pass Props */
-      selectedIndex,
+      initialIndex,
       asCarousel,
       pageWidth,
       /* Items */
@@ -92,7 +110,7 @@ function TabController({
       /* Callbacks */
       onChangeIndex
     };
-  }, [/* selectedIndex,*/asCarousel, items, onChangeIndex]);
+  }, [/* initialIndex,*/initialIndex, asCarousel, items, onChangeIndex]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 }
