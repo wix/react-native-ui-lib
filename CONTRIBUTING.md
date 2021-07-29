@@ -26,6 +26,6 @@ When contributing to this repository, please first discuss the change you wish t
 
 ## Typescript Status
 Currently most of our code is migrated to typescript though we still have some leftovers of javascript code and manual typings.  
-Till we complete the migration you require to do the following for new TS files
+Until we complete the migration you are required to do the following for new TS files
 
 Before pushing new code make sure to run `npm run build:dev` - this check for TS errors and create appropriate declarations (`d.ts`) files under generatedTypes folder. Make sure to push these files as well!
