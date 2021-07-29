@@ -11,8 +11,8 @@ When contributing to this repository, please first discuss the change you wish t
 2. Before submitting a PR we suggest running `npm run prepush` command that verifies our lint, TS and tests were not broken.
 3. Please use our PR prefixes accordingly. `fix` for bugfix, `feat` for feature, `infra` for infrastructure changes and `docs` for documentation related changes (e.g `fix/ButtonStyle`, `feat/Avatar_colorProp`)
 4. Please don't change our PR template.
-- 4.1 In the Description section add everything that can help the reviewer and the reviewing process, like a description of the issue and the way you decided to go about it, screenshots or gifs, etc.
-- 4.2 The Changelog section is important. Write a message for the library users - this message will be included in our release notes.
+  - In the Description section add everything that can help the reviewer and the reviewing process, like a description of the issue and the way you decided to go about it, screenshots or gifs, etc.
+  - The Changelog section is important. Write a message for the library users - this message will be included in our release notes.
 5. We try to make the PR review process as quick as possible, please be patient
 
 
