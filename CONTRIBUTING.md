@@ -11,7 +11,7 @@ When contributing to this repository, please first discuss the change you wish t
 2. Before submitting a PR we suggest running `npm run prepush` command that verifies our lint, TS and tests were not broken.
 3. Please don't change our PR template.
 - 3.1 In the Description section add everything that can help the reviewer and the reviewing process, like a description of the issue and the way you decided to go about it, screenshots or gifs, etc.
-- 3.2 In the Changelog it's important a message for the library users - this message will be included in our release notes
+- 3.2 The Changelog section is important. Write a message for the library users - this message will be included in our release notes.
 4. We try to make the PR review process as quick as possible, please be patient
 
 
