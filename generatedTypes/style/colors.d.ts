@@ -8,9 +8,11 @@ declare type Schemes = {
         [key: string]: string;
     };
 };
+declare type SchemeType = 'default' | 'light' | 'dark';
 export declare class Colors {
     [key: string]: any;
     schemes: Schemes;
+    currentScheme: SchemeType;
     constructor();
     /**
      * Load custom set of colors
@@ -26,6 +28,16 @@ export declare class Colors {
      * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
      */
     loadSchemes(schemes: Schemes): void;
+    /**
+     * Get app's current color scheme
+     */
+    getScheme(): 'light' | 'dark';
+    /**
+     * Set color scheme for app
+     * arguments:
+     * scheme - color scheme e.g light/dark/default
+     */
+    setScheme(scheme: SchemeType): void;
     /**
      * Add alpha to hex or rgb color
      * arguments:
@@ -118,18 +130,13 @@ declare const colorObject: Colors & {
     purple20: string;
     purple30: string;
     purple40: string;
-    /**
-     * Add alpha to hex or rgb color
-     * arguments:
-     * p1 - hex color / R part of RGB
-     * p2 - opacity / G part of RGB
-     * p3 - B part of RGB
-     * p4 - opacity
-     */
     purple50: string;
     purple60: string;
     purple70: string;
     purple80: string;
+    /**
+     * Get app's current color scheme
+     */
     violet10: string;
     violet20: string;
     violet30: string;
