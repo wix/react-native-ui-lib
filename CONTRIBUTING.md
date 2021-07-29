@@ -22,6 +22,13 @@ When contributing to this repository, please first discuss the change you wish t
 - Deciding on an API is not trivial but we always aim to keep it generic and intuitive - feel free to consult with us.
 - Our documentation is derived from our components' prop comments, make sure to add a clear description when adding new props. 
 - When possible, consider adding tests for the new functionality you added.
+- Try separating logic from UI as much as possible using hooks and presenters.
+
+#### Controlled vs Uncontrolled components
+When facing a new component's API we usually aim for making it controlled.  
+This is in order to give the user most control over what will be rendered in the component.  
+Having said that, keep in mind that in some cases (mostly due to performance concerns) we decide on making a component uncontrolled.
+
 
 
 
