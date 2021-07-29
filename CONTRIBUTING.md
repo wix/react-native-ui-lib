@@ -20,7 +20,7 @@ When contributing to this repository, please first discuss the change you wish t
 - Readability and clean code above all - we believe a clean code is easier to maintain and refactor when needed. 
 - Deciding on an API is not trivial but we always aim to keep it generic and intuitive - feel free to consult with us.
 - Our documentation is derived from our components' prop comments, make sure to add a clear description when adding new props. 
-- When possible, consider adding tets for a new functionality you add.
+- When possible, consider adding tests for the new functionality you added.
 
 
 
