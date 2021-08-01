@@ -462,6 +462,7 @@ class Hint extends Component<HintProps, HintState> {
       customContent, 
       removePaddings, 
       enableShadow,
+      visible,
       testID
     } = this.props;
 
@@ -473,7 +474,7 @@ class Hint extends Component<HintProps, HintState> {
         style={[
           styles.hint,
           !removePaddings && styles.hintPaddings,
-          enableShadow && styles.containerShadow, 
+          visible && enableShadow && styles.containerShadow, 
           color && {backgroundColor: color}, 
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
