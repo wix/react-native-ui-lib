@@ -179,7 +179,7 @@ class Hint extends Component<HintProps, HintState> {
   state = {
     targetLayoutInWindow: undefined,
     targetLayout: this.props.targetFrame,
-    hintUnmounted: false
+    hintUnmounted: !this.props.visible
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
