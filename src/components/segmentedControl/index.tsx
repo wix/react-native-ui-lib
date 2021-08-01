@@ -6,6 +6,7 @@ import {Colors, BorderRadiuses, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps as SegmentProps} from './segment';
+import {Constants} from 'helpers';
 
 const {interpolate: _interpolate, interpolateNode} = Reanimated;
 const interpolate = interpolateNode || _interpolate;
@@ -124,7 +125,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const animatedStyle = useMemo(() => {
     if (segmentsCounter.current === segments?.length) {
-      const left = interpolate(animatedValue.current, {
+      const inset = interpolate(animatedValue.current, {
         inputRange: _.times(segmentsCounter.current),
         outputRange: _.map(segmentsStyle.current, segment => segment.x - BORDER_WIDTH)
       });
@@ -134,7 +135,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
         outputRange: _.map(segmentsStyle.current, segment => segment.width)
       });
 
-      return {width, left};
+      return [{width}, Constants.isRTL ? {right: inset} : {left: inset}];
     }
     return undefined;
   }, [segmentsCounter.current, segments?.length]);
