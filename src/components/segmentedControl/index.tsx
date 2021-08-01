@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import React, {useRef, useState, useCallback, useMemo} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent, I18nManager} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import Reanimated, {EasingNode, Easing as _Easing} from 'react-native-reanimated';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps as SegmentProps} from './segment';
+import {Constants} from 'helpers';
 
 const {interpolate: _interpolate, interpolateNode} = Reanimated;
 const interpolate = interpolateNode || _interpolate;
@@ -137,7 +138,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
         outputRange: _.map(segmentsStyle.current, segment => segment.width - 2 * BORDER_WIDTH)
       });
 
-      return [{width}, I18nManager.isRTL ? {right: inset} : {left: inset}];
+      return [{width}, Constants.isRTL ? {right: inset} : {left: inset}];
     }
     return undefined;
   }, [segmentsCounter.current, segments?.length]);
