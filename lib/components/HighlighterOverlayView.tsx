@@ -1,9 +1,37 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {requireNativeComponent, processColor, Platform, StyleSheet, Modal} from 'react-native';
+import {requireNativeComponent, processColor, Platform, StyleSheet, Modal, ViewStyle} from 'react-native';
 
-const NativeHighlighterView = requireNativeComponent('HighlighterView', null);
+const NativeHighlighterView = requireNativeComponent('HighlighterView');
 const DefaultOverlayColor = 'rgba(0, 0, 0, 0.5)';
+
+type HighlightFrameType = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+type HighlightViewTagParams = {
+  padding: number | ViewStyle['padding'];
+  offset: Pick<HighlightFrameType, 'x' | 'y'>;
+}
+
+export type HighlighterOverlayViewProps = {
+  visible: boolean,
+  overlayColor?: string
+  borderRadius?: number,
+  strokeColor?: string,
+  strokeWidth?: number,
+  onRequestClose?: () => void,
+  highlightFrame?: HighlightFrameType,
+  style?: ViewStyle,
+  highlightViewTag: number,
+  children: JSX.Element[] | JSX.Element,
+  highlightViewTagParams?: HighlightViewTagParams,
+  minimumRectSize?: Pick<HighlightFrameType, 'width' | 'height'>
+  innerPadding?: number,
+};
+
 
 const HighlighterOverlayView = (props) => {
   const {
@@ -19,7 +47,7 @@ const HighlighterOverlayView = (props) => {
     highlightViewTag,
     highlightViewTagParams,
     minimumRectSize,
-    innerPadding,
+    innerPadding
   } = props;
 
   let overlayColorToUse = overlayColor || DefaultOverlayColor;
@@ -34,9 +62,10 @@ const HighlighterOverlayView = (props) => {
       visible={!!(visible)}
       animationType={'fade'}
       transparent
-      onRequestClose={() => onRequestClose && onRequestClose()}
+      onRequestClose={() => onRequestClose?.()}
     >
       <NativeHighlighterView
+        // @ts-ignore, this became private, not sure if I should remove it 
         highlightFrame={highlightFrame}
         style={[style, {...StyleSheet.absoluteFillObject, backgroundColor: 'transparent'}]}
         overlayColor={overlayColorToUse}
@@ -53,46 +82,5 @@ const HighlighterOverlayView = (props) => {
   );
 };
 
-HighlighterOverlayView.propTypes = {
-  overlayColor: PropTypes.string,
-  borderRadius: PropTypes.number,
-  strokeColor: PropTypes.string,
-  strokeWidth: PropTypes.number,
-  visible: PropTypes.bool.isRequired,
-  onRequestClose: PropTypes.func,
-  highlightFrame: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }),
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-  highlightViewTag: PropTypes.number,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  highlightViewTagParams: PropTypes.shape({
-    padding: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        top: PropTypes.number,
-        left: PropTypes.number,
-        bottom: PropTypes.number,
-        right: PropTypes.number}),
-    ]),
-    offset: PropTypes.shape({
-      x: PropTypes.number,
-      y: PropTypes.number,
-    }),
-  }),
-  minimumRectSize: PropTypes.shape({
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }),
-  innerPadding: PropTypes.number,
-};
-
 HighlighterOverlayView.displayName = 'IGNORE';
-
 export default HighlighterOverlayView;
