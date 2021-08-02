@@ -50,7 +50,7 @@ interface ColorSliderGroupState {
 
 /**
  * @description: A Gradient Slider component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
  */
 class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderGroupState> {
