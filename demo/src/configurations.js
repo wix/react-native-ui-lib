@@ -1,6 +1,7 @@
 import {Assets, Colors, Typography, Spacings, Incubator} from 'react-native-ui-lib'; // eslint-disable-line
 
 Assets.loadAssetsGroup('icons.demo', {
+  chevronDown: require('./assets/icons/chevronDown.png'),
   add: require('./assets/icons/add.png'),
   camera: require('./assets/icons/cameraSelected.png'),
   close: require('./assets/icons/close.png'),

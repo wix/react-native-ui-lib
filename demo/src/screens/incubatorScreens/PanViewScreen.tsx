@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {GestureHandlerRootView, FlatList} from 'react-native-gesture-handler';
 import {
+  Assets,
   View,
   Text,
   Colors,
@@ -20,7 +21,6 @@ interface Item {
   label: string;
 }
 
-const chevronDown = require('../../assets/icons/chevronDown.png');
 const overlayBackgroundColor = Colors.rgba(Colors.black, 0.2);
 const colors: Item[] = [
   {value: Colors.red10, label: 'Red10'},
@@ -155,7 +155,7 @@ class PanViewScreen extends Component {
             <Text text50 marginB-s2>
               Scrollable
             </Text>
-            <Image source={chevronDown}/>
+            <Image source={Assets.icons.demo.chevronDown}/>
           </View>
         </ScrollView>
         {showToast && this.renderToast()}

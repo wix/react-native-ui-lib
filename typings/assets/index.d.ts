@@ -7,6 +7,7 @@ export type IconName =
   | 'check'
   | 'checkSmall'
   | 'chevronRight'
+  | 'chevronDown'
   | 'plusSmall'
   | 'search'
   | 'settings'
