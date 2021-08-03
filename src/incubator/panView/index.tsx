@@ -68,7 +68,7 @@ interface Props extends PanViewProps {
   children?: React.ReactNode | React.ReactNode[];
 }
 
-const RETURN_ANIMATION_SPRING_CONFIG = {velocity: 300, damping: 15, stiffness: 300, mass: 0.8};
+const RETURN_ANIMATION_SPRING_CONFIG = {velocity: 300, damping: 20, stiffness: 300, mass: 0.8};
 
 const PanView = (props: Props) => {
   const {
