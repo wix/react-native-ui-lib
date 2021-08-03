@@ -1,6 +1,8 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, Text, Incubator, Colors, Typography, Button, Dialog} from 'react-native-ui-lib';
 import _ from 'lodash';
+
+type WheelPickerValue = Incubator.WheelPickerProps['initialValue'];
 
 const monthItems = _.map([
   'January',
@@ -24,9 +26,9 @@ const yearItems = _.times(2030, i => i)
 const dayItems = _.times(31, i => i + 1).map(day => ({label: `${day}`, value: day}));
 
 const useData = (initialMonth?: string, initialYear?: string, initialDays?: number) => {
-  const [selectedMonth, setMonth] = useState<string | undefined>(initialMonth);
-  const [, setYear] = useState<string | undefined>(initialYear);
-  const [selectedDays, setDays] = useState<number | undefined>(initialDays);
+  const [selectedMonth, setMonth] = useState<WheelPickerValue>(initialMonth);
+  const [, setYear] = useState<WheelPickerValue>(initialYear);
+  const [selectedDays, setDays] = useState<WheelPickerValue>(initialDays);
   const [showDialog, setShowDialog] = useState(false);
 
   const onPickDaysPress = useCallback(() => {
@@ -37,16 +39,16 @@ const useData = (initialMonth?: string, initialYear?: string, initialDays?: numb
     setShowDialog(false);
   }, []);
 
-  const onMonthChange = useCallback((item: string | number, _: number) => {
-    setMonth(item as string);
+  const onMonthChange = useCallback((item: WheelPickerValue, _: number) => {
+    setMonth(item);
   }, []);
 
-  const onYearChange = useCallback((item: string | number, _: number) => {
-    setYear(item as string);
+  const onYearChange = useCallback((item: WheelPickerValue, _: number) => {
+    setYear(item);
   }, []);
 
-  const onDaysChange = useCallback((item: string | number, _: number) => {
-    setDays(item as number);
+  const onDaysChange = useCallback((item: WheelPickerValue, _: number) => {
+    setDays(item);
   }, []);
 
   return {
