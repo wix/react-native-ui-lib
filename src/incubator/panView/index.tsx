@@ -2,7 +2,6 @@ import {isEmpty} from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
-import {asBaseComponent} from '../../commons/new';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -10,6 +9,7 @@ import Animated, {
   useAnimatedGestureHandler,
   runOnJS
 } from 'react-native-reanimated';
+import {asBaseComponent} from '../../commons/new';
 import {Constants} from '../../helpers';
 import View, {ViewProps} from '../../components/view';
 import {
