@@ -96,6 +96,14 @@ export interface HintProps {
      */
     customContent?: JSX.Element;
     /**
+     * Remove all hint's paddings
+     */
+    removePaddings?: boolean;
+    /**
+     * Enable shadow (for hint with white background only)
+     */
+    enableShadow?: boolean;
+    /**
      * The hint's test identifier
      */
     testID?: string;
@@ -111,7 +119,7 @@ interface HintState {
 }
 /**
  * @description: Hint component for displaying a tooltip over wrapped component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.tsx
  * @notes: You can either wrap a component or pass a specific targetFrame
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Hint/Hint.gif?raw=true
  */

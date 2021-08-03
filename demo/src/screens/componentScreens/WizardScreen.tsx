@@ -9,25 +9,30 @@ const stepTypes = _.map(Wizard.States, state => {
   return <Text key={state}>{state}</Text>;
 });
 
-export default class WizardScreen extends Component {
-  constructor(props) {
-    super(props);
+interface State {
+  activeIndex: number;
+  completedStepIndex?: number;
+  allTypesIndex: number;
+  selectedFlavor: string;
+  customerName?: string;
+  toastMessage?: string;
+}
 
-    this.state = {
-      activeIndex: 0,
-      completedStepIndex: undefined,
-      allTypesIndex: 0,
-      selectedFlavor: initialFlavor,
-      customerName: undefined,
-      toastMessage: undefined
-    };
-  }
+export default class WizardScreen extends Component<{}, State> {
+  state = {
+    activeIndex: 0,
+    completedStepIndex: undefined,
+    allTypesIndex: 0,
+    selectedFlavor: initialFlavor,
+    customerName: undefined,
+    toastMessage: undefined
+  };
 
-  onActiveIndexChanged = activeIndex => {
+  onActiveIndexChanged = (activeIndex: number) => {
     this.setState({activeIndex});
   };
 
-  onAllTypesIndexChanged = allTypesIndex => {
+  onAllTypesIndexChanged = (allTypesIndex: number) => {
     this.setState({allTypesIndex});
   };
 
@@ -88,7 +93,7 @@ export default class WizardScreen extends Component {
     }
   };
 
-  renderNextButton = disabled => {
+  renderNextButton = (disabled?: boolean) => {
     const {activeIndex} = this.state;
     const label = activeIndex === 2 ? 'done & reset' : 'next';
 
@@ -104,12 +109,12 @@ export default class WizardScreen extends Component {
     );
   };
 
-  renderFlavorRadioButton = index => {
+  renderFlavorRadioButton = (index: number) => {
     const value = flavors[index];
     return <RadioButton testID={value} marginL-10={index > 0} value={value} label={value}/>;
   };
 
-  setSelectedFlavor = selectedFlavor => {
+  setSelectedFlavor = (selectedFlavor: string) => {
     this.setState({selectedFlavor});
   };
 
@@ -130,7 +135,7 @@ export default class WizardScreen extends Component {
     );
   };
 
-  onNameEntered = customerName => {
+  onNameEntered = (customerName: string) => {
     this.setState({customerName});
   };
 
@@ -178,7 +183,7 @@ export default class WizardScreen extends Component {
     }
   };
 
-  getStepState(index) {
+  getStepState(index: number) {
     const {activeIndex, completedStepIndex} = this.state;
     let state = Wizard.States.DISABLED;
     if (completedStepIndex > index - 1) {

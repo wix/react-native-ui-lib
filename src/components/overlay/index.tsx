@@ -32,7 +32,7 @@ export type OverlayTypes = {
 /**
  * @description: Overlay view with types (default, top, bottom, solid)
  * @extends: Image
- * @extendsLink: https://facebook.github.io/react-native/docs/image
+ * @extendsLink: https://reactnative.dev/docs/image
  */
 class Overlay extends PureComponent<OverlayTypes> {
   static displayName = 'Overlay';

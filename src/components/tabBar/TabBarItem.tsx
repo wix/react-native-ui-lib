@@ -1,6 +1,15 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
-import {StyleSheet, Animated, Easing, LayoutChangeEvent, LayoutRectangle, StyleProp, ViewStyle, TextStyle} from 'react-native';
+import React, {PureComponent, ReactElement} from 'react';
+import {
+  StyleSheet,
+  Animated,
+  Easing,
+  LayoutChangeEvent,
+  LayoutRectangle,
+  StyleProp,
+  ViewStyle,
+  TextStyle
+} from 'react-native';
 import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
@@ -10,7 +19,6 @@ import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
 import Badge, {BadgeProps} from '../badge';
-
 
 const INDICATOR_HEIGHT = 2;
 const INDICATOR_BG_COLOR = Colors.primary;
@@ -42,6 +50,14 @@ export interface TabBarItemProps {
    */
   badge?: BadgeProps; //TODO: remove after deprecation
   badgeProps?: BadgeProps;
+  /**
+   * Pass to render a leading element
+   */
+  leadingAccessory?: ReactElement;
+  /**
+   * Pass to render a trailing element
+   */
+  trailingAccessory?: ReactElement;
   /**
    * maximum number of lines the label can break
    */
@@ -97,7 +113,7 @@ interface State {
  * @description: TabBar.Item, inner component of TabBar for configuring the tabs
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.tsx
  * @extends: TouchableOpacity
- * @extendsLink: https://facebook.github.io/react-native/docs/touchableopacity
+ * @extendsLink: https://reactnative.dev/docs/touchableopacity
  */
 class TabBarItem extends PureComponent<TabBarItemProps, State> {
   static displayName = 'TabBar.Item';
@@ -178,6 +194,8 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
       labelStyle,
       badgeProps,
       badge,
+      leadingAccessory,
+      trailingAccessory,
       uppercase,
       maxLines,
       selectedLabelStyle,
@@ -193,9 +211,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
 
     const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(styles.label);
     const iconSelectedTint =
-      iconSelectedColor ||
-      this.getColorFromStyle(selectedLabelStyle) ||
-      this.getColorFromStyle(styles.selectedLabel);
+      iconSelectedColor || this.getColorFromStyle(selectedLabelStyle) || this.getColorFromStyle(styles.selectedLabel);
     const badgeFinalProps = badgeProps || badge;
     const badgeSize = _.get(badgeFinalProps, 'size', 'small');
 
@@ -213,6 +229,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
         accessibilityLabel={accessibilityLabel}
       >
         <View row flex center style={[showDivider && styles.divider, styles.contentContainer]}>
+          {leadingAccessory}
           {icon && (
             <Image
               style={!_.isEmpty(label) && styles.icon}
@@ -238,6 +255,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
               containerStyle={[styles.badge, badgeFinalProps.containerStyle]}
             />
           )}
+          {trailingAccessory}
         </View>
         <Animated.View style={[{opacity: indicatorOpacity}, styles.indicator, indicatorStyle]}/>
       </TouchableOpacity>
@@ -246,7 +264,6 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
 }
 
 export default asBaseComponent<TabBarItemProps>(TabBarItem);
-
 
 const styles = StyleSheet.create({
   contentContainer: {

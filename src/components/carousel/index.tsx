@@ -18,7 +18,7 @@ type DefaultProps = Partial<CarouselProps>
  * @gif: https://user-images.githubusercontent.com/1780255/107120258-40b5bc80-6895-11eb-9596-8065d3a940ff.gif, https://user-images.githubusercontent.com/1780255/107120257-3eebf900-6895-11eb-9800-402e9e0dc692.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.tsx
  * @extends: ScrollView
- * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
+ * @extendsLink: https://reactnative.dev/docs/scrollview
  * @notes: This is a screen width Component
  */
 class Carousel extends Component<CarouselProps, CarouselState> {
@@ -251,14 +251,14 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   onMomentumScrollEnd = () => {
     // finished full page scroll
-    const {currentStandingPage, currentPage} = this.state;
+    const {currentStandingPage = 0, currentPage} = this.state;
     const index = this.getCalcIndex(currentPage);
 
     const pagesCount = presenter.getChildrenLength(this.props);
     if (index < pagesCount) {
       this.setState({currentStandingPage: index});
       if (currentStandingPage !== index) {
-        _.invoke(this.props, 'onChangePage', index, currentStandingPage);
+        this.props.onChangePage?.(index, currentStandingPage);
       }
     }
   };
@@ -316,7 +316,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       this.resetAutoPlay();
     }
 
-    _.invoke(this.props, 'onScroll', event);
+    this.props.onScroll?.(event);
   };
 
   // @ts-ignore

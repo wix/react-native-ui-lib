@@ -1,80 +1,36 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import TouchableOpacity from '../touchableOpacity';
-import {PureBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import Colors from '../../style/colors';
 import BorderRadiuses from '../../style/borderRadiuses';
 import Spacings from '../../style/spacings';
-import {States, StatesConfig} from './WizardStates';
+import {WizardStepProps, WizardProps} from './types';
+import {StatesConfig} from './WizardStates';
+
+// Includes private props from the Wizard
+interface Props extends WizardStepProps, Omit<WizardProps, 'onActiveIndexChanged | containerStyle'> {
+  index: number;
+  maxWidth: number;
+  onPress: WizardProps['onActiveIndexChanged'];
+}
 
 /**
  * @description: WizardStep Component: a wizard presents a series of steps in  prescribed order
  * that the user needs to complete in order to accomplish a goal (e.g. purchase a product).
  *
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.tsx
  * @notes: Use Wizard with nested Wizard.Step(s) to achieve the desired result.
  */
-export default class WizardStep extends PureBaseComponent {
+class WizardStep extends Component<Props> {
   static displayName = 'Wizard.Step';
 
-  static propTypes = {
-    /**
-     * The state of the step (Wizard.States.X)
-     */
-    state: PropTypes.oneOf(Object.values(States)),
-    /**
-     * The label of the item
-     */
-    label: PropTypes.string,
-    /**
-     * Additional styles for the label
-     */
-    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Additional styles for the connector
-     */
-    connectorStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Color of the step index (or of the icon, when provided)
-     */
-    color: PropTypes.string,
-    /**
-     * Color of the circle
-     */
-    circleColor: PropTypes.string,
-    /**
-     * The step's circle size (diameter)
-     */
-    circleSize: PropTypes.number,
-    /**
-     * Circle's background color
-     */
-    circleBackgroundColor: PropTypes.string,
-    /**
-     * Icon to replace the (default) index
-     */
-    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Additional styles for the index's label (when icon is not provided)
-     */
-    indexLabelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Whether the step should be enabled
-     */
-    enabled: PropTypes.bool,
-    /**
-     * Extra text to be read in accessibility mode
-     */
-    accessibilityInfo: PropTypes.string
-  };
-
   getProps() {
-    const props = this.getThemeProps();
+    const props = this.props;
     const {state, activeConfig: propsActiveConfig, index, activeIndex} = props;
     const config = StatesConfig[state];
     const activeConfig = index === activeIndex ? propsActiveConfig : {};
@@ -88,7 +44,7 @@ export default class WizardStep extends PureBaseComponent {
     return `Step ${index + 1}, ${label}, ${extraInfo}`;
   }
 
-  renderCircle(props) {
+  renderCircle(props: Props) {
     const {
       testID,
       index,
@@ -152,6 +108,8 @@ export default class WizardStep extends PureBaseComponent {
     );
   }
 }
+
+export default asBaseComponent<WizardStepProps>(WizardStep);
 
 const styles = StyleSheet.create({
   connector: {

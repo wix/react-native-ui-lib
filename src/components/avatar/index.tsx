@@ -174,9 +174,7 @@ export type AvatarPropTypes = AvatarProps; //TODO: remove after ComponentPropTyp
 
 /**
  * @description: Avatar component for displaying user profile images
- * @extends: TouchableOpacity
- * @extendsnotes: (when passing onPress)
- * @extendsLink: docs/TouchableOpacity
+ * @extends: TouchableOpacity, Image
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */

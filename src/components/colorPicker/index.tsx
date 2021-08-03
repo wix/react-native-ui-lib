@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import ColorPalette from './ColorPalette';
@@ -57,7 +56,7 @@ const ACCESSIBILITY_LABELS = {
 
 /**
  * @description: A color picker component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  * @notes: This is a screen width component
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPicker/ColorPicker.gif?raw=true
  */
@@ -133,7 +132,7 @@ class ColorPicker extends PureComponent<Props> {
 
   // ColorPalette
   onValueChange = (value: string, options: object) => {
-    _.invoke(this.props, 'onValueChange', value, options);
+    this.props.onValueChange?.(value, options);
   };
 }
 

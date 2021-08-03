@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Constants} from '../../helpers';
@@ -67,7 +66,7 @@ type State = {
 /**
  * @description: Stack aggregator component
  * @modifiers: margin, padding
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.tsx
  */
 class StackAggregator extends PureComponent<StackAggregatorProps, State> {
   static displayName = 'StackAggregator';
@@ -103,10 +102,10 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
     }
   }
 
-  getAnimatedScales = (): Animated.Value[] => {
+  getAnimatedScales = () => {
     return React.Children.map(this.props.children, (_item, index) => {
       return new Animated.Value(this.getItemScale(index));
-    });
+    }) as Animated.Value[];
   }
 
   getItemScale = (index: number) => {
@@ -172,7 +171,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
 
   close = () => {
     this.setState({collapsed: true}, async () => {
-      _.invoke(this.props, 'onCollapseWillChange', true);
+      this.props.onCollapseWillChange?.(true);
       if (this.props.onCollapseChanged) {
         await this.animate();
         this.props.onCollapseChanged(true);
@@ -184,7 +183,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
 
   open = () => {
     this.setState({collapsed: false}, async () => {
-      _.invoke(this.props, 'onCollapseWillChange', false);
+      this.props.onCollapseWillChange?.(false);
       if (this.props.onCollapseChanged) {
         await this.animate();
         this.props.onCollapseChanged(false);
@@ -232,7 +231,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
   };
 
   onItemPress = (index: number) => {
-    _.invoke(this.props, 'onItemPress', index);
+    this.props.onItemPress?.(index);
   };
 
   renderItem = (item: JSX.Element | JSX.Element[], index: number) => {
@@ -299,7 +298,7 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
           </Animated.View>
 
           {React.Children.map(children, (item, index) => {
-            return this.renderItem(item, index);
+            return this.renderItem(item as JSX.Element | JSX.Element[], index);
           })}
 
           {collapsed && (

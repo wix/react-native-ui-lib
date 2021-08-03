@@ -103,6 +103,9 @@ module.exports = {
       get SharedTransitionScreen() {
         return require('./screens/componentScreens/SharedTransitionScreen').default;
       },
+      get SkeletonViewScreen() {
+        return require('./screens/componentScreens/SkeletonViewScreen').default;
+      },
       get StepperScreen() {
         return require('./screens/componentScreens/StepperScreen').default;
       },
@@ -218,7 +221,7 @@ module.exports = {
       get ProgressBarScreen() {
         return require('./screens/componentScreens/ProgressBarScreen').default;
       },
-      // Incubator 
+      // Incubator
       get IncubatorTextFieldScreen() {
         return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
       },

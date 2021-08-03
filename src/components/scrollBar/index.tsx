@@ -152,7 +152,7 @@ class ScrollBar extends Component<Props, State> {
 
     this.animateGradientOpacity(offsetX, contentWidth, containerWidth);
 
-    _.invoke(this.props, 'onScroll', event);
+    this.props.onScroll?.(event);
   };
 
   onContentSizeChange = (contentWidth: number, contentHeight: number) => {
@@ -164,14 +164,14 @@ class ScrollBar extends Component<Props, State> {
         this.setState({gradientOpacity: new Animated.Value(1)});
       }
 
-      _.invoke(this.props, 'onContentSizeChange', contentWidth, contentHeight);
+      this.props.onContentSizeChange?.(contentWidth, contentHeight);
     }
   };
 
   onLayout = (event: LayoutChangeEvent) => {
     this.containerWidth = event.nativeEvent.layout.width;
 
-    _.invoke(this.props, 'onLayout', event);
+    this.props.onLayout?.(event);
     // 1 - for race condition, in case onContentSizeChange() is called before
     // 0 - for containerWidth change, when onContentSizeChange() is called first
     this.setState({gradientOpacity: new Animated.Value(this.scrollContentWidth > this.containerWidth ? 1 : 0)});

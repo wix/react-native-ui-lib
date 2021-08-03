@@ -147,8 +147,8 @@ class PanListenerView extends PureComponent<Props> {
   };
 
   handlePanStart = () => {
-    _.invoke(this.props, 'onPanStart');
-    _.invoke(this.props.context, 'onPanStart');
+    this.props.onPanStart?.();
+    this.props.context?.onPanStart?.();
   };
 
   getSwipeDirection = ({vx, vy}: ({vx: number, vy: number})): PanningResultProps => {
@@ -201,26 +201,29 @@ class PanListenerView extends PureComponent<Props> {
     if (this.panResultHasValue(panResult)) {
       // @ts-ignore
       const data = {directions: panResult.selectedDirections, velocities: panResult.selectedAmounts};
-      _.invoke(this.props, 'onSwipe', data);
-      _.invoke(context, 'onSwipe', data);
+      this.props.onSwipe?.(data);
+      context?.onSwipe?.(data);
     } else if (hasDrag || hasContext) {
       panResult = this.getDragDirection(gestureState);
       if (this.panResultHasValue(panResult)) {
         const data = {directions: panResult.selectedDirections, deltas: panResult.selectedAmounts};
-        _.invoke(this.props, 'onDrag', data);
-        _.invoke(context, 'onDrag', data);
+        this.props.onDrag?.(data);
+        context?.onDrag?.(data);
+  
       }
     }
   };
 
   handlePanRelease = () => {
-    _.invoke(this.props, 'onPanRelease');
-    _.invoke(this.props.context, 'onPanRelease');
+    this.props.onPanRelease?.();
+    this.props.context?.onPanRelease?.();
+
   };
 
   handlePanTerminate = () => {
-    _.invoke(this.props, 'onPanTerminated');
-    _.invoke(this.props.context, 'onPanTerminated');
+    this.props.onPanTerminated?.();
+    this.props.context?.onPanTerminated?.();
+
   };
 
   render() {

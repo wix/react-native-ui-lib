@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component, ElementRef} from 'react';
 import {
   StyleSheet,
@@ -146,10 +145,8 @@ interface State {
  * @notes: 1) FeatureHighlight component must be a direct child of the root view returned in render().; 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
  * @important: FeatureHighlight uses a native library. You MUST add and link the native library to both iOS and Android projects. For instruction please see
  * @importantLink: https://facebook.github.io/react-native/docs/linking-libraries-ios.html
- * @extends: HighlighterOverlayView
- * @extendsLink: docs/HighlighterOverlayView
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FeatureHighlight/FeatureHighlight.gif?raw=true
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.tsx
  */
 /*eslint-enable*/
 class FeatureHighlight extends Component<FeatureHighlightProps, State> {
@@ -290,7 +287,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
     this.contentHeight = contentViewHeight;
     this.targetPosition = undefined;
     const {confirmButtonProps} = this.props;
-    _.invoke(confirmButtonProps, 'onPress');
+    confirmButtonProps?.onPress?.();
   };
 
   renderHighlightMessage() {
