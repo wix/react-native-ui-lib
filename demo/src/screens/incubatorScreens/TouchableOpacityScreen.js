@@ -83,6 +83,20 @@ class TouchableOpacityScreen extends Component {
         >
           <Text white>TouchableOpacity2</Text>
         </Incubator.TouchableOpacity2>
+        <Incubator.TouchableOpacity2
+          marginT-20
+          paddingH-20
+          paddingV-8
+          br100
+          center
+          onPress={this.onPress}
+          backgroundColor={Colors.orange30}
+          feedbackColor={Colors.yellow20}
+          activeOpacity={1}
+          activeScale={0.98}
+        >
+          <Text white>TouchableOpacity2 (without LongPress)</Text>
+        </Incubator.TouchableOpacity2>
         {this.renderRNTouchableExample()}
       </View>
     );
