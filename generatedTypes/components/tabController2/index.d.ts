@@ -9,7 +9,11 @@ export interface TabControllerProps {
     /**
      * Initial selected index
      */
-    selectedIndex: number;
+    initialIndex?: number;
+    /**
+     * DEPRECATED: use initialIndex instead
+     */
+    selectedIndex?: number;
     /**
      * callback for when index has change (will not be called on ignored items)
      */
@@ -30,7 +34,7 @@ export interface TabControllerProps {
  * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-declare function TabController({ selectedIndex, asCarousel, items, onChangeIndex, carouselPageWidth, children }: PropsWithChildren<TabControllerProps>): JSX.Element;
+declare function TabController({ initialIndex, selectedIndex, asCarousel, items, onChangeIndex, carouselPageWidth, children }: PropsWithChildren<TabControllerProps>): JSX.Element;
 declare namespace TabController {
     var TabBar: React.ComponentClass<import("./TabBar").TabControllerBarProps & {
         useCustomTheme?: boolean | undefined;
