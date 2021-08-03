@@ -8,11 +8,12 @@ let SafeAreaInsetsCache = null;
 const NativeSafeAreaManager = NativeModules.SafeAreaManager;
 
 class SafeAreaInsetsManager {
-  constructor() {
-    this._defaultInsets = {top: 0, left: 0, bottom: 0, right: 0};
-    this._safeAreaInsets = this._defaultInsets;
-    this._safeAreaChangedDelegates = [];
 
+  _defaultInsets = {top: 0, left: 0, bottom: 0, right: 0};
+  _safeAreaInsets = {top: 0, left: 0, bottom: 0, right: 0};
+  _safeAreaChangedDelegates = [];
+
+  constructor() {
     this.addSafeAreaChangedListener();
   }
 
