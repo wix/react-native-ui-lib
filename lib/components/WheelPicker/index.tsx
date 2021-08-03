@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {DeviceEventEmitter, requireNativeComponent, StyleSheet, View} from 'react-native';
+import {DeviceEventEmitter, requireNativeComponent, StyleSheet, View, ViewStyle, TextStyle} from 'react-native';
 
 import WheelPickerItem from './WheelPickerItem';
 import {Constants} from '../../../src/helpers';
@@ -18,47 +17,50 @@ if (!PickerPackage) {
   }
 }
 
-const WheelPickerNative = requireNativeComponent('WheelPicker', null);
+const WheelPickerNative = requireNativeComponent('WheelPicker');
 
-class WheelPicker extends Component {
-  static displayName = 'WheelPicker';
-
-  static propTypes = {
-    /**
+type WheelPickerProps = {
+   /**
      * the current selected value of the picker
      */
-    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), //eslint-disable-line
+    selectedValue?: string | number; 
     /**
      * callback for when a value change
      */
-    onValueChange: PropTypes.func,
+    onValueChange?: (value: string | number, index: number) => void;
     /**
      * pass custom style
      */
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    style: ViewStyle;
     /**
      * pass custom label style: fontSize, fontFamily, color<br>
      * Note: label's color will override the text color (hex only)
      */
-    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    labelStyle: TextStyle;
     /**
      * The height of the selected item
      */
-    itemHeight: PropTypes.number,
+    itemHeight: number;
     /**
      * The color of the wheel picker (hex only)
      */
-    color: PropTypes.string,
+    color: string;
     /**
      * pass custom style for the picker item
      */
-    itemStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]) //eslint-disable-line
-  };
+    itemStyle: ViewStyle;
+    children: JSX.Element | JSX.Element[];
+}
+
+class WheelPicker extends Component<WheelPickerProps> {
+  static displayName = 'WheelPicker';
 
   static defaultProps = {
     labelStyle: {fontSize: Typography.text70.fontSize, fontFamily: Typography.text70.fontFamily},
     color: Colors.primary
   };
+
+  static Item = WheelPickerItem;
 
   constructor(props) {
     super(props);
@@ -85,6 +87,9 @@ class WheelPicker extends Component {
   }
 
   getItems() {
+    const {children} = this.props;
+    const array = Array.isArray(children) ? children : [children];
+    
     const items = _.map(React.Children.toArray(this.props.children), child => ({
       value: child.props.value,
       label: child.props.label
@@ -104,12 +109,12 @@ class WheelPicker extends Component {
 
   render() {
     const {style, color, labelStyle, itemHeight} = this.props;
-    const {fontSize, fontFamily} = labelStyle;
-    const {color: labelColor} = labelStyle;
+    const {fontSize, fontFamily, color: labelColor} = labelStyle;
 
     return (
       <View collapsable={false} style={styles.container}>
         <WheelPickerNative
+          // @ts-expect-error
           data={this.extractLabelsFromItems()}
           initialIndex={this.getInitialIndex()}
           onChange={this.onValueChange}
@@ -134,7 +139,5 @@ const styles = StyleSheet.create({
     height: 200
   }
 });
-
-WheelPicker.Item = WheelPickerItem;
 
 export default Constants.isAndroid ? WheelPicker : Picker;
