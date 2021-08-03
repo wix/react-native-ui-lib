@@ -1,5 +1,5 @@
 import { PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
-export declare enum PanningDirections {
+export declare enum PanViewDirections {
     UP = "up",
     DOWN = "down",
     LEFT = "left",
@@ -32,7 +32,7 @@ export interface TranslationOptions {
     translationLock: TranslationLock;
     currentTranslation: Frame;
 }
-export interface PanDismissThreshold {
+export interface PanViewDismissThreshold {
     /**
      * The (positive) velocity of a drag\swipe past it the view will be dismissed.
      */
@@ -48,9 +48,9 @@ export interface PanDismissThreshold {
 }
 export declare function getTranslationClamp(initialTranslation: Frame, options: TranslationOptions): Frame;
 export declare function getTranslationDirectionClamp(translation: Frame, options: TranslationOptions): Frame;
-export declare function getTranslation(event: PanGestureHandlerEventPayload, initialTranslation: Frame, directions: PanningDirections[], options: TranslationOptions): Frame;
-export declare const DEFAULT_THRESHOLD: Required<PanDismissThreshold>;
+export declare function getTranslation(event: PanGestureHandlerEventPayload, initialTranslation: Frame, directions: PanViewDirections[], options: TranslationOptions): Frame;
+export declare const DEFAULT_THRESHOLD: Required<PanViewDismissThreshold>;
 /**
  * Will return undefined if should not dismiss
  */
-export declare function getDismissVelocity(event: PanGestureHandlerEventPayload, directions: PanningDirections[], options: TranslationOptions, threshold?: PanDismissThreshold): Partial<Frame> | undefined;
+export declare function getDismissVelocity(event: PanGestureHandlerEventPayload, directions: PanViewDirections[], options: TranslationOptions, threshold?: PanViewDismissThreshold): Partial<Frame> | undefined;

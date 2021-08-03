@@ -13,22 +13,22 @@ import Animated, {
 import {Constants} from '../../helpers';
 import View, {ViewProps} from '../../components/view';
 import {
-  PanningDirections,
+  PanViewDirections,
   TranslationLock,
   Frame,
-  PanDismissThreshold,
+  PanViewDismissThreshold,
   getTranslation,
   getDismissVelocity,
   DEFAULT_THRESHOLD
 } from './panningUtil';
-export {PanningDirections, TranslationLock, PanDismissThreshold};
+export {PanViewDirections, TranslationLock, PanViewDismissThreshold};
 
 export interface PanViewProps extends ViewProps {
   /**
    * The directions of the allowed pan (default is all)
    * Types: UP, DOWN, LEFT and RIGHT (using PanView.directions.###)
    */
-  directions?: PanningDirections[];
+  directions?: PanViewDirections[];
   /**
    * Will enable the dismissible behavior:
    * 1. Dismiss if over the threshold.
@@ -52,7 +52,7 @@ export interface PanViewProps extends ViewProps {
   /**
    * Object to adjust the dismiss threshold limits.
    */
-  threshold?: PanDismissThreshold;
+  threshold?: PanViewDismissThreshold;
   /**
    * Add a style to the container
    */
@@ -60,7 +60,7 @@ export interface PanViewProps extends ViewProps {
 }
 
 interface StaticMembers {
-  directions: typeof PanningDirections;
+  directions: typeof PanViewDirections;
   translationLock: typeof TranslationLock;
 }
 
@@ -177,10 +177,10 @@ const PanView = (props: Props) => {
 };
 
 PanView.displayName = 'PanView';
-PanView.directions = PanningDirections;
+PanView.directions = PanViewDirections;
 PanView.translationLock = TranslationLock;
 PanView.defaultProps = {
-  directions: [PanningDirections.UP, PanningDirections.DOWN, PanningDirections.LEFT, PanningDirections.RIGHT],
+  directions: [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
   translationLock: TranslationLock.NONE,
   threshold: DEFAULT_THRESHOLD
 };
