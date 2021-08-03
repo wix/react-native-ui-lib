@@ -10,7 +10,7 @@ const CustomKeyboardViewNativeAndroid = requireNativeComponent('CustomKeyboardVi
 type CustomKeyboardViewProps = {
   initialProps?: any;
   component?: string;
-  onItemSelected: () => void;
+  onItemSelected?: () => void;
 }
 
 export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKeyboardViewProps> {
