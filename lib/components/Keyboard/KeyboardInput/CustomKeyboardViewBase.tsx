@@ -1,17 +1,23 @@
 import {Component} from 'react';
-import PropTypes from 'prop-types';
 import KeyboardRegistry from './KeyboardRegistry';
+import {EventSubscription} from 'react-native';
 
-export default class CustomKeyboardViewBase extends Component {
-  static propTypes = {
-    initialProps: PropTypes.object,
-    component: PropTypes.string,
-    onItemSelected: PropTypes.func
-  };
+export type CustomKeyboardViewBaseProps = {
+  initialProps?: any;
+  component?: string;
+  onItemSelected?: () => void;
+  onRequestShowKeyboard?: (keyboardId: string) => void;
+}
 
+export default class CustomKeyboardViewBase<T extends CustomKeyboardViewBaseProps> extends Component<T> {
+  
   static defaultProps = {
     initialProps: {}
   };
+
+  registeredRequestShowKeyboard = false;
+  keyboardExpandedToggle: any;
+  keyboardEventListeners: [EventSubscription];
 
   constructor(props) {
     super(props);
@@ -19,8 +25,6 @@ export default class CustomKeyboardViewBase extends Component {
     const {component, onItemSelected} = props;
     if (component) {
       this.addOnItemSelectListener(onItemSelected, component);
-
-      this.registeredRequestShowKeyboard = false;
     }
 
     this.keyboardExpandedToggle = {};
@@ -35,7 +39,7 @@ export default class CustomKeyboardViewBase extends Component {
     KeyboardRegistry.removeListeners('onRequestShowKeyboard');
 
     if (this.keyboardEventListeners) {
-      this.keyboardEventListeners.forEach(eventListener => eventListener.remove());
+      this.keyboardEventListeners.forEach((eventListener: EventSubscription) => eventListener.remove());
     }
 
     if (component) {
