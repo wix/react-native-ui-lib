@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {requireNativeComponent} from 'react-native';
-import TextInputKeyboardManager from './TextInputKeyboardManager';
+import TextInputKeyboardManager from '../TextInputKeyboardManager/TextInputKeyboardManager.android';
 import KeyboardRegistry from '../KeyboardRegistry';
 import CustomKeyboardViewBase from '../CustomKeyboardViewBase';
 
 const CustomKeyboardViewNativeAndroid = requireNativeComponent('CustomKeyboardViewNativeTemp');
 
-export default class CustomKeyboardView extends CustomKeyboardViewBase {
+type CustomKeyboardViewProps = {
+  initialProps?: any;
+  component?: string;
+  onItemSelected: () => void;
+}
+
+export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKeyboardViewProps> {
   static displayName = 'IGNORE';
   static propTypes = {
     initialProps: PropTypes.object,
