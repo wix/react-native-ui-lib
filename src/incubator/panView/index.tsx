@@ -50,7 +50,7 @@ export interface PanViewProps extends ViewProps {
    */
   translationLock?: TranslationLock;
   /**
-   * Object to adjust the dismiss threshold limits.
+   * Object to adjust the dismiss threshold limits (eg {x, y, velocity}).
    */
   threshold?: PanViewDismissThreshold;
   /**
