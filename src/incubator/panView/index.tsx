@@ -160,6 +160,7 @@ const PanView = (props: Props) => {
   [directions, dismissible, setTranslation]);
 
   return (
+    // TODO: delete comments once completed
     // <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
     <View style={containerStyle}>
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : onGestureEvent}>
