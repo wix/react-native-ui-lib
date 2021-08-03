@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, requireNativeComponent} from 'react-native';
+import {View, requireNativeComponent, ViewStyle} from 'react-native';
 
-const NativeSafeAreaSpacerView = requireNativeComponent('SafeAreaSpacerView', null);
+const NativeSafeAreaSpacerView = requireNativeComponent('SafeAreaSpacerView');
 
-const SafeAreaSpacerView = ({style}) => {
+type SafeAreaSpacerViewProps = {
+  style: ViewStyle
+}
+
+const SafeAreaSpacerView = ({style}: SafeAreaSpacerViewProps) => {
   return (
+    // @ts-ignore
     NativeSafeAreaSpacerView ? <NativeSafeAreaSpacerView style={style}/> : <View style={style}/>
   );
 };
 
 SafeAreaSpacerView.displayName = 'IGNORE';
-SafeAreaSpacerView.propTypes = {
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-};
-
 export default SafeAreaSpacerView;
