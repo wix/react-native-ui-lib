@@ -60,6 +60,7 @@ export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal
 export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
+export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {
   default as PanningProvider,
   PanningDirections,

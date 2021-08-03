@@ -185,7 +185,7 @@ class PageControl extends PureComponent<PageControlProps, State> {
 
   onPagePress = ({customValue: index}: TouchableOpacityProps) => {
     PageControl.animate(this.props);
-    _.invoke(this.props, 'onPagePress', index);
+    this.props.onPagePress?.(index);
   };
 
   renderIndicator(index: number, size: number, enlargeActive?: boolean) {

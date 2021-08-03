@@ -53,9 +53,9 @@ type Props = BaseComponentInjectedProps &
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
- * @extends: TouchableOpacity
  * @modifiers: margins, paddings, alignments, background, borderRadius
- * @extendsLink: https://facebook.github.io/react-native/docs/touchableopacity.html
+ * @extends: TouchableOpacity
+ * @extendsLink: https://reactnative.dev/docs/touchableopacity
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx
  */
@@ -88,12 +88,14 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
 
   onPressIn = (...args: any) => {
     this.setState({active: true});
-    _.invoke(this.props, 'onPressIn', ...args);
+    //@ts-expect-error
+    this.props.onPressIn?.(...args);
   }
 
   onPressOut = (...args: any) => {
     this.setState({active: false});
-    _.invoke(this.props, 'onPressOut', ...args);
+    //@ts-expect-error
+    this.props.onPressOut?.(...args);
   }
 
   get backgroundColorStyle() {
@@ -147,7 +149,7 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 
   onPress() {
-    _.invoke(this.props, 'onPress', this.props);
+    this.props.onPress?.(this.props);
   }
 }
 

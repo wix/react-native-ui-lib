@@ -68,7 +68,7 @@ const KEYBOARD_HEIGHT = 216;
 /**
  * @description: A color picker dialog component
  * @extends: Dialog
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  */
 class ColorPickerDialog extends PureComponent<Props, State> {
   static displayName = 'ColorPicker';
@@ -212,14 +212,14 @@ class ColorPickerDialog extends PureComponent<Props, State> {
     const {hex} = this.getValidColorString(text);
 
     if (hex) {
-      _.invoke(this.props, 'onSubmit', hex, this.getTextColor(hex));
+      this.props.onSubmit?.(hex, this.getTextColor(hex));
       this.onDismiss();
     }
   };
 
   onDismiss = () => {
     this.resetValues();
-    _.invoke(this.props, 'onDismiss');
+    this.props.onDismiss?.();
   };
 
   renderHeader() {

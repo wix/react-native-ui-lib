@@ -135,7 +135,6 @@ const DEFAULT_SIZE = 26;
 /**
  * @description: Chip component
  * @extends: TouchableOpacity
- * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  * @image: https://user-images.githubusercontent.com/1780255/119636022-e9743180-be1c-11eb-8f02-22eeab6558cd.png
  */

@@ -101,3 +101,12 @@ class WizardTypesForDocs extends React.Component<WizardProps> { // eslint-disabl
     return null;
   }
 }
+
+// @ts-ignore
+class WizardStepTypesForDocs extends React.Component<WizardStepProps> { // eslint-disable-line
+  static displayName = 'Wizard.Step';
+
+  render() {
+    return null;
+  }
+}

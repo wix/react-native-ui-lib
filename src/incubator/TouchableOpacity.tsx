@@ -136,7 +136,7 @@ class TouchableOpacity extends PureComponent<Props> {
 
   onLongPress = (event: LongPressGestureHandlerGestureEvent) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      _.invoke(this.props, 'onLongPress', this.props);
+      this.props.onLongPress?.(this.props);
     }
   };
 

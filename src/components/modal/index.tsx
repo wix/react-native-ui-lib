@@ -1,7 +1,13 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {StyleSheet, Modal as RNModal, ModalProps as RNModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
+import {
+  StyleSheet,
+  Modal as RNModal,
+  ModalProps as RNModalProps,
+  TouchableWithoutFeedback,
+  GestureResponderEvent
+} from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
@@ -12,41 +18,41 @@ const BlurView = BlurViewPackage?.BlurView;
 
 export {ModalTopBarProps};
 export interface ModalProps extends RNModalProps {
-    /**
-     * Blurs the modal background when transparent (iOS only)
-     */
-    enableModalBlur?: boolean;
-    /**
-     * A custom view to use as a BlueView instead of the default one
-     */
-    blurView?: JSX.Element;
-    /**
-     * allow dismissing a modal when clicking on its background
-     */
-    onBackgroundPress?: (event: GestureResponderEvent) => void;
-    /**
-     * the background color of the overlay
-     */
-    overlayBackgroundColor?: string;
-    /**
-     * The modal's end-to-end test identifier
-     */
-    testID?: string;
-    /**
-     * Overrides the text that's read by the screen reader when the user interacts with the element. By default, the
-     * label is constructed by traversing all the children and accumulating all the Text nodes separated by space.
-     */
-    accessibilityLabel?: string;
-    /**
-     * Should add a GestureHandlerRootView (Android only)
-     */
-     useGestureHandlerRootView?: boolean;
+  /**
+   * Blurs the modal background when transparent (iOS only)
+   */
+  enableModalBlur?: boolean;
+  /**
+   * A custom view to use as a BlueView instead of the default one
+   */
+  blurView?: JSX.Element;
+  /**
+   * allow dismissing a modal when clicking on its background
+   */
+  onBackgroundPress?: (event: GestureResponderEvent) => void;
+  /**
+   * the background color of the overlay
+   */
+  overlayBackgroundColor?: string;
+  /**
+   * The modal's end-to-end test identifier
+   */
+  testID?: string;
+  /**
+   * Overrides the text that's read by the screen reader when the user interacts with the element. By default, the
+   * label is constructed by traversing all the children and accumulating all the Text nodes separated by space.
+   */
+  accessibilityLabel?: string;
+  /**
+   * Should add a GestureHandlerRootView (Android only)
+   */
+  useGestureHandlerRootView?: boolean;
 }
 
 /**
  * @description: Component that present content on top of the invoking screen
  * @extends: Modal
- * @extendsLink: https://facebook.github.io/react-native/docs/modal.html
+ * @extendsLink: https://reactnative.dev/docs/modal
  * @gif: https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.tsx
  */

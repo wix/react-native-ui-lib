@@ -106,8 +106,6 @@ type State = {
 /**
  * @description: Card component
  * @extends: TouchableOpacity
- * @extendsnotes: (Touchable when passing onPress)
- * @extendsLink: docs/TouchableOpacity
  * @modifiers: margin, padding
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_01.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_02.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_03.png?raw=true
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Card_Selecteable.gif, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_activeScale.gif?raw=true

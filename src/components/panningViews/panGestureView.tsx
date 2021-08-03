@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {
   PanResponder,
@@ -161,7 +160,7 @@ class PanGestureView extends Component<PanGestureViewProps, State> {
 
   onDismiss = () => {
     this.initPositions();
-    _.invoke(this.props, 'onDismiss');
+    this.props.onDismiss?.();
   }
 
   initPositions() {

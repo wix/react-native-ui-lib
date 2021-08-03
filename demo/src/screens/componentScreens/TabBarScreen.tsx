@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Button, TabBar} from 'react-native-ui-lib';
-
+import {Colors, View, Button, TabBar, Image} from 'react-native-ui-lib';
 
 const labelsArray = [
   ['ONE TWO', 'THREE', 'THREEEEEEEE', 'FOUR', 'FIVE FIVE', 'SIX', 'SEVEN-ELEVEN'],
@@ -12,8 +11,8 @@ const labelsArray = [
   ['FIVE FIVE', 'ONE TWO', 'THREE', 'THREEEEEEEE', 'FOUR', 'SIX', 'SEVEN-ELEVEN']
 ];
 const ADD_ITEM_ICON = require('../../assets/icons/plus.png');
+const BELL_ICON = require('../../assets/icons/bell.png');
 const themeColors = [Colors.violet30, Colors.green30, Colors.red30, Colors.blue30, Colors.yellow30];
-
 
 export default class TabBarScreen extends Component {
   state = {
@@ -22,7 +21,8 @@ export default class TabBarScreen extends Component {
     selectedIndex2: 1,
     labels: labelsArray[0],
     currentTabs: [],
-    themeColor: themeColors[0]
+    themeColor: themeColors[0],
+    bellColor: Colors.red30
   };
 
   counter = 0;
@@ -70,6 +70,14 @@ export default class TabBarScreen extends Component {
     this.setState({themeColor: themeColors[this.colorCounter]});
   };
 
+  updateBellColor = (index: number) => {
+    if (index === 1) {
+      this.setState({bellColor: Colors.green30});
+    } else {
+      this.setState({bellColor: Colors.red30});
+    }
+  };
+
   /** Children Count change */
   addTab = () => {
     const random = Math.floor(Math.random() * 100000);
@@ -96,9 +104,7 @@ export default class TabBarScreen extends Component {
     if (showAddTab) {
       tabs.push(this.renderAddTabsTab());
     } else {
-      tabs.push(
-        this.renderTabs({id: this.state.currentTabs.length, displayLabel: `tab #${this.state.currentTabs.length}`})
-      );
+      tabs.push(this.renderTabs({id: this.state.currentTabs.length, displayLabel: `tab #${this.state.currentTabs.length}`}));
     }
     return tabs;
   }
@@ -141,6 +147,16 @@ export default class TabBarScreen extends Component {
             <TabBar.Item label="Fixed" uppercase backgroundColor={Colors.blue80}/>
             <TabBar.Item label="Tab" badgeProps={{label: '100'}} uppercase style={{backgroundColor: Colors.blue80}}/>
             <TabBar.Item label="Bar" uppercase style={{backgroundColor: Colors.blue80}}/>
+          </TabBar>
+
+          <TabBar style={styles.tabbar} enableShadow onChangeIndex={this.updateBellColor}>
+            <TabBar.Item label="With"/>
+            <TabBar.Item
+              label="Custom"
+              leadingAccessory={<Image marginR-4 source={BELL_ICON} tintColor={this.state.bellColor}/>}
+              trailingAccessory={<Image marginL-4 source={BELL_ICON} tintColor={this.state.bellColor}/>}
+            />
+            <TabBar.Item label="Elements"/>
           </TabBar>
 
           <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
