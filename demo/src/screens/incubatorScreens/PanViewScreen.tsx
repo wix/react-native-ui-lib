@@ -68,36 +68,39 @@ class PanViewScreen extends Component {
   };
 
   renderDialog = () => {
+    const Container = Constants.isAndroid ? GestureHandlerRootView : React.Fragment;
+    const containerProps = Constants.isAndroid ? {style: styles.gestureHandler} : {};
     return (
       <View flex>
         <Modal
-          useGestureHandlerRootView
           transparent
           onBackgroundPress={this.onDialogDismissed}
           overlayBackgroundColor={overlayBackgroundColor}
           visible
         >
-          <PanView
-            directions={[PanView.directions.DOWN]}
-            dismissible
-            // threshold={{y: 10}}
-            containerStyle={styles.container}
-            onDismiss={this.onDialogDismissed}
-          >
-            <View style={styles.dialog}>
-              <Text text60 margin-s2>
-                Title (swipe here)
-              </Text>
-              <View height={1} bg-grey40/>
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                style={styles.verticalScroll}
-                data={colors}
-                renderItem={this.renderVerticalItem}
-                keyExtractor={this.keyExtractor}
-              />
-            </View>
-          </PanView>
+          <Container {...containerProps}>
+            <PanView
+              directions={[PanView.directions.DOWN]}
+              dismissible
+              // threshold={{y: 10}}
+              containerStyle={styles.panView}
+              onDismiss={this.onDialogDismissed}
+            >
+              <View style={styles.dialog}>
+                <Text text60 margin-s2>
+                  Title (swipe here)
+                </Text>
+                <View height={1} bg-grey40/>
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  style={styles.verticalScroll}
+                  data={colors}
+                  renderItem={this.renderVerticalItem}
+                  keyExtractor={this.keyExtractor}
+                />
+              </View>
+            </PanView>
+          </Container>
         </Modal>
       </View>
     );
@@ -114,7 +117,7 @@ class PanViewScreen extends Component {
         dismissible
         directionLock
         threshold={{y: 10}}
-        containerStyle={styles.container}
+        containerStyle={styles.panView}
         onDismiss={this.onToastDismissed}
       >
         <TouchableOpacity center style={styles.toast} onPress={this.onToastDismissed}>
@@ -174,7 +177,7 @@ const styles = StyleSheet.create({
   gestureHandler: {
     flex: 1
   },
-  container: {
+  panView: {
     flex: 1,
     position: 'absolute',
     bottom: 20,

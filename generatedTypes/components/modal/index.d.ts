@@ -28,10 +28,6 @@ export interface ModalProps extends RNModalProps {
      * label is constructed by traversing all the children and accumulating all the Text nodes separated by space.
      */
     accessibilityLabel?: string;
-    /**
-     * Should add a GestureHandlerRootView (Android only)
-     */
-    useGestureHandlerRootView?: boolean;
 }
 /**
  * @description: Component that present content on top of the invoking screen
