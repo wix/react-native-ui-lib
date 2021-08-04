@@ -12,9 +12,28 @@ const MAP_SCHEMA = {
     },
     applyAutofix: {
       type: 'boolean'
+    },
+    rules: {
+      type: 'array',
+      items: [
+        {
+          type: 'object',
+          properties: {
+            origin: {
+              type: 'string'
+            },
+            destination: {
+              type: 'string'
+            },
+            applyAutofix: {
+              type: 'boolean'
+            }
+          }
+        }
+      ]
     }
   },
-  additionalProperties: false
+  additionalProperties: true
 };
 
 module.exports = {
@@ -22,22 +41,20 @@ module.exports = {
     docs: {
       description: 'Do not import directly from open source project',
       category: 'Best Practices',
-      recommended: true,
+      recommended: true
     },
     messages: {
-      uiLib: 'Do not import directly from this source. Please use another import source (autofix may be available).',
+      uiLib: 'Do not import directly from this source. Please use another import source (autofix may be available).'
     },
     fixable: 'code',
-    schema: [
-      MAP_SCHEMA,
-    ],
+    schema: [MAP_SCHEMA]
   },
   create(context) {
-    function reportDirectImport(node) {
+    function reportDirectImport(node, rule) {
       try {
-        const origin = context.options[0].origin;
-        const destination = context.options[0].destination;
-        const applyAutofix = context.options[0].applyAutofix;
+        const origin = rule.origin;
+        const destination = rule.destination;
+        const applyAutofix = rule.applyAutofix;
         const autofixMessage = applyAutofix ? ' (autofix available)' : '';
         const message = `Do not import directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
         context.report({
@@ -47,23 +64,29 @@ module.exports = {
             if (node && applyAutofix && destination) {
               return fixer.replaceText(node.source, `'${destination}'`);
             }
-          },
+          }
         });
       } catch (err) {
         handleError(RULE_ID, err, context.getFilename());
       }
     }
 
+    function getRules() {
+      // To support both structures; single rule or array of rules
+      return context.options[0].rules || [context.options[0]];
+    }
+
     function checkImportDeclaration(node) {
-      const origin = context.options[0].origin;
       const source = node.source.value;
-      if (source && origin && source === origin) {
-        reportDirectImport(node);
+      const rule = getRules().find((rule) => rule.origin === source);
+      
+      if (rule) {
+        reportDirectImport(node, rule);
       }
     }
 
     return {
       ImportDeclaration: checkImportDeclaration
     };
-  },
+  }
 };
