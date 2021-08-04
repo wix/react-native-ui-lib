@@ -74,6 +74,7 @@ export {default as PageControl, PageControlProps} from './components/pageControl
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as Hint, HintProps} from './components/hint';
 export {default as LogService} from './services/LogService';
+export {default as Keyboard} from '../lib/components/Keyboard';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {

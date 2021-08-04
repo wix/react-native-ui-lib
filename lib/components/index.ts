@@ -4,7 +4,7 @@ import WheelPicker from './WheelPicker';
 import SafeAreaInsetsManager from './SafeArea/SafeAreaInsetsManager';
 import Keyboard from './Keyboard';
 
-export {
+export default {
   HighlighterOverlayView,
   SafeAreaSpacerView,
   WheelPicker,

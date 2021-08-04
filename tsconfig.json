@@ -29,6 +29,6 @@
       "style": ["./src/style"]
     }
   },
-  "include": ["src/**/*", "typings/**/*", "demo/**/*"],
+  "include": ["src/**/*", "typings/**/*", "demo/**/*", "lib/components/**/*"] ,
   "exclude": ["node_modules", "src/index.ts"]
 }

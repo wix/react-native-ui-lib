@@ -4,8 +4,6 @@ import {default as TextInputKeyboardManagerAndroid} from './TextInputKeyboardMan
 
 const IsAndroid = Platform.OS === 'android';
 
-const TextInputKeyboardManager = () => {
-  return IsAndroid ? TextInputKeyboardManagerAndroid : TextInputKeyboardManagerIOS;
-};
+const TextInputKeyboardManager = IsAndroid ? TextInputKeyboardManagerAndroid : TextInputKeyboardManagerIOS;
 
 export default TextInputKeyboardManager;

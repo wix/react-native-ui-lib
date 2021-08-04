@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {View, requireNativeComponent, ViewStyle} from 'react-native';
 
 const NativeSafeAreaSpacerView = requireNativeComponent('SafeAreaSpacerView');

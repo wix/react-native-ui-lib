@@ -1,12 +1,14 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import KeyboardRegistry from './KeyboardRegistry';
 import {EventSubscription} from 'react-native';
 
 export type CustomKeyboardViewBaseProps = {
+  inputRef?: any;
   initialProps?: any;
   component?: string;
   onItemSelected?: () => void;
   onRequestShowKeyboard?: (keyboardId: string) => void;
+  children?: React.ReactChild | React.ReactChild[];
 }
 
 export default class CustomKeyboardViewBase<T extends CustomKeyboardViewBaseProps> extends Component<T> {
