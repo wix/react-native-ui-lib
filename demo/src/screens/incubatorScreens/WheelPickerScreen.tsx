@@ -75,9 +75,6 @@ export default () => {
     showDialog
   } = useData('February', undefined, 5);
 
-  const [initialYear, setInitialYear] = useState(2021);
-  const resetInitialYear = useCallback(() => setInitialYear(2020), []);
-
   return (
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
@@ -93,10 +90,7 @@ export default () => {
           selectedValue={selectedMonth}
         />
 
-        <View row bottom marginT-s5>
-          <Text h3>Years</Text>
-          <Button bodySmall marginL-s2 link label="Reset" size={Button.sizes.xSmall} onPress={resetInitialYear}/>
-        </View>
+        <Text h3>Years</Text>
         <Text bodySmall grey30>
           (Uncontrolled, initialValue passed)
         </Text>
@@ -104,7 +98,7 @@ export default () => {
           <Incubator.WheelPicker
             onChange={onYearChange}
             numberOfVisibleRows={3}
-            initialValue={initialYear}
+            initialValue={2021}
             items={yearItems}
           />
         </View>
