@@ -120,7 +120,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     clearTextOnFocus?: boolean | undefined;
     dataDetectorTypes?: import("react-native").DataDetectorTypes | import("react-native").DataDetectorTypes[] | undefined;
     enablesReturnKeyAutomatically?: boolean | undefined;
-    keyboardAppearance?: "light" | "dark" | "default" | undefined;
+    keyboardAppearance?: "default" | "light" | "dark" | undefined;
     passwordRules?: string | null | undefined;
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;
@@ -452,7 +452,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     clearTextOnFocus?: boolean | undefined;
     dataDetectorTypes?: import("react-native").DataDetectorTypes | import("react-native").DataDetectorTypes[] | undefined;
     enablesReturnKeyAutomatically?: boolean | undefined;
-    keyboardAppearance?: "light" | "dark" | "default" | undefined;
+    keyboardAppearance?: "default" | "light" | "dark" | undefined;
     passwordRules?: string | null | undefined;
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;
@@ -896,7 +896,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     clearTextOnFocus?: boolean | undefined;
     dataDetectorTypes?: import("react-native").DataDetectorTypes | import("react-native").DataDetectorTypes[] | undefined;
     enablesReturnKeyAutomatically?: boolean | undefined;
-    keyboardAppearance?: "light" | "dark" | "default" | undefined;
+    keyboardAppearance?: "default" | "light" | "dark" | undefined;
     passwordRules?: string | null | undefined;
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;

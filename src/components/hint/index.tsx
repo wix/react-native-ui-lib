@@ -15,7 +15,7 @@ import {
   LayoutChangeEvent,
   View as RNView
 } from 'react-native';
-import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
+import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
@@ -168,7 +168,7 @@ class Hint extends Component<HintProps, HintState> {
   state = {
     targetLayoutInWindow: undefined,
     targetLayout: this.props.targetFrame,
-    hintUnmounted: false
+    hintUnmounted: !this.props.visible
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
@@ -451,6 +451,7 @@ class Hint extends Component<HintProps, HintState> {
       customContent, 
       removePaddings, 
       enableShadow,
+      visible,
       testID
     } = this.props;
 
@@ -462,7 +463,7 @@ class Hint extends Component<HintProps, HintState> {
         style={[
           styles.hint,
           !removePaddings && styles.hintPaddings,
-          enableShadow && styles.containerShadow, 
+          visible && enableShadow && styles.containerShadow, 
           {backgroundColor: color}, 
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
@@ -586,11 +587,7 @@ const styles = StyleSheet.create({
     paddingBottom: Spacings.s4
   },
   containerShadow: {
-    shadowColor: Colors.dark40,
-    shadowOpacity: 0.25,
-    shadowRadius: 5,
-    shadowOffset: {height: 5, width: 0},
-    elevation: 2
+    ...Shadows.sh30.bottom
   },
   hintMessage: {
     ...Typography.text70,

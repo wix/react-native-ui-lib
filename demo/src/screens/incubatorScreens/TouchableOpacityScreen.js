@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {TouchableOpacity} from 'react-native';
 import {View, Text, Colors, Incubator} from 'react-native-ui-lib';
 
 class TouchableOpacityScreen extends Component {
@@ -35,6 +36,24 @@ class TouchableOpacityScreen extends Component {
     );
   }
 
+  renderRNTouchableExample = () => {
+    return (
+      <View row centerV marginT-20>
+        <Text marginR-14>RN TouchableOpacity</Text>
+        <TouchableOpacity
+          onPress={() => {
+            console.warn('onPress');
+          }}
+          onLongPress={() => {
+            console.warn('onLongPress');
+          }}
+        >
+          <View style={{backgroundColor: Colors.green40, width: 100, height: 34, borderRadius: 22}}/>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   render() {
     const {counter, longPressCounter} = this.state;
     return (
@@ -64,6 +83,21 @@ class TouchableOpacityScreen extends Component {
         >
           <Text white>TouchableOpacity2</Text>
         </Incubator.TouchableOpacity2>
+        <Incubator.TouchableOpacity2
+          marginT-20
+          paddingH-20
+          paddingV-8
+          br100
+          center
+          onPress={this.onPress}
+          backgroundColor={Colors.orange30}
+          feedbackColor={Colors.yellow20}
+          activeOpacity={1}
+          activeScale={0.98}
+        >
+          <Text white>TouchableOpacity2 (without LongPress)</Text>
+        </Incubator.TouchableOpacity2>
+        {this.renderRNTouchableExample()}
       </View>
     );
   }
