@@ -65,7 +65,7 @@ class WizardStep extends Component<Props> {
         testID={`${testID}.circle`}
         style={[
           styles.circle,
-          circleSize && {width: circleSize, height: circleSize},
+          !!circleSize && {width: circleSize, height: circleSize},
           {borderColor: circleColor, backgroundColor: circleBackgroundColor}
         ]}
         onPress={enabled ? onPress : undefined}
