@@ -166,13 +166,7 @@ export function getDismissVelocity(event: PanGestureHandlerEventPayload,
   options: TranslationOptions,
   threshold?: PanViewDismissThreshold) {
   'worklet';
-  // Sadly using {...DEFAULT_THRESHOLD, ...threshold} is done
-  // on the JS thread for some reason, causing an exception
-  const _threshold: Required<PanViewDismissThreshold> = {
-    velocity: threshold?.velocity || DEFAULT_THRESHOLD.velocity,
-    x: threshold?.x || DEFAULT_THRESHOLD.x,
-    y: threshold?.y || DEFAULT_THRESHOLD.y
-  };
+  const _threshold: Required<PanViewDismissThreshold> = Object.assign({}, DEFAULT_THRESHOLD, threshold);
   const clampedVelocity = getVelocityDirectionClamp(event, directions);
   const velocity = Math.sqrt(Math.pow(clampedVelocity.x, 2) + Math.pow(clampedVelocity.y, 2));
   const {velocityPassedThreshold, xPassedThreshold, yPassedThreshold} = checkThresholds(event,
