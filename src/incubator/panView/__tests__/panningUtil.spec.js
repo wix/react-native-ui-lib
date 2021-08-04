@@ -1,6 +1,6 @@
 import {Constants} from '../../../helpers';
 import {
-  PanningDirections,
+  PanViewDirections,
   DEFAULT_THRESHOLD,
   getTranslation,
   TranslationLock,
@@ -12,7 +12,7 @@ import {
 describe('panningUtil', () => {
   let directions;
   beforeEach(() => {
-    directions = [PanningDirections.UP, PanningDirections.DOWN, PanningDirections.LEFT, PanningDirections.RIGHT];
+    directions = [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT];
   });
 
   describe('getTranslation', () => {
@@ -137,7 +137,7 @@ describe('panningUtil', () => {
 
     describe('Down and right', () => {
       beforeEach(() => {
-        directions = [PanningDirections.DOWN, PanningDirections.RIGHT];
+        directions = [PanViewDirections.DOWN, PanViewDirections.RIGHT];
       });
 
       describe('Start at origin', () => {
@@ -215,7 +215,7 @@ describe('panningUtil', () => {
 
     describe('Up and left', () => {
       beforeEach(() => {
-        directions = [PanningDirections.UP, PanningDirections.LEFT];
+        directions = [PanViewDirections.UP, PanViewDirections.LEFT];
       });
 
       describe('Start at origin', () => {
@@ -294,7 +294,7 @@ describe('panningUtil', () => {
     describe('Lock', () => {
       describe('Down and right', () => {
         it('lockOnDrop', () => {
-          directions = [PanningDirections.DOWN, PanningDirections.RIGHT];
+          directions = [PanViewDirections.DOWN, PanViewDirections.RIGHT];
           initialTranslation = {x: 0, y: 0};
           let event = {translationX: 1, translationY: 1};
           let result = getTranslation(event, initialTranslation, directions, {
@@ -328,7 +328,7 @@ describe('panningUtil', () => {
         });
 
         it('lockOnDrag', () => {
-          directions = [PanningDirections.DOWN, PanningDirections.RIGHT];
+          directions = [PanViewDirections.DOWN, PanViewDirections.RIGHT];
           initialTranslation = {x: 0, y: 0};
           let event = {translationX: 1, translationY: 1};
           let result = getTranslation(event, initialTranslation, directions, {
@@ -370,7 +370,7 @@ describe('panningUtil', () => {
 
       describe('Up and left', () => {
         it('lockOnDrop', () => {
-          directions = [PanningDirections.UP, PanningDirections.LEFT];
+          directions = [PanViewDirections.UP, PanViewDirections.LEFT];
           initialTranslation = {x: 0, y: 0};
           let event = {translationX: -1, translationY: -1};
           let result = getTranslation(event, initialTranslation, directions, {
@@ -404,7 +404,7 @@ describe('panningUtil', () => {
         });
 
         it('lockOnDrag', () => {
-          directions = [PanningDirections.UP, PanningDirections.LEFT];
+          directions = [PanViewDirections.UP, PanViewDirections.LEFT];
           initialTranslation = {x: 0, y: 0};
           let event = {translationX: -1, translationY: -1};
           let result = getTranslation(event, initialTranslation, directions, {
