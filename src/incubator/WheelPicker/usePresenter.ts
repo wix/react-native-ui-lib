@@ -51,7 +51,7 @@ const usePresenter = ({
     if (_.isString(value) || _.isNumber(value)) {
       return _.findIndex(items, {value});
     }
-    return _.findIndex(items, {value: (value as ItemProps)?.value});
+    return _.findIndex(items, {value: (value)?.value});
   };
 
   const shouldControlComponent = (offset: number): boolean => {
