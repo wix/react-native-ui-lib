@@ -162,7 +162,7 @@ class TabController extends Component<TabControllerProps, StateProps> {
   };
 
   onPageChange = ([index]: readonly number[]) => {
-    _.invoke(this.props, 'onChangeIndex', index);
+    this.props.onChangeIndex?.(index);
   };
 
   renderCodeBlock = _.memoize(() => {

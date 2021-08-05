@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses} from 'react-native-ui-lib';
 
@@ -20,29 +20,28 @@ const segments = {
 };
 
 const SegmentedControlScreen = () => {
-  const onChangeIndex = (segment: string, index: number) => {
-    console.warn('Index ' + index + ' of the ' + segment + ' segmentedControl was pressed');
-  };
+
+  const onChangeIndex = useCallback((index: number) => {
+    console.warn('Index ' + index + ' of the second segmentedControl was pressed');
+  }, []);
 
   return (
     <View flex bottom padding-page>
       <View flex centerV>
         <View center>
-          <SegmentedControl onChangeIndex={(index: number) => onChangeIndex('first', index)} segments={segments.first}/>
+          <SegmentedControl segments={segments.first}/>
           <SegmentedControl
-            onChangeIndex={(index: number) => onChangeIndex('second', index)}
+            onChangeIndex={onChangeIndex}
             containerStyle={styles.container}
             segments={segments.second}
             initialIndex={2}
           />
           <SegmentedControl
-            onChangeIndex={(index: number) => onChangeIndex('third', index)}
             containerStyle={styles.container}
             activeColor={Colors.red30}
             segments={segments.third}
           />
           <SegmentedControl
-            onChangeIndex={(index: number) => onChangeIndex('forth', index)}
             containerStyle={styles.container}
             segments={segments.forth}
             activeColor={Colors.grey10}
@@ -54,12 +53,10 @@ const SegmentedControlScreen = () => {
         </View>
         <SegmentedControl
           containerStyle={styles.container}
-          onChangeIndex={(index: number) => onChangeIndex('second', index)}
           segments={segments.fifth}
         />
         <SegmentedControl
           containerStyle={styles.container}
-          onChangeIndex={(index: number) => onChangeIndex('second', index)}
           segments={segments.sixth}
         />
       </View>

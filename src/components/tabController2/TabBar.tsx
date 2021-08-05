@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useContext, ReactNode} from 'react';
+import React, {useMemo, useContext, ReactNode} from 'react';
 import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import _ from 'lodash';
@@ -141,14 +141,11 @@ const TabBar = (props: Props) => {
     spreadItems,
     indicatorInsets = Spacings.s4,
     containerStyle,
-    testID,
-    children: propsChildren
+    testID
   } = props;
 
   const context = useContext(TabBarContext);
   const {items: contextItems, currentPage, targetPage, selectedIndex} = context;
-
-  const children = useRef<Props['children']>(_.filter(propsChildren, (child: ChildProps) => !!child));
 
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || Constants.screenWidth;
@@ -157,8 +154,6 @@ const TabBar = (props: Props) => {
   const items = useMemo(() => {
     return contextItems || propsItems;
   }, [contextItems, propsItems]);
-
-  const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
 
   const {
     scrollViewRef: tabBar,
@@ -171,7 +166,7 @@ const TabBar = (props: Props) => {
     onContentSizeChange,
     onLayout
   } = useScrollToItem({
-    itemsCount: itemsCount.current,
+    itemsCount: items?.length || 0,
     selectedIndex,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });

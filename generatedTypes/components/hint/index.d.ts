@@ -15,21 +15,9 @@ interface HintTargetFrame {
     width?: number;
     height?: number;
 }
-interface Position {
-    top?: number;
-    bottom?: number;
-    left?: number;
-    right?: number;
-}
-interface HintPositionStyle extends Position {
-    alignItems?: string;
-}
-interface Paddings {
-    paddingLeft?: number;
-    paddingRight?: number;
-    paddingVertical?: number;
-    paddingHorizontal?: number;
-}
+declare type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
+declare type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
+declare type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 export interface HintProps {
     /**
      * Control the visibility of the hint
@@ -96,6 +84,14 @@ export interface HintProps {
      */
     customContent?: JSX.Element;
     /**
+     * Remove all hint's paddings
+     */
+    removePaddings?: boolean;
+    /**
+     * Enable shadow (for hint with white background only)
+     */
+    enableShadow?: boolean;
+    /**
      * The hint's test identifier
      */
     testID?: string;
@@ -111,7 +107,7 @@ interface HintState {
 }
 /**
  * @description: Hint component for displaying a tooltip over wrapped component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.tsx
  * @notes: You can either wrap a component or pass a specific targetFrame
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Hint/Hint.gif?raw=true
  */

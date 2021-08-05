@@ -41,7 +41,9 @@ class TabControllerScreen extends Component<{}, State> {
         label: tab,
         key: tab,
         icon: index === 2 ? Assets.icons.demo.dashboard : undefined,
-        badge: index === 5 ? {label: '2'} : undefined
+        badge: index === 5 ? {label: '2'} : undefined,
+        leadingAccessory: index === 3 ? <Text marginR-4>{Assets.emojis.movie_camera}</Text> : undefined,
+        trailingAccessory: index === 4 ? <Text marginL-4>{Assets.emojis.camera}</Text> : undefined
       }))
       .value();
 
@@ -71,7 +73,10 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   onAddItem = () => {
-    console.warn('Add Item');
+    const {items} = this.state;
+    let newItems = items.slice(0, -1) as TabControllerItemProps[];
+    newItems = [...newItems, {label: `New Item # ${newItems.length + 1}`}, items[items.length - 1]];
+    this.setState({items: newItems});
   };
 
   toggleItemsCount = () => {

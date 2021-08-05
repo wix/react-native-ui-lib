@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {
   Animated,
@@ -93,7 +92,6 @@ interface CheckboxState {
 /**
  * @description: Checkbox component for toggling boolean value related to some context
  * @extends: TouchableOpacity
- * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true
  */
@@ -174,7 +172,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     const {disabled} = this.props;
 
     if (!disabled) {
-      _.invoke(this.props, 'onValueChange', !this.props.value);
+      this.props.onValueChange?.(!this.props.value);
     }
   };
 

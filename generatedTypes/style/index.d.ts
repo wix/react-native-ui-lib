@@ -8,3 +8,4 @@ export { default as Components } from './components';
 export { default as ThemeManager } from './themeManager';
 export { default as AnimatableManager } from './animatableManager';
 export { default as ColorName } from './colorName';
+export { default as Dividers } from './dividers';

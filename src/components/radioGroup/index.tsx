@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent, GetDerivedStateFromProps} from 'react';
 import {
   asBaseComponent,
@@ -17,7 +16,7 @@ export type RadioGroupProps = ViewProps & {
   /**
    * Invoked once when value changes, by selecting one of the radio buttons in the group
    */
-  onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void);
+  onValueChange?: ((value?: string) => void) | ((value?: number) => void) | ((value?: boolean) => void) | ((value?: any) => void);
 };
 export type RadioGroupPropTypes = RadioGroupProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -66,7 +65,7 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
 
   onValueChange = (value: RadioGroupProps['initialValue']) => {
     this.setState({value});
-    _.invoke(this.props, 'onValueChange', value);
+    this.props.onValueChange?.(value);
   };
 
   render() {
