@@ -2,12 +2,21 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {Colors, View, Text, Image, Slider, GradientSlider, ColorSliderGroup} from 'react-native-ui-lib';
 
-
 const INITIAL_VALUE = 0;
 const COLOR = Colors.blue30;
 
-export default class SliderScreen extends Component {
-  constructor(props) {
+interface SliderScreenProps {
+  componentId: string;
+}
+
+interface SliderScreenState {
+  alpha: number;
+  color: string;
+  sliderValue: number;
+}
+
+export default class SliderScreen extends Component<SliderScreenProps, SliderScreenState> {
+  constructor(props: SliderScreenProps) {
     super(props);
 
     this.state = {
@@ -17,15 +26,15 @@ export default class SliderScreen extends Component {
     };
   }
 
-  onSliderValueChange = (value) => {
+  onSliderValueChange = (value: number) => {
     this.setState({sliderValue: value});
   }
 
-  onGradientValueChange = (value, alpha) => {
+  onGradientValueChange = (value: string, alpha: number) => {
     this.setState({color: value, alpha});
   }
 
-  onGroupValueChange = (value) => {
+  onGroupValueChange = (value: string) => {
     console.warn('onGroupValueChange: ', value);
   }
 
