@@ -52,10 +52,6 @@ export interface PanViewProps extends ViewProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
 
-interface StaticMembers {
-  directions: typeof PanViewDirections;
-}
-
 interface Props extends PanViewProps {
   children?: React.ReactNode | React.ReactNode[];
 }
@@ -174,7 +170,7 @@ PanView.defaultProps = {
   threshold: DEFAULT_THRESHOLD
 };
 
-export default asBaseComponent<PanViewProps, StaticMembers>(PanView);
+export default asBaseComponent<PanViewProps, typeof PanView>(PanView);
 
 const styles = StyleSheet.create({
   wrapChild: {

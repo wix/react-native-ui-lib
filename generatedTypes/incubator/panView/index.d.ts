@@ -32,10 +32,18 @@ export interface PanViewProps extends ViewProps {
      */
     containerStyle?: StyleProp<ViewStyle>;
 }
-interface StaticMembers {
-    directions: typeof PanViewDirections;
+interface Props extends PanViewProps {
+    children?: React.ReactNode | React.ReactNode[];
 }
 declare const _default: React.ComponentClass<PanViewProps & {
     useCustomTheme?: boolean | undefined;
-}, any> & StaticMembers;
+}, any> & {
+    (props: Props): JSX.Element;
+    displayName: string;
+    directions: typeof PanViewDirections;
+    defaultProps: {
+        directions: PanViewDirections[];
+        threshold: Required<PanViewDismissThreshold>;
+    };
+};
 export default _default;
