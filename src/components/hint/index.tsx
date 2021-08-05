@@ -50,23 +50,12 @@ interface HintTargetFrame {
   height?: number;
 }
 
-interface Position {
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-}
+type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>
 
-interface HintPositionStyle extends Position {
-  alignItems?: string;
-}
+type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>
 
-interface Paddings {
-  paddingLeft?: number;
-  paddingRight?: number;
-  paddingVertical?: number;
-  paddingHorizontal?: number;
-}
+type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>
+
 
 export interface HintProps {
   /**
@@ -475,7 +464,7 @@ class Hint extends Component<HintProps, HintState> {
           styles.hint,
           !removePaddings && styles.hintPaddings,
           visible && enableShadow && styles.containerShadow, 
-          color && {backgroundColor: color}, 
+          {backgroundColor: color}, 
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
         ref={this.setHintRef}
