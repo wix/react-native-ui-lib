@@ -14,14 +14,13 @@ import {Constants} from '../../helpers';
 import View, {ViewProps} from '../../components/view';
 import {
   PanViewDirections,
-  TranslationLock,
   Frame,
   PanViewDismissThreshold,
   getTranslation,
   getDismissVelocity,
   DEFAULT_THRESHOLD
 } from './panningUtil';
-export {PanViewDirections, TranslationLock, PanViewDismissThreshold};
+export {PanViewDirections, PanViewDismissThreshold};
 
 export interface PanViewProps extends ViewProps {
   /**
@@ -44,12 +43,6 @@ export interface PanViewProps extends ViewProps {
    */
   directionLock?: boolean;
   /**
-   * Allows locking the translation when dragging or dropping.
-   * i.e. cannot drag back when a certain direction is not allowed.
-   * Only when dismissible={false}
-   */
-  translationLock?: TranslationLock;
-  /**
    * Object to adjust the dismiss threshold limits (eg {x, y, velocity}).
    */
   threshold?: PanViewDismissThreshold;
@@ -61,7 +54,6 @@ export interface PanViewProps extends ViewProps {
 
 interface StaticMembers {
   directions: typeof PanViewDirections;
-  translationLock: typeof TranslationLock;
 }
 
 interface Props extends PanViewProps {
@@ -76,7 +68,6 @@ const PanView = (props: Props) => {
     dismissible,
     onDismiss,
     directionLock,
-    translationLock,
     threshold,
     containerStyle,
     children,
@@ -96,7 +87,6 @@ const PanView = (props: Props) => {
     'worklet';
     return {
       directionLock,
-      translationLock: dismissible ? TranslationLock.NONE : translationLock!,
       currentTranslation: {x: translationX.value, y: translationY.value}
     };
   };
@@ -179,10 +169,8 @@ const PanView = (props: Props) => {
 
 PanView.displayName = 'PanView';
 PanView.directions = PanViewDirections;
-PanView.translationLock = TranslationLock;
 PanView.defaultProps = {
   directions: [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
-  translationLock: TranslationLock.NONE,
   threshold: DEFAULT_THRESHOLD
 };
 

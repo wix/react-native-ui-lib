@@ -8,25 +8,6 @@ export enum PanViewDirections {
   RIGHT = 'right'
 }
 
-export enum TranslationLock {
-  /**
-   * No locking (default).
-   */
-  NONE = 'none',
-  /**
-   * Will lock the start location to the drop location.
-   * Only when a certain direction is not allowed.
-   * Only when dismissible={false}
-   */
-  DROP = 'drop',
-  /**
-   * Will lock the start location to the dragged location.
-   * Only when a certain direction is not allowed.
-   * Only when dismissible={false}
-   */
-  DRAG = 'drag'
-}
-
 export interface Frame {
   x: number;
   y: number;
@@ -34,7 +15,6 @@ export interface Frame {
 
 export interface TranslationOptions {
   directionLock?: boolean;
-  translationLock: TranslationLock;
   currentTranslation: Frame;
 }
 
@@ -51,24 +31,6 @@ export interface PanViewDismissThreshold {
    * The y translation from the start location past it the view will be dismissed.
    */
   y?: number;
-}
-
-export function getTranslationClamp(initialTranslation: Frame, options: TranslationOptions) {
-  'worklet';
-  let clamp;
-  switch (options.translationLock) {
-    case TranslationLock.DRAG:
-      clamp = {x: options.currentTranslation.x, y: options.currentTranslation.y};
-      break;
-    case TranslationLock.DROP:
-      clamp = initialTranslation;
-      break;
-    case TranslationLock.NONE:
-      clamp = {x: 0, y: 0};
-      break;
-  }
-
-  return clamp;
 }
 
 export function getTranslationDirectionClamp(translation: Frame, options: TranslationOptions) {
@@ -95,21 +57,20 @@ export function getTranslation(event: PanGestureHandlerEventPayload,
   options: TranslationOptions): Frame {
   'worklet';
   const result = {x: 0, y: 0};
-  const clamp = getTranslationClamp(initialTranslation, options);
   if (directions?.includes(PanViewDirections.LEFT) && directions?.includes(PanViewDirections.RIGHT)) {
     result.x = initialTranslation.x + event.translationX;
   } else if (directions?.includes(PanViewDirections.LEFT)) {
-    result.x = Math.min(clamp.x, initialTranslation.x + event.translationX);
+    result.x = Math.min(initialTranslation.x, initialTranslation.x + event.translationX);
   } else if (directions?.includes(PanViewDirections.RIGHT)) {
-    result.x = Math.max(clamp.x, initialTranslation.x + event.translationX);
+    result.x = Math.max(initialTranslation.x, initialTranslation.x + event.translationX);
   }
 
   if (directions?.includes(PanViewDirections.UP) && directions?.includes(PanViewDirections.DOWN)) {
     result.y = initialTranslation.y + event.translationY;
   } else if (directions?.includes(PanViewDirections.UP)) {
-    result.y = Math.min(clamp.y, initialTranslation.y + event.translationY);
+    result.y = Math.min(initialTranslation.y, initialTranslation.y + event.translationY);
   } else if (directions?.includes(PanViewDirections.DOWN)) {
-    result.y = Math.max(clamp.y, initialTranslation.y + event.translationY);
+    result.y = Math.max(initialTranslation.y, initialTranslation.y + event.translationY);
   }
 
   return getTranslationDirectionClamp(result, options);

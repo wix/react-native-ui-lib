@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { ViewProps } from '../../components/view';
-import { PanViewDirections, TranslationLock, PanViewDismissThreshold } from './panningUtil';
-export { PanViewDirections, TranslationLock, PanViewDismissThreshold };
+import { PanViewDirections, PanViewDismissThreshold } from './panningUtil';
+export { PanViewDirections, PanViewDismissThreshold };
 export interface PanViewProps extends ViewProps {
     /**
      * The directions of the allowed pan (default is all)
@@ -24,12 +24,6 @@ export interface PanViewProps extends ViewProps {
      */
     directionLock?: boolean;
     /**
-     * Allows locking the translation when dragging or dropping.
-     * i.e. cannot drag back when a certain direction is not allowed.
-     * Only when dismissible={false}
-     */
-    translationLock?: TranslationLock;
-    /**
      * Object to adjust the dismiss threshold limits (eg {x, y, velocity}).
      */
     threshold?: PanViewDismissThreshold;
@@ -40,7 +34,6 @@ export interface PanViewProps extends ViewProps {
 }
 interface StaticMembers {
     directions: typeof PanViewDirections;
-    translationLock: typeof TranslationLock;
 }
 declare const _default: React.ComponentClass<PanViewProps & {
     useCustomTheme?: boolean | undefined;

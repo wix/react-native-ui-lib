@@ -3,9 +3,7 @@ import {
   PanViewDirections,
   DEFAULT_THRESHOLD,
   getTranslation,
-  TranslationLock,
   getDismissVelocity,
-  getTranslationClamp,
   getTranslationDirectionClamp
 } from '../panningUtil';
 
@@ -17,7 +15,7 @@ describe('panningUtil', () => {
 
   describe('getTranslation', () => {
     let initialTranslation;
-    function runAllDirections(translationLock, currentTranslation) {
+    function runAllDirections(currentTranslation) {
       describe('All directions', () => {
         describe('Start at origin', () => {
           beforeEach(() => {
@@ -27,31 +25,28 @@ describe('panningUtil', () => {
           it('Negative event', () => {
             const event = {translationX: -1, translationY: -1};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX);
-            expect(result.y).toEqual(event.translationY);
+            expect(result.x).toEqual(-1);
+            expect(result.y).toEqual(-1);
           });
 
           it('No movement event', () => {
             const event = {translationX: 0, translationY: 0};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX);
-            expect(result.y).toEqual(event.translationY);
+            expect(result.x).toEqual(0);
+            expect(result.y).toEqual(0);
           });
 
           it('Positive event', () => {
             const event = {translationX: 1, translationY: 1};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX);
-            expect(result.y).toEqual(event.translationY);
+            expect(result.x).toEqual(1);
+            expect(result.y).toEqual(1);
           });
         });
 
@@ -63,31 +58,28 @@ describe('panningUtil', () => {
           it('Negative event', () => {
             const event = {translationX: -1, translationY: -1};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX + initialTranslation.x);
-            expect(result.y).toEqual(event.translationY + initialTranslation.y);
+            expect(result.x).toEqual(-2);
+            expect(result.y).toEqual(-2);
           });
 
           it('No movement event', () => {
             const event = {translationX: 0, translationY: 0};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX + initialTranslation.x);
-            expect(result.y).toEqual(event.translationY + initialTranslation.y);
+            expect(result.x).toEqual(-1);
+            expect(result.y).toEqual(-1);
           });
 
           it('Positive event', () => {
             const event = {translationX: 1, translationY: 1};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX + initialTranslation.x);
-            expect(result.y).toEqual(event.translationY + initialTranslation.y);
+            expect(result.x).toEqual(0);
+            expect(result.y).toEqual(0);
           });
         });
 
@@ -99,41 +91,36 @@ describe('panningUtil', () => {
           it('Negative event', () => {
             const event = {translationX: -1, translationY: -1};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX + initialTranslation.x);
-            expect(result.y).toEqual(event.translationY + initialTranslation.y);
+            expect(result.x).toEqual(0);
+            expect(result.y).toEqual(0);
           });
 
           it('No movement event', () => {
             const event = {translationX: 0, translationY: 0};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX + initialTranslation.x);
-            expect(result.y).toEqual(event.translationY + initialTranslation.y);
+            expect(result.x).toEqual(1);
+            expect(result.y).toEqual(1);
           });
 
           it('Positive event', () => {
             const event = {translationX: 1, translationY: 1};
             const result = getTranslation(event, initialTranslation, directions, {
-              translationLock,
               currentTranslation
             });
-            expect(result.x).toEqual(event.translationX + initialTranslation.x);
-            expect(result.y).toEqual(event.translationY + initialTranslation.y);
+            expect(result.x).toEqual(2);
+            expect(result.y).toEqual(2);
           });
         });
       });
     }
 
-    runAllDirections(TranslationLock.NONE, {x: 0, y: 0});
-    runAllDirections(TranslationLock.DROP, {x: 0, y: 0});
-    runAllDirections(TranslationLock.DRAG, {x: -1, y: -1});
-    runAllDirections(TranslationLock.DRAG, {x: 0, y: 0});
-    runAllDirections(TranslationLock.DRAG, {x: 1, y: 1});
+    runAllDirections({x: -1, y: -1});
+    runAllDirections({x: 0, y: 0});
+    runAllDirections({x: 1, y: 1});
 
     describe('Down and right', () => {
       beforeEach(() => {
@@ -148,7 +135,6 @@ describe('panningUtil', () => {
         it('Negative event', () => {
           const event = {translationX: -1, translationY: -1};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
             currentTranslation: {x: 0, y: 0}
           });
           expect(result.x).toEqual(0);
@@ -158,21 +144,19 @@ describe('panningUtil', () => {
         it('No movement event', () => {
           const event = {translationX: 0, translationY: 0};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
             currentTranslation: {x: 0, y: 0}
           });
-          expect(result.x).toEqual(event.translationX);
-          expect(result.y).toEqual(event.translationY);
+          expect(result.x).toEqual(0);
+          expect(result.y).toEqual(0);
         });
 
         it('Positive event', () => {
           const event = {translationX: 1, translationY: 1};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
             currentTranslation: {x: 0, y: 0}
           });
-          expect(result.x).toEqual(event.translationX);
-          expect(result.y).toEqual(event.translationY);
+          expect(result.x).toEqual(1);
+          expect(result.y).toEqual(1);
         });
       });
 
@@ -184,31 +168,28 @@ describe('panningUtil', () => {
         it('Negative event', () => {
           const event = {translationX: -1, translationY: -1};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
-            currentTranslation: {x: 0, y: 0}
+            currentTranslation: {x: 1, y: 1}
           });
-          expect(result.x).toEqual(event.translationX + initialTranslation.x);
-          expect(result.y).toEqual(event.translationY + initialTranslation.y);
+          expect(result.x).toEqual(1);
+          expect(result.y).toEqual(1);
         });
 
         it('No movement event', () => {
           const event = {translationX: 0, translationY: 0};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
-            currentTranslation: {x: 0, y: 0}
+            currentTranslation: {x: 1, y: 1}
           });
-          expect(result.x).toEqual(event.translationX + initialTranslation.x);
-          expect(result.y).toEqual(event.translationY + initialTranslation.y);
+          expect(result.x).toEqual(1);
+          expect(result.y).toEqual(1);
         });
 
         it('Positive event', () => {
           const event = {translationX: 1, translationY: 1};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
-            currentTranslation: {x: 0, y: 0}
+            currentTranslation: {x: 1, y: 1}
           });
-          expect(result.x).toEqual(event.translationX + initialTranslation.x);
-          expect(result.y).toEqual(event.translationY + initialTranslation.y);
+          expect(result.x).toEqual(2);
+          expect(result.y).toEqual(2);
         });
       });
     });
@@ -226,27 +207,24 @@ describe('panningUtil', () => {
         it('Negative event', () => {
           const event = {translationX: -1, translationY: -1};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
             currentTranslation: {x: 0, y: 0}
           });
-          expect(result.x).toEqual(event.translationX);
-          expect(result.y).toEqual(event.translationY);
+          expect(result.x).toEqual(-1);
+          expect(result.y).toEqual(-1);
         });
 
         it('No movement event', () => {
           const event = {translationX: 0, translationY: 0};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
             currentTranslation: {x: 0, y: 0}
           });
-          expect(result.x).toEqual(event.translationX);
-          expect(result.y).toEqual(event.translationY);
+          expect(result.x).toEqual(0);
+          expect(result.y).toEqual(0);
         });
 
         it('Positive event', () => {
           const event = {translationX: 1, translationY: 1};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
             currentTranslation: {x: 0, y: 0}
           });
           expect(result.x).toEqual(0);
@@ -262,185 +240,28 @@ describe('panningUtil', () => {
         it('Negative event', () => {
           const event = {translationX: -1, translationY: -1};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
-            currentTranslation: {x: 0, y: 0}
+            currentTranslation: {x: -1, y: -1}
           });
-          expect(result.x).toEqual(event.translationX + initialTranslation.x);
-          expect(result.y).toEqual(event.translationY + initialTranslation.y);
+          expect(result.x).toEqual(-2);
+          expect(result.y).toEqual(-2);
         });
 
         it('No movement event', () => {
           const event = {translationX: 0, translationY: 0};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
-            currentTranslation: {x: 0, y: 0}
+            currentTranslation: {x: -1, y: -1}
           });
-          expect(result.x).toEqual(event.translationX + initialTranslation.x);
-          expect(result.y).toEqual(event.translationY + initialTranslation.y);
+          expect(result.x).toEqual(-1);
+          expect(result.y).toEqual(-1);
         });
 
         it('Positive event', () => {
           const event = {translationX: 1, translationY: 1};
           const result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.NONE,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(event.translationX + initialTranslation.x);
-          expect(result.y).toEqual(event.translationY + initialTranslation.y);
-        });
-      });
-    });
-
-    describe('Lock', () => {
-      describe('Down and right', () => {
-        it('lockOnDrop', () => {
-          directions = [PanViewDirections.DOWN, PanViewDirections.RIGHT];
-          initialTranslation = {x: 0, y: 0};
-          let event = {translationX: 1, translationY: 1};
-          let result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DROP,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(1);
-          expect(result.y).toEqual(1);
-          event = {translationX: -1, translationY: -1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DROP,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(0);
-          expect(result.y).toEqual(0);
-          event = {translationX: 1, translationY: 1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DROP,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(1);
-          expect(result.y).toEqual(1);
-          initialTranslation = result; // drop
-          event = {translationX: -1, translationY: -1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DROP,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(1);
-          expect(result.y).toEqual(1);
-        });
-
-        it('lockOnDrag', () => {
-          directions = [PanViewDirections.DOWN, PanViewDirections.RIGHT];
-          initialTranslation = {x: 0, y: 0};
-          let event = {translationX: 1, translationY: 1};
-          let result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(1);
-          expect(result.y).toEqual(1);
-          event = {translationX: -1, translationY: -1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: 1, y: 1}
-          });
-          expect(result.x).toEqual(1);
-          expect(result.y).toEqual(1);
-          event = {translationX: 1, translationY: 1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: 1, y: 1}
-          });
-          expect(result.x).toEqual(1);
-          expect(result.y).toEqual(1);
-          event = {translationX: -1, translationY: -1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: 1, y: 1}
-          });
-          expect(result.x).toEqual(1);
-          expect(result.y).toEqual(1);
-          event = {translationX: 2, translationY: 2};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: 1, y: 1}
-          });
-          expect(result.x).toEqual(2);
-          expect(result.y).toEqual(2);
-        });
-      });
-
-      describe('Up and left', () => {
-        it('lockOnDrop', () => {
-          directions = [PanViewDirections.UP, PanViewDirections.LEFT];
-          initialTranslation = {x: 0, y: 0};
-          let event = {translationX: -1, translationY: -1};
-          let result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DROP,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(-1);
-          expect(result.y).toEqual(-1);
-          event = {translationX: 1, translationY: 1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DROP,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(0);
-          expect(result.y).toEqual(0);
-          event = {translationX: -1, translationY: -1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DROP,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(-1);
-          expect(result.y).toEqual(-1);
-          initialTranslation = result; // drop
-          event = {translationX: 1, translationY: 1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DROP,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(-1);
-          expect(result.y).toEqual(-1);
-        });
-
-        it('lockOnDrag', () => {
-          directions = [PanViewDirections.UP, PanViewDirections.LEFT];
-          initialTranslation = {x: 0, y: 0};
-          let event = {translationX: -1, translationY: -1};
-          let result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: 0, y: 0}
-          });
-          expect(result.x).toEqual(-1);
-          expect(result.y).toEqual(-1);
-          event = {translationX: 1, translationY: 1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
             currentTranslation: {x: -1, y: -1}
           });
           expect(result.x).toEqual(-1);
           expect(result.y).toEqual(-1);
-          event = {translationX: -1, translationY: -1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: -1, y: -1}
-          });
-          expect(result.x).toEqual(-1);
-          expect(result.y).toEqual(-1);
-          event = {translationX: 1, translationY: 1};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: -1, y: -1}
-          });
-          expect(result.x).toEqual(-1);
-          expect(result.y).toEqual(-1);
-          event = {translationX: -2, translationY: -2};
-          result = getTranslation(event, initialTranslation, directions, {
-            translationLock: TranslationLock.DRAG,
-            currentTranslation: {x: -1, y: -1}
-          });
-          expect(result.x).toEqual(-2);
-          expect(result.y).toEqual(-2);
         });
       });
     });
@@ -450,7 +271,6 @@ describe('panningUtil', () => {
     function getOptions(event) {
       return {
         directionLock: false,
-        translationLock: false,
         currentTranslation: {
           x: event.translationX + event.velocityX * 0.1,
           y: event.translationY + event.velocityY * 0.1
@@ -768,126 +588,13 @@ describe('panningUtil', () => {
     });
   });
 
-  describe('getTranslationClamp', () => {
-    function testGetTranslationClamp(directionLock) {
-      describe('None', () => {
-        it('Regular', () => {
-          const initialTranslation = {x: 0, y: 0};
-          const currentTranslation = {x: 0, y: 0};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.NONE,
-            currentTranslation
-          });
-          expect(result).toEqual({x: 0, y: 0});
-        });
-
-        it('Different initial', () => {
-          const initialTranslation = {x: 10, y: 10};
-          const currentTranslation = {x: 0, y: 0};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.NONE,
-            currentTranslation
-          });
-          expect(result).toEqual({x: 0, y: 0});
-        });
-
-        it('Different current', () => {
-          const initialTranslation = {x: 0, y: 0};
-          const currentTranslation = {x: 10, y: 10};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.NONE,
-            currentTranslation
-          });
-          expect(result).toEqual({x: 0, y: 0});
-        });
-      });
-
-      describe('Drag', () => {
-        it('Regular', () => {
-          const initialTranslation = {x: 0, y: 0};
-          const currentTranslation = {x: 0, y: 0};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.DRAG,
-            currentTranslation
-          });
-          expect(result).toEqual(currentTranslation);
-        });
-
-        it('Different initial', () => {
-          const initialTranslation = {x: 10, y: 10};
-          const currentTranslation = {x: 0, y: 0};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.DRAG,
-            currentTranslation
-          });
-          expect(result).toEqual(currentTranslation);
-        });
-
-        it('Different current', () => {
-          const initialTranslation = {x: 0, y: 0};
-          const currentTranslation = {x: 10, y: 10};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.DRAG,
-            currentTranslation
-          });
-          expect(result).toEqual(currentTranslation);
-        });
-      });
-
-      describe('Drop', () => {
-        it('Regular', () => {
-          const initialTranslation = {x: 0, y: 0};
-          const currentTranslation = {x: 0, y: 0};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.DROP,
-            currentTranslation
-          });
-          expect(result).toEqual(initialTranslation);
-        });
-
-        it('Different initial', () => {
-          const initialTranslation = {x: 10, y: 10};
-          const currentTranslation = {x: 0, y: 0};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.DROP,
-            currentTranslation
-          });
-          expect(result).toEqual(initialTranslation);
-        });
-
-        it('Different current', () => {
-          const initialTranslation = {x: 0, y: 0};
-          const currentTranslation = {x: 10, y: 10};
-          const result = getTranslationClamp(initialTranslation, {
-            directionLock,
-            translationLock: TranslationLock.DROP,
-            currentTranslation
-          });
-          expect(result).toEqual(initialTranslation);
-        });
-      });
-    }
-
-    testGetTranslationClamp(false);
-    testGetTranslationClamp(true);
-  });
-
   describe('getDirectionClamp', () => {
-    function testGetDirectionClamp(translationLock) {
+    function testGetDirectionClamp() {
       describe('No lock', () => {
         it('Regular', () => {
           const translation = {x: 0, y: 0};
           const options = {
             directionLock: false,
-            translationLock,
             currentTranslation: {x: 0, y: 0}
           };
 
@@ -899,7 +606,6 @@ describe('panningUtil', () => {
           const translation = {x: 10, y: 10};
           const options = {
             directionLock: false,
-            translationLock,
             currentTranslation: {x: 0, y: 0}
           };
 
@@ -913,7 +619,6 @@ describe('panningUtil', () => {
           const translation = {x: 10, y: 0};
           const options = {
             directionLock: true,
-            translationLock,
             currentTranslation: {x: 0, y: 0}
           };
 
@@ -925,7 +630,6 @@ describe('panningUtil', () => {
           const translation = {x: 0, y: 10};
           const options = {
             directionLock: true,
-            translationLock,
             currentTranslation: {x: 0, y: 0}
           };
 
@@ -937,7 +641,6 @@ describe('panningUtil', () => {
           const translation = {x: 20, y: 10};
           const options = {
             directionLock: true,
-            translationLock,
             currentTranslation: {x: 10, y: 0}
           };
 
@@ -949,7 +652,6 @@ describe('panningUtil', () => {
           const translation = {x: -20, y: 10};
           const options = {
             directionLock: true,
-            translationLock,
             currentTranslation: {x: -10, y: 0}
           };
 
@@ -961,7 +663,6 @@ describe('panningUtil', () => {
           const translation = {x: 10, y: 20};
           const options = {
             directionLock: true,
-            translationLock,
             currentTranslation: {x: 0, y: 10}
           };
 
@@ -973,7 +674,6 @@ describe('panningUtil', () => {
           const translation = {x: 10, y: -20};
           const options = {
             directionLock: true,
-            translationLock,
             currentTranslation: {x: 0, y: -10}
           };
 
@@ -983,8 +683,6 @@ describe('panningUtil', () => {
       });
     }
 
-    testGetDirectionClamp(TranslationLock.NONE);
-    testGetDirectionClamp(TranslationLock.DRAG);
-    testGetDirectionClamp(TranslationLock.DROP);
+    testGetDirectionClamp();
   });
 });
