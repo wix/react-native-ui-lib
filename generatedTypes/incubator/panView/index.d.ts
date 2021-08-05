@@ -42,7 +42,6 @@ declare const _default: React.ComponentClass<PanViewProps & {
     displayName: string;
     directions: typeof PanViewDirections;
     defaultProps: {
-        directions: PanViewDirections[];
         threshold: Required<PanViewDismissThreshold>;
     };
 };

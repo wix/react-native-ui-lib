@@ -60,7 +60,7 @@ const RETURN_ANIMATION_SPRING_CONFIG = {velocity: 300, damping: 20, stiffness: 3
 
 const PanView = (props: Props) => {
   const {
-    directions,
+    directions = [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
     dismissible,
     onDismiss,
     directionLock,
@@ -89,7 +89,7 @@ const PanView = (props: Props) => {
 
   const setTranslation = (event: PanGestureHandlerEventPayload, initialTranslation: Frame) => {
     'worklet';
-    const result = getTranslation(event, initialTranslation, directions!, getTranslationOptions());
+    const result = getTranslation(event, initialTranslation, directions, getTranslationOptions());
 
     translationX.value = result.x;
     translationY.value = result.y;
@@ -125,7 +125,7 @@ const PanView = (props: Props) => {
     },
     onEnd: (event: PanGestureHandlerEventPayload) => {
       if (dismissible) {
-        const velocity = getDismissVelocity(event, directions!, getTranslationOptions(), threshold);
+        const velocity = getDismissVelocity(event, directions, getTranslationOptions(), threshold);
         if (velocity) {
           waitingForDismiss.value = true;
           if (velocity.x !== 0) {
@@ -166,7 +166,6 @@ const PanView = (props: Props) => {
 PanView.displayName = 'PanView';
 PanView.directions = PanViewDirections;
 PanView.defaultProps = {
-  directions: [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
   threshold: DEFAULT_THRESHOLD
 };
 
