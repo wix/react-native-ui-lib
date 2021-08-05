@@ -56,7 +56,7 @@ export declare class Colors {
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
     isDark(color: string): boolean;
     isValidHex(string: string): boolean;
-    getHexString(color: string): string;
+    getHexString(color: tinycolor.ColorInput): string;
     getHSL(color?: string): tinycolor.ColorFormats.HSLA;
     isTransparent(color?: string): boolean | "" | undefined;
     areEqual(colorA: string, colorB: string): boolean;
