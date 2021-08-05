@@ -58,7 +58,7 @@ interface Props extends PanViewProps {
   children?: React.ReactNode | React.ReactNode[];
 }
 
-const RETURN_ANIMATION_SPRING_CONFIG = {velocity: 300, damping: 20, stiffness: 300, mass: 0.8};
+const SPRING_BACK_ANIMATION_CONFIG = {velocity: 300, damping: 20, stiffness: 300, mass: 0.8};
 
 const PanView = (props: Props) => {
   const {
@@ -122,8 +122,8 @@ const PanView = (props: Props) => {
   const springBackIfNeeded = useCallback(() => {
     'worklet';
     if (springBack) {
-      translationX.value = withSpring(0, RETURN_ANIMATION_SPRING_CONFIG);
-      translationY.value = withSpring(0, RETURN_ANIMATION_SPRING_CONFIG);
+      translationX.value = withSpring(0, SPRING_BACK_ANIMATION_CONFIG);
+      translationY.value = withSpring(0, SPRING_BACK_ANIMATION_CONFIG);
     }
   }, [springBack]);
 
