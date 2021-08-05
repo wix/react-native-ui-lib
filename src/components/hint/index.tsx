@@ -464,7 +464,7 @@ class Hint extends Component<HintProps, HintState> {
           styles.hint,
           !removePaddings && styles.hintPaddings,
           visible && enableShadow && styles.containerShadow, 
-          {backgroundColor: color}, 
+          color ? {backgroundColor: color} : undefined, 
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
         ref={this.setHintRef}
