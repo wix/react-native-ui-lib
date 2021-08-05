@@ -24,7 +24,7 @@ const IOS_SCROLL_BEHAVIORS = IsIOS
   }
   : {};
 
-type KeyboardAccessoryViewProps = {
+export type KeyboardAccessoryViewProps = {
   /**
    * Content to be rendered above the keyboard
    */

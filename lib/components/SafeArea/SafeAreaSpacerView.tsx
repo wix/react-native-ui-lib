@@ -3,7 +3,7 @@ import {View, requireNativeComponent, ViewStyle} from 'react-native';
 
 const NativeSafeAreaSpacerView = requireNativeComponent('SafeAreaSpacerView');
 
-type SafeAreaSpacerViewProps = {
+export type SafeAreaSpacerViewProps = {
   style: ViewStyle
 }
 

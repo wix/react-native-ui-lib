@@ -25,6 +25,5 @@ const styles = StyleSheet.create({
 });
 
 KeyboardAwareInsetsView.displayName = 'KeyboardAwareInsetsView';
-KeyboardAwareInsetsView.propTypes = KeyboardTrackingView.propTypes;
 
 export default KeyboardAwareInsetsView;

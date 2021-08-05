@@ -1,9 +1,33 @@
 import React from 'react';
-import {Platform} from 'react-native';
-import {default as KeyboardTrackingViewIOS, KeyboardTrackingViewProps} from './KeyboardTrackingView.ios';
+import {Platform, ViewStyle} from 'react-native';
+import {default as KeyboardTrackingViewIOS} from './KeyboardTrackingView.ios';
 import {default as KeyboardTrackingViewAndroid} from './KeyboardTrackingView.android';
 
 const IsAndroid = Platform.OS === 'android';
+
+export type KeyboardTrackingViewProps = {
+  /**
+     * Enables tracking of the keyboard when it's dismissed interactively (false by default).
+     * Why? When using an external keyboard (BT),
+     * you still get the keyboard events and the view just hovers when you focus the input.
+     * Also, if you're not using interactive style of dismissing the keyboard
+     * (or if you don't have an input inside this view) it doesn't make sense to track it anyway.
+     * (This is caused because of the usage of inputAccessory to be able to track the
+     * keyboard interactive change and it introduces this bug)
+     */
+   trackInteractive?: boolean;
+   /**
+    * Allow control safe area
+    */
+   useSafeArea?: boolean;
+
+   // Can't figure out what it's supposed to be
+   ref?: any;
+
+   children?: React.ReactChild | React.ReactChild[];
+
+   style?: ViewStyle;
+}
 
 const KeyboardTrackingView = ({children, ...others}: KeyboardTrackingViewProps) => {
   const KeyboardTrackingViewContainer = IsAndroid ? KeyboardTrackingViewAndroid : KeyboardTrackingViewIOS;

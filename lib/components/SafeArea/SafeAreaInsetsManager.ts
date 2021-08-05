@@ -3,14 +3,16 @@
 import {NativeModules, NativeEventEmitter} from 'react-native';
 import _ from 'lodash';
 
-let SafeAreaInsetsCache = null;
+type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null 
+
+let SafeAreaInsetsCache: SafeAreaInsetsType = null;
 
 const NativeSafeAreaManager = NativeModules.SafeAreaManager;
 
 class SafeAreaInsetsManager {
 
-  _defaultInsets = {top: 0, left: 0, bottom: 0, right: 0};
-  _safeAreaInsets = {top: 0, left: 0, bottom: 0, right: 0};
+  _defaultInsets: SafeAreaInsetsType = {top: 0, left: 0, bottom: 0, right: 0};
+  _safeAreaInsets: SafeAreaInsetsType = {top: 0, left: 0, bottom: 0, right: 0};
   _safeAreaChangedDelegates = [];
 
   constructor() {
