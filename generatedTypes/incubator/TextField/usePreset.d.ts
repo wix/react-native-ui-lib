@@ -126,7 +126,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
+    autoCompleteType?: "email" | "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -458,7 +458,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
+    autoCompleteType?: "email" | "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -902,7 +902,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
+    autoCompleteType?: "email" | "name" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "password" | "postal-code" | "street-address" | "tel" | "username" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
