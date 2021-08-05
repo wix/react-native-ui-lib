@@ -1,6 +1,6 @@
 import {isEmpty} from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
@@ -153,7 +153,7 @@ const PanView = (props: Props) => {
         <Animated.View
           // !visible.current && styles.hidden is done to fix a bug is iOS
           //   style={[style, animatedStyle, !visible.current && styles.hidden]}
-          style={[styles.wrapChild, animatedStyle]}
+          style={animatedStyle}
           //   style={[style]}
         >
           <View {...others}>{children}</View>
@@ -171,12 +171,3 @@ PanView.defaultProps = {
 };
 
 export default asBaseComponent<PanViewProps, typeof PanView>(PanView);
-
-const styles = StyleSheet.create({
-  wrapChild: {
-    alignSelf: 'baseline'
-  },
-  hidden: {
-    opacity: 0
-  }
-});
