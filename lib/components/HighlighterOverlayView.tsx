@@ -17,23 +17,25 @@ type HighlightViewTagParams = {
 }
 
 export type HighlighterOverlayViewProps = {
-  visible: boolean,
-  overlayColor?: string
-  borderRadius?: number,
-  strokeColor?: string,
-  strokeWidth?: number,
-  onRequestClose?: () => void,
-  highlightFrame?: HighlightFrameType,
-  style?: ViewStyle,
-  highlightViewTag: number,
-  children: JSX.Element[] | JSX.Element,
-  highlightViewTagParams?: HighlightViewTagParams,
-  minimumRectSize?: Pick<HighlightFrameType, 'width' | 'height'>
-  innerPadding?: number,
+  visible: boolean;
+  overlayColor?: string;
+  borderRadius?: number;
+  strokeColor?: string;
+  strokeWidth?: number;
+  onRequestClose?: () => void;
+  highlightFrame?: HighlightFrameType;
+  style?: ViewStyle;
+  highlightViewTag?: number | null;
+  children?: JSX.Element[] | JSX.Element;
+  highlightViewTagParams?: HighlightViewTagParams;
+  minimumRectSize?: Pick<HighlightFrameType, 'width' | 'height'>;
+  innerPadding?: number;
+  accessible?: boolean;
+  testID?: string;
 };
 
 
-const HighlighterOverlayView = (props) => {
+const HighlighterOverlayView = (props: HighlighterOverlayViewProps) => {
   const {
     overlayColor,
     borderRadius,
@@ -53,7 +55,9 @@ const HighlighterOverlayView = (props) => {
   let overlayColorToUse = overlayColor || DefaultOverlayColor;
   let strokeColorToUse = strokeColor;
   if (Platform.OS === 'android') {
+    // @ts-ignore
     overlayColorToUse = processColor(overlayColorToUse);
+    // @ts-ignore
     strokeColorToUse = processColor(strokeColorToUse);
   }
 
