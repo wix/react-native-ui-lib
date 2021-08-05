@@ -10,11 +10,13 @@ export interface PanViewProps extends ViewProps {
      */
     directions?: PanViewDirections[];
     /**
-     * Will enable the dismissible behavior:
-     * 1. Dismiss if over the threshold.
-     * 2. Animate to start if no dismissed.
+     * Dismiss the view if over the threshold (translation or velocity).
      */
     dismissible?: boolean;
+    /**
+     * Animate to start if not dismissed.
+     */
+    springBack?: boolean;
     /**
      * Callback to the dismiss animation end
      */

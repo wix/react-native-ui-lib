@@ -29,11 +29,13 @@ export interface PanViewProps extends ViewProps {
    */
   directions?: PanViewDirections[];
   /**
-   * Will enable the dismissible behavior:
-   * 1. Dismiss if over the threshold.
-   * 2. Animate to start if no dismissed.
+   * Dismiss the view if over the threshold (translation or velocity).
    */
   dismissible?: boolean;
+  /**
+   * Animate to start if not dismissed.
+   */
+  springBack?: boolean;
   /**
    * Callback to the dismiss animation end
    */
@@ -62,6 +64,7 @@ const PanView = (props: Props) => {
   const {
     directions = [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
     dismissible,
+    springBack,
     onDismiss,
     directionLock,
     threshold,
@@ -116,6 +119,14 @@ const PanView = (props: Props) => {
   },
   [dismiss]);
 
+  const springBackIfNeeded = useCallback(() => {
+    'worklet';
+    if (springBack) {
+      translationX.value = withSpring(0, RETURN_ANIMATION_SPRING_CONFIG);
+      translationY.value = withSpring(0, RETURN_ANIMATION_SPRING_CONFIG);
+    }
+  }, [springBack]);
+
   const onGestureEvent = useAnimatedGestureHandler({
     onStart: (_event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
       context.initialTranslation = {x: translationX.value, y: translationY.value};
@@ -137,13 +148,14 @@ const PanView = (props: Props) => {
             translationY.value = withSpring(toY, {velocity: velocity.y, damping: 50}, shouldDismissY);
           }
         } else {
-          translationX.value = withSpring(0, RETURN_ANIMATION_SPRING_CONFIG);
-          translationY.value = withSpring(0, RETURN_ANIMATION_SPRING_CONFIG);
+          springBackIfNeeded();
         }
+      } else {
+        springBackIfNeeded();
       }
     }
   },
-  [directions, dismissible, setTranslation]);
+  [directions, dismissible, setTranslation, springBackIfNeeded]);
 
   return (
     // TODO: delete comments once completed
