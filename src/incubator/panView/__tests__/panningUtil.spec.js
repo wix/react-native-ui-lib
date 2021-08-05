@@ -170,8 +170,8 @@ describe('panningUtil', () => {
           const result = getTranslation(event, initialTranslation, directions, {
             currentTranslation: {x: 1, y: 1}
           });
-          expect(result.x).toEqual(1);
-          expect(result.y).toEqual(1);
+          expect(result.x).toEqual(0);
+          expect(result.y).toEqual(0);
         });
 
         it('No movement event', () => {
@@ -260,8 +260,8 @@ describe('panningUtil', () => {
           const result = getTranslation(event, initialTranslation, directions, {
             currentTranslation: {x: -1, y: -1}
           });
-          expect(result.x).toEqual(-1);
-          expect(result.y).toEqual(-1);
+          expect(result.x).toEqual(0);
+          expect(result.y).toEqual(0);
         });
       });
     });

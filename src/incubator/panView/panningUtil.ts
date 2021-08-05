@@ -60,17 +60,17 @@ export function getTranslation(event: PanGestureHandlerEventPayload,
   if (directions?.includes(PanViewDirections.LEFT) && directions?.includes(PanViewDirections.RIGHT)) {
     result.x = initialTranslation.x + event.translationX;
   } else if (directions?.includes(PanViewDirections.LEFT)) {
-    result.x = Math.min(initialTranslation.x, initialTranslation.x + event.translationX);
+    result.x = Math.min(0, initialTranslation.x + event.translationX);
   } else if (directions?.includes(PanViewDirections.RIGHT)) {
-    result.x = Math.max(initialTranslation.x, initialTranslation.x + event.translationX);
+    result.x = Math.max(0, initialTranslation.x + event.translationX);
   }
 
   if (directions?.includes(PanViewDirections.UP) && directions?.includes(PanViewDirections.DOWN)) {
     result.y = initialTranslation.y + event.translationY;
   } else if (directions?.includes(PanViewDirections.UP)) {
-    result.y = Math.min(initialTranslation.y, initialTranslation.y + event.translationY);
+    result.y = Math.min(0, initialTranslation.y + event.translationY);
   } else if (directions?.includes(PanViewDirections.DOWN)) {
-    result.y = Math.max(initialTranslation.y, initialTranslation.y + event.translationY);
+    result.y = Math.max(0, initialTranslation.y + event.translationY);
   }
 
   return getTranslationDirectionClamp(result, options);
