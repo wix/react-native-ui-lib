@@ -1,43 +1,18 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../style';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../view';
 import ListItemPart from './ListItemPart';
+import {ListItemProps} from './types';
 
-/**
- * @description: List item component to render inside a List component
- * @extends: TouchableOpacity
- * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.js
- */
-class ListItem extends BaseComponent {
+type ListItemState = {
+  pressed: boolean;
+}
+
+class ListItem extends Component<ListItemProps, ListItemState> {
   static displayName = 'ListItem';
-
-  static propTypes = {
-    /**
-     * the list item height
-     */
-    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * action for when pressing the item
-     */
-    onPress: PropTypes.func,
-    /**
-     * action for when long pressing the item
-     */
-    onLongPress: PropTypes.func,
-    /**
-     * Additional styles for the top container
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * The container element to wrap the ListItem
-     */
-    containerElement: PropTypes.elementType
-  };
 
   static defaultProps = {
     height: 63,
@@ -45,15 +20,15 @@ class ListItem extends BaseComponent {
     underlayColor: Colors.dark70
   };
 
-  constructor(props) {
+  static Part = ListItemPart;
+
+  styles = createStyles(this.props.height);
+
+  constructor(props: ListItemProps) {
     super(props);
     this.state = {
       pressed: false
     };
-  }
-
-  generateStyles() {
-    this.styles = createStyles(this.props);
   }
 
   onHideUnderlay() {
@@ -62,7 +37,7 @@ class ListItem extends BaseComponent {
   onShowUnderlay() {
     this.setPressed(true);
   }
-  setPressed(isPressed) {
+  setPressed(isPressed: boolean) {
     this.setState({pressed: isPressed});
   }
 
@@ -98,7 +73,7 @@ class ListItem extends BaseComponent {
   }
 }
 
-function createStyles({height}) {
+function createStyles(height: ListItemProps['height']) {
   return StyleSheet.create({
     container: {
       backgroundColor: Colors.white
@@ -110,6 +85,4 @@ function createStyles({height}) {
   });
 }
 
-ListItem.Part = ListItemPart;
-
-export default ListItem;
+export default asBaseComponent<ListItemProps>(ListItem);
