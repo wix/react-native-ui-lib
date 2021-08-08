@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, ImageURISource} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
@@ -9,41 +9,8 @@ import View from '../../components/view';
 import Image from '../../components/image';
 import Button from '../../components/button';
 import Text from '../../components/text';
+import {StateScreenProps} from './types';
 
-export type StateScreenProps = {
-    /**
-     * The image source that's showing at the top. use an image that was required locally
-     */
-    imageSource?: ImageURISource;
-    source?: ImageURISource; // TODO: remove after deprecation
-    /**
-     * To to show as the title
-     */
-    title: string;
-    /**
-     * Text to to show as the subtitle
-     */
-    subtitle?: string;
-    /**
-     * Text to to show in the "call to action" button
-     */
-    ctaLabel?: string;
-    /**
-     * Action handler for "call to action" button
-     */
-    onCtaPress?: () => void;
-    /**
-     * Use to identify the container in tests
-     */
-    testId?: string;
-    testID?: string;
-}
-
-/**
- * @description: Component that shows a full screen for a certain state, like an empty state
- * @image: https://user-images.githubusercontent.com/33805983/34672894-f262ab84-f488-11e7-83f0-4ee0f0ac34ba.png
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/EmptyStateScreen.js
- */
 class StateScreen extends Component<StateScreenProps> {
   static displayName = 'StateScreen';
 
@@ -90,6 +57,7 @@ class StateScreen extends Component<StateScreenProps> {
   }
 }
 
+export {StateScreenProps};
 export default asBaseComponent<StateScreenProps>(StateScreen);
 
 function createStyles(isRemoteImage: boolean) {
