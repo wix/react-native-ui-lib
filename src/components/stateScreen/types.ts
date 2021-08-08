@@ -14,7 +14,7 @@ export type StateScreenProps = {
     /**
      * Text to to show as the subtitle
      */
-    subtitle?: string;
+    subtitle?: string | React.ReactNode;
     /**
      * Text to to show in the "call to action" button
      */

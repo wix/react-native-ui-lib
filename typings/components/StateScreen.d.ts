@@ -6,7 +6,7 @@ export interface StateScreenProps {
   imageSource?: ImageSourcePropType;
   source?: ImageSourcePropType;
   title: string;
-  subtitle?: ReactNode[];
+  subtitle?: string | ReactNode[];
   ctaLabel?: string;
   onCtaPress?: (event: GestureResponderEvent) => void;
   testId?: string;
