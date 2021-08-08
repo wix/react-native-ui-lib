@@ -15,6 +15,14 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export interface WheelPickerProps {
   /**
+   * Initial value (doesn't work with selectedValue)
+   */
+  initialValue?: ItemProps | number | string;
+  /**
+   * The current selected value
+   */
+  selectedValue?: ItemProps | number | string;
+  /**
    * Data source for WheelPicker
    */
   items?: ItemProps[];
@@ -64,10 +72,6 @@ export interface WheelPickerProps {
    * Support passing items as children props
    */
   children?: JSX.Element | JSX.Element[];
-  /**
-   * WheelPicker initial value, can be ItemProps.value, number as index
-   */
-  selectedValue: ItemProps | number | string;
   testID?: string;
 }
 
@@ -84,6 +88,7 @@ const WheelPicker = React.memo(({
   onChange,
   style,
   children,
+  initialValue,
   selectedValue,
   testID
 }: WheelPickerProps) => {
@@ -100,6 +105,7 @@ const WheelPicker = React.memo(({
     index: currentIndex,
     getRowItemAtOffset
   } = usePresenter({
+    initialValue,
     selectedValue,
     items: propItems,
     children,
@@ -109,24 +115,19 @@ const WheelPicker = React.memo(({
 
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
-
-  useEffect(() => {
-    controlComponent();
-  });
-
   const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
 
-  /**
-     * The picker is a controlled component. This means we expect the
-     * to relay on `selectedValue` prop to be our
-     * source of truth - not the picker current value.
-     * This way, you can control disallow or mutate selection of some values.
-     */
-  const controlComponent = () => {
+  /* This effect enforce the index to be controlled by selectedValue passed by the user */
+  useEffect(() => {
     if (shouldControlComponent(scrollOffset)) {
       scrollToIndex(currentIndex, true);
     }
-  };
+  });
+
+  /* This effect making sure to reset index if initialValue has changed */
+  useEffect(() => {
+    scrollToIndex(currentIndex, true);
+  }, [currentIndex]);
 
   const scrollToPassedIndex = useCallback(() => {
     scrollToIndex(currentIndex, false);
@@ -164,7 +165,8 @@ const WheelPicker = React.memo(({
 
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     onChange?.(value, index);
-  }, [onChange]);
+  },
+  [onChange]);
 
   const renderItem = useCallback(({item, index}) => {
     return (

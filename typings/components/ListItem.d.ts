@@ -1,9 +1,9 @@
 
 import {ComponentType} from 'react';
-import {GestureResponderEvent, StyleProp, ViewStyle} from 'react-native';
+import {GestureResponderEvent, StyleProp, ViewStyle, TouchableOpacityProps} from 'react-native';
 import {BaseComponent} from '../commons';
 
-export interface ListItemPartProps {
+export interface ListItemPartProps extends TouchableOpacityProps {
   left?: boolean;
   middle?: boolean;
   right?: boolean;
