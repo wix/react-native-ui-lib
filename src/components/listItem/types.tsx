@@ -65,7 +65,7 @@ export type ListItemPartProps = {
  * @description: List item component to render inside a List component
  * @extends: TouchableOpacity
  * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx
  */
 // @ts-ignore
 class FakeListItemForDocs extends PureComponent<ListItemProps> { // eslint-disable-line
@@ -79,7 +79,7 @@ class FakeListItemForDocs extends PureComponent<ListItemProps> { // eslint-disab
 
 /**
  * @description: ListItem.Part, a sub ListItem component for layout-ing inside a ListItem
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx
  */
 // @ts-ignore
 class FakeListItemPartForDocs extends PureComponent<ListItemPartProps> { // eslint-disable-line
