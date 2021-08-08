@@ -41,15 +41,15 @@ class StateScreen extends Component<StateScreenProps> {
     const finalSource = imageSource || source;
 
     return (
-      <View style={this.styles.container} testID={testID || testId}>
-        <Image style={this.styles.image} resizeMode={'contain'} source={finalSource}/>
-        <Text style={[this.styles.title]}>{title}</Text>
-        <Text style={[this.styles.subtitle]}>{subtitle}</Text>
+      <View style={this.styles?.container} testID={testID || testId}>
+        <Image style={this.styles?.image} resizeMode={'contain'} source={finalSource}/>
+        <Text style={[this.styles?.title]}>{title}</Text>
+        <Text style={[this.styles?.subtitle]}>{subtitle}</Text>
         <Button
           link
           marginT-30
           onPress={onCtaPress}
-          labelStyle={this.styles.ctaLabel}
+          labelStyle={this.styles?.ctaLabel}
           label={Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
         />
       </View>
