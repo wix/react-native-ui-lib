@@ -80,13 +80,13 @@ export {default as PageControl, PageControlProps} from './components/pageControl
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as ActionSheet} from './components/actionSheet';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
+export {default as ListItem, ListItemProps} from './components/listItem';
 
 /* All components with manual typings */
 export {
   BaseInput,
   TextArea,
   MaskedInput,
-  ListItem,
   ProgressBar,
   ColorSliderGroup,
   Stepper,
