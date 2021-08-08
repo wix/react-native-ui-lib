@@ -31,7 +31,7 @@ export type ListItemProps = {
    */
   underlayColor?: string;
 
-  testID: string;
+  testID?: string;
 };
 
 export type ListItemPartProps = {
