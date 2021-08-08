@@ -1,5 +1,5 @@
 import {PureComponent} from 'react';
-import {ViewStyle} from 'react-native';
+import {ViewStyle, ViewProps} from 'react-native';
 
 export type ListItemProps = {
   /**
@@ -21,7 +21,7 @@ export type ListItemProps = {
   /**
    * The container element to wrap the ListItem
    */
-  containerElement?: JSX.Element;
+  containerElement?: React.ComponentType<ListItemProps | ViewProps>;
   /**
    * The inner element style
    */
@@ -32,6 +32,33 @@ export type ListItemProps = {
   underlayColor?: string;
 
   testID: string;
+};
+
+export type ListItemPartProps = {
+  /**
+   * this part content will be aligned to left
+   */
+  left?: boolean;
+  /**
+   * this part content will be aligned to spreaded
+   */
+  middle?: boolean;
+  /**
+   * this part content will be aligned to right
+   */
+  right?: boolean;
+  /**
+   * this part content direction will be row (default)
+   */
+  row?: boolean;
+  /**
+   * this part content direction will be column
+   */
+  column?: boolean;
+  /**
+   * container style
+   */
+  containerStyle?: ViewStyle;
 };
 
 /**
@@ -47,4 +74,18 @@ class FakeListItemForDocs extends PureComponent<ListItemProps> { // eslint-disab
   render() {
     return null;
   }
+}
+
+
+/**
+ * @description: ListItem.Part, a sub ListItem component for layout-ing inside a ListItem
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.js
+ */
+// @ts-ignore
+class FakeListItemPartForDocs extends PureComponent<ListItemPartProps> { // eslint-disable-line
+    static displayName = 'ListItemPart';
+  
+    render() {
+      return null;
+    }
 }
