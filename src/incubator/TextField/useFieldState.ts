@@ -93,6 +93,7 @@ export default function useFieldState({
     onFocus,
     onBlur,
     onChangeText,
-    fieldState
+    fieldState,
+    validateField
   };
 }
