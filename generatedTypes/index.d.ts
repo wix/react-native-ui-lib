@@ -77,6 +77,7 @@ export {default as PageControl, PageControlProps} from './components/pageControl
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as ActionSheet} from './components/actionSheet';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
+export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 
 /* All components with manual typings */
 export {
@@ -101,8 +102,6 @@ export {
   UIComponent,
   forwardRef,
   AvatarHelper,
-  LoaderScreen,
-  StateScreen,
   WheelPicker,
   WheelPickerProps,
   Picker,
