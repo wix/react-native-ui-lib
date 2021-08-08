@@ -1,4 +1,17 @@
-const orders = [
+type InventoryType = {
+  trackingMethod: string;
+  status: string;
+  quantity: number;
+}
+
+export type OrderType = {
+  name: string;
+  formattedPrice: string;
+  inventory: InventoryType
+  mediaUrl: string;
+}
+
+const orders: Array<OrderType> = [
   {
     name: '#100201',
     formattedPrice: '$19.99',
