@@ -1,50 +1,14 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
 import Text from '../../components/text';
+import {LoaderScreenProps} from './types';
 
-/**
- * @description: Component that shows a full screen with an activity indicator
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/LoadingScreen.js
- * 
- */
-export default class LoaderScreen extends BaseComponent {
+class LoaderScreen extends Component<LoaderScreenProps> {
   static displayName = 'LoaderScreen';
-
-  static propTypes = {
-    ...ActivityIndicator.propTypes,
-    /**
-     * Color of the loading indicator
-     */
-    loaderColor: PropTypes.string,
-    /**
-     * Custom loader
-     */
-    customLoader: PropTypes.element,
-    /**
-     * Color of the loader background (only when passing 'overlay')
-     */
-    backgroundColor: PropTypes.string,
-    /**
-     * loader message
-     */
-    message: PropTypes.string,
-    /**
-     * message style
-     */
-    messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Show the screen as an absolute overlay
-     */
-    overlay: PropTypes.bool
-    /**
-     * Custom container style
-     */
-  };
 
   render() {
     const {
@@ -75,6 +39,8 @@ export default class LoaderScreen extends BaseComponent {
     );
   }
 }
+
+export default asBaseComponent<LoaderScreenProps>(LoaderScreen);
 
 const styles = StyleSheet.create({
   container: {
