@@ -6,13 +6,10 @@ const remoteImageSource = {uri: 'https://static.pexels.com/photos/169651/pexels-
 
 type State = {
   currentPage: number;
-}
+};
 
-export default class EmptyStateScreen extends Component<any, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {currentPage: 0};
-  }
+export default class EmptyStateScreen extends Component<{}, State> {
+  state = {currentPage: 0};
 
   setCurrentPage(offsetX: number) {
     if (offsetX >= 0) {
@@ -30,7 +27,7 @@ export default class EmptyStateScreen extends Component<any, State> {
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
-          onScroll={(event) => {
+          onScroll={event => {
             this.setCurrentPage(event.nativeEvent.contentOffset.x);
           }}
           scrollEventThrottle={200}
