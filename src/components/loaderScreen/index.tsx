@@ -40,6 +40,7 @@ class LoaderScreen extends Component<LoaderScreenProps> {
   }
 }
 
+export {LoaderScreenProps};
 export default asBaseComponent<LoaderScreenProps>(LoaderScreen);
 
 const styles = StyleSheet.create({
