@@ -119,19 +119,10 @@ export default class TextFieldScreen extends Component {
           />
 
           <View row marginV-s4 spread>
-            <View row>
-              <Text h3 blue50>
-                Validation
-              </Text>
-              <Button
-                marginL-s2
-                label="Validate"
-                size={Button.sizes.xSmall}
-                onPress={() => {
-                  this.inputWithValidation.current?.validate?.();
-                }}
-              />
-            </View>
+            <Text h3 blue50>
+              Validation
+            </Text>
+
             <Button
               size={Button.sizes.xSmall}
               label={`Error Position: ${_.upperCase(errorPosition)}`}
@@ -147,7 +138,6 @@ export default class TextFieldScreen extends Component {
           </View>
 
           <TextField
-            ref={this.inputWithValidation}
             value={this.state.value}
             onChangeText={value => this.setState({value})}
             label="Email"
@@ -162,7 +152,27 @@ export default class TextFieldScreen extends Component {
             // validateOnStart
             // validateOnBlur
             fieldStyle={styles.withUnderline}
+            marginB-s4
           />
+
+          <View row top marginT-s4>
+            <TextField
+              ref={this.inputWithValidation}
+              placeholder="Enter full name"
+              validate="required"
+              validationMessage="This field is required"
+              containerStyle={{flexGrow: 1}}
+              fieldStyle={styles.withUnderline}
+            />
+            <Button
+              marginL-s5
+              label="Validate"
+              size={Button.sizes.xSmall}
+              onPress={() => {
+                this.inputWithValidation.current?.validate?.();
+              }}
+            />
+          </View>
 
           <View row centerV spread>
             <Text h3 blue50 marginV-s4>
