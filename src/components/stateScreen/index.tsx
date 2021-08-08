@@ -14,7 +14,7 @@ import {StateScreenProps} from './types';
 class StateScreen extends Component<StateScreenProps> {
   static displayName = 'StateScreen';
 
-  styles?: any;
+  styles: any;
   constructor(props: StateScreenProps) {
     super(props);
     
@@ -25,6 +25,8 @@ class StateScreen extends Component<StateScreenProps> {
     if (props.source) {
       LogService.deprecationWarn({component: 'StateScreen', oldProp: 'source', newProp: 'imageSource'});
     }
+
+    this.generateStyles();
   }
 
   generateStyles() {
@@ -41,15 +43,15 @@ class StateScreen extends Component<StateScreenProps> {
     const finalSource = imageSource || source;
 
     return (
-      <View style={this.styles?.container} testID={testID || testId}>
-        <Image style={this.styles?.image} resizeMode={'contain'} source={finalSource}/>
-        <Text style={[this.styles?.title]}>{title}</Text>
-        <Text style={[this.styles?.subtitle]}>{subtitle}</Text>
+      <View style={this.styles.container} testID={testID || testId}>
+        <Image style={this.styles.image} resizeMode={'contain'} source={finalSource}/>
+        <Text style={[this.styles.title]}>{title}</Text>
+        <Text style={[this.styles.subtitle]}>{subtitle}</Text>
         <Button
           link
           marginT-30
           onPress={onCtaPress}
-          labelStyle={this.styles?.ctaLabel}
+          labelStyle={this.styles.ctaLabel}
           label={Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
         />
       </View>
