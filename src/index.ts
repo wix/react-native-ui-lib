@@ -24,6 +24,7 @@ export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avat
 export {AvatarHelper} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
+export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Constants} from './helpers/Constants';
 export {default as HapticService, HapticType} from './services/HapticService';
 export {default as View, ViewPropTypes, ViewProps} from './components/view';
@@ -80,7 +81,7 @@ export {default as LogService} from './services/LogService';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ConnectionStatusBar, ChipsInput,
+  ChipsInput,
   BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
   PickerProps, ProgressBar, Stepper,
   TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
