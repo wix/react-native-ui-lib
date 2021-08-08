@@ -535,7 +535,7 @@ class Hint extends Component<HintProps, HintState> {
     const {onBackgroundPress, testID} = this.props;
     
     if (!this.props.visible && this.state.hintUnmounted) {
-      return this.props.children;
+      return this.props.children || null;
     }
 
     return (
