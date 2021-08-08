@@ -24,6 +24,7 @@ export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avat
 export {AvatarHelper} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
+export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Constants} from './helpers/Constants';
 export {default as HapticService, HapticType} from './services/HapticService';
 export {default as View, ViewPropTypes, ViewProps} from './components/view';
@@ -78,13 +79,14 @@ export {default as GradientSlider, GradientSliderProps} from './components/slide
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as LogService} from './services/LogService';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
+export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ConnectionStatusBar, ChipsInput,
+  ChipsInput,
   BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
   PickerProps, ProgressBar, Stepper,
   TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
   BaseComponent, PureBaseComponent, UIComponent, forwardRef,
-  LoaderScreen, WheelPicker, WheelPickerProps
+  WheelPicker, WheelPickerProps
 } from '../typings';

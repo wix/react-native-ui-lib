@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {createContext} from 'react';
 
 export type FieldContextType = {
@@ -7,6 +8,7 @@ export type FieldContextType = {
   isValid: boolean;
   failingValidatorIndex?: number;
   disabled: boolean;
+  validateField: () => void
 };
 
 const FieldContext = createContext<FieldContextType>({
@@ -14,7 +16,8 @@ const FieldContext = createContext<FieldContextType>({
   hasValue: false,
   isValid: true,
   failingValidatorIndex: undefined,
-  disabled: false
+  disabled: false,
+  validateField: _.noop
 });
 
 export default FieldContext;

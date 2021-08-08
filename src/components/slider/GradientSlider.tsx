@@ -59,6 +59,7 @@ type GradientSliderComponentProps = {
 
 interface GradientSliderState {
   color: tinycolor.ColorFormats.HSLA;
+  initialColor: tinycolor.ColorFormats.HSLA;
   prevColor: string | undefined;
 }
 
@@ -85,6 +86,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
 
     this.state = {
       prevColor: props.color,
+      initialColor: Colors.getHSL(props.color),
       color: Colors.getHSL(props.color)
     };
   }
@@ -186,6 +188,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
 
   render() {
     const {type, containerStyle, disabled, accessible} = this.props;
+    const initialColor = this.state.initialColor;
     const color = this.getColor();
     const thumbTintColor = Colors.getHexString(color);
     let step = 0.01;
@@ -198,17 +201,17 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
       case GradientSliderTypes.HUE:
         step = 1;
         maximumValue = 359;
-        value = color.h;
+        value = initialColor.h;
         renderTrack = this.renderHueGradient;
         onValueChange = this.updateHue;
         break;
       case GradientSliderTypes.LIGHTNESS:
-        value = color.l;
+        value = initialColor.l;
         renderTrack = this.renderLightnessGradient;
         onValueChange = this.updateLightness;
         break;
       case GradientSliderTypes.SATURATION:
-        value = color.s;
+        value = initialColor.s;
         renderTrack = this.renderSaturationGradient;
         onValueChange = this.updateSaturation;
         break;
