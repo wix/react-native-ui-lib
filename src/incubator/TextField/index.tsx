@@ -142,11 +142,11 @@ const TextField = (props: InternalTextFieldProps) => {
     placeholder,
     ...others
   } = usePreset(props);
-  const {onFocus, onBlur, onChangeText, fieldState} = useFieldState(others);
+  const {onFocus, onBlur, onChangeText, fieldState, validateField} = useFieldState(others);
 
   const context = useMemo(() => {
-    return {...fieldState, disabled: others.editable === false};
-  }, [fieldState, others.editable]);
+    return {...fieldState, disabled: others.editable === false, validateField};
+  }, [fieldState, others.editable, validateField]);
 
   const {margins, paddings, typography, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);

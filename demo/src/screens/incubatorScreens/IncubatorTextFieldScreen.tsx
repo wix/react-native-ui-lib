@@ -8,6 +8,7 @@ const {KeyboardAwareInsetsView} = Keyboard;
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
   input2 = React.createRef<TextInput>();
+  inputWithValidation = React.createRef<TextInput>();
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
     shouldDisable: false,
@@ -118,9 +119,19 @@ export default class TextFieldScreen extends Component {
           />
 
           <View row marginV-s4 spread>
-            <Text h3 blue50>
-              Validation
-            </Text>
+            <View row>
+              <Text h3 blue50>
+                Validation
+              </Text>
+              <Button
+                marginL-s2
+                label="Validate"
+                size={Button.sizes.xSmall}
+                onPress={() => {
+                  this.inputWithValidation.current?.validate?.();
+                }}
+              />
+            </View>
             <Button
               size={Button.sizes.xSmall}
               label={`Error Position: ${_.upperCase(errorPosition)}`}
@@ -136,6 +147,7 @@ export default class TextFieldScreen extends Component {
           </View>
 
           <TextField
+            ref={this.inputWithValidation}
             value={this.state.value}
             onChangeText={value => this.setState({value})}
             label="Email"
