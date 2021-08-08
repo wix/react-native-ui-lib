@@ -47,6 +47,7 @@ declare type GradientSliderComponentProps = {
 } & GradientSliderProps & typeof defaultProps;
 interface GradientSliderState {
     color: tinycolor.ColorFormats.HSLA;
+    initialColor: tinycolor.ColorFormats.HSLA;
     prevColor: string | undefined;
 }
 declare const defaultProps: {
