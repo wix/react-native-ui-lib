@@ -1,54 +1,56 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, ImageURISource} from 'react-native';
 import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
 import Image from '../../components/image';
 import Button from '../../components/button';
 import Text from '../../components/text';
+
+export type StateScreenProps = {
+    /**
+     * The image source that's showing at the top. use an image that was required locally
+     */
+    imageSource?: ImageURISource;
+    source?: ImageURISource; // TODO: remove after deprecation
+    /**
+     * To to show as the title
+     */
+    title: string;
+    /**
+     * Text to to show as the subtitle
+     */
+    subtitle?: string;
+    /**
+     * Text to to show in the "call to action" button
+     */
+    ctaLabel?: string;
+    /**
+     * Action handler for "call to action" button
+     */
+    onCtaPress?: () => void;
+    /**
+     * Use to identify the container in tests
+     */
+    testId?: string;
+    testID?: string;
+}
 
 /**
  * @description: Component that shows a full screen for a certain state, like an empty state
  * @image: https://user-images.githubusercontent.com/33805983/34672894-f262ab84-f488-11e7-83f0-4ee0f0ac34ba.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/EmptyStateScreen.js
  */
-export default class StateScreen extends BaseComponent {
+class StateScreen extends Component<StateScreenProps> {
   static displayName = 'StateScreen';
-  static propTypes = {
-    /**
-     * The image source that's showing at the top. use an image that was required locally
-     */
-    imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), // TODO: remove after deprecation
-    /**
-     * To to show as the title
-     */
-    title: PropTypes.string.isRequired,
-    /**
-     * Text to to show as the subtitle
-     */
-    subtitle: PropTypes.any,
-    /**
-     * Text to to show in the "call to action" button
-     */
-    ctaLabel: PropTypes.string,
-    /**
-     * Action handler for "call to action" button
-     */
-    onCtaPress: PropTypes.func,
-    /**
-     * Use to identify the container in tests
-     */
-    testId: PropTypes.string
-  };
 
-  constructor(props) {
+  styles?: any;
+  constructor(props: StateScreenProps) {
     super(props);
-
+    
     if (props.testId) {
       LogService.deprecationWarn({component: 'StateScreen', oldProp: 'testId', newProp: 'testID'});
 
@@ -88,7 +90,9 @@ export default class StateScreen extends BaseComponent {
   }
 }
 
-function createStyles(isRemoteImage) {
+export default asBaseComponent<StateScreenProps>(StateScreen);
+
+function createStyles(isRemoteImage: boolean) {
   const imageStyle = _.merge({height: 200}, isRemoteImage && {width: Constants.screenWidth * 0.9});
   return StyleSheet.create({
     container: {
