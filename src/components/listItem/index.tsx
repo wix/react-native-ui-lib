@@ -41,35 +41,32 @@ class ListItem extends Component<ListItemProps, ListItemState> {
     this.setState({pressed: isPressed});
   }
 
-  render() {
-    const {
-      containerElement,
-      containerStyle,
-      style,
-      onPress,
-      onLongPress,
-      underlayColor,
-      testID,
-      ...others
-    } = this.props;
+  renderViewContainer = () => {
     const {pressed} = this.state;
+    const {containerStyle, style, underlayColor, ...others} = this.props;
     const pressedStyle = {backgroundColor: underlayColor};
-    const Container = onPress || onLongPress ? containerElement : View;
-
     return (
-      <Container
-        activeOpacity={1}
-        style={[this.styles.container, containerStyle]}
-        onPress={onPress}
-        onLongPress={onLongPress}
-        onHideUnderlay={this.onHideUnderlay}
-        onShowUnderlay={this.onShowUnderlay}
-        testID={testID}
-        {...others}
-      >
+      <View style={[this.styles.container, containerStyle]} {...others}>
         <View style={[this.styles.innerContainer, style, pressed && pressedStyle]}>{this.props.children}</View>
-      </Container>
+      </View>
     );
+  };
+
+  renderCustomContainer = (Container: React.ComponentType) => {
+    const {...others} = this.props;
+    return <Container {...others}>{this.renderChildren()}</Container>;
+  };
+
+  renderChildren = () => {
+    const {pressed} = this.state;
+    const {underlayColor, style, children} = this.props;
+    const pressedStyle = {backgroundColor: underlayColor};
+    return <View style={[this.styles.innerContainer, style, pressed && pressedStyle]}>{children}</View>;
+  };
+
+  render() {
+    const {containerElement} = this.props;
+    return containerElement ? this.renderCustomContainer(containerElement) : this.renderViewContainer();
   }
 }
 
