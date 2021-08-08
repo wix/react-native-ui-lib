@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
 import {StateScreen, Constants, PageControl} from 'react-native-ui-lib';
 const localImageSource = require('../../assets/images/empty-state.jpg');
-const remoteImageSource = {uri: 'https://static.pexels.com/photos/169651/pexels-photo-169651.jpeg'};
+const remoteImageSource = {uri: 'https://cdn.pixabay.com/photo/2017/04/19/20/10/morning-2243465_1280.jpg'};
 
 type State = {
   currentPage: number;
