@@ -1,5 +1,6 @@
 import {PureComponent} from 'react';
-import {ViewStyle, TouchableOpacityProps} from 'react-native';
+import {ViewStyle} from 'react-native';
+import {TouchableOpacityProps} from '../touchableOpacity';
 
 export type ListItemProps = {
   /**

@@ -1,5 +1,6 @@
 /// <reference types="react" />
-import { ViewStyle, TouchableOpacityProps } from 'react-native';
+import { ViewStyle } from 'react-native';
+import { TouchableOpacityProps } from '../touchableOpacity';
 export declare type ListItemProps = {
     /**
      * the list item height
