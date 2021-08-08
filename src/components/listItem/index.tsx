@@ -82,4 +82,6 @@ function createStyles(height: ListItemProps['height']) {
   });
 }
 
+export {ListItemProps};
+
 export default asBaseComponent<ListItemProps>(ListItem);

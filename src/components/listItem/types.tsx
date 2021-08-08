@@ -1,5 +1,5 @@
 import {PureComponent} from 'react';
-import {ViewStyle, ViewProps} from 'react-native';
+import {ViewStyle, TouchableOpacityProps} from 'react-native';
 
 export type ListItemProps = {
   /**
@@ -21,7 +21,7 @@ export type ListItemProps = {
   /**
    * The container element to wrap the ListItem
    */
-  containerElement?: React.ComponentType<ListItemProps | ViewProps>;
+  containerElement?: React.ComponentType<ListItemProps | TouchableOpacityProps>;
   /**
    * The inner element style
    */
