@@ -148,15 +148,15 @@ class GridView extends UIComponent<Props, State> {
       return;
     }
 
-    const thumbnailBorderRadius = _.chain(items)
+    const imageBorderRadius = _.chain(items)
       .first()
-      .get('thumbnail.borderRadius')
+      .get('imageProps.borderRadius')
       .value();
     return (
       <View
         style={[
           styles.overlayContainer,
-          {backgroundColor: Colors.rgba(overlayColor, 0.6), borderRadius: thumbnailBorderRadius}
+          {backgroundColor: Colors.rgba(overlayColor, 0.6), borderRadius: imageBorderRadius}
         ]}
       >
         <Text mainBold white>

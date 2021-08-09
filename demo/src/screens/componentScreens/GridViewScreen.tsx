@@ -12,7 +12,7 @@ class GridViewScreen extends Component {
     contacts: _.chain(conversations)
       .take(15)
       .map(contact => ({
-        thumbnail: {source: {uri: contact.thumbnail}, borderRadius: 999},
+        imageProps: {source: {uri: contact.thumbnail}, borderRadius: 999},
         title: _.split(contact.name, ' ')[0],
         onPress: () => Alert.alert('My name is ' + contact.name)
       }))
@@ -20,7 +20,7 @@ class GridViewScreen extends Component {
     products: _.chain(products)
       .take(8)
       .map((product, index) => ({
-        thumbnail: {source: {uri: product.mediaUrl}, borderRadius: 4},
+        imageProps: {source: {uri: product.mediaUrl}, borderRadius: 4},
         title: product.name,
         titleTypography: 'subtextBold',
         onPress: () => Alert.alert('My price is ' + product.formattedPrice),
@@ -39,7 +39,7 @@ class GridViewScreen extends Component {
     pairs: _.chain(products)
       .take(2)
       .map(product => ({
-        thumbnail: {source: {uri: product.mediaUrl}},
+        imageProps: {source: {uri: product.mediaUrl}},
         title: product.name,
         subtitle: (
           <Text>
@@ -56,7 +56,7 @@ class GridViewScreen extends Component {
     dynamicLayout: _.chain(products)
       .take(2)
       .map(product => ({
-        thumbnail: {
+        imageProps: {
           source: {
             uri: product.mediaUrl
           }
@@ -73,7 +73,7 @@ class GridViewScreen extends Component {
     overlayText: _.chain(products)
       .take(2)
       .map((product, index) => ({
-        thumbnail: {
+        imageProps: {
           source: {
             uri: product.mediaUrl
           }

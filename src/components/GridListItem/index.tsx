@@ -17,7 +17,7 @@ export interface GridItemProps {
   /**
    * Image props object for rendering an image item
    */
-  thumbnail?: ImageProps;
+  imageProps?: ImageProps;
   /**
    * Custom GridListItem to be rendered in the GridView
    */
@@ -159,7 +159,7 @@ class GridListItem extends BaseComponent<GridItemProps> {
   render() {
     const {
       testID,
-      thumbnail,
+      imageProps,
       alignToStart,
       containerStyle,
       renderCustomItem,
@@ -184,11 +184,11 @@ class GridListItem extends BaseComponent<GridItemProps> {
     const hasPress = _.isFunction(onPress);
     const hasOverlay = _.isFunction(renderOverlay);
     const Container = hasPress ? TouchableOpacity : View;
-    const thumbnailStyle = {...this.getItemSizeObj()};
-    const width = _.get(thumbnailStyle, 'width');
+    const imageStyle = {...this.getItemSizeObj()};
+    const width = _.get(imageStyle, 'width');
     const TextContainer = overlayText ? View : React.Fragment;
     const textContainerStyle = overlayText ? {style: [styles.overlayText, overlayTextContainerStyle]} : null;
-    const thumbnailBorderRadius = thumbnail?.borderRadius;
+    const imageBorderRadius = imageProps?.borderRadius;
 
     return (
       <Container
@@ -197,11 +197,11 @@ class GridListItem extends BaseComponent<GridItemProps> {
         accessible={renderCustomItem ? true : undefined}
         {...this.extractAccessibilityProps()}
       >
-        {thumbnail &&
+        {imageProps &&
         <View
-          style={[{borderRadius: thumbnailBorderRadius}, thumbnailStyle]}
+          style={[{borderRadius: imageBorderRadius}, imageStyle]}
         >
-          <Image style={thumbnailStyle} {...thumbnail}/>
+          <Image style={imageStyle} {...imageProps}/>
           {children}
         </View>}
         {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
