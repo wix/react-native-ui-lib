@@ -95,7 +95,7 @@ export interface GridItemProps {
    */
   onPress?: TouchableOpacityProps['onPress'];
   /**
-   * Renders an overlay on top of the thumbnail
+   * Renders an overlay on top of the image
    */
   renderOverlay?: () => React.ReactElement;
   /**
