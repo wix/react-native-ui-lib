@@ -4,6 +4,14 @@ import { ItemProps } from './Item';
 import { TextProps } from '../../components/text';
 export interface WheelPickerProps {
     /**
+     * Initial value (doesn't work with selectedValue)
+     */
+    initialValue?: ItemProps | number | string;
+    /**
+     * The current selected value
+     */
+    selectedValue?: ItemProps | number | string;
+    /**
      * Data source for WheelPicker
      */
     items?: ItemProps[];
@@ -53,11 +61,7 @@ export interface WheelPickerProps {
      * Support passing items as children props
      */
     children?: JSX.Element | JSX.Element[];
-    /**
-     * WheelPicker initial value, can be ItemProps.value, number as index
-     */
-    selectedValue: ItemProps | number | string;
     testID?: string;
 }
-declare const WheelPicker: React.MemoExoticComponent<({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, style, children, selectedValue, testID }: WheelPickerProps) => JSX.Element>;
+declare const WheelPicker: React.MemoExoticComponent<({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, style, children, initialValue, selectedValue, testID }: WheelPickerProps) => JSX.Element>;
 export default WheelPicker;

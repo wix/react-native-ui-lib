@@ -278,9 +278,9 @@ class DateTimePicker extends Component {
 
     return (
       <TextField
+        renderExpandableInput={renderInput}
         {...textInputProps}
         value={this.getStringValue()}
-        renderExpandableInput={renderInput}
         expandable
         renderExpandable={this.renderExpandable}
         onToggleExpandableModal={this.onToggleExpandableModal}

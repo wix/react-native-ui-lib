@@ -8,6 +8,7 @@ const {KeyboardAwareInsetsView} = Keyboard;
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
   input2 = React.createRef<TextInput>();
+  inputWithValidation = React.createRef<TextInput>();
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
     shouldDisable: false,
@@ -121,6 +122,7 @@ export default class TextFieldScreen extends Component {
             <Text h3 blue50>
               Validation
             </Text>
+
             <Button
               size={Button.sizes.xSmall}
               label={`Error Position: ${_.upperCase(errorPosition)}`}
@@ -150,7 +152,27 @@ export default class TextFieldScreen extends Component {
             // validateOnStart
             // validateOnBlur
             fieldStyle={styles.withUnderline}
+            marginB-s4
           />
+
+          <View row top marginT-s4>
+            <TextField
+              ref={this.inputWithValidation}
+              placeholder="Enter full name"
+              validate="required"
+              validationMessage="This field is required"
+              containerStyle={{flexGrow: 1}}
+              fieldStyle={styles.withUnderline}
+            />
+            <Button
+              marginL-s5
+              label="Validate"
+              size={Button.sizes.xSmall}
+              onPress={() => {
+                this.inputWithValidation.current?.validate?.();
+              }}
+            />
+          </View>
 
           <View row centerV spread>
             <Text h3 blue50 marginV-s4>

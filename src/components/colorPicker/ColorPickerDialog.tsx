@@ -20,7 +20,6 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 import Dialog, {DialogProps} from '../dialog';
 import Button from '../button';
-//@ts-expect-error
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import PanningProvider from '../panningViews/panningProvider';
 

@@ -769,7 +769,7 @@ function createStyles({centered, multiline}, rightItemTopPadding = 0) {
     },
     input: {
       flexGrow: 1,
-      textAlign: centered ? 'center' : undefined,
+      textAlign: centered ? 'center' : Constants.isRTL ? 'right' : 'left',
       backgroundColor: 'transparent',
       // marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
@@ -800,7 +800,7 @@ function createStyles({centered, multiline}, rightItemTopPadding = 0) {
     },
     errorMessage: {
       color: Colors.red30,
-      textAlign: centered ? 'center' : undefined
+      textAlign: centered ? 'center' : 'left'
     },
     topLabel: {
       marginBottom: Constants.isIOS ? (multiline ? 1 : 5) : 7

@@ -23,7 +23,8 @@ Typography.loadTypographies({
   h1: {...Typography.text40},
   h2: {...Typography.text50},
   h3: {...Typography.text60},
-  body: Typography.text70
+  body: Typography.text70,
+  bodySmall: Typography.text80
 });
 
 Spacings.loadSpacings({

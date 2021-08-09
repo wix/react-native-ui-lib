@@ -6,6 +6,7 @@ import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
 import {Constants} from '../../helpers';
 import FieldContext from './FieldContext';
+import useImperativeInputHandle from './useImperativeInputHandle';
 
 const DEFAULT_INPUT_COLOR: ColorType = {
   default: Colors.grey10,
@@ -35,6 +36,7 @@ const Input = ({
   forwardedRef,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
+  const inputRef = useImperativeInputHandle(forwardedRef);
   const context = useContext(FieldContext);
   const placeholder = !context.isFocused ? props.placeholder : hint || props.placeholder;
   const inputColor = getColorByState(color, context);
@@ -46,7 +48,8 @@ const Input = ({
       {...props}
       placeholder={placeholder}
       placeholderTextColor={placeholderTextColor}
-      ref={forwardedRef}
+      // @ts-expect-error
+      ref={inputRef}
       underlineColorAndroid="transparent"
       accessibilityState={{disabled: props.editable === false}}
     />
