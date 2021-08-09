@@ -24,6 +24,8 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
     private final InputMethodManager mInputMethodManager;
     private final ReactSoftKeyboardMonitor mKeyboardMonitor;
     private WeakReference<CustomKeyboardRootViewShadow> mShadowNode = new WeakReference<>(null);
+    private int mSoftInputMode;
+    private boolean mIsShown = false;
 
     public CustomKeyboardLayout(ReactContext reactContext, ReactSoftKeyboardMonitor keyboardMonitor, ReactScreenMonitor screenMonitor) {
         mKeyboardMonitor = keyboardMonitor;
@@ -31,6 +33,18 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
 
         mKeyboardMonitor.setListener(this);
         screenMonitor.addListener(this);
+    }
+
+    public void setShown(boolean isShown) {
+        mIsShown = isShown;
+        Window window = getWindow();
+        if (window != null) {
+            if (mIsShown) {
+                mSoftInputMode = window.getAttributes().softInputMode;
+            } else {
+                window.setSoftInputMode(mSoftInputMode);
+            }
+        }
     }
 
     @Override
@@ -167,16 +181,20 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
     }
 
     private void setKeyboardOverlayMode() {
-        Window window = getWindow();
-        if (window != null) {
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        if (mIsShown) {
+            Window window = getWindow();
+            if (window != null) {
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+            }
         }
     }
 
     private void clearKeyboardOverlayMode() {
-        Window window = getWindow();
-        if (window != null) {
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        if (mIsShown) {
+            Window window = getWindow();
+            if (window != null) {
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            }
         }
     }
 
