@@ -15,7 +15,7 @@ import Image, {ImageProps} from '../image';
 
 export interface GridItemProps {
   /**
-   * Thumbnail props object for rendering a Thumbnail item
+   * Image props object for rendering an image item
    */
   thumbnail?: ImageProps;
   /**
