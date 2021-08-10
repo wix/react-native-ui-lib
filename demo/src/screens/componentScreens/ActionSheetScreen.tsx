@@ -22,7 +22,7 @@ export default class ActionSheetScreen extends Component {
 
   pickOption(index: string) {
     this.setState({
-      colorOption: index
+      pickedOption: index
     });
   }
 
