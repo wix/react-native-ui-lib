@@ -241,6 +241,9 @@ module.exports = {
       // wrapperScreens
       get TouchableOpacityScreen() {
         return require('./screens/componentScreens/TouchableOpacityScreen').default;
+      },
+      get ProductPage() {
+        return require('./screens/realExamples/ProductPage');
       }
     };
   },

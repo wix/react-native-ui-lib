@@ -6,4 +6,5 @@ export function registerScreens(registrar) {
     gestureHandlerRootHOC(require('./Pinterest').default));
   registrar('unicorn.examples.ListActionsScreen',
     () => require('./ListActions/ListActionsScreen').default);
+  registrar('unicorn.examples.ProductPage', () => require('./ProductPage').default);
 }
