@@ -10,6 +10,7 @@ const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
   label: string;
+  fakeLabel?: string;
   value: string | number;
 }
 
@@ -28,6 +29,7 @@ interface InternalProps extends ItemProps {
 export default memo(({
   index,
   label,
+  fakeLabel,
   itemHeight,
   onSelect,
   offset,
@@ -63,10 +65,19 @@ export default memo(({
       // @ts-ignore reanimated2
       index={index}
       testID={testID}
+      row
     >
-      <AnimatedText text60R style={[animatedColorStyle, style]}>
+      <AnimatedText
+        text60R
+        style={[animatedColorStyle, style, fakeLabel ? styles.textWithLabelPadding : styles.textPadding]}
+      >
         {label}
       </AnimatedText>
+      {fakeLabel && (
+        <Text marginL-s2 marginR-s5 text70 color={'white'}>
+          {fakeLabel}
+        </Text>
+      )}
     </AnimatedTouchableOpacity>
   );
 });
@@ -74,5 +85,11 @@ export default memo(({
 const styles = StyleSheet.create({
   container: {
     minWidth: Spacings.s10
+  },
+  textPadding: {
+    paddingHorizontal: Spacings.s5
+  },
+  textWithLabelPadding: {
+    paddingLeft: Spacings.s5
   }
 });

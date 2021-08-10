@@ -13,6 +13,12 @@ import Text, {TextProps} from '../../components/text';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
+export enum WheelPickerAlign {
+  CENTER = 'center',
+  RIGHT = 'right',
+  LEFT = 'left'
+}
+
 export interface WheelPickerProps {
   /**
    * Initial value (doesn't work with selectedValue)
@@ -72,6 +78,10 @@ export interface WheelPickerProps {
    * Support passing items as children props
    */
   children?: JSX.Element | JSX.Element[];
+  /**
+   * Align the content to center, right ot left (default: center)
+   */
+  align?: WheelPickerAlign;
   testID?: string;
 }
 
@@ -86,6 +96,7 @@ const WheelPicker = React.memo(({
   labelStyle,
   labelProps,
   onChange,
+  align,
   style,
   children,
   initialValue,
@@ -115,6 +126,7 @@ const WheelPicker = React.memo(({
 
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
+  const [flatListWidth, setFlatListWidth] = useState(0);
   const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
 
   /* This effect enforce the index to be controlled by selectedValue passed by the user */
@@ -168,6 +180,14 @@ const WheelPicker = React.memo(({
   },
   [onChange]);
 
+  const alignmentStyle = useMemo(() =>
+    align === WheelPickerAlign.RIGHT
+      ? {alignSelf: 'flex-end'}
+      : align === WheelPickerAlign.LEFT
+        ? {alignSelf: 'flex-start'}
+        : {alignSelf: 'center'},
+  [align]);
+
   const renderItem = useCallback(({item, index}) => {
     return (
       <Item
@@ -178,6 +198,7 @@ const WheelPicker = React.memo(({
         inactiveColor={inactiveTextColor}
         style={textStyle}
         {...item}
+        fakeLabel={label}
         centerH={!label}
         onSelect={selectItem}
         testID={`${testID}.item_${index}`}
@@ -196,8 +217,8 @@ const WheelPicker = React.memo(({
 
   const labelContainer = useMemo(() => {
     return (
-      <View centerV>
-        <Text marginL-s2 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+      <View style={{position: 'absolute', right: 0, top: 0, bottom: 0}} centerV pointerEvents="none">
+        <Text marginL-s2 marginR-s5 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
           {label}
         </Text>
       </View>
@@ -215,13 +236,22 @@ const WheelPicker = React.memo(({
   [itemHeight]);
 
   const contentContainerStyle = useMemo(() => {
-    return {paddingVertical: height / 2 - itemHeight / 2};
-  }, [height, itemHeight]);
+    return [
+      {
+        paddingVertical: height / 2 - itemHeight / 2
+      },
+      alignmentStyle
+    ];
+  }, [height, itemHeight, alignmentStyle]);
+
+  const labelContainerStyle = useMemo(() => {
+    return [{position: 'absolute', top: 0, bottom: 0}, alignmentStyle];
+  }, [alignmentStyle]);
 
   return (
     <View testID={testID} bg-white style={style}>
-      <View row marginH-s5 centerH>
-        <View>
+      <View row centerH>
+        <View flexG>
           <AnimatedFlatList
             testID={`${testID}.list`}
             height={height}
@@ -235,14 +265,19 @@ const WheelPicker = React.memo(({
             onLayout={scrollToPassedIndex}
             // @ts-ignore
             ref={scrollView}
+            // @ts-expect-error
             contentContainerStyle={contentContainerStyle}
             snapToInterval={itemHeight}
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
             getItemLayout={getItemLayout}
             initialScrollIndex={currentIndex}
+            onContentSizeChange={contentWidth => setFlatListWidth(contentWidth)}
           />
         </View>
+      </View>
+      {/* @ts-expect-error */}
+      <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
         {label && labelContainer}
       </View>
       {fader(FaderPosition.BOTTOM)}

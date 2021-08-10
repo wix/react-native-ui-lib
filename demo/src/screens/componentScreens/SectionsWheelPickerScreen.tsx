@@ -65,21 +65,24 @@ const SectionsWheelPickerScreen = () => {
       onChange: onDaysChange,
       selectedValue: selectedDays,
       label: 'Days',
-      style: numOfSections === 1 ? {flex: 1} : {flex: 1, alignItems: 'flex-end'}
+      align: numOfSections === 1 ? Incubator.WheelPickerAlign.CENTER : Incubator.WheelPickerAlign.RIGHT,
+      style: {flex: 1}
     },
     {
       items: getItems(hours),
       onChange: onHoursChange,
       selectedValue: selectedHours,
       label: 'Hrs',
-      style: numOfSections === 2 ? {flex: 1, alignItems: 'flex-start'} : undefined
+      align: numOfSections === 2 ? Incubator.WheelPickerAlign.LEFT : Incubator.WheelPickerAlign.CENTER,
+      style: numOfSections === 2 ? {flex: 1} : undefined
     },
     {
       items: getItems(minutes),
       onChange: onMinutesChange,
       selectedValue: selectedMinutes,
       label: 'Mins',
-      style: {flex: 1, alignItems: 'flex-start'}
+      align: Incubator.WheelPickerAlign.LEFT,
+      style: {flex: 1}
     }
   ];
 
