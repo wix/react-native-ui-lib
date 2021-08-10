@@ -85,7 +85,7 @@ export declare function extractPositionStyle(props: Dictionary<any>): {
 } | undefined;
 export declare function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeFlexModifierKeyType, number>> | undefined;
 export declare function extractAccessibilityProps(props?: any): Partial<any>;
-export declare function extractAnimationProps(props?: any): Pick<any, "onAnimationEnd" | "animation" | "duration" | "delay" | "direction" | "easing" | "iterationCount" | "transition" | "onAnimationBegin" | "useNativeDriver">;
+export declare function extractAnimationProps(props?: any): Pick<any, "direction" | "onAnimationEnd" | "animation" | "duration" | "delay" | "easing" | "iterationCount" | "transition" | "onAnimationBegin" | "useNativeDriver">;
 export declare function extractBorderRadiusValue(props: Dictionary<any>): number | undefined;
 export declare function extractModifierProps(props: Dictionary<any>): _.Dictionary<any>;
 /**
