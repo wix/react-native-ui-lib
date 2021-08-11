@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo, memo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
-import Text from '../../components/text';
+import Text, {TextProps} from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
 
@@ -11,6 +11,8 @@ const AnimatedText = Animated.createAnimatedComponent(Text);
 export interface ItemProps {
   label: string;
   fakeLabel?: string;
+  fakeLabelStyle?: TextStyle;
+  fakeLabelProps?: TextProps;
   value: string | number;
 }
 
@@ -30,6 +32,8 @@ export default memo(({
   index,
   label,
   fakeLabel,
+  fakeLabelStyle,
+  fakeLabelProps,
   itemHeight,
   onSelect,
   offset,
@@ -74,7 +78,7 @@ export default memo(({
         {label}
       </AnimatedText>
       {fakeLabel && (
-        <Text marginL-s2 marginR-s5 text70 color={'white'}>
+        <Text marginL-s2 marginR-s5 text80M color={'white'} {...fakeLabelProps} style={fakeLabelStyle}>
           {fakeLabel}
         </Text>
       )}

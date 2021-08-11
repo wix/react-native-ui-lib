@@ -3,6 +3,7 @@ import React, {useState, useCallback} from 'react';
 import {Alert} from 'react-native';
 import {Text, View, SectionsWheelPicker, SegmentedControl, Button, Incubator} from 'react-native-ui-lib';
 
+const {WheelPicker} = Incubator;
 const SectionsWheelPickerScreen = () => {
   const [numOfSections, setNumOfSections] = useState(1);
 
@@ -65,7 +66,7 @@ const SectionsWheelPickerScreen = () => {
       onChange: onDaysChange,
       selectedValue: selectedDays,
       label: 'Days',
-      align: numOfSections === 1 ? Incubator.WheelPickerAlign.CENTER : Incubator.WheelPickerAlign.RIGHT,
+      align: numOfSections === 1 ? WheelPicker.alignments.CENTER : WheelPicker.alignments.RIGHT,
       style: {flex: 1}
     },
     {
@@ -73,7 +74,7 @@ const SectionsWheelPickerScreen = () => {
       onChange: onHoursChange,
       selectedValue: selectedHours,
       label: 'Hrs',
-      align: numOfSections === 2 ? Incubator.WheelPickerAlign.LEFT : Incubator.WheelPickerAlign.CENTER,
+      align: numOfSections === 2 ? WheelPicker.alignments.LEFT : WheelPicker.alignments.CENTER,
       style: numOfSections === 2 ? {flex: 1} : undefined
     },
     {
@@ -81,7 +82,7 @@ const SectionsWheelPickerScreen = () => {
       onChange: onMinutesChange,
       selectedValue: selectedMinutes,
       label: 'Mins',
-      align: Incubator.WheelPickerAlign.LEFT,
+      align: WheelPicker.alignments.LEFT,
       style: {flex: 1}
     }
   ];

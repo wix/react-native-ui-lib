@@ -13,7 +13,7 @@ import Text, {TextProps} from '../../components/text';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export enum WheelPickerAlign {
+enum WheelPickerAlign {
   CENTER = 'center',
   RIGHT = 'right',
   LEFT = 'left'
@@ -85,7 +85,7 @@ export interface WheelPickerProps {
   testID?: string;
 }
 
-const WheelPicker = React.memo(({
+const WheelPicker = ({
   items: propItems,
   itemHeight = 44,
   numberOfVisibleRows = 5,
@@ -199,6 +199,8 @@ const WheelPicker = React.memo(({
         style={textStyle}
         {...item}
         fakeLabel={label}
+        fakeLabelStyle={labelStyle}
+        fakeLabelProps={labelProps}
         centerH={!label}
         onSelect={selectItem}
         testID={`${testID}.item_${index}`}
@@ -215,15 +217,22 @@ const WheelPicker = React.memo(({
     );
   }, []);
 
+  const labelContainerStyle = useMemo(() => {
+    return [{position: 'absolute', top: 0, bottom: 0}, alignmentStyle];
+  }, [alignmentStyle]);
+
   const labelContainer = useMemo(() => {
     return (
-      <View style={{position: 'absolute', right: 0, top: 0, bottom: 0}} centerV pointerEvents="none">
-        <Text marginL-s2 marginR-s5 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
-          {label}
-        </Text>
+      // @ts-expect-error
+      <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
+        <View style={styles.label} centerV pointerEvents="none">
+          <Text marginL-s2 marginR-s5 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+            {label}
+          </Text>
+        </View>
       </View>
     );
-  }, []);
+  }, [flatListWidth, labelContainerStyle, label, labelProps, activeTextColor, labelStyle]);
 
   const fader = useMemo(() => (position: FaderPosition) => {
     return <Fader visible position={position} size={60}/>;
@@ -235,6 +244,10 @@ const WheelPicker = React.memo(({
   },
   [itemHeight]);
 
+  const updateFlatListWidth = useCallback((width: number) => {
+    setFlatListWidth(width);
+  }, []);
+
   const contentContainerStyle = useMemo(() => {
     return [
       {
@@ -243,10 +256,6 @@ const WheelPicker = React.memo(({
       alignmentStyle
     ];
   }, [height, itemHeight, alignmentStyle]);
-
-  const labelContainerStyle = useMemo(() => {
-    return [{position: 'absolute', top: 0, bottom: 0}, alignmentStyle];
-  }, [alignmentStyle]);
 
   return (
     <View testID={testID} bg-white style={style}>
@@ -272,21 +281,19 @@ const WheelPicker = React.memo(({
             renderItem={renderItem}
             getItemLayout={getItemLayout}
             initialScrollIndex={currentIndex}
-            onContentSizeChange={contentWidth => setFlatListWidth(contentWidth)}
+            onContentSizeChange={updateFlatListWidth}
           />
         </View>
       </View>
-      {/* @ts-expect-error */}
-      <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
-        {label && labelContainer}
-      </View>
+      {label && labelContainer}
       {fader(FaderPosition.BOTTOM)}
       {fader(FaderPosition.TOP)}
       {separators}
     </View>
   );
-});
+};
 
+WheelPicker.alignments = WheelPickerAlign;
 export default WheelPicker;
 
 const styles = StyleSheet.create({
@@ -295,5 +302,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     height: Spacings.s9,
     borderColor: Colors.grey60
+  },
+  label: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0
   }
 });

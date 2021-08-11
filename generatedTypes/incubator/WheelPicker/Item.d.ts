@@ -1,9 +1,12 @@
 import React from 'react';
 import { TextStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { TextProps } from '../../components/text';
 export interface ItemProps {
     label: string;
     fakeLabel?: string;
+    fakeLabelStyle?: TextStyle;
+    fakeLabelProps?: TextProps;
     value: string | number;
 }
 interface InternalProps extends ItemProps {
@@ -17,5 +20,5 @@ interface InternalProps extends ItemProps {
     testID?: string;
     centerH?: boolean;
 }
-declare const _default: React.MemoExoticComponent<({ index, label, fakeLabel, itemHeight, onSelect, offset, activeColor, inactiveColor, style, testID, centerH }: InternalProps) => JSX.Element>;
+declare const _default: React.MemoExoticComponent<({ index, label, fakeLabel, fakeLabelStyle, fakeLabelProps, itemHeight, onSelect, offset, activeColor, inactiveColor, style, testID, centerH }: InternalProps) => JSX.Element>;
 export default _default;
