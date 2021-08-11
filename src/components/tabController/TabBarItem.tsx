@@ -2,12 +2,15 @@
 import React, {PureComponent, ReactElement} from 'react';
 import {StyleSheet, /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {processColor} from 'react-native-reanimated';
+import Reanimated, {interpolateColors, processColor} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
+
+// Unlike const interpolate = interpolateNode || _interpolate;
+// interpolateColors has a different API (outputColorRange instead of outputRange)
 
 const {cond, eq, call, block, and} = Reanimated;
 
@@ -212,10 +215,18 @@ export default class TabBarItem extends PureComponent<Props> {
     const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
 
     // Animated color
-    const color = interpolateColor(currentPage, {
-      inputRange: [index - 1, index, index + 1],
-      outputRange: [inactiveColor, activeColor, inactiveColor]
-    });
+    let color;
+    if (interpolateColors) {
+      color = interpolateColors(currentPage, {
+        inputRange: [index - 1, index, index + 1],
+        outputColorRange: [inactiveColor, activeColor, inactiveColor]
+      });
+    } else {
+      color = interpolateColor(currentPage, {
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [inactiveColor, activeColor, inactiveColor]
+      });
+    }
 
     return [
       labelStyle,

@@ -1,61 +1,70 @@
+import React, {PureComponent, GetDerivedStateFromProps} from 'react';
+import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
-import {asBaseComponent} from '../../commons';
-import GradientSlider from './GradientSlider';
+import {asBaseComponent} from '../../commons/new';
+import GradientSlider, {GradientSliderTypes} from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import Text from '../text';
 
+type SliderOnValueChange = (value: string) => void;
 
-/**
- * @description: A Gradient Slider component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
- * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
- */
-class ColorSliderGroup extends PureComponent {
-  static displayName = 'ColorSliderGroup';
-
-  static propTypes = {
-    /**
+export type ColorSliderGroupProps = {
+  /**
      * The gradient color
      */
-    initialColor: PropTypes.string.isRequired,
-    /**
+  initialColor: string;
+  /**
      * Callback for onValueChange returns the new hex color
      */
-    onValueChange: PropTypes.func,
-    /**
+  onValueChange?: SliderOnValueChange;
+  /**
      * Group container style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
      * Sliders style
      */
-    sliderContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
+  sliderContainerStyle?: StyleProp<ViewStyle>;
+  /**
      * Show the sliders labels (defaults are: Hue, Lightness, Saturation)
      */
-    showLabels: PropTypes.bool,
-    /**
+  showLabels?: boolean;
+  /**
      * In case you would like to change the default labels (translations etc.), you can provide
      * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
      */
-    labels: PropTypes.object,
-    /**
+  labels?: {[key in GradientSliderTypes]: string};
+  /**
      * The labels style
      */
-    labelsStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
-  }
+  labelsStyle?: StyleProp<TextStyle>;
+  /**
+     * If true the component will have accessibility features enabled
+     */
+   accessible?: boolean;
+};
+
+interface ColorSliderGroupState {
+  initialColor: string;
+}
+
+/**
+ * @description: A Gradient Slider component
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
+ */
+class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderGroupState> {
+  static displayName = 'ColorSliderGroup';
 
   static defaultProps = {
     labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
-  }
+  };
 
   state = {
     initialColor: this.props.initialColor
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps: GetDerivedStateFromProps<ColorSliderGroupProps, ColorSliderGroupState> = (nextProps, prevState) => {
     if (prevState.initialColor !== nextProps.initialColor) {
       return {
         initialColor: nextProps.initialColor
@@ -64,16 +73,16 @@ class ColorSliderGroup extends PureComponent {
     return null;
   }
 
-  onValueChange = (value) => {
+  onValueChange = (value: string) => {
     _.invoke(this.props, 'onValueChange', value);
   }
 
-  renderSlider = (type) => {
+  renderSlider = (type: GradientSliderTypes) => {
     const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.props;
 
     return (
       <>
-        {showLabels && (
+        {showLabels && labels && (
           <Text dark30 text80 style={labelsStyle} accessible={accessible}>
             {labels[type]}
           </Text>
@@ -97,4 +106,4 @@ class ColorSliderGroup extends PureComponent {
   }
 }
 
-export default asBaseComponent(ColorSliderGroup);
+export default asBaseComponent<ColorSliderGroupProps, typeof ColorSliderGroup>(ColorSliderGroup);

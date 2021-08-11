@@ -1,19 +1,24 @@
-import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import {StyleProp, ViewStyle} from 'react-native';
+import _ from 'lodash';
 import SliderContext from './SliderContext';
 import {Colors} from '../../../style';
 import View from '../../view';
 
+interface SliderGroupProps {
+  color: string;
+  onValueChange: (color: string) => void;
+  style?: StyleProp<ViewStyle>;
+}
 
-export default class SliderGroup extends Component {
+interface SliderGroupState {
+  value: tinycolor.ColorFormats.HSLA
+}
+
+export default class SliderGroup extends Component<SliderGroupProps, SliderGroupState> {
   static displayName = 'IGNORE';
-  static propTypes = {
-    color: PropTypes.string,
-    onValueChange: PropTypes.func
-  }
 
-  constructor(props) {
+  constructor(props: SliderGroupProps) {
     super(props);
 
     this.state = {
@@ -28,7 +33,7 @@ export default class SliderGroup extends Component {
     };
   }
 
-  setValue = (value) => {
+  setValue = (value: tinycolor.ColorFormats.HSLA) => {
     this.setState({value});
     _.invoke(this.props, 'onValueChange', Colors.getHexString(value));
   }

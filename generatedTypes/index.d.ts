@@ -27,7 +27,9 @@ export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avatar';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
+export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Constants} from './helpers/Constants';
+export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
 export {default as View, ViewPropTypes, ViewProps} from './components/view';
 export {default as Text, TextPropTypes, TextProps} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
@@ -48,6 +50,7 @@ export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './com
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
 export {default as HapticService, HapticType} from './services/HapticService';
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
+export {default as Slider, SliderProps} from './components/slider';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
 export {default as TabController2} from './components/tabController2';
@@ -77,17 +80,16 @@ export {default as PageControl, PageControlProps} from './components/pageControl
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as ActionSheet} from './components/actionSheet';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
+export {default as StateScreen, StateScreenProps} from './components/stateScreen';
+export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 
 /* All components with manual typings */
 export {
-  ConnectionStatusBar,
   BaseInput,
   TextArea,
   MaskedInput,
   ListItem,
   ProgressBar,
-  Slider,
-  GradientSlider,
   ColorSliderGroup,
   Stepper,
   TagsInput,
@@ -101,8 +103,6 @@ export {
   UIComponent,
   forwardRef,
   AvatarHelper,
-  LoaderScreen,
-  StateScreen,
   WheelPicker,
   WheelPickerProps,
   Picker,

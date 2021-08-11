@@ -1,8 +1,21 @@
-import React from 'react';
+/// <reference types="react" />
 import { TextStyle, ViewStyle } from 'react-native';
 import { ItemProps } from './Item';
 import { TextProps } from '../../components/text';
+declare enum WheelPickerAlign {
+    CENTER = "center",
+    RIGHT = "right",
+    LEFT = "left"
+}
 export interface WheelPickerProps {
+    /**
+     * Initial value (doesn't work with selectedValue)
+     */
+    initialValue?: ItemProps | number | string;
+    /**
+     * The current selected value
+     */
+    selectedValue?: ItemProps | number | string;
     /**
      * Data source for WheelPicker
      */
@@ -54,10 +67,13 @@ export interface WheelPickerProps {
      */
     children?: JSX.Element | JSX.Element[];
     /**
-     * WheelPicker initial value, can be ItemProps.value, number as index
+     * Align the content to center, right ot left (default: center)
      */
-    selectedValue: ItemProps | number | string;
+    align?: WheelPickerAlign;
     testID?: string;
 }
-declare const WheelPicker: React.MemoExoticComponent<({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, style, children, selectedValue, testID }: WheelPickerProps) => JSX.Element>;
+declare const WheelPicker: {
+    ({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, align, style, children, initialValue, selectedValue, testID }: WheelPickerProps): JSX.Element;
+    alignments: typeof WheelPickerAlign;
+};
 export default WheelPicker;

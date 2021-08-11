@@ -92,7 +92,7 @@ declare class Badge extends PureComponent<BadgeProps> {
     styles: ReturnType<typeof createStyles>;
     static displayName: string;
     constructor(props: BadgeProps);
-    get size(): number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
+    get size(): number | "default" | "small" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
     getAccessibilityProps(): {
         accessible: boolean;
         accessibilityRole: string;
@@ -219,7 +219,7 @@ declare function createStyles(props: BadgeProps): {
         } | undefined;
         shadowOpacity?: number | undefined;
         shadowRadius?: number | undefined;
-        transform?: (import("react-native").PerpectiveTransform | import("react-native").RotateTransform | import("react-native").RotateXTransform | import("react-native").RotateYTransform | import("react-native").RotateZTransform | import("react-native").ScaleTransform | import("react-native").ScaleXTransform | import("react-native").ScaleYTransform | import("react-native").TranslateXTransform | import("react-native").TranslateYTransform | import("react-native").SkewXTransform | import("react-native").SkewYTransform)[] | undefined;
+        transform?: (import("react-native").PerpectiveTransform | import("react-native").RotateTransform | import("react-native").RotateXTransform | import("react-native").RotateYTransform | import("react-native").RotateZTransform | import("react-native").ScaleTransform | import("react-native").ScaleXTransform | import("react-native").ScaleYTransform | import("react-native").TranslateXTransform | import("react-native").TranslateYTransform | import("react-native").SkewXTransform | import("react-native").SkewYTransform | import("react-native").MatrixTransform)[] | undefined;
         transformMatrix?: number[] | undefined;
         rotation?: number | undefined;
         scaleX?: number | undefined;
@@ -332,7 +332,7 @@ declare function createStyles(props: BadgeProps): {
         } | undefined;
         shadowOpacity?: number | undefined;
         shadowRadius?: number | undefined;
-        transform?: (import("react-native").PerpectiveTransform | import("react-native").RotateTransform | import("react-native").RotateXTransform | import("react-native").RotateYTransform | import("react-native").RotateZTransform | import("react-native").ScaleTransform | import("react-native").ScaleXTransform | import("react-native").ScaleYTransform | import("react-native").TranslateXTransform | import("react-native").TranslateYTransform | import("react-native").SkewXTransform | import("react-native").SkewYTransform)[] | undefined;
+        transform?: (import("react-native").PerpectiveTransform | import("react-native").RotateTransform | import("react-native").RotateXTransform | import("react-native").RotateYTransform | import("react-native").RotateZTransform | import("react-native").ScaleTransform | import("react-native").ScaleXTransform | import("react-native").ScaleYTransform | import("react-native").TranslateXTransform | import("react-native").TranslateYTransform | import("react-native").SkewXTransform | import("react-native").SkewYTransform | import("react-native").MatrixTransform)[] | undefined;
         transformMatrix?: number[] | undefined;
         rotation?: number | undefined;
         scaleX?: number | undefined;
@@ -357,7 +357,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * the badge size (default, small)
      */
-    size?: number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large" | undefined;
+    size?: number | "default" | "small" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large" | undefined;
     /**
      * Press handler
      */
