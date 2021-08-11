@@ -3,3 +3,4 @@ export { default as TextField, TextFieldProps, FieldContextType } from './TextFi
 export { default as TouchableOpacity, TouchableOpacityProps } from './TouchableOpacity';
 export { default as TouchableOpacity2 } from './TouchableOpacity2';
 export { default as WheelPicker, WheelPickerProps, WheelPickerAlign } from './WheelPicker';
+export { default as PanView, PanViewProps, PanViewDirections, PanViewDismissThreshold } from './panView';
