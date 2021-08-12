@@ -111,7 +111,8 @@ export const navigationData = {
         tags: 'scroll fader',
         screen: 'unicorn.components.FaderScreen'
       },
-      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
+      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'},
+      {title: 'GridView', tags: 'grid view', screen: 'unicorn.components.GridViewScreen'}
     ]
   },
   Native: {
