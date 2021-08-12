@@ -71,6 +71,7 @@
     "@react-native-community/netinfo": "^5.6.2",
     "@react-native-picker/picker": "^1.9.4",
     "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/react-native": "^7.2.0",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "0.64.1",
