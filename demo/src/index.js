@@ -225,6 +225,9 @@ module.exports = {
       get IncubatorTextFieldScreen() {
         return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
       },
+      get PanViewScreen() {
+        return require('./screens/incubatorScreens/PanViewScreen').default;
+      },
       // realExamples
       get AppleMusic() {
         return require('./screens/realExamples/AppleMusic').default;

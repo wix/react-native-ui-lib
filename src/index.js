@@ -95,6 +95,10 @@ export default {
     // return require('./components/textField/TextFieldMigrator').default;
     return require('./components/textField').default;
   },
+  // TODO: remove once TextField migration has completed
+  get TextFieldMigrator() {
+    return require('./components/textField/TextFieldMigrator').default;
+  },
   get MaskedInput() {
     return require('./components/maskedInput').default;
   },

@@ -111,7 +111,8 @@ export const navigationData = {
         tags: 'scroll fader',
         screen: 'unicorn.components.FaderScreen'
       },
-      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
+      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'},
+      {title: 'GridView', tags: 'grid view', screen: 'unicorn.components.GridViewScreen'}
     ]
   },
   Native: {
@@ -156,7 +157,8 @@ export const navigationData = {
     screens: [
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
-      {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'}
+      {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'},
+      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
     ]
   },
   Inspirations: {

@@ -11,7 +11,7 @@ import Reanimated, {
 } from 'react-native-reanimated';
 import {TapGestureHandler, LongPressGestureHandler, State} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
-import {ViewProps} from '../components/view';
+import View, {ViewProps} from '../components/view';
 
 export type TouchableOpacityProps = {
   /**
@@ -107,11 +107,12 @@ function TouchableOpacity(props: Props) {
     },
     onEnd: () => {
       toggleActive(0);
-
       runOnJS(onPress)();
     },
     onFail: () => {
-      toggleActive(0);
+      if (!isLongPressed.value) {
+        toggleActive(0);
+      }
     }
   });
 
@@ -119,11 +120,11 @@ function TouchableOpacity(props: Props) {
     onActive: () => {
       if (!isLongPressed.value) {
         isLongPressed.value = true;
-        toggleActive(0);
         runOnJS(onLongPress)();
       }
     },
     onFinish: () => {
+      toggleActive(0);
       isLongPressed.value = false;
     }
   });
@@ -140,6 +141,8 @@ function TouchableOpacity(props: Props) {
     };
   }, [backgroundColor, feedbackColor]);
 
+  const Container = props.onLongPress ? LongPressGestureHandler : View;
+
   return (
     <TapGestureHandler
       // @ts-expect-error
@@ -149,7 +152,7 @@ function TouchableOpacity(props: Props) {
     >
       <Reanimated.View>
         {/* @ts-expect-error */}
-        <LongPressGestureHandler onGestureEvent={longPressGestureHandler} shouldCancelWhenOutside>
+        <Container onGestureEvent={longPressGestureHandler} shouldCancelWhenOutside>
           <Reanimated.View
             {...others}
             ref={forwardedRef}
@@ -166,7 +169,7 @@ function TouchableOpacity(props: Props) {
           >
             {children}
           </Reanimated.View>
-        </LongPressGestureHandler>
+        </Container>
       </Reanimated.View>
     </TapGestureHandler>
   );

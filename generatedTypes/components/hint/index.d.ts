@@ -15,21 +15,9 @@ interface HintTargetFrame {
     width?: number;
     height?: number;
 }
-interface Position {
-    top?: number;
-    bottom?: number;
-    left?: number;
-    right?: number;
-}
-interface HintPositionStyle extends Position {
-    alignItems?: string;
-}
-interface Paddings {
-    paddingLeft?: number;
-    paddingRight?: number;
-    paddingVertical?: number;
-    paddingHorizontal?: number;
-}
+declare type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
+declare type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
+declare type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 export interface HintProps {
     /**
      * Control the visibility of the hint
@@ -178,7 +166,7 @@ declare class Hint extends Component<HintProps, HintState> {
     renderHint(): JSX.Element | undefined;
     renderHintContainer(): JSX.Element;
     renderChildren(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
-    render(): React.ReactNode;
+    render(): {} | null;
 }
 declare const _default: React.ComponentClass<HintProps & {
     useCustomTheme?: boolean | undefined;

@@ -50,23 +50,12 @@ interface HintTargetFrame {
   height?: number;
 }
 
-interface Position {
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-}
+type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>
 
-interface HintPositionStyle extends Position {
-  alignItems?: string;
-}
+type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>
 
-interface Paddings {
-  paddingLeft?: number;
-  paddingRight?: number;
-  paddingVertical?: number;
-  paddingHorizontal?: number;
-}
+type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>
+
 
 export interface HintProps {
   /**
@@ -434,7 +423,7 @@ class Hint extends Component<HintProps, HintState> {
   // }
 
   renderHintTip() {
-    const {position, color} = this.props;
+    const {position, color = DEFAULT_COLOR} = this.props;
     const source = this.useSideTip ? sideTip : middleTip;
     const flipVertically = position === HintPositions.TOP;
     const flipHorizontally = this.getTargetPositionOnScreen() === TARGET_POSITIONS.RIGHT;
@@ -444,7 +433,7 @@ class Hint extends Component<HintProps, HintState> {
 
     return (
       <Image
-        tintColor={color || DEFAULT_COLOR}
+        tintColor={color}
         source={source}
         style={[styles.hintTip, this.getTipPosition(), flipStyle]}
       />
@@ -458,7 +447,7 @@ class Hint extends Component<HintProps, HintState> {
       icon, 
       iconStyle, 
       borderRadius, 
-      color, 
+      color = DEFAULT_COLOR, 
       customContent, 
       removePaddings, 
       enableShadow,
@@ -475,7 +464,7 @@ class Hint extends Component<HintProps, HintState> {
           styles.hint,
           !removePaddings && styles.hintPaddings,
           visible && enableShadow && styles.containerShadow, 
-          color && {backgroundColor: color}, 
+          {backgroundColor: color},
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
         ref={this.setHintRef}
@@ -546,7 +535,7 @@ class Hint extends Component<HintProps, HintState> {
     const {onBackgroundPress, testID} = this.props;
     
     if (!this.props.visible && this.state.hintUnmounted) {
-      return this.props.children;
+      return this.props.children || null;
     }
 
     return (

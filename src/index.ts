@@ -24,6 +24,7 @@ export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avat
 export {AvatarHelper} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
+export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Constants} from './helpers/Constants';
 export {default as HapticService, HapticType} from './services/HapticService';
 export {default as View, ViewPropTypes, ViewProps} from './components/view';
@@ -73,15 +74,20 @@ export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as Hint, HintProps} from './components/hint';
+export {default as Slider, SliderProps} from './components/slider';
+export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
+export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as LogService} from './services/LogService';
 export {default as Keyboard} from '../lib/components/Keyboard';
+export {default as StateScreen, StateScreenProps} from './components/stateScreen';
+export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ConnectionStatusBar, ChipsInput,
+  ChipsInput,
   BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
-  PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
+  PickerProps, ProgressBar, Stepper,
   TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
   BaseComponent, PureBaseComponent, UIComponent, forwardRef,
-  LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
+  WheelPicker, WheelPickerProps
 } from '../typings';
