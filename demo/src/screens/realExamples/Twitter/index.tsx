@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
-import {View, Text, ListItem, Avatar, AnimatableManager, Card, Image, Colors} from 'react-native-ui-lib';
+import {View, Text, ListItem, Avatar, AnimatableManager, Card, Colors, Button} from 'react-native-ui-lib';
 
 const posts = [{
-  height: 294,
+  height: 310,
   avatar: 'https://images.pexels.com/photos/3496994/pexels-photo-3496994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
   name: 'Jack',
   nickname: '@jackywhite',
@@ -14,16 +14,28 @@ const posts = [{
     website: 'helloworld.com',
     description: 'Live Webinar: Secrets of Serverless monitoring. Register Now!',
     thumbnail: 'https://images.pexels.com/photos/3271010/pexels-photo-3271010.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  }
+  },
+  icons: [
+    require('../../../assets/icons/video.png'),
+    require('../../../assets/icons/tags.png'),
+    require('../../../assets/icons/star.png'),
+    require('../../../assets/icons/share.png')
+  ]
 }, {
-  height: 184,
+  height: 196,
   avatar: 'https://images.pexels.com/photos/3297502/pexels-photo-3297502.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   name: 'Jessica Alba',
   nickname: '@jessicaalba',
   description: 'I am a Jessica Marie Alba, an American actress, model and businesswoman. I began my television and movie appearances at age 13 in Camp Nowhere and The Secret World of Alex Mack, but rose to prominence at age 19 as the lead actress of the television series Dark Angel, for which she received a Golden Globe nomination.',
   time: '47m',
+  icons: [
+    require('../../../assets/icons/video.png'),
+    require('../../../assets/icons/tags.png'),
+    require('../../../assets/icons/star.png'),
+    require('../../../assets/icons/share.png')
+  ]
 }, {
-  height: 294,
+  height: 310,
   avatar: 'https://images.pexels.com/photos/3323694/pexels-photo-3323694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
   name: 'New York Times',
   nickname: '@NYTimesMagazine',
@@ -34,6 +46,12 @@ const posts = [{
     description: 'Californians have felt an urgency to move away from using fossil fuels as climate...',
     thumbnail: 'https://images.pexels.com/photos/3206153/pexels-photo-3206153.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   },
+  icons: [
+    require('../../../assets/icons/video.png'),
+    require('../../../assets/icons/tags.png'),
+    require('../../../assets/icons/star.png'),
+    require('../../../assets/icons/share.png')
+  ]
 }];
 
 class Twitter extends Component {
@@ -42,11 +60,11 @@ class Twitter extends Component {
   renderPost(post: any, id: number) {
     return (
       <AnimatableView {...AnimatableManager.getEntranceByIndex(id, {})}>
-        <ListItem key={id} height={post.height} containerStyle={{marginVertical: 10}}>
+        <ListItem key={id} height={post.height} containerStyle={styles.post}>
           <ListItem.Part left containerStyle={{justifyContent: 'space-between'}}>
             <Avatar
               source={post.avatar ? {uri: post.avatar} : null}
-              containerStyle={{alignSelf: 'flex-start', marginRight: 8}}
+              containerStyle={styles.avatar}
             />
           </ListItem.Part>
           <ListItem.Part middle column>
@@ -68,19 +86,16 @@ class Twitter extends Component {
                 </View>
               </Card>
             : null}
-            <View row style={{justifyContent: 'space-between', marginTop: 10}}>
-              <Image
-                style={{tintColor: Colors.dark40}}
-                source={require('../../../assets/icons/video.png')}/>
-              <Image
-                style={{tintColor: Colors.dark40}}
-                source={require('../../../assets/icons/tags.png')}/>
-              <Image
-                style={{tintColor: Colors.dark40}}
-                source={require('../../../assets/icons/star.png')}/>
-              <Image
-                style={{tintColor: Colors.dark40}}
-                source={require('../../../assets/icons/share.png')}/>
+            <View row style={{justifyContent: 'space-between', marginVertical: 10}}>
+              {post.icons ? post.icons.map((icnSource: any) => {
+                return (
+                  <Button
+                    iconSource={icnSource}
+                    iconStyle={styles.icon}
+                    backgroundColor={'transparent'}
+                  />
+                );
+              }) : null}
             </View>
           </ListItem.Part>
         </ListItem>
@@ -94,10 +109,29 @@ class Twitter extends Component {
         data={posts}
         renderItem={({item, index}) => this.renderPost(item, index)}
         keyExtractor={this.keyExtractor}
-        style={{paddingHorizontal: 20}}
       />
     );
   }
 }
+
+const styles = StyleSheet.create({
+  post: {
+    marginTop: 10,
+    marginBottom: 10,
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.grey70,
+    paddingHorizontal: 20
+  },
+  avatar: {
+    alignSelf: 'flex-start',
+    marginRight: 8,
+    marginTop: 8
+  },
+  icon: {
+    tintColor: Colors.dark40,
+    width: 20,
+    height: 20
+  }
+});
 
 export default Twitter;
