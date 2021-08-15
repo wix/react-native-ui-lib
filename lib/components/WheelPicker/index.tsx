@@ -31,25 +31,25 @@ type WheelPickerProps = {
     /**
      * pass custom style
      */
-    style: ViewStyle;
+    style?: ViewStyle;
     /**
      * pass custom label style: fontSize, fontFamily, color<br>
      * Note: label's color will override the text color (hex only)
      */
-    labelStyle: TextStyle;
+    labelStyle?: TextStyle;
     /**
      * The height of the selected item
      */
-    itemHeight: number;
+    itemHeight?: number;
     /**
      * The color of the wheel picker (hex only)
      */
-    color: string;
+    color?: string; 
     /**
      * pass custom style for the picker item
      */
-    itemStyle: ViewStyle;
-    children: JSX.Element | JSX.Element[];
+    itemStyle?: ViewStyle;
+    children?: JSX.Element | JSX.Element[];
 }
 
 class WheelPicker extends Component<WheelPickerProps> {
@@ -60,8 +60,8 @@ class WheelPicker extends Component<WheelPickerProps> {
     color: Colors.primary
   };
 
-  static Item = WheelPickerItem;
-
+  static Item: typeof WheelPickerItem;
+  
   constructor(props) {
     super(props);
     this.onValueChange = this.onValueChange.bind(this); //eslint-disable-line
@@ -88,9 +88,8 @@ class WheelPicker extends Component<WheelPickerProps> {
 
   getItems() {
     const {children} = this.props;
-    const array = Array.isArray(children) ? children : [children];
-    
-    const items = _.map(React.Children.toArray(this.props.children), child => ({
+      
+    const items = _.map(React.Children.toArray(children), child => ({
       value: child.props.value,
       label: child.props.label
     }));
@@ -129,6 +128,8 @@ class WheelPicker extends Component<WheelPickerProps> {
     );
   }
 }
+
+WheelPicker.Item = WheelPickerItem;
 
 const styles = StyleSheet.create({
   container: {
