@@ -1,3 +1,17 @@
+import * as Animatable from 'react-native-animatable';
+declare type AnimationType = {
+    animation: Animatable.Animation;
+    easing?: Animatable.Easing;
+    duration: number;
+    useNativeDriver?: boolean;
+};
+declare type AnimationPresets = {
+    slideInUp: AnimationType;
+    slideInDown: AnimationType;
+    fadeIn: AnimationType;
+    fadeOut: AnimationType;
+    fadeInRight: AnimationType;
+};
 /**
  * @description: Animatable animations and presets
  * @extendsnotes: To have access to uilib's animations, and load your custom animations (optional), call:
@@ -5,36 +19,7 @@
  * in your app entry point
  */
 export declare class AnimatableManager {
-    presets: {
-        slideInUp: {
-            animation: string;
-            easing: string;
-            duration: number;
-            useNativeDriver: boolean;
-        };
-        slideInDown: {
-            animation: string;
-            easing: string;
-            duration: number;
-            useNativeDriver: boolean;
-        };
-        fadeIn: {
-            animation: string;
-            duration: number;
-            useNativeDriver: boolean;
-        };
-        fadeOut: {
-            animation: string;
-            duration: number;
-            useNativeDriver: boolean;
-        };
-        fadeInRight: {
-            animation: string;
-            easing: string;
-            duration: number;
-            useNativeDriver: boolean;
-        };
-    };
+    presets: AnimationPresets;
     animations: any;
     constructor();
     loadAnimationPresets(animationPresets: Dictionary<any>): void;

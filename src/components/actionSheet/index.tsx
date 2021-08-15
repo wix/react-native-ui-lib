@@ -164,6 +164,7 @@ class ActionSheet extends Component<ActionSheetProps> {
         key={index}
         testID={option.testID}
         onPress={() => this.onOptionPress(index)}
+        // @ts-expect-error
         activeBackgroundColor={Colors.dark80}
       >
         <View row paddingL-16 flex centerV>
