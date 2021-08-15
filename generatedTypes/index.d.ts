@@ -82,6 +82,14 @@ export {default as ActionSheet} from './components/actionSheet';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
+export {
+  Keyboard,
+  SafeAreaSpacerView,
+  WheelPicker,
+  WheelPickerProps,
+  HighlighterOverlayView,
+  SafeAreaInsetsManager
+} from '../lib/components';
 
 /* All components with manual typings */
 export {
@@ -103,8 +111,6 @@ export {
   UIComponent,
   forwardRef,
   AvatarHelper,
-  WheelPicker,
-  WheelPickerProps,
   Picker,
   PickerItemValue,
   PickerProps
@@ -114,11 +120,5 @@ export {
 export const AnimatedImage;
 export const AnimatedScanner;
 export const DateTimePicker;
-export const HighlighterOverlayView;
-export const Keyboard;
-export const KeyboardAwareListView;
-export const KeyboardAwareScrollView;
-export const SafeAreaInsetsManager;
-export const SafeAreaSpacerView;
 export const SelectableComponent;
 export const TextField;
