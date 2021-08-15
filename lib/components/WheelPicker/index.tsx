@@ -19,7 +19,7 @@ if (!PickerPackage) {
 
 const WheelPickerNative = requireNativeComponent('WheelPicker');
 
-type WheelPickerProps = {
+export type WheelPickerProps = {
    /**
      * the current selected value of the picker
      */
@@ -56,13 +56,13 @@ class WheelPicker extends Component<WheelPickerProps> {
   static displayName = 'WheelPicker';
 
   static defaultProps = {
-    labelStyle: {fontSize: Typography.text70.fontSize, fontFamily: Typography.text70.fontFamily},
+    labelStyle: {fontSize: Typography.text70?.fontSize, fontFamily: Typography.text70?.fontFamily},
     color: Colors.primary
   };
 
   static Item: typeof WheelPickerItem;
   
-  constructor(props) {
+  constructor(props: WheelPickerProps) {
     super(props);
     this.onValueChange = this.onValueChange.bind(this); //eslint-disable-line
     this.getItems();
@@ -73,11 +73,12 @@ class WheelPicker extends Component<WheelPickerProps> {
     items: this.getItems()
   };
 
-  onLogReceived = event => {
+  onLogReceived = (event: any) => {
+    // @ts-expect-error
     console[event.LogType](event.TAG, event.text);
   };
 
-  onValueChange(event) {
+  onValueChange(event: any) {
     const index = event.nativeEvent.itemIndex;
     const {onValueChange} = this.props;
     if (onValueChange) {
@@ -90,7 +91,9 @@ class WheelPicker extends Component<WheelPickerProps> {
     const {children} = this.props;
       
     const items = _.map(React.Children.toArray(children), child => ({
+      //@ts-expect-error
       value: child.props.value,
+      //@ts-expect-error
       label: child.props.label
     }));
     return items;
@@ -108,7 +111,6 @@ class WheelPicker extends Component<WheelPickerProps> {
 
   render() {
     const {style, color, labelStyle, itemHeight} = this.props;
-    const {fontSize, fontFamily, color: labelColor} = labelStyle;
 
     return (
       <View collapsable={false} style={styles.container}>
@@ -119,10 +121,10 @@ class WheelPicker extends Component<WheelPickerProps> {
           onChange={this.onValueChange}
           style={[styles.wheelPicker, style]}
           color={color}
-          labelColor={labelColor || color}
-          fontSize={fontSize}
+          labelColor={labelStyle?.color || color}
+          fontSize={labelStyle?.fontSize}
           itemHeight={itemHeight}
-          fontFamily={fontFamily}
+          fontFamily={labelStyle?.fontFamily}
         />
       </View>
     );
