@@ -79,6 +79,8 @@ export {default as GradientSlider, GradientSliderProps} from './components/slide
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as LogService} from './services/LogService';
 export {default as ListItem, ListItemProps} from './components/listItem';
+export {default as StateScreen, StateScreenProps} from './components/stateScreen';
+export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
@@ -87,5 +89,5 @@ export {
   PickerProps, ProgressBar, Stepper,
   TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
   BaseComponent, PureBaseComponent, UIComponent, forwardRef,
-  LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
+  WheelPicker, WheelPickerProps
 } from '../typings';

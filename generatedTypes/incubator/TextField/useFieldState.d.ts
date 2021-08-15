@@ -24,4 +24,5 @@ export default function useFieldState({ validate, validateOnBlur, validateOnChan
         isFocused: boolean;
         failingValidatorIndex: number | undefined;
     };
+    validateField: (valueToValidate?: any) => void;
 };

@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo, memo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
-import Text from '../../components/text';
+import Text, {TextProps} from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
 
@@ -10,6 +10,9 @@ const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
   label: string;
+  fakeLabel?: string;
+  fakeLabelStyle?: TextStyle;
+  fakeLabelProps?: TextProps;
   value: string | number;
 }
 
@@ -28,6 +31,9 @@ interface InternalProps extends ItemProps {
 export default memo(({
   index,
   label,
+  fakeLabel,
+  fakeLabelStyle,
+  fakeLabelProps,
   itemHeight,
   onSelect,
   offset,
@@ -63,10 +69,19 @@ export default memo(({
       // @ts-ignore reanimated2
       index={index}
       testID={testID}
+      row
     >
-      <AnimatedText text60R style={[animatedColorStyle, style]}>
+      <AnimatedText
+        text60R
+        style={[animatedColorStyle, style, fakeLabel ? styles.textWithLabelPadding : styles.textPadding]}
+      >
         {label}
       </AnimatedText>
+      {fakeLabel && (
+        <Text marginL-s2 marginR-s5 text80M color={'white'} {...fakeLabelProps} style={fakeLabelStyle}>
+          {fakeLabel}
+        </Text>
+      )}
     </AnimatedTouchableOpacity>
   );
 });
@@ -74,5 +89,11 @@ export default memo(({
 const styles = StyleSheet.create({
   container: {
     minWidth: Spacings.s10
+  },
+  textPadding: {
+    paddingHorizontal: Spacings.s5
+  },
+  textWithLabelPadding: {
+    paddingLeft: Spacings.s5
   }
 });
