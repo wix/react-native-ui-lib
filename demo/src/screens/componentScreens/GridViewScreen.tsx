@@ -1,11 +1,9 @@
 import _ from 'lodash';
-import {View, Text, Colors, Constants, Avatar} from 'react-native-ui-lib';
+import {View, Text, Colors, Constants, Avatar, GridView} from 'react-native-ui-lib';
 import React, {Component} from 'react';
 import {Alert, ScrollView} from 'react-native';
-import GridView from '../../../../src/components/GridView';
 import conversations from '../../data/conversations';
 import products from '../../data/products';
-
 
 class GridViewScreen extends Component {
   state = {
@@ -26,12 +24,7 @@ class GridViewScreen extends Component {
         onPress: () => Alert.alert('My price is ' + product.formattedPrice),
         renderOverlay: () => {
           if (index < 7) {
-            return (
-              <Text
-                text={product.price}
-                style={{alignSelf: 'center', marginTop: 3}}
-              />
-            );
+            return <Text text={product.price} style={{alignSelf: 'center', marginTop: 3}}/>;
           }
         }
       }))
@@ -94,10 +87,9 @@ class GridViewScreen extends Component {
         renderOverlay: () => {
           if (index === 0) {
             return (
-              <Text
-                margin-10 text80BO
-                style={{alignSelf: 'flex-start', marginTop: 12, marginLeft: 12}}
-              >{product.formattedPrice}</Text>
+              <Text margin-10 text80BO style={{alignSelf: 'flex-start', marginTop: 12, marginLeft: 12}}>
+                {product.formattedPrice}
+              </Text>
             );
           }
         }
@@ -105,7 +97,7 @@ class GridViewScreen extends Component {
       .value(),
     avatars: _.chain(conversations)
       .take(9)
-      .map((item) => ({
+      .map(item => ({
         renderCustomItem: () => {
           const imageElementElement = item.thumbnail;
           return (
@@ -168,27 +160,15 @@ class GridViewScreen extends Component {
           <Text margin-30 text60BO>
             Pairs
           </Text>
-          <GridView
-            items={pairs}
-            numColumns={2}
-            useCustomTheme
-          />
+          <GridView items={pairs} numColumns={2} useCustomTheme/>
           <Text margin-30 text60BO>
             Dynamic itemSize
           </Text>
-          <GridView
-            items={dynamicLayout}
-            numColumns={2}
-            useCustomTheme
-          />
+          <GridView items={dynamicLayout} numColumns={2} useCustomTheme/>
           <Text margin-30 text60BO>
             OverlayText
           </Text>
-          <GridView
-            items={overlayText}
-            numColumns={2}
-            useCustomTheme
-          />
+          <GridView items={overlayText} numColumns={2} useCustomTheme/>
           <Text margin-30 text60BO>
             Custom content (Avatars)
           </Text>

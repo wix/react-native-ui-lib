@@ -7,14 +7,14 @@ import {Colors, Spacings} from 'style';
 import View from '../view';
 import Text from '../text';
 import {Constants} from 'helpers';
-import GridListItem, {GridItemProps} from '../GridListItem';
+import GridListItem, {GridListItemProps} from '../gridListItem';
 import {formatLastItemLabel} from '../../helpers/FormattingPresenter';
 
-interface Props {
+export interface GridViewProps {
   /**
    * The list of items based on GridListItem props
    */
-  items?: GridItemProps[];
+  items?: GridListItemProps[];
   /**
    * pass the desired grid view width (will improve loading time)
    */
@@ -48,12 +48,12 @@ interface State {
 }
 
 
-type ExistProps = Props & State
+type ExistProps = GridViewProps & State
 /**
  * @description: A auto-generated grid view that calculate item size according to given props
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx
  */
-class GridView extends UIComponent<Props, State> {
+class GridView extends UIComponent<GridViewProps, State> {
   static displayName = 'GridView';
 
   static defaultProps = {
@@ -171,7 +171,7 @@ class GridView extends UIComponent<Props, State> {
     );
   }
 
-  renderItem = (item: GridItemProps, index: number) => {
+  renderItem = (item: GridListItemProps, index: number) => {
     const {items, itemSpacing} = this.props;
     const {numColumns} = this.state;
     const itemsCount = _.size(items);

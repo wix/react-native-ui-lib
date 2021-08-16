@@ -8,7 +8,7 @@ import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image, {ImageProps} from '../image';
 
-export interface GridItemProps {
+export interface GridListItemProps {
   /**
    * Image props object for rendering an image item
    */
@@ -112,7 +112,7 @@ interface RenderContentType {
  * @description: A single grid view/list item component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx
  */
-class GridListItem extends Component<GridItemProps> {
+class GridListItem extends Component<GridListItemProps> {
   static displayName = 'GridListItem';
 
   static defaultProps = {
