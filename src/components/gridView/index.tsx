@@ -2,8 +2,8 @@ import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 // TODO: we should use asBaseComponent here instead of using UIComponent directly
-import {UIComponent} from 'react-native-ui-lib';
 import {Colors, Spacings} from 'style';
+import UIComponent from '../../commons/UIComponent';
 import View from '../view';
 import Text from '../text';
 import {Constants} from 'helpers';
