@@ -1,7 +1,12 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Colors, Constants, Spacings, Text, UIComponent, View} from 'react-native-ui-lib';
+// TODO: we should use asBaseComponent here instead of using UIComponent directly
+import {UIComponent} from 'react-native-ui-lib';
+import {Colors, Spacings} from 'style';
+import View from '../view';
+import Text from '../text';
+import {Constants} from 'helpers';
 import GridListItem, {GridItemProps} from '../GridListItem';
 import {formatLastItemLabel} from '../../helpers/FormattingPresenter';
 
