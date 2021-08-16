@@ -99,7 +99,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     onChangeIndex?.(indexRef.current);
   },
   400,
-  {trailing: true, leading: false}),
+  {trailing: false, leading: true}),
   []);
 
   const onSegmentPress = useCallback((index: number) => {
