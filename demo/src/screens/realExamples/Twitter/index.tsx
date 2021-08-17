@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
-import {View, Text, ListItem, Avatar, AnimatableManager, Card, Colors, Button} from 'react-native-ui-lib';
+import {View, Text, ListItem, Avatar, Card, Colors, Button} from 'react-native-ui-lib';
 
 const posts = [
   {
@@ -68,7 +67,7 @@ class Twitter extends Component {
 
   renderPost(post: any, id: number) {
     return (
-      <AnimatableView {...AnimatableManager.getEntranceByIndex(id, {})}>
+      <View padding-page>
         <ListItem key={id} height={post.height} containerStyle={styles.post}>
           <ListItem.Part left containerStyle={{justifyContent: 'space-between'}}>
             <Avatar source={post.avatar ? {uri: post.avatar} : undefined} containerStyle={styles.avatar}/>
@@ -105,7 +104,7 @@ class Twitter extends Component {
             </View>
           </ListItem.Part>
         </ListItem>
-      </AnimatableView>
+      </View>
     );
   }
 
