@@ -42,6 +42,8 @@ export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
+export {default as GridListItem, GridListItemProps} from './components/gridListItem';
+export {default as GridView, GridViewProps} from './components/gridView';
 export {default as Hint, HintProps} from './components/hint';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
