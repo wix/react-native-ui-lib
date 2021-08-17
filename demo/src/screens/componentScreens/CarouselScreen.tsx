@@ -57,7 +57,7 @@ class CarouselScreen extends Component<Props, State> {
       limitShownPages: false,
       numberOfPagesShown: 7,
       currentPage: INITIAL_PAGE,
-      autoplay: false
+      autoplay: true
     };
   }
 
@@ -82,8 +82,9 @@ class CarouselScreen extends Component<Props, State> {
     return Constants.windowWidth - Spacings.s5 * 2;
   };
 
-  onChangePage = (currentPage: number) => {
+  onChangePage = (currentPage: number, _: any) => {
     this.setState({currentPage});
+
   };
 
   onPagePress = (index: number) => {
@@ -102,14 +103,11 @@ class CarouselScreen extends Component<Props, State> {
         </Text>
 
         <View marginH-20 marginB-20>
-          {renderBooleanOption.call(
-            this,
+          {renderBooleanOption.call(this,
             'Limit number of pages shown in page control',
-            'limitShownPages'
-          )}
+            'limitShownPages')}
           {renderBooleanOption.call(this, 'autoplay', 'autoplay')}
-          {renderSliderOption.call(
-            this,
+          {renderSliderOption.call(this,
             'Number of pages shown',
             'numberOfPagesShown',
             {
@@ -117,8 +115,7 @@ class CarouselScreen extends Component<Props, State> {
               max: 10,
               step: 1,
               initial: 7
-            }
-          )}
+            })}
         </View>
 
         <Carousel
@@ -136,6 +133,7 @@ class CarouselScreen extends Component<Props, State> {
           pageControlProps={{onPagePress: this.onPagePress, limitShownPages}}
           // showCounter
           allowAccessibleLayout
+          loop
         >
           {_.map([...Array(numberOfPagesShown)], (item, index) => (
             <Page

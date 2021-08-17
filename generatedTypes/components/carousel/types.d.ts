@@ -1,8 +1,8 @@
-import { ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType, Animated } from 'react-native';
-import { PageControlProps } from '../pageControl';
+import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType, Animated} from 'react-native';
+import {PageControlProps} from '../pageControl';
 export declare enum PageControlPosition {
-    OVER = "over",
-    UNDER = "under"
+    OVER = 'over',
+    UNDER = 'under'
 }
 export interface CarouselProps extends ScrollViewProps {
     /**

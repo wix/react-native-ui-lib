@@ -37,13 +37,14 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   autoplayTimer?: ReturnType<typeof setTimeout>;
   orientationChange?: boolean;
   skippedInitialScroll?: boolean;
+  isAutoScrolled: boolean;
 
   constructor(props: CarouselProps) {
     super(props);
 
     const defaultPageWidth = props.loop || !props.pageWidth ? Constants.screenWidth : props.pageWidth;
     const pageHeight = props.pageHeight ?? Constants.screenHeight;
-
+    this.isAutoScrolled = false;
     this.state = {
       containerWidth: undefined,
       // @ts-ignore (defaultProps)
@@ -167,8 +168,10 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   startAutoPlay() {
     this.autoplayTimer = setInterval(() => {
+      this.isAutoScrolled = true;
       this.goToNextPage();
     }, this.props.autoplayInterval);
+    
   }
 
   stopAutoPlay() {
@@ -258,7 +261,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     if (index < pagesCount) {
       this.setState({currentStandingPage: index});
       if (currentStandingPage !== index) {
-        this.props.onChangePage?.(index, currentStandingPage);
+        this.props.onChangePage?.(index, currentStandingPage, this.isAutoScrolled);
+        this.isAutoScrolled = false;
       }
     }
   };
@@ -276,12 +280,13 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     }
 
     this.goToPage(nextPageIndex, true);
-
+    
     // in case of a loop, after we advanced right to the cloned first page,
     // we return silently to the real first page
     if (loop && currentPage === pagesCount) {
       this.goToPage(0, false);
     }
+    
   }
 
   onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -425,7 +430,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {containerStyle, children} = this.props;
 
     return (
-      <View style={containerStyle} onLayout={this.onContainerLayout}>
+      <View style={containerStyle} onLayout={this.onContainerLayout}>  
         <ScrollView
           ref={this.carousel}
           showsVerticalScrollIndicator={false}
