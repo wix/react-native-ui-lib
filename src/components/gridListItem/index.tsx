@@ -3,7 +3,7 @@ import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import * as Modifiers from '../../commons/modifiers';
 import {Colors, Spacings, Typography} from 'style';
-import View from '../view';
+import View, {ViewProps} from '../view';
 import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image, {ImageProps} from '../image';
@@ -13,6 +13,10 @@ export interface GridListItemProps {
    * Image props object for rendering an image item
    */
   imageProps?: ImageProps;
+  /**
+   * Props to pass on to the touchable container
+   */
+  containerProps?: Omit<TouchableOpacityProps | ViewProps, 'style'>;
   /**
    * Custom GridListItem to be rendered in the GridView
    */
@@ -156,6 +160,7 @@ class GridListItem extends Component<GridListItemProps> {
       imageProps,
       alignToStart,
       containerStyle,
+      containerProps,
       renderCustomItem,
       children,
       title,
@@ -187,13 +192,14 @@ class GridListItem extends Component<GridListItemProps> {
     return (
       <Container
         style={[styles.container, alignToStart && styles.containerAlignedToStart, {width}, containerStyle]}
+        {...containerProps}
         onPress={hasPress ? this.onItemPress : undefined}
         accessible={renderCustomItem ? true : undefined}
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
         {imageProps && (
           <View style={[{borderRadius: imageBorderRadius}, imageStyle]}>
-            <Image style={imageStyle} {...imageProps}/>
+            <Image {...imageProps} style={[imageStyle, imageProps?.style]}/>
             {children}
           </View>
         )}
