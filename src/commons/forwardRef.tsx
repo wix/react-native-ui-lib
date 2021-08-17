@@ -9,7 +9,7 @@ export interface ForwardRefInjectedProps {
   forwardedRef: any;
 }
 
-export default function forwardRef<P = any>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> {
+export default function forwardRef<P = any, STATICS = {}>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> & STATICS {
   function forwardRef(props: P, ref: any) {
     return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
@@ -25,4 +25,3 @@ export default function forwardRef<P = any>(WrappedComponent: React.ComponentTyp
 
   return ForwardedComponent as any;
 }
-
