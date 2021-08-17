@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Colors, TouchableOpacity, Image, Button, Carousel, Picker, Dialog} from 'react-native-ui-lib';
+import {View, Text, Colors, Image, Button, Carousel, Picker} from 'react-native-ui-lib';
+import _ from 'lodash';
 
-const colorOptions = [
-  {name: 'Red', color: Colors.red30},
-  {name: 'Green', color: Colors.green30},
-  {name: 'Blue', color: Colors.blue30},
-];
+const colorOptions: {[key: string]: {name: string; color: string}} = {
+  red: {name: 'Red', color: Colors.red30},
+  green: {name: 'Green', color: Colors.green30},
+  blue: {name: 'Blue', color: Colors.blue30}
+};
 
-const sizeOptions = [
-  {name: 'Small'},
-  {name: 'Medium'},
-  {name: 'Large'},
-];
+const sizeOptions = {
+  s: {name: 'Small'},
+  m: {name: 'Medium'},
+  l: {name: 'Large'}
+};
 
 const images = [
   'https://images.pexels.com/photos/3297502/pexels-photo-3297502.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -29,45 +30,20 @@ class Product extends Component {
   state = {
     isColor: false,
     isSize: false,
-    colorOption: colorOptions[0],
-    sizeOption: sizeOptions[0],
+    selectedColor: 'red',
+    selectedSize: 's'
   };
-  
-  pickOption(opt: any) {
-    this.setState({
-      colorOption: opt,
-      isColor: false
-    });
-  }
-  
-  renderDialog = (modalProps: any) => {
-    const {visible, children, toggleModal} = modalProps;
-    
-    return (
-      <Dialog
-        migrate
-        visible={visible}
-        onDismiss={() => toggleModal(false)}
-        width="90%"
-        height="40%"
-        bottom
-        useSafeArea
-        containerStyle={{backgroundColor: Colors.white, borderRadius: 12}}
-      >
-        <ScrollView>{children}</ScrollView>
-      </Dialog>
-    );
-  };
-  
+
   render() {
-    const {isColor, colorOption, isSize, sizeOption} = this.state;
-    
+    const {selectedColor, selectedSize} = this.state;
+
     return (
       <ScrollView>
         <View>
           <Image
             style={{position: 'absolute', top: 10, right: 10, zIndex: 100, tintColor: Colors.white}}
-            source={require('../../../assets/icons/share.png')}/>
+            source={require('../../../assets/icons/share.png')}
+          />
           <Carousel
             containerStyle={{height: 200}}
             pageControlProps={{size: 6}}
@@ -76,89 +52,63 @@ class Product extends Component {
             {images.map((image, i) => {
               return (
                 <View flex centerV key={i}>
-                  <Image
-                    overlayType={Image.overlayTypes.BOTTOM}
-                    style={{flex: 1}}
-                    source={{uri: image}}
-                  />
+                  <Image overlayType={Image.overlayTypes.BOTTOM} style={{flex: 1}} source={{uri: image}}/>
                 </View>
               );
             })}
           </Carousel>
         </View>
-    
+
         <View paddingH-page>
           <View row centerV>
-            <Text text40M marginT-s7>New Product</Text>
+            <Text text40M marginT-s7>
+              New Product
+            </Text>
           </View>
-          <Text text80 dark40 marginV-s1>SKU: 1234567890</Text>
-          <Text text50L marginV-s2>$55.00</Text>
-  
-          <Picker
-            marginT-20
-            visible={isColor}
-            title="Color"
-            placeholder={colorOption.name}
-            onChange={()=>this.setState({isColor: true})}
-            rightIconSource={require('../../../assets/icons/chevronDown.png')}
-            // renderPicker={() => {
-            //   return (
-            //     <View flex marginV-s2 paddingV-s2 style={{borderColor: Colors.dark70, borderBottomWidth: 1}}>
-            //       <Text dark30>Color</Text>
-            //       <TouchableOpacity row centerV spread>
-            //         <View row centerV>
-            //           <View style={{width: 14, height: 14, borderRadius: 12, marginRight: 6}} backgroundColor={colorOption.color}/>
-            //           <Text dark10 text70>{colorOption.name}</Text>
-            //         </View>
-            //         <Image source={require('../../../assets/icons/chevronDown.png')}/>
-            //       </TouchableOpacity>
-            //     </View>
-            //   );
-            // }}
-            renderCustomModal={this.renderDialog}
-          >
-            {colorOptions.map(option => (
-              <TouchableOpacity row centerV onPress={()=> this.pickOption(option)}>
-                <View row centerV padding-20>
-                  <View style={{width: 14, height: 14, borderRadius: 12, marginRight: 6}} backgroundColor={option.color}/>
-                  <Text dark10 text70>{option.name}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </Picker>
-  
-          <Picker
-            marginT-20
-            visible={isSize}
-            title="Size"
-            placeholder={sizeOption.name}
-            onChange={()=>this.setState({isSize: true})}
-            rightIconSource={require('../../../assets/icons/chevronDown.png')}
-            renderCustomModal={this.renderDialog}
-          >
-            {sizeOptions.map(option => (
-              <TouchableOpacity row centerV onPress={()=> this.setState({sizeOption: option})}>
-                <View row centerV padding-20>
-                  <Text dark10 text70>{option.name}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </Picker>
-      
-          <Button marginV-40 label={'Add to Cart'} />
-      
-          <Text text60M>Recommended for You</Text>
+          <Text text80 dark40 marginV-s1>
+            SKU: 1234567890
+          </Text>
+          <Text text50L marginV-s2>
+            $55.00
+          </Text>
+
+          <View marginT-s2>
+            <Picker
+              migrate
+              value={selectedColor}
+              onChange={(value: string) => this.setState({selectedColor: value})}
+              rightIconSource={{}}
+              rightIconStyle={{
+                width: 24,
+                height: 24,
+                backgroundColor: colorOptions[selectedColor].color,
+                borderRadius: 12
+              }}
+            >
+              {_.map(colorOptions, (colorOption, colorKey) => {
+                return <Picker.Item value={colorKey} label={colorOption.name}/>;
+              })}
+            </Picker>
+            <Picker migrate value={selectedSize} onChange={(value: string) => this.setState({selectedSize: value})}>
+              {_.map(sizeOptions, (sizeOption, sizeKey) => {
+                return <Picker.Item value={sizeKey} label={sizeOption.name}/>;
+              })}
+            </Picker>
+          </View>
+
+          <Button label={'Add to Cart'}/>
         </View>
-        <ScrollView style={{height: 200, marginVertical: 20, marginLeft: 20}} horizontal showsHorizontalScrollIndicator={false}>
-          {
-            images.map((image) => (
-              <Image
-                width={160}
-                style={{marginRight: 10}}
-                source={{uri: image}}
-              />
-            ))
-          }
+        <Text marginL-page marginT-s5 text60M>
+          Recommended for You
+        </Text>
+        <ScrollView
+          style={{height: 200, marginVertical: 20, marginLeft: 20}}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+          {images.map((image, index) => (
+            <Image key={index} width={160} style={{marginRight: 10}} source={{uri: image}}/>
+          ))}
         </ScrollView>
       </ScrollView>
     );
