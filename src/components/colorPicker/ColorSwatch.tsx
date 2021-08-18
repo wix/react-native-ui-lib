@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
@@ -45,7 +44,7 @@ export const SWATCH_SIZE = DEFAULT_SIZE;
 
 /**
  * @description: A color swatch component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true
  */
 class ColorSwatch extends PureComponent<Props> {
@@ -104,9 +103,9 @@ class ColorSwatch extends PureComponent<Props> {
   }
 
   onPress = () => {
-    const {color, value, index} = this.props;
+    const {color = '', value, index} = this.props;
     const tintColor = this.getTintColor(value);
-    _.invoke(this.props, 'onPress', value || color, {tintColor, index});
+    this.props.onPress?.(value || color, {tintColor, index});
   };
 
   getTintColor(color?: string) {

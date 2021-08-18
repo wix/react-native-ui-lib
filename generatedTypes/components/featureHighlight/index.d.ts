@@ -109,7 +109,7 @@ interface State {
  * @important: FeatureHighlight uses a native library. You MUST add and link the native library to both iOS and Android projects. For instruction please see
  * @importantLink: https://facebook.github.io/react-native/docs/linking-libraries-ios.html
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FeatureHighlight/FeatureHighlight.gif?raw=true
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.tsx
  */
 declare class FeatureHighlight extends Component<FeatureHighlightProps, State> {
     static displayName: string;

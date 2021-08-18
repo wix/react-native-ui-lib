@@ -13,7 +13,21 @@ import Text, {TextProps} from '../../components/text';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
+enum WheelPickerAlign {
+  CENTER = 'center',
+  RIGHT = 'right',
+  LEFT = 'left'
+}
+
 export interface WheelPickerProps {
+  /**
+   * Initial value (doesn't work with selectedValue)
+   */
+  initialValue?: ItemProps | number | string;
+  /**
+   * The current selected value
+   */
+  selectedValue?: ItemProps | number | string;
   /**
    * Data source for WheelPicker
    */
@@ -65,13 +79,13 @@ export interface WheelPickerProps {
    */
   children?: JSX.Element | JSX.Element[];
   /**
-   * WheelPicker initial value, can be ItemProps.value, number as index
+   * Align the content to center, right ot left (default: center)
    */
-  selectedValue: ItemProps | number | string;
+  align?: WheelPickerAlign;
   testID?: string;
 }
 
-const WheelPicker = React.memo(({
+const WheelPicker = ({
   items: propItems,
   itemHeight = 44,
   numberOfVisibleRows = 5,
@@ -82,8 +96,10 @@ const WheelPicker = React.memo(({
   labelStyle,
   labelProps,
   onChange,
+  align,
   style,
   children,
+  initialValue,
   selectedValue,
   testID
 }: WheelPickerProps) => {
@@ -100,6 +116,7 @@ const WheelPicker = React.memo(({
     index: currentIndex,
     getRowItemAtOffset
   } = usePresenter({
+    initialValue,
     selectedValue,
     items: propItems,
     children,
@@ -109,24 +126,20 @@ const WheelPicker = React.memo(({
 
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
-
-  useEffect(() => {
-    controlComponent();
-  });
-
+  const [flatListWidth, setFlatListWidth] = useState(0);
   const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
 
-  /**
-     * The picker is a controlled component. This means we expect the
-     * to relay on `selectedValue` prop to be our
-     * source of truth - not the picker current value.
-     * This way, you can control disallow or mutate selection of some values.
-     */
-  const controlComponent = () => {
+  /* This effect enforce the index to be controlled by selectedValue passed by the user */
+  useEffect(() => {
     if (shouldControlComponent(scrollOffset)) {
       scrollToIndex(currentIndex, true);
     }
-  };
+  });
+
+  /* This effect making sure to reset index if initialValue has changed */
+  useEffect(() => {
+    scrollToIndex(currentIndex, true);
+  }, [currentIndex]);
 
   const scrollToPassedIndex = useCallback(() => {
     scrollToIndex(currentIndex, false);
@@ -164,7 +177,16 @@ const WheelPicker = React.memo(({
 
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     onChange?.(value, index);
-  }, [onChange]);
+  },
+  [onChange]);
+
+  const alignmentStyle = useMemo(() =>
+    align === WheelPickerAlign.RIGHT
+      ? {alignSelf: 'flex-end'}
+      : align === WheelPickerAlign.LEFT
+        ? {alignSelf: 'flex-start'}
+        : {alignSelf: 'center'},
+  [align]);
 
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -176,6 +198,9 @@ const WheelPicker = React.memo(({
         inactiveColor={inactiveTextColor}
         style={textStyle}
         {...item}
+        fakeLabel={label}
+        fakeLabelStyle={labelStyle}
+        fakeLabelProps={labelProps}
         centerH={!label}
         onSelect={selectItem}
         testID={`${testID}.item_${index}`}
@@ -192,15 +217,22 @@ const WheelPicker = React.memo(({
     );
   }, []);
 
+  const labelContainerStyle = useMemo(() => {
+    return [{position: 'absolute', top: 0, bottom: 0}, alignmentStyle];
+  }, [alignmentStyle]);
+
   const labelContainer = useMemo(() => {
     return (
-      <View centerV>
-        <Text marginL-s2 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
-          {label}
-        </Text>
+      // @ts-expect-error
+      <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
+        <View style={styles.label} centerV pointerEvents="none">
+          <Text marginL-s2 marginR-s5 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+            {label}
+          </Text>
+        </View>
       </View>
     );
-  }, []);
+  }, [flatListWidth, labelContainerStyle, label, labelProps, activeTextColor, labelStyle]);
 
   const fader = useMemo(() => (position: FaderPosition) => {
     return <Fader visible position={position} size={60}/>;
@@ -212,14 +244,23 @@ const WheelPicker = React.memo(({
   },
   [itemHeight]);
 
+  const updateFlatListWidth = useCallback((width: number) => {
+    setFlatListWidth(width);
+  }, []);
+
   const contentContainerStyle = useMemo(() => {
-    return {paddingVertical: height / 2 - itemHeight / 2};
-  }, [height, itemHeight]);
+    return [
+      {
+        paddingVertical: height / 2 - itemHeight / 2
+      },
+      alignmentStyle
+    ];
+  }, [height, itemHeight, alignmentStyle]);
 
   return (
     <View testID={testID} bg-white style={style}>
-      <View row marginH-s5 centerH>
-        <View>
+      <View row centerH>
+        <View flexG>
           <AnimatedFlatList
             testID={`${testID}.list`}
             height={height}
@@ -233,23 +274,26 @@ const WheelPicker = React.memo(({
             onLayout={scrollToPassedIndex}
             // @ts-ignore
             ref={scrollView}
+            // @ts-expect-error
             contentContainerStyle={contentContainerStyle}
             snapToInterval={itemHeight}
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
             getItemLayout={getItemLayout}
             initialScrollIndex={currentIndex}
+            onContentSizeChange={updateFlatListWidth}
           />
         </View>
-        {label && labelContainer}
       </View>
+      {label && labelContainer}
       {fader(FaderPosition.BOTTOM)}
       {fader(FaderPosition.TOP)}
       {separators}
     </View>
   );
-});
+};
 
+WheelPicker.alignments = WheelPickerAlign;
 export default WheelPicker;
 
 const styles = StyleSheet.create({
@@ -258,5 +302,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     height: Spacings.s9,
     borderColor: Colors.grey60
+  },
+  label: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0
   }
 });

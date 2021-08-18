@@ -98,7 +98,7 @@ type ActionSheetProps = {
 /**
  * @description: Cross platform Action Sheet, with a support for native iOS solution
  * @gif: https://media.giphy.com/media/l0HUpXOR6RqB2ct5S/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.tsx
  */
 class ActionSheet extends Component<ActionSheetProps> {
   static displayName = 'ActionSheet';
@@ -139,8 +139,8 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   onOptionPress(optionIndex: number) {
-    _.invoke(this.props, `options[${optionIndex}].onPress`);
-    _.invoke(this.props, 'onDismiss');
+    this.props.options?.[optionIndex].onPress?.();
+    this.props.onDismiss?.();
   }
 
   handleRenderIcon = (option: ButtonProps) => {
@@ -164,6 +164,7 @@ class ActionSheet extends Component<ActionSheetProps> {
         key={index}
         testID={option.testID}
         onPress={() => this.onOptionPress(index)}
+        // @ts-expect-error
         activeBackgroundColor={Colors.dark80}
       >
         <View row paddingL-16 flex centerV>

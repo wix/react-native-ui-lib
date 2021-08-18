@@ -24,7 +24,6 @@ const GUTTER_SPACING = 8;
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ChipsInput/ChipsInput.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.js
  * @extends: TextField
- * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/inputs/TextField.js
  */
 class ChipsInput extends Component {
   static displayName = 'ChipsInput';

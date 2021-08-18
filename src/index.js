@@ -66,6 +66,12 @@ export default {
   get FeatureHighlight() {
     return require('./components/featureHighlight').default;
   },
+  get GridListItem() {
+    return require('./components/gridListItem').default;
+  },
+  get GridView() {
+    return require('./components/gridView').default;
+  },
   get Hint() {
     return require('./components/hint').default;
   },
@@ -94,6 +100,10 @@ export default {
     // TODO: Start migration by exporting TextFieldMigrator
     // return require('./components/textField/TextFieldMigrator').default;
     return require('./components/textField').default;
+  },
+  // TODO: remove once TextField migration has completed
+  get TextFieldMigrator() {
+    return require('./components/textField/TextFieldMigrator').default;
   },
   get MaskedInput() {
     return require('./components/maskedInput').default;

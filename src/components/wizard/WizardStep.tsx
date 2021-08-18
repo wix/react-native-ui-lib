@@ -23,7 +23,7 @@ interface Props extends WizardStepProps, Omit<WizardProps, 'onActiveIndexChanged
  * @description: WizardStep Component: a wizard presents a series of steps in  prescribed order
  * that the user needs to complete in order to accomplish a goal (e.g. purchase a product).
  *
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.tsx
  * @notes: Use Wizard with nested Wizard.Step(s) to achieve the desired result.
  */
 class WizardStep extends Component<Props> {
@@ -65,7 +65,7 @@ class WizardStep extends Component<Props> {
         testID={`${testID}.circle`}
         style={[
           styles.circle,
-          circleSize && {width: circleSize, height: circleSize},
+          !!circleSize && {width: circleSize, height: circleSize},
           {borderColor: circleColor, backgroundColor: circleBackgroundColor}
         ]}
         onPress={enabled ? onPress : undefined}

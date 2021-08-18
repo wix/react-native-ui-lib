@@ -6,6 +6,7 @@ export declare type FieldContextType = {
     isValid: boolean;
     failingValidatorIndex?: number;
     disabled: boolean;
+    validateField: () => void;
 };
 declare const FieldContext: import("react").Context<FieldContextType>;
 export default FieldContext;

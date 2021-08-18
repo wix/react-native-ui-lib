@@ -111,7 +111,8 @@ interface SkeletonState {
 
 /**
  * @description: Allows showing a temporary skeleton view while your real view is loading.
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.tsx
+ * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true
  * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
  */
 class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {

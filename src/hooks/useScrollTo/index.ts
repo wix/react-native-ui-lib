@@ -74,11 +74,11 @@ const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>):
     }
 
     // @ts-ignore
-    if (_.isFunction(scrollViewRef.current.scrollToOffset)) {
+    if (_.isFunction(scrollViewRef.current?.scrollToOffset)) {
       // @ts-ignore
       scrollViewRef.current.scrollToOffset({offset, animated});
       // @ts-ignore
-    } else if (_.isFunction(scrollViewRef.current.scrollTo)) {
+    } else if (_.isFunction(scrollViewRef.current?.scrollTo)) {
       const scrollToXY = horizontal ? {x: offset} : {y: offset};
       // @ts-ignore
       scrollViewRef.current.scrollTo({...scrollToXY, animated});

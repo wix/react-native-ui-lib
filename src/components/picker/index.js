@@ -182,20 +182,22 @@ class Picker extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (!_.isEmpty(nextProps.value) && prevState.value !== nextProps.value) {
-      if (prevState.prevValue !== prevState.value) {
-        // for this.setState() updates to 'value'
-        // NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue'
-        return {
-          prevValue: prevState.value
-        };
-      } else {
-        // for prop update to 'value'
-        return {
-          value: nextProps.value
-        };
-      }
-    } else if (_.isFunction(nextProps.renderPicker) && prevState.value !== nextProps.value) {
+    const hasNextValue = !_.isEmpty(nextProps.value) || _.isNumber(nextProps.value);
+    /* Relevant for keeping the value prop controlled - react when user change value prop */
+    const externalValueChanged = hasNextValue && prevState.value !== nextProps.value;
+    /* Relevant for multi select mode when we keep an internal value state */
+    const internalValueChanged = prevState.value !== prevState.prevValue;
+    if (internalValueChanged && nextProps.mode === Picker.modes.MULTI) {
+      /* for this.setState() updates to 'value'
+      NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue' */
+      return {
+        prevValue: prevState.value
+      };
+    } else if (externalValueChanged) {
+      return {
+        value: nextProps.value
+      };
+    } else if (_.isFunction(nextProps.renderPicker) && externalValueChanged) {
       return {
         prevValue: prevState.value,
         value: nextProps.value
@@ -448,7 +450,7 @@ class Picker extends Component {
         expandable
         renderExpandable={this.renderExpandableModal}
         onToggleExpandableModal={this.toggleExpandableModal}
-        selection={Constants.isAndroid && {start: 0}}
+        selection={Constants.isAndroid ? {start: 0} : undefined}
       />
     );
   }
