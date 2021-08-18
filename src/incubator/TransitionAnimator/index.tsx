@@ -1,38 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useRef,
-  useCallback,
-  useState,
-  useMemo,
-  useImperativeHandle
-} from 'react';
+import React, {PropsWithChildren, useEffect, useCallback, useImperativeHandle} from 'react';
 import {View as RNView, LayoutChangeEvent} from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  withTiming,
-  useAnimatedGestureHandler,
-  runOnJS
-} from 'react-native-reanimated';
+import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, runOnJS} from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocations, {HiddenLocation} from './useHiddenLocations';
 const AnimatedView = Animated.createAnimatedComponent(View);
+export {HiddenLocation as TransitionLocation};
 
 const DEFAULT_ANIMATION_VELOCITY = 300;
-const ENTER_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 300, mass: 0.4};
+const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 300, mass: 0.4};
 
-export type AnimationType = 'in' | 'out';
+export type TransitionAnimationEndType = 'in' | 'out';
 
 export interface TransitionAnimatorProps extends ViewProps {
   /**
    * Callback to the animation end.
    */
-  onAnimationEnd?: (animationType: AnimationType) => void;
+  onAnimationEnd?: (animationType: TransitionAnimationEndType) => void;
   /**
    * If this is given there will be an enter animation from this location.
    */
@@ -48,8 +33,6 @@ interface Statics {
   animateOut: () => void;
 }
 
-type AnimationAxis = 'none' | 'x' | 'y';
-
 const TransitionAnimator = (props: Props) => {
   const {
     onAnimationEnd,
@@ -62,39 +45,30 @@ const TransitionAnimator = (props: Props) => {
   } = props;
   const containerRef = React.createRef<RNView>();
   const {onLayout: hiddenLocationOnLayout, hiddenLocations} = useHiddenLocations({containerRef});
-  const hide = useSharedValue<boolean>(!!enterAnimationLocation);
-  const animationAxis = useSharedValue<AnimationAxis>('none');
+  const visible = useSharedValue<boolean>(!enterAnimationLocation);
 
   const getLocation = (location?: HiddenLocation) => {
-    if (location) {
-      return hiddenLocations[location];
+    if (location === 'left' || location === 'right') {
+      return {x: hiddenLocations[location], y: 0};
+    } else if (location === 'top' || location === 'bottom') {
+      return {x: 0, y: hiddenLocations[location]};
     } else {
-      return 0;
+      return {x: 0, y: 0};
     }
   };
 
-  const translation = useSharedValue<number>(getLocation(enterAnimationLocation));
+  // Has to start at {0, 0} with {opacity: 0} so layout can be measured
+  const translateX = useSharedValue<number>(0);
+  const translateY = useSharedValue<number>(0);
   const animatedStyle = useAnimatedStyle(() => {
-    if (animationAxis.value === 'y') {
-      return {
-        transform: [{translateY: translation.value}]
-      };
-    } else if (animationAxis.value === 'x') {
-      return {
-        transform: [{translateX: translation.value}]
-      };
-    }
+    return {
+      transform: [{translateX: translateX.value}, {translateY: translateY.value}],
+      // TODO: do we want to take the component's opacity here? - I think combining opacities is buggy
+      opacity: Number(visible.value)
+    };
+  }, []);
 
-    return {};
-  }, [hide]);
-
-  const style = useMemo(() => {
-    // animatedStyle has to return an object (and not undefined),
-    // this is done to prevent the view from disappearing sometimes (might be a debug only issue, when saving code)
-    return [propsStyle, hide.value ? {opacity: 0} : undefined, translation.value !== 0 ? animatedStyle : undefined];
-  }, [propsStyle, animatedStyle]);
-
-  const animationEnded = useCallback((animationType: AnimationType) => {
+  const animationEnded = useCallback((animationType: TransitionAnimationEndType) => {
     onAnimationEnd?.(animationType);
   },
   [onAnimationEnd]);
@@ -107,17 +81,20 @@ const TransitionAnimator = (props: Props) => {
   },
   [animationEnded]);
 
+  const animate = (to: {x: number; y: number},
+    callback: (isFinished: boolean) => void,
+    animationLocation?: HiddenLocation) => {
+    'worklet';
+    if (animationLocation === 'left' || animationLocation === 'right') {
+      translateX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
+    } else if (animationLocation === 'top' || animationLocation === 'bottom') {
+      translateY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
+    }
+  };
+
   const animateOut = useCallback(() => {
     'worklet';
-    if (exitAnimationLocation === 'top' || exitAnimationLocation === 'bottom') {
-      animationAxis.value = 'y';
-    } else if (exitAnimationLocation === 'left' || exitAnimationLocation === 'right') {
-      animationAxis.value = 'x';
-    } else {
-      return;
-    }
-
-    translation.value = withSpring(getLocation(exitAnimationLocation), ENTER_ANIMATION_CONFIG, outAnimationEnd);
+    animate(getLocation(exitAnimationLocation), outAnimationEnd, exitAnimationLocation);
   }, [hiddenLocations, exitAnimationLocation, outAnimationEnd]);
 
   useImperativeHandle(forwardedRef,
@@ -136,32 +113,28 @@ const TransitionAnimator = (props: Props) => {
 
   const animateIn = useCallback(() => {
     'worklet';
-    translation.value = withSpring(0, ENTER_ANIMATION_CONFIG, inAnimationEnd);
+    animate({x: 0, y: 0}, inAnimationEnd, enterAnimationLocation);
   }, [inAnimationEnd]);
 
   useEffect(() => {
-    if (animationAxis.value !== 'none' && !hiddenLocations.isDefault && enterAnimationLocation) {
-      translation.value = withTiming(hiddenLocations[enterAnimationLocation], {duration: 0}, animateIn);
+    if (!hiddenLocations.isDefault && enterAnimationLocation) {
+      const location = getLocation(enterAnimationLocation);
+      if (enterAnimationLocation === 'left' || enterAnimationLocation === 'right') {
+        translateX.value = withTiming(location.x, {duration: 0}, animateIn);
+      } else {
+        translateY.value = withTiming(location.y, {duration: 0}, animateIn);
+      }
+
+      visible.value = true;
     }
   }, [hiddenLocations.isDefault]);
 
-  const initAnimateIn = useCallback(() => {
-    'worklet';
-    hide.value = false;
-    if (enterAnimationLocation === 'top' || enterAnimationLocation === 'bottom') {
-      animationAxis.value = 'y';
-    } else if (enterAnimationLocation === 'left' || enterAnimationLocation === 'right') {
-      animationAxis.value = 'x';
-    }
-  }, [enterAnimationLocation]);
-
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     hiddenLocationOnLayout(event);
-    initAnimateIn();
     propsOnLayout?.(event);
   }, []);
 
-  return <AnimatedView {...others} onLayout={onLayout} style={style} ref={containerRef}/>;
+  return <AnimatedView {...others} onLayout={onLayout} style={[propsStyle, animatedStyle]} ref={containerRef}/>;
 };
 
 export default forwardRef<Props, Statics>(TransitionAnimator);
