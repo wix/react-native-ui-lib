@@ -110,9 +110,9 @@ export interface HintProps {
    * Callback for Hint press
    */
   onPress?: () => void;
-  /**
-    * Callback for the background press
-    */
+  /** 
+   * Callback for the background press
+   */
   onBackgroundPress?: (event: GestureResponderEvent) => void;
   /**
    * The hint container width
@@ -217,15 +217,13 @@ class Hint extends Component<HintProps, HintState> {
     if (!_.isEqual(this.state.targetLayout, layout)) {
       this.setState({targetLayout: layout});
     }
-
-    if (!this.state.targetLayoutInWindow) {
-      setTimeout(() => {
-        this.targetRef?.measureInWindow((x: number, y: number, width: number, height: number) => {
-          const targetLayoutInWindow = {x, y, width, height};
-          this.setState({targetLayoutInWindow});
-        });
+    
+    setTimeout(() => {
+      this.targetRef?.measureInWindow((x: number, y: number, width: number, height: number) => {
+        const targetLayoutInWindow = {x, y, width, height};
+        this.setState({targetLayoutInWindow});
       });
-    }
+    });
   };
 
   getAccessibilityInfo() {
