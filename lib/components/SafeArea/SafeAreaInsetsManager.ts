@@ -3,16 +3,19 @@
 import {NativeModules, NativeEventEmitter} from 'react-native';
 import _ from 'lodash';
 
-let SafeAreaInsetsCache = null;
+type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null 
+
+let SafeAreaInsetsCache: SafeAreaInsetsType = null;
 
 const NativeSafeAreaManager = NativeModules.SafeAreaManager;
 
 class SafeAreaInsetsManager {
-  constructor() {
-    this._defaultInsets = {top: 0, left: 0, bottom: 0, right: 0};
-    this._safeAreaInsets = this._defaultInsets;
-    this._safeAreaChangedDelegates = [];
 
+  _defaultInsets: SafeAreaInsetsType = {top: 0, left: 0, bottom: 0, right: 0};
+  _safeAreaInsets: SafeAreaInsetsType = {top: 0, left: 0, bottom: 0, right: 0};
+  _safeAreaChangedDelegates: Array<any> = [];
+
+  constructor() {
     this.addSafeAreaChangedListener();
   }
 
@@ -46,11 +49,11 @@ class SafeAreaInsetsManager {
     return this._safeAreaInsets;
   }
 
-  addSafeAreaChangedDelegate(delegate) {
+  addSafeAreaChangedDelegate(delegate: any) {
     this._safeAreaChangedDelegates.push(delegate);
   }
 
-  removeSafeAreaChangedDelegate(delegateToRemove) {
+  removeSafeAreaChangedDelegate(delegateToRemove: any) {
     _.remove(this._safeAreaChangedDelegates, (currentDelegate) => {
       return currentDelegate === delegateToRemove;
     });

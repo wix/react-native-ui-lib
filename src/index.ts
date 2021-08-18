@@ -83,6 +83,7 @@ export {default as LogService} from './services/LogService';
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
+export {Keyboard, SafeAreaSpacerView, WheelPicker, WheelPickerProps, HighlighterOverlayView, SafeAreaInsetsManager} from '../lib/components';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
@@ -90,6 +91,5 @@ export {
   BaseInput, TextArea, TextField, MaskedInput, Picker,
   PickerProps, ProgressBar, Stepper,
   TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
-  BaseComponent, PureBaseComponent, UIComponent, forwardRef,
-  WheelPicker, WheelPickerProps
+  BaseComponent, PureBaseComponent, UIComponent, forwardRef
 } from '../typings';

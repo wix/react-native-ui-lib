@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 export default class EventEmitterManager {
+  handlerCallbacks = {};
   constructor() {
     this.handlerCallbacks = {};
   }
