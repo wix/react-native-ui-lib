@@ -2,12 +2,13 @@ import React, { PropsWithChildren } from 'react';
 import { ViewProps } from '../../components/view';
 import { ForwardRefInjectedProps } from '../../commons/new';
 import { HiddenLocation } from './useHiddenLocations';
-export declare type AnimationType = 'in' | 'out';
+export { HiddenLocation as TransitionLocation };
+export declare type TransitionAnimationEndType = 'in' | 'out';
 export interface TransitionAnimatorProps extends ViewProps {
     /**
      * Callback to the animation end.
      */
-    onAnimationEnd?: (animationType: AnimationType) => void;
+    onAnimationEnd?: (animationType: TransitionAnimationEndType) => void;
     /**
      * If this is given there will be an enter animation from this location.
      */
