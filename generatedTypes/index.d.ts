@@ -42,6 +42,8 @@ export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
+export {default as GridListItem, GridListItemProps} from './components/gridListItem';
+export {default as GridView, GridViewProps} from './components/gridView';
 export {default as Hint, HintProps} from './components/hint';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
@@ -80,6 +82,7 @@ export {default as PageControl, PageControlProps} from './components/pageControl
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as ActionSheet} from './components/actionSheet';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
+export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 export {
@@ -96,7 +99,6 @@ export {
   BaseInput,
   TextArea,
   MaskedInput,
-  ListItem,
   ProgressBar,
   ColorSliderGroup,
   Stepper,

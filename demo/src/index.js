@@ -238,6 +238,12 @@ module.exports = {
       get ListActionsScreen() {
         return require('./screens/realExamples/ListActions/ListActionsScreen').default;
       },
+      get ProductPage() {
+        return require('./screens/realExamples/ProductPage');
+      },
+      get Twitter() {
+        return require('./screens/realExamples/Twitter');
+      },
       // wrapperScreens
       get TouchableOpacityScreen() {
         return require('./screens/componentScreens/TouchableOpacityScreen').default;
