@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+import { ViewProps } from '../view';
 import { TouchableOpacityProps } from '../touchableOpacity';
 import { ImageProps } from '../image';
 export interface GridListItemProps {
@@ -7,6 +8,10 @@ export interface GridListItemProps {
      * Image props object for rendering an image item
      */
     imageProps?: ImageProps;
+    /**
+     * Props to pass on to the touchable container
+     */
+    containerProps?: Omit<TouchableOpacityProps | ViewProps, 'style'>;
     /**
      * Custom GridListItem to be rendered in the GridView
      */
