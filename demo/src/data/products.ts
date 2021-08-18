@@ -7,7 +7,7 @@ const products = [
       status: 'In Stock',
       quantity: 1
     },
-    mediaUrl: 'https://static.wixstatic.com/media/d911269bdf7972c9a59ba30440cb3789.jpg_128'
+    mediaUrl: 'https://images.pexels.com/photos/248412/pexels-photo-248412.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=200'
   },
   {
     name: 'I\'m a Product',
@@ -17,7 +17,7 @@ const products = [
       status: 'In Stock',
       quantity: 2
     },
-    mediaUrl: 'https://static.wixstatic.com/media/cda177_5c6d2cd3b71a41caa54309301e1dd0d7.jpg_128'
+    mediaUrl: 'https://images.pexels.com/photos/3737604/pexels-photo-3737604.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=200'
   },
   {
     name: 'I\'m a Product',
@@ -27,7 +27,7 @@ const products = [
       status: 'In Stock',
       quantity: 1
     },
-    mediaUrl: 'https://static.wixstatic.com/media/cda177_7153ff06297c484498f9d6662e26d6d5.jpg_128'
+    mediaUrl: 'https://images.pexels.com/photos/3685538/pexels-photo-3685538.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=200'
   },
   {
     name: 'I\'m a Product',
@@ -37,7 +37,7 @@ const products = [
       status: 'Out of Stock',
       quantity: 0
     },
-    mediaUrl: 'https://static.wixstatic.com/media/cda177_e008aa7681f443b3be63a1fe86c10cfd.jpg_128'
+    mediaUrl: 'https://images.pexels.com/photos/4202467/pexels-photo-4202467.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=200'
   },
   {
     name: 'I\'m a Product',
