@@ -1,23 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {
-  BaseComponent,
-  Colors,
-  Spacings,
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  Typography,
-  View
-} from 'react-native-ui-lib';
 import _ from 'lodash';
+import * as Modifiers from '../../commons/modifiers';
+import {Colors, Spacings, Typography} from 'style';
+import View, {ViewProps} from '../view';
+import Text from '../text';
+import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image, {ImageProps} from '../image';
 
-export interface GridItemProps {
+export interface GridListItemProps {
   /**
    * Image props object for rendering an image item
    */
   imageProps?: ImageProps;
+  /**
+   * Props to pass on to the touchable container
+   */
+  containerProps?: Omit<TouchableOpacityProps | ViewProps, 'style'>;
   /**
    * Custom GridListItem to be rendered in the GridView
    */
@@ -109,16 +108,15 @@ interface RenderContentType {
   typography?: string;
   color?: string;
   numberOfLines?: number;
-  style?: StyleProp<ViewStyle>,
-  testID?: string
+  style?: StyleProp<ViewStyle>;
+  testID?: string;
 }
 
 /**
  * @description: A single grid view/list item component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx
  */
-class GridListItem extends BaseComponent<GridItemProps> {
-
+class GridListItem extends Component<GridListItemProps> {
   static displayName = 'GridListItem';
 
   static defaultProps = {
@@ -162,6 +160,7 @@ class GridListItem extends BaseComponent<GridItemProps> {
       imageProps,
       alignToStart,
       containerStyle,
+      containerProps,
       renderCustomItem,
       children,
       title,
@@ -193,17 +192,17 @@ class GridListItem extends BaseComponent<GridItemProps> {
     return (
       <Container
         style={[styles.container, alignToStart && styles.containerAlignedToStart, {width}, containerStyle]}
+        {...containerProps}
         onPress={hasPress ? this.onItemPress : undefined}
         accessible={renderCustomItem ? true : undefined}
-        {...this.extractAccessibilityProps()}
+        {...Modifiers.extractAccessibilityProps(this.props)}
       >
-        {imageProps &&
-        <View
-          style={[{borderRadius: imageBorderRadius}, imageStyle]}
-        >
-          <Image style={imageStyle} {...imageProps}/>
-          {children}
-        </View>}
+        {imageProps && (
+          <View style={[{borderRadius: imageBorderRadius}, imageStyle]}>
+            <Image {...imageProps} style={[imageStyle, imageProps?.style]}/>
+            {children}
+          </View>
+        )}
         {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
         {hasOverlay && <View style={[styles.overlay, this.getItemSizeObj()]}>{renderOverlay?.()}</View>}
         <TextContainer {...textContainerStyle}>

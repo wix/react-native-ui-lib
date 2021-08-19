@@ -166,7 +166,9 @@ export const navigationData = {
     screens: [
       {title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'},
       {title: 'Pinterest', tags: 'pinterest demo screen', screen: 'unicorn.examples.Pinterest'},
-      {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'}
+      {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'},
+      {title: 'Product Page', tags: 'product page demo screen', screen: 'unicorn.examples.ProductPage'},
+      {title: 'Twitter', tags: 'twitter demo screen', screen: 'unicorn.examples.Twitter'}
     ]
   }
 };

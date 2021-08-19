@@ -37,6 +37,8 @@ export {default as ColorPicker, ColorPickerProps} from './components/colorPicker
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPicker/ColorPalette';
 export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker/ColorSwatch';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
+export {default as GridListItem, GridListItemProps} from './components/gridListItem';
+export {default as GridView, GridViewProps} from './components/gridView';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton';

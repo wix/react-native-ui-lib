@@ -1,18 +1,16 @@
 import _ from 'lodash';
-import {View, Text, Colors, Constants, Avatar} from 'react-native-ui-lib';
+import {View, Text, Image, Colors, Constants, Avatar, GridView, Shadows, Card} from 'react-native-ui-lib';
 import React, {Component} from 'react';
 import {Alert, ScrollView} from 'react-native';
-import GridView from '../../../../src/components/GridView';
 import conversations from '../../data/conversations';
 import products from '../../data/products';
-
 
 class GridViewScreen extends Component {
   state = {
     contacts: _.chain(conversations)
       .take(15)
       .map(contact => ({
-        imageProps: {source: {uri: contact.thumbnail}, borderRadius: 999},
+        imageProps: {source: {uri: contact.thumbnail}, borderRadius: 999, style: {backgroundColor: Colors.grey60}},
         title: _.split(contact.name, ' ')[0],
         onPress: () => Alert.alert('My name is ' + contact.name)
       }))
@@ -20,18 +18,17 @@ class GridViewScreen extends Component {
     products: _.chain(products)
       .take(8)
       .map((product, index) => ({
-        imageProps: {source: {uri: product.mediaUrl}, borderRadius: 4},
+        imageProps: {
+          source: {uri: product.mediaUrl},
+          borderRadius: 4,
+          style: {backgroundColor: Colors.grey60, borderWidth: 1, borderColor: Colors.grey50}
+        },
         title: product.name,
         titleTypography: 'subtextBold',
         onPress: () => Alert.alert('My price is ' + product.formattedPrice),
         renderOverlay: () => {
           if (index < 7) {
-            return (
-              <Text
-                text={product.price}
-                style={{alignSelf: 'center', marginTop: 3}}
-              />
-            );
+            return <Text text={product.price} style={{alignSelf: 'center', marginTop: 3}}/>;
           }
         }
       }))
@@ -39,7 +36,14 @@ class GridViewScreen extends Component {
     pairs: _.chain(products)
       .take(2)
       .map(product => ({
-        imageProps: {source: {uri: product.mediaUrl}},
+        containerProps: {useNative: true, activeScale: 0.97, activeOpacity: 1},
+        renderCustomItem: () => {
+          return (
+            <Card height={150} activeOpacity={1}>
+              <Card.Image style={{flex: 1}} source={{uri: product.mediaUrl}}/>
+            </Card>
+          );
+        },
         title: product.name,
         subtitle: (
           <Text>
@@ -54,14 +58,14 @@ class GridViewScreen extends Component {
       }))
       .value(),
     dynamicLayout: _.chain(products)
-      .take(2)
+      .take(3)
       .map(product => ({
         imageProps: {
           source: {
             uri: product.mediaUrl
           }
         },
-        itemSize: {height: 70},
+        itemSize: {height: 90},
         title: 'Title',
         subtitle: 'subtitle',
         description: product.name,
@@ -76,7 +80,9 @@ class GridViewScreen extends Component {
         imageProps: {
           source: {
             uri: product.mediaUrl
-          }
+          },
+          overlayType: Image.overlayTypes.VERTICAL,
+          overlayColor: Colors.white
         },
         itemSize: {height: 240},
         overlayText: true,
@@ -94,10 +100,9 @@ class GridViewScreen extends Component {
         renderOverlay: () => {
           if (index === 0) {
             return (
-              <Text
-                margin-10 text80BO
-                style={{alignSelf: 'flex-start', marginTop: 12, marginLeft: 12}}
-              >{product.formattedPrice}</Text>
+              <Text margin-10 text80BO style={{alignSelf: 'flex-start', marginTop: 12, marginLeft: 12}}>
+                {product.formattedPrice}
+              </Text>
             );
           }
         }
@@ -105,7 +110,7 @@ class GridViewScreen extends Component {
       .value(),
     avatars: _.chain(conversations)
       .take(9)
-      .map((item) => ({
+      .map(item => ({
         renderCustomItem: () => {
           const imageElementElement = item.thumbnail;
           return (
@@ -120,6 +125,9 @@ class GridViewScreen extends Component {
         titleTypography: 'bodySmall'
       }))
       .value(),
+    squares: [Colors.red30, Colors.yellow30, Colors.blue30, Colors.violet30, Colors.green30].map(color => ({
+      renderCustomItem: () => <View height={50} backgroundColor={color}/>
+    })),
     orientation: Constants.orientation
   };
 
@@ -134,27 +142,27 @@ class GridViewScreen extends Component {
   };
 
   render() {
-    const {contacts, dynamicLayout, overlayText, avatars, products, pairs} = this.state;
+    const {contacts, dynamicLayout, overlayText, avatars, products, pairs, squares} = this.state;
 
     return (
       <ScrollView onLayout={this.onLayout}>
         <View padding-page>
-          <Text center text60BO>
+          <Text center h1>
             GridView
           </Text>
 
-          <Text margin-30 text60BO>
+          <Text h3 marginV-s5>
             Avatars
           </Text>
           <GridView
             items={contacts}
             // viewWidth={300}
-            numColumns={5}
+            numColumns={6}
             lastItemOverlayColor={Colors.primary}
             lastItemLabel={7}
           />
 
-          <Text margin-30 text60BO>
+          <Text h3 marginV-s5>
             Thumbnails
           </Text>
           <GridView
@@ -165,34 +173,26 @@ class GridViewScreen extends Component {
             keepItemSize
           />
 
-          <Text margin-30 text60BO>
+          <Text marginV-s5 text60BO>
             Pairs
           </Text>
-          <GridView
-            items={pairs}
-            numColumns={2}
-            useCustomTheme
-          />
-          <Text margin-30 text60BO>
+          <GridView items={pairs} numColumns={2}/>
+          <Text marginV-s5 text60BO>
             Dynamic itemSize
           </Text>
-          <GridView
-            items={dynamicLayout}
-            numColumns={2}
-            useCustomTheme
-          />
-          <Text margin-30 text60BO>
+          <GridView items={dynamicLayout} numColumns={3}/>
+          <Text marginV-s5 text60BO>
             OverlayText
           </Text>
-          <GridView
-            items={overlayText}
-            numColumns={2}
-            useCustomTheme
-          />
-          <Text margin-30 text60BO>
+          <GridView items={overlayText} numColumns={2}/>
+          <Text marginV-s5 text60BO>
             Custom content (Avatars)
           </Text>
           <GridView items={avatars} numColumns={Constants.orientation === 'landscape' ? 6 : 3}/>
+          <Text marginV-s5 text60BO>
+            Custom content (Squares)
+          </Text>
+          <GridView items={squares} numColumns={3}/>
         </View>
       </ScrollView>
     );
