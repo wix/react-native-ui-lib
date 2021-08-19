@@ -218,12 +218,14 @@ class Hint extends Component<HintProps, HintState> {
       this.setState({targetLayout: layout});
     }
     
-    setTimeout(() => {
-      this.targetRef?.measureInWindow((x: number, y: number, width: number, height: number) => {
-        const targetLayoutInWindow = {x, y, width, height};
-        this.setState({targetLayoutInWindow});
+    if (!this.state.targetLayoutInWindow || this.props.onBackgroundPress) {
+      setTimeout(() => {
+        this.targetRef?.measureInWindow((x: number, y: number, width: number, height: number) => {
+          const targetLayoutInWindow = {x, y, width, height};
+          this.setState({targetLayoutInWindow});
+        });
       });
-    });
+    }
   };
 
   getAccessibilityInfo() {
