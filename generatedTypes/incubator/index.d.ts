@@ -1,3 +1,4 @@
+export { default as ExpandableInput } from './expandableInput';
 export { default as TabController } from './TabController';
 export { default as TextField, TextFieldProps, FieldContextType } from './TextField';
 export { default as TouchableOpacity, TouchableOpacityProps } from './TouchableOpacity';

@@ -1,3 +1,4 @@
+export {default as ExpandableInput} from './expandableInput';
 // @ts-ignore
 export {default as TabController} from './TabController';
 export {default as TextField, TextFieldProps, FieldContextType} from './TextField';
