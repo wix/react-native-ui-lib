@@ -1,7 +1,7 @@
-import React, {Component, RefObject, ReactNode, Key} from 'react';
-import {ScrollView, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
-import {CarouselProps, CarouselState, PageControlPosition} from './types';
-export {CarouselProps, PageControlPosition};
+import React, { Component, RefObject, ReactNode, Key } from 'react';
+import { ScrollView, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { CarouselProps, CarouselState, PageControlPosition } from './types';
+export { CarouselProps, PageControlPosition };
 declare type DefaultProps = Partial<CarouselProps>;
 /**
  * @description: Carousel for scrolling pages horizontally
@@ -19,6 +19,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     autoplayTimer?: ReturnType<typeof setTimeout>;
     orientationChange?: boolean;
     skippedInitialScroll?: boolean;
+    isAutoScrolled: boolean;
     constructor(props: CarouselProps);
     static getDerivedStateFromProps(nextProps: CarouselProps, prevState: CarouselState): {
         pageWidth: number;
@@ -48,7 +49,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     getSnapToOffsets: () => number[] | undefined;
     shouldUsePageWidth(): number | false | undefined;
     shouldEnablePagination(): boolean | undefined;
-    onContainerLayout: ({nativeEvent: {layout: {width: containerWidth, height: containerHeight}}}: LayoutChangeEvent) => void;
+    onContainerLayout: ({ nativeEvent: { layout: { width: containerWidth, height: containerHeight } } }: LayoutChangeEvent) => void;
     shouldAllowAccessibilityLayout(): boolean | undefined;
     onContentSizeChange: () => void;
     onMomentumScrollEnd: () => void;
@@ -63,7 +64,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     renderCarousel(): JSX.Element;
     render(): JSX.Element;
 }
-export {Carousel};
+export { Carousel };
 declare const _default: React.ComponentClass<CarouselProps & {
     useCustomTheme?: boolean | undefined;
 }, any> & Carousel & {
