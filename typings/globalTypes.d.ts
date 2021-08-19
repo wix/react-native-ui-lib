@@ -9,7 +9,6 @@ declare module 'react-native-color' {
   declare const Gradient: any;
 }
 
-declare module 'hoist-non-react-statics';
 declare module 'url-parse';
 
 interface Extendable {
