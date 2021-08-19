@@ -223,7 +223,6 @@ const WheelPicker = ({
 
   const labelContainer = useMemo(() => {
     return (
-      // @ts-expect-error
       <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
         <View style={styles.label} centerV pointerEvents="none">
           <Text marginL-s2 marginR-s5 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
