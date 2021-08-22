@@ -68,40 +68,37 @@ class PanViewScreen extends Component {
   };
 
   renderDialog = () => {
-    const Container = Constants.isAndroid ? GestureHandlerRootView : React.Fragment;
-    const containerProps = Constants.isAndroid ? {style: styles.gestureHandler} : {};
     return (
       <View flex>
         <Modal
           transparent
           onBackgroundPress={this.onDialogDismissed}
           overlayBackgroundColor={overlayBackgroundColor}
+          useGestureHandlerRootView
           visible
         >
-          <Container {...containerProps}>
-            <PanView
-              directions={[PanView.directions.DOWN]}
-              dismissible
-              springBack
-              // threshold={{y: 10}}
-              containerStyle={styles.panView}
-              onDismiss={this.onDialogDismissed}
-            >
-              <View style={styles.dialog}>
-                <Text text60 margin-s2>
-                  Title (swipe here)
-                </Text>
-                <View height={1} bg-grey40/>
-                <FlatList
-                  showsVerticalScrollIndicator={false}
-                  style={styles.verticalScroll}
-                  data={colors}
-                  renderItem={this.renderVerticalItem}
-                  keyExtractor={this.keyExtractor}
-                />
-              </View>
-            </PanView>
-          </Container>
+          <PanView
+            directions={[PanView.directions.DOWN]}
+            dismissible
+            springBack
+            // threshold={{y: 10}}
+            containerStyle={styles.panView}
+            onDismiss={this.onDialogDismissed}
+          >
+            <View style={styles.dialog}>
+              <Text text60 margin-s2>
+                Title (swipe here)
+              </Text>
+              <View height={1} bg-grey40/>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                style={styles.verticalScroll}
+                data={colors}
+                renderItem={this.renderVerticalItem}
+                keyExtractor={this.keyExtractor}
+              />
+            </View>
+          </PanView>
         </Modal>
       </View>
     );
