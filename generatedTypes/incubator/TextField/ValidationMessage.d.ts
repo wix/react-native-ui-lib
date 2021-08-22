@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import { TextStyle } from 'react-native';
+import { FieldStateProps } from './useFieldState';
 export interface ValidationMessageProps {
     /**
      * Should support showing validation error message
@@ -14,9 +15,10 @@ export interface ValidationMessageProps {
      */
     validationMessageStyle?: TextStyle;
     retainSpace?: boolean;
+    validate: FieldStateProps['validateOnChange'];
 }
 declare const ValidationMessage: {
-    ({ validationMessage, enableErrors, validationMessageStyle, retainSpace }: ValidationMessageProps): JSX.Element | null;
+    ({ validationMessage, enableErrors, validationMessageStyle, retainSpace, validate }: ValidationMessageProps): JSX.Element | null;
     displayName: string;
 };
 export default ValidationMessage;
