@@ -18,10 +18,7 @@ export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKey
     useSafeArea: true
   };
 
-  registeredRequestShowKeyboard: boolean;
-  keyboardExpandedToggle: [any];
-
-  constructor(props) {
+  constructor(props: CustomKeyboardViewProps) {
     super(props);
 
     const {component} = props;
@@ -29,7 +26,7 @@ export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKey
       this.registeredRequestShowKeyboard = false;
     }
 
-    KeyboardRegistry.addListener('onToggleExpandedKeyboard', args => {
+    KeyboardRegistry.addListener('onToggleExpandedKeyboard', (args: any) => {
       const {inputRef, initialProps} = this.props;
       if (inputRef) {
         if (this.keyboardExpandedToggle[args.keyboardId] === undefined) {
@@ -48,7 +45,7 @@ export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKey
     super.componentWillUnmount();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: CustomKeyboardViewProps) {
     const {inputRef: nextInputRef, component: nextComponent, initialProps: nextInitialProps, useSafeArea} = this.props;
     const {component} = prevProps;
 

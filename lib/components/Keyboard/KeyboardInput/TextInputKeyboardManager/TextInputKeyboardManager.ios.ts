@@ -3,7 +3,8 @@ import ReactNative, {NativeModules, LayoutAnimation} from 'react-native';
 const CustomInputControllerTemp = NativeModules.CustomInputControllerTemp;
 
 export default class TextInputKeyboardManager {
-  static setInputComponent = (textInputRef, {component, initialProps, useSafeArea}) => {
+  static setInputComponent = (textInputRef: any,
+    {component, initialProps, useSafeArea}: {component?: string; initialProps: any; useSafeArea?: boolean}) => {
     if (!textInputRef || !CustomInputControllerTemp) {
       return;
     }
@@ -13,7 +14,7 @@ export default class TextInputKeyboardManager {
     }
   };
 
-  static removeInputComponent = textInputRef => {
+  static removeInputComponent = (textInputRef: any) => {
     if (!textInputRef || !CustomInputControllerTemp) {
       return;
     }
@@ -27,7 +28,7 @@ export default class TextInputKeyboardManager {
     CustomInputControllerTemp.dismissKeyboard();
   };
 
-  static toggleExpandKeyboard = (textInputRef, expand, performLayoutAnimation = false) => {
+  static toggleExpandKeyboard = (textInputRef: any, expand: boolean, performLayoutAnimation = false) => {
     if (textInputRef) {
       if (performLayoutAnimation) {
         LayoutAnimation.configureNext(springAnimation);
@@ -42,7 +43,7 @@ export default class TextInputKeyboardManager {
   };
 }
 
-function findNodeHandle(ref) {
+function findNodeHandle(ref: any) {
   return ReactNative.findNodeHandle(ref.current || ref);
 }
 

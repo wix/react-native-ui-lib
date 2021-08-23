@@ -6,22 +6,21 @@ export type CustomKeyboardViewBaseProps = {
   inputRef?: any;
   initialProps?: any;
   component?: string;
-  onItemSelected?: () => void;
+  onItemSelected?: (component?: string, args?: any) => void;
   onRequestShowKeyboard?: (keyboardId: string) => void;
   children?: React.ReactChild | React.ReactChild[];
-}
+};
 
 export default class CustomKeyboardViewBase<T extends CustomKeyboardViewBaseProps> extends Component<T> {
-  
   static defaultProps = {
     initialProps: {}
   };
 
   registeredRequestShowKeyboard = false;
   keyboardExpandedToggle: any;
-  keyboardEventListeners: [EventSubscription];
+  keyboardEventListeners: EventSubscription[] = [];
 
-  constructor(props) {
+  constructor(props: T) {
     super(props);
 
     const {component, onItemSelected} = props;
@@ -32,7 +31,7 @@ export default class CustomKeyboardViewBase<T extends CustomKeyboardViewBaseProp
     this.keyboardExpandedToggle = {};
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: T) {
     return nextProps.component !== this.props.component;
   }
 
@@ -49,20 +48,21 @@ export default class CustomKeyboardViewBase<T extends CustomKeyboardViewBaseProp
     }
   }
 
-  addOnItemSelectListener(onItemSelected, component) {
+  addOnItemSelectListener(onItemSelected: CustomKeyboardViewBaseProps['onItemSelected'],
+    component: CustomKeyboardViewBaseProps['component']) {
     if (onItemSelected) {
-      KeyboardRegistry.addListener(`${component}.onItemSelected`, args => {
+      KeyboardRegistry.addListener(`${component}.onItemSelected`, (args: any) => {
         onItemSelected(component, args);
       });
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: T) {
     const {onRequestShowKeyboard} = this.props;
 
     if (onRequestShowKeyboard && !this.registeredRequestShowKeyboard) {
       this.registeredRequestShowKeyboard = true;
-      KeyboardRegistry.addListener('onRequestShowKeyboard', args => {
+      KeyboardRegistry.addListener('onRequestShowKeyboard', (args: any) => {
         onRequestShowKeyboard(args.keyboardId);
       });
     }
@@ -70,7 +70,7 @@ export default class CustomKeyboardViewBase<T extends CustomKeyboardViewBaseProp
     this.registerListener(prevProps, this.props);
   }
 
-  registerListener(props, nextProps) {
+  registerListener(props: T, nextProps: T) {
     const {component, onItemSelected} = nextProps;
     if (component && props.component !== component) {
       if (props.component) {

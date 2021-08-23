@@ -9,7 +9,7 @@ const CustomKeyboardViewNativeAndroid = requireNativeComponent('CustomKeyboardVi
 export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKeyboardViewBaseProps> {
   static displayName = 'IGNORE';
 
-  async componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps: CustomKeyboardViewBaseProps) {
     const {component} = this.props;
 
     if (prevProps.component !== component && !component) {

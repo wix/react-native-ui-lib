@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Dimensions} from 'react-native';
-import KeyboardTrackingView from './KeyboardTrackingView';
+import KeyboardTrackingView, {KeyboardTrackingViewProps} from './KeyboardTrackingView';
 
 /**
  * @description: Used to add an inset when a keyboard is used and might hide part of the screen.
@@ -8,7 +8,7 @@ import KeyboardTrackingView from './KeyboardTrackingView';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/InputsScreen.js
  * @notes: This view is useful only for iOS.
  */
-const KeyboardAwareInsetsView = props => (
+const KeyboardAwareInsetsView = (props: KeyboardTrackingViewProps) => (
   <KeyboardTrackingView {...props} pointerEvents={'none'} style={styles.insetsView} scrollToFocusedInput/>
 );
 

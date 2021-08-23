@@ -1,12 +1,12 @@
 import _ from 'lodash';
 
 export default class EventEmitterManager {
-  handlerCallbacks = {};
+  handlerCallbacks: {[key: string]: Function[]} = {};
   constructor() {
     this.handlerCallbacks = {};
   }
 
-  listenOn(eventName, handlerCallback) {
+  listenOn(eventName: string, handlerCallback: Function) {
     if (!this.handlerCallbacks[eventName]) {
       this.handlerCallbacks[eventName] = [];
     }
@@ -15,17 +15,17 @@ export default class EventEmitterManager {
     }
   }
 
-  emitEvent(eventName, params = {}) {
+  emitEvent(eventName: string, params = {}) {
     if (this.handlerCallbacks[eventName]) {
       this.handlerCallbacks[eventName].forEach(callback => callback(params));
     }
   }
 
-  removeListeners(eventName) {
+  removeListeners(eventName: string) {
     delete this.handlerCallbacks[eventName];
   }
 
-  removeListener(eventName, listener) {
+  removeListener(eventName: string, listener: Function) {
     const handlers = this.handlerCallbacks[eventName];
 
     if (handlers) {

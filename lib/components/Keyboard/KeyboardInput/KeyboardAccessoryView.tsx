@@ -6,7 +6,8 @@ import {
   NativeEventEmitter,
   DeviceEventEmitter,
   processColor,
-  BackHandler
+  BackHandler,
+  LayoutChangeEvent
 } from 'react-native';
 import KeyboardTrackingView from '../KeyboardTracking/KeyboardTrackingView';
 import CustomKeyboardView from './CustomKeyboardView';
@@ -28,7 +29,7 @@ export type KeyboardAccessoryViewProps = {
   /**
    * Content to be rendered above the keyboard
    */
-  renderContent?: () => React.ReactChild;
+  renderContent?: () => React.ReactElement;
   /**
    * A callback for when the height is changed
    */
@@ -138,7 +139,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
   customInputControllerEventsSubscriber: any;
   trackingViewRef: any;
 
-  constructor(props) {
+  constructor(props: KeyboardAccessoryViewProps) {
     super(props);
 
     this.onContainerComponentHeightChanged = this.onContainerComponentHeightChanged.bind(this);
@@ -160,7 +161,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
     }
   }
 
-  onContainerComponentHeightChanged(event) {
+  onContainerComponentHeightChanged(event: LayoutChangeEvent) {
     const {onHeightChanged} = this.props;
 
     if (onHeightChanged) {
@@ -256,7 +257,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
 
     return (
       <KeyboardTrackingView
-        ref={r => (this.trackingViewRef = r)}
+        ref={(r: any) => (this.trackingViewRef = r)}
         style={styles.trackingToolbarContainer}
         // @ts-ignore
         onLayout={this.onContainerComponentHeightChanged}
@@ -267,7 +268,9 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
         addBottomView={addBottomView}
         allowHitsOutsideBounds={allowHitsOutsideBounds}
       >
-        {renderContent?.()}
+        <>
+          {renderContent?.()}
+        </>
         <CustomKeyboardView
           inputRef={kbInputRef}
           component={kbComponent}

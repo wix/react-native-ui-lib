@@ -1,11 +1,11 @@
 import React from 'react';
-import {Platform, ViewStyle} from 'react-native';
+import {Platform, ViewStyle, ViewProps} from 'react-native';
 import {default as KeyboardTrackingViewIOS} from './KeyboardTrackingView.ios';
 import {default as KeyboardTrackingViewAndroid} from './KeyboardTrackingView.android';
 
 const IsAndroid = Platform.OS === 'android';
 
-export type KeyboardTrackingViewProps = {
+export type KeyboardTrackingViewProps = ViewProps & {
   /**
      * Enables tracking of the keyboard when it's dismissed interactively (false by default).
      * Why? When using an external keyboard (BT),
@@ -20,6 +20,14 @@ export type KeyboardTrackingViewProps = {
     * Allow control safe area
     */
    useSafeArea?: boolean;
+
+   scrollToFocusedInput?: boolean;
+   scrollBehavior?: number;
+   revealKeyboardInteractive?: boolean;
+   manageScrollView?: boolean;
+   requiresSameParentToManageScrollView?: boolean;
+   addBottomView?: boolean;
+   allowHitsOutsideBounds?: boolean;
 
    // Can't figure out what it's supposed to be
    ref?: any;
