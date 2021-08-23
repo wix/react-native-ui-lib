@@ -8,6 +8,7 @@ export default class ChipsInputScreen extends Component {
     super(props);
 
     this.state = {
+      chips: [{label: 'Falcon 9'}, {label: 'Enterprise'}, {label: 'Challenger'}, {label: 'Coca Cola', invalid: true}],
       tags: [{label: 'Amit'}, {label: 'Ethan', invalid: true}],
       tags2: ['Chips', 'Input'],
       tags3: ['Non', 'Removable', 'Tags'],
@@ -19,13 +20,54 @@ export default class ChipsInputScreen extends Component {
     this.customChipsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
   };
 
-  renderCustomTag(tag, index, shouldMarkToRemove) {
+  renderCustomTag(tag, _, shouldMarkToRemove) {
     return (
       <View style={[styles.customTag, shouldMarkToRemove && {backgroundColor: Colors.purple70}]}>
         <Text white>{tag.label}</Text>
       </View>
     );
   }
+
+  renderRightElement = () => {
+    return (
+      <View center height={40} marginR-s2 style={{alignItems: 'flex-start'}}>
+        <Text grey30 text70M>
+          To:
+        </Text>
+      </View>
+    );
+  };
+
+  renderSearchTypeInput = () => {
+    return (
+      <>
+        <Text marginB-10 text60>Search Type</Text>
+        <View bg-grey60>
+          <ChipsInput
+            placeholder={'Enter Tags'}
+            chipsProps={this.state.chips}
+            leftElement={this.renderRightElement()}
+            hideUnderline
+            maxHeight={100}
+          />
+        </View>
+      </>
+    );
+  };
+
+  renderFormTypeInput = () => {
+    return (
+      <View marginT-40>
+        <Text marginB-10 text60>Form Type</Text>
+        <ChipsInput
+          placeholder={'Enter Tags'}
+          title={'Mendy'}
+          chipsProps={this.state.chips}
+          maxLength={4}
+        />
+      </View>
+    );
+  };
 
   render() {
     return (
@@ -35,12 +77,12 @@ export default class ChipsInputScreen extends Component {
             ChipsInput
           </Text>
 
-          <ChipsInput
-            containerStyle={{marginBottom: 25}}
-            placeholder="Enter Tags"
-            tags={this.state.tags2}
-          />
 
+          {this.renderSearchTypeInput()}
+
+          {this.renderFormTypeInput()}
+
+          <Text text50 marginV-20>Old Usage</Text>
           <ChipsInput
             containerStyle={{marginBottom: 25}}
             placeholder="Enter Tags"
