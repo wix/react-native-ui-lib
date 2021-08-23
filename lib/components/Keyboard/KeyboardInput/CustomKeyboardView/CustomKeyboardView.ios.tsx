@@ -1,24 +1,25 @@
-import PropTypes from 'prop-types';
-import TextInputKeyboardManager from './TextInputKeyboardManager';
-import KeyboardRegistry from './KeyboardRegistry';
-import CustomKeyboardViewBase from './CustomKeyboardViewBase';
+import TextInputKeyboardManager from './../TextInputKeyboardManager/TextInputKeyboardManager.ios';
+import KeyboardRegistry from './../KeyboardRegistry';
+import CustomKeyboardViewBase, {CustomKeyboardViewBaseProps} from './../CustomKeyboardViewBase';
 
-export default class CustomKeyboardView extends CustomKeyboardViewBase {
+export type CustomKeyboardViewProps = CustomKeyboardViewBaseProps & {
+  /**
+   * The reference to the actual text input (or the keyboard may not reset when instructed to, etc.)
+   */
+  inputRef?: any;
+  useSafeArea?: boolean;
+};
+
+export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKeyboardViewProps> {
   static displayName = 'IGNORE';
-  static propTypes = {
-    /**
-     * The reference to the actual text input (or the keyboard may not reset when instructed to, etc.)
-     */
-    inputRef: PropTypes.object,
-    initialProps: PropTypes.object,
-    component: PropTypes.string,
-    onItemSelected: PropTypes.func,
-    useSafeArea: PropTypes.bool
-  };
 
   static defaultProps = {
+    initialProps: {},
     useSafeArea: true
   };
+
+  registeredRequestShowKeyboard: boolean;
+  keyboardExpandedToggle: [any];
 
   constructor(props) {
     super(props);
