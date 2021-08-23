@@ -72,8 +72,8 @@ export interface HintProps {
      */
     onPress?: () => void;
     /**
-      * Callback for the background press
-      */
+     * Callback for the background press
+     */
     onBackgroundPress?: (event: GestureResponderEvent) => void;
     /**
      * The hint container width
