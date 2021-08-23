@@ -21,7 +21,22 @@ const definitions = {
   }
 };
 
-const PRESETS = {
+type AnimationType = {
+  animation: Animatable.Animation;
+  easing?: Animatable.Easing;
+  duration: number;
+  useNativeDriver?: boolean;
+}
+
+type AnimationPresets = {
+  slideInUp: AnimationType;
+  slideInDown: AnimationType;
+  fadeIn: AnimationType;
+  fadeOut: AnimationType;
+  fadeInRight: AnimationType;
+}
+
+const PRESETS: AnimationPresets = {
   slideInUp: {
     animation: 'slideInUp',
     easing: 'ease-out-quint',
