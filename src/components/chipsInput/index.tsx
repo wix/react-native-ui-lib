@@ -1,22 +1,121 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React, {Component} from 'react';
-import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image} from 'react-native';
+import React, {Component, RefObject} from 'react';
+import {NativeModules, StyleSheet, ViewStyle, Image, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, findNodeHandle, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps} from 'react-native';
 import {Constants} from '../../helpers';
-import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
+import {Colors, BorderRadiuses, ThemeManager, Typography, Spacings} from '../../style';
 import Assets from '../../assets';
-import {asBaseComponent} from '../../commons/new';
+import {LogService} from '../../services';
+import {asBaseComponent, BaseComponentInjectedProps, TypographyModifiers} from '../../commons/new';
+// @ts-expect-error
+import {TextField} from '../inputs';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
-import {TextField} from '../inputs';
 import Text from '../text';
+import Chip, {ChipProps as ExternalChipProp} from '../chip';
+import {getValidationBasedColor, getCounterTextColor, getCounterText, getChipDismissColor, isDisabled} from './Presenter';
+import {TextFieldProps} from '../../../typings/components/Inputs';
 
 // TODO: support updating tags externally
 // TODO: support char array as tag creators (like comma)
 // TODO: add notes to Docs about the Android fix for onKeyPress
 
+type ChipType = string | boolean | any;
+export type ChipProps = ExternalChipProp & {invalid?: boolean}
+
+export type ChipsInputProps = TypographyModifiers & TextFieldProps & {
+  /**
+  * DEPRECATED: use chips instead. list of tags. can be string boolean or custom object when implementing getLabel
+  */
+  tags?: Array<ChipType>;
+  /**
+  * list of tags. can be string boolean or custom object when implementing getLabel
+  */
+  chipsProps?: Array<ChipProps>;
+  /** 
+   * Style your chips
+   */
+  defaultChipProps?: ChipProps;
+  /**
+   * callback for extracting the label out of the tag item
+   */
+  getLabel?: (tag: ChipType) => any;
+  /**
+   * callback for custom rendering tag item
+   */
+  renderTag?: (tag: ChipType, index: number, shouldMarkTag: boolean, label: string) => React.ReactElement;
+  /**
+   * callback for onChangeTags event
+   */
+  onChangeTags?: () => void;
+  /**
+   * callback for creating new tag out of input value (good for composing tag object)
+   */
+  onCreateTag?: (value: any) => void;
+  /**
+   * callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
+   */
+  onTagPress?: (index: number, toRemove?: number) => void;
+  /**
+   * validation message error appears when tag isn't validate
+   */
+  validationErrorMessage?: string;
+  /**
+   * if true, tags *removal* Ux won't be available
+   */
+  disableTagRemoval?: boolean;
+  /**
+   * if true, tags *adding* Ux (i.e. by 'submitting' the input text) won't be available
+   */
+  disableTagAdding?: boolean;
+  /**
+   * custom styling for the component container
+   */
+  containerStyle?: ViewStyle;
+  /**
+   * custom styling for the tag item
+   */
+  tagStyle?: ViewStyle;
+  /**
+   * custom styling for the text input
+   */
+  inputStyle?: RNTextInputProps['style'];
+  /**
+   * should hide input underline
+   */
+  hideUnderline?: boolean;
+  /**
+   *  Maximum numbers of chips 
+   */
+  maxLength?: number;
+  /** 
+   * Chips with maxHeigh is inside a scrollView 
+   */
+  scrollViewProps?: ScrollViewProps;
+  /** 
+   * Chips inside a ScrollView 
+   */
+  maxHeight?: number;
+  /**
+   * Custom element before the chips, for example 'search' icon, 'To:' label etc' 
+   */
+  leftElement?: JSX.Element | JSX.Element[];
+
+  value?: any;
+
+  selectionColor?: string | number;
+}
+
+type State = {
+  value: any;
+  chips: Array<ChipType>;
+  chipIndexToRemove?: number;
+  initialChips?: Array<ChipType>;
+  isFocused: boolean;
+}
 
 const GUTTER_SPACING = 8;
+
+type OwnProps = ChipsInputProps & BaseComponentInjectedProps;
 
 /**
  * @description: Tags input component (chips)
@@ -25,102 +124,60 @@ const GUTTER_SPACING = 8;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.js
  * @extends: TextField
  */
-class ChipsInput extends Component {
+class ChipsInput extends Component<OwnProps, State> {
   static displayName = 'ChipsInput';
-
-  static propTypes = {
-    /**
-     * list of tags. can be string boolean or custom object when implementing getLabel
-     */
-    tags: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])),
-    /**
-     * callback for extracting the label out of the tag item
-     */
-    getLabel: PropTypes.func,
-    /**
-     * callback for custom rendering tag item
-     */
-    renderTag: PropTypes.elementType,
-    /**
-     * callback for onChangeTags event
-     */
-    onChangeTags: PropTypes.func,
-    /**
-     * callback for creating new tag out of input value (good for composing tag object)
-     */
-    onCreateTag: PropTypes.func,
-    /**
-     * callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
-     */
-    onTagPress: PropTypes.func,
-    /**
-     * validation message error appears when tag isn't validate
-     */
-    validationErrorMessage: PropTypes.string,
-    /**
-     * if true, tags *removal* Ux won't be available
-     */
-    disableTagRemoval: PropTypes.bool,
-    /**
-     * if true, tags *adding* Ux (i.e. by 'submitting' the input text) won't be available
-     */
-    disableTagAdding: PropTypes.bool,
-    /**
-     * custom styling for the component container
-     */
-    containerStyle: ViewPropTypes.style,
-    /**
-     * custom styling for the tag item
-     */
-    tagStyle: ViewPropTypes.style,
-    /**
-     * custom styling for the text input
-     */
-    inputStyle: TextField.propTypes.style,
-    /**
-     * should hide input underline
-     */
-    hideUnderline: PropTypes.bool
-  };
 
   static onChangeTagsActions = {
     ADDED: 'added',
     REMOVED: 'removed'
   };
+  
+  input = React.createRef<TextInput>();
+  scrollRef = React.createRef<ScrollView>();
 
-  constructor(props) {
+  constructor(props: OwnProps) {
     super(props);
 
     this.state = {
       value: props.value,
-      tags: _.cloneDeep(props.tags) || [],
-      tagIndexToRemove: undefined,
-      initialTags: props.tags
+      chips: _.cloneDeep(props.tags || props.chipsProps) || [],
+      chipIndexToRemove: undefined,
+      initialChips: props.tags || props.chipsProps,
+      isFocused: this.input.current?.isFocused() || false
     };
+
+    if (props.tags) {
+      LogService.deprecationWarn({component: 'ChipsInput', oldProp: 'tags', newProp: 'chipsProps'});
+    }
   }
 
   componentDidMount() {
     if (Constants.isAndroid) {
-      const textInputHandle = ReactNative.findNodeHandle(this.input);
+      const textInputHandle = findNodeHandle(this.input.current);
       if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
         NativeModules.TextInputDelKeyHandler.register(textInputHandle);
       }
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.tags !== prevState.initialTags) {
+  static getDerivedStateFromProps(nextProps: Readonly<OwnProps>, prevState: State) {
+    const {tags, chipsProps} = nextProps;
+    if (tags && tags !== prevState.initialChips || chipsProps && chipsProps !== prevState.initialChips) {
       return {
-        initialTags: nextProps.tags,
-        tags: nextProps.tags
+        initialChips: nextProps.tags || nextProps.chipsProps,
+        chips: nextProps.tags || nextProps.chipsProps
       };
     }
     return null;
   }
 
   addTag = () => {
-    const {onCreateTag, disableTagAdding} = this.props;
-    const {value, tags} = this.state;
+    const {onCreateTag, disableTagAdding, maxLength, chipsProps} = this.props;
+    const {value, chips} = this.state;
+    
+    if (this.scrollRef?.current?.scrollToEnd) {
+      this.scrollRef?.current?.scrollToEnd();
+    }
 
     if (disableTagAdding) {
       return;
@@ -129,55 +186,60 @@ class ChipsInput extends Component {
       return;
     }
 
-    const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
-    const newTags = [...tags, newTag];
+    if (maxLength && this.state.chips.length >= maxLength) {
+      this.setState({value: ''});
+      return;
+    }
+
+    const newChip = _.isFunction(onCreateTag) ? onCreateTag(value) : chipsProps ? {label: value} : value;
+    const newChips = [...chips, newChip];
 
     this.setState({
       value: '',
-      tags: newTags
+      chips: newChips
     });
 
-    _.invoke(this.props, 'onChangeTags', newTags, ChipsInput.onChangeTagsActions.ADDED, newTag);
+    _.invoke(this.props, 'onChangeTags', newChips, ChipsInput.onChangeTagsActions.ADDED, newChip);
     this.clear();
   }
 
   removeMarkedTag() {
-    const {tags, tagIndexToRemove} = this.state;
+    const {chips, chipIndexToRemove} = this.state;
 
-    if (!_.isUndefined(tagIndexToRemove)) {
-      const removedTag = tags[tagIndexToRemove];
+    if (!_.isUndefined(chipIndexToRemove)) {
+      const removedTag = chips[chipIndexToRemove];
 
-      tags.splice(tagIndexToRemove, 1);
+      chips.splice(chipIndexToRemove, 1);
       this.setState({
-        tags,
-        tagIndexToRemove: undefined
+        chips,
+        chipIndexToRemove: undefined
       });
 
-      _.invoke(this.props, 'onChangeTags', tags, ChipsInput.onChangeTagsActions.REMOVED, removedTag);
+      _.invoke(this.props, 'onChangeTags', chips, ChipsInput.onChangeTagsActions.REMOVED, removedTag);
     }
   }
 
-  markTagIndex = (tagIndex) => {
-    this.setState({tagIndexToRemove: tagIndex});
+  markTagIndex = (chipIndex: number) => {
+    this.setState({chipIndexToRemove: chipIndex});
   }
 
   onChangeText = _.debounce((value) => {
-    this.setState({value, tagIndexToRemove: undefined});
+    this.setState({value, chipIndexToRemove: undefined});
     _.invoke(this.props, 'onChangeText', value);
   }, 0);
 
-  onTagPress(index) {
+  onTagPress(index: number) {
     const {onTagPress} = this.props;
-    const {tagIndexToRemove} = this.state;
+    const {chipIndexToRemove} = this.state;
 
     // custom press handler
     if (onTagPress) {
-      onTagPress(index, tagIndexToRemove);
+      onTagPress(index, chipIndexToRemove);
       return;
     }
 
     // default press handler
-    if (tagIndexToRemove === index) {
+    if (chipIndexToRemove === index) {
       this.removeMarkedTag();
     } else {
       this.markTagIndex(index);
@@ -185,14 +247,14 @@ class ChipsInput extends Component {
   }
 
   isLastTagMarked() {
-    const {tags, tagIndexToRemove} = this.state;
-    const tagsCount = _.size(tags);
-    const isLastTagMarked = tagIndexToRemove === tagsCount - 1;
+    const {chips, chipIndexToRemove} = this.state;
+    const tagsCount = _.size(chips);
+    const isLastTagMarked = chipIndexToRemove === tagsCount - 1;
 
     return isLastTagMarked;
   }
 
-  onKeyPress = (event) => {
+  onKeyPress = (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     _.invoke(this.props, 'onKeyPress', event);
 
     const {disableTagRemoval} = this.props;
@@ -200,25 +262,25 @@ class ChipsInput extends Component {
       return;
     }
 
-    const {value, tags, tagIndexToRemove} = this.state;
-    const tagsCount = _.size(tags);
+    const {value, chips, chipIndexToRemove} = this.state;
+    const tagsCount = _.size(chips);
     const keyCode = _.get(event, 'nativeEvent.key');
     const hasNoValue = _.isEmpty(value);
     const pressedBackspace = keyCode === Constants.backspaceKey;
     const hasTags = tagsCount > 0;
 
     if (pressedBackspace) {
-      if (hasNoValue && hasTags && _.isUndefined(tagIndexToRemove)) {
+      if (hasNoValue && hasTags && _.isUndefined(chipIndexToRemove)) {
         this.setState({
-          tagIndexToRemove: tagsCount - 1
+          chipIndexToRemove: tagsCount - 1
         });
-      } else if (!_.isUndefined(tagIndexToRemove)) {
+      } else if (!_.isUndefined(chipIndexToRemove)) {
         this.removeMarkedTag();
       }
     }
   }
 
-  getLabel = (item) => {
+  getLabel = (item: ChipType) => {
     const {getLabel} = this.props;
 
     if (getLabel) {
@@ -230,7 +292,15 @@ class ChipsInput extends Component {
     return _.get(item, 'label');
   }
 
-  renderLabel(tag, shouldMarkTag) {
+  onFocus = () => {
+    this.setState({isFocused: true});
+  }
+
+  onBlur = () => {
+    this.setState({isFocused: false});
+  }
+
+  renderLabel(tag: ChipType, shouldMarkTag: boolean) {
     const {typography} = this.props.modifiers;
     const label = this.getLabel(tag);
 
@@ -238,7 +308,7 @@ class ChipsInput extends Component {
       <View row centerV>
         {shouldMarkTag && (
           <Image
-            style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]}
+            style={[styles.removeIcon, tag.invalid && styles.invalidTagRemoveIcon, styles.basicTagStyle]}
             source={Assets.icons.x}
           />)
         }
@@ -252,25 +322,25 @@ class ChipsInput extends Component {
     );
   }
 
-  renderTag = (tag, index) => {
+  renderTag = (tag: ChipType, index: number) => {
     const {tagStyle, renderTag} = this.props;
-    const {tagIndexToRemove} = this.state;
-    const shouldMarkTag = tagIndexToRemove === index;
-    const markedTagStyle = tag.invalid ? styles.inValidMarkedTag : styles.tagMarked;
-    const defaultTagStyle = tag.invalid ? styles.inValidTag : styles.tag;
+    const {chipIndexToRemove} = this.state;
+    const shouldMarkTag = chipIndexToRemove === index;
+    const markedTagStyle = tag.invalid ? styles.invalidMarkedTag : styles.tagMarked;
+    const defaultTagStyle = tag.invalid ? styles.invalidTag : styles.tag;
 
     if (_.isFunction(renderTag)) {
       return renderTag(tag, index, shouldMarkTag, this.getLabel(tag));
     }
 
     return (
-      <View key={index} style={[defaultTagStyle, tagStyle, shouldMarkTag && markedTagStyle]}>
+      <View key={index} style={[defaultTagStyle, tagStyle, basicTagStyle, shouldMarkTag && markedTagStyle]}>
         {this.renderLabel(tag, shouldMarkTag)}
       </View>
     );
   }
 
-  renderTagWrapper = (tag, index) => {
+  renderTagWrapper = (tag: ChipType, index: number) => {
     return (
       <TouchableOpacity
         key={index}
@@ -283,23 +353,117 @@ class ChipsInput extends Component {
     );
   }
 
+  renderNewChip = () => {
+    const {defaultChipProps} = this.props;
+    const {chipIndexToRemove, chips} = this.state;
+    const disabled = isDisabled(this.props);
+
+    return _.map(chips, (chip, index) => {
+      const selected = chipIndexToRemove === index;
+      const dismissColor = getChipDismissColor(chip, selected, defaultChipProps);
+      
+      return (
+        <View center flexS>
+          <Chip
+            {...defaultChipProps}
+            {...chip}
+            containerStyle={[styles.tag, chip.invalid && styles.invalidTag]}
+            labelStyle={[
+              styles.tagLabel,
+              chip.invalid && styles.errorMessage,
+              selected && !!chip.invalid && styles.errorMessageWhileMarked
+            ]}
+            disabled={disabled}
+            marginR-s2
+            marginT-2
+            left={Assets.icons.x}
+            onPress={_ => this.onTagPress(index)}
+            onDismiss={selected ? () => this.onTagPress(index) : undefined}
+            dismissColor={dismissColor}
+            dismissIcon={Assets.icons.xSmall}
+            dismissIconStyle={styles.dismissIconStyle}
+          />
+        </View>
+      );
+    });
+  }
+
+  renderTitleText = () => {
+    const {title, defaultChipProps} = this.props;
+    const color = this.state.isFocused ? getValidationBasedColor(this.state.chips, defaultChipProps) : Colors.grey30;
+    return title && (
+      <Text text70L color={color}>{title}</Text>
+    );
+  };
+
+  renderChips = () => {
+    const {disableTagRemoval, chipsProps} = this.props;
+    const {chips} = this.state;
+    const renderFunction = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
+
+    if (chipsProps) {
+      return this.renderNewChip();
+    } else {
+      // The old way of creating the 'Chip' internally 
+      return _.map(chips, (tag, index) => {
+        return (
+          <View>
+            {renderFunction(tag, index)}
+          </View>
+        );
+      });
+    }
+  }
+
+  renderCharCounter() {
+    const {maxLength} = this.props;
+    const counter = this.state.chips.length;
+    
+
+    if (maxLength) {
+      const color = getCounterTextColor(this.state.chips, this.props);
+      const counterText = getCounterText(counter, maxLength);
+
+      return (
+        <Text
+          color={color}
+          style={styles.label}
+          accessibilityLabel={`${counter} out of ${maxLength} max chips`}
+        >
+          {counterText}
+        </Text>
+      );
+    }
+  }
+
+  renderUnderline = () => {
+    const {isFocused, chips} = this.state;
+    const {defaultChipProps} = this.props;
+    const color = getValidationBasedColor(chips, defaultChipProps);
+    return <View height={1} marginT-10 backgroundColor={isFocused ? color : Colors.grey50}/>;
+  }
+
   renderTextInput() {
-    const {inputStyle, selectionColor, ...others} = this.props;
+    const {inputStyle, selectionColor, title, ...others} = this.props;
     const {value} = this.state;
     const isLastTagMarked = this.isLastTagMarked();
 
     return (
       <View style={styles.inputWrapper}>
         <TextField
-          ref={r => (this.input = r)}
+          ref={(r: RefObject<TextInput>) => (this.input = r)}
           text80
           blurOnSubmit={false}
           {...others}
+          maxLength={undefined}
+          title={this.props.chipsProps ? undefined : title}
           value={value}
           onSubmitEditing={this.addTag}
           onChangeText={this.onChangeText}
           onKeyPress={this.onKeyPress}
           enableErrors={false}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
           hideUnderline
           selectionColor={isLastTagMarked ? 'transparent' : selectionColor}
           style={[inputStyle, {textAlignVertical: 'center'}]}
@@ -313,21 +477,40 @@ class ChipsInput extends Component {
     );
   }
 
+  renderChipsContainer = () => {
+    const {maxHeight, scrollViewProps} = this.props;
+    const Container = maxHeight ? ScrollView : View;
+    return (
+      <Container
+        ref={this.scrollRef}
+        showsVerticalScrollIndicator={false}
+        style={!maxHeight && styles.tagsList}
+        contentContainerStyle={styles.tagsList}
+        {...scrollViewProps}
+      >
+        {this.renderChips()}
+        {this.renderTextInput()}
+      </Container>
+    );
+  }
+  
   render() {
-    const {disableTagRemoval, containerStyle, hideUnderline, validationErrorMessage} = this.props;
-    const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
-    const {tags, tagIndexToRemove} = this.state;
+    const {containerStyle, hideUnderline, validationErrorMessage, leftElement, maxHeight, chipsProps} = this.props;
+    const {chipIndexToRemove} = this.state;
 
     return (
       <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
-        <View style={styles.tagsList}>
-          {_.map(tags, tagRenderFn)}
-          {this.renderTextInput()}
+        {!!chipsProps && this.renderTitleText()}
+        <View style={[styles.tagListContainer, {maxHeight}]}>
+          {leftElement}
+          {this.renderChipsContainer()}
         </View>
+        {!hideUnderline && this.renderUnderline()}
+        {this.renderCharCounter()}
         {validationErrorMessage ?
           (
             <View>
-              <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
+              <Text style={[styles.errorMessage, !!chipIndexToRemove && styles.errorMessageWhileMarked]}>
                 {validationErrorMessage}
               </Text>
             </View>
@@ -337,20 +520,20 @@ class ChipsInput extends Component {
   }
 
   blur() {
-    this.input.blur();
+    this.input.current?.blur();
   }
 
   focus() {
-    this.input.focus();
+    this.input.current?.focus();
   }
 
   clear() {
-    this.input.clear();
+    this.input.current?.clear();
   }
 }
 
 export {ChipsInput}; // For tests
-export default asBaseComponent(ChipsInput);
+export default asBaseComponent<ChipsInputProps, typeof ChipsInput>(ChipsInput);
 
 
 const basicTagStyle = {
@@ -367,28 +550,45 @@ const styles = StyleSheet.create({
     borderColor: ThemeManager.dividerColor
   },
   tagsList: {
+    minHeight: 38,
+    backgroundColor: 'transparent',
     flexDirection: 'row',
     flexWrap: 'wrap'
+  },
+  tagListContainer: {
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    flexWrap: 'nowrap'
   },
   inputWrapper: {
     flexGrow: 1,
     minWidth: 120,
+    backgroundColor: 'transparent',
     justifyContent: 'center'
   },
   tag: {
-    backgroundColor: Colors.primary,
-    ...basicTagStyle
+    borderWidth: 0,
+    paddingVertical: 5,
+    backgroundColor: Colors.primary
   },
-  inValidTag: {
+  invalidTag: {
     borderWidth: 1,
     borderColor: Colors.red30,
+    backgroundColor: 'transparent'
+  },
+  basicTagStyle: {
     ...basicTagStyle
   },
-  inValidMarkedTag: {
+  invalidMarkedTag: {
     borderColor: Colors.red10
   },
   tagMarked: {
     backgroundColor: Colors.dark10
+  },
+  dismissIconStyle: {
+    width: 10, 
+    height: 10, 
+    marginRight: Spacings.s1
   },
   removeIcon: {
     tintColor: Colors.white,
@@ -396,7 +596,7 @@ const styles = StyleSheet.create({
     height: 10,
     marginRight: 6
   },
-  inValidTagRemoveIcon: {
+  invalidTagRemoveIcon: {
     tintColor: Colors.red10
   },
   tagLabel: {
@@ -409,5 +609,11 @@ const styles = StyleSheet.create({
   },
   errorMessageWhileMarked: {
     color: Colors.red10
+  },
+  label: {
+    marginTop: Spacings.s1,
+    alignSelf: 'flex-end',
+    height: Typography.text80?.lineHeight,
+    ...Typography.text80
   }
 });
