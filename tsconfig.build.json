@@ -3,6 +3,6 @@
   "compilerOptions": {
     "emitDeclarationOnly": true
   },
-  "include": ["src/**/*", "typings/**/*", /*"lib/components/**//*"*/],
+  "include": ["src/**/*", "typings/**/*", "lib/components/*/*"],
   "exclude": [ "node_modules", "src/index.ts"]
 }
