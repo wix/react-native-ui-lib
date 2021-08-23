@@ -145,11 +145,10 @@ const TabBar = (props: Props) => {
   } = props;
 
   const context = useContext(TabBarContext);
-  const {items: contextItems, currentPage, targetPage, selectedIndex} = context;
-
+  const {items: contextItems, currentPage, targetPage, selectedIndex, screenWidth} = context;
   const containerWidth: number = useMemo(() => {
-    return propsContainerWidth || Constants.screenWidth;
-  }, [propsContainerWidth]);
+    return propsContainerWidth || screenWidth;
+  }, [propsContainerWidth, screenWidth]);
 
   const items = useMemo(() => {
     return contextItems || propsItems;

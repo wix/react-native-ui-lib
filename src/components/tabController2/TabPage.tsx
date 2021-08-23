@@ -2,7 +2,6 @@ import React, {PropsWithChildren, useCallback, useContext, useState} from 'react
 import {StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
-import {Constants} from 'helpers';
 
 export interface TabControllerPageProps {
   /**
@@ -38,7 +37,7 @@ export default function TabPage({
   renderLoading,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
-  const {currentPage, targetPage, asCarousel, containerWidth} = useContext(TabBarContext);
+  const {currentPage, targetPage, asCarousel, containerWidth, screenWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
 
   const lazyLoad = useCallback(() => {
@@ -61,7 +60,7 @@ export default function TabPage({
     return {
       opacity: isActive || asCarousel ? 1 : 0,
       zIndex: isActive || asCarousel ? 1 : 0,
-      width: asCarousel ? containerWidth.value || Constants.screenWidth : undefined
+      width: asCarousel ? containerWidth.value || screenWidth : undefined
     };
   });
 

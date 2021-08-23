@@ -7,6 +7,7 @@ interface TabControllerContext {
     asCarousel?: boolean;
     containerWidth: Reanimated.SharedValue<number>;
     pageWidth?: number;
+    screenWidth: number;
     /** static page index */
     currentPage: Reanimated.SharedValue<number>;
     /** transition page index (can be a fraction when transitioning between pages) */

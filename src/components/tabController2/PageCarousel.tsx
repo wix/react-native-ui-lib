@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useCallback, useContext, useMemo, useEffect} from 'react';
 import TabBarContext from './TabBarContext';
 import Reanimated, {
   runOnJS,
@@ -8,7 +8,6 @@ import Reanimated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated';
-import {Constants} from 'helpers';
 
 /**
  * @description: TabController's Page Carousel
@@ -21,9 +20,15 @@ function PageCarousel({...props}) {
     currentPage,
     targetPage,
     selectedIndex = 0,
-    pageWidth = Constants.screenWidth,
+    screenWidth,
+    pageWidth: contextPageWidth,
     carouselOffset
   } = useContext(TabBarContext);
+
+  const pageWidth = useMemo(() => {
+    return contextPageWidth || screenWidth;
+  }, [contextPageWidth, screenWidth]);
+
   const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
   const wasScrolledByPress = useSharedValue(false);
 
@@ -61,6 +66,11 @@ function PageCarousel({...props}) {
       runOnJS(scrollToItem)(currIndex);
     }
   });
+
+  useEffect(() => {
+    // @ts-expect-error
+    carousel.current?.scrollTo({x: currentPage.value * pageWidth, animated: false});
+  }, [pageWidth]);
 
   return (
     <Reanimated.ScrollView
