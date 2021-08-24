@@ -56,6 +56,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.DateTimePickerScreen', () => require('./DateTimePickerScreen').default);
   registrar('unicorn.components.ViewScreen', () => require('./ViewScreen').default);
   registrar('unicorn.components.WizardScreen', () => require('./WizardScreen').default);
+  registrar('unicorn.components.GridViewScreen', () => require('./GridViewScreen').default);
   // List Components
   registrar('unicorn.lists.BasicListScreen', () => require('./BasicListScreen').default);
   registrar('unicorn.lists.ContactsListScreen', () => require('./ContactsListScreen').default);

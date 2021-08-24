@@ -3,6 +3,7 @@ import {TextStyle, StyleSheet} from 'react-native';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
 import {getRelevantValidationMessage} from './Presenter';
+import {FieldStateProps} from './useFieldState';
 
 export interface ValidationMessageProps {
   /**
@@ -18,13 +19,15 @@ export interface ValidationMessageProps {
    */
   validationMessageStyle?: TextStyle;
   retainSpace?: boolean;
+  validate?: FieldStateProps['validate'];
 }
 
 const ValidationMessage = ({
   validationMessage,
   enableErrors,
   validationMessageStyle,
-  retainSpace
+  retainSpace,
+  validate
 }: ValidationMessageProps) => {
   const context = useContext(FieldContext);
 
@@ -32,14 +35,12 @@ const ValidationMessage = ({
     return null;
   }
 
-  const relevantValidationMessage = getRelevantValidationMessage(
-    validationMessage,
-    context.failingValidatorIndex
-  );
+  const relevantValidationMessage = getRelevantValidationMessage(validationMessage, context.failingValidatorIndex);
+  const showValidationMessage = !context.isValid || (!validate && !!validationMessage);
 
   return (
     <Text red30 style={[styles.validationMessage, validationMessageStyle]}>
-      {context.isValid ? '' : relevantValidationMessage}
+      {showValidationMessage ? relevantValidationMessage : ''}
     </Text>
   );
 };

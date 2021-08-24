@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// @ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 import RadioGroupContext from './RadioGroupContext';
 

@@ -111,7 +111,8 @@ export const navigationData = {
         tags: 'scroll fader',
         screen: 'unicorn.components.FaderScreen'
       },
-      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
+      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'},
+      {title: 'GridView', tags: 'grid view', screen: 'unicorn.components.GridViewScreen'}
     ]
   },
   Native: {
@@ -156,6 +157,7 @@ export const navigationData = {
     screens: [
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
+      {title: 'ExpandableOverlay', tags: 'text field expandable input picker', screen: 'unicorn.components.IncubatorExpandableOverlayScreen'},
       {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'},
       {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
     ]
@@ -165,7 +167,9 @@ export const navigationData = {
     screens: [
       {title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'},
       {title: 'Pinterest', tags: 'pinterest demo screen', screen: 'unicorn.examples.Pinterest'},
-      {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'}
+      {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'},
+      {title: 'Product Page', tags: 'product page demo screen', screen: 'unicorn.examples.ProductPage'},
+      {title: 'Twitter', tags: 'twitter demo screen', screen: 'unicorn.examples.Twitter'}
     ]
   }
 };

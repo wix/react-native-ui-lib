@@ -1,7 +1,6 @@
 // TODO: remove this file (was replaced with useFieldState hook)
 import React, {useCallback, useState, useEffect, useMemo} from 'react';
 import _ from 'lodash';
-//@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 import {TextInputProps} from 'react-native';
 import validators from './validators';
