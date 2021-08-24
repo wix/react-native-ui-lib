@@ -92,7 +92,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | undefined;
+    preset?: 'default' | null;
   };
 
 export type InternalTextFieldProps = TextFieldProps &

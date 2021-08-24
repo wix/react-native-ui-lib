@@ -68,7 +68,7 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | undefined;
+    preset?: 'default' | null;
 };
 export declare type InternalTextFieldProps = TextFieldProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 interface StaticMembers {
