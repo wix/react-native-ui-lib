@@ -149,7 +149,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
     retainSpace?: boolean | undefined;
-    validate: (boolean & (import("./types").Validator | import("./types").Validator[])) | undefined;
+    validate?: (boolean & (import("./types").Validator | import("./types").Validator[])) | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
@@ -481,7 +481,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
     retainSpace?: boolean | undefined;
-    validate: (boolean & (import("./types").Validator | import("./types").Validator[])) | undefined;
+    validate?: (boolean & (import("./types").Validator | import("./types").Validator[])) | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
@@ -1045,7 +1045,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
     retainSpace?: boolean | undefined;
-    validate: (boolean & (import("./types").Validator | import("./types").Validator[])) | undefined;
+    validate?: (boolean & (import("./types").Validator | import("./types").Validator[])) | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;

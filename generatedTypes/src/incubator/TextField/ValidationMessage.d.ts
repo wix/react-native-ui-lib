@@ -15,7 +15,7 @@ export interface ValidationMessageProps {
      */
     validationMessageStyle?: TextStyle;
     retainSpace?: boolean;
-    validate: FieldStateProps['validateOnChange'];
+    validate?: FieldStateProps['validateOnChange'];
 }
 declare const ValidationMessage: {
     ({ validationMessage, enableErrors, validationMessageStyle, retainSpace, validate }: ValidationMessageProps): JSX.Element | null;
