@@ -91,6 +91,10 @@ function TabController({
   const containerWidth = useSharedValue(pageWidth);
 
   useEffect(() => {
+    containerWidth.value = pageWidth;
+  }, [pageWidth]);
+
+  useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
       LogService.deprecationWarn({component: 'TabController2', oldProp: 'selectedIndex', newProp: 'initialIndex'});
     }
