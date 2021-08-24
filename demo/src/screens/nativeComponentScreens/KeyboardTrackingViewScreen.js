@@ -40,7 +40,7 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
         {_.map(messages, (message, i) => {
           const isLeftBubble = i % 2 === 0;
           return (
-            <View right={!isLeftBubble}>
+            <View right={!isLeftBubble} key={i}>
               <View
                 bg-blue40={isLeftBubble}
                 bg-white={!isLeftBubble}

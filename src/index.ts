@@ -6,6 +6,7 @@
 
 export * from './style';
 export * from './services';
+export * from '../lib/components';
 export {
   BaseComponentInjectedProps,
   ForwardRefInjectedProps,
@@ -84,12 +85,12 @@ export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 
+
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
   ChipsInput,
   BaseInput, TextArea, TextField, MaskedInput, Picker,
   PickerProps, ProgressBar, Stepper,
   TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
-  BaseComponent, PureBaseComponent, UIComponent, forwardRef,
-  WheelPicker, WheelPickerProps
+  BaseComponent, PureBaseComponent, UIComponent, forwardRef
 } from '../typings';
