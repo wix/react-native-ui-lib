@@ -149,11 +149,11 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
     retainSpace?: boolean | undefined;
+    validate?: import("./types").Validator | import("./types").Validator[] | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
-    validate?: import("./types").Validator | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
@@ -481,11 +481,11 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
     retainSpace?: boolean | undefined;
+    validate?: import("./types").Validator | import("./types").Validator[] | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
-    validate?: import("./types").Validator | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
@@ -1045,11 +1045,11 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
     retainSpace?: boolean | undefined;
+    validate?: import("./types").Validator | import("./types").Validator[] | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
-    validate?: import("./types").Validator | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur: boolean;

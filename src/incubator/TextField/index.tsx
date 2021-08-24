@@ -168,6 +168,7 @@ const TextField = (props: InternalTextFieldProps) => {
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
             enableErrors={enableErrors}
+            validate={others.validate}
             validationMessage={validationMessage}
             validationMessageStyle={validationMessageStyle}
           />
@@ -202,6 +203,7 @@ const TextField = (props: InternalTextFieldProps) => {
           {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
             <ValidationMessage
               enableErrors={enableErrors}
+              validate={others.validate}
               validationMessage={validationMessage}
               validationMessageStyle={validationMessageStyle}
               retainSpace
