@@ -19,7 +19,7 @@ export interface ValidationMessageProps {
    */
   validationMessageStyle?: TextStyle;
   retainSpace?: boolean;
-  validate?: FieldStateProps['validateOnChange'];
+  validate?: FieldStateProps['validate'];
 }
 
 const ValidationMessage = ({
