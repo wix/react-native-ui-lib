@@ -3,7 +3,6 @@ import {useState, useCallback, useEffect, useRef, RefObject} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {useScrollTo, ScrollToSupportedViews, ScrollToResultProps} from 'hooks';
-import {Constants} from 'helpers';
 
 export enum OffsetType {
   CENTER = 'CENTER',
@@ -22,6 +21,10 @@ export type ScrollToItemProps<T extends ScrollToSupportedViews> = {
    * The selected item's index
    */
   selectedIndex?: number;
+  /**
+   * The screen width, should update on orientation change
+   */
+   screenWidth: number;
   /**
    * Where would the item be located (default to CENTER)
    */
@@ -86,6 +89,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     scrollViewRef: propsScrollViewRef,
     itemsCount,
     selectedIndex,
+    screenWidth,
     offsetType = OffsetType.CENTER,
     addOffsetMargin = true,
     outerSpacing = 0,
@@ -111,14 +115,14 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
       return;
     }
 
-    const screenCenter = Constants.screenWidth / 2; // TODO: change to something more dynamic?
+    const screenCenter = screenWidth / 2; // TODO: change to something more dynamic?
     let index = 0;
     const centeredOffsets = [];
     let currentCenterOffset = outerSpacing;
     const leftOffsets = [];
     leftOffsets.push(outerSpacing - innerSpacing);
     const rightOffsets = [];
-    rightOffsets.push(-Constants.screenWidth + widths[0] + outerSpacing + innerSpacing);
+    rightOffsets.push(-screenWidth + widths[0] + outerSpacing + innerSpacing);
     while (index < itemsCount) {
       /* map animated widths and offsets */
       itemsWidthsAnimated.value[index] = widths[index];
@@ -150,7 +154,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     itemsWidthsAnimated.value = [...itemsWidthsAnimated.value];
     itemsOffsetsAnimated.value = [...itemsOffsetsAnimated.value];
   },
-  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin]);
+  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, screenWidth]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     const {width} = event.nativeEvent.layout;

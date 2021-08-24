@@ -8,7 +8,6 @@ import Reanimated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated';
-import {Constants} from 'helpers';
 
 /**
  * @description: TabController's Page Carousel
@@ -21,7 +20,7 @@ function PageCarousel({...props}) {
     currentPage,
     targetPage,
     selectedIndex = 0,
-    pageWidth = Constants.screenWidth,
+    pageWidth,
     carouselOffset
   } = useContext(TabBarContext);
   const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);

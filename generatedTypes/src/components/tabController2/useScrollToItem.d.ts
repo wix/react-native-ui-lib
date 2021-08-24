@@ -18,6 +18,10 @@ export declare type ScrollToItemProps<T extends ScrollToSupportedViews> = {
      */
     selectedIndex?: number;
     /**
+     * The screen width, should update on orientation change
+     */
+    screenWidth: number;
+    /**
      * Where would the item be located (default to CENTER)
      */
     offsetType?: OffsetType;
