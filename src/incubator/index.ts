@@ -1,4 +1,4 @@
-export {default as ExpandableInput} from './expandableInput';
+export {default as ExpandableOverlay} from './expandableOverlay';
 // @ts-ignore
 export {default as TabController} from './TabController';
 export {default as TextField, TextFieldProps, FieldContextType} from './TextField';

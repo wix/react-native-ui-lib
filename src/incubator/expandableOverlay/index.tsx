@@ -5,7 +5,7 @@ import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../components/dialog';
 
-export type ExpandableInputProps = TouchableOpacityProps &
+export type ExpandableOverlayProps = TouchableOpacityProps &
   PropsWithChildren<{
     /**
      * The content to render inside the expandable modal/dialog
@@ -33,13 +33,13 @@ export type ExpandableInputProps = TouchableOpacityProps &
     topBarProps?: ModalTopBarProps;
   }>;
 
-interface ExpandableInputMethods {
+interface ExpandableOverlayMethods {
   openExpandable: () => void;
   closeExpandable: () => void;
 }
 
-const ExpandableInput = (props: ExpandableInputProps, ref: any) => {
-  const {children, expandableContent, useDialog, modalProps, dialogProps, showTopBar, topBarProps} = props;
+const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
+  const {children, expandableContent, useDialog, modalProps, dialogProps, showTopBar, topBarProps, ...others} = props;
   const [expandableVisible, setExpandableVisible] = useState(false);
   const showExpandable = useCallback(() => setExpandableVisible(true), []);
   const hideExpandable = useCallback(() => setExpandableVisible(false), []);
@@ -71,11 +71,11 @@ const ExpandableInput = (props: ExpandableInputProps, ref: any) => {
   };
 
   return (
-    <TouchableOpacity {...props} onPress={showExpandable}>
+    <TouchableOpacity {...others} onPress={showExpandable}>
       <View pointerEvents="none">{children}</View>
       {useDialog ? renderDialog() : renderModal()}
     </TouchableOpacity>
   );
 };
 
-export default forwardRef<ExpandableInputMethods, ExpandableInputProps>(ExpandableInput);
+export default forwardRef<ExpandableOverlayMethods, ExpandableOverlayProps>(ExpandableOverlay);

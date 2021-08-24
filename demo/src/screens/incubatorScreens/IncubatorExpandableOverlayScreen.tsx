@@ -87,7 +87,7 @@ export default class TextFieldScreen extends Component {
         <Text h3 marginB-s4 primary>
           Expandable TextField
         </Text>
-        <Incubator.ExpandableInput
+        <Incubator.ExpandableOverlay
           ref={this.expandableInputRef}
           modalProps={{animationType: 'slide'}}
           expandableContent={this.renderInputModal()}
@@ -96,7 +96,7 @@ export default class TextFieldScreen extends Component {
           dialogProps={{bottom: true}}
         >
           <Incubator.TextField placeholder="Expandable input" value={textFieldValue}/>
-        </Incubator.ExpandableInput>
+        </Incubator.ExpandableOverlay>
       </>
     );
   }
@@ -108,14 +108,14 @@ export default class TextFieldScreen extends Component {
         <Text h3 marginB-s4 primary>
           Expandable Picker
         </Text>
-        <Incubator.ExpandableInput
+        <Incubator.ExpandableOverlay
           ref={this.expandablePickerRef}
           useDialog
           expandableContent={this.renderPickerContent()}
           dialogProps={{bottom: true}}
         >
           {this.renderColorRow(selectedColor)}
-        </Incubator.ExpandableInput>
+        </Incubator.ExpandableOverlay>
       </>
     );
   }
@@ -125,7 +125,7 @@ export default class TextFieldScreen extends Component {
       <ScrollView keyboardShouldPersistTaps="always">
         <View padding-page>
           <Text h2 marginB-s5>
-            ExpandableInput
+            ExpandableOverlay
           </Text>
 
           {this.renderExpandableFieldExample()}

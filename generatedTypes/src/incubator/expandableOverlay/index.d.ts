@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { TouchableOpacityProps } from '../../components/touchableOpacity';
 import { ModalProps, ModalTopBarProps } from '../../components/modal';
 import { DialogProps } from '../../components/dialog';
-export declare type ExpandableInputProps = TouchableOpacityProps & PropsWithChildren<{
+export declare type ExpandableOverlayProps = TouchableOpacityProps & PropsWithChildren<{
     /**
      * The content to render inside the expandable modal/dialog
      */
@@ -28,7 +28,7 @@ export declare type ExpandableInputProps = TouchableOpacityProps & PropsWithChil
      */
     topBarProps?: ModalTopBarProps;
 }>;
-interface ExpandableInputMethods {
+interface ExpandableOverlayMethods {
     openExpandable: () => void;
     closeExpandable: () => void;
 }
@@ -59,5 +59,5 @@ declare const _default: React.ForwardRefExoticComponent<TouchableOpacityProps & 
     topBarProps?: ModalTopBarProps | undefined;
 } & {
     children?: React.ReactNode;
-} & React.RefAttributes<ExpandableInputMethods>>;
+} & React.RefAttributes<ExpandableOverlayMethods>>;
 export default _default;
