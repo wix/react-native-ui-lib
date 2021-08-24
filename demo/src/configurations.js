@@ -9,7 +9,8 @@ Assets.loadAssetsGroup('icons.demo', {
   image: require('./assets/icons/image.png'),
   plus: require('./assets/icons/plus.png'),
   refresh: require('./assets/icons/refresh.png'),
-  search: require('./assets/icons/search.png')
+  search: require('./assets/icons/search.png'),
+  share: require('./assets/icons/share.png')
 });
 
 Assets.loadAssetsGroup('images.demo', {

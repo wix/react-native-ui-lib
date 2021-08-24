@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Colors, Image, Button, Carousel, Picker} from 'react-native-ui-lib';
+import {Assets, View, Text, Colors, Image, Button, Carousel, Picker} from 'react-native-ui-lib';
 import _ from 'lodash';
 
 const colorOptions: {[key: string]: {name: string; color: string}} = {
@@ -42,11 +42,11 @@ class Product extends Component {
         <View>
           <Image
             style={{position: 'absolute', top: 10, right: 10, zIndex: 100, tintColor: Colors.white}}
-            source={require('../../../assets/icons/share.png')}
+            source={Assets.icons.demo.share}
           />
           <Carousel
             containerStyle={{height: 200}}
-            pageControlProps={{size: 6}}
+            pageControlProps={{size: 6, limitShownPages: true, color: Colors.white, inactiveColor: Colors.grey50}}
             pageControlPosition={Carousel.pageControlPositions.OVER}
           >
             {images.map((image, i) => {
