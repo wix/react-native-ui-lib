@@ -184,6 +184,11 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     }
   }, [selectedIndex, focusIndex]);
 
+  useEffect(() => {
+    focusIndex(currentIndex.current, false);
+    // TODO: This is called the first time as well, can we prevent that? - Is is a real problem?
+  }, [screenWidth]);
+
   return {
     scrollViewRef,
     onItemLayout,

@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useCallback, useContext, useMemo, useEffect} from 'react';
 import TabBarContext from './TabBarContext';
 import Reanimated, {
   runOnJS,
@@ -60,6 +60,11 @@ function PageCarousel({...props}) {
       runOnJS(scrollToItem)(currIndex);
     }
   });
+
+  useEffect(() => {
+    // @ts-expect-error
+    carousel.current?.scrollTo({x: currentPage.value * pageWidth, animated: false});
+  }, [pageWidth]);
 
   return (
     <Reanimated.ScrollView
