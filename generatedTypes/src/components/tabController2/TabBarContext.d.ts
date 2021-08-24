@@ -5,7 +5,6 @@ interface TabControllerContext {
     selectedIndex?: number;
     items?: any[];
     asCarousel?: boolean;
-    containerWidth: Reanimated.SharedValue<number>;
     pageWidth: number;
     screenWidth: number;
     /** static page index */

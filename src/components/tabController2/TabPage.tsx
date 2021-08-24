@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useCallback, useContext, useState} from 'react';
+import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
@@ -37,7 +37,7 @@ export default function TabPage({
   renderLoading,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
-  const {currentPage, targetPage, asCarousel, containerWidth, screenWidth} = useContext(TabBarContext);
+  const {currentPage, targetPage, asCarousel, screenWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
 
   const lazyLoad = useCallback(() => {
@@ -59,13 +59,17 @@ export default function TabPage({
     const isActive = Math.round(currentPage.value) === index;
     return {
       opacity: isActive || asCarousel ? 1 : 0,
-      zIndex: isActive || asCarousel ? 1 : 0,
-      width: asCarousel ? containerWidth.value || screenWidth : undefined
+      zIndex: isActive || asCarousel ? 1 : 0
     };
   });
 
+  const style = useMemo(() => {
+    const style = {width: asCarousel ? screenWidth : undefined};
+    return [!asCarousel && styles.page, animatedPageStyle, style];
+  }, [asCarousel, screenWidth, animatedPageStyle]);
+
   return (
-    <Reanimated.View style={[!asCarousel && styles.page, animatedPageStyle]} testID={testID}>
+    <Reanimated.View style={style} testID={testID}>
       {!shouldLoad && renderLoading?.()}
       {shouldLoad && props.children}
     </Reanimated.View>

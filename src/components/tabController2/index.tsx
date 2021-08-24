@@ -88,17 +88,6 @@ function TabController({
   /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
   const targetPage = useSharedValue(initialIndex);
   const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
-  const containerWidth = useSharedValue(pageWidth);
-
-  useEffect(() => {
-    // TODO: this causes a crash on iOS
-    // 1. Refresh app in TabController screen
-    // 2. Switch to landscape
-    // 3. Press the Community tab
-    // 4. Switch to portrait
-    // Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Mouting block is expected to not be set'
-    containerWidth.value = pageWidth;
-  }, [pageWidth]);
 
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
@@ -134,7 +123,6 @@ function TabController({
       targetPage,
       currentPage,
       carouselOffset,
-      containerWidth,
       /* Callbacks */
       onChangeIndex
     };
