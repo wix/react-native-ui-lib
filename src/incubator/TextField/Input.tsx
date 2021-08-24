@@ -27,6 +27,10 @@ export interface InputProps
    * placeholder text color
    */
   placeholderTextColor?: ColorType;
+  /**
+   * Custom formatter for the input value (used only when input if not focused)
+   */
+  formatter?: (value?: string) => string;
 }
 
 const Input = ({
@@ -34,6 +38,7 @@ const Input = ({
   hint,
   color = DEFAULT_INPUT_COLOR,
   forwardedRef,
+  formatter,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
   const inputRef = useImperativeInputHandle(forwardedRef);
@@ -42,10 +47,13 @@ const Input = ({
   const inputColor = getColorByState(color, context);
   const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
 
+  const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
+
   return (
     <TextInput
       style={[styles.input, !!inputColor && {color: inputColor}, style]}
       {...props}
+      value={value}
       placeholder={placeholder}
       placeholderTextColor={placeholderTextColor}
       // @ts-expect-error

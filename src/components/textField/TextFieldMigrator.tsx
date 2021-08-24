@@ -13,7 +13,8 @@ const propsMigrationMap: Dictionary<string> = {
   titleColor: 'labelColor',
   titleStyle: 'labelStyle',
   /* CHAR COUNTER */
-  showCharacterCounter: 'showCharCounter'
+  showCharacterCounter: 'showCharCounter',
+  transformer: 'formatter'
 };
 
 const specialMigrationMap: Dictionary<string> = {

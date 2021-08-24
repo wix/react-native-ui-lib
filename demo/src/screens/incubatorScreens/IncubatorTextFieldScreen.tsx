@@ -5,6 +5,8 @@ import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incu
 const {TextField} = Incubator;
 const {KeyboardAwareInsetsView} = Keyboard;
 
+const priceFormatter = Intl.NumberFormat('en-US');
+
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
   input2 = React.createRef<TextInput>();
@@ -47,7 +49,7 @@ export default class TextFieldScreen extends Component {
   }
 
   render() {
-    const {errorPosition, shouldDisable} = this.state;
+    const {errorPosition, shouldDisable, price} = this.state;
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-page>
@@ -216,6 +218,20 @@ export default class TextFieldScreen extends Component {
             label="Password"
             placeholder="Enter password"
             hint="1-6 chars including numeric chars"
+            fieldStyle={styles.withUnderline}
+          />
+          <Text h3 blue50 marginV-s4>
+            Formatter
+          </Text>
+          <TextField
+            value={price}
+            onChangeText={value => this.setState({price: value})}
+            label="Price"
+            placeholder="Enter price"
+            validate={'number'}
+            validationMessage="Invalid price"
+            // @ts-expect-error
+            formatter={(value) => (isNaN(value) ? value : priceFormatter.format(Number(value)))}
             fieldStyle={styles.withUnderline}
           />
         </View>
