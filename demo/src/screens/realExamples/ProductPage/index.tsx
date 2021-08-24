@@ -86,12 +86,12 @@ class Product extends Component {
               }}
             >
               {_.map(colorOptions, (colorOption, colorKey) => {
-                return <Picker.Item value={colorKey} label={colorOption.name}/>;
+                return <Picker.Item key={colorKey} value={colorKey} label={colorOption.name}/>;
               })}
             </Picker>
             <Picker migrate value={selectedSize} onChange={(value: string) => this.setState({selectedSize: value})}>
               {_.map(sizeOptions, (sizeOption, sizeKey) => {
-                return <Picker.Item value={sizeKey} label={sizeOption.name}/>;
+                return <Picker.Item key={sizeKey} value={sizeKey} label={sizeOption.name}/>;
               })}
             </Picker>
           </View>

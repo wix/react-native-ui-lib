@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, Spacings, View, Card, Text, Image, Constants} from 'react-native-ui-lib';
+import {Assets, Colors, Spacings, View, Card, Text, Image, Button, Constants} from 'react-native-ui-lib';
 import _ from 'lodash';
 
 import './configurations';
@@ -86,6 +86,14 @@ class Pinterest extends Component {
         activeOpacity={1}
       >
         <Image style={[styles.image, {aspectRatio: image.aspectRatio}]} source={{uri: image.uri}} width={COLUMN_SIZE}/>
+        <View absF bottom right pointerEvents="none" padding-s2>
+          <Button
+            iconSource={Assets.icons.demo.plus}
+            round
+            size={Button.sizes.xSmall}
+            backgroundColor={Colors.rgba(Colors.grey80, 0.7)}
+          />
+        </View>
       </Card>
     );
   }
@@ -108,8 +116,8 @@ class Pinterest extends Component {
 
     if (!images) {
       return (
-        <View>
-          <Text>Loading</Text>
+        <View flex center>
+          <Text text60>Loading...</Text>
         </View>
       );
     }

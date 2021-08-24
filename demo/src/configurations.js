@@ -7,6 +7,7 @@ Assets.loadAssetsGroup('icons.demo', {
   close: require('./assets/icons/close.png'),
   dashboard: require('./assets/icons/dashboard.png'),
   image: require('./assets/icons/image.png'),
+  plus: require('./assets/icons/plus.png'),
   refresh: require('./assets/icons/refresh.png'),
   search: require('./assets/icons/search.png')
 });
