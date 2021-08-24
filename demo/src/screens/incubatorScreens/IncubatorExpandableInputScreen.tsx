@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Text, Incubator, Modal, TouchableOpacity} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, Text, Incubator, TouchableOpacity} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
 const COLOR_OPTIONS: {[key: string]: string} = {
@@ -15,13 +15,21 @@ export default class TextFieldScreen extends Component {
   expandablePickerRef = React.createRef();
 
   state = {
+    textFieldValueDraft: '',
     textFieldValue: '',
     selectedColor: 'red'
   };
 
-  updateText = (value: string) => this.setState({textFieldValue: value});
+  updateText = (value: string) => this.setState({textFieldValueDraft: value});
 
-  onDone = () => this.expandableInputRef.current.closeExpandable();
+  onDone = () => {
+    this.setState({textFieldValue: this.state.textFieldValueDraft});
+    this.expandableInputRef.current.closeExpandable();
+  };
+  onCancel = () => {
+    this.setState({textFieldValueDraft: this.state.textFieldValue});
+    this.expandableInputRef.current.closeExpandable();
+  };
 
   onPickItem = ({customValue: color}: {customValue: string}) => {
     this.setState({selectedColor: color});
@@ -29,15 +37,14 @@ export default class TextFieldScreen extends Component {
   };
 
   renderInputModal = () => {
-    const {textFieldValue} = this.state;
+    const {textFieldValueDraft} = this.state;
     return (
       <>
-        <Modal.TopBar title="Edit Input" onDone={this.onDone}/>
         <View bg-white br20 padding-s4>
           <Incubator.TextField
             autoFocus
             preset={null}
-            value={textFieldValue}
+            value={textFieldValueDraft}
             multiline
             placeholder="Enter text"
             containerStyle={{minHeight: 300}}
@@ -64,7 +71,7 @@ export default class TextFieldScreen extends Component {
       <View bg-white br20 padding-s3 paddingB-60>
         {_.map(COLOR_OPTIONS, (_color, key) => {
           return (
-            <TouchableOpacity customValue={key} onPress={this.onPickItem}>
+            <TouchableOpacity key={key} customValue={key} onPress={this.onPickItem}>
               {this.renderColorRow(key)}
             </TouchableOpacity>
           );
@@ -84,6 +91,8 @@ export default class TextFieldScreen extends Component {
           ref={this.expandableInputRef}
           modalProps={{animationType: 'slide'}}
           expandableContent={this.renderInputModal()}
+          showTopBar
+          topBarProps={{title: 'Edit Input', doneLabel: 'Done', onCancel: this.onCancel, onDone: this.onDone}}
           dialogProps={{bottom: true}}
         >
           <Incubator.TextField placeholder="Expandable input" value={textFieldValue}/>

@@ -2,15 +2,35 @@ import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperati
 
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
-import Modal, {ModalProps} from '../../components/modal';
+import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../components/dialog';
 
 export type ExpandableInputProps = TouchableOpacityProps &
   PropsWithChildren<{
+    /**
+     * The content to render inside the expandable modal/dialog
+     */
     expandableContent?: React.ReactElement;
+    /**
+     * Whether to use a dialog as expandable container (by default the container will be a full screen modal)
+     */
     useDialog?: boolean;
+    /**
+     * The props to pass to the modal expandable container
+     */
     modalProps?: ModalProps;
+    /**
+     * The props to pass to the dialog expandable container
+     */
     dialogProps?: DialogProps;
+    /**
+     * Whether to render a modal top bar (relevant only for modal)
+     */
+    showTopBar?: boolean;
+    /**
+     * The modal top bar props to pass on
+     */
+    topBarProps?: ModalTopBarProps;
   }>;
 
 interface ExpandableInputMethods {
@@ -18,8 +38,8 @@ interface ExpandableInputMethods {
   closeExpandable: () => void;
 }
 
-const ExpandableInput = ({children, expandableContent, useDialog, modalProps, dialogProps, ...props}: ExpandableInputProps,
-  ref: any) => {
+const ExpandableInput = (props: ExpandableInputProps, ref: any) => {
+  const {children, expandableContent, useDialog, modalProps, dialogProps, showTopBar, topBarProps} = props;
   const [expandableVisible, setExpandableVisible] = useState(false);
   const showExpandable = useCallback(() => setExpandableVisible(true), []);
   const hideExpandable = useCallback(() => setExpandableVisible(false), []);
@@ -34,30 +54,26 @@ const ExpandableInput = ({children, expandableContent, useDialog, modalProps, di
   }));
 
   const renderModal = () => {
-    if (!useDialog) {
-      return (
-        <Modal {...modalProps} visible={expandableVisible} onDismiss={hideExpandable}>
-          {expandableContent}
-        </Modal>
-      );
-    }
+    return (
+      <Modal {...modalProps} visible={expandableVisible} onDismiss={hideExpandable}>
+        {showTopBar && <Modal.TopBar onDone={hideExpandable} {...topBarProps}/>}
+        {expandableContent}
+      </Modal>
+    );
   };
 
   const renderDialog = () => {
-    if (useDialog) {
-      return (
-        <Dialog {...dialogProps} visible={expandableVisible} onDismiss={hideExpandable}>
-          {expandableContent}
-        </Dialog>
-      );
-    }
+    return (
+      <Dialog {...dialogProps} visible={expandableVisible} onDismiss={hideExpandable}>
+        {expandableContent}
+      </Dialog>
+    );
   };
 
   return (
     <TouchableOpacity {...props} onPress={showExpandable}>
       <View pointerEvents="none">{children}</View>
-      {renderModal()}
-      {renderDialog()}
+      {useDialog ? renderDialog() : renderModal()}
     </TouchableOpacity>
   );
 };
