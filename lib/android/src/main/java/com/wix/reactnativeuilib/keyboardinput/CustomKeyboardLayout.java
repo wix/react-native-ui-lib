@@ -181,19 +181,18 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
     }
 
     private void setKeyboardOverlayMode() {
-        if (mIsShown) {
-            Window window = getWindow();
-            if (window != null) {
-                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-            }
-        }
+        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     private void clearKeyboardOverlayMode() {
+        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    }
+
+    private void setSoftInputMode(int softInputMode) {
         if (mIsShown) {
             Window window = getWindow();
             if (window != null) {
-                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                window.setSoftInputMode(softInputMode);
             }
         }
     }
