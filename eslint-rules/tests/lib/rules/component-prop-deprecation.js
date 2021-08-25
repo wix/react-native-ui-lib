@@ -91,17 +91,11 @@ ruleTester.run('component-prop-deprecation', rule, {
     },
     {
       options: ruleOptions,
-      code: 'import {Picker} from \'module-with-deprecations\'; <Picker t="title" s="subtitle" migrate/>',
-      errors: [
-        {message: "The 'Picker' component's prop 'migrate' is required. Please make sure to pass the 'migrate' prop."},
-      ]
+      code: 'import {Picker} from \'module-with-deprecations\'; <Picker t="title" s="subtitle" migrate/>'
     },
     {
       options: ruleOptions,
-      code: 'import {Picker} from \'module-with-deprecations\'; pickerProps = {t: "title", s:"subtitle", migrate: true}; <Picker {...pickerProps}/>',
-      errors: [
-        {message: "The 'Picker' component's prop 'migrate' is required. Please make sure to pass the 'migrate' prop."},
-      ]
+      code: 'import {Picker} from \'module-with-deprecations\'; pickerProps = {t: "title", s:"subtitle", migrate: true}; <Picker {...pickerProps}/>'
     },
   ],
   invalid: [
