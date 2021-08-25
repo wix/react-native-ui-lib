@@ -45,6 +45,10 @@ export interface WizardStepProps {
      */
     icon?: ImageProps;
     /**
+     * Index of the step
+     */
+    index: number;
+    /**
      * Additional styles for the index's label (when icon is not provided)
      */
     indexLabelStyle?: StyleProp<TextStyle>;
