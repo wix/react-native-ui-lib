@@ -10,7 +10,7 @@ import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const LinearGradient = LinearGradientPackage?.default;
 
-const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+let ShimmerPlaceholder: any;
 
 const ANIMATION_DURATION = 400;
 
@@ -134,6 +134,14 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
       isAnimating: !_.isUndefined(props.showContent),
       opacity: new Animated.Value(0)
     };
+
+    if (_.isUndefined(LinearGradientPackage?.default)) {
+      console.error(`RNUILib SkeletonView's requires installing "react-native-linear-gradient" dependency`);
+    } else if (_.isUndefined(createShimmerPlaceholder)) {
+      console.error(`RNUILib SkeletonView's requires installing "react-native-shimmer-placeholder" dependency`);
+    } else {
+      ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+    }
   }
 
   componentDidMount() {
@@ -326,6 +334,10 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   renderNothing = () => null;
 
   render() {
+    if (_.isUndefined(LinearGradientPackage?.default) || _.isUndefined(createShimmerPlaceholder)) {
+      return null;
+    }
+
     const {times, timesKey, showLastSeparator, hideSeparator, renderContent, testID} = this.props;
 
     if (times) {

@@ -156,12 +156,12 @@ class Drawer extends PureComponent<Props> {
   constructor(props: DrawerProps) {
     super(props);
 
-    this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
-    this.rightRender = props.rightItems
-      ? Constants.isRTL
-        ? this.renderLeftActions
-        : this.renderRightActions
-      : undefined;
+    this.leftRender = Constants.isRTL
+      ? props.rightItems && this.renderRightActions
+      : props.leftItem && this.renderLeftActions;
+    this.rightRender = Constants.isRTL
+      ? props.leftItem && this.renderLeftActions
+      : props.rightItems && this.renderRightActions;
   }
 
   private getLeftActionsContainerStyle = memoize((leftItem, rightItems) => {
