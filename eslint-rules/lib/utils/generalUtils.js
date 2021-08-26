@@ -21,11 +21,11 @@ function findValueNodeOfIdentifier(identifierName, scope) {
     }
   });
   if (valueNode === false || _.isNil(valueNode) || valueNode.value !== undefined) {
-    if (scope.block.body.length > 0) {
+    if (scope && scope.block && scope.block.body && scope.block.body.length > 0) {
       scope.block.body.forEach(scopeNode => {
-        if (scopeNode.type === 'ExpressionStatement') {
+        if (scopeNode && scopeNode.type === 'ExpressionStatement') {
           const variableName = _.get(scopeNode, 'expression.left.name');
-          if (variableName === identifierName) {
+          if (variableName === identifierName && scopeNode.expression && scopeNode.expression.right) {
             valueNode = scopeNode.expression.right;
           }
         }
