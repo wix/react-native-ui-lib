@@ -89,6 +89,14 @@ ruleTester.run('component-prop-deprecation', rule, {
       <Picker value="value" migrate={true}/>
       `
     },
+    {
+      options: ruleOptions,
+      code: 'import {Picker} from \'module-with-deprecations\'; <Picker t="title" s="subtitle" migrate/>'
+    },
+    {
+      options: ruleOptions,
+      code: 'import {Picker} from \'module-with-deprecations\'; pickerProps = {t: "title", s:"subtitle", migrate: true}; <Picker {...pickerProps}/>'
+    },
   ],
   invalid: [
     {

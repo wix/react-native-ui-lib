@@ -20,7 +20,7 @@ function findValueNodeOfIdentifier(identifierName, scope) {
       }
     }
   });
-  if (_.isNil(valueNode) || valueNode.value !== undefined) {
+  if (valueNode === false || _.isNil(valueNode) || valueNode.value !== undefined) {
     if (scope.block.body.length > 0) {
       scope.block.body.forEach(scopeNode => {
         if (scopeNode.type === 'ExpressionStatement') {
