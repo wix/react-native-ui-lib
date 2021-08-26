@@ -5,7 +5,6 @@ import {useDidUpdate} from 'hooks';
 import {Validator} from './types';
 import {InputProps} from './Input';
 
-
 export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
@@ -17,7 +16,7 @@ export interface FieldStateProps extends InputProps {
   /**
    * Callback for when field validity has changed
    */
-  onChangeValidity?: (isValid: boolean) => void
+  onChangeValidity?: (isValid: boolean) => void;
 }
 
 export default function useFieldState({
@@ -41,10 +40,16 @@ export default function useFieldState({
 
   useEffect(() => {
     if (props.value !== value) {
+      
       setValue(props.value);
+      
+      if (validateOnChange) {
+        validateField(props.value);
+      }
     }
-  /* On purpose listen only to props.value change */
-  }, [props.value]);
+    /* On purpose listen only to props.value change */
+    /* eslint-disable-next-line react-hooks/exhaustive-deps*/
+  }, [props.value, validateOnChange]);
 
   useDidUpdate(() => {
     onChangeValidity?.(isValid);
