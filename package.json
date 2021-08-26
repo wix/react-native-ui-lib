@@ -119,11 +119,7 @@
     "react": ">=17.0.1",
     "react-native": ">=0.64.1",
     "react-native-gesture-handler": ">=1.9.0",
-    "react-native-reanimated": ">=2.0.0",
-    "@react-native-community/blur": ">=3.4.1",
-    "@react-native-community/datetimepicker": "^2.1.0",
-    "@react-native-community/netinfo": "^5.6.2",
-    "@react-native-picker/picker": "^1.9.4"
+    "react-native-reanimated": ">=2.0.0"
   },
   "jest": {
     "preset": "react-native",
