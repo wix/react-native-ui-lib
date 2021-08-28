@@ -28,6 +28,10 @@ interface Props extends WizardStepProps, Omit<WizardProps, 'onActiveIndexChanged
  */
 class WizardStep extends Component<Props> {
   static displayName = 'Wizard.Step';
+  static defaultProps = {
+    index: 0,
+    maxWidth: 0
+  };
 
   getProps() {
     const props = this.props;
