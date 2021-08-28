@@ -225,6 +225,9 @@ module.exports = {
       get IncubatorTextFieldScreen() {
         return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
       },
+      get PanViewScreen() {
+        return require('./screens/incubatorScreens/PanViewScreen').default;
+      },
       // realExamples
       get AppleMusic() {
         return require('./screens/realExamples/AppleMusic').default;
@@ -234,6 +237,12 @@ module.exports = {
       },
       get ListActionsScreen() {
         return require('./screens/realExamples/ListActions/ListActionsScreen').default;
+      },
+      get ProductPage() {
+        return require('./screens/realExamples/ProductPage');
+      },
+      get Twitter() {
+        return require('./screens/realExamples/Twitter');
       },
       // wrapperScreens
       get TouchableOpacityScreen() {
