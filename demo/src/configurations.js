@@ -1,13 +1,16 @@
 import {Assets, Colors, Typography, Spacings, Incubator} from 'react-native-ui-lib'; // eslint-disable-line
 
 Assets.loadAssetsGroup('icons.demo', {
+  chevronDown: require('./assets/icons/chevronDown.png'),
   add: require('./assets/icons/add.png'),
   camera: require('./assets/icons/cameraSelected.png'),
   close: require('./assets/icons/close.png'),
   dashboard: require('./assets/icons/dashboard.png'),
   image: require('./assets/icons/image.png'),
+  plus: require('./assets/icons/plus.png'),
   refresh: require('./assets/icons/refresh.png'),
-  search: require('./assets/icons/search.png')
+  search: require('./assets/icons/search.png'),
+  share: require('./assets/icons/share.png')
 });
 
 Assets.loadAssetsGroup('images.demo', {
@@ -21,7 +24,7 @@ Assets.loadAssetsGroup('svgs.demo', {
 Typography.loadTypographies({
   h1: {...Typography.text40},
   h2: {...Typography.text50},
-  h3: {...Typography.text60},
+  h3: {...Typography.text70M},
   body: Typography.text70,
   bodySmall: Typography.text80
 });

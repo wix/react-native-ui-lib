@@ -14,7 +14,7 @@ export function getColorByState(color?: ColorType, context?: FieldContextType) {
     } else if (!context?.isValid) {
       finalColor = color?.error;
     } else if (context?.isFocused) {
-      finalColor = color?.focus;      
+      finalColor = color?.focus;
     }
 
     finalColor = finalColor || color?.default || Colors.grey10;
@@ -23,10 +23,7 @@ export function getColorByState(color?: ColorType, context?: FieldContextType) {
   return finalColor;
 }
 
-export function validate(
-  value?: string,
-  validator?: Validator | Validator[]
-): [boolean, number?] {
+export function validate(value?: string, validator?: Validator | Validator[]): [boolean, number?] {
   if (_.isUndefined(validator)) {
     return [true, undefined];
   }
@@ -51,14 +48,11 @@ export function validate(
   return [_isValid, _failingValidatorIndex];
 }
 
-export function getRelevantValidationMessage(
-  validationMessage: string | string[] | undefined,
-  failingValidatorIndex: undefined | number
-) {
-  if (
-    _.isUndefined(failingValidatorIndex) ||
-    _.isUndefined(validationMessage)
-  ) {
+export function getRelevantValidationMessage(validationMessage: string | string[] | undefined,
+  failingValidatorIndex: undefined | number) {
+  if (_.isUndefined(failingValidatorIndex)) {
+    return validationMessage;
+  } else if (_.isUndefined(validationMessage)) {
     return;
   }
 
