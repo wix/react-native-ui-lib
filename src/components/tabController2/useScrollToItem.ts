@@ -24,7 +24,7 @@ export type ScrollToItemProps<T extends ScrollToSupportedViews> = {
   /**
    * The screen width, should update on orientation change
    */
-   screenWidth: number;
+  screenWidth: number;
   /**
    * Where would the item be located (default to CENTER)
    */
@@ -67,7 +67,7 @@ export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<
   /**
    * The items' offsets as share animated value
    */
-   itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
+  itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
   /**
    * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
    */
