@@ -117,13 +117,17 @@ module.exports = {
       if (attribute.type === 'JSXAttribute') {
         wasFound = checkPropDeprecation(attribute, attribute.name, attribute.name.name, deprecatedPropList, componentName);
       } else if (attribute.type === 'JSXSpreadAttribute') {
-        const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context.getScope());
+        const identifierName = _.get(attribute, 'argument.name') || _.get(attribute, 'argument.callee.name') || _.get(attribute, 'argument.property.name');
+        const spreadSource = findValueNodeOfIdentifier(identifierName, context.getScope());
         if (spreadSource) {
-          _.forEach(spreadSource.properties, property => {
-            const key = _.get(property, 'key');
-            const propName = _.get(property, 'key.name');
-            wasFound = checkPropDeprecation(key, key, propName, deprecatedPropList, componentName);
-          });
+          const properties = _.get(spreadSource, 'properties') || _.get(spreadSource, 'body.properties');
+          if (properties) {
+            _.forEach(properties, property => {
+              const key = _.get(property, 'key');
+              const propName = _.get(property, 'key.name');
+              wasFound = checkPropDeprecation(key, key, propName, deprecatedPropList, componentName);
+            });
+          }
         }
       }
       return wasFound;
