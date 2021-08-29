@@ -91,7 +91,7 @@ function TabController({
 
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
-      LogService.deprecationWarn({component: 'TabController2', oldProp: 'selectedIndex', newProp: 'initialIndex'});
+      // LogService.deprecationWarn({component: 'TabController2', oldProp: 'selectedIndex', newProp: 'initialIndex'});
     }
   }, [selectedIndex]);
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
-import {Assets, TabController, Colors, View, Text, Button, TabControllerItemProps} from 'react-native-ui-lib';
+import {Assets, TabController2 as TabController, Colors, View, Text, Button, TabControllerItemProps} from 'react-native-ui-lib';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import _ from 'lodash';
 
