@@ -110,6 +110,13 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
   // const contentWidth = _.sum(itemsWidths);
   // TODO: const scrollEnabled = contentWidth.current > containerWidth;
 
+  useEffect(() => {
+    if (!_.includes(itemsWidths.current, null)) {
+      itemsWidths.current = _.times(itemsCount, () => null);
+      setOffsets({CENTER: [], LEFT: [], RIGHT: []});
+    }
+  }, [screenWidth]);
+
   const setSnapBreakpoints = useCallback((widths: number[]) => {
     if (_.isEmpty(widths)) {
       return;
@@ -159,11 +166,11 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
   const onItemLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     const {width} = event.nativeEvent.layout;
     itemsWidths.current[index] = width;
-    if (!_.includes(itemsWidths.current, null)) {
+    if (!_.includes(itemsWidths.current, null) && _.isEmpty(offsets.CENTER)) {
       setSnapBreakpoints(itemsWidths.current as number[]);
     }
   },
-  [setSnapBreakpoints]);
+  [setSnapBreakpoints, offsets]);
 
   const focusIndex = useCallback((index: number, animated = true) => {
     if (index >= 0 && offsets.CENTER.length > index) {
