@@ -201,6 +201,7 @@ export default function TabBarItem({
       activeOpacity={activeOpacity}
       onPress={onPress}
       testID={testID}
+      key={`${screenWidth}`}
     >
       {leadingAccessory}
       {icon && (
