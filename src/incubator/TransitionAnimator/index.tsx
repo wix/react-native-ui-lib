@@ -21,11 +21,11 @@ export interface TransitionAnimatorProps extends ViewProps {
   /**
    * If this is given there will be an enter animation from this location.
    */
-  enterAnimationLocation?: HiddenLocation;
+  enterFrom?: HiddenLocation;
   /**
-   * If this is given there will be an exit animation in this location.
+   * If this is given there will be an exit animation to this location.
    */
-  exitAnimationLocation?: HiddenLocation;
+  exitTo?: HiddenLocation;
 }
 
 type Props = PropsWithChildren<TransitionAnimatorProps> & ForwardRefInjectedProps;
@@ -36,8 +36,8 @@ interface Statics {
 const TransitionAnimator = (props: Props) => {
   const {
     onAnimationEnd,
-    enterAnimationLocation,
-    exitAnimationLocation,
+    enterFrom,
+    exitTo,
     forwardedRef,
     style: propsStyle,
     onLayout: propsOnLayout,
@@ -45,7 +45,11 @@ const TransitionAnimator = (props: Props) => {
   } = props;
   const containerRef = React.createRef<RNView>();
   const {onLayout: hiddenLocationOnLayout, hiddenLocations} = useHiddenLocations({containerRef});
-  const visible = useSharedValue<boolean>(!enterAnimationLocation);
+  const visible = useSharedValue<boolean>(!enterFrom);
+
+  // Has to start at {0, 0} with {opacity: 0} so layout can be measured
+  const translateX = useSharedValue<number>(0);
+  const translateY = useSharedValue<number>(0);
 
   const getLocation = (location?: HiddenLocation) => {
     if (location === 'left' || location === 'right') {
@@ -57,9 +61,6 @@ const TransitionAnimator = (props: Props) => {
     }
   };
 
-  // Has to start at {0, 0} with {opacity: 0} so layout can be measured
-  const translateX = useSharedValue<number>(0);
-  const translateY = useSharedValue<number>(0);
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{translateX: translateX.value}, {translateY: translateY.value}],
@@ -94,8 +95,8 @@ const TransitionAnimator = (props: Props) => {
 
   const animateOut = useCallback(() => {
     'worklet';
-    animate(getLocation(exitAnimationLocation), outAnimationEnd, exitAnimationLocation);
-  }, [hiddenLocations, exitAnimationLocation, outAnimationEnd]);
+    animate(getLocation(exitTo), outAnimationEnd, exitTo);
+  }, [hiddenLocations, exitTo, outAnimationEnd]);
 
   useImperativeHandle(forwardedRef,
     () => ({
@@ -113,13 +114,13 @@ const TransitionAnimator = (props: Props) => {
 
   const animateIn = useCallback(() => {
     'worklet';
-    animate({x: 0, y: 0}, inAnimationEnd, enterAnimationLocation);
+    animate({x: 0, y: 0}, inAnimationEnd, enterFrom);
   }, [inAnimationEnd]);
 
   useEffect(() => {
-    if (!hiddenLocations.isDefault && enterAnimationLocation) {
-      const location = getLocation(enterAnimationLocation);
-      if (enterAnimationLocation === 'left' || enterAnimationLocation === 'right') {
+    if (!hiddenLocations.isDefault && enterFrom) {
+      const location = getLocation(enterFrom);
+      if (enterFrom === 'left' || enterFrom === 'right') {
         translateX.value = withTiming(location.x, {duration: 0}, animateIn);
       } else {
         translateY.value = withTiming(location.y, {duration: 0}, animateIn);

@@ -46,8 +46,8 @@ export default class TransitionAnimatorScreen extends Component<{}, State> {
           <TransitionAnimator
             key={`${key}`}
             ref={this.ref}
-            enterAnimationLocation={enterLocation}
-            exitAnimationLocation={exitLocation}
+            enterFrom={enterLocation}
+            exitTo={exitLocation}
             // onAnimationEnd={this.onAnimationEnd}
           >
             <Button label="Press to remove" onPress={this.onPress}/>

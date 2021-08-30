@@ -12,11 +12,11 @@ export interface TransitionAnimatorProps extends ViewProps {
     /**
      * If this is given there will be an enter animation from this location.
      */
-    enterAnimationLocation?: HiddenLocation;
+    enterFrom?: HiddenLocation;
     /**
      * If this is given there will be an exit animation in this location.
      */
-    exitAnimationLocation?: HiddenLocation;
+    exitTo?: HiddenLocation;
 }
 declare type Props = PropsWithChildren<TransitionAnimatorProps> & ForwardRefInjectedProps;
 interface Statics {
