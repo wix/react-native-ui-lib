@@ -66,18 +66,13 @@ const TransitionAnimator = (props: Props) => {
     };
   }, []);
 
-  const animationEnded = useCallback((animationType: TransitionAnimationEndType) => {
-    onAnimationEnd?.(animationType);
-  },
-  [onAnimationEnd]);
-
   const outAnimationEnd = useCallback((isFinished: boolean) => {
     'worklet';
-    if (isFinished) {
-      runOnJS(animationEnded)('out');
+    if (onAnimationEnd && isFinished) {
+      runOnJS(onAnimationEnd)('out');
     }
   },
-  [animationEnded]);
+  [onAnimationEnd]);
 
   const animate = (to: {x: number; y: number},
     callback: (isFinished: boolean) => void,
@@ -105,11 +100,11 @@ const TransitionAnimator = (props: Props) => {
 
   const inAnimationEnd = useCallback((isFinished: boolean) => {
     'worklet';
-    if (isFinished) {
-      runOnJS(animationEnded)('in');
+    if (onAnimationEnd && isFinished) {
+      runOnJS(onAnimationEnd)('in');
     }
   },
-  [animationEnded]);
+  [onAnimationEnd]);
 
   const animateIn = useCallback(() => {
     'worklet';
