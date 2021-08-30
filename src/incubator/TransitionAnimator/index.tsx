@@ -66,14 +66,6 @@ const TransitionAnimator = (props: Props) => {
     };
   }, []);
 
-  const outAnimationEnd = useCallback((isFinished: boolean) => {
-    'worklet';
-    if (onAnimationEnd && isFinished) {
-      runOnJS(onAnimationEnd)('out');
-    }
-  },
-  [onAnimationEnd]);
-
   const animate = (to: {x: number; y: number},
     callback: (isFinished: boolean) => void,
     animationLocation?: HiddenLocation) => {
@@ -87,18 +79,20 @@ const TransitionAnimator = (props: Props) => {
     }
   };
 
-  const animateOut = useCallback(() => {
+  const onExitAnimationEnd = useCallback((isFinished: boolean) => {
     'worklet';
-    animate(getLocation(exitTo), outAnimationEnd, exitTo);
-  }, [hiddenLocations, exitTo, outAnimationEnd]);
+    if (onAnimationEnd && isFinished) {
+      runOnJS(onAnimationEnd)('out');
+    }
+  },
+  [onAnimationEnd]);
 
-  useImperativeHandle(forwardedRef,
-    () => ({
-      animateOut
-    }),
-    [animateOut]);
+  const exit = useCallback(() => {
+    'worklet';
+    animate(getLocation(exitTo), onExitAnimationEnd, exitTo);
+  }, [hiddenLocations, exitTo, onExitAnimationEnd]);
 
-  const inAnimationEnd = useCallback((isFinished: boolean) => {
+  const onEnterAnimationEnd = useCallback((isFinished: boolean) => {
     'worklet';
     if (onAnimationEnd && isFinished) {
       runOnJS(onAnimationEnd)('in');
@@ -106,18 +100,24 @@ const TransitionAnimator = (props: Props) => {
   },
   [onAnimationEnd]);
 
-  const animateIn = useCallback(() => {
+  const enter = useCallback(() => {
     'worklet';
-    animate({x: 0, y: 0}, inAnimationEnd, enterFrom);
-  }, [inAnimationEnd]);
+    animate({x: 0, y: 0}, onEnterAnimationEnd, enterFrom);
+  }, [onEnterAnimationEnd]);
+
+  useImperativeHandle(forwardedRef,
+    () => ({
+      animateOut: exit // TODO: should this be renamed as well?
+    }),
+    [exit]);
 
   useEffect(() => {
     if (!hiddenLocations.isDefault && enterFrom) {
       const location = getLocation(enterFrom);
       if (['left', 'right'].includes(enterFrom)) {
-        translateX.value = withTiming(location.x, {duration: 0}, animateIn);
+        translateX.value = withTiming(location.x, {duration: 0}, enter);
       } else {
-        translateY.value = withTiming(location.y, {duration: 0}, animateIn);
+        translateY.value = withTiming(location.y, {duration: 0}, enter);
       }
 
       visible.value = true;

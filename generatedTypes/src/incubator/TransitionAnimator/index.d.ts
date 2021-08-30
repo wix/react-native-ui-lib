@@ -14,7 +14,7 @@ export interface TransitionAnimatorProps extends ViewProps {
      */
     enterFrom?: HiddenLocation;
     /**
-     * If this is given there will be an exit animation in this location.
+     * If this is given there will be an exit animation to this location.
      */
     exitTo?: HiddenLocation;
 }
