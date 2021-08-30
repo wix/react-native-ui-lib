@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import {View, Button, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Button, Incubator} from 'react-native-ui-lib';
 const {TransitionAnimator} = Incubator;
 // @ts-ignore
 import {renderRadioGroup} from '../ExampleScreenPresenter';
@@ -57,7 +56,3 @@ export default class TransitionAnimatorScreen extends Component<{}, State> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {}
-});
