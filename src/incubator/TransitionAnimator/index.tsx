@@ -52,13 +52,10 @@ const TransitionAnimator = (props: Props) => {
   const translateY = useSharedValue<number>(0);
 
   const getLocation = (location?: HiddenLocation) => {
-    if (location === 'left' || location === 'right') {
-      return {x: hiddenLocations[location], y: 0};
-    } else if (location === 'top' || location === 'bottom') {
-      return {x: 0, y: hiddenLocations[location]};
-    } else {
-      return {x: 0, y: 0};
-    }
+    return {
+      x: location && ['left', 'right'].includes(location) ? hiddenLocations[location] : 0,
+      y: location && ['top', 'bottom'].includes(location) ? hiddenLocations[location] : 0
+    };
   };
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -86,10 +83,12 @@ const TransitionAnimator = (props: Props) => {
     callback: (isFinished: boolean) => void,
     animationLocation?: HiddenLocation) => {
     'worklet';
-    if (animationLocation === 'left' || animationLocation === 'right') {
-      translateX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
-    } else if (animationLocation === 'top' || animationLocation === 'bottom') {
-      translateY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
+    if (animationLocation) {
+      if (['left', 'right'].includes(animationLocation)) {
+        translateX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
+      } else if (['top', 'bottom'].includes(animationLocation)) {
+        translateY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
+      }
     }
   };
 
@@ -120,7 +119,7 @@ const TransitionAnimator = (props: Props) => {
   useEffect(() => {
     if (!hiddenLocations.isDefault && enterFrom) {
       const location = getLocation(enterFrom);
-      if (enterFrom === 'left' || enterFrom === 'right') {
+      if (['left', 'right'].includes(enterFrom)) {
         translateX.value = withTiming(location.x, {duration: 0}, animateIn);
       } else {
         translateY.value = withTiming(location.y, {duration: 0}, animateIn);
