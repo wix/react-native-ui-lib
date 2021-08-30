@@ -157,9 +157,10 @@ export const navigationData = {
     screens: [
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
+      {title: 'ExpandableOverlay', tags: 'text field expandable input picker', screen: 'unicorn.components.IncubatorExpandableOverlayScreen'},
+      {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'},
       {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'},
-      {title: 'Transition Animator', tags: 'transition animation enter exit', screen: 'unicorn.incubator.TransitionAnimatorScreen'},
-      {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'}
+      {title: 'Transition Animator', tags: 'transition animation enter exit', screen: 'unicorn.incubator.TransitionAnimatorScreen'}
     ]
   },
   Inspirations: {

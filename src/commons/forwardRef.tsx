@@ -1,5 +1,4 @@
 import React from 'react';
-//@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 
 export interface ForwardRefInjectedProps {
