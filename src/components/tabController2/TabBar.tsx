@@ -8,7 +8,6 @@ import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
-import {Constants} from '../../helpers';
 import FadedScrollView from './FadedScrollView';
 
 import useScrollToItem from './useScrollToItem';
@@ -145,11 +144,11 @@ const TabBar = (props: Props) => {
   } = props;
 
   const context = useContext(TabBarContext);
-  const {items: contextItems, currentPage, targetPage, selectedIndex} = context;
+  const {items: contextItems, currentPage, targetPage, selectedIndex, containerWidth: contextContainerWidth} = context;
 
   const containerWidth: number = useMemo(() => {
-    return propsContainerWidth || Constants.screenWidth;
-  }, [propsContainerWidth]);
+    return propsContainerWidth || contextContainerWidth;
+  }, [propsContainerWidth, contextContainerWidth]);
 
   const items = useMemo(() => {
     return contextItems || propsItems;
@@ -168,6 +167,7 @@ const TabBar = (props: Props) => {
   } = useScrollToItem({
     itemsCount: items?.length || 0,
     selectedIndex,
+    containerWidth,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
 
@@ -282,9 +282,6 @@ const styles = StyleSheet.create({
     height: DEFAULT_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between'
-  },
-  tabBarScrollContent: {
-    minWidth: Constants.screenWidth
   },
   tab: {
     flex: 1,
