@@ -248,7 +248,7 @@ const TabBar = (props: Props) => {
   }, [containerWidth]);
 
   return (
-    <View style={_containerStyle}>
+    <View style={_containerStyle} key={`${containerWidth}`}>
       <FadedScrollView
         // @ts-expect-error
         ref={tabBar}
