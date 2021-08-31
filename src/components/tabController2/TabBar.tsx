@@ -1,4 +1,4 @@
-import React, {useMemo, useContext, ReactNode} from 'react';
+import React, {useMemo, useContext, useState, useCallback, ReactNode} from 'react';
 import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import _ from 'lodash';
@@ -143,6 +143,7 @@ const TabBar = (props: Props) => {
     testID
   } = props;
 
+  const [key, setKey] = useState<boolean>(true);
   const context = useContext(TabBarContext);
   const {items: contextItems, currentPage, targetPage, selectedIndex, containerWidth: contextContainerWidth} = context;
 
@@ -153,6 +154,10 @@ const TabBar = (props: Props) => {
   const items = useMemo(() => {
     return contextItems || propsItems;
   }, [contextItems, propsItems]);
+
+  const onReset = useCallback(() => {
+    setKey(!key);
+  }, [key, setKey]);
 
   const {
     scrollViewRef: tabBar,
@@ -165,6 +170,7 @@ const TabBar = (props: Props) => {
     onContentSizeChange,
     onLayout
   } = useScrollToItem({
+    onReset,
     itemsCount: items?.length || 0,
     selectedIndex,
     containerWidth,
@@ -248,7 +254,7 @@ const TabBar = (props: Props) => {
   }, [containerWidth]);
 
   return (
-    <View style={_containerStyle} key={`${containerWidth}`}>
+    <View style={_containerStyle} key={`${key}`}>
       <FadedScrollView
         // @ts-expect-error
         ref={tabBar}
