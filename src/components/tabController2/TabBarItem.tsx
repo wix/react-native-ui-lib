@@ -131,13 +131,6 @@ export default function TabBarItem({
   const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(labelStyle)));
   const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
 
-  useEffect(() => {
-    if (itemWidth.current) {
-      props.onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: itemWidth.current, height: 0}}} as LayoutChangeEvent,
-        index);
-    }
-  }, []);
-
   const onPress = useCallback(() => {
     if (!ignore) {
       currentPage.value = index;
@@ -149,7 +142,10 @@ export default function TabBarItem({
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
 
-    if (!itemWidth.current && itemRef?.current) {
+    if (itemWidth.current) {
+      props.onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: itemWidth.current, height: 0}}} as LayoutChangeEvent,
+        index);
+    } else if (itemRef?.current) {
       itemWidth.current = width;
       // @ts-ignore
       itemRef.current?.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
@@ -183,11 +179,19 @@ export default function TabBarItem({
     };
   });
 
+  const constantWidthStyle = useAnimatedStyle(() => {
+    if (itemWidth.current) {
+      return {flex: 0, width: itemWidth.current};
+    }
+
+    return {};
+  });
+
   return (
     <TouchableOpacity
       // @ts-expect-error
       ref={itemRef}
-      style={[styles.tabItem, style]}
+      style={[styles.tabItem, style, constantWidthStyle]}
       onLayout={onLayout}
       activeBackgroundColor={activeBackgroundColor}
       activeOpacity={activeOpacity}
