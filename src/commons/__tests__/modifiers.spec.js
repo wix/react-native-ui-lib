@@ -249,6 +249,11 @@ describe('Modifiers', () => {
     it('should return absolute with horizontal values', () => {
       expect(uut.extractPositionStyle({absH: true})).toEqual({position: 'absolute', left: 0, right: 0});
     });
+
+    it('should combine multiple abs modifiers', () => {
+      expect(uut.extractPositionStyle({absB: true, absR: true})).toEqual({position: 'absolute', bottom: 0, right: 0});
+      expect(uut.extractPositionStyle({absH: true, absV: true})).toEqual({position: 'absolute', top: 0, left: 0, bottom: 0, right: 0});
+    });
   });
 
   describe('extractFlexStyle - flex modifier', () => {
