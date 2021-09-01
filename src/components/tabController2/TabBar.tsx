@@ -1,4 +1,4 @@
-import React, {useMemo, useContext, useState, useCallback, ReactNode} from 'react';
+import React, {useMemo, useContext, useState, useCallback, useEffect, useRef, ReactNode} from 'react';
 import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import _ from 'lodash';
@@ -143,9 +143,17 @@ const TabBar = (props: Props) => {
     testID
   } = props;
 
+  const tabBar = useRef<typeof FadedScrollView>();
   const [key, setKey] = useState<boolean>(true);
   const context = useContext(TabBarContext);
-  const {items: contextItems, currentPage, targetPage, initialIndex, selectedIndex, containerWidth: contextContainerWidth} = context;
+  const {
+    items: contextItems,
+    currentPage,
+    targetPage,
+    initialIndex,
+    selectedIndex,
+    containerWidth: contextContainerWidth
+  } = context;
 
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || contextContainerWidth;
@@ -160,7 +168,6 @@ const TabBar = (props: Props) => {
   }, [key, setKey]);
 
   const {
-    scrollViewRef: tabBar,
     onItemLayout,
     itemsWidthsAnimated,
     itemsOffsetsAnimated,
@@ -170,7 +177,10 @@ const TabBar = (props: Props) => {
     onContentSizeChange,
     onLayout
   } = useScrollToItem({
-    onReset,
+    // @ts-expect-error TODO: typing bug
+    scrollViewRef: tabBar,
+    // @ts-expect-error TODO: fix forwardRef Statics
+    onReset: tabBar.current?.isScrollEnabled() ? undefined : onReset,
     itemsCount: items?.length || 0,
     selectedIndex: selectedIndex || initialIndex,
     containerWidth,
@@ -251,6 +261,13 @@ const TabBar = (props: Props) => {
 
   const scrollViewContainerStyle = useMemo(() => {
     return {minWidth: containerWidth};
+  }, [containerWidth]);
+
+  useEffect(() => {
+    // @ts-expect-error TODO: fix forwardRef Statics
+    if (tabBar.current?.isScrollEnabled()) {
+      focusIndex(currentPage.value);
+    }
   }, [containerWidth]);
 
   return (

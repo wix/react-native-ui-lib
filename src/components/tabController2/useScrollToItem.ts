@@ -117,7 +117,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
   // TODO: const scrollEnabled = contentWidth.current > containerWidth;
 
   useEffect(() => {
-    if (shouldReset.current) {
+    if (onReset && shouldReset.current) {
       for (let i = 0; i < itemsCount; ++i) {
         itemsWidths.current[i] = null;
         itemsWidthsAnimated.value[i] = 0;
@@ -126,7 +126,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
       setOffsets({CENTER: [], LEFT: [], RIGHT: []});
       shouldReset.current = false;
-      onReset?.();
+      onReset();
     }
   }, [containerWidth, onReset]);
 
@@ -173,9 +173,9 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     // trigger value change
     itemsWidthsAnimated.value = [...itemsWidthsAnimated.value];
     itemsOffsetsAnimated.value = [...itemsOffsetsAnimated.value];
-    shouldReset.current = true;
+    shouldReset.current = !_.isUndefined(onReset);
   },
-  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, containerWidth]);
+  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, containerWidth, onReset]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     const {width} = event.nativeEvent.layout;
