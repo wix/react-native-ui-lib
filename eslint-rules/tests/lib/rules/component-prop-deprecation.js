@@ -100,18 +100,18 @@ ruleTester.run('component-prop-deprecation', rule, {
     {
       options: ruleOptions,
       code: `
-import {Picker} from 'module-with-deprecations';
-const getPickerProps = () => ({t: "title", s:"subtitle", migrate: true});
-<Picker {...getPickerProps()}/>
-`
+      import {Picker} from 'module-with-deprecations';
+      const getPickerProps = () => ({t: "title", s:"subtitle", migrate: true});
+      <Picker {...getPickerProps()}/>
+      `
     },
     {
       options: ruleOptions,
       code: `
-import {Picker} from 'module-with-deprecations';
-pickerProps = {t: "title", s:"subtitle", migrate: true};
-<Picker {...this.pickerProps}/>
-`
+      import {Picker} from 'module-with-deprecations';
+      pickerProps = {t: "title", s:"subtitle", migrate: true};
+      <Picker {...this.pickerProps}/>
+      `
     }
   ],
   invalid: [
