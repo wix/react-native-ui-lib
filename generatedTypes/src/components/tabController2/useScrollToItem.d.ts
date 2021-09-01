@@ -22,6 +22,10 @@ export declare type ScrollToItemProps<T extends ScrollToSupportedViews> = {
      */
     containerWidth: number;
     /**
+     * callback to let the user know a reset has occurred.
+     */
+    onReset?: () => void;
+    /**
      * Where would the item be located (default to CENTER)
      */
     offsetType?: OffsetType;
