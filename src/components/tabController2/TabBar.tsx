@@ -145,7 +145,7 @@ const TabBar = (props: Props) => {
 
   const [key, setKey] = useState<boolean>(true);
   const context = useContext(TabBarContext);
-  const {items: contextItems, currentPage, targetPage, selectedIndex, containerWidth: contextContainerWidth} = context;
+  const {items: contextItems, currentPage, targetPage, initialIndex, selectedIndex, containerWidth: contextContainerWidth} = context;
 
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || contextContainerWidth;
@@ -172,7 +172,7 @@ const TabBar = (props: Props) => {
   } = useScrollToItem({
     onReset,
     itemsCount: items?.length || 0,
-    selectedIndex,
+    selectedIndex: selectedIndex || initialIndex,
     containerWidth,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
