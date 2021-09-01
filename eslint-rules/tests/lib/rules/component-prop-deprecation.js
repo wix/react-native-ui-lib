@@ -112,7 +112,7 @@ import {Picker} from 'module-with-deprecations';
 pickerProps = {t: "title", s:"subtitle", migrate: true};
 <Picker {...this.pickerProps}/>
 `
-    },
+    }
   ],
   invalid: [
     {
@@ -383,7 +383,7 @@ pickerProps = {t: "title", s:"subtitle", migrate: true};
       options: ruleOptions,
       code: 'import {Picker} from \'module-with-deprecations\'; <Picker t="title" s="subtitle"/>',
       errors: [
-        {message: "The 'Picker' component's prop 'migrate' is required. Please make sure to pass the 'migrate' prop."},
+        {message: "The 'Picker' component's prop 'migrate' is required. Please make sure to pass the 'migrate' prop."}
       ]
     }
   ]
