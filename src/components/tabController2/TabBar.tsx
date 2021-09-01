@@ -260,7 +260,6 @@ const TabBar = (props: Props) => {
         ref={tabBar}
         horizontal
         contentContainerStyle={scrollViewContainerStyle}
-        scrollEnabled // TODO:
         testID={testID}
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
