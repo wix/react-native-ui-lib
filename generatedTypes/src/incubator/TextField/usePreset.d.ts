@@ -162,6 +162,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 } | {
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
@@ -494,6 +495,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 } | {
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
@@ -1062,4 +1064,5 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 };

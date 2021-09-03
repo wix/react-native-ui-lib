@@ -5,7 +5,7 @@
  * 3. Passing typography preset that includes lineHeight usually cause alignment issues with
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
-import React, {ReactElement, useMemo} from 'react';
+import React, {PropsWithChildren, ReactElement, useMemo} from 'react';
 import {ViewStyle, TextStyle} from 'react-native';
 import {omit, isFunction} from 'lodash';
 import {
@@ -95,10 +95,10 @@ export type TextFieldProps = MarginModifiers &
     preset?: 'default' | null;
   };
 
-export type InternalTextFieldProps = TextFieldProps &
+export type InternalTextFieldProps = PropsWithChildren<TextFieldProps &
   // Omit<FieldStateInjectedProps, keyof InputProps> &
   BaseComponentInjectedProps &
-  ForwardRefInjectedProps;
+  ForwardRefInjectedProps>;
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
@@ -140,6 +140,7 @@ const TextField = (props: InternalTextFieldProps) => {
     charCounterStyle,
     // Input
     placeholder,
+    children,
     ...others
   } = usePreset(props);
   const {onFocus, onBlur, onChangeText, fieldState, validateField} = useFieldState(others);
@@ -186,15 +187,17 @@ const TextField = (props: InternalTextFieldProps) => {
                   validationMessagePosition={validationMessagePosition}
                 />
               )}
-              <Input
-                {...others}
-                style={[typographyStyle, colorStyle, others.style]}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onChangeText={onChangeText}
-                placeholder={floatingPlaceholder ? undefined : placeholder}
-                hint={hint}
-              />
+              {children || (
+                <Input
+                  {...others}
+                  style={[typographyStyle, colorStyle, others.style]}
+                  onFocus={onFocus}
+                  onBlur={onBlur}
+                  onChangeText={onChangeText}
+                  placeholder={floatingPlaceholder ? undefined : placeholder}
+                  hint={hint}
+                />
+              )}
             </View>
             {trailingAccessory}
           </View>
