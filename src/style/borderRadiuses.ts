@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import Constants from '../helpers/Constants';
 
-interface IBorderRadiusesLiterals {
-  [key: `br${number}`]: number
-}
+// TODO: enable template type after we're ready to use TS 4.4.0
+// interface IBorderRadiusesLiterals {
+//   [key: `br${number}`]: number
+// }
 
-export const BorderRadiusesLiterals: IBorderRadiusesLiterals = {
+export const BorderRadiusesLiterals/* : IBorderRadiusesLiterals  */ = {
   br0: Constants.isIOS ? 0 : 0,
   br10: Constants.isIOS ? 3 : 2,
   br20: 6,
@@ -17,7 +18,7 @@ export const BorderRadiusesLiterals: IBorderRadiusesLiterals = {
 };
 
 export class BorderRadiuses {
-  loadBorders(borders: IBorderRadiusesLiterals) {
+  loadBorders(borders: Dictionary<number>/*  IBorderRadiusesLiterals */) {
     _.forEach(borders, (value, key) => {
       //@ts-ignore
       this[key] = value;
