@@ -37,7 +37,7 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './src/componen
 export {default as Button, ButtonPropTypes, ButtonSize, ButtonProps} from './src/components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './src/components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './src/components/chip';
-export {default as ChipsInput, ChipsInputProps} from './components/ChipsInput';
+export {default as ChipsInput, ChipsInputProps} from './src/components/chipsInput';
 export {default as ColorPicker, ColorPickerProps} from './src/components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './src/components/colorPicker/ColorPalette';
 export {default as ColorSwatch, ColorSwatchProps} from './src/components/colorPicker/ColorSwatch';
