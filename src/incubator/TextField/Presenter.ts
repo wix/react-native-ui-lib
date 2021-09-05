@@ -50,7 +50,9 @@ export function validate(value?: string, validator?: Validator | Validator[]): [
 
 export function getRelevantValidationMessage(validationMessage: string | string[] | undefined,
   failingValidatorIndex: undefined | number) {
-  if (_.isUndefined(failingValidatorIndex) || _.isUndefined(validationMessage)) {
+  if (_.isUndefined(failingValidatorIndex)) {
+    return validationMessage;
+  } else if (_.isUndefined(validationMessage)) {
     return;
   }
 

@@ -44,17 +44,19 @@ describe('TextField:Presenter', () => {
     it('should return undefined when there is no validationMessage', () => {
       expect(uut.getRelevantValidationMessage(undefined, 0)).toBeUndefined();
     });
+    
+    it('should return the validation message when there is no validate method', () => {
+      expect(uut.getRelevantValidationMessage('error message', undefined)).toBe('error message');
+    });
 
     it('should return the relevant validation message when there is a single message', () => {
       expect(uut.getRelevantValidationMessage('error message', 0)).toBe('error message');
-      expect(uut.getRelevantValidationMessage('error message', undefined)).toBeUndefined();
     });
 
     it('should return the relevant validation message when there are multiple messages', () => {
       const messages = ['Field is required', 'Email is invalid'];
       expect(uut.getRelevantValidationMessage(messages, 0)).toBe(messages[0]);
       expect(uut.getRelevantValidationMessage(messages, 1)).toBe(messages[1]);
-      expect(uut.getRelevantValidationMessage(messages, undefined)).toBeUndefined();
     });
   });
 });
