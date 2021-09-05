@@ -16,7 +16,7 @@ export declare type ChipsInputProps = TypographyModifiers & TextFieldProps & {
     /**
     * list of tags. can be string boolean or custom object when implementing getLabel
     */
-    chipsProps?: Array<ChipProps>;
+     chips?: Array<ChipProps>;
     /**
      * Style your chips
      */
