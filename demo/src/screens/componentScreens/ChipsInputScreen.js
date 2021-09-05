@@ -45,7 +45,7 @@ export default class ChipsInputScreen extends Component {
         <View bg-grey60>
           <ChipsInput
             placeholder={'Enter Tags'}
-            chipsProps={this.state.chips}
+            chips={this.state.chips}
             leftElement={this.renderRightElement()}
             hideUnderline
             maxHeight={100}
@@ -62,7 +62,7 @@ export default class ChipsInputScreen extends Component {
         <ChipsInput
           placeholder={'Enter Tags'}
           title={'Mendy'}
-          chipsProps={this.state.chips}
+          chips={this.state.chips}
           maxLength={4}
         />
       </View>

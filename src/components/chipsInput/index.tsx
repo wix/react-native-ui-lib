@@ -30,7 +30,7 @@ export type ChipsInputProps = TypographyModifiers & TextFieldProps & {
   /**
   * list of tags. can be string boolean or custom object when implementing getLabel
   */
-  chipsProps?: Array<ChipProps>;
+  chips?: Array<ChipProps>;
   /** 
    * Style your chips
    */
@@ -140,14 +140,14 @@ class ChipsInput extends Component<OwnProps, State> {
 
     this.state = {
       value: props.value,
-      chips: _.cloneDeep(props.tags || props.chipsProps) || [],
+      chips: _.cloneDeep(props.tags || props.chips) || [],
       chipIndexToRemove: undefined,
-      initialChips: props.tags || props.chipsProps,
+      initialChips: props.tags || props.chips,
       isFocused: this.input.current?.isFocused() || false
     };
 
     if (props.tags) {
-      LogService.deprecationWarn({component: 'ChipsInput', oldProp: 'tags', newProp: 'chipsProps'});
+      LogService.deprecationWarn({component: 'ChipsInput', oldProp: 'tags', newProp: 'chips'});
     }
   }
 
@@ -161,18 +161,18 @@ class ChipsInput extends Component<OwnProps, State> {
   }
 
   static getDerivedStateFromProps(nextProps: Readonly<OwnProps>, prevState: State) {
-    const {tags, chipsProps} = nextProps;
-    if (tags && tags !== prevState.initialChips || chipsProps && chipsProps !== prevState.initialChips) {
+    const {tags, chips} = nextProps;
+    if (tags && tags !== prevState.initialChips || chips && chips !== prevState.initialChips) {
       return {
-        initialChips: nextProps.tags || nextProps.chipsProps,
-        chips: nextProps.tags || nextProps.chipsProps
+        initialChips: nextProps.tags || nextProps.chips,
+        chips: nextProps.tags || nextProps.chips
       };
     }
     return null;
   }
 
   addTag = () => {
-    const {onCreateTag, disableTagAdding, maxLength, chipsProps} = this.props;
+    const {onCreateTag, disableTagAdding, maxLength, chips: chipsProps} = this.props;
     const {value, chips} = this.state;
     
     if (this.scrollRef?.current?.scrollToEnd) {
@@ -397,7 +397,7 @@ class ChipsInput extends Component<OwnProps, State> {
   };
 
   renderChips = () => {
-    const {disableTagRemoval, chipsProps} = this.props;
+    const {disableTagRemoval, chips: chipsProps} = this.props;
     const {chips} = this.state;
     const renderFunction = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
 
@@ -456,7 +456,7 @@ class ChipsInput extends Component<OwnProps, State> {
           blurOnSubmit={false}
           {...others}
           maxLength={undefined}
-          title={this.props.chipsProps ? undefined : title}
+          title={this.props.chips ? undefined : title}
           value={value}
           onSubmitEditing={this.addTag}
           onChangeText={this.onChangeText}
@@ -495,12 +495,12 @@ class ChipsInput extends Component<OwnProps, State> {
   }
   
   render() {
-    const {containerStyle, hideUnderline, validationErrorMessage, leftElement, maxHeight, chipsProps} = this.props;
+    const {containerStyle, hideUnderline, validationErrorMessage, leftElement, maxHeight, chips} = this.props;
     const {chipIndexToRemove} = this.state;
 
     return (
       <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
-        {!!chipsProps && this.renderTitleText()}
+        {!!chips && this.renderTitleText()}
         <View style={[styles.tagListContainer, {maxHeight}]}>
           {leftElement}
           {this.renderChipsContainer()}
