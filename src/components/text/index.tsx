@@ -31,7 +31,7 @@ export type TextProps = RNTextProps &
     /**
      * Substring to highlight
      */
-    highlightString?: string;
+    highlightString?: string | string[];
     /**
      * Custom highlight style for highlight string
      */
@@ -65,14 +65,46 @@ class Text extends PureComponent<PropsTypes> {
   //   this._root.setNativeProps(nativeProps); // eslint-disable-line
   // }
 
+  getPartsByHighlight(targetString = '', highlightString: string | string[]) {
+    if (typeof highlightString === 'string') {
+      if (_.isEmpty(highlightString.trim())) {
+        return [{string: targetString, shouldHighlight: false}];
+      }
+      return this.getTextPartsByHighlight(targetString, highlightString);
+    } else {
+      return this.getArrayPartsByHighlight(targetString, highlightString);
+    }
+  }
+
   getTextPartsByHighlight(targetString = '', highlightString = '') {
-    const highlightWords = _.split(_.toLower(_.trim(highlightString)), ' ');
+    if (highlightString === '') {
+      return [{string: targetString, shouldHighlight: false}];
+    }
+    const textParts = [];
+    let highlightIndex;
+    do {
+      highlightIndex = targetString.toLowerCase().indexOf(highlightString.toLowerCase());
+      if (highlightIndex !== -1) {
+        if (highlightIndex > 0) {
+          textParts.push({string: targetString.substring(0, highlightIndex), shouldHighlight: false});
+        }
+        textParts.push({string: targetString.substr(highlightIndex, highlightString.length), shouldHighlight: true});
+        targetString = targetString.substr(highlightIndex + highlightString.length);
+      } else {
+        textParts.push({string: targetString, shouldHighlight: false});
+      }
+    } while (highlightIndex !== -1);
+
+    return textParts;
+  }
+
+  getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
     const target = _.toLower(targetString);
     const indices = [];
     let index = 0;
     let lastWordLength = 0;
-    for (let j = 0; j < highlightWords.length; j++) {
-      const word = highlightWords[j];
+    for (let j = 0; j < highlightString.length; j++) {
+      const word = _.toLower(highlightString[j]);
       const targetSuffix = target.substring(index + lastWordLength);
       const i = targetSuffix.indexOf(word);
       if (i >= 0) {
@@ -112,8 +144,8 @@ class Text extends PureComponent<PropsTypes> {
       }
 
       if (_.isString(children)) {
-        const textParts = this.getTextPartsByHighlight(children, highlightString);
-        return _.map(textParts, (text, index) => {
+        const textParts = highlightString && this.getPartsByHighlight(children, highlightString);
+        return textParts && _.map(textParts, (text, index) => {
           return (
             <RNText key={index} style={text.shouldHighlight ? [styles.highlight, highlightStyle] : styles.notHighlight}>
               {text.string}
