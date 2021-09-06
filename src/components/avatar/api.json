@@ -1,0 +1,22 @@
+{
+  "name": "Avatar",
+  "description": " Avatar component for displaying user profile images",
+  "extends": ["TouchableOpacity", "Image"],
+  "props": [
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "description": "Background color for Avatar"
+    },
+    {
+      "name": "badgePosition",
+      "type": "BadgePosition",
+      "description": "Badge location on Avatar"
+    },
+    {
+      "name": "source",
+      "type": "ImageSourcePropType",
+      "description": "The image source (external or assets)"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Button",
+  "description": "Basic button component",
+  "extends": "TouchableOpacity",
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Text to show inside the button"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "description": "The Button text color (inherited from Text component)"
+    },
+    {
+      "name": "iconSource",
+      "type": ["imageSource", "function"],
+      "description": "Icon image source or a callback function that returns a source"
+    }
+  ]
+}
