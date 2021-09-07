@@ -34,7 +34,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Components',
-      items: ['Basic', 'Form', 'Overlays', 'Layout'].map(category => {
+      items: ['Basic', 'Form', 'Overlays', 'Layout', 'Native', 'Incubator'].map(category => {
         return {
           type: 'category',
           label: category,
