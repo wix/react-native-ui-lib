@@ -17,12 +17,23 @@ if (!fs.existsSync(COMPONENTS_DOCS_DIR)) {
 }
 
 components.forEach(component => {
+  /* General */
   let content = `${component.description}\n`;
+
+  /* Images */
+  content += `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
+  component.images?.forEach(image => {
+    content += `<img style={{maxHeight: '420px'}} src={'${image}'}/>`;
+    content += '\n\n';
+  });
+  content += '</div>\n\n';
+
+  /* Props */
   content += `## API\n`;
   component.props.forEach(prop => {
     content += `### ${prop.name}\n`;
     content += `${prop.description}  \n`;
-    content += `${prop.type}\n`;
+    content += `<span style={{color: 'grey'}}>${prop.type}</span>\n\n`;
   });
 
   if (!fs.existsSync(`${COMPONENTS_DOCS_DIR}/${component.category}`)) {

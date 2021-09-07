@@ -2,6 +2,10 @@
   "name": "Avatar",
   "category": "basic",
   "description": " Avatar component for displaying user profile images",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true"
+  ],
   "extends": ["TouchableOpacity", "Image"],
   "props": [
     {
