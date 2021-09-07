@@ -18,7 +18,20 @@ if (!fs.existsSync(COMPONENTS_DOCS_DIR)) {
 
 components.forEach(component => {
   /* General */
-  let content = `${component.description}\n`;
+  let content = `${component.description}  \n`;
+  content += `[(code example)](${component.example})\n`;
+
+  if (component.extends) {
+    content += `:::info\n`;
+    content += `This component extends **${component.extends?.join(', ')}** props.\n`;
+    content += `:::\n`;
+  }
+
+  if (component.modifiers) {
+    content += `:::tip\n`;
+    content += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
+    content += `:::\n`;
+  }
 
   /* Images */
   content += `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
