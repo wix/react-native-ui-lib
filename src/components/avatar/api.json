@@ -1,5 +1,6 @@
 {
   "name": "Avatar",
+  "category": "basic",
   "description": " Avatar component for displaying user profile images",
   "extends": ["TouchableOpacity", "Image"],
   "props": [

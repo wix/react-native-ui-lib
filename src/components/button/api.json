@@ -1,5 +1,6 @@
 {
   "name": "Button",
+  "category": "basic",
   "description": "Basic button component",
   "extends": "TouchableOpacity",
   "props": [
