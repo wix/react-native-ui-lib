@@ -66,46 +66,38 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           style: 'dark',
           links: [
             {
-              title: 'Docs',
+              title: 'Links',
               items: [
                 {
-                  label: 'Tutorial',
-                  to: '/docs/intro'
+                  label: 'Docs',
+                  to: '/docs/getting-started/setup'
+                },
+                {
+                  label: 'GitHub',
+                  href: 'https://github.com/wix/react-native-ui-lib'
+                },
+                {
+                  label: 'Expo-Snack',
+                  href: 'https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android'
                 }
               ]
             },
+
             {
               title: 'Community',
               items: [
                 {
-                  label: 'Stack Overflow',
-                  href: 'https://stackoverflow.com/questions/tagged/docusaurus'
-                },
-                {
                   label: 'Discord',
-                  href: 'https://discordapp.com/invite/docusaurus'
+                  href: 'https://discord.gg/2eW4g6Z'
                 },
                 {
                   label: 'Twitter',
-                  href: 'https://twitter.com/docusaurus'
-                }
-              ]
-            },
-            {
-              title: 'More',
-              items: [
-                {
-                  label: 'Blog',
-                  to: '/blog'
-                },
-                {
-                  label: 'GitHub',
-                  href: 'https://github.com/facebook/docusaurus'
+                  href: 'https://twitter.com/rnuilib'
                 }
               ]
             }
           ],
-          copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
+          copyright: `© 2006-${new Date().getFullYear()} Wix.com, Inc.`
         },
         prism: {
           theme: lightCodeTheme,
