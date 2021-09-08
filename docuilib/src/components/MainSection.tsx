@@ -23,7 +23,7 @@ export default () => {
         </div>
 
         <div className={styles.buttons}>
-          <Link to="/getting-started/setup">
+          <Link to="docs/getting-started/setup">
             <button className={componentsStyles.btnDark}>View Docs</button>
           </Link>
 
