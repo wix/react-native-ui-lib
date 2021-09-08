@@ -12,7 +12,7 @@ export default () => {
 
   return (
     <div className={styles.intro}>
-      <img src={mainCover} alt="showcase" _className={styles.introCover}/>
+      <img src={mainCover} alt="showcase" className={styles.introCover}/>
       <div className={styles.introContent}>
         <p>
           <span className={styles.libName}>RNUI</span> is a UI Toolset & Components Library for React Native
