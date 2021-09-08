@@ -1,6 +1,6 @@
 @import 'src/css/constants';
 
-.intro {
+.main {
   position: relative;
   height: 75vh;
   width: 100%;
@@ -11,7 +11,7 @@
     height: 100vh;
   }
 
-  .introCover {
+  .mainCover {
     display: none;
     position: absolute;
     min-width: 1920px;
@@ -21,7 +21,7 @@
     }
   }
 
-  .introContent {
+  .mainContent {
     position: absolute;
     z-index: 1;
     display: flex;
