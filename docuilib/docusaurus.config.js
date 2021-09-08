@@ -5,16 +5,19 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (
   module.exports = {
-    title: 'My Site',
-    tagline: 'Dinosaurs are cool',
-    url: 'https://your-docusaurus-test-site.com',
+    title: 'RNUILib',
+    tagline: 'React Native UI Lib',
+    url: 'https://github.com/wix/react-native-ui-lib',
     baseUrl: '/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
-    organizationName: 'facebook', // Usually your GitHub org/user name.
-    projectName: 'docusaurus', // Usually your repo name.
-
+    organizationName: 'wix', // Usually your GitHub org/user name.
+    projectName: 'react-native-ui-lib', // Usually your repo name.
+    customFields: {
+      expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android'
+    },
+    plugins: ['docusaurus-plugin-sass'],
     presets: [
       [
         '@docusaurus/preset-classic',
