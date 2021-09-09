@@ -231,16 +231,20 @@ export function extractPositionStyle(props: Dictionary<any>) {
   } as const;
 
   const keys = Object.keys(props);
-  const positionProp = _.findLast(keys, prop => POSITION_KEY_PATTERN.test(prop) && !!props[prop]);
-  if (positionProp) {
+  const positionProps = _.filter(keys, prop => POSITION_KEY_PATTERN.test(prop) && !!props[prop]);
+  let style = {};
+
+  _.forEach(positionProps, positionProp => {
     const positionVariationKey = _.split(positionProp, 'abs')[1] as keyof typeof POSITION_CONVERSIONS;
     if (positionVariationKey) {
       const positionVariation = POSITION_CONVERSIONS[positionVariationKey];
       const styleKey = `absolute${positionVariation}` as keyof typeof styles;
-      return styles[styleKey];
+      style = {...style, ...styles[styleKey]};
     }
-    return styles.absolute;
-  }
+    style = {...style, ...styles.absolute};
+  });
+    
+  return _.isEmpty(style) ? undefined : style;
 }
 
 export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeFlexModifierKeyType, number>> | undefined {
