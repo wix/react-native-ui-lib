@@ -26,10 +26,6 @@ export type ScrollToItemProps<T extends ScrollToSupportedViews> = {
    */
   containerWidth: number;
   /**
-   * callback to let the user know a reset has occurred.
-   */
-  onReset?: () => void;
-  /**
    * Where would the item be located (default to CENTER)
    */
   offsetType?: OffsetType;
@@ -77,6 +73,10 @@ export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<
    */
   focusIndex: (index: number, animated?: boolean) => void;
   /**
+   * Use in order to reset the data.
+   */
+  reset: () => void;
+  /**
    * onContentSizeChange callback (should be set to your onContentSizeChange).
    * Needed for RTL support on Android.
    */
@@ -94,13 +94,11 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     itemsCount,
     selectedIndex,
     containerWidth,
-    onReset,
     offsetType = OffsetType.CENTER,
     addOffsetMargin = true,
     outerSpacing = 0,
     innerSpacing = 0
   } = props;
-  const shouldReset = useRef<boolean>(false);
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
   const itemsWidthsAnimated = useSharedValue(_.times(itemsCount, () => 0));
   const itemsOffsetsAnimated = useSharedValue(_.times(itemsCount, () => 0));
@@ -115,20 +113,6 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
   // const contentWidth = _.sum(itemsWidths);
   // TODO: const scrollEnabled = contentWidth.current > containerWidth;
-
-  useEffect(() => {
-    if (onReset && shouldReset.current) {
-      for (let i = 0; i < itemsCount; ++i) {
-        itemsWidths.current[i] = null;
-        itemsWidthsAnimated.value[i] = 0;
-        itemsOffsetsAnimated.value[i] = 0;
-      }
-
-      setOffsets({CENTER: [], LEFT: [], RIGHT: []});
-      shouldReset.current = false;
-      onReset();
-    }
-  }, [containerWidth, onReset]);
 
   const setSnapBreakpoints = useCallback((widths: number[]) => {
     if (_.isEmpty(widths)) {
@@ -173,9 +157,8 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     // trigger value change
     itemsWidthsAnimated.value = [...itemsWidthsAnimated.value];
     itemsOffsetsAnimated.value = [...itemsOffsetsAnimated.value];
-    shouldReset.current = !_.isUndefined(onReset);
   },
-  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, containerWidth, onReset]);
+  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, containerWidth]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     const {width} = event.nativeEvent.layout;
@@ -205,12 +188,23 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     }
   }, [selectedIndex, focusIndex]);
 
+  const reset = useCallback(() => {
+    for (let i = 0; i < itemsCount; ++i) {
+      itemsWidths.current[i] = null;
+      itemsWidthsAnimated.value[i] = 0;
+      itemsOffsetsAnimated.value[i] = 0;
+    }
+
+    setOffsets({CENTER: [], LEFT: [], RIGHT: []});
+  }, [itemsCount]);
+
   return {
     scrollViewRef,
     onItemLayout,
     itemsWidthsAnimated,
     itemsOffsetsAnimated,
     focusIndex,
+    reset,
     onContentSizeChange,
     onLayout
   };
