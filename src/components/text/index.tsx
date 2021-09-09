@@ -121,10 +121,12 @@ class Text extends PureComponent<PropsTypes> {
     let val = false;
     for (let k = 0; k < indices.length; k++) {
       if (k === 0) {
-        parts.push({string: targetString.substring(0, indices[k]), shouldHighlight: false});
+        targetString.substring(0, indices[k]) &&
+          parts.push({string: targetString.substring(0, indices[k]), shouldHighlight: false});
         parts.push({string: targetString.substring(indices[k], indices[k + 1]), shouldHighlight: true});
       } else if (k === indices.length - 1) {
-        parts.push({string: targetString.substring(indices[k]), shouldHighlight: false});
+        targetString.substring(indices[k]) &&
+          parts.push({string: targetString.substring(indices[k]), shouldHighlight: false});
       } else {
         parts.push({string: targetString.substring(indices[k], indices[k + 1]), shouldHighlight: val});
         val = !val;
@@ -145,13 +147,19 @@ class Text extends PureComponent<PropsTypes> {
 
       if (_.isString(children)) {
         const textParts = highlightString && this.getPartsByHighlight(children, highlightString);
-        return textParts && _.map(textParts, (text, index) => {
-          return (
-            <RNText key={index} style={text.shouldHighlight ? [styles.highlight, highlightStyle] : styles.notHighlight}>
-              {text.string}
-            </RNText>
-          );
-        });
+        return (
+          textParts &&
+          _.map(textParts, (text, index) => {
+            return (
+              <RNText
+                key={index}
+                style={text.shouldHighlight ? [styles.highlight, highlightStyle] : styles.notHighlight}
+              >
+                {text.string}
+              </RNText>
+            );
+          })
+        );
       }
     }
     return children;
