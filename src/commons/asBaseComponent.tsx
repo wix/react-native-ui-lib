@@ -1,5 +1,5 @@
 import React from 'react';
-import {Appearance} from 'react-native';
+import {Appearance, EventSubscription} from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
 import forwardRef from './forwardRef';
@@ -27,12 +27,14 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       error: false
     };
 
+    appearanceListenerSubscription?: EventSubscription = undefined;
+
     componentDidMount() {
-      Appearance.addChangeListener(this.appearanceListener);
+      this.appearanceListenerSubscription = Appearance.addChangeListener(this.appearanceListener);
     }
-    
+
     componentWillUnmount() {
-      Appearance.removeChangeListener(this.appearanceListener);
+      this.appearanceListenerSubscription?.remove();
     }
 
     appearanceListener: Appearance.AppearanceListener = () => {
