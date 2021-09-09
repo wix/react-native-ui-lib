@@ -232,6 +232,7 @@ export default class TextFieldScreen extends Component {
             validationMessage="Invalid price"
             // @ts-expect-error
             formatter={(value) => (isNaN(value) ? value : priceFormatter.format(Number(value)))}
+            leadingAccessory={<Text marginR-s1 grey30>$</Text>}
             fieldStyle={styles.withUnderline}
           />
         </View>
