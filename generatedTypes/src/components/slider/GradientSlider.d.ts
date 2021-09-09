@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import tinycolor from 'tinycolor2';
+import { SliderProps } from './index';
 import { SliderContextProps } from './context/SliderContext';
 declare type SliderOnValueChange = (value: string, alfa: number) => void;
 export declare enum GradientSliderTypes {
@@ -9,7 +10,7 @@ export declare enum GradientSliderTypes {
     LIGHTNESS = "lightness",
     SATURATION = "saturation"
 }
-export declare type GradientSliderProps = {
+export declare type GradientSliderProps = SliderProps & {
     /**
        * The gradient color
        */
@@ -92,7 +93,61 @@ declare const _default: React.ComponentClass<{
        * Context of the slider group
        */
     sliderContext: SliderContextProps;
-} & GradientSliderProps & {
+} & {
+    value?: number | undefined;
+    minimumValue?: number | undefined;
+    maximumValue?: number | undefined;
+    step?: number | undefined;
+    minimumTrackTintColor?: string | undefined;
+    maximumTrackTintColor?: string | undefined;
+    renderTrack?: (() => React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactElement<any, string | React.JSXElementConstructor<any>>[]) | undefined;
+    thumbTintColor?: string | undefined;
+    onValueChange?: import("./index").SliderOnValueChange | undefined;
+    onSeekStart?: (() => void) | undefined;
+    onSeekEnd?: (() => void) | undefined;
+    containerStyle?: StyleProp<ViewStyle>;
+    trackStyle?: StyleProp<ViewStyle>;
+    thumbStyle?: ViewStyle | undefined;
+    activeThumbStyle?: ViewStyle | undefined;
+    disableActiveStyling?: boolean | undefined;
+    disabled?: boolean | undefined;
+    accessible?: boolean | undefined;
+    testID?: string | undefined;
+} & {
+    value: number;
+    minimumValue: number;
+    maximumValue: number;
+    step: number;
+} & {
+    /**
+       * The gradient color
+       */
+    color?: string | undefined;
+    /**
+       * The gradient type (default, hue, lightness, saturation)
+       */
+    type?: GradientSliderTypes | undefined;
+    /**
+       * The gradient steps
+       */
+    gradientSteps?: number | undefined;
+    /**
+       * Callback for onValueChange, returns the updated color
+       */
+    onValueChange?: SliderOnValueChange | undefined;
+    /**
+       * If true the component will have accessibility features enabled
+       */
+    accessible?: boolean | undefined;
+    /**
+      * The container style
+      */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+       * If true the Slider will be disabled and will appear in disabled color
+       */
+    disabled?: boolean | undefined;
+} & {
     type: GradientSliderTypes;
     gradientSteps: number;
     color: string;
