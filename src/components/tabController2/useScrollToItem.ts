@@ -3,7 +3,6 @@ import {useState, useCallback, useEffect, useRef, RefObject} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {useScrollTo, ScrollToSupportedViews, ScrollToResultProps} from 'hooks';
-import {Constants} from 'helpers';
 
 export enum OffsetType {
   CENTER = 'CENTER',
@@ -22,6 +21,10 @@ export type ScrollToItemProps<T extends ScrollToSupportedViews> = {
    * The selected item's index
    */
   selectedIndex?: number;
+  /**
+   * The container width, should update on orientation change
+   */
+  containerWidth: number;
   /**
    * Where would the item be located (default to CENTER)
    */
@@ -64,11 +67,15 @@ export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<
   /**
    * The items' offsets as share animated value
    */
-   itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
+  itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
   /**
    * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
    */
   focusIndex: (index: number, animated?: boolean) => void;
+  /**
+   * Use in order to reset the data.
+   */
+  reset: () => void;
   /**
    * onContentSizeChange callback (should be set to your onContentSizeChange).
    * Needed for RTL support on Android.
@@ -86,6 +93,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     scrollViewRef: propsScrollViewRef,
     itemsCount,
     selectedIndex,
+    containerWidth,
     offsetType = OffsetType.CENTER,
     addOffsetMargin = true,
     outerSpacing = 0,
@@ -111,14 +119,14 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
       return;
     }
 
-    const screenCenter = Constants.screenWidth / 2; // TODO: change to something more dynamic?
+    const screenCenter = containerWidth / 2;
     let index = 0;
     const centeredOffsets = [];
     let currentCenterOffset = outerSpacing;
     const leftOffsets = [];
     leftOffsets.push(outerSpacing - innerSpacing);
     const rightOffsets = [];
-    rightOffsets.push(-Constants.screenWidth + widths[0] + outerSpacing + innerSpacing);
+    rightOffsets.push(-containerWidth + widths[0] + outerSpacing + innerSpacing);
     while (index < itemsCount) {
       /* map animated widths and offsets */
       itemsWidthsAnimated.value[index] = widths[index];
@@ -150,7 +158,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     itemsWidthsAnimated.value = [...itemsWidthsAnimated.value];
     itemsOffsetsAnimated.value = [...itemsOffsetsAnimated.value];
   },
-  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin]);
+  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, containerWidth]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     const {width} = event.nativeEvent.layout;
@@ -180,12 +188,23 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     }
   }, [selectedIndex, focusIndex]);
 
+  const reset = useCallback(() => {
+    for (let i = 0; i < itemsCount; ++i) {
+      itemsWidths.current[i] = null;
+      itemsWidthsAnimated.value[i] = 0;
+      itemsOffsetsAnimated.value[i] = 0;
+    }
+
+    setOffsets({CENTER: [], LEFT: [], RIGHT: []});
+  }, [itemsCount]);
+
   return {
     scrollViewRef,
     onItemLayout,
     itemsWidthsAnimated,
     itemsOffsetsAnimated,
     focusIndex,
+    reset,
     onContentSizeChange,
     onLayout
   };
