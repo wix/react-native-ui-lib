@@ -176,7 +176,7 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]}>
           <View row centerV>
             {leadingAccessory}
-            <View flex>
+            <View flexG>
               {floatingPlaceholder && (
                 <FloatingPlaceholder
                   placeholder={placeholder}
@@ -187,12 +187,13 @@ const TextField = (props: InternalTextFieldProps) => {
                 />
               )}
               <Input
+                placeholderTextColor={floatingPlaceholder ? 'transparent' : undefined}
                 {...others}
                 style={[typographyStyle, colorStyle, others.style]}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChangeText}
-                placeholder={floatingPlaceholder ? undefined : placeholder}
+                placeholder={placeholder}
                 hint={hint}
               />
             </View>
