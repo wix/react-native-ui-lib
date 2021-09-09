@@ -30,11 +30,23 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     appearanceListenerSubscription?: EventSubscription = undefined;
 
     componentDidMount() {
-      this.appearanceListenerSubscription = Appearance.addChangeListener(this.appearanceListener);
+      // <  RN64 - void
+      // >= RN65 - EventSubscription
+      const subscription = Appearance.addChangeListener(this.appearanceListener);
+      if (subscription !== undefined) {
+        // @ts-ignore
+        this.appearanceListenerSubscription = subscription;
+      }
     }
 
     componentWillUnmount() {
-      this.appearanceListenerSubscription?.remove();
+      if (this.appearanceListenerSubscription) {
+        // >=RN65
+        this.appearanceListenerSubscription?.remove();
+      } else {
+        // <RN65
+        Appearance.removeChangeListener(this.appearanceListener);
+      }
     }
 
     appearanceListener: Appearance.AppearanceListener = () => {
