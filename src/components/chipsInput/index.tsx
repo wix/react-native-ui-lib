@@ -365,6 +365,7 @@ class ChipsInput extends Component<OwnProps, State> {
       return (
         <View center flexS>
           <Chip
+            key={index}
             {...defaultChipProps}
             {...chip}
             containerStyle={[styles.tag, chip.invalid && styles.invalidTag]}
