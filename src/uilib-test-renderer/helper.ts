@@ -1,14 +1,14 @@
 import _ from 'lodash';
 
-interface Style {
+interface Props {
   style: any;
 }
 
-interface Props {
-  props: Style;
+interface Component {
+  props: Props;
 }
 
-const findStyle = <T>(key: string, component: Props): T => {
+const findStyle = <T>(key: string, component: Component): T => {
   const flat = _.flatMap(component.props.style) as Array<any | undefined>;
   const color = _.find(flat, key)[key];
   return color;

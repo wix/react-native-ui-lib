@@ -29,7 +29,7 @@ describe('Hint Screen component test', () => {
     const expectedColor = Colors.primary;
     const element = <HintTestComponent useTargetFrame showHint/>;
 
-    const {getByTestId, toJSON} = render(element);
+    const {getByTestId} = render(element);
 
     const wrapper = getByTestId('Hint');
     expect(wrapper).toBeTruthy();
@@ -39,28 +39,25 @@ describe('Hint Screen component test', () => {
 
     expect(color).toBe(expectedColor);
     expect(hint).toBeTruthy();
-    expect(toJSON()).toMatchSnapshot();
   });
 
   it('Test Hint modal is not visible when showHint is false', async () => {
     const element = <HintTestComponent useTargetFrame showHint={false}/>;
 
-    const {toJSON, queryByTestId} = render(element);
+    const {queryByTestId} = render(element);
 
     const modal = queryByTestId('Hint.modal');
 
     expect(modal).toBeNull();
-    expect(toJSON()).toMatchSnapshot();
   });
 
   it('Test Hint modal is visible when showHint is true', async () => {
     const element = <HintTestComponent useTargetFrame showHint/>;
 
-    const {getByTestId, queryAllByTestId, toJSON} = render(element);
+    const {getByTestId, queryAllByTestId} = render(element);
     const hint = getByTestId('Hint');
     expect(hint).toBeTruthy();
   
     expect(queryAllByTestId('Hint.modal')).toBeTruthy();
-    expect(toJSON()).toMatchSnapshot();
   });
 });
