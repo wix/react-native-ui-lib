@@ -11,6 +11,8 @@ import {Colors, Spacings, Typography} from '../../style';
 import FadedScrollView from './FadedScrollView';
 
 import useScrollToItem from './useScrollToItem';
+import {orientations} from '../../helpers/Constants';
+import {Constants} from '../../helpers';
 
 const DEFAULT_HEIGHT = 48;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
@@ -144,7 +146,7 @@ const TabBar = (props: Props) => {
   } = props;
 
   const tabBar = useRef<typeof FadedScrollView>();
-  const [key, setKey] = useState<boolean>(true);
+  const [key, setKey] = useState<orientations>(Constants.orientation);
   const context = useContext(TabBarContext);
   const {
     items: contextItems,
@@ -164,7 +166,7 @@ const TabBar = (props: Props) => {
   }, [contextItems, propsItems]);
 
   const onReset = useCallback(() => {
-    setKey(!key);
+    setKey(Constants.orientation);
   }, [key, setKey]);
 
   const {
@@ -271,7 +273,7 @@ const TabBar = (props: Props) => {
   }, [containerWidth]);
 
   return (
-    <View style={_containerStyle} key={`${key}`}>
+    <View style={_containerStyle} key={key}>
       <FadedScrollView
         // @ts-expect-error
         ref={tabBar}
