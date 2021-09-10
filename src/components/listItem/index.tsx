@@ -9,7 +9,7 @@ import {ListItemProps} from './types';
 
 type ListItemState = {
   pressed: boolean;
-}
+};
 
 class ListItem extends Component<ListItemProps, ListItemState> {
   static displayName = 'ListItem';
@@ -20,7 +20,7 @@ class ListItem extends Component<ListItemProps, ListItemState> {
     underlayColor: Colors.dark70
   };
 
-  static Part = ListItemPart;
+  static Part: typeof ListItemPart;
 
   styles = createStyles(this.props.height);
 
@@ -84,4 +84,6 @@ function createStyles(height: ListItemProps['height']) {
 
 export {ListItemProps};
 
-export default asBaseComponent<ListItemProps>(ListItem);
+ListItem.Part = ListItemPart;
+
+export default asBaseComponent<ListItemProps, typeof ListItem>(ListItem);
