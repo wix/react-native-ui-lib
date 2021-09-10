@@ -86,4 +86,4 @@ export {ListItemProps};
 
 ListItem.Part = ListItemPart;
 
-export default asBaseComponent<ListItemProps, {Part: typeof ListItemPart}>(ListItem);
+export default asBaseComponent<ListItemProps, typeof ListItem>(ListItem);
