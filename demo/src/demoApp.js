@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {Navigation} from 'react-native-navigation';
-import * as Animatable from 'react-native-animatable';
 import {Constants, Colors, Typography} from 'react-native-ui-lib'; // eslint-disable-line
 import {registerScreens} from './screens';
 
