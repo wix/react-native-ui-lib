@@ -1,0 +1,70 @@
+import React, {Component} from 'react';
+import {View, Text, Stepper} from 'react-native-ui-lib'; //eslint-disable-line
+
+
+export default class StepperScreen extends Component {
+  state = {
+    stepperValue: 1
+  };
+
+  stepperProps = {
+    minValue: 0,
+    maxValue: 3,
+    value: 1
+  };
+
+  onValueChange = (value: number, _?: string) => {
+    this.setState({stepperValue: value});
+  };
+
+  render() {
+    const {stepperValue} = this.state;
+
+    return (
+      <View padding-page>
+        <Text text40 marginB-20>Stepper</Text>
+
+        <View centerV>
+          <View row spread centerV>
+            <Text text70>Default</Text>
+            <Stepper/>
+          </View>
+
+          <View row spread centerV marginT-30>
+            <Text text70>Disabled</Text>
+            <Stepper disabled/>
+          </View>
+
+          <View row spread marginT-30>
+            <Text text70>Step (0.5)</Text>
+            <Stepper step={0.5}/>
+          </View>
+
+          <View row spread marginT-30>
+            <Text text70>Small</Text>
+            <Stepper small/>
+          </View>
+
+          <View marginT-30>
+            <View row spread centerV>
+              <Text text70>Custom</Text>
+              <Stepper
+                onValueChange={this.onValueChange}
+                maxValue={this.stepperProps.maxValue}
+                minValue={this.stepperProps.minValue}
+                value={stepperValue}
+                testID={'Stepper1'}
+              />
+            </View>
+            <View padding-5>
+              <Text text80M>Stepper value: {stepperValue}</Text>
+              <Text marginT-3>Initial value: {this.stepperProps.value}</Text>
+              <Text marginT-3>Min value: {this.stepperProps.minValue}</Text>
+              <Text marginT-3>Max value: {this.stepperProps.maxValue}</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  }
+}

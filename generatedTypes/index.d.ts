@@ -92,7 +92,6 @@ export {
   MaskedInput,
   ProgressBar,
   ColorSliderGroup,
-  Stepper,
   ChipsInput,
   SharedTransition,
   Toast,
