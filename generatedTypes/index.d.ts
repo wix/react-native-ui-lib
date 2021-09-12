@@ -25,18 +25,18 @@ export {
   BackgroundColorModifier
 } from './src/commons/new';
 export {default as ActionBar, ActionBarProps} from './src/components/actionBar';
-export {default as Avatar, AvatarPropTypes, AvatarProps} from './src/components/avatar';
+export {default as Avatar, AvatarProps} from './src/components/avatar';
 export {default as Badge, BadgeProps} from './src/components/badge';
-export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './src/components/card';
+export {default as Card, CardProps, CardSectionProps} from './src/components/card';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './src/components/connectionStatusBar';
 export {default as Constants} from './src/helpers/Constants';
 export {default as GradientSlider, GradientSliderProps} from './src/components/slider/GradientSlider';
-export {default as View, ViewPropTypes, ViewProps} from './src/components/view';
-export {default as Text, TextPropTypes, TextProps} from './src/components/text';
+export {default as View, ViewProps} from './src/components/view';
+export {default as Text, TextProps} from './src/components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './src/components/touchableOpacity';
-export {default as Button, ButtonPropTypes, ButtonSize, ButtonProps} from './src/components/button';
-export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './src/components/checkbox';
-export {default as Chip, ChipPropTypes, ChipProps} from './src/components/chip';
+export {default as Button, ButtonSize, ButtonProps} from './src/components/button';
+export {default as Checkbox, CheckboxProps} from './src/components/checkbox';
+export {default as Chip, ChipProps} from './src/components/chip';
 export {default as ColorPicker, ColorPickerProps} from './src/components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './src/components/colorPicker/ColorPalette';
 export {default as ColorSwatch, ColorSwatchProps} from './src/components/colorPicker/ColorSwatch';
@@ -48,8 +48,8 @@ export {default as GridView, GridViewProps} from './src/components/gridView';
 export {default as Hint, HintProps} from './src/components/hint';
 export {default as Image, ImageProps} from './src/components/image';
 export {default as Overlay, OverlayTypes} from './src/components/overlay';
-export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './src/components/radioButton';
-export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './src/components/radioGroup';
+export {default as RadioButton, RadioButtonProps} from './src/components/radioButton';
+export {default as RadioGroup, RadioGroupProps} from './src/components/radioGroup';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './src/components/sectionsWheelPicker';
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './src/components/segmentedControl';
 export {default as Slider, SliderProps} from './src/components/slider';
@@ -74,9 +74,9 @@ export {
   PanDirectionsProps,
   PanningProviderDirection
 } from './src/components/panningViews/panningProvider';
-export {default as PanListenerView, PanListenerViewPropTypes, PanListenerViewProps} from './src/components/panningViews/panListenerView';
-export {default as PanResponderView, PanResponderViewPropTypes, PanResponderViewProps} from './src/components/panningViews/panResponderView';
-export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes, PanDismissibleViewProps, DismissibleAnimationProps} from './src/components/panningViews/panDismissibleView';
+export {default as PanListenerView, PanListenerViewProps} from './src/components/panningViews/panListenerView';
+export {default as PanResponderView, PanResponderViewProps} from './src/components/panningViews/panResponderView';
+export {default as PanDismissibleView, PanDismissibleViewProps, DismissibleAnimationProps} from './src/components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './src/components/dialog';
 export {default as PageControl, PageControlProps} from './src/components/pageControl';
 export {default as Carousel, CarouselProps, PageControlPosition} from './src/components/carousel';

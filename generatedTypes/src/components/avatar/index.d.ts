@@ -137,7 +137,6 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
      */
     testID?: string;
 };
-export declare type AvatarPropTypes = AvatarProps;
 /**
  * @description: Avatar component for displaying user profile images
  * @extends: TouchableOpacity, Image

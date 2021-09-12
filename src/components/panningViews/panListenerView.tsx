@@ -71,8 +71,6 @@ export interface PanListenerViewProps extends PanningProps, ViewProps {
      */
     isClickable?: boolean;
 }
-export type PanListenerViewPropTypes = PanListenerViewProps; //TODO: remove after ComponentPropTypes deprecation;
-
 
 interface Props extends PanListenerViewProps {
   context?: PanningProps;

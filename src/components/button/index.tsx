@@ -10,8 +10,8 @@ import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
 
-import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
-export {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes};
+import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
+export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE, DISABLED_COLOR} from './ButtonConstants';
 

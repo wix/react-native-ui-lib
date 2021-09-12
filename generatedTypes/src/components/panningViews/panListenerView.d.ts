@@ -62,6 +62,5 @@ export interface PanListenerViewProps extends PanningProps, ViewProps {
      */
     isClickable?: boolean;
 }
-export declare type PanListenerViewPropTypes = PanListenerViewProps;
 declare const _default: React.ComponentClass<PanListenerViewProps, any>;
 export default _default;

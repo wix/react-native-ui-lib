@@ -15,7 +15,6 @@ export interface DismissibleAnimationProps {
      */
     duration?: number;
 }
-export declare type DismissibleAnimationPropTypes = DismissibleAnimationProps;
 export interface PanDismissibleViewProps {
     /**
      * Additional styling
@@ -47,6 +46,5 @@ export interface PanDismissibleViewProps {
      */
     allowDiagonalDismiss?: boolean;
 }
-export declare type PanDismissibleViewPropTypes = PanDismissibleViewProps;
 declare const _default: React.ComponentClass<PanDismissibleViewProps, any>;
 export default _default;
