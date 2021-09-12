@@ -44,7 +44,7 @@ const TransitionAnimator = (props: Props) => {
     ...others
   } = props;
   const containerRef = React.createRef<RNView>();
-  const {onLayout: hiddenLocationOnLayout, hiddenLocations} = useHiddenLocation({containerRef});
+  const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
   const visible = useSharedValue<boolean>(!enterFrom);
 
   // Has to start at {0, 0} with {opacity: 0} so layout can be measured
@@ -53,8 +53,8 @@ const TransitionAnimator = (props: Props) => {
 
   const getDirection = (direction?: Direction) => {
     return {
-      x: direction && ['left', 'right'].includes(direction) ? hiddenLocations[direction] : 0,
-      y: direction && ['top', 'bottom'].includes(direction) ? hiddenLocations[direction] : 0
+      x: direction && ['left', 'right'].includes(direction) ? hiddenLocation[direction] : 0,
+      y: direction && ['top', 'bottom'].includes(direction) ? hiddenLocation[direction] : 0
     };
   };
 
@@ -90,7 +90,7 @@ const TransitionAnimator = (props: Props) => {
   const exit = useCallback(() => {
     'worklet';
     animate(getDirection(exitTo), onExitAnimationEnd, exitTo);
-  }, [hiddenLocations, exitTo, onExitAnimationEnd]);
+  }, [hiddenLocation, exitTo, onExitAnimationEnd]);
 
   const onEnterAnimationEnd = useCallback((isFinished: boolean) => {
     'worklet';
@@ -112,7 +112,7 @@ const TransitionAnimator = (props: Props) => {
     [exit]);
 
   useEffect(() => {
-    if (!hiddenLocations.isDefault && enterFrom) {
+    if (!hiddenLocation.isDefault && enterFrom) {
       const direction = getDirection(enterFrom);
       if (['left', 'right'].includes(enterFrom)) {
         translateX.value = withTiming(direction.x, {duration: 0}, enter);
@@ -122,7 +122,7 @@ const TransitionAnimator = (props: Props) => {
 
       visible.value = true;
     }
-  }, [hiddenLocations.isDefault]);
+  }, [hiddenLocation.isDefault]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     hiddenLocationOnLayout(event);

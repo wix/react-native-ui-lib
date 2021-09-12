@@ -3,7 +3,7 @@ import {View, LayoutChangeEvent} from 'react-native';
 import {Constants} from 'helpers';
 
 export type Direction = 'top' | 'bottom' | 'left' | 'right';
-interface HiddenLocations {
+interface HiddenLocation {
   isDefault: boolean;
   top: number;
   bottom: number;
@@ -11,14 +11,14 @@ interface HiddenLocations {
   right: number;
 }
 
-export interface HiddenLocationsProps<T extends View> {
+export interface HiddenLocationProps<T extends View> {
   containerRef: RefObject<T>;
 }
 
-export default function useHiddenLocation<T extends View>(props: HiddenLocationsProps<T>) {
+export default function useHiddenLocation<T extends View>(props: HiddenLocationProps<T>) {
   const {containerRef} = props;
 
-  const getHiddenLocations = ({
+  const getHiddenLocation = ({
     x = 0,
     y = 0,
     width = Constants.screenWidth,
@@ -34,17 +34,17 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocations
     };
   };
 
-  const [hiddenLocations, setHiddenLocations] = useState<HiddenLocations>(getHiddenLocations({}));
+  const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
     if (containerRef.current) {
       containerRef.current.measureInWindow((x: number, y: number) => {
-        setHiddenLocations(getHiddenLocations({x, y, width, height, isDefault: false}));
+        setHiddenLocation(getHiddenLocation({x, y, width, height, isDefault: false}));
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return {onLayout, hiddenLocations};
+  return {onLayout, hiddenLocation};
 }
