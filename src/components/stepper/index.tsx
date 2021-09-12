@@ -1,6 +1,10 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, AccessibilityInfo, AccessibilityProps, AccessibilityActionEvent} from 'react-native';
-import {Typography, Spacings, asBaseComponent, View, Text, Button} from 'react-native-ui-lib';
+import {Typography, Spacings} from '../../style';
+import {asBaseComponent} from '../../commons/new';
+import View from '../View';
+import Text from '../Text';
+import Button from '../Button';
 
 
 enum ActionType {
