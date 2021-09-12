@@ -1,21 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {PropsWithChildren, useEffect, useCallback, useImperativeHandle} from 'react';
 import {View as RNView, LayoutChangeEvent} from 'react-native';
-import Animated, {runOnJS} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocation, {Direction} from './useHiddenLocation';
 import useAnimatedTranslator from './useAnimatedTranslator';
+import useAnimationEndNotifier, {
+  TransitionAnimationEndType,
+  AnimationNotifierEndProps
+} from './useAnimationEndNotifier';
 const AnimatedView = Animated.createAnimatedComponent(View);
-export {Direction};
+export {Direction, TransitionAnimationEndType};
 
-export type TransitionAnimationEndType = 'in' | 'out';
-
-export interface TransitionAnimatorProps extends ViewProps {
-  /**
-   * Callback to the animation end.
-   */
-  onAnimationEnd?: (animationType: TransitionAnimationEndType) => void;
+export interface TransitionAnimatorProps extends AnimationNotifierEndProps, ViewProps {
   /**
    * If this is given there will be an enter animation from this direction.
    */
@@ -44,6 +42,7 @@ const TransitionAnimator = (props: Props) => {
   const containerRef = React.createRef<RNView>();
   const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
   const {init, animate, animatedStyle} = useAnimatedTranslator({initialVisibility: !enterFrom});
+  const {onEnterAnimationEnd, onExitAnimationEnd} = useAnimationEndNotifier({onAnimationEnd});
 
   const getLocation = (direction?: Direction) => {
     return {
@@ -52,26 +51,10 @@ const TransitionAnimator = (props: Props) => {
     };
   };
 
-  const onExitAnimationEnd = useCallback((isFinished: boolean) => {
-    'worklet';
-    if (onAnimationEnd && isFinished) {
-      runOnJS(onAnimationEnd)('out');
-    }
-  },
-  [onAnimationEnd]);
-
   const exit = useCallback(() => {
     'worklet';
     animate(getLocation(exitTo), onExitAnimationEnd, exitTo);
   }, [hiddenLocation, exitTo, onExitAnimationEnd]);
-
-  const onEnterAnimationEnd = useCallback((isFinished: boolean) => {
-    'worklet';
-    if (onAnimationEnd && isFinished) {
-      runOnJS(onAnimationEnd)('in');
-    }
-  },
-  [onAnimationEnd]);
 
   const enter = useCallback(() => {
     'worklet';

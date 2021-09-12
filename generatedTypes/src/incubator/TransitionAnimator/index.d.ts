@@ -2,13 +2,9 @@ import React, { PropsWithChildren } from 'react';
 import { ViewProps } from '../../components/view';
 import { ForwardRefInjectedProps } from '../../commons/new';
 import { Direction } from './useHiddenLocation';
-export { Direction };
-export declare type TransitionAnimationEndType = 'in' | 'out';
-export interface TransitionAnimatorProps extends ViewProps {
-    /**
-     * Callback to the animation end.
-     */
-    onAnimationEnd?: (animationType: TransitionAnimationEndType) => void;
+import { TransitionAnimationEndType, AnimationNotifierEndProps } from './useAnimationEndNotifier';
+export { Direction, TransitionAnimationEndType };
+export interface TransitionAnimatorProps extends AnimationNotifierEndProps, ViewProps {
     /**
      * If this is given there will be an enter animation from this direction.
      */
