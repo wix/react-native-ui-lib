@@ -213,7 +213,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
     const iconSelectedTint =
       iconSelectedColor || this.getColorFromStyle(selectedLabelStyle) || this.getColorFromStyle(styles.selectedLabel);
     const badgeFinalProps = badgeProps || badge;
-    const badgeSize = _.get(badgeFinalProps, 'size', 'small');
+    const badgeSize = _.get(badgeFinalProps, 'size', 16);
 
     return (
       <TouchableOpacity

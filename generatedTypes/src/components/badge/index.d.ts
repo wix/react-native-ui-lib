@@ -1,16 +1,7 @@
 import React, { PureComponent } from 'react';
 import { ImageSourcePropType, ImageStyle, StyleProp, TextStyle, TouchableOpacityProps, ViewStyle, ViewProps } from 'react-native';
 declare const LABEL_FORMATTER_VALUES: readonly [1, 2, 3, 4];
-export declare enum BADGE_SIZES {
-    pimpleSmall = 6,
-    pimpleBig = 10,
-    pimpleHuge = 14,
-    small = 16,
-    default = 20,
-    large = 24
-}
 declare type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
-export declare type BadgeSizes = keyof typeof BADGE_SIZES;
 export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * Text to show inside the badge.
@@ -24,7 +15,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * the badge size (default, small)
      */
-    size?: BadgeSizes | number;
+    size?: number;
     /**
      * Press handler
      */
@@ -76,28 +67,23 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      * Custom element to render instead of an icon
      */
     customElement?: JSX.Element;
-    /**
-     * Use to identify the badge in tests
-     */
-    testId?: string;
 };
 /**
  * @description: Round colored badge, typically used to show a number
- * @extends: Animatable.View
- * @extendsLink: https://github.com/oblador/react-native-animatable
+ * @extends: View
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx
  */
 declare class Badge extends PureComponent<BadgeProps> {
-    styles: ReturnType<typeof createStyles>;
     static displayName: string;
+    styles: ReturnType<typeof createStyles>;
     constructor(props: BadgeProps);
-    get size(): number | "default" | "small" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
     getAccessibilityProps(): {
         accessible: boolean;
         accessibilityRole: string;
         accessibilityLabel: string;
     };
+    get size(): number;
     isSmallBadge(): boolean;
     getBadgeSizeStyle(): any;
     getFormattedLabel(): any;
@@ -355,9 +341,9 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      */
     backgroundColor?: string | undefined;
     /**
-     * the badge size (default, small)
+     * the badge size
      */
-    size?: number | "default" | "small" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large" | undefined;
+    size?: number | undefined;
     /**
      * Press handler
      */
@@ -409,10 +395,6 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Custom element to render instead of an icon
      */
     customElement?: JSX.Element | undefined;
-    /**
-     * Use to identify the badge in tests
-     */
-    testId?: string | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Badge;

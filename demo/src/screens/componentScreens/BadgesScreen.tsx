@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Colors, View, Badge, Button, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
+
+
 const BadgesSpace = 30;
 const plusIcon = require('../../assets/icons/chevronUp.png');
 const minusIcon = require('../../assets/icons/chevronDown.png');
@@ -45,7 +47,7 @@ export default class BadgesScreen extends Component {
         </Text>
         <View row center style={{alignItems: 'flex-start'}}>
           <View center paddingH-10>
-            <Badge size={'default'} label={this.state.value.toString()} backgroundColor={Colors.red30}/>
+            <Badge size={20} label={this.state.value.toString()} backgroundColor={Colors.red30}/>
             <Badge
               label={this.state.value.toString()}
               containerStyle={{marginTop: BadgesSpace}}
@@ -53,7 +55,7 @@ export default class BadgesScreen extends Component {
               borderWidth={1}
             />
             <Badge
-              size="small"
+              size={16}
               label={this.state.value.toString()}
               containerStyle={{marginTop: BadgesSpace}}
               backgroundColor={Colors.red30}
@@ -69,7 +71,7 @@ export default class BadgesScreen extends Component {
               borderWidth={2}
               borderColor={Colors.white}
             />
-            <Badge labelFormatterLimit={1} size="small" label={'99999999'} containerStyle={{marginTop: BadgesSpace}}/>
+            <Badge labelFormatterLimit={1} size={16} label={'99999999'} containerStyle={{marginTop: BadgesSpace}}/>
           </View>
         </View>
 
@@ -102,18 +104,18 @@ export default class BadgesScreen extends Component {
             style={{justifyContent: 'space-around', alignItems: 'flex-start', width: 140, height: 140}}
           >
             <Text text80 row>
-              size={'{\'pimpleSmall\'}'}
+              size={'{6}'}
             </Text>
-            <Text text80>size={'{\'pimpleBig\'}'}</Text>
+            <Text text80>size={'{10}'}</Text>
             <Text text80 row>
-              size={'{\'pimpleHuge\'}'}
+              size={'{14}'}
             </Text>
           </View>
 
           <View center style={{justifyContent: 'space-around', width: 40, height: 140}}>
-            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} size={'pimpleSmall'}/>
-            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.red30} size={'pimpleBig'}/>
-            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={'pimpleHuge'}/>
+            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} size={6}/>
+            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.red30} size={10}/>
+            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={14}/>
           </View>
         </View>
         <Text text50 marginB-10 row center marginT-25>
@@ -121,7 +123,7 @@ export default class BadgesScreen extends Component {
         </Text>
         <View row paddingH-15>
           <View style={styles.iconBadgeColumnContainer}>
-            <Badge size={'small'} icon={star} borderWidth={1} borderColor={Colors.red30}/>
+            <Badge size={16} icon={star} borderWidth={1} borderColor={Colors.red30}/>
             <Text text80 style={{marginTop: 10}}>
               small(16)
             </Text>
@@ -135,7 +137,7 @@ export default class BadgesScreen extends Component {
           </View>
 
           <View style={styles.iconBadgeColumnContainer}>
-            <Badge size={'large'} icon={star} iconStyle={{backgroundColor: Colors.red30}}/>
+            <Badge size={24} icon={star} iconStyle={{backgroundColor: Colors.red30}}/>
             <Text text80 style={{marginTop: 10}}>
               large(24)
             </Text>

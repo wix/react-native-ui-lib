@@ -67,8 +67,7 @@ export {
   PanningDirections,
   PanLocationProps,
   PanAmountsProps,
-  PanDirectionsProps,
-  PanningProviderDirection
+  PanDirectionsProps
 } from './components/panningViews/panningProvider';
 export {default as PanListenerView, PanListenerViewProps} from './components/panningViews/panListenerView';
 export {default as PanResponderView, PanResponderViewProps} from './components/panningViews/panResponderView';
