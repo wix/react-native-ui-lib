@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image, DeviceEventEmitter} from 'react-native';
+import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image, DeviceEventEmitter, EmitterSubscription} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, Typography} from '../../style';
 import Assets from '../../assets';
@@ -88,6 +88,8 @@ export default class TagsInput extends BaseComponent {
     REMOVED: 'removed'
   };
 
+  backspacePressEventSubscription: EmitterSubscription = undefined;
+
   constructor(props) {
     super(props);
 
@@ -114,14 +116,14 @@ export default class TagsInput extends BaseComponent {
 
       if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
         NativeModules.TextInputDelKeyHandler.register(textInputHandle);
-        DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
+        this.backspacePressEventSubscription = DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
       }
     }
   }
 
   componentWillUnmount() {
     if (Constants.isAndroid) {
-      DeviceEventEmitter.removeListener('onBackspacePress', this.onKeyPress);
+      this.backspacePressEventSubscription.remove();
     }
   }
 

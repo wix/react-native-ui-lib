@@ -5,7 +5,7 @@ import tinycolor from 'tinycolor2';
 import {HueGradient, LightnessGradient, SaturationGradient, Gradient} from 'react-native-color';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
-import Slider from './index';
+import Slider, {SliderProps} from './index';
 import {SliderContextProps} from './context/SliderContext';
 import asSliderGroupChild from './context/asSliderGroupChild';
 
@@ -18,7 +18,7 @@ export enum GradientSliderTypes {
   SATURATION = 'saturation'
 }
 
-export type GradientSliderProps = {
+export type GradientSliderProps = SliderProps & {
   /**
      * The gradient color
      */
@@ -187,7 +187,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
   };
 
   render() {
-    const {type, containerStyle, disabled, accessible} = this.props;
+    const {type, containerStyle, disabled, accessible, ...others} = this.props;
     const initialColor = this.state.initialColor;
     const color = this.getColor();
     const thumbTintColor = Colors.getHexString(color);
@@ -221,6 +221,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
 
     return (
       <Slider
+        {...others}
         renderTrack={renderTrack}
         step={step}
         maximumValue={maximumValue}

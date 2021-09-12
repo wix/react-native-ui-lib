@@ -66,6 +66,12 @@ export default {
   get FeatureHighlight() {
     return require('./components/featureHighlight').default;
   },
+  get GridListItem() {
+    return require('./components/gridListItem').default;
+  },
+  get GridView() {
+    return require('./components/gridView').default;
+  },
   get Hint() {
     return require('./components/hint').default;
   },

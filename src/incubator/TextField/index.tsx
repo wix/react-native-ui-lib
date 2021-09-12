@@ -92,7 +92,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | undefined;
+    preset?: 'default' | null;
   };
 
 export type InternalTextFieldProps = TextFieldProps &
@@ -168,6 +168,7 @@ const TextField = (props: InternalTextFieldProps) => {
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
             enableErrors={enableErrors}
+            validate={others.validate}
             validationMessage={validationMessage}
             validationMessageStyle={validationMessageStyle}
           />
@@ -175,7 +176,7 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]}>
           <View row centerV>
             {leadingAccessory}
-            <View flex>
+            <View flexG>
               {floatingPlaceholder && (
                 <FloatingPlaceholder
                   placeholder={placeholder}
@@ -186,12 +187,13 @@ const TextField = (props: InternalTextFieldProps) => {
                 />
               )}
               <Input
+                placeholderTextColor={floatingPlaceholder ? 'transparent' : undefined}
                 {...others}
                 style={[typographyStyle, colorStyle, others.style]}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChangeText}
-                placeholder={floatingPlaceholder ? undefined : placeholder}
+                placeholder={placeholder}
                 hint={hint}
               />
             </View>
@@ -202,6 +204,7 @@ const TextField = (props: InternalTextFieldProps) => {
           {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
             <ValidationMessage
               enableErrors={enableErrors}
+              validate={others.validate}
               validationMessage={validationMessage}
               validationMessageStyle={validationMessageStyle}
               retainSpace
