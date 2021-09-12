@@ -114,5 +114,4 @@ export {
 export const AnimatedImage;
 export const AnimatedScanner;
 export const DateTimePicker;
-export const SelectableComponent;
 export const TextField;

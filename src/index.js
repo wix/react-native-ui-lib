@@ -235,9 +235,6 @@ export default {
   get PureBaseComponent() {
     return require('./commons').PureBaseComponent;
   },
-  get SelectableComponent() {
-    return require('./commons').SelectableComponent;
-  },
   get UIComponent() {
     return require('./commons').UIComponent;
   },
