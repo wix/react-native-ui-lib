@@ -2,7 +2,7 @@ import { Direction } from './useHiddenLocation';
 export interface TranslatorProps {
     initialVisibility: boolean;
 }
-export default function useTranslator(props: TranslatorProps): {
+export default function useAnimatedTranslator(props: TranslatorProps): {
     init: (to: {
         x: number;
         y: number;

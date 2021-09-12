@@ -9,7 +9,7 @@ export interface TranslatorProps {
 const DEFAULT_ANIMATION_VELOCITY = 300;
 const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 300, mass: 0.4};
 
-export default function useAnimatedTransition(props: TranslatorProps) {
+export default function useAnimatedTranslator(props: TranslatorProps) {
   const {initialVisibility} = props;
 
   // Has to start at {0, 0} with {opacity: 0} so layout can be measured

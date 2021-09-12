@@ -5,7 +5,7 @@ import Animated, {runOnJS} from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocation, {Direction} from './useHiddenLocation';
-import useAnimatedTransition from './useAnimatedTransition';
+import useAnimatedTranslator from './useAnimatedTranslator';
 const AnimatedView = Animated.createAnimatedComponent(View);
 export {Direction};
 
@@ -43,7 +43,7 @@ const TransitionAnimator = (props: Props) => {
   } = props;
   const containerRef = React.createRef<RNView>();
   const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
-  const {init, animate, animatedStyle} = useAnimatedTransition({initialVisibility: !enterFrom});
+  const {init, animate, animatedStyle} = useAnimatedTranslator({initialVisibility: !enterFrom});
 
   const getLocation = (direction?: Direction) => {
     return {
