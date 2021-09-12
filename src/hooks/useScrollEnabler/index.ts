@@ -25,7 +25,7 @@ export type ScrollEnablerResultProps = {
 
 const useScrollEnabler = (props: ScrollEnablerProps = {}): ScrollEnablerResultProps => {
   const {horizontal = false} = props;
-  const [scrollEnabled, setScrollEnabled] = useState(true);
+  const [scrollEnabled, setScrollEnabled] = useState(false);
   const contentSize = useRef<number>(0);
   const layoutSize = useRef<number>(0);
 

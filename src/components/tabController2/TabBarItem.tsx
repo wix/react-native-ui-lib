@@ -1,5 +1,5 @@
 // TODO: support commented props
-import React, {useCallback, useContext, useEffect, useRef, ReactElement} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement} from 'react';
 import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
@@ -183,11 +183,16 @@ export default function TabBarItem({
     };
   });
 
+  const _style = useMemo(() => {
+    const constantWidthStyle = itemWidth.current ? {flex: 0, width: itemWidth.current} : undefined;
+    return [styles.tabItem, style, constantWidthStyle];
+  }, [style]);
+
   return (
     <TouchableOpacity
       // @ts-expect-error
       ref={itemRef}
-      style={[styles.tabItem, style]}
+      style={_style}
       onLayout={onLayout}
       activeBackgroundColor={activeBackgroundColor}
       activeOpacity={activeOpacity}
