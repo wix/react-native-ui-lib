@@ -128,7 +128,6 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    */
   dismissContainerStyle?: StyleProp<ImageStyle>;
 }
-export type ChipPropTypes = ChipProps; //TODO: remove after ComponentPropTypes deprecation;
 
 const DEFAULT_SIZE = 26;
 

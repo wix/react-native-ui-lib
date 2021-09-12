@@ -3,7 +3,7 @@ import {Alert, StyleSheet} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {Colors, Carousel, PageControl, Modal, View, Text} from 'react-native-ui-lib'; // eslint-disable-line
 
-interface ModalScreenPropTypes {
+interface ModalScreenProps {
   componentId: string;
 }
 
@@ -11,7 +11,7 @@ interface State {
   currentPage?: number;
 }
 
-export default class ModalScreen extends Component<ModalScreenPropTypes, State> {
+export default class ModalScreen extends Component<ModalScreenProps, State> {
 
   static options() {
     return {
@@ -22,7 +22,7 @@ export default class ModalScreen extends Component<ModalScreenPropTypes, State> 
     };
   }
 
-  constructor(props: ModalScreenPropTypes) {
+  constructor(props: ModalScreenProps) {
     super(props);
 
     this.state = {
