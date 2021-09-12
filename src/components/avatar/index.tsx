@@ -170,7 +170,7 @@ class Avatar extends PureComponent<AvatarProps> {
   static defaultProps = {
     animate: false,
     size: 50,
-    labelColor: Colors.dark10,
+    labelColor: Colors.grey10,
     badgePosition: BadgePosition.TOP_RIGHT
   };
 

@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
   containerShadow: {
     ...Platform.select({
       ios: {
-        shadowColor: Colors.dark10,
+        shadowColor: Colors.grey10,
         shadowOpacity: 0.05,
         shadowRadius: 2,
         shadowOffset: {height: 6, width: 0}

@@ -19,12 +19,12 @@ export default class ActionBarScreen extends Component {
 
   render() {
     return (
-      <View flex bg-dark80>
+      <View flex bg-grey80>
         <PageControl
           containerStyle={[styles.pageControl, styles.absoluteContainer]}
           numOfPages={6}
           currentPage={this.state.currentPage}
-          color={Colors.dark10}
+          color={Colors.grey10}
           size={15}
         />
         <Carousel
@@ -65,9 +65,9 @@ export default class ActionBarScreen extends Component {
             <ActionBar
               centered
               actions={[
-                {label: 'Bold', labelStyle: {color: Colors.dark10, ...Typography.text60, fontWeight: '400'}},
-                {label: 'Italic', text60: true, labelStyle: {fontStyle: 'italic', color: Colors.dark10}},
-                {label: 'Link', text60: true, labelStyle: {textDecorationLine: 'underline', color: Colors.dark10}}
+                {label: 'Bold', labelStyle: {color: Colors.grey10, ...Typography.text60, fontWeight: '400'}},
+                {label: 'Italic', text60: true, labelStyle: {fontStyle: 'italic', color: Colors.grey10}},
+                {label: 'Link', text60: true, labelStyle: {textDecorationLine: 'underline', color: Colors.grey10}}
               ]}
             />
           </View>

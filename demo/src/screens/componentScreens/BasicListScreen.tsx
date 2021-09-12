@@ -48,7 +48,7 @@ export default class BasicListScreen extends Component<{}, BasicListScreenState>
       <Animatable.View {...animationProps}>
         <ListItem
           // @ts-expect-error
-          activeBackgroundColor={Colors.dark60}
+          activeBackgroundColor={Colors.grey60}
           activeOpacity={0.3}
           height={77.5}
           onPress={() => Alert.alert(`pressed on order #${id + 1}`)}
@@ -58,10 +58,10 @@ export default class BasicListScreen extends Component<{}, BasicListScreenState>
           </ListItem.Part>
           <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
             <ListItem.Part containerStyle={{marginBottom: 3}}>
-              <Text dark10 text70 style={{flex: 1, marginRight: 10}} numberOfLines={1}>
+              <Text grey10 text70 style={{flex: 1, marginRight: 10}} numberOfLines={1}>
                 {row.name}
               </Text>
-              <Text dark10 text70 style={{marginTop: 2}}>
+              <Text grey10 text70 style={{marginTop: 2}}>
                 {row.formattedPrice}
               </Text>
             </ListItem.Part>
@@ -69,7 +69,7 @@ export default class BasicListScreen extends Component<{}, BasicListScreenState>
               <Text
                 style={{flex: 1, marginRight: 10}}
                 text90
-                dark40
+                grey40
                 numberOfLines={1}
               >{`${row.inventory.quantity} item`}</Text>
               <Text text90 color={statusColor} numberOfLines={1}>
@@ -102,6 +102,6 @@ const styles = StyleSheet.create({
   },
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.dark70
+    borderColor: Colors.grey70
   }
 });

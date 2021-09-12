@@ -75,13 +75,13 @@ function createStyles(isRemoteImage: boolean) {
     title: {
       textAlign: 'center',
       ...Typography.text50,
-      color: Colors.dark10,
+      color: Colors.grey10,
       fontWeight: '300'
     },
     subtitle: {
       textAlign: 'center',
       ...Typography.text70,
-      color: Colors.dark40,
+      color: Colors.grey40,
       fontWeight: '300',
       marginTop: 12
     },
