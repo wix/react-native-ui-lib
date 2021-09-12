@@ -1,8 +1,8 @@
-import { ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType, Animated } from 'react-native';
-import { PageControlProps } from '../pageControl';
+import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType, Animated} from 'react-native';
+import {PageControlProps} from '../pageControl';
 export declare enum PageControlPosition {
-    OVER = "over",
-    UNDER = "under"
+    OVER = 'over',
+    UNDER = 'under'
 }
 export interface CarouselProps extends ScrollViewProps {
     /**
@@ -37,7 +37,7 @@ export interface CarouselProps extends ScrollViewProps {
     /**
      * callback for when page has changed
      */
-    onChangePage?: (newPageIndex: number, oldPageIndex: number) => void;
+    onChangePage?: (newPageIndex: number, oldPageIndex: number, info: {isAutoScrolled: boolean}) => void;
     /**
      * callback for onScroll event of the internal ScrollView
      */

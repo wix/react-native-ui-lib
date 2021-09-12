@@ -18,6 +18,10 @@ export declare type ScrollToItemProps<T extends ScrollToSupportedViews> = {
      */
     selectedIndex?: number;
     /**
+     * The container width, should update on orientation change
+     */
+    containerWidth: number;
+    /**
      * Where would the item be located (default to CENTER)
      */
     offsetType?: OffsetType;
@@ -53,6 +57,10 @@ export declare type ScrollToItemResultProps<T extends ScrollToSupportedViews> = 
      * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
      */
     focusIndex: (index: number, animated?: boolean) => void;
+    /**
+     * Use in order to reset the data.
+     */
+    reset: () => void;
     /**
      * onContentSizeChange callback (should be set to your onContentSizeChange).
      * Needed for RTL support on Android.

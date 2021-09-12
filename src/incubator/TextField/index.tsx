@@ -95,10 +95,12 @@ export type TextFieldProps = MarginModifiers &
     preset?: 'default' | null;
   };
 
-export type InternalTextFieldProps = PropsWithChildren<TextFieldProps &
-  // Omit<FieldStateInjectedProps, keyof InputProps> &
-  BaseComponentInjectedProps &
-  ForwardRefInjectedProps>;
+export type InternalTextFieldProps = PropsWithChildren<
+  TextFieldProps &
+    // Omit<FieldStateInjectedProps, keyof InputProps> &
+    BaseComponentInjectedProps &
+    ForwardRefInjectedProps
+>;
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
@@ -177,7 +179,7 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]}>
           <View row centerV>
             {leadingAccessory}
-            <View flex>
+            <View flexG>
               {floatingPlaceholder && (
                 <FloatingPlaceholder
                   placeholder={placeholder}
@@ -189,12 +191,13 @@ const TextField = (props: InternalTextFieldProps) => {
               )}
               {children || (
                 <Input
+                  placeholderTextColor={floatingPlaceholder ? 'transparent' : undefined}
                   {...others}
                   style={[typographyStyle, colorStyle, others.style]}
                   onFocus={onFocus}
                   onBlur={onBlur}
                   onChangeText={onChangeText}
-                  placeholder={floatingPlaceholder ? undefined : placeholder}
+                  placeholder={placeholder}
                   hint={hint}
                 />
               )}

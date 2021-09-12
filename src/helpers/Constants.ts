@@ -78,10 +78,10 @@ const constants = {
   /* Layout */
   isRTL: I18nManager.isRTL,
   get orientation() {
-    return getOrientation(screenHeight, screenWidth);
+    return getOrientation(windowHeight, windowWidth);
   },
   get isLandscape() {
-    return getOrientation(screenHeight, screenWidth) === orientations.LANDSCAPE;
+    return getOrientation(windowHeight, windowWidth) === orientations.LANDSCAPE;
   },
   get screenWidth() {
     return screenWidth;

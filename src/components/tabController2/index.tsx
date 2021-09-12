@@ -1,8 +1,9 @@
 // TODO: support commented props
-import React, {PropsWithChildren, useMemo, useEffect} from 'react';
+import React, {PropsWithChildren, useMemo, useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 import {Constants} from '../../helpers';
+import {orientations} from '../../helpers/Constants';
 import {asBaseComponent} from '../../commons/new';
 import {LogService} from '../../services';
 import TabBarContext from './TabBarContext';
@@ -56,9 +57,24 @@ function TabController({
   carouselPageWidth,
   children
 }: PropsWithChildren<TabControllerProps>) {
+  const [screenWidth, setScreenWidth] = useState<number>(Constants.windowWidth);
+  const orientation = useRef<orientations>(Constants.orientation);
+  useEffect(() => {
+    const onOrientationChange = () => {
+      if (orientation.current !== Constants.orientation) {
+        orientation.current = Constants.orientation;
+        setScreenWidth(Constants.windowWidth);
+      }
+    };
+    Constants.addDimensionsEventListener(onOrientationChange);
+    return () => {
+      Constants.removeDimensionsEventListener(onOrientationChange);
+    };
+  }, []);
+
   const pageWidth = useMemo(() => {
-    return carouselPageWidth || Constants.screenWidth;
-  }, [carouselPageWidth]);
+    return carouselPageWidth || screenWidth;
+  }, [carouselPageWidth, screenWidth]);
 
   const ignoredItems = useMemo(() => {
     return _.filter<TabControllerItemProps[]>(items, (item: TabControllerItemProps) => item.ignore);
@@ -72,7 +88,6 @@ function TabController({
   /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
   const targetPage = useSharedValue(initialIndex);
   const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
-  const containerWidth = useSharedValue(pageWidth);
 
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
@@ -107,11 +122,11 @@ function TabController({
       targetPage,
       currentPage,
       carouselOffset,
-      containerWidth,
+      containerWidth: screenWidth,
       /* Callbacks */
       onChangeIndex
     };
-  }, [/* initialIndex,*/initialIndex, asCarousel, items, onChangeIndex]);
+  }, [/* initialIndex,*/initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 }

@@ -1,4 +1,4 @@
-import React, {useMemo, useContext, ReactNode} from 'react';
+import React, {useMemo, useContext, useState, useRef, ReactNode} from 'react';
 import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import _ from 'lodash';
@@ -8,10 +8,12 @@ import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
-import {Constants} from '../../helpers';
 import FadedScrollView from './FadedScrollView';
 
 import useScrollToItem from './useScrollToItem';
+import {orientations} from '../../helpers/Constants';
+import {Constants} from 'helpers';
+import {useDidUpdate} from 'hooks';
 
 const DEFAULT_HEIGHT = 48;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
@@ -144,30 +146,42 @@ const TabBar = (props: Props) => {
     testID
   } = props;
 
+  const tabBar = useRef<typeof FadedScrollView>();
+  const [key, setKey] = useState<orientations>(Constants.orientation);
   const context = useContext(TabBarContext);
-  const {items: contextItems, currentPage, targetPage, selectedIndex} = context;
+  const {
+    items: contextItems,
+    currentPage,
+    targetPage,
+    initialIndex,
+    selectedIndex,
+    containerWidth: contextContainerWidth
+  } = context;
 
   const containerWidth: number = useMemo(() => {
-    return propsContainerWidth || Constants.screenWidth;
-  }, [propsContainerWidth]);
+    return propsContainerWidth || contextContainerWidth;
+  }, [propsContainerWidth, contextContainerWidth]);
 
   const items = useMemo(() => {
     return contextItems || propsItems;
   }, [contextItems, propsItems]);
 
   const {
-    scrollViewRef: tabBar,
     onItemLayout,
     itemsWidthsAnimated,
     itemsOffsetsAnimated,
     // itemsWidths,
     // itemsOffsets,
     focusIndex,
+    reset,
     onContentSizeChange,
     onLayout
   } = useScrollToItem({
+    // @ts-expect-error TODO: typing bug
+    scrollViewRef: tabBar,
     itemsCount: items?.length || 0,
-    selectedIndex,
+    selectedIndex: selectedIndex || initialIndex,
+    containerWidth,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
 
@@ -247,14 +261,23 @@ const TabBar = (props: Props) => {
     return {minWidth: containerWidth};
   }, [containerWidth]);
 
+  useDidUpdate(() => {
+    // @ts-expect-error TODO: fix forwardRef Statics
+    if (tabBar.current?.isScrollEnabled()) {
+      focusIndex(currentPage.value);
+    } else {
+      reset();
+      setKey(Constants.orientation);
+    }
+  }, [containerWidth]);
+
   return (
-    <View style={_containerStyle}>
+    <View style={_containerStyle} key={key}>
       <FadedScrollView
         // @ts-expect-error
         ref={tabBar}
         horizontal
         contentContainerStyle={scrollViewContainerStyle}
-        scrollEnabled // TODO:
         testID={testID}
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
@@ -282,9 +305,6 @@ const styles = StyleSheet.create({
     height: DEFAULT_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between'
-  },
-  tabBarScrollContent: {
-    minWidth: Constants.screenWidth
   },
   tab: {
     flex: 1,
