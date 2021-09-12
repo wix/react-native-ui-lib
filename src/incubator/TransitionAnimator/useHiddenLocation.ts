@@ -3,7 +3,7 @@ import {View, LayoutChangeEvent} from 'react-native';
 import {Constants} from 'helpers';
 
 export type Direction = 'top' | 'bottom' | 'left' | 'right';
-interface HiddenLocation {
+export interface HiddenLocation {
   isDefault: boolean;
   top: number;
   bottom: number;

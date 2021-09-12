@@ -1,7 +1,7 @@
 import { RefObject } from 'react';
 import { View, LayoutChangeEvent } from 'react-native';
 export declare type Direction = 'top' | 'bottom' | 'left' | 'right';
-interface HiddenLocation {
+export interface HiddenLocation {
     isDefault: boolean;
     top: number;
     bottom: number;
@@ -15,4 +15,3 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
     onLayout: (event: LayoutChangeEvent) => void;
     hiddenLocation: HiddenLocation;
 };
-export {};
