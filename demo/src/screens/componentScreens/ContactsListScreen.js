@@ -1,40 +1,17 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
-import {Colors, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
 export default class ContactsListScreen extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      onEdit: false,
-      updating: false
-    };
-  }
-
-  getEntranceByIndex = (index = 0, options) => {
-    return {
-      animation: 'itemEntrance',
-      easing: 'ease-out-quint',
-      duration: 600,
-      delay: 10 + (Number(index) % 12) * 100,
-      useNativeDriver: true,
-      ...options
-    };
-  };
-
-  keyExtractor = item => item.name;
+  keyExtractor = (item, index) => `${item.name}.${index}`;
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
-    const animationProps = this.getEntranceByIndex(id);
 
     return (
-      <AnimatableView {...animationProps}>
+      <View>
         <ListItem
           key={id}
           onPress={() => Alert.alert(`pressed on contact #${id + 1}`)}
@@ -51,7 +28,7 @@ export default class ContactsListScreen extends Component {
             <Text text70>{row.name}</Text>
           </ListItem.Part>
         </ListItem>
-      </AnimatableView>
+      </View>
     );
   }
 

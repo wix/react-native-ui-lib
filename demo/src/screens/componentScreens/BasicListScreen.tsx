@@ -1,51 +1,18 @@
-import {sample} from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import {Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib';
+import {Colors, BorderRadiuses, View, Image, ListItem, Text} from 'react-native-ui-lib';
 import orders, {OrderType} from '../../data/orders';
 
-type BasicListScreenState = {
-  onEdit: boolean;
-  updating: boolean;
-}
 
-export default class BasicListScreen extends Component<{}, BasicListScreenState> {
-
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      onEdit: false,
-      updating: false
-    };
-  }
-
-  getRandomDelay(delays = [20, 120, 220], options: any) {
-    return {
-      animation: 'fadeInLeft',
-      easing: 'ease-out-expo',
-      duration: 600,
-      delay: sample(delays),
-      useNativeDriver: true,
-      ...options
-    };
-  }
+export default class BasicListScreen extends Component {
 
   keyExtractor = (item: OrderType) => item.name;
 
   renderRow(row: OrderType, id: number) {
     const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;
-    const animationProps = {
-      animation: 'fadeInRight',
-      easing: 'ease-out-expo',
-      duration: 500,
-      useNativeDriver: true
-    };
-    const imageAnimationProps = this.getRandomDelay(undefined, undefined);
 
     return (
-      <Animatable.View {...animationProps}>
+      <View>
         <ListItem
           // @ts-expect-error
           activeBackgroundColor={Colors.dark60}
@@ -54,7 +21,7 @@ export default class BasicListScreen extends Component<{}, BasicListScreenState>
           onPress={() => Alert.alert(`pressed on order #${id + 1}`)}
         >
           <ListItem.Part left>
-            <Animatable.Image source={{uri: row.mediaUrl}} style={styles.image} {...imageAnimationProps} />
+            <Image source={{uri: row.mediaUrl}} style={styles.image}/>
           </ListItem.Part>
           <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
             <ListItem.Part containerStyle={{marginBottom: 3}}>
@@ -78,7 +45,7 @@ export default class BasicListScreen extends Component<{}, BasicListScreenState>
             </ListItem.Part>
           </ListItem.Part>
         </ListItem>
-      </Animatable.View>
+      </View>
     );
   }
 
