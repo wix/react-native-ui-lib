@@ -13,7 +13,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      */
     backgroundColor?: string;
     /**
-     * the badge size (default, small)
+     * the badge size
      */
     size?: number;
     /**
