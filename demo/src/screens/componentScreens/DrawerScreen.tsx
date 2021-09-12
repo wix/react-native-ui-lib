@@ -192,7 +192,7 @@ class DrawerScreen extends Component {
         style={{borderBottomWidth: 1, borderColor: Colors.grey60}}
         testID="drawer_item"
       >
-        {this.state.unread && <Badge testID="drawer_item_badge" size={'pimpleSmall'} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
+        {this.state.unread && <Badge testID="drawer_item_badge" size={6} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
         <Avatar source={{uri: data.thumbnail}}/>
         <View marginL-20>
           <Text text70R={!this.state.unread} text70BO={this.state.unread}>{data.name}</Text>
