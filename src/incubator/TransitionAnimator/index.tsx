@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {PropsWithChildren, useEffect, useCallback, useImperativeHandle} from 'react';
 import {View as RNView, LayoutChangeEvent} from 'react-native';
-import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, runOnJS} from 'react-native-reanimated';
+import Animated, {runOnJS} from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocation, {Direction} from './useHiddenLocation';
+import useAnimatedTransition from './useAnimatedTransition';
 const AnimatedView = Animated.createAnimatedComponent(View);
 export {Direction};
-
-const DEFAULT_ANIMATION_VELOCITY = 300;
-const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 300, mass: 0.4};
 
 export type TransitionAnimationEndType = 'in' | 'out';
 
@@ -45,38 +43,13 @@ const TransitionAnimator = (props: Props) => {
   } = props;
   const containerRef = React.createRef<RNView>();
   const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
-  const visible = useSharedValue<boolean>(!enterFrom);
+  const {init, animate, animatedStyle} = useAnimatedTransition({initialVisibility: !enterFrom});
 
-  // Has to start at {0, 0} with {opacity: 0} so layout can be measured
-  const translateX = useSharedValue<number>(0);
-  const translateY = useSharedValue<number>(0);
-
-  const getDirection = (direction?: Direction) => {
+  const getLocation = (direction?: Direction) => {
     return {
       x: direction && ['left', 'right'].includes(direction) ? hiddenLocation[direction] : 0,
       y: direction && ['top', 'bottom'].includes(direction) ? hiddenLocation[direction] : 0
     };
-  };
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{translateX: translateX.value}, {translateY: translateY.value}],
-      // TODO: do we want to take the component's opacity here? - I think combining opacities is buggy
-      opacity: Number(visible.value)
-    };
-  }, []);
-
-  const animate = (to: {x: number; y: number},
-    callback: (isFinished: boolean) => void,
-    animationDirection?: Direction) => {
-    'worklet';
-    if (animationDirection) {
-      if (['left', 'right'].includes(animationDirection)) {
-        translateX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
-      } else if (['top', 'bottom'].includes(animationDirection)) {
-        translateY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
-      }
-    }
   };
 
   const onExitAnimationEnd = useCallback((isFinished: boolean) => {
@@ -89,7 +62,7 @@ const TransitionAnimator = (props: Props) => {
 
   const exit = useCallback(() => {
     'worklet';
-    animate(getDirection(exitTo), onExitAnimationEnd, exitTo);
+    animate(getLocation(exitTo), onExitAnimationEnd, exitTo);
   }, [hiddenLocation, exitTo, onExitAnimationEnd]);
 
   const onEnterAnimationEnd = useCallback((isFinished: boolean) => {
@@ -113,14 +86,8 @@ const TransitionAnimator = (props: Props) => {
 
   useEffect(() => {
     if (!hiddenLocation.isDefault && enterFrom) {
-      const direction = getDirection(enterFrom);
-      if (['left', 'right'].includes(enterFrom)) {
-        translateX.value = withTiming(direction.x, {duration: 0}, enter);
-      } else {
-        translateY.value = withTiming(direction.y, {duration: 0}, enter);
-      }
-
-      visible.value = true;
+      const location = getLocation(enterFrom);
+      init(location, enter, enterFrom);
     }
   }, [hiddenLocation.isDefault]);
 
