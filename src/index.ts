@@ -33,6 +33,7 @@ export {default as Text, TextProps} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
 export {default as Button, ButtonProps, ButtonSize, ButtonAnimationDirection} from './components/button';
 export {default as Checkbox, CheckboxProps} from './components/checkbox';
+export {default as Stepper, StepperProps} from './components/stepper';
 export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPicker/ColorPalette';
@@ -95,7 +96,6 @@ export {
   Picker,
   PickerProps, 
   ProgressBar, 
-  Stepper,
   SharedTransition, 
   Toast, 
   WheelPickerDialog, 
