@@ -3,8 +3,9 @@ import React, {Component} from 'react';
 import {ScrollView, View, Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import {Colors, Typography, Toast} from 'react-native-ui-lib';//eslint-disable-line
 
+
 const {width} = Dimensions.get('window');
-const baseColors = ['dark', 'blue', 'cyan', 'green', 'yellow', 'orange', 'red', 'purple', 'violet'];
+const baseColors = ['grey', 'blue', 'cyan', 'green', 'yellow', 'orange', 'red', 'purple', 'violet'];
 
 export default class ColorsScreen extends Component {
 
@@ -15,7 +16,7 @@ export default class ColorsScreen extends Component {
       key: '',
       color: Colors.white,
       background: Colors.blue40,
-      showToast: false,
+      showToast: false
     };
   }
 
