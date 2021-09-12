@@ -2,12 +2,6 @@ import React, { PureComponent } from 'react';
 import { ImageSourcePropType, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle, AccessibilityProps } from 'react-native';
 import { BadgeProps } from '../badge';
 import { ImageProps } from '../image';
-export declare enum StatusModes {
-    ONLINE = "ONLINE",
-    OFFLINE = "OFFLINE",
-    AWAY = "AWAY",
-    NONE = "NONE"
-}
 export declare enum BadgePosition {
     TOP_RIGHT = "TOP_RIGHT",
     TOP_LEFT = "TOP_LEFT",
@@ -117,14 +111,6 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
      */
     customRibbon?: JSX.Element;
     /**
-     * Determine if to show online badge
-     */
-    isOnline?: boolean;
-    /**
-     * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
-     */
-    status?: StatusModes;
-    /**
      * Custom size for the Avatar
      */
     size: number;
@@ -144,21 +130,19 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */
 declare class Avatar extends PureComponent<AvatarProps> {
+    static displayName: string;
     styles: ReturnType<typeof createStyles>;
     constructor(props: AvatarProps);
-    static displayName: string;
-    static modes: typeof StatusModes;
-    static badgePosition: typeof BadgePosition;
     static defaultProps: {
         animate: boolean;
         size: number;
         labelColor: string;
         badgePosition: BadgePosition;
     };
+    static badgePosition: typeof BadgePosition;
     getContainerStyle(): StyleProp<ViewStyle>;
     getInitialsContainer(): StyleProp<ViewStyle>;
     getRibbonStyle(): StyleProp<ViewStyle>;
-    getStatusBadgeColor(status: StatusModes | undefined): string | null;
     getBadgeBorderWidth: () => any;
     getBadgeColor(): any;
     getBadgeSize: () => number;
@@ -279,14 +263,6 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
      * Custom ribbon
      */
     customRibbon?: JSX.Element | undefined;
-    /**
-     * Determine if to show online badge
-     */
-    isOnline?: boolean | undefined;
-    /**
-     * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
-     */
-    status?: StatusModes | undefined;
     /**
      * Custom size for the Avatar
      */

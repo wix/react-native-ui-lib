@@ -4,7 +4,7 @@ import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 're
 import _ from 'lodash';
 import Reanimated, {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {Colors, Typography, Spacings} from '../../style';
-import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
+import Badge, {BadgeProps} from '../badge';
 import _TouchableOpacity from '../touchableOpacity';
 import TabBarContext from './TabBarContext';
 
@@ -212,7 +212,7 @@ export default function TabBarItem({
         </Reanimated.Text>
       )}
       {badge && (
-        <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
+        <Badge backgroundColor={Colors.red30} size={20} {...badge} containerStyle={styles.badge}/>
       )}
       {trailingAccessory}
     </TouchableOpacity>
