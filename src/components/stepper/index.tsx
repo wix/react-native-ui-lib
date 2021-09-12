@@ -118,10 +118,10 @@ class Stepper extends PureComponent<Props, State> {
 
     switch (event.nativeEvent.actionName) {
       case 'decrement':
-        this.accessibilityActionHandler('minus', currentValue - step, stepperLimitMsg);
+        this.accessibilityActionHandler(ActionType.MINUS, currentValue - step, stepperLimitMsg);
         break;
       case 'increment':
-        this.accessibilityActionHandler('plus', currentValue + step, stepperLimitMsg);
+        this.accessibilityActionHandler(ActionType.PLUS, currentValue + step, stepperLimitMsg);
         break;
       default:
         break;
