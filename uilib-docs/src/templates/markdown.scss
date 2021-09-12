@@ -22,10 +22,10 @@
   }
 
   pre {
-    background-color: $dark10;
+    background-color: $grey10;
     border-radius: 4px;
     padding: 16px;
-    box-shadow: 2px 2px 2px rgba($dark10, 0.2);
+    box-shadow: 2px 2px 2px rgba($grey10, 0.2);
 
     code {
       background: transparent;
@@ -37,7 +37,7 @@
   code {
     word-break: break-word;
     display: inline-block;
-    background: $dark70;
+    background: $grey70;
     padding: 1px 2px;
     margin-bottom: 2px;
   }

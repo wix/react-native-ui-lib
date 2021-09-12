@@ -12,7 +12,7 @@ export default class HapticScreen extends Component {
     return (
       <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
         <View padding-20>
-          <Text text30 dark10 marginB-20>
+          <Text text30 grey10 marginB-20>
             Haptic Screen
           </Text>
 

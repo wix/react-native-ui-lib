@@ -83,7 +83,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
     return (
       <>
         {showLabels && labels && (
-          <Text dark30 text80 style={labelsStyle} accessible={accessible}>
+          <Text grey30 text80 style={labelsStyle} accessible={accessible}>
             {labels[type]}
           </Text>
         )}

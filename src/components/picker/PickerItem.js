@@ -53,7 +53,7 @@ const PickerItem = props => {
 
   const selectedIndicator = useMemo(() => {
     if (isSelected) {
-      return <Image source={selectedIcon} tintColor={isItemDisabled ? Colors.dark60 : selectedIconColor}/>;
+      return <Image source={selectedIcon} tintColor={isItemDisabled ? Colors.grey60 : selectedIconColor}/>;
     }
   }, [isSelected, isItemDisabled, selectedIcon, selectedIconColor]);
 
@@ -99,17 +99,17 @@ const styles = StyleSheet.create({
   container: {
     height: 56.5,
     paddingHorizontal: 23,
-    borderColor: Colors.rgba(Colors.dark10, 0.1),
+    borderColor: Colors.rgba(Colors.grey10, 0.1),
     borderBottomWidth: 1
   },
   labelText: {
     ...Typography.text70,
-    color: Colors.dark10,
+    color: Colors.grey10,
     flex: 1,
     textAlign: 'left'
   },
   labelTextDisabled: {
-    color: Colors.dark60
+    color: Colors.grey60
   }
 });
 

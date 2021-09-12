@@ -4,7 +4,7 @@ import {Colors, Typography} from '../../style';
 
 
 export default function createStyles() {
-  const separatorColor = Colors.dark70;
+  const separatorColor = Colors.grey70;
   const bottomTextMargin = 4; // use margins to center the text until we move to using assets
 
   return StyleSheet.create({
@@ -34,7 +34,7 @@ export default function createStyles() {
     },
     titleText: {
       ...Typography.text70,
-      color: Colors.dark10
+      color: Colors.grey10
     },
     separator: {
       marginTop: Constants.isIOS ? 4 : 2,
@@ -51,7 +51,7 @@ export default function createStyles() {
       marginBottom: bottomTextMargin
     },
     disableText: {
-      color: Colors.dark70,
+      color: Colors.grey70,
       marginBottom: bottomTextMargin
     }
   });
