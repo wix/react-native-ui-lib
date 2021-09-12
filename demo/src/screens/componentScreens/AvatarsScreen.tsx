@@ -1,12 +1,11 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, View, Text, StyleSheet, Alert} from 'react-native';
-import _ from 'lodash';
 import {Avatar, AvatarHelper, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 
+
 const star = require('../../assets/icons/star.png');
-
 const onlineColor = Colors.green30;
-
 const examples = [
   {title: 'Custom Background', backgroundColor: Colors.violet60},
   {title: 'Empty Avatar with ribbon', ribbonLabel: 'New'},
@@ -106,19 +105,16 @@ const examples = [
     badgePosition: 'BOTTOM_RIGHT',
     badgeProps: {
       label: '+2',
-      size: 'large',
+      size: 24,
       borderWidth: 1.5,
-      borderColor: Colors.white,
+      borderColor: Colors.white
     }
   }
 ];
 
 export default class AvatarsScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  onAvatarPress = (item) => {
+  
+  onAvatarPress = (item: any) => {
     const {title, source, label} = item;
     const uri = _.get(source, 'uri');
     const isGravatar = !!uri && AvatarHelper.isGravatarUrl(uri);
