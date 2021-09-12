@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     borderRightWidth: 1,
-    borderRightColor: Colors.dark70,
+    borderRightColor: Colors.grey70,
     marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
   },
   indicator: {

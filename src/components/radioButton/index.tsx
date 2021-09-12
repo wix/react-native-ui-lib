@@ -195,7 +195,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
       style.push({borderRadius});
     }
     if (color) {
-      style.push({borderColor: disabled ? Colors.dark70 : color});
+      style.push({borderColor: disabled ? Colors.grey70 : color});
     }
 
     style.push(propsStyle);
@@ -210,7 +210,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
       style.push({borderRadius});
     }
     if (color) {
-      style.push({backgroundColor: disabled ? Colors.dark70 : color});
+      style.push({backgroundColor: disabled ? Colors.grey70 : color});
     }
 
     return style;
@@ -278,14 +278,14 @@ function createStyles(props: RadioButtonProps) {
   return StyleSheet.create({
     radioButtonOutline: {
       borderWidth: 2,
-      borderColor: disabled ? Colors.dark70 : color,
+      borderColor: disabled ? Colors.grey70 : color,
       width: size,
       height: size,
       borderRadius,
       padding: 3
     },
     radioButtonInner: {
-      backgroundColor: disabled ? Colors.dark70 : color,
+      backgroundColor: disabled ? Colors.grey70 : color,
       flex: 1,
       borderRadius
     },

@@ -14,7 +14,7 @@ export default class OverlaysScreen extends Component {
   getImageWithOverlay = (type, text, customOverylay) => {
     return (
       <View centerH>
-        <Text dark10>{text}</Text>
+        <Text grey10>{text}</Text>
         <Image /* overlayColor={Colors.rgba(Colors.red40, 0.4)} */ style={styles.image} source={image} overlayType={type} customOverlayContent={customOverylay}/>
       </View>
     );

@@ -37,9 +37,9 @@ export default class ProgressBarScreen extends Component {
 
     return (
       <ScrollView>
-        <View flex bg-dark80 spread paddingV-18>
+        <View flex bg-grey80 spread paddingV-18>
           <View paddingL-18 marginB-18>
-            <Text text40 dark10>
+            <Text text40 grey10>
               ProgressBar
             </Text>
           </View>
@@ -55,7 +55,7 @@ export default class ProgressBarScreen extends Component {
                   progressBackgroundColor={[Colors.red40, Colors.purple40, Colors.blue30, Colors.green40][index]}
                 />
 
-                <View bg-dark10 padding-12>
+                <View bg-grey10 padding-12>
                   <Text white>
                     {this.elements[index] && this.elements[index].getSnippet()}
                   </Text>

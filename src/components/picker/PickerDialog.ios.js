@@ -58,7 +58,7 @@ class PickerDialog extends BaseComponent {
 const styles = StyleSheet.create({
   header: {
     height: 44,
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.grey80,
     paddingHorizontal: 17,
     flexDirection: 'row',
     justifyContent: 'space-between',

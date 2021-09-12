@@ -98,7 +98,7 @@ export default class ToastsScreen extends Component {
     const backgroundColor = selectedColor === 'none' ? undefined : selectedColor;
 
     return (
-      <View flex center bg-dark80 style={styles.container}>
+      <View flex center bg-grey80 style={styles.container}>
         <Toast
           renderAttachment={this.renderBelowToast}
           visible={this.state.showTopToast}
@@ -201,6 +201,6 @@ const styles = StyleSheet.create({
   },
   selected: {
     borderWidth: 2,
-    borderColor: Colors.dark10
+    borderColor: Colors.grey10
   }
 });

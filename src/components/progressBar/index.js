@@ -35,8 +35,8 @@ export default class ProgressBar extends BaseComponent {
   };
 
   static defaultProps = {
-    backgroundColor: Colors.dark60,
-    progressBackgroundColor: Colors.dark10
+    backgroundColor: Colors.grey60,
+    progressBackgroundColor: Colors.grey10
   };
 
   getAccessibilityProps() {

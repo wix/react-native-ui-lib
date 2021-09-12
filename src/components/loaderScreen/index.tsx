@@ -29,7 +29,7 @@ class LoaderScreen extends Component<LoaderScreenProps> {
             <ActivityIndicator
               size={'large'}
               animating
-              color={loaderColor || (Constants.isIOS ? Colors.dark60 : Colors.primary)}
+              color={loaderColor || (Constants.isIOS ? Colors.grey60 : Colors.primary)}
               {...others}
             />
           )}
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
   message: {
     ...Typography.text70,
     marginTop: 18,
-    color: Colors.dark10
+    color: Colors.grey10
   }
 });

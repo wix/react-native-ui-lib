@@ -175,8 +175,8 @@ export default class ButtonsScreen extends Component {
 
             <Button
               label="Outline with background"
-              outlineColor={Colors.dark10}
-              backgroundColor={Colors.dark40}
+              outlineColor={Colors.grey10}
+              backgroundColor={Colors.grey40}
               style={{marginBottom: ButtonSpace}}
             />
 
@@ -388,7 +388,7 @@ export default class ButtonsScreen extends Component {
 
           <View marginT-20>
             <View centerH marginB-10>
-              <Text text50 dark10>
+              <Text text50 grey10>
                 Full Width Buttons
               </Text>
             </View>
@@ -398,7 +398,7 @@ export default class ButtonsScreen extends Component {
               fullWidth
               size="medium"
               bg-red70
-              dark10
+              grey10
               label="Medium Size Full Width"
               marginB-10
             />
@@ -421,7 +421,7 @@ const SnippetBlock = ({snippet, onClose}) => {
     <View
       flex
       spread
-      bg-dark10
+      bg-grey10
       padding-15
       style={{...StyleSheet.absoluteFillObject, zIndex: 1}}
     >
