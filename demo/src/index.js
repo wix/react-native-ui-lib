@@ -118,9 +118,6 @@ module.exports = {
       get TabControllerScreen() {
         return require('./screens/componentScreens/TabControllerScreen').default;
       },
-      get TabBarScreen() {
-        return require('./screens/componentScreens/TabBarScreen').default;
-      },
       get TextScreen() {
         return require('./screens/componentScreens/TextScreen').default;
       },

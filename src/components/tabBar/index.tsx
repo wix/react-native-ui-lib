@@ -99,6 +99,8 @@ class TabBar extends Component<TabBarProps, State> {
     this.contentOffset = {x: 0, y: 0};
     this.scrollBar = React.createRef();
     this.itemsRefs = [];
+
+    console.warn('TabBar component is deprecated. Please use TabController instead.');
   }
 
   componentDidUpdate(prevProps: TabBarProps, prevState: State) {
