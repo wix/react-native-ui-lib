@@ -9,6 +9,6 @@ export {default as PanView, PanViewProps, PanViewDirections, PanViewDismissThres
 export {
   default as TransitionAnimator,
   TransitionAnimatorProps,
-  TransitionLocation,
+  Direction,
   TransitionAnimationEndType
 } from './TransitionAnimator';

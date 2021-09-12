@@ -5,16 +5,16 @@ const {TransitionAnimator} = Incubator;
 import {renderRadioGroup} from '../ExampleScreenPresenter';
 
 interface State {
-  enterLocation: Incubator.TransitionLocation;
-  exitLocation: Incubator.TransitionLocation;
+  enterDirection: Incubator.Direction;
+  exitDirection: Incubator.Direction;
   key: number;
 }
 
 export default class TransitionAnimatorScreen extends Component<{}, State> {
   private ref = React.createRef<typeof TransitionAnimator>();
   state = {
-    enterLocation: 'left' as Incubator.TransitionLocation,
-    exitLocation: 'bottom' as Incubator.TransitionLocation,
+    enterDirection: 'left' as Incubator.Direction,
+    exitDirection: 'bottom' as Incubator.Direction,
     key: 1
   };
 
@@ -27,26 +27,27 @@ export default class TransitionAnimatorScreen extends Component<{}, State> {
   //   };
 
   render() {
-    const {key, enterLocation, exitLocation} = this.state;
+    const {key, enterDirection, exitDirection} = this.state;
     return (
       <View padding-20 bg-grey80 flex>
         {renderRadioGroup.call(this,
-          'Enter location',
-          'enterLocation',
+          'Enter direction',
+          'enterDirection',
           {top: 'top', bottom: 'bottom', left: 'left', right: 'right'},
           {isRow: true})}
         {renderRadioGroup.call(this,
-          'Exit location',
-          'exitLocation',
+          'Exit direction',
+          'exitDirection',
           {top: 'top', bottom: 'bottom', left: 'left', right: 'right'},
           {isRow: true})}
         <Button label="Refresh" onPress={() => this.setState({key: key + 1})}/>
         <View flex center>
           <TransitionAnimator
             key={`${key}`}
+            // @ts-expect-error
             ref={this.ref}
-            enterFrom={enterLocation}
-            exitTo={exitLocation}
+            enterFrom={enterDirection}
+            exitTo={exitDirection}
             // onAnimationEnd={this.onAnimationEnd}
           >
             <Button label="Press to remove" onPress={this.onPress}/>

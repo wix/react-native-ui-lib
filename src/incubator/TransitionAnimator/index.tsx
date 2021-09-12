@@ -4,9 +4,9 @@ import {View as RNView, LayoutChangeEvent} from 'react-native';
 import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, runOnJS} from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
-import useHiddenLocations, {HiddenLocation} from './useHiddenLocations';
+import useHiddenLocation, {Direction} from './useHiddenLocation';
 const AnimatedView = Animated.createAnimatedComponent(View);
-export {HiddenLocation as TransitionLocation};
+export {Direction};
 
 const DEFAULT_ANIMATION_VELOCITY = 300;
 const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 300, mass: 0.4};
@@ -19,13 +19,13 @@ export interface TransitionAnimatorProps extends ViewProps {
    */
   onAnimationEnd?: (animationType: TransitionAnimationEndType) => void;
   /**
-   * If this is given there will be an enter animation from this location.
+   * If this is given there will be an enter animation from this direction.
    */
-  enterFrom?: HiddenLocation;
+  enterFrom?: Direction;
   /**
-   * If this is given there will be an exit animation to this location.
+   * If this is given there will be an exit animation to this direction.
    */
-  exitTo?: HiddenLocation;
+  exitTo?: Direction;
 }
 
 type Props = PropsWithChildren<TransitionAnimatorProps> & ForwardRefInjectedProps;
@@ -44,17 +44,17 @@ const TransitionAnimator = (props: Props) => {
     ...others
   } = props;
   const containerRef = React.createRef<RNView>();
-  const {onLayout: hiddenLocationOnLayout, hiddenLocations} = useHiddenLocations({containerRef});
+  const {onLayout: hiddenLocationOnLayout, hiddenLocations} = useHiddenLocation({containerRef});
   const visible = useSharedValue<boolean>(!enterFrom);
 
   // Has to start at {0, 0} with {opacity: 0} so layout can be measured
   const translateX = useSharedValue<number>(0);
   const translateY = useSharedValue<number>(0);
 
-  const getLocation = (location?: HiddenLocation) => {
+  const getDirection = (direction?: Direction) => {
     return {
-      x: location && ['left', 'right'].includes(location) ? hiddenLocations[location] : 0,
-      y: location && ['top', 'bottom'].includes(location) ? hiddenLocations[location] : 0
+      x: direction && ['left', 'right'].includes(direction) ? hiddenLocations[direction] : 0,
+      y: direction && ['top', 'bottom'].includes(direction) ? hiddenLocations[direction] : 0
     };
   };
 
@@ -68,12 +68,12 @@ const TransitionAnimator = (props: Props) => {
 
   const animate = (to: {x: number; y: number},
     callback: (isFinished: boolean) => void,
-    animationLocation?: HiddenLocation) => {
+    animationDirection?: Direction) => {
     'worklet';
-    if (animationLocation) {
-      if (['left', 'right'].includes(animationLocation)) {
+    if (animationDirection) {
+      if (['left', 'right'].includes(animationDirection)) {
         translateX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
-      } else if (['top', 'bottom'].includes(animationLocation)) {
+      } else if (['top', 'bottom'].includes(animationDirection)) {
         translateY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
       }
     }
@@ -89,7 +89,7 @@ const TransitionAnimator = (props: Props) => {
 
   const exit = useCallback(() => {
     'worklet';
-    animate(getLocation(exitTo), onExitAnimationEnd, exitTo);
+    animate(getDirection(exitTo), onExitAnimationEnd, exitTo);
   }, [hiddenLocations, exitTo, onExitAnimationEnd]);
 
   const onEnterAnimationEnd = useCallback((isFinished: boolean) => {
@@ -113,11 +113,11 @@ const TransitionAnimator = (props: Props) => {
 
   useEffect(() => {
     if (!hiddenLocations.isDefault && enterFrom) {
-      const location = getLocation(enterFrom);
+      const direction = getDirection(enterFrom);
       if (['left', 'right'].includes(enterFrom)) {
-        translateX.value = withTiming(location.x, {duration: 0}, enter);
+        translateX.value = withTiming(direction.x, {duration: 0}, enter);
       } else {
-        translateY.value = withTiming(location.y, {duration: 0}, enter);
+        translateY.value = withTiming(direction.y, {duration: 0}, enter);
       }
 
       visible.value = true;

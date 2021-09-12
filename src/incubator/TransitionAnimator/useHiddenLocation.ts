@@ -2,7 +2,7 @@ import {RefObject, useCallback, useState} from 'react';
 import {View, LayoutChangeEvent} from 'react-native';
 import {Constants} from 'helpers';
 
-export type HiddenLocation = 'top' | 'bottom' | 'left' | 'right';
+export type Direction = 'top' | 'bottom' | 'left' | 'right';
 interface HiddenLocations {
   isDefault: boolean;
   top: number;
@@ -15,7 +15,7 @@ export interface HiddenLocationsProps<T extends View> {
   containerRef: RefObject<T>;
 }
 
-export default function useHiddenLocations<T extends View>(props: HiddenLocationsProps<T>) {
+export default function useHiddenLocation<T extends View>(props: HiddenLocationsProps<T>) {
   const {containerRef} = props;
 
   const getHiddenLocations = ({
