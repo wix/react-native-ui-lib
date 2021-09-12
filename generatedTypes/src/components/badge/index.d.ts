@@ -341,7 +341,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      */
     backgroundColor?: string | undefined;
     /**
-     * the badge size (default, small)
+     * the badge size
      */
     size?: number | undefined;
     /**

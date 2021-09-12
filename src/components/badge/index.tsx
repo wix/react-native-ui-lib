@@ -35,7 +35,7 @@ export type BadgeProps = ViewProps &
      */
     backgroundColor?: string;
     /**
-     * the badge size (default, small)
+     * the badge size
      */
     size?: number;
     /**
