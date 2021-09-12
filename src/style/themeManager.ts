@@ -21,12 +21,6 @@ export class ThemeManager {
     components: {} as Extendable
   }
 
-  //TODO: deprecate on V6
-  setTheme(overrides: Dictionary<string>) {
-    console.warn('ThemeManager.setTheme() is deprecated. Please remove usage before next uilib major version update. Consider using ThemeManager.setComponentTheme instead');
-    this.theme = _.merge(this.theme, overrides);
-  }
-
   getTheme() {
     return this.theme;
   }
