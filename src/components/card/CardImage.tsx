@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {LogService} from '../../services';
 // import {BaseComponent} from '../../commons';
 import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
