@@ -35,6 +35,7 @@ export {default as View, ViewProps} from './src/components/view';
 export {default as Text, TextProps} from './src/components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './src/components/touchableOpacity';
 export {default as Button, ButtonSize, ButtonProps} from './src/components/button';
+export {default as Stepper, StepperProps} from './src/components/stepper';
 export {default as Checkbox, CheckboxProps} from './src/components/checkbox';
 export {default as Chip, ChipProps} from './src/components/chip';
 export {default as ColorPicker, ColorPickerProps} from './src/components/colorPicker';
