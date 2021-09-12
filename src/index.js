@@ -315,9 +315,6 @@ export default {
   get Typography() {
     return require('./style').Typography;
   },
-  get AnimatableManager() {
-    return require('./style').AnimatableManager;
-  },
   get Hooks() {
     return require('./hooks');
   },

@@ -1,7 +1,8 @@
+import {sample} from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {AnimatableManager, Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib';
+import {Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib';
 import orders, {OrderType} from '../../data/orders';
 
 type BasicListScreenState = {
@@ -20,12 +21,28 @@ export default class BasicListScreen extends Component<{}, BasicListScreenState>
     };
   }
 
+  getRandomDelay(delays = [20, 120, 220], options: any) {
+    return {
+      animation: 'fadeInLeft',
+      easing: 'ease-out-expo',
+      duration: 600,
+      delay: sample(delays),
+      useNativeDriver: true,
+      ...options
+    };
+  }
+
   keyExtractor = (item: OrderType) => item.name;
 
   renderRow(row: OrderType, id: number) {
     const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;
-    const animationProps = AnimatableManager.presets.fadeInRight;
-    const imageAnimationProps = AnimatableManager.getRandomDelay(undefined, undefined);
+    const animationProps = {
+      animation: 'fadeInRight',
+      easing: 'ease-out-expo',
+      duration: 500,
+      useNativeDriver: true
+    };
+    const imageAnimationProps = this.getRandomDelay(undefined, undefined);
 
     return (
       <Animatable.View {...animationProps}>
