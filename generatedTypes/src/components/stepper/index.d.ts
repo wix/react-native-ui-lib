@@ -13,6 +13,10 @@ interface Props {
      */
     maxValue?: number;
     /**
+     * The step to increase and decrease by (default is 1)
+     */
+    step?: number;
+    /**
      * On value change callback function
      */
     onValueChange?: (value: number, testID?: string) => void;
