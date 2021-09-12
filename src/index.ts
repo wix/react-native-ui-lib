@@ -89,8 +89,20 @@ export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScr
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
   ChipsInput,
-  BaseInput, TextArea, TextField, MaskedInput, Picker,
-  PickerProps, ProgressBar, Stepper,
-  TagsInput, SharedTransition, Toast, WheelPickerDialog, Assets,
-  BaseComponent, PureBaseComponent, UIComponent, forwardRef
+  BaseInput, 
+  TextArea, 
+  TextField, 
+  MaskedInput, 
+  Picker,
+  PickerProps, 
+  ProgressBar, 
+  Stepper,
+  SharedTransition, 
+  Toast, 
+  WheelPickerDialog, 
+  Assets,
+  BaseComponent, 
+  PureBaseComponent, 
+  UIComponent, 
+  forwardRef
 } from '../typings';

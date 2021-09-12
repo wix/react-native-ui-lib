@@ -94,7 +94,6 @@ export {
   ProgressBar,
   ColorSliderGroup,
   Stepper,
-  TagsInput,
   ChipsInput,
   SharedTransition,
   Toast,
