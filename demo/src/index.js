@@ -212,12 +212,6 @@ module.exports = {
       get CardScannerScreen() {
         return require('./screens/componentScreens/CardScannerScreen').default;
       },
-      get CardAnimationsScreen() {
-        return require('./screens/animationScreens/CardAnimationsScreen').default;
-      },
-      get ListAnimationsScreen() {
-        return require('./screens/animationScreens/ListAnimationsScreen').default;
-      },
       get ProgressBarScreen() {
         return require('./screens/componentScreens/ProgressBarScreen').default;
       },

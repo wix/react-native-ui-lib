@@ -144,8 +144,6 @@ export const navigationData = {
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
       {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
       {title: 'ProgressiveImage', tags: 'progressive image cover overlay', screen: 'unicorn.components.ProgressiveImageScreen'},
-      {title: 'List Animations', tags: 'animated card', screen: 'unicorn.animations.ListAnimationsScreen'},
-      {title: 'Card Animations', tags: 'animated card', screen: 'unicorn.animations.CardAnimationsScreen'},
       {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
       {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
       {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},

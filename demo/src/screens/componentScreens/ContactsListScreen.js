@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
-import {AnimatableManager, Colors, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -16,11 +16,22 @@ export default class ContactsListScreen extends Component {
     };
   }
 
+  getEntranceByIndex = (index = 0, options) => {
+    return {
+      animation: 'itemEntrance',
+      easing: 'ease-out-quint',
+      duration: 600,
+      delay: 10 + (Number(index) % 12) * 100,
+      useNativeDriver: true,
+      ...options
+    };
+  };
+
   keyExtractor = item => item.name;
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
-    const animationProps = AnimatableManager.getEntranceByIndex(id);
+    const animationProps = this.getEntranceByIndex(id);
 
     return (
       <AnimatableView {...animationProps}>
