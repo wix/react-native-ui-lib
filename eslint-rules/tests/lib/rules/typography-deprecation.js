@@ -692,21 +692,6 @@ ruleTester.run('typography-deprecation', rule, {
     //   options: options,
     //   code: `
     //     import React, {Component} from 'react';
-    //     import {Typography, TabBar} from 'our-source';
-    //     export default class OurList extends Component {
-    //       render() {
-    //         const titleVal = true;
-    //         return (
-    //           <TabBar labelStyle={{title: titleVal}} selectedLabelStyle={{title: titleVal}}/>
-    //         )
-    //       }
-    //     }`,
-    //     errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
-    // },
-    // {
-    //   options: options,
-    //   code: `
-    //     import React, {Component} from 'react';
     //     import {Typography, Label} from 'our-source';
     //     export default class OurList extends Component {
     //       render() {
