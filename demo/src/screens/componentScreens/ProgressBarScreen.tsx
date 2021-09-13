@@ -32,7 +32,7 @@ export default class ProgressBarScreen extends Component {
 
   get customElement() {
     return (
-      <View style={{backgroundColor: Colors.green30, borderWidth: 0.5}}/>
+      <View style={{backgroundColor: Colors.green30, borderWidth: 0.5, borderRadius: 4}}/>
     );
   }
 
