@@ -48,7 +48,7 @@ export default class ProgressBarScreen extends Component {
             </Text>
           </View>
 
-          <Text bodyBold style={styles.text}>
+          <Text text70 style={styles.text}>
             Default
           </Text>
           <ProgressBar
@@ -56,8 +56,8 @@ export default class ProgressBarScreen extends Component {
             style={styles.progressBar}
           />
 
-          <Text bodyBold style={styles.text}>
-            fullWidth
+          <Text text70 style={styles.text}>
+            FullWidth
           </Text>
           <ProgressBar
             progress={progresses[1]}
@@ -65,8 +65,8 @@ export default class ProgressBarScreen extends Component {
             fullWidth
           />
 
-          <Text bodyBold style={styles.text}>
-            styled
+          <Text text70 style={styles.text}>
+            Styled
           </Text>
           <ProgressBar
             progress={progresses[2]}
@@ -74,7 +74,7 @@ export default class ProgressBarScreen extends Component {
             progressColor={Colors.purple70}
           />
 
-          <Text bodyBold style={styles.text}>
+          <Text text70 style={styles.text}>
             Custom Element
           </Text>
           <ProgressBar
