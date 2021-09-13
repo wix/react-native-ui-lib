@@ -2,9 +2,9 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, AccessibilityInfo, AccessibilityProps, AccessibilityActionEvent} from 'react-native';
 import {Typography, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
-import View from '../View';
-import Text from '../Text';
-import Button from '../Button';
+import View from '../view';
+import Text from '../text';
+import Button from '../button';
 
 
 enum ActionType {
