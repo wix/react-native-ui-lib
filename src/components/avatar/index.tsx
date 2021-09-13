@@ -73,6 +73,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    * The image source (external or assets)
    */
   source?: ImageSourcePropType;
+  imageSource?: ImageSourcePropType; //TODO: deprecate
   /**
    * Image props object
    */
@@ -176,6 +177,10 @@ class Avatar extends PureComponent<AvatarProps> {
 
   static badgePosition = BadgePosition;
 
+  get source() {
+    return this.props.source || this.props.imageSource;
+  }
+
   getContainerStyle(): StyleProp<ViewStyle> {
     const {size} = this.props;
 
@@ -265,7 +270,6 @@ class Avatar extends PureComponent<AvatarProps> {
   renderImage() {
     const {
       animate,
-      source,
       // @ts-ignore
       onImageLoadStart,
       onImageLoadEnd,
@@ -274,7 +278,7 @@ class Avatar extends PureComponent<AvatarProps> {
       imageProps,
       imageStyle
     } = this.props;
-    const hasImage = !_.isUndefined(source);
+    const hasImage = !_.isUndefined(this.source);
     const ImageContainer = animate ? AnimatedImage : Image;
 
     if (hasImage) {
@@ -282,7 +286,7 @@ class Avatar extends PureComponent<AvatarProps> {
         <ImageContainer
           animate={animate}
           style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
-          source={source}
+          source={this.source}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
@@ -333,7 +337,6 @@ class Avatar extends PureComponent<AvatarProps> {
   render() {
     const {
       labelColor: color,
-      source,
       onPress,
       containerStyle,
       children,
@@ -343,7 +346,7 @@ class Avatar extends PureComponent<AvatarProps> {
       forwardedRef
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
-    const hasImage = !_.isUndefined(source);
+    const hasImage = !_.isUndefined(this.source);
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
     const text = this.text;
