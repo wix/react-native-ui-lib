@@ -47,6 +47,7 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
      * The image source (external or assets)
      */
     source?: ImageSourcePropType;
+    imageSource?: ImageSourcePropType;
     /**
      * Image props object
      */
@@ -140,6 +141,7 @@ declare class Avatar extends PureComponent<AvatarProps> {
         badgePosition: BadgePosition;
     };
     static badgePosition: typeof BadgePosition;
+    get source(): ImageSourcePropType | undefined;
     getContainerStyle(): StyleProp<ViewStyle>;
     getInitialsContainer(): StyleProp<ViewStyle>;
     getRibbonStyle(): StyleProp<ViewStyle>;
@@ -200,6 +202,7 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
      * The image source (external or assets)
      */
     source?: ImageSourcePropType | undefined;
+    imageSource?: ImageSourcePropType | undefined;
     /**
      * Image props object
      */
