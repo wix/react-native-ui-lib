@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {Platform, ViewStyle, ViewProps} from 'react-native';
 import {default as KeyboardTrackingViewIOS} from './KeyboardTrackingView.ios';
 import {default as KeyboardTrackingViewAndroid} from './KeyboardTrackingView.android';
 
-const IsAndroid = Platform.OS === 'android';
+const isAndroid = Platform.OS === 'android';
 
 export type KeyboardTrackingViewProps = ViewProps & {
   /**
@@ -37,14 +37,14 @@ export type KeyboardTrackingViewProps = ViewProps & {
    style?: ViewStyle;
 }
 
-const KeyboardTrackingView = ({children, ...others}: KeyboardTrackingViewProps) => {
-  const KeyboardTrackingViewContainer = IsAndroid ? KeyboardTrackingViewAndroid : KeyboardTrackingViewIOS;
+const KeyboardTrackingView = ({children, ...others}: KeyboardTrackingViewProps, ref: any) => {
+  const KeyboardTrackingViewContainer = isAndroid ? KeyboardTrackingViewAndroid : KeyboardTrackingViewIOS;
   
   return (
-    <KeyboardTrackingViewContainer {...others}>
+    <KeyboardTrackingViewContainer {...others} ref={ref}>
       {children}
     </KeyboardTrackingViewContainer>
   );
 };
 
-export default KeyboardTrackingView;
+export default forwardRef(KeyboardTrackingView);
