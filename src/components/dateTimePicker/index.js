@@ -205,7 +205,6 @@ class DateTimePicker extends Component {
 
     return (
       <Dialog
-        migrate
         visible={showExpandableOverlay}
         width="100%"
         height={null}
