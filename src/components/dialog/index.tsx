@@ -5,7 +5,6 @@ import {Colors} from '../../style';
 import Constants, {orientations} from '../../helpers/Constants';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {LogService} from '../../services';
 import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
@@ -58,10 +57,6 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
      * Whether or not to handle SafeArea
      */
     useSafeArea?: boolean;
-    /**
-     * Called once the modal has been dismissed (iOS only) - Deprecated, use onDialogDismissed instead
-     */
-    onModalDismissed?: (props: any) => void;
     /**
      * Called once the dialog has been dismissed completely
      */
@@ -125,10 +120,6 @@ class Dialog extends Component<DialogProps, DialogState> {
 
     this.styles = createStyles(this.props);
     this.setAlignment();
-
-    if (!_.isUndefined(props.onModalDismissed)) {
-      LogService.deprecationWarn({component: 'Dialog', oldProp: 'onModalDismissed', newProp: 'onDialogDismissed'});
-    }
   }
 
   componentDidMount() {
@@ -171,7 +162,6 @@ class Dialog extends Component<DialogProps, DialogState> {
     if (!this.state.modalVisibility) {
       setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS
         this.props.onDialogDismissed?.(this.props);
-        this.props.onModalDismissed?.(this.props);
       }, 100);
     }
   }
@@ -198,11 +188,6 @@ class Dialog extends Component<DialogProps, DialogState> {
       this._onDismiss();
     }
   };
-
-  onModalDismissed = () => {
-    this.props.onDialogDismissed?.(this.props);
-    this.props.onModalDismissed?.(this.props);
-  }
 
   hideDialogView = () => {
     this.setState({dialogVisibility: false});
@@ -290,7 +275,6 @@ class Dialog extends Component<DialogProps, DialogState> {
         animationType={'none'}
         onBackgroundPress={onBackgroundPress}
         onRequestClose={onBackgroundPress}
-        // onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
       >
