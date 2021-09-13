@@ -57,7 +57,6 @@ export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItem
 export {default as Slider, SliderProps} from './src/components/slider';
 export {default as Switch, SwitchProps} from './src/components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './src/components/tabController';
-export {default as TabController2} from './src/components/tabController2';
 export {default as TabBar, TabBarProps} from './src/components/TabBar';
 export {default as ScrollBar, ScrollBarProps} from './src/components/ScrollBar';
 export {default as StackAggregator, StackAggregatorProps} from './src/components/stackAggregator';

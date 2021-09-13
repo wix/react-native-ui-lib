@@ -162,9 +162,6 @@ export default {
   get TabController() {
     return require('./components/tabController').default;
   },
-  get TabController2() {
-    return require('./components/tabController2').default;
-  },
   get TabBar() { //TODO: remove on V7
     return require('./components/tabBar').default;
   },

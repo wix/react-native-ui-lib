@@ -49,7 +49,6 @@ export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './compon
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
-export {default as TabController2} from './components/tabController2';
 export {default as TabBar, TabBarProps} from './components/TabBar'; //TODO: remove on V7
 export {default as ScrollBar, ScrollBarProps} from './components/ScrollBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
