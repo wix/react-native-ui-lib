@@ -13,8 +13,8 @@ import Image from '../image';
 import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
 
-const VERTICAL_PADDING = 8;
 
+const VERTICAL_PADDING = 8;
 type ActionSheetOnOptionPress = (index: number) => void;
 
 type ActionSheetProps = {
@@ -84,7 +84,7 @@ type ActionSheetProps = {
   /**
    * Called once the modal has been dismissed (iOS only, modal only)
    */
-  onModalDismissed?: DialogProps['onModalDismissed'];
+  onModalDismissed?: DialogProps['onDialogDismissed'];
   /**
    * Whether or not to handle SafeArea
    */
@@ -233,7 +233,7 @@ class ActionSheet extends Component<ActionSheetProps> {
         containerStyle={[styles.dialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
-        onModalDismissed={onModalDismissed}
+        onDialogDismissed={onModalDismissed}
         panDirection={PanningProvider.Directions.DOWN}
       >
         {this.renderSheet()}

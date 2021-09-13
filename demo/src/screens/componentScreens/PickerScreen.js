@@ -57,7 +57,6 @@ export default class PickerScreen extends Component {
 
     return (
       <Dialog
-        migrate
         visible={visible}
         onDismiss={() => {
           onDone();

@@ -66,7 +66,7 @@ declare type ActionSheetProps = {
     /**
      * Called once the modal has been dismissed (iOS only, modal only)
      */
-    onModalDismissed?: DialogProps['onModalDismissed'];
+    onModalDismissed?: DialogProps['onDialogDismissed'];
     /**
      * Whether or not to handle SafeArea
      */
