@@ -7,7 +7,6 @@ export * from './Inputs';
 export * from './ListItem';
 export * from './LoaderScreen';
 export * from './Picker';
-export * from './ProgressBar';
 export * from './SharedTransition';
 export * from './Slider';
 export * from './StackAggregator';
