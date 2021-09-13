@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -11,40 +10,30 @@ import Button from '../../components/button';
 import Text from '../../components/text';
 import {StateScreenProps} from './types';
 
+
 class StateScreen extends Component<StateScreenProps> {
   static displayName = 'StateScreen';
 
   styles: any;
   constructor(props: StateScreenProps) {
     super(props);
-    
-    if (props.testId) {
-      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'testId', newProp: 'testID'});
-
-    }
-    if (props.source) {
-      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'source', newProp: 'imageSource'});
-    }
 
     this.generateStyles();
   }
 
   generateStyles() {
-    const {source, imageSource} = this.props;
-    const finalSource = imageSource || source;
+    const {imageSource} = this.props;
 
-    const isRemoteImage = _.isObject(finalSource) && Boolean(finalSource.uri);
+    const isRemoteImage = _.isObject(imageSource) && Boolean(imageSource.uri);
     this.styles = createStyles(isRemoteImage);
   }
 
   render() {
-    // TODO: remove testId and source after deprecation
-    const {title, subtitle, source, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
-    const finalSource = imageSource || source;
+    const {title, subtitle, imageSource, ctaLabel, onCtaPress, testID} = this.props;
 
     return (
-      <View style={this.styles.container} testID={testID || testId}>
-        <Image style={this.styles.image} resizeMode={'contain'} source={finalSource}/>
+      <View style={this.styles.container} testID={testID}>
+        <Image style={this.styles.image} resizeMode={'contain'} source={imageSource}/>
         <Text style={[this.styles.title]}>{title}</Text>
         <Text style={[this.styles.subtitle]}>{subtitle}</Text>
         <Button
