@@ -96,7 +96,6 @@ export {
   MaskedInput, 
   Picker,
   PickerProps, 
-  ProgressBar, 
   SharedTransition, 
   Toast, 
   WheelPickerDialog, 
