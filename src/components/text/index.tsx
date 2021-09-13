@@ -109,8 +109,7 @@ class Text extends PureComponent<PropsTypes> {
       const i = targetSuffix.indexOf(word);
       if (i >= 0) {
         const newIndex = index + lastWordLength + i;
-        indices.push(index + lastWordLength + i);
-        indices.push(index + lastWordLength + i + word.length);
+        indices.push({start: index + lastWordLength + i, end: index + lastWordLength + i + word.length});
         index = newIndex;
         lastWordLength = word.length;
       } else {
@@ -118,18 +117,15 @@ class Text extends PureComponent<PropsTypes> {
       }
     }
     const parts = [];
-    let val = false;
     for (let k = 0; k < indices.length; k++) {
-      if (k === 0) {
-        targetString.substring(0, indices[k]) &&
-          parts.push({string: targetString.substring(0, indices[k]), shouldHighlight: false});
-        parts.push({string: targetString.substring(indices[k], indices[k + 1]), shouldHighlight: true});
-      } else if (k === indices.length - 1) {
-        targetString.substring(indices[k]) &&
-          parts.push({string: targetString.substring(indices[k]), shouldHighlight: false});
+      if (k === 0 && indices[k].start !== 0) {
+        parts.push({string: targetString.substring(0, indices[k].start), shouldHighlight: false});
+      }
+      parts.push({string: targetString.substring(indices[k].start, indices[k].end), shouldHighlight: true});
+      if (k === indices.length - 1) {
+        parts.push({string: targetString.substring(indices[k].end), shouldHighlight: false});
       } else {
-        parts.push({string: targetString.substring(indices[k], indices[k + 1]), shouldHighlight: val});
-        val = !val;
+        parts.push({string: targetString.substring(indices[k].end, indices[k + 1].start), shouldHighlight: false});
       }
     }
     return parts;
