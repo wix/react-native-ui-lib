@@ -58,6 +58,7 @@ export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal
 export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
+export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as ActionSheet} from './components/actionSheet';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
@@ -95,7 +96,6 @@ export {
   MaskedInput, 
   Picker,
   PickerProps, 
-  ProgressBar, 
   SharedTransition, 
   Toast, 
   WheelPickerDialog, 

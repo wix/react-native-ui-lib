@@ -42,6 +42,7 @@ export {default as ColorPicker, ColorPickerProps} from './src/components/colorPi
 export {default as ColorPalette, ColorPaletteProps} from './src/components/colorPicker/ColorPalette';
 export {default as ColorSwatch, ColorSwatchProps} from './src/components/colorPicker/ColorSwatch';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './src/components/drawer';
+export {default as ProgressBar, ProgressBarProps} from './src/components/progressBar';
 export {default as FeatureHighlight, FeatureHighlightProps} from './src/components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './src/components/floatingButton';
 export {default as GridListItem, GridListItemProps} from './src/components/gridListItem';
@@ -91,7 +92,6 @@ export {
   BaseInput,
   TextArea,
   MaskedInput,
-  ProgressBar,
   ColorSliderGroup,
   ChipsInput,
   SharedTransition,
