@@ -9,7 +9,7 @@ const Components = StyleSheet.create({
     backgroundColor: 'transparent',
     borderTopWidth: 3 / PixelRatio.get(),
     borderRightWidth: 3 / PixelRatio.get(),
-    borderColor: Colors.dark60,
+    borderColor: Colors.grey60,
     transform: [
       {
         rotate: '45deg'

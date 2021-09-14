@@ -59,7 +59,6 @@ export declare type RadioButtonProps = RadioGroupContextProps & ViewProps & {
      */
     containerStyle?: StyleProp<ViewStyle>;
 };
-export declare type RadioButtonPropTypes = RadioButtonProps;
 declare const _default: React.ComponentClass<RadioGroupContextProps & ViewProps & {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group

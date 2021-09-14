@@ -162,14 +162,8 @@ export default {
   get TabController() {
     return require('./components/tabController').default;
   },
-  get TabController2() {
-    return require('./components/tabController2').default;
-  },
-  get TabBar() {
+  get TabBar() { //TODO: remove on V7
     return require('./components/tabBar').default;
-  },
-  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
-    return require('./components/tagsInput').default;
   },
   get ChipsInput() {
     return require('./components/chipsInput').default;
@@ -234,9 +228,6 @@ export default {
   },
   get PureBaseComponent() {
     return require('./commons').PureBaseComponent;
-  },
-  get SelectableComponent() {
-    return require('./commons').SelectableComponent;
   },
   get UIComponent() {
     return require('./commons').UIComponent;
@@ -317,9 +308,6 @@ export default {
   },
   get Typography() {
     return require('./style').Typography;
-  },
-  get AnimatableManager() {
-    return require('./style').AnimatableManager;
   },
   get Hooks() {
     return require('./hooks');

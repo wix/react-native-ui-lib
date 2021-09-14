@@ -37,7 +37,9 @@ export interface CarouselProps extends ScrollViewProps {
     /**
      * callback for when page has changed
      */
-    onChangePage?: (newPageIndex: number, oldPageIndex: number) => void;
+    onChangePage?: (newPageIndex: number, oldPageIndex: number, info: {
+        isAutoScrolled: boolean;
+    }) => void;
     /**
      * callback for onScroll event of the internal ScrollView
      */

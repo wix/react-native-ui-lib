@@ -23,9 +23,8 @@ export interface TabBarItemProps {
      */
     labelStyle?: StyleProp<TextStyle>;
     /**
-     * Badge component props to display next the item label
+     * Badge component's props to display next the item label
      */
-    badge?: BadgeProps;
     badgeProps?: BadgeProps;
     /**
      * Pass to render a leading element

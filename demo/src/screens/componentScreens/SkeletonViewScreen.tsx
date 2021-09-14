@@ -129,7 +129,7 @@ export default class SkeletonViewScreen extends Component {
           return (
             <ListItem
               key={index}
-              activeBackgroundColor={Colors.dark60}
+              activeBackgroundColor={Colors.grey60}
               activeOpacity={0.3}
               height={90}
               onPress={() => Alert.alert(`pressed on order #${index + 1}`)}
@@ -358,6 +358,6 @@ const styles = StyleSheet.create({
   },
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.dark70
+    borderColor: Colors.grey70
   }
 });
