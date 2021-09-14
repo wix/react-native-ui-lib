@@ -12,6 +12,7 @@ import {
   AccessibilityProps
 } from 'react-native';
 import memoize from 'memoize-one';
+import {LogService} from '../../services';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -73,7 +74,10 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    * The image source (external or assets)
    */
   source?: ImageSourcePropType;
-  imageSource?: ImageSourcePropType; //TODO: deprecate
+  /**
+   * @deprecated use 'source' prop
+   */
+  imageSource?: ImageSourcePropType;
   /**
    * Image props object
    */
@@ -166,6 +170,10 @@ class Avatar extends PureComponent<AvatarProps> {
     super(props);
 
     this.styles = createStyles(props);
+
+    if (props.imageSource) {
+      LogService.warn('uilib: imageSource prop is deprecated, use source instead.');
+    }
   }
 
   static defaultProps = {
