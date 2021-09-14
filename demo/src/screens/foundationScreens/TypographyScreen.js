@@ -2,7 +2,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {TabBar, Colors, Typography, View, Text} from 'react-native-ui-lib';
+import {TabController, Colors, Typography, View, Text} from 'react-native-ui-lib';
+
 
 const WEIGHTS = ['Thin', 'Light', 'Default', 'Regular', 'Medium', 'Bold', 'Heavy', 'Black'];
 
@@ -12,11 +13,7 @@ export default class TypographyScreen extends Component {
   };
 
   static defaultProps = {
-    color: Colors.dark10
-  };
-
-  state = {
-    currentPage: 0
+    color: Colors.grey10
   };
 
   getWeightSuffix(weight) {
@@ -30,10 +27,9 @@ export default class TypographyScreen extends Component {
     }
   }
 
-  renderPage() {
+  renderPage(index = 0) {
     const {color} = this.props;
-    const {currentPage} = this.state;
-    const weight = WEIGHTS[currentPage];
+    const weight = WEIGHTS[index];
     const weightSuffix = this.getWeightSuffix(weight);
     return (
       <ScrollView>
@@ -45,12 +41,12 @@ export default class TypographyScreen extends Component {
             if (fontPreset) {
               modifiers[fontName] = true;
               return (
-                <View key={fontKey} paddingV-20 centerH style={{borderBottomWidth: 1, borderColor: Colors.dark60}}>
+                <View key={fontKey} paddingV-20 centerH style={{borderBottomWidth: 1, borderColor: Colors.grey60}}>
                   <Text style={{color, backgroundColor: Colors.red80}} {...modifiers}>
                     text{fontKey}
                     {weightSuffix}
                   </Text>
-                  <Text text80 dark40>
+                  <Text text80 grey40>
                     fontSize: {fontPreset.fontSize}
                   </Text>
                 </View>
@@ -62,19 +58,29 @@ export default class TypographyScreen extends Component {
     );
   }
 
-  render() {
-    const {currentPage} = this.state;
+  renderPages() {
     return (
       <View flex>
-        <TabBar selectedIndex={currentPage} onChangeIndex={index => this.setState({currentPage: index})}>
-          {_.map(WEIGHTS, weight => (
-            <TabBar.Item key={weight} label={weight}/>
-          ))}
-        </TabBar>
-        <View flex>
-          {this.renderPage()}
-        </View>
+        {_.map(WEIGHTS, (item, index) => {
+          return (
+            <TabController.TabPage key={`${item.title}_page`} index={index}>
+              {this.renderPage(index)}
+            </TabController.TabPage>
+          );
+        })}
       </View>
+    );
+  }
+
+  render() {
+    return (
+      <TabController>
+        <TabController.TabBar
+          items={WEIGHTS.map(item => ({label: item, key: item}))}
+          activeBackgroundColor={Colors.blue70}
+        />
+        {this.renderPages()}
+      </TabController>
     );
   }
 }

@@ -29,7 +29,6 @@ export declare type TextProps = RNTextProps & TypographyModifiers & ColorsModifi
     textAlign?: string;
     style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
 };
-export declare type TextPropTypes = TextProps;
 declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextProps;
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support

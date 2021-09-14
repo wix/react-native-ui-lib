@@ -46,7 +46,6 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
   backgroundColor?: string;
   style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
-export type ViewPropTypes = ViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewProps;
 

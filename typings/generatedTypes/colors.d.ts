@@ -6,7 +6,7 @@ declare class Colors {
     /**
      * Load custom set of colors
      * arguments:
-     * colors - map of keys and colors values e.g {dark10: '#20303C', dark20: '#43515C'}
+     * colors - map of keys and colors values e.g {grey10: '#20303C', grey20: '#43515C'}
      */
     loadColors(colors: {
         [key: string]: string;
@@ -35,14 +35,14 @@ declare class Colors {
     areEqual(colorA: string, colorB: string): boolean;
 }
 declare const colorObject: Colors & {
-    dark10: string;
-    dark20: string;
-    dark30: string;
-    dark40: string;
-    dark50: string;
-    dark60: string;
-    dark70: string;
-    dark80: string;
+    grey10: string;
+    grey20: string;
+    grey30: string;
+    grey40: string;
+    grey50: string;
+    grey60: string;
+    grey70: string;
+    grey80: string;
     grey10: string;
     grey20: string;
     grey30: string;

@@ -42,7 +42,7 @@ class PickerDialog extends BaseComponent {
     // TODO: should be taken from dialogProps but there's an issue with "babel-plugin-typescript-to-proptypes" plugin
     const {panDirection} = this.props;
     return (
-      <Dialog {...dialogProps} width="100%" migrate bottom animationConfig={{duration: 300}} panDirection={panDirection}>
+      <Dialog {...dialogProps} width="100%" bottom animationConfig={{duration: 300}} panDirection={panDirection}>
         <View flex bg-white>
           {this.renderHeader()}
           <View centerV flex>
@@ -58,7 +58,7 @@ class PickerDialog extends BaseComponent {
 const styles = StyleSheet.create({
   header: {
     height: 44,
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.grey80,
     paddingHorizontal: 17,
     flexDirection: 'row',
     justifyContent: 'space-between',

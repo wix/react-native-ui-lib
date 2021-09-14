@@ -60,7 +60,7 @@ const SegmentedControlScreen = () => {
           segments={segments.sixth}
         />
       </View>
-      <Text text40 dark10>
+      <Text text40 grey10>
         Segmented Control
       </Text>
     </View>

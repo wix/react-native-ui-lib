@@ -40,10 +40,6 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
      */
     useSafeArea?: boolean;
     /**
-     * Called once the modal has been dismissed (iOS only) - Deprecated, use onDialogDismissed instead
-     */
-    onModalDismissed?: (props: any) => void;
-    /**
      * Called once the dialog has been dismissed completely
      */
     onDialogDismissed?: (props: any) => void;

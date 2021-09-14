@@ -64,7 +64,7 @@ describe('services/AvatarService', () => {
   it('should getBackgroundColor', () => {
     const avatarColors = uut.getAvatarColors();
     const hashFunction = uut.hashStringToNumber;
-    const defaultColor = Colors.dark80;
+    const defaultColor = Colors.grey80;
     expect(uut.getBackgroundColor('', avatarColors, hashFunction, defaultColor)).toBe(defaultColor);
     expect(uut.getBackgroundColor(undefined, avatarColors, hashFunction, defaultColor)).toBe(defaultColor);
     expect(uut.getBackgroundColor(null, avatarColors, hashFunction, defaultColor)).toBe(defaultColor);

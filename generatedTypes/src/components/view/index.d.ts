@@ -36,7 +36,6 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
     backgroundColor?: string;
     style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
-export declare type ViewPropTypes = ViewProps;
 declare const _default: React.ComponentClass<ViewProps & {
     useCustomTheme?: boolean | undefined;
 }, any>;

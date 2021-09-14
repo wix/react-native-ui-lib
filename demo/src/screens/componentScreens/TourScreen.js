@@ -22,7 +22,7 @@ export default class TourScreen extends Component {
         <Text text20>Hellow</Text>
         <Tour
           visible={this.state.showButtonTour}
-          overlayColor={Colors.dark10}
+          overlayColor={Colors.grey10}
           message='Check out this nice button and how nice it is'
           onClose={() => this.setState({showButtonTour: false})}
         >

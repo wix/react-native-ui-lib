@@ -65,7 +65,7 @@ class Product extends Component {
               New Product
             </Text>
           </View>
-          <Text text80 dark40 marginV-s1>
+          <Text text80 grey40 marginV-s1>
             SKU: 1234567890
           </Text>
           <Text text50L marginV-s2>
