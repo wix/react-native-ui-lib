@@ -47,6 +47,9 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
      * The image source (external or assets)
      */
     source?: ImageSourcePropType;
+    /**
+     * @deprecated use 'source' prop
+     */
     imageSource?: ImageSourcePropType;
     /**
      * Image props object
@@ -202,6 +205,9 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
      * The image source (external or assets)
      */
     source?: ImageSourcePropType | undefined;
+    /**
+     * @deprecated use 'source' prop
+     */
     imageSource?: ImageSourcePropType | undefined;
     /**
      * Image props object
