@@ -62,7 +62,6 @@ export declare type CardProps = ViewProps & TouchableOpacityProps & {
         hideIndicator?: boolean;
     };
 };
-export declare type CardPropTypes = CardProps;
 declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
     /**
      * card custom width

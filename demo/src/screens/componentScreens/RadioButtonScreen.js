@@ -54,11 +54,11 @@ export default class RadioButtonScreen extends Component {
 
   render() {
     return (
-      <View flex useSafeArea bg-dark80>
+      <View flex useSafeArea bg-grey80>
         <View flex>
           <ScrollView style={{padding: 20}}>
             <RadioGroup initialValue={this.state.color || null} onValueChange={value => this.setState({color: value})}>
-              <Text marginB-20 text60 dark10>
+              <Text marginB-20 text60 grey10>
                 Select a color{'\n'}
                 (enum with default value)
               </Text>
@@ -70,7 +70,7 @@ export default class RadioButtonScreen extends Component {
             </RadioGroup>
 
             <RadioGroup marginT-30 initialValue={this.state.textSide} onValueChange={value => this.setState({textSide: value})}>
-              <Text marginB-20 text60 dark10>
+              <Text marginB-20 text60 grey10>
                 Alignments
               </Text>
               {this.renderRadioButtonWithImageAndText('right-icon', 'Text on right')}
@@ -81,7 +81,7 @@ export default class RadioButtonScreen extends Component {
             </RadioGroup>
 
             <RadioGroup marginT-30 initialValue={this.state.value} onValueChange={value => this.setState({value})}>
-              <Text marginB-20 text60 dark10>
+              <Text marginB-20 text60 grey10>
                 Yes or No?
               </Text>
               <View row>
@@ -91,7 +91,7 @@ export default class RadioButtonScreen extends Component {
               <Text marginT-10>You chose: {this.state.value}</Text>
             </RadioGroup>
 
-            <Text marginV-20 text60 dark10>
+            <Text marginV-20 text60 grey10>
               Use it without RadioGroup
             </Text>
             <View row centerV marginB-10>
@@ -131,8 +131,8 @@ export default class RadioButtonScreen extends Component {
             <View style={{height: 30}}/>
           </ScrollView>
 
-          <View paddingH-20 paddingV-10 style={[styles.shadow, {backgroundColor: Colors.dark80}]}>
-            <Text text40 dark10>
+          <View paddingH-20 paddingV-10 style={[styles.shadow, {backgroundColor: Colors.grey80}]}>
+            <Text text40 grey10>
               Radio Buttons
             </Text>
           </View>
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   shadow: {
     ...Platform.select({
       ios: {
-        ...Shadows.dark20.bottom
+        ...Shadows.grey20.bottom
       },
       android: {
         elevation: 3

@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     height: '40%'
   },
   solid: {
-    backgroundColor: Colors.rgba(Colors.dark10, 0.4)
+    backgroundColor: Colors.rgba(Colors.grey10, 0.4)
   },
   customContent: {
     ...StyleSheet.absoluteFillObject

@@ -11,7 +11,7 @@
   padding: 20px;
   padding-top: 0;
   border-radius: 2px;
-  border-right: 2px solid $dark80;
+  border-right: 2px solid $grey80;
   z-index: 100;
 
   &.visible {
@@ -55,7 +55,7 @@
       border: 0;
       padding: 5px;
       background: transparent;
-      background: $dark80;
+      background: $grey80;
       border-radius: 20px;
       display: flex;
       align-items: center;
@@ -75,7 +75,7 @@
 
     input {
       background: transparent;
-      color: $dark10;
+      color: $grey10;
       width: 100%;
       flex: 1;
       display: inline-block;
@@ -86,7 +86,7 @@
       font-size: $text20;
 
       &::placeholder {
-        color: $dark30;
+        color: $grey30;
       }
     }
   }
@@ -114,7 +114,7 @@
     }
 
     .entry {
-      color: $dark10;
+      color: $grey10;
       font-size: 0.9em;
       font-weight: 500;
       width: 100%;
@@ -128,13 +128,13 @@
     }
 
     .nested {
-      border-left: 1px solid $dark60;
+      border-left: 1px solid $grey60;
       margin-top: 10px;
       padding-left: 10px;
     }
 
     &.separator {
-      border-bottom: 2px solid $dark80;
+      border-bottom: 2px solid $grey80;
       width: 100%;
       margin: 8px 0;
       padding: 0;

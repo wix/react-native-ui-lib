@@ -132,7 +132,7 @@ Scroll: ${scroll}`;
         <View margin-20>
           <Text>{title}</Text>
         </View>
-        <View height={2} bg-dark70/>
+        <View height={2} bg-grey70/>
       </View>
     );
   };
@@ -235,7 +235,6 @@ Scroll: ${scroll}`;
 
     return (
       <Dialog
-        migrate
         useSafeArea
         key={this.getDialogKey(height)}
         top={position === 'top'}
@@ -261,7 +260,7 @@ Scroll: ${scroll}`;
     return (
       <ScrollView>
         <View flex padding-12>
-          <Text text30 dark10 marginB-20>
+          <Text text30 grey10 marginB-20>
             Dialog
           </Text>
 

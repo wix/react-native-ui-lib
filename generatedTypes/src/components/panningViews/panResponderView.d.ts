@@ -15,6 +15,5 @@ export interface PanResponderViewProps extends ViewProps {
      */
     isAnimated?: boolean;
 }
-export declare type PanResponderViewPropTypes = PanResponderViewProps;
 declare const _default: React.ComponentClass<PanResponderViewProps, any>;
 export default _default;

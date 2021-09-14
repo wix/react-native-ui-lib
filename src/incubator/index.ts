@@ -1,6 +1,5 @@
 export {default as ExpandableOverlay} from './expandableOverlay';
 // @ts-ignore
-export {default as TabController} from './TabController';
 export {default as TextField, TextFieldProps, FieldContextType} from './TextField';
 export {default as TouchableOpacity, TouchableOpacityProps} from './TouchableOpacity';
 export {default as TouchableOpacity2} from './TouchableOpacity2';

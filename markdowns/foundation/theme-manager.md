@@ -20,7 +20,7 @@ import {ThemeManager} from 'react-native-ui-lib';
 
 ThemeManager.setComponentTheme('Text', {
     text70: true, // will set the text70 typography modifier prop to be true by default
-    dark10: true, // will set the dark10 color modifier prop to be true by default 
+    grey10: true, // will set the grey10 color modifier prop to be true by default 
 });
 
 

@@ -5,7 +5,7 @@
  * 3. Passing typography preset that includes lineHeight usually cause alignment issues with
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
-import React, { ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import { ViewStyle, TextStyle } from 'react-native';
 import { ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers, PaddingModifiers, TypographyModifiers, ColorsModifiers } from '../../commons/new';
 import { ValidationMessagePosition, Validator } from './types';
@@ -70,7 +70,7 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
      */
     preset?: 'default' | null;
 };
-export declare type InternalTextFieldProps = TextFieldProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
+export declare type InternalTextFieldProps = PropsWithChildren<TextFieldProps & BaseComponentInjectedProps & ForwardRefInjectedProps>;
 interface StaticMembers {
     validationMessagePositions: typeof ValidationMessagePosition;
 }

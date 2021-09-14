@@ -194,7 +194,7 @@ class ColorSwatch extends PureComponent<Props> {
 export default asBaseComponent<Props>(ColorSwatch);
 
 
-function createStyles({color = Colors.dark30}) {
+function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({
     container: {
       backgroundColor: color,
@@ -203,7 +203,7 @@ function createStyles({color = Colors.dark30}) {
       borderRadius: DEFAULT_SIZE / 2,
       margin: SWATCH_MARGIN,
       borderWidth: color === 'transparent' ? undefined : 1,
-      borderColor: Colors.rgba(Colors.dark30, 0.2)
+      borderColor: Colors.rgba(Colors.grey30, 0.2)
     },
     transparentImage: {
       ...StyleSheet.absoluteFillObject,

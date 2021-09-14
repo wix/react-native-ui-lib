@@ -11,28 +11,17 @@ import {
   ViewStyle,
   ViewProps
 } from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
-import {extractAccessibilityProps, extractAnimationProps} from '../../commons/modifiers';
+import {extractAccessibilityProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Colors, Spacings, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import View from '../view';
 
+
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4] as const;
 
-// TODO: depreciate enum badge sizes, use only number for size
-export enum BADGE_SIZES {
-  pimpleSmall = 6,
-  pimpleBig = 10,
-  pimpleHuge = 14,
-  small = 16,
-  default = 20,
-  large = 24
-}
-
 type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
-export type BadgeSizes = keyof typeof BADGE_SIZES;
 
 export type BadgeProps = ViewProps &
   TouchableOpacityProps & {
@@ -46,9 +35,9 @@ export type BadgeProps = ViewProps &
      */
     backgroundColor?: string;
     /**
-     * the badge size (default, small)
+     * the badge size
      */
-    size?: BadgeSizes | number;
+    size?: number;
     /**
      * Press handler
      */
@@ -100,35 +89,23 @@ export type BadgeProps = ViewProps &
      * Custom element to render instead of an icon
      */
     customElement?: JSX.Element;
-    /**
-     * Use to identify the badge in tests
-     */
-    testId?: string;
   };
 
 /**
  * @description: Round colored badge, typically used to show a number
- * @extends: Animatable.View
- * @extendsLink: https://github.com/oblador/react-native-animatable
+ * @extends: View
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx
  */
 class Badge extends PureComponent<BadgeProps> {
-  styles: ReturnType<typeof createStyles>;
-
   static displayName = 'Badge';
+  
+  styles: ReturnType<typeof createStyles>;
 
   constructor(props: BadgeProps) {
     super(props);
+
     this.styles = createStyles(props);
-
-    if (props.testId) {
-      console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
-    }
-  }
-
-  get size() {
-    return this.props.size || 'default';
   }
 
   getAccessibilityProps() {
@@ -142,19 +119,22 @@ class Badge extends PureComponent<BadgeProps> {
     };
   }
 
+  get size() {
+    return this.props.size || 20;
+  }
+
   isSmallBadge() {
-    return this.size === 'small';
+    return this.size <= 16;
   }
 
   getBadgeSizeStyle() {
     const {borderWidth, icon, customElement} = this.props;
     const label = this.getFormattedLabel();
-    const badgeHeight = _.isNumber(this.size) ? this.size : BADGE_SIZES[this.size];
 
     const style: any = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
-      height: badgeHeight,
-      minWidth: badgeHeight
+      height: this.size,
+      minWidth: this.size
     };
     if (icon && label) {
       style.paddingRight = 6;
@@ -262,18 +242,12 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   render() {
-    // TODO: remove testId after deprecation
-    const {activeOpacity, backgroundColor, containerStyle, hitSlop, onPress, testId, testID, ...others} = this.props;
+    const {activeOpacity, backgroundColor, containerStyle, hitSlop, onPress, testID, ...others} = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = this.getBorderStyling();
-    const animationProps = extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
+    const Container = onPress ? TouchableOpacity : View;
 
-    if (!_.isEmpty(animationProps)) {
-      console.warn('Badge component will soon stop supporting animationProps.' +
-          'Please wrap your Badge component with your own animation component, such as Animatable.View');
-    }
     return (
       // The extra View wrapper is to break badge's flex-ness
       // @ts-ignore
@@ -286,13 +260,12 @@ class Badge extends PureComponent<BadgeProps> {
         {...this.getAccessibilityProps()}
       >
         <Container
-          testID={testID || testId}
+          testID={testID}
           pointerEvents={'none'}
           style={[sizeStyle, this.styles.badge, borderStyle, backgroundStyle]}
           onPress={onPress}
           activeOpacity={activeOpacity}
           hitSlop={hitSlop}
-          {...animationProps}
           row
         >
           {this.renderCustomElement()}

@@ -134,11 +134,8 @@ export default {
   get TabController() {
     return require('./tabController').default;
   },
-  get TabBar() {
+  get TabBar() { //TODO: remove on V7
     return require('./tabBar').default;
-  },
-  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
-    return require('./tagsInput').default;
   },
   get ChipsInput() {
     return require('./ChipsInput').default;

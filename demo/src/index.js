@@ -118,9 +118,6 @@ module.exports = {
       get TabControllerScreen() {
         return require('./screens/componentScreens/TabControllerScreen').default;
       },
-      get TabBarScreen() {
-        return require('./screens/componentScreens/TabBarScreen').default;
-      },
       get TextScreen() {
         return require('./screens/componentScreens/TextScreen').default;
       },
@@ -211,12 +208,6 @@ module.exports = {
       // animationScreens
       get CardScannerScreen() {
         return require('./screens/componentScreens/CardScannerScreen').default;
-      },
-      get CardAnimationsScreen() {
-        return require('./screens/animationScreens/CardAnimationsScreen').default;
-      },
-      get ListAnimationsScreen() {
-        return require('./screens/animationScreens/ListAnimationsScreen').default;
       },
       get ProgressBarScreen() {
         return require('./screens/componentScreens/ProgressBarScreen').default;

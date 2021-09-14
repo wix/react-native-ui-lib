@@ -54,7 +54,7 @@ export default class DemoScreen extends Component {
     if (PropTypes.bool === prop) {
       return (
         <View row spread key={propId} paddingV-10>
-          <Text test70 dark60>
+          <Text test70 grey60>
             {propId}
           </Text>
           <Switch

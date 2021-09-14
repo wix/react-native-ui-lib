@@ -17,7 +17,7 @@ export declare type TextProps = RNTextProps & TypographyModifiers & ColorsModifi
     /**
      * Substring to highlight
      */
-    highlightString?: string;
+    highlightString?: string | string[];
     /**
      * Custom highlight style for highlight string
      */
@@ -29,7 +29,6 @@ export declare type TextProps = RNTextProps & TypographyModifiers & ColorsModifi
     textAlign?: string;
     style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
 };
-export declare type TextPropTypes = TextProps;
 declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextProps;
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
@@ -42,7 +41,18 @@ declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps &
 declare class Text extends PureComponent<PropsTypes> {
     static displayName: string;
     private TextContainer;
-    getTextPartsByHighlight(targetString?: string, highlightString?: string): string[];
+    getPartsByHighlight(targetString: string | undefined, highlightString: string | string[]): {
+        string: string;
+        shouldHighlight: boolean;
+    }[];
+    getTextPartsByHighlight(targetString?: string, highlightString?: string): {
+        string: string;
+        shouldHighlight: boolean;
+    }[];
+    getArrayPartsByHighlight(targetString?: string, highlightString?: string[]): {
+        string: string;
+        shouldHighlight: boolean;
+    }[];
     renderText(children: any): any;
     render(): JSX.Element;
 }
