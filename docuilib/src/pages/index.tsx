@@ -10,6 +10,7 @@ import MainSection from '../components/MainSection';
 import ComponentsSection from '../components/ComponentsSection';
 import FeaturesSection from '../components/FeaturesSection';
 import CodeSection from '../components/CodeSection';
+import LibrariesSection from '../components/LibrariesSection';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -38,6 +39,7 @@ export default function Home(): JSX.Element {
         <ComponentsSection/>
         <FeaturesSection/>
         <CodeSection/>
+        <LibrariesSection/>
         {/* <HomepageFeatures/> */}
       </main>
     </Layout>
