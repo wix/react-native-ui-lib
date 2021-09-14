@@ -12,11 +12,11 @@ import {
   AccessibilityProps
 } from 'react-native';
 import memoize from 'memoize-one';
+import {LogService} from '../../services';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
-//@ts-ignore
-import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
+import Badge, {BadgeProps} from '../badge';
 import View from '../view';
 import Text from '../text';
 import Image, {ImageProps} from '../image';
@@ -24,18 +24,6 @@ import Image, {ImageProps} from '../image';
 import AnimatedImage from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
 
-const deprecatedProps = [
-  {old: 'isOnline', new: 'badgeProps.backgroundColor'},
-  {old: 'status', new: 'badgeProps.backgroundColor'},
-  {old: 'imageSource', new: 'source'}
-];
-
-export enum StatusModes {
-  ONLINE = 'ONLINE',
-  OFFLINE = 'OFFLINE',
-  AWAY = 'AWAY',
-  NONE = 'NONE'
-}
 
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
@@ -44,7 +32,7 @@ export enum BadgePosition {
   BOTTOM_LEFT = 'BOTTOM_LEFT'
 }
 
-const DEFAULT_BADGE_SIZE = 'pimpleBig';
+const DEFAULT_BADGE_SIZE = 10;
 
 export type AutoColorsProps = {
   /**
@@ -87,6 +75,10 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    */
   source?: ImageSourcePropType;
   /**
+   * @deprecated use 'source' prop
+   */
+  imageSource?: ImageSourcePropType;
+  /**
    * Image props object
    */
   imageProps?: ImageProps;
@@ -120,7 +112,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    * Hash the name (or label) to get a color, so each name will have a specific color.
    * Default is false.
    */
-   useAutoColors?: boolean;
+  useAutoColors?: boolean;
   /**
    * Send this to use the name to infer a backgroundColor
    */
@@ -150,14 +142,6 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    */
   customRibbon?: JSX.Element;
   /**
-   * Determine if to show online badge
-   */
-  isOnline?: boolean;
-  /**
-   * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
-   */
-  status?: StatusModes;
-  /**
    * Custom size for the Avatar
    */
   size: number;
@@ -170,7 +154,6 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    */
   testID?: string;
 };
-export type AvatarPropTypes = AvatarProps; //TODO: remove after ComponentPropTypes deprecation;
 
 /**
  * @description: Avatar component for displaying user profile images
@@ -179,30 +162,32 @@ export type AvatarPropTypes = AvatarProps; //TODO: remove after ComponentPropTyp
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */
 class Avatar extends PureComponent<AvatarProps> {
+  static displayName = 'Avatar';
+
   styles: ReturnType<typeof createStyles>;
 
   constructor(props: AvatarProps) {
     super(props);
 
     this.styles = createStyles(props);
-    deprecatedProps.forEach(prop => {
-      //@ts-ignore
-      if (props[prop.old]) {
-        console.warn(`"Avatar's ${prop.old}" property is deprecated, please use "${prop.new}"`);
-      }
-    });
-  }
 
-  static displayName = 'Avatar';
-  static modes = StatusModes;
-  static badgePosition = BadgePosition;
+    if (props.imageSource) {
+      LogService.warn('uilib: imageSource prop is deprecated, use source instead.');
+    }
+  }
 
   static defaultProps = {
     animate: false,
     size: 50,
-    labelColor: Colors.dark10,
+    labelColor: Colors.grey10,
     badgePosition: BadgePosition.TOP_RIGHT
   };
+
+  static badgePosition = BadgePosition;
+
+  get source() {
+    return this.props.source || this.props.imageSource;
+  }
 
   getContainerStyle(): StyleProp<ViewStyle> {
     const {size} = this.props;
@@ -237,37 +222,14 @@ class Avatar extends PureComponent<AvatarProps> {
     };
   }
 
-  getStatusBadgeColor(status: StatusModes | undefined): string | null {
-    switch (status) {
-      case Avatar.modes.AWAY:
-        return Colors.yellow30;
-      case Avatar.modes.ONLINE:
-        return Colors.green30;
-      case Avatar.modes.OFFLINE:
-        return Colors.dark60;
-      case Avatar.modes.NONE:
-      default:
-        return null;
-    }
-  }
-
   getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', 0);
 
   getBadgeColor() {
-    const {isOnline, status} = this.props;
-    const statusColor = this.getStatusBadgeColor(status);
-    const onlineColor = isOnline ? Colors.green30 : undefined;
-
-    return _.get(this.props, 'badgeProps.backgroundColor') || statusColor || onlineColor;
+    return _.get(this.props, 'badgeProps.backgroundColor');
   }
 
   getBadgeSize = () => {
-    const badgeSize = this.props?.badgeProps?.size ?? DEFAULT_BADGE_SIZE;
-
-    if (_.isString(badgeSize)) {
-      return BADGE_SIZES[badgeSize] || BADGE_SIZES[DEFAULT_BADGE_SIZE];
-    }
-    return badgeSize;
+    return this.props?.badgeProps?.size || DEFAULT_BADGE_SIZE;
   };
 
   getBadgePosition = (): object => {
@@ -316,9 +278,7 @@ class Avatar extends PureComponent<AvatarProps> {
   renderImage() {
     const {
       animate,
-      source,
       // @ts-ignore
-      imageSource,
       onImageLoadStart,
       onImageLoadEnd,
       onImageLoadError,
@@ -326,16 +286,15 @@ class Avatar extends PureComponent<AvatarProps> {
       imageProps,
       imageStyle
     } = this.props;
-    const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
+    const hasImage = !_.isUndefined(this.source);
     const ImageContainer = animate ? AnimatedImage : Image;
-    const avatarImageSource = imageSource || source;
 
     if (hasImage) {
       return (
         <ImageContainer
           animate={animate}
           style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
-          source={avatarImageSource}
+          source={this.source}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
@@ -386,9 +345,6 @@ class Avatar extends PureComponent<AvatarProps> {
   render() {
     const {
       labelColor: color,
-      source,
-      //@ts-ignore
-      imageSource,
       onPress,
       containerStyle,
       children,
@@ -398,7 +354,7 @@ class Avatar extends PureComponent<AvatarProps> {
       forwardedRef
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
-    const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
+    const hasImage = !_.isUndefined(this.source);
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
     const text = this.text;

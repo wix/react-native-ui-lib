@@ -73,7 +73,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   static displayName = 'ColorPicker';
 
   static defaultProps = {
-    initialColor: Colors.dark80
+    initialColor: Colors.grey80
   };
 
   constructor(props: Props) {
@@ -155,7 +155,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   }
 
   getTextColor(color: string) {
-    return Colors.isDark(color) ? Colors.white : Colors.dark10;
+    return Colors.isDark(color) ? Colors.white : Colors.grey10;
   }
 
   getValidColorString(text?: string) {
@@ -230,7 +230,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
         <Button
           link
           iconSource={Assets.icons.x}
-          iconStyle={{tintColor: Colors.dark10}}
+          iconStyle={{tintColor: Colors.grey10}}
           onPress={this.onDismiss}
           accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
         />

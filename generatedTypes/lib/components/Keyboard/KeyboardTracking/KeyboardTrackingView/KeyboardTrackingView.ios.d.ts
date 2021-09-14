@@ -13,7 +13,6 @@ import { KeyboardTrackingViewProps } from './index';
  */
 declare class KeyboardTrackingView extends PureComponent<KeyboardTrackingViewProps> {
     static displayName: string;
-    /** V6 should be change to default false */
     static defaultProps: {
         useSafeArea: boolean;
     };

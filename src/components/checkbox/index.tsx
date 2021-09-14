@@ -83,7 +83,6 @@ export interface CheckboxProps extends TouchableOpacityProps {
    */
   containerStyle?: StyleProp<ViewStyle>;
 }
-export type CheckboxPropTypes = CheckboxProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface CheckboxState {
   isChecked: Animated.Value;

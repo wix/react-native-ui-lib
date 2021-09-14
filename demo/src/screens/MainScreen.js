@@ -207,10 +207,10 @@ class MainScreen extends Component {
           activeBackgroundColor={Colors.primary}
           activeOpacity={1}
         >
-          <Text style={[item.deprecate && styles.entryTextDeprecated]} dark10 text50>
+          <Text style={[item.deprecate && styles.entryTextDeprecated]} grey10 text50>
             {item.title}
           </Text>
-          <Image source={chevronIcon} style={{tintColor: Colors.dark10}} supportRTL/>
+          <Image source={chevronIcon} style={{tintColor: Colors.grey10}} supportRTL/>
         </TouchableOpacity>
       );
     } else {
@@ -284,7 +284,7 @@ class MainScreen extends Component {
         )}
         {showNoResults && (
           <View padding-20>
-            <Text dark40 text50>
+            <Text grey40 text50>
               Sorry, nothing was found. Try Button or something..
             </Text>
           </View>
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
   },
   searchField: {
     padding: 12,
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.grey80,
     borderRadius: 8
   }
 });

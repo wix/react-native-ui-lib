@@ -1,79 +1,83 @@
-import React, {PureComponent} from 'react';
-import _ from 'lodash';
+import React, {useCallback, useContext, useMemo, useEffect} from 'react';
 import TabBarContext from './TabBarContext';
-import Animated from 'react-native-reanimated';
-import {Constants} from '../../helpers';
-
-const {Code, block, call} = Animated;
+import Reanimated, {
+  runOnJS,
+  useAnimatedReaction,
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useSharedValue,
+  withTiming
+} from 'react-native-reanimated';
 
 /**
  * @description: TabController's Page Carousel
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel
  */
-class PageCarousel extends PureComponent {
-  static displayName = 'TabController.PageCarousel';
-  static contextType = TabBarContext;
-  carousel = React.createRef<Animated.ScrollView>();
+function PageCarousel({...props}) {
+  const carousel = useAnimatedRef<Reanimated.ScrollView>();
+  const {
+    currentPage,
+    targetPage,
+    selectedIndex = 0,
+    pageWidth,
+    carouselOffset
+  } = useContext(TabBarContext);
+  const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
+  const wasScrolledByPress = useSharedValue(false);
 
-  onScroll = Animated.event([{nativeEvent: {contentOffset: {x: this.context.carouselOffset}}}], {
-    useNativeDriver: true
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: e => {
+      carouselOffset.value = e.contentOffset.x;
+      const newIndex = e.contentOffset.x / pageWidth;
+
+      if (wasScrolledByPress.value) {
+        /* Round is for android when offset value has fraction */
+        targetPage.value = withTiming(Math.round(newIndex));
+        wasScrolledByPress.value = false;
+      } else {
+        targetPage.value = newIndex;
+      }
+    },
+    onMomentumEnd: e => {
+      const newPage = Math.round(e.contentOffset.x / pageWidth);
+      currentPage.value = newPage;
+    }
   });
 
-  componentDidMount() {
-    if (Constants.isAndroid) {
-      setTimeout(() => {
-        this.scrollToPage(this.context.selectedIndex);
-      }, 0);
+  const scrollToItem = useCallback(index => {
+    wasScrolledByPress.value = true;
+    // @ts-expect-error
+    carousel.current?.scrollTo({x: index * pageWidth, animated: false});
+  },
+  [pageWidth]);
+
+  useAnimatedReaction(() => {
+    return currentPage.value;
+  },
+  (currIndex, prevIndex) => {
+    if (currIndex !== prevIndex) {
+      runOnJS(scrollToItem)(currIndex);
     }
-  }
-
-  onTabChange = ([index]: readonly number[]) => {
-    this.scrollToPage(index);
-  };
-
-  scrollToPage = (pageIndex: number) => {
-    const {pageWidth} = this.context;
-    const node = this.carousel.current?.getNode?.();
-    if (node) {
-      node.scrollTo({x: pageIndex * pageWidth, animated: false});
-    }
-  };
-
-  renderCodeBlock = _.memoize(() => {
-    const {targetPage, containerWidth} = this.context;
-
-    return (
-      <Code>
-        {() =>
-          block([
-            Animated.onChange(targetPage, [call([targetPage], this.onTabChange)]),
-            Animated.onChange(containerWidth, [call([targetPage], this.onTabChange)])
-          ])
-        }
-      </Code>
-    );
   });
 
-  render() {
-    const {selectedIndex, pageWidth} = this.context;
-    return (
-      <>
-        <Animated.ScrollView
-          {...this.props}
-          ref={this.carousel}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={this.onScroll}
-          scrollEventThrottle={16}
-          contentOffset={{x: selectedIndex * pageWidth, y: 0}} // iOS only
-        />
+  useEffect(() => {
+    // @ts-expect-error
+    carousel.current?.scrollTo({x: currentPage.value * pageWidth, animated: false});
+  }, [pageWidth]);
 
-        {this.renderCodeBlock()}
-      </>
-    );
-  }
+  return (
+    <Reanimated.ScrollView
+      {...props}
+      ref={carousel}
+      horizontal
+      pagingEnabled
+      showsHorizontalScrollIndicator={false}
+      onScroll={scrollHandler}
+      scrollEventThrottle={16}
+      contentOffset={contentOffset} // iOS only
+    />
+  );
 }
 
 export default PageCarousel;

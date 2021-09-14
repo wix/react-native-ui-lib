@@ -19,6 +19,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     autoplayTimer?: ReturnType<typeof setTimeout>;
     orientationChange?: boolean;
     skippedInitialScroll?: boolean;
+    isAutoScrolled: boolean;
     constructor(props: CarouselProps);
     static getDerivedStateFromProps(nextProps: CarouselProps, prevState: CarouselState): {
         pageWidth: number;

@@ -5,5 +5,5 @@ export declare type FadedScrollViewProps = ViewProps & ScrollViewProps & {
     children?: React.ReactNode | React.ReactNode[];
 };
 declare type Props = FadedScrollViewProps & ForwardRefInjectedProps;
-declare const _default: React.ComponentType<Props>;
+declare const _default: React.ComponentClass<Props, any> | React.FunctionComponent<Props>;
 export default _default;

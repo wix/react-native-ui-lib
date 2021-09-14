@@ -80,6 +80,9 @@ class TextScreen extends Component {
             <Text text50R highlightString={'danc'} highlightStyle={{fontWeight: '200', color: Colors.grey20}}>
               Dancing in The Dark
             </Text>
+            <Text text60R highlightString={['dancing', 'da']} highlightStyle={{color: Colors.green30}}>
+              Dancing in The Dark
+            </Text>
           </View>
           {this.renderDivider()}
           <View padding-20 centerH>

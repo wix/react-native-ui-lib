@@ -49,7 +49,7 @@ describe('TextField', () => {
       const uut = new TextField({});
       expect(uut.getStateColor({focus: Colors.blue30})).toEqual(Colors.grey10);
       uut.state = {focused: true};
-      expect(uut.getStateColor({default: Colors.dark20})).toEqual(Colors.grey10);
+      expect(uut.getStateColor({default: Colors.grey20})).toEqual(Colors.grey10);
     });
     
     it('should return default "error" state when there is an error', () => {
