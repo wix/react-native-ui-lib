@@ -7,8 +7,8 @@ export {default as TouchableOpacity2} from './TouchableOpacity2';
 export {default as WheelPicker, WheelPickerProps} from './WheelPicker';
 export {default as PanView, PanViewProps, PanViewDirections, PanViewDismissThreshold} from './panView';
 export {
-  default as TransitionAnimator,
-  TransitionAnimatorProps,
+  default as TransitionView,
+  TransitionViewProps,
   Direction,
   TransitionAnimationEndType
-} from './TransitionAnimator';
+} from './TransitionView';

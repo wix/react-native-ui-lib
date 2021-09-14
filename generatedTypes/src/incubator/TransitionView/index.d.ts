@@ -5,8 +5,8 @@ import { Direction } from './useHiddenLocation';
 import { TransitionAnimationEndType } from './useAnimationEndNotifier';
 import { AnimatedTransitionProps } from './useAnimatedTransition';
 export { Direction, TransitionAnimationEndType };
-export declare type TransitionAnimatorProps = AnimatedTransitionProps & ViewProps;
-declare type Props = PropsWithChildren<TransitionAnimatorProps> & ForwardRefInjectedProps;
+export declare type TransitionViewProps = AnimatedTransitionProps & ViewProps;
+declare type Props = PropsWithChildren<TransitionViewProps> & ForwardRefInjectedProps;
 interface Statics {
     animateOut: () => void;
 }

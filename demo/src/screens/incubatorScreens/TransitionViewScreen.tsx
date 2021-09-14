@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Button, Incubator} from 'react-native-ui-lib';
-const {TransitionAnimator} = Incubator;
+const {TransitionView} = Incubator;
 // @ts-ignore
 import {renderRadioGroup} from '../ExampleScreenPresenter';
 
@@ -10,8 +10,8 @@ interface State {
   key: number;
 }
 
-export default class TransitionAnimatorScreen extends Component<{}, State> {
-  private ref = React.createRef<typeof TransitionAnimator>();
+export default class TransitionViewScreen extends Component<{}, State> {
+  private ref = React.createRef<typeof TransitionView>();
   state = {
     enterDirection: 'left' as Incubator.Direction,
     exitDirection: 'bottom' as Incubator.Direction,
@@ -42,7 +42,7 @@ export default class TransitionAnimatorScreen extends Component<{}, State> {
           {isRow: true})}
         <Button label="Refresh" onPress={() => this.setState({key: key + 1})}/>
         <View flex center>
-          <TransitionAnimator
+          <TransitionView
             key={`${key}`}
             // @ts-expect-error
             ref={this.ref}
@@ -51,7 +51,7 @@ export default class TransitionAnimatorScreen extends Component<{}, State> {
             // onAnimationEnd={this.onAnimationEnd}
           >
             <Button label="Press to remove" onPress={this.onPress}/>
-          </TransitionAnimator>
+          </TransitionView>
         </View>
       </View>
     );

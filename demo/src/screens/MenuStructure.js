@@ -160,7 +160,7 @@ export const navigationData = {
       {title: 'ExpandableOverlay', tags: 'text field expandable input picker', screen: 'unicorn.components.IncubatorExpandableOverlayScreen'},
       {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'},
       {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'},
-      {title: 'Transition Animator', tags: 'transition animation enter exit', screen: 'unicorn.incubator.TransitionAnimatorScreen'}
+      {title: 'Transition View', tags: 'transition animation enter exit', screen: 'unicorn.incubator.TransitionViewScreen'}
     ]
   },
   Inspirations: {

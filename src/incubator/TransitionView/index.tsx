@@ -10,14 +10,14 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 export {Direction, TransitionAnimationEndType};
 
 // TODO: might need to create a file for types and create a fake component for docs
-export type TransitionAnimatorProps = AnimatedTransitionProps & ViewProps;
+export type TransitionViewProps = AnimatedTransitionProps & ViewProps;
 
-type Props = PropsWithChildren<TransitionAnimatorProps> & ForwardRefInjectedProps;
+type Props = PropsWithChildren<TransitionViewProps> & ForwardRefInjectedProps;
 interface Statics {
   animateOut: () => void;
 }
 
-const TransitionAnimator = (props: Props) => {
+const TransitionView = (props: Props) => {
   const {
     onAnimationEnd,
     enterFrom,
@@ -46,4 +46,4 @@ const TransitionAnimator = (props: Props) => {
   return <AnimatedView {...others} onLayout={onLayout} style={[propsStyle, animatedStyle]} ref={containerRef}/>;
 };
 
-export default forwardRef<Props, Statics>(TransitionAnimator);
+export default forwardRef<Props, Statics>(TransitionView);

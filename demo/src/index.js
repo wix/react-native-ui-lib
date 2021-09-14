@@ -228,8 +228,8 @@ module.exports = {
       get PanViewScreen() {
         return require('./screens/incubatorScreens/PanViewScreen').default;
       },
-      get TransitionAnimatorScreen() {
-        return require('./screens/incubatorScreens/TransitionAnimatorScreen').default;
+      get TransitionViewScreen() {
+        return require('./screens/incubatorScreens/TransitionViewScreen').default;
       },
       // realExamples
       get AppleMusic() {
