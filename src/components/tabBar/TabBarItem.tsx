@@ -10,7 +10,6 @@ import {
   ViewStyle,
   TextStyle
 } from 'react-native';
-import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -19,6 +18,7 @@ import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
 import Badge, {BadgeProps} from '../badge';
+
 
 const INDICATOR_HEIGHT = 2;
 const INDICATOR_BG_COLOR = Colors.primary;
@@ -46,9 +46,8 @@ export interface TabBarItemProps {
    */
   labelStyle?: StyleProp<TextStyle>;
   /**
-   * Badge component props to display next the item label
+   * Badge component's props to display next the item label
    */
-  badge?: BadgeProps; //TODO: remove after deprecation
   badgeProps?: BadgeProps;
   /**
    * Pass to render a leading element
@@ -131,10 +130,6 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
       indicatorOpacity: props.selected ? new Animated.Value(1) : new Animated.Value(0),
       selected: props.selected
     };
-
-    if (!_.isEmpty(props.badge)) {
-      LogService.deprecationWarn({component: 'TabBarItem', oldProp: 'badge', newProp: 'badgeProps'});
-    }
   }
 
   componentDidUpdate(prevProps: TabBarItemProps) {
@@ -193,7 +188,6 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
       label,
       labelStyle,
       badgeProps,
-      badge,
       leadingAccessory,
       trailingAccessory,
       uppercase,
@@ -212,8 +206,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
     const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(styles.label);
     const iconSelectedTint =
       iconSelectedColor || this.getColorFromStyle(selectedLabelStyle) || this.getColorFromStyle(styles.selectedLabel);
-    const badgeFinalProps = badgeProps || badge;
-    const badgeSize = _.get(badgeFinalProps, 'size', 'small');
+    const badgeSize = _.get(badgeProps, 'size', 16);
 
     return (
       <TouchableOpacity
@@ -247,12 +240,12 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
             </Text>
           )}
           {children}
-          {!_.isNil(badgeFinalProps) && (
+          {!_.isNil(badgeProps) && (
             <Badge
               backgroundColor={Colors.red30}
-              {...badgeFinalProps}
+              {...badgeProps}
               size={badgeSize}
-              containerStyle={[styles.badge, badgeFinalProps.containerStyle]}
+              containerStyle={[styles.badge, badgeProps.containerStyle]}
             />
           )}
           {trailingAccessory}
@@ -280,7 +273,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     borderRightWidth: 1,
-    borderRightColor: Colors.dark70,
+    borderRightColor: Colors.grey70,
     marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
   },
   indicator: {

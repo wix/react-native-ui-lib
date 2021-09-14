@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useImperativeHandle, useRef} from 'react';
 import {
   ViewProps,
   ScrollView,
@@ -29,6 +29,7 @@ const FadedScrollView = (props: Props) => {
     onLayout: propsOnLayout,
     ...other
   } = props;
+  const ref = useRef<ScrollView>();
   const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal: true});
   const {
     onScroll: onScrollReached,
@@ -60,6 +61,15 @@ const FadedScrollView = (props: Props) => {
   },
   [propsOnLayout, onLayout]);
 
+  const isScrollEnabled = () => {
+    return scrollEnabled; 
+  };
+
+  useImperativeHandle(props.forwardedRef, () => ({
+    scrollTo: (...data: any) => ref.current?.scrollTo?.(...data),
+    isScrollEnabled
+  }));
+
   if (children) {
     return (
       <>
@@ -73,7 +83,8 @@ const FadedScrollView = (props: Props) => {
           onContentSizeChange={_onContentSizeChange}
           onLayout={_onLayout}
           onScroll={onScroll}
-          ref={props.forwardedRef}
+          // @ts-ignore
+          ref={ref}
         >
           {children}
         </ScrollView>

@@ -24,9 +24,9 @@ const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;
 const BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
-const DEFAULT_COLOR = Colors.dark50;
+const DEFAULT_COLOR = Colors.grey50;
 const ACTIVE_COLOR = Colors.violet30;
-const INACTIVE_COLOR = Colors.dark60;
+const INACTIVE_COLOR = Colors.grey60;
 
 export type SliderOnValueChange = (value: number) => void;
 

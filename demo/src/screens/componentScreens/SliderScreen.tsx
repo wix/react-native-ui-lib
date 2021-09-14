@@ -144,7 +144,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
 
 const styles = StyleSheet.create({
   image: {
-    tintColor: Colors.dark30
+    tintColor: Colors.grey30
   },
   text: {
     width: 40
@@ -182,10 +182,10 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 4,
     borderWidth: 1, 
-    borderColor: Colors.dark60
+    borderColor: Colors.grey60
   },
   group: {
-    backgroundColor: Colors.dark60,
+    backgroundColor: Colors.grey60,
     padding: 10,
     borderRadius: 6
   }

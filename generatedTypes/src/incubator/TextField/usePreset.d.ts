@@ -19,10 +19,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     hint?: string | undefined;
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
-    textAlign?: "left" | "right" | "center" | undefined;
-    testID?: string | undefined;
-    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
+    testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
@@ -88,6 +86,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     maxFontSizeMultiplier?: number | null | undefined;
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
+    textAlign?: "left" | "right" | "center" | undefined;
+    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     value?: string | undefined;
     autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;
@@ -162,6 +162,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 } | {
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
@@ -268,14 +269,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     transparent?: boolean | undefined;
     black?: boolean | undefined;
     white?: boolean | undefined;
-    dark10?: boolean | undefined;
-    dark20?: boolean | undefined;
-    dark30?: boolean | undefined;
-    dark40?: boolean | undefined;
-    dark50?: boolean | undefined;
-    dark60?: boolean | undefined;
-    dark70?: boolean | undefined;
-    dark80?: boolean | undefined;
     grey10?: boolean | undefined;
     grey20?: boolean | undefined;
     grey30?: boolean | undefined;
@@ -351,10 +344,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     hint?: string | undefined;
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
-    textAlign?: "left" | "right" | "center" | undefined;
-    testID?: string | undefined;
-    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
+    testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
@@ -420,6 +411,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     maxFontSizeMultiplier?: number | null | undefined;
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
+    textAlign?: "left" | "right" | "center" | undefined;
+    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     value?: string | undefined;
     autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;
@@ -494,6 +487,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 } | {
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
@@ -600,14 +594,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     transparent?: boolean | undefined;
     black?: boolean | undefined;
     white?: boolean | undefined;
-    dark10?: boolean | undefined;
-    dark20?: boolean | undefined;
-    dark30?: boolean | undefined;
-    dark40?: boolean | undefined;
-    dark50?: boolean | undefined;
-    dark60?: boolean | undefined;
-    dark70?: boolean | undefined;
-    dark80?: boolean | undefined;
     grey10?: boolean | undefined;
     grey20?: boolean | undefined;
     grey30?: boolean | undefined;
@@ -683,9 +669,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     hint?: string | undefined;
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
-    textAlign?: "left" | "right" | "center" | undefined;
-    testID?: string | undefined;
-    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     style: false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | {
         lineHeight: undefined;
         height: number | undefined;
@@ -799,6 +782,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
         includeFontPadding?: boolean | undefined;
     } | null;
+    testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
@@ -864,6 +848,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     maxFontSizeMultiplier?: number | null | undefined;
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
+    textAlign?: "left" | "right" | "center" | undefined;
+    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     value?: string | undefined;
     autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;
@@ -1062,4 +1048,5 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 };

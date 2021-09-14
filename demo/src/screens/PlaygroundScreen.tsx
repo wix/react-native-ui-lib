@@ -6,7 +6,7 @@ import {View, Text, Card, TextField, Button} from 'react-native-ui-lib'; //eslin
 export default class PlaygroundScreen extends Component {
   render() {
     return (
-      <View bg-dark80 flex padding-20>
+      <View bg-grey80 flex padding-20>
         <View marginT-20>
           <TextField placeholder="Placeholder" />
         </View>

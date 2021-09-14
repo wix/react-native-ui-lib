@@ -1,11 +1,7 @@
-import React, {PureComponent} from 'react';
+import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import Reanimated from 'react-native-reanimated';
-import _ from 'lodash';
+import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
-import {Constants} from '../../helpers';
-
-const {Code, Value, cond, set, and, call, block, eq} = Reanimated;
 
 export interface TabControllerPageProps {
   /**
@@ -34,81 +30,53 @@ export interface TabControllerPageProps {
  * @description: TabController's TabPage
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  */
-export default class TabPage extends PureComponent<TabControllerPageProps> {
-  static displayName = 'TabController.TabPage';
+export default function TabPage({
+  testID,
+  index,
+  lazy,
+  renderLoading,
+  ...props
+}: PropsWithChildren<TabControllerPageProps>) {
+  const {currentPage, targetPage, asCarousel, containerWidth} = useContext(TabBarContext);
+  const [shouldLoad, setLoaded] = useState(!lazy);
 
-  static contextType = TabBarContext;
+  const lazyLoad = useCallback(() => {
+    if (lazy && !shouldLoad) {
+      setLoaded(true);
+    }
+  }, [lazy, shouldLoad]);
 
-  static defaultProps = {
-    lazy: false,
-    activeOpacity: 0.6,
-    lazyLoadTime: 300,
-    renderLoading: _.noop
-  };
-
-  state = {
-    loaded: !this.props.lazy
-  };
-
-  _loaded = new Value(Number(!this.props.lazy));
-  _opacity = new Value(0);
-  _zIndex = new Value(0);
-  _pageStyle = [
-    {opacity: this._opacity},
-    this.context.asCarousel ? styles.carouselPage : styles.page,
-    this.context.asCarousel ? {width: this.context.containerWidth} : undefined,
-    {zIndex: this._zIndex}
-  ];
-
-  lazyLoad = () => {
-    setTimeout(() => {
-      this.setState({
-        loaded: true
-      });
-    }, this.props.lazyLoadTime); // tab bar indicator transition time
-  };
-
-  renderCodeBlock = _.memoize(() => {
-    const {targetPage} = this.context;
-    const {index, lazy} = this.props;
-    return (
-      <Code>
-        {() =>
-          block([
-            cond(and(eq(targetPage, index), Number(lazy), eq(this._loaded, 0)), [
-              set(this._loaded, 1),
-              call([], this.lazyLoad)
-            ]),
-            cond(eq(targetPage, index),
-              [set(this._opacity, 1), set(this._zIndex, 1)],
-              [set(this._opacity, 0), set(this._zIndex, 0)])
-          ])
-        }
-      </Code>
-    );
+  useAnimatedReaction(() => {
+    return targetPage.value === index;
+  },
+  isActive => {
+    if (isActive) {
+      runOnJS(lazyLoad)();
+    }
   });
 
-  render() {
-    const {renderLoading, testID} = this.props;
-    const {loaded} = this.state;
+  const animatedPageStyle = useAnimatedStyle(() => {
+    const isActive = Math.round(currentPage.value) === index;
+    return {
+      opacity: isActive || asCarousel ? 1 : 0,
+      zIndex: isActive || asCarousel ? 1 : 0
+    };
+  });
 
-    return (
-      <Reanimated.View style={this._pageStyle} testID={testID}>
-        {!loaded && renderLoading?.()}
-        {loaded && this.props.children}
-        {this.renderCodeBlock()}
-      </Reanimated.View>
-    );
-  }
+  const style = useMemo(() => {
+    return [!asCarousel && styles.page, animatedPageStyle, {width: asCarousel ? containerWidth : undefined}];
+  }, [asCarousel, animatedPageStyle, containerWidth]);
+
+  return (
+    <Reanimated.View style={style} testID={testID}>
+      {!shouldLoad && renderLoading?.()}
+      {shouldLoad && props.children}
+    </Reanimated.View>
+  );
 }
 
 const styles = StyleSheet.create({
   page: {
     ...StyleSheet.absoluteFillObject
-  },
-  carouselPage: {
-    width: Constants.screenWidth,
-    flex: 1,
-    opacity: 1
   }
 });

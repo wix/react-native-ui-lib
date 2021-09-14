@@ -72,7 +72,7 @@ export default class ChipScreen extends Component {
     const {showDialog} = this.state;
 
     return (
-      <Dialog migrate visible={showDialog} useSafeArea bottom onDismiss={this.closeDialog}>
+      <Dialog visible={showDialog} useSafeArea bottom onDismiss={this.closeDialog}>
         {this.renderContent()}
       </Dialog>
     );

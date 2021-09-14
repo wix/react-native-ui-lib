@@ -192,7 +192,7 @@ class DrawerScreen extends Component {
         style={{borderBottomWidth: 1, borderColor: Colors.grey60}}
         testID="drawer_item"
       >
-        {this.state.unread && <Badge testID="drawer_item_badge" size={'pimpleSmall'} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
+        {this.state.unread && <Badge testID="drawer_item_badge" size={6} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
         <Avatar source={{uri: data.thumbnail}}/>
         <View marginL-20>
           <Text text70R={!this.state.unread} text70BO={this.state.unread}>{data.name}</Text>
@@ -312,12 +312,12 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   listContent: {
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.grey80
   },
   rowContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.grey80
   },
   rowIcon: {
     width: 38,
@@ -329,11 +329,11 @@ const styles = StyleSheet.create({
   rowTitle: {
     ...Typography.text70,
     fontWeight: 'bold',
-    color: Colors.dark20
+    color: Colors.grey20
   },
   rowSubtitle: {
     ...Typography.text80,
-    color: Colors.dark30
+    color: Colors.grey30
   },
   rowButtonContainer: {
     flex: 1,

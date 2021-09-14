@@ -17,8 +17,6 @@ export interface PanResponderViewProps extends ViewProps {
      */
     isAnimated?: boolean;
 }
-export type PanResponderViewPropTypes = PanResponderViewProps; //TODO: remove after ComponentPropTypes deprecation;
-
 
 interface PanResponderProps {
   isPanning: boolean;
