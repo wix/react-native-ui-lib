@@ -9,6 +9,7 @@ import styles from './index.module.scss';
 import MainSection from '../components/MainSection';
 import ComponentsSection from '../components/ComponentsSection';
 import FeaturesSection from '../components/FeaturesSection';
+import CodeSection from '../components/CodeSection';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -36,6 +37,7 @@ export default function Home(): JSX.Element {
         <MainSection/>
         <ComponentsSection/>
         <FeaturesSection/>
+        <CodeSection/>
         {/* <HomepageFeatures/> */}
       </main>
     </Layout>
