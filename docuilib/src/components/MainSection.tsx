@@ -3,7 +3,6 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import styles from './MainSection.module.scss';
-import componentsStyles from '../css/Components.module.scss';
 import mainCover from '@site/static/img/mainCover.jpg';
 import GoldStarSvg from '@site/static/img/goldStar.svg';
 
@@ -24,11 +23,11 @@ export default () => {
 
         <div className={styles.buttons}>
           <Link to="docs/getting-started/setup">
-            <button className={componentsStyles.btnDark}>View Docs</button>
+            <button className={'button dark'}>View Docs</button>
           </Link>
 
           <a href={siteConfig.customFields.expoSnackLink} target="_blank" rel="noopener noreferrer">
-            <button className={componentsStyles.btn}>Expo-Snack Demo</button>
+            <button className={'button'}>Expo-Snack Demo</button>
           </a>
         </div>
       </div>

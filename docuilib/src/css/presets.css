@@ -1,0 +1,95 @@
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  /* DARKS */
+  --dark10: #20303c;
+  --dark20: #43515c;
+  --dark30: #66737c;
+  --dark40: #858f96;
+  --dark50: #a3abb0;
+  --dark60: #c2c7cb;
+  --dark70: #e0e3e5;
+  --dark80: #f2f4f5;
+  /* BLUES */
+  --blue10: #3182c8;
+  --blue20: #4196e0;
+  --blue30: #459fed;
+  --blue40: #57a8ef;
+  --blue50: #8fc5f4;
+  --blue60: #b5d9f8;
+  --blue70: #daecfb;
+  --blue80: #ecf5fd;
+
+  /* CYANS */
+  --cyan10: #00aaaf;
+  --cyan20: #32babc;
+  --cyan30: #3cc7c5;
+  --cyan40: #64d4d2;
+  --cyan50: #8bdfdd;
+  --cyan60: #b1e9e9;
+  --cyan70: #d8f4f4;
+  --cyan80: #ebf9f9;
+  /* GREENS */
+  --green10: #00a65f;
+  --green20: #32b76c;
+  --green30: #65c888;
+  --green40: #84d3a0;
+  --green50: #a3deb8;
+  --green60: #c1e9cf;
+  --green70: #e8f7ef;
+  --green80: #f3fbf7;
+  /* YELLOWS */
+  --yellow10: #e19800;
+  --yellow20: #f0a700;
+  --yellow30: #ffb600;
+  --yellow40: #ffca45;
+  --yellow50: #ffdd87;
+  --yellow60: #ffeab5;
+  --yellow70: #fff2d1;
+  --yellow80: #fff7e3;
+  /* ORANGES */
+  --orange10: #d9644a;
+  --orange20: #e66a4e;
+  --orange30: #f27052;
+  --orange40: #f37e63;
+  --orange50: #f7a997;
+  --orange60: #fac6ba;
+  --orange70: #fce2dc;
+  --orange80: #fef0ed;
+  /* REDS */
+  --red10: #cf262f;
+  --red20: #ee2c38;
+  --red30: #f2564d;
+  --red40: #f57871;
+  --red50: #f79a94;
+  --red60: #fabbb8;
+  --red70: #fcdddb;
+  --red80: #feeeed;
+  /* PURPLES */
+  --purple10: #8b1079;
+  --purple20: #a0138e;
+  --purple30: #b13dac;
+  --purple40: #c164bd;
+  --purple50: #d08bcd;
+  --purple60: #e0b1de;
+  --purple70: #efd8ee;
+  --purple80: #f7ebf7;
+  /* VIOLETS */
+  --violet10: #48217b;
+  --violet20: #542790;
+  --violet30: #733ca6;
+  --violet40: #8f63b8;
+  --violet50: #ab8aca;
+  --violet60: #c7b1db;
+  --violet70: #e3d8ed;
+  --violet80: #f1ebf6;
+
+  /* TEXTS */
+  --fontFamily: Poppins;
+  --text10: 1.5em;
+  --text20: 1.3em;
+  --text30: 1.12em;
+  --text40: 1em;
+  --text50: 0.8em;
+  --text60: 0.6em;
+}

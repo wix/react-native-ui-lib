@@ -4,7 +4,6 @@ import classnames from 'classnames';
 
 import {foundationSnippet, themeSnippet, modifiersSnippet} from './CodeSectionSnippets';
 import styles from './CodeSection.module.scss';
-import componentsStyles from '../css/Components.module.scss';
 
 const tabs = [
   {headline: `Define your app's foundation - colors, typography and spacings`, codeSnippet: foundationSnippet},
@@ -25,7 +24,7 @@ export default () => {
         <TabBar onChangeIndex={setSelectedTab} selectedIndex={selectedTab}/>
         <Tab {...tabs[selectedTab]}/>
         <Link className={styles.docsButton} to="docs/getting-started/setup">
-          <button className={componentsStyles.btnDark}>View Docs</button>
+          <button className={'button dark'}>View Docs</button>
         </Link>
       </div>
     </div>

@@ -2,8 +2,6 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 
 import styles from './ComponentsSection.module.scss';
-import componentsStyles from '../css/Components.module.scss';
-
 import showcase from '@site/static/img/showcase.jpg';
 
 export default () => {
@@ -15,7 +13,7 @@ export default () => {
           Basic components like Button, Avatar and Card and more sophisticated ones like Hints, ColorPicker and Drawer.
         </p>
         <Link to="docs/getting-started/setup">
-          <button className={componentsStyles.btnDark}>View Docs</button>
+          <button className={'button dark'}>View Docs</button>
         </Link>
       </div>
       <img src={showcase} alt="showcase"/>

@@ -35,7 +35,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/blog/'
           },
           theme: {
-            customCss: require.resolve('./src/css/custom.css')
+            customCss: [
+              require.resolve('./src/css/custom.css'),
+              require.resolve('./src/css/presets.css'),
+              require.resolve('./src/css/components.css')
+            ]
           }
         })
       ]
