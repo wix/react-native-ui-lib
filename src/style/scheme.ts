@@ -13,9 +13,13 @@ class Scheme {
   constructor() {
     Appearance.addChangeListener(() => {
       if (this.currentScheme === 'default') {
-        Object.assign(this, this.schemes[Appearance.getColorScheme() ?? 'light']);
+        this.broadcastSchemeChange();
       }
     });
+  }
+
+  private broadcastSchemeChange() {
+    this.changeListeners.forEach(listener => listener(this.getSchemeType()));
   }
 
   /**
@@ -39,7 +43,7 @@ class Scheme {
     this.currentScheme = scheme;
 
     if (prevSchemeType !== this.getSchemeType()) {
-      this.changeListeners.forEach(listener => listener(this.getSchemeType()));
+      this.broadcastSchemeChange();
     }
   }
 
