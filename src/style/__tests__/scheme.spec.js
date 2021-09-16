@@ -66,7 +66,7 @@ describe('Scheme', () => {
   describe('scheme change listeners', () => {
     it('should register scheme change listener', () => {
       const listener = jest.fn();
-      Scheme.addSchemeChangeListener(listener);
+      Scheme.addChangeListener(listener);
       expect(listener).not.toHaveBeenCalled();
       Scheme.setScheme('dark');
       expect(listener).toHaveBeenCalledTimes(1);
@@ -74,17 +74,17 @@ describe('Scheme', () => {
 
     it('should unregister scheme change listener', () => {
       const listener = jest.fn();
-      Scheme.addSchemeChangeListener(listener);
+      Scheme.addChangeListener(listener);
       Scheme.setScheme('dark');
       expect(listener).toHaveBeenCalledTimes(1);
-      Scheme.removeSchemeChangeListener(listener);
+      Scheme.removeChangeListener(listener);
       Scheme.setScheme('light');
       expect(listener).toHaveBeenCalledTimes(1);
     });
 
     it('should not be triggered if scheme set to the same type', () => {
       const listener = jest.fn();
-      Scheme.addSchemeChangeListener(listener);
+      Scheme.addChangeListener(listener);
       Scheme.setScheme('dark');
       expect(listener).toHaveBeenCalledTimes(1);
       Scheme.setScheme('dark');

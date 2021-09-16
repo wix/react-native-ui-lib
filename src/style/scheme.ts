@@ -1,9 +1,9 @@
 import {Appearance} from 'react-native';
 import {remove, xor, isEmpty} from 'lodash';
 
-type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
-type SchemeType = 'default' | 'light' | 'dark';
-type SchemeChangeListener = (schemeType?: 'light' | 'dark') => void;
+export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
+export type SchemeType = 'default' | 'light' | 'dark';
+export type SchemeChangeListener = (schemeType?: 'light' | 'dark') => void;
 
 class Scheme {
   currentScheme: SchemeType = 'default';
@@ -70,7 +70,7 @@ class Scheme {
   /**
    * Add a change scheme event listener
    */
-  addSchemeChangeListener(listener: SchemeChangeListener) {
+  addChangeListener(listener: SchemeChangeListener) {
     this.changeListeners.push(listener);
   }
 
@@ -79,7 +79,7 @@ class Scheme {
    * arguments:
    * listener - listener reference to remove
    */
-  removeSchemeChangeListener(listener: SchemeChangeListener) {
+  removeChangeListener(listener: SchemeChangeListener) {
     remove(this.changeListeners, changeListener => changeListener === listener);
   }
 }
