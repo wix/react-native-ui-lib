@@ -46,6 +46,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
       ({
         navbar: {
           title: 'RNUILib',
+          hideOnScroll: true,
           logo: {
             alt: 'RNUILib Logo',
             src: 'img/logo.png'
