@@ -77,5 +77,6 @@ declare const _default: React.ComponentClass<WheelPickerProps & {
 }, any> & {
     ({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, align, style, children, initialValue, selectedValue, testID }: WheelPickerProps): JSX.Element;
     alignments: typeof WheelPickerAlign;
+    displayName: string;
 };
 export default _default;
