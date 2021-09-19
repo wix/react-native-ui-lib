@@ -51,7 +51,11 @@ export {default as Overlay, OverlayTypes} from './src/components/overlay';
 export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './src/components/radioButton';
 export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './src/components/radioGroup';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './src/components/sectionsWheelPicker';
-export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './src/components/segmentedControl';
+export {
+  default as SegmentedControl,
+  SegmentedControlProps,
+  SegmentedControlItemProps
+} from './src/components/segmentedControl';
 export {default as Slider, SliderProps} from './src/components/slider';
 export {default as Switch, SwitchProps} from './src/components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './src/components/tabController';
@@ -74,17 +78,49 @@ export {
   PanDirectionsProps,
   PanningProviderDirection
 } from './src/components/panningViews/panningProvider';
-export {default as PanListenerView, PanListenerViewPropTypes, PanListenerViewProps} from './src/components/panningViews/panListenerView';
-export {default as PanResponderView, PanResponderViewPropTypes, PanResponderViewProps} from './src/components/panningViews/panResponderView';
-export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes, PanDismissibleViewProps, DismissibleAnimationProps} from './src/components/panningViews/panDismissibleView';
+export {
+  default as PanListenerView,
+  PanListenerViewPropTypes,
+  PanListenerViewProps
+} from './src/components/panningViews/panListenerView';
+export {
+  default as PanResponderView,
+  PanResponderViewPropTypes,
+  PanResponderViewProps
+} from './src/components/panningViews/panResponderView';
+export {
+  default as PanDismissibleView,
+  PanDismissibleViewPropTypes,
+  DismissibleAnimationPropTypes,
+  PanDismissibleViewProps,
+  DismissibleAnimationProps
+} from './src/components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './src/components/dialog';
 export {default as PageControl, PageControlProps} from './src/components/pageControl';
 export {default as Carousel, CarouselProps, PageControlPosition} from './src/components/carousel';
 export {default as ActionSheet} from './src/components/actionSheet';
-export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './src/components/wizard';
+export {
+  default as Wizard,
+  WizardProps,
+  WizardStepProps,
+  WizardStepStates,
+  WizardStepConfig,
+  WizardStepsConfig
+} from './src/components/wizard';
 export {default as ListItem, ListItemProps} from './src/components/listItem';
 export {default as StateScreen, StateScreenProps} from './src/components/stateScreen';
 export {default as LoaderScreen, LoaderScreenProps} from './src/components/loaderScreen';
+export {
+  default as Picker,
+  PickerProps,
+  PickerListProps,
+  PickerSearchStyle,
+  PickerMode,
+  PickerItemProps,
+  PickerItemRenderItemFunc,
+  PickerItemValue,
+  PickerItemLabeledValue
+} from './src/components/picker';
 
 /* All components with manual typings */
 export {
@@ -104,10 +140,7 @@ export {
   PureBaseComponent,
   UIComponent,
   forwardRef,
-  AvatarHelper,
-  Picker,
-  PickerItemValue,
-  PickerProps
+  AvatarHelper
 } from '../typings';
 
 /* All components that are missing either manual or auto generated typings */
