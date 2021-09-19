@@ -1,15 +1,9 @@
-import { FlatListProps, GestureResponderEvent, LayoutChangeEvent } from 'react-native';
-import { ReactElement } from 'react';
-import {ModalTopBarProps} from '../modal'
+import {FlatListProps, GestureResponderEvent, LayoutChangeEvent} from 'react-native';
+import {ReactElement} from 'react';
+import {ModalTopBarProps} from '../modal';
 
-export type PickerItemLabeledValue = { value?: any, label?: string };
-export type PickerItemValue =
-  | object
-  | string
-  | string[]
-  | number
-  | PickerItemLabeledValue
-  | PickerItemLabeledValue[];
+export type PickerItemLabeledValue = {value?: any; label?: string};
+export type PickerItemValue = object | string | string[] | number | PickerItemLabeledValue | PickerItemLabeledValue[];
 
 export type PickerItemRenderItemFunc = (
   value: PickerItemValue | undefined,
@@ -26,6 +20,9 @@ export interface PickerItemProps {
   renderItem?: PickerItemRenderItemFunc;
   onPress?: (event: GestureResponderEvent) => void;
   onSelectedLayout?: (event: LayoutChangeEvent) => void;
+  labelStyle?: TextProps;
+  selectedIcon?: any;
+  selectedIconColor?: string;
   testID?: string;
 }
 export type PickerMode = 'SINGLE' | 'MULTI';
