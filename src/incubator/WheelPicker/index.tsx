@@ -260,7 +260,7 @@ const WheelPicker = ({
   return (
     <View testID={testID} bg-white style={style}>
       <View row centerH>
-        <View flexG>
+        <View flexG centerH>
           <AnimatedFlatList
             testID={`${testID}.list`}
             height={height}
