@@ -17,7 +17,7 @@ export declare class Colors {
     /**
      * Load custom set of colors
      * arguments:
-     * colors - map of keys and colors values e.g {dark10: '#20303C', dark20: '#43515C'}
+     * colors - map of keys and colors values e.g {grey10: '#20303C', grey20: '#43515C'}
      */
     loadColors(colors: {
         [key: string]: string;
@@ -62,14 +62,6 @@ export declare class Colors {
     areEqual(colorA: string, colorB: string): boolean;
 }
 declare const colorObject: Colors & {
-    dark10: string;
-    dark20: string;
-    dark30: string;
-    dark40: string;
-    dark50: string;
-    dark60: string;
-    dark70: string;
-    dark80: string;
     grey10: string;
     grey20: string;
     grey30: string;
@@ -134,9 +126,6 @@ declare const colorObject: Colors & {
     purple60: string;
     purple70: string;
     purple80: string;
-    /**
-     * Get app's current color scheme
-     */
     violet10: string;
     violet20: string;
     violet30: string;
@@ -149,6 +138,11 @@ declare const colorObject: Colors & {
     black: string;
     transparent: string;
 } & {
+    /**
+     * Set color scheme for app
+     * arguments:
+     * scheme - color scheme e.g light/dark/default
+     */
     primary: string;
 };
 export default colorObject;

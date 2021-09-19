@@ -1,18 +1,14 @@
 // TODO: support commented props
-import React, {PureComponent, ReactElement} from 'react';
-import {StyleSheet, /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
+import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement} from 'react';
+import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {interpolateColors, processColor} from 'react-native-reanimated';
-import {State} from 'react-native-gesture-handler';
-import {interpolateColor} from 'react-native-redash';
+import Reanimated, {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {Colors, Typography, Spacings} from '../../style';
-import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
-import {TouchableOpacity} from '../../incubator';
+import Badge, {BadgeProps} from '../badge';
+import _TouchableOpacity from '../touchableOpacity';
+import TabBarContext from './TabBarContext';
 
-// Unlike const interpolate = interpolateNode || _interpolate;
-// interpolateColors has a different API (outputColorRange instead of outputRange)
-
-const {cond, eq, call, block, and} = Reanimated;
+const TouchableOpacity = Reanimated.createAnimatedComponent(_TouchableOpacity);
 
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.primary;
@@ -25,11 +21,11 @@ export interface TabControllerItemProps {
   /**
    * custom label style
    */
-  labelStyle?: TextStyle;
+  labelStyle?: StyleProp<TextStyle>;
   /**
    * custom selected label style
    */
-  selectedLabelStyle?: TextStyle;
+  selectedLabelStyle?: StyleProp<TextStyle>;
   /**
    * the default label color
    */
@@ -63,14 +59,6 @@ export interface TabControllerItemProps {
    */
   trailingAccessory?: ReactElement;
   /**
-   * maximun number of lines the label can break
-   */
-  // maxLines?: number;
-  /**
-   * whether the tab will have a divider on its right
-   */
-  // showDivider?: boolean;
-  /**
    * A fixed width for the item
    */
   width?: number;
@@ -103,16 +91,11 @@ export interface TabControllerItemProps {
    * Used as a testing identifier
    */
   testID?: string;
-  /**
-   * disables icon's tint color
-   */
-  disableIconTintColor?: boolean;
 }
 
 interface Props extends TabControllerItemProps {
   index: number;
   targetPage: any; // TODO: typescript?
-  state: State;
   currentPage: Reanimated.Adaptable<number>;
   onLayout?: (event: LayoutChangeEvent, index: number) => void;
 }
@@ -122,204 +105,118 @@ interface Props extends TabControllerItemProps {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: Must be rendered as a direct child of TabController.TabBar.
  */
-export default class TabBarItem extends PureComponent<Props> {
-  static displayName = 'TabController.TabBarItem';
+export default function TabBarItem({
+  index,
+  label,
+  labelColor,
+  selectedLabelColor,
+  labelStyle,
+  selectedLabelStyle,
+  icon,
+  badge,
+  leadingAccessory,
+  trailingAccessory,
+  uppercase,
+  activeOpacity = 0.9,
+  activeBackgroundColor,
+  testID,
+  ignore,
+  style,
+  ...props
+}: Props) {
+  const {currentPage} = useContext(TabBarContext);
+  const itemRef = useRef();
+  const itemWidth = useRef(props.width);
+  // JSON.parse(JSON.stringify is due to an issue with reanimated
+  const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(labelStyle)));
+  const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
 
-  static defaultProps = {
-    activeOpacity: 1,
-    onPress: _.noop
-  };
-
-  private itemWidth?: number;
-  private itemRef = React.createRef<any>();
-
-  constructor(props: Props) {
-    super(props);
-
-    this.itemWidth = this.props.width;
-
-    if (this.itemWidth) {
-      const {index, onLayout} = this.props;
-      onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: this.itemWidth, height: 0}}} as LayoutChangeEvent, index);
+  useEffect(() => {
+    if (itemWidth.current) {
+      props.onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: itemWidth.current, height: 0}}} as LayoutChangeEvent,
+        index);
     }
-  }
+  }, []);
 
-  onLayout = (event: LayoutChangeEvent) => {
+  const onPress = useCallback(() => {
+    if (!ignore) {
+      currentPage.value = index;
+    }
+
+    props.onPress?.(index);
+  }, [index, props.onPress, ignore]);
+
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
-    const {index, onLayout} = this.props;
-    if (!this.itemWidth && this.itemRef && this.itemRef.current) {
-      this.itemWidth = width;
+
+    if (!itemWidth.current && itemRef?.current) {
+      itemWidth.current = width;
       // @ts-ignore
-      this.itemRef.current.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
-      onLayout?.(event, index);
+      itemRef.current?.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
+      props.onLayout?.(event, index);
     }
-  };
+  },
+  [index, props.onLayout]);
 
-  onPress = () => {
-    const {index, onPress} = this.props;
-    onPress?.(index);
-  };
+  const animatedLabelStyle = useAnimatedStyle(() => {
+    const isActive = currentPage.value === index;
+    return isActive ? sharedSelectedLabelStyle.value : sharedLabelStyle.value;
+  }, [currentPage]);
 
-  getItemStyle() {
-    const {state, style: propsStyle, activeOpacity = TabBarItem.defaultProps.activeOpacity} = this.props;
-    const opacity = block([
-      cond(eq(state, State.END), call([], this.onPress)),
-      cond(eq(state, State.BEGAN), activeOpacity, 1)
-    ]);
-
-    const style: any = {
-      opacity
-    };
-
-    if (this.props.width) {
-      style.flex = undefined;
-      style.width = this.itemWidth;
-      style.paddingHorizontal = undefined;
-    }
-
-    return [style, propsStyle];
-  }
-
-  getLabelStyle() {
-    const {index, currentPage, targetPage, labelColor, selectedLabelColor, ignore, labelStyle, selectedLabelStyle} =
-      this.props;
-
-    let fontWeight, letterSpacing, fontFamily;
-
-    if (labelStyle?.fontWeight || selectedLabelStyle?.fontWeight) {
-      fontWeight = cond(
-        // @ts-ignore TODO: typescript - add or delete and?
-        and(eq(targetPage, index) /* , defined(itemWidth) */),
-        selectedLabelStyle?.fontWeight || 'normal',
-        labelStyle?.fontWeight || 'normal');
-    }
-
-    if (labelStyle?.letterSpacing || selectedLabelStyle?.letterSpacing) {
-      letterSpacing = cond(
-        // @ts-ignore TODO: typescript - add or delete and?
-        and(eq(targetPage, index) /* , defined(itemWidth) */),
-        selectedLabelStyle?.letterSpacing || 0,
-        labelStyle?.letterSpacing || 0);
-    }
-
-    if (labelStyle?.fontFamily || selectedLabelStyle?.fontFamily) {
-      fontFamily = cond(
-        // @ts-ignore TODO: typescript - add or delete and?
-        and(eq(targetPage, index) /* , defined(itemWidth) */),
-        // @ts-ignore
-        selectedLabelStyle.fontFamily,
-        labelStyle?.fontFamily);
-    }
-
+  const animatedLabelColorStyle = useAnimatedStyle(() => {
+    const isActive = currentPage.value === index;
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
     const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
 
-    // Animated color
-    let color;
-    if (interpolateColors) {
-      color = interpolateColors(currentPage, {
-        inputRange: [index - 1, index, index + 1],
-        outputColorRange: [inactiveColor, activeColor, inactiveColor]
-      });
-    } else {
-      color = interpolateColor(currentPage, {
-        inputRange: [index - 1, index, index + 1],
-        outputRange: [inactiveColor, activeColor, inactiveColor]
-      });
-    }
+    return {
+      color: isActive ? activeColor : inactiveColor
+    };
+  });
 
-    return [
-      labelStyle,
-      _.omitBy({
-        fontFamily,
-        fontWeight,
-        letterSpacing,
-        color
-      },
-      _.isUndefined)
-    ];
-  }
-
-  getIconStyle() {
-    const {
-      index,
-      currentPage,
-      iconColor,
-      selectedIconColor,
-      labelColor,
-      selectedLabelColor,
-      ignore,
-      disableIconTintColor
-    } = this.props;
-
-    if (disableIconTintColor) {
-      return undefined;
-    }
-
-    let activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
-    let inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
-
-    // TODO: Don't condition this once migrating completely to reanimated v2
-    if (processColor) {
-      // @ts-ignore
-      activeColor = processColor(activeColor);
-      // @ts-ignore
-      inactiveColor = processColor(inactiveColor);
-    }
-
-    const tintColor = cond(eq(currentPage, index), activeColor, ignore ? activeColor : inactiveColor);
+  const animatedIconStyle = useAnimatedStyle(() => {
+    const isActive = currentPage.value === index;
+    const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
+    const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
 
     return {
-      tintColor
+      tintColor: isActive ? activeColor : inactiveColor
     };
-  }
+  });
 
-  render() {
-    const {
-      label,
-      icon,
-      badge,
-      leadingAccessory,
-      trailingAccessory,
-      state,
-      uppercase,
-      activeOpacity,
-      activeBackgroundColor,
-      testID
-    } = this.props;
+  const _style = useMemo(() => {
+    const constantWidthStyle = itemWidth.current ? {flex: 0, width: itemWidth.current} : undefined;
+    return [styles.tabItem, style, constantWidthStyle];
+  }, [style]);
 
-    return (
-      <TouchableOpacity
-        ref={this.itemRef}
-        pressState={state}
-        style={[styles.tabItem, this.getItemStyle()]}
-        onLayout={this.onLayout}
-        feedbackColor={activeBackgroundColor}
-        activeOpacity={activeOpacity}
-        onPress={this.onPress}
-        testID={testID}
-      >
-        {leadingAccessory}
-        {icon && (
-          <Reanimated.Image
-            source={icon}
-            // @ts-ignore reanimated2
-            style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, this.getIconStyle()]}
-          />
-        )}
-        {!_.isEmpty(label) && (
-          <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
-            {uppercase ? _.toUpper(label) : label}
-          </Reanimated.Text>
-        )}
-        {badge && (
-          // @ts-ignore
-          <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
-        )}
-        {trailingAccessory}
-      </TouchableOpacity>
-    );
-  }
+  return (
+    <TouchableOpacity
+      // @ts-expect-error
+      ref={itemRef}
+      style={_style}
+      onLayout={onLayout}
+      activeBackgroundColor={activeBackgroundColor}
+      activeOpacity={activeOpacity}
+      onPress={onPress}
+      testID={testID}
+    >
+      {leadingAccessory}
+      {icon && (
+        <Reanimated.Image
+          source={icon}
+          style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, animatedIconStyle]}
+        />
+      )}
+      {!_.isEmpty(label) && (
+        <Reanimated.Text style={[styles.tabItemLabel, labelStyle, animatedLabelStyle, animatedLabelColorStyle]}>
+          {uppercase ? _.toUpper(label) : label}
+        </Reanimated.Text>
+      )}
+      {badge && (
+        <Badge backgroundColor={Colors.red30} size={20} {...badge} containerStyle={styles.badge}/>
+      )}
+      {trailingAccessory}
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({

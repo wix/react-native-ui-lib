@@ -249,13 +249,13 @@ export default class ActionsList extends Component {
           height: 80,
           backgroundColor: Colors.white,
           borderBottomWidth: 1,
-          borderBottomColor: Colors.dark70
+          borderBottomColor: Colors.grey70
         }}
         {...this.panResponder.panHandlers}
       >
         <TouchableOpacity flex center activeOpacity={0.5} onPress={this.closePanels}>
           <View row>
-            <Text text80 dark10 style={{alignSelf: 'center'}}>{item.text} #{item.id}</Text>
+            <Text text80 grey10 style={{alignSelf: 'center'}}>{item.text} #{item.id}</Text>
             <Text text60 marginH-12>Swipe to any direction</Text>
             <Button size={'small'} label={`Button #${index}`} onPress={() => console.warn(`button ${index} press`)}/>
           </View>

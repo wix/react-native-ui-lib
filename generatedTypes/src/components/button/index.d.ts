@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { LayoutChangeEvent, ImageStyle } from 'react-native';
-import { ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes, ButtonState, Props } from './ButtonTypes';
-export { ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes };
+import { ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props } from './ButtonTypes';
+export { ButtonSize, ButtonAnimationDirection, ButtonProps };
 declare class Button extends PureComponent<Props, ButtonState> {
     static displayName: string;
     static defaultProps: {

@@ -105,7 +105,6 @@ export declare type ChipProps = ViewProps & TouchableOpacityProps & {
      */
     dismissContainerStyle?: StyleProp<ImageStyle>;
 };
-export declare type ChipPropTypes = ChipProps;
 declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
     /**
      * Chip's size. Number or a width and height object.

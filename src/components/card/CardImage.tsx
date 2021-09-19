@@ -1,19 +1,12 @@
 import React, {PureComponent} from 'react';
-import {View, StyleSheet, ImageSourcePropType} from 'react-native';
-import {LogService} from '../../services';
+import {View, StyleSheet} from 'react-native';
 // import {BaseComponent} from '../../commons';
 import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
 import asCardChild, {asCardChildProps} from './asCardChild';
 
 
-// TODO: Remove omitting source after imageSource deprecation (since it's required for Image)
-export type CardImageProps = Omit<ImageProps, 'source'> & {
-  /**
-   * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-   */
-  imageSource?: ImageSourcePropType;
-  source?: ImageSourcePropType; //TODO: Remove after imageSource deprecation - should take it from ImageProps
+export type CardImageProps = ImageProps & {
   /**
    * Image width
    */
@@ -28,10 +21,6 @@ export type CardImageProps = Omit<ImageProps, 'source'> & {
    * Card component
    */
   position?: string[];
-  /**
-   * border radius, basically for Android since overflow doesn't work well (deprecated)
-   */
-  borderRadius?: number;
 };
 
 type Props = CardImageProps & asCardChildProps;
@@ -49,32 +38,23 @@ class CardImage extends PureComponent<Props> {
     super(props);
 
     this.styles = createStyles(props);
-
-    if (props.imageSource) {
-      LogService.deprecationWarn({component: 'CardImage', oldProp: 'imageSource', newProp: 'source'});
-    }
-    if (props.borderRadius) {
-      LogService.deprecationWarn({component: 'CardImage', oldProp: 'borderRadius'});
-    }
   }
 
   render() {
     const {
-      imageSource,
       source,
       style,
       testID,
       overlayType,
       context: {borderStyle}
     } = this.props;
-    const finalSource = source || imageSource;
 
-    if (finalSource) {
+    if (source) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
           <Image
             testID={testID}
-            source={finalSource}
+            source={source}
             style={[this.styles.image]}
             overlayType={overlayType}
           />

@@ -10,6 +10,7 @@ import {Constants} from 'helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
 import Text, {TextProps} from '../../components/text';
+import {asBaseComponent} from '../../commons/new';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -294,7 +295,8 @@ const WheelPicker = ({
 };
 
 WheelPicker.alignments = WheelPickerAlign;
-export default WheelPicker;
+WheelPicker.displayName = 'Incubator.WheelPicker';
+export default asBaseComponent<WheelPickerProps, typeof WheelPicker>(WheelPicker);
 
 const styles = StyleSheet.create({
   separators: {
