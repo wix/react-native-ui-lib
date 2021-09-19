@@ -61,15 +61,15 @@ export default class SharedTransitionScreen extends Component {
       <View marginB-20 padding-20 row height={280}>
         <Card padding-20 marginV-20 width={'60%'} style={{zIndex: 10}} spread>
           <View>
-            <Text text70 dark10>
+            <Text text70 grey10>
               {item.title}
             </Text>
-            <Text text80 dark30>
+            <Text text80 grey30>
               {item.location}
             </Text>
           </View>
           <View>
-            <Text text70 dark30>
+            <Text text70 grey30>
               <Text text50 purple30>
                 {item.views}
               </Text>
@@ -127,7 +127,7 @@ export default class SharedTransitionScreen extends Component {
             when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived
             not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged
           </Text>
-          <Button link marginT-20 dark10 label="Learn More" size="small" />
+          <Button link marginT-20 grey10 label="Learn More" size="small" />
         </View>
       </View>
     );
@@ -135,7 +135,7 @@ export default class SharedTransitionScreen extends Component {
 
   render() {
     return (
-      <View flex dark80>
+      <View flex grey80>
         <SharedTransition.Area renderDetails={this.renderDetails}>{this.renderList()}</SharedTransition.Area>
       </View>
     );

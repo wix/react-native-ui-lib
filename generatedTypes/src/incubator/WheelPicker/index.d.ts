@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 import { ItemProps } from './Item';
 import { TextProps } from '../../components/text';
@@ -72,8 +72,11 @@ export interface WheelPickerProps {
     align?: WheelPickerAlign;
     testID?: string;
 }
-declare const WheelPicker: {
+declare const _default: React.ComponentClass<WheelPickerProps & {
+    useCustomTheme?: boolean | undefined;
+}, any> & {
     ({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, align, style, children, initialValue, selectedValue, testID }: WheelPickerProps): JSX.Element;
     alignments: typeof WheelPickerAlign;
+    displayName: string;
 };
-export default WheelPicker;
+export default _default;

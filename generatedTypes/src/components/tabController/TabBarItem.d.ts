@@ -1,9 +1,7 @@
-import { PureComponent, ReactElement } from 'react';
-import { /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
-import _ from 'lodash';
+import { ReactElement } from 'react';
+import { TextStyle, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
 import Reanimated from 'react-native-reanimated';
-import { State } from 'react-native-gesture-handler';
-import { BadgeProps } from '../../components/badge';
+import { BadgeProps } from '../badge';
 export interface TabControllerItemProps {
     /**
      * label of the tab
@@ -12,11 +10,11 @@ export interface TabControllerItemProps {
     /**
      * custom label style
      */
-    labelStyle?: TextStyle;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * custom selected label style
      */
-    selectedLabelStyle?: TextStyle;
+    selectedLabelStyle?: StyleProp<TextStyle>;
     /**
      * the default label color
      */
@@ -50,12 +48,6 @@ export interface TabControllerItemProps {
      */
     trailingAccessory?: ReactElement;
     /**
-     * maximun number of lines the label can break
-     */
-    /**
-     * whether the tab will have a divider on its right
-     */
-    /**
      * A fixed width for the item
      */
     width?: number;
@@ -88,15 +80,10 @@ export interface TabControllerItemProps {
      * Used as a testing identifier
      */
     testID?: string;
-    /**
-     * disables icon's tint color
-     */
-    disableIconTintColor?: boolean;
 }
 interface Props extends TabControllerItemProps {
     index: number;
     targetPage: any;
-    state: State;
     currentPage: Reanimated.Adaptable<number>;
     onLayout?: (event: LayoutChangeEvent, index: number) => void;
 }
@@ -105,22 +92,5 @@ interface Props extends TabControllerItemProps {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: Must be rendered as a direct child of TabController.TabBar.
  */
-export default class TabBarItem extends PureComponent<Props> {
-    static displayName: string;
-    static defaultProps: {
-        activeOpacity: number;
-        onPress: (...args: any[]) => void;
-    };
-    private itemWidth?;
-    private itemRef;
-    constructor(props: Props);
-    onLayout: (event: LayoutChangeEvent) => void;
-    onPress: () => void;
-    getItemStyle(): any[];
-    getLabelStyle(): (TextStyle | _.Dictionary<Reanimated.Node<number> | Reanimated.Node<string | number> | Reanimated.Node<string | number | boolean> | Reanimated.Node<"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"> | undefined> | undefined)[];
-    getIconStyle(): {
-        tintColor: Reanimated.Node<string>;
-    } | undefined;
-    render(): JSX.Element;
-}
+export default function TabBarItem({ index, label, labelColor, selectedLabelColor, labelStyle, selectedLabelStyle, icon, badge, leadingAccessory, trailingAccessory, uppercase, activeOpacity, activeBackgroundColor, testID, ignore, style, ...props }: Props): JSX.Element;
 export {};

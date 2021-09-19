@@ -1,12 +1,4 @@
 declare const colorsPalette: {
-    dark10: string;
-    dark20: string;
-    dark30: string;
-    dark40: string;
-    dark50: string;
-    dark60: string;
-    dark70: string;
-    dark80: string;
     grey10: string;
     grey20: string;
     grey30: string;

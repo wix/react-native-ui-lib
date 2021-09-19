@@ -11,7 +11,6 @@ export declare type RadioGroupProps = ViewProps & {
      */
     onValueChange?: ((value?: string) => void) | ((value?: number) => void) | ((value?: boolean) => void) | ((value?: any) => void);
 };
-export declare type RadioGroupPropTypes = RadioGroupProps;
 interface RadioGroupState {
     initialValue?: RadioGroupProps['initialValue'];
     value?: RadioGroupProps['initialValue'];

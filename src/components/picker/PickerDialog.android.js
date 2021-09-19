@@ -36,7 +36,7 @@ class PickerDialog extends BaseComponent {
     if (title) {
       return (
         <View style={styles.header}>
-          <Text text60 dark10 style={titleStyle}>
+          <Text text60 grey10 style={titleStyle}>
             {title}
           </Text>
         </View>
@@ -67,7 +67,7 @@ class PickerDialog extends BaseComponent {
     // TODO: should be taken from dialogProps but there's an issue with "babel-plugin-typescript-to-proptypes" plugin
     const {panDirection} = this.props;
     return (
-      <Dialog {...dialogProps} migrate height="50%" width="77%" panDirection={panDirection}>
+      <Dialog {...dialogProps} height="50%" width="77%" panDirection={panDirection}>
         <View style={styles.dialog}>
           {this.renderHeader()}
           <View flex center paddingH-24>

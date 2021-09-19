@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "main": "index.js",
   "types": "index.d.ts",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
@@ -41,9 +41,7 @@
     "bump:patch": "npm version patch",
     "demo": "./scripts/demo.sh",
     "release": "node ./scripts/release.js",
-    "jenkinsRelease": "node ./scripts/jenkinsRelease.js",
-    "build:ts": "rm -rf dist-ts && ./scripts/build-ts.sh",
-    "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc --emitDeclarationOnly"
+    "jenkinsRelease": "node ./scripts/jenkinsRelease.js"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -54,7 +52,6 @@
     "memoize-one": "^5.0.5",
     "moment": "^2.24.0",
     "prop-types": "^15.5.10",
-    "react-native-animatable": "^1.1.0",
     "react-native-color": "0.0.10",
     "react-native-redash": "^12.0.3",
     "react-native-text-size": "4.0.0-rc.1",
@@ -124,7 +121,7 @@
   "jest": {
     "preset": "react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-animatable|react-native-reanimated|react-native-redash)/)"
+      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash)/)"
     ],
     "testPathIgnorePatterns": [
       "/e2e/",

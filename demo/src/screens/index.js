@@ -7,7 +7,6 @@ export function registerScreens(registrar) {
   require('./componentScreens').registerScreens(registrar);
   require('./foundationScreens').registerScreens(registrar);
   require('./nativeComponentScreens').registerScreens(registrar);
-  require('./animationScreens').registerScreens(registrar);
   require('./realExamples').registerScreens(registrar);
   require('./incubatorScreens').registerScreens(registrar);
 

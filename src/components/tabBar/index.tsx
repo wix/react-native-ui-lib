@@ -99,6 +99,8 @@ class TabBar extends Component<TabBarProps, State> {
     this.contentOffset = {x: 0, y: 0};
     this.scrollBar = React.createRef();
     this.itemsRefs = [];
+
+    console.warn('TabBar component is deprecated. Please use TabController instead.');
   }
 
   componentDidUpdate(prevProps: TabBarProps, prevState: State) {
@@ -296,7 +298,7 @@ const styles = StyleSheet.create({
   containerShadow: {
     ...Platform.select({
       ios: {
-        shadowColor: Colors.dark10,
+        shadowColor: Colors.grey10,
         shadowOpacity: 0.05,
         shadowRadius: 2,
         shadowOffset: {height: 6, width: 0}

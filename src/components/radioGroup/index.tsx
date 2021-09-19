@@ -18,7 +18,6 @@ export type RadioGroupProps = ViewProps & {
    */
   onValueChange?: ((value?: string) => void) | ((value?: number) => void) | ((value?: boolean) => void) | ((value?: any) => void);
 };
-export type RadioGroupPropTypes = RadioGroupProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface RadioGroupState {
   initialValue?: RadioGroupProps['initialValue'];

@@ -4,6 +4,7 @@ import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanima
 import Text, {TextProps} from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
+import {asBaseComponent} from '../../commons/new';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
@@ -28,7 +29,7 @@ interface InternalProps extends ItemProps {
   centerH?: boolean;
 }
 
-export default memo(({
+const WheelPickerItem = memo(({
   index,
   label,
   fakeLabel,
@@ -85,6 +86,9 @@ export default memo(({
     </AnimatedTouchableOpacity>
   );
 });
+
+WheelPickerItem.displayName = 'Incubator.WheelPickerItem';
+export default asBaseComponent<ItemProps>(WheelPickerItem);
 
 const styles = StyleSheet.create({
   container: {

@@ -222,9 +222,9 @@ export default class BaseInput extends BaseComponent {
 
   getColor(value) {
     if (this.state.focused) {
-      return Colors.dark10;
+      return Colors.grey10;
     } else {
-      return _.isEmpty(value) ? Colors.dark40 : Colors.dark10;
+      return _.isEmpty(value) ? Colors.grey40 : Colors.grey10;
     }
   }
 
