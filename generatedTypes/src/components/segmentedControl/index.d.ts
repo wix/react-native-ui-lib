@@ -48,6 +48,10 @@ export declare type SegmentedControlProps = {
      */
     iconOnRight?: boolean;
     /**
+     * Disable the trailing delay when changing index
+     */
+    disableThrottle?: boolean;
+    /**
      * Additional spacing styles for the container
      */
     containerStyle?: StyleProp<ViewStyle>;

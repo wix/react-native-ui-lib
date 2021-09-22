@@ -34,7 +34,7 @@ export declare type SegmentProps = SegmentedControlItemProps & {
     /**
      * Callback for when segment has pressed.
      */
-    onPress: (index: number) => void;
+    onPress?: (index: number) => void;
     /**
      * The index of the segment.
      */
@@ -61,7 +61,7 @@ declare const _default: React.ComponentClass<SegmentedControlItemProps & {
     /**
      * Callback for when segment has pressed.
      */
-    onPress: (index: number) => void;
+    onPress?: ((index: number) => void) | undefined;
     /**
      * The index of the segment.
      */

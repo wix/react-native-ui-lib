@@ -1,17 +1,25 @@
 import _ from 'lodash';
-import React, {useRef, useState, useCallback, useMemo} from 'react';
+import React, {useRef, useState, useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import Reanimated, {EasingNode, Easing as _Easing} from 'react-native-reanimated';
+import Reanimated, {
+  Easing,
+  useAnimatedReaction,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  runOnJS
+} from 'react-native-reanimated';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps as SegmentProps} from './segment';
 import {Constants} from 'helpers';
 
-const {interpolate: _interpolate, interpolateNode} = Reanimated;
-const interpolate = interpolateNode || _interpolate;
-const Easing = EasingNode || _Easing;
 const BORDER_WIDTH = 1;
+const TIMING_CONFIG = {
+  duration: 300,
+  easing: Easing.bezier(0.33, 1, 0.68, 1)
+};
 
 export type SegmentedControlItemProps = SegmentProps;
 export type SegmentedControlProps = {
@@ -60,6 +68,10 @@ export type SegmentedControlProps = {
    */
   iconOnRight?: boolean;
   /**
+   * Disable the trailing delay when changing index
+   */
+  disableThrottle?: boolean;
+  /**
    * Additional spacing styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -85,36 +97,39 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     inactiveColor = Colors.grey20,
     outlineColor = activeColor,
     outlineWidth = BORDER_WIDTH,
+    disableThrottle,
     testID
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
-
+  const animatedSelectedIndex = useSharedValue(selectedSegment);
   const segmentsStyle = useRef([] as {x: number; width: number}[]);
   const segmentedControlHeight = useRef(0);
   const indexRef = useRef(0);
   const segmentsCounter = useRef(0);
-  const animatedValue = useRef(new Reanimated.Value(initialIndex));
+  const delay = disableThrottle ? 0 : 400;
 
   const changeIndex = useCallback(_.throttle(() => {
     onChangeIndex?.(indexRef.current);
   },
-  400,
+  delay,
   {trailing: true, leading: false}),
   []);
 
-  const onSegmentPress = useCallback((index: number) => {
-    if (selectedSegment !== index) {
-      setSelectedSegment(index);
-      indexRef.current = index;
-
-      Reanimated.timing(animatedValue.current, {
-        toValue: index,
-        duration: 300,
-        easing: Easing.bezier(0.33, 1, 0.68, 1)
-      }).start(changeIndex);
+  useAnimatedReaction(() => {
+    return animatedSelectedIndex.value;
+  },
+  (selected, previous) => {
+    if (selected !== -1 && selected !== previous) {
+      onChangeIndex && runOnJS(changeIndex)();
     }
   },
-  [onChangeIndex, selectedSegment]);
+  []);
+
+  const onSegmentPress = useCallback((index: number) => {
+    setSelectedSegment(index);
+    indexRef.current = index;
+    animatedSelectedIndex.value = index;
+  }, []);
 
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
@@ -126,32 +141,25 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   },
   [initialIndex, segments?.length]);
 
-  const animatedStyle = useMemo(() => {
+  const animatedStyle = useAnimatedStyle(() => {
     if (segmentsCounter.current === segments?.length) {
-      const inset = interpolate(animatedValue.current, {
-        inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segmentsStyle.current, segment => segment.x)
-      });
-
-      const width = interpolate(animatedValue.current, {
-        inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segmentsStyle.current, segment => segment.width - 2 * BORDER_WIDTH)
-      });
-
-      return [{width}, Constants.isRTL ? {right: inset} : {left: inset}];
+      const inset = withTiming(segmentsStyle.current[selectedSegment].x, TIMING_CONFIG);
+      const width = withTiming(segmentsStyle.current[selectedSegment].width - 2 * BORDER_WIDTH, TIMING_CONFIG);
+      return Constants.isRTL ? {width, right: inset} : {width, left: inset};
     }
-    return undefined;
-  }, [segmentsCounter.current, segments?.length]);
+    return {};
+  }, [segmentsCounter.current, segments?.length, selectedSegment]);
 
   const renderSegments = () =>
     _.map(segments, (_value, index) => {
+      const isSelected = selectedSegment === index;
       return (
         <Segment
           key={index}
           onLayout={onLayout}
           index={index}
-          onPress={onSegmentPress}
-          isSelected={selectedSegment === index}
+          onPress={isSelected ? undefined : onSegmentPress}
+          isSelected={isSelected}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
           {...segments?.[index]}
