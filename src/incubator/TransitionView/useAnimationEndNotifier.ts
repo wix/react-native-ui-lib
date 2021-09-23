@@ -1,13 +1,13 @@
 import {useCallback} from 'react';
 import {runOnJS} from 'react-native-reanimated';
 
-export type TransitionAnimationEndType = 'in' | 'out';
+export type TransitionViewAnimationType = 'enter' | 'exit';
 
 export interface AnimationNotifierEndProps {
   /**
    * Callback to the animation end.
    */
-  onAnimationEnd?: (animationType: TransitionAnimationEndType) => void;
+  onAnimationEnd?: (animationType: TransitionViewAnimationType) => void;
 }
 
 export default function useAnimationEndNotifier(props: AnimationNotifierEndProps) {
@@ -16,7 +16,7 @@ export default function useAnimationEndNotifier(props: AnimationNotifierEndProps
   const onEnterAnimationEnd = useCallback((isFinished: boolean) => {
     'worklet';
     if (onAnimationEnd && isFinished) {
-      runOnJS(onAnimationEnd)('in');
+      runOnJS(onAnimationEnd)('enter');
     }
   },
   [onAnimationEnd]);
@@ -24,7 +24,7 @@ export default function useAnimationEndNotifier(props: AnimationNotifierEndProps
   const onExitAnimationEnd = useCallback((isFinished: boolean) => {
     'worklet';
     if (onAnimationEnd && isFinished) {
-      runOnJS(onAnimationEnd)('out');
+      runOnJS(onAnimationEnd)('exit');
     }
   },
   [onAnimationEnd]);

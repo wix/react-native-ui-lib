@@ -22,9 +22,9 @@ export default class TransitionViewScreen extends Component<{}, State> {
     this.ref.current?.animateOut();
   };
 
-  //   onAnimationEnd = (type: Incubator.TransitionAnimationEndType) => {
-  //     console.warn('Animation complete', type);
-  //   };
+  // onAnimationEnd = (type: Incubator.TransitionViewAnimationType) => {
+  //   console.warn('Animation complete', type);
+  // };
 
   render() {
     const {key, enterDirection, exitDirection} = this.state;

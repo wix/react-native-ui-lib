@@ -4,10 +4,10 @@ import Animated from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocation, {Direction} from './useHiddenLocation';
-import {TransitionAnimationEndType} from './useAnimationEndNotifier';
+import {TransitionViewAnimationType} from './useAnimationEndNotifier';
 import useAnimatedTransition, {AnimatedTransitionProps} from './useAnimatedTransition';
 const AnimatedView = Animated.createAnimatedComponent(View);
-export {Direction, TransitionAnimationEndType};
+export {Direction, TransitionViewAnimationType};
 
 // TODO: might need to create a file for types and create a fake component for docs
 export type TransitionViewProps = AnimatedTransitionProps & ViewProps;

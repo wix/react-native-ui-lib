@@ -9,5 +9,5 @@ export {
   default as TransitionView,
   TransitionViewProps,
   Direction,
-  TransitionAnimationEndType
+  TransitionViewAnimationType
 } from './TransitionView';

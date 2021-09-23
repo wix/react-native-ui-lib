@@ -4,4 +4,4 @@ export { default as TouchableOpacity, TouchableOpacityProps } from './TouchableO
 export { default as TouchableOpacity2 } from './TouchableOpacity2';
 export { default as WheelPicker, WheelPickerProps } from './WheelPicker';
 export { default as PanView, PanViewProps, PanViewDirections, PanViewDismissThreshold } from './panView';
-export { default as TransitionView, TransitionViewProps, Direction, TransitionAnimationEndType } from './TransitionView';
+export { default as TransitionView, TransitionViewProps, Direction, TransitionViewAnimationType } from './TransitionView';

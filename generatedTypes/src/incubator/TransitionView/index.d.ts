@@ -2,9 +2,9 @@ import React, { PropsWithChildren } from 'react';
 import { ViewProps } from '../../components/view';
 import { ForwardRefInjectedProps } from '../../commons/new';
 import { Direction } from './useHiddenLocation';
-import { TransitionAnimationEndType } from './useAnimationEndNotifier';
+import { TransitionViewAnimationType } from './useAnimationEndNotifier';
 import { AnimatedTransitionProps } from './useAnimatedTransition';
-export { Direction, TransitionAnimationEndType };
+export { Direction, TransitionViewAnimationType };
 export declare type TransitionViewProps = AnimatedTransitionProps & ViewProps;
 declare type Props = PropsWithChildren<TransitionViewProps> & ForwardRefInjectedProps;
 interface Statics {
