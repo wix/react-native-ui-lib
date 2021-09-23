@@ -6,11 +6,11 @@ export default function useAnimatedTranslator(props: TranslatorProps): {
     init: (to: {
         x: number;
         y: number;
-    }, callback: (isFinished: boolean) => void, animationDirection?: Direction | undefined) => void;
+    }, animationDirection: Direction, callback: (isFinished: boolean) => void) => void;
     animate: (to: {
         x: number;
         y: number;
-    }, callback: (isFinished: boolean) => void, animationDirection?: Direction | undefined) => void;
+    }, animationDirection: Direction, callback: (isFinished: boolean) => void) => void;
     animatedStyle: {
         transform: ({
             translateX: number;

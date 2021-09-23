@@ -19,15 +19,13 @@ export default function useAnimatedTranslator(props: TranslatorProps) {
   const visible = useSharedValue<boolean>(initialVisibility);
   
   const init = useCallback((to: {x: number; y: number},
-    callback: (isFinished: boolean) => void,
-    animationDirection?: Direction) => {
+    animationDirection: Direction,
+    callback: (isFinished: boolean) => void) => {
     'worklet';
-    if (animationDirection) {
-      if (['left', 'right'].includes(animationDirection)) {
-        translateX.value = withTiming(to.x, {duration: 0}, callback);
-      } else if (['top', 'bottom'].includes(animationDirection)) {
-        translateY.value = withTiming(to.y, {duration: 0}, callback);
-      }
+    if (['left', 'right'].includes(animationDirection)) {
+      translateX.value = withTiming(to.x, {duration: 0}, callback);
+    } else if (['top', 'bottom'].includes(animationDirection)) {
+      translateY.value = withTiming(to.y, {duration: 0}, callback);
     }
 
     visible.value = true;
@@ -36,15 +34,13 @@ export default function useAnimatedTranslator(props: TranslatorProps) {
   []);
 
   const animate = useCallback((to: {x: number; y: number},
-    callback: (isFinished: boolean) => void,
-    animationDirection?: Direction) => {
+    animationDirection: Direction,
+    callback: (isFinished: boolean) => void) => {
     'worklet';
-    if (animationDirection) {
-      if (['left', 'right'].includes(animationDirection)) {
-        translateX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
-      } else if (['top', 'bottom'].includes(animationDirection)) {
-        translateY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
-      }
+    if (['left', 'right'].includes(animationDirection)) {
+      translateX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
+    } else if (['top', 'bottom'].includes(animationDirection)) {
+      translateY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
     }
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps

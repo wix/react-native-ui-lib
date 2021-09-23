@@ -35,18 +35,22 @@ export default function useAnimatedTransition(props: Props) {
   useEffect(() => {
     if (!hiddenLocation.isDefault && enterFrom) {
       const location = getLocation(enterFrom);
-      init(location, enter, enterFrom);
+      init(location, enterFrom, enter);
     }
   }, [hiddenLocation.isDefault]);
 
   const enter = useCallback(() => {
     'worklet';
-    animate({x: 0, y: 0}, onEnterAnimationEnd, enterFrom);
+    if (enterFrom) {
+      animate({x: 0, y: 0}, enterFrom, onEnterAnimationEnd);
+    }
   }, [onEnterAnimationEnd]);
 
   const exit = useCallback(() => {
     'worklet';
-    animate(getLocation(exitTo), onExitAnimationEnd, exitTo);
+    if (exitTo) {
+      animate(getLocation(exitTo), exitTo, onExitAnimationEnd);
+    }
   }, [hiddenLocation, exitTo, onExitAnimationEnd]);
 
   return {exit, animatedStyle};
