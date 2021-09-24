@@ -21,12 +21,14 @@ class PickerModal extends BaseComponent {
     searchStyle: PropTypes.shape({
       color: PropTypes.string,
       placeholderTextColor: PropTypes.string,
-      selectionColor: PropTypes.string
+      selectionColor: PropTypes.string,
+      icon: PropTypes.object
     }),
     searchPlaceholder: PropTypes.string,
     onSearchChange: PropTypes.func,
     renderCustomSearch: PropTypes.elementType,
-    listProps: PropTypes.object
+    listProps: PropTypes.object,
+    overlayBackgroundColor: PropTypes.string
   };
 
   static defaultProps = {
@@ -55,7 +57,7 @@ class PickerModal extends BaseComponent {
 
       return (
         <View style={this.styles.searchInputContainer}>
-          <Image style={this.styles.searchIcon} source={Assets.icons.search}/>
+          <Image style={this.styles.searchIcon} source={searchStyle.icon || Assets.icons.search}/>
           <TextInput
             testID={testID}
             ref={r => (this.search = r)}
@@ -78,7 +80,7 @@ class PickerModal extends BaseComponent {
   };
 
   render() {
-    const {visible, enableModalBlur, topBarProps, listProps, children, onShow} = this.props;
+    const {visible, enableModalBlur, topBarProps, listProps, children, onShow, overlayBackgroundColor} = this.props;
     return (
       <Modal
         animationType={'slide'}
@@ -87,6 +89,7 @@ class PickerModal extends BaseComponent {
         visible={visible}
         onRequestClose={topBarProps.onCancel}
         onShow={onShow}
+        overlayBackgroundColor={overlayBackgroundColor}
       >
         <Modal.TopBar {...topBarProps}/>
         {this.renderSearchInput()}
