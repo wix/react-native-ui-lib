@@ -64,7 +64,7 @@ const PanView = (props: Props) => {
   const {
     directions = [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
     dismissible,
-    springBack,
+    springBack: propsSpringBack,
     onDismiss,
     directionLock,
     threshold,
@@ -105,27 +105,17 @@ const PanView = (props: Props) => {
       runOnJS(onDismiss)();
     }
   },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   [onDismiss]);
 
-  const shouldDismissX = useCallback((isFinished: boolean) => {
+  const springBack = useCallback(() => {
     'worklet';
-    dismiss(isFinished);
-  },
-  [dismiss]);
-
-  const shouldDismissY = useCallback((isFinished: boolean) => {
-    'worklet';
-    dismiss(isFinished);
-  },
-  [dismiss]);
-
-  const springBackIfNeeded = useCallback(() => {
-    'worklet';
-    if (springBack) {
+    if (propsSpringBack) {
       translationX.value = withSpring(0, SPRING_BACK_ANIMATION_CONFIG);
       translationY.value = withSpring(0, SPRING_BACK_ANIMATION_CONFIG);
     }
-  }, [springBack]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [propsSpringBack]);
 
   const onGestureEvent = useAnimatedGestureHandler({
     onStart: (_event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
@@ -141,21 +131,21 @@ const PanView = (props: Props) => {
           waitingForDismiss.value = true;
           if (velocity.x !== 0) {
             const toX = Math.sign(translationX.value) * (Math.abs(translationX.value) + Constants.screenWidth);
-            translationX.value = withSpring(toX, {velocity: velocity.x, damping: 50}, shouldDismissX);
+            translationX.value = withSpring(toX, {velocity: velocity.x, damping: 50}, dismiss);
           }
           if (velocity.y !== 0) {
             const toY = Math.sign(translationY.value) * (Math.abs(translationY.value) + Constants.screenHeight);
-            translationY.value = withSpring(toY, {velocity: velocity.y, damping: 50}, shouldDismissY);
+            translationY.value = withSpring(toY, {velocity: velocity.y, damping: 50}, dismiss);
           }
         } else {
-          springBackIfNeeded();
+          springBack();
         }
       } else {
-        springBackIfNeeded();
+        springBack();
       }
     }
   },
-  [directions, dismissible, setTranslation, springBackIfNeeded]);
+  [directions, dismissible, setTranslation, springBack]);
 
   return (
     // TODO: delete comments once completed
