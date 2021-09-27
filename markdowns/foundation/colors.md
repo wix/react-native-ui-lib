@@ -5,7 +5,7 @@ title: "Colors"
 ---
 
 #### loadColors
-Load set of colors to use in the app.  
+Load a set of colors to be used in the app.  
 These colors will be accessible through the Colors class and as modifiers.
 usage:
 ```javascript
@@ -28,8 +28,8 @@ import {View, Text, Colors} from 'react-native-ui-lib';
 ```
 
 #### loadSchemes
-Load set of scheme colors to support dark/light mode.  
-This features works hand in hand with our modifiers 
+Load a set of scheme colors to support dark/light mode.  
+This feature works hand in hand with our modifiers 
 
 ```js
 Colors.loadSchemes({
@@ -73,11 +73,11 @@ usage:
 import {Colors} from 'react-native-ui-lib';
 
 Colors.getColorTint(Colors.green30, 70); // will return the value of Colors.green70
-Colors.getColorTint('#ff2442, 50); // will return the 5th tint in an autogenerate 8 tints palette based on #ff2442
+Colors.getColorTint('#ff2442', 50); // will return the 5th tint in an autogenerate 8-tints palette based on '#ff2442'
 ```
 
 #### isDark
-returns if a color is considered dark (bright colors will return false)
+returns `true` if a color is considered dark (bright colors will return `false`)
 ```js
 import {Colors} from 'react-native-ui-lib';
 
