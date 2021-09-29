@@ -156,7 +156,8 @@ export const navigationData = {
       {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
       {title: 'ExpandableOverlay', tags: 'text field expandable input picker', screen: 'unicorn.components.IncubatorExpandableOverlayScreen'},
       {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'},
-      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
+      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'},
+      {title: 'Transition View', tags: 'transition animation enter exit', screen: 'unicorn.incubator.TransitionViewScreen'}
     ]
   },
   Inspirations: {
