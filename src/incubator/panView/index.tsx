@@ -1,16 +1,16 @@
 import {isEmpty} from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, View as RNView, ViewStyle} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
+  withTiming,
   useAnimatedGestureHandler,
   runOnJS
 } from 'react-native-reanimated';
 import {asBaseComponent} from '../../commons/new';
-import {Constants} from '../../helpers';
 import View, {ViewProps} from '../../components/view';
 import {
   PanViewDirections,
@@ -20,6 +20,7 @@ import {
   getDismissVelocity,
   DEFAULT_THRESHOLD
 } from './panningUtil';
+import useHiddenLocation from '../hooks/useHiddenLocation';
 export {PanViewDirections, PanViewDismissThreshold};
 
 export interface PanViewProps extends ViewProps {
@@ -82,6 +83,9 @@ const PanView = (props: Props) => {
     };
   }, []);
 
+  const containerRef = React.createRef<RNView>();
+  const {onLayout, hiddenLocation} = useHiddenLocation({containerRef});
+
   const getTranslationOptions = () => {
     'worklet';
     return {
@@ -129,13 +133,16 @@ const PanView = (props: Props) => {
         const velocity = getDismissVelocity(event, directions, getTranslationOptions(), threshold);
         if (velocity) {
           waitingForDismiss.value = true;
-          if (velocity.x !== 0) {
-            const toX = Math.sign(translationX.value) * (Math.abs(translationX.value) + Constants.screenWidth);
-            translationX.value = withSpring(toX, {velocity: velocity.x, damping: 50}, dismiss);
+          if (translationX.value !== 0 && velocity.x !== undefined && velocity.x !== 0) {
+            const toX = velocity.x > 0 ? hiddenLocation.right : hiddenLocation.left;
+            const duration = Math.abs((toX - translationX.value) / velocity.x) * 1000;
+            translationX.value = withTiming(toX, {duration}, dismiss);
           }
-          if (velocity.y !== 0) {
-            const toY = Math.sign(translationY.value) * (Math.abs(translationY.value) + Constants.screenHeight);
-            translationY.value = withSpring(toY, {velocity: velocity.y, damping: 50}, dismiss);
+
+          if (translationY.value !== 0 && velocity.y !== undefined && velocity.y !== 0) {
+            const toY = velocity.y > 0 ? hiddenLocation.bottom : hiddenLocation.top;
+            const duration = Math.abs((toY - translationY.value) / velocity.y) * 1000;
+            translationY.value = withTiming(toY, {duration}, dismiss);
           }
         } else {
           springBack();
@@ -149,8 +156,7 @@ const PanView = (props: Props) => {
 
   return (
     // TODO: delete comments once completed
-    // <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
-    <View style={containerStyle}>
+    <RNView ref={containerRef} style={containerStyle} onLayout={onLayout}>
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : onGestureEvent}>
         <Animated.View
           // !visible.current && styles.hidden is done to fix a bug is iOS
@@ -161,7 +167,7 @@ const PanView = (props: Props) => {
           <View {...others}>{children}</View>
         </Animated.View>
       </PanGestureHandler>
-    </View>
+    </RNView>
   );
 };
 
