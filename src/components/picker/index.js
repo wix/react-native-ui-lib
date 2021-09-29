@@ -146,9 +146,9 @@ class Picker extends Component {
      */
     listProps: PropTypes.object,
     /**
-     * Pass a custom background color to the modal picker.
+     * Pass props to the picker modal
      */
-    overlayBackgroundColor: PropTypes.string
+    pickerModalProps: PropTypes.object
   };
 
   static defaultProps = {
@@ -370,7 +370,7 @@ class Picker extends Component {
       listProps,
       children,
       testID,
-      overlayBackgroundColor
+      pickerModalProps
     } = this.props;
     const {showExpandableModal, selectedItemPosition, value} = this.state;
 
@@ -412,7 +412,7 @@ class Picker extends Component {
           renderCustomSearch={renderCustomSearch}
           listProps={listProps}
           onShow={onShow}
-          overlayBackgroundColor={overlayBackgroundColor}
+          pickerModalProps={pickerModalProps}
         >
           {this.children}
         </PickerModal>

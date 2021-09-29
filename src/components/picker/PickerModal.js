@@ -28,7 +28,7 @@ class PickerModal extends BaseComponent {
     onSearchChange: PropTypes.func,
     renderCustomSearch: PropTypes.elementType,
     listProps: PropTypes.object,
-    overlayBackgroundColor: PropTypes.string
+    pickerModalProps: PropTypes.object
   };
 
   static defaultProps = {
@@ -80,7 +80,7 @@ class PickerModal extends BaseComponent {
   };
 
   render() {
-    const {visible, enableModalBlur, topBarProps, listProps, children, onShow, overlayBackgroundColor} = this.props;
+    const {visible, enableModalBlur, topBarProps, listProps, children, onShow, pickerModalProps} = this.props;
     return (
       <Modal
         animationType={'slide'}
@@ -89,7 +89,7 @@ class PickerModal extends BaseComponent {
         visible={visible}
         onRequestClose={topBarProps.onCancel}
         onShow={onShow}
-        overlayBackgroundColor={overlayBackgroundColor}
+        overlayBackgroundColor={pickerModalProps.backgroundColor}
       >
         <Modal.TopBar {...topBarProps}/>
         {this.renderSearchInput()}
