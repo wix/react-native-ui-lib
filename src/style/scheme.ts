@@ -58,7 +58,7 @@ class Scheme {
 
     const missingKeys = xor(lightSchemeKeys, darkSchemeKeys);
     if (!isEmpty(missingKeys)) {
-      console.error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
+      throw new Error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
     }
 
     this.schemes = schemes;

@@ -61,6 +61,20 @@ describe('Scheme', () => {
         b: 'black'
       });
     });
+
+    it('should throw on missing color keys', () => {
+      expect(() => Scheme.loadSchemes({
+        dark: {
+          a: 'black',
+          b: 'black'
+        },
+        light: {
+          a: 'white',
+          b: 'white',
+          c: 'white'
+        }
+      })).toThrow(`There is a mismatch in scheme keys: c`);
+    });
   });
 
   describe('scheme change listeners', () => {
