@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Button, ButtonSize, StackAggregator} from 'react-native-ui-lib';
+import {View, Text, Button, StackAggregator} from 'react-native-ui-lib';
 
 
 const contents = [
@@ -24,7 +24,7 @@ export default class StackAggregatorScreen extends Component {
   renderItem = (_: string, index: number) => {
     return (
       <View key={index} center padding-12>
-        <Button label={`${index}`} marginB-10 size={ButtonSize.small} onPress={() => this.onPress(index)}/>
+        <Button label={`${index}`} marginB-10 size={Button.sizes.small} onPress={() => this.onPress(index)}/>
         <Text>{contents[index]}</Text>
       </View>
     );
