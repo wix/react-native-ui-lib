@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Colors, Constants, SegmentedControl, SegmentedControlItemProps} from 'react-native-ui-lib';
+import {View, Text, Colors, Constants, SegmentedControl, SchemeType} from 'react-native-ui-lib';
 
 const SCHEME_TYPES = [
   {label: 'device (default)', value: 'default'},
@@ -20,7 +20,7 @@ class DarkModeScreen extends Component {
 
   changeSchemeType = (index: number) => {
     this.setState({selectedSchemeType: SCHEME_TYPES[index].value});
-    Colors.setScheme(SCHEME_TYPES[index].value);
+    Colors.setScheme(SCHEME_TYPES[index].value as SchemeType);
   };
 
   render() {
