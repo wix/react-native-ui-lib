@@ -3,8 +3,8 @@ index: 6
 path: "/foundation/assets"
 title: "Assets"
 ---
-Assets are big part of the whole UI system, whether it's an icon, placeholder or an illustration, we use them everywhere.  
-Load assets groups and easily render them with the _Image_ component.
+Assets are a big part of the whole UI system, whether it's an icon, placeholder or an illustration, we use them everywhere.  
+Load groups of assets and easily render them with the _Image_ component.
 
 ```javascript
 import {Assets, Image} from 'react-native-ui-lib';

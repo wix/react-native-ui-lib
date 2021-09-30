@@ -1,5 +1,5 @@
-
 export {default as Colors} from './colors';
+export {default as Scheme, SchemeType, Schemes, SchemeChangeListener} from './scheme';
 export {default as Typography} from './typography';
 export {default as BorderRadiuses} from './borderRadiuses';
 export {default as Shadows} from './shadows';
