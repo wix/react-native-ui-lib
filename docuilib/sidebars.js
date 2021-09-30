@@ -18,7 +18,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Getting Started',
-      items: ['getting-started/setup', 'getting-started/usage', 'getting-started/v5']
+      items: ['getting-started/setup', 'getting-started/usage', 'getting-started/v5', 'getting-started/v6']
     },
     {
       type: 'category',

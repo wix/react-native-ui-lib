@@ -6,7 +6,7 @@ title: "Modifiers"
 As you have probably noticed already, we translate our style presets into modifiers.  
 **Modifiers** help you create a stunning UI easily and quickly.
 
-**[!IMPORTANT]** <br>
+**[!IMPORTANT]**  
 Make sure to use modifiers only on UILib components, as some modifiers can cause issues on Android when used on React Native components directly.
 
 ## Layout Modifiers
@@ -111,7 +111,7 @@ The last type of modifiers is for styling your components
 ```
 
 
-! all styling modifiers are based on our [`Colors` & `Typography` presets](/react-native-ui-lib/foundation/style). <br>
+! all styling modifiers are based on our [`Colors` & `Typography` presets](/react-native-ui-lib/foundation/style).  
 You can load your own presets and use them as modifiers. 
 
 
