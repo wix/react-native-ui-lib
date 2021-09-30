@@ -4,7 +4,7 @@ sidebar_position: 2
 path: "/getting-started/usage"
 title: "Usage"
 ---
-This is a quick example of how to use our basic components, modifiers and presets to generate a good looking screen. <br>
+This is a quick example of how to use our basic components, modifiers and presets to generate a good looking screen.  
 For detailed information please go over the other sections: Style, Modifiers, Components...
 
 ![basic showcase](basic-showcase.png).
