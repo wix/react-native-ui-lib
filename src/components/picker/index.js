@@ -144,7 +144,11 @@ class Picker extends Component {
     /**
      * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
      */
-    listProps: PropTypes.object
+    listProps: PropTypes.object,
+    /**
+     * Pass props to the picker modal
+     */
+    pickerModalProps: PropTypes.object
   };
 
   static defaultProps = {
@@ -365,7 +369,8 @@ class Picker extends Component {
       renderCustomModal,
       listProps,
       children,
-      testID
+      testID,
+      pickerModalProps
     } = this.props;
     const {showExpandableModal, selectedItemPosition, value} = this.state;
 
@@ -407,6 +412,7 @@ class Picker extends Component {
           renderCustomSearch={renderCustomSearch}
           listProps={listProps}
           onShow={onShow}
+          pickerModalProps={pickerModalProps}
         >
           {this.children}
         </PickerModal>
