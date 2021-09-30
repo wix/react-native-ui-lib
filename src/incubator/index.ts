@@ -11,3 +11,4 @@ export {
   TransitionViewDirection,
   TransitionViewAnimationType
 } from './TransitionView';
+export {default as Dialog, DialogProps} from './Dialog';

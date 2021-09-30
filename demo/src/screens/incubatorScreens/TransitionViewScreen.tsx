@@ -44,7 +44,6 @@ export default class TransitionViewScreen extends Component<{}, State> {
         <View flex center>
           <TransitionView
             key={`${key}`}
-            // @ts-expect-error
             ref={this.ref}
             enterFrom={enterDirection}
             exitTo={exitDirection}

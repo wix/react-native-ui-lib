@@ -1,6 +1,10 @@
 import { Direction, HiddenLocation } from './useHiddenLocation';
-import { AnimationNotifierEndProps } from './useAnimationEndNotifier';
+import { AnimationNotifierEndProps, TransitionViewAnimationType } from './useAnimationEndNotifier';
 export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
+    /**
+     * Callback to the animation start.
+     */
+    onAnimationStart?: (animationType: TransitionViewAnimationType) => void;
     /**
      * If this is given there will be an enter animation from this direction.
      */

@@ -1,10 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
+import {runOnJS} from 'react-native-reanimated';
 import {Direction, HiddenLocation} from './useHiddenLocation';
 import useAnimatedTranslator from './useAnimatedTranslator';
-import useAnimationEndNotifier, {AnimationNotifierEndProps} from './useAnimationEndNotifier';
+import useAnimationEndNotifier, {
+  AnimationNotifierEndProps,
+  TransitionViewAnimationType
+} from './useAnimationEndNotifier';
 
 export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
+  /**
+   * Callback to the animation start.
+   */
+  onAnimationStart?: (animationType: TransitionViewAnimationType) => void;
   /**
    * If this is given there will be an enter animation from this direction.
    */
@@ -20,7 +28,7 @@ type Props = AnimatedTransitionProps & {
 };
 
 export default function useAnimatedTransition(props: Props) {
-  const {hiddenLocation, enterFrom, exitTo, onAnimationEnd} = props;
+  const {hiddenLocation, enterFrom, exitTo, onAnimationStart, onAnimationEnd} = props;
 
   const {init, animate, animatedStyle} = useAnimatedTranslator({initialVisibility: !enterFrom});
   const {onEnterAnimationEnd, onExitAnimationEnd} = useAnimationEndNotifier({onAnimationEnd});
@@ -42,6 +50,10 @@ export default function useAnimatedTransition(props: Props) {
   const enter = useCallback(() => {
     'worklet';
     if (enterFrom) {
+      if (onAnimationStart) {
+        runOnJS(onAnimationStart)('enter');
+      }
+
       animate({x: 0, y: 0}, enterFrom, onEnterAnimationEnd);
     }
   }, [onEnterAnimationEnd]);
@@ -49,6 +61,10 @@ export default function useAnimatedTransition(props: Props) {
   const exit = useCallback(() => {
     'worklet';
     if (exitTo) {
+      if (onAnimationStart) {
+        runOnJS(onAnimationStart)('exit');
+      }
+
       animate(getLocation(exitTo), exitTo, onExitAnimationEnd);
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd]);

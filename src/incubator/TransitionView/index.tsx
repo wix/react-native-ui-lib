@@ -10,7 +10,9 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 export {TransitionViewDirection, TransitionViewAnimationType};
 
 // TODO: might need to create a file for types and create a fake component for docs
-export type TransitionViewProps = AnimatedTransitionProps & ViewProps;
+export interface TransitionViewProps extends AnimatedTransitionProps, ViewProps {
+  ref?: any;
+}
 
 type Props = PropsWithChildren<TransitionViewProps> & ForwardRefInjectedProps;
 interface Statics {
@@ -19,6 +21,7 @@ interface Statics {
 
 const TransitionView = (props: Props) => {
   const {
+    onAnimationStart,
     onAnimationEnd,
     enterFrom,
     exitTo,
@@ -29,7 +32,13 @@ const TransitionView = (props: Props) => {
   } = props;
   const containerRef = React.createRef<RNView>();
   const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
-  const {exit, animatedStyle} = useAnimatedTransition({hiddenLocation, enterFrom, exitTo, onAnimationEnd});
+  const {exit, animatedStyle} = useAnimatedTransition({
+    hiddenLocation,
+    enterFrom,
+    exitTo,
+    onAnimationStart,
+    onAnimationEnd
+  });
 
   useImperativeHandle(forwardedRef,
     () => ({
@@ -46,4 +55,5 @@ const TransitionView = (props: Props) => {
   return <AnimatedView {...others} onLayout={onLayout} style={[propsStyle, animatedStyle]} ref={containerRef}/>;
 };
 
-export default forwardRef<Props, Statics>(TransitionView);
+// @ts-expect-error TODO: should this be fixed in forwardRef?
+export default forwardRef<TransitionViewProps, Statics>(TransitionView);

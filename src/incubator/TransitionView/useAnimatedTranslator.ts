@@ -7,7 +7,7 @@ export interface TranslatorProps {
 }
 
 const DEFAULT_ANIMATION_VELOCITY = 300;
-const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 300, mass: 0.4};
+const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 100, mass: 0.4};
 
 export default function useAnimatedTranslator(props: TranslatorProps) {
   const {initialVisibility} = props;
