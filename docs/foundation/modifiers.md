@@ -3,14 +3,14 @@ index: 5
 path: "/foundation/modifiers"
 title: "Modifiers"
 ---
-As you probably noticed already, we translate our style presets into modifiers.  
-**Modifiers** will help you create a stunning UI easily and quickly.
+As you have probably noticed already, we translate our style presets into modifiers.  
+**Modifiers** help you create a stunning UI easily and quickly.
 
-**[!IMPORTANT]**  
-Make sure to use modifiers only on uilib components, some modifiers can cause issues on Android when used on React Native components directly.
+**[!IMPORTANT]** <br>
+Make sure to use modifiers only on UILib components, as some modifiers can cause issues on Android when used on React Native components directly.
 
 ## Layout Modifiers
-Use our alignment props to quickly position your view's content without getting confused calculating all these flex rules.
+Use our alignment properties to quickly position the content of your view without getting confused calculating all those flex rules.
 - flex - apply `flex:1` on a view 
 - flex-[value] - When you want to control the flex value
 - flexS - FlexShrink 
@@ -51,7 +51,7 @@ Use our alignment props to quickly position your view's content without getting 
 <img src="https://cloud.githubusercontent.com/assets/1780255/24798566/4de91efc-1b9f-11e7-9974-e06e3daa7c63.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798569/50dc99a4-1b9f-11e7-8231-fbcbb139a010.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798571/52766d08-1b9f-11e7-95a3-b2b262e81170.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798572/545b7abe-1b9f-11e7-9098-409ceee6ff22.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798575/55e3c4f4-1b9f-11e7-998d-7986a038abb6.png" width="160"/>
 
 ## Spacing Modifiers
-It's always important to use your margins and paddings correctly, with modifiers it is simpler to do so.
+It's always important to use your margins and paddings correctly, and that's also easier to do with modifiers:
 
 - padding-[value] - will add padding to all corners (e.g. padding-30 will add 30 pt of padding)
 - paddingL-[value] - Left padding
@@ -81,39 +81,39 @@ It's always important to use your margins and paddings correctly, with modifiers
 <View margin-s5 padding-s2>...</View>
 ```
 ## Position Modifiers
-Use the position modifiers to quickly set an absolute position to your views
+Use the position modifiers to quickly set an absolute position for your views.
 - `abs` will set the absolute position on your View
-- `absL`, `absT`, `absR`, `absB` - set the absolute position and align to Left, Top, Right, Botton side accordingly
+- `absL`, `absT`, `absR`, `absB` - set the absolute position and align to Left, Top, Right, Bottom accordingly
 - `absH` and `absV` - position absolute and stretch horizontally or vertically
 - `absF` will set the absolute position and fill the parent view (similar to StyleSheet.absoluteFillObject)
 
 ## Styling Modifiers
-Last type of modifiers are for styling your components
+The last type of modifiers is for styling your components
 
-- [colorKey] - Controls text components' color
+- [colorKey] - Controls the color of text components
 - background-[colorKey] (or bg-[colorKey]) - Background color 
 
 ```jsx
 <Text blue30>...</Text>
-<View bg-dark70>...</View>
+<View bg-grey70>...</View>
 <TouchableOpacity bg-red30/>
 ```
 
-- [typographyKey] - Controls text components' typography
+- [typographyKey] - Controls the typography of text components 
 ```jsx
 <Text text70>...</Text>
 <TextInput text80/>
 ```
 
-- br[borderRadiusKey] - Set the view's border radius (e.g. `br10`, `br20`, .., `br60`)
+- br[borderRadiusKey] - Set the border radius for the view (e.g. `br10`, `br20`, .., `br60`)
 ```jsx
 <View br40>...</View>
 ```
 
 
-All styling modifiers are based on our [`Colors` & `Typography` presets](/foundation/style).  
+! all styling modifiers are based on our [`Colors` & `Typography` presets](/react-native-ui-lib/foundation/style). <br>
 You can load your own presets and use them as modifiers. 
 
 
 
-Check out [this example](/getting-started/usage) where we use most of these props
+Check out [this example](/react-native-ui-lib/getting-started/usage) where we use most of these props.
