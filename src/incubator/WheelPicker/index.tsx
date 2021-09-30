@@ -280,8 +280,8 @@ const WheelPicker = ({
             snapToInterval={itemHeight}
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
-            getItemLayout={getItemLayout}
-            initialScrollIndex={currentIndex}
+            getItemLayout={Constants.isIOS ? getItemLayout : undefined}
+            initialScrollIndex={Constants.isIOS ? currentIndex : undefined}
             onContentSizeChange={updateFlatListWidth}
           />
         </View>
