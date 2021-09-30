@@ -1,22 +1,46 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Constants} from 'react-native-ui-lib';
+import {View, Text, Colors, Constants, SegmentedControl, SchemeType} from 'react-native-ui-lib';
+
+const SCHEME_TYPES: {label: string; value: SchemeType}[] = [
+  {label: 'device (default)', value: 'default'},
+  {label: 'dark', value: 'dark'},
+  {label: 'light', value: 'light'}
+];
+
+const DEVICE_DARK_MODE_MESSAGE = Constants.isIOS
+  ? 'Change to dark mode in simulator by pressing Cmd+Shift+A'
+  : 'Change to dark mode';
+const MANUAL_DARK_MODE_MESSAGE = 'Setting the scheme manually will ignore device settings';
 
 class DarkModeScreen extends Component {
-  state = {};
+  state = {
+    selectedSchemeType: 'default'
+  };
+
+  changeSchemeType = (index: number) => {
+    this.setState({selectedSchemeType: SCHEME_TYPES[index].value});
+    Colors.setScheme(SCHEME_TYPES[index].value);
+  };
+
   render() {
+    const {selectedSchemeType} = this.state;
+    const message = selectedSchemeType === 'default' ? DEVICE_DARK_MODE_MESSAGE : MANUAL_DARK_MODE_MESSAGE;
+
     return (
       <View flex padding-page bg-screenBG>
         <Text h1 textColor>
           Dark Mode
         </Text>
-        {Constants.isIOS ? (
-          <Text marginT-s2 body textColor>
-            Change to dark mode in simulator by pressing Cmd+Shift+A
-          </Text>
-        ) : (
-          <Text marginT-s2 body textColor>Change to dark mode</Text>
-        )}
+        <SegmentedControl
+          containerStyle={{alignSelf: 'flex-start', marginTop: 20}}
+          segments={SCHEME_TYPES}
+          onChangeIndex={this.changeSchemeType}
+        />
+
+        <Text marginT-s2 body textColor>
+          {message}
+        </Text>
 
         <View style={styles.moonOrSun} bg-moonOrSun/>
         <View style={[styles.mountain, styles.mountainBackground]} bg-mountainBackground/>

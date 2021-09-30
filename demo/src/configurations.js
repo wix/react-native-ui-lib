@@ -36,7 +36,7 @@ Spacings.loadSpacings({
 /* Dark Mode Schemes */
 Colors.loadSchemes({
   light: {
-    screenBG: 'transparent',
+    screenBG: Colors.white,
     textColor: Colors.grey10,
     moonOrSun: Colors.yellow30,
     mountainForeground: Colors.green30,

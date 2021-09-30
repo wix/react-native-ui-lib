@@ -111,9 +111,9 @@ The last type of modifiers is for styling your components
 ```
 
 
-! all styling modifiers are based on our [`Colors` & `Typography` presets](/foundation/style). <br>
+! all styling modifiers are based on our [`Colors` & `Typography` presets](/react-native-ui-lib/foundation/style). <br>
 You can load your own presets and use them as modifiers. 
 
 
 
-Check out [this example](/getting-started/usage) where we use most of these props.
+Check out [this example](/react-native-ui-lib/getting-started/usage) where we use most of these props.

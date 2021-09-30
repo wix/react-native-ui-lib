@@ -1,18 +1,8 @@
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
-declare type Schemes = {
-    light: {
-        [key: string]: string;
-    };
-    dark: {
-        [key: string]: string;
-    };
-};
-declare type SchemeType = 'default' | 'light' | 'dark';
+import { Schemes, SchemeType } from './scheme';
 export declare class Colors {
     [key: string]: any;
-    schemes: Schemes;
-    currentScheme: SchemeType;
     constructor();
     /**
      * Load custom set of colors
@@ -107,6 +97,9 @@ declare const colorObject: Colors & {
     orange30: string;
     orange40: string;
     orange50: string;
+    /**
+     * Get app's current color scheme
+     */
     orange60: string;
     orange70: string;
     orange80: string;
@@ -120,6 +113,14 @@ declare const colorObject: Colors & {
     red80: string;
     purple10: string;
     purple20: string;
+    /**
+     * Add alpha to hex or rgb color
+     * arguments:
+     * p1 - hex color / R part of RGB
+     * p2 - opacity / G part of RGB
+     * p3 - B part of RGB
+     * p4 - opacity
+     */
     purple30: string;
     purple40: string;
     purple50: string;
@@ -138,11 +139,6 @@ declare const colorObject: Colors & {
     black: string;
     transparent: string;
 } & {
-    /**
-     * Set color scheme for app
-     * arguments:
-     * scheme - color scheme e.g light/dark/default
-     */
     primary: string;
 };
 export default colorObject;
