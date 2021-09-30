@@ -5,16 +5,16 @@ const {TransitionView} = Incubator;
 import {renderRadioGroup} from '../ExampleScreenPresenter';
 
 interface State {
-  enterDirection: Incubator.Direction;
-  exitDirection: Incubator.Direction;
+  enterDirection: Incubator.TransitionViewDirection;
+  exitDirection: Incubator.TransitionViewDirection;
   key: number;
 }
 
 export default class TransitionViewScreen extends Component<{}, State> {
   private ref = React.createRef<typeof TransitionView>();
   state = {
-    enterDirection: 'left' as Incubator.Direction,
-    exitDirection: 'bottom' as Incubator.Direction,
+    enterDirection: 'left' as Incubator.TransitionViewDirection,
+    exitDirection: 'bottom' as Incubator.TransitionViewDirection,
     key: 1
   };
 
