@@ -89,7 +89,7 @@ class PickerModal extends BaseComponent {
         visible={visible}
         onRequestClose={topBarProps.onCancel}
         onShow={onShow}
-        overlayBackgroundColor={pickerModalProps.backgroundColor}
+        {...pickerModalProps}
       >
         <Modal.TopBar {...topBarProps}/>
         {this.renderSearchInput()}
