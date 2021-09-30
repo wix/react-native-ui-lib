@@ -100,8 +100,9 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     innerSpacing = 0
   } = props;
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
-  const itemsWidthsAnimated = useSharedValue(_.times(itemsCount, () => 0));
-  const itemsOffsetsAnimated = useSharedValue(_.times(itemsCount, () => 0));
+  // Math.max(itemsCount, 2) is for setting minimum of 2 items required for the interpolation
+  const itemsWidthsAnimated = useSharedValue(_.times(Math.max(itemsCount, 2), () => 0));
+  const itemsOffsetsAnimated = useSharedValue(_.times(Math.max(itemsCount, 2), () => 0));
   const currentIndex = useRef<number>(selectedIndex || 0);
   const [offsets, setOffsets] = useState<Offsets>({CENTER: [], LEFT: [], RIGHT: []});
   const {scrollViewRef, scrollTo, onContentSizeChange, onLayout} = useScrollTo<T>({scrollViewRef: propsScrollViewRef});
