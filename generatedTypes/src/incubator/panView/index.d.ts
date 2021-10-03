@@ -16,7 +16,7 @@ export interface PanViewProps extends ViewProps {
     /**
      * Animate to start if not dismissed.
      */
-    springBack?: boolean;
+    animateToStart?: boolean;
     /**
      * Callback to the dismiss animation end
      */

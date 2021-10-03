@@ -80,7 +80,7 @@ class PanViewScreen extends Component {
           <PanView
             directions={[PanView.directions.DOWN]}
             dismissible
-            springBack
+            animateToStart
             // threshold={{y: 10}}
             containerStyle={styles.panView}
             onDismiss={this.onDialogDismissed}
@@ -113,7 +113,7 @@ class PanViewScreen extends Component {
       <PanView
         directions={[PanView.directions.LEFT, PanView.directions.DOWN, PanView.directions.RIGHT]}
         dismissible
-        springBack
+        animateToStart
         directionLock
         threshold={{y: 10}}
         containerStyle={styles.panView}
