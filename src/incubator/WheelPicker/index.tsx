@@ -97,7 +97,7 @@ const WheelPicker = ({
   labelStyle,
   labelProps,
   onChange,
-  align,
+  align = WheelPickerAlign.CENTER,
   style,
   children,
   initialValue,
@@ -181,13 +181,13 @@ const WheelPicker = ({
   },
   [onChange]);
 
-  const alignmentStyle = useMemo(() =>
-    align === WheelPickerAlign.RIGHT
-      ? {alignSelf: 'flex-end'}
+  const alignmentStyle = useMemo(() => {
+    return align === WheelPickerAlign.RIGHT
+      ? {alignSelf: undefined}
       : align === WheelPickerAlign.LEFT
         ? {alignSelf: 'flex-start'}
-        : {alignSelf: 'center'},
-  [align]);
+        : {alignSelf: 'center'};
+  }, [align]);
 
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -283,6 +283,8 @@ const WheelPicker = ({
             getItemLayout={getItemLayout}
             initialScrollIndex={currentIndex}
             onContentSizeChange={updateFlatListWidth}
+            /* This fixes an issue with RTL when centering flatlist content using alignSelf */
+            centerContent={align === 'center' && Constants.isRTL}
           />
         </View>
       </View>
