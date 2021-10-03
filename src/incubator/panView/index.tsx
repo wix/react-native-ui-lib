@@ -156,7 +156,7 @@ const PanView = (props: Props) => {
 
   return (
     // TODO: delete comments once completed
-    <RNView ref={containerRef} style={containerStyle} onLayout={onLayout}>
+    <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : onGestureEvent}>
         <Animated.View
           // !visible.current && styles.hidden is done to fix a bug is iOS
@@ -167,7 +167,7 @@ const PanView = (props: Props) => {
           <View {...others}>{children}</View>
         </Animated.View>
       </PanGestureHandler>
-    </RNView>
+    </View>
   );
 };
 
