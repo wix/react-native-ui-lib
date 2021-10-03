@@ -150,7 +150,7 @@ declare class Avatar extends PureComponent<AvatarProps> {
     getRibbonStyle(): StyleProp<ViewStyle>;
     getBadgeBorderWidth: () => any;
     getBadgeColor(): any;
-    getBadgeSize: () => number;
+    getBadgeSize: () => string | number;
     getBadgePosition: () => object;
     renderBadge(): JSX.Element | undefined;
     renderRibbon(): JSX.Element | undefined;
