@@ -75,15 +75,15 @@ class Twitter extends Component {
           <ListItem.Part middle column>
             <View row centerV>
               <Text text80M>{post.name} </Text>
-              <Text dark40>{post.nickname}</Text>
-              <Text dark40>{' • ' + post.time}</Text>
+              <Text grey40>{post.nickname}</Text>
+              <Text grey40>{' • ' + post.time}</Text>
             </View>
             <Text>{post.description}</Text>
             {post.link ? (
               <Card style={{marginTop: 10}} height={200}>
                 <Card.Section imageSource={{uri: post.link.thumbnail}} imageStyle={{height: 120}}/>
                 <View padding-s3>
-                  <Text dark40>{post.link.website}</Text>
+                  <Text grey40>{post.link.website}</Text>
                   <Text>{post.link.description}</Text>
                 </View>
               </Card>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     marginTop: 8
   },
   icon: {
-    tintColor: Colors.dark40,
+    tintColor: Colors.grey40,
     width: 20,
     height: 20
   }

@@ -1,16 +1,17 @@
 import React from 'react';
-import {View, requireNativeComponent, ViewStyle} from 'react-native';
+import {View, requireNativeComponent, ViewStyle, Platform} from 'react-native';
 
 const NativeSafeAreaSpacerView = requireNativeComponent('SafeAreaSpacerView');
+const isIOS = Platform.OS === 'ios';
 
 export type SafeAreaSpacerViewProps = {
-  style?: ViewStyle
-}
+  style?: ViewStyle;
+};
 
 const SafeAreaSpacerView = ({style}: SafeAreaSpacerViewProps) => {
   return (
     // @ts-ignore
-    NativeSafeAreaSpacerView ? <NativeSafeAreaSpacerView style={style}/> : <View style={style}/>
+    isIOS ? <NativeSafeAreaSpacerView style={style}/> : <View style={style}/>
   );
 };
 

@@ -93,7 +93,6 @@ export type CardProps = ViewProps &
       hideIndicator?: boolean;
     };
   };
-export type CardPropTypes = CardProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropTypes = BaseComponentInjectedProps &
   ForwardRefInjectedProps &
@@ -347,7 +346,7 @@ function createStyles({
     },
     containerShadow: {
       // sh30 bottom
-      shadowColor: Colors.dark40,
+      shadowColor: Colors.grey40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0}

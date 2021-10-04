@@ -20,9 +20,8 @@ const KeyboardTrackingViewTempManager = NativeModules.KeyboardTrackingViewTempMa
 class KeyboardTrackingView extends PureComponent<KeyboardTrackingViewProps> {
   static displayName = 'KeyboardTrackingView';
 
-  /** V6 should be change to default false */
   static defaultProps = {
-    useSafeArea: true
+    useSafeArea: false
   };
 
   ref?: any;

@@ -7,7 +7,7 @@ export default class BorderRadiusesScreen extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text text30 dark10 marginB-20>
+        <Text text30 grey10 marginB-20>
           Border Radius
         </Text>
         <View>
@@ -15,10 +15,10 @@ export default class BorderRadiusesScreen extends Component {
             return (
               <View center key={key} height={150} width={150}>
                 <View style={styles.labelContainer}>
-                  <Text dark30 text50>
+                  <Text grey30 text50>
                     {key}
                   </Text>
-                  <Text dark30 text70>
+                  <Text grey30 text70>
                     ({value})
                   </Text>
                 </View>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 25,
     alignItems: 'center',
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.grey80,
   },
   labelContainer: {
     position: 'absolute',
