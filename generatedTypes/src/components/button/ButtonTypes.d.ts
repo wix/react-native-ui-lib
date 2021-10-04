@@ -126,7 +126,6 @@ export declare type ButtonProps = TouchableOpacityProps & TypographyModifiers & 
      */
     animateTo?: ButtonAnimationDirection;
 };
-export declare type ButtonPropTypes = ButtonProps;
 export declare type ButtonState = {
     size?: number;
     borderRadius?: number;

@@ -112,7 +112,7 @@ export default class TextFieldScreen extends Component {
             placeholder="Enter weight"
             text70
             trailingAccessory={
-              <Text text70 dark30>
+              <Text text70 grey30>
                 Kg.
               </Text>
             }

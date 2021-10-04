@@ -163,6 +163,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 } | {
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
@@ -269,14 +270,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     transparent?: boolean | undefined;
     black?: boolean | undefined;
     white?: boolean | undefined;
-    dark10?: boolean | undefined;
-    dark20?: boolean | undefined;
-    dark30?: boolean | undefined;
-    dark40?: boolean | undefined;
-    dark50?: boolean | undefined;
-    dark60?: boolean | undefined;
-    dark70?: boolean | undefined;
-    dark80?: boolean | undefined;
     grey10?: boolean | undefined;
     grey20?: boolean | undefined;
     grey30?: boolean | undefined;
@@ -496,6 +489,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 } | {
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
@@ -602,14 +596,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     transparent?: boolean | undefined;
     black?: boolean | undefined;
     white?: boolean | undefined;
-    dark10?: boolean | undefined;
-    dark20?: boolean | undefined;
-    dark30?: boolean | undefined;
-    dark40?: boolean | undefined;
-    dark50?: boolean | undefined;
-    dark60?: boolean | undefined;
-    dark70?: boolean | undefined;
-    dark80?: boolean | undefined;
     grey10?: boolean | undefined;
     grey20?: boolean | undefined;
     grey30?: boolean | undefined;
@@ -1065,4 +1051,5 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
+    children?: import("react").ReactNode;
 };

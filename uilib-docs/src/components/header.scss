@@ -11,7 +11,7 @@
   padding: 0px 11%;
   background: $white;
   z-index: 100;
-  box-shadow: 1px 1px 5px rgba($dark10, 0.2);
+  box-shadow: 1px 1px 5px rgba($grey10, 0.2);
   
   // background-color: rgba(white, .15);  
   // backdrop-filter: blur(50px);
@@ -27,7 +27,7 @@
 
     a {
       font-size: $text40;
-      color: $dark10;
+      color: $grey10;
       text-decoration: none;
       font-weight: 500;
 

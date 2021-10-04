@@ -95,7 +95,6 @@ export const navigationData = {
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
-      {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
       {
         title: 'withScrollEnabler',
         tags: 'scroll enabled withScrollEnabler',
@@ -144,8 +143,6 @@ export const navigationData = {
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
       {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
       {title: 'ProgressiveImage', tags: 'progressive image cover overlay', screen: 'unicorn.components.ProgressiveImageScreen'},
-      {title: 'List Animations', tags: 'animated card', screen: 'unicorn.animations.ListAnimationsScreen'},
-      {title: 'Card Animations', tags: 'animated card', screen: 'unicorn.animations.CardAnimationsScreen'},
       {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
       {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
       {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
@@ -159,7 +156,8 @@ export const navigationData = {
       {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
       {title: 'ExpandableOverlay', tags: 'text field expandable input picker', screen: 'unicorn.components.IncubatorExpandableOverlayScreen'},
       {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'},
-      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
+      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'},
+      {title: 'Transition View', tags: 'transition animation enter exit', screen: 'unicorn.incubator.TransitionViewScreen'}
     ]
   },
   Inspirations: {

@@ -1,5 +1,6 @@
 import {UIManager, I18nManager} from 'react-native';
 import {navigationData as menuStructure} from './screens/MenuStructure';
+import {loadDemoConfigurations} from './configurations';
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true); // eslint-disable-line
 I18nManager.allowRTL(true);
@@ -7,6 +8,7 @@ I18nManager.allowRTL(true);
 module.exports = {
   name: 'unicorn demo app',
   menuStructure,
+  loadDemoConfigurations,
   // componentScreens
   get screens() {
     return {
@@ -118,9 +120,6 @@ module.exports = {
       get TabControllerScreen() {
         return require('./screens/componentScreens/TabControllerScreen').default;
       },
-      get TabBarScreen() {
-        return require('./screens/componentScreens/TabBarScreen').default;
-      },
       get TextScreen() {
         return require('./screens/componentScreens/TextScreen').default;
       },
@@ -212,12 +211,6 @@ module.exports = {
       get CardScannerScreen() {
         return require('./screens/componentScreens/CardScannerScreen').default;
       },
-      get CardAnimationsScreen() {
-        return require('./screens/animationScreens/CardAnimationsScreen').default;
-      },
-      get ListAnimationsScreen() {
-        return require('./screens/animationScreens/ListAnimationsScreen').default;
-      },
       get ProgressBarScreen() {
         return require('./screens/componentScreens/ProgressBarScreen').default;
       },
@@ -227,6 +220,9 @@ module.exports = {
       },
       get PanViewScreen() {
         return require('./screens/incubatorScreens/PanViewScreen').default;
+      },
+      get TransitionViewScreen() {
+        return require('./screens/incubatorScreens/TransitionViewScreen').default;
       },
       // realExamples
       get AppleMusic() {
