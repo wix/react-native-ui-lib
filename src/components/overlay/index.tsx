@@ -98,8 +98,8 @@ class Overlay extends PureComponent<OverlayTypes> {
     if (type === OVERLY_TYPES.VERTICAL) {
       return (
         <>
-          {imageSource && this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], imageSource)}
-          {imageSource && this.renderImage([this.getStyleByType(OVERLY_TYPES.BOTTOM), styles.vertical], imageSource)}
+          {this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], imageSource)}
+          {this.renderImage([this.getStyleByType(OVERLY_TYPES.BOTTOM), styles.vertical], imageSource)}
           {customContent && this.renderCustomContent()}
         </>
       );
