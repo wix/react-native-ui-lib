@@ -30,7 +30,7 @@ export interface InputProps
   /**
    * Custom formatter for the input value (used only when input if not focused)
    */
-  formatter?: (value?: string) => string;
+  formatter?: (value?: string) => string | undefined;
 }
 
 const Input = ({

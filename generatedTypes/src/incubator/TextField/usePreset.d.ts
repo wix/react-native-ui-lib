@@ -19,7 +19,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     hint?: string | undefined;
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
-    formatter?: ((value?: string | undefined) => string) | undefined;
+    formatter?: ((value?: string | undefined) => string | undefined) | undefined;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
     testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
@@ -345,7 +345,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     hint?: string | undefined;
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
-    formatter?: ((value?: string | undefined) => string) | undefined;
+    formatter?: ((value?: string | undefined) => string | undefined) | undefined;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
     testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
@@ -671,7 +671,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     hint?: string | undefined;
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
-    formatter?: ((value?: string | undefined) => string) | undefined;
+    formatter?: ((value?: string | undefined) => string | undefined) | undefined;
     style: false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | {
         lineHeight: undefined;
         height: number | undefined;

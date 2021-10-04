@@ -18,7 +18,7 @@ export interface InputProps extends Omit<TextInputProps, 'placeholderTextColor'>
     /**
      * Custom formatter for the input value (used only when input if not focused)
      */
-    formatter?: (value?: string) => string;
+    formatter?: (value?: string) => string | undefined;
 }
 declare const Input: {
     ({ style, hint, color, forwardedRef, formatter, ...props }: InputProps & ForwardRefInjectedProps): JSX.Element;
