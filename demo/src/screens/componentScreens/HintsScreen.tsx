@@ -7,10 +7,7 @@ import {Colors, View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 
 const settingsIcon = require('../../assets/icons/settings.png');
 const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 
-type HintScreenProps = {
-  showHint: boolean;
-  useTargetFrame?: boolean;
-};
+type HintScreenProps = {};
 type HintScreenState = {
   showHint: boolean;
   useShortMessage: boolean;
@@ -27,15 +24,14 @@ type HintScreenState = {
 export default class HintsScreen extends Component<HintScreenProps, HintScreenState> {
   constructor(props: HintScreenProps) {
     super(props);
-    const {showHint, useTargetFrame} = props;
 
     this.state = {
-      showHint,
+      showHint: true,
       useShortMessage: false,
       showBottomHint: false,
       showIcon: false,
       targetPosition: 'flex-start',
-      useTargetFrame,
+      // useTargetFrame: true,
       useSideTip: false,
       showCustomContent: false,
       showReactionStrip: false,

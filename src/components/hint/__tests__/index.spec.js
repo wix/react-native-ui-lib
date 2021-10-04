@@ -2,7 +2,6 @@ import React from 'react';
 import {Hint} from 'react-native-ui-lib';
 import {Colors} from '../../../style';
 import {render, findStyle} from '../../../uilib-test-renderer';
-// import HintsScreen from '../../../../demo/src/screens/componentScreens/HintsScreen';
 
 const HintTestComponent = ({showHint}) => {
   return (
@@ -27,7 +26,7 @@ describe('Hint Screen component test', () => {
     const hintTestId = 'Hint.message';
 
     const expectedColor = Colors.primary;
-    const element = <HintTestComponent useTargetFrame showHint/>;
+    const element = <HintTestComponent showHint/>;
 
     const {getByTestId} = render(element);
 
@@ -42,7 +41,7 @@ describe('Hint Screen component test', () => {
   });
 
   it('Test Hint modal is not visible when showHint is false', async () => {
-    const element = <HintTestComponent useTargetFrame showHint={false}/>;
+    const element = <HintTestComponent showHint={false}/>;
 
     const {queryByTestId} = render(element);
 
@@ -52,7 +51,7 @@ describe('Hint Screen component test', () => {
   });
 
   it('Test Hint modal is visible when showHint is true', async () => {
-    const element = <HintTestComponent useTargetFrame showHint/>;
+    const element = <HintTestComponent showHint/>;
 
     const {getByTestId, queryAllByTestId} = render(element);
     const hint = getByTestId('Hint');
