@@ -45,8 +45,6 @@ declare class Overlay extends PureComponent<OverlayTypes> {
     };
     static intensityTypes: typeof OverlayIntensityType;
     getStyleByType(type?: string | undefined): ("" | {
-        backgroundColor: string;
-    } | undefined)[] | ("" | {
         bottom: undefined;
         top: number;
         height: string;
@@ -61,7 +59,9 @@ declare class Overlay extends PureComponent<OverlayTypes> {
         }[];
     } | {
         tintColor: string;
-    } | undefined)[] | undefined;
+    } | undefined)[] | {
+        backgroundColor: string;
+    } | undefined;
     renderCustomContent: () => JSX.Element;
     renderImage: (style: any, source: ImageSourcePropType) => JSX.Element;
     getImageSource: (type?: string | undefined, intensity?: OverlayIntensityType | undefined) => any;
