@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { ImageProps as RNImageProps, ImageSourcePropType, NativeSyntheticEvent, ImageErrorEventData } from 'react-native';
 import { ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers } from '../../commons/new';
-import { OverlayTypeType } from '../overlay';
+import { OverlayTypeType, OverlayIntensityType } from '../overlay';
 export declare type ImageProps = RNImageProps & MarginModifiers & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
@@ -36,6 +36,10 @@ export declare type ImageProps = RNImageProps & MarginModifiers & {
      * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
      */
     overlayType?: OverlayTypeType;
+    /**
+     * The intensity of the overlay ('LOW' | 'MEDIUM' | 'HIGH'), default is 'LOW'.
+     */
+    overlayIntensity?: OverlayIntensityType;
     /**
      * Pass a custom color for the overlay
      */
@@ -73,6 +77,7 @@ declare class Image extends PureComponent<Props, State> {
         BOTTOM: string;
         SOLID: string;
     };
+    static overlayIntensityType: typeof OverlayIntensityType;
     sourceTransformer?: (props: any) => ImageSourcePropType;
     constructor(props: Props);
     static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State): {
@@ -123,6 +128,10 @@ declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"marg
      * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
      */
     overlayType?: string | undefined;
+    /**
+     * The intensity of the overlay ('LOW' | 'MEDIUM' | 'HIGH'), default is 'LOW'.
+     */
+    overlayIntensity?: OverlayIntensityType | undefined;
     /**
      * Pass a custom color for the overlay
      */
