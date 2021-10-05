@@ -36,7 +36,7 @@ export interface PanViewProps extends ViewProps {
   /**
    * Animate to start if not dismissed.
    */
-  animateToStart?: boolean;
+  animateToOrigin?: boolean;
   /**
    * Callback to the dismiss animation end
    */
@@ -65,7 +65,7 @@ const PanView = (props: Props) => {
   const {
     directions = [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
     dismissible,
-    animateToStart: propsAnimateToStart,
+    animateToOrigin,
     onDismiss,
     directionLock,
     threshold,
@@ -112,14 +112,14 @@ const PanView = (props: Props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   [onDismiss]);
 
-  const animateToStart = useCallback(() => {
+  const returnToOrigin = useCallback(() => {
     'worklet';
-    if (propsAnimateToStart) {
+    if (animateToOrigin) {
       translationX.value = withSpring(0, SPRING_BACK_ANIMATION_CONFIG);
       translationY.value = withSpring(0, SPRING_BACK_ANIMATION_CONFIG);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [propsAnimateToStart]);
+  }, [animateToOrigin]);
 
   const onGestureEvent = useAnimatedGestureHandler({
     onStart: (_event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
@@ -145,14 +145,14 @@ const PanView = (props: Props) => {
             translationY.value = withTiming(toY, {duration}, dismiss);
           }
         } else {
-          animateToStart();
+          returnToOrigin();
         }
       } else {
-        animateToStart();
+        returnToOrigin();
       }
     }
   },
-  [directions, dismissible, setTranslation, animateToStart]);
+  [directions, dismissible, setTranslation, returnToOrigin]);
 
   return (
     // TODO: delete comments once completed
