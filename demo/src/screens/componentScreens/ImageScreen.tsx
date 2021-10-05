@@ -91,6 +91,7 @@ class ImageScreen extends Component<{}, State> {
     const {cover, overlayType, overlayIntensity, margin, showErrorImage} = this.state;
     return (
       <Image
+        key={`${overlayType}-${overlayIntensity}`}
         source={{uri: showErrorImage ? BROKEN_URL : IMAGE_URL}}
         errorSource={Assets.images.demo.brokenImage}
         cover={cover}

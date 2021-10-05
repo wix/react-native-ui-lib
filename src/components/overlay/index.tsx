@@ -1,3 +1,4 @@
+import {isUndefined} from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Image, ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
@@ -52,15 +53,26 @@ class Overlay extends PureComponent<OverlayTypes> {
   static intensityTypes = OverlayIntensityType;
 
   getStyleByType(type = this.props.type) {
-    const {color} = this.props;
+    const {color, intensity} = this.props;
 
     switch (type) {
       case OVERLY_TYPES.TOP:
         return [styles.top, color && {tintColor: color}];
       case OVERLY_TYPES.BOTTOM:
         return [styles.bottom, color && {tintColor: color}];
-      case OVERLY_TYPES.SOLID:
-        return [styles.solid, color && {backgroundColor: color}];
+      case OVERLY_TYPES.SOLID: {
+        if (isUndefined(color)) {
+          const opacity =
+            intensity === OverlayIntensityType.HIGH ? 0.75 : intensity === OverlayIntensityType.MEDIUM ? 0.55 : 0.4;
+          return {backgroundColor: Colors.rgba(Colors.grey10, opacity)};
+        } else if (color === Colors.white) {
+          const opacity =
+            intensity === OverlayIntensityType.HIGH ? 0.85 : intensity === OverlayIntensityType.MEDIUM ? 0.7 : 0.45;
+          return {backgroundColor: Colors.rgba(Colors.white, opacity)};
+        } else {
+          return {backgroundColor: color};
+        }
+      }
       default:
         break;
     }
@@ -132,9 +144,6 @@ const styles = StyleSheet.create({
   },
   vertical: {
     height: '40%'
-  },
-  solid: {
-    backgroundColor: Colors.rgba(Colors.grey10, 0.4)
   },
   customContent: {
     ...StyleSheet.absoluteFillObject
