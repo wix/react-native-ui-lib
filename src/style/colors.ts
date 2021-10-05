@@ -15,7 +15,7 @@ export class Colors {
     Object.assign(this, colors);
 
     Scheme.addChangeListener(() => {
-      Object.assign(this, this.getScheme());
+      Object.assign(this, Scheme.getScheme());
     });
   }
   /**
@@ -35,7 +35,7 @@ export class Colors {
    */
   loadSchemes(schemes: Schemes) {
     Scheme.loadSchemes(schemes);
-    Object.assign(this, this.getScheme());
+    Object.assign(this, Scheme.getScheme());
   }
 
   /**
