@@ -2,7 +2,7 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 export function registerScreens(registrar) {
   // load demo app presets
-  require('../configurations');
+  require('../configurations').loadDemoConfigurations();
 
   require('./componentScreens').registerScreens(registrar);
   require('./foundationScreens').registerScreens(registrar);

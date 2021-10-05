@@ -37,7 +37,7 @@ export type BadgeProps = ViewProps &
     /**
      * the badge size
      */
-    size?: number;
+    size?: number | string;
     /**
      * Press handler
      */

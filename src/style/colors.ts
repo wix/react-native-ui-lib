@@ -1,4 +1,3 @@
-import {Appearance} from 'react-native';
 import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
@@ -6,23 +5,17 @@ import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
 //@ts-ignore
 import ColorName from './colorName';
-
-type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
-type SchemeType = 'default' | 'light' | 'dark'
+import Scheme, {Schemes, SchemeType} from './scheme';
 
 export class Colors {
   [key: string]: any;
-  schemes: Schemes = {light: {}, dark: {}};
-  currentScheme: SchemeType = 'default';
 
   constructor() {
     const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
 
-    Appearance.addChangeListener(() => {
-      if (this.currentScheme === 'default') {
-        Object.assign(this, this.schemes[Appearance.getColorScheme() ?? 'light']);
-      }
+    Scheme.addChangeListener(() => {
+      Object.assign(this, this.getScheme());
     });
   }
   /**
@@ -41,25 +34,15 @@ export class Colors {
    * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
    */
   loadSchemes(schemes: Schemes) {
-    const lightSchemeKeys = Object.keys(schemes.light);
-    const darkSchemeKeys = Object.keys(schemes.dark);
-
-    const missingKeys = _.xor(lightSchemeKeys, darkSchemeKeys);
-    if (!_.isEmpty(missingKeys)) {
-      console.error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
-    }
-
-    this.schemes = schemes;
-    const colorScheme = this.getScheme();
-    Object.assign(this, this.schemes[colorScheme]);
+    Scheme.loadSchemes(schemes);
+    Object.assign(this, this.getScheme());
   }
 
   /**
    * Get app's current color scheme
    */
   getScheme(): 'light' | 'dark' {
-    const scheme = this.currentScheme === 'default' ? Appearance.getColorScheme() : this.currentScheme;
-    return scheme ?? 'light';
+    return Scheme.getSchemeType();
   }
 
   /**
@@ -68,12 +51,7 @@ export class Colors {
    * scheme - color scheme e.g light/dark/default
    */
   setScheme(scheme: SchemeType) {
-    if (!['light', 'dark', 'default'].includes(scheme)) {
-      throw new Error(`${scheme} is invalid colorScheme, please use 'light' | 'dark' | 'default'`);
-    }
-    this.currentScheme = scheme;
-    const colorScheme = this.getScheme();
-    Object.assign(this, this.schemes[colorScheme]);
+    Scheme.setScheme(scheme);
   }
 
   /**
