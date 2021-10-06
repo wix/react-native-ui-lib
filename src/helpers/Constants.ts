@@ -131,7 +131,11 @@ const constants = {
   },
   /* Dimensions */
   removeDimensionsEventListener: (callback: any) => {
-    Dimensions.removeEventListener('change', callback);
+    if (Dimensions.remove) {
+      Dimensions.remove('change', callback);
+    } else {
+      Dimensions.removeEventListener('change', callback);
+    }
   },
   /* Accessibility */
   get accessibility() {
