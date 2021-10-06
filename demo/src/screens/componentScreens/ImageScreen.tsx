@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Image, Colors, Assets} from 'react-native-ui-lib';
+import {View, Text, Image, Colors, Assets, OverlayTypes} from 'react-native-ui-lib';
 import {renderBooleanOption, renderRadioGroup, renderSliderOption} from '../ExampleScreenPresenter';
 
 const IMAGE_URL =
@@ -38,11 +38,24 @@ enum SizeType {
   Percentage = '50%'
 }
 
-class ImageScreen extends Component {
+interface State {
+  cover: boolean;
+  showOverlayContent: boolean;
+  overlayType: 'none' | OverlayTypes['type'];
+  overlayIntensity: OverlayTypes['intensity'];
+  margin: number;
+  showErrorImage: boolean;
+  showSvg: boolean;
+  isFile: boolean;
+  sizeType: SizeType;
+}
+
+class ImageScreen extends Component<{}, State> {
   state = {
     cover: true,
     showOverlayContent: false,
     overlayType: 'none',
+    overlayIntensity: Image.overlayIntensityType.LOW,
     margin: 0,
     showErrorImage: false,
     showSvg: false,
@@ -75,13 +88,15 @@ class ImageScreen extends Component {
   }
 
   renderImage() {
-    const {cover, overlayType, margin, showErrorImage} = this.state;
+    const {cover, overlayType, overlayIntensity, margin, showErrorImage} = this.state;
     return (
       <Image
+        key={`${overlayType}-${overlayIntensity}`}
         source={{uri: showErrorImage ? BROKEN_URL : IMAGE_URL}}
         errorSource={Assets.images.demo.brokenImage}
         cover={cover}
         overlayType={overlayType !== 'none' ? overlayType : undefined}
+        overlayIntensity={overlayIntensity}
         style={!cover && {width: DEFAULT_SIZE, height: DEFAULT_SIZE}}
         customOverlayContent={this.renderOverlayContent()}
         {...{[`margin-${margin}`]: true}}
@@ -109,7 +124,10 @@ class ImageScreen extends Component {
         {renderBooleanOption.call(this, 'Show as Cover Image', 'cover')}
         {renderBooleanOption.call(this, 'Show Overlay Content', 'showOverlayContent')}
         {renderBooleanOption.call(this, 'Show Error Image', 'showErrorImage')}
-        {renderRadioGroup.call(this, 'Overlay Type', 'overlayType', {none: 'none', ...Image.overlayTypes})}
+        <View row spread>
+          {renderRadioGroup.call(this, 'Overlay Type', 'overlayType', {none: 'none', ...Image.overlayTypes})}
+          {renderRadioGroup.call(this, 'Overlay Intensity', 'overlayIntensity', Image.overlayIntensityType)}
+        </View>
         {renderSliderOption.call(this, 'Margin(margin-XX)', 'margin', {step: 4, min: 0, max: 40})}
       </>
     );

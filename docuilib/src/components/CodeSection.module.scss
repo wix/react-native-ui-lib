@@ -1,0 +1,73 @@
+@import 'src/css/constants';
+
+.codeSection {
+  padding-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .headline {
+    text-align: center;
+  }
+
+  .codeExample {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+
+    @include desktop {
+      width: 55vw;
+    }
+
+    .docsButton {
+      margin-top: 40px;
+      align-self: center;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    border: 1px solid;
+    height: 32px;
+
+    @include desktop {
+      height: 46px;
+    }
+
+    .tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: 0.2s all;
+
+      &:not(:last-child) {
+        border-right: 1px solid;
+      }
+    }
+    .tabSelected {
+      background-color: $black;
+      color: $white;
+    }
+  }
+
+  .tabPage {
+    pre {
+      background-color: $dark10;
+      padding: 20px;
+      width: 100%;
+    }
+
+    .tabPageDescription {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    .tabPageCode {
+      color: $white;
+    }
+  }
+
+}

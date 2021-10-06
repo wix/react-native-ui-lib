@@ -62,6 +62,7 @@ dist
 dist-ts
 yarn.lock
 package-lock.json
+docs/**/*.md
 
 # CocoaPods
 /ios/Pods/

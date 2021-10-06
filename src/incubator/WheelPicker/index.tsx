@@ -1,5 +1,5 @@
 // TODO: Support style customization
-import {isFunction} from 'lodash';
+import {isFunction, isUndefined} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
@@ -10,6 +10,7 @@ import {Constants} from 'helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
 import Text, {TextProps} from '../../components/text';
+import {asBaseComponent} from '../../commons/new';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -96,7 +97,7 @@ const WheelPicker = ({
   labelStyle,
   labelProps,
   onChange,
-  align,
+  align = WheelPickerAlign.CENTER,
   style,
   children,
   initialValue,
@@ -138,7 +139,7 @@ const WheelPicker = ({
 
   /* This effect making sure to reset index if initialValue has changed */
   useEffect(() => {
-    scrollToIndex(currentIndex, true);
+    !isUndefined(initialValue) && scrollToIndex(currentIndex, true);
   }, [currentIndex]);
 
   const scrollToPassedIndex = useCallback(() => {
@@ -180,13 +181,13 @@ const WheelPicker = ({
   },
   [onChange]);
 
-  const alignmentStyle = useMemo(() =>
-    align === WheelPickerAlign.RIGHT
-      ? {alignSelf: 'flex-end'}
+  const alignmentStyle = useMemo(() => {
+    return align === WheelPickerAlign.RIGHT
+      ? {alignSelf: undefined}
       : align === WheelPickerAlign.LEFT
         ? {alignSelf: 'flex-start'}
-        : {alignSelf: 'center'},
-  [align]);
+        : {alignSelf: 'center'};
+  }, [align]);
 
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -282,6 +283,8 @@ const WheelPicker = ({
             getItemLayout={getItemLayout}
             initialScrollIndex={currentIndex}
             onContentSizeChange={updateFlatListWidth}
+            /* This fixes an issue with RTL when centering flatlist content using alignSelf */
+            centerContent={align === 'center' && Constants.isRTL}
           />
         </View>
       </View>
@@ -294,7 +297,8 @@ const WheelPicker = ({
 };
 
 WheelPicker.alignments = WheelPickerAlign;
-export default WheelPicker;
+WheelPicker.displayName = 'Incubator.WheelPicker';
+export default asBaseComponent<WheelPickerProps, typeof WheelPicker>(WheelPicker);
 
 const styles = StyleSheet.create({
   separators: {

@@ -59,6 +59,11 @@ function TabController({
 }: PropsWithChildren<TabControllerProps>) {
   const [screenWidth, setScreenWidth] = useState<number>(Constants.windowWidth);
   const orientation = useRef<orientations>(Constants.orientation);
+
+  if (items?.length < 2) {
+    console.error('TabController component expect a minimum of 2 items');
+  }
+
   useEffect(() => {
     const onOrientationChange = () => {
       if (orientation.current !== Constants.orientation) {
@@ -126,7 +131,7 @@ function TabController({
       /* Callbacks */
       onChangeIndex
     };
-  }, [/* initialIndex,*/initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
+  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 }
