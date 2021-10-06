@@ -18,10 +18,10 @@ const IsAndroid = Platform.OS === 'android';
 
 const IOS_SCROLL_BEHAVIORS = IsIOS
   ? {
-    NONE: NativeModules.KeyboardTrackingViewTempManager.KeyboardTrackingScrollBehaviorNone,
+    NONE: NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorNone,
     SCROLL_TO_BOTTOM_INVERTED_ONLY:
-        NativeModules.KeyboardTrackingViewTempManager.KeyboardTrackingScrollBehaviorScrollToBottomInvertedOnly,
-    FIXED_OFFSET: NativeModules.KeyboardTrackingViewTempManager.KeyboardTrackingScrollBehaviorFixedOffset
+        NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorScrollToBottomInvertedOnly,
+    FIXED_OFFSET: NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorFixedOffset
   }
   : {};
 
