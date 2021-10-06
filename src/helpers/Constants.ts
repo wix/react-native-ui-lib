@@ -131,7 +131,9 @@ const constants = {
   },
   /* Dimensions */
   removeDimensionsEventListener: (callback: any) => {
+    // @ts-expect-error
     if (Dimensions.remove) {
+      // @ts-expect-error
       Dimensions.remove('change', callback);
     } else {
       Dimensions.removeEventListener('change', callback);
