@@ -6,7 +6,7 @@ export function getChildrenLength(props: PropsWithChildren<CarouselProps>): numb
   return React.Children.count(props.children);
 }
 
-export function calcOffset(props: CarouselProps, state: Omit<CarouselState, 'initialOffset' | 'prevProps'>) {
+export function calcOffset(props: CarouselProps, state: Omit<CarouselState, 'initialOffset' | 'prevProps' | 'currentStandingPage'>) {
   const {currentPage, pageWidth, pageHeight} = state;
   const {loop, containerMarginHorizontal = 0} = props;
   const actualCurrentPage = loop ? currentPage + 1 : currentPage;
