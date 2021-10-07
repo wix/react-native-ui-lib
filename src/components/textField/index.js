@@ -8,6 +8,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
+import memoize from 'memoize-one';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
 import BaseInput from '../baseInput';
@@ -274,7 +275,7 @@ export default class TextField extends BaseInput {
     }
   };
 
-  getPlaceholderText() {
+  getPlaceholderText = memoize(() => {
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const {placeholder, helperText} = this.props;
     const text = this.shouldFakePlaceholder()
@@ -285,7 +286,7 @@ export default class TextField extends BaseInput {
         ? helperText
         : this.getRequiredPlaceholder(placeholder);
     return text;
-  }
+  });
 
   getStateColor(colorProp = {}) {
     const {focused} = this.state;
