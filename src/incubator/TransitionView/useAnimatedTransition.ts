@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
-import {Direction, HiddenLocation} from './useHiddenLocation';
+import {Direction, HiddenLocation} from '../hooks/useHiddenLocation';
 import useAnimatedTranslator from './useAnimatedTranslator';
 import useAnimationEndNotifier, {AnimationNotifierEndProps} from './useAnimationEndNotifier';
 
