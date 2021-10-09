@@ -5,18 +5,33 @@
     "name": "rnuilib",
     "slug": "rnuilib",
     "privacy": "public",
-    "icon": "https://user-images.githubusercontent.com/1780255/107911939-34e98a80-6f66-11eb-91a6-1eb1b384e429.png",
-    "version": "1.0.0",
-    "entryPoint": "index.js",
-    "packagerOpts": {
-      "projectRoot": "."
-    },
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
     "description": "Demo project show case for react-native-ui-lib components",
-    "githubUrl": "https://github.com/wix/react-native-ui-lib"
+    "githubUrl": "https://github.com/wix/react-native-ui-lib",
+    "version": "2.0.0",
+    "orientation": "portrait",
+    "icon": "https://user-images.githubusercontent.com/1780255/107911939-34e98a80-6f66-11eb-91a6-1eb1b384e429.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
   }
 }

@@ -5,6 +5,8 @@ import {menuStructure} from 'unicorn-demo-app';
 import _ from 'lodash';
 import fuzzysearch from 'fuzzysearch';
 
+
+
 const {TextField} = Incubator;
 
 const sections = _.map(menuStructure, (section, key) => {
