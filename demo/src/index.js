@@ -235,10 +235,10 @@ module.exports = {
         return require('./screens/realExamples/ListActions/ListActionsScreen').default;
       },
       get ProductPage() {
-        return require('./screens/realExamples/ProductPage');
+        return require('./screens/realExamples/ProductPage').default;
       },
       get Twitter() {
-        return require('./screens/realExamples/Twitter');
+        return require('./screens/realExamples/Twitter').default;
       },
       // wrapperScreens
       get TouchableOpacityScreen() {
