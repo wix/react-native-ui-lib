@@ -68,9 +68,9 @@ export type SegmentedControlProps = {
    */
   iconOnRight?: boolean;
   /**
-   * Disable the trailing delay when changing index
+   * Trailing throttle time of changing index in ms.
    */
-  disableThrottle?: boolean;
+  throttleTime?: number;
   /**
    * Additional spacing styles for the container
    */
@@ -97,7 +97,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     inactiveColor = Colors.grey20,
     outlineColor = activeColor,
     outlineWidth = BORDER_WIDTH,
-    disableThrottle,
+    throttleTime,
     testID
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
@@ -106,7 +106,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const segmentedControlHeight = useRef(0);
   const indexRef = useRef(0);
   const segmentsCounter = useRef(0);
-  const delay = disableThrottle ? 0 : 400;
+  const delay = throttleTime || 0;
 
   const changeIndex = useCallback(_.throttle(() => {
     onChangeIndex?.(indexRef.current);

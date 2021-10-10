@@ -48,9 +48,9 @@ export declare type SegmentedControlProps = {
      */
     iconOnRight?: boolean;
     /**
-     * Disable the trailing delay when changing index
+     * Trailing throttle time of changing index in ms.
      */
-    disableThrottle?: boolean;
+    throttleTime?: number;
     /**
      * Additional spacing styles for the container
      */
