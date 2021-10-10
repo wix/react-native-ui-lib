@@ -158,7 +158,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           key={index}
           onLayout={onLayout}
           index={index}
-          onPress={isSelected ? undefined : onSegmentPress}
+          onPress={onSegmentPress}
           isSelected={isSelected}
           activeColor={activeColor}
           inactiveColor={inactiveColor}

@@ -81,8 +81,8 @@ const Segment = React.memo((props: SegmentProps) => {
   }, [iconSource, segmentedColor, iconStyle]);
 
   const onSegmentPress = useCallback(() => {
-    onPress?.(index);
-  }, [index, onPress]);
+    !isSelected && onPress?.(index);
+  }, [index, onPress, isSelected]);
 
   const segmentOnLayout = useCallback((event: LayoutChangeEvent) => {
     onLayout?.(index, event);
