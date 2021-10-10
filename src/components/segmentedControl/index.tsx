@@ -104,12 +104,11 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const animatedSelectedIndex = useSharedValue(selectedSegment);
   const segmentsStyle = useRef([] as {x: number; width: number}[]);
   const segmentedControlHeight = useRef(0);
-  const indexRef = useRef(0);
   const segmentsCounter = useRef(0);
   const delay = throttleTime || 0;
 
   const changeIndex = useCallback(_.throttle(() => {
-    onChangeIndex?.(indexRef.current);
+    onChangeIndex?.(animatedSelectedIndex.value);
   },
   delay,
   {trailing: true, leading: false}),
@@ -127,7 +126,6 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const onSegmentPress = useCallback((index: number) => {
     setSelectedSegment(index);
-    indexRef.current = index;
     animatedSelectedIndex.value = index;
   }, []);
 
