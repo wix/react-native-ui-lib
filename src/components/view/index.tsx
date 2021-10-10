@@ -9,6 +9,7 @@ import {
   ContainerModifiers
 } from '../../commons/new';
 import {Constants} from 'helpers';
+import {ReanimatedPackage} from '../../optionalDependencies';
 
 
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
@@ -68,6 +69,7 @@ class View extends PureComponent<PropsTypes, ViewState> {
 
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
     if (props.reanimated) {
+      console.warn('ethan - ReanimatedPackage', ReanimatedPackage.default.createAnimatedComponent);
       this.Container = Reanimated.createAnimatedComponent(this.Container);
     } else if (props.animated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
