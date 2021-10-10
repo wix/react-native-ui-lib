@@ -1,4 +1,4 @@
-import { Direction } from './useHiddenLocation';
+import { Direction } from '../hooks/useHiddenLocation';
 export interface TranslatorProps {
     initialVisibility: boolean;
 }

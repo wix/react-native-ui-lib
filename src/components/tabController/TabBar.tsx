@@ -157,14 +157,13 @@ const TabBar = (props: Props) => {
     selectedIndex,
     containerWidth: contextContainerWidth
   } = context;
-
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || contextContainerWidth;
   }, [propsContainerWidth, contextContainerWidth]);
-
   const items = useMemo(() => {
     return contextItems || propsItems;
   }, [contextItems, propsItems]);
+  const itemsCount = items?.length || 0;
 
   const {
     onItemLayout,
@@ -179,7 +178,7 @@ const TabBar = (props: Props) => {
   } = useScrollToItem({
     // @ts-expect-error TODO: typing bug
     scrollViewRef: tabBar,
-    itemsCount: items?.length || 0,
+    itemsCount,
     selectedIndex: selectedIndex || initialIndex,
     containerWidth,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
@@ -283,7 +282,9 @@ const TabBar = (props: Props) => {
         onLayout={onLayout}
       >
         <View style={tabBarContainerStyle}>{tabBarItems}</View>
-        <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
+        {itemsCount > 1 && (
+          <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
+        )}
       </FadedScrollView>
     </View>
   );

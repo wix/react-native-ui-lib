@@ -131,7 +131,13 @@ const constants = {
   },
   /* Dimensions */
   removeDimensionsEventListener: (callback: any) => {
-    Dimensions.removeEventListener('change', callback);
+    // @ts-expect-error
+    if (Dimensions.remove) {
+      // @ts-expect-error
+      Dimensions.remove('change', callback);
+    } else {
+      Dimensions.removeEventListener('change', callback);
+    }
   },
   /* Accessibility */
   get accessibility() {

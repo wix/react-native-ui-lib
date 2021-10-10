@@ -1,5 +1,6 @@
 import {UIManager, I18nManager} from 'react-native';
 import {navigationData as menuStructure} from './screens/MenuStructure';
+import {loadDemoConfigurations} from './configurations';
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true); // eslint-disable-line
 I18nManager.allowRTL(true);
@@ -7,6 +8,7 @@ I18nManager.allowRTL(true);
 module.exports = {
   name: 'unicorn demo app',
   menuStructure,
+  loadDemoConfigurations,
   // componentScreens
   get screens() {
     return {
@@ -233,10 +235,10 @@ module.exports = {
         return require('./screens/realExamples/ListActions/ListActionsScreen').default;
       },
       get ProductPage() {
-        return require('./screens/realExamples/ProductPage');
+        return require('./screens/realExamples/ProductPage').default;
       },
       get Twitter() {
-        return require('./screens/realExamples/Twitter');
+        return require('./screens/realExamples/Twitter').default;
       },
       // wrapperScreens
       get TouchableOpacityScreen() {

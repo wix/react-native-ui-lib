@@ -125,7 +125,13 @@ const Dialog = (props: DialogProps) => {
         {this.renderDialogView()}
       {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>} */}
 
-        <PanView directions={directions} dismissible springBack containerStyle={panStyle} onDismiss={onPanViewDismiss}>
+        <PanView
+          directions={directions}
+          dismissible
+          animateToOrigin
+          containerStyle={panStyle}
+          onDismiss={onPanViewDismiss}
+        >
           <TransitionView
             ref={transitionAnimatorRef}
             enterFrom={direction}

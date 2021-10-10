@@ -26,8 +26,8 @@ Download our Expo demo app <br>
 
 See setup instructions [here](https://wix.github.io/react-native-ui-lib/getting-started/setup).
 
-#### New Major Version 5.0
-See [breaking changes](https://wix.github.io/react-native-ui-lib/getting-started/v5)
+#### New Major Version 6.0
+See [breaking changes](https://wix.github.io/react-native-ui-lib/getting-started/v6)
 
 #### For React Native >= 0.60.0
 please use `react-native-ui-lib`

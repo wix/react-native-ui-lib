@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewProps } from '../../components/view';
-import { Direction as TransitionViewDirection } from './useHiddenLocation';
+import { Direction as TransitionViewDirection } from '../hooks/useHiddenLocation';
 import { TransitionViewAnimationType } from './useAnimationEndNotifier';
 import { AnimatedTransitionProps } from './useAnimatedTransition';
 export { TransitionViewDirection, TransitionViewAnimationType };

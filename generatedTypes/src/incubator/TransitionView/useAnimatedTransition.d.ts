@@ -1,4 +1,4 @@
-import { Direction, HiddenLocation } from './useHiddenLocation';
+import { Direction, HiddenLocation } from '../hooks/useHiddenLocation';
 import { AnimationNotifierEndProps, TransitionViewAnimationType } from './useAnimationEndNotifier';
 export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
     /**
