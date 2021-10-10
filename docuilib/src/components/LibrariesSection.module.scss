@@ -1,0 +1,65 @@
+@import 'src/css/constants';
+
+.librariesSection {
+  width: 100vw;
+  padding: 0 40px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  background-color: $primary;
+  color: $white;
+
+  @include desktop {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20%;
+  }
+
+  .headline {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    font-size: 2em;
+
+    @include desktop {
+      text-align: start;
+      align-self: center;
+      width: 20%;
+      min-width: 400px;
+      margin-top: 0;
+      margin-right: 40px;
+      margin-bottom: 0;
+    }
+  }
+
+  .libraries {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include desktop {
+      width: 60%;
+    }
+
+    .library {
+      text-align: center;
+      color: $white;
+
+      img {
+        max-height: 60px;
+        height: 7vw;
+        transition: 0.3s all;
+      }
+
+      .libraryName {
+        margin: 0;
+      }
+
+      &:hover img {
+        transform: scale(1.02);
+      }
+    }
+  }
+}

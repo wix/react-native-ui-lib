@@ -1,18 +1,8 @@
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
-declare type Schemes = {
-    light: {
-        [key: string]: string;
-    };
-    dark: {
-        [key: string]: string;
-    };
-};
-declare type SchemeType = 'default' | 'light' | 'dark';
+import { Schemes, SchemeType } from './scheme';
 export declare class Colors {
     [key: string]: any;
-    schemes: Schemes;
-    currentScheme: SchemeType;
     constructor();
     /**
      * Load custom set of colors
@@ -138,11 +128,6 @@ declare const colorObject: Colors & {
     black: string;
     transparent: string;
 } & {
-    /**
-     * Set color scheme for app
-     * arguments:
-     * scheme - color scheme e.g light/dark/default
-     */
     primary: string;
 };
 export default colorObject;

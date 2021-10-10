@@ -207,6 +207,78 @@ declare const _default: {
             };
         };
     };
+    dark10: {
+        top: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+        };
+        bottom: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+        };
+    };
+    dark20: {
+        top: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+        };
+        bottom: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+        };
+    };
+    dark30: {
+        top: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+        };
+        bottom: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+        };
+    };
+    dark40: {
+        top: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+        };
+        bottom: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+        };
+    };
     /**
      * Load custom set of shadows
      * arguments:

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Appearance, EventSubscription} from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
+import {Scheme} from '../style';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
 
@@ -27,32 +27,19 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       error: false
     };
 
-    appearanceListenerSubscription?: EventSubscription = undefined;
-
     componentDidMount() {
-      // <  RN64 - void
-      // >= RN65 - EventSubscription
-      const subscription = Appearance.addChangeListener(this.appearanceListener);
-      if (subscription !== undefined) {
-        // @ts-ignore
-        this.appearanceListenerSubscription = subscription;
-      }
+      Scheme.addChangeListener(this.appearanceListener);
     }
 
     componentWillUnmount() {
-      if (this.appearanceListenerSubscription) {
-        // >=RN65
-        this.appearanceListenerSubscription?.remove();
-      } else {
-        // <RN65
-        Appearance.removeChangeListener(this.appearanceListener);
-      }
+      Scheme.removeChangeListener(this.appearanceListener);
     }
 
-    appearanceListener: Appearance.AppearanceListener = () => {
+    appearanceListener = () => {
       // iOS 13 and above will trigger this call with the wrong colorScheme value. So just ignore returned colorScheme for now
       // https://github.com/facebook/react-native/issues/28525
-      this.setState({colorScheme: Appearance.getColorScheme()});
+      // this.setState({colorScheme: Appearance.getColorScheme()});
+      this.setState({colorScheme: Scheme.getSchemeType()});
     };
 
     static getThemeProps = (props: any, context: any) => {
