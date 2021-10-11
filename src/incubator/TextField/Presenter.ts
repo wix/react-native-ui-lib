@@ -27,7 +27,7 @@ export function validate(value?: string,
   validator?: Validator | Validator[],
   validationMessage?: string | string[]): [boolean, number?] {
   if (_.isUndefined(validator)) {
-    return validationMessage ? [false, undefined] : [true, undefined];
+    return [!validationMessage, undefined];
   }
 
   let _isValid = true;
