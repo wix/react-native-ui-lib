@@ -48,6 +48,7 @@ export {default as FloatingButton, FloatingButtonProps} from './src/components/f
 export {default as GridListItem, GridListItemProps} from './src/components/gridListItem';
 export {default as GridView, GridViewProps} from './src/components/gridView';
 export {default as Hint, HintProps} from './src/components/hint';
+export {default as Icon, IconProps} from './src/components/icon';
 export {default as Image, ImageProps} from './src/components/image';
 export {default as Overlay, OverlayTypes} from './src/components/overlay';
 export {default as RadioButton, RadioButtonProps} from './src/components/radioButton';

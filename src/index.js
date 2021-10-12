@@ -75,6 +75,9 @@ export default {
   get Hint() {
     return require('./components/hint').default;
   },
+  get Icon() {
+    return require('./components/icon').default;
+  },
   get Image() {
     return require('./components/image').default;
   },
