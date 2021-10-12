@@ -97,7 +97,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     inactiveColor = Colors.grey20,
     outlineColor = activeColor,
     outlineWidth = BORDER_WIDTH,
-    throttleTime,
+    throttleTime = 0,
     testID
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
@@ -105,12 +105,11 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const segmentsStyle = useRef([] as {x: number; width: number}[]);
   const segmentedControlHeight = useRef(0);
   const segmentsCounter = useRef(0);
-  const delay = throttleTime || 0;
 
   const changeIndex = useCallback(_.throttle(() => {
     onChangeIndex?.(animatedSelectedIndex.value);
   },
-  delay,
+  throttleTime,
   {trailing: true, leading: false}),
   []);
 
