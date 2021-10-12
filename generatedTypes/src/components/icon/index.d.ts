@@ -28,8 +28,16 @@ declare const _default: React.ComponentClass<ImageProps & Partial<Record<"margin
     size?: number | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
-}, any> & {
-    (props: Props): JSX.Element;
-    displayName: string;
+}, any> & React.NamedExoticComponent<ImageProps & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
+    /**
+     * the icon tint
+     */
+    tintColor?: string | undefined;
+    /**
+     * the icon size
+     */
+    size?: number | undefined;
+} & BaseComponentInjectedProps> & {
+    readonly type: (props: Props) => JSX.Element;
 };
 export default _default;
