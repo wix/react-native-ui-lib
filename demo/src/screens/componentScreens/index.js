@@ -20,6 +20,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.ChipsInputScreen', () => require('./ChipsInputScreen').default);
   registrar('unicorn.components.HapticScreen', () => require('./HapticScreen').default);
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
+  registrar('unicorn.components.IconScreen', () => require('./IconScreen').default);
   registrar('unicorn.components.ImageScreen', () => require('./ImageScreen').default);
   registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);
   registrar('unicorn.components.KeyboardAwareScrollViewScreen', () => require('./KeyboardAwareScrollViewScreen').default);
