@@ -14,6 +14,10 @@ export interface FieldStateProps extends InputProps {
    */
   validate?: Validator | Validator[];
   /**
+   * The validation message to display when field is invalid (depends on validate)
+   */
+  validationMessage?: string | string[];
+  /**
    * Callback for when field validity has changed
    */
   onChangeValidity?: (isValid: boolean) => void;
@@ -21,6 +25,7 @@ export interface FieldStateProps extends InputProps {
 
 export default function useFieldState({
   validate,
+  validationMessage,
   validateOnBlur,
   validateOnChange,
   validateOnStart,
@@ -40,9 +45,8 @@ export default function useFieldState({
 
   useEffect(() => {
     if (props.value !== value) {
-      
       setValue(props.value);
-      
+
       if (validateOnChange) {
         validateField(props.value);
       }
@@ -56,12 +60,12 @@ export default function useFieldState({
   }, [isValid]);
 
   const validateField = useCallback((valueToValidate = value) => {
-    const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);
+    const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate, validationMessage);
 
     setIsValid(_isValid);
     setFailingValidatorIndex(_failingValidatorIndex);
   },
-  [value, validate]);
+  [value, validate, validationMessage]);
 
   const onFocus = useCallback((...args: any) => {
     setIsFocused(true);

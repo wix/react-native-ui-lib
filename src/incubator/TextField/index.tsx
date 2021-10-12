@@ -134,7 +134,6 @@ const TextField = (props: InternalTextFieldProps) => {
     trailingAccessory,
     // Validation
     enableErrors, // TODO: rename to enableValidation
-    validationMessage,
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
     // Char Counter
@@ -172,7 +171,7 @@ const TextField = (props: InternalTextFieldProps) => {
           <ValidationMessage
             enableErrors={enableErrors}
             validate={others.validate}
-            validationMessage={validationMessage}
+            validationMessage={props.validationMessage}
             validationMessageStyle={validationMessageStyle}
           />
         )}
@@ -210,7 +209,7 @@ const TextField = (props: InternalTextFieldProps) => {
             <ValidationMessage
               enableErrors={enableErrors}
               validate={others.validate}
-              validationMessage={validationMessage}
+              validationMessage={props.validationMessage}
               validationMessageStyle={validationMessageStyle}
               retainSpace
             />
