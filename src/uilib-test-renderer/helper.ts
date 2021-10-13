@@ -10,8 +10,9 @@ interface Component {
 
 const findStyle = <T>(key: string, component: Component): T => {
   const flat = _.flatMap(component.props.style) as Array<any | undefined>;
-  const color = _.find(flat, key)[key];
-  return color;
+  const object = _.findLast(flat, key);
+  const value = !_.isUndefined(object) ? object[key] : undefined;
+  return value;
 };
 
 export {findStyle};
