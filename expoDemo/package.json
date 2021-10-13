@@ -1,44 +1,36 @@
 {
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
     "web": "expo start --web",
-    "start": "react-native start --projectRoot='.'",
-    "test": "jest",
-    "expo": "expo start"
+    "eject": "expo eject"
   },
   "dependencies": {
-    "@react-native-community/blur": "^3.4.1",
-    "@react-native-community/datetimepicker": "3.0.4",
-    "@react-native-community/masked-view": "0.1.10",
-    "@react-native-community/netinfo": "5.9.7",
-    "@react-native-picker/picker": "^1.9.4",
-    "@react-navigation/native": "^5.0.8",
-    "@react-navigation/stack": "^5.1.0",
-    "expo": "^40.0.0",
+    "@react-navigation/native": "^6.0.4",
+    "@react-navigation/stack": "^6.0.9",
+    "expo": "~42.0.1",
+    "expo-status-bar": "~1.0.4",
     "fuzzysearch": "^1.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "0.63.4",
-    "react-native-gesture-handler": "~1.8.0",
-    "react-native-reanimated": "~1.13.0",
-    "react-native-safe-area-context": "3.1.9",
-    "react-native-screens": "~2.15.0",
-    "react-native-ui-lib": "snapshot",
-    "react-native-unimodules": "~0.12.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-gesture-handler": "~1.10.2",
+    "react-native-reanimated": "~2.2.0",
+    "react-native-safe-area-context": "3.2.0",
+    "react-native-screens": "~3.4.0",
+    "react-native-svg": "12.1.1",
+    "react-native-ui-lib": "^6.1.2",
     "react-native-web": "~0.13.12",
     "unicorn-demo-app": "snapshot"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0",
-    "babel-jest": "~24.9.0",
-    "jest": "~24.9.0",
-    "metro-react-native-babel-preset": "~0.56.0",
-    "react-test-renderer": "~16.9.0"
-  },
-  "jest": {
-    "preset": "react-native"
+    "@babel/core": "^7.9.0",
+    "@types/react": "~16.9.35",
+    "@types/react-native": "~0.63.2",
+    "typescript": "~4.0.0"
   },
   "private": true
 }
