@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useRef, useState, useCallback} from 'react';
+import React, {useRef, useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import Reanimated, {
   Easing,
@@ -100,63 +100,68 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     throttleTime = 0,
     testID
   } = props;
-  const [selectedSegment, setSelectedSegment] = useState(-1);
-  const animatedSelectedIndex = useSharedValue(selectedSegment);
-  const segmentsStyle = useRef([] as {x: number; width: number}[]);
-  const segmentedControlHeight = useRef(0);
+  const animatedSelectedIndex = useSharedValue(initialIndex);
+  const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
+  const segmentedControlHeight = useSharedValue(0);
   const segmentsCounter = useRef(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const changeIndex = useCallback(_.throttle(() => {
     onChangeIndex?.(animatedSelectedIndex.value);
   },
   throttleTime,
   {trailing: true, leading: false}),
-  []);
+  [throttleTime]);
 
   useAnimatedReaction(() => {
     return animatedSelectedIndex.value;
   },
   (selected, previous) => {
-    if (selected !== -1 && selected !== previous) {
+    if (selected !== -1 && previous !== null && selected !== previous) {
       onChangeIndex && runOnJS(changeIndex)();
     }
   },
   []);
 
   const onSegmentPress = useCallback((index: number) => {
-    setSelectedSegment(index);
     animatedSelectedIndex.value = index;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
-    segmentsStyle.current[index] = {x, width};
-    segmentedControlHeight.current = height - 2 * BORDER_WIDTH;
+    segmentsStyle.value[index] = {x, width};
+    segmentedControlHeight.value = height - 2 * BORDER_WIDTH;
     segmentsCounter.current++;
 
-    return segmentsCounter.current === segments?.length && setSelectedSegment(initialIndex);
+    if (segmentsCounter.current === segments?.length) {
+      animatedSelectedIndex.value = initialIndex;
+      segmentsStyle.value = [...segmentsStyle.value];
+    }
   },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   [initialIndex, segments?.length]);
 
   const animatedStyle = useAnimatedStyle(() => {
-    if (segmentsCounter.current === segments?.length) {
-      const inset = withTiming(segmentsStyle.current[selectedSegment].x, TIMING_CONFIG);
-      const width = withTiming(segmentsStyle.current[selectedSegment].width - 2 * BORDER_WIDTH, TIMING_CONFIG);
-      return Constants.isRTL ? {width, right: inset} : {width, left: inset};
+    if (segmentsStyle.value.length !== 0) {
+      const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x, TIMING_CONFIG);
+      const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width - 2 * BORDER_WIDTH,
+        TIMING_CONFIG);
+      const height = segmentedControlHeight.value;
+      return Constants.isRTL ? {width, right: inset, height} : {width, left: inset, height};
     }
     return {};
-  }, [segmentsCounter.current, segments?.length, selectedSegment]);
+  });
 
   const renderSegments = () =>
     _.map(segments, (_value, index) => {
-      const isSelected = selectedSegment === index;
       return (
         <Segment
           key={index}
           onLayout={onLayout}
           index={index}
           onPress={onSegmentPress}
-          isSelected={isSelected}
+          selectedIndex={animatedSelectedIndex}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
           {...segments?.[index]}
@@ -168,21 +173,18 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   return (
     <View style={containerStyle} testID={testID}>
       <View row center style={[styles.container, style, {borderRadius, backgroundColor}]}>
-        {animatedStyle && (
-          <Reanimated.View
-            style={[
-              styles.selectedSegment,
-              animatedStyle,
-              {
-                borderColor: outlineColor,
-                borderRadius,
-                backgroundColor: activeBackgroundColor,
-                borderWidth: outlineWidth,
-                height: segmentedControlHeight.current
-              }
-            ]}
-          />
-        )}
+        <Reanimated.View
+          style={[
+            styles.selectedSegment,
+            {
+              borderColor: outlineColor,
+              borderRadius,
+              backgroundColor: activeBackgroundColor,
+              borderWidth: outlineWidth
+            },
+            animatedStyle
+          ]}
+        />
         {renderSegments()}
       </View>
     </View>
