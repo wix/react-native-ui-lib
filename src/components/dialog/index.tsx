@@ -107,6 +107,7 @@ class Dialog extends Component<DialogProps, DialogState> {
   };
 
   private styles: any;
+  private dimensionsChangeListener: any;
 
   constructor(props: DialogProps) {
     super(props);
@@ -123,11 +124,11 @@ class Dialog extends Component<DialogProps, DialogState> {
   }
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChange);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChange);
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChange);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChange);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: DialogProps) {
