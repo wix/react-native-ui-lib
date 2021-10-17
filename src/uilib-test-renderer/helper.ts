@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import {StyleSheet} from 'react-native';
 
 interface Props {
   style: any;
@@ -9,10 +9,7 @@ interface Component {
 }
 
 const findStyle = <T>(key: string, component: Component): T => {
-  const flat = _.flatMap(component.props.style) as Array<any | undefined>;
-  const object = _.findLast(flat, key);
-  const value = !_.isUndefined(object) ? object[key] : undefined;
-  return value;
+  return StyleSheet.flatten(component.props.style)[key];
 };
 
 export {findStyle};
