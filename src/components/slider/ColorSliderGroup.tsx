@@ -87,7 +87,12 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
             {labels[type]}
           </Text>
         )}
-        <GradientSlider type={type} containerStyle={sliderContainerStyle} accessible={accessible}/>
+        <GradientSlider 
+          color={this.props.initialColor} 
+          type={type} 
+          containerStyle={sliderContainerStyle} 
+          accessible={accessible}
+        />
       </>
     );
   };
