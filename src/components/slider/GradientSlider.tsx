@@ -231,6 +231,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
         containerStyle={containerStyle}
         disabled={disabled}
         accessible={accessible}
+        color={this.props.initialColor}
       />
     );
   }
