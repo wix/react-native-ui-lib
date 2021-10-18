@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps} from 'react-native';
 import {Colors} from '../../style';
-import Constants, {orientations} from '../../helpers/Constants';
+import Constants from '../../helpers/Constants';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
 import Modal from '../modal';
@@ -83,7 +83,6 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
 
 interface DialogState {
   alignments: AlignmentModifiers;
-  orientationKey: orientations;
   modalVisibility?: boolean;
   dialogVisibility?: boolean;
   fadeOut?: boolean;
@@ -113,21 +112,12 @@ class Dialog extends Component<DialogProps, DialogState> {
 
     this.state = {
       alignments: extractAlignmentsValues(props),
-      orientationKey: Constants.orientation,
       modalVisibility: props.visible,
       dialogVisibility: props.visible
     };
 
     this.styles = createStyles(this.props);
     this.setAlignment();
-  }
-
-  componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChange);
-  }
-
-  componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChange);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: DialogProps) {
@@ -140,13 +130,6 @@ class Dialog extends Component<DialogProps, DialogState> {
       this.hideDialogView();
     }
   }
-
-  onOrientationChange = () => {
-    const orientationKey = Constants.orientation;
-    if (this.state.orientationKey !== orientationKey) {
-      this.setState({orientationKey});
-    }
-  };
 
   setAlignment() {
     const {alignments} = this.state;
@@ -262,13 +245,12 @@ class Dialog extends Component<DialogProps, DialogState> {
   };
 
   render = () => {
-    const {orientationKey, modalVisibility} = this.state;
+    const {modalVisibility} = this.state;
     const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress} = this.props;
     const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
 
     return (
       <Modal
-        key={orientationKey}
         testID={`${testID}.modal`}
         transparent
         visible={modalVisibility}
