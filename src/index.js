@@ -189,6 +189,9 @@ export default {
   get SharedTransition() {
     return require('./components/sharedTransition').default;
   },
+  get SortableList() {
+    return require('./components/sortableList').default;
+  },
   get StackAggregator() {
     return require('./components/stackAggregator').default;
   },

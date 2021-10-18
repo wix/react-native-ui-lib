@@ -57,6 +57,7 @@ export {default as RadioButton, RadioButtonProps} from './src/components/radioBu
 export {default as RadioGroup, RadioGroupProps} from './src/components/radioGroup';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './src/components/sectionsWheelPicker';
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './src/components/segmentedControl';
+export {default as SortableList} from './src/components/sortableList';
 export {default as Slider, SliderProps} from './src/components/slider';
 export {default as Switch, SwitchProps} from './src/components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './src/components/tabController';

@@ -185,8 +185,5 @@ export default {
   },
   get ScrollBar() {
     return require('./scrollBar').default;
-  },
-  get SortableList() {
-    return require('./sortableList').default;
   }
 };
