@@ -59,6 +59,7 @@ function TabController({
 }: PropsWithChildren<TabControllerProps>) {
   const [screenWidth, setScreenWidth] = useState<number>(Constants.windowWidth);
   const orientation = useRef<orientations>(Constants.orientation);
+  const dimensionsChangeListener = useRef<any>();
 
   if (items?.length < 2) {
     console.error('TabController component expect a minimum of 2 items');
@@ -71,9 +72,9 @@ function TabController({
         setScreenWidth(Constants.windowWidth);
       }
     };
-    Constants.addDimensionsEventListener(onOrientationChange);
+    dimensionsChangeListener.current = Constants.addDimensionsEventListener(onOrientationChange);
     return () => {
-      Constants.removeDimensionsEventListener(onOrientationChange);
+      Constants.removeDimensionsEventListener(dimensionsChangeListener.current || onOrientationChange);
     };
   }, []);
 

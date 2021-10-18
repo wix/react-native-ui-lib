@@ -45,6 +45,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   orientationChange?: boolean;
   skippedInitialScroll?: boolean;
   isAutoScrolled: boolean;
+  private dimensionsChangeListener: any;
 
   constructor(props: CarouselProps) {
     super(props);
@@ -106,7 +107,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChanged);
 
     if (this.props.autoplay) {
       this.startAutoPlay();
@@ -114,7 +115,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChanged);
 
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);

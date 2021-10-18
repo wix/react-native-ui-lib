@@ -36,6 +36,7 @@ interface State {
 
 class CarouselScreen extends Component<Props, State> {
   carousel = React.createRef<typeof Carousel>();
+  private dimensionsChangeListener: any;
 
   constructor(props: Props) {
     super(props);
@@ -51,11 +52,11 @@ class CarouselScreen extends Component<Props, State> {
   }
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChange);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChange);
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChange);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChange);
   }
 
   onOrientationChange = () => {
