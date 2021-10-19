@@ -3,7 +3,7 @@ import {Hint} from 'react-native-ui-lib';
 import {Colors} from '../../../style';
 import {render, findStyle} from '../../../uilib-test-renderer';
 
-const HintTestComponent = ({showHint}) => {
+const HintTestComponent = ({showHint, color}) => {
   return (
     <Hint
       visible={showHint}
@@ -13,7 +13,7 @@ const HintTestComponent = ({showHint}) => {
       key={'1'}
       targetFrame={{x: 1, y: 1, height: 1, width: 1}}
       onBackgroundPress={() => {}}
-      color={Colors.white}
+      color={color}
       removePaddings
       enableShadow
       testID={'Hint'}
@@ -28,16 +28,20 @@ describe('Hint Screen component test', () => {
     const expectedColor = Colors.primary;
     const element = <HintTestComponent showHint/>;
 
-    const {getByTestId} = render(element);
+    const {getByTestId, rerender} = render(element);
 
     const wrapper = getByTestId('Hint');
     expect(wrapper).toBeTruthy();
 
     const hint = getByTestId(hintTestId);
-    const color = findStyle('backgroundColor', hint);
+    let color = findStyle('backgroundColor', hint);
 
     expect(color).toBe(expectedColor);
     expect(hint).toBeTruthy();
+
+    rerender(<HintTestComponent showHint color={Colors.white}/>);
+    color = findStyle('backgroundColor', hint);
+    expect(color).toBe(Colors.white);
   });
 
   it('Test Hint modal is not visible when showHint is false', async () => {
