@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { LayoutChangeEvent, View, StyleProp, ViewStyle } from 'react-native';
-import Animated, { useAnimatedRef, useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
+import React, {useState} from 'react';
+import {LayoutChangeEvent, StyleProp, ViewStyle, FlatList} from 'react-native';
+import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
 import Item from './Item';
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export interface SortableListProps<T> {
   /**
@@ -11,7 +13,7 @@ export interface SortableListProps<T> {
   /**
    * Takes an item from items list and renders it into the view
    */
-  renderItem: (item: T) => JSX.Element;
+  renderItem: ({item, index}: { item: T, index: number }) => JSX.Element;
   /**
    * Height of each item (mandatory)
    */
@@ -23,11 +25,11 @@ export interface SortableListProps<T> {
   /**
    * [optional] The size (in pixels) of the draggable area. Enables scrolling when set as it default to the whole width of the item component. 
    */
-  dragableAreaSize?: number;
+  draggableAreaSize?: number;
   /**
    * [optional] The side of the draggable area. defaults to left.
    */
-  dragableAreaSide?: 'left' | 'right';
+  draggableAreaSide?: 'left' | 'right';
   /**
    * Styling for the external list View
    */
@@ -42,15 +44,15 @@ export interface SortableListProps<T> {
   testID?: string;
 }
 
-const SortableList = ({ items, itemHeight, onOrderChange, renderItem, dragableAreaSize, dragableAreaSide = 'left', style = {}, contentContainerStyle = {}, testID }: SortableListProps<any>) => {
+const SortableList = ({items, itemHeight, onOrderChange, renderItem, draggableAreaSize, draggableAreaSide = 'left', style = {}, contentContainerStyle = {}, testID}: SortableListProps<any>) => {
   const [containerHeight, setContainerHeight] = useState<number>();
-  const positions = useSharedValue({ ...items.map((item: any, index: number) => index) });
+  const positions = useSharedValue({...items.map((_item: any, index: number) => index)});
   const scrollY = useSharedValue(0);
-  const scrolViewRef = useAnimatedRef<Animated.ScrollView>();
+  const listRef = useAnimatedRef<FlatList>();
   const contentHeight = items.length * itemHeight;
 
   const onScroll = useAnimatedScrollHandler({
-    onScroll: ({ contentOffset: { y } }) => scrollY.value = y
+    onScroll: ({contentOffset: {y}}) => scrollY.value = y
   });
 
   const onLayout = (event: LayoutChangeEvent) => {
@@ -66,28 +68,28 @@ const SortableList = ({ items, itemHeight, onOrderChange, renderItem, dragableAr
     onOrderChange(sortedList);
   };
 
+  const _renderItem = ({item, index}: { item: any, index: number }) => (
+    <Item
+      {...{item, index, positions, scrollY, containerHeight, contentHeight, listRef, itemHeight, renderItem, draggableAreaSize, draggableAreaSide}}
+      onFinish={sortList}
+    />
+  );
+
   return (
-    <View onLayout={onLayout}>
-      <Animated.ScrollView ref={scrolViewRef}
-        style={style}
-        contentContainerStyle={[{ height: items.length * itemHeight }, contentContainerStyle]}
-        bounces={false}
-        scrollEventThrottle={8}
-        onScroll={onScroll}
-        showsVerticalScrollIndicator
-        persistentScrollbar
-        testID={testID}
-      >
-        {items.map((item: any, key: number) => {
-          return (
-            <Item {...{ item, key, positions, scrollY, containerHeight, contentHeight, scrolViewRef, itemHeight, renderItem, dragableAreaSize, dragableAreaSide }}
-              onFinish={sortList}
-              index={key}
-            />
-          )
-        })}
-      </Animated.ScrollView>
-    </View>
+    <AnimatedFlatList
+      ref={listRef}
+      data={items}
+      renderItem={_renderItem}
+      onLayout={onLayout}
+      style={style}
+      contentContainerStyle={[{height: items.length * itemHeight}, contentContainerStyle]}
+      bounces={false}
+      scrollEventThrottle={8}
+      onScroll={onScroll}
+      showsVerticalScrollIndicator
+      persistentScrollbar
+      testID={testID}
+    />
   );
 };
 

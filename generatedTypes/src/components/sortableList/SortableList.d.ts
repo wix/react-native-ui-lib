@@ -8,7 +8,10 @@ export interface SortableListProps<T> {
     /**
      * Takes an item from items list and renders it into the view
      */
-    renderItem: (item: T) => JSX.Element;
+    renderItem: ({ item, index }: {
+        item: T;
+        index: number;
+    }) => JSX.Element;
     /**
      * Height of each item (mandatory)
      */
@@ -20,11 +23,11 @@ export interface SortableListProps<T> {
     /**
      * [optional] The size (in pixels) of the draggable area. Enables scrolling when set as it default to the whole width of the item component.
      */
-    dragableAreaSize?: number;
+    draggableAreaSize?: number;
     /**
      * [optional] The side of the draggable area. defaults to left.
      */
-    dragableAreaSide?: 'left' | 'right';
+    draggableAreaSide?: 'left' | 'right';
     /**
      * Styling for the external list View
      */
@@ -38,5 +41,5 @@ export interface SortableListProps<T> {
      */
     testID?: string;
 }
-declare const SortableList: ({ items, itemHeight, onOrderChange, renderItem, dragableAreaSize, dragableAreaSide, style, contentContainerStyle, testID }: SortableListProps<any>) => JSX.Element;
+declare const SortableList: ({ items, itemHeight, onOrderChange, renderItem, draggableAreaSize, draggableAreaSide, style, contentContainerStyle, testID }: SortableListProps<any>) => JSX.Element;
 export default SortableList;

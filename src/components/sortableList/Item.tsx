@@ -1,28 +1,28 @@
-import React, { ReactNode } from 'react';
-import { Dimensions, Platform, StyleSheet, View } from 'react-native';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
-import Animated, { runOnJS, scrollTo, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
-import { getOrder, getPosition } from './Config';
+import React from 'react';
+import {Dimensions, Platform, StyleSheet, View} from 'react-native';
+import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
+import Animated, {runOnJS, scrollTo, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import {getOrder, getPosition} from './Config';
 
-const { height } = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 const isAndroid = Platform.OS === 'android';
 
-interface ItemProps {
+interface ItemProps<T> {
   item: any;
   index: number;
   positions: Animated.SharedValue<number[]>;
   scrollY: Animated.SharedValue<number>;
   contentHeight: number;
   containerHeight?: number;
-  scrolViewRef: React.RefObject<Animated.ScrollView>;
+  listRef: any;
   itemHeight: number;
-  onFinish: (item: any) => void;
-  renderItem: (item: any) => ReactNode;
-  dragableAreaSize?: number;
-  dragableAreaSide: 'left' | 'right';
+  onFinish: (list: T[]) => void;
+  renderItem: ({item, index}: { item: T, index: number }) => JSX.Element;
+  draggableAreaSize?: number;
+  draggableAreaSide: 'left' | 'right';
 }
 
-const Item = ({ dragableAreaSize, dragableAreaSide, item, positions, index, containerHeight = height - 80, contentHeight, scrollY, scrolViewRef, itemHeight, onFinish, renderItem }: ItemProps) => {
+const Item = ({draggableAreaSize, draggableAreaSide, item, positions, index, containerHeight = height - 80, contentHeight, scrollY, listRef, itemHeight, onFinish, renderItem}: ItemProps<any>) => {
   const topAnimatedValue = useSharedValue(positions.value[index] * itemHeight);
   const zIndex = useSharedValue(0);
 
@@ -45,14 +45,14 @@ const Item = ({ dragableAreaSize, dragableAreaSide, item, positions, index, cont
         zIndex: zIndex.value,
         elevation: zIndex.value,
         shadowColor: 'black',
-        shadowOffset: { width: zIndex.value, height: 0.5 * zIndex.value },
+        shadowOffset: {width: zIndex.value, height: 0.5 * zIndex.value},
         shadowOpacity: 0.3,
         shadowRadius: 0.8 * zIndex.value
       };
   });
 
   const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { y: number, order: number }>({
-    onStart: (event, ctx) => {
+    onStart: (_event, ctx) => {
       ctx.y = topAnimatedValue.value;
       zIndex.value = 3;
     },
@@ -84,7 +84,7 @@ const Item = ({ dragableAreaSize, dragableAreaSide, item, positions, index, cont
         scrollY.value += diff;
         ctx.y += diff;
         topAnimatedValue.value = ctx.y + event.translationY;
-        scrollTo(scrolViewRef, 0, scrollY.value, false);
+        scrollTo(listRef, 0, scrollY.value, false);
       }
       if (newPosition > upperBound) {
         const leftToScrollDown = maxScroll - scrollY.value;
@@ -92,44 +92,48 @@ const Item = ({ dragableAreaSize, dragableAreaSide, item, positions, index, cont
         scrollY.value += diff;
         ctx.y += diff;
         topAnimatedValue.value = ctx.y + event.translationY;
-        scrollTo(scrolViewRef, 0, scrollY.value, false);
+        scrollTo(listRef, 0, scrollY.value, false);
       }
     },
     onEnd: (event, ctx) => {
       const newOrder = getOrder(ctx.y + event.translationY, itemHeight);
       let newPosition = getPosition(newOrder, itemHeight);
-      if (newPosition < 0) newPosition = 0;
-      if (newPosition > contentHeight - itemHeight) newPosition = contentHeight - itemHeight;
-      topAnimatedValue.value = withTiming(newPosition, { duration: 200 }, () => runOnJS(onFinish)(positions.value));
+      if (newPosition < 0) {
+        newPosition = 0;
+      }
+      if (newPosition > contentHeight - itemHeight) {
+        newPosition = contentHeight - itemHeight;
+      }
+      topAnimatedValue.value = withTiming(newPosition, {duration: 200}, () => runOnJS(onFinish)(positions.value));
       zIndex.value = 0;
-    },
+    }
   });
 
   return (
     <Animated.View style={[styles.item, itemStyle]}>
-      <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
         {
-          dragableAreaSize && dragableAreaSize > 0 ?
+          draggableAreaSize && draggableAreaSize > 0 ?
             <React.Fragment>
-              <Animated.View style={{ flex: 1, width: '100%' }}>{renderItem(item)}</Animated.View>
+              <Animated.View style={{flex: 1, width: '100%'}}>{renderItem({item, index})}</Animated.View>
               <PanGestureHandler onGestureEvent={onGestureEvent}>
-                <Animated.View style={[StyleSheet.absoluteFill, { width: dragableAreaSize }, dragableAreaSide === 'left' ? { right: 'auto' } : { left: 'auto' }]} />
+                <Animated.View style={[StyleSheet.absoluteFill, {width: draggableAreaSize}, draggableAreaSide === 'left' ? {right: 'auto'} : {left: 'auto'}]}/>
               </PanGestureHandler>
             </React.Fragment>
             :
             <PanGestureHandler onGestureEvent={onGestureEvent}>
-              <Animated.View style={{ flex: 1, width: '100%' }}>{renderItem(item)}</Animated.View>
+              <Animated.View style={{flex: 1, width: '100%'}}>{renderItem({item, index})}</Animated.View>
             </PanGestureHandler>
         }
       </View>
     </Animated.View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   item: {
     position: 'absolute',
-    width: '100%',
+    width: '100%'
   }
 });
 

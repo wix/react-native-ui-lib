@@ -1,18 +1,21 @@
-import React, { ReactNode } from 'react';
+/// <reference types="react" />
 import Animated from 'react-native-reanimated';
-interface ItemProps {
+interface ItemProps<T> {
     item: any;
     index: number;
     positions: Animated.SharedValue<number[]>;
     scrollY: Animated.SharedValue<number>;
     contentHeight: number;
     containerHeight?: number;
-    scrolViewRef: React.RefObject<Animated.ScrollView>;
+    listRef: any;
     itemHeight: number;
-    onFinish: (item: any) => void;
-    renderItem: (item: any) => ReactNode;
-    dragableAreaSize?: number;
-    dragableAreaSide: 'left' | 'right';
+    onFinish: (list: T[]) => void;
+    renderItem: ({ item, index }: {
+        item: T;
+        index: number;
+    }) => JSX.Element;
+    draggableAreaSize?: number;
+    draggableAreaSide: 'left' | 'right';
 }
-declare const Item: ({ dragableAreaSize, dragableAreaSide, item, positions, index, containerHeight, contentHeight, scrollY, scrolViewRef, itemHeight, onFinish, renderItem }: ItemProps) => JSX.Element;
+declare const Item: ({ draggableAreaSize, draggableAreaSide, item, positions, index, containerHeight, contentHeight, scrollY, listRef, itemHeight, onFinish, renderItem }: ItemProps<any>) => JSX.Element;
 export default Item;
