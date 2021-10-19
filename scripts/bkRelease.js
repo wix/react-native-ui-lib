@@ -21,7 +21,6 @@ if (process.env.BUILDKITE_MESSAGE.match(/^release$/i)) {
 // const isRelease = process.env.RELEASE_BUILD === 'true';
 const branch = process.env.BUILDKITE_BRANCH;
 
-
 // const ONLY_ON_BRANCH = `origin/${branch || 'master'}`;
 const VERSION_TAG = isRelease ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
