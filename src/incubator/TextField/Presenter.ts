@@ -23,11 +23,9 @@ export function getColorByState(color?: ColorType, context?: FieldContextType) {
   return finalColor;
 }
 
-export function validate(value?: string,
-  validator?: Validator | Validator[],
-  validationMessage?: string | string[]): [boolean, number?] {
+export function validate(value?: string, validator?: Validator | Validator[]): [boolean, number?] {
   if (_.isUndefined(validator)) {
-    return [!validationMessage, undefined];
+    return [true, undefined];
   }
 
   let _isValid = true;
