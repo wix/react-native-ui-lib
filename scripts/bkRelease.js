@@ -100,6 +100,7 @@ function tryPublishAndTag(version) {
   }
 }
 
+
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
   // exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
