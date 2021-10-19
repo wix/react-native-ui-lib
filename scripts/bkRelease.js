@@ -18,8 +18,6 @@ if (process.env.BUILDKITE_MESSAGE.match(/^release$/i)) {
   }
 }
 
-
-
 // const isRelease = process.env.RELEASE_BUILD === 'true';
 const branch = process.env.BUILDKITE_BRANCH;
 
