@@ -21,7 +21,7 @@ function PageCarousel({...props}) {
     targetPage,
     selectedIndex = 0,
     pageWidth,
-    carouselOffset,
+    // carouselOffset,
     setCurrentIndex
   } = useContext(TabBarContext);
   const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
@@ -29,7 +29,7 @@ function PageCarousel({...props}) {
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
-      carouselOffset.value = e.contentOffset.x;
+      // carouselOffset.value = e.contentOffset.x;
       const newIndex = e.contentOffset.x / pageWidth;
 
       if (indexChangeReason.value === 'byPress') { // Scroll was immediate and not by gesture
@@ -50,10 +50,10 @@ function PageCarousel({...props}) {
   const scrollToItem = useCallback(index => {
     if (indexChangeReason.value === 'byScroll') {
       indexChangeReason.value = undefined;
-      return;
+    } else {
+      indexChangeReason.value = 'byPress';
     }
 
-    indexChangeReason.value = 'byPress';
     // @ts-expect-error
     carousel.current?.scrollTo({x: index * pageWidth, animated: false});
   },

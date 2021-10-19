@@ -93,7 +93,7 @@ function TabController({
   const currentPage = useSharedValue(initialIndex);
   /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
   const targetPage = useSharedValue(initialIndex);
-  const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
+  // const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
 
   const setCurrentIndex = useCallback(index => {
     'worklet';
@@ -129,10 +129,11 @@ function TabController({
       /* Items */
       items,
       ignoredItems,
+      itemsCount: items.length - ignoredItems.length,
       /* Animated Values */
       targetPage,
       currentPage,
-      carouselOffset,
+      // carouselOffset,
       containerWidth: screenWidth,
       /* Callbacks */
       onChangeIndex,
