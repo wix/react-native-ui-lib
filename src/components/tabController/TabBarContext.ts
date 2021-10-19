@@ -14,6 +14,7 @@ interface TabControllerContext {
   /** transition page index (can be a fraction when transitioning between pages) */
   targetPage: Reanimated.SharedValue<number>;
   carouselOffset: Reanimated.SharedValue<number>;
+  setCurrentIndex: (index: number) => void;
 }
 
 // @ts-expect-error

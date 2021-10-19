@@ -1,5 +1,5 @@
 // TODO: support commented props
-import React, {PropsWithChildren, useMemo, useEffect, useRef, useState} from 'react';
+import React, {PropsWithChildren, useMemo, useEffect, useRef, useState, useCallback} from 'react';
 import _ from 'lodash';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 import {Constants} from '../../helpers';
@@ -95,6 +95,11 @@ function TabController({
   const targetPage = useSharedValue(initialIndex);
   const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
 
+  const setCurrentIndex = useCallback(index => {
+    'worklet';
+    currentPage.value = index;
+  }, []);
+
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
       LogService.deprecationWarn({component: 'TabController2', oldProp: 'selectedIndex', newProp: 'initialIndex'});
@@ -102,7 +107,7 @@ function TabController({
   }, [selectedIndex]);
 
   useEffect(() => {
-    currentPage.value = initialIndex;
+    setCurrentIndex(initialIndex);
   }, [initialIndex]);
 
   useAnimatedReaction(() => {
@@ -130,7 +135,8 @@ function TabController({
       carouselOffset,
       containerWidth: screenWidth,
       /* Callbacks */
-      onChangeIndex
+      onChangeIndex,
+      setCurrentIndex
     };
   }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
 

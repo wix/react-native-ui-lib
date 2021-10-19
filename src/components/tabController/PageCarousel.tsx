@@ -21,7 +21,8 @@ function PageCarousel({...props}) {
     targetPage,
     selectedIndex = 0,
     pageWidth,
-    carouselOffset
+    carouselOffset,
+    setCurrentIndex
   } = useContext(TabBarContext);
   const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
   const wasScrolledByPress = useSharedValue(false);
@@ -41,7 +42,7 @@ function PageCarousel({...props}) {
     },
     onMomentumEnd: e => {
       const newPage = Math.round(e.contentOffset.x / pageWidth);
-      currentPage.value = newPage;
+      setCurrentIndex(newPage);
     }
   });
 
