@@ -117,7 +117,6 @@ class CarouselScreen extends Component<Props, State> {
           pageControlProps={{onPagePress: this.onPagePress, limitShownPages}}
           // showCounter
           allowAccessibleLayout
-          loop
         >
           {_.map([...Array(numberOfPagesShown)], (item, index) => (
             <Page style={{backgroundColor: BACKGROUND_COLORS[index]}} key={index}>
