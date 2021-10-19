@@ -25,29 +25,35 @@ function PageCarousel({...props}) {
     setCurrentIndex
   } = useContext(TabBarContext);
   const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
-  const wasScrolledByPress = useSharedValue(false);
+  const indexChangeReason = useSharedValue<'byScroll' | 'byPress' | undefined>(undefined);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
       carouselOffset.value = e.contentOffset.x;
       const newIndex = e.contentOffset.x / pageWidth;
 
-      if (wasScrolledByPress.value) {
+      if (indexChangeReason.value === 'byPress') { // Scroll was immediate and not by gesture
         /* Round is for android when offset value has fraction */
         targetPage.value = withTiming(Math.round(newIndex));
-        wasScrolledByPress.value = false;
+        indexChangeReason.value = undefined;
       } else {
         targetPage.value = newIndex;
       }
     },
     onMomentumEnd: e => {
       const newPage = Math.round(e.contentOffset.x / pageWidth);
+      indexChangeReason.value = 'byScroll';
       setCurrentIndex(newPage);
     }
   });
 
   const scrollToItem = useCallback(index => {
-    wasScrolledByPress.value = true;
+    if (indexChangeReason.value === 'byScroll') {
+      indexChangeReason.value = undefined;
+      return;
+    }
+
+    indexChangeReason.value = 'byPress';
     // @ts-expect-error
     carousel.current?.scrollTo({x: index * pageWidth, animated: false});
   },
@@ -57,7 +63,7 @@ function PageCarousel({...props}) {
     return currentPage.value;
   },
   (currIndex, prevIndex) => {
-    if (currIndex !== prevIndex) {
+    if (prevIndex !== null && currIndex !== prevIndex) {
       runOnJS(scrollToItem)(currIndex);
     }
   });
