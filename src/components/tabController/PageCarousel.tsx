@@ -5,9 +5,11 @@ import Reanimated, {
   useAnimatedReaction,
   useAnimatedRef,
   useAnimatedScrollHandler,
-  useSharedValue,
-  withTiming
+  useSharedValue
 } from 'react-native-reanimated';
+import {Constants} from 'helpers';
+
+const FIX_RTL = Constants.isRTL && Constants.isAndroid;
 
 /**
  * @description: TabController's Page Carousel
@@ -17,6 +19,7 @@ import Reanimated, {
 function PageCarousel({...props}) {
   const carousel = useAnimatedRef<Reanimated.ScrollView>();
   const {
+    itemsCount,
     currentPage,
     targetPage,
     selectedIndex = 0,
@@ -27,21 +30,31 @@ function PageCarousel({...props}) {
   const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
   const indexChangeReason = useSharedValue<'byScroll' | 'byPress' | undefined>(undefined);
 
+  const calcOffset = useCallback(offset => {
+    'worklet';
+    return FIX_RTL ? pageWidth * (itemsCount - 1) - offset : offset;
+  },
+  [pageWidth, itemsCount]);
+
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
       // carouselOffset.value = e.contentOffset.x;
-      const newIndex = e.contentOffset.x / pageWidth;
+      const xOffset = calcOffset(e.contentOffset.x);
+      const newIndex = xOffset / pageWidth;
 
-      if (indexChangeReason.value === 'byPress') { // Scroll was immediate and not by gesture
+      if (indexChangeReason.value === 'byPress') {
+        // Scroll was immediate and not by gesture
         /* Round is for android when offset value has fraction */
-        targetPage.value = withTiming(Math.round(newIndex));
+        // targetPage.value = withTiming(Math.round(newIndex));
+
         indexChangeReason.value = undefined;
       } else {
         targetPage.value = newIndex;
       }
     },
     onMomentumEnd: e => {
-      const newPage = Math.round(e.contentOffset.x / pageWidth);
+      const xOffset = calcOffset(e.contentOffset.x);
+      const newPage = Math.round(xOffset / pageWidth);
       indexChangeReason.value = 'byScroll';
       setCurrentIndex(newPage);
     }
@@ -54,10 +67,11 @@ function PageCarousel({...props}) {
       indexChangeReason.value = 'byPress';
     }
 
+    const actualIndex = FIX_RTL ? itemsCount - index - 1 : index;
     // @ts-expect-error
-    carousel.current?.scrollTo({x: index * pageWidth, animated: false});
+    carousel.current?.scrollTo({x: actualIndex * pageWidth, animated: false});
   },
-  [pageWidth]);
+  [pageWidth, itemsCount]);
 
   useAnimatedReaction(() => {
     return currentPage.value;
