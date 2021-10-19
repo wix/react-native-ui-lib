@@ -14,11 +14,15 @@ export interface ValidationMessageProps {
      * Custom style for the validation message
      */
     validationMessageStyle?: TextStyle;
+    /**
+     * Should validate when the TextField mounts
+     */
+    validateOnStart?: boolean;
     retainSpace?: boolean;
     validate?: FieldStateProps['validate'];
 }
 declare const ValidationMessage: {
-    ({ validationMessage, enableErrors, validationMessageStyle, retainSpace, validate }: ValidationMessageProps): JSX.Element | null;
+    ({ validationMessage, enableErrors, validationMessageStyle, retainSpace, validate, validateOnStart }: ValidationMessageProps): JSX.Element | null;
     displayName: string;
 };
 export default ValidationMessage;

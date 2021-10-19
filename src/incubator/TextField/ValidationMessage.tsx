@@ -18,6 +18,10 @@ export interface ValidationMessageProps {
    * Custom style for the validation message
    */
   validationMessageStyle?: TextStyle;
+  /**
+   * Should validate when the TextField mounts
+   */
+  validateOnStart?: boolean;
   retainSpace?: boolean;
   validate?: FieldStateProps['validate'];
 }
@@ -27,11 +31,12 @@ const ValidationMessage = ({
   enableErrors,
   validationMessageStyle,
   retainSpace,
-  validate
+  validate,
+  validateOnStart
 }: ValidationMessageProps) => {
   const context = useContext(FieldContext);
 
-  if (!enableErrors || (!retainSpace && context.isValid)) {
+  if (!enableErrors || (!retainSpace && context.isValid) || (!validateOnStart && context.isValid)) {
     return null;
   }
 

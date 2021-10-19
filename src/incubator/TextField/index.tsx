@@ -171,8 +171,9 @@ const TextField = (props: InternalTextFieldProps) => {
           <ValidationMessage
             enableErrors={enableErrors}
             validate={others.validate}
-            validationMessage={props.validationMessage}
+            validationMessage={others.validationMessage}
             validationMessageStyle={validationMessageStyle}
+            validateOnStart={others.validateOnStart}
           />
         )}
         <View style={[paddings, fieldStyle]}>
@@ -209,9 +210,10 @@ const TextField = (props: InternalTextFieldProps) => {
             <ValidationMessage
               enableErrors={enableErrors}
               validate={others.validate}
-              validationMessage={props.validationMessage}
+              validationMessage={others.validationMessage}
               validationMessageStyle={validationMessageStyle}
               retainSpace
+              validateOnStart={others.validateOnStart}
             />
           )}
           {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle}/>}
