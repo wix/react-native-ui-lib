@@ -31,11 +31,9 @@ export interface FieldStateProps extends TextInputProps {
   validate?: Validator | Validator[];
 }
 
-function withFieldState(
-  WrappedComponent: React.ComponentType<
+function withFieldState(WrappedComponent: React.ComponentType<
     FieldStateInjectedProps & TextInputProps
-  >
-) {
+  >) {
   const WithFieldState = ({
     validate,
     validateOnBlur,
@@ -53,52 +51,44 @@ function withFieldState(
       }
     }, []);
 
-    const validateField = useCallback(
-      (valueToValidate = value) => {
-        let _isValid = true;
-        if (_.isFunction(validate)) {
-          _isValid = validate(valueToValidate);
-        } else if (_.isString(validate)) {
-          _isValid = validators[validate]?.(valueToValidate);
-        }
+    const validateField = useCallback((valueToValidate = value) => {
+      let _isValid = true;
+      if (_.isFunction(validate)) {
+        _isValid = validate(valueToValidate);
+      } else if (_.isString(validate)) {
+        _isValid = validators[validate]?.(valueToValidate);
+      }
 
-        setIsValid(_isValid);
-      },
-      [value]
-    );
+      setIsValid(_isValid);
+    },
+    [value]);
 
-    const onFocus = useCallback(
-      (...args: any) => {
-        setIsFocused(true);
-        //@ts-expect-error
-        props.onFocus?.(...args);
-      },
-      [props.onFocus]
-    );
+    const onFocus = useCallback((...args: any) => {
+      setIsFocused(true);
+      //@ts-expect-error
+      props.onFocus?.(...args);
+    },
+    [props.onFocus]);
 
-    const onBlur = useCallback(
-      (...args: any) => {
-        setIsFocused(false);
-        //@ts-expect-error
-        props.onBlur?.(...args);
-        if (validateOnBlur) {
-          validateField();
-        }
-      },
-      [props.onBlur, validateOnBlur, validateField]
-    );
+    const onBlur = useCallback((...args: any) => {
+      setIsFocused(false);
+      //@ts-expect-error
+      props.onBlur?.(...args);
+      if (validateOnBlur) {
+        validateField();
+      }
+    },
+    [props.onBlur, validateOnBlur, validateField]);
 
-    const onChangeText = useCallback(
-      (text) => {
-        setValue(text);
-        props.onChangeText?.(text);
+    const onChangeText = useCallback((text) => {
+      setValue(text);
+      props.onChangeText?.(text);
 
-        if (validateOnChange) {
-          validateField(text);
-        }
-      },
-      [props.onChangeText, validateOnChange]
-    );
+      if (validateOnChange) {
+        validateField(text);
+      }
+    },
+    [props.onChangeText, validateOnChange]);
 
     const fieldState = useMemo(() => {
       return {value, hasValue: !_.isEmpty(value), isValid, isFocused};

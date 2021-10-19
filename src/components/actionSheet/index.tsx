@@ -124,16 +124,14 @@ class ActionSheet extends Component<ActionSheetProps> {
         cancelBtnIndex = optionsArray.length - 1;
       }
 
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          title,
-          message,
-          options: optionsArray.map(option => option?.label || ''),
-          cancelButtonIndex: cancelBtnIndex,
-          destructiveButtonIndex
-        },
-        this.onOptionPress
-      );
+      ActionSheetIOS.showActionSheetWithOptions({
+        title,
+        message,
+        options: optionsArray.map(option => option?.label || ''),
+        cancelButtonIndex: cancelBtnIndex,
+        destructiveButtonIndex
+      },
+      this.onOptionPress);
     }
   }
 
