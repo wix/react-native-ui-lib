@@ -28,7 +28,7 @@ export default class ChipsInputScreen extends Component {
     );
   }
 
-  renderRightElement = () => {
+  renderLeftElement = () => {
     return (
       <View center height={40} marginR-s2 style={{alignItems: 'flex-start'}}>
         <Text grey30 text70M>
@@ -46,7 +46,7 @@ export default class ChipsInputScreen extends Component {
           <ChipsInput
             placeholder={'Enter Tags'}
             chips={this.state.chips}
-            leftElement={this.renderRightElement()}
+            leftElement={this.renderLeftElement()}
             hideUnderline
             maxHeight={100}
           />
