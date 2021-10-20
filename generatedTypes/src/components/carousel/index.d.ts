@@ -20,6 +20,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     orientationChange?: boolean;
     skippedInitialScroll?: boolean;
     isAutoScrolled: boolean;
+    private dimensionsChangeListener;
     constructor(props: CarouselProps);
     static getDerivedStateFromProps(nextProps: CarouselProps, prevState: CarouselState): {
         pageWidth: number;

@@ -44,7 +44,7 @@ describe('TextField:Presenter', () => {
     it('should return undefined when there is no validationMessage', () => {
       expect(uut.getRelevantValidationMessage(undefined, 0)).toBeUndefined();
     });
-    
+
     it('should return the validation message when there is no validate method', () => {
       expect(uut.getRelevantValidationMessage('error message', undefined)).toBe('error message');
     });

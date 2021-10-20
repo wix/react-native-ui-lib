@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { ViewProps } from '../../components/view';
 import { ForwardRefInjectedProps } from '../../commons/new';
-import { Direction } from './useHiddenLocation';
+import { Direction } from '../hooks/useHiddenLocation';
 import { TransitionViewAnimationType } from './useAnimationEndNotifier';
 import { AnimatedTransitionProps } from './useAnimatedTransition';
 export { Direction, TransitionViewAnimationType };

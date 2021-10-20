@@ -162,6 +162,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
   private containerSize: Measurements | undefined;
   private trackSize: Measurements | undefined;
   private thumbSize: Measurements | undefined;
+  private dimensionsChangeListener: any;
 
   constructor(props: SliderProps) {
     super(props);
@@ -225,11 +226,11 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
   }
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChanged);
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChanged);
   }
 
 

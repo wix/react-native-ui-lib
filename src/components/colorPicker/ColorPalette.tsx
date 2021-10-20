@@ -110,13 +110,14 @@ class ColorPalette extends PureComponent<Props, State> {
   usePagination?: boolean = undefined;
   innerMargin?: number = undefined;
   swatchStyles?: StyleProp<ViewStyle>[] = undefined;
+  private dimensionsChangeListener: any;
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChanged);
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChanged);
   }
 
   onOrientationChanged = () => {

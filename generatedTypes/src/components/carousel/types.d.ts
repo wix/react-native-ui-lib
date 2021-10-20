@@ -98,7 +98,7 @@ export interface CarouselProps extends ScrollViewProps {
 export interface CarouselState {
     containerWidth?: number;
     currentPage: number;
-    currentStandingPage?: number;
+    currentStandingPage: number;
     pageWidth: number;
     pageHeight: number;
     initialOffset: PointPropType;

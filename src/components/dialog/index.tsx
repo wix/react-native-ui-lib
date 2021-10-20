@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps} from 'react-native';
 import {Colors} from '../../style';
-import Constants, {orientations} from '../../helpers/Constants';
+import Constants from '../../helpers/Constants';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
 import Modal from '../modal';
@@ -23,67 +23,66 @@ interface RNPartialProps
     Pick<AccessibilityProps, 'accessibilityLabel'> {}
 
 export interface DialogProps extends AlignmentModifiers, RNPartialProps {
-    /**
-     * Control visibility of the dialog
-     */
-    visible?: boolean;
-    /**
-     * Dismiss callback for when clicking on the background
-     */
-    onDismiss?: (props?: any) => void;
-    /**
-     * Whether or not to ignore background press
-     */
-    ignoreBackgroundPress?: boolean;
-    /**
-     * The color of the overlay background
-     */
-    overlayBackgroundColor?: string;
-    /**
-     * The dialog width (default: 90%)
-     */
-    width?: string | number;
-    /**
-     * The dialog height (default: undefined)
-     */
-    height?: string | number;
-    /**
-     * The direction of the allowed pan (default is DOWN).
-     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).
-     * Pass null to remove pan.
-     */
-    panDirection?: PanningDirections;
-    /**
-     * Whether or not to handle SafeArea
-     */
-    useSafeArea?: boolean;
-    /**
-     * Called once the dialog has been dismissed completely
-     */
-    onDialogDismissed?: (props: any) => void;
-    /**
-     * If this is added only the header will be pannable;
-     * this allows for scrollable content (the children of the dialog)
-     * props are transferred to the renderPannableHeader
-     */
-    renderPannableHeader?: (props: any) => JSX.Element;
-    /**
-     * The props that will be passed to the pannable header
-     */
-    pannableHeaderProps?: any;
-    /**
-     * The Dialog`s container style
-     */
-    containerStyle?: StyleProp<ViewStyle>;
-    /**
-     * Used as a testing identifier
-     */
-    testID?: string;
+  /**
+   * Control visibility of the dialog
+   */
+  visible?: boolean;
+  /**
+   * Dismiss callback for when clicking on the background
+   */
+  onDismiss?: (props?: any) => void;
+  /**
+   * Whether or not to ignore background press
+   */
+  ignoreBackgroundPress?: boolean;
+  /**
+   * The color of the overlay background
+   */
+  overlayBackgroundColor?: string;
+  /**
+   * The dialog width (default: 90%)
+   */
+  width?: string | number;
+  /**
+   * The dialog height (default: undefined)
+   */
+  height?: string | number;
+  /**
+   * The direction of the allowed pan (default is DOWN).
+   * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).
+   * Pass null to remove pan.
+   */
+  panDirection?: PanningDirections;
+  /**
+   * Whether or not to handle SafeArea
+   */
+  useSafeArea?: boolean;
+  /**
+   * Called once the dialog has been dismissed completely
+   */
+  onDialogDismissed?: (props: any) => void;
+  /**
+   * If this is added only the header will be pannable;
+   * this allows for scrollable content (the children of the dialog)
+   * props are transferred to the renderPannableHeader
+   */
+  renderPannableHeader?: (props: any) => JSX.Element;
+  /**
+   * The props that will be passed to the pannable header
+   */
+  pannableHeaderProps?: any;
+  /**
+   * The Dialog`s container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Used as a testing identifier
+   */
+  testID?: string;
 }
 
 interface DialogState {
   alignments: AlignmentModifiers;
-  orientationKey: orientations;
   modalVisibility?: boolean;
   dialogVisibility?: boolean;
   fadeOut?: boolean;
@@ -113,21 +112,12 @@ class Dialog extends Component<DialogProps, DialogState> {
 
     this.state = {
       alignments: extractAlignmentsValues(props),
-      orientationKey: Constants.orientation,
       modalVisibility: props.visible,
       dialogVisibility: props.visible
     };
 
     this.styles = createStyles(this.props);
     this.setAlignment();
-  }
-
-  componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChange);
-  }
-
-  componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChange);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: DialogProps) {
@@ -141,13 +131,6 @@ class Dialog extends Component<DialogProps, DialogState> {
     }
   }
 
-  onOrientationChange = () => {
-    const orientationKey = Constants.orientation;
-    if (this.state.orientationKey !== orientationKey) {
-      this.setState({orientationKey});
-    }
-  };
-
   setAlignment() {
     const {alignments} = this.state;
     if (_.isEmpty(alignments)) {
@@ -160,11 +143,12 @@ class Dialog extends Component<DialogProps, DialogState> {
   // TODO: revert adding this workaround once RN fixes https://github.com/facebook/react-native/issues/29455
   onFadeDone = () => {
     if (!this.state.modalVisibility) {
-      setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS
+      setTimeout(() => {
+        // unfortunately this is needed if a modal needs to open on iOS
         this.props.onDialogDismissed?.(this.props);
       }, 100);
     }
-  }
+  };
 
   _onDismiss = () => {
     this.setState({modalVisibility: false, fadeOut: false}, () => {
@@ -177,7 +161,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         props.onDialogDismissed?.(props);
       }
     });
-  }
+  };
 
   onDismiss = () => {
     const fadeOut = Constants.isIOS && this.props.visible;
@@ -206,7 +190,7 @@ class Dialog extends Component<DialogProps, DialogState> {
       return View;
     }
     return PanListenerView;
-  }
+  };
 
   renderDialogView = () => {
     const {children, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.props;
@@ -237,7 +221,7 @@ class Dialog extends Component<DialogProps, DialogState> {
   renderDialogContainer = () => {
     const {modalVisibility, dialogVisibility, fadeOut} = this.state;
     const {useSafeArea, bottom, overlayBackgroundColor, testID} = this.props;
-    const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
+    const addBottomSafeArea = Constants.isIphoneX && useSafeArea && bottom;
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
     const onFadeDone = Constants.isIOS ? this.onFadeDone : undefined;
 
@@ -262,13 +246,12 @@ class Dialog extends Component<DialogProps, DialogState> {
   };
 
   render = () => {
-    const {orientationKey, modalVisibility} = this.state;
+    const {modalVisibility} = this.state;
     const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress} = this.props;
     const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
 
     return (
       <Modal
-        key={orientationKey}
         testID={`${testID}.modal`}
         transparent
         visible={modalVisibility}
