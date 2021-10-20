@@ -2,13 +2,8 @@ import * as uut from '../Presenter';
 
 describe('TextField:Presenter', () => {
   describe('validate', () => {
-    it('should return true if validator and validationMessage are undefined', () => {
+    it('should return true if validator is undefined', () => {
       expect(uut.validate('value', undefined)).toEqual([true, undefined]);
-      expect(uut.validate('value', undefined, undefined)).toEqual([true, undefined]);
-    });
-
-    it('should return false if validator is undefined and there is a validationMessage', () => {
-      expect(uut.validate('value', undefined, 'Error!')).toEqual([false, undefined]);
     });
 
     it('should validate email', () => {
@@ -49,7 +44,7 @@ describe('TextField:Presenter', () => {
     it('should return undefined when there is no validationMessage', () => {
       expect(uut.getRelevantValidationMessage(undefined, 0)).toBeUndefined();
     });
-    
+
     it('should return the validation message when there is no validate method', () => {
       expect(uut.getRelevantValidationMessage('error message', undefined)).toBe('error message');
     });

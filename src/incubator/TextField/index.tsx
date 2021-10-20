@@ -171,7 +171,7 @@ const TextField = (props: InternalTextFieldProps) => {
           <ValidationMessage
             enableErrors={enableErrors}
             validate={others.validate}
-            validationMessage={props.validationMessage}
+            validationMessage={others.validationMessage}
             validationMessageStyle={validationMessageStyle}
           />
         )}
@@ -209,7 +209,7 @@ const TextField = (props: InternalTextFieldProps) => {
             <ValidationMessage
               enableErrors={enableErrors}
               validate={others.validate}
-              validationMessage={props.validationMessage}
+              validationMessage={others.validationMessage}
               validationMessageStyle={validationMessageStyle}
               retainSpace
             />
