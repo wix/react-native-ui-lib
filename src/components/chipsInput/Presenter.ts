@@ -1,14 +1,14 @@
 import {Colors} from '../../style';
 import {ChipProps, ChipsInputProps} from './index';
 
-export const isContainsInvalid = (chips: Array<ChipProps>) => {
+export const hasInvalidChip = (chips: Array<ChipProps>) => {
   return chips.filter((chip) => chip.invalid === true)[0] !== undefined;
 };
 
 export const getValidationBasedColor = (chips: Array<ChipProps>, defaultChip?: ChipProps) => {
   const dismissColor = defaultChip?.dismissColor || Colors.red30;
   
-  return isContainsInvalid(chips) ? dismissColor : Colors.primary;
+  return hasInvalidChip(chips) ? dismissColor : Colors.primary;
 };
 
 export const getCounterTextColor = (stateChips: Array<ChipProps>, props: ChipsInputProps) => {
