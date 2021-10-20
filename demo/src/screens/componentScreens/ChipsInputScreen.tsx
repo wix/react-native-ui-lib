@@ -2,9 +2,18 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {View, Colors, Text, Typography, ChipsInput} from 'react-native-ui-lib'; // eslint-disable-line
 
+interface State {
+  chips: Array<any>;
+  tags: Array<any>;
+  tags2: Array<string>;
+  tags3: Array<string>;
+  tags4: Array<string>;
+}
 
-export default class ChipsInputScreen extends Component {
-  constructor(props) {
+export default class ChipsInputScreen extends Component<{}, State> {
+  customChipsInput: typeof ChipsInput;
+
+  constructor(props: any) {
     super(props);
 
     this.state = {
@@ -16,11 +25,11 @@ export default class ChipsInputScreen extends Component {
     };
   }
 
-  onTagPress = (tagIndex, markedTagIndex) => {
+  onTagPress = (tagIndex: number, markedTagIndex: number) => {
     this.customChipsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
   };
 
-  renderCustomTag(tag, _, shouldMarkToRemove) {
+  renderCustomTag(tag: any, _: any, shouldMarkToRemove: boolean) {
     return (
       <View style={[styles.customTag, shouldMarkToRemove && {backgroundColor: Colors.purple70}]}>
         <Text white>{tag.label}</Text>
@@ -99,12 +108,12 @@ export default class ChipsInputScreen extends Component {
           />
 
           <ChipsInput
-            ref={r => (this.customChipsInput = r)}
+            ref={(r: typeof ChipsInput) => (this.customChipsInput = r)}
             containerStyle={{marginBottom: 25}}
             placeholder="With custom tags"
             tags={this.state.tags}
             renderTag={this.renderCustomTag}
-            onCreateTag={value => ({label: value})}
+            onCreateTag={(value: string) => ({label: value})}
             onTagPress={this.onTagPress}
             inputStyle={{...Typography.text60, color: Colors.blue30}}
           />
