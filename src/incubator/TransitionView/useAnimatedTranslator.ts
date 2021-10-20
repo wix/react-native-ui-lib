@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
 import {useSharedValue, useAnimatedStyle, withSpring, withTiming} from 'react-native-reanimated';
-import {Direction} from './useHiddenLocation';
+import {Direction} from '../hooks/useHiddenLocation';
 
 export interface TranslatorProps {
   initialVisibility: boolean;

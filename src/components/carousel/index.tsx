@@ -45,6 +45,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   orientationChange?: boolean;
   skippedInitialScroll?: boolean;
   isAutoScrolled: boolean;
+  private dimensionsChangeListener: any;
 
   constructor(props: CarouselProps) {
     super(props);
@@ -56,7 +57,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       containerWidth: undefined,
       // @ts-ignore (defaultProps)
       currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
-      currentStandingPage: props.initialPage,
+      currentStandingPage: props.initialPage || 0,
       pageWidth: defaultPageWidth,
       pageHeight,
       initialOffset: presenter.calcOffset(props, {
@@ -106,7 +107,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChanged);
 
     if (this.props.autoplay) {
       this.startAutoPlay();
@@ -114,7 +115,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChanged);
 
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
@@ -262,7 +263,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   onMomentumScrollEnd = () => {
     // finished full page scroll
-    const {currentStandingPage = 0, currentPage} = this.state;
+    const {currentStandingPage, currentPage} = this.state;
     const index = this.getCalcIndex(currentPage);
 
     const pagesCount = presenter.getChildrenLength(this.props);
@@ -420,14 +421,14 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   renderCounter() {
     const {pageWidth, showCounter, counterTextStyle} = this.props;
-    const {currentPage} = this.state;
+    const {currentStandingPage} = this.state;
     const pagesCount = presenter.getChildrenLength(this.props);
 
     if (showCounter && !pageWidth) {
       return (
         <View center style={styles.counter}>
           <Text grey80 text90 style={[{fontWeight: 'bold'}, counterTextStyle]}>
-            {currentPage + 1}/{pagesCount}
+            {currentStandingPage + 1}/{pagesCount}
           </Text>
         </View>
       );

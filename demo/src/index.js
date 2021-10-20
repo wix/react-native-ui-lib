@@ -66,6 +66,9 @@ module.exports = {
       get HintsScreen() {
         return require('./screens/componentScreens/HintsScreen').default;
       },
+      get IconScreen() {
+        return require('./screens/componentScreens/IconScreen').default;
+      },
       get ImageScreen() {
         return require('./screens/componentScreens/ImageScreen').default;
       },
@@ -235,10 +238,10 @@ module.exports = {
         return require('./screens/realExamples/ListActions/ListActionsScreen').default;
       },
       get ProductPage() {
-        return require('./screens/realExamples/ProductPage');
+        return require('./screens/realExamples/ProductPage').default;
       },
       get Twitter() {
-        return require('./screens/realExamples/Twitter');
+        return require('./screens/realExamples/Twitter').default;
       },
       // wrapperScreens
       get TouchableOpacityScreen() {

@@ -25,16 +25,23 @@ import {KeyboardTrackingView, KeyboardAwareInsetsView, KeyboardRegistry, Keyboar
 
 First, run `npm install react-native-ui-lib`
 
-### Peer Dependencies
-If you plan on using specific components, see **UILib Packages** above.
+If you plan on using specific components, see **UILib Packages** above.  
 *For some packages you might still need to install one of the peer dependencies*
 
-If you want it all, install **peer dependencies**:
-```js
-npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo @react-native-picker/picker
 
-cd ios && pod install
-```
+### Peer Dependencies
+UILIb has mandatory peer dependencies on the following packages:
+- react-native-reanimated (Make sure to follow [Reanimated setup guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation))
+- react-native-gesture-handler
+
+### Optional Dependencies
+Some dependencies are optional and required by specific components or features (e.g. Card's blur features requires installing `@react-native-community/blur` package)
+
+The following are optional dependencies:
+- @react-native-community/blur
+- @react-native-community/datetimepicker
+- @react-native-community/netinfo
+- @react-native-picker/picker
 
 
 ## Install Native Dependencies
@@ -46,7 +53,7 @@ Some of the components are using the native dependencies listed below - those ar
 > It's important to run `cd ios && pod install` if you are using a component that has a native dependency.
 
 - "react-native-gesture-handler": ">=1.9.0" (mandatory)
-- "react-native-reanimated": ">=1.13.2" (mandatory)
+- "react-native-reanimated": ">=2.1.0" (mandatory)
 - "@react-native-community/blur": ">=3.4.1" (required for Card component when passing `enableBlur` prop)
 - "@react-native-community/datetimepicker": "^2.1.0"
 - "@react-native-community/netinfo": "^5.6.2" (required for ConnectionStatusBar component)

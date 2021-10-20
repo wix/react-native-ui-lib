@@ -3,7 +3,7 @@ import {View as RNView, LayoutChangeEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
-import useHiddenLocation, {Direction} from './useHiddenLocation';
+import useHiddenLocation, {Direction} from '../hooks/useHiddenLocation';
 import {TransitionViewAnimationType} from './useAnimationEndNotifier';
 import useAnimatedTransition, {AnimatedTransitionProps} from './useAnimatedTransition';
 const AnimatedView = Animated.createAnimatedComponent(View);

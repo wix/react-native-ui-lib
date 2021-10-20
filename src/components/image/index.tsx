@@ -14,7 +14,7 @@ import Constants from '../../helpers/Constants';
 import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
 // @ts-ignore
 import Assets from '../../assets';
-import Overlay, {OverlayTypeType} from '../overlay';
+import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from './SvgImage';
 
 
@@ -53,6 +53,10 @@ export type ImageProps = RNImageProps & MarginModifiers & {
    */
   overlayType?: OverlayTypeType;
   /**
+   * The intensity of the overlay ('LOW' | 'MEDIUM' | 'HIGH'), default is 'LOW'.
+   */
+   overlayIntensity?: OverlayIntensityType;
+  /**
    * Pass a custom color for the overlay
    */
   overlayColor?: string;
@@ -89,6 +93,7 @@ class Image extends PureComponent<Props, State> {
   };
 
   public static overlayTypes = Overlay.overlayTypes;
+  public static overlayIntensityType = Overlay.intensityTypes;
 
   sourceTransformer?: (props: any) => ImageSourcePropType;
 
@@ -171,6 +176,7 @@ class Image extends PureComponent<Props, State> {
       cover,
       aspectRatio,
       overlayType,
+      overlayIntensity,
       overlayColor,
       customOverlayContent,
       modifiers,
@@ -199,7 +205,12 @@ class Image extends PureComponent<Props, State> {
         source={source}
       >
         {(overlayType || customOverlayContent) && (
-          <Overlay type={overlayType} color={overlayColor} customContent={customOverlayContent}/>
+          <Overlay
+            type={overlayType}
+            intensity={overlayIntensity}
+            color={overlayColor}
+            customContent={customOverlayContent}
+          />
         )}
       </ImageView>
     );

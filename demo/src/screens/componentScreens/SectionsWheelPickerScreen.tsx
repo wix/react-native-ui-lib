@@ -64,7 +64,7 @@ const SectionsWheelPickerScreen = () => {
     {
       items: getItems(days),
       onChange: onDaysChange,
-      selectedValue: selectedDays,
+      initialValue: selectedDays,
       label: 'Days',
       align: numOfSections === 1 ? WheelPicker.alignments.CENTER : WheelPicker.alignments.RIGHT,
       style: {flex: 1}
@@ -72,7 +72,7 @@ const SectionsWheelPickerScreen = () => {
     {
       items: getItems(hours),
       onChange: onHoursChange,
-      selectedValue: selectedHours,
+      initialValue: selectedHours,
       label: 'Hrs',
       align: numOfSections === 2 ? WheelPicker.alignments.LEFT : WheelPicker.alignments.CENTER,
       style: numOfSections === 2 ? {flex: 1} : undefined
@@ -80,7 +80,7 @@ const SectionsWheelPickerScreen = () => {
     {
       items: getItems(minutes),
       onChange: onMinutesChange,
-      selectedValue: selectedMinutes,
+      initialValue: selectedMinutes,
       label: 'Mins',
       align: WheelPicker.alignments.LEFT,
       style: {flex: 1}
@@ -102,6 +102,7 @@ const SectionsWheelPickerScreen = () => {
         <SegmentedControl
           segments={[{label: '1 section'}, {label: '2 sections'}, {label: '3 sections'}]}
           onChangeIndex={onChangeIndex}
+          throttleTime={400}
         />
         <Text text50 marginV-20>
           Pick a duration

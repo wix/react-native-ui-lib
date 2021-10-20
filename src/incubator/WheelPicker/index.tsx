@@ -1,5 +1,5 @@
 // TODO: Support style customization
-import {isFunction} from 'lodash';
+import {isFunction, isUndefined} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
@@ -139,7 +139,7 @@ const WheelPicker = ({
 
   /* This effect making sure to reset index if initialValue has changed */
   useEffect(() => {
-    scrollToIndex(currentIndex, true);
+    !isUndefined(initialValue) && scrollToIndex(currentIndex, true);
   }, [currentIndex]);
 
   const scrollToPassedIndex = useCallback(() => {

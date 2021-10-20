@@ -28,6 +28,8 @@ class Wizard extends Component<WizardProps, State> {
   static Step: typeof WizardStep;
   static States: typeof WizardStepStates;
 
+  private dimensionsChangeListener: any;
+
   constructor(props: WizardProps) {
     super(props);
 
@@ -37,11 +39,11 @@ class Wizard extends Component<WizardProps, State> {
   }
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChange);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChange);
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChange);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChange);
   }
 
   onOrientationChange = () => {

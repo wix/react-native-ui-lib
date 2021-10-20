@@ -62,6 +62,7 @@ class GridView extends UIComponent<GridViewProps, State> {
   };
 
   private itemSize?: number;
+  private dimensionsChangeListener: any;
 
   constructor(props: ExistProps) {
     super(props);
@@ -92,11 +93,11 @@ class GridView extends UIComponent<GridViewProps, State> {
   }
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChanged);
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChanged);
   }
 
   onOrientationChanged = () => {

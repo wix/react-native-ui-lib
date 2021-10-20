@@ -127,11 +127,15 @@ const constants = {
   },
   /* Orientation */
   addDimensionsEventListener: (callback: any) => {
-    Dimensions.addEventListener('change', callback);
+    return Dimensions.addEventListener('change', callback);
   },
   /* Dimensions */
   removeDimensionsEventListener: (callback: any) => {
-    Dimensions.removeEventListener('change', callback);
+    if (callback.remove) {
+      callback.remove();
+    } else {
+      Dimensions.removeEventListener('change', callback);
+    }
   },
   /* Accessibility */
   get accessibility() {

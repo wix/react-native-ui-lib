@@ -124,6 +124,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     private containerSize;
     private trackSize;
     private thumbSize;
+    private dimensionsChangeListener;
     constructor(props: SliderProps);
     checkProps(props: SliderProps): void;
     getAccessibilityProps(): {
