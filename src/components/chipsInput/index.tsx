@@ -361,19 +361,18 @@ class ChipsInput extends Component<OwnProps, State> {
     return _.map(chips, (chip, index) => {
       const selected = chipIndexToRemove === index;
       const dismissColor = getChipDismissColor(chip, selected, defaultChipProps);
-      
       return (
         <View center flexS>
           <Chip
             key={index}
-            {...defaultChipProps}
-            {...chip}
             containerStyle={[styles.tag, chip.invalid && styles.invalidTag]}
             labelStyle={[
               styles.tagLabel,
               chip.invalid && styles.errorMessage,
               selected && !!chip.invalid && styles.errorMessageWhileMarked
             ]}
+            {...chip}
+            {...defaultChipProps}
             disabled={disabled}
             marginR-s2
             marginT-2
