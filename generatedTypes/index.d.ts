@@ -38,6 +38,7 @@ export {default as Button, ButtonSize, ButtonProps} from './src/components/butto
 export {default as Stepper, StepperProps} from './src/components/stepper';
 export {default as Checkbox, CheckboxProps} from './src/components/checkbox';
 export {default as ChipsInput, ChipsInputProps} from './src/components/chipsInput';
+export {default as Chip, ChipProps} from './src/components/chip';
 export {default as ColorPicker, ColorPickerProps} from './src/components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './src/components/colorPicker/ColorPalette';
 export {default as ColorSwatch, ColorSwatchProps} from './src/components/colorPicker/ColorSwatch';
