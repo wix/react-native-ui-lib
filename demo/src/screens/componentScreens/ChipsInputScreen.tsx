@@ -1,35 +1,40 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Colors, Text, Typography, ChipsInput} from 'react-native-ui-lib'; // eslint-disable-line
+import {View, Colors, Text, Typography, ChipsInput, ChipsInputChipProps} from 'react-native-ui-lib'; // eslint-disable-line
 
 interface State {
-  chips: Array<any>;
-  tags: Array<any>;
+  chips: Array<ChipsInputChipProps>;
+  namesChips: Array<ChipsInputChipProps>;
+  nonRemovalChips: Array<ChipsInputChipProps>;
+  customChips: Array<string>;
+  tags: Array<string | any>;
   tags2: Array<string>;
   tags3: Array<string>;
-  tags4: Array<string>;
 }
 
 export default class ChipsInputScreen extends Component<{}, State> {
-  customChipsInput: typeof ChipsInput;
+  // @ts-ignore
+  customChipsInput = React.createRef<ChipsInput>();
 
   constructor(props: any) {
     super(props);
 
     this.state = {
-      chips: [{label: 'Falcon 9'}, {label: 'Enterprise'}, {label: 'Challenger'}, {label: 'Coca Cola', invalid: true}],
+      chips: [{label: 'Falcon 9'}, {label: 'Enterprise'}, {label: 'Challenger', borderRadius: 0}, {label: 'Coca Cola', invalid: true}],
+      namesChips: [{label: 'Amit'}, {label: 'Ethan', invalid: true}],
+      nonRemovalChips: [{label: 'Non'}, {label: 'Removable'}, {label: 'Tags'}],
+      customChips: ['Chips', 'Input'],
       tags: [{label: 'Amit'}, {label: 'Ethan', invalid: true}],
-      tags2: ['Chips', 'Input'],
-      tags3: ['Non', 'Removable', 'Tags'],
-      tags4: ['Change', 'Typography']
+      tags2: ['Non', 'Removable', 'Tags'],
+      tags3: ['Change', 'Typography']
     };
   }
 
   onTagPress = (tagIndex: number, markedTagIndex: number) => {
-    this.customChipsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
+    this.customChipsInput.current?.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
   };
 
-  renderCustomTag(tag: any, _: any, shouldMarkToRemove: boolean) {
+  renderCustomTag(tag: any, _: number, shouldMarkToRemove: boolean) {
     return (
       <View style={[styles.customTag, shouldMarkToRemove && {backgroundColor: Colors.purple70}]}>
         <Text white>{tag.label}</Text>
@@ -78,6 +83,10 @@ export default class ChipsInputScreen extends Component<{}, State> {
     );
   };
 
+  onCreateTag = (value: string) => {
+    return {label: value};
+  }
+
   render() {
     return (
       <ScrollView keyboardShouldPersistTaps="never">
@@ -91,6 +100,21 @@ export default class ChipsInputScreen extends Component<{}, State> {
 
           {this.renderFormTypeInput()}
 
+          <ChipsInput
+            containerStyle={{marginBottom: 25}}
+            placeholder="Enter Tags"
+            chips={this.state.namesChips}
+            validationErrorMessage="error validation message"
+          />
+
+          <ChipsInput
+            containerStyle={{marginBottom: 25}}
+            placeholder="Editing disabled"
+            chips={this.state.nonRemovalChips}
+            disableTagRemoval
+            disableTagAdding
+          />
+
           <Text text50 marginV-20>Old Usage</Text>
           <ChipsInput
             containerStyle={{marginBottom: 25}}
@@ -98,32 +122,31 @@ export default class ChipsInputScreen extends Component<{}, State> {
             tags={this.state.tags}
             validationErrorMessage="error validation message"
           />
-
+          
           <ChipsInput
             containerStyle={{marginBottom: 25}}
             placeholder="Editing disabled"
-            tags={this.state.tags3}
+            tags={this.state.tags2}
             disableTagRemoval
             disableTagAdding
           />
-
           <ChipsInput
-            ref={(r: typeof ChipsInput) => (this.customChipsInput = r)}
+            ref={this.customChipsInput}
             containerStyle={{marginBottom: 25}}
             placeholder="With custom tags"
             tags={this.state.tags}
             renderTag={this.renderCustomTag}
-            onCreateTag={(value: string) => ({label: value})}
+            onCreateTag={this.onCreateTag}
             onTagPress={this.onTagPress}
             inputStyle={{...Typography.text60, color: Colors.blue30}}
           />
-
-          <ChipsInput
+          <ChipsInput 
             text60
             containerStyle={{marginBottom: 25}}
             placeholder="Enter Tags"
-            tags={this.state.tags4}
+            tags={this.state.tags3}
           />
+
         </View>
       </ScrollView>
     );

@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { ViewStyle, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps } from 'react-native';
 import { BaseComponentInjectedProps, TypographyModifiers } from '../../commons/new';
-import { ChipProps as ExternalChipProp } from '../chip';
+import { ChipProps } from '../chip';
 import { TextFieldProps } from '../../../typings/components/Inputs';
 declare type ChipType = string | boolean | any;
-export declare type ChipProps = ExternalChipProp & {
+export declare type ChipsInputChipProps = ChipProps & {
     invalid?: boolean;
 };
 export declare type ChipsInputProps = TypographyModifiers & TextFieldProps & {
@@ -16,11 +16,11 @@ export declare type ChipsInputProps = TypographyModifiers & TextFieldProps & {
     /**
     * list of tags. can be string boolean or custom object when implementing getLabel
     */
-     chips?: Array<ChipProps>;
+    chips?: Array<ChipsInputChipProps>;
     /**
      * Style your chips
      */
-    defaultChipProps?: ChipProps;
+    defaultChipProps?: ChipsInputChipProps;
     /**
      * callback for extracting the label out of the tag item
      */
