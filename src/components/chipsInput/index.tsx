@@ -11,7 +11,7 @@ import {TextField} from '../inputs';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
-import Chip, {ChipProps as ExternalChipProp} from '../chip';
+import Chip, {ChipProps} from '../chip';
 import {getValidationBasedColor, getCounterTextColor, getCounterText, getChipDismissColor, isDisabled} from './Presenter';
 import {TextFieldProps} from '../../../typings/components/Inputs';
 
@@ -20,7 +20,7 @@ import {TextFieldProps} from '../../../typings/components/Inputs';
 // TODO: add notes to Docs about the Android fix for onKeyPress
 
 type ChipType = string | boolean | any;
-export type ChipProps = ExternalChipProp & {invalid?: boolean}
+export type ChipsInputChipProps = ChipProps & {invalid?: boolean}
 
 export type ChipsInputProps = TypographyModifiers & TextFieldProps & {
   /**
@@ -30,17 +30,17 @@ export type ChipsInputProps = TypographyModifiers & TextFieldProps & {
   /**
   * list of tags. can be string boolean or custom object when implementing getLabel
   */
-  chips?: Array<ChipProps>;
+  chips?: Array<ChipsInputChipProps>;
   /** 
    * Style your chips
    */
-  defaultChipProps?: ChipProps;
+  defaultChipProps?: ChipsInputChipProps;
   /**
    * callback for extracting the label out of the tag item
    */
   getLabel?: (tag: ChipType) => any;
   /**
-   * callback for custom rendering tag item
+   * DEPRECATED: use chips instead. callback for custom rendering tag item
    */
   renderTag?: (tag: ChipType, index: number, shouldMarkTag: boolean, label: string) => React.ReactElement;
   /**
@@ -48,11 +48,11 @@ export type ChipsInputProps = TypographyModifiers & TextFieldProps & {
    */
   onChangeTags?: () => void;
   /**
-   * callback for creating new tag out of input value (good for composing tag object)
+   * DEPRECATED: use chips instead. callback for creating new tag out of input value (good for composing tag object)
    */
   onCreateTag?: (value: any) => void;
   /**
-   * callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
+   * DEPRECATED: use chips instead. callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
    */
   onTagPress?: (index: number, toRemove?: number) => void;
   /**
@@ -254,6 +254,21 @@ class ChipsInput extends Component<OwnProps, State> {
     return isLastTagMarked;
   }
 
+  removeTag = () => {
+    const {value, chips, chipIndexToRemove} = this.state;
+    const tagsCount = _.size(chips);
+    const hasNoValue = _.isEmpty(value);
+    const hasTags = tagsCount > 0;
+    
+    if (hasNoValue && hasTags && _.isUndefined(chipIndexToRemove)) {
+      this.setState({
+        chipIndexToRemove: tagsCount - 1
+      });
+    } else if (!_.isUndefined(chipIndexToRemove)) {
+      this.removeMarkedTag();
+    }
+  }
+
   onKeyPress = (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     _.invoke(this.props, 'onKeyPress', event);
 
@@ -261,22 +276,12 @@ class ChipsInput extends Component<OwnProps, State> {
     if (disableTagRemoval) {
       return;
     }
-
-    const {value, chips, chipIndexToRemove} = this.state;
-    const tagsCount = _.size(chips);
+    
     const keyCode = _.get(event, 'nativeEvent.key');
-    const hasNoValue = _.isEmpty(value);
     const pressedBackspace = keyCode === Constants.backspaceKey;
-    const hasTags = tagsCount > 0;
 
     if (pressedBackspace) {
-      if (hasNoValue && hasTags && _.isUndefined(chipIndexToRemove)) {
-        this.setState({
-          chipIndexToRemove: tagsCount - 1
-        });
-      } else if (!_.isUndefined(chipIndexToRemove)) {
-        this.removeMarkedTag();
-      }
+      this.removeTag();
     }
   }
 
@@ -300,7 +305,7 @@ class ChipsInput extends Component<OwnProps, State> {
     this.setState({isFocused: false});
   }
 
-  renderLabel(tag: ChipType, shouldMarkTag: boolean) {
+  renderLabel(tag: ChipType, shouldMarkTag: boolean) {	
     const {typography} = this.props.modifiers;
     const label = this.getLabel(tag);
 
@@ -308,7 +313,7 @@ class ChipsInput extends Component<OwnProps, State> {
       <View row centerV>
         {shouldMarkTag && (
           <Image
-            style={[styles.removeIcon, tag.invalid && styles.invalidTagRemoveIcon, styles.basicTagStyle]}
+            style={[styles.removeIcon, tag.invalid && styles.basicTagStyle && styles.invalidTagRemoveIcon]}
             source={Assets.icons.x}
           />)
         }
@@ -362,7 +367,7 @@ class ChipsInput extends Component<OwnProps, State> {
       const selected = chipIndexToRemove === index;
       const dismissColor = getChipDismissColor(chip, selected, defaultChipProps);
       return (
-        <View center flexS>
+        <View center flexS marginT-2 marginB-2>
           <Chip
             key={index}
             containerStyle={[styles.tag, chip.invalid && styles.invalidTag]}
@@ -466,7 +471,7 @@ class ChipsInput extends Component<OwnProps, State> {
           onBlur={this.onBlur}
           hideUnderline
           selectionColor={isLastTagMarked ? 'transparent' : selectionColor}
-          style={[inputStyle, {textAlignVertical: 'center'}]}
+          style={[inputStyle, styles.alignTextCenter]}
           containerStyle={{flexGrow: 0}}
           collapsable={false}
           accessibilityHint={
@@ -583,7 +588,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.red10
   },
   tagMarked: {
-    backgroundColor: Colors.dark10
+    backgroundColor: Colors.grey10
   },
   dismissIconStyle: {
     width: 10, 
@@ -615,5 +620,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     height: Typography.text80?.lineHeight,
     ...Typography.text80
+  },
+  alignTextCenter: {
+    textAlignVertical: 'center'
   }
 });
