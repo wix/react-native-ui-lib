@@ -22,13 +22,18 @@ function PageCarousel({...props}) {
     itemsCount,
     currentPage,
     targetPage,
-    selectedIndex = 0,
     pageWidth,
     // carouselOffset,
     setCurrentIndex
   } = useContext(TabBarContext);
-  const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
+  const initialOffset = useMemo(() => ({x: currentPage.value * pageWidth, y: 0}), []);
   const indexChangeReason = useSharedValue<'byScroll' | 'byPress' | undefined>(undefined);
+
+  const scrollToInitial = useCallback(() => {
+    if (Constants.isAndroid && currentPage.value) {
+      scrollToItem(currentPage.value);
+    }
+  }, []);
 
   const calcOffset = useCallback(offset => {
     'worklet';
@@ -96,7 +101,8 @@ function PageCarousel({...props}) {
       showsHorizontalScrollIndicator={false}
       onScroll={scrollHandler}
       scrollEventThrottle={16}
-      contentOffset={contentOffset} // iOS only
+      contentOffset={initialOffset} // iOS only
+      onLayout={scrollToInitial} // Android only
     />
   );
 }

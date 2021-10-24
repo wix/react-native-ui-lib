@@ -188,7 +188,7 @@ const TabBar = (props: Props) => {
     return Math.round(currentPage.value);
   },
   (currIndex, prevIndex) => {
-    if (currIndex !== prevIndex) {
+    if (prevIndex !== null && currIndex !== prevIndex) {
       runOnJS(focusIndex)(currIndex);
     }
   });
