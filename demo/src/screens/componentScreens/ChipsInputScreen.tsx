@@ -138,11 +138,11 @@ export default class ChipsInputScreen extends Component<{}, State> {
             renderTag={this.renderCustomTag}
             onCreateTag={this.onCreateTag}
             onTagPress={this.onTagPress}
-            inputStyle={{...Typography.text60, color: Colors.blue30}}
+            inputStyle={styles.customInput}
           />
           <ChipsInput 
             text60
-            containerStyle={{marginBottom: 25}}
+            containerStyle={styles.bottomMargin}
             placeholder="Enter Tags"
             tags={this.state.tags3}
           />
@@ -157,6 +157,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15
+  },
+  customInput: {
+    ...Typography.text60,
+    color: Colors.blue30
+  },
+  bottomMargin: {
+    marginBottom: 25
   },
   customTag: {
     backgroundColor: Colors.purple30,
