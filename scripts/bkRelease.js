@@ -25,7 +25,7 @@ const branch = process.env.BUILDKITE_BRANCH;
 // const ONLY_ON_BRANCH = `origin/${branch || 'master'}`;
 const VERSION_TAG = isRelease ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
-
+console.log(cp.execSync(`cat /usr/local/etc/buildkite-agent/hooks/environment`))
 function run() {
   if (!validateEnv()) {
     return;
