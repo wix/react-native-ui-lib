@@ -389,14 +389,18 @@ export default class Swipeable extends Component<Props, StateType> {
   };
 
   openLeftFull = () => {
-    const {rowWidth} = this.state;
-    this._animateRow(this._currentOffset(), rowWidth);
+    if (this.props.renderLeftActions) {
+      const {rowWidth} = this.state;
+      this._animateRow(this._currentOffset(), rowWidth);
+    }
   };
 
   toggleLeft = () => {
     // Programmatically left toggle
-    const {rowWidth} = this.state;
-    this._animateRow(this._currentOffset(), rowWidth * LEFT_TOGGLE_THRESHOLD);
+    if (this.props.renderLeftActions) {
+      const {rowWidth} = this.state;
+      this._animateRow(this._currentOffset(), rowWidth * LEFT_TOGGLE_THRESHOLD);
+    }
   };
 
   openRight = () => {
@@ -407,8 +411,10 @@ export default class Swipeable extends Component<Props, StateType> {
   };
 
   openRightFull = () => {
-    const {rowWidth} = this.state;
-    this._animateRow(this._currentOffset(), -rowWidth);
+    if (this.props.renderRightActions) {
+      const {rowWidth} = this.state;
+      this._animateRow(this._currentOffset(), -rowWidth);
+    }
   };
 
   _onRowLayout = ({nativeEvent}) => this.handleMeasure('rowWidth', nativeEvent);
