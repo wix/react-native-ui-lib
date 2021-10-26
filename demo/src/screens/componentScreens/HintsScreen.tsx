@@ -126,7 +126,7 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
             targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
-            // onBackgroundPress={() => this.setState({showHint: !showHint})}
+            onBackgroundPress={useTargetFrame ? undefined : () => this.setState({showHint: !showHint})}
             customContent={
               showCustomContent
                 ? this.renderCustomContent()
@@ -142,7 +142,10 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
             {!useTargetFrame && (
               <Button
                 label={showHint ? 'Hide' : 'Show'}
-                onPress={() => this.setState({showHint: !showHint})}
+                onPress={() => {
+                  console.warn('pressed button');
+                  this.setState({showHint: !showHint});
+                }}
                 style={{alignSelf: targetPosition}}
                 testID={'Hint.button'}
                 // style={{alignSelf: targetPosition, marginLeft: 30}}

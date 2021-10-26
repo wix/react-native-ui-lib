@@ -497,17 +497,20 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderHintContainer() {
-    const {style, ...others} = this.props;
+    const {style, targetFrame, ...others} = this.props;
     return (
-      <View
-        {...others}
-        // this view must be collapsable, don't pass testID or backgroundColor etc'.
-        collapsable
-        testID={undefined}
-        style={[styles.container, style, this.getContainerPosition()]}
-      >
-        {this.renderHint()}
-      </View>
+      <>
+        <View
+          {...others}
+          // this view must be collapsable, don't pass testID or backgroundColor etc'.
+          collapsable
+          testID={undefined}
+          style={[styles.container, style, this.getContainerPosition()]}
+        >
+          {this.renderHint()}
+        </View>
+        {!targetFrame && <View style={[styles.container, this.getContainerPosition()]}>{this.renderChildren()}</View>}
+      </>
     );
   }
 
