@@ -108,42 +108,40 @@ const Dialog = (props: DialogProps) => {
   }, [overlayBackgroundColor]);
 
   return (
-    <View flex testID={testID}>
-      <Modal
-        transparent
-        animationType={'none'}
-        {...otherModalProps}
-        testID={`${testID}.modal`}
-        useGestureHandlerRootView
-        visible={visible}
-        onBackgroundPress={ignoreBackgroundPress ? undefined : onBackgroundPress}
-        onRequestClose={onBackgroundPress}
-        onDismiss={undefined}
-      >
-        <View testID={`${testID}.overlayFadingBackground`} absF reanimated style={fadeStyle} pointerEvents="none"/>
-        {/* TODO: remove?
+    <Modal
+      transparent
+      animationType={'none'}
+      {...otherModalProps}
+      testID={`${testID}.modal`}
+      useGestureHandlerRootView
+      visible={visible}
+      onBackgroundPress={ignoreBackgroundPress ? undefined : onBackgroundPress}
+      onRequestClose={onBackgroundPress}
+      onDismiss={undefined}
+    >
+      <View testID={`${testID}.overlayFadingBackground`} absF reanimated style={fadeStyle} pointerEvents="none"/>
+      {/* TODO: remove?
         {this.renderDialogView()}
       {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>} */}
 
-        <PanView
-          directions={directions}
-          dismissible
-          animateToOrigin
-          containerStyle={panStyle}
-          onDismiss={onPanViewDismiss}
+      <PanView
+        directions={directions}
+        dismissible
+        animateToOrigin
+        containerStyle={panStyle}
+        onDismiss={onPanViewDismiss}
+      >
+        <TransitionView
+          ref={transitionAnimatorRef}
+          enterFrom={direction}
+          exitTo={direction}
+          onAnimationStart={onTransitionAnimationStart}
+          onAnimationEnd={onTransitionAnimationEnd}
         >
-          <TransitionView
-            ref={transitionAnimatorRef}
-            enterFrom={direction}
-            exitTo={direction}
-            onAnimationStart={onTransitionAnimationStart}
-            onAnimationEnd={onTransitionAnimationEnd}
-          >
-            {children}
-          </TransitionView>
-        </PanView>
-      </Modal>
-    </View>
+          {children}
+        </TransitionView>
+      </PanView>
+    </Modal>
   );
 };
 
