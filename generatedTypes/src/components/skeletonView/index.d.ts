@@ -31,6 +31,10 @@ export interface SkeletonListProps {
      * Whether to show the last list item template separator
      */
     showLastSeparator?: boolean;
+    /**
+     * Extra content to be rendered on the end of the list item
+     */
+    renderEndContent?: () => React.ReactElement | undefined;
 }
 export interface SkeletonViewProps extends AccessibilityProps {
     /**
@@ -75,27 +79,27 @@ export interface SkeletonViewProps extends AccessibilityProps {
     timesKey?: string;
     /**
      * @deprecated
-     * - Send via listProps instead.
+     * - Pass via listProps instead.
      * - The size of the skeleton view.
      * - Types: SMALL and LARGE (using SkeletonView.sizes.###)
      */
     size?: Size;
     /**
      * @deprecated
-     * - Send via listProps instead.
+     * - Pass via listProps instead.
      * - Add content to the skeleton.
      * - Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
      */
     contentType?: ContentType;
     /**
      * @deprecated
-     * - Send via listProps instead.
+     * - Pass via listProps instead.
      * - Whether to hide the list item template separator
      */
     hideSeparator?: boolean;
     /**
      * @deprecated
-     * - Send via listProps instead.
+     * - Pass via listProps instead.
      * - Whether to show the last list item template separator
      */
     showLastSeparator?: boolean;
@@ -162,7 +166,11 @@ declare class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
         width: number;
         height: number;
     };
-    getContentSize: () => 48 | 40;
+    get size(): Size | undefined;
+    get contentSize(): 48 | 40;
+    get contentType(): ContentType | undefined;
+    get hideSeparator(): boolean | undefined;
+    get showLastSeparator(): boolean | undefined;
     renderListItemLeftContent: () => JSX.Element | undefined;
     renderStrip: (isMain: boolean, length: number, marginTop: number) => JSX.Element;
     renderListItemContentStrips: () => JSX.Element;
