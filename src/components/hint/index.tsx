@@ -497,7 +497,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderHintContainer() {
-    const {style, targetFrame, ...others} = this.props;
+    const {style, targetFrame, onBackgroundPress, ...others} = this.props;
     return (
       <>
         <View
@@ -509,7 +509,9 @@ class Hint extends Component<HintProps, HintState> {
         >
           {this.renderHint()}
         </View>
-        {!targetFrame && <View style={[styles.container, this.getContainerPosition()]}>{this.renderChildren()}</View>}
+        {!targetFrame && onBackgroundPress && (
+          <View style={[styles.container, this.getContainerPosition()]}>{this.renderChildren()}</View>
+        )}
       </>
     );
   }
