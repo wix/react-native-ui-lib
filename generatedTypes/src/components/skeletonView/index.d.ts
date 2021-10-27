@@ -12,6 +12,26 @@ declare enum ContentType {
     AVATAR = "avatar",
     THUMBNAIL = "thumbnail"
 }
+export interface SkeletonListProps {
+    /**
+     * The size of the skeleton view.
+     * Types: SMALL and LARGE (using SkeletonView.sizes.###)
+     */
+    size?: Size;
+    /**
+     * Add content to the skeleton.
+     * Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
+     */
+    contentType?: ContentType;
+    /**
+     * Whether to hide the list item template separator
+     */
+    hideSeparator?: boolean;
+    /**
+     * Whether to show the last list item template separator
+     */
+    showLastSeparator?: boolean;
+}
 export interface SkeletonViewProps extends AccessibilityProps {
     /**
      * The content has been loaded, start fading out the skeleton and fading in the content
@@ -38,6 +58,10 @@ export interface SkeletonViewProps extends AccessibilityProps {
      */
     template?: Template;
     /**
+     * Props that are available when using template={SkeletonView.templates.LIST_ITEM}
+     */
+    listProps?: SkeletonListProps;
+    /**
      * An object that holds the number of times the skeleton will appear, and (optionally) the key.
      * The key will actually be `${key}-${index}` if a key is given or `${index}` if no key is given.
      * IMPORTANT: your data (i.e. children \ renderContent) will NOT be duplicated.
@@ -50,21 +74,29 @@ export interface SkeletonViewProps extends AccessibilityProps {
      */
     timesKey?: string;
     /**
-     * The size of the skeleton view.
-     * Types: SMALL and LARGE (using SkeletonView.sizes.###)
+     * @deprecated
+     * - Send via listProps instead.
+     * - The size of the skeleton view.
+     * - Types: SMALL and LARGE (using SkeletonView.sizes.###)
      */
     size?: Size;
     /**
-     * Add content to the skeleton.
-     * Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
+     * @deprecated
+     * - Send via listProps instead.
+     * - Add content to the skeleton.
+     * - Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
      */
     contentType?: ContentType;
     /**
-     * Whether to hide the list item template separator
+     * @deprecated
+     * - Send via listProps instead.
+     * - Whether to hide the list item template separator
      */
     hideSeparator?: boolean;
     /**
-     * Whether to show the last list item template separator
+     * @deprecated
+     * - Send via listProps instead.
+     * - Whether to show the last list item template separator
      */
     showLastSeparator?: boolean;
     /**
