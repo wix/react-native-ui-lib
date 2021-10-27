@@ -8,7 +8,9 @@ import {
   ImageBackground,
   ImageSourcePropType,
   NativeSyntheticEvent,
-  ImageErrorEventData
+  ImageErrorEventData,
+  ViewStyle,
+  ImageStyle
 } from 'react-native';
 import Constants from '../../helpers/Constants';
 import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
@@ -16,6 +18,8 @@ import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, Ma
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from './SvgImage';
+import View from '../view';
+import {Colors} from '../../style';
 
 
 export type ImageProps = RNImageProps & MarginModifiers & {
@@ -75,6 +79,11 @@ type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 type State = {
   error: boolean,
   prevSource: ImageSourcePropType
+}
+
+type ErrorImageStyles = {
+  flexShrink?: ViewStyle['flexShrink'];
+  resizeMode?: ImageStyle['resizeMode'];
 }
 
 /**
@@ -159,14 +168,40 @@ class Image extends PureComponent<Props, State> {
       this.setState({error: true});
       this.props.onError?.(event);
     }
-  }
+  };
 
   renderSvg = () => {
     const {source, ...others} = this.props;
     return <SvgImage data={source} {...others}/>;
-  }
+  };
 
-  renderRegularImage() {
+  renderErrorImage = () => {
+    const {
+      style,
+      cover,
+      modifiers,
+      height,
+      width
+    } = this.props;
+    const {margins} = modifiers;
+
+    return (
+      <View
+        style={[
+          margins,
+          style,
+          {width, height},
+          {backgroundColor: Colors.grey70},
+          {justifyContent: 'center', alignItems: 'center'},
+          cover && styles.coverImage
+        ]}
+      >
+        {this.renderImage({flexShrink: 1, resizeMode: 'contain'})}
+      </View>
+    );
+  };
+
+  renderImage = ({flexShrink, resizeMode}: ErrorImageStyles) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
@@ -196,8 +231,10 @@ class Image extends PureComponent<Props, State> {
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
           margins,
-          style
+          style,
+          {flexShrink}
         ]}
+        resizeMode={resizeMode}
         accessible={false}
         accessibilityRole={'image'}
         {...others}
@@ -214,6 +251,15 @@ class Image extends PureComponent<Props, State> {
         )}
       </ImageView>
     );
+  };
+
+  renderRegularImage() {
+    const {error} = this.state;
+    if (error) {
+      return this.renderErrorImage();
+    } else {
+      return this.renderImage({});
+    }
   }
 
   render() {
