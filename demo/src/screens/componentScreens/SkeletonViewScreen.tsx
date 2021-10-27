@@ -14,6 +14,7 @@ import {
   View,
   Colors
 } from 'react-native-ui-lib';
+// @ts-expect-error
 import * as ExampleScreenPresenter from '../ExampleScreenPresenter';
 
 const AVATAR_SIZE = 48;
@@ -171,8 +172,7 @@ export default class SkeletonViewScreen extends Component {
     return (
       <SkeletonView
         template={SkeletonView.templates.LIST_ITEM}
-        contentType={contentType}
-        size={size}
+        listProps={{size, contentType}}
         showContent={isDataAvailable}
         renderContent={this.renderListItemsData}
         customValue={{hasAvatar, hasThumbnail}}

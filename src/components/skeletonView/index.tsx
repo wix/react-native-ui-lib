@@ -29,6 +29,27 @@ enum ContentType {
   THUMBNAIL = 'thumbnail'
 }
 
+export interface SkeletonListProps {
+  /**
+   * The size of the skeleton view.
+   * Types: SMALL and LARGE (using SkeletonView.sizes.###)
+   */
+  size?: Size;
+  /**
+   * Add content to the skeleton.
+   * Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
+   */
+  contentType?: ContentType;
+  /**
+   * Whether to hide the list item template separator
+   */
+  hideSeparator?: boolean;
+  /**
+   * Whether to show the last list item template separator
+   */
+  showLastSeparator?: boolean;
+}
+
 export interface SkeletonViewProps extends AccessibilityProps {
   /**
    * The content has been loaded, start fading out the skeleton and fading in the content
@@ -55,6 +76,10 @@ export interface SkeletonViewProps extends AccessibilityProps {
    */
   template?: Template;
   /**
+   * Props that are available when using template={SkeletonView.templates.LIST_ITEM}
+   */
+  listProps?: SkeletonListProps;
+  /**
    * An object that holds the number of times the skeleton will appear, and (optionally) the key.
    * The key will actually be `${key}-${index}` if a key is given or `${index}` if no key is given.
    * IMPORTANT: your data (i.e. children \ renderContent) will NOT be duplicated.
@@ -67,21 +92,29 @@ export interface SkeletonViewProps extends AccessibilityProps {
    */
   timesKey?: string;
   /**
-   * The size of the skeleton view.
-   * Types: SMALL and LARGE (using SkeletonView.sizes.###)
+   * @deprecated
+   * - Send via listProps instead.
+   * - The size of the skeleton view.
+   * - Types: SMALL and LARGE (using SkeletonView.sizes.###)
    */
   size?: Size;
   /**
-   * Add content to the skeleton.
-   * Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
+   * @deprecated
+   * - Send via listProps instead.
+   * - Add content to the skeleton.
+   * - Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
    */
   contentType?: ContentType;
   /**
-   * Whether to hide the list item template separator
+   * @deprecated
+   * - Send via listProps instead.
+   * - Whether to hide the list item template separator
    */
   hideSeparator?: boolean;
   /**
-   * Whether to show the last list item template separator
+   * @deprecated
+   * - Send via listProps instead.
+   * - Whether to show the last list item template separator
    */
   showLastSeparator?: boolean;
   /**
@@ -124,6 +157,7 @@ interface SkeletonState {
 class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   static defaultProps = {
     size: Size.SMALL,
+    // listProps: {size: Size.SMALL}, TODO: once size is deprecated remove it and add this
     borderRadius: BorderRadiuses.br10
   };
 
@@ -207,16 +241,19 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   };
 
   getContentSize = () => {
-    const {size} = this.props;
-    return size === Size.LARGE ? 48 : 40;
+    const {listProps, size} = this.props;
+    const _size = listProps?.size || size;
+    return _size === Size.LARGE ? 48 : 40;
   };
 
   renderListItemLeftContent = () => {
-    const {contentType, size} = this.props;
-    if (contentType) {
+    const {listProps, contentType, size} = this.props;
+    const _contentType = listProps?.contentType || contentType;
+    if (_contentType) {
+      const _size = listProps?.size || size;
       const contentSize = this.getContentSize();
-      const circleOverride = contentType === ContentType.AVATAR;
-      const style = {marginRight: size === Size.LARGE ? 16 : 14};
+      const circleOverride = _contentType === ContentType.AVATAR;
+      const style = {marginRight: _size === Size.LARGE ? 16 : 14};
       return (
         <ShimmerPlaceholder
           {...this.getDefaultSkeletonProps({circleOverride, style})}
@@ -239,16 +276,19 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   };
 
   renderListItemContentStrips = () => {
-    const {contentType, size, hideSeparator} = this.props;
-    const customLengths = contentType === ContentType.AVATAR ? [undefined, 50] : undefined;
-    const height = size === Size.LARGE ? 95 : 75;
+    const {listProps, contentType, size, hideSeparator} = this.props;
+    const _contentType = listProps?.contentType || contentType;
+    const _size = listProps?.size || size;
+    const _hideSeparator = listProps?.hideSeparator || hideSeparator;
+    const customLengths = _contentType === ContentType.AVATAR ? [undefined, 50] : undefined;
+    const height = _size === Size.LARGE ? 95 : 75;
     const lengths = _.merge([90, 180, 160], customLengths);
-    const topMargins = [0, size === Size.LARGE ? 16 : 8, 8];
+    const topMargins = [0, _size === Size.LARGE ? 16 : 8, 8];
     return (
-      <View width={'100%'} height={height} centerV style={!hideSeparator && Dividers.d10}>
+      <View width={'100%'} height={height} centerV style={!_hideSeparator && Dividers.d10}>
         {this.renderStrip(true, lengths[0], topMargins[0])}
         {this.renderStrip(false, lengths[1], topMargins[1])}
-        {size === Size.LARGE && this.renderStrip(false, lengths[2], topMargins[2])}
+        {_size === Size.LARGE && this.renderStrip(false, lengths[2], topMargins[2])}
       </View>
     );
   };
@@ -345,9 +385,11 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
       return null;
     }
 
-    const {times, timesKey, showLastSeparator, hideSeparator, renderContent, testID} = this.props;
+    const {times, timesKey, listProps, showLastSeparator, hideSeparator, renderContent, testID} = this.props;
 
     if (times) {
+      const _hideSeparator = listProps?.hideSeparator || hideSeparator;
+      const _showLastSeparator = listProps?.showLastSeparator || showLastSeparator;
       return _.times(times, index => {
         const key = timesKey ? `${timesKey}-${index}` : `${index}`;
         return (
@@ -356,7 +398,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
             key={key}
             testID={`${testID}-${index}`}
             renderContent={index === 0 ? renderContent : this.renderNothing}
-            hideSeparator={hideSeparator || (!showLastSeparator && index === times - 1)}
+            hideSeparator={_hideSeparator || (!_showLastSeparator && index === times - 1)}
             times={undefined}
           />
         );
