@@ -66,6 +66,9 @@ module.exports = {
       get HintsScreen() {
         return require('./screens/componentScreens/HintsScreen').default;
       },
+      get IconScreen() {
+        return require('./screens/componentScreens/IconScreen').default;
+      },
       get ImageScreen() {
         return require('./screens/componentScreens/ImageScreen').default;
       },

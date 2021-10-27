@@ -1,5 +1,6 @@
 import React from 'react';
 import { LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
+import Reanimated from 'react-native-reanimated';
 export declare type SegmentedControlItemProps = {
     /**
      * The label of the segment.
@@ -20,9 +21,9 @@ export declare type SegmentedControlItemProps = {
 };
 export declare type SegmentProps = SegmentedControlItemProps & {
     /**
-     * Is the item selected.
+     * Shared value of the current selected index.
      */
-    isSelected?: boolean;
+    selectedIndex?: Reanimated.SharedValue<number>;
     /**
      * The color of the active segment (label and outline).
      */
@@ -34,7 +35,7 @@ export declare type SegmentProps = SegmentedControlItemProps & {
     /**
      * Callback for when segment has pressed.
      */
-    onPress: (index: number) => void;
+    onPress?: (index: number) => void;
     /**
      * The index of the segment.
      */
@@ -47,9 +48,9 @@ export declare type SegmentProps = SegmentedControlItemProps & {
 };
 declare const _default: React.ComponentClass<SegmentedControlItemProps & {
     /**
-     * Is the item selected.
+     * Shared value of the current selected index.
      */
-    isSelected?: boolean | undefined;
+    selectedIndex?: Reanimated.SharedValue<number> | undefined;
     /**
      * The color of the active segment (label and outline).
      */
@@ -61,7 +62,7 @@ declare const _default: React.ComponentClass<SegmentedControlItemProps & {
     /**
      * Callback for when segment has pressed.
      */
-    onPress: (index: number) => void;
+    onPress?: ((index: number) => void) | undefined;
     /**
      * The index of the segment.
      */

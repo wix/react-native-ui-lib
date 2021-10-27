@@ -9,11 +9,15 @@ export interface FieldStateProps extends InputProps {
      */
     validate?: Validator | Validator[];
     /**
+     * The validation message to display when field is invalid (depends on validate)
+     */
+    validationMessage?: string | string[];
+    /**
      * Callback for when field validity has changed
      */
     onChangeValidity?: (isValid: boolean) => void;
 }
-export default function useFieldState({ validate, validateOnBlur, validateOnChange, validateOnStart, onChangeValidity, ...props }: FieldStateProps): {
+export default function useFieldState({ validate, validationMessage, validateOnBlur, validateOnChange, validateOnStart, onChangeValidity, ...props }: FieldStateProps): {
     onFocus: (...args: any) => void;
     onBlur: (...args: any) => void;
     onChangeText: (text: any) => void;

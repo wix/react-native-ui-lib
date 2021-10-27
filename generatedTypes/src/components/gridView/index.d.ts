@@ -48,6 +48,7 @@ declare class GridView extends UIComponent<GridViewProps, State> {
         itemSpacing: number;
     };
     private itemSize?;
+    private dimensionsChangeListener;
     constructor(props: ExistProps);
     static getDerivedStateFromProps(nextProps: ExistProps, prevState: State): {
         viewWidth: number;
