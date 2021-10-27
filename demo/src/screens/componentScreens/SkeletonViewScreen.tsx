@@ -119,9 +119,9 @@ export default class SkeletonViewScreen extends Component {
     );
   };
 
-  renderListItemsData = (contentData?: any) => {
+  renderListItemsData = (customValue?: any) => {
     const {isLarge} = this.state;
-    const {hasAvatar, hasThumbnail} = contentData || {};
+    const {hasAvatar, hasThumbnail} = customValue || {};
 
     return (
       <React.Fragment>
@@ -175,7 +175,7 @@ export default class SkeletonViewScreen extends Component {
         size={size}
         showContent={isDataAvailable}
         renderContent={this.renderListItemsData}
-        contentData={{hasAvatar, hasThumbnail}}
+        customValue={{hasAvatar, hasThumbnail}}
         times={NUMBER_OF_ITEMS_TO_SHOW}
       />
     );
