@@ -61,9 +61,9 @@ export interface SkeletonViewProps extends AccessibilityProps {
   showContent?: boolean;
   /**
    * A function that will render the content once the content is ready (i.e. showContent is true).
-   * The method will be called with the Skeleton's contentData (i.e. renderContent(props?.customValue))
+   * The method will be called with the Skeleton's customValue (i.e. renderContent(props?.customValue))
    */
-  renderContent?: (contentData?: any) => React.ReactNode;
+  renderContent?: (customValue?: any) => React.ReactNode;
   /**
    * Custom value of any type to pass on to SkeletonView and receive back in the renderContent callback.
    */
