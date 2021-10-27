@@ -150,9 +150,6 @@ const Dialog = (props: DialogProps) => {
 export default Dialog;
 
 const styles = StyleSheet.create({
-  gestureHandler: {
-    flex: 1
-  },
   panView: {
     position: 'absolute'
   }
