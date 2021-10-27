@@ -27,7 +27,7 @@ export {
 export {default as ActionBar, ActionBarProps} from './src/components/actionBar';
 export {default as Avatar, AvatarProps} from './src/components/avatar';
 export {default as Badge, BadgeProps} from './src/components/badge';
-export {default as Card, CardProps, CardSectionProps} from './src/components/card';
+export {default as Card, CardProps, CardSectionProps, CardSelectionOptions} from './src/components/card';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './src/components/connectionStatusBar';
 export {default as Constants} from './src/helpers/Constants';
 export {default as GradientSlider, GradientSliderProps} from './src/components/slider/GradientSlider';

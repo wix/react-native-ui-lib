@@ -24,7 +24,7 @@ export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarProps} from './components/avatar';
 export {AvatarHelper} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
-export {default as Card, CardProps, CardSectionProps} from './components/card';
+export {default as Card, CardProps, CardSectionProps, CardSelectionOptions} from './components/card';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Constants} from './helpers/Constants';
 export {default as HapticService, HapticType} from './services/HapticService';
