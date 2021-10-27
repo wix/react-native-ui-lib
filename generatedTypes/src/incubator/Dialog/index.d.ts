@@ -32,6 +32,7 @@ interface _DialogProps extends AlignmentModifiers {
      * Used to locate this view in end-to-end tests
      * The container has the unchanged id.
      * Currently supported inner IDs:
+     * TODO: add missing <TestID>(s?)
      * <TestID>.modal - the Modal's id.
      * <TestID>.overlayFadingBackground - the fading background id.
      */
