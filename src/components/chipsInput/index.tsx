@@ -26,11 +26,11 @@ export type ChipsInputProps = TypographyModifiers & TextFieldProps & {
   /**
   * DEPRECATED: use chips instead. list of tags. can be string boolean or custom object when implementing getLabel
   */
-  tags?: Array<ChipType>;
+  tags?: ChipType[];
   /**
   * list of tags. can be string boolean or custom object when implementing getLabel
   */
-  chips?: Array<ChipsInputChipProps>;
+  chips?: ChipsInputChipProps[];
   /** 
    * Style your chips
    */
