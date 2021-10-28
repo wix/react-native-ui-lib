@@ -14,9 +14,6 @@ if (isRelease) {
   VERSION = cp.execSync(`buildkite-agent meta-data get version`).toString();
 }
 
-// const branch = process.env.BUILDKITE_BRANCH;
-
-// const ONLY_ON_BRANCH = `origin/${branch || 'master'}`;
 const VERSION_TAG = isRelease ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
 function run() {
@@ -32,17 +29,6 @@ function validateEnv() {
   if (!process.env.CI) {
     throw new Error('releasing is only available from CI');
   }
-
-  // if (!process.env.JENKINS_MASTER) {
-  //   console.log('not publishing on a different build');
-  //   return false;
-  // }
-
-  // if (process.env.GIT_BRANCH !== ONLY_ON_BRANCH) {
-  //   console.log(`not publishing on branch ${process.env.GIT_BRANCH}`);
-  //   return false;
-  // }
-
   return true;
 }
 
@@ -101,7 +87,7 @@ function tagAndPublish(newVersion) {
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }
-  exec.execSyncSilent(`git push deploy ${newVersion} || true`);
+  exec.execSyncSilent(`git push deploy ${newVersion}`);
 }
 
 run();

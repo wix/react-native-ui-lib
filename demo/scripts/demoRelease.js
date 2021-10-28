@@ -12,12 +12,6 @@ if (isRelease) {
   VERSION = cp.execSync(`buildkite-agent meta-data get version`).toString();
 }
 
-
-
-// const isRelease = process.env.RELEASE_BUILD === 'true';
-// const branch = process.env.BRANCH;
-
-// const ONLY_ON_BRANCH = `origin/${branch || 'master'}`;
 const VERSION_TAG = isRelease ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
 
@@ -25,7 +19,6 @@ function run() {
   if (!validateEnv()) {
     return;
   }
-  // setupGit();
   createNpmRc();
   versionTagAndPublish();
 }
@@ -34,28 +27,8 @@ function validateEnv() {
   if (!process.env.CI) {
     throw new Error('releasing is only available from CI');
   }
-
-  // if (!process.env.JENKINS_MASTER) {
-  //   console.log('not publishing on a different build');
-  //   return false;
-  // }
-
-  // if (process.env.GIT_BRANCH !== ONLY_ON_BRANCH) {
-  //   console.log(`not publishing on branch ${process.env.GIT_BRANCH}`);
-  //   return false;
-  // }
-
   return true;
 }
-
-// function setupGit() {
-//   exec.execSyncSilent('git config --global push.default simple');
-//   exec.execSyncSilent(`git config --global user.email "${process.env.GIT_EMAIL}"`);
-//   exec.execSyncSilent(`git config --global user.name "${process.env.GIT_USER}"`);
-//   const remoteUrl = new RegExp('https?://(\\S+)').exec(exec.execSyncRead('git remote -v'))[1];
-//   exec.execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
-//   // exec.execSync(`git checkout ${ONLY_ON_BRANCH}`);
-// }
 
 function createNpmRc() {
   exec.execSync('rm -f package-lock.json');
@@ -97,8 +70,8 @@ function tryPublishAndTag(version) {
 
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
-  exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
-  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
+  // exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
+  // exec.execSync(`npm publish --tag ${VERSION_TAG}`);
 }
 
 run();

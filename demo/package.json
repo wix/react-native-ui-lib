@@ -13,7 +13,7 @@
   },
   "scripts": {
     "release": "node ./scripts/release.js",
-    "bkRelease": "node ./scripts/bkRelease.js"
+    "demoRelease": "node ./scripts/demoRelease.js"
   },
   "devDependencies": {
     "react-native-ui-lib": "*",
