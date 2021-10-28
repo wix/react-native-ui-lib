@@ -2,5 +2,5 @@
 
 pushd demo
 npm install
-npm run bkRelease
+npm run demoRelease
 popd
