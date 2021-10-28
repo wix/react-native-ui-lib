@@ -8,24 +8,14 @@ const p = require('path');
 
 // Export buildkite variables for Release build
 // We cast toString() because function returns 'object'
-let isRelease, VERSION;
-if (process.env.BUILDKITE_MESSAGE.match(/^release$/i)) {
-  isRelease = cp.execSync(`buildkite-agent meta-data get release-build`).toString();
-  isRelease = (isRelease === 'true');
+const isRelease = process.env.BUILDKITE_MESSAGE.match(/^release$/i);
+let VERSION;
+if (isRelease) {
   VERSION = cp.execSync(`buildkite-agent meta-data get version`).toString();
-  if (isRelease && Number(VERSION) === 0) {
-    throw new Error('Version can not be 0. Please specify the correct version...')
-  }
 }
 
-
-// const isRelease = process.env.RELEASE_BUILD === 'true';
-const branch = process.env.BUILDKITE_BRANCH;
-
-// const ONLY_ON_BRANCH = `origin/${branch || 'master'}`;
 const VERSION_TAG = isRelease ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
-
 function run() {
   if (!validateEnv()) {
     return;
@@ -39,17 +29,6 @@ function validateEnv() {
   if (!process.env.CI) {
     throw new Error('releasing is only available from CI');
   }
-
-  // if (!process.env.JENKINS_MASTER) {
-  //   console.log('not publishing on a different build');
-  //   return false;
-  // }
-
-  // if (process.env.GIT_BRANCH !== ONLY_ON_BRANCH) {
-  //   console.log(`not publishing on branch ${process.env.GIT_BRANCH}`);
-  //   return false;
-  // }
-
   return true;
 }
 
@@ -100,6 +79,7 @@ function tryPublishAndTag(version) {
   }
 }
 
+
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
   // exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
@@ -107,7 +87,7 @@ function tagAndPublish(newVersion) {
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }
-  exec.execSyncSilent(`git push deploy ${newVersion} || true`);
+  exec.execSync(`git push deploy ${newVersion}`);
 }
 
 run();
