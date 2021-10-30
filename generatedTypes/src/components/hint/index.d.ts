@@ -1,4 +1,4 @@
-import React, { Component, ReactElement, ElementRef } from 'react';
+import React, { Component, ReactElement, ElementRef, PropsWithChildren } from 'react';
 import { Animated, GestureResponderEvent, ImageSourcePropType, ImageStyle, StyleProp, TextStyle, ViewStyle, LayoutChangeEvent, View as RNView } from 'react-native';
 declare enum TARGET_POSITIONS {
     LEFT = "left",
@@ -23,6 +23,10 @@ export interface HintProps {
      * Control the visibility of the hint
      */
     visible?: boolean;
+    /**
+     * Provide a target ref for the hint
+     */
+    targetRef?: React.RefObject<any>;
     /**
      * The hint background color
      */
@@ -126,7 +130,10 @@ declare class Hint extends Component<HintProps, HintState> {
         hintUnmounted: boolean;
     };
     visibleAnimated: Animated.Value;
+    constructor(props: PropsWithChildren<HintProps>);
+    componentDidMount(): void;
     componentDidUpdate(prevProps: HintProps): void;
+    measureTargetRefLayout: (targetRef: React.RefObject<any> | undefined) => void;
     animateHint: () => void;
     toggleAnimationEndedToRemoveHint: () => void;
     focusAccessibilityOnHint: () => void;

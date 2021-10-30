@@ -1,6 +1,6 @@
 // TODO: Add support to custom hint rendering
 import _ from 'lodash';
-import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
+import React, {Component, ReactElement, isValidElement, ElementRef, PropsWithChildren} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants} from '../../helpers';
+import {LogService} from '../../services';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
@@ -61,6 +62,10 @@ export interface HintProps {
    * Control the visibility of the hint
    */
   visible?: boolean;
+  /**
+   * Provide a target ref for the hint
+   */
+  targetRef?: React.RefObject<any>;
   /**
    * The hint background color
    */
@@ -172,11 +177,40 @@ class Hint extends Component<HintProps, HintState> {
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
 
-  componentDidUpdate(prevProps: HintProps) {
-    if (prevProps.visible !== this.props.visible) {
-      this.animateHint();
+  constructor(props: PropsWithChildren<HintProps>) {
+    super(props);
+
+    if (props.children) {
+      LogService.deprecationWarn({component: 'Hint', oldProp: 'children', newProp: 'targetRef'});
     }
   }
+
+  componentDidMount() {
+    const {visible, targetRef} = this.props;
+    if (visible) {
+      this.measureTargetRefLayout(targetRef);
+    }
+  }
+
+  componentDidUpdate(prevProps: HintProps) {
+    const {targetRef} = this.props;
+    if (prevProps.visible !== this.props.visible) {
+      this.animateHint();
+
+      if (this.props.visible && targetRef) {
+        this.measureTargetRefLayout(targetRef);
+      }
+    }
+  }
+
+  measureTargetRefLayout = (targetRef: React.RefObject<any> | undefined) => {
+    setTimeout(() => {
+      targetRef?.current?.measure((_x: number, _y: number, width: number, height: number, pageX: number, pageY: number) => {
+        const targetLayoutInWindow = {x: pageX, y: pageY, width, height};
+        this.setState({targetLayoutInWindow});
+      });
+    });
+  };
 
   animateHint = () => {
     Animated.timing(this.visibleAnimated, {
@@ -244,14 +278,14 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get targetLayout() {
-    const {onBackgroundPress, targetFrame} = this.props;
+    const {onBackgroundPress, targetRef, targetFrame} = this.props;
     const {targetLayout, targetLayoutInWindow} = this.state;
 
     if (targetFrame) {
       return targetFrame;
     }
 
-    return onBackgroundPress ? targetLayoutInWindow : targetLayout;
+    return onBackgroundPress || targetRef ? targetLayoutInWindow : targetLayout;
   }
 
   get showHint() {
