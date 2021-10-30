@@ -1,42 +1,31 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import {Colors, View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib';
+import {Colors, View, Text, Hint, Button, Switch, Assets, Incubator} from 'react-native-ui-lib';
+// @ts-expect-error
+import {renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 const settingsIcon = require('../../assets/icons/settings.png');
 const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 
 type HintScreenProps = {};
-type HintScreenState = {
-  showHint: boolean;
-  useShortMessage: boolean;
-  showBottomHint: boolean;
-  showIcon: boolean;
-  targetPosition: string;
-  useTargetFrame?: boolean;
-  useSideTip?: boolean;
-  showCustomContent?: boolean;
-  showReactionStrip?: boolean;
-  enableShadow?: boolean;
-};
 
-export default class HintsScreen extends Component<HintScreenProps, HintScreenState> {
-  constructor(props: HintScreenProps) {
-    super(props);
+export default class HintsScreen extends Component<HintScreenProps> {
+  targetRef = React.createRef();
 
-    this.state = {
-      showHint: true,
-      useShortMessage: false,
-      showBottomHint: false,
-      showIcon: false,
-      targetPosition: 'flex-start',
-      // useTargetFrame: true,
-      useSideTip: false,
-      showCustomContent: false,
-      showReactionStrip: false,
-      enableShadow: false
-    };
-  }
+  state = {
+    showHint: true,
+    useShortMessage: false,
+    showBottomHint: false,
+    showIcon: false,
+    targetPosition: 'flex-start',
+    useTargetRef: false,
+    useTargetFrame: false,
+    useSideTip: false,
+    showCustomContent: false,
+    showReactionStrip: false,
+    enableShadow: false
+  };
 
   toggleHintPosition = () => {
     this.setState({
@@ -74,6 +63,84 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
     );
   }
 
+  renderOptionsFAB() {
+    return (
+      <View absR absB padding-page style={{zIndex: 10}}>
+        <Incubator.ExpandableOverlay
+          useDialog
+          expandableContent={this.renderScreenOptions()}
+          dialogProps={{bottom: true}}
+        >
+          <Button round iconSource={Assets.icons.demo.settings} white/>
+        </Incubator.ExpandableOverlay>
+      </View>
+    );
+  }
+
+  renderScreenOptions() {
+    const {showIcon, useTargetRef, useTargetFrame, showCustomContent, showReactionStrip, enableShadow} = this.state;
+    return (
+      <View bg-white br20 padding-20 collapsable={false}>
+        <Text h2 marginB-s4>
+          Hint Options
+        </Text>
+        {renderMultipleSegmentOptions.call(this, 'Button Position', 'targetPosition', [
+          {label: 'Left', value: 'flex-start'},
+          {label: 'Center', value: 'center'},
+          {label: 'Right', value: 'flex-end'}
+        ])}
+
+        {renderMultipleSegmentOptions.call(this, 'Tip Position', 'useSideTip', [
+          {label: 'Side Tip', value: true},
+          {label: 'Middle Top', value: false}
+        ])}
+
+        {renderMultipleSegmentOptions.call(this, 'Hint Position', 'showBottomHint', [
+          {label: 'Above', value: false},
+          {label: 'Under', value: true}
+        ])}
+
+        {renderMultipleSegmentOptions.call(this, 'Message Length', 'useShortMessage', [
+          {label: 'Short', value: true},
+          {label: 'Long', value: false}
+        ])}
+
+        <View row centerV marginV-10>
+          <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})}/>
+          <Text marginL-10>Toggle Icon</Text>
+        </View>
+
+        <View row centerV marginV-10>
+          <Switch value={enableShadow} onValueChange={value => this.setState({enableShadow: value})}/>
+          <Text marginL-10>Toggle shadow</Text>
+        </View>
+
+        <View row centerV marginV-10>
+          <Switch value={useTargetRef} onValueChange={value => this.setState({useTargetRef: value, showHint: false})}/>
+          <Text marginL-10>Use target ref</Text>
+        </View>
+
+        <View row centerV marginV-10>
+          <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})}/>
+          <Text marginL-10>Use random position</Text>
+        </View>
+
+        <View row centerV marginV-10>
+          <Switch value={showCustomContent} onValueChange={value => this.setState({showCustomContent: value})}/>
+          <Text marginL-10>Show custom content</Text>
+        </View>
+
+        <View row centerV marginV-10>
+          <Switch
+            value={showReactionStrip}
+            onValueChange={value => this.setState({showReactionStrip: value, enableShadow: true})}
+          />
+          <Text marginL-10>Show reaction strip</Text>
+        </View>
+      </View>
+    );
+  }
+
   render() {
     const {
       showHint,
@@ -82,6 +149,7 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
       targetPosition,
       useShortMessage,
       useSideTip,
+      useTargetRef,
       useTargetFrame,
       showCustomContent,
       showReactionStrip,
@@ -104,7 +172,7 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
         >
           {/* <Button bg-purple30 label="Background" style={{position: 'absolute', right: 50, bottom: 100}}/> */}
           <Hint
-            visible={showHint}
+            visible={!useTargetRef && showHint}
             // color={Colors.orange30}
             message={message}
             // message={
@@ -145,6 +213,7 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
                 onPress={() => this.setState({showHint: !showHint})}
                 style={{alignSelf: targetPosition}}
                 testID={'Hint.button'}
+                ref={this.targetRef}
                 // style={{alignSelf: targetPosition, marginLeft: 30}}
                 // style={{alignSelf: targetPosition, position: 'absolute', top: 160, left: 100}}
               />
@@ -163,72 +232,17 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
               }}
             />
           )}
+
+          <Hint
+            visible={useTargetRef && showHint}
+            message="This Hint is using targetRef"
+            targetRef={this.targetRef}
+            position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
+            useSideTip={useSideTip}
+          />
         </View>
 
-        <View padding-20 collapsable={false}>
-          <RadioGroup
-            row
-            centerV
-            marginB-20
-            initialValue={targetPosition}
-            onValueChange={(value: string) => this.setState({targetPosition: value})}
-          >
-            <Text marginR-10>Button Position:</Text>
-            <RadioButton value={'flex-start'} label={'Left'} marginR-10/>
-            <RadioButton value={'center'} label={'Center'} marginR-10/>
-            <RadioButton value={'flex-end'} label={'Right'} marginR-10/>
-          </RadioGroup>
-
-          <RadioGroup
-            row
-            centerV
-            marginB-20
-            initialValue={useSideTip}
-            onValueChange={(value: boolean) => this.setState({useSideTip: value})}
-          >
-            <Text marginR-10>Tip:</Text>
-            <RadioButton value label={'Side Tip'} marginR-10/>
-            <RadioButton value={false} label={'Middle Tip'} marginR-10/>
-          </RadioGroup>
-
-          <View row centerV marginV-10>
-            <Switch value={showBottomHint} onValueChange={this.toggleHintPosition}/>
-            <Text marginL-10>Toggle Hint Position</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={useShortMessage} onValueChange={() => this.setState({useShortMessage: !useShortMessage})}/>
-            <Text marginL-10>Toggle Message</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})}/>
-            <Text marginL-10>Toggle Icon</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={enableShadow} onValueChange={value => this.setState({enableShadow: value})}/>
-            <Text marginL-10>Toggle shadow</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})}/>
-            <Text marginL-10>Use random position</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={showCustomContent} onValueChange={value => this.setState({showCustomContent: value})}/>
-            <Text marginL-10>Show custom content</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch
-              value={showReactionStrip}
-              onValueChange={value => this.setState({showReactionStrip: value, enableShadow: true})}
-            />
-            <Text marginL-10>Show reaction strip</Text>
-          </View>
-        </View>
+        {this.renderOptionsFAB()}
       </View>
     );
   }
