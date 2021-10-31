@@ -8,9 +8,7 @@ import {
   ImageBackground,
   ImageSourcePropType,
   NativeSyntheticEvent,
-  ImageErrorEventData,
-  ViewStyle,
-  ImageStyle
+  ImageErrorEventData
 } from 'react-native';
 import Constants from '../../helpers/Constants';
 import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
@@ -79,11 +77,6 @@ type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 type State = {
   error: boolean,
   prevSource: ImageSourcePropType
-}
-
-type ImageStyleOption = {
-  flexShrink?: ViewStyle['flexShrink'];
-  resizeMode?: ImageStyle['resizeMode'];
 }
 
 /**
@@ -192,12 +185,12 @@ class Image extends PureComponent<Props, State> {
           cover && styles.coverImage
         ]}
       >
-        {this.renderImage({flexShrink: 1, resizeMode: 'contain'})}
+        {this.renderImage(true)}
       </View>
     );
   };
 
-  renderImage = ({flexShrink, resizeMode}: ImageStyleOption) => {
+  renderImage = (useImageInsideContainer: boolean) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
@@ -216,6 +209,7 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
+    const resizeMode = useImageInsideContainer ? 'contain' : undefined;
 
     return (
       // @ts-ignore
@@ -226,9 +220,9 @@ class Image extends PureComponent<Props, State> {
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
-          margins,
+          !useImageInsideContainer && margins,
           style,
-          {flexShrink}
+          useImageInsideContainer && styles.shrink
         ]}
         resizeMode={resizeMode}
         accessible={false}
@@ -254,7 +248,7 @@ class Image extends PureComponent<Props, State> {
     if (error) {
       return this.renderErrorImage();
     } else {
-      return this.renderImage({});
+      return this.renderImage(false);
     }
   }
 
@@ -283,6 +277,9 @@ const styles = StyleSheet.create({
   errorImageContainer: {
     backgroundColor: Colors.grey70,
     zIndex: -1
+  },
+  shrink: {
+    flexShrink: 1
   }
 });
 
