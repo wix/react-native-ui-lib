@@ -2,6 +2,11 @@ import React, { PropsWithChildren } from 'react';
 import { TouchableOpacityProps } from '../../components/touchableOpacity';
 import { ModalProps, ModalTopBarProps } from '../../components/modal';
 import { DialogProps } from '../../components/dialog';
+export interface RenderCustomOverlayProps {
+    expandableVisible: boolean;
+    openExpandable: () => void;
+    closeExpandable: () => void;
+}
 export declare type ExpandableOverlayProps = TouchableOpacityProps & PropsWithChildren<{
     /**
      * The content to render inside the expandable modal/dialog
@@ -27,6 +32,10 @@ export declare type ExpandableOverlayProps = TouchableOpacityProps & PropsWithCh
      * The modal top bar props to pass on
      */
     topBarProps?: ModalTopBarProps;
+    /**
+     * A custom overlay to render instead of Modal or Dialog components
+     */
+    renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement;
 }>;
 interface ExpandableOverlayMethods {
     openExpandable: () => void;
@@ -57,6 +66,10 @@ declare const _default: React.ForwardRefExoticComponent<TouchableOpacityProps & 
      * The modal top bar props to pass on
      */
     topBarProps?: ModalTopBarProps | undefined;
+    /**
+     * A custom overlay to render instead of Modal or Dialog components
+     */
+    renderCustomOverlay?: ((props: RenderCustomOverlayProps) => React.ReactElement<any, string | React.JSXElementConstructor<any>>) | undefined;
 } & {
     children?: React.ReactNode;
 } & React.RefAttributes<ExpandableOverlayMethods>>;
