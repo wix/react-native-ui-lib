@@ -1,6 +1,7 @@
 import React from 'react';
 import { ViewStyle } from 'react-native';
 import { ViewProps } from '../view';
+import { TouchableOpacityProps as NativeTouchableOpacityProps } from '../../incubator/TouchableOpacity';
 import { TouchableOpacityProps } from '../touchableOpacity';
 import CardImage from './CardImage';
 import CardSection, { CardSectionProps } from './CardSection';
@@ -13,7 +14,7 @@ export interface CardSelectionOptions {
     hideIndicator?: boolean;
 }
 export { CardSectionProps };
-export declare type CardProps = ViewProps & TouchableOpacityProps & {
+export declare type CardProps = ViewProps & Omit<TouchableOpacityProps, 'useNative'> & {
     /**
      * card custom width
      */
@@ -62,8 +63,18 @@ export declare type CardProps = ViewProps & TouchableOpacityProps & {
      * Custom options for styling the selection indication
      */
     selectionOptions?: CardSelectionOptions;
+    /**
+     * '@deprecated
+     * - Please start using nativeProps instead
+     * - Should use a more native touchable opacity component
+     */
+    useNative?: boolean;
+    /**
+     * Should use a more native touchable opacity component.
+     */
+    nativeProps?: Omit<Exclude<NativeTouchableOpacityProps, TouchableOpacityProps>, 'style'>;
 };
-declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
+declare const _default: React.ComponentClass<ViewProps & Omit<TouchableOpacityProps, "useNative"> & {
     /**
      * card custom width
      */
@@ -112,6 +123,16 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Custom options for styling the selection indication
      */
     selectionOptions?: CardSelectionOptions | undefined;
+    /**
+     * '@deprecated
+     * - Please start using nativeProps instead
+     * - Should use a more native touchable opacity component
+     */
+    useNative?: boolean | undefined;
+    /**
+     * Should use a more native touchable opacity component.
+     */
+    nativeProps?: Omit<NativeTouchableOpacityProps, "style"> | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & {

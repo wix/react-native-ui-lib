@@ -97,10 +97,8 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
         style={{marginBottom: 15}}
         onPress={() => {}}
         borderRadius={borderRadius}
-        useNative
         backgroundColor={Colors.white}
-        activeOpacity={1}
-        activeScale={isImageOnLeft ? 0.96 : 1.04}
+        nativeProps={{activeOpacity: 1, activeScale: isImageOnLeft ? 0.96 : 1.04}}
       >
         {isImageOnLeft && (
           <Card.Section
@@ -137,7 +135,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
   renderCoupon = (cardProps: CardProps) => {
     return (
-      <Card {...cardProps} flex height={160} onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
+      <Card {...cardProps} flex height={160} onPress={() => {}} nativeProps={{activeOpacity: 1, activeScale: 0.96}}>
         <Card.Section
           bg-red30
           padding-20
@@ -170,7 +168,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
   renderComplexImage = (cardProps: CardProps, image: React.ReactNode) => {
     return (
-      <Card {...cardProps} flex marginV-10 onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
+      <Card {...cardProps} flex marginV-10 onPress={() => {}} nativeProps={{activeOpacity: 1, activeScale: 0.96}}>
         {image}
         <Card.Section
           bg-white

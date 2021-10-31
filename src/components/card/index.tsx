@@ -6,6 +6,7 @@ import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View, {ViewProps} from '../view';
+import {TouchableOpacityProps as NativeTouchableOpacityProps} from '../../incubator/TouchableOpacity';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
@@ -39,7 +40,7 @@ export interface CardSelectionOptions {
 
 export {CardSectionProps};
 export type CardProps = ViewProps &
-  TouchableOpacityProps & {
+  Omit<TouchableOpacityProps, 'useNative'> & {
     /**
      * card custom width
      */
@@ -88,6 +89,16 @@ export type CardProps = ViewProps &
      * Custom options for styling the selection indication
      */
     selectionOptions?: CardSelectionOptions;
+    /**
+     * '@deprecated
+     * - Please start using nativeProps instead
+     * - Should use a more native touchable opacity component
+     */
+    useNative?: boolean;
+    /**
+     * Should use a more native touchable opacity component.
+     */
+    nativeProps?: Omit<Exclude<NativeTouchableOpacityProps, TouchableOpacityProps>, 'style'>;
   };
 
 type PropTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & CardProps;
@@ -257,7 +268,8 @@ class Card extends PureComponent<PropTypes, State> {
   };
 
   render() {
-    const {onPress, onLongPress, style, selected, containerStyle, enableBlur, forwardedRef, ...others} = this.props;
+    const {onPress, onLongPress, style, selected, containerStyle, enableBlur, forwardedRef, nativeProps, ...others} =
+      this.props;
     const blurOptions = this.getBlurOptions();
     const Container = onPress || onLongPress ? TouchableOpacity : View;
     const brRadius = this.borderRadius;
@@ -279,6 +291,8 @@ class Card extends PureComponent<PropTypes, State> {
         activeOpacity={0.6}
         accessibilityState={{selected}}
         {...others}
+        {...nativeProps}
+        useNative={!_.isEmpty(nativeProps)}
         ref={forwardedRef}
       >
         {Constants.isIOS && enableBlur && BlurView && (
