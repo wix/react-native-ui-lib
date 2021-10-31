@@ -179,9 +179,7 @@ class Image extends PureComponent<Props, State> {
     const {
       style,
       cover,
-      modifiers,
-      height,
-      width
+      modifiers
     } = this.props;
     const {margins} = modifiers;
 
@@ -190,9 +188,7 @@ class Image extends PureComponent<Props, State> {
         style={[
           margins,
           style,
-          {width, height},
           {backgroundColor: Colors.grey70},
-          {justifyContent: 'center', alignItems: 'center'},
           cover && styles.coverImage
         ]}
       >
