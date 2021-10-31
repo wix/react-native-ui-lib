@@ -81,7 +81,7 @@ type State = {
   prevSource: ImageSourcePropType
 }
 
-type ErrorImageStyles = {
+type ImageStyleOption = {
   flexShrink?: ViewStyle['flexShrink'];
   resizeMode?: ImageStyle['resizeMode'];
 }
@@ -201,7 +201,7 @@ class Image extends PureComponent<Props, State> {
     );
   };
 
-  renderImage = ({flexShrink, resizeMode}: ErrorImageStyles) => {
+  renderImage = ({flexShrink, resizeMode}: ImageStyleOption) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
