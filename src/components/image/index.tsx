@@ -188,7 +188,7 @@ class Image extends PureComponent<Props, State> {
         style={[
           margins,
           style,
-          {backgroundColor: Colors.grey70},
+          styles.errorImageContainer,
           cover && styles.coverImage
         ]}
       >
@@ -279,6 +279,10 @@ const styles = StyleSheet.create({
   },
   gifImage: {
     overflow: 'hidden'
+  },
+  errorImageContainer: {
+    backgroundColor: Colors.grey70,
+    zIndex: -1
   }
 });
 
