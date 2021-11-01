@@ -204,11 +204,19 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   measureTargetRefLayout = (targetRef: React.RefObject<any> | undefined) => {
+    const {onBackgroundPress} = this.props;
     setTimeout(() => {
-      targetRef?.current?.measure((_x: number, _y: number, width: number, height: number, pageX: number, pageY: number) => {
-        const targetLayoutInWindow = {x: pageX, y: pageY, width, height};
-        this.setState({targetLayoutInWindow});
-      });
+      if (!onBackgroundPress) {
+        targetRef?.current?.measure((_x: number, _y: number, width: number, height: number, pageX: number, pageY: number) => {
+          const targetLayoutInWindow = {x: pageX, y: pageY, width, height};
+          this.setState({targetLayoutInWindow});
+        });
+      } else {
+        targetRef?.current?.measureInWindow((x: number, y: number, width: number, height: number) => {
+          const targetLayoutInWindow = {x, y, width, height};
+          this.setState({targetLayoutInWindow});
+        });
+      }
     });
   };
 
