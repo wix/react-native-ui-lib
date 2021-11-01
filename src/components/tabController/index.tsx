@@ -129,7 +129,7 @@ function TabController({
       /* Items */
       items,
       ignoredItems,
-      itemsCount: items.length - ignoredItems.length,
+      itemsCount: items?.length - ignoredItems.length,
       /* Animated Values */
       targetPage,
       currentPage,
