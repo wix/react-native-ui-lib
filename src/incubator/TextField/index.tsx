@@ -84,7 +84,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | ((context: FieldContextType) => ViewStyle);
+    fieldStyle?: ViewStyle | ((context: FieldContextType, props: {preset: TextFieldProps['preset']}) => ViewStyle);
     /**
      * Container style of the whole component
      */
@@ -92,7 +92,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | null;
+    preset?: 'default' | null | string;
   };
 
 export type InternalTextFieldProps = PropsWithChildren<
@@ -154,7 +154,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
 
-  const fieldStyle = isFunction(fieldStyleProp) ? fieldStyleProp(context) : fieldStyleProp;
+  const fieldStyle = isFunction(fieldStyleProp) ? fieldStyleProp(context, {preset: props.preset}) : fieldStyleProp;
 
   return (
     <FieldContext.Provider value={context}>
