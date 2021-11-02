@@ -101,14 +101,14 @@ export default class ChipsInputScreen extends Component<{}, State> {
           {this.renderFormTypeInput()}
 
           <ChipsInput
-            containerStyle={{marginBottom: 25}}
+            containerStyle={styles.bottomMargin}
             placeholder="Enter Tags"
             chips={this.state.namesChips}
             validationErrorMessage="error validation message"
           />
 
           <ChipsInput
-            containerStyle={{marginBottom: 25}}
+            containerStyle={styles.bottomMargin}
             placeholder="Editing disabled"
             chips={this.state.nonRemovalChips}
             disableTagRemoval
@@ -117,14 +117,14 @@ export default class ChipsInputScreen extends Component<{}, State> {
 
           <Text text50 marginV-20>Old Usage</Text>
           <ChipsInput
-            containerStyle={{marginBottom: 25}}
+            containerStyle={styles.bottomMargin}
             placeholder="Enter Tags"
             tags={this.state.tags}
             validationErrorMessage="error validation message"
           />
           
           <ChipsInput
-            containerStyle={{marginBottom: 25}}
+            containerStyle={styles.bottomMargin}
             placeholder="Editing disabled"
             tags={this.state.tags2}
             disableTagRemoval
@@ -132,7 +132,7 @@ export default class ChipsInputScreen extends Component<{}, State> {
           />
           <ChipsInput
             ref={this.customChipsInput}
-            containerStyle={{marginBottom: 25}}
+            containerStyle={styles.bottomMargin}
             placeholder="With custom tags"
             tags={this.state.tags}
             renderTag={this.renderCustomTag}
