@@ -456,7 +456,7 @@ class ChipsInput extends Component<OwnProps, State> {
     return (
       <View style={styles.inputWrapper}>
         <TextField
-          ref={(r: RefObject<TextInput>) => (this.input = r)}
+          ref={this.input}
           text80
           blurOnSubmit={false}
           {...others}
