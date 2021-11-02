@@ -199,9 +199,11 @@ const DialogDismissibleView = (props: Props) => {
   }, []);
 
   const resetToShown = useCallback((left: number, top: number, direction: PanningDirections) => {
-    const toValue = [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT].includes(direction)
-      ? 1 + left / hiddenLocation.current.left
-      : 1 + top / hiddenLocation.current.top;
+    const toValue =
+        //@ts-expect-error
+        [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT].includes(direction)
+          ? 1 + left / hiddenLocation.current.left
+          : 1 + top / hiddenLocation.current.top;
 
     animateTo(toValue);
   },
