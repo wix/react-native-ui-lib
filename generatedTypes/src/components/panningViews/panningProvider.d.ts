@@ -5,7 +5,7 @@ export declare enum PanningDirectionsEnum {
     LEFT = "left",
     RIGHT = "right"
 }
-export declare type PanningDirectionsUnion = `${PanningDirectionsEnum}`;
+export declare type PanningDirectionsUnion = 'up' | 'down' | 'left' | 'right';
 export declare type PanningDirections = PanningDirectionsEnum | PanningDirectionsUnion;
 export interface PanLocationProps {
     left?: number;
