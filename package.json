@@ -21,7 +21,7 @@
     "android": "react-native run-android",
     "pretest": "npm run lint",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watch -- ./src/incubator/panView/__tests__/panningUtil.spec.js",
     "lint": "eslint src -c .eslintrc.js --ext .tsx,.ts,.js",
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha --compilers js:babel-core/register eslint-rules/tests/lib/rules",
