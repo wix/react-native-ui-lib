@@ -11,7 +11,6 @@ const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 type HintScreenProps = {};
 
 export default class HintsScreen extends Component<HintScreenProps> {
-  targetRef = React.createRef();
 
   state = {
     showHint: true,
@@ -191,7 +190,6 @@ export default class HintsScreen extends Component<HintScreenProps> {
                 onPress={this.toggleHint}
                 style={{alignSelf: targetPosition}}
                 testID={'Hint.button'}
-                ref={this.targetRef}
                 /* Change layout and position to test various cases */
                 // marginT-150
                 // style={{alignSelf: targetPosition, marginLeft: 30}}
