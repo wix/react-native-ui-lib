@@ -259,6 +259,11 @@ class ChipsInput extends Component<OwnProps, State> {
     const tagsCount = _.size(chips);
     const hasNoValue = _.isEmpty(value);
     const hasTags = tagsCount > 0;
+
+    const {disableTagRemoval} = this.props;
+    if (disableTagRemoval) {
+      return;
+    }
     
     if (hasNoValue && hasTags && _.isUndefined(chipIndexToRemove)) {
       this.setState({
@@ -272,11 +277,6 @@ class ChipsInput extends Component<OwnProps, State> {
   onKeyPress = (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     _.invoke(this.props, 'onKeyPress', event);
 
-    const {disableTagRemoval} = this.props;
-    if (disableTagRemoval) {
-      return;
-    }
-    
     const keyCode = _.get(event, 'nativeEvent.key');
     const pressedBackspace = keyCode === Constants.backspaceKey;
 
