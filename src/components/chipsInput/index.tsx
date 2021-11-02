@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component, RefObject} from 'react';
+import React, {Component} from 'react';
 import {NativeModules, StyleSheet, ViewStyle, Image, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, findNodeHandle, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography, Spacings} from '../../style';
