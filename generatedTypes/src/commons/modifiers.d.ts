@@ -90,8 +90,8 @@ export declare function extractModifierProps(props: Dictionary<any>): _.Dictiona
  * TODO:
  * @deprecated switch to Modifiers#extractComponentProps
  */
-export declare function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]): _.Omit<Partial<Dictionary<any>>, string>;
-export declare function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps?: string[]): _.Omit<Partial<Dictionary<any>>, string>;
+export declare function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]): _.Omit<_.Dictionary<any>, string>;
+export declare function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps?: string[]): _.Omit<_.Dictionary<any>, string>;
 export declare function getThemeProps(props?: any, context?: any): any;
 export declare function generateModifiersStyle(options: {
     color: boolean;

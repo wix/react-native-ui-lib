@@ -434,7 +434,7 @@ class Picker extends Component {
       return (
         <View left>
           <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
-            {renderPicker(value)}
+            {renderPicker(value, this.getLabel(value))}
           </Button>
           {this.renderExpandableModal()}
         </View>

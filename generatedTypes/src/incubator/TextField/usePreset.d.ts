@@ -78,6 +78,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     onAccessibilityTap?: (() => void) | undefined;
     onMagicTap?: (() => void) | undefined;
     accessibilityIgnoresInvertColors?: boolean | undefined;
+    textAlign?: "left" | "right" | "center" | undefined;
+    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     onBlur?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputFocusEventData>) => void) | undefined;
     onFocus?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputFocusEventData>) => void) | undefined;
     onPressIn?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").NativeTouchEvent>) => void) | undefined;
@@ -87,8 +89,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     maxFontSizeMultiplier?: number | null | undefined;
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
-    textAlign?: "left" | "right" | "center" | undefined;
-    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     value?: string | undefined;
     autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;
@@ -404,6 +404,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     onAccessibilityTap?: (() => void) | undefined;
     onMagicTap?: (() => void) | undefined;
     accessibilityIgnoresInvertColors?: boolean | undefined;
+    textAlign?: "left" | "right" | "center" | undefined;
+    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     onBlur?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputFocusEventData>) => void) | undefined;
     onFocus?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputFocusEventData>) => void) | undefined;
     onPressIn?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").NativeTouchEvent>) => void) | undefined;
@@ -413,8 +415,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     maxFontSizeMultiplier?: number | null | undefined;
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
-    textAlign?: "left" | "right" | "center" | undefined;
-    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     value?: string | undefined;
     autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;
@@ -842,6 +842,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     onAccessibilityTap?: (() => void) | undefined;
     onMagicTap?: (() => void) | undefined;
     accessibilityIgnoresInvertColors?: boolean | undefined;
+    textAlign?: "left" | "right" | "center" | undefined;
+    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     onBlur?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputFocusEventData>) => void) | undefined;
     onFocus?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputFocusEventData>) => void) | undefined;
     onPressIn?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").NativeTouchEvent>) => void) | undefined;
@@ -851,8 +853,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     maxFontSizeMultiplier?: number | null | undefined;
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
-    textAlign?: "left" | "right" | "center" | undefined;
-    textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
     value?: string | undefined;
     autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
     autoCorrect?: boolean | undefined;

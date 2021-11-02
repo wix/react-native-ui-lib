@@ -11,6 +11,7 @@ export const loadDemoConfigurations = () => {
     plus: require('./assets/icons/plus.png'),
     refresh: require('./assets/icons/refresh.png'),
     search: require('./assets/icons/search.png'),
+    settings: require('./assets/icons/settings.png'),
     share: require('./assets/icons/share.png')
   });
 

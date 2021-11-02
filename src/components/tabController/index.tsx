@@ -1,5 +1,5 @@
 // TODO: support commented props
-import React, {PropsWithChildren, useMemo, useEffect, useRef, useState} from 'react';
+import React, {PropsWithChildren, useMemo, useEffect, useRef, useState, useCallback} from 'react';
 import _ from 'lodash';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 import {Constants} from '../../helpers';
@@ -93,7 +93,12 @@ function TabController({
   const currentPage = useSharedValue(initialIndex);
   /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
   const targetPage = useSharedValue(initialIndex);
-  const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
+  // const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
+
+  const setCurrentIndex = useCallback(index => {
+    'worklet';
+    currentPage.value = index;
+  }, []);
 
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
@@ -102,7 +107,7 @@ function TabController({
   }, [selectedIndex]);
 
   useEffect(() => {
-    currentPage.value = initialIndex;
+    setCurrentIndex(initialIndex);
   }, [initialIndex]);
 
   useAnimatedReaction(() => {
@@ -124,13 +129,15 @@ function TabController({
       /* Items */
       items,
       ignoredItems,
+      itemsCount: items.length - ignoredItems.length,
       /* Animated Values */
       targetPage,
       currentPage,
-      carouselOffset,
+      // carouselOffset,
       containerWidth: screenWidth,
       /* Callbacks */
-      onChangeIndex
+      onChangeIndex,
+      setCurrentIndex
     };
   }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
 
