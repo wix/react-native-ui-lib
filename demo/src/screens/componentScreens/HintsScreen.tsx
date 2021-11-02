@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import {Colors, View, Text, Hint, Button, Switch, Assets, Incubator} from 'react-native-ui-lib';
+import {Colors, View, Text, Hint, Button, Assets, Incubator} from 'react-native-ui-lib';
 // @ts-expect-error
-import {renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
+import {renderMultipleSegmentOptions, renderBooleanOption} from '../ExampleScreenPresenter';
 
 const settingsIcon = require('../../assets/icons/settings.png');
 const reactions = ['❤️', '😮', '😔', '😂', '😡'];
@@ -19,12 +19,16 @@ export default class HintsScreen extends Component<HintScreenProps> {
     showBottomHint: false,
     showIcon: false,
     targetPosition: 'flex-start',
-    useTargetRef: false,
+    useBackdrop: true,
     useTargetFrame: false,
     useSideTip: false,
     showCustomContent: false,
     showReactionStrip: false,
     enableShadow: false
+  };
+
+  toggleHint = () => {
+    this.setState({showHint: !this.state.showHint});
   };
 
   toggleHintPosition = () => {
@@ -78,7 +82,6 @@ export default class HintsScreen extends Component<HintScreenProps> {
   }
 
   renderScreenOptions() {
-    const {showIcon, useTargetRef, useTargetFrame, showCustomContent, showReactionStrip, enableShadow} = this.state;
     return (
       <View bg-white br20 padding-20 collapsable={false}>
         <Text h2 marginB-s4>
@@ -105,38 +108,12 @@ export default class HintsScreen extends Component<HintScreenProps> {
           {label: 'Long', value: false}
         ])}
 
-        <View row centerV marginV-10>
-          <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})}/>
-          <Text marginL-10>Toggle Icon</Text>
-        </View>
-
-        <View row centerV marginV-10>
-          <Switch value={enableShadow} onValueChange={value => this.setState({enableShadow: value})}/>
-          <Text marginL-10>Toggle shadow</Text>
-        </View>
-
-        <View row centerV marginV-10>
-          <Switch value={useTargetRef} onValueChange={value => this.setState({useTargetRef: value, showHint: false})}/>
-          <Text marginL-10>Use target ref</Text>
-        </View>
-
-        <View row centerV marginV-10>
-          <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})}/>
-          <Text marginL-10>Use random position</Text>
-        </View>
-
-        <View row centerV marginV-10>
-          <Switch value={showCustomContent} onValueChange={value => this.setState({showCustomContent: value})}/>
-          <Text marginL-10>Show custom content</Text>
-        </View>
-
-        <View row centerV marginV-10>
-          <Switch
-            value={showReactionStrip}
-            onValueChange={value => this.setState({showReactionStrip: value, enableShadow: true})}
-          />
-          <Text marginL-10>Show reaction strip</Text>
-        </View>
+        {renderBooleanOption.call(this, 'With backdrop', 'useBackdrop')}
+        {renderBooleanOption.call(this, 'With icon', 'showIcon')}
+        {renderBooleanOption.call(this, 'With shadow', 'enableShadow')}
+        {renderBooleanOption.call(this, 'Use random position', 'useTargetFrame')}
+        {renderBooleanOption.call(this, 'Show custom content', 'showCustomContent')}
+        {renderBooleanOption.call(this, 'Show reaction strip', 'showReactionStrip')}
       </View>
     );
   }
@@ -147,9 +124,9 @@ export default class HintsScreen extends Component<HintScreenProps> {
       showBottomHint,
       showIcon,
       targetPosition,
+      useBackdrop,
       useShortMessage,
       useSideTip,
-      useTargetRef,
       useTargetFrame,
       showCustomContent,
       showReactionStrip,
@@ -172,7 +149,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
         >
           {/* <Button bg-purple30 label="Background" style={{position: 'absolute', right: 50, bottom: 100}}/> */}
           <Hint
-            visible={!useTargetRef && showHint}
+            visible={showHint}
             // color={Colors.orange30}
             message={message}
             // message={
@@ -194,7 +171,8 @@ export default class HintsScreen extends Component<HintScreenProps> {
             targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
-            // onBackgroundPress={() => this.setState({showHint: !showHint})}
+            onBackgroundPress={useBackdrop && !useTargetFrame ? this.toggleHint : undefined}
+            backdropColor={Colors.rgba(Colors.grey10, 0.3)}
             customContent={
               showCustomContent
                 ? this.renderCustomContent()
@@ -210,10 +188,12 @@ export default class HintsScreen extends Component<HintScreenProps> {
             {!useTargetFrame && (
               <Button
                 label={showHint ? 'Hide' : 'Show'}
-                onPress={() => this.setState({showHint: !showHint})}
+                onPress={this.toggleHint}
                 style={{alignSelf: targetPosition}}
                 testID={'Hint.button'}
                 ref={this.targetRef}
+                /* Change layout and position to test various cases */
+                // marginT-150
                 // style={{alignSelf: targetPosition, marginLeft: 30}}
                 // style={{alignSelf: targetPosition, position: 'absolute', top: 160, left: 100}}
               />
@@ -221,25 +201,23 @@ export default class HintsScreen extends Component<HintScreenProps> {
           </Hint>
 
           {useTargetFrame && (
-            <View
-              bg-red50
-              style={{
-                position: 'absolute',
-                top: targetFrame.y,
-                left: targetFrame.x,
-                width: targetFrame.width,
-                height: targetFrame.height
-              }}
-            />
-          )}
+            <>
+              <View
+                bg-red50
+                style={{
+                  position: 'absolute',
+                  top: targetFrame.y,
+                  left: targetFrame.x,
+                  width: targetFrame.width,
+                  height: targetFrame.height
+                }}
+              />
 
-          <Hint
-            visible={useTargetRef && showHint}
-            message="This Hint is using targetRef"
-            targetRef={this.targetRef}
-            position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
-            useSideTip={useSideTip}
-          />
+              <View absL absB margin-page>
+                <Button label="Show Hint" onPress={this.toggleHint}/>
+              </View>
+            </>
+          )}
         </View>
 
         {this.renderOptionsFAB()}

@@ -1,6 +1,5 @@
-// TODO: Add support to custom hint rendering
 import _ from 'lodash';
-import React, {Component, ReactElement, isValidElement, ElementRef, PropsWithChildren} from 'react';
+import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -17,7 +16,6 @@ import {
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants} from '../../helpers';
-import {LogService} from '../../services';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
@@ -62,10 +60,6 @@ export interface HintProps {
    * Control the visibility of the hint
    */
   visible?: boolean;
-  /**
-   * Provide a target ref for the hint
-   */
-  targetRef?: React.RefObject<any>;
   /**
    * The hint background color
    */
@@ -118,6 +112,10 @@ export interface HintProps {
    * Callback for the background press
    */
   onBackgroundPress?: (event: GestureResponderEvent) => void;
+  /**
+   * Color for background overlay (require onBackgroundPress)
+   */
+  backdropColor?: string;
   /**
    * The hint container width
    */
@@ -177,48 +175,11 @@ class Hint extends Component<HintProps, HintState> {
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
 
-  constructor(props: PropsWithChildren<HintProps>) {
-    super(props);
-
-    if (props.children) {
-      LogService.deprecationWarn({component: 'Hint', oldProp: 'children', newProp: 'targetRef'});
-    }
-  }
-
-  componentDidMount() {
-    const {visible, targetRef} = this.props;
-    if (visible) {
-      this.measureTargetRefLayout(targetRef);
-    }
-  }
-
   componentDidUpdate(prevProps: HintProps) {
-    const {targetRef} = this.props;
     if (prevProps.visible !== this.props.visible) {
       this.animateHint();
-
-      if (this.props.visible && targetRef) {
-        this.measureTargetRefLayout(targetRef);
-      }
     }
   }
-
-  measureTargetRefLayout = (targetRef: React.RefObject<any> | undefined) => {
-    const {onBackgroundPress} = this.props;
-    setTimeout(() => {
-      if (!onBackgroundPress) {
-        targetRef?.current?.measure((_x: number, _y: number, width: number, height: number, pageX: number, pageY: number) => {
-          const targetLayoutInWindow = {x: pageX, y: pageY, width, height};
-          this.setState({targetLayoutInWindow});
-        });
-      } else {
-        targetRef?.current?.measureInWindow((x: number, y: number, width: number, height: number) => {
-          const targetLayoutInWindow = {x, y, width, height};
-          this.setState({targetLayoutInWindow});
-        });
-      }
-    });
-  };
 
   animateHint = () => {
     Animated.timing(this.visibleAnimated, {
@@ -286,14 +247,14 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get targetLayout() {
-    const {onBackgroundPress, targetRef, targetFrame} = this.props;
+    const {onBackgroundPress, targetFrame} = this.props;
     const {targetLayout, targetLayoutInWindow} = this.state;
 
     if (targetFrame) {
       return targetFrame;
     }
 
-    return onBackgroundPress || targetRef ? targetLayoutInWindow : targetLayout;
+    return onBackgroundPress ? targetLayoutInWindow : targetLayout;
   }
 
   get showHint() {
@@ -553,11 +514,33 @@ class Hint extends Component<HintProps, HintState> {
     );
   }
 
+  renderMockChildren() {
+    const {children} = this.props;
+    if (children && React.isValidElement(children)) {
+      const layout = {
+        ...this.getContainerPosition(),
+        width: this.targetLayout?.width,
+        height: this.targetLayout?.height
+      };
+
+      return (
+        <View style={[styles.mockChildrenContainer, layout]}>
+          {React.cloneElement(children, {
+            collapsable: false,
+            key: 'mock',
+            style: [children.props.style, styles.mockChildren]
+          })}
+        </View>
+      );
+    }
+  }
+
   renderChildren() {
     const {targetFrame} = this.props;
 
     if (!targetFrame && isValidElement(this.props.children)) {
       return React.cloneElement(this.props.children, {
+        key: 'clone',
         collapsable: false,
         onLayout: this.onTargetLayout,
         ref: this.setTargetRef,
@@ -567,31 +550,33 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   render() {
-    const {onBackgroundPress, testID} = this.props;
+    const {onBackgroundPress, backdropColor, testID} = this.props;
 
     if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children || null;
     }
 
     return (
-      <React.Fragment>
+      <>
+        {this.renderChildren()}
         {onBackgroundPress ? (
           <Modal
             visible={this.showHint}
-            animationType="none"
+            animationType={backdropColor ? 'fade' : 'none'}
+            overlayBackgroundColor={backdropColor}
             transparent
             onBackgroundPress={onBackgroundPress}
             onRequestClose={onBackgroundPress as () => void}
             testID={`${testID}.modal`}
           >
+            {this.renderMockChildren()}
             {this.renderHintContainer()}
           </Modal>
         ) : (
           // this.renderOverlay(),
           this.renderHintContainer()
         )}
-        {this.renderChildren()}
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -599,6 +584,23 @@ class Hint extends Component<HintProps, HintState> {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute'
+  },
+  mockChildrenContainer: {
+    position: 'absolute'
+  },
+  mockChildren: {
+    margin: undefined,
+    marginVertical: undefined,
+    marginHorizontal: undefined,
+    marginTop: undefined,
+    marginRight: undefined,
+    marginBottom: undefined,
+    marginLeft: undefined,
+
+    top: undefined,
+    left: undefined,
+    right: undefined,
+    bottom: undefined
   },
   // overlay: {
   //   position: 'absolute',

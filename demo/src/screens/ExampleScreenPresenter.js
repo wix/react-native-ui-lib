@@ -26,7 +26,7 @@ export function renderBooleanOption(title, key) {
   const value = this.state[key];
   return (
     <View row centerV spread marginB-s4 key={key}>
-      <Text text70 style={{flex: 1}}>
+      <Text flex>
         {title}
       </Text>
       <Switch
