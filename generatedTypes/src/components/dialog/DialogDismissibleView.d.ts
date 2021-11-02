@@ -31,7 +31,7 @@ declare const DialogDismissibleView: {
     (props: Props): JSX.Element;
     displayName: string;
     defaultProps: {
-        direction: PanningDirections;
+        direction: import("../panningViews/panningProvider").PanningDirectionsEnum;
         onDismiss: () => void;
     };
 };
