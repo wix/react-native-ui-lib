@@ -8,6 +8,7 @@ export {
   default as TransitionView,
   TransitionViewProps,
   TransitionViewDirection,
+  TransitionViewDirectionEnum,
   TransitionViewAnimationType
 } from './TransitionView';
 export {default as Dialog, DialogProps} from './Dialog';

@@ -1,8 +1,11 @@
 import { PropsWithChildren } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { TransitionViewDirection } from '../TransitionView/index';
+import { PanningDirections, PanningDirectionsEnum } from '../panView/panningUtil';
 import { ModalProps } from '../../components/modal';
 import { AlignmentModifiers } from '../../commons/modifiers';
+declare type DialogDirections = PanningDirections;
+declare const DialogDirectionsEnum: typeof PanningDirectionsEnum;
+export { DialogDirections, DialogDirectionsEnum };
 interface _DialogProps extends AlignmentModifiers {
     /**
      * Control visibility of the dialog.
@@ -15,7 +18,7 @@ interface _DialogProps extends AlignmentModifiers {
     /**
      * The direction from which and to which the dialog is animating \ panning (default bottom).
      */
-    direction?: TransitionViewDirection;
+    direction?: DialogDirections;
     /**
      * The Dialog`s container style (it is set to {position: 'absolute'})
      */
@@ -39,5 +42,9 @@ interface _DialogProps extends AlignmentModifiers {
     testID?: string;
 }
 export declare type DialogProps = PropsWithChildren<_DialogProps>;
-declare const Dialog: (props: DialogProps) => JSX.Element;
+declare const Dialog: {
+    (props: DialogProps): JSX.Element;
+    displayName: string;
+    directions: typeof PanningDirectionsEnum;
+};
 export default Dialog;

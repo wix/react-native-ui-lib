@@ -13,15 +13,19 @@ import Animated, {
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../../components/view';
 import {
-  PanViewDirections,
+  PanningDirections,
+  PanningDirectionsEnum,
+  PanningDismissThreshold,
   Frame,
-  PanViewDismissThreshold,
   getTranslation,
   getDismissVelocity,
   DEFAULT_THRESHOLD
 } from './panningUtil';
 import useHiddenLocation from '../hooks/useHiddenLocation';
-export {PanViewDirections, PanViewDismissThreshold};
+type PanViewDirections = PanningDirections;
+const PanViewDirectionsEnum = PanningDirectionsEnum;
+type PanViewDismissThreshold = PanningDismissThreshold;
+export {PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
 
 export interface PanViewProps extends ViewProps {
   /**
@@ -63,7 +67,12 @@ const SPRING_BACK_ANIMATION_CONFIG = {velocity: 300, damping: 20, stiffness: 300
 
 const PanView = (props: Props) => {
   const {
-    directions = [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
+    directions = [
+      PanViewDirectionsEnum.UP,
+      PanViewDirectionsEnum.DOWN,
+      PanViewDirectionsEnum.LEFT,
+      PanViewDirectionsEnum.RIGHT
+    ],
     dismissible,
     animateToOrigin,
     onDismiss,
@@ -140,7 +149,7 @@ const PanView = (props: Props) => {
           }
 
           if (translationY.value !== 0 && velocity.y !== undefined && velocity.y !== 0) {
-            const toY = velocity.y > 0 ? hiddenLocation.bottom : hiddenLocation.top;
+            const toY = velocity.y > 0 ? hiddenLocation.down : hiddenLocation.up;
             const duration = Math.abs((toY - translationY.value) / velocity.y) * 1000;
             translationY.value = withTiming(toY, {duration}, dismiss);
           }
@@ -172,7 +181,7 @@ const PanView = (props: Props) => {
 };
 
 PanView.displayName = 'PanView';
-PanView.directions = PanViewDirections;
+PanView.directions = PanViewDirectionsEnum;
 PanView.defaultProps = {
   threshold: DEFAULT_THRESHOLD
 };

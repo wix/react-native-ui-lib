@@ -1,6 +1,8 @@
 import {useCallback} from 'react';
 import {useSharedValue, useAnimatedStyle, withSpring, withTiming} from 'react-native-reanimated';
-import {Direction} from '../hooks/useHiddenLocation';
+import {PanningDirections, PanningDirectionsEnum} from '../panView/panningUtil';
+export const TransitionViewDirectionEnum = PanningDirectionsEnum;
+export type TransitionViewDirection = PanningDirections;
 
 export interface TranslatorProps {
   initialVisibility: boolean;
@@ -17,14 +19,16 @@ export default function useAnimatedTranslator(props: TranslatorProps) {
   const translateY = useSharedValue<number>(0);
 
   const visible = useSharedValue<boolean>(initialVisibility);
-  
+
   const init = useCallback((to: {x: number; y: number},
-    animationDirection: Direction,
+    animationDirection: TransitionViewDirection,
     callback: (isFinished: boolean) => void) => {
     'worklet';
-    if (['left', 'right'].includes(animationDirection)) {
+    // @ts-expect-error
+    if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
       translateX.value = withTiming(to.x, {duration: 0}, callback);
-    } else if (['top', 'bottom'].includes(animationDirection)) {
+      // @ts-expect-error
+    } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(animationDirection)) {
       translateY.value = withTiming(to.y, {duration: 0}, callback);
     }
 
@@ -34,12 +38,14 @@ export default function useAnimatedTranslator(props: TranslatorProps) {
   []);
 
   const animate = useCallback((to: {x: number; y: number},
-    animationDirection: Direction,
+    animationDirection: TransitionViewDirection,
     callback: (isFinished: boolean) => void) => {
     'worklet';
-    if (['left', 'right'].includes(animationDirection)) {
+    // @ts-expect-error
+    if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
       translateX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
-    } else if (['top', 'bottom'].includes(animationDirection)) {
+      // @ts-expect-error
+    } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(animationDirection)) {
       translateY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
     }
   },

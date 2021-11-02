@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
 import {runOnJS} from 'react-native-reanimated';
-import {Direction, HiddenLocation} from '../hooks/useHiddenLocation';
-import useAnimatedTranslator from './useAnimatedTranslator';
+import {HiddenLocation} from '../hooks/useHiddenLocation';
+import useAnimatedTranslator, {TransitionViewDirection, TransitionViewDirectionEnum} from './useAnimatedTranslator';
 import useAnimationEndNotifier, {
   AnimationNotifierEndProps,
   TransitionViewAnimationType
@@ -16,11 +16,11 @@ export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
   /**
    * If this is given there will be an enter animation from this direction.
    */
-  enterFrom?: Direction;
+  enterFrom?: TransitionViewDirection;
   /**
    * If this is given there will be an exit animation to this direction.
    */
-  exitTo?: Direction;
+  exitTo?: TransitionViewDirection;
 }
 
 type Props = AnimatedTransitionProps & {
@@ -33,10 +33,18 @@ export default function useAnimatedTransition(props: Props) {
   const {init, animate, animatedStyle} = useAnimatedTranslator({initialVisibility: !enterFrom});
   const {onEnterAnimationEnd, onExitAnimationEnd} = useAnimationEndNotifier({onAnimationEnd});
 
-  const getLocation = (direction?: Direction) => {
+  const getLocation = (direction?: TransitionViewDirection) => {
     return {
-      x: direction && ['left', 'right'].includes(direction) ? hiddenLocation[direction] : 0,
-      y: direction && ['top', 'bottom'].includes(direction) ? hiddenLocation[direction] : 0
+      x:
+        //@ts-expect-error
+        direction && [TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(direction)
+          ? hiddenLocation[direction]
+          : 0,
+      y:
+        //@ts-expect-error
+        direction && [TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(direction)
+          ? hiddenLocation[direction]
+          : 0
     };
   };
 

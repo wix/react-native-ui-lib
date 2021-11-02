@@ -1,11 +1,15 @@
 import React, {PropsWithChildren, useMemo, useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useSharedValue, withTiming, useAnimatedStyle} from 'react-native-reanimated';
-import TransitionView, {TransitionViewDirection, TransitionViewAnimationType} from '../TransitionView/index';
-import PanView, {PanViewDirections} from '../panView/index';
+import TransitionView, {TransitionViewAnimationType} from '../TransitionView/index';
+import PanView from '../panView/index';
+import {PanningDirections, PanningDirectionsEnum} from '../panView/panningUtil';
 import View from '../../components/view';
 import Modal, {ModalProps} from '../../components/modal';
 import {AlignmentModifiers} from '../../commons/modifiers';
+type DialogDirections = PanningDirections;
+const DialogDirectionsEnum = PanningDirectionsEnum;
+export {DialogDirections, DialogDirectionsEnum};
 
 interface _DialogProps extends AlignmentModifiers {
   /**
@@ -19,7 +23,7 @@ interface _DialogProps extends AlignmentModifiers {
   /**
    * The direction from which and to which the dialog is animating \ panning (default bottom).
    */
-  direction?: TransitionViewDirection;
+  direction?: DialogDirections;
   /**
    * The Dialog`s container style (it is set to {position: 'absolute'})
    */
@@ -52,7 +56,7 @@ const Dialog = (props: DialogProps) => {
   const {
     visible = false,
     onDismiss,
-    direction = 'bottom',
+    direction = DialogDirectionsEnum.DOWN,
     children,
     containerStyle,
     ignoreBackgroundPress,
@@ -63,17 +67,9 @@ const Dialog = (props: DialogProps) => {
   const {overlayBackgroundColor = DEFAULT_OVERLAY_BACKGROUND_COLORS, ...otherModalProps} = modalProps;
   const fadeOpacity = useSharedValue<number>(Number(visible));
 
-  const directions = (() => {
-    if (direction === 'left') {
-      return [PanViewDirections.LEFT];
-    } else if (direction === 'right') {
-      return [PanViewDirections.RIGHT];
-    } else if (direction === 'top') {
-      return [PanViewDirections.UP];
-    } else {
-      return [PanViewDirections.DOWN];
-    }
-  })();
+  const directions = useMemo((): DialogDirections[] => {
+    return [direction];
+  }, [direction]);
 
   const onBackgroundPress = useCallback(() => {
     transitionAnimatorRef.current?.animateOut();
@@ -145,6 +141,9 @@ const Dialog = (props: DialogProps) => {
     </Modal>
   );
 };
+
+Dialog.displayName = 'Incubator.Dialog';
+Dialog.directions = DialogDirectionsEnum;
 
 export default Dialog;
 

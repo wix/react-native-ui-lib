@@ -1,4 +1,5 @@
-import { Direction, HiddenLocation } from '../hooks/useHiddenLocation';
+import { HiddenLocation } from '../hooks/useHiddenLocation';
+import { TransitionViewDirection } from './useAnimatedTranslator';
 import { AnimationNotifierEndProps, TransitionViewAnimationType } from './useAnimationEndNotifier';
 export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
     /**
@@ -8,11 +9,11 @@ export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
     /**
      * If this is given there will be an enter animation from this direction.
      */
-    enterFrom?: Direction;
+    enterFrom?: TransitionViewDirection;
     /**
      * If this is given there will be an exit animation to this direction.
      */
-    exitTo?: Direction;
+    exitTo?: TransitionViewDirection;
 }
 declare type Props = AnimatedTransitionProps & {
     hiddenLocation: HiddenLocation;

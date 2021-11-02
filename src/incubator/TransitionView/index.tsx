@@ -3,11 +3,12 @@ import {View as RNView, LayoutChangeEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
-import useHiddenLocation, {Direction as TransitionViewDirection} from '../hooks/useHiddenLocation';
+import useHiddenLocation from '../hooks/useHiddenLocation';
 import {TransitionViewAnimationType} from './useAnimationEndNotifier';
+import {TransitionViewDirection, TransitionViewDirectionEnum} from './useAnimatedTranslator';
 import useAnimatedTransition, {AnimatedTransitionProps} from './useAnimatedTransition';
 const AnimatedView = Animated.createAnimatedComponent(View);
-export {TransitionViewDirection, TransitionViewAnimationType};
+export {TransitionViewDirection, TransitionViewDirectionEnum, TransitionViewAnimationType};
 
 // TODO: might need to create a file for types and create a fake component for docs
 export interface TransitionViewProps extends AnimatedTransitionProps, ViewProps {
@@ -17,6 +18,7 @@ export interface TransitionViewProps extends AnimatedTransitionProps, ViewProps 
 type Props = PropsWithChildren<TransitionViewProps> & ForwardRefInjectedProps;
 interface Statics {
   animateOut: () => void;
+  directions: typeof TransitionViewDirectionEnum;
 }
 
 const TransitionView = (props: Props) => {
@@ -54,6 +56,9 @@ const TransitionView = (props: Props) => {
 
   return <AnimatedView {...others} onLayout={onLayout} style={[propsStyle, animatedStyle]} ref={containerRef}/>;
 };
+
+TransitionView.displayName = 'TransitionView';
+TransitionView.directions = TransitionViewDirectionEnum;
 
 // @ts-expect-error TODO: should this be fixed in forwardRef?
 export default forwardRef<TransitionViewProps, Statics>(TransitionView);
