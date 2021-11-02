@@ -159,7 +159,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType) => import("react-native").ViewStyle) | undefined;
+    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").ViewStyle) | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
@@ -485,7 +487,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType) => import("react-native").ViewStyle) | undefined;
+    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").ViewStyle) | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
@@ -1047,7 +1051,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         borderBottomWidth: number;
         borderBottomColor: string;
         paddingBottom: number;
-    } | ((context: import("./FieldContext").FieldContextType) => import("react-native").ViewStyle);
+    } | ((context: import("./FieldContext").FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").ViewStyle);
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
