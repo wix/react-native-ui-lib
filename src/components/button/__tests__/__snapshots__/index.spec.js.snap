@@ -895,9 +895,7 @@ exports[`Button container size should have no padding of button is an icon butto
           },
           undefined,
         ],
-        Object {
-          "flexShrink": undefined,
-        },
+        false,
       ]
     }
   />
@@ -1725,9 +1723,7 @@ exports[`Button icon should apply color on icon 1`] = `
           },
           undefined,
         ],
-        Object {
-          "flexShrink": undefined,
-        },
+        false,
       ]
     }
   />
@@ -1783,9 +1779,7 @@ exports[`Button icon should apply color on icon 2`] = `
           },
           undefined,
         ],
-        Object {
-          "flexShrink": undefined,
-        },
+        false,
       ]
     }
   />
@@ -1844,9 +1838,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
             "tintColor": "red",
           },
         ],
-        Object {
-          "flexShrink": undefined,
-        },
+        false,
       ]
     }
   />
@@ -1904,9 +1896,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
-        Object {
-          "flexShrink": undefined,
-        },
+        false,
       ]
     }
   />
@@ -1962,9 +1952,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
-        Object {
-          "flexShrink": undefined,
-        },
+        false,
       ]
     }
   />
@@ -2020,9 +2008,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
-        Object {
-          "flexShrink": undefined,
-        },
+        false,
       ]
     }
   />
@@ -3005,9 +2991,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
           },
           undefined,
         ],
-        Object {
-          "flexShrink": undefined,
-        },
+        false,
       ]
     }
   />
