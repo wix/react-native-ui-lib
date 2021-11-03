@@ -1,4 +1,4 @@
-import { PanningDirections, PanningDirectionsEnum } from '../panView/panningUtil';
+import { PanningDirections, PanningDirectionsEnum } from '../panView';
 export declare const TransitionViewDirectionEnum: typeof PanningDirectionsEnum;
 export declare type TransitionViewDirection = PanningDirections;
 export interface TranslatorProps {

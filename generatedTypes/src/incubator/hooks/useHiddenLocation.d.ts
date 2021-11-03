@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 import { View, LayoutChangeEvent } from 'react-native';
-import { PanningDirectionsEnum } from '../panView/panningUtil';
+import { PanningDirectionsEnum } from '../panView';
 declare type HiddenLocationRecord = Record<PanningDirectionsEnum, number>;
 export interface HiddenLocation extends HiddenLocationRecord {
     isDefault: boolean;

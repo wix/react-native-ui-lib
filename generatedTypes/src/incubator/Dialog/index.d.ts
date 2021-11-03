@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { PanningDirections, PanningDirectionsEnum } from '../panView/panningUtil';
+import { PanningDirections, PanningDirectionsEnum } from '../panView';
 import { ModalProps } from '../../components/modal';
 import { AlignmentModifiers } from '../../commons/modifiers';
 declare type DialogDirections = PanningDirections;

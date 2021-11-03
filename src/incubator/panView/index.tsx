@@ -25,7 +25,7 @@ import useHiddenLocation from '../hooks/useHiddenLocation';
 type PanViewDirections = PanningDirections;
 const PanViewDirectionsEnum = PanningDirectionsEnum;
 type PanViewDismissThreshold = PanningDismissThreshold;
-export {PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
+export {PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
 
 export interface PanViewProps extends ViewProps {
   /**

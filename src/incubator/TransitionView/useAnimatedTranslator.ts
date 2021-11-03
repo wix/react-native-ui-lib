@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
 import {useSharedValue, useAnimatedStyle, withSpring, withTiming} from 'react-native-reanimated';
-import {PanningDirections, PanningDirectionsEnum} from '../panView/panningUtil';
+import {PanningDirections, PanningDirectionsEnum} from '../panView';
 export const TransitionViewDirectionEnum = PanningDirectionsEnum;
 export type TransitionViewDirection = PanningDirections;
 

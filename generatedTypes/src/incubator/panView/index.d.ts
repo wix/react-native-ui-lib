@@ -5,7 +5,7 @@ import { PanningDirections, PanningDirectionsEnum, PanningDismissThreshold } fro
 declare type PanViewDirections = PanningDirections;
 declare const PanViewDirectionsEnum: typeof PanningDirectionsEnum;
 declare type PanViewDismissThreshold = PanningDismissThreshold;
-export { PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold };
+export { PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold };
 export interface PanViewProps extends ViewProps {
     /**
      * The directions of the allowed pan (default is all)
