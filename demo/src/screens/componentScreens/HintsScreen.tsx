@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {Alert} from 'react-native';
 import {Colors, View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib';
 
-
 const settingsIcon = require('../../assets/icons/settings.png');
 const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 
@@ -18,7 +17,7 @@ type HintScreenState = {
   useSideTip?: boolean;
   showCustomContent?: boolean;
   showReactionStrip?: boolean;
-  enableShadow?: boolean
+  enableShadow?: boolean;
 };
 
 export default class HintsScreen extends Component<HintScreenProps, HintScreenState> {
@@ -47,11 +46,11 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
 
   onHintPressed = () => {
     Alert.alert('Hint Pressed');
-  }
+  };
 
   onReactionPress = () => {
     Alert.alert('Reaction button pressed');
-  }
+  };
 
   renderCustomContent() {
     return (
@@ -89,9 +88,9 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
       enableShadow
     } = this.state;
     const targetFrame = {x: 140, y: 100, width: 10, height: 10};
-    const message = useShortMessage ? 
-      'Add other cool and useful stuff.' : 
-      'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
+    const message = useShortMessage
+      ? 'Add other cool and useful stuff.'
+      : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
 
     return (
       <View flex>
@@ -129,8 +128,11 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
             // edgeMargins={30}
             // onBackgroundPress={() => this.setState({showHint: !showHint})}
             customContent={
-              showCustomContent ? 
-                this.renderCustomContent() : showReactionStrip ? this.renderReactionStrip() : undefined
+              showCustomContent
+                ? this.renderCustomContent()
+                : showReactionStrip
+                  ? this.renderReactionStrip()
+                  : undefined
             }
             color={!showCustomContent && showReactionStrip ? Colors.white : undefined}
             removePaddings={!showCustomContent && showReactionStrip}
@@ -220,8 +222,8 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
           </View>
 
           <View row centerV marginV-10>
-            <Switch 
-              value={showReactionStrip} 
+            <Switch
+              value={showReactionStrip}
               onValueChange={value => this.setState({showReactionStrip: value, enableShadow: true})}
             />
             <Text marginL-10>Show reaction strip</Text>
