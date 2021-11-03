@@ -6,9 +6,10 @@ import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../components/dialog';
 
 export interface RenderCustomOverlayProps {
-  expandableVisible: boolean;
+  visible: boolean;
   openExpandable: () => void;
   closeExpandable: () => void;
+  toggleExpandable: () => void;
 }
 
 export type ExpandableOverlayProps = TouchableOpacityProps &
@@ -40,7 +41,7 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
     /**
      * A custom overlay to render instead of Modal or Dialog components
      */
-    renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement;
+    renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement | undefined;
   }>;
 
 interface ExpandableOverlayMethods {
@@ -64,13 +65,17 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   const showExpandable = useCallback(() => setExpandableVisible(true), []);
   const hideExpandable = useCallback(() => setExpandableVisible(false), []);
 
+  const toggleExpandable = useCallback(() => (expandableVisible ? hideExpandable() : showExpandable()),
+    [expandableVisible, showExpandable, hideExpandable]);
+
   useImperativeHandle(ref, () => ({
     openExpandable: () => {
       showExpandable();
     },
     closeExpandable: () => {
       hideExpandable();
-    }
+    },
+    toggleExpandable
   }));
 
   const renderModal = () => {
@@ -92,7 +97,12 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const renderOverlay = () => {
     if (renderCustomOverlay) {
-      return renderCustomOverlay({expandableVisible, openExpandable: showExpandable, closeExpandable: hideExpandable});
+      return renderCustomOverlay({
+        visible: expandableVisible,
+        openExpandable: showExpandable,
+        closeExpandable: hideExpandable,
+        toggleExpandable
+      });
     } else {
       return useDialog ? renderDialog() : renderModal();
     }

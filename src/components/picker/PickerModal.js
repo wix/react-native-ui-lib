@@ -1,5 +1,5 @@
 // TODO: This should be renamed to PickerOverlayContent cause it's
-// responsible for rendering the Modal anymore 
+// not responsible for rendering the Modal anymore 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';

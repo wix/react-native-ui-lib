@@ -313,10 +313,10 @@ class Picker extends Component {
   //   _.invoke(this.props, 'onPress');
   // };
 
-  toggleExpandableModal = value => {
-    this.setState({showExpandableModal: value});
-    this.clearSearchField();
-  };
+  // toggleExpandableModal = value => {
+  //   this.setState({showExpandableModal: value});
+  //   this.clearSearchField();
+  // };
 
   toggleItemSelection = item => {
     const {getItemValue} = this.props;
@@ -334,7 +334,7 @@ class Picker extends Component {
   cancelSelect = () => {
     this.setState({value: this.props.value});
     // this.toggleExpandableModal(false);
-    this.pickerExpandable.current.closeExpandable();
+    this.pickerExpandable.current?.closeExpandable?.();
     this.props.topBarProps?.onCancel?.();
   };
 
@@ -342,7 +342,7 @@ class Picker extends Component {
     this.clearSearchField();
     this.setState({value: item});
     // this.toggleExpandableModal(false);
-    this.pickerExpandable.current.closeExpandable();
+    this.pickerExpandable.current?.closeExpandable?.();
     this.props.onChange?.(item);
   };
 
@@ -363,15 +363,14 @@ class Picker extends Component {
     this.setState({searchValue: ''});
   };
 
-  renderCustomModal = ({expandableVisible, openExpandable, closeExpandable}) => {
+  renderCustomModal = ({visible, toggleExpandable}) => {
     const {renderCustomModal, children} = this.props;
     const {value} = this.state;
 
-    // TODO: Deprecate renderCustomModal prop
     if (renderCustomModal) {
       const modalProps = {
-        visible: expandableVisible,
-        toggleModal: () => (expandableVisible ? closeExpandable() : openExpandable()),
+        visible,
+        toggleModal: toggleExpandable,
         onSearchChange: this.onSearchChange,
         children,
         onDone: () => this.onDoneSelecting(value),
@@ -513,10 +512,11 @@ class Picker extends Component {
               {...this.getAccessibilityInfo()}
               importantForAccessibility={'no-hide-descendants'}
               value={label}
-              // expandable
-              // renderExpandable={this.renderExpandableModal}
-              // onToggleExpandableModal={this.toggleExpandableModal}
               selection={Constants.isAndroid ? {start: 0} : undefined}
+              // Disable TextField expandable feature 
+              expandable={false}
+              renderExpandable={_.noop}
+              onToggleExpandableModal={_.noop}
             />
           )}
         </ExpandableOverlay>
