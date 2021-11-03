@@ -243,13 +243,9 @@ export default class Swipeable extends Component<Props, StateType> {
     }
   };
 
-  _hasLeftActions() {
-    return this.props.renderLeftActions !== undefined;
-  }
+  _hasLeftActions = this.props.renderLeftActions !== undefined;
 
-  _hasRightActions() {
-    return this.props.renderRightActions !== undefined;
-  }
+  _hasRightActions = this.props.renderRightActions !== undefined;
 
   _handleRelease = nativeEvent => {
     const {velocityX, translationX: dragX} = nativeEvent;
@@ -271,24 +267,24 @@ export default class Swipeable extends Component<Props, StateType> {
 
     let toValue = 0;
     if (this.rowState === 0) {
-      if (this._hasLeftActions() && onToggleSwipeLeft && translationX > rowWidth * LEFT_TOGGLE_THRESHOLD && !this.dragThresholdReached) {
+      if (this._hasLeftActions && onToggleSwipeLeft && translationX > rowWidth * LEFT_TOGGLE_THRESHOLD && !this.dragThresholdReached) {
         // Swipe left toggle
         toValue = rowWidth * LEFT_TOGGLE_THRESHOLD;
       } else if (!onToggleSwipeLeft && fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
         // Full left swipe
         this._triggerHaptic();
         toValue = rowWidth;
-      } else if (this._hasRightActions() && fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
+      } else if (this._hasRightActions && fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
         // Full right swipe
         this._triggerHaptic();
         toValue = -rowWidth;
-      } else if (this._hasLeftActions() && translationX > leftThreshold) {
+      } else if (this._hasLeftActions && translationX > leftThreshold) {
         // left swipe
         if (!onToggleSwipeLeft || onToggleSwipeLeft && translationX < rowWidth * LEFT_TOGGLE_THRESHOLD) {
           // left swipe with toggle
           toValue = leftWidth;
         }
-      } else if (this._hasRightActions() && translationX < -rightThreshold) {
+      } else if (this._hasRightActions && translationX < -rightThreshold) {
         // right swipe
         toValue = -rightWidth;
       }
@@ -401,7 +397,7 @@ export default class Swipeable extends Component<Props, StateType> {
   };
 
   openLeftFull = () => {
-    if (this._hasLeftActions()) {
+    if (this._hasLeftActions) {
       const {rowWidth} = this.state;
       this._animateRow(this._currentOffset(), rowWidth);
     }
@@ -409,7 +405,7 @@ export default class Swipeable extends Component<Props, StateType> {
 
   toggleLeft = () => {
     // Programmatically left toggle
-    if (this._hasLeftActions()) {
+    if (this._hasLeftActions) {
       const {rowWidth} = this.state;
       this._animateRow(this._currentOffset(), rowWidth * LEFT_TOGGLE_THRESHOLD);
     }
@@ -423,7 +419,7 @@ export default class Swipeable extends Component<Props, StateType> {
   };
 
   openRightFull = () => {
-    if (this._hasRightActions()) {
+    if (this._hasRightActions) {
       const {rowWidth} = this.state;
       this._animateRow(this._currentOffset(), -rowWidth);
     }
@@ -450,8 +446,8 @@ export default class Swipeable extends Component<Props, StateType> {
         break;
     }
 
-    const leftRender = this._hasLeftActions() ? this.leftWidth : true;
-    const rightRender = this._hasRightActions() ? this.rightOffset : true;
+    const leftRender = this._hasLeftActions ? this.leftWidth : true;
+    const rightRender = this._hasRightActions ? this.rightOffset : true;
 
     if (this.rowWidth && leftRender && rightRender) {
       this.setState({
@@ -475,7 +471,7 @@ export default class Swipeable extends Component<Props, StateType> {
       testID
     } = this.props;
 
-    const left = this._hasLeftActions() && (
+    const left = this._hasLeftActions && (
       <Animated.View
         style={[
           styles.leftActions,
@@ -488,7 +484,7 @@ export default class Swipeable extends Component<Props, StateType> {
       </Animated.View>
     );
 
-    const right = this._hasRightActions() && (
+    const right = this._hasRightActions && (
       <Animated.View
         style={[
           styles.rightActions,
