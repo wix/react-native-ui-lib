@@ -7,7 +7,7 @@ describe('ChipsInput', () => {
   beforeEach(() => {
     uut = new ChipsInput({});
     uut.setState = jest.fn(state => _.assign(uut.state, state));
-    _.set(uut.state, 'tags', [{}, {}, {}]);
+    _.set(uut.state, 'chips', [{}, {}, {}]);
   });
 
   describe('getLabel', () => {
@@ -43,30 +43,30 @@ describe('ChipsInput', () => {
     it('should update state - tagIndexToRemove with last tag index', () => {
       const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
       uut.onKeyPress(pressEvent);
-      expect(uut.state.tagIndexToRemove).toBe(2);
+      expect(uut.state.chipIndexToRemove).toBe(2);
     });
 
     it('should not update state if keyCode is not backspace', () => {
       const pressEvent = {nativeEvent: {key: 'space'}};
       uut.onKeyPress(pressEvent);
-      expect(uut.state.tagIndexToRemove).toBe(undefined);
+      expect(uut.state.chipIndexToRemove).toBe(undefined);
       expect(removeTagSpy).not.toHaveBeenCalled();
     });
 
     it('should not update state if there are not tags', () => {
       const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
-      _.set(uut.state, 'tags', []);
+      _.set(uut.state, 'chips', []);
       uut.onKeyPress(pressEvent);
-      expect(uut.state.tagIndexToRemove).toBe(undefined);
+      expect(uut.state.chipIndexToRemove).toBe(undefined);
       expect(removeTagSpy).not.toHaveBeenCalled();
     });
 
     it('should not update state if input value is not empty', () => {
       const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
-      _.set(uut.state, 'tags', [{}, {}, {}]);
+      _.set(uut.state, 'chips', [{}, {}, {}]);
       _.set(uut.state, 'value', 'some text');
       uut.onKeyPress(pressEvent);
-      expect(uut.state.tagIndexToRemove).toBe(undefined);
+      expect(uut.state.chipIndexToRemove).toBe(undefined);
       expect(removeTagSpy).not.toHaveBeenCalled();
     });
 
@@ -81,18 +81,18 @@ describe('ChipsInput', () => {
 
     it('should not set last tag index if it is already set to last index, instead call remove tag', () => {
       const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
-      _.set(uut.state, 'tagIndexToRemove', 2);
+      _.set(uut.state, 'chipIndexToRemove', 2);
       uut.onKeyPress(pressEvent);
       expect(removeTagSpy).toHaveBeenCalled();
-      expect(uut.state.tagIndexToRemove).toBe(undefined);
+      expect(uut.state.chipIndexToRemove).toBe(undefined);
     });
 
-    it('should not remove tag nor update tagIndexToRemove if pressed any key while tagIndexToRemove was set', () => {
+    it('should not remove tag nor update chipIndexToRemove if pressed any key while chipIndexToRemove was set', () => {
       const pressEvent = {nativeEvent: {key: 'space'}};
-      _.set(uut.state, 'tagIndexToRemove', 2);
+      _.set(uut.state, 'chipIndexToRemove', 2);
       uut.onKeyPress(pressEvent);
       expect(removeTagSpy).not.toHaveBeenCalled();
-      expect(uut.state.tagIndexToRemove).toBe(2);
+      expect(uut.state.chipIndexToRemove).toBe(2);
     });
   });
 
@@ -101,38 +101,38 @@ describe('ChipsInput', () => {
     beforeEach(() => {
       _.set(uut, 'props.onChangeTags', onChangeTagsCallback);
     });
-    it('should not change tags if there is no tagIndexToRemove in state', () => {
+    it('should not change tags if there is no chipIndexToRemove in state', () => {
       const tags = [{}, {}];
-      _.set(uut, 'state', {tagIndexToRemove: undefined, tags});
+      _.set(uut, 'state', {chipIndexToRemove: undefined, tags});
       uut.removeMarkedTag();
       expect(uut.state.tags).toEqual(tags);
       expect(onChangeTagsCallback).not.toHaveBeenCalled();
     });
 
-    it('should remove tag according to the tagIndexToRemove in state and invoke ', () => {
-      const tags = [{}, {}, {}];
-      const tagIndexToRemove = 2;
-      const removedTag = tags[tagIndexToRemove];
-      _.set(uut, 'state', {tagIndexToRemove, tags});
+    it('should remove tag according to the chipIndexToRemove in state and invoke ', () => {
+      const chips = [{}, {}, {}];
+      const chipIndexToRemove = 2;
+      const removedTag = chips[chipIndexToRemove];
+      _.set(uut, 'state', {chipIndexToRemove, chips});
       uut.removeMarkedTag();
-      expect(uut.state.tags).toEqual([tags[0], tags[1]]);
-      expect(onChangeTagsCallback).toHaveBeenCalledWith([tags[0], tags[1]], 'removed', removedTag);
-      expect(uut.state.tagIndexToRemove).toBeUndefined();
+      expect(uut.state.chips).toEqual([chips[0], chips[1]]);
+      expect(onChangeTagsCallback).toHaveBeenCalledWith([chips[0], chips[1]], 'removed', removedTag);
+      expect(uut.state.chipIndexToRemove).toBeUndefined();
     });
   });
 
   describe('onTagPress', () => {
-    it('should set tagIndexToRemove according to given index', () => {
-      _.set(uut, 'state.tagIndexToRemove', undefined);
+    it('should set chipIndexToRemove according to given index', () => {
+      _.set(uut, 'state.chipIndexToRemove', undefined);
       uut.onTagPress(1);
-      expect(uut.state.tagIndexToRemove).toBe(1);
+      expect(uut.state.chipIndexToRemove).toBe(1);
       uut.onTagPress(2);
-      expect(uut.state.tagIndexToRemove).toBe(2);
+      expect(uut.state.chipIndexToRemove).toBe(2);
     });
 
-    it('should call to removeMarkedTag if the given index is the same as the current tagIndexToRemove', () => {
+    it('should call to removeMarkedTag if the given index is the same as the current chipIndexToRemove', () => {
       const removeTagSpy = jest.spyOn(uut, 'removeMarkedTag');
-      _.set(uut, 'state.tagIndexToRemove', 1);
+      _.set(uut, 'state.chipIndexToRemove', 1);
       uut.onTagPress(1);
       expect(removeTagSpy).toHaveBeenCalledWith();
     });

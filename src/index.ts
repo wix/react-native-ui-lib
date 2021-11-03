@@ -34,6 +34,7 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './components/t
 export {default as Button, ButtonProps, ButtonSize, ButtonAnimationDirection} from './components/button';
 export {default as Checkbox, CheckboxProps} from './components/checkbox';
 export {default as Stepper, StepperProps} from './components/stepper';
+export {default as ChipsInput, ChipsInputProps, ChipsInputChipProps} from './components/ChipsInput';
 export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPicker/ColorPalette';
@@ -89,7 +90,6 @@ export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScr
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ChipsInput,
   BaseInput, 
   TextArea, 
   TextField, 

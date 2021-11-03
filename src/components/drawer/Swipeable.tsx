@@ -243,6 +243,10 @@ export default class Swipeable extends Component<Props, StateType> {
     }
   };
 
+  _hasLeftActions = this.props.renderLeftActions !== undefined;
+
+  _hasRightActions = this.props.renderRightActions !== undefined;
+
   _handleRelease = nativeEvent => {
     const {velocityX, translationX: dragX} = nativeEvent;
     const {leftWidth = 0, rowWidth = 0} = this.state;
@@ -263,34 +267,38 @@ export default class Swipeable extends Component<Props, StateType> {
 
     let toValue = 0;
     if (this.rowState === 0) {
-      if (onToggleSwipeLeft && translationX > rowWidth * LEFT_TOGGLE_THRESHOLD && !this.dragThresholdReached) {
+      if (this._hasLeftActions && onToggleSwipeLeft && translationX > rowWidth * LEFT_TOGGLE_THRESHOLD && !this.dragThresholdReached) {
         // Swipe left toggle
         toValue = rowWidth * LEFT_TOGGLE_THRESHOLD;
       } else if (!onToggleSwipeLeft && fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
+        // Full left swipe
         this._triggerHaptic();
         toValue = rowWidth;
-      } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
+      } else if (this._hasRightActions && fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
+        // Full right swipe
         this._triggerHaptic();
         toValue = -rowWidth;
-      } else if (translationX > leftThreshold) {
+      } else if (this._hasLeftActions && translationX > leftThreshold) {
+        // left swipe
         if (!onToggleSwipeLeft || onToggleSwipeLeft && translationX < rowWidth * LEFT_TOGGLE_THRESHOLD) {
+          // left swipe with toggle
           toValue = leftWidth;
         }
-      } else if (translationX < -rightThreshold) {
+      } else if (this._hasRightActions && translationX < -rightThreshold) {
+        // right swipe
         toValue = -rightWidth;
       }
     } else if (this.rowState === 1) {
-      // swiped to left
+      // swiped to the right (left swipe)
       if (translationX > -leftThreshold) {
         toValue = leftWidth;
       }
     } else {
-      // swiped to right
+      // swiped to the left (right swipe)
       if (translationX < rightThreshold) {
         toValue = -rightWidth;
       }
     }
-
     this._animateRow(startOffsetX, toValue, velocityX / friction);
   };
 
@@ -389,14 +397,18 @@ export default class Swipeable extends Component<Props, StateType> {
   };
 
   openLeftFull = () => {
-    const {rowWidth} = this.state;
-    this._animateRow(this._currentOffset(), rowWidth);
+    if (this._hasLeftActions) {
+      const {rowWidth} = this.state;
+      this._animateRow(this._currentOffset(), rowWidth);
+    }
   };
 
   toggleLeft = () => {
     // Programmatically left toggle
-    const {rowWidth} = this.state;
-    this._animateRow(this._currentOffset(), rowWidth * LEFT_TOGGLE_THRESHOLD);
+    if (this._hasLeftActions) {
+      const {rowWidth} = this.state;
+      this._animateRow(this._currentOffset(), rowWidth * LEFT_TOGGLE_THRESHOLD);
+    }
   };
 
   openRight = () => {
@@ -407,8 +419,10 @@ export default class Swipeable extends Component<Props, StateType> {
   };
 
   openRightFull = () => {
-    const {rowWidth} = this.state;
-    this._animateRow(this._currentOffset(), -rowWidth);
+    if (this._hasRightActions) {
+      const {rowWidth} = this.state;
+      this._animateRow(this._currentOffset(), -rowWidth);
+    }
   };
 
   _onRowLayout = ({nativeEvent}) => this.handleMeasure('rowWidth', nativeEvent);
@@ -432,8 +446,8 @@ export default class Swipeable extends Component<Props, StateType> {
         break;
     }
 
-    const leftRender = this.props.renderLeftActions ? this.leftWidth : true;
-    const rightRender = this.props.renderRightActions ? this.rightOffset : true;
+    const leftRender = this._hasLeftActions ? this.leftWidth : true;
+    const rightRender = this._hasRightActions ? this.rightOffset : true;
 
     if (this.rowWidth && leftRender && rightRender) {
       this.setState({
@@ -457,7 +471,7 @@ export default class Swipeable extends Component<Props, StateType> {
       testID
     } = this.props;
 
-    const left = renderLeftActions && (
+    const left = this._hasLeftActions && (
       <Animated.View
         style={[
           styles.leftActions,
@@ -470,7 +484,7 @@ export default class Swipeable extends Component<Props, StateType> {
       </Animated.View>
     );
 
-    const right = renderRightActions && (
+    const right = this._hasRightActions && (
       <Animated.View
         style={[
           styles.rightActions,

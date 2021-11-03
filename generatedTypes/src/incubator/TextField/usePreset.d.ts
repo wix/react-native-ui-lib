@@ -90,7 +90,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
     value?: string | undefined;
-    autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
+    autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
     blurOnSubmit?: boolean | undefined;
@@ -127,7 +127,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "password" | "username" | "email" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | undefined;
+    autoCompleteType?: "name" | "password" | "username" | "email" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -159,7 +159,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType) => import("react-native").ViewStyle) | undefined;
+    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").ViewStyle) | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
@@ -416,7 +418,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
     value?: string | undefined;
-    autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
+    autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
     blurOnSubmit?: boolean | undefined;
@@ -453,7 +455,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "password" | "username" | "email" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | undefined;
+    autoCompleteType?: "name" | "password" | "username" | "email" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -485,7 +487,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType) => import("react-native").ViewStyle) | undefined;
+    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").ViewStyle) | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
@@ -854,7 +858,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
     value?: string | undefined;
-    autoCapitalize?: "none" | "characters" | "sentences" | "words" | undefined;
+    autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
     blurOnSubmit?: boolean | undefined;
@@ -891,7 +895,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "password" | "username" | "email" | "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | undefined;
+    autoCompleteType?: "name" | "password" | "username" | "email" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -1047,7 +1051,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         borderBottomWidth: number;
         borderBottomColor: string;
         paddingBottom: number;
-    } | ((context: import("./FieldContext").FieldContextType) => import("react-native").ViewStyle);
+    } | ((context: import("./FieldContext").FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").ViewStyle);
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
