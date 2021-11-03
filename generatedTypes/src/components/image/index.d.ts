@@ -90,6 +90,8 @@ declare class Image extends PureComponent<Props, State> {
     getImageSource(): any;
     onError: (event: NativeSyntheticEvent<ImageErrorEventData>) => void;
     renderSvg: () => JSX.Element;
+    renderErrorImage: () => JSX.Element;
+    renderImage: (useImageInsideContainer: boolean) => JSX.Element;
     renderRegularImage(): JSX.Element;
     render(): JSX.Element;
 }
