@@ -151,6 +151,8 @@ class DateTimePicker extends Component {
       if (Constants.isAndroid) {
         this.onDonePressed();
       }
+    } else if (event.type === 'dismissed' && Constants.isAndroid) {
+      this.toggleExpandableOverlay();
     }
   };
 

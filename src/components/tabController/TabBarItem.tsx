@@ -124,7 +124,7 @@ export default function TabBarItem({
   style,
   ...props
 }: Props) {
-  const {currentPage} = useContext(TabBarContext);
+  const {currentPage, setCurrentIndex} = useContext(TabBarContext);
   const itemRef = useRef();
   const itemWidth = useRef(props.width);
   // JSON.parse(JSON.stringify is due to an issue with reanimated
@@ -140,7 +140,7 @@ export default function TabBarItem({
 
   const onPress = useCallback(() => {
     if (!ignore) {
-      currentPage.value = index;
+      setCurrentIndex(index);
     }
 
     props.onPress?.(index);

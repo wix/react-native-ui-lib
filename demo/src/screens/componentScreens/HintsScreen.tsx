@@ -1,43 +1,34 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import {Colors, View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib';
-
+import {Colors, View, Text, Hint, Button, Assets, Incubator} from 'react-native-ui-lib';
+// @ts-expect-error
+import {renderMultipleSegmentOptions, renderBooleanOption} from '../ExampleScreenPresenter';
 
 const settingsIcon = require('../../assets/icons/settings.png');
 const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 
 type HintScreenProps = {};
-type HintScreenState = {
-  showHint: boolean;
-  useShortMessage: boolean;
-  showBottomHint: boolean;
-  showIcon: boolean;
-  targetPosition: string;
-  useTargetFrame?: boolean;
-  useSideTip?: boolean;
-  showCustomContent?: boolean;
-  showReactionStrip?: boolean;
-  enableShadow?: boolean
-};
 
-export default class HintsScreen extends Component<HintScreenProps, HintScreenState> {
-  constructor(props: HintScreenProps) {
-    super(props);
+export default class HintsScreen extends Component<HintScreenProps> {
 
-    this.state = {
-      showHint: true,
-      useShortMessage: false,
-      showBottomHint: false,
-      showIcon: false,
-      targetPosition: 'flex-start',
-      // useTargetFrame: true,
-      useSideTip: false,
-      showCustomContent: false,
-      showReactionStrip: false,
-      enableShadow: false
-    };
-  }
+  state = {
+    showHint: true,
+    useShortMessage: false,
+    showBottomHint: false,
+    showIcon: false,
+    targetPosition: 'flex-start',
+    useBackdrop: true,
+    useTargetFrame: false,
+    useSideTip: false,
+    showCustomContent: false,
+    showReactionStrip: false,
+    enableShadow: false
+  };
+
+  toggleHint = () => {
+    this.setState({showHint: !this.state.showHint});
+  };
 
   toggleHintPosition = () => {
     this.setState({
@@ -47,11 +38,11 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
 
   onHintPressed = () => {
     Alert.alert('Hint Pressed');
-  }
+  };
 
   onReactionPress = () => {
     Alert.alert('Reaction button pressed');
-  }
+  };
 
   renderCustomContent() {
     return (
@@ -75,12 +66,64 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
     );
   }
 
+  renderOptionsFAB() {
+    return (
+      <View absR absB padding-page style={{zIndex: 10}}>
+        <Incubator.ExpandableOverlay
+          useDialog
+          expandableContent={this.renderScreenOptions()}
+          dialogProps={{bottom: true}}
+        >
+          <Button round iconSource={Assets.icons.demo.settings} white/>
+        </Incubator.ExpandableOverlay>
+      </View>
+    );
+  }
+
+  renderScreenOptions() {
+    return (
+      <View bg-white br20 padding-20 collapsable={false}>
+        <Text h2 marginB-s4>
+          Hint Options
+        </Text>
+        {renderMultipleSegmentOptions.call(this, 'Button Position', 'targetPosition', [
+          {label: 'Left', value: 'flex-start'},
+          {label: 'Center', value: 'center'},
+          {label: 'Right', value: 'flex-end'}
+        ])}
+
+        {renderMultipleSegmentOptions.call(this, 'Tip Position', 'useSideTip', [
+          {label: 'Side Tip', value: true},
+          {label: 'Middle Top', value: false}
+        ])}
+
+        {renderMultipleSegmentOptions.call(this, 'Hint Position', 'showBottomHint', [
+          {label: 'Above', value: false},
+          {label: 'Under', value: true}
+        ])}
+
+        {renderMultipleSegmentOptions.call(this, 'Message Length', 'useShortMessage', [
+          {label: 'Short', value: true},
+          {label: 'Long', value: false}
+        ])}
+
+        {renderBooleanOption.call(this, 'With backdrop', 'useBackdrop')}
+        {renderBooleanOption.call(this, 'With icon', 'showIcon')}
+        {renderBooleanOption.call(this, 'With shadow', 'enableShadow')}
+        {renderBooleanOption.call(this, 'Use random position', 'useTargetFrame')}
+        {renderBooleanOption.call(this, 'Show custom content', 'showCustomContent')}
+        {renderBooleanOption.call(this, 'Show reaction strip', 'showReactionStrip')}
+      </View>
+    );
+  }
+
   render() {
     const {
       showHint,
       showBottomHint,
       showIcon,
       targetPosition,
+      useBackdrop,
       useShortMessage,
       useSideTip,
       useTargetFrame,
@@ -89,9 +132,9 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
       enableShadow
     } = this.state;
     const targetFrame = {x: 140, y: 100, width: 10, height: 10};
-    const message = useShortMessage ? 
-      'Add other cool and useful stuff.' : 
-      'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
+    const message = useShortMessage
+      ? 'Add other cool and useful stuff.'
+      : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
 
     return (
       <View flex>
@@ -127,10 +170,14 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
             targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
-            // onBackgroundPress={() => this.setState({showHint: !showHint})}
+            onBackgroundPress={useBackdrop && !useTargetFrame ? this.toggleHint : undefined}
+            backdropColor={Colors.rgba(Colors.grey10, 0.3)}
             customContent={
-              showCustomContent ? 
-                this.renderCustomContent() : showReactionStrip ? this.renderReactionStrip() : undefined
+              showCustomContent
+                ? this.renderCustomContent()
+                : showReactionStrip
+                  ? this.renderReactionStrip()
+                  : undefined
             }
             color={!showCustomContent && showReactionStrip ? Colors.white : undefined}
             removePaddings={!showCustomContent && showReactionStrip}
@@ -140,9 +187,11 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
             {!useTargetFrame && (
               <Button
                 label={showHint ? 'Hide' : 'Show'}
-                onPress={() => this.setState({showHint: !showHint})}
+                onPress={this.toggleHint}
                 style={{alignSelf: targetPosition}}
                 testID={'Hint.button'}
+                /* Change layout and position to test various cases */
+                // marginT-150
                 // style={{alignSelf: targetPosition, marginLeft: 30}}
                 // style={{alignSelf: targetPosition, position: 'absolute', top: 160, left: 100}}
               />
@@ -150,83 +199,26 @@ export default class HintsScreen extends Component<HintScreenProps, HintScreenSt
           </Hint>
 
           {useTargetFrame && (
-            <View
-              bg-red50
-              style={{
-                position: 'absolute',
-                top: targetFrame.y,
-                left: targetFrame.x,
-                width: targetFrame.width,
-                height: targetFrame.height
-              }}
-            />
+            <>
+              <View
+                bg-red50
+                style={{
+                  position: 'absolute',
+                  top: targetFrame.y,
+                  left: targetFrame.x,
+                  width: targetFrame.width,
+                  height: targetFrame.height
+                }}
+              />
+
+              <View absL absB margin-page>
+                <Button label="Show Hint" onPress={this.toggleHint}/>
+              </View>
+            </>
           )}
         </View>
 
-        <View padding-20 collapsable={false}>
-          <RadioGroup
-            row
-            centerV
-            marginB-20
-            initialValue={targetPosition}
-            onValueChange={(value: string) => this.setState({targetPosition: value})}
-          >
-            <Text marginR-10>Button Position:</Text>
-            <RadioButton value={'flex-start'} label={'Left'} marginR-10/>
-            <RadioButton value={'center'} label={'Center'} marginR-10/>
-            <RadioButton value={'flex-end'} label={'Right'} marginR-10/>
-          </RadioGroup>
-
-          <RadioGroup
-            row
-            centerV
-            marginB-20
-            initialValue={useSideTip}
-            onValueChange={(value: boolean) => this.setState({useSideTip: value})}
-          >
-            <Text marginR-10>Tip:</Text>
-            <RadioButton value label={'Side Tip'} marginR-10/>
-            <RadioButton value={false} label={'Middle Tip'} marginR-10/>
-          </RadioGroup>
-
-          <View row centerV marginV-10>
-            <Switch value={showBottomHint} onValueChange={this.toggleHintPosition}/>
-            <Text marginL-10>Toggle Hint Position</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={useShortMessage} onValueChange={() => this.setState({useShortMessage: !useShortMessage})}/>
-            <Text marginL-10>Toggle Message</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})}/>
-            <Text marginL-10>Toggle Icon</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={enableShadow} onValueChange={value => this.setState({enableShadow: value})}/>
-            <Text marginL-10>Toggle shadow</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})}/>
-            <Text marginL-10>Use random position</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch value={showCustomContent} onValueChange={value => this.setState({showCustomContent: value})}/>
-            <Text marginL-10>Show custom content</Text>
-          </View>
-
-          <View row centerV marginV-10>
-            <Switch 
-              value={showReactionStrip} 
-              onValueChange={value => this.setState({showReactionStrip: value, enableShadow: true})}
-            />
-            <Text marginL-10>Show reaction strip</Text>
-          </View>
-        </View>
+        {this.renderOptionsFAB()}
       </View>
     );
   }

@@ -27,7 +27,7 @@ export {
 export {default as ActionBar, ActionBarProps} from './src/components/actionBar';
 export {default as Avatar, AvatarProps} from './src/components/avatar';
 export {default as Badge, BadgeProps} from './src/components/badge';
-export {default as Card, CardProps, CardSectionProps} from './src/components/card';
+export {default as Card, CardProps, CardSectionProps, CardSelectionOptions} from './src/components/card';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './src/components/connectionStatusBar';
 export {default as Constants} from './src/helpers/Constants';
 export {default as GradientSlider, GradientSliderProps} from './src/components/slider/GradientSlider';
@@ -37,6 +37,7 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './src/componen
 export {default as Button, ButtonSize, ButtonProps} from './src/components/button';
 export {default as Stepper, StepperProps} from './src/components/stepper';
 export {default as Checkbox, CheckboxProps} from './src/components/checkbox';
+export {default as ChipsInput, ChipsInputProps, ChipsInputChipProps} from './src/components/chipsInput';
 export {default as Chip, ChipProps} from './src/components/chip';
 export {default as ColorPicker, ColorPickerProps} from './src/components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './src/components/colorPicker/ColorPalette';
@@ -93,7 +94,6 @@ export {
   TextArea,
   MaskedInput,
   ColorSliderGroup,
-  ChipsInput,
   SharedTransition,
   Toast,
   WheelPickerDialog,

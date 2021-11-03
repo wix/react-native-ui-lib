@@ -1,9 +1,9 @@
 // TODO: support commented props
-import React, {PropsWithChildren, useMemo, useEffect, useRef, useState} from 'react';
+import React, {PropsWithChildren, useMemo, useEffect, useState, useCallback} from 'react';
 import _ from 'lodash';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 import {Constants} from '../../helpers';
-import {orientations} from '../../helpers/Constants';
+import {useOrientation} from '../../hooks';
 import {asBaseComponent} from '../../commons/new';
 import {LogService} from '../../services';
 import TabBarContext from './TabBarContext';
@@ -58,25 +58,16 @@ function TabController({
   children
 }: PropsWithChildren<TabControllerProps>) {
   const [screenWidth, setScreenWidth] = useState<number>(Constants.windowWidth);
-  const orientation = useRef<orientations>(Constants.orientation);
-  const dimensionsChangeListener = useRef<any>();
 
   if (items?.length < 2) {
     console.error('TabController component expect a minimum of 2 items');
   }
 
-  useEffect(() => {
-    const onOrientationChange = () => {
-      if (orientation.current !== Constants.orientation) {
-        orientation.current = Constants.orientation;
-        setScreenWidth(Constants.windowWidth);
-      }
-    };
-    dimensionsChangeListener.current = Constants.addDimensionsEventListener(onOrientationChange);
-    return () => {
-      Constants.removeDimensionsEventListener(dimensionsChangeListener.current || onOrientationChange);
-    };
-  }, []);
+  useOrientation({
+    onOrientationChange: () => {
+      setScreenWidth(Constants.windowWidth);
+    }
+  });
 
   const pageWidth = useMemo(() => {
     return carouselPageWidth || screenWidth;
@@ -93,7 +84,12 @@ function TabController({
   const currentPage = useSharedValue(initialIndex);
   /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
   const targetPage = useSharedValue(initialIndex);
-  const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
+  // const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
+
+  const setCurrentIndex = useCallback(index => {
+    'worklet';
+    currentPage.value = index;
+  }, []);
 
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
@@ -102,7 +98,7 @@ function TabController({
   }, [selectedIndex]);
 
   useEffect(() => {
-    currentPage.value = initialIndex;
+    setCurrentIndex(initialIndex);
   }, [initialIndex]);
 
   useAnimatedReaction(() => {
@@ -124,13 +120,15 @@ function TabController({
       /* Items */
       items,
       ignoredItems,
+      itemsCount: items.length - ignoredItems.length,
       /* Animated Values */
       targetPage,
       currentPage,
-      carouselOffset,
+      // carouselOffset,
       containerWidth: screenWidth,
       /* Callbacks */
-      onChangeIndex
+      onChangeIndex,
+      setCurrentIndex
     };
   }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
 

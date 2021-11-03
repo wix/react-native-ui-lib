@@ -1,7 +1,18 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Checkbox, Switch, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
+import {
+  Checkbox,
+  Switch,
+  ColorPalette,
+  Colors,
+  RadioButton,
+  RadioGroup,
+  Slider,
+  SegmentedControl,
+  Text,
+  View
+} from 'react-native-ui-lib';
 
 export function renderHeader(title, others) {
   return (
@@ -15,7 +26,7 @@ export function renderBooleanOption(title, key) {
   const value = this.state[key];
   return (
     <View row centerV spread marginB-s4 key={key}>
-      <Text text70 style={{flex: 1}}>
+      <Text flex>
         {title}
       </Text>
       <Switch
@@ -63,9 +74,11 @@ export function renderRadioGroup(title, key, options, {isRow, afterValueChanged,
   const value = this.state[key];
   return (
     <View marginB-s2>
-      {!_.isUndefined(title) && <Text text70M marginB-s2>
-        {title}
-      </Text>}
+      {!_.isUndefined(title) && (
+        <Text text70M marginB-s2>
+          {title}
+        </Text>
+      )}
       <RadioGroup
         row={isRow}
         style={isRow && styles.rowWrap}
@@ -128,6 +141,22 @@ export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, ini
           {value}
         </Text>
       </View>
+    </View>
+  );
+}
+
+export function renderMultipleSegmentOptions(title, key, options) {
+  const value = this.state[key];
+  const index = _.findIndex(options, {value});
+
+  return (
+    <View row centerV spread marginB-s4 key={key}>
+      <Text marginR-s2>{title}</Text>
+      <SegmentedControl
+        initialIndex={index}
+        segments={options}
+        onChangeIndex={index => this.setState({[key]: options[index].value})}
+      />
     </View>
   );
 }

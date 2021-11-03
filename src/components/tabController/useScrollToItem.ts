@@ -184,7 +184,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
-      focusIndex(selectedIndex);
+      focusIndex(selectedIndex, false);
     }
   }, [selectedIndex, focusIndex]);
 

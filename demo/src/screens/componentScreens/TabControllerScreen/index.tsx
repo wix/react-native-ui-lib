@@ -14,6 +14,7 @@ interface State {
   asCarousel: boolean;
   centerSelected: boolean;
   fewItems: boolean;
+  initialIndex: number;
   selectedIndex: number;
   key: string | number;
   items: TabControllerItemProps[];
@@ -26,6 +27,7 @@ class TabControllerScreen extends Component<{}, State> {
       asCarousel: true,
       centerSelected: false,
       fewItems: false,
+      initialIndex: 0,
       selectedIndex: 0,
       key: Date.now(),
       items: []
@@ -146,14 +148,14 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   render() {
-    const {key, /* selectedIndex, */ asCarousel, centerSelected, fewItems, items} = this.state;
+    const {key, initialIndex, /* selectedIndex, */ asCarousel, centerSelected, fewItems, items} = this.state;
     return (
       <View flex bg-grey70>
         <TabController
           key={key}
           asCarousel={asCarousel}
           // selectedIndex={selectedIndex}
-          initialIndex={0}
+          initialIndex={initialIndex}
           onChangeIndex={this.onChangeIndex}
           items={items}
         >

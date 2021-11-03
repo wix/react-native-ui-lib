@@ -5,9 +5,11 @@ import Reanimated, {
   useAnimatedReaction,
   useAnimatedRef,
   useAnimatedScrollHandler,
-  useSharedValue,
-  withTiming
+  useSharedValue
 } from 'react-native-reanimated';
+import {Constants} from 'helpers';
+
+const FIX_RTL = Constants.isRTL && Constants.isAndroid;
 
 /**
  * @description: TabController's Page Carousel
@@ -17,46 +19,70 @@ import Reanimated, {
 function PageCarousel({...props}) {
   const carousel = useAnimatedRef<Reanimated.ScrollView>();
   const {
+    itemsCount,
     currentPage,
     targetPage,
-    selectedIndex = 0,
     pageWidth,
-    carouselOffset
+    // carouselOffset,
+    setCurrentIndex
   } = useContext(TabBarContext);
-  const contentOffset = useMemo(() => ({x: selectedIndex * pageWidth, y: 0}), [selectedIndex, pageWidth]);
-  const wasScrolledByPress = useSharedValue(false);
+  const initialOffset = useMemo(() => ({x: currentPage.value * pageWidth, y: 0}), []);
+  const indexChangeReason = useSharedValue<'byScroll' | 'byPress' | undefined>(undefined);
+
+  const scrollToInitial = useCallback(() => {
+    if (Constants.isAndroid && currentPage.value) {
+      scrollToItem(currentPage.value);
+    }
+  }, []);
+
+  const calcOffset = useCallback(offset => {
+    'worklet';
+    return FIX_RTL ? pageWidth * (itemsCount - 1) - offset : offset;
+  },
+  [pageWidth, itemsCount]);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
-      carouselOffset.value = e.contentOffset.x;
-      const newIndex = e.contentOffset.x / pageWidth;
+      // carouselOffset.value = e.contentOffset.x;
+      const xOffset = calcOffset(e.contentOffset.x);
+      const newIndex = xOffset / pageWidth;
 
-      if (wasScrolledByPress.value) {
+      if (indexChangeReason.value === 'byPress') {
+        // Scroll was immediate and not by gesture
         /* Round is for android when offset value has fraction */
-        targetPage.value = withTiming(Math.round(newIndex));
-        wasScrolledByPress.value = false;
+        // targetPage.value = withTiming(Math.round(newIndex));
+
+        indexChangeReason.value = undefined;
       } else {
         targetPage.value = newIndex;
       }
     },
     onMomentumEnd: e => {
-      const newPage = Math.round(e.contentOffset.x / pageWidth);
-      currentPage.value = newPage;
+      const xOffset = calcOffset(e.contentOffset.x);
+      const newPage = Math.round(xOffset / pageWidth);
+      indexChangeReason.value = 'byScroll';
+      setCurrentIndex(newPage);
     }
   });
 
   const scrollToItem = useCallback(index => {
-    wasScrolledByPress.value = true;
+    if (indexChangeReason.value === 'byScroll') {
+      indexChangeReason.value = undefined;
+    } else {
+      indexChangeReason.value = 'byPress';
+    }
+
+    const actualIndex = FIX_RTL ? itemsCount - index - 1 : index;
     // @ts-expect-error
-    carousel.current?.scrollTo({x: index * pageWidth, animated: false});
+    carousel.current?.scrollTo({x: actualIndex * pageWidth, animated: false});
   },
-  [pageWidth]);
+  [pageWidth, itemsCount]);
 
   useAnimatedReaction(() => {
     return currentPage.value;
   },
   (currIndex, prevIndex) => {
-    if (currIndex !== prevIndex) {
+    if (prevIndex !== null && currIndex !== prevIndex) {
       runOnJS(scrollToItem)(currIndex);
     }
   });
@@ -75,7 +101,8 @@ function PageCarousel({...props}) {
       showsHorizontalScrollIndicator={false}
       onScroll={scrollHandler}
       scrollEventThrottle={16}
-      contentOffset={contentOffset} // iOS only
+      contentOffset={initialOffset} // iOS only
+      onLayout={scrollToInitial} // Android only
     />
   );
 }
