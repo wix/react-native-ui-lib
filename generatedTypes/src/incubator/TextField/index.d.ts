@@ -60,7 +60,9 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | ((context: FieldContextType) => ViewStyle);
+    fieldStyle?: ViewStyle | ((context: FieldContextType, props: {
+        preset: TextFieldProps['preset'];
+    }) => ViewStyle);
     /**
      * Container style of the whole component
      */
@@ -68,7 +70,7 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | null;
+    preset?: 'default' | null | string;
 };
 export declare type InternalTextFieldProps = PropsWithChildren<TextFieldProps & BaseComponentInjectedProps & ForwardRefInjectedProps>;
 interface StaticMembers {

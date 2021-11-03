@@ -35,11 +35,8 @@ class TextFieldScreen extends Component {
 
   render() {
     return (
-      <TabController>
-        <TabController.TabBar
-          items={SCREENS.map(item => ({label: item.title}))}
-          activeBackgroundColor={Colors.blue70}
-        />
+      <TabController items={SCREENS.map(item => ({label: item.title}))}>
+        <TabController.TabBar activeBackgroundColor={Colors.blue70}/>
         {this.renderPages()}
       </TabController>
     );

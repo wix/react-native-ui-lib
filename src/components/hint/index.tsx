@@ -1,4 +1,3 @@
-// TODO: Add support to custom hint rendering
 import _ from 'lodash';
 import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
 import {
@@ -113,6 +112,10 @@ export interface HintProps {
    * Callback for the background press
    */
   onBackgroundPress?: (event: GestureResponderEvent) => void;
+  /**
+   * Color for background overlay (require onBackgroundPress)
+   */
+  backdropColor?: string;
   /**
    * The hint container width
    */
@@ -511,11 +514,33 @@ class Hint extends Component<HintProps, HintState> {
     );
   }
 
+  renderMockChildren() {
+    const {children} = this.props;
+    if (children && React.isValidElement(children)) {
+      const layout = {
+        ...this.getContainerPosition(),
+        width: this.targetLayout?.width,
+        height: this.targetLayout?.height
+      };
+
+      return (
+        <View style={[styles.mockChildrenContainer, layout]}>
+          {React.cloneElement(children, {
+            collapsable: false,
+            key: 'mock',
+            style: [children.props.style, styles.mockChildren]
+          })}
+        </View>
+      );
+    }
+  }
+
   renderChildren() {
     const {targetFrame} = this.props;
 
     if (!targetFrame && isValidElement(this.props.children)) {
       return React.cloneElement(this.props.children, {
+        key: 'clone',
         collapsable: false,
         onLayout: this.onTargetLayout,
         ref: this.setTargetRef,
@@ -525,31 +550,33 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   render() {
-    const {onBackgroundPress, testID} = this.props;
+    const {onBackgroundPress, backdropColor, testID} = this.props;
 
     if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children || null;
     }
 
     return (
-      <React.Fragment>
+      <>
+        {this.renderChildren()}
         {onBackgroundPress ? (
           <Modal
             visible={this.showHint}
-            animationType="none"
+            animationType={backdropColor ? 'fade' : 'none'}
+            overlayBackgroundColor={backdropColor}
             transparent
             onBackgroundPress={onBackgroundPress}
             onRequestClose={onBackgroundPress as () => void}
             testID={`${testID}.modal`}
           >
+            {this.renderMockChildren()}
             {this.renderHintContainer()}
           </Modal>
         ) : (
           // this.renderOverlay(),
           this.renderHintContainer()
         )}
-        {this.renderChildren()}
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -557,6 +584,23 @@ class Hint extends Component<HintProps, HintState> {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute'
+  },
+  mockChildrenContainer: {
+    position: 'absolute'
+  },
+  mockChildren: {
+    margin: undefined,
+    marginVertical: undefined,
+    marginHorizontal: undefined,
+    marginTop: undefined,
+    marginRight: undefined,
+    marginBottom: undefined,
+    marginLeft: undefined,
+
+    top: undefined,
+    left: undefined,
+    right: undefined,
+    bottom: undefined
   },
   // overlay: {
   //   position: 'absolute',

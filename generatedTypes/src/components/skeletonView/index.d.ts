@@ -12,37 +12,7 @@ declare enum ContentType {
     AVATAR = "avatar",
     THUMBNAIL = "thumbnail"
 }
-export interface SkeletonViewProps extends AccessibilityProps {
-    /**
-     * The content has been loaded, start fading out the skeleton and fading in the content
-     */
-    showContent?: boolean;
-    /**
-     * Custom value of any type to pass on to SkeletonView and receive back in the renderContent callback
-     */
-    contentData?: any;
-    /**
-     * A function that will render the content once the content is ready (i.e. showContent is true).
-     * The method will be called with the Skeleton's contentData (i.e. renderContent(props?.contentData))
-     */
-    renderContent?: (contentData?: any) => React.ReactNode;
-    /**
-     * The type of the skeleton view.
-     * Types: LIST_ITEM and TEXT_CONTENT (using SkeletonView.templates.###)
-     */
-    template?: Template;
-    /**
-     * An object that holds the number of times the skeleton will appear, and (optionally) the key.
-     * The key will actually be `${key}-${index}` if a key is given or `${index}` if no key is given.
-     * IMPORTANT: your data (i.e. children \ renderContent) will NOT be duplicated.
-     * Note: testID will be `${testID}-${index}`
-     */
-    times?: number;
-    /**
-     * A key for the duplicated SkeletonViews.
-     * This is needed because the `key` prop is not accessible.
-     */
-    timesKey?: string;
+export interface SkeletonListProps {
     /**
      * The size of the skeleton view.
      * Types: SMALL and LARGE (using SkeletonView.sizes.###)
@@ -59,6 +29,78 @@ export interface SkeletonViewProps extends AccessibilityProps {
     hideSeparator?: boolean;
     /**
      * Whether to show the last list item template separator
+     */
+    showLastSeparator?: boolean;
+    /**
+     * Extra content to be rendered on the end of the list item
+     */
+    renderEndContent?: () => React.ReactElement | undefined;
+}
+export interface SkeletonViewProps extends AccessibilityProps {
+    /**
+     * The content has been loaded, start fading out the skeleton and fading in the content
+     */
+    showContent?: boolean;
+    /**
+     * A function that will render the content once the content is ready (i.e. showContent is true).
+     * The method will be called with the Skeleton's customValue (i.e. renderContent(props?.customValue))
+     */
+    renderContent?: (customValue?: any) => React.ReactNode;
+    /**
+     * Custom value of any type to pass on to SkeletonView and receive back in the renderContent callback.
+     */
+    customValue?: any;
+    /**
+     * @deprecated
+     * - Please use customValue instead.
+     * - Custom value of any type to pass on to SkeletonView and receive back in the renderContent callback.
+     */
+    contentData?: any;
+    /**
+     * The type of the skeleton view.
+     * Types: LIST_ITEM and TEXT_CONTENT (using SkeletonView.templates.###)
+     */
+    template?: Template;
+    /**
+     * Props that are available when using template={SkeletonView.templates.LIST_ITEM}
+     */
+    listProps?: SkeletonListProps;
+    /**
+     * An object that holds the number of times the skeleton will appear, and (optionally) the key.
+     * The key will actually be `${key}-${index}` if a key is given or `${index}` if no key is given.
+     * IMPORTANT: your data (i.e. children \ renderContent) will NOT be duplicated.
+     * Note: testID will be `${testID}-${index}`
+     */
+    times?: number;
+    /**
+     * A key for the duplicated SkeletonViews.
+     * This is needed because the `key` prop is not accessible.
+     */
+    timesKey?: string;
+    /**
+     * @deprecated
+     * - Pass via listProps instead.
+     * - The size of the skeleton view.
+     * - Types: SMALL and LARGE (using SkeletonView.sizes.###)
+     */
+    size?: Size;
+    /**
+     * @deprecated
+     * - Pass via listProps instead.
+     * - Add content to the skeleton.
+     * - Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
+     */
+    contentType?: ContentType;
+    /**
+     * @deprecated
+     * - Pass via listProps instead.
+     * - Whether to hide the list item template separator
+     */
+    hideSeparator?: boolean;
+    /**
+     * @deprecated
+     * - Pass via listProps instead.
+     * - Whether to show the last list item template separator
      */
     showLastSeparator?: boolean;
     /**
@@ -124,7 +166,11 @@ declare class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
         width: number;
         height: number;
     };
-    getContentSize: () => 48 | 40;
+    get size(): Size | undefined;
+    get contentSize(): 48 | 40;
+    get contentType(): ContentType | undefined;
+    get hideSeparator(): boolean | undefined;
+    get showLastSeparator(): boolean | undefined;
     renderListItemLeftContent: () => JSX.Element | undefined;
     renderStrip: (isMain: boolean, length: number, marginTop: number) => JSX.Element;
     renderListItemContentStrips: () => JSX.Element;
