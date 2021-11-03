@@ -1,8 +1,8 @@
 import React, {PropsWithChildren, useMemo, useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useSharedValue, withTiming, useAnimatedStyle} from 'react-native-reanimated';
-import TransitionView, {TransitionViewAnimationType} from '../TransitionView/index';
-import PanView from '../panView/index';
+import TransitionView, {TransitionViewAnimationType} from '../TransitionView';
+import PanView from '../panView';
 import {PanningDirections, PanningDirectionsEnum} from '../panView/panningUtil';
 import View from '../../components/view';
 import Modal, {ModalProps} from '../../components/modal';
