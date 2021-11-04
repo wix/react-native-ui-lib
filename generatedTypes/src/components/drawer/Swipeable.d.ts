@@ -67,6 +67,8 @@ export default class Swipeable extends Component<Props, StateType> {
     _onHandlerStateChange: ({ nativeEvent }: {
         nativeEvent: any;
     }) => void;
+    _hasLeftActions: boolean;
+    _hasRightActions: boolean;
     _handleRelease: (nativeEvent: any) => void;
     _animateRow: (fromValue: any, toValue: any, velocityX: any) => void;
     _currentOffset: () => number;

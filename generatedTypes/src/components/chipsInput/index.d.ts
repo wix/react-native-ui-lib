@@ -12,11 +12,11 @@ export declare type ChipsInputProps = TypographyModifiers & TextFieldProps & {
     /**
     * DEPRECATED: use chips instead. list of tags. can be string boolean or custom object when implementing getLabel
     */
-    tags?: Array<ChipType>;
+    tags?: ChipType[];
     /**
     * list of tags. can be string boolean or custom object when implementing getLabel
     */
-    chips?: Array<ChipsInputChipProps>;
+    chips?: ChipsInputChipProps[];
     /**
      * Style your chips
      */
@@ -26,7 +26,7 @@ export declare type ChipsInputProps = TypographyModifiers & TextFieldProps & {
      */
     getLabel?: (tag: ChipType) => any;
     /**
-     * callback for custom rendering tag item
+     * DEPRECATED: use chips instead. callback for custom rendering tag item
      */
     renderTag?: (tag: ChipType, index: number, shouldMarkTag: boolean, label: string) => React.ReactElement;
     /**
@@ -34,11 +34,11 @@ export declare type ChipsInputProps = TypographyModifiers & TextFieldProps & {
      */
     onChangeTags?: () => void;
     /**
-     * callback for creating new tag out of input value (good for composing tag object)
+     * DEPRECATED: use chips instead. callback for creating new tag out of input value (good for composing tag object)
      */
     onCreateTag?: (value: any) => void;
     /**
-     * callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
+     * DEPRECATED: use chips instead. callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
      */
     onTagPress?: (index: number, toRemove?: number) => void;
     /**
@@ -97,7 +97,7 @@ declare type State = {
 };
 declare type OwnProps = ChipsInputProps & BaseComponentInjectedProps;
 /**
- * @description: Tags input component (chips)
+ * @description: Chips input component
  * @modifiers: Typography
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ChipsInput/ChipsInput.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.js
@@ -123,6 +123,7 @@ declare class ChipsInput extends Component<OwnProps, State> {
     onChangeText: _.DebouncedFunc<(value: any) => void>;
     onTagPress(index: number): void;
     isLastTagMarked(): boolean;
+    removeTag: () => void;
     onKeyPress: (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => void;
     getLabel: (item: ChipType) => any;
     onFocus: () => void;
