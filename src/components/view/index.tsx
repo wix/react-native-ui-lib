@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
-import Reanimated from 'react-native-reanimated';
+// import Reanimated from 'react-native-reanimated';
 import {
   asBaseComponent,
   forwardRef,
@@ -68,9 +68,13 @@ class View extends PureComponent<PropsTypes, ViewState> {
     super(props);
 
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
-    if (props.reanimated) {
-      console.warn('ethan - ReanimatedPackage', ReanimatedPackage.default.createAnimatedComponent);
-      this.Container = Reanimated.createAnimatedComponent(this.Container);
+
+    if (props.reanimated && ReanimatedPackage) {
+      if (ReanimatedPackage) {
+        this.Container = ReanimatedPackage.createAnimatedComponent(this.Container);
+      } else {
+        console.error(`RNUILib View's "reanimated" prop requires installing "react-native-reanimated" dependency`);
+      }
     } else if (props.animated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
     }
