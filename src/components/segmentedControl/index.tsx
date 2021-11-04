@@ -14,6 +14,7 @@ import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps as SegmentProps} from './segment';
 import {Constants} from 'helpers';
+import {useOrientation} from 'hooks';
 
 const BORDER_WIDTH = 1;
 const TIMING_CONFIG = {
@@ -105,6 +106,13 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const segmentedControlHeight = useSharedValue(0);
   const segmentsCounter = useRef(0);
 
+  useOrientation({
+    onOrientationChange: () => {
+      segmentsCounter.current = 0;
+      segmentsStyle.value = [];
+    }
+  });
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const changeIndex = useCallback(_.throttle(() => {
     onChangeIndex?.(animatedSelectedIndex.value);
@@ -135,7 +143,6 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     segmentsCounter.current++;
 
     if (segmentsCounter.current === segments?.length) {
-      animatedSelectedIndex.value = initialIndex;
       segmentsStyle.value = [...segmentsStyle.value];
     }
   },
