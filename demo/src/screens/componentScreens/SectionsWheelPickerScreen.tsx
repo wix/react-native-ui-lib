@@ -102,6 +102,7 @@ const SectionsWheelPickerScreen = () => {
         <SegmentedControl
           segments={[{label: '1 section'}, {label: '2 sections'}, {label: '3 sections'}]}
           onChangeIndex={onChangeIndex}
+          throttleTime={400}
         />
         <Text text50 marginV-20>
           Pick a duration

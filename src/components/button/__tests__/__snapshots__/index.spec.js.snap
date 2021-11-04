@@ -4,7 +4,9 @@ exports[`Button backgroundColor should return backgroundColor according to modif
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -71,7 +73,9 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -138,7 +142,9 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -205,7 +211,9 @@ exports[`Button backgroundColor should return theme disabled color if button is 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -272,7 +280,9 @@ exports[`Button backgroundColor should return undefined if this button is link 1
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -339,7 +349,9 @@ exports[`Button backgroundColor should return undefined if this button is outlin
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -408,7 +420,9 @@ exports[`Button border radius should return 0 border radius when border radius p
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -475,7 +489,9 @@ exports[`Button border radius should return 0 border radius when button is full 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -542,7 +558,9 @@ exports[`Button border radius should return given border radius when use plain n
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -609,7 +627,9 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -681,7 +701,9 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -753,7 +775,9 @@ exports[`Button container size should have no padding of button is a link nor mi
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -825,7 +849,9 @@ exports[`Button container size should have no padding of button is an icon butto
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -869,6 +895,7 @@ exports[`Button container size should have no padding of button is an icon butto
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -921,7 +948,9 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -990,7 +1019,9 @@ exports[`Button container size should return style for large button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1057,7 +1088,9 @@ exports[`Button container size should return style for large button 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1126,7 +1159,9 @@ exports[`Button container size should return style for medium button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1198,7 +1233,9 @@ exports[`Button container size should return style for medium button 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1272,7 +1309,9 @@ exports[`Button container size should return style for round button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1339,7 +1378,9 @@ exports[`Button container size should return style for small button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1411,7 +1452,9 @@ exports[`Button container size should return style for small button 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1485,7 +1528,9 @@ exports[`Button container size should return style for xSmall button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1557,7 +1602,9 @@ exports[`Button container size should return style for xSmall button 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1631,7 +1678,9 @@ exports[`Button icon should apply color on icon 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1674,6 +1723,7 @@ exports[`Button icon should apply color on icon 1`] = `
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1684,7 +1734,9 @@ exports[`Button icon should apply color on icon 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1727,6 +1779,7 @@ exports[`Button icon should apply color on icon 2`] = `
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1737,7 +1790,9 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1783,6 +1838,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
             "tintColor": "red",
           },
         ],
+        false,
       ]
     }
   />
@@ -1793,7 +1849,9 @@ exports[`Button icon should return icon style according to different variations 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1838,6 +1896,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1848,7 +1907,9 @@ exports[`Button icon should return icon style according to different variations 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1891,6 +1952,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1901,7 +1963,9 @@ exports[`Button icon should return icon style according to different variations 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1944,6 +2008,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1954,7 +2019,9 @@ exports[`Button icon should return the right spacing according to button size wh
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2021,7 +2088,9 @@ exports[`Button icon should return the right spacing according to button size wh
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2093,7 +2162,9 @@ exports[`Button icon should return the right spacing according to button size wh
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2165,7 +2236,9 @@ exports[`Button icon should return the right spacing according to button size wh
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2237,7 +2310,9 @@ exports[`Button label size should return style for large button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2304,7 +2379,9 @@ exports[`Button label size should return style for medium button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2376,7 +2453,9 @@ exports[`Button label size should return style for small button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2448,7 +2527,9 @@ exports[`Button label size should return style for xSmall button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2520,7 +2601,9 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2587,7 +2670,9 @@ exports[`Button labelColor should return color according to color modifier 1`] =
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2654,7 +2739,9 @@ exports[`Button labelColor should return color according to color prop 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2721,7 +2808,9 @@ exports[`Button labelColor should return disabled text color according to theme 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2788,7 +2877,9 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2855,7 +2946,9 @@ exports[`Button labelColor should return undefined color if this is an icon butt
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2898,6 +2991,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -2908,7 +3002,9 @@ exports[`Button link should render button as a link 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2975,7 +3071,9 @@ exports[`Button outline should render button with an outline 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3044,7 +3142,9 @@ exports[`Button outline should render button with an outlineColor 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3113,7 +3213,9 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3182,7 +3284,9 @@ exports[`Button outline should return custom borderWidth according to outlineWid
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3251,7 +3355,9 @@ exports[`Button outline should return disabled color for outline if button is di
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3320,7 +3426,9 @@ exports[`Button outline should return undefined when link is true, even when out
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3387,7 +3495,9 @@ exports[`Button should render default button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}

@@ -18,6 +18,7 @@ declare class Wizard extends Component<WizardProps, State> {
     static displayName: string;
     static Step: typeof WizardStep;
     static States: typeof WizardStepStates;
+    private dimensionsChangeListener;
     constructor(props: WizardProps);
     componentDidMount(): void;
     componentWillUnmount(): void;

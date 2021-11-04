@@ -1,35 +1,17 @@
-// TODO: support hitSlop
-import React, {PureComponent} from 'react';
-import {processColor, StyleSheet, LayoutChangeEvent} from 'react-native';
-import _ from 'lodash';
-import Reanimated, {Easing as _Easing, EasingNode} from 'react-native-reanimated';
-import {TapGestureHandler, LongPressGestureHandler, State, LongPressGestureHandlerGestureEvent} from 'react-native-gesture-handler';
+import React, {PropsWithChildren, useCallback, useMemo} from 'react';
+import {LayoutChangeEvent} from 'react-native';
+import Reanimated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  interpolate,
+  interpolateColor,
+  runOnJS
+} from 'react-native-reanimated';
+import {TapGestureHandler, LongPressGestureHandler, State} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
-import {ViewProps} from '../components/view';
-
-const {
-  Clock,
-  Code,
-  cond,
-  and,
-  or,
-  eq,
-  neq,
-  interpolate: _interpolate,
-  interpolateNode,
-  Extrapolate,
-  Value,
-  call,
-  block,
-  event,
-  timing,
-  set,
-  startClock,
-  stopClock
-} = Reanimated;
-
-const Easing = EasingNode || _Easing;
-const interpolate = interpolateNode || _interpolate;
+import View, {ViewProps} from '../components/view';
 
 export type TouchableOpacityProps = {
   /**
@@ -68,162 +50,131 @@ export type TouchableOpacityProps = {
    * Pass custom style
    */
   style?: ViewProps['style'];
+  /**
+   * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
+   */
+  customValue?: any;
   onLayout?: (event: LayoutChangeEvent) => void;
   testID?: string;
 };
 
-type Props = TouchableOpacityProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
+type Props = PropsWithChildren<TouchableOpacityProps & BaseComponentInjectedProps & ForwardRefInjectedProps>;
 
 /**
  * @description: a Better, enhanced TouchableOpacity component
  * @modifiers: flex, margin, padding, background
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TouchableOpacityScreen.js
  */
-class TouchableOpacity extends PureComponent<Props> {
-  static displayName = 'Incubator.TouchableOpacity';
+function TouchableOpacity(props: Props) {
+  const {
+    children,
+    modifiers,
+    style,
+    disabled,
+    forwardedRef,
+    feedbackColor,
+    activeOpacity = 0.2,
+    activeScale = 1,
+    ...others
+  } = props;
+  const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
-  static defaultProps = {
-    activeOpacity: 0.2,
-    activeScale: 1,
-    onPress: _.noop
+  const isActive = useSharedValue(0);
+  /* This flag is for fixing an issue with long press triggering twice
+  TODO: Consider revisiting this issue to see if it still occurs */
+  const isLongPressed = useSharedValue(false);
+
+  const backgroundColor = useMemo(() => {
+    return props.backgroundColor || modifiers.backgroundColor;
+  }, [props.backgroundColor, modifiers.backgroundColor]);
+
+  const onPress = useCallback(() => {
+    props.onPress?.(props);
+  }, [props.onPress, props.customValue]);
+
+  const onLongPress = useCallback(() => {
+    props.onLongPress?.(props);
+  }, [props.onLongPress, props.customValue]);
+
+  const toggleActive = (value: number) => {
+    'worklet';
+    isActive.value = withTiming(value, {duration: 200});
   };
 
-  state = {
-    pressState: new Value(-1)
-  };
-
-  _prevPressState = new Value(-1);
-  isAnimating = new Value(0);
-  clock = new Clock();
-
-  _scale = runTiming(this.clock, this.pressState, this.props.activeScale || 1, 1);
-  _opacity = runTiming(this.clock, this.pressState, this.props.activeOpacity || 0.2, 1);
-  _color = cond(eq(this.pressState, State.BEGAN),
-    // @ts-expect-error
-    processColor(this.props.feedbackColor || this.backgroundColor),
-    processColor(this.backgroundColor));
-
-  get pressState(): any {
-    return this.props.pressState || this.state.pressState;
-  }
-
-  get backgroundColor() {
-    const {modifiers, backgroundColor: backgroundColorProp} = this.props;
-    const {backgroundColor} = modifiers;
-    return backgroundColorProp || backgroundColor;
-  }
-
-  get animatedStyle() {
-    const {feedbackColor} = this.props;
-    const style = {
-      opacity: this._opacity,
-      transform: [{scale: this._scale}]
-    } as any;
-
-    if (feedbackColor) {
-      style.backgroundColor = this._color;
+  const tapGestureHandler = useAnimatedGestureHandler({
+    onStart: () => {
+      toggleActive(1);
+    },
+    onEnd: () => {
+      toggleActive(0);
+      runOnJS(onPress)();
+    },
+    onFail: () => {
+      if (!isLongPressed.value) {
+        toggleActive(0);
+      }
     }
+  });
 
-    return style;
-  }
-
-  onStateChange = event([
-    {
-      nativeEvent: {state: this.pressState}
+  const longPressGestureHandler = useAnimatedGestureHandler({
+    onActive: () => {
+      if (!isLongPressed.value) {
+        isLongPressed.value = true;
+        runOnJS(onLongPress)();
+      }
+    },
+    onFinish: () => {
+      toggleActive(0);
+      isLongPressed.value = false;
     }
-  ],
-  {useNativeDriver: true});
+  });
 
-  onLongPress = (event: LongPressGestureHandlerGestureEvent) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      this.props.onLongPress?.(this.props);
-    }
-  };
+  const animatedStyle = useAnimatedStyle(() => {
+    const activeColor = feedbackColor || backgroundColor;
+    const opacity = interpolate(isActive.value, [0, 1], [1, activeOpacity]);
+    const scale = interpolate(isActive.value, [0, 1], [1, activeScale]);
 
-  render() {
-    const {modifiers, style, onPress = _.noop, onLongPress, disabled, forwardedRef, ...others} = this.props;
-    const {borderRadius, paddings, margins, alignments, flexStyle, backgroundColor} = modifiers;
+    return {
+      backgroundColor: interpolateColor(isActive.value, [0, 1], [backgroundColor, activeColor]),
+      opacity,
+      transform: [{scale}]
+    };
+  }, [backgroundColor, feedbackColor]);
 
-    return (
-      <TapGestureHandler
-        onHandlerStateChange={this.onStateChange}
-        shouldCancelWhenOutside
-        enabled={!disabled}
-      >
-        <Reanimated.View
-          {...others}
-          ref={forwardedRef}
-          style={[
-            borderRadius && {borderRadius},
-            flexStyle,
-            paddings,
-            margins,
-            alignments,
-            backgroundColor && {backgroundColor},
-            style,
-            this.animatedStyle
-          ]}
-        >
-          {this.props.children}
+  const Container = props.onLongPress ? LongPressGestureHandler : View;
 
-          <Code>
-            {() => {
-              return block([
-                cond(and(eq(this.pressState, State.END), eq(this._prevPressState, State.BEGAN)), [
-                  call([], () => onPress(this.props))
-                ]),
-                set(this._prevPressState, this.pressState)
-              ]);
-            }}
-          </Code>
-          {onLongPress && (
-            <LongPressGestureHandler onHandlerStateChange={this.onLongPress} enabled={!disabled}>
-              <Reanimated.View style={StyleSheet.absoluteFillObject}/>
-            </LongPressGestureHandler>
-          )}
-        </Reanimated.View>
-      </TapGestureHandler>
-    );
-  }
+  return (
+    <TapGestureHandler
+      // @ts-expect-error
+      onGestureEvent={tapGestureHandler}
+      shouldCancelWhenOutside
+      enabled={!disabled}
+    >
+      <Reanimated.View>
+        {/* @ts-expect-error */}
+        <Container onGestureEvent={longPressGestureHandler} shouldCancelWhenOutside>
+          <Reanimated.View
+            {...others}
+            ref={forwardedRef}
+            style={[
+              borderRadius && {borderRadius},
+              flexStyle,
+              paddings,
+              margins,
+              alignments,
+              backgroundColor && {backgroundColor},
+              style,
+              animatedStyle
+            ]}
+          >
+            {children}
+          </Reanimated.View>
+        </Container>
+      </Reanimated.View>
+    </TapGestureHandler>
+  );
 }
 
-function runTiming(clock: any, gestureState: any, initialValue: number, endValue: number) {
-  const state = {
-    finished: new Value(0),
-    position: new Value(0),
-    time: new Value(0),
-    frameTime: new Value(0)
-  };
-
-  const config = {
-    duration: 150,
-    toValue: new Value(0),
-    easing: Easing.inOut(Easing.ease)
-  };
-
-  return block([
-    cond(and(eq(gestureState, State.BEGAN), neq(config.toValue, 1)), [
-      set(state.finished, 0),
-      set(state.time, 0),
-      set(state.frameTime, 0),
-      set(config.toValue, 1),
-      startClock(clock)
-    ]),
-    cond(and(or(eq(gestureState, State.END), eq(gestureState, State.FAILED)), neq(config.toValue, 0)), [
-      set(state.finished, 0),
-      set(state.time, 0),
-      set(state.frameTime, 0),
-      set(config.toValue, 0),
-      startClock(clock)
-    ]),
-    timing(clock, state, config),
-    cond(state.finished, stopClock(clock)),
-    interpolate(state.position, {
-      inputRange: [0, 1],
-      outputRange: [endValue, initialValue],
-      extrapolate: Extrapolate.CLAMP
-    })
-  ]);
-}
+TouchableOpacity.displayName = 'Incubator.TouchableOpacity';
 
 export default asBaseComponent<TouchableOpacityProps>(forwardRef<Props>(TouchableOpacity));

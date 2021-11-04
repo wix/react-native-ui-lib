@@ -28,6 +28,15 @@ const DEFAULT_SELECTION_PROPS = {
   hideIndicator: false
 };
 
+export interface CardSelectionOptions {
+  icon?: number;
+  iconColor?: string;
+  color?: string;
+  borderWidth?: number;
+  indicatorSize?: number;
+  hideIndicator?: boolean;
+}
+
 export {CardSectionProps};
 export type CardProps = ViewProps &
   TouchableOpacityProps & {
@@ -78,14 +87,7 @@ export type CardProps = ViewProps &
     /**
      * Custom options for styling the selection indication
      */
-    selectionOptions?: {
-      icon?: number;
-      iconColor?: string;
-      color?: string;
-      borderWidth?: number;
-      indicatorSize?: number;
-      hideIndicator?: boolean;
-    };
+    selectionOptions?: CardSelectionOptions;
   };
 
 type PropTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & CardProps;

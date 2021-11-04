@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import PanningContext from './panningContext';
 
-
-export enum PanningDirections {
+export enum PanningDirectionsEnum {
   UP = 'up',
   DOWN = 'down',
   LEFT = 'left',
   RIGHT = 'right'
 }
+
+export type PanningDirectionsUnion = 'up' | 'down' | 'left' | 'right';
+
+export type PanningDirections = PanningDirectionsEnum | PanningDirectionsUnion;
 
 export interface PanLocationProps {
   left?: number;
@@ -39,7 +42,7 @@ interface State {
  */
 export default class PanningProvider extends Component<any, State> {
   static displayName = 'IGNORE';
-  static Directions = PanningDirections;
+  static Directions = PanningDirectionsEnum;
 
   constructor(props: any) {
     super(props);

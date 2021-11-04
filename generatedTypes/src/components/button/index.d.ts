@@ -154,9 +154,6 @@ declare class Button extends PureComponent<Props, ButtonState> {
         };
     };
     componentDidUpdate(prevProps: Props): void;
-    componentDidMount(): void;
-    componentWillUnmount(): void;
-    onOrientationChanged: () => void;
     onLayout: (event: LayoutChangeEvent) => void;
     get isOutline(): boolean;
     get isFilled(): boolean;

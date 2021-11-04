@@ -16,6 +16,8 @@ import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, Ma
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from './SvgImage';
+import View from '../view';
+import {Colors} from '../../style';
 
 
 export type ImageProps = RNImageProps & MarginModifiers & {
@@ -159,14 +161,36 @@ class Image extends PureComponent<Props, State> {
       this.setState({error: true});
       this.props.onError?.(event);
     }
-  }
+  };
 
   renderSvg = () => {
     const {source, ...others} = this.props;
     return <SvgImage data={source} {...others}/>;
-  }
+  };
 
-  renderRegularImage() {
+  renderErrorImage = () => {
+    const {
+      style,
+      cover,
+      modifiers
+    } = this.props;
+    const {margins} = modifiers;
+
+    return (
+      <View
+        style={[
+          margins,
+          style,
+          styles.errorImageContainer,
+          cover && styles.coverImage
+        ]}
+      >
+        {this.renderImage(true)}
+      </View>
+    );
+  };
+
+  renderImage = (useImageInsideContainer: boolean) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
@@ -185,6 +209,7 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
+    const resizeMode = useImageInsideContainer ? 'contain' : undefined;
 
     return (
       // @ts-ignore
@@ -195,9 +220,11 @@ class Image extends PureComponent<Props, State> {
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
-          margins,
-          style
+          !useImageInsideContainer && margins,
+          style,
+          useImageInsideContainer && styles.shrink
         ]}
+        resizeMode={resizeMode}
         accessible={false}
         accessibilityRole={'image'}
         {...others}
@@ -214,6 +241,15 @@ class Image extends PureComponent<Props, State> {
         )}
       </ImageView>
     );
+  };
+
+  renderRegularImage() {
+    const {error} = this.state;
+    if (error) {
+      return this.renderErrorImage();
+    } else {
+      return this.renderImage(false);
+    }
   }
 
   render() {
@@ -237,6 +273,13 @@ const styles = StyleSheet.create({
   },
   gifImage: {
     overflow: 'hidden'
+  },
+  errorImageContainer: {
+    backgroundColor: Colors.grey70,
+    zIndex: -1
+  },
+  shrink: {
+    flexShrink: 1
   }
 });
 

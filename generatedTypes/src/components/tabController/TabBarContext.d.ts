@@ -4,6 +4,7 @@ interface TabControllerContext {
     initialIndex?: number;
     selectedIndex?: number;
     items?: any[];
+    itemsCount: number;
     asCarousel?: boolean;
     containerWidth: number;
     pageWidth: number;
@@ -11,7 +12,7 @@ interface TabControllerContext {
     currentPage: Reanimated.SharedValue<number>;
     /** transition page index (can be a fraction when transitioning between pages) */
     targetPage: Reanimated.SharedValue<number>;
-    carouselOffset: Reanimated.SharedValue<number>;
+    setCurrentIndex: (index: number) => void;
 }
 declare const TabBarContext: React.Context<TabControllerContext>;
 export default TabBarContext;
