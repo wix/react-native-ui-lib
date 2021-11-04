@@ -69,7 +69,7 @@ class View extends PureComponent<PropsTypes, ViewState> {
 
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
 
-    if (props.reanimated && ReanimatedPackage) {
+    if (props.reanimated) {
       if (ReanimatedPackage) {
         this.Container = ReanimatedPackage.createAnimatedComponent(this.Container);
       } else {
