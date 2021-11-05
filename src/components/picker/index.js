@@ -456,7 +456,10 @@ class Picker extends Component {
       onShow,
       renderCustomModal,
       forwardedRef,
-      modifiers
+      modifiers,
+      enableModalBlur,
+      topBarProps,
+      pickerModalProps
     } = this.props;
     const {value} = this.state;
 
@@ -485,11 +488,11 @@ class Picker extends Component {
 
     const modalProps = {
       animationType: 'slide',
-      transparent: Constants.isIOS && this.props.enableModalBlur,
-      enableModalBlur: Constants.isIOS && this.props.enableModalBlur,
-      onRequestClose: this.props.topBarProps?.onCancel,
+      transparent: Constants.isIOS && enableModalBlur,
+      enableModalBlur: Constants.isIOS && enableModalBlur,
+      onRequestClose: topBarProps?.onCancel,
       onShow,
-      ...this.props.pickerModalProps
+      ...pickerModalProps
     };
 
     return (
