@@ -5,6 +5,7 @@ import {Card, Avatar, View, Text} from 'react-native-ui-lib';
 
 class Tab2 extends Component {
   state = {
+    counter: 0,
     loading: true
   };
 
@@ -13,7 +14,16 @@ class Tab2 extends Component {
       this.setState({loading: false});
     }, 1200);
 
-    // this.slow();
+    /* Uncomment to test TabPage freeze functionality when the page lose focus */
+    // setInterval(() => {
+    //   this.setState({counter: this.state.counter + 1});
+    // }, 1000);
+  }
+
+  componentDidUpdate() {
+    if (this.state.counter % 3 === 0) {
+      console.warn('freeze counter', this.state.counter);
+    }
   }
 
   slow(iterations = 10) {

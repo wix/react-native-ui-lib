@@ -1,6 +1,7 @@
 import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
+import {Freeze} from 'react-freeze';
 import TabBarContext from './TabBarContext';
 
 export interface TabControllerPageProps {
@@ -39,6 +40,7 @@ export default function TabPage({
 }: PropsWithChildren<TabControllerPageProps>) {
   const {currentPage, targetPage, asCarousel, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
+  const [focused, setFocused] = useState(false);
 
   const lazyLoad = useCallback(() => {
     if (lazy && !shouldLoad) {
@@ -49,9 +51,14 @@ export default function TabPage({
   useAnimatedReaction(() => {
     return targetPage.value === index;
   },
-  isActive => {
+  (isActive, wasActive) => {
     if (isActive) {
       runOnJS(lazyLoad)();
+      runOnJS(setFocused)(true);
+    }
+
+    if (wasActive && wasActive !== isActive) {
+      runOnJS(setFocused)(false);
     }
   });
 
@@ -70,7 +77,8 @@ export default function TabPage({
   return (
     <Reanimated.View style={style} testID={testID}>
       {!shouldLoad && renderLoading?.()}
-      {shouldLoad && props.children}
+      {/* {shouldLoad && props.children} */}
+      <Freeze freeze={!shouldLoad || !focused}>{props.children}</Freeze>
     </Reanimated.View>
   );
 }
