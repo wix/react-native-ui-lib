@@ -63,7 +63,10 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   } = props;
   const [expandableVisible, setExpandableVisible] = useState(false);
   const openExpandable = useCallback(() => setExpandableVisible(true), []);
-  const closeExpandable = useCallback(() => setExpandableVisible(false), []);
+  const closeExpandable = useCallback(() => {
+    setExpandableVisible(false);
+    useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
+  }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss]);
 
   const toggleExpandable = useCallback(() => (expandableVisible ? closeExpandable() : openExpandable()),
     [expandableVisible, openExpandable, closeExpandable]);
