@@ -61,15 +61,15 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     renderCustomOverlay,
     ...others
   } = props;
-  const [expandableVisible, setExpandableVisible] = useState(false);
+  const [visible, setExpandableVisible] = useState(false);
   const openExpandable = useCallback(() => setExpandableVisible(true), []);
   const closeExpandable = useCallback(() => {
     setExpandableVisible(false);
     useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
   }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss]);
 
-  const toggleExpandable = useCallback(() => (expandableVisible ? closeExpandable() : openExpandable()),
-    [expandableVisible, openExpandable, closeExpandable]);
+  const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
+    [visible, openExpandable, closeExpandable]);
 
   useImperativeHandle(ref, () => ({
     openExpandable,
@@ -79,7 +79,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const renderModal = () => {
     return (
-      <Modal {...modalProps} visible={expandableVisible} onDismiss={closeExpandable}>
+      <Modal {...modalProps} visible={visible} onDismiss={closeExpandable}>
         {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
         {expandableContent}
       </Modal>
@@ -88,7 +88,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const renderDialog = () => {
     return (
-      <Dialog {...dialogProps} visible={expandableVisible} onDismiss={closeExpandable}>
+      <Dialog {...dialogProps} visible={visible} onDismiss={closeExpandable}>
         {expandableContent}
       </Dialog>
     );
@@ -97,7 +97,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   const renderOverlay = () => {
     if (renderCustomOverlay) {
       return renderCustomOverlay({
-        visible: expandableVisible,
+        visible,
         openExpandable,
         closeExpandable,
         toggleExpandable
