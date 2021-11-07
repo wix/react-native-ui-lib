@@ -87,7 +87,7 @@ function tagAndPublish(newVersion) {
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }
-  exec.execSync(`git push deploy ${newVersion}`);
+  cp.execSync(`git push deploy ${newVersion}`);
 }
 
 run();
