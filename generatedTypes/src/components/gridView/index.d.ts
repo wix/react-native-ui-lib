@@ -11,7 +11,11 @@ export interface GridViewProps {
      */
     viewWidth?: number;
     /**
-     * Number of items to show in a row
+     * Allow a responsive item width to the maximum item width
+     */
+    maxItemWidth?: number;
+    /**
+     * Number of items to show in a row (ignored when passing maxItemWidth)
      */
     numColumns?: number;
     /**
@@ -29,28 +33,32 @@ export interface GridViewProps {
     /**
      * whether to keep the items initial size when orientation changes,
      * in which case the apt number of columns will be calculated automatically.
+     * Irrelevant when passing maxItemWidth
      */
     keepItemSize?: boolean;
 }
 interface State {
     viewWidth: number;
     numColumns: number;
+    itemSize: number;
 }
-declare type ExistProps = GridViewProps & State;
 /**
  * @description: A auto-generated grid view that calculate item size according to given props
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx
  */
-declare class GridView extends UIComponent<GridViewProps, State> {
+declare class GridView extends UIComponent<GridViewProps> {
     static displayName: string;
     static defaultProps: {
         numColumns: number;
         itemSpacing: number;
     };
-    private itemSize?;
     private dimensionsChangeListener;
-    constructor(props: ExistProps);
-    static getDerivedStateFromProps(nextProps: ExistProps, prevState: State): {
+    state: {
+        viewWidth: number;
+        numColumns: number;
+        itemSize: number;
+    };
+    static getDerivedStateFromProps(nextProps: GridViewProps, prevState: State): {
         viewWidth: number;
         numColumns: number | undefined;
     } | null;
@@ -59,8 +67,9 @@ declare class GridView extends UIComponent<GridViewProps, State> {
     onOrientationChanged: () => void;
     shouldUpdateItemSize(): boolean;
     getDefaultViewWidth(): number;
-    getCalculatedNumOfColumns(): number;
-    getItemSize(): number | undefined;
+    getGridContainerWidth(): number;
+    calcNumberOfColumns(): number;
+    calcItemSize(): number;
     getThemeColor(placeColor: string): any;
     renderLastItemOverlay(): JSX.Element | undefined;
     renderItem: (item: GridListItemProps, index: number) => JSX.Element;
