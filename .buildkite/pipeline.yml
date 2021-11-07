@@ -1,0 +1,24 @@
+steps:
+  - block: ":rocket: Release!"
+    prompt: "Fill out the details for release"
+    if: "build.message =~ /^release$/i"
+    fields:
+      - text: "VERSION"
+        key: "version"
+  
+  - label: ":hammer_and_pick: Build"
+    command:
+    - "nvm install"
+    - "npm install"
+    - "npm run test"
+    - "npm run build"
+    key: 'main_build'
+    
+  - label: ":shipit: Publish"
+    depends_on: 'main_build'
+    command:
+    - "nvm install"
+    - "npm install"
+    - "npm run bkRelease"
+    - "npm run demo"
+    if: "build.pull_request.id == null"
