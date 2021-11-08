@@ -1,6 +1,6 @@
 {
   "name": "MaskedInput",
-  "category": "Form",
+  "category": "form",
   "description": "Mask Input to create custom looking inputs with custom formats",
   "extends": ["TextField"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MaskedInputScreen.js",
