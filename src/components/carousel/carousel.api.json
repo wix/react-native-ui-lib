@@ -75,7 +75,12 @@
       "default": "true"
     },
     {"name": "allowAccessibleLayout", "type": "boolean", "description": "Whether to layout Carousel for accessibility"},
-    {"name": "autoplay", "type": "boolean", "description": "Enable to switch automatically between the pages", "default": "false"},
+    {
+      "name": "autoplay",
+      "type": "boolean",
+      "description": "Enable to switch automatically between the pages",
+      "default": "false"
+    },
     {
       "name": "autoplayInterval",
       "type": "number",
