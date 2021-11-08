@@ -1,0 +1,27 @@
+{
+  "name": "Stepper",
+  "category": "Form",
+  "description": "A stepper component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.tsx",
+  "images": [],
+  "props": [
+    {"name": "value", "type": "number", "description": "Initial value of the Stepper"},
+    {"name": "minValue", "type": "number", "description": "Minimum value"},
+    {"name": "maxValue", "type": "number", "description": "Maximum value"},
+    {
+      "name": "step",
+      "type": "number",
+      "description": "The step to increase and decrease by (default is 1)",
+      "default": "1"
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: number, testID?: string) => void",
+      "description": "Value change callback function"
+    },
+    {"name": "disabled", "type": "boolean", "description": "Disables interaction with the stepper"},
+    {"name": "small", "type": "boolean", "description": "Renders a small sized Stepper"},
+    {"name": "accessibilityLabel", "type": "string", "description": "Component accessibility label"},
+    {"name": "testID", "type": "string", "description": "Test id for component"}
+  ]
+}
