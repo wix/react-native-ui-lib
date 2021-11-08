@@ -8,8 +8,8 @@
     "https://media.giphy.com/media/l49JVcxoclUXbryiA/giphy.gif"
   ],
   "props": [
-    {"name": "progress", "type": "number", "description": "Animated value between 0 and 100"},
-    {"name": "duration", "type": "number", "description": "Duration of current break (can be change between breaks)"},
+    {"name": "progress", "type": "number", "description": "Animated value between 0 and 100", "default": "0"},
+    {"name": "duration", "type": "number", "description": "Duration of current break (can be change between breaks)", "default": "1000"},
     {"name": "opacity", "type": "number", "description": "Opacity"},
     {"name": "backgroundColor", "type": "string", "description": "Background color"},
     {"name": "onBreakpoint", "type": "() => {progress, isDone}", "description": "Breakpoint callback"},

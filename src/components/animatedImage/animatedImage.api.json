@@ -8,7 +8,7 @@
     "https://media.giphy.com/media/l0HU7jj0ivEFyZIA0/giphy.gif"
   ],
   "props": [
-    {"name": "animationDuration", "type": "number", "description": "Duration for the fade animation when the image is loaded"},
+    {"name": "animationDuration", "type": "number", "description": "Duration for the fade animation when the image is loaded", "default": "300"},
     {"name": "loader", "type": "JSX.element", "description": "A component to render while the image is loading"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"}
   ]
