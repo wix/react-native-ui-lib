@@ -9,11 +9,11 @@
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ActionBar/ActionBar.gif?raw=true"
   ],
   "props": [
-    {"name": "actions", "type": "ButtonProps[]", "description": "actions for the action bar", "required": true},
-    {"name": "height", "type": "number", "description": "Action bar height"},
-    {"name": "backgroundColor", "type": "string", "description": "Action bar background color"},
-    {"name": "centered", "type": "boolean", "description": "should action be equally centered"},
-    {"name": "keepRelative", "type": "boolean", "description": "keep the action bar position relative instead of it absolute position"},
+    {"name": "actions", "type": "ButtonProps[]", "description": "The actions for the action bar", "required": true},
+    {"name": "height", "type": "number", "description": "Height"},
+    {"name": "backgroundColor", "type": "string", "description": "Background color"},
+    {"name": "centered", "type": "boolean", "description": "Should action be equally centered"},
+    {"name": "keepRelative", "type": "boolean", "description": "Keep the action bar position relative instead of it absolute position"},
     {"name": "useSafeArea", "type": "boolean", "description": "In iOS, use safe area, in case component attached to the bottom", "default": "true"},
     {"name": "style", "type": "ViewStyle", "description": "Component's style"}
   ]

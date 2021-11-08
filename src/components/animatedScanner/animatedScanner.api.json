@@ -1,0 +1,19 @@
+{
+  "name": "AnimatedScanner",
+  "category": "AnimationsAndGestures",
+  "description": "description",
+  "extends": ["Animated.View"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardScannerScreen.js",
+  "images": [
+    "https://media.giphy.com/media/l49JVcxoclUXbryiA/giphy.gif"
+  ],
+  "props": [
+    {"name": "progress", "type": "number", "description": "Animated value between 0 and 100"},
+    {"name": "duration", "type": "number", "description": "Duration of current break (can be change between breaks)"},
+    {"name": "opacity", "type": "number", "description": "Opacity"},
+    {"name": "backgroundColor", "type": "string", "description": "Background color"},
+    {"name": "onBreakpoint", "type": "() => {progress, isDone}", "description": "Breakpoint callback"},
+    {"name": "hideScannerLine", "type": "boolean", "description": "Whether to hide the scanner line"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"}
+  ]
+}
