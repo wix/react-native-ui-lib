@@ -94,10 +94,12 @@ class Picker extends Component {
      */
     onPress: PropTypes.func,
     /**
+     * @deprecated
      * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
      */
     getItemValue: PropTypes.func,
     /**
+     * @deprecated
      * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
      */
     getItemLabel: PropTypes.func,
