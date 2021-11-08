@@ -18,9 +18,9 @@
     {"name": "onModalDismissed", "type": "DialogProps['onDialogDismissed']", "description": "Called once the modal has been dismissed (iOS only, modal only)"},
     {"name": "useNativeIOS", "type": "boolean", "description": "Should use the native action sheet for iOS"},
     {"name": "showCancelButton", "type": "boolean", "description": "When passed (only with useNativeIOS), will display a cancel button at the bottom (overrides cancelButtonIndex)t"},
-    {"name": "containerStyle", "type": "StyleProp<ViewStyle>", "description": "Add or override style of the action sheet (wraps the title and actions)"},
-    {"name": "dialogStyle", "type": "StyleProp<ViewStyle>", "description": "Add or override style of the dialog wrapping the action sheet"},
-    {"name": "optionsStyle", "type": "StyleProp<ViewStyle>", "description": "Add or override style of the options list"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Add or override style of the action sheet (wraps the title and actions)"},
+    {"name": "dialogStyle", "type": "ViewStyle", "description": "Add or override style of the dialog wrapping the action sheet"},
+    {"name": "optionsStyle", "type": "ViewStyle", "description": "Add or override style of the options list"},
     {"name": "renderTitle", "type": "() => JSX.Element", "description": "Render custom title"},
     {
       "name": "renderAction", 
