@@ -1,7 +1,7 @@
 {
   "name": "GridView",
   "category": "layoutsAndTemplates",
-  "description": "A auto-generated grid view that calculate item size according to given props",
+  "description": "An auto-generated grid view that calculate item size according to given props",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx",
   "props": [
     {"name": "items", "type": "GridListItemProps[]", "description": "The list of items based on GridListItem props"},
