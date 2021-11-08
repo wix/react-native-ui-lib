@@ -11,7 +11,7 @@
     "https://user-images.githubusercontent.com/1780255/107120257-3eebf900-6895-11eb-9800-402e9e0dc692.gif"
   ],
   "props": [
-    {"name": "initialPage", "type": "number", "description": "The initial page to start at"},
+    {"name": "initialPage", "type": "number", "description": "The initial page to start at", "default": "0"},
     {
       "name": "pageWidth",
       "type": "number",
@@ -22,7 +22,8 @@
     {
       "name": "containerMarginHorizontal",
       "type": "number",
-      "description": "Horizontal margin for the carousel container"
+      "description": "Horizontal margin for the carousel container",
+      "default": "true"
     },
     {
       "name": "containerPaddingVertical",
@@ -70,14 +71,16 @@
     {
       "name": "pagingEnabled",
       "type": "boolean",
-      "description": "Will block multiple pages scroll (will not work with 'pageWidth' prop)"
+      "description": "Will block multiple pages scroll (will not work with 'pageWidth' prop)",
+      "default": "true"
     },
     {"name": "allowAccessibleLayout", "type": "boolean", "description": "Whether to layout Carousel for accessibility"},
-    {"name": "autoplay", "type": "boolean", "description": "Enable to switch automatically between the pages"},
+    {"name": "autoplay", "type": "boolean", "description": "Enable to switch automatically between the pages", "default": "false"},
     {
       "name": "autoplayInterval",
       "type": "number",
-      "description": "Time is ms to wait before switching to the next page (requires autoplay to be enabled)"
+      "description": "Time is ms to wait before switching to the next page (requires 'autoplay' to be enabled)",
+      "default": "4000"
     },
     {
       "name": "animatedScrollOffset",

@@ -20,7 +20,7 @@
       "description": "Card border radius (will be passed to inner Card.Image component)"
     },
     {"name": "onPress", "type": "function", "description": "Callback function for card press event"},
-    {"name": "enableShadow", "type": "boolean", "description": "Whether the card should have shadow or not"},
+    {"name": "enableShadow", "type": "boolean", "description": "Whether the card should have shadow or not", "default": "true"},
     {"name": "elevation", "type": "number", "description": "Elevation value (Android only)"},
     {"name": "enableBlur", "type": "boolean", "description": "Enable blur effect (iOS only)"},
     {
