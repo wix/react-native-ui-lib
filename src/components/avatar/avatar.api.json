@@ -7,11 +7,25 @@
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true"
   ],
   "extends": ["TouchableOpacity", "Image"],
+  "extendsLink": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx",
+    "https://github.com/wix/react-native-ui-lib/blob/master/src/components/image/index.tsx"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx",
   "props": [
-    {"name": "animate", "type": "boolean", "description": "Adds fade in animation when Avatar image loads", "default": "false"},
+    {
+      "name": "animate",
+      "type": "boolean",
+      "description": "Adds fade in animation when Avatar image loads",
+      "default": "false"
+    },
     {"name": "backgroundColor", "type": "string", "description": "Background color for Avatar"},
-    {"name": "badgePosition", "type": "TOP_RIGHT | TOP_LEFT | BOTTOM_RIGHT | BOTTOM_LEFT", "description": "Badge location on Avatar", "default": "BadgePosition.TOP_RIGHT"},
+    {
+      "name": "badgePosition",
+      "type": "TOP_RIGHT | TOP_LEFT | BOTTOM_RIGHT | BOTTOM_LEFT",
+      "description": "Badge location on Avatar",
+      "default": "BadgePosition.TOP_RIGHT"
+    },
     {"name": "badgeProps", "type": "BadgeProps", "description": "Badge props passed down to Badge component"},
     {
       "name": "containerStyle",
