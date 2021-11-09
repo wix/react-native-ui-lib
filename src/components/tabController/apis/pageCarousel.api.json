@@ -5,6 +5,5 @@
   "note": "You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel",
   "extends": ["ScrollView"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx",
-  "images": [],
-  "props": []
+  "images": []
 }
