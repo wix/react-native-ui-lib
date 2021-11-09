@@ -2,7 +2,7 @@
   "name": "Dialog",
   "category": "overlays",
   "description": "Component for displaying custom content inside a popup dialog",
-  "notes": "Use alignment modifiers to control the dialog position (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)",
+  "note": "Use alignment modifiers to control the dialog position (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)",
   "modifiers": ["alignment"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Dialog/Dialog.gif?raw=true"],
