@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component} from 'react';
+import React, {Component, RefObject} from 'react';
 import {NativeModules, StyleSheet, ViewStyle, Image, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, findNodeHandle, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography, Spacings} from '../../style';
@@ -456,7 +456,7 @@ class ChipsInput extends Component<OwnProps, State> {
     return (
       <View style={styles.inputWrapper}>
         <TextField
-          ref={this.input}
+          ref={(r: RefObject<TextInput>) => (this.input = r)}
           text80
           blurOnSubmit={false}
           {...others}
@@ -487,7 +487,8 @@ class ChipsInput extends Component<OwnProps, State> {
     const Container = maxHeight ? ScrollView : View;
     return (
       <Container
-        ref={this.scrollRef}
+        // @ts-ignore
+        ref={(r: RefObject<ScrollView>) => (this.scrollRef = r)}
         showsVerticalScrollIndicator={false}
         style={!maxHeight && styles.tagsList}
         contentContainerStyle={styles.tagsList}
