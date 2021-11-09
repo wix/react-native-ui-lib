@@ -3,6 +3,7 @@
   "category": "basic",
   "description": "A wrapper for Text component with extra functionality like modifiers support",
   "extends": ["Text"],
+  "extendsLink": ["https://reactnative.dev/docs/text"],
   "modifiers": ["margins", "color", "typography"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.js",
   "images": [
