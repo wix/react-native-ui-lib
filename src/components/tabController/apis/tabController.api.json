@@ -7,7 +7,7 @@
   "images": [],
   "props": [
     {"name": "items", "type": "TabControllerItemProps[]", "description": "The list of tab bar items"},
-    {"name": "initialIndex", "type": "number", "description": "Initial selected index"},
+    {"name": "initialIndex", "type": "number", "description": "Initial selected index", "default": "0"},
     {"name": "selectedIndex", "type": "number", "description": "The current selected index", "deprecated": true},
     {
       "name": "onChangeIndex",
@@ -17,7 +17,8 @@
     {
       "name": "asCarousel",
       "type": "boolean",
-      "description": "When using TabController.PageCarousel this should be turned on"
+      "description": "When using TabController.PageCarousel this should be turned on",
+      "default": "false"
     },
     {"name": "carouselPageWidth;", "type": "number", "description": "Pass for custom carousel page width"}
   ]

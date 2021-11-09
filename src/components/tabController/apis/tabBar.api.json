@@ -5,7 +5,7 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx",
   "images": [],
   "props": [
-    {"name": "height", "type": "number", "description": "Tab Bar height"},
+    {"name": "height", "type": "number", "description": "Tab Bar height", "default": "48"},
     {"name": "enableShadow", "type": "boolean", "description": "Show Tab Bar bottom shadow"},
     {"name": "shadowStyle", "type": "ViewStyle", "description": "Custom shadow style"},
     {"name": "indicatorStyle", "type": "ViewStyle", "description": "Custom style for the selected indicator"},
@@ -17,7 +17,7 @@
     {"name": "iconColor", "type": "string", "description": "Icon tint color"},
     {"name": "selectedIconColor", "type": "string", "description": "Icon selected tint color"},
     {"name": "activeBackgroundColor", "type": "string", "description": "Apply background color on press for tab item"},
-    {"name": "backgroundColor", "type": "string", "description": "The TabBar background Color"},
+    {"name": "backgroundColor", "type": "string", "description": "The TabBar background Color", "default": "Colors.white"},
     {"name": "containerWidth", "type": "number", "description": "The TabBar container width"},
     {"name": "centerSelected", "type": "boolean", "description": "Pass to center selected item"},
     {"name": "spreadItems", "type": "boolean", "description": "Whether the tabBar should be spread", "default": "true"},
