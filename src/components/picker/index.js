@@ -32,10 +32,9 @@ const ItemType = PropTypes.oneOfType([
 ]);
 
 /**
- * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
+ * @description: Picker Component, support single or multiple selection, blurModel and native wheel picker
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/Default.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/MultiPicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/NativePicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/DialogPicker.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/CustomPicker.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
- * @notes: 'useNativePicker' prop requires installing the '@react-native-picker/picker' native library
  */
 class Picker extends Component {
   static displayName = 'Picker';
