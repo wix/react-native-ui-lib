@@ -2,7 +2,7 @@
   "name": "ColorPalette",
   "category": "form",
   "description": "A component for displaying a color palette",
-  "notes": "This is a screen width component",
+  "note": "This is a screen width component",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true"
