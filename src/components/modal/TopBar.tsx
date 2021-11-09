@@ -57,6 +57,10 @@ export interface ModalTopBarProps {
      * style for the TopBar container
      */
     containerStyle?: ViewProps['style'];
+  /**
+   * Whether or not to handle SafeArea
+   */
+  useSafeArea?: boolean;
 }
 
 type topBarButtonProp = {
@@ -132,10 +136,10 @@ class TopBar extends Component<ModalTopBarProps> {
   }
 
   render() {
-    const {title, titleStyle, includeStatusBar, containerStyle} = this.props;
+    const {title, titleStyle, includeStatusBar, containerStyle, useSafeArea} = this.props;
 
     return (
-      <View style={containerStyle}>
+      <View style={containerStyle} useSafeArea={useSafeArea}>
         {includeStatusBar && <View style={styles.statusBar}/>}
         <View style={styles.container}>
           <View row flex bottom paddingL-15 centerV>
