@@ -12,7 +12,7 @@
     },
     {
       "name": "containerStyle",
-      "type": "StyleProp<ViewStyle>",
+      "type": "ViewStyle",
       "description": "Additional styles for the top container"
     },
     {"name": "numOfPages", "required": true, "type": "number", "description": "Total number of pages"},
