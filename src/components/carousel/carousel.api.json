@@ -22,8 +22,7 @@
     {
       "name": "containerMarginHorizontal",
       "type": "number",
-      "description": "Horizontal margin for the carousel container",
-      "default": "true"
+      "description": "Horizontal margin for the carousel container"
     },
     {
       "name": "containerPaddingVertical",
@@ -33,7 +32,8 @@
     {
       "name": "horizontal",
       "type": "boolean",
-      "description": "Whether pages will be rendered horizontally or vertically"
+      "description": "Whether pages will be rendered horizontally or vertically",
+      "default": "true"
     },
     {
       "name": "loop",

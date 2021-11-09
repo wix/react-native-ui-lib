@@ -2,7 +2,7 @@
   "name": "connectionStatusBar",
   "category": "basic",
   "description": "Top bar to show a 'no internet' connection status",
-  "notes": [
+  "note": [
     "Run on real device for best results",
     "The component requires installing the '@react-native-community/netinfo' native library"
   ],
