@@ -10,7 +10,7 @@
   "props": [
     {"name": "backgroundColor", "type": "string", "description": "Background color for TouchableOpacity"},
     {"name": "throttleTime", "type": "number", "description": "Throttle time in MS for onPress callback"},
-    {"name": "throttleOptions", "type": "{leading: boolean; trailing: boolean}", "description": "Throttle options"},
+    {"name": "throttleOptions", "type": "{leading, trailing}", "description": "Throttle options"},
     {
       "name": "activeBackgroundColor",
       "type": "string",

@@ -7,7 +7,7 @@
     {"name": "imageProps", "type": "ImageProps", "description": "Image props object for rendering an image item"},
     {
       "name": "containerProps",
-      "type": "Omit<TouchableOpacityProps | ViewProps, 'style'>",
+      "type": "TouchableOpacityProps | ViewProps",
       "description": "Props to pass on to the touchable container"
     },
     {

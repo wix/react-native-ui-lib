@@ -16,7 +16,7 @@
     },
     {"name": "opacity", "type": "number", "description": "Opacity"},
     {"name": "backgroundColor", "type": "string", "description": "Background color"},
-    {"name": "onBreakpoint", "type": "() => {progress, isDone}", "description": "Breakpoint callback"},
+    {"name": "onBreakpoint", "type": "({progress, isDone}) => void", "description": "Breakpoint callback"},
     {"name": "hideScannerLine", "type": "boolean", "description": "Whether to hide the scanner line"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"}
   ]
