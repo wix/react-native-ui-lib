@@ -19,6 +19,7 @@ steps:
     command:
     - "nvm install"
     - "npm install"
+    - "npm run build"
     - "npm run bkRelease"
     - "npm run demo"
     if: "build.pull_request.id == null"
