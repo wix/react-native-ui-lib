@@ -1,4 +1,4 @@
-import {useEffect, useCallback, useState} from 'react';
+import {useEffect, useCallback, useState, useRef} from 'react';
 import {Constants} from 'helpers';
 import useDidUpdate from '../useDidUpdate';
 
@@ -8,14 +8,15 @@ interface UseOrientationProps {
 
 const useOrientation = ({onOrientationChange}: UseOrientationProps = {}) => {
   const [orientation, setOrientation] = useState(Constants.orientation);
+  const listener = useRef<any>();
 
   const orientationChangeListener = useCallback(() => {
     setOrientation(Constants.orientation);
   }, []);
 
   useEffect(() => {
-    Constants.addDimensionsEventListener(orientationChangeListener);
-    return () => Constants.removeDimensionsEventListener(orientationChangeListener);
+    listener.current = Constants.addDimensionsEventListener(orientationChangeListener);
+    return () => Constants.removeDimensionsEventListener(listener.current);
   }, []);
 
   useDidUpdate(() => {
