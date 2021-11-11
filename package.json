@@ -41,7 +41,7 @@
     "bump:patch": "npm version patch",
     "demo": "./scripts/demo.sh",
     "release": "node ./scripts/release.js",
-    "jenkinsRelease": "node ./scripts/jenkinsRelease.js"
+    "bkRelease": "node ./scripts/bkRelease.js"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",

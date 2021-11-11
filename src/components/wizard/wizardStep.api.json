@@ -1,0 +1,29 @@
+{
+  "name": "Wizard.Step",
+  "category": "layoutsAndTemplates",
+  "description": "A wizard presents a series of steps in  prescribed order. That the user needs to complete in order to accomplish a goal (e.g. purchase a product)",
+  "note": "Use Wizard with nested Wizard.Step(s) to achieve the desired result.",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/Wizard.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/WizardPresets.png?raw=true"
+  ],
+  "props": [
+    {"name": "state", "type": "WizardStepStates", "description": "The state of the step (Wizard.States.X)"},
+    {"name": "label", "type": "string", "description": "The label of the item"},
+    {"name": "labelStyle", "type": "TextStyle", "description": "Additional styles for the label"},
+    {"name": "connectorStyle", "type": "ViewStyle", "description": "Additional styles for the connector"},
+    {"name": "color", "type": "string", "description": "Color of the step index (or of the icon, when provided)"},
+    {"name": "circleColor", "type": "string", "description": "Color of the circle"},
+    {"name": "circleSize", "type": "number", "description": "The step's circle size (diameter)"},
+    {"name": "circleBackgroundColor", "type": "string", "description": "Circle's background color"},
+    {"name": "icon", "type": "ImageProps", "description": "Icon to replace the (default) index"},
+    {
+      "name": "indexLabelStyle",
+      "type": "TextStyle",
+      "description": "Additional styles for the index's label (when icon is not provided)"
+    },
+    {"name": "enabled", "type": "boolean", "description": "Whether the step should be enabled"},
+    {"name": "accessibilityInfo", "type": "string", "description": "Extra text to be read in accessibility mode"}
+  ]
+}
