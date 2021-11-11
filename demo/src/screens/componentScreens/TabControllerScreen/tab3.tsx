@@ -21,9 +21,10 @@ class Tab2 extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.counter % 3 === 0) {
-      console.warn('freeze counter', this.state.counter);
-    }
+    /* Uncomment to test TabPage freeze functionality when the page lose focus */
+    // if (this.state.counter % 3 === 0) {
+    //   console.warn('freeze counter', this.state.counter);
+    // }
   }
 
   slow(iterations = 10) {
