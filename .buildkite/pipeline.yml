@@ -12,8 +12,8 @@ steps:
     - "npm install"
     - "npm run test"
     - "npm run build"
-    - "[[ "$BUILDKITE_PULL_REQUEST" == "false" ]] && npm run bkRelease"
-    - "[[ "$BUILDKITE_PULL_REQUEST" == "false" ]] && npm run demo"
+    - "[[ $BUILDKITE_PULL_REQUEST == 'false' ]] && npm run bkRelease"
+    - "[[ $BUILDKITE_PULL_REQUEST == 'false' ]] && npm run demo"
     # key: 'main_build'
     
   # - label: ":shipit: Publish"
