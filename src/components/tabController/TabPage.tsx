@@ -38,7 +38,7 @@ export default function TabPage({
   renderLoading,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
-  const {currentPage, targetPage, asCarousel, containerWidth} = useContext(TabBarContext);
+  const {currentPage, asCarousel, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
   const [focused, setFocused] = useState(false);
 
@@ -49,18 +49,29 @@ export default function TabPage({
   }, [lazy, shouldLoad]);
 
   useAnimatedReaction(() => {
-    return targetPage.value === index;
+    return currentPage.value === index;
   },
   (isActive, wasActive) => {
     if (isActive) {
       runOnJS(lazyLoad)();
       runOnJS(setFocused)(true);
     }
-
-    if (wasActive && wasActive !== isActive) {
+    if (wasActive) {
       runOnJS(setFocused)(false);
     }
-  });
+  },
+  [currentPage]);
+
+  /* Handle freeze for pages that near the active page (relevant for carousel page) */
+  useAnimatedReaction(() => {
+    return asCarousel && currentPage.value - 1 === index || currentPage.value + 1 === index;
+  },
+  (nearActive) => {
+    if (nearActive) {
+      runOnJS(setFocused)(true);
+    }
+  },
+  [currentPage]);
 
   const animatedPageStyle = useAnimatedStyle(() => {
     const isActive = Math.round(currentPage.value) === index;
