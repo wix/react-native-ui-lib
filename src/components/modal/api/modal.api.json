@@ -1,0 +1,38 @@
+{
+  "name": "Modal",
+  "category": "layoutsAndTemplates",
+  "description": "Component that present content on top of the invoking screen",
+  "extends": ["Modal"],
+  "extendsLink": ["https://reactnative.dev/docs/modal"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.tsx",
+  "images": ["https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif"],
+  "props": [
+    {
+      "name": "enableModalBlur",
+      "type": "boolean",
+      "description": "Blurs the modal background when transparent (iOS only)"
+    },
+    {
+      "name": "blurView",
+      "type": "JSX.Element",
+      "description": "A custom view to use as a BlueView instead of the default one"
+    },
+    {
+      "name": "onBackgroundPress",
+      "type": "(event: GestureResponderEvent) => void",
+      "description": "allow dismissing a modal when clicking on its background"
+    },
+    {"name": "overlayBackgroundColor", "type": "string", "description": "The background color of the overlay"},
+    {"name": "testID", "type": "string", "description": "The modal's end-to-end test identifier"},
+    {
+      "name": "accessibilityLabel",
+      "type": "string",
+      "description": "Overrides the text that's read by the screen reader when the user interacts with the element.\\By default, the label is constructed by traversing all the children and accumulating all the Text nodes separated by space."
+    },
+    {
+      "name": "useGestureHandlerRootView",
+      "type": "boolean",
+      "description": "Should add a GestureHandlerRootView (Android only)"
+    }
+  ]
+}
