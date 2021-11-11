@@ -1,4 +1,3 @@
-import {Appearance} from 'react-native';
 import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
@@ -6,25 +5,23 @@ import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
 //@ts-ignore
 import ColorName from './colorName';
-
-type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
+import Scheme, {Schemes, SchemeType} from './scheme';
 
 export class Colors {
   [key: string]: any;
-  schemes: Schemes = {light: {}, dark: {}};
 
   constructor() {
     const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
 
-    Appearance.addChangeListener(({colorScheme}: Appearance.AppearancePreferences) => {
-      Object.assign(this, this.schemes[colorScheme ?? 'light']);
+    Scheme.addChangeListener(() => {
+      Object.assign(this, Scheme.getScheme());
     });
   }
   /**
    * Load custom set of colors
    * arguments:
-   * colors - map of keys and colors values e.g {dark10: '#20303C', dark20: '#43515C'}
+   * colors - map of keys and colors values e.g {grey10: '#20303C', grey20: '#43515C'}
    */
   loadColors(colors: {[key: string]: string}) {
     _.forEach(colors, (value, key) => {
@@ -37,17 +34,24 @@ export class Colors {
    * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
    */
   loadSchemes(schemes: Schemes) {
-    const lightSchemeKeys = Object.keys(schemes.light);
-    const darkSchemeKeys = Object.keys(schemes.dark);
+    Scheme.loadSchemes(schemes);
+    Object.assign(this, Scheme.getScheme());
+  }
 
-    const missingKeys = _.xor(lightSchemeKeys, darkSchemeKeys);
-    if (!_.isEmpty(missingKeys)) {
-      console.error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
-    }
+  /**
+   * Get app's current color scheme
+   */
+  getScheme(): 'light' | 'dark' {
+    return Scheme.getSchemeType();
+  }
 
-    this.schemes = schemes;
-    const colorScheme = Appearance.getColorScheme();
-    Object.assign(this, this.schemes[colorScheme ?? 'light']);
+  /**
+   * Set color scheme for app
+   * arguments:
+   * scheme - color scheme e.g light/dark/default
+   */
+  setScheme(scheme: SchemeType) {
+    Scheme.setScheme(scheme);
   }
 
   /**
@@ -177,7 +181,7 @@ export class Colors {
   isValidHex(string: string) {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(string);
   }
-  getHexString(color: string) {
+  getHexString(color: tinycolor.ColorInput) {
     return tinycolor(color).toHexString();
   }
   getHSL(color?: string) {

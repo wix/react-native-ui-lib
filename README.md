@@ -26,8 +26,8 @@ Download our Expo demo app <br>
 
 See setup instructions [here](https://wix.github.io/react-native-ui-lib/getting-started/setup).
 
-#### New Major Version 5.0
-See [breaking changes](https://wix.github.io/react-native-ui-lib/getting-started/v5)
+#### New Major Version 6.0
+See [breaking changes](https://wix.github.io/react-native-ui-lib/getting-started/v6)
 
 #### For React Native >= 0.60.0
 please use `react-native-ui-lib`
@@ -40,7 +40,7 @@ please use `react-native-ui-lib@^3.0.0`
 ### Step 1
 Load your foundations and presets (colors, typography, spacings, etc...)
 
-```
+```js
 // FoundationConfig.js
 
 import {Colors, Typography, Spacings} from 'react-native-ui-lib';
@@ -71,7 +71,7 @@ Spacings.loadSpacings({
 ### Step 2
 Set default configurations to your components
 
-```
+```js
 // ComponentsConfig.js
 
 import {ThemeManager} from 'react-native-ui-lib';
@@ -97,7 +97,7 @@ ThemeManager.setComponentTheme('Button', (props, context) => {
 Use it all together. 
 Your configurations will be applied on uilib components so you can use them easily with [modifiers](https://wix.github.io/react-native-ui-lib/foundation/modifiers). 
 
-```
+```jsx
 // MyScreen.js
 
 import React, {Component} from 'react';
@@ -118,4 +118,4 @@ class MyScreen extends Component {
   }
 }
 ```
-
+ 

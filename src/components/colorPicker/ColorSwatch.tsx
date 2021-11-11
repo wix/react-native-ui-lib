@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
@@ -45,9 +44,7 @@ export const SWATCH_SIZE = DEFAULT_SIZE;
 
 /**
  * @description: A color swatch component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
- * @extends: Animated.View
- * @extendsLink: https://facebook.github.io/react-native/docs/animated
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true
  */
 class ColorSwatch extends PureComponent<Props> {
@@ -106,9 +103,9 @@ class ColorSwatch extends PureComponent<Props> {
   }
 
   onPress = () => {
-    const {color, value, index} = this.props;
+    const {color = '', value, index} = this.props;
     const tintColor = this.getTintColor(value);
-    _.invoke(this.props, 'onPress', value || color, {tintColor, index});
+    this.props.onPress?.(value || color, {tintColor, index});
   };
 
   getTintColor(color?: string) {
@@ -197,7 +194,7 @@ class ColorSwatch extends PureComponent<Props> {
 export default asBaseComponent<Props>(ColorSwatch);
 
 
-function createStyles({color = Colors.dark30}) {
+function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({
     container: {
       backgroundColor: color,
@@ -206,7 +203,7 @@ function createStyles({color = Colors.dark30}) {
       borderRadius: DEFAULT_SIZE / 2,
       margin: SWATCH_MARGIN,
       borderWidth: color === 'transparent' ? undefined : 1,
-      borderColor: Colors.rgba(Colors.dark30, 0.2)
+      borderColor: Colors.rgba(Colors.grey30, 0.2)
     },
     transparentImage: {
       ...StyleSheet.absoluteFillObject,

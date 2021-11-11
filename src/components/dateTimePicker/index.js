@@ -19,6 +19,13 @@ const MODES = {
   TIME: 'time'
 };
 
+
+const THEME_VARIANTS = {
+  LIGHT: 'light',
+  DARK: 'dark'
+};
+
+
 /*eslint-disable*/
 /**
  * @description: Date and Time Picker Component that wraps RNDateTimePicker for date and time modes.
@@ -98,7 +105,11 @@ class DateTimePicker extends Component {
     /**
      * Render custom input
      */
-    renderInput: PropTypes.elementType
+    renderInput: PropTypes.elementType,
+    /**
+     * Override system theme variant (dark or light mode) used by the date picker.
+     */
+    themeVariant: PropTypes.oneOf(Object.values(THEME_VARIANTS))
   };
 
   static defaultProps = {
@@ -140,6 +151,8 @@ class DateTimePicker extends Component {
       if (Constants.isAndroid) {
         this.onDonePressed();
       }
+    } else if (event.type === 'dismissed' && Constants.isAndroid) {
+      this.toggleExpandableOverlay();
     }
   };
 
@@ -194,7 +207,6 @@ class DateTimePicker extends Component {
 
     return (
       <Dialog
-        migrate
         visible={showExpandableOverlay}
         width="100%"
         height={null}
@@ -222,7 +234,7 @@ class DateTimePicker extends Component {
         <Button
           link
           iconSource={Assets.icons.x}
-          iconStyle={{tintColor: Colors.dark10}}
+          iconStyle={{tintColor: Colors.grey10}}
           onPress={this.toggleExpandableOverlay}
         />
         <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed}/>
@@ -236,7 +248,7 @@ class DateTimePicker extends Component {
     }
 
     const {value, showExpandableOverlay} = this.state;
-    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes} = this.props;
+    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes, themeVariant} = this.props;
 
     if (showExpandableOverlay) {
       return (
@@ -251,6 +263,7 @@ class DateTimePicker extends Component {
           minuteInterval={minuteInterval}
           timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
           display={Constants.isIOS ? 'spinner' : undefined}
+          themeVariant={themeVariant}
         />
       );
     }
@@ -262,9 +275,11 @@ class DateTimePicker extends Component {
 
   render() {
     const textInputProps = TextField.extractOwnProps(this.props);
+    const {renderInput} = this.props;
 
     return (
       <TextField
+        renderExpandableInput={renderInput}
         {...textInputProps}
         value={this.getStringValue()}
         expandable
@@ -283,7 +298,7 @@ const styles = StyleSheet.create({
   header: {
     height: 56,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.dark80
+    borderBottomColor: Colors.grey80
   },
   dialog: {
     backgroundColor: Colors.white,

@@ -1,21 +1,25 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, memo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
-import Animated, {interpolateColors} from 'react-native-reanimated';
-import Text from '../../components/text';
+import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
+import Text, {TextProps} from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
+import {asBaseComponent} from '../../commons/new';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
   label: string;
+  fakeLabel?: string;
+  fakeLabelStyle?: TextStyle;
+  fakeLabelProps?: TextProps;
   value: string | number;
 }
 
 interface InternalProps extends ItemProps {
   index: number;
-  offset: any;
+  offset: Animated.SharedValue<number>;
   itemHeight: number;
   activeColor?: string;
   inactiveColor?: string;
@@ -25,9 +29,12 @@ interface InternalProps extends ItemProps {
   centerH?: boolean;
 }
 
-export default ({
+const WheelPickerItem = memo(({
   index,
   label,
+  fakeLabel,
+  fakeLabelStyle,
+  fakeLabelProps,
   itemHeight,
   onSelect,
   offset,
@@ -40,11 +47,11 @@ export default ({
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
 
-  const color = useMemo(() => {
-    return interpolateColors(offset, {
-      inputRange: [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
-      outputColorRange: [inactiveColor, activeColor, inactiveColor]
-    });
+  const animatedColorStyle = useAnimatedStyle(() => {
+    const color = interpolateColor(offset.value,
+      [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
+      [inactiveColor, activeColor, inactiveColor]);
+    return {color};
   }, [itemHeight]);
 
   const containerStyle = useMemo(() => {
@@ -63,17 +70,34 @@ export default ({
       // @ts-ignore reanimated2
       index={index}
       testID={testID}
+      row
     >
-      {/* @ts-ignore reanimated2*/}
-      <AnimatedText text60R style={{color, ...style}}>
+      <AnimatedText
+        text60R
+        style={[animatedColorStyle, style, fakeLabel ? styles.textWithLabelPadding : styles.textPadding]}
+      >
         {label}
       </AnimatedText>
+      {fakeLabel && (
+        <Text marginL-s2 marginR-s5 text80M color={'white'} {...fakeLabelProps} style={fakeLabelStyle}>
+          {fakeLabel}
+        </Text>
+      )}
     </AnimatedTouchableOpacity>
   );
-};
+});
+
+WheelPickerItem.displayName = 'Incubator.WheelPickerItem';
+export default asBaseComponent<ItemProps>(WheelPickerItem);
 
 const styles = StyleSheet.create({
   container: {
     minWidth: Spacings.s10
+  },
+  textPadding: {
+    paddingHorizontal: Spacings.s5
+  },
+  textWithLabelPadding: {
+    paddingLeft: Spacings.s5
   }
 });

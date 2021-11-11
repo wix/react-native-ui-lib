@@ -1,7 +1,6 @@
 // TODO: remove this file (was replaced with useFieldState hook)
 import React, {useCallback, useState, useEffect, useMemo} from 'react';
 import _ from 'lodash';
-//@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 import {TextInputProps} from 'react-native';
 import validators from './validators';
@@ -60,7 +59,7 @@ function withFieldState(
         if (_.isFunction(validate)) {
           _isValid = validate(valueToValidate);
         } else if (_.isString(validate)) {
-          _isValid = _.invoke(validators, validate, valueToValidate);
+          _isValid = validators[validate]?.(valueToValidate);
         }
 
         setIsValid(_isValid);
@@ -71,7 +70,8 @@ function withFieldState(
     const onFocus = useCallback(
       (...args: any) => {
         setIsFocused(true);
-        _.invoke(props, 'onFocus', ...args);
+        //@ts-expect-error
+        props.onFocus?.(...args);
       },
       [props.onFocus]
     );
@@ -79,7 +79,8 @@ function withFieldState(
     const onBlur = useCallback(
       (...args: any) => {
         setIsFocused(false);
-        _.invoke(props, 'onBlur', ...args);
+        //@ts-expect-error
+        props.onBlur?.(...args);
         if (validateOnBlur) {
           validateField();
         }
@@ -90,7 +91,7 @@ function withFieldState(
     const onChangeText = useCallback(
       (text) => {
         setValue(text);
-        _.invoke(props, 'onChangeText', text);
+        props.onChangeText?.(text);
 
         if (validateOnChange) {
           validateField(text);

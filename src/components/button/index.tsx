@@ -10,8 +10,8 @@ import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
 
-import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
-export {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes};
+import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
+export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE, DISABLED_COLOR} from './ButtonConstants';
 
@@ -42,21 +42,6 @@ class Button extends PureComponent<Props, ButtonState> {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
   }
-
-  componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
-  }
-
-  componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
-  }
-
-  onOrientationChanged = () => {
-    if (Constants.isTablet && this.props.fullWidth) {
-      // only to trigger re-render
-      this.setState({isLandscape: Constants.isLandscape});
-    }
-  };
 
   // This method will be called more than once in case of layout change!
   onLayout = (event: LayoutChangeEvent) => {
@@ -120,7 +105,7 @@ class Button extends PureComponent<Props, ButtonState> {
     } else if (outline) {
       color = outlineColor || Colors.primary;
     } else if (this.isIconButton) {
-      color = undefined; // Colors.dark10;
+      color = undefined; // Colors.grey10;
     }
 
     if (disabled && (link || outline)) {
@@ -221,7 +206,7 @@ class Button extends PureComponent<Props, ButtonState> {
       };
 
       if (disabled) {
-        outlineStyle.borderColor = Colors.dark70;
+        outlineStyle.borderColor = Colors.grey70;
       }
     }
     return outlineStyle;
@@ -265,7 +250,7 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     if (disabled && !this.isFilled) {
-      iconStyle.tintColor = Colors.dark60;
+      iconStyle.tintColor = Colors.grey60;
     }
 
     return [iconStyle, propsIconStyle];
@@ -374,7 +359,7 @@ function createStyles() {
       alignItems: 'center'
     },
     containerDisabled: {
-      backgroundColor: Colors.dark60
+      backgroundColor: Colors.grey60
     },
     innerContainerLink: {
       minWidth: undefined,

@@ -1,79 +1,110 @@
-import React, {PureComponent} from 'react';
-import _ from 'lodash';
+import React, {useCallback, useContext, useMemo, useEffect} from 'react';
 import TabBarContext from './TabBarContext';
-import Animated from 'react-native-reanimated';
-import {Constants} from '../../helpers';
+import Reanimated, {
+  runOnJS,
+  useAnimatedReaction,
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useSharedValue
+} from 'react-native-reanimated';
+import {Constants} from 'helpers';
 
-const {Code, block, call} = Animated;
+const FIX_RTL = Constants.isRTL && Constants.isAndroid;
 
 /**
  * @description: TabController's Page Carousel
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel
  */
-class PageCarousel extends PureComponent {
-  static displayName = 'TabController.PageCarousel';
-  static contextType = TabBarContext;
-  carousel = React.createRef<Animated.ScrollView>();
+function PageCarousel({...props}) {
+  const carousel = useAnimatedRef<Reanimated.ScrollView>();
+  const {
+    itemsCount,
+    currentPage,
+    targetPage,
+    pageWidth,
+    // carouselOffset,
+    setCurrentIndex
+  } = useContext(TabBarContext);
+  const initialOffset = useMemo(() => ({x: currentPage.value * pageWidth, y: 0}), []);
+  const indexChangeReason = useSharedValue<'byScroll' | 'byPress' | undefined>(undefined);
 
-  onScroll = Animated.event([{nativeEvent: {contentOffset: {x: this.context.carouselOffset}}}], {
-    useNativeDriver: true
+  const scrollToInitial = useCallback(() => {
+    if (Constants.isAndroid && currentPage.value) {
+      scrollToItem(currentPage.value);
+    }
+  }, []);
+
+  const calcOffset = useCallback(offset => {
+    'worklet';
+    return FIX_RTL ? pageWidth * (itemsCount - 1) - offset : offset;
+  },
+  [pageWidth, itemsCount]);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: e => {
+      // carouselOffset.value = e.contentOffset.x;
+      const xOffset = calcOffset(e.contentOffset.x);
+      const newIndex = xOffset / pageWidth;
+
+      if (indexChangeReason.value === 'byPress') {
+        // Scroll was immediate and not by gesture
+        /* Round is for android when offset value has fraction */
+        // targetPage.value = withTiming(Math.round(newIndex));
+
+        indexChangeReason.value = undefined;
+      } else {
+        targetPage.value = newIndex;
+      }
+    },
+    onMomentumEnd: e => {
+      const xOffset = calcOffset(e.contentOffset.x);
+      const newPage = Math.round(xOffset / pageWidth);
+      indexChangeReason.value = 'byScroll';
+      setCurrentIndex(newPage);
+    }
   });
 
-  componentDidMount() {
-    if (Constants.isAndroid) {
-      setTimeout(() => {
-        this.scrollToPage(this.context.selectedIndex);
-      }, 0);
+  const scrollToItem = useCallback(index => {
+    if (indexChangeReason.value === 'byScroll') {
+      indexChangeReason.value = undefined;
+    } else {
+      indexChangeReason.value = 'byPress';
     }
-  }
 
-  onTabChange = ([index]: readonly number[]) => {
-    this.scrollToPage(index);
-  };
+    const actualIndex = FIX_RTL ? itemsCount - index - 1 : index;
+    // @ts-expect-error
+    carousel.current?.scrollTo({x: actualIndex * pageWidth, animated: false});
+  },
+  [pageWidth, itemsCount]);
 
-  scrollToPage = (pageIndex: number) => {
-    const {pageWidth} = this.context;
-    const node = _.invoke(this.carousel, 'current.getNode');
-    if (node) {
-      node.scrollTo({x: pageIndex * pageWidth, animated: false});
+  useAnimatedReaction(() => {
+    return currentPage.value;
+  },
+  (currIndex, prevIndex) => {
+    if (prevIndex !== null && currIndex !== prevIndex) {
+      runOnJS(scrollToItem)(currIndex);
     }
-  };
-
-  renderCodeBlock = _.memoize(() => {
-    const {targetPage, containerWidth} = this.context;
-
-    return (
-      <Code>
-        {() =>
-          block([
-            Animated.onChange(targetPage, [call([targetPage], this.onTabChange)]),
-            Animated.onChange(containerWidth, [call([targetPage], this.onTabChange)])
-          ])
-        }
-      </Code>
-    );
   });
 
-  render() {
-    const {selectedIndex, pageWidth} = this.context;
-    return (
-      <>
-        <Animated.ScrollView
-          {...this.props}
-          ref={this.carousel}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={this.onScroll}
-          scrollEventThrottle={16}
-          contentOffset={{x: selectedIndex * pageWidth, y: 0}} // iOS only
-        />
+  useEffect(() => {
+    // @ts-expect-error
+    carousel.current?.scrollTo({x: currentPage.value * pageWidth, animated: false});
+  }, [pageWidth]);
 
-        {this.renderCodeBlock()}
-      </>
-    );
-  }
+  return (
+    <Reanimated.ScrollView
+      {...props}
+      ref={carousel}
+      horizontal
+      pagingEnabled
+      showsHorizontalScrollIndicator={false}
+      onScroll={scrollHandler}
+      scrollEventThrottle={16}
+      contentOffset={initialOffset} // iOS only
+      onLayout={scrollToInitial} // Android only
+    />
+  );
 }
 
 export default PageCarousel;

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import ConnectionStatusBar from '../index';
+import {ConnectionStatusBar} from '../index';
 
 describe('ConnectionStatusBar', () => {
   let uut;

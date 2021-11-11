@@ -12,34 +12,37 @@ import {
 } from '../../commons/new';
 import {Colors} from 'style';
 
-export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
-  /**
-   * color of the text
-   */
-  color?: string;
-  /**
-   * whether to center the text (using textAlign)
-   */
-  center?: boolean;
-  /**
-   * whether to change the text to uppercase
-   */
-  uppercase?: boolean;
-  /**
-   * Substring to highlight
-   */
-  highlightString?: string;
-  /**
-   * Custom highlight style for highlight string
-   */
-  highlightStyle?: TextStyle;
-  /**
-   * Use Animated.Text as a container
-   */
-  animated?: boolean;
-  textAlign?: string;
-  style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
-}
+export type TextProps = RNTextProps &
+  TypographyModifiers &
+  ColorsModifiers &
+  MarginModifiers & {
+    /**
+     * color of the text
+     */
+    color?: string;
+    /**
+     * whether to center the text (using textAlign)
+     */
+    center?: boolean;
+    /**
+     * whether to change the text to uppercase
+     */
+    uppercase?: boolean;
+    /**
+     * Substring to highlight
+     */
+    highlightString?: string | string[];
+    /**
+     * Custom highlight style for highlight string
+     */
+    highlightStyle?: TextStyle;
+    /**
+     * Use Animated.Text as a container
+     */
+    animated?: boolean;
+    textAlign?: string;
+    style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
+  };
 export type TextPropTypes = TextProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextProps;
@@ -47,7 +50,7 @@ type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPro
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
  * @extends: Text
- * @extendsLink: https://facebook.github.io/react-native/docs/text.html
+ * @extendsLink: https://reactnative.dev/docs/text
  * @modifiers: margins, color, typography
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.js
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Modifiers.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Transformation.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Highlights.png?raw=true
@@ -62,28 +65,70 @@ class Text extends PureComponent<PropsTypes> {
   //   this._root.setNativeProps(nativeProps); // eslint-disable-line
   // }
 
-  getTextPartsByHighlight(targetString = '', highlightString = '') {
-    if (_.isEmpty(highlightString.trim())) {
-      return [targetString];
+  getPartsByHighlight(targetString = '', highlightString: string | string[]) {
+    if (typeof highlightString === 'string') {
+      if (_.isEmpty(highlightString.trim())) {
+        return [{string: targetString, shouldHighlight: false}];
+      }
+      return this.getTextPartsByHighlight(targetString, highlightString);
+    } else {
+      return this.getArrayPartsByHighlight(targetString, highlightString);
     }
+  }
 
+  getTextPartsByHighlight(targetString = '', highlightString = '') {
+    if (highlightString === '') {
+      return [{string: targetString, shouldHighlight: false}];
+    }
     const textParts = [];
     let highlightIndex;
-
     do {
       highlightIndex = targetString.toLowerCase().indexOf(highlightString.toLowerCase());
       if (highlightIndex !== -1) {
         if (highlightIndex > 0) {
-          textParts.push(targetString.substring(0, highlightIndex));
+          textParts.push({string: targetString.substring(0, highlightIndex), shouldHighlight: false});
         }
-        textParts.push(targetString.substr(highlightIndex, highlightString.length));
+        textParts.push({string: targetString.substr(highlightIndex, highlightString.length), shouldHighlight: true});
         targetString = targetString.substr(highlightIndex + highlightString.length);
       } else {
-        textParts.push(targetString);
+        textParts.push({string: targetString, shouldHighlight: false});
       }
     } while (highlightIndex !== -1);
 
     return textParts;
+  }
+
+  getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
+    const target = _.toLower(targetString);
+    const indices = [];
+    let index = 0;
+    let lastWordLength = 0;
+    for (let j = 0; j < highlightString.length; j++) {
+      const word = _.toLower(highlightString[j]);
+      const targetSuffix = target.substring(index + lastWordLength);
+      const i = targetSuffix.indexOf(word);
+      if (i >= 0) {
+        const newIndex = index + lastWordLength + i;
+        indices.push({start: index + lastWordLength + i, end: index + lastWordLength + i + word.length});
+        index = newIndex;
+        lastWordLength = word.length;
+      } else {
+        break;
+      }
+    }
+    const parts = [];
+    for (let k = 0; k < indices.length; k++) {
+      if (k === 0 && indices[k].start !== 0) {
+        parts.push({string: targetString.substring(0, indices[k].start), shouldHighlight: false});
+      }
+      parts.push({string: targetString.substring(indices[k].start, indices[k].end), shouldHighlight: true});
+      if (k === indices.length - 1) {
+        parts.push({string: targetString.substring(indices[k].end), shouldHighlight: false});
+      } else {
+        parts.push({string: targetString.substring(indices[k].end, indices[k + 1].start), shouldHighlight: false});
+      }
+    }
+    return parts;
   }
 
   renderText(children: any): any {
@@ -91,21 +136,26 @@ class Text extends PureComponent<PropsTypes> {
 
     if (!_.isEmpty(highlightString)) {
       if (_.isArray(children)) {
-        return _.map(children, (child) => {
+        return _.map(children, child => {
           return this.renderText(child);
         });
       }
 
       if (_.isString(children)) {
-        const textParts = this.getTextPartsByHighlight(children, highlightString);
-        return _.map(textParts, (text, index) => {
-          const shouldHighlight = _.lowerCase(text) === _.lowerCase(highlightString);
-          return (
-            <RNText key={index} style={shouldHighlight ? [styles.highlight, highlightStyle] : styles.notHighlight}>
-              {text}
-            </RNText>
-          );
-        });
+        const textParts = highlightString && this.getPartsByHighlight(children, highlightString);
+        return (
+          textParts &&
+          _.map(textParts, (text, index) => {
+            return (
+              <RNText
+                key={index}
+                style={text.shouldHighlight ? [styles.highlight, highlightStyle] : styles.notHighlight}
+              >
+                {text.string}
+              </RNText>
+            );
+          })
+        );
       }
     }
     return children;

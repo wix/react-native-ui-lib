@@ -78,10 +78,10 @@ const constants = {
   /* Layout */
   isRTL: I18nManager.isRTL,
   get orientation() {
-    return getOrientation(screenHeight, screenWidth);
+    return getOrientation(windowHeight, windowWidth);
   },
   get isLandscape() {
-    return getOrientation(screenHeight, screenWidth) === orientations.LANDSCAPE;
+    return getOrientation(windowHeight, windowWidth) === orientations.LANDSCAPE;
   },
   get screenWidth() {
     return screenWidth;
@@ -127,11 +127,15 @@ const constants = {
   },
   /* Orientation */
   addDimensionsEventListener: (callback: any) => {
-    Dimensions.addEventListener('change', callback);
+    return Dimensions.addEventListener('change', callback);
   },
   /* Dimensions */
   removeDimensionsEventListener: (callback: any) => {
-    Dimensions.removeEventListener('change', callback);
+    if (callback.remove) {
+      callback.remove();
+    } else {
+      Dimensions.removeEventListener('change', callback);
+    }
   },
   /* Accessibility */
   get accessibility() {

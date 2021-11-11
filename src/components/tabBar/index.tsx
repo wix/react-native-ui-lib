@@ -69,7 +69,6 @@ interface State {
  * @modifiers: alignment, flex, padding, margin, background, typography, color (list of supported modifiers)
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.tsx
  * @extends: ScrollBar
- * @extendsLink:https://github.com/wix/react-native-ui-lib/blob/master/src/components/scrollBar/index.js
  * @notes: This is screen width component.
  */
 class TabBar extends Component<TabBarProps, State> {
@@ -100,6 +99,8 @@ class TabBar extends Component<TabBarProps, State> {
     this.contentOffset = {x: 0, y: 0};
     this.scrollBar = React.createRef();
     this.itemsRefs = [];
+
+    console.warn('TabBar component is deprecated. Please use TabController instead.');
   }
 
   componentDidUpdate(prevProps: TabBarProps, prevState: State) {
@@ -163,11 +164,12 @@ class TabBar extends Component<TabBarProps, State> {
   }
 
   onChangeIndex(index: number) {
-    _.invoke(this.props, 'onChangeIndex', index);
+    this.props.onChangeIndex?.(index);
   }
 
   onTabSelected(index: number) {
-    _.invoke(this.props, 'onTabSelected', index);
+    this.props.onTabSelected?.(index);
+
   }
 
   onItemPress = (index: number, props: TabBarItemProps) => {
@@ -178,7 +180,7 @@ class TabBar extends Component<TabBarProps, State> {
         this.onChangeIndex(index);
       }
       this.onTabSelected(index);
-      _.invoke(props, 'onPress');
+      props.onPress?.();
     }, 0);
   };
 
@@ -296,7 +298,7 @@ const styles = StyleSheet.create({
   containerShadow: {
     ...Platform.select({
       ios: {
-        shadowColor: Colors.dark10,
+        shadowColor: Colors.grey10,
         shadowOpacity: 0.05,
         shadowRadius: 2,
         shadowOffset: {height: 6, width: 0}

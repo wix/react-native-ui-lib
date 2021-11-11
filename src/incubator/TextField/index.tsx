@@ -5,7 +5,7 @@
  * 3. Passing typography preset that includes lineHeight usually cause alignment issues with
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
-import React, {ReactElement, useMemo} from 'react';
+import React, {PropsWithChildren, ReactElement, useMemo} from 'react';
 import {ViewStyle, TextStyle} from 'react-native';
 import {omit, isFunction} from 'lodash';
 import {
@@ -84,7 +84,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | ((context: FieldContextType) => ViewStyle);
+    fieldStyle?: ViewStyle | ((context: FieldContextType, props: {preset: TextFieldProps['preset']}) => ViewStyle);
     /**
      * Container style of the whole component
      */
@@ -92,13 +92,15 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | undefined;
+    preset?: 'default' | null | string;
   };
 
-export type InternalTextFieldProps = TextFieldProps &
-  // Omit<FieldStateInjectedProps, keyof InputProps> &
-  BaseComponentInjectedProps &
-  ForwardRefInjectedProps;
+export type InternalTextFieldProps = PropsWithChildren<
+  TextFieldProps &
+    // Omit<FieldStateInjectedProps, keyof InputProps> &
+    BaseComponentInjectedProps &
+    ForwardRefInjectedProps
+>;
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
@@ -132,7 +134,6 @@ const TextField = (props: InternalTextFieldProps) => {
     trailingAccessory,
     // Validation
     enableErrors, // TODO: rename to enableValidation
-    validationMessage,
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
     // Char Counter
@@ -140,19 +141,20 @@ const TextField = (props: InternalTextFieldProps) => {
     charCounterStyle,
     // Input
     placeholder,
+    children,
     ...others
   } = usePreset(props);
-  const {onFocus, onBlur, onChangeText, fieldState} = useFieldState(others);
+  const {onFocus, onBlur, onChangeText, fieldState, validateField} = useFieldState(others);
 
   const context = useMemo(() => {
-    return {...fieldState, disabled: others.editable === false};
-  }, [fieldState, others.editable]);
+    return {...fieldState, disabled: others.editable === false, validateField};
+  }, [fieldState, others.editable, validateField]);
 
   const {margins, paddings, typography, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
 
-  const fieldStyle = isFunction(fieldStyleProp) ? fieldStyleProp(context) : fieldStyleProp;
+  const fieldStyle = isFunction(fieldStyleProp) ? fieldStyleProp(context, {preset: props.preset}) : fieldStyleProp;
 
   return (
     <FieldContext.Provider value={context}>
@@ -168,14 +170,15 @@ const TextField = (props: InternalTextFieldProps) => {
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
             enableErrors={enableErrors}
-            validationMessage={validationMessage}
+            validate={others.validate}
+            validationMessage={others.validationMessage}
             validationMessageStyle={validationMessageStyle}
           />
         )}
         <View style={[paddings, fieldStyle]}>
           <View row centerV>
             {leadingAccessory}
-            <View flex>
+            <View flexG>
               {floatingPlaceholder && (
                 <FloatingPlaceholder
                   placeholder={placeholder}
@@ -185,15 +188,18 @@ const TextField = (props: InternalTextFieldProps) => {
                   validationMessagePosition={validationMessagePosition}
                 />
               )}
-              <Input
-                {...others}
-                style={[typographyStyle, colorStyle, others.style]}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onChangeText={onChangeText}
-                placeholder={floatingPlaceholder ? undefined : placeholder}
-                hint={hint}
-              />
+              {children || (
+                <Input
+                  placeholderTextColor={floatingPlaceholder ? 'transparent' : undefined}
+                  {...others}
+                  style={[typographyStyle, colorStyle, others.style]}
+                  onFocus={onFocus}
+                  onBlur={onBlur}
+                  onChangeText={onChangeText}
+                  placeholder={placeholder}
+                  hint={hint}
+                />
+              )}
             </View>
             {trailingAccessory}
           </View>
@@ -202,7 +208,8 @@ const TextField = (props: InternalTextFieldProps) => {
           {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
             <ValidationMessage
               enableErrors={enableErrors}
-              validationMessage={validationMessage}
+              validate={others.validate}
+              validationMessage={others.validationMessage}
               validationMessageStyle={validationMessageStyle}
               retainSpace
             />

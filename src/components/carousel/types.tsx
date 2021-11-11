@@ -40,7 +40,7 @@ export interface CarouselProps extends ScrollViewProps {
   /**
    * callback for when page has changed
    */
-  onChangePage?: (newPageIndex: number, oldPageIndex: number) => void;
+  onChangePage?: (newPageIndex: number, oldPageIndex: number, info: {isAutoScrolled: boolean}) => void;
   /**
    * callback for onScroll event of the internal ScrollView
    */
@@ -95,12 +95,13 @@ export interface CarouselProps extends ScrollViewProps {
    * Carousel scroll offset (pass new Animated.ValueXY())
    */
   animatedScrollOffset?: Animated.ValueXY;
+  
 }
 
 export interface CarouselState {
   containerWidth?: number;
   currentPage: number;
-  currentStandingPage?: number;
+  currentStandingPage: number;
   pageWidth: number;
   pageHeight: number;
   initialOffset: PointPropType;

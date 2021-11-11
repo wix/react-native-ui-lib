@@ -1,5 +1,4 @@
 import React from 'react';
-//@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 
 export interface ForwardRefInjectedProps {
@@ -9,7 +8,7 @@ export interface ForwardRefInjectedProps {
   forwardedRef: any;
 }
 
-export default function forwardRef<P = any>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> {
+export default function forwardRef<P = any, STATICS = {}>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> & STATICS {
   function forwardRef(props: P, ref: any) {
     return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
@@ -25,4 +24,3 @@ export default function forwardRef<P = any>(WrappedComponent: React.ComponentTyp
 
   return ForwardedComponent as any;
 }
-

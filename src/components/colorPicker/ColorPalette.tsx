@@ -73,7 +73,7 @@ const DEFAULT_NUMBER_OF_ROWS = 3;
 
 /**
  * @description: A color palette component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  * @notes: This is a screen width component
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true
  */
@@ -110,13 +110,14 @@ class ColorPalette extends PureComponent<Props, State> {
   usePagination?: boolean = undefined;
   innerMargin?: number = undefined;
   swatchStyles?: StyleProp<ViewStyle>[] = undefined;
+  private dimensionsChangeListener: any;
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChanged);
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChanged);
   }
 
   onOrientationChanged = () => {
@@ -247,7 +248,7 @@ class ColorPalette extends PureComponent<Props, State> {
   };
 
   onValueChange = (value: string, options: object) => {
-    _.invoke(this.props, 'onValueChange', value, options);
+    this.props.onValueChange?.(value, options);
   };
 
   onLayout = () => {
@@ -367,8 +368,8 @@ class ColorPalette extends PureComponent<Props, State> {
         </Carousel>
         <PageControl
           size={6}
-          color={Colors.dark10}
-          inactiveColor={Colors.dark50}
+          color={Colors.grey10}
+          inactiveColor={Colors.grey50}
           spacing={8}
           numOfPages={colorGroups.length}
           currentPage={currentPage}

@@ -16,7 +16,7 @@ export default () => {
         </p>
         <div className="git-stars">
           <img src={goldStar} alt="gold star" />
-          <span className="star-count">3.3k</span>
+          <span className="star-count">3.7k</span>
         </div>
 
         <div className="buttons">

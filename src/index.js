@@ -66,8 +66,17 @@ export default {
   get FeatureHighlight() {
     return require('./components/featureHighlight').default;
   },
+  get GridListItem() {
+    return require('./components/gridListItem').default;
+  },
+  get GridView() {
+    return require('./components/gridView').default;
+  },
   get Hint() {
     return require('./components/hint').default;
+  },
+  get Icon() {
+    return require('./components/icon').default;
   },
   get Image() {
     return require('./components/image').default;
@@ -94,6 +103,10 @@ export default {
     // TODO: Start migration by exporting TextFieldMigrator
     // return require('./components/textField/TextFieldMigrator').default;
     return require('./components/textField').default;
+  },
+  // TODO: remove once TextField migration has completed
+  get TextFieldMigrator() {
+    return require('./components/textField/TextFieldMigrator').default;
   },
   get MaskedInput() {
     return require('./components/maskedInput').default;
@@ -152,20 +165,17 @@ export default {
   get TabController() {
     return require('./components/tabController').default;
   },
-  get TabBar() {
+  get TabBar() { //TODO: remove on V7
     return require('./components/tabBar').default;
-  },
-  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
-    return require('./components/tagsInput').default;
   },
   get ChipsInput() {
     return require('./components/chipsInput').default;
   },
   get RadioButton() {
-    return require('./components/radioButton/RadioButton').default;
+    return require('./components/radioButton').default;
   },
   get RadioGroup() {
-    return require('./components/radioButton/RadioGroup').default;
+    return require('./components/radioGroup').default;
   },
   get ScrollBar() {
     return require('./components/scrollBar').default;
@@ -203,6 +213,9 @@ export default {
   get WheelPickerDialog() {
     return require('./components/wheelPickerDialog').default;
   },
+  get SkeletonView() {
+    return require('./components/skeletonView').default;
+  },
 
   // Assets
   get Assets() {
@@ -218,9 +231,6 @@ export default {
   },
   get PureBaseComponent() {
     return require('./commons').PureBaseComponent;
-  },
-  get SelectableComponent() {
-    return require('./commons').SelectableComponent;
   },
   get UIComponent() {
     return require('./commons').UIComponent;
@@ -301,9 +311,6 @@ export default {
   },
   get Typography() {
     return require('./style').Typography;
-  },
-  get AnimatableManager() {
-    return require('./style').AnimatableManager;
   },
   get Hooks() {
     return require('./hooks');

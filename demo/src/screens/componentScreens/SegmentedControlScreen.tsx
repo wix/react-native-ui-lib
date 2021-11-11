@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses} from 'react-native-ui-lib';
 
@@ -14,42 +14,53 @@ const segments = {
     },
     {label: 'Short'}
   ],
-  forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Colors'}]
+  forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Colors'}],
+  fifth: [{label: 'Full'}, {label: 'Width'}],
+  sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}]
 };
 
 const SegmentedControlScreen = () => {
-  const onChangeIndex = (segment: string, index: number) => {
-    console.warn('Index ' + index + ' of the ' + segment + ' segmentedControl was pressed');
-  };
+
+  const onChangeIndex = useCallback((index: number) => {
+    console.warn('Index ' + index + ' of the second segmentedControl was pressed');
+  }, []);
 
   return (
-    <View flex bottom padding-20>
-      <View flex center>
-        <SegmentedControl onChangeIndex={(index: number) => onChangeIndex('first', index)} segments={segments.first}/>
+    <View flex bottom padding-page>
+      <View flex centerV>
+        <View center>
+          <SegmentedControl segments={segments.first}/>
+          <SegmentedControl
+            onChangeIndex={onChangeIndex}
+            containerStyle={styles.container}
+            segments={segments.second}
+            initialIndex={2}
+          />
+          <SegmentedControl
+            containerStyle={styles.container}
+            activeColor={Colors.red30}
+            segments={segments.third}
+          />
+          <SegmentedControl
+            containerStyle={styles.container}
+            segments={segments.forth}
+            activeColor={Colors.grey10}
+            borderRadius={BorderRadiuses.br20}
+            backgroundColor={Colors.grey10}
+            activeBackgroundColor={Colors.grey40}
+            inactiveColor={Colors.grey70}
+          />
+        </View>
         <SegmentedControl
-          onChangeIndex={(index: number) => onChangeIndex('second', index)}
           containerStyle={styles.container}
-          segments={segments.second}
-          initialIndex={2}
+          segments={segments.fifth}
         />
         <SegmentedControl
-          onChangeIndex={(index: number) => onChangeIndex('third', index)}
           containerStyle={styles.container}
-          activeColor={Colors.red30}
-          segments={segments.third}
-        />
-        <SegmentedControl
-          onChangeIndex={(index: number) => onChangeIndex('forth', index)}
-          containerStyle={styles.container}
-          segments={segments.forth}
-          activeColor={Colors.grey10}
-          borderRadius={BorderRadiuses.br20}
-          backgroundColor={Colors.grey10}
-          activeBackgroundColor={Colors.grey40}
-          inactiveColor={Colors.grey70}
+          segments={segments.sixth}
         />
       </View>
-      <Text text40 dark10>
+      <Text text40 grey10>
         Segmented Control
       </Text>
     </View>

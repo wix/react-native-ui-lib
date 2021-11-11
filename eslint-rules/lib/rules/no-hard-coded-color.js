@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const {findAndReportHardCodedValues} = require('../utils');
+const {findAndReportHardCodedValues, handleError} = require('../utils');
 
+const RULE_ID = 'no-hard-coded-color';
 const MAP_SCHEMA = {
   type: 'object',
   additionalProperties: true
@@ -39,7 +40,7 @@ module.exports = {
                     .invert()
                     .value();
                   const invertedColorsDict = _.assign({}, validColorsDic, extraColors);
-                  const lowerCaseColorString = colorString.toLowerCase().replace(/ /g, '');
+                  const lowerCaseColorString = (colorString ? colorString.toLowerCase() : '').replace(/ /g, '');
                   if (invertedColorsDict[lowerCaseColorString]) {
                     return fixer.replaceText(node, `Colors.${invertedColorsDict[lowerCaseColorString]}`);
                   }
@@ -49,7 +50,7 @@ module.exports = {
           });
         }
       } catch (err) {
-        console.log('Found error in: ', context.getFilename());
+        handleError(RULE_ID, err, context.getFilename());
       }
     }
 
@@ -77,7 +78,7 @@ module.exports = {
 
     const colorExceptions = ['transparent'];
 
-    function isColorException(colorString) {
+    function isColorException(colorString = '') {
       const lowerCaseColorString = colorString.toLowerCase();
       return colorExceptions.indexOf(lowerCaseColorString) !== -1;
     }

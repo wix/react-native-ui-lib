@@ -1,34 +1,59 @@
+const childProcess = require('child_process');
 const fs = require('fs');
 const _ = require('lodash');
-const path = require('path');
-const recursive = require('recursive-readdir'); // eslint-disable-line
-const docgen = require('react-docgen'); // eslint-disable-line
-const propTypesDocHandler = require('./utils/propTypesHandler');
 
-const SRC_PATH = path.join(path.resolve(__dirname), '../src/components');
+const COMPONENTS_DOCS_DIR = './docs/components';
 
-console.info('BUILDING DOCS');
-console.info('SEARCHING COMPONENTS IN:', SRC_PATH);
+const result = childProcess.execSync('find ./src -name "*api.json"');
+const apiFiles = result.toString().trim().split('\n');
 
-extractDocs(SRC_PATH);
+const components = apiFiles.map(filePath => {
+  const file = fs.readFileSync(filePath);
+  const api = JSON.parse(file.toString());
+  return api;
+});
 
-function extractDocs(srcPath) {
-  return new Promise((res) => {
-    const resolver = docgen.resolver.findExportedComponentDefinition;
-    const handlers = _.toArray(docgen.handlers).concat([propTypesDocHandler]);
-    let docs;
-    recursive(srcPath, (err, files) => {
-      docs = _.map(files, (file) => {
-        try {
-          const src = fs.readFileSync(file);
-          const documentation = docgen.parse(src, resolver, handlers);
-          return documentation;
-        } catch (error) {
-          console.log('could not extract file', file);
-        }
-      });
-      docs = _.filter(docs, Boolean);
-      res(docs);
-    });
-  });
+if (!fs.existsSync(COMPONENTS_DOCS_DIR)) {
+  fs.mkdirSync(COMPONENTS_DOCS_DIR);
 }
+
+components.forEach(component => {
+  /* General */
+  let content = `${component.description}  \n`;
+  content += `[(code example)](${component.example})\n`;
+
+  if (component.extends) {
+    content += `:::info\n`;
+    content += `This component extends **${component.extends?.join(', ')}** props.\n`;
+    content += `:::\n`;
+  }
+
+  if (component.modifiers) {
+    content += `:::tip\n`;
+    content += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
+    content += `:::\n`;
+  }
+
+  /* Images */
+  content += `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
+  component.images?.forEach(image => {
+    content += `<img style={{maxHeight: '420px'}} src={'${image}'}/>`;
+    content += '\n\n';
+  });
+  content += '</div>\n\n';
+
+  /* Props */
+  content += `## API\n`;
+  component.props?.forEach(prop => {
+    content += `### ${prop.name}\n`;
+    content += `${prop.description}  \n`;
+    // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
+    content += `<code>${_.escape(prop.type)}</code>\n\n`;
+  });
+
+  if (!fs.existsSync(`${COMPONENTS_DOCS_DIR}/${component.category}`)) {
+    fs.mkdirSync(`${COMPONENTS_DOCS_DIR}/${component.category}`);
+  }
+
+  fs.writeFileSync(`${COMPONENTS_DOCS_DIR}/${component.category}/${component.name}.md`, content, {encoding: 'utf8'});
+});

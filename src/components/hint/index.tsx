@@ -1,4 +1,3 @@
-// TODO: Add support to custom hint rendering
 import _ from 'lodash';
 import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
 import {
@@ -15,13 +14,14 @@ import {
   LayoutChangeEvent,
   View as RNView
 } from 'react-native';
-import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
+import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import Modal from '../modal';
+import TouchableOpacity from '../touchableOpacity';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -49,23 +49,11 @@ interface HintTargetFrame {
   height?: number;
 }
 
-interface Position {
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-}
+type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
 
-interface HintPositionStyle extends Position {
-  alignItems?: string;
-}
+type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
 
-interface Paddings {
-  paddingLeft?: number;
-  paddingRight?: number;
-  paddingVertical?: number;
-  paddingHorizontal?: number;
-}
+type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 
 export interface HintProps {
   /**
@@ -117,9 +105,17 @@ export interface HintProps {
    */
   offset?: number;
   /**
+   * Callback for Hint press
+   */
+  onPress?: () => void;
+  /**
    * Callback for the background press
    */
   onBackgroundPress?: (event: GestureResponderEvent) => void;
+  /**
+   * Color for background overlay (require onBackgroundPress)
+   */
+  backdropColor?: string;
   /**
    * The hint container width
    */
@@ -128,6 +124,14 @@ export interface HintProps {
    * Custom content element to render inside the hint container
    */
   customContent?: JSX.Element;
+  /**
+   * Remove all hint's paddings
+   */
+  removePaddings?: boolean;
+  /**
+   * Enable shadow (for hint with white background only)
+   */
+  enableShadow?: boolean;
   /**
    * The hint's test identifier
    */
@@ -141,11 +145,12 @@ export interface HintProps {
 interface HintState {
   targetLayout?: HintTargetFrame;
   targetLayoutInWindow?: HintTargetFrame;
+  hintUnmounted: boolean;
 }
 
 /**
  * @description: Hint component for displaying a tooltip over wrapped component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.tsx
  * @notes: You can either wrap a component or pass a specific targetFrame
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Hint/Hint.gif?raw=true
  */
@@ -160,28 +165,39 @@ class Hint extends Component<HintProps, HintState> {
 
   targetRef: ElementRef<typeof RNView> | null = null;
   hintRef: ElementRef<typeof RNView> | null = null;
+  animationDuration = 170;
 
   state = {
     targetLayoutInWindow: undefined,
-    targetLayout: this.props.targetFrame
+    targetLayout: this.props.targetFrame,
+    hintUnmounted: !this.props.visible
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
 
   componentDidUpdate(prevProps: HintProps) {
     if (prevProps.visible !== this.props.visible) {
-      Animated.timing(this.visibleAnimated, {
-        toValue: Number(!!this.props.visible),
-        duration: 170,
-        useNativeDriver: true
-      }).start();
+      this.animateHint();
     }
   }
+
+  animateHint = () => {
+    Animated.timing(this.visibleAnimated, {
+      toValue: Number(!!this.props.visible),
+      duration: this.animationDuration,
+      useNativeDriver: true
+    }).start(this.toggleAnimationEndedToRemoveHint);
+  };
+
+  toggleAnimationEndedToRemoveHint = () => {
+    this.setState({hintUnmounted: !this.props.visible});
+  };
 
   focusAccessibilityOnHint = () => {
     const {message} = this.props;
     const targetRefTag = findNodeHandle(this.targetRef);
     const hintRefTag = findNodeHandle(this.hintRef);
+
     if (targetRefTag && _.isString(message)) {
       AccessibilityInfo.setAccessibilityFocus(targetRefTag);
     } else if (hintRefTag) {
@@ -204,7 +220,7 @@ class Hint extends Component<HintProps, HintState> {
       this.setState({targetLayout: layout});
     }
 
-    if (!this.state.targetLayoutInWindow) {
+    if (!this.state.targetLayoutInWindow || this.props.onBackgroundPress) {
       setTimeout(() => {
         this.targetRef?.measureInWindow((x: number, y: number, width: number, height: number) => {
           const targetLayoutInWindow = {x, y, width, height};
@@ -237,6 +253,7 @@ class Hint extends Component<HintProps, HintState> {
     if (targetFrame) {
       return targetFrame;
     }
+
     return onBackgroundPress ? targetLayoutInWindow : targetLayout;
   }
 
@@ -264,12 +281,14 @@ class Hint extends Component<HintProps, HintState> {
     if (!_.isUndefined(useSideTip)) {
       return useSideTip;
     }
+
     return this.getTargetPositionOnScreen() !== TARGET_POSITIONS.CENTER;
   }
 
   getTargetPositionOnScreen() {
     if (this.targetLayout?.x && this.targetLayout?.width) {
       const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
+
       if (targetMidPosition > this.containerWidth * (2 / 3)) {
         return TARGET_POSITIONS.RIGHT;
       } else if (targetMidPosition < this.containerWidth * (1 / 3)) {
@@ -312,6 +331,7 @@ class Hint extends Component<HintProps, HintState> {
 
   getHintPadding() {
     const paddings: Paddings = {paddingVertical: this.hintOffset, paddingHorizontal: this.edgeMargins};
+
     if (this.useSideTip && this.targetLayout?.x) {
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
       if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
@@ -320,12 +340,14 @@ class Hint extends Component<HintProps, HintState> {
         paddings.paddingRight = this.containerWidth - this.targetLayout.x - this.targetLayout.width;
       }
     }
+
     return paddings;
   }
 
   getHintAnimatedStyle = () => {
     const {position} = this.props;
     const translateY = position === HintPositions.TOP ? -10 : 10;
+
     return {
       opacity: this.visibleAnimated,
       transform: [
@@ -347,13 +369,15 @@ class Hint extends Component<HintProps, HintState> {
       tipPositionStyle.top = this.hintOffset - this.tipSize.height;
     }
 
-    if (this.targetLayout?.width && this.targetLayout?.x) {
-      const targetMidWidth = this.targetLayout.width / 2;
+    const layoutWidth = this.targetLayout?.width || 0;
+
+    if (this.targetLayout?.x) {
+      const targetMidWidth = layoutWidth / 2;
       const tipMidWidth = this.tipSize.width / 2;
 
       const leftPosition = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
       const rightPosition = this.useSideTip
-        ? this.containerWidth - this.targetLayout.x - this.targetLayout.width
+        ? this.containerWidth - this.targetLayout.x - layoutWidth
         : this.containerWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
 
@@ -401,7 +425,7 @@ class Hint extends Component<HintProps, HintState> {
   // }
 
   renderHintTip() {
-    const {position, color} = this.props;
+    const {position, color = DEFAULT_COLOR} = this.props;
     const source = this.useSideTip ? sideTip : middleTip;
     const flipVertically = position === HintPositions.TOP;
     const flipHorizontally = this.getTargetPositionOnScreen() === TARGET_POSITIONS.RIGHT;
@@ -409,24 +433,36 @@ class Hint extends Component<HintProps, HintState> {
       transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
     };
 
-    return (
-      <Image
-        tintColor={color || DEFAULT_COLOR}
-        source={source}
-        style={[styles.hintTip, this.getTipPosition(), flipStyle]}
-      />
-    );
+    return <Image tintColor={color} source={source} style={[styles.hintTip, this.getTipPosition(), flipStyle]}/>;
   }
 
   renderContent() {
-    const {message, messageStyle, icon, iconStyle, borderRadius, color, customContent, testID} = this.props;
+    const {
+      message,
+      messageStyle,
+      icon,
+      iconStyle,
+      borderRadius,
+      color = DEFAULT_COLOR,
+      customContent,
+      removePaddings,
+      enableShadow,
+      visible,
+      testID
+    } = this.props;
 
     return (
       <View
         testID={`${testID}.message`}
         row
         centerV
-        style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
+        style={[
+          styles.hint,
+          !removePaddings && styles.hintPaddings,
+          visible && enableShadow && styles.containerShadow,
+          {backgroundColor: color},
+          !_.isUndefined(borderRadius) && {borderRadius}
+        ]}
         ref={this.setHintRef}
       >
         {customContent}
@@ -437,7 +473,8 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderHint() {
-    const {testID} = this.props;
+    const {onPress, testID} = this.props;
+    const opacity = onPress ? 0.9 : 1.0;
 
     if (this.showHint) {
       return (
@@ -453,8 +490,10 @@ class Hint extends Component<HintProps, HintState> {
           pointerEvents="box-none"
           testID={testID}
         >
+          <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
+            {this.renderContent()}
+          </TouchableOpacity>
           {this.renderHintTip()}
-          {this.renderContent()}
         </View>
       );
     }
@@ -462,10 +501,12 @@ class Hint extends Component<HintProps, HintState> {
 
   renderHintContainer() {
     const {style, ...others} = this.props;
-    delete others.testID;
     return (
       <View
         {...others}
+        // this view must be collapsable, don't pass testID or backgroundColor etc'.
+        collapsable
+        testID={undefined}
         style={[styles.container, style, this.getContainerPosition()]}
       >
         {this.renderHint()}
@@ -473,11 +514,33 @@ class Hint extends Component<HintProps, HintState> {
     );
   }
 
+  renderMockChildren() {
+    const {children} = this.props;
+    if (children && React.isValidElement(children)) {
+      const layout = {
+        ...this.getContainerPosition(),
+        width: this.targetLayout?.width,
+        height: this.targetLayout?.height
+      };
+
+      return (
+        <View style={[styles.mockChildrenContainer, layout]}>
+          {React.cloneElement(children, {
+            collapsable: false,
+            key: 'mock',
+            style: [children.props.style, styles.mockChildren]
+          })}
+        </View>
+      );
+    }
+  }
+
   renderChildren() {
     const {targetFrame} = this.props;
 
     if (!targetFrame && isValidElement(this.props.children)) {
       return React.cloneElement(this.props.children, {
+        key: 'clone',
         collapsable: false,
         onLayout: this.onTargetLayout,
         ref: this.setTargetRef,
@@ -487,31 +550,33 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   render() {
-    const {visible, onBackgroundPress, testID} = this.props;
+    const {onBackgroundPress, backdropColor, testID} = this.props;
 
-    if (!visible) {
-      return this.props.children;
+    if (!this.props.visible && this.state.hintUnmounted) {
+      return this.props.children || null;
     }
 
     return (
-      <React.Fragment>
+      <>
+        {this.renderChildren()}
         {onBackgroundPress ? (
           <Modal
             visible={this.showHint}
-            animationType="none"
+            animationType={backdropColor ? 'fade' : 'none'}
+            overlayBackgroundColor={backdropColor}
             transparent
             onBackgroundPress={onBackgroundPress}
             onRequestClose={onBackgroundPress as () => void}
             testID={`${testID}.modal`}
           >
+            {this.renderMockChildren()}
             {this.renderHintContainer()}
           </Modal>
         ) : (
           // this.renderOverlay(),
           this.renderHintContainer()
         )}
-        {this.renderChildren()}
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -519,7 +584,23 @@ class Hint extends Component<HintProps, HintState> {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute'
+  },
+  mockChildrenContainer: {
+    position: 'absolute'
+  },
+  mockChildren: {
+    margin: undefined,
+    marginVertical: undefined,
+    marginHorizontal: undefined,
+    marginTop: undefined,
+    marginRight: undefined,
+    marginBottom: undefined,
+    marginLeft: undefined,
 
+    top: undefined,
+    left: undefined,
+    right: undefined,
+    bottom: undefined
   },
   // overlay: {
   //   position: 'absolute',
@@ -534,11 +615,16 @@ const styles = StyleSheet.create({
   },
   hint: {
     maxWidth: 400,
-    backgroundColor: DEFAULT_COLOR,
+    borderRadius: BorderRadiuses.br60,
+    backgroundColor: DEFAULT_COLOR
+  },
+  hintPaddings: {
     paddingHorizontal: Spacings.s5,
     paddingTop: Spacings.s3,
-    paddingBottom: Spacings.s4,
-    borderRadius: BorderRadiuses.br60
+    paddingBottom: Spacings.s4
+  },
+  containerShadow: {
+    ...Shadows.sh30.bottom
   },
   hintMessage: {
     ...Typography.text70,

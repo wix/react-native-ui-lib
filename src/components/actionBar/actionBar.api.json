@@ -1,0 +1,28 @@
+{
+  "name": "ActionBar",
+  "category": "basic",
+  "description": "Quick actions bar, each action support Button component props",
+  "extends": ["View"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/view/index.tsx"],
+  "modifiers": ["margin", "padding"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionBarScreen.tsx",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ActionBar/ActionBar.gif?raw=true"],
+  "props": [
+    {"name": "actions", "type": "ButtonProps[]", "description": "The actions for the action bar", "required": true},
+    {"name": "height", "type": "number", "description": "Height", "default": "48"},
+    {"name": "backgroundColor", "type": "string", "description": "Background color", "default": "Colors.white"},
+    {"name": "centered", "type": "boolean", "description": "Should action be equally centered"},
+    {
+      "name": "keepRelative",
+      "type": "boolean",
+      "description": "Keep the action bar position relative instead of it absolute position"
+    },
+    {
+      "name": "useSafeArea",
+      "type": "boolean",
+      "description": "In iOS, use safe area, in case component attached to the bottom",
+      "default": "true"
+    },
+    {"name": "style", "type": "ViewStyle", "description": "Component's style"}
+  ]
+}

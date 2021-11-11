@@ -5,7 +5,6 @@ import {useDidUpdate} from 'hooks';
 import {Validator} from './types';
 import {InputProps} from './Input';
 
-
 export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
@@ -15,13 +14,18 @@ export interface FieldStateProps extends InputProps {
    */
   validate?: Validator | Validator[];
   /**
+   * The validation message to display when field is invalid (depends on validate)
+   */
+  validationMessage?: string | string[];
+  /**
    * Callback for when field validity has changed
    */
-  onChangeValidity?: (isValid: boolean) => void
+  onChangeValidity?: (isValid: boolean) => void;
 }
 
 export default function useFieldState({
   validate,
+  validationMessage,
   validateOnBlur,
   validateOnChange,
   validateOnStart,
@@ -39,6 +43,18 @@ export default function useFieldState({
     }
   }, []);
 
+  useEffect(() => {
+    if (props.value !== value) {
+      setValue(props.value);
+
+      if (validateOnChange) {
+        validateField(props.value);
+      }
+    }
+    /* On purpose listen only to props.value change */
+    /* eslint-disable-next-line react-hooks/exhaustive-deps*/
+  }, [props.value, validateOnChange]);
+
   useDidUpdate(() => {
     onChangeValidity?.(isValid);
   }, [isValid]);
@@ -53,13 +69,15 @@ export default function useFieldState({
 
   const onFocus = useCallback((...args: any) => {
     setIsFocused(true);
-    _.invoke(props, 'onFocus', ...args);
+    //@ts-expect-error
+    props.onFocus?.(...args);
   },
   [props.onFocus]);
 
   const onBlur = useCallback((...args: any) => {
     setIsFocused(false);
-    _.invoke(props, 'onBlur', ...args);
+    //@ts-expect-error
+    props.onBlur?.(...args);
     if (validateOnBlur) {
       validateField();
     }
@@ -68,7 +86,7 @@ export default function useFieldState({
 
   const onChangeText = useCallback(text => {
     setValue(text);
-    _.invoke(props, 'onChangeText', text);
+    props.onChangeText?.(text);
 
     if (validateOnChange) {
       validateField(text);
@@ -77,13 +95,20 @@ export default function useFieldState({
   [props.onChangeText, validateOnChange, validateField]);
 
   const fieldState = useMemo(() => {
-    return {value, hasValue: !_.isEmpty(value), isValid, isFocused, failingValidatorIndex};
-  }, [value, isFocused, isValid, failingValidatorIndex]);
+    return {
+      value,
+      hasValue: !_.isEmpty(value),
+      isValid: validationMessage && !validate ? false : isValid,
+      isFocused,
+      failingValidatorIndex
+    };
+  }, [value, isFocused, isValid, failingValidatorIndex, validationMessage, validate]);
 
   return {
     onFocus,
     onBlur,
     onChangeText,
-    fieldState
+    fieldState,
+    validateField
   };
 }

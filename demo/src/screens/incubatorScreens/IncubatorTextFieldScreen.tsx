@@ -5,14 +5,18 @@ import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incu
 const {TextField} = Incubator;
 const {KeyboardAwareInsetsView} = Keyboard;
 
+const priceFormatter = Intl.NumberFormat('en-US');
+
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
   input2 = React.createRef<TextInput>();
+  inputWithValidation = React.createRef<TextInput>();
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
     shouldDisable: false,
     value: 'Initial Value',
-    searching: false
+    searching: false,
+    preset: 'withUnderline'
   };
 
   componentDidMount() {
@@ -46,7 +50,7 @@ export default class TextFieldScreen extends Component {
   }
 
   render() {
-    const {errorPosition, shouldDisable} = this.state;
+    const {errorPosition, shouldDisable, price, preset} = this.state;
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-page>
@@ -109,7 +113,7 @@ export default class TextFieldScreen extends Component {
             placeholder="Enter weight"
             text70
             trailingAccessory={
-              <Text text70 dark30>
+              <Text text70 grey30>
                 Kg.
               </Text>
             }
@@ -121,6 +125,7 @@ export default class TextFieldScreen extends Component {
             <Text h3 blue50>
               Validation
             </Text>
+
             <Button
               size={Button.sizes.xSmall}
               label={`Error Position: ${_.upperCase(errorPosition)}`}
@@ -150,7 +155,27 @@ export default class TextFieldScreen extends Component {
             // validateOnStart
             // validateOnBlur
             fieldStyle={styles.withUnderline}
+            marginB-s4
           />
+
+          <View row top marginT-s4>
+            <TextField
+              ref={this.inputWithValidation}
+              placeholder="Enter full name"
+              validate="required"
+              validationMessage="This field is required"
+              containerStyle={{flexGrow: 1}}
+              fieldStyle={styles.withUnderline}
+            />
+            <Button
+              marginL-s5
+              label="Validate"
+              size={Button.sizes.xSmall}
+              onPress={() => {
+                this.inputWithValidation.current?.validate?.();
+              }}
+            />
+          </View>
 
           <View row centerV spread>
             <Text h3 blue50 marginV-s4>
@@ -174,6 +199,25 @@ export default class TextFieldScreen extends Component {
             editable={!shouldDisable}
           />
 
+          <View row spread centerV>
+            <Text h3 blue50 marginV-s4>
+              Custom Field Style
+            </Text>
+            <Button
+              label={preset}
+              onPress={() => this.setState({preset: preset === 'withUnderline' ? 'withFrame' : 'withUnderline'})}
+              size={Button.sizes.xSmall}
+            />
+          </View>
+
+          <TextField
+            label="Label"
+            placeholder="Enter text..."
+            preset={preset}
+            fieldStyle={(_state, {preset}) => (preset === 'withUnderline' ? styles.withUnderline : styles.withFrame)}
+            editable={!shouldDisable}
+          />
+
           <Text h3 blue50 marginV-s4>
             Char Counter
           </Text>
@@ -194,6 +238,21 @@ export default class TextFieldScreen extends Component {
             label="Password"
             placeholder="Enter password"
             hint="1-6 chars including numeric chars"
+            fieldStyle={styles.withUnderline}
+          />
+          <Text h3 blue50 marginV-s4>
+            Formatter
+          </Text>
+          <TextField
+            value={price}
+            onChangeText={value => this.setState({price: value})}
+            label="Price"
+            placeholder="Enter price"
+            validate={'number'}
+            validationMessage="Invalid price"
+            // @ts-expect-error
+            formatter={(value) => (isNaN(value) ? value : priceFormatter.format(Number(value)))}
+            leadingAccessory={<Text marginR-s1 grey30>$</Text>}
             fieldStyle={styles.withUnderline}
           />
         </View>

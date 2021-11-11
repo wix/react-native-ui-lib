@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import memoize from 'memoize-one';
 import {asBaseComponent, forwardRef} from '../../commons';
+import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 import View from '../../components/view';
 import Modal from '../modal';
@@ -22,12 +23,13 @@ const PICKER_MODES = {
   MULTI: 'MULTI'
 };
 const ItemType = PropTypes.oneOfType([
-  PropTypes.number, 
+  PropTypes.number,
   PropTypes.string,
   PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.string
-  })]);
+  })
+]);
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
@@ -142,7 +144,11 @@ class Picker extends Component {
     /**
      * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
      */
-    listProps: PropTypes.object
+    listProps: PropTypes.object,
+    /**
+     * Pass props to the picker modal
+     */
+    pickerModalProps: PropTypes.object
   };
 
   static defaultProps = {
@@ -180,20 +186,22 @@ class Picker extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (!_.isEmpty(nextProps.value) && prevState.value !== nextProps.value) {
-      if (prevState.prevValue !== prevState.value) {
-        // for this.setState() updates to 'value'
-        // NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue'
-        return {
-          prevValue: prevState.value
-        };
-      } else {
-        // for prop update to 'value'
-        return {
-          value: nextProps.value
-        };
-      }
-    } else if (_.isFunction(nextProps.renderPicker) && prevState.value !== nextProps.value) {
+    const hasNextValue = !_.isEmpty(nextProps.value) || _.isNumber(nextProps.value);
+    /* Relevant for keeping the value prop controlled - react when user change value prop */
+    const externalValueChanged = hasNextValue && prevState.value !== nextProps.value;
+    /* Relevant for multi select mode when we keep an internal value state */
+    const internalValueChanged = prevState.value !== prevState.prevValue;
+    if (internalValueChanged && nextProps.mode === Picker.modes.MULTI) {
+      /* for this.setState() updates to 'value'
+      NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue' */
+      return {
+        prevValue: prevState.value
+      };
+    } else if (externalValueChanged) {
+      return {
+        value: nextProps.value
+      };
+    } else if (_.isFunction(nextProps.renderPicker) && externalValueChanged) {
       return {
         prevValue: prevState.value,
         value: nextProps.value
@@ -260,7 +268,7 @@ class Picker extends Component {
     if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
       return getLabel(value);
     }
-    
+
     if (_.isArray(value)) {
       return this.getLabelsFromArray(value);
     }
@@ -274,7 +282,7 @@ class Picker extends Component {
     const selectedItem = _.find(items, {value});
 
     return _.get(selectedItem, 'label');
-  }
+  };
 
   getFilteredChildren = memoize((children, searchValue) => {
     const {getItemLabel: getItemLabelPicker} = this.props;
@@ -336,7 +344,11 @@ class Picker extends Component {
     _.invoke(this.props, 'onSearchChange', searchValue);
   };
 
-  onSelectedItemLayout = ({nativeEvent: {layout: {y}}}) => {
+  onSelectedItemLayout = ({
+    nativeEvent: {
+      layout: {y}
+    }
+  }) => {
     this.setState({selectedItemPosition: y});
   };
 
@@ -357,7 +369,8 @@ class Picker extends Component {
       renderCustomModal,
       listProps,
       children,
-      testID
+      testID,
+      pickerModalProps
     } = this.props;
     const {showExpandableModal, selectedItemPosition, value} = this.state;
 
@@ -399,15 +412,17 @@ class Picker extends Component {
           renderCustomSearch={renderCustomSearch}
           listProps={listProps}
           onShow={onShow}
+          pickerModalProps={pickerModalProps}
         >
-          {this.children} 
+          {this.children}
         </PickerModal>
       </PickerContext.Provider>
     );
   };
 
   render() {
-    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, modifiers} = this.props;
+    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, forwardedRef, modifiers} =
+      this.props;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
@@ -419,7 +434,7 @@ class Picker extends Component {
       return (
         <View left>
           <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
-            {renderPicker(value)}
+            {renderPicker(value, this.getLabel(value))}
           </Button>
           {this.renderExpandableModal()}
         </View>
@@ -432,6 +447,7 @@ class Picker extends Component {
 
     return (
       <TextField
+        ref={forwardedRef}
         {...textInputProps}
         containerStyle={[paddings, margins, positionStyle, containerStyle]}
         {...this.getAccessibilityInfo()}
@@ -440,6 +456,7 @@ class Picker extends Component {
         expandable
         renderExpandable={this.renderExpandableModal}
         onToggleExpandableModal={this.toggleExpandableModal}
+        selection={Constants.isAndroid ? {start: 0} : undefined}
       />
     );
   }

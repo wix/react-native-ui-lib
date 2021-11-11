@@ -9,20 +9,13 @@ import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors, BorderRadiuses} from '../../style';
-import {WheelPicker} from '../../incubator';
 
 class PickerDialog extends BaseComponent {
   static displayName = 'IGNORE';
   static propTypes = {
-    selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    onValueChange: PropTypes.func,
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
     children: PropTypes.array,
-    /**
-     * Pass props for the WheelPicker (Android only)
-     */
-    wheelPickerProps: PropTypes.shape(WheelPicker.propTypes),
     /**
      * select label style
      */
@@ -43,7 +36,7 @@ class PickerDialog extends BaseComponent {
     if (title) {
       return (
         <View style={styles.header}>
-          <Text text60 dark10 style={titleStyle}>
+          <Text text60 grey10 style={titleStyle}>
             {title}
           </Text>
         </View>
@@ -68,28 +61,17 @@ class PickerDialog extends BaseComponent {
     );
   }
 
-  renderPicker() {
-    const {children, onValueChange, selectedValue, renderNativePicker, wheelPickerProps, testID} = this.props;
-    if (_.isFunction(renderNativePicker)) {
-      return renderNativePicker(this.props);
-    }
-    return (
-      <WheelPicker selectedValue={selectedValue} onChange={onValueChange} {...wheelPickerProps} testID={`${testID}.wheelPicker`}>
-        {children}
-      </WheelPicker>
-    );
-  }
 
   render() {
     const dialogProps = extractComponentProps(Dialog, this.props);
     // TODO: should be taken from dialogProps but there's an issue with "babel-plugin-typescript-to-proptypes" plugin
     const {panDirection} = this.props;
     return (
-      <Dialog {...dialogProps} migrate height="50%" width="77%" panDirection={panDirection}>
+      <Dialog {...dialogProps} height="50%" width="77%" panDirection={panDirection}>
         <View style={styles.dialog}>
           {this.renderHeader()}
           <View flex center paddingH-24>
-            {this.renderPicker()}
+            {this.props.children}
           </View>
           {this.renderFooter()}
         </View>

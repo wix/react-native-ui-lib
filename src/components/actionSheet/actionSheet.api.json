@@ -1,0 +1,75 @@
+{
+  "name": "ActionSheet",
+  "category": "overlays",
+  "description": "Cross platform Action Sheet, with a support for native iOS solutions",
+  "extends": ["Dialog"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/dialog/index.tsx"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.tsx",
+  "images": ["https://media.giphy.com/media/l0HUpXOR6RqB2ct5S/giphy.gif"],
+  "props": [
+    {"name": "visible", "type": "boolean", "description": "Whether to show the action sheet or not"},
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Title of the action sheet",
+      "note": "If both 'title' and 'message' are not passed will not render the title view at all"
+    },
+    {"name": "message", "type": "string", "description": "Message of the action sheet"},
+    {
+      "name": "cancelButtonIndex",
+      "type": "number",
+      "description": "Index of the option represents the cancel action (to be displayed as the separated bottom bold button)"
+    },
+    {
+      "name": "destructiveButtonIndex",
+      "type": "number",
+      "description": "Index of the option represents the destructive action (will display red text. Usually used for delete or abort actions)"
+    },
+    {
+      "name": "options",
+      "type": "Array<ButtonProps>",
+      "description": "List of options for the action sheet, follows the Button prop types (supply 'label' string and 'onPress' function)"
+    },
+    {
+      "name": "onDismiss",
+      "type": "DialogProps['onDismiss']",
+      "description": "Called when dismissing the action sheet (usually used for setting 'visible' prop to false)"
+    },
+    {
+      "name": "onModalDismissed",
+      "type": "DialogProps['onDialogDismissed']",
+      "description": "Called once the modal has been dismissed",
+      "note": "iOS only, modal only"
+    },
+    {"name": "useNativeIOS", "type": "boolean", "description": "Should use the native action sheet for iOS"},
+    {
+      "name": "showCancelButton",
+      "type": "boolean",
+      "description": "When passed (only with useNativeIOS), will display a cancel button at the bottom (overrides cancelButtonIndex)"
+    },
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "Add or override style of the action sheet (wraps the title and actions)"
+    },
+    {
+      "name": "dialogStyle",
+      "type": "ViewStyle",
+      "description": "Add or override style of the dialog wrapping the action sheet"
+    },
+    {"name": "optionsStyle", "type": "ViewStyle", "description": "Add or override style of the options list"},
+    {"name": "renderTitle", "type": "() => JSX.Element", "description": "Render custom title"},
+    {
+      "name": "renderAction",
+      "type": "\n(\noption: ButtonProps, \nindex: number, \nonOptionPress: ActionSheetOnOptionPress\n) => JSX.Element",
+      "description": "Render custom action",
+      "note": "You will need to call 'onOptionPress' so the option's 'onPress' will be called"
+    },
+    {
+      "name": "useSafeArea",
+      "type": "boolean",
+      "description": "In iOS, use safe area, in case component attached to the bottom"
+    },
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}

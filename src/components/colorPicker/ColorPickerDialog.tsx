@@ -20,7 +20,6 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 import Dialog, {DialogProps} from '../dialog';
 import Button from '../button';
-//@ts-expect-error
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import PanningProvider from '../panningViews/panningProvider';
 
@@ -32,7 +31,7 @@ interface Props extends DialogProps {
   /**
    * onSubmit callback for the picker dialog color change
    */
-  onSubmit?: () => void;
+  onSubmit?: (color: string, textColor: string) => void;
   /**
    * Props to pass the Dialog component // TODO: deprecate 'dialogProps' prop
    */
@@ -68,13 +67,13 @@ const KEYBOARD_HEIGHT = 216;
 /**
  * @description: A color picker dialog component
  * @extends: Dialog
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  */
 class ColorPickerDialog extends PureComponent<Props, State> {
   static displayName = 'ColorPicker';
 
   static defaultProps = {
-    initialColor: Colors.dark80
+    initialColor: Colors.grey80
   };
 
   constructor(props: Props) {
@@ -156,7 +155,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   }
 
   getTextColor(color: string) {
-    return Colors.isDark(color) ? Colors.white : Colors.dark10;
+    return Colors.isDark(color) ? Colors.white : Colors.grey10;
   }
 
   getValidColorString(text?: string) {
@@ -212,14 +211,14 @@ class ColorPickerDialog extends PureComponent<Props, State> {
     const {hex} = this.getValidColorString(text);
 
     if (hex) {
-      _.invoke(this.props, 'onSubmit', hex, this.getTextColor(hex));
+      this.props.onSubmit?.(hex, this.getTextColor(hex));
       this.onDismiss();
     }
   };
 
   onDismiss = () => {
     this.resetValues();
-    _.invoke(this.props, 'onDismiss');
+    this.props.onDismiss?.();
   };
 
   renderHeader() {
@@ -231,7 +230,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
         <Button
           link
           iconSource={Assets.icons.x}
-          iconStyle={{tintColor: Colors.dark10}}
+          iconStyle={{tintColor: Colors.grey10}}
           onPress={this.onDismiss}
           accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
         />

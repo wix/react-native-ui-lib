@@ -1,5 +1,6 @@
 import {UIManager, I18nManager} from 'react-native';
 import {navigationData as menuStructure} from './screens/MenuStructure';
+import {loadDemoConfigurations} from './configurations';
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true); // eslint-disable-line
 I18nManager.allowRTL(true);
@@ -7,6 +8,7 @@ I18nManager.allowRTL(true);
 module.exports = {
   name: 'unicorn demo app',
   menuStructure,
+  loadDemoConfigurations,
   // componentScreens
   get screens() {
     return {
@@ -64,6 +66,9 @@ module.exports = {
       get HintsScreen() {
         return require('./screens/componentScreens/HintsScreen').default;
       },
+      get IconScreen() {
+        return require('./screens/componentScreens/IconScreen').default;
+      },
       get ImageScreen() {
         return require('./screens/componentScreens/ImageScreen').default;
       },
@@ -103,6 +108,9 @@ module.exports = {
       get SharedTransitionScreen() {
         return require('./screens/componentScreens/SharedTransitionScreen').default;
       },
+      get SkeletonViewScreen() {
+        return require('./screens/componentScreens/SkeletonViewScreen').default;
+      },
       get StepperScreen() {
         return require('./screens/componentScreens/StepperScreen').default;
       },
@@ -114,9 +122,6 @@ module.exports = {
       },
       get TabControllerScreen() {
         return require('./screens/componentScreens/TabControllerScreen').default;
-      },
-      get TabBarScreen() {
-        return require('./screens/componentScreens/TabBarScreen').default;
       },
       get TextScreen() {
         return require('./screens/componentScreens/TextScreen').default;
@@ -209,18 +214,18 @@ module.exports = {
       get CardScannerScreen() {
         return require('./screens/componentScreens/CardScannerScreen').default;
       },
-      get CardAnimationsScreen() {
-        return require('./screens/animationScreens/CardAnimationsScreen').default;
-      },
-      get ListAnimationsScreen() {
-        return require('./screens/animationScreens/ListAnimationsScreen').default;
-      },
       get ProgressBarScreen() {
         return require('./screens/componentScreens/ProgressBarScreen').default;
       },
-      // Incubator 
+      // Incubator
       get IncubatorTextFieldScreen() {
         return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
+      },
+      get PanViewScreen() {
+        return require('./screens/incubatorScreens/PanViewScreen').default;
+      },
+      get TransitionViewScreen() {
+        return require('./screens/incubatorScreens/TransitionViewScreen').default;
       },
       // realExamples
       get AppleMusic() {
@@ -231,6 +236,12 @@ module.exports = {
       },
       get ListActionsScreen() {
         return require('./screens/realExamples/ListActions/ListActionsScreen').default;
+      },
+      get ProductPage() {
+        return require('./screens/realExamples/ProductPage').default;
+      },
+      get Twitter() {
+        return require('./screens/realExamples/Twitter').default;
       },
       // wrapperScreens
       get TouchableOpacityScreen() {

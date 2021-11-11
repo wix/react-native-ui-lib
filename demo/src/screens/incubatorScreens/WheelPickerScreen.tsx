@@ -2,8 +2,9 @@ import React, {useCallback, useState} from 'react';
 import {View, Text, Incubator, Colors, Typography, Button, Dialog} from 'react-native-ui-lib';
 import _ from 'lodash';
 
-// Months
-const months = [
+type WheelPickerValue = Incubator.WheelPickerProps['initialValue'];
+
+const monthItems = _.map([
   'January',
   'February',
   'March',
@@ -16,60 +17,45 @@ const months = [
   'October',
   'November',
   'December'
-];
+],
+item => ({label: item, value: item}));
 
-// Years
-const years = _.times(2020, i => i);
-
-const days = _.times(365, i => i + 1);
+const yearItems = _.times(2030, i => i)
+  .reverse()
+  .map(item => ({label: `${item}`, value: item}));
+const dayItems = _.times(31, i => i + 1).map(day => ({label: `${day}`, value: day}));
 
 const useData = (initialMonth?: string, initialYear?: string, initialDays?: number) => {
-  const [selectedMonth, setMonth] = useState<string | undefined>(initialMonth);
-  const [selectedYear, setYear] = useState<string | undefined>(initialYear);
-  const [selectedDays, setDays] = useState<number | undefined>(initialDays);
+  const [selectedMonth, setMonth] = useState<WheelPickerValue>(initialMonth);
+  const [, setYear] = useState<WheelPickerValue>(initialYear);
+  const [selectedDays, setDays] = useState<WheelPickerValue>(initialDays);
   const [showDialog, setShowDialog] = useState(false);
 
-  const onPickDaysPress = () => {
+  const onPickDaysPress = useCallback(() => {
     setShowDialog(true);
-  };
+  }, []);
 
-  const onDialogDismissed = () => {
+  const onDialogDismissed = useCallback(() => {
     setShowDialog(false);
-  };
+  }, []);
 
-  const onMonthChange = (item: string | undefined, _: number) => {
+  const onMonthChange = useCallback((item: WheelPickerValue, _: number) => {
     setMonth(item);
-  };
+  }, []);
 
-  const onYearChange = (item: string | undefined, _: number) => {
+  const onYearChange = useCallback((item: WheelPickerValue, _: number) => {
     setYear(item);
-  };
+  }, []);
 
-  const onDaysChange = (item: number | undefined, _: number) => {
+  const onDaysChange = useCallback((item: WheelPickerValue, _: number) => {
     setDays(item);
-  };
-
-  const getMonths = useCallback(() => {
-    return _.map(months, item => ({label: item, value: item}));
-  }, []);
-
-  const getYears = useCallback(() => {
-    return _.map(years, item => ({label: '' + item, value: item}));
-  }, []);
-
-  const getDays = useCallback(() => {
-    return _.map(days, item => ({label: '' + item, value: item}));
   }, []);
 
   return {
-    getMonths,
-    getYears,
-    getDays,
     onMonthChange,
     onYearChange,
     onDaysChange,
     selectedMonth,
-    selectedYear,
     selectedDays,
     onPickDaysPress,
     onDialogDismissed,
@@ -81,13 +67,9 @@ export default () => {
   const {
     selectedMonth,
     onMonthChange,
-    getMonths,
-    selectedYear,
     onYearChange,
-    getYears,
     selectedDays,
     onDaysChange,
-    getDays,
     onPickDaysPress,
     onDialogDismissed,
     showDialog
@@ -97,36 +79,35 @@ export default () => {
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
 
-      <View flex marginT-20 centerH>
+      <View marginT-s5 centerH>
         <Text h3>Months</Text>
         <Incubator.WheelPicker
-          style={{width: '100%'}}
           onChange={onMonthChange}
           activeTextColor={Colors.primary}
           inactiveTextColor={Colors.grey20}
-          items={getMonths()}
+          items={monthItems}
           textStyle={Typography.text60R}
           selectedValue={selectedMonth}
         />
 
         <Text h3>Years</Text>
-        <View width={'100%'}>
+        <Text bodySmall grey30>
+          (Uncontrolled, initialValue passed)
+        </Text>
+        <View width={'100%'} marginT-s3>
           <Incubator.WheelPicker
             onChange={onYearChange}
             numberOfVisibleRows={3}
-            selectedValue={selectedYear}
-            items={getYears()}
+            initialValue={2021}
+            items={yearItems}
           />
         </View>
+      </View>
 
-        <Button marginT-40 label={'Pick Days'} marginH-120 onPress={onPickDaysPress}/>
+      <View marginB-s10>
+        <Button marginT-40 label={'Pick Days'} marginH-100 onPress={onPickDaysPress}/>
         <Dialog width={'90%'} height={260} bottom visible={showDialog} onDismiss={onDialogDismissed}>
-          <Incubator.WheelPicker
-            onChange={onDaysChange}
-            selectedValue={selectedDays}
-            label={'Days'}
-            items={getDays()}
-          />
+          <Incubator.WheelPicker onChange={onDaysChange} selectedValue={selectedDays} label={'Days'} items={dayItems}/>
         </Dialog>
       </View>
     </View>

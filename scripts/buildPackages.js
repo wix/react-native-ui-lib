@@ -15,7 +15,8 @@ const packages = [
       'Spacings',
       'BorderRadiuses',
       'Shadows',
-      'ThemeManager'
+      'ThemeManager',
+      'Scheme'
     ]
   },
   {
@@ -26,7 +27,8 @@ const packages = [
       'BorderRadiuses',
       'Shadows',
       'Spacings',
-      'ThemeManager'
+      'ThemeManager',
+      'Scheme'
     ]
   }
 ];

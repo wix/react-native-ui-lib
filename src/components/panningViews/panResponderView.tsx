@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import View, {ViewProps} from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
@@ -18,8 +17,6 @@ export interface PanResponderViewProps extends ViewProps {
      */
     isAnimated?: boolean;
 }
-export type PanResponderViewPropTypes = PanResponderViewProps; //TODO: remove after ComponentPropTypes deprecation;
-
 
 interface PanResponderProps {
   isPanning: boolean;
@@ -77,8 +74,9 @@ class PanResponderView extends PureComponent<Props> {
     const location: PanLocationProps = {left: this.left, top: this.top};
     this.initialLeft = this.left || this.initialLeft;
     this.initialTop = this.top || this.initialTop;
-    _.invoke(this.props, 'onPanLocationChanged', location);
-    _.invoke(this.props.context, 'onPanLocationChanged', location);
+    this.props.onPanLocationChanged?.(location);
+    //@ts-expect-error
+    this.props.context.onPanLocationChanged?.(location);
   }
 
   onDrag(deltas: PanAmountsProps) {

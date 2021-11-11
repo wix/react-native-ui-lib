@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import {Appearance, StyleSheet} from 'react-native';
-import {Typography, Colors, BorderRadiuses, Spacings, ThemeManager} from '../style';
+import {StyleSheet} from 'react-native';
+import {Typography, Colors, Scheme, BorderRadiuses, Spacings, ThemeManager} from '../style';
 import {BorderRadiusesLiterals} from '../style/borderRadiuses';
 import TypographyPresets from '../style/typographyPresets';
 import {SpacingLiterals} from '../style/spacings';
@@ -58,7 +58,6 @@ const STYLE_KEY_CONVERTERS = {
   flexS: 'flexShrink'
 } as const;
 
-
 export type PaddingLiterals = keyof typeof PADDING_VARIATIONS;
 export type NativePaddingKeyType = typeof PADDING_VARIATIONS[PaddingLiterals];
 export type MarginLiterals = keyof typeof MARGIN_VARIATIONS;
@@ -69,12 +68,18 @@ export type ColorLiterals = keyof typeof colorsPalette;
 export type TypographyLiterals = keyof typeof TypographyPresets;
 export type BorderRadiusLiterals = keyof typeof BorderRadiusesLiterals;
 export type AlignmentLiterals =
-| 'row' | 'spread'
-| 'center' | 'centerH' | 'centerV'
-| 'left' | 'right' | 'top' | 'bottom';
+  | 'row'
+  | 'spread'
+  | 'center'
+  | 'centerH'
+  | 'centerV'
+  | 'left'
+  | 'right'
+  | 'top'
+  | 'bottom';
 export type PositionLiterals = 'absF' | 'absL' | 'absR' | 'absT' | 'absB' | 'absV' | 'absH';
 
-export type Modifier<T extends string> = Partial<Record<T, boolean>>
+export type Modifier<T extends string> = Partial<Record<T, boolean>>;
 export type CustomModifier = {[key: string]: boolean};
 
 export type TypographyModifiers = Modifier<TypographyLiterals> | CustomModifier;
@@ -87,8 +92,7 @@ export type MarginModifiers = Modifier<MarginLiterals>;
 export type FlexModifiers = Modifier<FlexLiterals>;
 export type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
 
-export type ContainerModifiers =
-  AlignmentModifiers &
+export type ContainerModifiers = AlignmentModifiers &
   PositionModifiers &
   PaddingModifiers &
   MarginModifiers &
@@ -97,8 +101,7 @@ export type ContainerModifiers =
   BackgroundColorModifier;
 
 export function extractColorValue(props: Dictionary<any>) {
-  const scheme = Appearance.getColorScheme() || 'light';
-  const schemeColors = Colors.schemes[scheme];
+  const schemeColors = Scheme.getScheme();
   const allColorsKeys: Array<keyof typeof Colors> = [..._.keys(Colors), ..._.keys(schemeColors)];
   const colorPropsKeys = _.chain(props)
     .keys()
@@ -110,8 +113,8 @@ export function extractColorValue(props: Dictionary<any>) {
 
 export function extractBackgroundColorValue(props: Dictionary<any>) {
   let backgroundColor;
-  const scheme = Appearance.getColorScheme() || 'light';
-  const schemeColors = Colors.schemes[scheme];
+
+  const schemeColors = Scheme.getScheme();
 
   const keys = Object.keys(props);
   const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop) && !!props[prop])!;
@@ -231,16 +234,20 @@ export function extractPositionStyle(props: Dictionary<any>) {
   } as const;
 
   const keys = Object.keys(props);
-  const positionProp = _.findLast(keys, prop => POSITION_KEY_PATTERN.test(prop) && !!props[prop]);
-  if (positionProp) {
+  const positionProps = _.filter(keys, prop => POSITION_KEY_PATTERN.test(prop) && !!props[prop]);
+  let style = {};
+
+  _.forEach(positionProps, positionProp => {
     const positionVariationKey = _.split(positionProp, 'abs')[1] as keyof typeof POSITION_CONVERSIONS;
     if (positionVariationKey) {
       const positionVariation = POSITION_CONVERSIONS[positionVariationKey];
       const styleKey = `absolute${positionVariation}` as keyof typeof styles;
-      return styles[styleKey];
+      style = {...style, ...styles[styleKey]};
     }
-    return styles.absolute;
-  }
+    style = {...style, ...styles.absolute};
+  });
+
+  return _.isEmpty(style) ? undefined : style;
 }
 
 export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeFlexModifierKeyType, number>> | undefined {
@@ -362,8 +369,8 @@ export function generateModifiersStyle(options = {
   alignments: true,
   flex: true,
   position: true
-}, props: Dictionary<any>) {
-
+},
+props: Dictionary<any>) {
   //@ts-ignore
   const boundProps = props || this.props;
   const style: ExtractedStyle = {};

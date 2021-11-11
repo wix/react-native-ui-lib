@@ -1,0 +1,30 @@
+{
+  "name": "Switch",
+  "category": "form",
+  "description": "Switch component for toggling boolean value related to some context",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SwitchScreen.tsx",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Switch/Switch.gif?raw=true"],
+  "props": [
+    {
+      "name": "value",
+      "type": "boolean",
+      "description": "The value of the switch. If true the switch will be turned on. Default value is false"
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: boolean) => void",
+      "description": "Invoked with the new value when the value changes"
+    },
+    {"name": "disabled", "type": "boolean", "description": "Whether the switch should be disabled"},
+    {"name": "width", "type": "number", "description": "The Switch width"},
+    {"name": "height", "type": "number", "description": "The Switch height"},
+    {"name": "onColor", "type": "string", "description": "The Switch background color when it's turned on"},
+    {"name": "offColor", "type": "string", "description": "The Switch background color when it's turned off"},
+    {"name": "disabledColor", "type": "string", "description": "The Switch background color when it's disabled"},
+    {"name": "thumbColor", "type": "string", "description": "The Switch's thumb color"},
+    {"name": "thumbSize", "type": "number", "description": "The Switch's thumb size (width & height)"},
+    {"name": "thumbStyle", "type": "ViewStyle", "description": "The Switch's thumb style"},
+    {"name": "style", "type": "ViewStyle", "description": "Custom style"},
+    {"name": "testID", "type": "string", "description": "Component test id"}
+  ]
+}

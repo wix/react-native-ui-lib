@@ -5,7 +5,7 @@ import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings} from 'style';
 import Avatar, {AvatarProps} from '../avatar';
-import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
+import Badge, {BadgeProps} from '../badge';
 import Image, {ImageProps} from '../image';
 import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
@@ -128,14 +128,12 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    */
   dismissContainerStyle?: StyleProp<ImageStyle>;
 }
-export type ChipPropTypes = ChipProps; //TODO: remove after ComponentPropTypes deprecation;
 
 const DEFAULT_SIZE = 26;
 
 /**
  * @description: Chip component
  * @extends: TouchableOpacity
- * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  * @image: https://user-images.githubusercontent.com/1780255/119636022-e9743180-be1c-11eb-8f02-22eeab6558cd.png
  */
@@ -185,7 +183,7 @@ const Chip = ({
   const renderBadge = useCallback(() => {
     return (
       <Badge
-        size={BADGE_SIZES.default}
+        size={20}
         testID={`${testID}.counter`}
         backgroundColor={useCounter ? 'transparent' : undefined}
         {...badgeProps}

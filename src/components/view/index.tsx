@@ -46,7 +46,6 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
   backgroundColor?: string;
   style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
-export type ViewPropTypes = ViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewProps;
 
@@ -57,7 +56,7 @@ interface ViewState {
 /**
  * @description: An enhanced View component
  * @extends: View
- * @extendsLink: https://facebook.github.io/react-native/docs/view.html
+ * @extendsLink: https://reactnative.dev/docs/view
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
 class View extends PureComponent<PropsTypes, ViewState> {

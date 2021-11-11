@@ -20,6 +20,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.ChipsInputScreen', () => require('./ChipsInputScreen').default);
   registrar('unicorn.components.HapticScreen', () => require('./HapticScreen').default);
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
+  registrar('unicorn.components.IconScreen', () => require('./IconScreen').default);
   registrar('unicorn.components.ImageScreen', () => require('./ImageScreen').default);
   registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);
   registrar('unicorn.components.KeyboardAwareScrollViewScreen', () => require('./KeyboardAwareScrollViewScreen').default);
@@ -36,11 +37,11 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.SectionsWheelPickerScreen', () => require('./SectionsWheelPickerScreen').default);
   registrar('unicorn.components.SegmentedControlScreen', () => require('./SegmentedControlScreen').default);
   registrar('unicorn.components.SharedTransitionScreen', () => require('./SharedTransitionScreen').default);
+  registrar('unicorn.components.SkeletonViewScreen', () => require('./SkeletonViewScreen').default);
   registrar('unicorn.components.StepperScreen', () => require('./StepperScreen').default);
   registrar('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);
   registrar('unicorn.components.ToastsScreen', () => require('./ToastsScreen').default);
   registrar('unicorn.components.TabControllerScreen', () => require('./TabControllerScreen').default);
-  registrar('unicorn.components.TabBarScreen', () => require('./TabBarScreen').default);
   registrar('unicorn.components.TextScreen', () => require('./TextScreen').default);
   registrar('unicorn.components.TextFieldScreen', () => require('./TextFieldScreen').default);
   registrar('unicorn.wrappers.TouchableOpacityScreen', () => require('./TouchableOpacityScreen').default);
@@ -55,6 +56,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.DateTimePickerScreen', () => require('./DateTimePickerScreen').default);
   registrar('unicorn.components.ViewScreen', () => require('./ViewScreen').default);
   registrar('unicorn.components.WizardScreen', () => require('./WizardScreen').default);
+  registrar('unicorn.components.GridViewScreen', () => require('./GridViewScreen').default);
   // List Components
   registrar('unicorn.lists.BasicListScreen', () => require('./BasicListScreen').default);
   registrar('unicorn.lists.ContactsListScreen', () => require('./ContactsListScreen').default);

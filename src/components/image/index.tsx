@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-//@ts-ignore
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {
   StyleSheet,
@@ -15,8 +14,10 @@ import Constants from '../../helpers/Constants';
 import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
 // @ts-ignore
 import Assets from '../../assets';
-import Overlay, {OverlayTypeType} from '../overlay';
+import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from './SvgImage';
+import View from '../view';
+import {Colors} from '../../style';
 
 
 export type ImageProps = RNImageProps & MarginModifiers & {
@@ -54,6 +55,10 @@ export type ImageProps = RNImageProps & MarginModifiers & {
    */
   overlayType?: OverlayTypeType;
   /**
+   * The intensity of the overlay ('LOW' | 'MEDIUM' | 'HIGH'), default is 'LOW'.
+   */
+   overlayIntensity?: OverlayIntensityType;
+  /**
    * Pass a custom color for the overlay
    */
   overlayColor?: string;
@@ -77,7 +82,7 @@ type State = {
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
- * @extendsLink: https://facebook.github.io/react-native/docs/image.html
+ * @extendsLink: https://reactnative.dev/docs/image
  * @notes: please note that for SVG support you need to add both
  * `react-native-svg` and `react-native-svg-transformer`,
  * and also configure them (see `metro.config.js`)
@@ -90,6 +95,7 @@ class Image extends PureComponent<Props, State> {
   };
 
   public static overlayTypes = Overlay.overlayTypes;
+  public static overlayIntensityType = Overlay.intensityTypes;
 
   sourceTransformer?: (props: any) => ImageSourcePropType;
 
@@ -153,16 +159,38 @@ class Image extends PureComponent<Props, State> {
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
     if (event.nativeEvent.error) {
       this.setState({error: true});
-      _.invoke(this.props, 'onError', event);
+      this.props.onError?.(event);
     }
-  }
+  };
 
   renderSvg = () => {
     const {source, ...others} = this.props;
     return <SvgImage data={source} {...others}/>;
-  }
+  };
 
-  renderRegularImage() {
+  renderErrorImage = () => {
+    const {
+      style,
+      cover,
+      modifiers
+    } = this.props;
+    const {margins} = modifiers;
+
+    return (
+      <View
+        style={[
+          margins,
+          style,
+          styles.errorImageContainer,
+          cover && styles.coverImage
+        ]}
+      >
+        {this.renderImage(true)}
+      </View>
+    );
+  };
+
+  renderImage = (useImageInsideContainer: boolean) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
@@ -172,6 +200,7 @@ class Image extends PureComponent<Props, State> {
       cover,
       aspectRatio,
       overlayType,
+      overlayIntensity,
       overlayColor,
       customOverlayContent,
       modifiers,
@@ -180,6 +209,7 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
+    const resizeMode = useImageInsideContainer ? 'contain' : undefined;
 
     return (
       // @ts-ignore
@@ -190,9 +220,11 @@ class Image extends PureComponent<Props, State> {
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
-          margins,
-          style
+          !useImageInsideContainer && margins,
+          style,
+          useImageInsideContainer && styles.shrink
         ]}
+        resizeMode={resizeMode}
         accessible={false}
         accessibilityRole={'image'}
         {...others}
@@ -200,10 +232,24 @@ class Image extends PureComponent<Props, State> {
         source={source}
       >
         {(overlayType || customOverlayContent) && (
-          <Overlay type={overlayType} color={overlayColor} customContent={customOverlayContent}/>
+          <Overlay
+            type={overlayType}
+            intensity={overlayIntensity}
+            color={overlayColor}
+            customContent={customOverlayContent}
+          />
         )}
       </ImageView>
     );
+  };
+
+  renderRegularImage() {
+    const {error} = this.state;
+    if (error) {
+      return this.renderErrorImage();
+    } else {
+      return this.renderImage(false);
+    }
   }
 
   render() {
@@ -227,6 +273,13 @@ const styles = StyleSheet.create({
   },
   gifImage: {
     overflow: 'hidden'
+  },
+  errorImageContainer: {
+    backgroundColor: Colors.grey70,
+    zIndex: -1
+  },
+  shrink: {
+    flexShrink: 1
   }
 });
 

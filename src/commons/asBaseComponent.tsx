@@ -1,9 +1,7 @@
 import React from 'react';
-import {Appearance} from 'react-native';
-//@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
-//@ts-ignore
 import * as Modifiers from './modifiers';
+import {Scheme} from '../style';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
 
@@ -30,15 +28,18 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     };
 
     componentDidMount() {
-      Appearance.addChangeListener(this.appearanceListener);
-    }
-    
-    componentWillUnmount() {
-      Appearance.removeChangeListener(this.appearanceListener);
+      Scheme.addChangeListener(this.appearanceListener);
     }
 
-    appearanceListener: Appearance.AppearanceListener = ({colorScheme}) => {
-      this.setState({colorScheme});
+    componentWillUnmount() {
+      Scheme.removeChangeListener(this.appearanceListener);
+    }
+
+    appearanceListener = () => {
+      // iOS 13 and above will trigger this call with the wrong colorScheme value. So just ignore returned colorScheme for now
+      // https://github.com/facebook/react-native/issues/28525
+      // this.setState({colorScheme: Appearance.getColorScheme()});
+      this.setState({colorScheme: Scheme.getSchemeType()});
     };
 
     static getThemeProps = (props: any, context: any) => {

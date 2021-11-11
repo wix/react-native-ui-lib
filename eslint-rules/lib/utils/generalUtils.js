@@ -20,12 +20,12 @@ function findValueNodeOfIdentifier(identifierName, scope) {
       }
     }
   });
-  if (_.isNil(valueNode) || valueNode.value !== undefined) {
-    if (scope.block.body.length > 0) {
+  if (valueNode === false || _.isNil(valueNode) || valueNode.value !== undefined) {
+    if (_.get(scope, 'block.body.length', 0) > 0) {
       scope.block.body.forEach(scopeNode => {
-        if (scopeNode.type === 'ExpressionStatement') {
+        if (_.get(scopeNode, 'type') === 'ExpressionStatement') {
           const variableName = _.get(scopeNode, 'expression.left.name');
-          if (variableName === identifierName) {
+          if (variableName === identifierName && _.get(scopeNode, 'expression.right')) {
             valueNode = scopeNode.expression.right;
           }
         }
@@ -38,9 +38,14 @@ function findValueNodeOfIdentifier(identifierName, scope) {
   return valueNode || findValueNodeOfIdentifier(identifierName, scope.upper);
 }
 
+function handleError(ruleId, error, fileName) {
+  console.log(`Found error in rule: ${ruleId}\n`, `Error: ${error}\n`, `In file: ${fileName}`);
+}
+
 
 module.exports = {
   getPrefix,
   getSuffix,
-  findValueNodeOfIdentifier
+  findValueNodeOfIdentifier,
+  handleError
 };

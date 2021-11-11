@@ -57,7 +57,6 @@ export default class PickerScreen extends Component {
 
     return (
       <Dialog
-        migrate
         visible={visible}
         onDismiss={() => {
           onDone();
@@ -92,7 +91,7 @@ export default class PickerScreen extends Component {
             style={{color: Colors.red20}}
             showSearch
             searchPlaceholder={'Search a language'}
-            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
+            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // onSearchChange={value => console.warn('value', value)}
           >
             {_.map(longOptions, option => (
@@ -137,14 +136,6 @@ export default class PickerScreen extends Component {
             //   );
             // }}
             // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
-            wheelPickerProps={{
-              style: {width: 200},
-              color: Colors.green30,
-              labelStyle: {fontSize: 32, fontFamily: 'sans-serif-condensed-light'},
-              itemHeight: 55
-            }}
-            selectLabelStyle={{color: Colors.green30}}
-            cancelLabelStyle={{color: Colors.green30}}
           >
             {_.map(options, option => (
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
@@ -162,11 +153,17 @@ export default class PickerScreen extends Component {
             renderCustomModal={this.renderDialog}
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option} label={option.label} labelStyle={Typography.text65} disabled={option.disabled}/>
+              <Picker.Item
+                key={option.value}
+                value={option}
+                label={option.label}
+                labelStyle={Typography.text65}
+                disabled={option.disabled}
+              />
             ))}
           </Picker>
 
-          <Text marginT-20 marginB-10 text70 dark60>
+          <Text marginT-20 marginB-10 text70 grey60>
             Custom Picker:
           </Text>
           <Picker
@@ -176,7 +173,7 @@ export default class PickerScreen extends Component {
               return (
                 <View row center>
                   <Image style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon}/>
-                  <Text dark10 text80>
+                  <Text grey10 text80>
                     {label} Posts
                   </Text>
                 </View>
@@ -188,7 +185,7 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Text marginT-20 marginB-10 text70 dark60>
+          <Text marginT-20 marginB-10 text70 grey60>
             Custom Picker Items:
           </Text>
           <Picker
@@ -215,7 +212,7 @@ export default class PickerScreen extends Component {
                     style={{
                       height: 56,
                       borderBottomWidth: 1,
-                      borderColor: Colors.dark80
+                      borderColor: Colors.grey80
                     }}
                     paddingH-15
                     row
@@ -224,7 +221,7 @@ export default class PickerScreen extends Component {
                   >
                     <View row centerV>
                       <Avatar size={35} source={{uri: item.thumbnail}}/>
-                      <Text marginL-10 text70 dark10>
+                      <Text marginL-10 text70 grey10>
                         {item.name}
                       </Text>
                     </View>
@@ -236,7 +233,9 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Text text60 marginT-s5 marginB-s2>Migrated Picker</Text>
+          <Text text60 marginT-s5 marginB-s2>
+            Migrated Picker
+          </Text>
 
           <Picker
             migrate
@@ -247,7 +246,7 @@ export default class PickerScreen extends Component {
             topBarProps={{title: 'Languages'}}
             showSearch
             searchPlaceholder={'Search a language'}
-            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
+            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // mode={Picker.modes.MULTI}
             // useNativePicker
           >

@@ -1,19 +1,8 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {
-  Constants,
-  Spacings,
-  View,
-  Text,
-  Carousel,
-  Image,
-  Colors
-} from 'react-native-ui-lib';
-import {
-  renderBooleanOption,
-  renderSliderOption
-} from '../ExampleScreenPresenter';
+import {Constants, Spacings, View, Text, Carousel, Image, Colors} from 'react-native-ui-lib';
+import {renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
 
 const INITIAL_PAGE = 2;
 const IMAGES = [
@@ -47,6 +36,7 @@ interface State {
 
 class CarouselScreen extends Component<Props, State> {
   carousel = React.createRef<typeof Carousel>();
+  private dimensionsChangeListener: any;
 
   constructor(props: Props) {
     super(props);
@@ -57,16 +47,16 @@ class CarouselScreen extends Component<Props, State> {
       limitShownPages: false,
       numberOfPagesShown: 7,
       currentPage: INITIAL_PAGE,
-      autoplay: false
+      autoplay: true
     };
   }
 
   componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChange);
+    this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChange);
   }
 
   componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChange);
+    Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChange);
   }
 
   onOrientationChange = () => {
@@ -82,7 +72,7 @@ class CarouselScreen extends Component<Props, State> {
     return Constants.windowWidth - Spacings.s5 * 2;
   };
 
-  onChangePage = (currentPage: number) => {
+  onChangePage = (currentPage: number, _: any) => {
     this.setState({currentPage});
   };
 
@@ -102,23 +92,14 @@ class CarouselScreen extends Component<Props, State> {
         </Text>
 
         <View marginH-20 marginB-20>
-          {renderBooleanOption.call(
-            this,
-            'Limit number of pages shown in page control',
-            'limitShownPages'
-          )}
+          {renderBooleanOption.call(this, 'Limit number of pages shown in page control', 'limitShownPages')}
           {renderBooleanOption.call(this, 'autoplay', 'autoplay')}
-          {renderSliderOption.call(
-            this,
-            'Number of pages shown',
-            'numberOfPagesShown',
-            {
-              min: 5,
-              max: 10,
-              step: 1,
-              initial: 7
-            }
-          )}
+          {renderSliderOption.call(this, 'Number of pages shown', 'numberOfPagesShown', {
+            min: 5,
+            max: 10,
+            step: 1,
+            initial: 7
+          })}
         </View>
 
         <Carousel
@@ -138,10 +119,7 @@ class CarouselScreen extends Component<Props, State> {
           allowAccessibleLayout
         >
           {_.map([...Array(numberOfPagesShown)], (item, index) => (
-            <Page
-              style={{backgroundColor: BACKGROUND_COLORS[index]}}
-              key={index}
-            >
+            <Page style={{backgroundColor: BACKGROUND_COLORS[index]}} key={index}>
               <Text margin-15>CARD {index}</Text>
             </Page>
           ))}

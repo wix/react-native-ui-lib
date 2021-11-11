@@ -1,5 +1,6 @@
 import React, {useEffect, forwardRef} from 'react';
 import {mapKeys} from 'lodash';
+import hoistStatics from 'hoist-non-react-statics';
 // @ts-ignore
 import OldTextField from './index';
 import NewTextField from '../../incubator/TextField';
@@ -12,7 +13,8 @@ const propsMigrationMap: Dictionary<string> = {
   titleColor: 'labelColor',
   titleStyle: 'labelStyle',
   /* CHAR COUNTER */
-  showCharacterCounter: 'showCharCounter'
+  showCharacterCounter: 'showCharCounter',
+  transformer: 'formatter'
 };
 
 const specialMigrationMap: Dictionary<string> = {
@@ -68,5 +70,6 @@ const TextFieldMigrator = forwardRef(({migrate = false, ...props}: any, ref) => 
   }
 });
 
+hoistStatics(TextFieldMigrator, NewTextField);
 TextFieldMigrator.displayName = 'TextField';
 export default TextFieldMigrator;

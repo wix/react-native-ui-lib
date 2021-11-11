@@ -4,7 +4,9 @@ exports[`Button backgroundColor should return backgroundColor according to modif
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -16,7 +18,7 @@ exports[`Button backgroundColor should return backgroundColor according to modif
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F27052",
+      "backgroundColor": "#FB6413",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -71,7 +73,9 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -138,7 +142,9 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -150,7 +156,7 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#C164BD",
+      "backgroundColor": "#b268ca",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -205,7 +211,9 @@ exports[`Button backgroundColor should return theme disabled color if button is 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -217,7 +225,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#C2C7CB",
+      "backgroundColor": "#D2D6D8",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -272,7 +280,9 @@ exports[`Button backgroundColor should return undefined if this button is link 1
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -321,7 +331,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {},
           Object {},
@@ -339,7 +349,9 @@ exports[`Button backgroundColor should return undefined if this button is outlin
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -352,7 +364,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -390,7 +402,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {},
           Object {},
@@ -408,7 +420,9 @@ exports[`Button border radius should return 0 border radius when border radius p
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -420,7 +434,7 @@ exports[`Button border radius should return 0 border radius when border radius p
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 0,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -475,7 +489,9 @@ exports[`Button border radius should return 0 border radius when button is full 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -487,7 +503,7 @@ exports[`Button border radius should return 0 border radius when button is full 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 0,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -542,7 +558,9 @@ exports[`Button border radius should return given border radius when use plain n
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -554,7 +572,7 @@ exports[`Button border radius should return given border radius when use plain n
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 12,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -609,7 +627,9 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -621,7 +641,7 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -681,7 +701,9 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -693,7 +715,7 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -753,7 +775,9 @@ exports[`Button container size should have no padding of button is a link nor mi
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -802,7 +826,7 @@ exports[`Button container size should have no padding of button is a link nor mi
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {
             "fontFamily": "System",
@@ -825,7 +849,9 @@ exports[`Button container size should have no padding of button is an icon butto
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -837,7 +863,7 @@ exports[`Button container size should have no padding of button is an icon butto
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -869,6 +895,7 @@ exports[`Button container size should have no padding of button is an icon butto
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -921,7 +948,9 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -934,7 +963,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 2,
       "flexDirection": "row",
@@ -972,7 +1001,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {},
           Object {},
@@ -990,7 +1019,9 @@ exports[`Button container size should return style for large button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1002,7 +1033,7 @@ exports[`Button container size should return style for large button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1057,7 +1088,9 @@ exports[`Button container size should return style for large button 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1070,7 +1103,7 @@ exports[`Button container size should return style for large button 2`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1108,7 +1141,7 @@ exports[`Button container size should return style for large button 2`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {},
           Object {},
@@ -1126,7 +1159,9 @@ exports[`Button container size should return style for medium button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1138,7 +1173,7 @@ exports[`Button container size should return style for medium button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1198,7 +1233,9 @@ exports[`Button container size should return style for medium button 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1211,7 +1248,7 @@ exports[`Button container size should return style for medium button 2`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1249,7 +1286,7 @@ exports[`Button container size should return style for medium button 2`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {
             "fontFamily": "System",
@@ -1272,7 +1309,9 @@ exports[`Button container size should return style for round button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1284,7 +1323,7 @@ exports[`Button container size should return style for round button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "height": undefined,
@@ -1339,7 +1378,9 @@ exports[`Button container size should return style for small button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1351,7 +1392,7 @@ exports[`Button container size should return style for small button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1411,7 +1452,9 @@ exports[`Button container size should return style for small button 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1424,7 +1467,7 @@ exports[`Button container size should return style for small button 2`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1462,7 +1505,7 @@ exports[`Button container size should return style for small button 2`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {
             "fontFamily": "System",
@@ -1485,7 +1528,9 @@ exports[`Button container size should return style for xSmall button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1497,7 +1542,7 @@ exports[`Button container size should return style for xSmall button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1557,7 +1602,9 @@ exports[`Button container size should return style for xSmall button 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1570,7 +1617,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1608,7 +1655,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {
             "fontFamily": "System",
@@ -1631,7 +1678,9 @@ exports[`Button icon should apply color on icon 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1643,7 +1692,7 @@ exports[`Button icon should apply color on icon 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1674,6 +1723,7 @@ exports[`Button icon should apply color on icon 1`] = `
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1684,7 +1734,9 @@ exports[`Button icon should apply color on icon 2`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1696,7 +1748,7 @@ exports[`Button icon should apply color on icon 2`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1723,10 +1775,11 @@ exports[`Button icon should apply color on icon 2`] = `
         Object {},
         Array [
           Object {
-            "tintColor": "#FF563D",
+            "tintColor": "#FC3D2F",
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1737,7 +1790,9 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1749,7 +1804,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1783,6 +1838,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
             "tintColor": "red",
           },
         ],
+        false,
       ]
     }
   />
@@ -1793,7 +1849,9 @@ exports[`Button icon should return icon style according to different variations 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1806,7 +1864,7 @@ exports[`Button icon should return icon style according to different variations 
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1834,10 +1892,11 @@ exports[`Button icon should return icon style according to different variations 
         Object {},
         Array [
           Object {
-            "tintColor": "#5847FF",
+            "tintColor": "#5A48F5",
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1848,7 +1907,9 @@ exports[`Button icon should return icon style according to different variations 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1887,10 +1948,11 @@ exports[`Button icon should return icon style according to different variations 
         Object {},
         Array [
           Object {
-            "tintColor": "#5847FF",
+            "tintColor": "#5A48F5",
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1901,7 +1963,9 @@ exports[`Button icon should return icon style according to different variations 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1913,7 +1977,7 @@ exports[`Button icon should return icon style according to different variations 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#C2C7CB",
+      "backgroundColor": "#D2D6D8",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1944,6 +2008,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1954,7 +2019,9 @@ exports[`Button icon should return the right spacing according to button size wh
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1966,7 +2033,7 @@ exports[`Button icon should return the right spacing according to button size wh
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2021,7 +2088,9 @@ exports[`Button icon should return the right spacing according to button size wh
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2033,7 +2102,7 @@ exports[`Button icon should return the right spacing according to button size wh
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2093,7 +2162,9 @@ exports[`Button icon should return the right spacing according to button size wh
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2105,7 +2176,7 @@ exports[`Button icon should return the right spacing according to button size wh
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2165,7 +2236,9 @@ exports[`Button icon should return the right spacing according to button size wh
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2177,7 +2250,7 @@ exports[`Button icon should return the right spacing according to button size wh
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2237,7 +2310,9 @@ exports[`Button label size should return style for large button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2249,7 +2324,7 @@ exports[`Button label size should return style for large button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2304,7 +2379,9 @@ exports[`Button label size should return style for medium button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2316,7 +2393,7 @@ exports[`Button label size should return style for medium button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2376,7 +2453,9 @@ exports[`Button label size should return style for small button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2388,7 +2467,7 @@ exports[`Button label size should return style for small button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2448,7 +2527,9 @@ exports[`Button label size should return style for xSmall button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2460,7 +2541,7 @@ exports[`Button label size should return style for xSmall button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2520,7 +2601,9 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2569,7 +2652,7 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#FFCA45",
+            "color": "#FFD54E",
           },
           Object {},
           Object {},
@@ -2587,7 +2670,9 @@ exports[`Button labelColor should return color according to color modifier 1`] =
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2599,7 +2684,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2636,7 +2721,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
             "lineHeight": 24,
           },
           Object {
-            "color": "#D72E15",
+            "color": "#D52712",
           },
           Object {},
           Object {},
@@ -2654,7 +2739,9 @@ exports[`Button labelColor should return color according to color prop 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2666,7 +2753,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2721,7 +2808,9 @@ exports[`Button labelColor should return disabled text color according to theme 
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2770,7 +2859,7 @@ exports[`Button labelColor should return disabled text color according to theme 
             "lineHeight": 24,
           },
           Object {
-            "color": "#C2C7CB",
+            "color": "#D2D6D8",
           },
           Object {},
           Object {},
@@ -2788,7 +2877,9 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2837,7 +2928,7 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#F7A997",
+            "color": "#FDB893",
           },
           Object {},
           Object {},
@@ -2855,7 +2946,9 @@ exports[`Button labelColor should return undefined color if this is an icon butt
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2867,7 +2960,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2898,6 +2991,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -2908,7 +3002,9 @@ exports[`Button link should render button as a link 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2957,7 +3053,7 @@ exports[`Button link should render button as a link 1`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {},
           Object {},
@@ -2975,7 +3071,9 @@ exports[`Button outline should render button with an outline 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2988,7 +3086,7 @@ exports[`Button outline should render button with an outline 1`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -3026,7 +3124,7 @@ exports[`Button outline should render button with an outline 1`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {},
           Object {},
@@ -3044,7 +3142,9 @@ exports[`Button outline should render button with an outlineColor 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3056,7 +3156,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderColor": "blue",
       "borderRadius": 999,
       "borderWidth": 1,
@@ -3113,7 +3213,9 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3182,7 +3284,9 @@ exports[`Button outline should return custom borderWidth according to outlineWid
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3195,7 +3299,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#5847FF",
+      "borderColor": "#5A48F5",
       "borderRadius": 999,
       "borderWidth": 3,
       "flexDirection": "row",
@@ -3233,7 +3337,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {},
           Object {},
@@ -3251,7 +3355,9 @@ exports[`Button outline should return disabled color for outline if button is di
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3264,7 +3370,7 @@ exports[`Button outline should return disabled color for outline if button is di
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#E0E3E5",
+      "borderColor": "#F0F2F5",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -3302,7 +3408,7 @@ exports[`Button outline should return disabled color for outline if button is di
             "lineHeight": 24,
           },
           Object {
-            "color": "#C2C7CB",
+            "color": "#D2D6D8",
           },
           Object {},
           Object {},
@@ -3320,7 +3426,9 @@ exports[`Button outline should return undefined when link is true, even when out
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3369,7 +3477,7 @@ exports[`Button outline should return undefined when link is true, even when out
             "lineHeight": 24,
           },
           Object {
-            "color": "#5847FF",
+            "color": "#5A48F5",
           },
           Object {},
           Object {},
@@ -3387,7 +3495,9 @@ exports[`Button should render default button 1`] = `
 <View
   accessibilityRole="button"
   accessible={true}
+  collapsable={false}
   focusable={true}
+  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3399,7 +3509,7 @@ exports[`Button should render default button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#5847FF",
+      "backgroundColor": "#5A48F5",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",

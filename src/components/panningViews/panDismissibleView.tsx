@@ -5,7 +5,6 @@ import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {
   PanningDirections,
-  PanningProviderDirection,
   PanAmountsProps,
   PanDirectionsProps
 } from './panningProvider';
@@ -24,7 +23,6 @@ export interface DismissibleAnimationProps {
    */
   duration?: number;
 }
-export type DismissibleAnimationPropTypes = DismissibleAnimationProps; //TODO: remove after ComponentPropTypes deprecation;
 
 export interface PanDismissibleViewProps {
   /**
@@ -35,7 +33,7 @@ export interface PanDismissibleViewProps {
    * The directions of the allowed pan (default allows all directions)
    * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
    */
-  directions?: PanningDirections[] | PanningProviderDirection[];
+  directions?: PanningDirections[];
   /**
    * onDismiss callback
    */
@@ -57,7 +55,6 @@ export interface PanDismissibleViewProps {
    */
   allowDiagonalDismiss?: boolean;
 }
-export type PanDismissibleViewPropTypes = PanDismissibleViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
 const DEFAULT_DIRECTIONS = [
   PanningProvider.Directions.UP,
@@ -381,7 +378,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
 
   onDismissAnimationFinished = ({finished}: {finished: boolean}) => {
     if (finished) {
-      _.invoke(this.props, 'onDismiss');
+      this.props.onDismiss?.();
     }
   };
 

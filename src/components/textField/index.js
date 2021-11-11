@@ -8,6 +8,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
+import memoize from 'memoize-one';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
 import BaseInput from '../baseInput';
@@ -47,7 +48,7 @@ const FLOATING_PLACEHOLDER_SCALE = 0.875;
  * @description: A wrapper for TextInput component with extra functionality like floating placeholder and validations (This is an uncontrolled component)
  * @modifiers: Typography
  * @extends: TextInput
- * @extendsLink: https://facebook.github.io/react-native/docs/textinput
+ * @extendsLink: https://reactnative.dev/docs/textinput
  * @gif: https://media.giphy.com/media/xULW8su8Cs5Z9Fq4PS/giphy.gif, https://media.giphy.com/media/3ohc1dhDcLS9FvWLJu/giphy.gif, https://media.giphy.com/media/oNUSOxnHdMP5ZnKYsh/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/BasicTextFieldScreen.js
  */
@@ -274,7 +275,7 @@ export default class TextField extends BaseInput {
     }
   };
 
-  getPlaceholderText() {
+  getPlaceholderText = memoize(() => {
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const {placeholder, helperText} = this.props;
     const text = this.shouldFakePlaceholder()
@@ -285,7 +286,7 @@ export default class TextField extends BaseInput {
         ? helperText
         : this.getRequiredPlaceholder(placeholder);
     return text;
-  }
+  });
 
   getStateColor(colorProp = {}) {
     const {focused} = this.state;
@@ -293,7 +294,7 @@ export default class TextField extends BaseInput {
     const {disabledColor} = this.getThemeProps();
 
     if (_.isString(colorProp)) {
-      return colorProp || Colors.dark10;
+      return colorProp || Colors.grey10;
     } else if (_.isPlainObject(colorProp)) {
       const mergedColorState = {...COLOR_BY_STATE, ...colorProp};
 
@@ -308,7 +309,7 @@ export default class TextField extends BaseInput {
       }
     }
 
-    return colorProp || Colors.dark10;
+    return colorProp || Colors.grey10;
   }
 
   getCharCount() {
@@ -760,7 +761,7 @@ function createStyles({centered, multiline}, rightItemTopPadding = 0) {
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
-      borderColor: Colors.dark70,
+      borderColor: Colors.grey70,
       paddingBottom: Constants.isIOS ? 10 : 5
     },
     innerContainerWithoutUnderline: {
@@ -769,7 +770,7 @@ function createStyles({centered, multiline}, rightItemTopPadding = 0) {
     },
     input: {
       flexGrow: 1,
-      textAlign: centered ? 'center' : undefined,
+      textAlign: centered ? 'center' : Constants.isRTL ? 'right' : 'left',
       backgroundColor: 'transparent',
       // marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
@@ -800,7 +801,7 @@ function createStyles({centered, multiline}, rightItemTopPadding = 0) {
     },
     errorMessage: {
       color: Colors.red30,
-      textAlign: centered ? 'center' : undefined
+      textAlign: centered ? 'center' : 'left'
     },
     topLabel: {
       marginBottom: Constants.isIOS ? (multiline ? 1 : 5) : 7
