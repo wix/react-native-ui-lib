@@ -1,0 +1,26 @@
+{
+  "name": "Wizard",
+  "category": "layoutsAndTemplates",
+  "description": "A wizard presents a series of steps in  prescribed order. That the user needs to complete in order to accomplish a goal (e.g. purchase a product)",
+  "note": "Use Wizard with nested Wizard.Step(s) to achieve the desired result.",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/Wizard.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Wizard/WizardPresets.png?raw=true"
+  ],
+  "props": [
+    {"name": "activeIndex", "type": "number", "description": "The active step's index"},
+    {
+      "name": "activeConfig",
+      "type": "WizardStepProps",
+      "description": "The configuration of the active step (see Wizard.Step.propTypes)"
+    },
+    {
+      "name": "onActiveIndexChanged",
+      "type": "(index: number) => void",
+      "description": "Callback that is called when the active step is changed (i.e. a step was clicked on). The new activeIndex will be the input of the callback"
+    },
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Add or override style of the container"},
+    {"name": "testID", "type": "string", "description": "The component test id"}
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Modal.TopBar",
+  "category": "layoutsAndTemplates",
+  "description": "Modal.TopBar, inner component for configuring the Modal component's title, buttons and statusBar",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.tsx",
+  "images": ["https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif"],
+  "props": [
+    {"name": "title", "type": "string", "description": "Title to display in the center of the top bar"},
+    {"name": "titleStyle", "type": "TextStyle", "description": "Title custom style"},
+    {
+      "name": "doneButtonProps",
+      "type": "ButtonProps",
+      "description": "Done action props",
+      "default": "{color: Colors.primary}"
+    },
+    {"name": "doneLabel", "type": "string", "description": "Done action label", "default": "Save"},
+    {"name": "doneIcon", "type": "ImageSource", "description": "Done action icon"},
+    {"name": "onDone", "type": "(props?: any) => void", "description": "Done action callback"},
+    {
+      "name": "cancelButtonProps",
+      "type": "ButtonProps",
+      "description": "Cancel action props",
+      "default": "{color: Colors.primary}"
+    },
+    {"name": "cancelLabel", "type": "string", "description": "Cancel action label"},
+    {
+      "name": "cancelIcon",
+      "type": "ImageSource",
+      "description": "Cancel action icon",
+      "default": "Assets.icons.x"
+    },
+    {"name": "onCancel", "type": "(props?: any) => void", "description": "Cancel action callback"},
+    {
+      "name": "includeStatusBar",
+      "type": "boolean",
+      "description": "Whether to include status bar or not (height calculations)",
+      "default": "Constants.isIOS"
+    },
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Style for the TopBar container"}
+  ]
+}
