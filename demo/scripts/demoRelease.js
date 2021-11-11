@@ -2,12 +2,16 @@ const exec = require('shell-utils').exec;
 const semver = require('semver');
 const _ = require('lodash');
 const p = require('path');
+const cp = require('child_process');
 
 // Workaround JS
-const isRelease = process.env.RELEASE_BUILD === 'true';
-const branch = process.env.BRANCH;
 
-const ONLY_ON_BRANCH = `origin/${branch || 'master'}`;
+const isRelease = process.env.BUILDKITE_MESSAGE.match(/^release$/i);
+let VERSION;
+if (isRelease) {
+  VERSION = cp.execSync(`buildkite-agent meta-data get version`).toString();
+}
+
 const VERSION_TAG = isRelease ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
 
@@ -15,36 +19,15 @@ function run() {
   if (!validateEnv()) {
     return;
   }
-  setupGit();
   createNpmRc();
   versionTagAndPublish();
 }
 
 function validateEnv() {
-  if (!process.env.JENKINS_CI) {
+  if (!process.env.CI) {
     throw new Error('releasing is only available from CI');
   }
-
-  if (!process.env.JENKINS_MASTER) {
-    console.log('not publishing on a different build');
-    return false;
-  }
-
-  if (process.env.GIT_BRANCH !== ONLY_ON_BRANCH) {
-    console.log(`not publishing on branch ${process.env.GIT_BRANCH}`);
-    return false;
-  }
-
   return true;
-}
-
-function setupGit() {
-  exec.execSyncSilent('git config --global push.default simple');
-  exec.execSyncSilent(`git config --global user.email "${process.env.GIT_EMAIL}"`);
-  exec.execSyncSilent(`git config --global user.name "${process.env.GIT_USER}"`);
-  const remoteUrl = new RegExp('https?://(\\S+)').exec(exec.execSyncRead('git remote -v'))[1];
-  exec.execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
-  // exec.execSync(`git checkout ${ONLY_ON_BRANCH}`);
 }
 
 function createNpmRc() {
@@ -57,7 +40,7 @@ function versionTagAndPublish() {
   const currentPublished = findCurrentPublishedVersion();
   console.log(`current published version: ${currentPublished}`);
 
-  const version = isRelease ? process.env.VERSION : `${currentPublished}-snapshot.${process.env.BUILD_ID}`;
+  const version = isRelease ? VERSION : `${currentPublished}-snapshot.${process.env.BUILDKITE_BUILD_NUMBER}`;
   console.log(`Publishing version: ${version}`);
 
   tryPublishAndTag(version);

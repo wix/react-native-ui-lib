@@ -1,0 +1,46 @@
+{
+  "name": "Image",
+  "category": "basic",
+  "description": "Image wrapper with extra functionality like source transform and assets support",
+  "extends": ["Image"],
+  "extendsLink": ["https://reactnative.dev/docs/image"],
+  "note": "please note that for SVG support you need to add both `react-native-svg` and `react-native-svg-transformer` and also configure them (see `metro.config.js`)",
+  "modifiers": ["margin"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ImageScreen.tsx",
+  "props": [
+    {
+      "name": "sourceTransformer",
+      "type": "(props: any) => ImageSourcePropType",
+      "description": "custom source transform handler for manipulating the image source (great for size control)"
+    },
+    {"name": "assetName", "type": "string", "description": "if provided image source will be driven from asset name"},
+    {"name": "assetGroup", "type": "string", "description": "the asset group, default is icons"},
+    {"name": "tintColor", "type": "string", "description": "the asset tint"},
+    {
+      "name": "supportRTL",
+      "type": "boolean",
+      "description": "whether the image should flip horizontally on RTL locals"
+    },
+    {
+      "name": "cover",
+      "type": "boolean",
+      "description": "Show image as a cover, full width, image (according to aspect ratio, default: 16:8)"
+    },
+    {"name": "aspectRatio", "type": "number", "description": "The aspect ratio for the image"},
+    {
+      "name": "overlayType",
+      "type": "VERTICAL | TOP | BOTTOM | SOLID",
+      "description": "The type of overlay to place on top of the image.",
+      "note": "the image MUST have proper size, see examples in: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx"
+    },
+    {
+      "name": "overlayIntensity",
+      "type": "LOW | MEDIUM | HIGH",
+      "description": "OverlayIntensityType",
+      "default": "Image.overlayIntensityType.LOW"
+    },
+    {"name": "overlayColor", "type": "string", "description": "Pass a custom color for the overlay"},
+    {"name": "customOverlayContent", "type": "JSX.Element", "description": "Render an overlay with custom content"},
+    {"name": "errorSource", "type": "ImageSourcePropType", "description": "Default image source in case of an error"}
+  ]
+}

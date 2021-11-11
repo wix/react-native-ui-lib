@@ -1,5 +1,6 @@
 const childProcess = require('child_process');
 const fs = require('fs');
+const _ = require('lodash');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
 
@@ -43,10 +44,11 @@ components.forEach(component => {
 
   /* Props */
   content += `## API\n`;
-  component.props.forEach(prop => {
+  component.props?.forEach(prop => {
     content += `### ${prop.name}\n`;
     content += `${prop.description}  \n`;
-    content += `<span style={{color: 'grey'}}>${prop.type}</span>\n\n`;
+    // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
+    content += `<code>${_.escape(prop.type)}</code>\n\n`;
   });
 
   if (!fs.existsSync(`${COMPONENTS_DOCS_DIR}/${component.category}`)) {
