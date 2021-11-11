@@ -1,0 +1,28 @@
+{
+  "name": "StackAggregator",
+  "category": "basic",
+  "description": "Stack aggregator component",
+  "modifiers": ["margin", "padding"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.tsx",
+  "images": [],
+  "props": [
+    {"name": "collapsed", "type": "boolean", "description": "The initial state of the stack"},
+    {"name": "children", "type": "JSX.Element | JSX.Element[]", "description": "Component Children"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "The container style"},
+    {"name": "contentContainerStyle", "type": "ViewStyle", "description": "The content container style"},
+    {"name": "itemBorderRadius", "type": "number", "description": "The items border radius"},
+    {"name": "buttonProps", "type": "ButtonProps", "description": "Props passed to the 'show less' button"},
+    {"name": "onItemPress", "type": "(index: number) => void", "description": "A callback for item press"},
+    {
+      "name": "onCollapseWillChange",
+      "type": "(changed: boolean) => void",
+      "description": "A callback for collapse state will change (value is future collapsed state)"
+    },
+    {
+      "name": "onCollapseChanged",
+      "type": "(changed: boolean) => void",
+      "description": "A callback for collapse state change (value is collapsed state)"
+    },
+    {"name": "disablePresses", "type": "boolean", "description": "A setting that disables pressability on cards"}
+  ]
+}

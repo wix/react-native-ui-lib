@@ -8,6 +8,7 @@ import GoldStarSvg from '@site/static/img/goldStar.svg';
 
 export default () => {
   const {siteConfig} = useDocusaurusContext();
+  console.warn('ethan - siteConfig', siteConfig.customFields.stars)
 
   return (
     <div className={styles.main}>
@@ -18,7 +19,7 @@ export default () => {
         </p>
         <div className={styles.gitStars}>
           <GoldStarSvg width={16} height={16} style={{margin: 4}}/>
-          <span>3.7k</span>
+          <span>{siteConfig.customFields.stars}k</span>
         </div>
 
         <div className={styles.buttons}>

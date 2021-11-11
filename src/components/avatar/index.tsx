@@ -237,7 +237,6 @@ class Avatar extends PureComponent<AvatarProps> {
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    // @ts-expect-error TODO: once badge size will stop supporting string type this should be resolved
     const shift = Math.sqrt(y ** 2 / 2) - (this.getBadgeSize() + this.getBadgeBorderWidth() * 2) / 2;
     const badgeLocation = _.split(_.toLower(badgePosition), '_', 2);
     const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift};

@@ -1,0 +1,19 @@
+{
+  "name": "AnimatedImage",
+  "category": "basic",
+  "description": "Image component that fades-in the image with animation once it's loaded",
+  "extends": ["Image"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/image/index.tsx"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AnimatedImageScreen.js",
+  "images": ["https://media.giphy.com/media/l0HU7jj0ivEFyZIA0/giphy.gif"],
+  "props": [
+    {
+      "name": "animationDuration",
+      "type": "number",
+      "description": "Duration for the fade animation when the image is loaded",
+      "default": "300"
+    },
+    {"name": "loader", "type": "JSX.element", "description": "A component to render while the image is loading"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"}
+  ]
+}

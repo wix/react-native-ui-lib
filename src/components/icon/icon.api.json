@@ -1,0 +1,13 @@
+{
+  "name": "Icon",
+  "category": "basic",
+  "description": "Icon component",
+  "extends": ["Image"],
+  "extendsLink": ["https://reactnative.dev/docs/image"],
+  "modifiers": ["margin"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/IconScreen.tsx",
+  "props": [
+    {"name": "tintColor", "type": "string", "description": "The icon tint"},
+    {"name": "size", "type": "number", "description": "The icon size"}
+  ]
+}
