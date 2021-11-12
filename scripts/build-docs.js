@@ -33,8 +33,9 @@ components.forEach(component => {
   if (isParentComponent) {
     content += `sidebar_position: 1\n`;
   }
-  content += `sidebar_label: ${componentName}\n`;
+  content += `id: ${component.name}\n`;
   content += `title: ${component.name}\n`;
+  content += `sidebar_label: ${componentName}\n`;
   content += `---\n`;
 
   /* General */
@@ -42,8 +43,15 @@ components.forEach(component => {
   content += `[(code example)](${component.example})\n`;
 
   if (component.extends) {
+    let extendsText = component.extends?.join(', ');
+    if (component.extendsLink) {
+      extendsText = `[${extendsText}](${component.extendsLink})`;
+    } else {
+      extendsText = `[${extendsText}](${extendsText})`;
+
+    }
     content += `:::info\n`;
-    content += `This component extends **${component.extends?.join(', ')}** props.\n`;
+    content += `This component extends **${extendsText}** props.\n`;
     content += `:::\n`;
   }
 
