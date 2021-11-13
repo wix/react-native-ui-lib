@@ -1,8 +1,11 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { ViewProps } from '../../components/view';
-import { PanViewDirections, PanViewDismissThreshold } from './panningUtil';
-export { PanViewDirections, PanViewDismissThreshold };
+import { PanningDirections, PanningDirectionsEnum, PanningDismissThreshold } from './panningUtil';
+declare type PanViewDirections = PanningDirections;
+declare const PanViewDirectionsEnum: typeof PanningDirectionsEnum;
+declare type PanViewDismissThreshold = PanningDismissThreshold;
+export { PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold };
 export interface PanViewProps extends ViewProps {
     /**
      * The directions of the allowed pan (default is all)
@@ -42,9 +45,9 @@ declare const _default: React.ComponentClass<PanViewProps & {
 }, any> & {
     (props: Props): JSX.Element;
     displayName: string;
-    directions: typeof PanViewDirections;
+    directions: typeof PanningDirectionsEnum;
     defaultProps: {
-        threshold: Required<PanViewDismissThreshold>;
+        threshold: Required<PanningDismissThreshold>;
     };
 };
 export default _default;
