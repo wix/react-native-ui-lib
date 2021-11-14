@@ -1,8 +1,9 @@
 ---
-index: 5
-path: "/foundation/modifiers"
+sidebar_position: 4
+sidebar_label: Modifiers
 title: "Modifiers"
 ---
+
 As you have probably noticed already, we translate our style presets into modifiers.  
 **Modifiers** help you create a stunning UI easily and quickly.
 

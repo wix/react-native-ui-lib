@@ -1,24 +1,18 @@
 import {PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import {Constants} from '../../helpers';
 
-export enum PanViewDirections {
+export enum PanningDirectionsEnum {
   UP = 'up',
   DOWN = 'down',
   LEFT = 'left',
   RIGHT = 'right'
 }
 
-export interface Frame {
-  x: number;
-  y: number;
-}
+export type PanningDirectionsUnion = 'up' | 'down' | 'left' | 'right';
 
-export interface TranslationOptions {
-  directionLock?: boolean;
-  currentTranslation: Frame;
-}
+export type PanningDirections = PanningDirectionsEnum | PanningDirectionsUnion;
 
-export interface PanViewDismissThreshold {
+export interface PanningDismissThreshold {
   /**
    * The (positive) velocity of a drag\swipe past it the view will be dismissed.
    */
@@ -31,6 +25,16 @@ export interface PanViewDismissThreshold {
    * The y translation from the start location past it the view will be dismissed.
    */
   y?: number;
+}
+
+export interface Frame {
+  x: number;
+  y: number;
+}
+
+export interface TranslationOptions {
+  directionLock?: boolean;
+  currentTranslation: Frame;
 }
 
 export function getTranslationDirectionClamp(translation: Frame, options: TranslationOptions) {
@@ -53,49 +57,49 @@ export function getTranslationDirectionClamp(translation: Frame, options: Transl
 
 export function getTranslation(event: PanGestureHandlerEventPayload,
   initialTranslation: Frame,
-  directions: PanViewDirections[],
+  directions: PanningDirections[],
   options: TranslationOptions): Frame {
   'worklet';
   const result = {x: 0, y: 0};
-  if (directions?.includes(PanViewDirections.LEFT) && directions?.includes(PanViewDirections.RIGHT)) {
+  if (directions?.includes(PanningDirectionsEnum.LEFT) && directions?.includes(PanningDirectionsEnum.RIGHT)) {
     result.x = initialTranslation.x + event.translationX;
-  } else if (directions?.includes(PanViewDirections.LEFT)) {
+  } else if (directions?.includes(PanningDirectionsEnum.LEFT)) {
     result.x = Math.min(0, initialTranslation.x + event.translationX);
-  } else if (directions?.includes(PanViewDirections.RIGHT)) {
+  } else if (directions?.includes(PanningDirectionsEnum.RIGHT)) {
     result.x = Math.max(0, initialTranslation.x + event.translationX);
   }
 
-  if (directions?.includes(PanViewDirections.UP) && directions?.includes(PanViewDirections.DOWN)) {
+  if (directions?.includes(PanningDirectionsEnum.UP) && directions?.includes(PanningDirectionsEnum.DOWN)) {
     result.y = initialTranslation.y + event.translationY;
-  } else if (directions?.includes(PanViewDirections.UP)) {
+  } else if (directions?.includes(PanningDirectionsEnum.UP)) {
     result.y = Math.min(0, initialTranslation.y + event.translationY);
-  } else if (directions?.includes(PanViewDirections.DOWN)) {
+  } else if (directions?.includes(PanningDirectionsEnum.DOWN)) {
     result.y = Math.max(0, initialTranslation.y + event.translationY);
   }
 
   return getTranslationDirectionClamp(result, options);
 }
 
-export const DEFAULT_THRESHOLD: Required<PanViewDismissThreshold> = {
+export const DEFAULT_THRESHOLD: Required<PanningDismissThreshold> = {
   velocity: 750,
   x: Constants.screenWidth / 4,
   y: Constants.screenHeight / 4
 };
 
-function getVelocityDirectionClamp(event: PanGestureHandlerEventPayload, directions: PanViewDirections[]) {
+function getVelocityDirectionClamp(event: PanGestureHandlerEventPayload, directions: PanningDirections[]) {
   'worklet';
   let x = 0,
     y = 0;
 
   if (
-    (directions.includes(PanViewDirections.LEFT) && event.velocityX < 0) ||
-    (directions.includes(PanViewDirections.RIGHT) && event.velocityX > 0)
+    (directions.includes(PanningDirectionsEnum.LEFT) && event.velocityX < 0) ||
+    (directions.includes(PanningDirectionsEnum.RIGHT) && event.velocityX > 0)
   ) {
     x = event.velocityX;
   }
   if (
-    (directions.includes(PanViewDirections.UP) && event.velocityY < 0) ||
-    (directions.includes(PanViewDirections.DOWN) && event.velocityY > 0)
+    (directions.includes(PanningDirectionsEnum.UP) && event.velocityY < 0) ||
+    (directions.includes(PanningDirectionsEnum.DOWN) && event.velocityY > 0)
   ) {
     y = event.velocityY;
   }
@@ -103,18 +107,18 @@ function getVelocityDirectionClamp(event: PanGestureHandlerEventPayload, directi
   return {x, y};
 }
 
-function checkThresholds(directions: PanViewDirections[],
+function checkThresholds(directions: PanningDirections[],
   velocity: number,
-  threshold: Required<PanViewDismissThreshold>,
+  threshold: Required<PanningDismissThreshold>,
   options: TranslationOptions) {
   'worklet';
   const velocityPassedThreshold = velocity > threshold.velocity;
   const xPassedThreshold =
-    (directions.includes(PanViewDirections.RIGHT) && options.currentTranslation.x > threshold.x) ||
-    (directions.includes(PanViewDirections.LEFT) && -options.currentTranslation.x > threshold.x);
+    (directions.includes(PanningDirectionsEnum.RIGHT) && options.currentTranslation.x > threshold.x) ||
+    (directions.includes(PanningDirectionsEnum.LEFT) && -options.currentTranslation.x > threshold.x);
   const yPassedThreshold =
-    (directions.includes(PanViewDirections.DOWN) && options.currentTranslation.y > threshold.y) ||
-    (directions.includes(PanViewDirections.UP) && -options.currentTranslation.y > threshold.y);
+    (directions.includes(PanningDirectionsEnum.DOWN) && options.currentTranslation.y > threshold.y) ||
+    (directions.includes(PanningDirectionsEnum.UP) && -options.currentTranslation.y > threshold.y);
 
   return {velocityPassedThreshold, xPassedThreshold, yPassedThreshold};
 }
@@ -123,11 +127,11 @@ function checkThresholds(directions: PanViewDirections[],
  * Will return undefined if should not dismiss
  */
 export function getDismissVelocity(event: PanGestureHandlerEventPayload,
-  directions: PanViewDirections[],
+  directions: PanningDirections[],
   options: TranslationOptions,
-  threshold?: PanViewDismissThreshold) {
+  threshold?: PanningDismissThreshold) {
   'worklet';
-  const _threshold: Required<PanViewDismissThreshold> = Object.assign({}, DEFAULT_THRESHOLD, threshold);
+  const _threshold: Required<PanningDismissThreshold> = Object.assign({}, DEFAULT_THRESHOLD, threshold);
   const clampedVelocity = getVelocityDirectionClamp(event, directions);
   const velocity = Math.sqrt(Math.pow(clampedVelocity.x, 2) + Math.pow(clampedVelocity.y, 2));
   const {velocityPassedThreshold, xPassedThreshold, yPassedThreshold} = checkThresholds(directions,
