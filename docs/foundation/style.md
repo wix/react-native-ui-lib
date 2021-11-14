@@ -1,9 +1,8 @@
 ---
-sidebar_position: 1
-sidebar_label: Style
+sidebar_position: 4
+path: "/foundation/style"
 title: "Style"
 ---
-
 The base foundation of each UI component is its style.
 We use basic style presets to define the rules and the style guide we follow.
 

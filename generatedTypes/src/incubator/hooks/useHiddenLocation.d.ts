@@ -1,9 +1,12 @@
 import { RefObject } from 'react';
 import { View, LayoutChangeEvent } from 'react-native';
-import { PanningDirectionsEnum } from '../panView';
-declare type HiddenLocationRecord = Record<PanningDirectionsEnum, number>;
-export interface HiddenLocation extends HiddenLocationRecord {
+export declare type Direction = 'top' | 'bottom' | 'left' | 'right';
+export interface HiddenLocation {
     isDefault: boolean;
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
 }
 export interface HiddenLocationProps<T extends View> {
     containerRef: RefObject<T>;
@@ -12,4 +15,3 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
     onLayout: (event: LayoutChangeEvent) => void;
     hiddenLocation: HiddenLocation;
 };
-export {};

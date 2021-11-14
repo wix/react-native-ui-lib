@@ -1,9 +1,8 @@
 ---
-sidebar_position: 5
-sidebar_label: ThemeManager
-title: "ThemeManager"
+index: 7
+path: "/foundation/theme-manager"
+title: "Theme Manager"
 ---
-
 Use `ThemeManager` to set default global behavior for your app.
 
 #### setComponentTheme

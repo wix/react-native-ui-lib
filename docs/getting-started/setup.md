@@ -1,8 +1,8 @@
 ---
+index: 1
 sidebar_position: 1
-sidebar_label: Setup
+path: "/getting-started/setup"
 title: "Setup"
-# path: "/getting-started/setup"
 ---
 
 ## Before You Start: UILib Packages

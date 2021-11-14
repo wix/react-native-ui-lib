@@ -5,16 +5,16 @@ const {TransitionView} = Incubator;
 import {renderRadioGroup} from '../ExampleScreenPresenter';
 
 interface State {
-  enterDirection: Incubator.TransitionViewDirection;
-  exitDirection: Incubator.TransitionViewDirection;
+  enterDirection: Incubator.Direction;
+  exitDirection: Incubator.Direction;
   key: number;
 }
 
 export default class TransitionViewScreen extends Component<{}, State> {
   private ref = React.createRef<typeof TransitionView>();
   state = {
-    enterDirection: Incubator.TransitionViewDirectionEnum.LEFT,
-    exitDirection: Incubator.TransitionViewDirectionEnum.DOWN,
+    enterDirection: 'left' as Incubator.Direction,
+    exitDirection: 'bottom' as Incubator.Direction,
     key: 1
   };
 
@@ -30,16 +30,21 @@ export default class TransitionViewScreen extends Component<{}, State> {
     const {key, enterDirection, exitDirection} = this.state;
     return (
       <View padding-20 bg-grey80 flex>
-        {renderRadioGroup.call(this, 'Enter direction', 'enterDirection', Incubator.TransitionViewDirectionEnum, {
-          isRow: true
-        })}
-        {renderRadioGroup.call(this, 'Exit direction', 'exitDirection', Incubator.TransitionViewDirectionEnum, {
-          isRow: true
-        })}
+        {renderRadioGroup.call(this,
+          'Enter direction',
+          'enterDirection',
+          {top: 'top', bottom: 'bottom', left: 'left', right: 'right'},
+          {isRow: true})}
+        {renderRadioGroup.call(this,
+          'Exit direction',
+          'exitDirection',
+          {top: 'top', bottom: 'bottom', left: 'left', right: 'right'},
+          {isRow: true})}
         <Button label="Refresh" onPress={() => this.setState({key: key + 1})}/>
         <View flex center>
           <TransitionView
             key={`${key}`}
+            // @ts-expect-error
             ref={this.ref}
             enterFrom={enterDirection}
             exitTo={exitDirection}

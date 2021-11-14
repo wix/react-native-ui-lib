@@ -1,10 +1,8 @@
-// TODO: This should be renamed to PickerOverlayContent cause it's
-// not responsible for rendering the Modal anymore 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, FlatList, TextInput} from 'react-native';
-// import {Constants} from '../../helpers';
+import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
@@ -82,18 +80,17 @@ class PickerModal extends BaseComponent {
   };
 
   render() {
-    const {/* visible, enableModalBlur,  */topBarProps, listProps, children/* , onShow, pickerModalProps */} = this.props;
+    const {visible, enableModalBlur, topBarProps, listProps, children, onShow, pickerModalProps} = this.props;
     return (
-      <>
-        {/* <Modal
-         animationType={'slide'}
-         transparent={Constants.isIOS && enableModalBlur}
-         enableModalBlur={Constants.isIOS && enableModalBlur}
-         visible={visible}
-         onRequestClose={topBarProps.onCancel}
-         onShow={onShow}
-         {...pickerModalProps}
-       > */}
+      <Modal
+        animationType={'slide'}
+        transparent={Constants.isIOS && enableModalBlur}
+        enableModalBlur={Constants.isIOS && enableModalBlur}
+        visible={visible}
+        onRequestClose={topBarProps.onCancel}
+        onShow={onShow}
+        {...pickerModalProps}
+      >
         <Modal.TopBar {...topBarProps}/>
         {this.renderSearchInput()}
 
@@ -103,8 +100,7 @@ class PickerModal extends BaseComponent {
           keyExtractor={this.keyExtractor}
           {...listProps}
         />
-      </>
-      // </Modal>
+      </Modal>
     );
   }
 }

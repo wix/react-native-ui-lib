@@ -22,4 +22,16 @@ describe('Picker', () => {
       expect(uut.getLabelValueText()).toEqual(`${countries[2].label}, ${countries[4].label}`);
     });
   });
+
+  describe('handlePickerOnPress', () => {
+    it('should get label out of an array of items', () => {
+      const onPress = jest.fn(() => {});
+      const uut = new Picker({value: countries[0], onPress});
+      uut.toggleExpandableModal = jest.fn(uut.toggleExpandableModal);
+
+      uut.handlePickerOnPress();
+      expect(onPress).toHaveBeenCalled();
+      expect(uut.toggleExpandableModal).toHaveBeenCalled();
+    });
+  });
 });

@@ -10,7 +10,7 @@
   "props": [
     {"name": "backgroundColor", "type": "string", "description": "Background color for TouchableOpacity"},
     {"name": "throttleTime", "type": "number", "description": "Throttle time in MS for onPress callback"},
-    {"name": "throttleOptions", "type": "ThrottleOptions", "description": "Throttle options"},
+    {"name": "throttleOptions", "type": "{leading, trailing}", "description": "Throttle options"},
     {
       "name": "activeBackgroundColor",
       "type": "string",
@@ -27,6 +27,6 @@
       "description": "Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback"
     },
     {"name": "style", "type": "ViewStyle", "description": "Custom style"},
-    {"name": "onPress", "type": "(props) => void", "description": "On press callback"}
+    {"name": "onPress", "type": "({customValue}) => void", "description": "On press callback"}
   ]
 }

@@ -13,19 +13,15 @@ import Animated, {
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../../components/view';
 import {
-  PanningDirections,
-  PanningDirectionsEnum,
-  PanningDismissThreshold,
+  PanViewDirections,
   Frame,
+  PanViewDismissThreshold,
   getTranslation,
   getDismissVelocity,
   DEFAULT_THRESHOLD
 } from './panningUtil';
 import useHiddenLocation from '../hooks/useHiddenLocation';
-type PanViewDirections = PanningDirections;
-const PanViewDirectionsEnum = PanningDirectionsEnum;
-type PanViewDismissThreshold = PanningDismissThreshold;
-export {PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
+export {PanViewDirections, PanViewDismissThreshold};
 
 export interface PanViewProps extends ViewProps {
   /**
@@ -67,12 +63,7 @@ const SPRING_BACK_ANIMATION_CONFIG = {velocity: 300, damping: 20, stiffness: 300
 
 const PanView = (props: Props) => {
   const {
-    directions = [
-      PanViewDirectionsEnum.UP,
-      PanViewDirectionsEnum.DOWN,
-      PanViewDirectionsEnum.LEFT,
-      PanViewDirectionsEnum.RIGHT
-    ],
+    directions = [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT],
     dismissible,
     animateToOrigin,
     onDismiss,
@@ -149,7 +140,7 @@ const PanView = (props: Props) => {
           }
 
           if (translationY.value !== 0 && velocity.y !== undefined && velocity.y !== 0) {
-            const toY = velocity.y > 0 ? hiddenLocation.down : hiddenLocation.up;
+            const toY = velocity.y > 0 ? hiddenLocation.bottom : hiddenLocation.top;
             const duration = Math.abs((toY - translationY.value) / velocity.y) * 1000;
             translationY.value = withTiming(toY, {duration}, dismiss);
           }
@@ -181,7 +172,7 @@ const PanView = (props: Props) => {
 };
 
 PanView.displayName = 'PanView';
-PanView.directions = PanViewDirectionsEnum;
+PanView.directions = PanViewDirections;
 PanView.defaultProps = {
   threshold: DEFAULT_THRESHOLD
 };

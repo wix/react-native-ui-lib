@@ -14,8 +14,8 @@ const useOrientation = ({onOrientationChange}: UseOrientationProps = {}) => {
   }, []);
 
   useEffect(() => {
-    const listener = Constants.addDimensionsEventListener(orientationChangeListener);
-    return () => Constants.removeDimensionsEventListener(listener);
+    Constants.addDimensionsEventListener(orientationChangeListener);
+    return () => Constants.removeDimensionsEventListener(orientationChangeListener);
   }, []);
 
   useDidUpdate(() => {

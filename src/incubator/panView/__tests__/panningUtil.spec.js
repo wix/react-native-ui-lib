@@ -1,6 +1,6 @@
 import {Constants} from '../../../helpers';
 import {
-  PanningDirectionsEnum,
+  PanViewDirections,
   DEFAULT_THRESHOLD,
   getTranslation,
   getDismissVelocity,
@@ -10,12 +10,7 @@ import {
 describe('panningUtil', () => {
   let directions;
   beforeEach(() => {
-    directions = [
-      PanningDirectionsEnum.UP,
-      PanningDirectionsEnum.DOWN,
-      PanningDirectionsEnum.LEFT,
-      PanningDirectionsEnum.RIGHT
-    ];
+    directions = [PanViewDirections.UP, PanViewDirections.DOWN, PanViewDirections.LEFT, PanViewDirections.RIGHT];
   });
 
   describe('getTranslation', () => {
@@ -129,7 +124,7 @@ describe('panningUtil', () => {
 
     describe('Down and right', () => {
       beforeEach(() => {
-        directions = [PanningDirectionsEnum.DOWN, PanningDirectionsEnum.RIGHT];
+        directions = [PanViewDirections.DOWN, PanViewDirections.RIGHT];
       });
 
       describe('Start at origin', () => {
@@ -201,7 +196,7 @@ describe('panningUtil', () => {
 
     describe('Up and left', () => {
       beforeEach(() => {
-        directions = [PanningDirectionsEnum.UP, PanningDirectionsEnum.LEFT];
+        directions = [PanViewDirections.UP, PanViewDirections.LEFT];
       });
 
       describe('Start at origin', () => {

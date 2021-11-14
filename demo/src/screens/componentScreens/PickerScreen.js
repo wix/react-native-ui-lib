@@ -171,7 +171,7 @@ export default class PickerScreen extends Component {
             onChange={filter => this.setState({filter})}
             renderPicker={({label}) => {
               return (
-                <View row>
+                <View row center>
                   <Image style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon}/>
                   <Text grey10 text80>
                     {label} Posts
@@ -194,7 +194,7 @@ export default class PickerScreen extends Component {
             getItemValue={contact => contact.name}
             renderPicker={contact => {
               return (
-                <View row>
+                <View row center>
                   <Avatar size={30} source={{uri: contact.thumbnail}}/>
                   <Text text70 marginL-10>
                     {contact.name}
