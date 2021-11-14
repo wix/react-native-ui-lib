@@ -351,7 +351,7 @@ class Picker extends Component {
 
   renderCustomModal = ({visible, toggleExpandable}) => {
     const {renderCustomModal, children} = this.props;
-    const {value} = this.state;
+    const {multiDraftValue} = this.state;
 
     if (renderCustomModal) {
       const modalProps = {
@@ -359,7 +359,8 @@ class Picker extends Component {
         toggleModal: toggleExpandable,
         onSearchChange: this.onSearchChange,
         children,
-        onDone: () => this.onDoneSelecting(value),
+        // onDone is relevant to multi mode only
+        onDone: () => this.onDoneSelecting(multiDraftValue),
         onCancel: this.cancelSelect
       };
 
@@ -445,9 +446,9 @@ class Picker extends Component {
       modifiers,
       enableModalBlur,
       topBarProps,
-      pickerModalProps
+      pickerModalProps,
+      value
     } = this.props;
-    const {value} = this.state;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
