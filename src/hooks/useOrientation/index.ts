@@ -1,4 +1,4 @@
-import {useEffect, useCallback, useState, useRef} from 'react';
+import {useEffect, useCallback, useState} from 'react';
 import {Constants} from 'helpers';
 import useDidUpdate from '../useDidUpdate';
 
