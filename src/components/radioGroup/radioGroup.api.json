@@ -1,0 +1,24 @@
+{
+  "name": "RadioGroup",
+  "category": "form",
+  "description": "Wrap a group of Radio Buttons to automatically control their selection",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/RadioButtonScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Default.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Alignment.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Custom.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Individual.png?raw=true"
+  ],
+  "props": [
+    {
+      "name": "initialValue",
+      "type": "string | number | boolean",
+      "description": "The initial value of the selected radio button"
+    },
+    {
+      "name": "onValueChange",
+      "type": "((value?: string) => void) | ((value?: number) => void) | ((value?: boolean) => void) | ((value?: any) => void)",
+      "description": "Invoked once when value changes, by selecting one of the radio buttons in the group"
+    }
+  ]
+}
