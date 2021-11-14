@@ -1,6 +1,7 @@
 // TODO: deprecate all places where we check if _.isPlainObject
 // TODO: deprecate getItemValue prop
 // TODO: deprecate getItemLabel prop
+// TODO: Add initialValue prop
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
@@ -168,10 +169,10 @@ class Picker extends Component {
     super(props);
 
     this.state = {
-      value: props.value,
-      prevValue: undefined,
       selectedItemPosition: 0,
-      items: Picker.extractPickerItems(props)
+      items: Picker.extractPickerItems(props),
+      multiDraftValue: props.value,
+      multiFinalValue: props.value
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
@@ -192,26 +193,10 @@ class Picker extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const hasNextValue = !_.isEmpty(nextProps.value) || _.isNumber(nextProps.value);
-    /* Relevant for keeping the value prop controlled - react when user change value prop */
-    const externalValueChanged = hasNextValue && prevState.value !== nextProps.value;
-    /* Relevant for multi select mode when we keep an internal value state */
-    const internalValueChanged = prevState.value !== prevState.prevValue;
-    if (internalValueChanged && nextProps.mode === Picker.modes.MULTI) {
-      /* for this.setState() updates to 'value'
-      NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue' */
-      return {
-        prevValue: prevState.value
-      };
-    } else if (externalValueChanged) {
-      return {
-        value: nextProps.value
-      };
-    } else if (_.isFunction(nextProps.renderPicker) && externalValueChanged) {
-      return {
-        prevValue: prevState.value,
-        value: nextProps.value
-      };
+    if (nextProps.mode === Picker.modes.MULTI) {
+      if (prevState.multiFinalValue !== nextProps.value) {
+        return {multiDraftValue: nextProps.value, multiFinalValue: nextProps.value};
+      }
     }
     return null;
   }
@@ -236,12 +221,12 @@ class Picker extends Component {
   }
 
   getContextValue = () => {
-    const {value} = this.state;
-    const {migrate, mode, getItemValue, getItemLabel, renderItem, selectionLimit} = this.props;
+    const {multiDraftValue} = this.state;
+    const {migrate, mode, getItemValue, getItemLabel, renderItem, selectionLimit, value} = this.props;
     const pickerValue = !migrate && _.isPlainObject(value) ? value?.value : value;
     return {
       migrate,
-      value: pickerValue,
+      value: mode === Picker.modes.MULTI ? multiDraftValue : pickerValue,
       onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
       isMultiMode: mode === Picker.modes.MULTI,
       getItemValue,
@@ -320,20 +305,20 @@ class Picker extends Component {
   // };
 
   toggleItemSelection = item => {
-    const {getItemValue} = this.props;
-    const {value} = this.state;
+    const {getItemValue, migrate} = this.props;
+    const {multiDraftValue} = this.state;
     let newValue;
-    if (_.isPlainObject(value)) {
-      newValue = _.xorBy(value, [item], getItemValue || 'value');
+    if (!migrate) {
+      newValue = _.xorBy(multiDraftValue, [item], getItemValue || 'value');
     } else {
-      newValue = _.xor(value, [item]);
+      newValue = _.xor(multiDraftValue, [item]);
     }
 
-    this.setState({value: newValue});
+    this.setState({multiDraftValue: newValue});
   };
 
   cancelSelect = () => {
-    this.setState({value: this.props.value});
+    this.setState({multiDraftValue: this.state.multiFinalValue});
     // this.toggleExpandableModal(false);
     this.pickerExpandable.current?.closeExpandable?.();
     this.props.topBarProps?.onCancel?.();
@@ -341,7 +326,7 @@ class Picker extends Component {
 
   onDoneSelecting = item => {
     this.clearSearchField();
-    this.setState({value: item});
+    this.setState({multiFinalValue: item});
     // this.toggleExpandableModal(false);
     this.pickerExpandable.current?.closeExpandable?.();
     this.props.onChange?.(item);
@@ -366,7 +351,7 @@ class Picker extends Component {
 
   renderCustomModal = ({visible, toggleExpandable}) => {
     const {renderCustomModal, children} = this.props;
-    const {value} = this.state;
+    const {multiDraftValue} = this.state;
 
     if (renderCustomModal) {
       const modalProps = {
@@ -374,7 +359,8 @@ class Picker extends Component {
         toggleModal: toggleExpandable,
         onSearchChange: this.onSearchChange,
         children,
-        onDone: () => this.onDoneSelecting(value),
+        // onDone is relevant to multi mode only
+        onDone: () => this.onDoneSelecting(multiDraftValue),
         onCancel: this.cancelSelect
       };
 
@@ -399,7 +385,7 @@ class Picker extends Component {
       testID,
       pickerModalProps
     } = this.props;
-    const {showExpandableModal, selectedItemPosition, value} = this.state;
+    const {showExpandableModal, selectedItemPosition, multiDraftValue} = this.state;
 
     // if (renderCustomModal) {
     //   const modalProps = {
@@ -407,7 +393,7 @@ class Picker extends Component {
     //     toggleModal: this.toggleExpandableModal,
     //     onSearchChange: this.onSearchChange,
     //     children,
-    //     onDone: () => this.onDoneSelecting(value),
+    //     onDone: () => this.onDoneSelecting(multiDraftValue),
     //     onCancel: this.cancelSelect
     //   };
 
@@ -430,7 +416,7 @@ class Picker extends Component {
         topBarProps={{
           ...topBarProps,
           onCancel: this.cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
+          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(multiDraftValue) : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -460,16 +446,16 @@ class Picker extends Component {
       modifiers,
       enableModalBlur,
       topBarProps,
-      pickerModalProps
+      pickerModalProps,
+      value
     } = this.props;
-    const {value} = this.state;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
     }
 
     // if (_.isFunction(renderPicker)) {
-    //   const {value} = this.state;
+    //   const {value} = this.props;
 
     //   return (
     //     <PickerContext.Provider value={this.getContextValue()}>
@@ -517,7 +503,7 @@ class Picker extends Component {
               importantForAccessibility={'no-hide-descendants'}
               value={label}
               selection={Constants.isAndroid ? {start: 0} : undefined}
-              // Disable TextField expandable feature 
+              // Disable TextField expandable feature
               expandable={false}
               renderExpandable={_.noop}
               onToggleExpandableModal={_.noop}
