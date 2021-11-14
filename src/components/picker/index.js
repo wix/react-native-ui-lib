@@ -1,6 +1,8 @@
 // TODO: deprecate all places where we check if _.isPlainObject
 // TODO: deprecate getItemValue prop
 // TODO: deprecate getItemLabel prop
+// TODO: consider deprecating renderCustomModal prop
+// TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -8,9 +10,10 @@ import memoize from 'memoize-one';
 import {asBaseComponent, forwardRef} from '../../commons';
 import {Constants} from '../../helpers';
 import {LogService} from '../../services';
-import View from '../../components/view';
+// import View from '../../components/view';
 import Modal from '../modal';
-import Button from '../../components/button';
+import ExpandableOverlay from '../../incubator/expandableOverlay';
+// import Button from '../../components/button';
 import {TextField} from '../inputs';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
@@ -159,6 +162,8 @@ class Picker extends Component {
 
   static modes = PICKER_MODES;
 
+  pickerExpandable = React.createRef();
+
   constructor(props) {
     super(props);
 
@@ -304,15 +309,15 @@ class Picker extends Component {
     return children;
   }
 
-  handlePickerOnPress = () => {
-    this.toggleExpandableModal(true);
-    _.invoke(this.props, 'onPress');
-  };
+  // handlePickerOnPress = () => {
+  //   this.toggleExpandableModal(true);
+  //   _.invoke(this.props, 'onPress');
+  // };
 
-  toggleExpandableModal = value => {
-    this.setState({showExpandableModal: value});
-    this.clearSearchField();
-  };
+  // toggleExpandableModal = value => {
+  //   this.setState({showExpandableModal: value});
+  //   this.clearSearchField();
+  // };
 
   toggleItemSelection = item => {
     const {getItemValue} = this.props;
@@ -329,15 +334,17 @@ class Picker extends Component {
 
   cancelSelect = () => {
     this.setState({value: this.props.value});
-    this.toggleExpandableModal(false);
-    _.invoke(this.props, 'topBarProps.onCancel');
+    // this.toggleExpandableModal(false);
+    this.pickerExpandable.current?.closeExpandable?.();
+    this.props.topBarProps?.onCancel?.();
   };
 
   onDoneSelecting = item => {
     this.clearSearchField();
     this.setState({value: item});
-    this.toggleExpandableModal(false);
-    _.invoke(this.props, 'onChange', item);
+    // this.toggleExpandableModal(false);
+    this.pickerExpandable.current?.closeExpandable?.();
+    this.props.onChange?.(item);
   };
 
   onSearchChange = searchValue => {
@@ -357,6 +364,25 @@ class Picker extends Component {
     this.setState({searchValue: ''});
   };
 
+  renderCustomModal = ({visible, toggleExpandable}) => {
+    const {renderCustomModal, children} = this.props;
+    const {value} = this.state;
+
+    if (renderCustomModal) {
+      const modalProps = {
+        visible,
+        toggleModal: toggleExpandable,
+        onSearchChange: this.onSearchChange,
+        children,
+        onDone: () => this.onDoneSelecting(value),
+        onCancel: this.cancelSelect
+      };
+
+      return renderCustomModal(modalProps);
+    }
+  };
+
+  // TODO: Rename to renderExpandableContent
   renderExpandableModal = () => {
     const {
       mode,
@@ -367,98 +393,138 @@ class Picker extends Component {
       searchStyle,
       searchPlaceholder,
       renderCustomSearch,
-      renderCustomModal,
+      // renderCustomModal,
       listProps,
-      children,
+      // children,
       testID,
       pickerModalProps
     } = this.props;
     const {showExpandableModal, selectedItemPosition, value} = this.state;
 
-    if (renderCustomModal) {
-      const modalProps = {
-        visible: showExpandableModal,
-        toggleModal: this.toggleExpandableModal,
-        onSearchChange: this.onSearchChange,
-        children,
-        onDone: () => this.onDoneSelecting(value),
-        onCancel: this.cancelSelect
-      };
+    // if (renderCustomModal) {
+    //   const modalProps = {
+    //     visible: showExpandableModal,
+    //     toggleModal: this.toggleExpandableModal,
+    //     onSearchChange: this.onSearchChange,
+    //     children,
+    //     onDone: () => this.onDoneSelecting(value),
+    //     onCancel: this.cancelSelect
+    //   };
 
-      return (
-        <>
-          <PickerContext.Provider value={this.getContextValue()}>
-            {renderCustomModal(modalProps)}
-          </PickerContext.Provider>
-        </>
-      );
-    }
+    //   return (
+    //     <>
+    //       {/* <PickerContext.Provider value={this.getContextValue()}> */}
+    //       {renderCustomModal(modalProps)}
+    //       {/* </PickerContext.Provider> */}
+    //     </>
+    //   );
+    // }
 
     return (
-      <PickerContext.Provider value={this.getContextValue()}>
-        <PickerModal
-          testID={`${testID}.modal`}
-          visible={showExpandableModal}
-          scrollPosition={selectedItemPosition}
-          enableModalBlur={enableModalBlur}
-          topBarProps={{
-            ...topBarProps,
-            onCancel: this.cancelSelect,
-            onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
-          }}
-          showSearch={showSearch}
-          searchStyle={searchStyle}
-          searchPlaceholder={searchPlaceholder}
-          onSearchChange={this.onSearchChange}
-          renderCustomSearch={renderCustomSearch}
-          listProps={listProps}
-          onShow={onShow}
-          pickerModalProps={pickerModalProps}
-        >
-          {this.children}
-        </PickerModal>
-      </PickerContext.Provider>
+      // <PickerContext.Provider value={this.getContextValue()}>
+      <PickerModal
+        testID={`${testID}.modal`}
+        visible={showExpandableModal}
+        scrollPosition={selectedItemPosition}
+        enableModalBlur={enableModalBlur}
+        topBarProps={{
+          ...topBarProps,
+          onCancel: this.cancelSelect,
+          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
+        }}
+        showSearch={showSearch}
+        searchStyle={searchStyle}
+        searchPlaceholder={searchPlaceholder}
+        onSearchChange={this.onSearchChange}
+        renderCustomSearch={renderCustomSearch}
+        listProps={listProps}
+        onShow={onShow}
+        pickerModalProps={pickerModalProps}
+      >
+        {this.children}
+      </PickerModal>
+      // </PickerContext.Provider>
     );
   };
 
   render() {
-    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, forwardedRef, modifiers} =
-      this.props;
+    const {
+      useNativePicker,
+      renderPicker,
+      customPickerProps,
+      containerStyle,
+      testID,
+      onShow,
+      renderCustomModal,
+      forwardedRef,
+      modifiers,
+      enableModalBlur,
+      topBarProps,
+      pickerModalProps
+    } = this.props;
+    const {value} = this.state;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
     }
 
-    if (_.isFunction(renderPicker)) {
-      const {value} = this.state;
+    // if (_.isFunction(renderPicker)) {
+    //   const {value} = this.state;
 
-      return (
-        <View left>
-          <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
-            {renderPicker(value, this.getLabel(value))}
-          </Button>
-          {this.renderExpandableModal()}
-        </View>
-      );
-    }
+    //   return (
+    //     <PickerContext.Provider value={this.getContextValue()}>
+    //       <View left>
+    //         <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
+    //           {renderPicker(value, this.getLabel(value))}
+    //         </Button>
+    //         {this.renderExpandableModal()}
+    //       </View>
+    //     </PickerContext.Provider>
+    //   );
+    // }
 
     const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabelValueText();
     const {paddings, margins, positionStyle} = modifiers;
 
+    const modalProps = {
+      animationType: 'slide',
+      transparent: Constants.isIOS && enableModalBlur,
+      enableModalBlur: Constants.isIOS && enableModalBlur,
+      onRequestClose: topBarProps?.onCancel,
+      onShow,
+      ...pickerModalProps
+    };
+
     return (
-      <TextField
-        ref={forwardedRef}
-        {...textInputProps}
-        containerStyle={[paddings, margins, positionStyle, containerStyle]}
-        {...this.getAccessibilityInfo()}
-        importantForAccessibility={'no-hide-descendants'}
-        value={label}
-        expandable
-        renderExpandable={this.renderExpandableModal}
-        onToggleExpandableModal={this.toggleExpandableModal}
-        selection={Constants.isAndroid ? {start: 0} : undefined}
-      />
+      <PickerContext.Provider value={this.getContextValue()}>
+        <ExpandableOverlay
+          ref={this.pickerExpandable}
+          modalProps={modalProps}
+          expandableContent={this.renderExpandableModal()}
+          renderCustomOverlay={renderCustomModal ? this.renderCustomModal : undefined}
+          testID={renderCustomModal ? testID : undefined}
+          {...customPickerProps}
+        >
+          {renderPicker ? (
+            renderPicker(value, this.getLabel(value))
+          ) : (
+            <TextField
+              ref={forwardedRef}
+              {...textInputProps}
+              containerStyle={[paddings, margins, positionStyle, containerStyle]}
+              {...this.getAccessibilityInfo()}
+              importantForAccessibility={'no-hide-descendants'}
+              value={label}
+              selection={Constants.isAndroid ? {start: 0} : undefined}
+              // Disable TextField expandable feature 
+              expandable={false}
+              renderExpandable={_.noop}
+              onToggleExpandableModal={_.noop}
+            />
+          )}
+        </ExpandableOverlay>
+      </PickerContext.Provider>
     );
   }
 }
