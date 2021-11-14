@@ -8,15 +8,14 @@ interface UseOrientationProps {
 
 const useOrientation = ({onOrientationChange}: UseOrientationProps = {}) => {
   const [orientation, setOrientation] = useState(Constants.orientation);
-  const listener = useRef<any>();
 
   const orientationChangeListener = useCallback(() => {
     setOrientation(Constants.orientation);
   }, []);
 
   useEffect(() => {
-    listener.current = Constants.addDimensionsEventListener(orientationChangeListener);
-    return () => Constants.removeDimensionsEventListener(listener.current);
+    const listener = Constants.addDimensionsEventListener(orientationChangeListener);
+    return () => Constants.removeDimensionsEventListener(listener);
   }, []);
 
   useDidUpdate(() => {
