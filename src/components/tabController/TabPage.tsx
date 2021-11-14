@@ -49,26 +49,22 @@ export default function TabPage({
   }, [lazy, shouldLoad]);
 
   useAnimatedReaction(() => {
-    return currentPage.value === index;
+    return currentPage.value;
   },
-  (isActive, wasActive) => {
+  (currentPage, previousPage) => {
+    const isActive = currentPage === index;
+    const wasActive = previousPage === index;
+    const nearActive = asCarousel && (currentPage - 1 === index || currentPage + 1 === index);
+    const wasNearActive = asCarousel && previousPage && (previousPage - 1 === index || previousPage + 1 === index);
+
     if (isActive) {
       runOnJS(lazyLoad)();
-      runOnJS(setFocused)(true);
     }
-    if (wasActive) {
-      runOnJS(setFocused)(false);
-    }
-  },
-  [currentPage]);
 
-  /* Handle freeze for pages that near the active page (relevant for carousel page) */
-  useAnimatedReaction(() => {
-    return asCarousel && currentPage.value - 1 === index || currentPage.value + 1 === index;
-  },
-  (nearActive) => {
-    if (nearActive) {
+    if (isActive || nearActive) {
       runOnJS(setFocused)(true);
+    } else if (wasActive || wasNearActive) {
+      runOnJS(setFocused)(false);
     }
   },
   [currentPage]);
