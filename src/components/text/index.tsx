@@ -105,6 +105,10 @@ class Text extends PureComponent<PropsTypes> {
     let lastWordLength = 0;
     for (let j = 0; j < highlightString.length; j++) {
       const word = _.toLower(highlightString[j]);
+      if (word.length === 0) {
+        break;
+      }
+
       const targetSuffix = target.substring(index + lastWordLength);
       const i = targetSuffix.indexOf(word);
       if (i >= 0) {
@@ -128,6 +132,10 @@ class Text extends PureComponent<PropsTypes> {
         parts.push({string: targetString.substring(indices[k].end, indices[k + 1].start), shouldHighlight: false});
       }
     }
+    if (parts.length === 0) {
+      parts.push({string: targetString, shouldHighlight: false});
+    }
+
     return parts;
   }
 
