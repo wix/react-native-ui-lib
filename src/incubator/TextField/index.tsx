@@ -19,7 +19,9 @@ import {
   ColorsModifiers
 } from '../../commons/new';
 import View from '../../components/view';
+import {Colors} from '../../style';
 import {ValidationMessagePosition, Validator} from './types';
+import {shouldHidePlaceholder} from './Presenter';
 import Input, {InputProps} from './Input';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
@@ -155,6 +157,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const colorStyle = useMemo(() => color && {color}, [color]);
 
   const fieldStyle = isFunction(fieldStyleProp) ? fieldStyleProp(context, {preset: props.preset}) : fieldStyleProp;
+  const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
 
   return (
     <FieldContext.Provider value={context}>
@@ -190,7 +193,7 @@ const TextField = (props: InternalTextFieldProps) => {
               )}
               {children || (
                 <Input
-                  placeholderTextColor={floatingPlaceholder ? 'transparent' : undefined}
+                  placeholderTextColor={hidePlaceholder ? 'transparent' : Colors.grey30}
                   {...others}
                   style={[typographyStyle, colorStyle, others.style]}
                   onFocus={onFocus}
