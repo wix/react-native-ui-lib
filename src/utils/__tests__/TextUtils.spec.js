@@ -73,9 +73,14 @@ describe('Text', () => {
       ]);
     });
 
-    it('Should handle empty string .', () => {
+    it('Should handle empty string.', () => {
       const result = getTextPartsToStyle('@ancing in the @ark', '');
       expect(result).toEqual([{string: '@ancing in the @ark', shouldStyle: false}]);
+    });
+
+    it('Should handle full string.', () => {
+      const result = getTextPartsToStyle('Dancing in the Dark', 'Dancing in the Dark');
+      expect(result).toEqual([{string: 'Dancing in the Dark', shouldStyle: true}]);
     });
   });
 

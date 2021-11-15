@@ -39,7 +39,7 @@ function getTextPartsToStyle(targetString = '', stringToStyle = ''): TextPart[] 
     } else {
       textParts.push({string: targetString, shouldStyle: false});
     }
-  } while (highlightIndex !== -1);
+  } while (highlightIndex !== -1 && targetString.length > 0);
 
   return textParts;
 }
