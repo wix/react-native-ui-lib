@@ -175,7 +175,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     super(props);
 
     this.state = {
-      isAnimating: !_.isUndefined(props.showContent),
+      isAnimating: props.showContent === false,
       opacity: new Animated.Value(0)
     };
 
