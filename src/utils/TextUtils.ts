@@ -1,8 +1,8 @@
-import _ from 'lodash';
+import {isEmpty, toLower} from 'lodash';
 
 function getPartsByHighlight(targetString = '', highlightString: string | string[]) {
   if (typeof highlightString === 'string') {
-    if (_.isEmpty(highlightString.trim())) {
+    if (isEmpty(highlightString.trim())) {
       return [{string: targetString, shouldHighlight: false}];
     }
     return getTextPartsByHighlight(targetString, highlightString);
@@ -34,12 +34,12 @@ function getTextPartsByHighlight(targetString = '', highlightString = '') {
 }
 
 function getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
-  const target = _.toLower(targetString);
+  const target = toLower(targetString);
   const indices = [];
   let index = 0;
   let lastWordLength = 0;
   for (let j = 0; j < highlightString.length; j++) {
-    const word = _.toLower(highlightString[j]);
+    const word = toLower(highlightString[j]);
     if (word.length === 0) {
       break;
     }
@@ -55,23 +55,23 @@ function getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
       break;
     }
   }
-  const parts = [];
+  const textParts = [];
   for (let k = 0; k < indices.length; k++) {
     if (k === 0 && indices[k].start !== 0) {
-      parts.push({string: targetString.substring(0, indices[k].start), shouldHighlight: false});
+      textParts.push({string: targetString.substring(0, indices[k].start), shouldHighlight: false});
     }
-    parts.push({string: targetString.substring(indices[k].start, indices[k].end), shouldHighlight: true});
+    textParts.push({string: targetString.substring(indices[k].start, indices[k].end), shouldHighlight: true});
     if (k === indices.length - 1) {
-      parts.push({string: targetString.substring(indices[k].end), shouldHighlight: false});
+      textParts.push({string: targetString.substring(indices[k].end), shouldHighlight: false});
     } else {
-      parts.push({string: targetString.substring(indices[k].end, indices[k + 1].start), shouldHighlight: false});
+      textParts.push({string: targetString.substring(indices[k].end, indices[k + 1].start), shouldHighlight: false});
     }
   }
-  if (parts.length === 0) {
-    parts.push({string: targetString, shouldHighlight: false});
+  if (textParts.length === 0) {
+    textParts.push({string: targetString, shouldHighlight: false});
   }
 
-  return parts;
+  return textParts;
 }
 
 export {getPartsByHighlight, getTextPartsByHighlight, getArrayPartsByHighlight};
