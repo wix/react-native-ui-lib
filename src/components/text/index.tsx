@@ -77,14 +77,14 @@ class Text extends PureComponent<PropsTypes> {
       }
 
       if (_.isString(children)) {
-        const textParts = highlightString && TextUtils.getPartsByHighlight(children, highlightString);
+        const textParts = highlightString && TextUtils.getPartsToStyle(children, highlightString);
         return (
           textParts &&
           _.map(textParts, (text, index) => {
             return (
               <RNText
                 key={index}
-                style={text.shouldHighlight ? [styles.highlight, highlightStyle] : styles.notHighlight}
+                style={text.shouldStyle ? [styles.highlight, highlightStyle] : styles.notHighlight}
               >
                 {text.string}
               </RNText>

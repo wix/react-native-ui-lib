@@ -1,13 +1,8 @@
-declare function getPartsByHighlight(targetString: string | undefined, highlightString: string | string[]): {
+interface TextPart {
     string: string;
-    shouldHighlight: boolean;
-}[];
-declare function getTextPartsByHighlight(targetString?: string, highlightString?: string): {
-    string: string;
-    shouldHighlight: boolean;
-}[];
-declare function getArrayPartsByHighlight(targetString?: string, highlightString?: string[]): {
-    string: string;
-    shouldHighlight: boolean;
-}[];
-export { getPartsByHighlight, getTextPartsByHighlight, getArrayPartsByHighlight };
+    shouldStyle: boolean;
+}
+declare function getPartsToStyle(targetString: string | undefined, stringToStyle: string | string[]): TextPart[];
+declare function getTextPartsToStyle(targetString?: string, stringToStyle?: string): TextPart[];
+declare function getArrayPartsToStyle(targetString?: string, stringToStyle?: string[]): TextPart[];
+export { getPartsToStyle, TextPart, getTextPartsToStyle, getArrayPartsToStyle };
