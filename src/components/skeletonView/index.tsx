@@ -14,17 +14,17 @@ let ShimmerPlaceholder: any;
 
 const ANIMATION_DURATION = 400;
 
-enum Template {
+export enum Template {
   LIST_ITEM = 'listItem',
   TEXT_CONTENT = 'content'
 }
 
-enum Size {
+export enum Size {
   SMALL = 'small',
   LARGE = 'large'
 }
 
-enum ContentType {
+export enum ContentType {
   AVATAR = 'avatar',
   THUMBNAIL = 'thumbnail'
 }
@@ -165,9 +165,9 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     borderRadius: BorderRadiuses.br10
   };
 
-  static templates = Template;
-  static sizes = Size;
-  static contentTypes = ContentType;
+  static templates: typeof Template = Template;
+  static sizes: typeof Size = Size;
+  static contentTypes: typeof ContentType = ContentType;
 
   fadeInAnimation?: Animated.CompositeAnimation;
 
