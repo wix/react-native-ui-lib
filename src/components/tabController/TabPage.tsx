@@ -55,7 +55,8 @@ export default function TabPage({
     const isActive = currentPage === index;
     const wasActive = previousPage === index;
     const nearActive = asCarousel && (currentPage - 1 === index || currentPage + 1 === index);
-    const wasNearActive = asCarousel && previousPage && (previousPage - 1 === index || previousPage + 1 === index);
+    const wasNearActive =
+        asCarousel && previousPage !== null && (previousPage - 1 === index || previousPage + 1 === index);
 
     if (isActive) {
       runOnJS(lazyLoad)();
