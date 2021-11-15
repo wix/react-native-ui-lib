@@ -23,6 +23,10 @@ export declare type TextProps = RNTextProps & TypographyModifiers & ColorsModifi
      */
     highlightStyle?: TextStyle;
     /**
+     * Substring to underline
+     */
+    underlineString?: string | string[];
+    /**
      * Use Animated.Text as a container
      */
     animated?: boolean;

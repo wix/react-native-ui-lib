@@ -38,6 +38,10 @@ export type TextProps = RNTextProps &
      */
     highlightStyle?: TextStyle;
     /**
+     * Substring to underline
+     */
+    underlineString?: string | string[];
+    /**
      * Use Animated.Text as a container
      */
     animated?: boolean;
@@ -67,9 +71,9 @@ class Text extends PureComponent<PropsTypes> {
   // }
 
   renderText(children: any): any {
-    const {highlightString, highlightStyle} = this.props;
+    const {highlightString, highlightStyle, underlineString} = this.props;
 
-    if (!_.isEmpty(highlightString)) {
+    if (!_.isEmpty(highlightString) || !_.isEmpty(underlineString)) {
       if (_.isArray(children)) {
         return _.map(children, child => {
           return this.renderText(child);
@@ -77,15 +81,20 @@ class Text extends PureComponent<PropsTypes> {
       }
 
       if (_.isString(children)) {
-        const textParts = highlightString && TextUtils.getPartsToStyle(children, highlightString);
+        const highlightTextParts = TextUtils.getPartsToStyle(children, highlightString);
+        const underlineTextParts = TextUtils.getPartsToStyle(children, underlineString);
+        const textParts = TextUtils.unifyTextPartsStyles(children,
+          [styles.highlight, highlightStyle],
+          styles.notHighlight,
+          styles.underline,
+          styles.notUnderline,
+          highlightTextParts,
+          underlineTextParts);
         return (
           textParts &&
           _.map(textParts, (text, index) => {
             return (
-              <RNText
-                key={index}
-                style={text.shouldStyle ? [styles.highlight, highlightStyle] : styles.notHighlight}
-              >
+              <RNText key={index} style={text.style}>
                 {text.string}
               </RNText>
             );
@@ -138,6 +147,12 @@ const styles = StyleSheet.create({
   },
   notHighlight: {
     color: undefined
+  },
+  underline: {
+    textDecorationLine: 'underline'
+  },
+  notUnderline: {
+    textDecorationLine: undefined
   }
 });
 
