@@ -920,7 +920,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         error: any;
         disabled: string;
     };
-    floatingPlaceholderStyle: {
+    floatingPlaceholderStyle: ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle) | {
         color?: import("react-native").ColorValue | undefined;
         fontFamily?: string | undefined;
         fontSize?: number | undefined;
@@ -1032,7 +1032,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         translateY?: number | undefined;
         textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
         includeFontPadding?: boolean | undefined;
-    } | ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle);
+    };
     floatOnFocus?: boolean | undefined;
     enableErrors: boolean;
     validationMessage?: string | string[] | undefined;
