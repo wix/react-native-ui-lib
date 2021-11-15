@@ -42,18 +42,6 @@ declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps &
 declare class Text extends PureComponent<PropsTypes> {
     static displayName: string;
     private TextContainer;
-    getPartsByHighlight(targetString: string | undefined, highlightString: string | string[]): {
-        string: string;
-        shouldHighlight: boolean;
-    }[];
-    getTextPartsByHighlight(targetString?: string, highlightString?: string): {
-        string: string;
-        shouldHighlight: boolean;
-    }[];
-    getArrayPartsByHighlight(targetString?: string, highlightString?: string[]): {
-        string: string;
-        shouldHighlight: boolean;
-    }[];
     renderText(children: any): any;
     render(): JSX.Element;
 }
