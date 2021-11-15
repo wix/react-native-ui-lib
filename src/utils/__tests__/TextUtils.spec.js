@@ -149,12 +149,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, []);
       const underlineTextParts = getPartsToStyle(string, []);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([{string: 'Playground Screen', style: [{color: undefined}, {textDecorationLine: undefined}]}]);
     });
     it('should return the whole string as a single part when style string is empty', () => {
@@ -162,12 +162,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['']);
       const underlineTextParts = getPartsToStyle(string, ['']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([{string: 'Playground Screen', style: [{color: undefined}, {textDecorationLine: undefined}]}]);
     });
     it('should return the whole string as a single part when style string dont match', () => {
@@ -175,12 +175,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['aaa']);
       const underlineTextParts = getPartsToStyle(string, ['bbb']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([{string: 'Playground Screen', style: [{color: undefined}, {textDecorationLine: undefined}]}]);
     });
     it('should break text to parts according to style string (highlight)', () => {
@@ -188,12 +188,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['Scr']);
       const underlineTextParts = getPartsToStyle(string, ['']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([
         {string: 'Playground ', style: [{color: undefined}, {textDecorationLine: undefined}]},
         {string: 'Scr', style: [{color: 'red'}, {textDecorationLine: undefined}]},
@@ -205,12 +205,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['']);
       const underlineTextParts = getPartsToStyle(string, ['Scr']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([
         {string: 'Playground ', style: [{color: undefined}, {textDecorationLine: undefined}]},
         {string: 'Scr', style: [{color: undefined}, {textDecorationLine: 'underline'}]},
@@ -222,12 +222,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['Scr']);
       const underlineTextParts = getPartsToStyle(string, ['Scr']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([
         {string: 'Playground ', style: [{color: undefined}, {textDecorationLine: undefined}]},
         {string: 'Scr', style: [{color: 'red'}, {textDecorationLine: 'underline'}]},
@@ -239,12 +239,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['Play']);
       const underlineTextParts = getPartsToStyle(string, ['Scr']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([
         {string: 'Play', style: [{color: 'red'}, {textDecorationLine: undefined}]},
         {string: 'ground ', style: [{color: undefined}, {textDecorationLine: undefined}]},
@@ -257,12 +257,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['Playground']);
       const underlineTextParts = getPartsToStyle(string, ['laygroun']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([
         {string: 'P', style: [{color: 'red'}, {textDecorationLine: undefined}]},
         {string: 'laygroun', style: [{color: 'red'}, {textDecorationLine: 'underline'}]},
@@ -275,12 +275,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['laygroun']);
       const underlineTextParts = getPartsToStyle(string, ['Playground']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([
         {string: 'P', style: [{color: undefined}, {textDecorationLine: 'underline'}]},
         {string: 'laygroun', style: [{color: 'red'}, {textDecorationLine: 'underline'}]},
@@ -293,12 +293,12 @@ describe('Text', () => {
       const highlightTextParts = getPartsToStyle(string, ['Playg']);
       const underlineTextParts = getPartsToStyle(string, ['ground']);
       const result = unifyTextPartsStyles(string,
+        highlightTextParts,
         styles.highlight,
         styles.notHighlight,
+        underlineTextParts,
         styles.underline,
-        styles.notUnderline,
-        highlightTextParts,
-        underlineTextParts);
+        styles.notUnderline);
       expect(result).toEqual([
         {string: 'Play', style: [{color: 'red'}, {textDecorationLine: undefined}]},
         {string: 'g', style: [{color: 'red'}, {textDecorationLine: 'underline'}]},

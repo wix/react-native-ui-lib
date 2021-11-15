@@ -101,12 +101,12 @@ function getUnifiedStyle(string: string,
 
 // eslint-disable-next-line max-params
 function unifyTextPartsStyles(targetString = '',
+  textParts1: TextPart[] | undefined,
   withStyle1: StyleProp<TextStyle>,
   noStyle1: StyleProp<TextStyle>,
+  textParts2: TextPart[] | undefined,
   withStyle2: StyleProp<TextStyle>,
-  noStyle2: StyleProp<TextStyle>,
-  textParts1?: TextPart[],
-  textParts2?: TextPart[]): StyledTextPart[] | undefined {
+  noStyle2: StyleProp<TextStyle>): StyledTextPart[] | undefined {
   const result: StyledTextPart[] = [];
   if (!textParts1 && !textParts2) {
     return undefined;

@@ -84,12 +84,12 @@ class Text extends PureComponent<PropsTypes> {
         const highlightTextParts = TextUtils.getPartsToStyle(children, highlightString);
         const underlineTextParts = TextUtils.getPartsToStyle(children, underlineString);
         const textParts = TextUtils.unifyTextPartsStyles(children,
+          highlightTextParts,
           [styles.highlight, highlightStyle],
           styles.notHighlight,
+          underlineTextParts,
           styles.underline,
-          styles.notUnderline,
-          highlightTextParts,
-          underlineTextParts);
+          styles.notUnderline);
         return (
           textParts &&
           _.map(textParts, (text, index) => {
