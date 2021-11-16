@@ -33,7 +33,7 @@ describe('Text', () => {
       ]);
     });
 
-    it('should handle ignore case-sensetive', () => {
+    it('should be case-insensitive', () => {
       const result = getTextPartsByHighlight('Dancing in the Dark', 'da');
       expect(result).toEqual([
         {string: 'Da', shouldHighlight: true},
@@ -81,6 +81,11 @@ describe('Text', () => {
       const result = getTextPartsByHighlight('Dancing in the Dark', 'Dancing in the Dark');
       expect(result).toEqual([{string: 'Dancing in the Dark', shouldHighlight: true}]);
     });
+
+    it('Should handle longer string.', () => {
+      const result = getTextPartsByHighlight('Dancing in the Dark', 'Dancing in the Darker');
+      expect(result).toEqual([{string: 'Dancing in the Dark', shouldHighlight: false}]);
+    });
   });
 
   describe('getArrayPartsByHighlight', () => {
@@ -113,7 +118,7 @@ describe('Text', () => {
       ]);
     });
 
-    it('should handle ignore case-sensetive', () => {
+    it('should be case-insensitive', () => {
       const result = getArrayPartsByHighlight('Dancing in the Dark', ['da']);
       expect(result).toEqual([
         {string: 'Da', shouldHighlight: true},
@@ -144,6 +149,16 @@ describe('Text', () => {
         {string: '@wix', shouldHighlight: true},
         {string: '.com', shouldHighlight: false}
       ]);
+    });
+
+    it('Should handle full string.', () => {
+      const result = getArrayPartsByHighlight('Dancing in the Dark', ['Dancing in the Dark']);
+      expect(result).toEqual([{string: 'Dancing in the Dark', shouldHighlight: true}]);
+    });
+
+    it('Should handle longer string.', () => {
+      const result = getArrayPartsByHighlight('Dancing in the Dark', ['Dancing in the Darker']);
+      expect(result).toEqual([{string: 'Dancing in the Dark', shouldHighlight: false}]);
     });
   });
 });

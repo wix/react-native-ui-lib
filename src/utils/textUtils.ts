@@ -61,10 +61,12 @@ function getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
       textParts.push({string: targetString.substring(0, indices[k].start), shouldHighlight: false});
     }
     textParts.push({string: targetString.substring(indices[k].start, indices[k].end), shouldHighlight: true});
-    if (k === indices.length - 1) {
-      textParts.push({string: targetString.substring(indices[k].end), shouldHighlight: false});
-    } else {
-      textParts.push({string: targetString.substring(indices[k].end, indices[k + 1].start), shouldHighlight: false});
+    if (indices[k].end < targetString.length) {
+      if (k === indices.length - 1) {
+        textParts.push({string: targetString.substring(indices[k].end), shouldHighlight: false});
+      } else {
+        textParts.push({string: targetString.substring(indices[k].end, indices[k + 1].start), shouldHighlight: false});
+      }
     }
   }
   if (textParts.length === 0) {
