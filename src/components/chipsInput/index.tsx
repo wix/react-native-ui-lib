@@ -121,7 +121,7 @@ type OwnProps = ChipsInputProps & BaseComponentInjectedProps;
  * @description: Chips input component
  * @modifiers: Typography
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ChipsInput/ChipsInput.gif?raw=true
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.tsx
  * @extends: TextField
  */
 class ChipsInput extends Component<OwnProps, State> {

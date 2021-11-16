@@ -1,0 +1,48 @@
+{
+  "name": "SkeletonView",
+  "category": "layoutsAndTemplates",
+  "description": "Allows showing a temporary skeleton view while your real view is loading",
+  "note": "Requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' libraries",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.tsx",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true"],
+  "props": [
+    {
+      "name": "showContent",
+      "type": "boolean",
+      "description": "The content has been loaded, start fading out the skeleton and fading in the content"
+    },
+    {
+      "name": "renderContent",
+      "type": "(customValue?: any) => React.ReactNode",
+      "description": "A function that will render the content once the content is ready (i.e. showContent is true). The method will be called with the Skeleton's customValue (i.e. renderContent(props?.customValue))"
+    },
+    {
+      "name": "customValue",
+      "type": "any",
+      "description": "Custom value of any type to pass on to SkeletonView and receive back in the renderContent callback."
+    },
+    {
+      "name": "template",
+      "type": "listItem | content",
+      "description": "The type of the skeleton view.",
+      "note": "Accessible through SkeletonView.templates.xxx"
+    },
+    {
+      "name": "listProps",
+      "type": "SkeletonListProps",
+      "description": "Props that are available when using template={SkeletonView.templates.LIST_ITEM}"
+    },
+    {"name": "times", "type": "number", "description": "Generates duplicate skeletons"},
+    {"name": "timesKey", "type": "string", "description": "A key prefix for the duplicated SkeletonViews"},
+    {"name": "height", "type": "number", "description": "The height of the skeleton view"},
+    {"name": "width", "type": "number", "description": "The width of the skeleton view"},
+    {"name": "borderRadius", "type": "number", "description": "The border radius of the skeleton view"},
+    {
+      "name": "circle",
+      "type": "boolean",
+      "description": "Whether the skeleton is a circle (will override the borderRadius)"
+    },
+    {"name": "style", "type": "ViewStyle", "description": "Override container styles"},
+    {"name": "testID", "type": "string", "description": "The component test id"}
+  ]
+}

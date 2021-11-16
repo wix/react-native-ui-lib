@@ -89,11 +89,10 @@ export default class TextFieldScreen extends Component {
         </Text>
         <Incubator.ExpandableOverlay
           ref={this.expandableInputRef}
-          modalProps={{animationType: 'slide'}}
+          modalProps={{animationType: 'slide', onDismiss: () => console.warn('Modal is dismissed')}}
           expandableContent={this.renderInputModal()}
           showTopBar
           topBarProps={{title: 'Edit Input', doneLabel: 'Done', onCancel: this.onCancel, onDone: this.onDone}}
-          dialogProps={{bottom: true}}
         >
           <Incubator.TextField placeholder="Expandable input" value={textFieldValue}/>
         </Incubator.ExpandableOverlay>
@@ -112,7 +111,7 @@ export default class TextFieldScreen extends Component {
           ref={this.expandablePickerRef}
           useDialog
           expandableContent={this.renderPickerContent()}
-          dialogProps={{bottom: true}}
+          dialogProps={{bottom: true, onDismiss: () => console.warn('Dialog is dismissed')}}
         >
           {this.renderColorRow(selectedColor)}
         </Incubator.ExpandableOverlay>

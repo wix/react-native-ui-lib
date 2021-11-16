@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Animated, StyleProp, ViewStyle, AccessibilityProps } from 'react-native';
-declare enum Template {
+export declare enum Template {
     LIST_ITEM = "listItem",
     TEXT_CONTENT = "content"
 }
-declare enum Size {
+export declare enum Size {
     SMALL = "small",
     LARGE = "large"
 }
-declare enum ContentType {
+export declare enum ContentType {
     AVATAR = "avatar",
     THUMBNAIL = "thumbnail"
 }

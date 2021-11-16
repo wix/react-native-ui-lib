@@ -1,0 +1,23 @@
+{
+  "name": "SegmentedControl",
+  "category": "form",
+  "description": "SegmentedControl component for toggling two values or more",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SegmentedControlScreen.tsx",
+  "images": [],
+  "props": [
+    {"name": "segments", "type": "SegmentedControlItemProps", "description": "Array on segments"},
+    {"name": "activeColor", "type": "string", "description": "The color of the active segment label"},
+    {"name": "onChangeIndex", "type": "(index: number) => void", "description": "Callback for when index has change."},
+    {"name": "initialIndex", "type": "number", "description": "Initial index to be active"},
+    {"name": "borderRadius", "type": "number", "description": "The segmentedControl borderRadius"},
+    {"name": "backgroundColor", "type": "string", "description": "The background color of the inactive segments"},
+    {"name": "activeBackgroundColor", "type": "string", "description": "The background color of the active segment"},
+    {"name": "outlineColor", "type": "string", "description": "The color of the active segment outline"},
+    {"name": "outlineWidth", "type": "number", "description": "The width of the active segment outline"},
+    {"name": "iconOnRight", "type": "boolean", "description": "Should the icon be on right of the label"},
+    {"name": "throttleTime", "type": "number", "description": "Trailing throttle time of changing index in ms."},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"},
+    {"name": "style", "type": "ViewStyle", "description": "Custom style to inner container"},
+    {"name": "testID", "type": "string", "description": "Component test id"}
+  ]
+}

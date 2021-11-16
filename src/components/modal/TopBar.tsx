@@ -10,53 +10,57 @@ import Text from '../../components/text';
 
 export interface ModalTopBarProps {
   /**
-     * title to display in the center of the top bar
-     */
-    title?: string;
-    /**
-     * title custom style
-     */
-    titleStyle?: StyleProp<TextStyle>;
-    /**
-     * done action props (Button props)
-     */
-    doneButtonProps?: Omit<ButtonProps, 'onPress'>;
-    /**
-     * done action label
-     */
-    doneLabel?: string;
-    /**
-     * done action icon
-     */
-    doneIcon?: ImageSourcePropType;
-    /**
-     * done action callback
-     */
-    onDone?: (props?: any) => void;
-    /**
-     * cancel action props (Button props)
-     */
-    cancelButtonProps?: Omit<ButtonProps, 'onPress'>;
-    /**
-     * cancel action label
-     */
-    cancelLabel?: string;
-    /**
-     * cancel action icon
-     */
-    cancelIcon?: ImageSourcePropType;
-    /**
-     * cancel action callback
-     */
-    onCancel?: (props?: any) => void;
-    /**
-     * whether to include status bar or not (height claculations)
-     */
-    includeStatusBar?: boolean;
-    /**
-     * style for the TopBar container
-     */
-    containerStyle?: ViewProps['style'];
+   * title to display in the center of the top bar
+   */
+  title?: string;
+  /**
+   * title custom style
+   */
+  titleStyle?: StyleProp<TextStyle>;
+  /**
+   * done action props (Button props)
+   */
+  doneButtonProps?: Omit<ButtonProps, 'onPress'>;
+  /**
+   * done action label
+   */
+  doneLabel?: string;
+  /**
+   * done action icon
+   */
+  doneIcon?: ImageSourcePropType;
+  /**
+   * done action callback
+   */
+  onDone?: (props?: any) => void;
+  /**
+   * cancel action props (Button props)
+   */
+  cancelButtonProps?: Omit<ButtonProps, 'onPress'>;
+  /**
+   * cancel action label
+   */
+  cancelLabel?: string;
+  /**
+   * cancel action icon
+   */
+  cancelIcon?: ImageSourcePropType;
+  /**
+   * cancel action callback
+   */
+  onCancel?: (props?: any) => void;
+  /**
+   * whether to include status bar or not (height claculations)
+   */
+  includeStatusBar?: boolean;
+  /**
+   * style for the TopBar container
+   */
+  containerStyle?: ViewProps['style'];
+  /**
+   * Whether or not to handle SafeArea
+   */
+  useSafeArea?: boolean;
 }
 
 type topBarButtonProp = {
@@ -65,7 +69,7 @@ type topBarButtonProp = {
   icon?: ImageSourcePropType;
   accessibilityLabel?: string;
   buttonProps?: Omit<ButtonProps, 'onPress'>;
-}
+};
 
 const TOP_BAR_HEIGHT = Constants.isIOS ? 44 : 56;
 const DEFAULT_BUTTON_PROPS = {
@@ -132,10 +136,10 @@ class TopBar extends Component<ModalTopBarProps> {
   }
 
   render() {
-    const {title, titleStyle, includeStatusBar, containerStyle} = this.props;
+    const {title, titleStyle, includeStatusBar, containerStyle, useSafeArea} = this.props;
 
     return (
-      <View style={containerStyle}>
+      <View style={containerStyle} useSafeArea={useSafeArea}>
         {includeStatusBar && <View style={styles.statusBar}/>}
         <View style={styles.container}>
           <View row flex bottom paddingL-15 centerV>

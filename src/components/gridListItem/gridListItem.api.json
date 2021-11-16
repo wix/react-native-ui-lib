@@ -1,0 +1,52 @@
+{
+  "name": "GridListItem",
+  "category": "layoutsAndTemplates",
+  "description": "A single grid view/list item component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx",
+  "props": [
+    {"name": "imageProps", "type": "ImageProps", "description": "Image props object for rendering an image item"},
+    {
+      "name": "containerProps",
+      "type": "TouchableOpacityProps | ViewProps",
+      "description": "Props to pass on to the touchable container"
+    },
+    {
+      "name": "renderCustomItem",
+      "type": "() => React.ReactElement",
+      "description": "Custom GridListItem to be rendered in the GridView",
+      "required": ""
+    },
+    {"name": "itemSize", "type": "number | ImageSize", "description": "The item size"},
+    {"name": "title", "type": "string | React.ReactElement", "description": "Title content text"},
+    {"name": "titleTypography", "type": "string", "description": "Title content typography"},
+    {"name": "titleColor", "type": "string", "description": "Title content color"},
+    {"name": "titleLines", "type": "number", "description": "Title content number of lines"},
+    {"name": "subtitle", "type": "string | React.ReactElement", "description": "Subtitle content text"},
+    {"name": "subtitleTypography", "type": "string", "description": "Subtitle content typography"},
+    {"name": "subtitleColor", "type": "string", "description": "Subtitle content color"},
+    {"name": "subtitleLines", "type": "number", "description": "Subtitle content number of lines"},
+    {"name": "description", "type": "string | React.ReactElement", "description": "Description content text"},
+    {"name": "descriptionTypography", "type": "string", "description": "Description content typography"},
+    {"name": "descriptionColor", "type": "string", "description": "Description content color"},
+    {"name": "descriptionLines", "type": "number", "description": "Description content number of lines"},
+    {
+      "name": "overlayText",
+      "type": "boolean",
+      "description": "Renders the title, subtitle and description inside the item"
+    },
+    {
+      "name": "overlayTextContainerStyle",
+      "type": "ViewStyle",
+      "description": "Custom container styling for inline text"
+    },
+    {"name": "alignToStart", "type": "boolean", "description": "Should content be align to start", "default": "center"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Custom container style"},
+    {"name": "onPress", "type": "TouchableOpacityProps['onPress']", "description": "The item's action handler"},
+    {
+      "name": "renderOverlay",
+      "type": "() => React.ReactElement",
+      "description": "Renders an overlay on top of the image"
+    },
+    {"name": "testID", "type": "string", "description": "Test ID for component"}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "TabController",
+  "category": "layoutsAndTemplates",
+  "description": "A performant solution for a tab controller with lazy load mechanism",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx",
+  "note": "This component is based on react-native-gesture-handler.\nOn Android, when using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC",
+  "images": [],
+  "props": [
+    {"name": "items", "type": "TabControllerItemProps[]", "description": "The list of tab bar items"},
+    {"name": "initialIndex", "type": "number", "description": "Initial selected index", "default": "0"},
+    {"name": "selectedIndex", "type": "number", "description": "The current selected index", "deprecated": true},
+    {
+      "name": "onChangeIndex",
+      "type": "(index: number, prevIndex: number | null) => void",
+      "description": "Callback for when index has change (will not be called on ignored items)"
+    },
+    {
+      "name": "asCarousel",
+      "type": "boolean",
+      "description": "When using TabController.PageCarousel this should be turned on",
+      "default": "false"
+    },
+    {"name": "carouselPageWidth;", "type": "number", "description": "Pass for custom carousel page width"}
+  ]
+}
