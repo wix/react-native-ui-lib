@@ -1,0 +1,34 @@
+{
+  "name": "Card.Section",
+  "category": "basic",
+  "description": "Inner component for rendering content easily inside a Card component",
+  "extends": ["View"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/view/index.tsx"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx",
+  "props": [
+    {
+      "name": "content",
+      "type": "ContentType[]",
+      "description": "Text content. Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}"
+    },
+    {"name": "contentStyle", "type": "ViewStyle", "description": "Component's container style"},
+    {"name": "backgroundColor", "type": "string", "description": "Background color"},
+    {
+      "name": "leadingIcon",
+      "type": "ImageProps",
+      "description": "Image props for a leading icon to render before the text"
+    },
+    {
+      "name": "trailingIcon",
+      "type": "ImageProps",
+      "description": "Image props for a trailing icon to render after the text"
+    },
+    {
+      "name": "imageSource",
+      "type": "ImageSourcePropType",
+      "description": "Will be used for the background when provided"
+    },
+    {"name": "imageStyle", "type": "ImageStyle", "description": "The style for the background image"},
+    {"name": "imageProps", "type": "ImageProps", "description": "Other image props that will be passed to the image"}
+  ]
+}
