@@ -35,7 +35,7 @@
     },
     {
       "name": "renderItem",
-      "type": "(value, {...props, isSelected}, itemLabel) => void",
+      "type": "(value, {{...props, isSelected}}, itemLabel) => void",
       "description": "Render custom picker item"
     },
     {
@@ -58,7 +58,7 @@
     {"name": "showSearch", "type": "boolean", "description": "Show search input to filter picker items by label"},
     {
       "name": "searchStyle",
-      "type": "{color: string, placeholderTextColor: string, selectionColor: string}",
+      "type": "{{color: string, placeholderTextColor: string, selectionColor: string}}",
       "description": "Style object for the search input (only when passing showSearch)"
     },
     {
