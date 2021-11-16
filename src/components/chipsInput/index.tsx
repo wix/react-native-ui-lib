@@ -298,6 +298,7 @@ class ChipsInput extends Component<OwnProps, State> {
   }
 
   onFocus = () => {
+    _.invoke(this.props, 'onFocus');
     this.setState({isFocused: true});
   }
 
