@@ -1,0 +1,32 @@
+{
+  "name": "TabController.TabBarItem",
+  "category": "layoutsAndTemplates",
+  "description": "TabController's TabBarItem component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx",
+  "images": [],
+  "props": [
+    {"name": "label", "type": "string", "description": "Label of the tab"},
+    {"name": "labelStyle;", "type": "TextStyle", "description": "Custom label style"},
+    {"name": "selectedLabelStyle", "type": "TextStyle", "description": "Custom selected label style"},
+    {"name": "labelColor", "type": "string", "description": "The default label color", "default": "Colors.black"},
+    {"name": "selectedLabelColor", "type": "string", "description": "The selected label color", "default": "Colors.primary"},
+    {"name": "icon", "type": "number", "description": "Icon of the tab"},
+    {"name": "iconColor", "type": "string", "description": "Icon tint color"},
+    {"name": "selectedIconColor", "type": "string", "description": "Icon selected tint color"},
+    {"name": "badge", "type": "BadgeProps", "description": "Badge component props to display next the item label"},
+    {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
+    {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
+    {"name": "width", "type": "number", "description": "A fixed width for the item"},
+    {"name": "ignore", "type": "boolean", "description": "Ignore tab presses"},
+    {"name": "onPress", "type": "(index: number) => void", "description": "Callback for when pressing a tab"},
+    {"name": "uppercase", "type": "boolean", "description": "Whether to change the text to uppercase"},
+    {"name": "activeOpacity", "type": "number", "description": "The active opacity when pressing a tab"},
+    {
+      "name": "activeBackgroundColor",
+      "type": "string",
+      "description": " Apply background color on press for TouchableOpacity"
+    },
+    {"name": "style", "type": "ViewStyle", "description": "Pass custom style"},
+    {"name": "testID", "type": "string", "description": "Used as a testing identifier"}
+  ]
+}

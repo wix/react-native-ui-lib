@@ -7,7 +7,7 @@ import {Colors} from '../../style';
 /**
  * @description: Image component that loads first a small thumbnail of the images, 
  *               and fades-in the full-sized image with animation once it's loaded
- * @extends: Animated.Image 
+ * @extends: AnimatedImage
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressiveImageScreen.js
  */
 class ProgressiveImage extends React.Component {

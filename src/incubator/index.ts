@@ -7,6 +7,8 @@ export {default as PanView, PanViewProps, PanViewDirections, PanViewDismissThres
 export {
   default as TransitionView,
   TransitionViewProps,
-  Direction,
+  TransitionViewDirection,
+  TransitionViewDirectionEnum,
   TransitionViewAnimationType
 } from './TransitionView';
+export {default as Dialog, DialogProps} from './Dialog';

@@ -1,0 +1,18 @@
+{
+  "name": "StateScreen",
+  "category": "layoutsAndTemplates",
+  "description": "Component that shows a full screen for a certain state, like an empty state",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/EmptyStateScreen.tsx",
+  "images": ["https://user-images.githubusercontent.com/33805983/34672894-f262ab84-f488-11e7-83f0-4ee0f0ac34ba.png"],
+  "props": [
+    {
+      "name": "imageSource",
+      "type": "ImageURISource",
+      "description": "The image source that's showing at the top. use an image that was required locally"
+    },
+    {"name": "title", "type": "string", "description": "To to show as the title"},
+    {"name": "ctaLabel", "type": "string", "description": "Text to to show in the CTA button"},
+    {"name": "onCtaPress", "type": "() => void", "description": "Action handler for CTA button"},
+    {"name": "testID", "type": "string", "description": "Use to identify the container in tests"}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "LoaderScreen",
+  "category": "layoutsAndTemplates",
+  "description": "Component that shows a full screen with an activity indicator",
+  "extends": ["ActivityIndicator"],
+  "extendsLink": ["https://reactnative.dev/docs/activityindicator"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/LoadingScreen.tsx",
+  "props": [
+    {"name": "loaderColor", "type": "string", "description": "Color of the loading indicator"},
+    {"name": "customLoader", "type": "React.ReactChild", "description": "Custom loader"},
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "description": "Color of the loader background (only when passing 'overlay')"
+    },
+    {"name": "message", "type": "string", "description": "loader message"},
+    {"name": "messageStyle", "type": "TextStyle", "description": "message style"},
+    {"name": "overlay", "type": "boolean", "description": "Show the screen as an absolute overlay"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Custom container style"}
+  ]
+}

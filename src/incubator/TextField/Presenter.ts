@@ -2,6 +2,8 @@ import _ from 'lodash';
 import {Colors} from './../../style';
 import {FieldContextType} from './FieldContext';
 import {ColorType, Validator} from './types';
+// TODO: Fix this import after moving all TextField types to a single file after we move to the new docs
+import {TextFieldProps} from './index';
 import formValidators from './validators';
 
 export function getColorByState(color?: ColorType, context?: FieldContextType) {
@@ -60,5 +62,16 @@ export function getRelevantValidationMessage(validationMessage: string | string[
     return validationMessage;
   } else if (_.isArray(validationMessage)) {
     return validationMessage[failingValidatorIndex];
+  }
+}
+
+export function shouldHidePlaceholder({floatingPlaceholder, hint, floatOnFocus}: TextFieldProps, isFocused: boolean) {
+  if (floatingPlaceholder) {
+    if (hint && isFocused) {
+      return !floatOnFocus;
+    }
+    return true;
+  } else {
+    return false;
   }
 }

@@ -1,0 +1,32 @@
+{
+  "name": "TouchableOpacity",
+  "category": "basic",
+  "description": "A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor",
+  "extends": ["TouchableOpacity"],
+  "extendsLink": ["https://reactnative.dev/docs/touchableopacity"],
+  "modifiers": ["margins", "paddings", "alignments", "background", "borderRadius"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx",
+  "images": ["https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif"],
+  "props": [
+    {"name": "backgroundColor", "type": "string", "description": "Background color for TouchableOpacity"},
+    {"name": "throttleTime", "type": "number", "description": "Throttle time in MS for onPress callback"},
+    {"name": "throttleOptions", "type": "ThrottleOptions", "description": "Throttle options"},
+    {
+      "name": "activeBackgroundColor",
+      "type": "string",
+      "description": "Apply background color on TouchableOpacity when active (press is on)"
+    },
+    {
+      "name": "useNative",
+      "type": "boolean",
+      "description": "Should use an enhanced native implementation with extra features"
+    },
+    {
+      "name": "customValue",
+      "type": "any",
+      "description": "Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback"
+    },
+    {"name": "style", "type": "ViewStyle", "description": "Custom style"},
+    {"name": "onPress", "type": "(props) => void", "description": "On press callback"}
+  ]
+}
