@@ -84,6 +84,7 @@ const ScrollBarGradient = ({
         left: left ? gradientMargins : undefined
       }}
     >
+      {/* @ts-expect-error */}
       <AnimatedImage
         source={gradientImage}
         style={{

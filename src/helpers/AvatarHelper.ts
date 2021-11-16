@@ -69,6 +69,7 @@ export function patchGravatarUrl(gravatarUrl: string) {
   const {query} = url;
   query.d = '404';
   delete query.default;
+  // @ts-expect-error
   url.set('query', query);
   return url.toString();
 }
