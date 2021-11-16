@@ -54,7 +54,7 @@ export interface WheelPickerProps {
   /**
    * Row text style
    */
-  textStyle?: TextStyle;
+  textStyle?: Omit<TextStyle, 'color'>;
   /**
    * Additional label on the right of the item text
    */
