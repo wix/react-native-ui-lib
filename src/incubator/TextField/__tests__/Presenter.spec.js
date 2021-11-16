@@ -59,4 +59,22 @@ describe('TextField:Presenter', () => {
       expect(uut.getRelevantValidationMessage(messages, 1)).toBe(messages[1]);
     });
   });
+
+  describe('Should hide placeholder', () => {
+    it('should keep it visible when floatingPlaceholder is false', () => {
+      expect(uut.shouldHidePlaceholder({floatingPlaceholder: false})).toBe(false);
+    });
+
+    it('should hide it when using floatingPlaceholder', () => {
+      expect(uut.shouldHidePlaceholder({floatingPlaceholder: true})).toBe(true);
+    });
+
+    it('should show it when floatingPlaceholder is true, user passed a hint text, the field is focused and floatOnFocus is true', () => {
+      expect(uut.shouldHidePlaceholder({floatingPlaceholder: true, hint: 'Hint text', floatOnFocus: true}, true)).toBe(false);
+    });
+    
+    it('should hide it when floatingPlaceholder is true, user passed a hint text, the field is focused but floatOnFocus is false', () => {
+      expect(uut.shouldHidePlaceholder({floatingPlaceholder: true, hint: 'Hint text', floatOnFocus: false}, true)).toBe(true);
+    });
+  });
 });

@@ -1,0 +1,46 @@
+{
+  "name": "RadioButton",
+  "category": "form",
+  "description": "A Radio Button component, should be wrapped with a RadioGroup",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/RadioButtonScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Default.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Alignment.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Custom.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/RadioButton/Individual.png?raw=true"
+  ],
+  "props": [
+    {
+      "name": "value",
+      "type": "string | number | boolean",
+      "description": "The identifier value of the radio button. must be different than other RadioButtons in the same group"
+    },
+    {
+      "name": "selected",
+      "type": "boolean",
+      "description": "When using RadioButton without a RadioGroup, use this prop to toggle selection"
+    },
+    {"name": "onPress", "type": "(selected: boolean) => void", "description": "Invoked when pressing the button"},
+    {"name": "disabled", "type": "boolean", "description": "Whether the radio button should be disabled"},
+    {"name": "color", "type": "string", "description": "The color of the radio button", "default": "Colors.primary"},
+    {
+      "name": "size",
+      "type": "number",
+      "description": "The size of the radio button, affect both width & height",
+      "default": "24"
+    },
+    {"name": "borderRadius", "type": "number", "description": "The radio button border radius", "default": "24"},
+    {"name": "label", "type": "string", "description": "A label for the radio button description"},
+    {"name": "labelStyle", "type": "TextStyle", "description": "Label style"},
+    {"name": "iconSource", "type": "ImageSource", "description": "Icon image source"},
+    {"name": "iconStyle", "type": "ImageStyle", "description": "Icon image style"},
+    {
+      "name": "iconOnRight",
+      "type": "boolean",
+      "description": "Should the icon be on the right side of the label",
+      "default": "false"
+    },
+    {"name": "contentOnRight", "type": "boolean", "description": "Should the content be rendered right to the button"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styling for the container"}
+  ]
+}

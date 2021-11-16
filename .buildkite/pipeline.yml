@@ -1,0 +1,15 @@
+steps:
+  - block: ":rocket: Release!"
+    prompt: "Fill out the details for release"
+    if: 'build.message =~ /^release\$/i'
+    fields:
+      - text: "VERSION"
+        key: "version"
+  
+  - label: ":hammer_and_pick: Build"
+    command:
+    - "nvm install"
+    - "npm install"
+    - "npm run test"
+    - "npm run build"
+    - "[[ $BUILDKITE_PULL_REQUEST == 'false' ]] && npm run bkRelease && npm run demo || true"
