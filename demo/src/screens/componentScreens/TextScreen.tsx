@@ -3,9 +3,8 @@ import {Animated, ScrollView} from 'react-native';
 import {View, Text, Colors} from 'react-native-ui-lib';
 
 class TextScreen extends Component {
-  state = {};
-  toggle = false;
-  animatedValue = new Animated.Value(0);
+  private toggle = false;
+  private animatedValue = new Animated.Value(0);
 
   animate = () => {
     this.toggle = !this.toggle;
@@ -89,6 +88,7 @@ class TextScreen extends Component {
             <Text
               text70
               animated
+              // @ts-expect-error
               style={{transform: [{scale: this.animatedValue.interpolate({inputRange: [0, 1], outputRange: [1, 2]})}]}}
               onPress={this.animate}
             >
