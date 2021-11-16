@@ -63,6 +63,9 @@ class TextScreen extends Component {
             <Text uppercase text70>
               uppercase
             </Text>
+            <Text underline text70>
+              underline
+            </Text>
           </View>
           {this.renderDivider()}
 
