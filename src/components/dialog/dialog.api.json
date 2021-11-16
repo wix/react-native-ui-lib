@@ -1,0 +1,51 @@
+{
+  "name": "Dialog",
+  "category": "overlays",
+  "description": "Component for displaying custom content inside a popup dialog",
+  "note": "Use alignment modifiers to control the dialog position (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)",
+  "modifiers": ["alignment"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Dialog/Dialog.gif?raw=true"],
+  "props": [
+    {"name": "visible", "type": "boolean", "description": "Control visibility of the component"},
+    {"name": "ignoreBackgroundPress", "type": "boolean", "description": "Whether or not to ignore background press"},
+    {
+      "name": "overlayBackgroundColor",
+      "type": "string",
+      "description": "The color of the overlay background",
+      "default": "Colors.rgba(Colors.grey10, 0.6)"
+    },
+    {"name": "width", "type": "string | number", "description": "Width", "default": "90%"},
+    {"name": "height", "type": "string | number", "description": "Height", "default": "undefined"},
+    {
+      "name": "panDirection",
+      "type": "UP | DOWN | LEFT | RIGHT",
+      "description": "The direction of the allowed pan",
+      "default": "PanningProvider.Directions.DOWN"
+    },
+    {"name": "onDismiss", "type": "(props?: any) => void", "description": "Called when clicking on the background"},
+    {
+      "name": "onDialogDismissed",
+      "type": "(props: any) => void",
+      "description": "Called once the dialog has been dismissed completely"
+    },
+    {
+      "name": "renderPannableHeader",
+      "type": "(props: any) => JSX.Element",
+      "description": "For scrollable content (the children of the dialog)",
+      "note": "If this is added only the header will be pannable. Props are transferred to the 'renderPannableHeader'"
+    },
+    {
+      "name": "pannableHeaderProps",
+      "type": "any",
+      "description": "The props that will be passed to the pannable header"
+    },
+    {
+      "name": "useSafeArea",
+      "type": "boolean",
+      "description": "In iOS, use safe area, in case component attached to the bottom"
+    },
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}
