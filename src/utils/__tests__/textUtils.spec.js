@@ -45,9 +45,14 @@ describe('Text', () => {
       expect(result).toEqual([{string: 'uilib', shouldHighlight: false}, {string: '@wix', shouldHighlight: true}, {string: '.com', shouldHighlight: false}]);
     });
 
-    it('Should handle empty string .', () => {
+    it('Should handle empty string.', () => {
       const result = getTextPartsByHighlight('@ancing in the @ark', '');
       expect(result).toEqual([{string: '@ancing in the @ark', shouldHighlight: false}]);
+    });
+
+    it('Should handle full string.', () => {
+      const result = getTextPartsByHighlight('Dancing in the Dark', 'Dancing in the Dark');
+      expect(result).toEqual([{string: 'Dancing in the Dark', shouldHighlight: true}]);
     });
   });
 
