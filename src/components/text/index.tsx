@@ -22,13 +22,17 @@ export type TextProps = RNTextProps &
      */
     color?: string;
     /**
-     * whether to center the text (using textAlign)
+     * Whether to center the text (using textAlign)
      */
     center?: boolean;
     /**
-     * whether to change the text to uppercase
+     * Whether to change the text to uppercase
      */
     uppercase?: boolean;
+    /**
+     * Whether to add an underline
+     */
+    underline?: boolean;
     /**
      * Substring to highlight
      */
@@ -97,7 +101,7 @@ class Text extends PureComponent<PropsTypes> {
   }
 
   render() {
-    const {modifiers, style, center, uppercase, children, forwardedRef, ...others} = this.props;
+    const {modifiers, style, center, uppercase, underline, children, forwardedRef, ...others} = this.props;
     const color = this.props.color || modifiers.color;
     const {margins, typography, backgroundColor, flexStyle} = modifiers;
     const textStyle = [
@@ -109,6 +113,7 @@ class Text extends PureComponent<PropsTypes> {
       margins,
       center && styles.centered,
       uppercase && styles.uppercase,
+      underline && styles.underline,
       style
     ];
 
@@ -132,6 +137,9 @@ const styles = StyleSheet.create({
   },
   uppercase: {
     textTransform: 'uppercase'
+  },
+  underline: {
+    textDecorationLine: 'underline'
   },
   highlight: {
     color: Colors.grey30
