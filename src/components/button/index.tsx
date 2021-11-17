@@ -102,10 +102,10 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getLabelColor() {
     const {linkColor, outline, outlineColor, disabled, color: propsColor} = this.props;
-    const link = this.isLink;
+    const isLink = this.isLink;
 
     let color: string | undefined = Colors.white;
-    if (link) {
+    if (isLink) {
       color = linkColor || Colors.primary;
     } else if (outline) {
       color = outlineColor || Colors.primary;
@@ -113,7 +113,7 @@ class Button extends PureComponent<Props, ButtonState> {
       color = undefined; // Colors.grey10;
     }
 
-    if (disabled && (link || outline)) {
+    if (disabled && (isLink || outline)) {
       return DISABLED_COLOR;
     }
 
