@@ -1697,6 +1697,78 @@ exports[`Button container size should return style for xSmall button 2`] = `
 </View>
 `;
 
+exports[`Button hyperlink should render button as a hyperlink 1`] = `
+<View
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "borderRadius": 0,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": undefined,
+      "opacity": 1,
+      "paddingHorizontal": undefined,
+      "paddingVertical": undefined,
+    }
+  }
+>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "textAlign": "left",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        undefined,
+        undefined,
+        Object {
+          "textDecorationLine": "underline",
+        },
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "flex": 0,
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#5A48F5",
+          },
+          Object {},
+          Object {},
+          undefined,
+        ],
+      ]
+    }
+  >
+    Button
+  </Text>
+</View>
+`;
+
 exports[`Button icon should apply color on icon 1`] = `
 <View
   accessibilityRole="button"

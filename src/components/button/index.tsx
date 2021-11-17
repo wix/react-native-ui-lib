@@ -63,9 +63,13 @@ class Button extends PureComponent<Props, ButtonState> {
     return Boolean(outline || outlineColor);
   }
 
+  get isLink() {
+    const {link, hyperlink} = this.props;
+    return link || hyperlink;
+  }
+
   get isFilled() {
-    const {link} = this.props;
-    return !this.isOutline && !link;
+    return !this.isOutline && !this.isLink;
   }
 
   get isIconButton() {
@@ -75,10 +79,10 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getBackgroundColor() {
     const {backgroundColor: themeBackgroundColor, modifiers} = this.props;
-    const {disabled, outline, link, disabledBackgroundColor, backgroundColor: propsBackgroundColor} = this.props;
+    const {disabled, outline, disabledBackgroundColor, backgroundColor: propsBackgroundColor} = this.props;
     const {backgroundColor: stateBackgroundColor} = modifiers;
 
-    if (!outline && !link) {
+    if (!outline && !this.isLink) {
       if (disabled) {
         return disabledBackgroundColor || DISABLED_COLOR;
       }
@@ -97,7 +101,8 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getLabelColor() {
-    const {link, linkColor, outline, outlineColor, disabled, color: propsColor} = this.props;
+    const {linkColor, outline, outlineColor, disabled, color: propsColor} = this.props;
+    const link = this.isLink;
 
     let color: string | undefined = Colors.white;
     if (link) {
@@ -130,7 +135,7 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getContainerSizeStyle() {
-    const {outline, link, avoidMinWidth, avoidInnerPadding, round} = this.props;
+    const {outline, avoidMinWidth, avoidInnerPadding, round} = this.props;
     const size = this.props.size || DEFAULT_SIZE;
     const outlineWidth = this.props.outlineWidth || 1;
 
@@ -177,7 +182,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
 
-    if (link || (this.isIconButton && !round)) {
+    if (this.isLink || (this.isIconButton && !round)) {
       containerSizeStyle.paddingVertical = undefined;
       containerSizeStyle.paddingHorizontal = undefined;
       containerSizeStyle.minWidth = undefined;
@@ -196,10 +201,10 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getOutlineStyle() {
-    const {outline, outlineColor, outlineWidth, link, disabled} = this.props;
+    const {outline, outlineColor, outlineWidth, disabled} = this.props;
 
     let outlineStyle;
-    if ((outline || outlineColor) && !link) {
+    if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
         borderColor: outlineColor || Colors.primary
@@ -213,9 +218,9 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getBorderRadiusStyle() {
-    const {link, fullWidth, borderRadius: borderRadiusFromProps, modifiers} = this.props;
+    const {fullWidth, borderRadius: borderRadiusFromProps, modifiers} = this.props;
 
-    if (link || fullWidth || borderRadiusFromProps === 0) {
+    if (this.isLink || fullWidth || borderRadiusFromProps === 0) {
       return {borderRadius: 0};
     }
 
@@ -290,7 +295,7 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   renderLabel() {
-    const {label, labelStyle, labelProps} = this.props;
+    const {label, labelStyle, labelProps, hyperlink} = this.props;
     const typography = extractTypographyValue(this.props);
     const color = this.getLabelColor();
     const labelSizeStyle = this.getLabelSizeStyle();
@@ -299,6 +304,7 @@ class Button extends PureComponent<Props, ButtonState> {
       return (
         <Text
           style={[this.styles.text, !!color && {color}, labelSizeStyle, {...typography}, labelStyle]}
+          underline={hyperlink}
           numberOfLines={1}
           {...labelProps}
         >
@@ -310,7 +316,7 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   render() {
-    const {onPress, disabled, link, style, testID, animateLayout, modifiers, forwardedRef, ...others} = this.props;
+    const {onPress, disabled, style, testID, animateLayout, modifiers, forwardedRef, ...others} = this.props;
     const shadowStyle = this.getShadowStyle();
     const {margins} = modifiers;
     const backgroundColor = this.getBackgroundColor();
@@ -326,7 +332,7 @@ class Button extends PureComponent<Props, ButtonState> {
           this.styles.container,
           animateLayout && this.getAnimationDirectionStyle(),
           containerSizeStyle,
-          link && this.styles.innerContainerLink,
+          this.isLink && this.styles.innerContainerLink,
           shadowStyle,
           margins,
           backgroundColor && {backgroundColor},
