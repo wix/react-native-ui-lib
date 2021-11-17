@@ -275,9 +275,8 @@ export default class TextField extends BaseInput {
     }
   };
 
-  getPlaceholderText = memoize(() => {
+  getPlaceholderText = memoize((placeholder, helperText) => {
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
-    const {placeholder, helperText} = this.props;
     const text = this.shouldFakePlaceholder()
       ? this.shouldShowHelperText()
         ? helperText
@@ -588,6 +587,8 @@ export default class TextField extends BaseInput {
       expandable,
       rightIconSource,
       color,
+      placeholder, 
+      helperText,
       ...others
     } = this.getThemeProps();
 
@@ -610,7 +611,7 @@ export default class TextField extends BaseInput {
       style
     ];
 
-    const placeholderText = this.getPlaceholderText();
+    const placeholderText = this.getPlaceholderText(placeholder, helperText);
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
     const isEditable = !this.isDisabled() && !expandable;
 
