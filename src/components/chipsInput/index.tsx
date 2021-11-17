@@ -297,12 +297,12 @@ class ChipsInput extends Component<OwnProps, State> {
     return _.get(item, 'label');
   }
 
-  onFocus = (event: NativeSyntheticEvent) => {
+  onFocus = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
     _.invoke(this.props, 'onFocus', event);
     this.setState({isFocused: true});
   }
 
-  onBlur = (event: NativeSyntheticEvent) => {
+  onBlur = (event: NativeSyntheticEvent<TextInputBlurEventData>) => {
     _.invoke(this.props, 'onBlur', event);
     this.setState({isFocused: false});
   }
