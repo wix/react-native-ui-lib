@@ -383,6 +383,12 @@ export default class ButtonsScreen extends Component {
               style={{marginBottom: ButtonSpace}}
             />
 
+            <Button
+              label="hyperlink button"
+              hyperlink
+              style={{marginBottom: ButtonSpace}}
+            />
+
             <Button label="Icon on right" iconSource={plusIcon} iconOnRight />
           </View>
 

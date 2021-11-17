@@ -12,7 +12,7 @@
   "props": [
     {
       "name": "size",
-      "type": "number | {width: number, height: number}",
+      "type": "number | {{width: number, height: number}}",
       "description": "Chip's size. Number or a width and height object"
     },
     {"name": "onPress", "type": "(props: any) => void", "description": "On Chip press callback"},
