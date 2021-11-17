@@ -1,0 +1,29 @@
+{
+  "name": "SectionsWheelPicker",
+  "category": "form",
+  "description": "SectionsWheelPicker component for presenting set of WheelPickers",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SectionsWheelPickerScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/SectionsWheelPicker/SectionsWheelPicker.gif?raw=true"
+  ],
+  "props": [
+    {"name": "sections", "type": "WheelPickerProps", "description": "Array of sections"},
+    {
+      "name": "itemHeight",
+      "type": "number",
+      "description": "Describe the height of each item in the WheelPicker",
+      "default": "44"
+    },
+    {
+      "name": "numberOfVisibleRows",
+      "type": "number",
+      "description": "Describe the number of rows visible",
+      "default": "5"
+    },
+    {"name": "activeTextColor", "type": "string", "description": "Text color for the focused row"},
+    {"name": "inactiveTextColor", "type": "string", "description": "Text color for other, non-focused rows"},
+    {"name": "textStyle", "type": "TextStyle", "description": "Row text style"},
+    {"name": "xxx", "type": "xxxx", "description": "xxxxx"},
+    {"name": "testID", "type": "string", "description": "The component test id"}
+  ]
+}

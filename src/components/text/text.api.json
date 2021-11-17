@@ -1,0 +1,21 @@
+{
+  "name": "Text",
+  "category": "basic",
+  "description": "A wrapper for Text component with extra functionality like modifiers support",
+  "extends": ["Text"],
+  "extendsLink": ["https://reactnative.dev/docs/text"],
+  "modifiers": ["margins", "color", "typography"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Modifiers.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Transformation.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Highlights.png?raw=true"
+  ],
+  "props": [
+    {"name": "color", "type": "string", "description": "Color of the text"},
+    {"name": "center", "type": "boolean", "description": "Whether to center the text (using textAlign)"},
+    {"name": "uppercase", "type": "boolean", "description": "Whether to change the text to uppercase"},
+    {"name": "underline", "type": "boolean", "description": "Whether to add an underline"},
+    {"name": "highlightString", "type": "string | string[]", "description": "Substring to highlight"},
+    {"name": "highlightStyle", "type": "TextStyle", "description": "Custom highlight style for highlight string"},
+    {"name": "animated", "type": "boolean", "description": "Use Animated.Text as a container"}
+  ]
+}

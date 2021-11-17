@@ -44,6 +44,7 @@ exports[`Button backgroundColor should return backgroundColor according to modif
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -111,6 +112,7 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -182,6 +184,7 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -251,6 +254,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -318,6 +322,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -391,6 +396,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -458,6 +464,7 @@ exports[`Button border radius should return 0 border radius when border radius p
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -529,6 +536,7 @@ exports[`Button border radius should return 0 border radius when button is full 
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -598,6 +606,7 @@ exports[`Button border radius should return given border radius when use plain n
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -665,6 +674,7 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -741,6 +751,7 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -813,6 +824,7 @@ exports[`Button container size should have no padding of button is a link nor mi
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -895,6 +907,7 @@ exports[`Button container size should have no padding of button is an icon butto
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -911,6 +924,7 @@ exports[`Button container size should have no padding of button is an icon butto
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -989,6 +1003,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -1056,6 +1071,7 @@ exports[`Button container size should return style for large button 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -1129,6 +1145,7 @@ exports[`Button container size should return style for large button 2`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -1196,6 +1213,7 @@ exports[`Button container size should return style for medium button 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -1274,6 +1292,7 @@ exports[`Button container size should return style for medium button 2`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -1348,6 +1367,7 @@ exports[`Button container size should return style for round button 1`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -1415,6 +1435,7 @@ exports[`Button container size should return style for small button 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -1493,6 +1514,7 @@ exports[`Button container size should return style for small button 2`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -1565,6 +1587,7 @@ exports[`Button container size should return style for xSmall button 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -1643,6 +1666,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -1662,6 +1686,78 @@ exports[`Button container size should return style for xSmall button 2`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
+          Object {},
+          undefined,
+        ],
+      ]
+    }
+  >
+    Button
+  </Text>
+</View>
+`;
+
+exports[`Button hyperlink should render button as a hyperlink 1`] = `
+<View
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "borderRadius": 0,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": undefined,
+      "opacity": 1,
+      "paddingHorizontal": undefined,
+      "paddingVertical": undefined,
+    }
+  }
+>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "textAlign": "left",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        undefined,
+        undefined,
+        Object {
+          "textDecorationLine": "underline",
+        },
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "flex": 0,
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#5A48F5",
+          },
+          Object {},
           Object {},
           undefined,
         ],
@@ -1722,6 +1818,7 @@ exports[`Button icon should apply color on icon 1`] = `
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1777,6 +1874,7 @@ exports[`Button icon should apply color on icon 2`] = `
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1835,6 +1933,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
             "tintColor": "red",
           },
         ],
+        false,
       ]
     }
   />
@@ -1892,6 +1991,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -1947,6 +2047,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -2002,6 +2103,7 @@ exports[`Button icon should return icon style according to different variations 
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -2050,6 +2152,7 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -2119,6 +2222,7 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -2195,6 +2299,7 @@ exports[`Button icon should return the right spacing according to button size wh
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -2267,6 +2372,7 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -2343,6 +2449,7 @@ exports[`Button label size should return style for large button 1`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -2410,6 +2517,7 @@ exports[`Button label size should return style for medium button 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -2486,6 +2594,7 @@ exports[`Button label size should return style for small button 1`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -2558,6 +2667,7 @@ exports[`Button label size should return style for xSmall button 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -2634,6 +2744,7 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -2701,6 +2812,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -2772,6 +2884,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -2841,6 +2954,7 @@ exports[`Button labelColor should return disabled text color according to theme 
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -2908,6 +3022,7 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -2984,6 +3099,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
           },
           undefined,
         ],
+        false,
       ]
     }
   />
@@ -3032,6 +3148,7 @@ exports[`Button link should render button as a link 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -3105,6 +3222,7 @@ exports[`Button outline should render button with an outline 1`] = `
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -3174,6 +3292,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -3247,6 +3366,7 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -3316,6 +3436,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [
@@ -3389,6 +3510,7 @@ exports[`Button outline should return disabled color for outline if button is di
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -3458,6 +3580,7 @@ exports[`Button outline should return undefined when link is true, even when out
         Object {},
         undefined,
         undefined,
+        undefined,
         Array [
           Object {
             "backgroundColor": "transparent",
@@ -3525,6 +3648,7 @@ exports[`Button should render default button 1`] = `
         undefined,
         undefined,
         Object {},
+        undefined,
         undefined,
         undefined,
         Array [

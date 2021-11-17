@@ -15,7 +15,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * the badge size
      */
-    size?: number | string;
+    size?: number;
     /**
      * Press handler
      */
@@ -83,7 +83,7 @@ declare class Badge extends PureComponent<BadgeProps> {
         accessibilityRole: string;
         accessibilityLabel: string;
     };
-    get size(): string | number;
+    get size(): number;
     isSmallBadge(): boolean;
     getBadgeSizeStyle(): any;
     getFormattedLabel(): any;
@@ -343,7 +343,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * the badge size
      */
-    size?: string | number | undefined;
+    size?: number | undefined;
     /**
      * Press handler
      */

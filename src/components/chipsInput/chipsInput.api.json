@@ -1,0 +1,77 @@
+{
+  "name": "ChipsInput",
+  "category": "form",
+  "description": "Chips input component",
+  "extends": ["TextField"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/textField/index.tsx"],
+  "modifiers": ["typography"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.js",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ChipsInput/ChipsInput.gif?raw=true"],
+  "props": [
+    {
+      "name": "tags",
+      "type": "ChipType[]",
+      "description": "use chips instead. List of tags. can be string boolean or custom object when implementing getLabel",
+      "deprecated": true
+    },
+    {
+      "name": "chips",
+      "type": "ChipsInputChipProps[]",
+      "description": "List of tags. can be string boolean or custom object when implementing getLabel"
+    },
+    {"name": "defaultChipProps", "type": "ChipsInputChipProps", "description": "Style your chips"},
+    {
+      "name": "getLabel",
+      "type": "(tag: ChipType) => any",
+      "description": "Callback for extracting the label out of the tag item"
+    },
+    {
+      "name": "renderTag",
+      "type": "(tag: ChipType, index: number, shouldMarkTag: boolean, label: string) => React.ReactElement",
+      "description": "use chips instead. Callback for custom rendering tag item",
+      "deprecated": true
+    },
+    {"name": "onChangeTags", "type": "() => void", "description": "Callback for 'onChangeTags' event"},
+    {
+      "name": "onCreateTag",
+      "type": "(value: any) => void",
+      "description": "Use chips instead. callback for creating new tag out of input value (good for composing tag object)",
+      "deprecated": true
+    },
+    {
+      "name": "onTagPress",
+      "type": "(index: number, toRemove?: number) => void",
+      "description": "use chips instead. callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}",
+      "deprecated": true
+    },
+    {
+      "name": "validationErrorMessage",
+      "type": "string",
+      "description": "Validation message error appears when tag isn't validate"
+    },
+    {"name": "disableTagRemoval", "type": "boolean", "description": "If true, tags *removal* UX won't be available"},
+    {
+      "name": "disableTagAdding",
+      "type": "boolean",
+      "description": "If true, tags *adding* UX (i.e. by 'submitting' the input text) won't be available"
+    },
+    {"name": "tagStyle", "type": "ViewStyle", "description": "Custom styling for the tag item"},
+    {"name": "inputStyle", "type": "RNTextInputProps['style']", "description": "Custom styling for the text input"},
+    {"name": "hideUnderline", "type": "boolean", "description": "Should hide input underline"},
+    {"name": "maxLength", "type": "number", "description": "Maximum numbers of chips"},
+    {
+      "name": "scrollViewProps",
+      "type": "ScrollViewProps",
+      "description": "Chips with 'maxHeigh' is inside a ScrollView"
+    },
+    {"name": "maxHeight", "type": "number", "description": "Chips inside a ScrollView"},
+    {
+      "name": "leftElement",
+      "type": "JSX.Element | JSX.Element[]",
+      "description": "Custom element before the chips, for example 'search' icon, 'To:' label etc'"
+    },
+    {"name": "value", "type": "any", "description": "The input's value"},
+    {"name": "selectionColor", "type": "string | number", "description": "The color for the selection state"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"}
+  ]
+}

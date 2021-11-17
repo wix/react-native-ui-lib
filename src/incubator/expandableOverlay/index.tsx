@@ -5,6 +5,13 @@ import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../components/dialog';
 
+export interface RenderCustomOverlayProps {
+  visible: boolean;
+  openExpandable: () => void;
+  closeExpandable: () => void;
+  toggleExpandable: () => void;
+}
+
 export type ExpandableOverlayProps = TouchableOpacityProps &
   PropsWithChildren<{
     /**
@@ -31,6 +38,10 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
      * The modal top bar props to pass on
      */
     topBarProps?: ModalTopBarProps;
+    /**
+     * A custom overlay to render instead of Modal or Dialog components
+     */
+    renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement | undefined;
   }>;
 
 interface ExpandableOverlayMethods {
@@ -39,24 +50,37 @@ interface ExpandableOverlayMethods {
 }
 
 const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
-  const {children, expandableContent, useDialog, modalProps, dialogProps, showTopBar, topBarProps, ...others} = props;
-  const [expandableVisible, setExpandableVisible] = useState(false);
-  const showExpandable = useCallback(() => setExpandableVisible(true), []);
-  const hideExpandable = useCallback(() => setExpandableVisible(false), []);
+  const {
+    children,
+    expandableContent,
+    useDialog,
+    modalProps,
+    dialogProps,
+    showTopBar,
+    topBarProps,
+    renderCustomOverlay,
+    ...others
+  } = props;
+  const [visible, setExpandableVisible] = useState(false);
+  const openExpandable = useCallback(() => setExpandableVisible(true), []);
+  const closeExpandable = useCallback(() => {
+    setExpandableVisible(false);
+    useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
+  }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss]);
+
+  const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
+    [visible, openExpandable, closeExpandable]);
 
   useImperativeHandle(ref, () => ({
-    openExpandable: () => {
-      showExpandable();
-    },
-    closeExpandable: () => {
-      hideExpandable();
-    }
+    openExpandable,
+    closeExpandable,
+    toggleExpandable
   }));
 
   const renderModal = () => {
     return (
-      <Modal {...modalProps} visible={expandableVisible} onDismiss={hideExpandable}>
-        {showTopBar && <Modal.TopBar onDone={hideExpandable} {...topBarProps}/>}
+      <Modal {...modalProps} visible={visible} onDismiss={closeExpandable}>
+        {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
         {expandableContent}
       </Modal>
     );
@@ -64,16 +88,29 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const renderDialog = () => {
     return (
-      <Dialog {...dialogProps} visible={expandableVisible} onDismiss={hideExpandable}>
+      <Dialog {...dialogProps} visible={visible} onDismiss={closeExpandable}>
         {expandableContent}
       </Dialog>
     );
   };
 
+  const renderOverlay = () => {
+    if (renderCustomOverlay) {
+      return renderCustomOverlay({
+        visible,
+        openExpandable,
+        closeExpandable,
+        toggleExpandable
+      });
+    } else {
+      return useDialog ? renderDialog() : renderModal();
+    }
+  };
+
   return (
-    <TouchableOpacity {...others} onPress={showExpandable}>
+    <TouchableOpacity {...others} onPress={openExpandable}>
       <View pointerEvents="none">{children}</View>
-      {useDialog ? renderDialog() : renderModal()}
+      {renderOverlay()}
     </TouchableOpacity>
   );
 };

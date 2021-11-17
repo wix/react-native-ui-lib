@@ -1,0 +1,92 @@
+{
+  "name": "TextField",
+  "category": "incubator",
+  "description": "An enhanced customizable TextField with validation support",
+  "extends": ["TextInput"],
+  "extendsLink": ["https://reactnative.dev/docs/textinput"],
+  "modifiers": ["margin", "color", "typography"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorTextFieldScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/FloatingPlaceholder.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Validation.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/ColorByState.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/CharCounter.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Hint.gif?raw=true"
+  ],
+  "props": [
+    {"name": "label", "type": "string", "description": "Field label"},
+    {
+      "name": "labelColor",
+      "type": "ColorType",
+      "description": "Field label color. Either a string or color by state map ({default, focus, error, disabled})"
+    },
+    {"name": "labelStyle", "type": "TextStyle", "description": "Custom style for the field label"},
+    {"name": "labelProps", "type": "TextProps", "description": "Pass extra props to the label Text element"},
+    {"name": "floatingPlaceholder", "type": "boolean", "description": "Pass to add floating placeholder support"},
+    {
+      "name": "floatingPlaceholderStyle",
+      "type": "TextStyle",
+      "description": "Custom style for the floating placeholder"
+    },
+    {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
+    {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
+    {"name": "enableErrors", "type": "boolean", "description": "Should support showing validation error message"},
+    {
+      "name": "validate",
+      "type": "Validator | Validator[]",
+      "description": "A single or multiple validator. Can be a string (required, email) or custom function."
+    },
+    {
+      "name": "validationMessage",
+      "type": "string | string[]",
+      "description": "The validation message to display when field is invalid (depends on validate)"
+    },
+    {
+      "name": "validationMessagePosition",
+      "type": "ValidationMessagePosition",
+      "description": "The position of the validation message (top/bottom)"
+    },
+    {"name": "validationMessageStyle", "type": "TextStyle", "description": "Custom style for the validation message"},
+    {"name": "validateOnStart", "type": "boolean", "description": "Should validate when the TextField mounts"},
+    {"name": "validateOnChange", "type": "boolean", "description": "Should validate when the TextField value changes"},
+    {"name": "validateOnBlur", "type": "boolean", "description": "Should validate when losing focus of TextField"},
+    {
+      "name": "onChangeValidity",
+      "type": "(isValid: boolean) => void",
+      "description": "Callback for when field validity has changed"
+    },
+    {
+      "name": "fieldStyle",
+      "type": "ViewStyle | (context: FieldContextType, props) => ViewStyle",
+      "description": "Internal style for the field container"
+    },
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Container style of the whole component"},
+    {
+      "name": "preset",
+      "type": "'default' | null | string",
+      "description": "Predefined preset to use for styling the field"
+    },
+    {
+      "name": "showCharCounter",
+      "type": "boolean",
+      "description": "Should show a character counter (works only with maxLength)"
+    },
+    {"name": "charCounterStyle", "type": "TextStyle", "description": "Pass custom style to character counter text"},
+    {"name": "placeholder", "type": "string", "description": "The placeholder for the field"},
+    {"name": "floatingPlaceholderColor", "type": "ColorType", "description": "The floating placeholder color"},
+    {
+      "name": "floatingPlaceholderStyle",
+      "type": "TextStyle",
+      "description": "Custom style to pass to the floating placeholder"
+    },
+    {
+      "name": "floatOnFocus",
+      "type": "boolean",
+      "description": "Should placeholder float on focus or when start typing"
+    },
+    {"name": "hint", "type": "string", "description": "A hint text to display when focusing the field"},
+    {"name": "color", "type": "ColorType", "description": "Input color"},
+    {"name": "placeholderTextColor", "type": "ColorType", "description": "Placeholder text color"},
+    {
+      "name": "formatter",
+      "type": "(value) => string | undefined",
+      "description": "Custom formatter for the input value (used only when input if not focused)"
+    }
+  ]
+}
