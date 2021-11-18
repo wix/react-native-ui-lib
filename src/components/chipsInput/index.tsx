@@ -13,7 +13,9 @@ import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Chip, {ChipProps} from '../chip';
 import {getValidationBasedColor, getCounterTextColor, getCounterText, getChipDismissColor, isDisabled} from './Presenter';
-import {TextFieldProps} from '../../../typings/components/Inputs';
+// TODO: We can't use these typing because they break ChipsInput typings
+// Instead we'll use TextInputProps for now till we migrate to new Incubator.TextField
+// import {TextFieldProps} from '../../../typings/components/Inputs';
 
 // TODO: support updating tags externally
 // TODO: support char array as tag creators (like comma)
@@ -22,7 +24,7 @@ import {TextFieldProps} from '../../../typings/components/Inputs';
 type ChipType = string | boolean | any;
 export type ChipsInputChipProps = ChipProps & {invalid?: boolean}
 
-export type ChipsInputProps = TypographyModifiers & TextFieldProps & {
+export type ChipsInputProps = TypographyModifiers & RNTextInputProps /* & TextFieldProps */ & {
   /**
   * DEPRECATED: use chips instead. list of tags. can be string boolean or custom object when implementing getLabel
   */
@@ -394,6 +396,7 @@ class ChipsInput extends Component<OwnProps, State> {
   }
 
   renderTitleText = () => {
+    // @ts-expect-error
     const {title, defaultChipProps} = this.props;
     const color = this.state.isFocused ? getValidationBasedColor(this.state.chips, defaultChipProps) : Colors.grey30;
     return title && (
@@ -449,6 +452,7 @@ class ChipsInput extends Component<OwnProps, State> {
   }
 
   renderTextInput() {
+    // @ts-expect-error
     const {inputStyle, selectionColor, title, ...others} = this.props;
     const {value} = this.state;
     const isLastTagMarked = this.isLastTagMarked();

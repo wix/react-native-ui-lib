@@ -3,12 +3,11 @@ import React, { Component } from 'react';
 import { ViewStyle, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps } from 'react-native';
 import { BaseComponentInjectedProps, TypographyModifiers } from '../../commons/new';
 import { ChipProps } from '../chip';
-import { TextFieldProps } from '../../../typings/components/Inputs';
 declare type ChipType = string | boolean | any;
 export declare type ChipsInputChipProps = ChipProps & {
     invalid?: boolean;
 };
-export declare type ChipsInputProps = TypographyModifiers & TextFieldProps & {
+export declare type ChipsInputProps = TypographyModifiers & RNTextInputProps & {
     /**
     * DEPRECATED: use chips instead. list of tags. can be string boolean or custom object when implementing getLabel
     */
@@ -132,7 +131,7 @@ declare class ChipsInput extends Component<OwnProps, State> {
     renderTag: (tag: ChipType, index: number) => JSX.Element;
     renderTagWrapper: (tag: ChipType, index: number) => JSX.Element;
     renderNewChip: () => JSX.Element[];
-    renderTitleText: () => "" | JSX.Element | undefined;
+    renderTitleText: () => any;
     renderChips: () => JSX.Element[];
     renderCharCounter(): JSX.Element | undefined;
     renderUnderline: () => JSX.Element;
