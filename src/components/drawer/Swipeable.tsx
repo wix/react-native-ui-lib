@@ -61,7 +61,7 @@ type Props = {
   disableHaptic?: boolean
 };
 
-type StateType = {
+type State = {
   dragX: Animated.Value,
   rowTranslation: Animated.Value,
   leftWidth: number | typeof undefined,
@@ -71,7 +71,7 @@ type StateType = {
 
 export type SwipeableProps = Props;
 
-export default class Swipeable extends Component<Props, StateType> {
+export default class Swipeable extends Component<Props, State> {
   static displayName = 'IGNORE';
   static defaultProps = {
     friction: 1,
@@ -167,7 +167,6 @@ export default class Swipeable extends Component<Props, StateType> {
         leftWidth + (overshootLeft || overshootFriction > 1 ? 1 : 0)
       ],
     });
-
     return transX;
   }
 
@@ -360,10 +359,10 @@ export default class Swipeable extends Component<Props, StateType> {
     });
 
     // Transition Callbacks
-    if (Constants.isRTL && (toValue === -(rowWidth * LEFT_TOGGLE_THRESHOLD) || this.dragThresholdReached) && onToggleSwipeLeft) {
+    if (Constants.isRTL && this._hasLeftActions && onToggleSwipeLeft && (toValue === -(rowWidth * LEFT_TOGGLE_THRESHOLD) || this.dragThresholdReached)) {
       // left toggle RTL
       onToggleSwipeLeft({rowWidth, leftWidth, released: true, triggerHaptic: !this.dragThresholdReached});
-    } else if ((toValue === rowWidth * LEFT_TOGGLE_THRESHOLD || this.dragThresholdReached) && onToggleSwipeLeft) {
+    } else if (this._hasLeftActions && onToggleSwipeLeft && (toValue === rowWidth * LEFT_TOGGLE_THRESHOLD || this.dragThresholdReached)) {
       // left toggle
       onToggleSwipeLeft({rowWidth, leftWidth, released: true, triggerHaptic: !this.dragThresholdReached});
       this.dragThresholdReached = false;
@@ -415,7 +414,8 @@ export default class Swipeable extends Component<Props, StateType> {
 
   toggleLeft = () => {
     // Programmatically left toggle
-    if (this._hasLeftActions) {
+    const shouldAnimate = Constants.isRTL ? this._hasRightActions : this._hasLeftActions;
+    if (shouldAnimate) {
       const {rowWidth} = this.state;
       this._animateRow(this._currentOffset(), (rowWidth * LEFT_TOGGLE_THRESHOLD) * (Constants.isRTL ? -1 : 1));
     }
