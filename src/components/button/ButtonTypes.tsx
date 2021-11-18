@@ -95,7 +95,11 @@ export type ButtonProps = TouchableOpacityProps &
      */
     link?: boolean;
     /**
-     * label color for when it's displayed as link
+     * Button will look like a hyperlink
+     */
+    hyperlink?: boolean;
+    /**
+     * label color for when it's displayed as link or hyperlink
      */
     linkColor?: string;
     /**
