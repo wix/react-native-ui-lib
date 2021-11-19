@@ -1,3 +1,4 @@
+export {default as ChipsInput, ChipsInputProps} from './ChipsInput';
 export {default as ExpandableOverlay} from './expandableOverlay';
 // @ts-ignore
 export {default as TextField, TextFieldProps, FieldContextType} from './TextField';
