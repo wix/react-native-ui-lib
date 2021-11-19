@@ -20,11 +20,14 @@ const ChipsInput = (props: ChipsInputProps) => {
   const fieldValue = useRef(others.value);
 
   const addChip = useCallback(() => {
-    const newChip = {label: fieldValue.current};
-    onChange?.([...chips, newChip]);
-    setMarkedForRemoval(undefined);
-    // @ts-expect-error
-    field.current.clear();
+    if (fieldValue.current) {
+      const newChip = {label: fieldValue.current};
+      onChange?.([...chips, newChip]);
+      setMarkedForRemoval(undefined);
+      // @ts-expect-error
+      field.current.clear();
+      fieldValue.current = '';
+    }
   }, [onChange, chips]);
 
   const removeMarkedChip = useCallback(() => {
@@ -46,15 +49,19 @@ const ChipsInput = (props: ChipsInputProps) => {
   const onChangeText = useCallback(value => {
     fieldValue.current = value;
     props.onChangeText?.(value);
+
+    if (!isUndefined(markedForRemoval)) {
+      setMarkedForRemoval(undefined);
+    }
   },
-  [props.onChangeText]);
+  [props.onChangeText, markedForRemoval]);
 
   const onKeyPress = useCallback((event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     props.onKeyPress?.(event);
     const keyCode = event?.nativeEvent?.key;
     const pressedBackspace = keyCode === Constants.backspaceKey;
 
-    if (pressedBackspace) {
+    if (pressedBackspace && !fieldValue.current) {
       if (isUndefined(markedForRemoval) || markedForRemoval !== chips.length - 1) {
         setMarkedForRemoval(chips.length - 1);
       } else {
