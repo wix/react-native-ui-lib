@@ -6,8 +6,8 @@
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
 import React, {PropsWithChildren, ReactElement, useMemo} from 'react';
-import {ViewStyle, TextStyle} from 'react-native';
-import {omit, isFunction} from 'lodash';
+import {ViewStyle, TextStyle, StyleProp} from 'react-native';
+import {omit} from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -86,7 +86,11 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | ((context: FieldContextType, props: {preset: TextFieldProps['preset']}) => ViewStyle);
+    fieldStyle?: StyleProp<ViewStyle>;
+    /**
+     * Internal dynamic style callback for the field container
+     */
+    dynamicFieldStyle?: (context: FieldContextType, props: {preset: TextFieldProps['preset']}) => StyleProp<ViewStyle>;
     /**
      * Container style of the whole component
      */
@@ -120,6 +124,7 @@ const TextField = (props: InternalTextFieldProps) => {
     modifiers,
     // General
     fieldStyle: fieldStyleProp,
+    dynamicFieldStyle,
     containerStyle,
     floatingPlaceholder,
     floatingPlaceholderColor,
@@ -156,7 +161,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
 
-  const fieldStyle = isFunction(fieldStyleProp) ? fieldStyleProp(context, {preset: props.preset}) : fieldStyleProp;
+  const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
 
   return (
