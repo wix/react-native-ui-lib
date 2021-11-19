@@ -178,34 +178,34 @@ const TextField = (props: InternalTextFieldProps) => {
             validationMessageStyle={validationMessageStyle}
           />
         )}
-        <View style={[paddings, fieldStyle]}>
-          <View row centerV>
-            {leadingAccessory}
-            <View flexG>
-              {floatingPlaceholder && (
-                <FloatingPlaceholder
-                  placeholder={placeholder}
-                  floatingPlaceholderStyle={[typographyStyle, floatingPlaceholderStyle]}
-                  floatingPlaceholderColor={floatingPlaceholderColor}
-                  floatOnFocus={floatOnFocus}
-                  validationMessagePosition={validationMessagePosition}
-                />
-              )}
-              {children || (
-                <Input
-                  placeholderTextColor={hidePlaceholder ? 'transparent' : Colors.grey30}
-                  {...others}
-                  style={[typographyStyle, colorStyle, others.style]}
-                  onFocus={onFocus}
-                  onBlur={onBlur}
-                  onChangeText={onChangeText}
-                  placeholder={placeholder}
-                  hint={hint}
-                />
-              )}
-            </View>
-            {trailingAccessory}
+        <View style={[paddings, fieldStyle]} row centerV>
+          {/* <View row centerV> */}
+          {leadingAccessory}
+          <View flexG>
+            {floatingPlaceholder && (
+              <FloatingPlaceholder
+                placeholder={placeholder}
+                floatingPlaceholderStyle={[typographyStyle, floatingPlaceholderStyle]}
+                floatingPlaceholderColor={floatingPlaceholderColor}
+                floatOnFocus={floatOnFocus}
+                validationMessagePosition={validationMessagePosition}
+              />
+            )}
+            {children || (
+              <Input
+                placeholderTextColor={hidePlaceholder ? 'transparent' : Colors.grey30}
+                {...others}
+                style={[typographyStyle, colorStyle, others.style]}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onChangeText={onChangeText}
+                placeholder={placeholder}
+                hint={hint}
+              />
+            )}
           </View>
+          {trailingAccessory}
+          {/* </View> */}
         </View>
         <View row spread>
           {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
