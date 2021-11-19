@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
+import {StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
 import {isUndefined, map} from 'lodash';
 import {Constants} from '../../helpers';
 import TextField, {TextFieldProps} from '../TextField';
@@ -106,8 +106,7 @@ const ChipsInput = (props: ChipsInputProps) => {
       {...others}
       onChangeText={onChangeText}
       onSubmitEditing={addChip}
-      // @ts-expect-error
-      fieldStyle={[fieldStyle, {flexWrap: 'wrap'}]}
+      fieldStyle={[fieldStyle, styles.fieldStyle]}
       onKeyPress={onKeyPress}
       accessibilityHint={props.editable ? 'press keyboard delete button to remove last tag' : undefined}
 
@@ -128,6 +127,12 @@ const ChipsInput = (props: ChipsInputProps) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  fieldStyle: {
+    flexWrap: 'wrap'
+  }
+});
 
 export default ChipsInput;
 
