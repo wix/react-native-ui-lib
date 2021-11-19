@@ -214,7 +214,7 @@ export default class TextFieldScreen extends Component {
             label="Label"
             placeholder="Enter text..."
             preset={preset}
-            fieldStyle={(_state, {preset}) => (preset === 'withUnderline' ? styles.withUnderline : styles.withFrame)}
+            dynamicFieldStyle={(_state, {preset}) => (preset === 'withUnderline' ? styles.withUnderline : styles.withFrame)}
             editable={!shouldDisable}
           />
 

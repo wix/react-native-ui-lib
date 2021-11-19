@@ -159,9 +159,10 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType, props: {
+    fieldStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    dynamicFieldStyle?: ((context: import("./FieldContext").FieldContextType, props: {
         preset: string | null | undefined;
-    }) => import("react-native").ViewStyle) | undefined;
+    }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
@@ -487,9 +488,10 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle?: import("react-native").ViewStyle | ((context: import("./FieldContext").FieldContextType, props: {
+    fieldStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    dynamicFieldStyle?: ((context: import("./FieldContext").FieldContextType, props: {
         preset: string | null | undefined;
-    }) => import("react-native").ViewStyle) | undefined;
+    }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
@@ -1047,13 +1049,14 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur: boolean;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle: import("react-native").ViewStyle | {
+    fieldStyle: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<import("react-native").ViewStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | {
         borderBottomWidth: number;
         borderBottomColor: string;
         paddingBottom: number;
-    } | ((context: import("./FieldContext").FieldContextType, props: {
+    } | null;
+    dynamicFieldStyle?: ((context: import("./FieldContext").FieldContextType, props: {
         preset: string | null | undefined;
-    }) => import("react-native").ViewStyle);
+    }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
