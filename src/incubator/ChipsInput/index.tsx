@@ -9,7 +9,7 @@ const removeIcon = require('./assets/xSmall.png');
 
 export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
   chips?: ChipProps[];
-  defaultChipProps: ChipProps;
+  defaultChipProps?: ChipProps;
   onChange?: (chips: ChipProps[]) => void;
 };
 
