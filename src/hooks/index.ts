@@ -1,3 +1,4 @@
+export {default as useCombinedRefs} from './useCombinedRefs';
 export {default as useToggleValue} from './useToggleValue';
 export {default as useDidUpdate} from './useDidUpdate';
 export {default as useOrientation} from './useOrientation';
