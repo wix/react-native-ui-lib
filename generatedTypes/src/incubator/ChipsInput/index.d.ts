@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import { TextFieldProps } from '../TextField';
 import { ChipProps } from '../../components/chip';
 export declare type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
@@ -10,5 +10,13 @@ export declare type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
      */
     maxChips?: number;
 };
-declare const ChipsInput: (props: ChipsInputProps) => JSX.Element;
-export default ChipsInput;
+declare const _default: React.ForwardRefExoticComponent<Omit<TextFieldProps, "ref"> & {
+    chips?: ChipProps[] | undefined;
+    defaultChipProps?: ChipProps | undefined;
+    onChange?: ((chips: ChipProps[]) => void) | undefined;
+    /**
+     * Maximum chips
+     */
+    maxChips?: number | undefined;
+} & React.RefAttributes<any>>;
+export default _default;

@@ -1,7 +1,8 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState, forwardRef} from 'react';
 import {StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
 import {isUndefined, map} from 'lodash';
 import {Constants} from '../../helpers';
+import {useCombinedRefs} from '../../hooks';
 import TextField, {TextFieldProps} from '../TextField';
 import Chip, {ChipProps} from '../../components/chip';
 
@@ -17,10 +18,10 @@ export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
   maxChips?: number;
 };
 
-const ChipsInput = (props: ChipsInputProps) => {
+const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
+  const fieldRef = useCombinedRefs(refToForward);
   const {chips = [], defaultChipProps, leadingAccessory, onChange, fieldStyle, maxChips, ...others} = props;
   const [markedForRemoval, setMarkedForRemoval] = useState<number | undefined>(undefined);
-  const field = useRef();
   const fieldValue = useRef(others.value);
 
   const addChip = useCallback(() => {
@@ -30,7 +31,7 @@ const ChipsInput = (props: ChipsInputProps) => {
       onChange?.([...chips, newChip]);
       setMarkedForRemoval(undefined);
       // @ts-expect-error
-      field.current.clear();
+      fieldRef.current.clear();
       fieldValue.current = '';
     }
   }, [onChange, chips, maxChips]);
@@ -105,7 +106,7 @@ const ChipsInput = (props: ChipsInputProps) => {
   return (
     <TextField
       // @ts-expect-error
-      ref={field}
+      ref={fieldRef}
       leadingAccessory={chipList}
       blurOnSubmit={false}
       {...others}
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ChipsInput;
+export default forwardRef(ChipsInput);
 
 /* Old ChipsInput props to make sure we have parity */
 //  /**
