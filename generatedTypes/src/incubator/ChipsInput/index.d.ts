@@ -5,6 +5,10 @@ export declare type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
     chips?: ChipProps[];
     defaultChipProps?: ChipProps;
     onChange?: (chips: ChipProps[]) => void;
+    /**
+     * Maximum chips
+     */
+    maxChips?: number;
 };
 declare const ChipsInput: (props: ChipsInputProps) => JSX.Element;
 export default ChipsInput;

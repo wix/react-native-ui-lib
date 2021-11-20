@@ -11,16 +11,21 @@ export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
   chips?: ChipProps[];
   defaultChipProps?: ChipProps;
   onChange?: (chips: ChipProps[]) => void;
+  /**
+   * Maximum chips
+   */
+  maxChips?: number;
 };
 
 const ChipsInput = (props: ChipsInputProps) => {
-  const {chips = [], defaultChipProps, leadingAccessory, onChange, fieldStyle, ...others} = props;
+  const {chips = [], defaultChipProps, leadingAccessory, onChange, fieldStyle, maxChips, ...others} = props;
   const [markedForRemoval, setMarkedForRemoval] = useState<number | undefined>(undefined);
   const field = useRef();
   const fieldValue = useRef(others.value);
 
   const addChip = useCallback(() => {
-    if (fieldValue.current) {
+    const reachedMaximum = maxChips && chips?.length >= maxChips;
+    if (fieldValue.current && !reachedMaximum) {
       const newChip = {label: fieldValue.current};
       onChange?.([...chips, newChip]);
       setMarkedForRemoval(undefined);
@@ -28,7 +33,7 @@ const ChipsInput = (props: ChipsInputProps) => {
       field.current.clear();
       fieldValue.current = '';
     }
-  }, [onChange, chips]);
+  }, [onChange, chips, maxChips]);
 
   const removeMarkedChip = useCallback(() => {
     if (!isUndefined(markedForRemoval)) {

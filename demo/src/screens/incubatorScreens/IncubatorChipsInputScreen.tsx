@@ -5,7 +5,8 @@ import {View, Text, Card, TextField, Button, Colors, Incubator} from 'react-nati
 
 export default class ChipsInputScreen extends Component {
   state = {
-    chips: [{label: 'one'}, {label: 'two'}]
+    chips: [{label: 'one'}, {label: 'two'}],
+    chips2: []
   };
 
   render() {
@@ -21,7 +22,6 @@ export default class ChipsInputScreen extends Component {
             labelStyle: {color: Colors.white},
             containerStyle: {borderWidth: 0},
             dismissColor: Colors.white
-
           }}
           chips={this.state.chips}
           leadingAccessory={<Text>TO: </Text>}
@@ -30,16 +30,14 @@ export default class ChipsInputScreen extends Component {
           }}
         />
 
-        {/* <Incubator.ChipsInput
-          editable={false}
-          placeholder="Enter chips"
-          defaultChipProps={{backgroundColor: 'red'}}
-          chips={this.state.chips}
-          leadingAccessory={<Text>TO: </Text>}
-          onChange={newChips => {
-            this.setState({chips: newChips});
-          }}
-        /> */}
+        <Incubator.ChipsInput
+          label="Max 3 chips"
+          placeholder="Enter chips..."
+          chips={this.state.chips2}
+          onChange={newChips => this.setState({chips2: newChips})}
+          maxChips={3}
+        />
+
       </View>
     );
   }
