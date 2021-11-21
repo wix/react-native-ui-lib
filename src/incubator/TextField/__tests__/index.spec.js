@@ -11,13 +11,13 @@ describe('TextField', () => {
     };
 
     it('should hint text replace placeholder when input is focused', () => {
-      const {getByTestId, getByPlaceholderText} = render(<TextFieldRenderTest {...props}/>);
+      const renderTree = render(<TextFieldRenderTest {...props}/>);
 
-      const input = getByTestId('field');
-      expect(getByPlaceholderText(props.placeholder).props.testID).toBe(props.testID);
+      const input = renderTree.getByTestId('field');
+      renderTree.getByPlaceholderText(props.placeholder);
 
       fireEvent(input, 'focus');
-      expect(getByPlaceholderText(props.hint).props.testID).toBe(props.testID);
+      renderTree.getByPlaceholderText(props.hint);
     });
   });
 
@@ -31,15 +31,15 @@ describe('TextField', () => {
     };
 
     it('should format value while not focused based on formatter prop', () => {
-      const textField = render(<TextFieldRenderTest {...props}/>);
-      textField.getByDisplayValue('10,000');
+      const renderTree = render(<TextFieldRenderTest {...props}/>);
+      renderTree.getByDisplayValue('10,000');
     });
 
     it('should not format value while focused', () => {
-      const textField = render(<TextFieldRenderTest {...props}/>);
-      const input = textField.getByTestId('field');
+      const renderTree = render(<TextFieldRenderTest {...props}/>);
+      const input = renderTree.getByTestId('field');
       fireEvent(input, 'focus');
-      textField.getByDisplayValue('10000');
+      renderTree.getByDisplayValue('10000');
     });
   });
 
