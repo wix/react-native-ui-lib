@@ -1,4 +1,4 @@
-import {NativeModules, AccessibilityInfo} from 'react-native';
+import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
 
 NativeModules.StatusBarManager = {getHeight: jest.fn()};
 jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => new Promise.resolve(false));
@@ -14,4 +14,11 @@ jest.mock('react-native', () => {
   const reactNative = jest.requireActual('react-native');
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
   return reactNative;
+});
+
+Animated.timing = (value, config) => ({
+  start: callback => {
+    value.setValue(config.toValue);
+    callback?.();
+  }
 });
