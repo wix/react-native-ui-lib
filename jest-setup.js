@@ -1,5 +1,7 @@
 import {NativeModules, AccessibilityInfo} from 'react-native';
 
+require('./node_modules/react-native-reanimated/src/reanimated2/jestUtils').setUpTests();
+
 NativeModules.StatusBarManager = {getHeight: jest.fn()};
 jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => new Promise.resolve(false));
 

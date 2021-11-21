@@ -74,6 +74,7 @@ const WheelPickerItem = memo(({
     >
       <AnimatedText
         text60R
+        testID={`${testID}.text`}
         style={[animatedColorStyle, style, fakeLabel ? styles.textWithLabelPadding : styles.textPadding]}
       >
         {label}
