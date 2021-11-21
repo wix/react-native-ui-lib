@@ -1,6 +1,6 @@
-import React from 'react';
-import TextFieldRenderTest from './textFieldRenderText';
+import React, {useState} from 'react';
 import {fireEvent, render} from '@testing-library/react-native';
+import TextField from '../index';
 
 describe('TextField', () => {
   describe('hint prop', () => {
@@ -11,7 +11,7 @@ describe('TextField', () => {
     };
 
     it('should hint text replace placeholder when input is focused', () => {
-      const renderTree = render(<TextFieldRenderTest {...props}/>);
+      const renderTree = render(<TestCase {...props}/>);
 
       const input = renderTree.getByTestId('field');
       renderTree.getByPlaceholderText(props.placeholder);
@@ -31,12 +31,12 @@ describe('TextField', () => {
     };
 
     it('should format value while not focused based on formatter prop', () => {
-      const renderTree = render(<TextFieldRenderTest {...props}/>);
+      const renderTree = render(<TestCase {...props}/>);
       renderTree.getByDisplayValue('10,000');
     });
 
     it('should not format value while focused', () => {
-      const renderTree = render(<TextFieldRenderTest {...props}/>);
+      const renderTree = render(<TestCase {...props}/>);
       const input = renderTree.getByTestId('field');
       fireEvent(input, 'focus');
       renderTree.getByDisplayValue('10000');
@@ -52,7 +52,7 @@ describe('TextField', () => {
     };
 
     it('should display validation error message when validation fail after blur', () => {
-      const renderTree = render(<TextFieldRenderTest {...props} validateOnBlur/>);
+      const renderTree = render(<TestCase {...props} validateOnBlur/>);
       const input = renderTree.getByTestId('field');
       fireEvent.changeText(input, 'invalidEmail');
       fireEvent(input, 'blur');
@@ -60,7 +60,7 @@ describe('TextField', () => {
     });
 
     it('should remove validation error message after entering a valid input', async () => {
-      const renderTree = render(<TextFieldRenderTest {...props} validateOnStart validateOnChange value={'invalid'}/>);
+      const renderTree = render(<TestCase {...props} validateOnStart validateOnChange value={'invalid'}/>);
       const input = renderTree.getByTestId('field');
 
       renderTree.getByText(props.validationMessage);
@@ -71,3 +71,8 @@ describe('TextField', () => {
     });
   });
 });
+
+const TestCase = props => {
+  const [value, setValue] = useState(props.value);
+  return <TextField {...props} onChangeText={setValue} value={value}/>;
+};
