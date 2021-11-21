@@ -1,0 +1,29 @@
+{
+  "name": "FloatingButton",
+  "category": "overlays",
+  "description": "Hovering button with gradient background",
+  "modifiers": ["margin", "background", "color"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FloatingButton/FloatingButton.gif?raw=true"
+  ],
+  "props": [
+    {"name": "visible", "type": "boolean", "description": "Whether the component is visible"},
+    {"name": "button", "type": "ButtonProps", "description": "Props for the Button component"},
+    {"name": "secondaryButton", "type": "ButtonProps", "description": "Props for the secondary Button component"},
+    {
+      "name": "bottomMargin",
+      "type": "number",
+      "description": "The bottom margin of the button, or secondary button if passed"
+    },
+    {"name": "duration", "type": "number", "description": "The duration of the button's animations (show/hide)"},
+    {"name": "withoutAnimation", "type": "boolean", "description": "Whether to show/hide the button without animation"},
+    {"name": "hideBackgroundOverlay", "type": "boolean", "description": "Whether to show background overlay"},
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "The test id for e2e tests",
+      "note": "<TestID> - the floatingButton container\n<TestID>.button - the floatingButton main button\n<TestID>.secondaryButton - the floatingButton secondaryButton"
+    }
+  ]
+}

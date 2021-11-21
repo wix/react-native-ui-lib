@@ -1,0 +1,24 @@
+{
+  "name": "ColorSwatch",
+  "category": "form",
+  "description": "A color swatch component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true"
+  ],
+  "props": [
+    {
+      "name": "value",
+      "type": "string",
+      "description": "The identifier value of the ColorSwatch in a ColorSwatch palette",
+      "note": "Must be different than other ColorSwatches in the same group"
+    },
+    {"name": "color", "type": "string", "description": "The color of the ColorSwatch"},
+    {"name": "selected", "type": "boolean", "description": "Is the initial state is selected"},
+    {"name": "animated", "type": "boolean", "description": "Is first render should be animated"},
+    {"name": "onPress", "type": "(value: string, options: object) => void", "description": "Callback from press event"},
+    {"name": "index", "type": "number", "description": "The index of the Swatch if in array"},
+    {"name": "style", "type": "ViewStyle", "description": "Component's style"},
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}

@@ -7,13 +7,17 @@ export declare type TextProps = RNTextProps & TypographyModifiers & ColorsModifi
      */
     color?: string;
     /**
-     * whether to center the text (using textAlign)
+     * Whether to center the text (using textAlign)
      */
     center?: boolean;
     /**
-     * whether to change the text to uppercase
+     * Whether to change the text to uppercase
      */
     uppercase?: boolean;
+    /**
+     * Whether to add an underline
+     */
+    underline?: boolean;
     /**
      * Substring to highlight
      */
@@ -42,18 +46,6 @@ declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps &
 declare class Text extends PureComponent<PropsTypes> {
     static displayName: string;
     private TextContainer;
-    getPartsByHighlight(targetString: string | undefined, highlightString: string | string[]): {
-        string: string;
-        shouldHighlight: boolean;
-    }[];
-    getTextPartsByHighlight(targetString?: string, highlightString?: string): {
-        string: string;
-        shouldHighlight: boolean;
-    }[];
-    getArrayPartsByHighlight(targetString?: string, highlightString?: string[]): {
-        string: string;
-        shouldHighlight: boolean;
-    }[];
     renderText(children: any): any;
     render(): JSX.Element;
 }

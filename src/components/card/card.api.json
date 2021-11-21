@@ -3,6 +3,7 @@
   "category": "basic",
   "description": "Customizable card component that handles press events",
   "extends": ["TouchableOpacity"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx"],
   "modifiers": ["margin", "padding"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx",
   "images": [
@@ -20,7 +21,12 @@
       "description": "Card border radius (will be passed to inner Card.Image component)"
     },
     {"name": "onPress", "type": "function", "description": "Callback function for card press event"},
-    {"name": "enableShadow", "type": "boolean", "description": "Whether the card should have shadow or not"},
+    {
+      "name": "enableShadow",
+      "type": "boolean",
+      "description": "Whether the card should have shadow or not",
+      "default": "true"
+    },
     {"name": "elevation", "type": "number", "description": "Elevation value (Android only)"},
     {"name": "enableBlur", "type": "boolean", "description": "Enable blur effect (iOS only)"},
     {
