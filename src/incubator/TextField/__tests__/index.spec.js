@@ -1,6 +1,4 @@
 import React from 'react';
-// import {TextInput} from 'react-native';
-// import TextField from '../index';
 import TextFieldRenderTest from './textFieldRenderText';
 import {fireEvent, render} from '@testing-library/react-native';
 
@@ -34,26 +32,42 @@ describe('TextField', () => {
 
     it('should format value while not focused based on formatter prop', () => {
       const textField = render(<TextFieldRenderTest {...props}/>);
-      const input = textField.getByTestId('field');
       textField.getByDisplayValue('10,000');
-
-      fireEvent.changeText(input, '20000');
-
-      fireEvent(input, 'focus');
-      textField.getByDisplayValue('20000');
-
-      fireEvent(input, 'blur');
-      textField.getByDisplayValue('20,000');
     });
 
-    // it.only('should format value while not focused based on formatter prop', async () => {
-    //   const textInput = render(<TextInput {...props}/>);
-    //   const input = textInput.getByTestId('field');
-    //   // textInput.getByDisplayValue('20000')
-    //   textInput.getByDisplayValue('10000');
-    //   // console.log('ethan - input', textInput.getByDisplayValue('10000'));
+    it('should not format value while focused', () => {
+      const textField = render(<TextFieldRenderTest {...props}/>);
+      const input = textField.getByTestId('field');
+      fireEvent(input, 'focus');
+      textField.getByDisplayValue('10000');
+    });
+  });
 
-    //   // console.log('ethan - bla', textInput.getByDisplayValue('20000'));
-    // });
+  describe('validation', () => {
+    const props = {
+      testID: 'field',
+      enableErrors: true,
+      validate: 'email',
+      validationMessage: 'email is invalid'
+    };
+
+    it('should display validation error message when validation fail after blur', () => {
+      const renderTree = render(<TextFieldRenderTest {...props} validateOnBlur/>);
+      const input = renderTree.getByTestId('field');
+      fireEvent.changeText(input, 'invalidEmail');
+      fireEvent(input, 'blur');
+      renderTree.getByText(props.validationMessage);
+    });
+
+    it('should remove validation error message after entering a valid input', async () => {
+      const renderTree = render(<TextFieldRenderTest {...props} validateOnStart validateOnChange value={'invalid'}/>);
+      const input = renderTree.getByTestId('field');
+
+      renderTree.getByText(props.validationMessage);
+
+      fireEvent.changeText(input, 'mail@mail.com');
+      const validationMessageElement = renderTree.queryByText(props.validationMessage);
+      expect(validationMessageElement).toBe(null);
+    });
   });
 });
