@@ -6,8 +6,8 @@
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
 import React, {PropsWithChildren, ReactElement, useMemo} from 'react';
-import {ViewStyle, TextStyle} from 'react-native';
-import {omit, isFunction} from 'lodash';
+import {ViewStyle, TextStyle, StyleProp} from 'react-native';
+import {omit} from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -19,7 +19,9 @@ import {
   ColorsModifiers
 } from '../../commons/new';
 import View from '../../components/view';
+import {Colors} from '../../style';
 import {ValidationMessagePosition, Validator} from './types';
+import {shouldHidePlaceholder} from './Presenter';
 import Input, {InputProps} from './Input';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
@@ -84,7 +86,11 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | ((context: FieldContextType, props: {preset: TextFieldProps['preset']}) => ViewStyle);
+    fieldStyle?: StyleProp<ViewStyle>;
+    /**
+     * Internal dynamic style callback for the field container
+     */
+    dynamicFieldStyle?: (context: FieldContextType, props: {preset: TextFieldProps['preset']}) => StyleProp<ViewStyle>;
     /**
      * Container style of the whole component
      */
@@ -118,6 +124,7 @@ const TextField = (props: InternalTextFieldProps) => {
     modifiers,
     // General
     fieldStyle: fieldStyleProp,
+    dynamicFieldStyle,
     containerStyle,
     floatingPlaceholder,
     floatingPlaceholderColor,
@@ -154,7 +161,8 @@ const TextField = (props: InternalTextFieldProps) => {
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
 
-  const fieldStyle = isFunction(fieldStyleProp) ? fieldStyleProp(context, {preset: props.preset}) : fieldStyleProp;
+  const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
+  const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
 
   return (
     <FieldContext.Provider value={context}>
@@ -173,6 +181,7 @@ const TextField = (props: InternalTextFieldProps) => {
             validate={others.validate}
             validationMessage={others.validationMessage}
             validationMessageStyle={validationMessageStyle}
+            testID={`${props.testID}.validationMessage`}
           />
         )}
         <View style={[paddings, fieldStyle]}>
@@ -190,7 +199,7 @@ const TextField = (props: InternalTextFieldProps) => {
               )}
               {children || (
                 <Input
-                  placeholderTextColor={floatingPlaceholder ? 'transparent' : undefined}
+                  placeholderTextColor={hidePlaceholder ? 'transparent' : Colors.grey30}
                   {...others}
                   style={[typographyStyle, colorStyle, others.style]}
                   onFocus={onFocus}
@@ -212,6 +221,7 @@ const TextField = (props: InternalTextFieldProps) => {
               validationMessage={others.validationMessage}
               validationMessageStyle={validationMessageStyle}
               retainSpace
+              testID={`${props.testID}.validationMessage`}
             />
           )}
           {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle}/>}

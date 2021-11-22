@@ -1,0 +1,23 @@
+{
+  "name": "Fader",
+  "category": "layoutsAndTemplates",
+  "description": "A gradient fading overlay to render on top of overflowing content (like scroll component)",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FaderScreen.tsx",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Fader/Fader.gif?raw=true"],
+  "props": [
+    {"name": "visible", "type": "boolean", "description": "Whether the fader is visible (default is true)"},
+    {
+      "name": "position",
+      "type": "START | END | TOP | BOTTOM",
+      "description": "The position of the fader (the image is different)",
+      "default": "Fader.position.END"
+    },
+    {"name": "size", "type": "number", "description": "change the size of the fade view", "default": "50"},
+    {
+      "name": "tintColor",
+      "type": "string",
+      "description": "Change the tint color of the fade view",
+      "default": "Colors.white"
+    }
+  ]
+}

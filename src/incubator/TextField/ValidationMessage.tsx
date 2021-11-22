@@ -20,6 +20,7 @@ export interface ValidationMessageProps {
   validationMessageStyle?: TextStyle;
   retainSpace?: boolean;
   validate?: FieldStateProps['validate'];
+  testID?: string;
 }
 
 const ValidationMessage = ({
@@ -27,7 +28,8 @@ const ValidationMessage = ({
   enableErrors,
   validationMessageStyle,
   retainSpace,
-  validate
+  validate,
+  testID
 }: ValidationMessageProps) => {
   const context = useContext(FieldContext);
 
@@ -39,7 +41,7 @@ const ValidationMessage = ({
   const showValidationMessage = !context.isValid || (!validate && !!validationMessage);
 
   return (
-    <Text red30 style={[styles.validationMessage, validationMessageStyle]}>
+    <Text testID={testID} red30 style={[styles.validationMessage, validationMessageStyle]}>
       {showValidationMessage ? relevantValidationMessage : ''}
     </Text>
   );
