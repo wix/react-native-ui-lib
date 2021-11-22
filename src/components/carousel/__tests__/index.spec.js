@@ -75,14 +75,14 @@ describe('Carousel tests', () => {
           </Page>
         ))}
       </Carousel>);
-      
+
       const scrollView = component.getByTestId('carousel.scrollView');
 
       fireEvent.scroll(scrollView, eventData); //NOTE: first scroll will no fire onScroll
       fireEvent.scroll(scrollView, eventData);
       expect(onChangePageMock).not.toHaveBeenCalled();
 
-      await new Promise(r => setTimeout(r, 2000));
+      // await new Promise(r => setTimeout(r, 1000));
       fireEvent(scrollView, 'onMomentumScrollEnd', eventData);
       expect(onChangePageMock).toHaveBeenCalled();
       expect(onChangePageMock).toHaveBeenCalledWith(1, 0, {isAutoScrolled: false});
