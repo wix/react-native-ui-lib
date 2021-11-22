@@ -48,7 +48,7 @@ export interface GridViewProps {
   keepItemSize?: boolean;
 }
 
-interface State {
+interface GridViewState {
   viewWidth: number;
   numColumns: number;
   itemSize: number;
@@ -58,7 +58,7 @@ interface State {
  * @description: A auto-generated grid view that calculate item size according to given props
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx
  */
-class GridView extends UIComponent<GridViewProps> {
+class GridView extends UIComponent<GridViewProps, GridViewState> {
   static displayName = 'GridView';
 
   static defaultProps = {
@@ -74,7 +74,7 @@ class GridView extends UIComponent<GridViewProps> {
     itemSize: this.calcItemSize()
   };
 
-  static getDerivedStateFromProps(nextProps: GridViewProps, prevState: State) {
+  static getDerivedStateFromProps(nextProps: GridViewProps, prevState: GridViewState) {
     let viewWidth;
     let numColumns;
     if (nextProps.viewWidth && Math.floor(nextProps.viewWidth) !== prevState.viewWidth) {
