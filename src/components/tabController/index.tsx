@@ -60,7 +60,7 @@ function TabController({
   const [screenWidth, setScreenWidth] = useState<number>(Constants.windowWidth);
 
   if (items?.length < 2) {
-    console.error('TabController component expect a minimum of 2 items');
+    console.warn('TabController component expect a minimum of 2 items');
   }
 
   useOrientation({
