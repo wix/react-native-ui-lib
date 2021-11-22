@@ -43,7 +43,7 @@ export interface GridViewProps {
   /**
    * whether to keep the items initial size when orientation changes,
    * in which case the apt number of columns will be calculated automatically.
-   * Irrelevant when passing maxItemWidth
+   * Ignored when passing 'maxItemWidth'
    */
   keepItemSize?: boolean;
 }
