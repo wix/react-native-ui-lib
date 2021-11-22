@@ -62,7 +62,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
   static displayName = 'GridView';
 
   static defaultProps = {
-    numColumns: 3,
+    numColumns: DEFAULT_NUM_COLUMNS,
     itemSpacing: Spacings.s4
   };
 
