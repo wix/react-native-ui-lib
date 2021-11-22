@@ -11,6 +11,7 @@ import GridListItem, {GridListItemProps} from '../gridListItem';
 import {formatLastItemLabel} from '../../helpers/FormattingPresenter';
 
 const DEFAULT_NUM_COLUMNS = 3;
+const DEFAULT_ITEM_SPACINGS = Spacings.s4;
 export interface GridViewProps {
   /**
    * The list of items based on GridListItem props
@@ -63,7 +64,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
 
   static defaultProps = {
     numColumns: DEFAULT_NUM_COLUMNS,
-    itemSpacing: Spacings.s4
+    itemSpacing: DEFAULT_ITEM_SPACINGS
   };
 
   private dimensionsChangeListener: any;
@@ -122,7 +123,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
   }
 
   calcNumberOfColumns() {
-    const {numColumns, itemSpacing = Spacings.s4, maxItemWidth} = this.props;
+    const {numColumns, itemSpacing = DEFAULT_ITEM_SPACINGS, maxItemWidth} = this.props;
     const containerWidth = this.getGridContainerWidth();
 
     if (maxItemWidth) {
@@ -133,7 +134,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
   }
 
   calcItemSize() {
-    const {itemSpacing = Spacings.s4} = this.props;
+    const {itemSpacing = DEFAULT_ITEM_SPACINGS} = this.props;
     const containerWidth = this.getGridContainerWidth();
     const numColumns = this.calcNumberOfColumns();
 
