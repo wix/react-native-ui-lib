@@ -5,7 +5,6 @@ import {Text, View} from 'react-native';
 import {Constants} from '../../../helpers';
 import Carousel from '../index';
 
-
 const numberOfPagesShown = 5;
 const eventData = {
   nativeEvent: {
@@ -46,6 +45,7 @@ describe('Carousel tests', () => {
           </Page>
         ))}
       </Carousel>);
+
       component.getByText('Page #0'); // Validates that the text is there
     });
 
@@ -53,10 +53,11 @@ describe('Carousel tests', () => {
       const component = render(<Carousel {...props}>
         {map([...Array(numberOfPagesShown)], (_, index) => (
           <Page key={index}>
-            <Text>Page #{index}</Text>
+            <Text testID={`page-${index}`}>Page #{index}</Text>
           </Page>
         ))}
       </Carousel>);
+
       const scrollView = component.getByTestId('carousel.scrollView');
 
       fireEvent.scroll(scrollView, eventData); //NOTE: first scroll will no fire onScroll
@@ -70,17 +71,18 @@ describe('Carousel tests', () => {
       const component = render(<Carousel {...props}>
         {map([...Array(numberOfPagesShown)], (_, index) => (
           <Page key={index}>
-            <Text>Page #{index}</Text>
+            <Text testID={`page-${index}`}>Page #{index}</Text>
           </Page>
         ))}
       </Carousel>);
+      
       const scrollView = component.getByTestId('carousel.scrollView');
 
       fireEvent.scroll(scrollView, eventData); //NOTE: first scroll will no fire onScroll
       fireEvent.scroll(scrollView, eventData);
       expect(onChangePageMock).not.toHaveBeenCalled();
-      
-      await new Promise((r) => setTimeout(r, 2000));
+
+      await new Promise(r => setTimeout(r, 2000));
       fireEvent(scrollView, 'onMomentumScrollEnd', eventData);
       expect(onChangePageMock).toHaveBeenCalled();
       expect(onChangePageMock).toHaveBeenCalledWith(1, 0, {isAutoScrolled: false});
