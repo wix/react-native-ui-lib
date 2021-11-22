@@ -4,8 +4,8 @@ import { ViewProps } from '../../components/view';
 import { ButtonProps } from '../../components/button';
 export interface ModalTopBarProps {
     /**
-       * title to display in the center of the top bar
-       */
+     * title to display in the center of the top bar
+     */
     title?: string;
     /**
      * title custom style
@@ -51,6 +51,10 @@ export interface ModalTopBarProps {
      * style for the TopBar container
      */
     containerStyle?: ViewProps['style'];
+    /**
+     * Whether or not to handle SafeArea
+     */
+    useSafeArea?: boolean;
 }
 declare const _default: React.ComponentClass<ModalTopBarProps & {
     useCustomTheme?: boolean | undefined;

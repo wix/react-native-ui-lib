@@ -1,0 +1,34 @@
+{
+  "name": "ConnectionStatusBar",
+  "category": "basic",
+  "description": "Top bar to show a 'no internet' connection status",
+  "note": [
+    "Run on real device for best results",
+    "The component requires installing the '@react-native-community/netinfo' native library"
+  ],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ConnectionStatusBarScreen.tsx",
+  "images": [
+    "https://user-images.githubusercontent.com/33805983/34683190-f3b1904c-f4a9-11e7-9d46-9a340bd35448.png",
+    "https://user-images.githubusercontent.com/33805983/34484206-edc6c6e4-efcb-11e7-88b2-cd394c19dd5e.png"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Text to show as the status",
+      "default": "No internet. Check your connection."
+    },
+    {
+      "name": "onConnectionChange",
+      "type": "(isConnected: boolean, isInitial: boolean) => void",
+      "description": "Handler to get connection change events propagation"
+    },
+    {"name": "allowDismiss", "type": "boolean", "description": "Whethere to allow the user to dismiss"},
+    {
+      "name": "useAbsolutePosition",
+      "type": "boolean",
+      "description": "Use absolute position for the component",
+      "default": "true"
+    }
+  ]
+}
