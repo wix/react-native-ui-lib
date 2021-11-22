@@ -1,0 +1,16 @@
+{
+  "name": "ExpandableSection",
+  "category": "basic",
+  "description": "Component to render expanded section below or above the SectionHeader",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ExpandableSectionScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ExpandableSection/ExpandableSection.gif?raw=true"
+  ],
+  "props": [
+    {"name": "sectionHeader", "type": "JSX.Element", "description": "Header element"},
+    {"name": "children", "type": "React.ReactNode", "description": "The expandable's children"},
+    {"name": "expanded", "type": "boolean", "description": "Should the ExpandableSection be expanded"},
+    {"name": "top", "type": "boolean", "description": "Should it open above the 'sectionHeader'"},
+    {"name": "onPress", "type": "() => void", "description": "Called when pressing the header of the ExpandableSection"}
+  ]
+}

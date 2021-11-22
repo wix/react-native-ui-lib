@@ -56,6 +56,13 @@ describe('Button', () => {
     });
   });
 
+  describe('hyperlink', () => {
+    it('should render button as a hyperlink', () => {
+      const tree = renderer.create(<Button label="Button" hyperlink/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
   describe('backgroundColor', () => {
     it('should return defined theme backgroundColor', () => {
       ThemeManager.setComponentTheme('Button', {

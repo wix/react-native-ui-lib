@@ -156,6 +156,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
     componentDidUpdate(prevProps: Props): void;
     onLayout: (event: LayoutChangeEvent) => void;
     get isOutline(): boolean;
+    get isLink(): boolean | undefined;
     get isFilled(): boolean;
     get isIconButton(): boolean | 0 | undefined;
     getBackgroundColor(): any;

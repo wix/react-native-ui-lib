@@ -1,0 +1,65 @@
+{
+  "name": "DateTimePicker",
+  "category": "form",
+  "description": "Date and Time Picker Component that wraps RNDateTimePicker for date and time modes. See: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker",
+  "note": "DateTimePicker uses a native library. You MUST add and link the native library to both iOS and Android projects",
+  "extends": ["TextField"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/textField/index.tsx"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DateTimePickerScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_iOS.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_Android.gif?raw=true"
+  ],
+  "props": [
+    {
+      "name": "mode",
+      "type": "DATE | TIME",
+      "description": "The type of picker to display ('date' or 'time')",
+      "default": "MODES.DATE"
+    },
+    {
+      "name": "value",
+      "type": "Date",
+      "description": "The initial value to set the picker to",
+      "note": "Defaults to device's date and time"
+    },
+    {"name": "onChange", "type": "() => Date", "description": "Called when the date/time change"},
+    {"name": "minimumDate", "type": "Date", "description": "The minimum date or time value to use"},
+    {"name": "maximumDate", "type": "Date", "description": "The maximum date or time value to use"},
+    {"name": "dateFormat", "type": "string", "description": "The date format for the text display"},
+    {"name": "dateFormatter", "type": "() => Date", "description": "A callback function to format date"},
+    {"name": "timeFormat", "type": "string", "description": "The time format for the text display"},
+    {"name": "timeFormatter", "type": "() => Date", "description": "A callback function to format time"},
+    {
+      "name": "locale",
+      "type": "string",
+      "description": "Allows changing of the locale of the component",
+      "note": "iOS only"
+    },
+    {
+      "name": "is24Hour",
+      "type": "boolean",
+      "description": "Allows changing of the time picker to a 24 hour format",
+      "note": "Android only"
+    },
+    {
+      "name": "minuteInterval",
+      "type": "number",
+      "description": "The interval at which minutes can be selected. Possible values are: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30",
+      "note": "iOS only"
+    },
+    {
+      "name": "timeZoneOffsetInMinutes",
+      "type": "number",
+      "description": "Allows changing of the timeZone of the date picker. By default it uses the device's time zone",
+      "note": "iOS only"
+    },
+    {"name": "dialogProps", "type": "DialogProps", "description": "Props to pass the Dialog component"},
+    {"name": "headerStyle", "type": "ViewStyle", "description": "Style to apply to the iOS dialog header"},
+    {"name": "renderInput", "type": "JSX.Element", "description": "Render custom input"},
+    {
+      "name": "themeVariant",
+      "type": "LIGHT | DARK",
+      "description": "Override system theme variant (dark or light mode) used by the date picker"
+    }
+  ]
+}

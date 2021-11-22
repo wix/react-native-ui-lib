@@ -1,0 +1,71 @@
+{
+  "name": "FeatureHighlight",
+  "category": "overlays",
+  "description": "Component for feature discovery",
+  "note": [
+    "FeatureHighlight component must be a direct child of the root view returned in render()",
+    "If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it",
+    "FeatureHighlight uses a native library. You MUST add and link the native library to both iOS and Android projects. For instruction please see: https://facebook.github.io/react-native/docs/linking-libraries-ios.html"
+  ],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FeatureHighlight/FeatureHighlight.gif?raw=true"
+  ],
+  "props": [
+    {"name": "visible", "type": "boolean", "description": "Determines if to present the feature highlight component"},
+    {
+      "name": "highlightFrame",
+      "type": "HighlightFrame",
+      "description": "Frame of the area to highlight {x, y, width, height}"
+    },
+    {
+      "name": "getTarget",
+      "type": "() => any",
+      "description": "Callback that extract the ref of the element to be highlighted"
+    },
+    {"name": "title", "type": "string", "description": "Title of the content to be displayed"},
+    {"name": "message", "type": "string", "description": "Message to be displayed"},
+    {"name": "titleStyle", "type": "TextStyle", "description": "Title text style"},
+    {"name": "messageStyle", "type": "TextStyle", "description": "Message text style"},
+    {"name": "titleNumberOfLines", "type": "number", "description": "Title's max number of lines"},
+    {"name": "messageNumberOfLines", "type": "number", "description": "Message's max number of lines"},
+    {
+      "name": "confirmButtonProps",
+      "type": "ButtonProps",
+      "description": "Props that will be passed to the dismiss button"
+    },
+    {
+      "name": "onBackgroundPress",
+      "type": "TouchableWithoutFeedbackProps['onPress']",
+      "description": "Called the background pressed"
+    },
+    {
+      "name": "overlayColor",
+      "type": "string",
+      "description": "Color of the content's background (usually includes alpha for transparency)"
+    },
+    {"name": "textColor", "type": "string", "description": "Color of the content's text"},
+    {"name": "borderColor", "type": "string", "description": "Color of the border around the highlighted element"},
+    {"name": "borderWidth", "type": "number", "description": "Width of the border around the highlighted element"},
+    {
+      "name": "borderRadius",
+      "type": "number",
+      "description": "Border radius for the border corners around the highlighted element"
+    },
+    {
+      "name": "minimumRectSize",
+      "type": "RectSize",
+      "description": "The minimum size of the highlighted component",
+      "note": "Android API 21+, and only when passing a ref in 'getTarget'",
+      "default": "{width: 56, height: 56}"
+    },
+    {
+      "name": "innerPadding",
+      "type": "number",
+      "description": "The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')",
+      "default": "10"
+    },
+    {"name": "pageControlProps", "type": "PageControlProps", "description": "PageControl component's props"},
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}
