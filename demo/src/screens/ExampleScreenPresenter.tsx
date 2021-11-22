@@ -10,11 +10,19 @@ import {
   RadioGroup,
   Slider,
   SegmentedControl,
+  SegmentedControlItemProps,
   Text,
+  TextProps,
   View
 } from 'react-native-ui-lib';
 
-export function renderHeader(title, others) {
+interface RadioGroupOptions {
+  isRow?: boolean;
+  afterValueChanged?: () => void;
+  useValueAsLabel?: boolean;
+}
+
+export function renderHeader(title: string, others: TextProps) {
   return (
     <Text text30 grey10 {...others}>
       {title}
@@ -22,25 +30,25 @@ export function renderHeader(title, others) {
   );
 }
 
-export function renderBooleanOption(title, key) {
+export function renderBooleanOption(title: string, key: string) {
+  // @ts-ignore
   const value = this.state[key];
   return (
     <View row centerV spread marginB-s4 key={key}>
-      <Text flex>
-        {title}
-      </Text>
+      <Text flex>{title}</Text>
       <Switch
         useCustomTheme
         key={key}
-        textID={key}
+        testID={key}
         value={value}
+        // @ts-ignore
         onValueChange={value => this.setState({[key]: value})}
       />
     </View>
   );
 }
 
-export function renderBooleanGroup(title, options) {
+export function renderBooleanGroup(title: string, options: string[]) {
   return (
     <View marginB-s2>
       <Text text70M marginB-s2>
@@ -48,6 +56,7 @@ export function renderBooleanGroup(title, options) {
       </Text>
       <View row style={styles.rowWrap}>
         {_.map(options, key => {
+          // @ts-ignore
           const value = this.state[key];
           return (
             <View spread centerH row key={key}>
@@ -57,6 +66,7 @@ export function renderBooleanGroup(title, options) {
                 key={key}
                 testID={key}
                 value={value}
+                // @ts-ignore
                 onValueChange={value => this.setState({[key]: value})}
               />
               <Text text70 marginR-s3 marginB-s2>
@@ -70,7 +80,11 @@ export function renderBooleanGroup(title, options) {
   );
 }
 
-export function renderRadioGroup(title, key, options, {isRow, afterValueChanged, useValueAsLabel} = {}) {
+export function renderRadioGroup(title: string,
+  key: string,
+  options: object,
+  {isRow, afterValueChanged, useValueAsLabel}: RadioGroupOptions = {}) {
+  // @ts-ignore
   const value = this.state[key];
   return (
     <View marginB-s2>
@@ -83,6 +97,7 @@ export function renderRadioGroup(title, key, options, {isRow, afterValueChanged,
         row={isRow}
         style={isRow && styles.rowWrap}
         initialValue={value}
+        // @ts-ignore
         onValueChange={value => this.setState({[key]: value}, afterValueChanged)}
       >
         {_.map(options, (value, key) => {
@@ -103,9 +118,10 @@ export function renderRadioGroup(title, key, options, {isRow, afterValueChanged,
   );
 }
 
-export function renderColorOption(title,
-  key,
+export function renderColorOption(title: string,
+  key: string,
   colors = ['transparent', Colors.blue30, Colors.grey10, Colors.yellow30, Colors.green30, Colors.purple30]) {
+  // @ts-ignore
   const value = this.state[key];
   return (
     <View marginV-s2>
@@ -113,13 +129,17 @@ export function renderColorOption(title,
       <ColorPalette
         value={value}
         colors={colors}
+        // @ts-ignore
         onValueChange={value => this.setState({[key]: value === 'transparent' ? undefined : value})}
       />
     </View>
   );
 }
 
-export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, initial = 0, sliderText = ''}) {
+export function renderSliderOption(title: string,
+  key: string,
+  {min = 0, max = 10, step = 1, initial = 0, sliderText = ''}) {
+  // @ts-ignore
   const value = this.state[key] || initial;
   return (
     <View marginV-s2>
@@ -134,6 +154,7 @@ export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, ini
           minimumValue={min}
           maximumValue={max}
           step={step}
+          // @ts-ignore
           onValueChange={value => this.setState({[key]: value})}
         />
         <Text marginL-s4 text70 style={styles.text}>
@@ -145,7 +166,8 @@ export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, ini
   );
 }
 
-export function renderMultipleSegmentOptions(title, key, options) {
+export function renderMultipleSegmentOptions(title: string, key: string, options: (SegmentedControlItemProps & {value: any})[]) {
+  // @ts-ignore
   const value = this.state[key];
   const index = _.findIndex(options, {value});
 
@@ -155,6 +177,7 @@ export function renderMultipleSegmentOptions(title, key, options) {
       <SegmentedControl
         initialIndex={index}
         segments={options}
+        // @ts-ignore
         onChangeIndex={index => this.setState({[key]: options[index].value})}
       />
     </View>
