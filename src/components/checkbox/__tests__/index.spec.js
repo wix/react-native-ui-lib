@@ -1,8 +1,22 @@
-import React from 'react';
+import React, {useState, useCallback} from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
-import CheckboxTestComponent, {testID} from './checkboxTester';
+import Checkbox from '../index';
 
+export const testID = 'checkbox';
 const onValueChange = jest.fn();
+
+const TestCase = props => {
+  const {value, onValueChange, ...others} = props;
+
+  const [_value, _setValue] = useState(value);
+  const _onValueChange = useCallback(newValue => {
+    _setValue(newValue);
+    onValueChange?.(newValue);
+  },
+  [_setValue, onValueChange]);
+
+  return <Checkbox {...others} onValueChange={_onValueChange} value={_value} testID={testID}/>;
+};
 
 describe('Checkbox renderer test', () => {
   beforeEach(() => {
@@ -11,7 +25,7 @@ describe('Checkbox renderer test', () => {
 
   it('Default value is false', async () => {
     const props = {onValueChange};
-    const element = <CheckboxTestComponent {...props}/>;
+    const element = <TestCase {...props}/>;
 
     const {getByTestId} = render(element);
 
@@ -25,7 +39,7 @@ describe('Checkbox renderer test', () => {
 
   it('Send value (false)', async () => {
     const props = {onValueChange, value: false};
-    const element = <CheckboxTestComponent {...props}/>;
+    const element = <TestCase {...props}/>;
 
     const {getByTestId} = render(element);
 
@@ -39,7 +53,7 @@ describe('Checkbox renderer test', () => {
 
   it('Send value (true)', async () => {
     const props = {onValueChange, value: true};
-    const element = <CheckboxTestComponent {...props}/>;
+    const element = <TestCase {...props}/>;
 
     const {getByTestId} = render(element);
 
@@ -53,7 +67,7 @@ describe('Checkbox renderer test', () => {
 
   it('Multiple clicks', async () => {
     const props = {onValueChange};
-    const element = <CheckboxTestComponent {...props}/>;
+    const element = <TestCase {...props}/>;
 
     const {getByTestId} = render(element);
 
@@ -75,7 +89,7 @@ describe('Checkbox renderer test', () => {
 
   it('Disabled (value = false)', async () => {
     const props = {onValueChange, value: false, disabled: true};
-    const element = <CheckboxTestComponent {...props}/>;
+    const element = <TestCase {...props}/>;
 
     const {getByTestId} = render(element);
 
@@ -88,7 +102,7 @@ describe('Checkbox renderer test', () => {
 
   it('Disabled (value = true)', async () => {
     const props = {onValueChange, value: true, disabled: true};
-    const element = <CheckboxTestComponent {...props}/>;
+    const element = <TestCase {...props}/>;
 
     const {getByTestId} = render(element);
 
