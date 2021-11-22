@@ -8,10 +8,15 @@ import Chip, {ChipProps} from '../../components/chip';
 
 const removeIcon = require('./assets/xSmall.png');
 
+export enum ChipsInputChangeReason {
+  Added = 'added',
+  Removed = 'removed'
+}
+
 export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
   chips?: ChipProps[];
   defaultChipProps?: ChipProps;
-  onChange?: (chips: ChipProps[]) => void;
+  onChange?: (chips: ChipProps[], changeReason: ChipsInputChangeReason, updatedChip: ChipProps) => void;
   /**
    * Maximum chips
    */
@@ -28,7 +33,7 @@ const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
     const reachedMaximum = maxChips && chips?.length >= maxChips;
     if (fieldValue.current && !reachedMaximum) {
       const newChip = {label: fieldValue.current};
-      onChange?.([...chips, newChip]);
+      onChange?.([...chips, newChip], ChipsInputChangeReason.Added, newChip);
       setMarkedForRemoval(undefined);
       // @ts-expect-error
       fieldRef.current.clear();
@@ -38,8 +43,8 @@ const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
 
   const removeMarkedChip = useCallback(() => {
     if (!isUndefined(markedForRemoval)) {
-      chips?.splice(markedForRemoval, 1);
-      onChange?.([...chips]);
+      const removedChip = chips?.splice(markedForRemoval, 1);
+      onChange?.([...chips], ChipsInputChangeReason.Removed, removedChip?.[0]);
       setMarkedForRemoval(undefined);
     }
   }, [chips, markedForRemoval, onChange]);
@@ -139,6 +144,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   }
 });
+
+ChipsInput.changeReasons = {
+  ADDED: 'added',
+  REMOVED: 'removed'
+};
 
 export default forwardRef(ChipsInput);
 
