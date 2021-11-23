@@ -71,7 +71,7 @@ components.forEach(component => {
 
   /* Props */
   content += `## API\n`;
-  component.props?.forEach(prop => {
+  _.sortBy(component.props, p => p.name)?.forEach(prop => {
     content += `### ${prop.name}\n`;
     content += `${prop.description}  \n`;
     // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
