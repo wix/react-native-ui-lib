@@ -125,6 +125,7 @@ const WheelPicker = ({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
+  const prevInitialValue = useRef(initialValue);
   const prevIndex = useRef(currentIndex);
   const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
   const [flatListWidth, setFlatListWidth] = useState(0);
@@ -163,7 +164,13 @@ const WheelPicker = ({
     // https://github.com/facebook/react-native/issues/26661
     if (Constants.isAndroid && prevIndex.current !== index) {
       prevIndex.current = index;
-      onChange?.(items?.[index]?.value, index);
+      
+      if (prevInitialValue.current !== initialValue) {
+        // don't invoke 'onChange' if 'initialValue' changed
+        prevInitialValue.current = initialValue;
+      } else {
+        onChange?.(items?.[index]?.value, index);
+      }
     }
     setTimeout(() => scrollToOffset(index, animated), 100);
   };
@@ -176,10 +183,15 @@ const WheelPicker = ({
   const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     setScrollOffset(event.nativeEvent.contentOffset.y);
 
-    const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
-    onChange?.(value, index);
+    if (prevInitialValue.current !== initialValue) {
+      // don't invoke 'onChange' if 'initialValue' changed
+      prevInitialValue.current = initialValue;
+    } else {
+      const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
+      onChange?.(value, index);
+    }
   },
-  [onChange]);
+  [onChange, initialValue, getRowItemAtOffset]);
 
   const alignmentStyle = useMemo(() => {
     return align === WheelPickerAlign.RIGHT
