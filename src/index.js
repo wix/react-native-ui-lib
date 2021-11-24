@@ -34,13 +34,13 @@ export default {
     return require('./components/checkbox').default;
   },
   get ColorPalette() {
-    return require('./components/colorPicker/ColorPalette').default;
+    return require('./components/colorPalette').default;
   },
   get ColorPicker() {
     return require('./components/colorPicker').default;
   },
   get ColorSwatch() {
-    return require('./components/colorPicker/ColorSwatch').default;
+    return require('./components/colorSwatch').default;
   },
   get ConnectionStatusBar() {
     return require('./components/connectionStatusBar').default;
