@@ -1,3 +1,4 @@
+// @ts-nocheck
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import 'react';
@@ -101,11 +102,11 @@ export default class BaseInput extends BaseComponent {
     }
   };
 
-  onChange = (event) => {
+  onChange = event => {
     _.invoke(this.props, 'onChange', event);
   };
 
-  onChangeText = (text) => {
+  onChangeText = text => {
     _.invoke(this.props, 'onChangeText', text);
     this.setState({value: text});
 
@@ -147,8 +148,7 @@ export default class BaseInput extends BaseComponent {
     if (!validate) {
       return;
     }
-    
-    
+
     let isValid = true;
     const inputValidators = _.isArray(validate) ? validate : [validate];
     let failingValidatorIndex;
@@ -205,7 +205,7 @@ export default class BaseInput extends BaseComponent {
 
   getRequiredPlaceholder(placeholder) {
     const {markRequired} = this.getThemeProps();
-    const shouldDisplayPlaceholderAsRequired = (this.isRequiredField() && markRequired && placeholder);
+    const shouldDisplayPlaceholderAsRequired = this.isRequiredField() && markRequired && placeholder;
 
     if (shouldDisplayPlaceholderAsRequired) {
       return `${placeholder} *`;
@@ -220,7 +220,7 @@ export default class BaseInput extends BaseComponent {
     return propsError || stateError;
   }
 
-  getColor(value) {
+  getColor(value: string) {
     if (this.state.focused) {
       return Colors.grey10;
     } else {
@@ -228,7 +228,8 @@ export default class BaseInput extends BaseComponent {
     }
   }
 
-  toggleExpandableModal(...args) {
+  toggleExpandableModal(...args: any[]) {
+    // @ts-expect-error
     return this.input.toggleExpandableModal(...args);
   }
 }
