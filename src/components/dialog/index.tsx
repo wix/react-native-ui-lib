@@ -46,7 +46,7 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
   /**
    * The dialog height (default: undefined)
    */
-  height?: string | number;
+  height?: string | number | null;
   /**
    * The direction of the allowed pan (default is DOWN).
    * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).
@@ -271,7 +271,7 @@ function createStyles(props: DialogProps) {
   const {width = '90%', height} = props;
   const flexType = height ? {flex: 1} : {flex: 0};
   return StyleSheet.create({
-    dialogViewSize: {width, height},
+    dialogViewSize: {width, height: height ?? undefined},
     flexType,
     container: {
       flex: 1
