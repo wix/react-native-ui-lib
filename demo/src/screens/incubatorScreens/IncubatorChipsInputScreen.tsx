@@ -37,12 +37,7 @@ export default class ChipsInputScreen extends Component {
           onChange={newChips => this.setState({chips2: newChips})}
           maxChips={3}
         />
-
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {}
-});
