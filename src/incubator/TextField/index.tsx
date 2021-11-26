@@ -181,6 +181,7 @@ const TextField = (props: InternalTextFieldProps) => {
             validate={others.validate}
             validationMessage={others.validationMessage}
             validationMessageStyle={validationMessageStyle}
+            testID={`${props.testID}.validationMessage`}
           />
         )}
         <View style={[paddings, fieldStyle]} row centerV>
@@ -220,6 +221,7 @@ const TextField = (props: InternalTextFieldProps) => {
               validationMessage={others.validationMessage}
               validationMessageStyle={validationMessageStyle}
               retainSpace
+              testID={`${props.testID}.validationMessage`}
             />
           )}
           {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle}/>}
