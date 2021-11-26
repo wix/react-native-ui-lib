@@ -14,8 +14,17 @@ export enum ChipsInputChangeReason {
 }
 
 export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
+  /**
+   * Chip items to render in the input
+   */
   chips?: ChipProps[];
+  /**
+   * A default set of chip props to pass to all chips
+   */
   defaultChipProps?: ChipProps;
+  /**
+   * Change callback for when chips changed (either added or removed)
+   */
   onChange?: (chips: ChipProps[], changeReason: ChipsInputChangeReason, updatedChip: ChipProps) => void;
   /**
    * Maximum chips
