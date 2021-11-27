@@ -37,6 +37,10 @@ export declare type ExpandableOverlayProps = TouchableOpacityProps & PropsWithCh
      * A custom overlay to render instead of Modal or Dialog components
      */
     renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement | undefined;
+    /**
+     * Disabled opening expandable overlay
+     */
+    disabled?: boolean;
 }>;
 interface ExpandableOverlayMethods {
     openExpandable: () => void;
@@ -71,6 +75,10 @@ declare const _default: React.ForwardRefExoticComponent<TouchableOpacityProps & 
      * A custom overlay to render instead of Modal or Dialog components
      */
     renderCustomOverlay?: ((props: RenderCustomOverlayProps) => React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined) | undefined;
+    /**
+     * Disabled opening expandable overlay
+     */
+    disabled?: boolean | undefined;
 } & {
     children?: React.ReactNode;
 } & React.RefAttributes<ExpandableOverlayMethods>>;
