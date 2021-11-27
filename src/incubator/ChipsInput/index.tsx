@@ -130,7 +130,7 @@ const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
       onKeyPress={onKeyPress}
       accessibilityHint={props.editable ? 'press keyboard delete button to remove last tag' : undefined}
 
-      // text80
+      // TODO: remove old props usage reference once the migration to the new implementation is completed
       // {...others}
       // maxLength={undefined}
       // title={this.props.chips ? undefined : title}
@@ -161,7 +161,7 @@ ChipsInput.changeReasons = {
 
 export default forwardRef(ChipsInput);
 
-/* Old ChipsInput props to make sure we have parity */
+/* TODO: These are old ChipsInput props to have a quick reference to what we had till we complete migration */
 //  /**
 //  * list of tags. can be string boolean or custom object when implementing getLabel
 //  */
