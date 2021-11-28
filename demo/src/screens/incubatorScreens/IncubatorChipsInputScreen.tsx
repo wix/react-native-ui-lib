@@ -1,6 +1,4 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
 import {View, Text, Card, TextField, Button, Colors, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class ChipsInputScreen extends Component {
