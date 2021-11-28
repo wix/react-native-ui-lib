@@ -129,21 +129,6 @@ const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
       fieldStyle={[fieldStyle, styles.fieldStyle]}
       onKeyPress={onKeyPress}
       accessibilityHint={props.editable ? 'press keyboard delete button to remove last tag' : undefined}
-
-      // TODO: remove old props usage reference once the migration to the new implementation is completed
-      // {...others}
-      // maxLength={undefined}
-      // title={this.props.chips ? undefined : title}
-      // value={value}
-      // onKeyPress={this.onKeyPress}
-      // enableErrors={false}
-      // onFocus={this.onFocus}
-      // onBlur={this.onBlur}
-      // hideUnderline
-      // selectionColor={isLastTagMarked ? 'transparent' : selectionColor}
-      // style={[inputStyle, styles.alignTextCenter]}
-      // containerStyle={{flexGrow: 0}}
-      // collapsable={false}
     />
   );
 };
@@ -160,74 +145,3 @@ ChipsInput.changeReasons = {
 };
 
 export default forwardRef(ChipsInput);
-
-/* TODO: These are old ChipsInput props to have a quick reference to what we had till we complete migration */
-//  /**
-//  * list of tags. can be string boolean or custom object when implementing getLabel
-//  */
-//  chips?: ChipsInputChipProps[];
-//  /**
-//   * Style your chips
-//   */
-//  defaultChipProps?: ChipsInputChipProps;
-//  /**
-//   * callback for extracting the label out of the tag item
-//   */
-//  getLabel?: (tag: ChipType) => any;
-//  /**
-//  /**
-//   * callback for onChangeTags event
-//   */
-//  onChangeTags?: () => void;
-//  /**
-//   * DEPRECATED: use chips instead. callback for creating new tag out of input value (good for composing tag object)
-//   */
-//  onCreateTag?: (value: any) => void;
-//  /**
-//   * DEPRECATED: use chips instead. callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
-//   */
-//  onTagPress?: (index: number, toRemove?: number) => void;
-//  /**
-//   * validation message error appears when tag isn't validate
-//   */
-//  validationErrorMessage?: string;
-//  /**
-//   * if true, tags *removal* Ux won't be available
-//   */
-//  disableTagRemoval?: boolean;
-//  /**
-//   * if true, tags *adding* Ux (i.e. by 'submitting' the input text) won't be available
-//   */
-//  disableTagAdding?: boolean;
-//  /**
-//   * custom styling for the component container
-//   */
-//  containerStyle?: ViewStyle;
-//  /**
-//   * custom styling for the tag item
-//   */
-//  tagStyle?: ViewStyle;
-//  /**
-//   * custom styling for the text input
-//   */
-//  inputStyle?: RNTextInputProps['style'];
-//  /**
-//   * should hide input underline
-//   */
-//  hideUnderline?: boolean;
-//  /**
-//   *  Maximum numbers of chips
-//   */
-//  maxLength?: number;
-//  /**
-//   * Chips with maxHeigh is inside a scrollView
-//   */
-//  scrollViewProps?: ScrollViewProps;
-//  /**
-//   * Chips inside a ScrollView
-//   */
-//  maxHeight?: number;
-//  /**
-//   * Custom element before the chips, for example 'search' icon, 'To:' label etc'
-//   */
-//  leftElement?: JSX.Element | JSX.Element[];
