@@ -33,6 +33,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     action,
     swipeable,
     backgroundColor,
+    onDismiss,
     children,
     testID
   } = props;
@@ -83,10 +84,10 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     toggleToast(visible);
   }, [visible]);
 
-  const onDismiss = useCallback(() => {
+  const handleDismiss = useCallback(() => {
     clearTimer();
-    props.onDismiss?.();
-  }, [props.onDismiss]);
+    onDismiss?.();
+  }, [onDismiss]);
 
   const positionStyle = useMemo(() => {
     return {
@@ -218,7 +219,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
         dismissible
         animateToOrigin
         directionLock
-        onDismiss={onDismiss}
+        onDismiss={handleDismiss}
         threshold={THRESHOLD}
       >
         {renderToast()}
