@@ -182,10 +182,6 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const renderToast = () => {
-    if (!visible && !isAnimating) {
-      return renderAttachment ? _renderAttachment(positionStyle, zIndex) : null;
-    }
-
     const isTop = position === 'top';
 
     return (
