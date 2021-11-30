@@ -15,21 +15,15 @@ const eventData = {
 };
 const onChangePageMock = jest.fn();
 const onScrollMock = jest.fn();
-const props = {
-  testID: 'carousel',
-  initialPage: 0,
-  pagingEnabled: true,
-  autoplay: false,
-  autoplayInterval: 4000,
-  horizontal: true,
-  onChangePage: onChangePageMock,
-  onScroll: onScrollMock
-  //animatedScrollOffset: // set to check Animated
-};
 
 const TestCase = props => {
   return (
-    <Carousel {...props}>
+    <Carousel 
+      testID={'carousel'}
+      onChangePage={onChangePageMock}
+      onScroll={onScrollMock}
+      {...props}
+    >
       {map([...Array(numberOfPagesShown)], (_, index) => (
         <Page key={index}>
           <Text testID={`page-${index}`}>Page #{index}</Text>
@@ -49,29 +43,41 @@ const Page = ({children, ...others}) => {
 
 describe('Carousel render tests', () => {
   
-  describe('default setup', () => {
-    it('should be set to default', () => {
-      const component = render(<TestCase {...props}/>);
-
-      component.getByText('Page #0'); // Validates that the text is there
+  describe('initialPage', () => {
+    it('should be set to default initialPage', () => {
+      const component = render(<TestCase/>);
+      const scrollView = component.getByTestId('carousel.scrollView');
+      
+      expect(scrollView.props.contentOffset.x).toBe(0);
     });
 
+    it('should be set to initialPage = 2', () => {
+      const component = render(<TestCase initialPage={2}/>);
+      const scrollView = component.getByTestId('carousel.scrollView');
+      
+      expect(scrollView.props.contentOffset.x).toBe(Constants.screenWidth * 2);
+    });
+  });
+
+  describe('onScroll', () => {
     it('should trigger onScroll from the second scroll', () => {
-      const component = render(<TestCase {...props}/>);
+      const component = render(<TestCase/>);
       const scrollView = component.getByTestId('carousel.scrollView');
 
-      fireEvent.scroll(scrollView, eventData); //NOTE: first scroll will no fire onScroll
+      fireEvent.scroll(scrollView, eventData); //NOTE: first scroll doesn't fire onScroll
       expect(onScrollMock).not.toHaveBeenCalled();
 
       fireEvent.scroll(scrollView, eventData);
       expect(onScrollMock).toHaveBeenCalled();
     });
+  });
 
+  describe('onChangePage', () => {
     it('should trigger onChangePage with current page', async () => {
-      const component = render(<TestCase {...props}/>);
+      const component = render(<TestCase/>);
       const scrollView = component.getByTestId('carousel.scrollView');
 
-      fireEvent.scroll(scrollView, eventData); //NOTE: first scroll will no fire onScroll
+      fireEvent.scroll(scrollView, eventData); //NOTE: first scroll doesn't fire onScroll
       fireEvent.scroll(scrollView, eventData);
       expect(onChangePageMock).not.toHaveBeenCalled();
 
