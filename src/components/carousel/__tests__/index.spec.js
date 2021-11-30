@@ -77,7 +77,6 @@ describe('Carousel render tests', () => {
 
       // await new Promise(r => setTimeout(r, 1000));
       fireEvent(scrollView, 'onMomentumScrollEnd', eventData);
-      expect(onChangePageMock).toHaveBeenCalled();
       expect(onChangePageMock).toHaveBeenCalledWith(1, 0, {isAutoScrolled: false});
     });
   });
