@@ -27,6 +27,18 @@ const props = {
   //animatedScrollOffset: // set to check Animated
 };
 
+const TestCase = props => {
+  return (
+    <Carousel {...props}>
+      {map([...Array(numberOfPagesShown)], (_, index) => (
+        <Page key={index}>
+          <Text testID={`page-${index}`}>Page #{index}</Text>
+        </Page>
+      ))}
+    </Carousel>
+  );
+};
+
 const Page = ({children, ...others}) => {
   return (
     <View {...others} style={{flex: 1}}>
@@ -35,29 +47,17 @@ const Page = ({children, ...others}) => {
   );
 };
 
-describe('Carousel tests', () => {
+describe('Carousel render tests', () => {
+  
   describe('default setup', () => {
     it('should be set to default', () => {
-      const component = render(<Carousel {...props}>
-        {map([...Array(numberOfPagesShown)], (_, index) => (
-          <Page key={index}>
-            <Text testID={`page-${index}`}>Page #{index}</Text>
-          </Page>
-        ))}
-      </Carousel>);
+      const component = render(<TestCase {...props}/>);
 
       component.getByText('Page #0'); // Validates that the text is there
     });
 
     it('should trigger onScroll from the second scroll', () => {
-      const component = render(<Carousel {...props}>
-        {map([...Array(numberOfPagesShown)], (_, index) => (
-          <Page key={index}>
-            <Text testID={`page-${index}`}>Page #{index}</Text>
-          </Page>
-        ))}
-      </Carousel>);
-
+      const component = render(<TestCase {...props}/>);
       const scrollView = component.getByTestId('carousel.scrollView');
 
       fireEvent.scroll(scrollView, eventData); //NOTE: first scroll will no fire onScroll
@@ -68,14 +68,7 @@ describe('Carousel tests', () => {
     });
 
     it('should trigger onChangePage with current page', async () => {
-      const component = render(<Carousel {...props}>
-        {map([...Array(numberOfPagesShown)], (_, index) => (
-          <Page key={index}>
-            <Text testID={`page-${index}`}>Page #{index}</Text>
-          </Page>
-        ))}
-      </Carousel>);
-
+      const component = render(<TestCase {...props}/>);
       const scrollView = component.getByTestId('carousel.scrollView');
 
       fireEvent.scroll(scrollView, eventData); //NOTE: first scroll will no fire onScroll
