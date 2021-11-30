@@ -1,11 +1,9 @@
-import {map} from 'lodash';
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
 import {Text, View} from 'react-native';
 import {Constants} from '../../../helpers';
 import Carousel from '../index';
 
-const numberOfPagesShown = 5;
 const getEventData = ({y = 0, x = 0}) => {
   return {
     nativeEvent: {
@@ -24,11 +22,18 @@ const TestCase = props => {
       onScroll={onScrollMock}
       {...props}
     >
-      {map([...Array(numberOfPagesShown)], (_, index) => (
-        <Page key={index}>
-          <Text testID={`page-${index}`}>Page #{index}</Text>
-        </Page>
-      ))}
+      <Page key={index}>
+        <Text testID={`page-0`}>Page #0</Text>
+      </Page>
+      <Page key={index}>
+        <Text testID={`page-1`}>Page #1</Text>
+      </Page>
+      <Page key={index}>
+        <Text testID={`page-2`}>Page #2</Text>
+      </Page>
+      <Page key={index}>
+        <Text testID={`page-3`}>Page #3</Text>
+      </Page>
     </Carousel>
   );
 };
