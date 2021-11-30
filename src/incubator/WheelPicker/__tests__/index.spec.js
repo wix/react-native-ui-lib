@@ -1,49 +1,57 @@
 import _ from 'lodash';
 import React from 'react';
 import {WheelPicker} from '../../../incubator';
-import {fireEvent, render} from '@testing-library/react-native';
+import {render} from '@testing-library/react-native';
+import {FireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
 
 const ITEM_HEIGHT = 50;
 const NUM_OF_ROWS = 7;
-const onChange = jest.fn();
-const props = {
-  testID: 'wheel',
-  items: _.times(60, i => i).map(item => ({label: `${item}`, value: item})),
-  onChange,
-  numberOfVisibleRows: NUM_OF_ROWS,
-  itemHeight: ITEM_HEIGHT,
-  initialIndex: 0,
-  activeTextColor: 'red',
-  inactiveTextColor: 'blue'
+const onChangeMock = jest.fn();
+
+const TestCase = props => {
+  return (
+    <WheelPicker
+      testID={'wheel'}
+      items={_.times(60, i => i).map(item => ({label: `${item}`, value: item}))}
+      onChange={onChangeMock}
+      numberOfVisibleRows={NUM_OF_ROWS}
+      itemHeight={ITEM_HEIGHT}
+      initialIndex={0}
+      activeTextColor={'red'}
+      inactiveTextColor={'blue'}
+      {...props}
+    />
+  );
 };
 
 describe('WheelPicker', () => {
   describe('FlatList', () => {
     it('should call onChange callback after scrolling', () => {
-      const {getByTestId} = render(<WheelPicker {...props}/>);
+      const {getByTestId} = render(<TestCase/>);
       const flatList = getByTestId('wheel.list');
 
-      fireEvent(flatList, 'onMomentumScrollEnd', {nativeEvent: {contentOffset: {y: 200}}});
+      FireOnMomentumScrollEnd(flatList, {y: 200});
 
-      expect(onChange).toHaveBeenCalled();
-      expect(onChange).toHaveBeenCalledWith(4, 4);
+      expect(onChangeMock).toHaveBeenCalled();
+      expect(onChangeMock).toHaveBeenCalledWith(4, 4);
 
-      fireEvent(flatList, 'onMomentumScrollEnd', {nativeEvent: {contentOffset: {y: 330}}});
+      FireOnMomentumScrollEnd(flatList, {y: 330});
 
-      expect(onChange).toHaveBeenCalledWith(7, 7);
+      expect(onChangeMock).toHaveBeenCalledWith(7, 7);
     });
 
     it('should present 7 rows', () => {
-      const {getByTestId} = render(<WheelPicker {...props}/>);
+      const {getByTestId} = render(<TestCase/>);
       const flatList = getByTestId('wheel.list');
 
       expect(flatList.props.height).toBe(NUM_OF_ROWS * ITEM_HEIGHT);
     });
   });
 
+  //TODO: make this test work
   //   describe('Item', () => {
   //     it('should color selected index with activeColor', () => {
-  //       const {getByTestId} = render(<WheelPicker {...props}/>);
+  //       const {getByTestId} = render(<TestCase/>);
   //       const flatList = getByTestId('wheel.list');
   //       const item_0 = getByTestId('wheel.item_0.text');
   //       const item_4 = getByTestId('wheel.item_4.text');
