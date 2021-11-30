@@ -335,10 +335,10 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     this.props.onScroll?.(event);
   };
 
-  // @ts-ignore
   onScrollEvent = Animated.event([
     {nativeEvent: 
       {contentOffset: 
+        // @ts-ignore
         {y: this.props?.animatedScrollOffset?.y, x: this.props?.animatedScrollOffset?.x}
       }
     }
