@@ -2,22 +2,26 @@ import React, {useState} from 'react';
 import {fireEvent, render} from '@testing-library/react-native';
 import TextField from '../index';
 
+const defaultProps = {
+  testID: 'field',
+  placeholder: 'Placeholder'
+};
+
+const TestCase = props => {
+  const [value, setValue] = useState(props.value);
+  return <TextField {...defaultProps} {...props} onChangeText={setValue} value={value}/>;
+};
+
 describe('TextField', () => {
   describe('hint prop', () => {
-    const props = {
-      testID: 'field',
-      placeholder: 'Placeholder',
-      hint: 'Hint'
-    };
-
     it('should hint text replace placeholder when input is focused', () => {
-      const renderTree = render(<TestCase {...props}/>);
+      const renderTree = render(<TestCase hint={'Hint'}/>);
 
       const input = renderTree.getByTestId('field');
-      renderTree.getByPlaceholderText(props.placeholder);
+      renderTree.getByPlaceholderText(defaultProps.placeholder);
 
       fireEvent(input, 'focus');
-      renderTree.getByPlaceholderText(props.hint);
+      renderTree.getByPlaceholderText('Hint');
     });
   });
 
@@ -25,7 +29,6 @@ describe('TextField', () => {
     const priceFormatter = Intl.NumberFormat('en-US');
 
     const props = {
-      testID: 'field',
       value: '10000',
       formatter: value => priceFormatter.format(Number(value))
     };
@@ -71,8 +74,3 @@ describe('TextField', () => {
     });
   });
 });
-
-const TestCase = props => {
-  const [value, setValue] = useState(props.value);
-  return <TextField {...props} onChangeText={setValue} value={value}/>;
-};
