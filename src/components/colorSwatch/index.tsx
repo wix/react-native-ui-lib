@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
+import {Constants} from '../../helpers';
+import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
-import {Colors} from '../../style';
-import {Constants} from '../../helpers';
 
 
 interface Props {

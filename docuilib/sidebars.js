@@ -14,7 +14,6 @@ const componentsCategories = {
   Form: 'form',
   Overlays: 'overlays',
   Layout: 'layoutsAndTemplates',
-  Lists: 'lists',
   Incubator: 'incubator'
 };
 
@@ -50,7 +49,7 @@ module.exports = {
       type: 'category',
       label: 'Components',
       collapsible: false,
-      items: ['Basic', 'Form', 'Overlays', 'Layout', 'Lists', 'Native', 'Incubator'].map(category => {
+      items: ['Basic', 'Form', 'Overlays', 'Layout', 'Native', 'Incubator'].map(category => {
         return {
           type: 'category',
           label: category,

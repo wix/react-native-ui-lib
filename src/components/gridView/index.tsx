@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-// TODO: we should use asBaseComponent here instead of using UIComponent directly
 import {Colors, Spacings} from 'style';
+// TODO: we should use asBaseComponent here instead of using UIComponent directly
 import UIComponent from '../../commons/UIComponent';
 import View from '../view';
 import Text from '../text';
@@ -10,6 +10,8 @@ import {Constants} from 'helpers';
 import GridListItem, {GridListItemProps} from '../gridListItem';
 import {formatLastItemLabel} from '../../helpers/FormattingPresenter';
 
+const DEFAULT_NUM_COLUMNS = 3;
+const DEFAULT_ITEM_SPACINGS = Spacings.s4;
 export interface GridViewProps {
   /**
    * The list of items based on GridListItem props
@@ -20,7 +22,11 @@ export interface GridViewProps {
    */
   viewWidth?: number;
   /**
-   * Number of items to show in a row
+   * Allow a responsive item width to the maximum item width
+   */
+  maxItemWidth?: number;
+  /**
+   * Number of items to show in a row (ignored when passing maxItemWidth)
    */
   numColumns?: number;
   /**
@@ -38,44 +44,38 @@ export interface GridViewProps {
   /**
    * whether to keep the items initial size when orientation changes,
    * in which case the apt number of columns will be calculated automatically.
+   * Ignored when passing 'maxItemWidth'
    */
   keepItemSize?: boolean;
 }
 
-interface State {
+interface GridViewState {
   viewWidth: number;
   numColumns: number;
+  itemSize: number;
 }
 
-
-type ExistProps = GridViewProps & State
 /**
  * @description: A auto-generated grid view that calculate item size according to given props
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx
  */
-class GridView extends UIComponent<GridViewProps, State> {
+class GridView extends UIComponent<GridViewProps, GridViewState> {
   static displayName = 'GridView';
 
   static defaultProps = {
-    numColumns: 3,
-    itemSpacing: Spacings.s4
+    numColumns: DEFAULT_NUM_COLUMNS,
+    itemSpacing: DEFAULT_ITEM_SPACINGS
   };
 
-  private itemSize?: number;
   private dimensionsChangeListener: any;
 
-  constructor(props: ExistProps) {
-    super(props);
+  state = {
+    viewWidth: this.getGridContainerWidth(),
+    numColumns: this.calcNumberOfColumns(),
+    itemSize: this.calcItemSize()
+  };
 
-    this.state = {
-      viewWidth: Math.floor(props.viewWidth || this.getDefaultViewWidth()),
-      numColumns: props.numColumns
-    };
-
-    this.itemSize = undefined;
-  }
-
-  static getDerivedStateFromProps(nextProps: ExistProps, prevState: State) {
+  static getDerivedStateFromProps(nextProps: GridViewProps, prevState: GridViewState) {
     let viewWidth;
     let numColumns;
     if (nextProps.viewWidth && Math.floor(nextProps.viewWidth) !== prevState.viewWidth) {
@@ -101,38 +101,44 @@ class GridView extends UIComponent<GridViewProps, State> {
   }
 
   onOrientationChanged = () => {
+    const {keepItemSize} = this.props;
+    const {itemSize} = this.state;
+
     if (!this.props.viewWidth) {
-      this.setState({viewWidth: Math.floor(this.getDefaultViewWidth()), numColumns: this.getCalculatedNumOfColumns()});
+      const newItemSize = keepItemSize ? itemSize : this.calcItemSize();
+      this.setState({
+        viewWidth: Math.floor(this.getDefaultViewWidth()),
+        numColumns: this.calcNumberOfColumns(),
+        itemSize: newItemSize
+      });
     }
   };
 
-  shouldUpdateItemSize() {
-    return !this.itemSize || !this.props.keepItemSize;
-  }
-
   getDefaultViewWidth() {
-    // @ts-ignore
-    return Constants.screenWidth - (Spacings.page * 2);
+    return Constants.screenWidth - Spacings.s5 * 2;
   }
 
-  getCalculatedNumOfColumns() {
-    const {itemSpacing, numColumns} = this.props as ExistProps;
-
-    if (!this.shouldUpdateItemSize() && Constants.orientation === 'landscape' && this.itemSize && itemSpacing) {
-      const numberOfColumns = this.getDefaultViewWidth() / (this.itemSize + itemSpacing);
-      return Math.floor(numberOfColumns);
-    }
-    return numColumns;
+  getGridContainerWidth() {
+    return Math.floor(this.props.viewWidth || this.getDefaultViewWidth());
   }
 
-  getItemSize() {
-    const {itemSpacing} = this.props;
-    const {viewWidth, numColumns} = this.state;
+  calcNumberOfColumns() {
+    const {numColumns, itemSpacing = DEFAULT_ITEM_SPACINGS, maxItemWidth} = this.props;
+    const containerWidth = this.getGridContainerWidth();
 
-    if (this.shouldUpdateItemSize() && viewWidth && itemSpacing && numColumns) {
-      return (viewWidth - itemSpacing * (numColumns - 1)) / numColumns;
+    if (maxItemWidth) {
+      return Math.ceil((containerWidth + itemSpacing) / (maxItemWidth + itemSpacing));
+    } else {
+      return numColumns || DEFAULT_NUM_COLUMNS;
     }
-    return this.itemSize;
+  }
+
+  calcItemSize() {
+    const {itemSpacing = DEFAULT_ITEM_SPACINGS} = this.props;
+    const containerWidth = this.getGridContainerWidth();
+    const numColumns = this.calcNumberOfColumns();
+
+    return (containerWidth - itemSpacing * (numColumns - 1)) / numColumns;
   }
 
   getThemeColor(placeColor: string) {
@@ -154,10 +160,7 @@ class GridView extends UIComponent<GridViewProps, State> {
       return;
     }
 
-    const imageBorderRadius = _.chain(items)
-      .first()
-      .get('imageProps.borderRadius')
-      .value();
+    const imageBorderRadius = _.chain(items).first().get('imageProps.borderRadius').value();
     return (
       <View
         style={[
@@ -173,23 +176,27 @@ class GridView extends UIComponent<GridViewProps, State> {
   }
 
   renderItem = (item: GridListItemProps, index: number) => {
+    const {itemSize} = this.state;
     const {items, itemSpacing} = this.props;
-    const {numColumns} = this.state;
+
+    const {numColumns = DEFAULT_NUM_COLUMNS} = this.state;
     const itemsCount = _.size(items);
     const rowCount = itemsCount / numColumns;
     const isLastItemInRow = (index + 1) % numColumns === 0;
     const isLastRow = index + 1 > (rowCount - 1) * numColumns;
     const isLastItem = index === itemsCount - 1;
-    const size = typeof item.itemSize === 'object'
-      ? {width: this.itemSize, height: _.get(item.itemSize, 'height', this.itemSize)}
-      : this.itemSize;
+    const size =
+      typeof item.itemSize === 'object' ? {width: itemSize, height: item.itemSize?.height || itemSize} : itemSize;
     return (
       <GridListItem
         key={index}
         {...item}
         itemSize={size}
-        containerStyle={[!isLastItemInRow && {marginRight: itemSpacing},
-          !isLastRow && {marginBottom: itemSpacing}, item.containerStyle]}
+        containerStyle={[
+          !isLastItemInRow && {marginRight: itemSpacing},
+          !isLastRow && {marginBottom: itemSpacing},
+          item.containerStyle
+        ]}
       >
         {isLastItem && this.renderLastItemOverlay()}
       </GridListItem>
@@ -197,12 +204,12 @@ class GridView extends UIComponent<GridViewProps, State> {
   };
 
   render() {
+    const {itemSize} = this.state;
     const {items, viewWidth} = this.props;
-    this.itemSize = this.getItemSize();
 
     return (
       <View style={[styles.container, {width: viewWidth ? Math.floor(viewWidth) : undefined}]}>
-        {this.itemSize && _.map(items, this.renderItem)}
+        {itemSize && _.map(items, this.renderItem)}
       </View>
     );
   }

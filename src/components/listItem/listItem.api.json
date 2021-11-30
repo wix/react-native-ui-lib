@@ -1,6 +1,6 @@
 {
   "name": "ListItem",
-  "category": "lists",
+  "category": "basic",
   "description": "List item component to render inside a List component",
   "extends": ["TouchableOpacity"],
   "extendsLink": ["https://reactnative.dev/docs/touchableopacity"],
