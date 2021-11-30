@@ -6,12 +6,12 @@ import {Constants} from '../../../helpers';
 import Carousel from '../index';
 
 const numberOfPagesShown = 5;
-const eventData = {
-  nativeEvent: {
-    contentOffset: {
-      x: Constants.screenWidth
+const getEventData = ({y = 0, x = 0}) => {
+  return {
+    nativeEvent: {
+      contentOffset: {y, x}
     }
-  }
+  };
 };
 const onChangePageMock = jest.fn();
 const onScrollMock = jest.fn();
@@ -64,10 +64,10 @@ describe('Carousel render tests', () => {
       const component = render(<TestCase/>);
       const scrollView = component.getByTestId('carousel.scrollView');
 
-      fireEvent.scroll(scrollView, eventData); //NOTE: first scroll doesn't fire onScroll
+      fireEvent.scroll(scrollView, getEventData({x: Constants.screenWidth})); //NOTE: first scroll doesn't fire onScroll
       expect(onScrollMock).not.toHaveBeenCalled();
 
-      fireEvent.scroll(scrollView, eventData);
+      fireEvent.scroll(scrollView, getEventData({x: Constants.screenWidth}));
       expect(onScrollMock).toHaveBeenCalled();
     });
   });
@@ -77,12 +77,12 @@ describe('Carousel render tests', () => {
       const component = render(<TestCase/>);
       const scrollView = component.getByTestId('carousel.scrollView');
 
-      fireEvent.scroll(scrollView, eventData); //NOTE: first scroll doesn't fire onScroll
-      fireEvent.scroll(scrollView, eventData);
+      fireEvent.scroll(scrollView, getEventData({x: Constants.screenWidth})); //NOTE: first scroll doesn't fire onScroll
+      fireEvent.scroll(scrollView, getEventData({x: Constants.screenWidth}));
       expect(onChangePageMock).not.toHaveBeenCalled();
 
       // await new Promise(r => setTimeout(r, 1000));
-      fireEvent(scrollView, 'onMomentumScrollEnd', eventData);
+      fireEvent(scrollView, 'onMomentumScrollEnd', getEventData({x: Constants.screenWidth}));
       expect(onChangePageMock).toHaveBeenCalledWith(1, 0, {isAutoScrolled: false});
     });
   });
