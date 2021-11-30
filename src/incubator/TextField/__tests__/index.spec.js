@@ -23,6 +23,16 @@ describe('TextField', () => {
       fireEvent(input, 'focus');
       renderTree.getByPlaceholderText('Hint');
     });
+
+    it('should not show hint when hint prop not passed', () => {
+      const renderTree = render(<TestCase/>);
+
+      const input = renderTree.getByTestId('field');
+      renderTree.getByPlaceholderText(defaultProps.placeholder);
+      
+      fireEvent(input, 'focus');
+      renderTree.getByPlaceholderText(defaultProps.placeholder);
+    });
   });
 
   describe('formatter prop', () => {
