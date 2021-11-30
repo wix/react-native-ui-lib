@@ -447,7 +447,8 @@ class Picker extends Component {
       enableModalBlur,
       topBarProps,
       pickerModalProps,
-      value
+      value,
+      editable
     } = this.props;
 
     if (useNativePicker) {
@@ -489,8 +490,9 @@ class Picker extends Component {
           modalProps={modalProps}
           expandableContent={this.renderExpandableModal()}
           renderCustomOverlay={renderCustomModal ? this.renderCustomModal : undefined}
-          testID={renderCustomModal ? testID : undefined}
+          testID={testID}
           {...customPickerProps}
+          disabled={editable === false}
         >
           {renderPicker ? (
             renderPicker(value, this.getLabel(value))
@@ -498,6 +500,7 @@ class Picker extends Component {
             <TextField
               ref={forwardedRef}
               {...textInputProps}
+              testID={`${testID}.input`}
               containerStyle={[paddings, margins, positionStyle, containerStyle]}
               {...this.getAccessibilityInfo()}
               importantForAccessibility={'no-hide-descendants'}

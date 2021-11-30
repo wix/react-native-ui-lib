@@ -16,9 +16,10 @@ export interface ValidationMessageProps {
     validationMessageStyle?: TextStyle;
     retainSpace?: boolean;
     validate?: FieldStateProps['validate'];
+    testID?: string;
 }
 declare const ValidationMessage: {
-    ({ validationMessage, enableErrors, validationMessageStyle, retainSpace, validate }: ValidationMessageProps): JSX.Element | null;
+    ({ validationMessage, enableErrors, validationMessageStyle, retainSpace, validate, testID }: ValidationMessageProps): JSX.Element | null;
     displayName: string;
 };
 export default ValidationMessage;

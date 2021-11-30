@@ -1,6 +1,7 @@
 import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
+import {Freeze} from 'react-freeze';
 import TabBarContext from './TabBarContext';
 
 export interface TabControllerPageProps {
@@ -37,8 +38,9 @@ export default function TabPage({
   renderLoading,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
-  const {currentPage, targetPage, asCarousel, containerWidth} = useContext(TabBarContext);
+  const {currentPage, asCarousel, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
+  const [focused, setFocused] = useState(false);
 
   const lazyLoad = useCallback(() => {
     if (lazy && !shouldLoad) {
@@ -47,13 +49,26 @@ export default function TabPage({
   }, [lazy, shouldLoad]);
 
   useAnimatedReaction(() => {
-    return targetPage.value === index;
+    return currentPage.value;
   },
-  isActive => {
+  (currentPage, previousPage) => {
+    const isActive = currentPage === index;
+    const wasActive = previousPage === index;
+    const nearActive = asCarousel && (currentPage - 1 === index || currentPage + 1 === index);
+    const wasNearActive =
+        asCarousel && previousPage !== null && (previousPage - 1 === index || previousPage + 1 === index);
+
     if (isActive) {
       runOnJS(lazyLoad)();
     }
-  });
+
+    if (isActive || nearActive) {
+      runOnJS(setFocused)(true);
+    } else if (wasActive || wasNearActive) {
+      runOnJS(setFocused)(false);
+    }
+  },
+  [currentPage]);
 
   const animatedPageStyle = useAnimatedStyle(() => {
     const isActive = Math.round(currentPage.value) === index;
@@ -70,7 +85,8 @@ export default function TabPage({
   return (
     <Reanimated.View style={style} testID={testID}>
       {!shouldLoad && renderLoading?.()}
-      {shouldLoad && props.children}
+      {/* {shouldLoad && props.children} */}
+      <Freeze freeze={!shouldLoad || !focused}>{props.children}</Freeze>
     </Reanimated.View>
   );
 }
