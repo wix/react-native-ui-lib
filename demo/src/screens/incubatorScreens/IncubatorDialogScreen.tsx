@@ -36,7 +36,7 @@ export default class IncubatorDialogScreen extends Component {
 
   renderVerticalItem = ({item}: {item: Item}) => {
     return (
-      <Text text50 margin-20 color={item.value}>
+      <Text text50 margin-20 color={item.value} onPress={this.closeDialog}>
         {item.label}
       </Text>
     );
@@ -54,6 +54,10 @@ export default class IncubatorDialogScreen extends Component {
     this.setState({visible: false});
   };
 
+  onDismiss = () => {
+    this.setState({visible: false});
+  };
+
   render() {
     const {visible} = this.state;
 
@@ -65,7 +69,7 @@ export default class IncubatorDialogScreen extends Component {
         <View flex center>
           <Button marginV-20 label="Open Dialog" onPress={this.openDialog}/>
         </View>
-        <Incubator.Dialog visible={visible} onDismiss={this.closeDialog} bottom containerStyle={styles.dialogContainer}>
+        <Incubator.Dialog visible={visible} onDismiss={this.onDismiss} bottom containerStyle={styles.dialogContainer}>
           <View style={styles.dialog}>
             <Text text60 margin-s2>
               Title (swipe here)
