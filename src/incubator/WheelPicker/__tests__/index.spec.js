@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import {WheelPicker} from '../../../incubator';
+import {Colors} from 'style';
 import {render} from '@testing-library/react-native';
 import {fireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
 
@@ -17,8 +18,8 @@ const TestCase = props => {
       numberOfVisibleRows={NUM_OF_ROWS}
       itemHeight={ITEM_HEIGHT}
       initialIndex={0}
-      activeTextColor={'red'}
-      inactiveTextColor={'blue'}
+      activeTextColor={Colors.red30}
+      inactiveTextColor={Colors.blue30}
       {...props}
     />
   );
@@ -32,7 +33,6 @@ describe('WheelPicker', () => {
 
       fireOnMomentumScrollEnd(flatList, {y: 200});
 
-      expect(onChangeMock).toHaveBeenCalled();
       expect(onChangeMock).toHaveBeenCalledWith(4, 4);
 
       fireOnMomentumScrollEnd(flatList, {y: 330});
@@ -49,22 +49,22 @@ describe('WheelPicker', () => {
   });
 
   //TODO: make this test work
-  //   describe('Item', () => {
-  //     it('should color selected index with activeColor', () => {
-  //       const {getByTestId} = render(<TestCase/>);
-  //       const flatList = getByTestId('wheel.list');
-  //       const item_0 = getByTestId('wheel.item_0.text');
-  //       const item_4 = getByTestId('wheel.item_4.text');
-  //       const activeStyle = {color: 'red'};
-  //       const inactiveStyle = {color: 'blue'};
+  // describe('Item', () => {
+  //   it('should set activeColor to the selected index', () => {
+  //     const {getByTestId} = render(<TestCase/>);
+  //     const flatList = getByTestId('wheel.list');
+  //     const item_0 = getByTestId('wheel.item_0.text');
+  //     const item_4 = getByTestId('wheel.item_4.text');
+  //     const activeStyle = {color: Colors.red30};
+  //     const inactiveStyle = {color: Colors.blue30};
 
-  //       expect(item_0).toHaveAnimatedStyle(activeStyle);
-  //       expect(item_4).toHaveAnimatedStyle(inactiveStyle);
+  //     expect(item_0).toHaveAnimatedStyle(activeStyle);
+  //     expect(item_4).toHaveAnimatedStyle(inactiveStyle);
 
-  //       fireEvent(flatList, 'onMomentumScrollEnd', {nativeEvent: {contentOffset: {y: 200}}});
+  //     fireEvent(flatList, 'onMomentumScrollEnd', {nativeEvent: {contentOffset: {y: 200}}});
 
-  //       expect(item_0).toHaveAnimatedStyle(inactiveStyle);
-  //       expect(item_4).toHaveAnimatedStyle(activeStyle);
-  //     });
+  //     expect(item_0).toHaveAnimatedStyle(inactiveStyle);
+  //     expect(item_4).toHaveAnimatedStyle(activeStyle);
   //   });
+  // });
 });
