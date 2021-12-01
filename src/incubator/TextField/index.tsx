@@ -20,6 +20,7 @@ import {
 } from '../../commons/new';
 import View from '../../components/view';
 import {Colors} from '../../style';
+import {useMeasure} from '../../hooks';
 import {ValidationMessagePosition, Validator} from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input, {InputProps} from './Input';
@@ -151,6 +152,7 @@ const TextField = (props: InternalTextFieldProps) => {
     children,
     ...others
   } = usePreset(props);
+  const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
   const {onFocus, onBlur, onChangeText, fieldState, validateField} = useFieldState(others);
 
   const context = useMemo(() => {
@@ -186,7 +188,8 @@ const TextField = (props: InternalTextFieldProps) => {
         )}
         <View style={[paddings, fieldStyle]} row centerV>
           {/* <View row centerV> */}
-          {leadingAccessory}
+          {/* @ts-expect-error */}
+          {leadingAccessory && <View ref={leadingAccessoryRef}>{leadingAccessory}</View>}
           <View flexG>
             {floatingPlaceholder && (
               <FloatingPlaceholder
@@ -195,6 +198,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 floatingPlaceholderColor={floatingPlaceholderColor}
                 floatOnFocus={floatOnFocus}
                 validationMessagePosition={validationMessagePosition}
+                extraOffset={leadingAccessoryMeasurements?.width}
               />
             )}
             {children || (
