@@ -104,7 +104,7 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
       useGestureHandlerRootView
       visible={visible}
       onBackgroundPress={ignoreBackgroundPress ? undefined : onBackgroundPress}
-      onRequestClose={onBackgroundPress}
+      onRequestClose={ignoreBackgroundPress ? undefined : onBackgroundPress}
       onDismiss={undefined}
     >
       {FadeView}
