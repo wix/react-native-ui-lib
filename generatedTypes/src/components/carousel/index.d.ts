@@ -46,15 +46,15 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     stopAutoPlay(): void;
     resetAutoPlay(): void;
     goToPage(pageIndex: number, animated?: boolean): void;
+    goToNextPage(): void;
     getCalcIndex(index: number): number;
     getSnapToOffsets: () => number[] | undefined;
     shouldUsePageWidth(): number | false | undefined;
     shouldEnablePagination(): boolean | undefined;
-    onContainerLayout: ({ nativeEvent: { layout: { width: containerWidth, height: containerHeight } } }: LayoutChangeEvent) => void;
     shouldAllowAccessibilityLayout(): boolean | undefined;
     onContentSizeChange: () => void;
+    onContainerLayout: ({ nativeEvent: { layout: { width: containerWidth, height: containerHeight } } }: LayoutChangeEvent) => void;
     onMomentumScrollEnd: () => void;
-    goToNextPage(): void;
     onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
     onScrollEvent: (...args: any[]) => void;
     renderChild: (child: ReactNode, key: Key) => JSX.Element | undefined;
