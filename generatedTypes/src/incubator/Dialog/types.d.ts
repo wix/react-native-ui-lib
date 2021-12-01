@@ -1,11 +1,12 @@
 import { PropsWithChildren } from 'react';
 import { AlignmentModifiers } from '../../commons/modifiers';
 import { ModalProps } from '../../components/modal';
+import { ViewProps } from '../../components/view';
 import { PanningDirections, PanningDirectionsEnum } from '../panView';
 declare type DialogDirections = PanningDirections;
 declare const DialogDirectionsEnum: typeof PanningDirectionsEnum;
 export { DialogDirections, DialogDirectionsEnum };
-export interface _DialogProps extends AlignmentModifiers {
+export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
     /**
      * The initial visibility of the dialog.
      */

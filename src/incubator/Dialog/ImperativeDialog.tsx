@@ -17,6 +17,7 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
     children,
     ignoreBackgroundPress,
     modalProps = {},
+    useSafeArea,
     testID
   } = props;
   const transitionAnimatorRef = React.createRef<typeof TransitionView>();
@@ -69,13 +70,9 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   [onDismiss, setVisible]);
 
   const renderDialog = () => {
-    {
-      /* TODO: remove?
-      {this.renderDialogView()}
-    {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>} */
-    }
     return (
       <PanView
+        useSafeArea={useSafeArea}
         directions={directions}
         dismissible
         animateToOrigin

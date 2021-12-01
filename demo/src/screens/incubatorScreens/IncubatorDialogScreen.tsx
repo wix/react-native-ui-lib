@@ -69,7 +69,7 @@ export default class IncubatorDialogScreen extends Component {
         <View flex center>
           <Button marginV-20 label="Open Dialog" onPress={this.openDialog}/>
         </View>
-        <Incubator.Dialog visible={visible} onDismiss={this.onDismiss} bottom centerH>
+        <Incubator.Dialog useSafeArea visible={visible} onDismiss={this.onDismiss} bottom centerH>
           <View style={styles.dialog}>
             <Text text60 margin-s2>
               Title (swipe here)
