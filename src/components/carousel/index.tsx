@@ -450,7 +450,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
         <ScrollView
-          testID={`${testID}.scrollView`}
+          testID={testID}
           ref={this.carousel}
           showsVerticalScrollIndicator={false}
           pagingEnabled
