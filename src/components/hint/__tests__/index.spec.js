@@ -45,22 +45,15 @@ describe('Hint Screen component test', () => {
   });
 
   it('Test Hint modal is not visible when showHint is false', async () => {
-    const element = <HintTestComponent showHint={false}/>;
-
-    const {queryByTestId} = render(element);
-
-    const modal = queryByTestId('Hint.modal');
-
+    const renderTree = render(<HintTestComponent showHint={false}/>);
+    const modal = renderTree.queryByTestId('Hint.modal');
     expect(modal).toBeNull();
   });
 
   it('Test Hint modal is visible when showHint is true', async () => {
-    const element = <HintTestComponent showHint/>;
-
-    const {getByTestId, queryAllByTestId} = render(element);
-    const hint = getByTestId('Hint');
+    const renderTree = render(<HintTestComponent showHint/>);
+    const hint = renderTree.getByTestId('Hint');
     expect(hint).toBeTruthy();
-  
-    expect(queryAllByTestId('Hint.modal')).toBeTruthy();
+    expect(renderTree.queryAllByTestId('Hint.modal')).toBeTruthy();
   });
 });
