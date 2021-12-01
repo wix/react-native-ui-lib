@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import React from 'react';
-import {WheelPicker} from '../../../incubator';
-import {Colors} from 'style';
 import {render} from '@testing-library/react-native';
 import {fireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
+import {Colors} from 'style';
+import {WheelPicker} from '../../../incubator';
+
 
 const ITEM_HEIGHT = 50;
 const NUM_OF_ROWS = 7;
@@ -14,10 +15,10 @@ const TestCase = props => {
     <WheelPicker
       testID={'wheel'}
       items={_.times(60, i => i).map(item => ({label: `${item}`, value: item}))}
+      initialValue={0}
       onChange={onChangeMock}
       numberOfVisibleRows={NUM_OF_ROWS}
       itemHeight={ITEM_HEIGHT}
-      initialIndex={0}
       activeTextColor={Colors.red30}
       inactiveTextColor={Colors.blue30}
       {...props}
@@ -26,17 +27,19 @@ const TestCase = props => {
 };
 
 describe('WheelPicker', () => {
+  beforeEach(() => {
+    onChangeMock.mockClear();
+  });
+
   describe('FlatList', () => {
     it('should call onChange callback after scrolling', () => {
       const {getByTestId} = render(<TestCase/>);
       const flatList = getByTestId('wheel.list');
 
       fireOnMomentumScrollEnd(flatList, {y: 200});
-
       expect(onChangeMock).toHaveBeenCalledWith(4, 4);
 
       fireOnMomentumScrollEnd(flatList, {y: 330});
-
       expect(onChangeMock).toHaveBeenCalledWith(7, 7);
     });
 
@@ -45,6 +48,15 @@ describe('WheelPicker', () => {
       const flatList = getByTestId('wheel.list');
 
       expect(flatList.props.height).toBe(NUM_OF_ROWS * ITEM_HEIGHT);
+    });
+  });
+
+  describe('initialValue', () => {
+    it('should not call onChange when initialValue is updated', () => {
+      const {update} = render(<TestCase/>);
+
+      update(<TestCase initialValue={2}/>);
+      expect(onChangeMock).not.toHaveBeenCalled();
     });
   });
 
@@ -61,7 +73,7 @@ describe('WheelPicker', () => {
   //     expect(item_0).toHaveAnimatedStyle(activeStyle);
   //     expect(item_4).toHaveAnimatedStyle(inactiveStyle);
 
-  //     fireEvent(flatList, 'onMomentumScrollEnd', {nativeEvent: {contentOffset: {y: 200}}});
+  //     fireOnMomentumScrollEnd(flatList, {y: 200});
 
   //     expect(item_0).toHaveAnimatedStyle(inactiveStyle);
   //     expect(item_4).toHaveAnimatedStyle(activeStyle);
