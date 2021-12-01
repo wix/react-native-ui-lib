@@ -467,7 +467,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderCarousel() {
-    const {containerStyle, animated, horizontal, animatedScrollOffset, testID, ...others} = this.props;
+    const {containerStyle, animated, horizontal, animatedScrollOffset, ...others} = this.props;
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth()
       ? {paddingRight: this.getItemSpacings(this.props)}
@@ -480,10 +480,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
         animated={animated}
         style={[{marginBottom}, containerStyle]}
         onLayout={this.onContainerLayout}
-        testID={testID}
       >
         <ScrollContainer
-          testID={`${testID}.scrollView`}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           decelerationRate="fast"

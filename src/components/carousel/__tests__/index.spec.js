@@ -39,15 +39,15 @@ describe('Carousel render tests', () => {
   
   describe('initialPage', () => {
     it('should be set to default initialPage', () => {
-      const component = render(<TestCase/>);
-      const scrollView = component.getByTestId('carousel.scrollView');
+      const {getByTestId} = render(<TestCase/>);
+      const scrollView = getByTestId('carousel');
       
       expect(scrollView.props.contentOffset.x).toBe(0);
     });
 
     it('should be set to initialPage = 2', () => {
-      const component = render(<TestCase initialPage={2}/>);
-      const scrollView = component.getByTestId('carousel.scrollView');
+      const {getByTestId} = render(<TestCase initialPage={2}/>);
+      const scrollView = getByTestId('carousel');
       
       expect(scrollView.props.contentOffset.x).toBe(Constants.screenWidth * 2);
     });
@@ -55,8 +55,8 @@ describe('Carousel render tests', () => {
 
   describe('onScroll', () => {
     it('should trigger onScroll from the second scroll', () => {
-      const component = render(<TestCase/>);
-      const scrollView = component.getByTestId('carousel.scrollView');
+      const {getByTestId} = render(<TestCase/>);
+      const scrollView = getByTestId('carousel');
 
       fireOnScroll(scrollView, {x: Constants.screenWidth}); //NOTE: first scroll doesn't fire onScroll
       expect(onScrollMock).not.toHaveBeenCalled();
@@ -68,8 +68,8 @@ describe('Carousel render tests', () => {
 
   describe('onChangePage', () => {
     it('should trigger onChangePage with current page', async () => {
-      const component = render(<TestCase/>);
-      const scrollView = component.getByTestId('carousel.scrollView');
+      const {getByTestId} = render(<TestCase/>);
+      const scrollView = getByTestId('carousel');
 
       fireOnScroll(scrollView, {x: Constants.screenWidth}); //NOTE: first scroll doesn't fire onScroll
       fireOnScroll(scrollView, {x: Constants.screenWidth});
