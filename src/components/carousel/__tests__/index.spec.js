@@ -1,18 +1,12 @@
 import {map} from 'lodash';
 import React from 'react';
-import {render, fireEvent} from '@testing-library/react-native';
+import {render} from '@testing-library/react-native';
 import {Text, View} from 'react-native';
+import {fireOnScroll, fireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
 import {Constants} from '../../../helpers';
 import Carousel from '../index';
 
 const numberOfPagesShown = 5;
-const getEventData = ({y = 0, x = 0}) => {
-  return {
-    nativeEvent: {
-      contentOffset: {y, x}
-    }
-  };
-};
 const onChangePageMock = jest.fn();
 const onScrollMock = jest.fn();
 
@@ -64,10 +58,10 @@ describe('Carousel render tests', () => {
       const component = render(<TestCase/>);
       const scrollView = component.getByTestId('carousel.scrollView');
 
-      fireEvent.scroll(scrollView, getEventData({x: Constants.screenWidth})); //NOTE: first scroll doesn't fire onScroll
+      fireOnScroll(scrollView, {x: Constants.screenWidth}); //NOTE: first scroll doesn't fire onScroll
       expect(onScrollMock).not.toHaveBeenCalled();
 
-      fireEvent.scroll(scrollView, getEventData({x: Constants.screenWidth}));
+      fireOnScroll(scrollView, {x: Constants.screenWidth});
       expect(onScrollMock).toHaveBeenCalled();
     });
   });
@@ -77,12 +71,12 @@ describe('Carousel render tests', () => {
       const component = render(<TestCase/>);
       const scrollView = component.getByTestId('carousel.scrollView');
 
-      fireEvent.scroll(scrollView, getEventData({x: Constants.screenWidth})); //NOTE: first scroll doesn't fire onScroll
-      fireEvent.scroll(scrollView, getEventData({x: Constants.screenWidth}));
+      fireOnScroll(scrollView, {x: Constants.screenWidth}); //NOTE: first scroll doesn't fire onScroll
+      fireOnScroll(scrollView, {x: Constants.screenWidth});
       expect(onChangePageMock).not.toHaveBeenCalled();
 
       // await new Promise(r => setTimeout(r, 1000));
-      fireEvent(scrollView, 'onMomentumScrollEnd', getEventData({x: Constants.screenWidth}));
+      fireOnMomentumScrollEnd(scrollView, {x: Constants.screenWidth});
       expect(onChangePageMock).toHaveBeenCalledWith(1, 0, {isAutoScrolled: false});
     });
   });
