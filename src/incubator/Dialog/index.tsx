@@ -1,11 +1,7 @@
 import React, {useRef} from 'react';
 import {useDidUpdate} from 'hooks';
-import ImperativeDialog, {
-  ImperativeDialogProps,
-  DialogDirections,
-  DialogDirectionsEnum,
-  ImperativeDialogMethods
-} from './ImperativeDialog';
+import ImperativeDialog from './ImperativeDialog';
+import {ImperativeDialogProps, DialogDirections, DialogDirectionsEnum, ImperativeDialogMethods} from './types';
 export {DialogDirections, DialogDirectionsEnum};
 
 export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {

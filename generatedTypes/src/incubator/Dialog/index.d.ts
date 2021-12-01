@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { ImperativeDialogProps, DialogDirections, DialogDirectionsEnum } from './ImperativeDialog';
+import { ImperativeDialogProps, DialogDirections, DialogDirectionsEnum } from './types';
 export { DialogDirections, DialogDirectionsEnum };
 export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
     /**

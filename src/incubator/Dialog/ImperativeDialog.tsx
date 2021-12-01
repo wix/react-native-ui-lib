@@ -1,57 +1,13 @@
-import React, {PropsWithChildren, useMemo, useCallback, useState, useImperativeHandle, forwardRef} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import React, {useMemo, useCallback, useState, useImperativeHandle, forwardRef} from 'react';
+import {StyleSheet} from 'react-native';
 import {useSharedValue, withTiming, useAnimatedStyle} from 'react-native-reanimated';
-import TransitionView, {TransitionViewAnimationType} from '../TransitionView';
-import PanView, {PanningDirections, PanningDirectionsEnum} from '../panView';
 import View from '../../components/view';
-import Modal, {ModalProps} from '../../components/modal';
-import {AlignmentModifiers} from '../../commons/modifiers';
-type DialogDirections = PanningDirections;
-const DialogDirectionsEnum = PanningDirectionsEnum;
+import Modal from '../../components/modal';
+import TransitionView, {TransitionViewAnimationType} from '../TransitionView';
+import PanView from '../panView';
+import useAlignmentStyle from './helpers/useAlignmentStyle';
+import {ImperativeDialogProps, ImperativeDialogMethods, DialogDirections, DialogDirectionsEnum} from './types';
 export {DialogDirections, DialogDirectionsEnum};
-
-interface _DialogProps extends AlignmentModifiers {
-  /**
-   * The initial visibility of the dialog.
-   */
-  initialVisibility?: boolean;
-  /**
-   * Callback that is called after the dialog's dismiss (after the animation has ended).
-   */
-  onDismiss?: (props?: ImperativeDialogProps) => void;
-  /**
-   * The direction from which and to which the dialog is animating \ panning (default bottom).
-   */
-  direction?: DialogDirections;
-  /**
-   * The Dialog`s container style (it is set to {position: 'absolute'})
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Whether or not to ignore background press.
-   */
-  ignoreBackgroundPress?: boolean;
-  /**
-   * Additional props for the modal.
-   */
-  modalProps?: ModalProps;
-  /**
-   * Used to locate this view in end-to-end tests
-   * The container has the unchanged id.
-   * Currently supported inner IDs:
-   * TODO: add missing <TestID>(s?)
-   * <TestID>.modal - the Modal's id.
-   * <TestID>.overlayFadingBackground - the fading background id.
-   */
-  testID?: string;
-}
-
-export type ImperativeDialogProps = PropsWithChildren<_DialogProps>;
-
-export interface ImperativeDialogMethods {
-  open: () => void;
-  close: () => void;
-}
 
 import {Colors} from 'style';
 const DEFAULT_OVERLAY_BACKGROUND_COLORS = Colors.rgba(Colors.black, 0.2);
@@ -62,7 +18,6 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
     onDismiss,
     direction = DialogDirectionsEnum.DOWN,
     children,
-    containerStyle,
     ignoreBackgroundPress,
     modalProps = {},
     testID
@@ -71,6 +26,7 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   const {overlayBackgroundColor = DEFAULT_OVERLAY_BACKGROUND_COLORS, ...otherModalProps} = modalProps;
   const fadeOpacity = useSharedValue<number>(Number(initialVisibility));
   const [visible, setVisible] = useState(initialVisibility);
+  const {alignmentStyle} = useAlignmentStyle(props);
 
   const open = useCallback(() => {
     if (!visible) {
@@ -117,16 +73,39 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   },
   [onDismiss, setVisible]);
 
-  const panStyle = useMemo(() => {
-    return [containerStyle, styles.panView];
-  }, [containerStyle]);
-
   const fadeStyle = useAnimatedStyle(() => {
     return {
       opacity: fadeOpacity.value,
       backgroundColor: overlayBackgroundColor
     };
   }, [overlayBackgroundColor]);
+
+  const renderDialog = () => {
+    {
+      /* TODO: remove?
+      {this.renderDialogView()}
+    {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>} */
+    }
+    return (
+      <PanView
+        directions={directions}
+        dismissible
+        animateToOrigin
+        containerStyle={styles.panView}
+        onDismiss={onPanViewDismiss}
+      >
+        <TransitionView
+          ref={transitionAnimatorRef}
+          enterFrom={direction}
+          exitTo={direction}
+          onAnimationStart={onTransitionAnimationStart}
+          onAnimationEnd={onTransitionAnimationEnd}
+        >
+          {children}
+        </TransitionView>
+      </PanView>
+    );
+  };
 
   return (
     <Modal
@@ -141,27 +120,7 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
       onDismiss={undefined}
     >
       <View testID={`${testID}.overlayFadingBackground`} absF reanimated style={fadeStyle} pointerEvents="none"/>
-      {/* TODO: remove?
-        {this.renderDialogView()}
-      {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>} */}
-
-      <PanView
-        directions={directions}
-        dismissible
-        animateToOrigin
-        containerStyle={panStyle}
-        onDismiss={onPanViewDismiss}
-      >
-        <TransitionView
-          ref={transitionAnimatorRef}
-          enterFrom={direction}
-          exitTo={direction}
-          onAnimationStart={onTransitionAnimationStart}
-          onAnimationEnd={onTransitionAnimationEnd}
-        >
-          {children}
-        </TransitionView>
-      </PanView>
+      <View pointerEvents={'none'} style={alignmentStyle}>{renderDialog()}</View>
     </Modal>
   );
 };

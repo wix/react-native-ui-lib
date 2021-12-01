@@ -69,7 +69,7 @@ export default class IncubatorDialogScreen extends Component {
         <View flex center>
           <Button marginV-20 label="Open Dialog" onPress={this.openDialog}/>
         </View>
-        <Incubator.Dialog visible={visible} onDismiss={this.onDismiss} bottom containerStyle={styles.dialogContainer}>
+        <Incubator.Dialog visible={visible} onDismiss={this.onDismiss} bottom centerH>
           <View style={styles.dialog}>
             <Text text60 margin-s2>
               Title (swipe here)
@@ -90,11 +90,8 @@ export default class IncubatorDialogScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  dialogContainer: {
-    bottom: 20,
-    alignSelf: 'center'
-  },
   dialog: {
+    margin: 20,
     backgroundColor: Colors.white,
     width: 200,
     height: 300,
