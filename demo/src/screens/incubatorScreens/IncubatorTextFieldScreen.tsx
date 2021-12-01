@@ -98,9 +98,10 @@ export default class TextFieldScreen extends Component {
           <TextField
             ref={this.input2}
             placeholder="Enter URL"
+            floatingPlaceholder
             text70
             leadingAccessory={
-              <Text text70 blue30>
+              <Text text70 blue30 marginR-2>
                 Https://
               </Text>
             }
@@ -214,7 +215,7 @@ export default class TextFieldScreen extends Component {
             label="Label"
             placeholder="Enter text..."
             preset={preset}
-            fieldStyle={(_state, {preset}) => (preset === 'withUnderline' ? styles.withUnderline : styles.withFrame)}
+            dynamicFieldStyle={(_state, {preset}) => (preset === 'withUnderline' ? styles.withUnderline : styles.withFrame)}
             editable={!shouldDisable}
           />
 

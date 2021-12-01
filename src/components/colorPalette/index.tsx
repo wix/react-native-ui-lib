@@ -7,9 +7,9 @@ import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Carousel from '../carousel';
-import PageControl from '../pageControl';
-import ColorSwatch, {SWATCH_SIZE} from './ColorSwatch';
 import ScrollBar from '../scrollBar';
+import PageControl from '../pageControl';
+import ColorSwatch, {SWATCH_SIZE} from '../colorSwatch';
 
 
 interface Props {
