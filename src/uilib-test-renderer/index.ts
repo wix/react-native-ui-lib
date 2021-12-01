@@ -1,9 +1,10 @@
 export * from '@testing-library/react-native';
-import {findStyle, FireOnMomentumScrollEnd} from './helper';
+import {findStyle} from './helper';
+import {fireOnMomentumScrollEnd} from './scrollViewHelper';
 
 export {
   findStyle,
-  FireOnMomentumScrollEnd
+  fireOnMomentumScrollEnd
 };
 
 /* Docs: https://callstack.github.io/react-native-testing-library/docs/api/  */

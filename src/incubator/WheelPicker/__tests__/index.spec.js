@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import {WheelPicker} from '../../../incubator';
 import {render} from '@testing-library/react-native';
-import {FireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
+import {fireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
 
 const ITEM_HEIGHT = 50;
 const NUM_OF_ROWS = 7;
@@ -30,12 +30,12 @@ describe('WheelPicker', () => {
       const {getByTestId} = render(<TestCase/>);
       const flatList = getByTestId('wheel.list');
 
-      FireOnMomentumScrollEnd(flatList, {y: 200});
+      fireOnMomentumScrollEnd(flatList, {y: 200});
 
       expect(onChangeMock).toHaveBeenCalled();
       expect(onChangeMock).toHaveBeenCalledWith(4, 4);
 
-      FireOnMomentumScrollEnd(flatList, {y: 330});
+      fireOnMomentumScrollEnd(flatList, {y: 330});
 
       expect(onChangeMock).toHaveBeenCalledWith(7, 7);
     });
