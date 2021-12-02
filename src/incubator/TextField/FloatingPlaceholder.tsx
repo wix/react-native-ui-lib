@@ -26,6 +26,7 @@ export interface FloatingPlaceholderProps {
    */
   floatOnFocus?: boolean;
   validationMessagePosition?: ValidationMessagePosition;
+  extraOffset?: number;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
@@ -35,7 +36,8 @@ const FloatingPlaceholder = ({
   floatingPlaceholderColor = Colors.grey40,
   floatingPlaceholderStyle,
   floatOnFocus,
-  validationMessagePosition
+  validationMessagePosition,
+  extraOffset = 0
 }: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
@@ -52,14 +54,17 @@ const FloatingPlaceholder = ({
           scale: interpolateValue(animation, [1, FLOATING_PLACEHOLDER_SCALE])
         },
         {
-          translateX: interpolateValue(animation, [0, -placeholderOffset.left])
+          translateX: interpolateValue(animation, [
+            0,
+            -placeholderOffset.left - extraOffset / FLOATING_PLACEHOLDER_SCALE
+          ])
         },
         {
           translateY: interpolateValue(animation, [0, -placeholderOffset.top])
         }
       ]
     };
-  }, [placeholderOffset]);
+  }, [placeholderOffset, extraOffset]);
 
   useEffect(() => {
     const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;

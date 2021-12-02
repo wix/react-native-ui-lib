@@ -146,6 +146,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     floatingPlaceholderColor?: import("./types").ColorType | undefined;
     floatingPlaceholderStyle?: ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle) | undefined;
     floatOnFocus?: boolean | undefined;
+    extraOffset?: number | undefined;
     enableErrors?: boolean | undefined;
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
@@ -475,6 +476,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     floatingPlaceholderColor?: import("./types").ColorType | undefined;
     floatingPlaceholderStyle?: ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle) | undefined;
     floatOnFocus?: boolean | undefined;
+    extraOffset?: number | undefined;
     enableErrors?: boolean | undefined;
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
@@ -1036,6 +1038,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         includeFontPadding?: boolean | undefined;
     };
     floatOnFocus?: boolean | undefined;
+    extraOffset?: number | undefined;
     enableErrors: boolean;
     validationMessage?: string | string[] | undefined;
     validationMessageStyle?: import("react-native").TextStyle | undefined;
