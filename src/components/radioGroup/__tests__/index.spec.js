@@ -31,85 +31,63 @@ describe('RadioGroup renderer test', () => {
 
   it('Press on radio button', async () => {
     const props = {onValueChangeMock};
-    const element = <RadioGroupTestComponent {...props}/>;
 
-    const {getByTestId} = render(element);
+    const {getByTestId} = render(<RadioGroupTestComponent {...props}/>);
 
-    const radioGroup = getByTestId(testIDs.radioGroup);
-    expect(radioGroup).toBeTruthy();
+    getByTestId(testIDs.radioGroup);
 
-    const up = getByTestId(testIDs.radioButtonUp);
-    expect(up).toBeTruthy();
-    fireEvent.press(up);
-    expect(onValueChangeMock).toHaveBeenCalled();
+    const radioButtonUp = getByTestId(testIDs.radioButtonUp);
+    fireEvent.press(radioButtonUp);
     expect(onValueChangeMock).toHaveBeenCalledTimes(1);
     expect(onValueChangeMock).toHaveBeenCalledWith('up');
   });
 
   it('Press on disabled radio button', async () => {
     const props = {onValueChangeMock, shouldDisable: true};
-    const element = <RadioGroupTestComponent {...props}/>;
 
-    const {getByTestId} = render(element);
+    const {getByTestId} = render(<RadioGroupTestComponent {...props}/>);
 
-    const radioGroup = getByTestId(testIDs.radioGroup);
-    expect(radioGroup).toBeTruthy();
+    getByTestId(testIDs.radioGroup);
 
-    const up = getByTestId(testIDs.radioButtonUp);
-    expect(up).toBeTruthy();
-    fireEvent.press(up);
+    const radioButtonUp = getByTestId(testIDs.radioButtonUp);
+    fireEvent.press(radioButtonUp);
     expect(onValueChangeMock).not.toHaveBeenCalled();
-    expect(onValueChangeMock).toHaveBeenCalledTimes(0);
   });
 
   it('Press on selected radio button', async () => {
     const props = {onValueChangeMock, initialValue: 'up'};
-    const element = <RadioGroupTestComponent {...props}/>;
 
-    const {getByTestId} = render(element);
+    const {getByTestId} = render(<RadioGroupTestComponent {...props}/>);
 
-    const radioGroup = getByTestId(testIDs.radioGroup);
-    expect(radioGroup).toBeTruthy();
+    getByTestId(testIDs.radioGroup);
 
-    const up = getByTestId(testIDs.radioButtonUp);
-    expect(up).toBeTruthy();
-    fireEvent.press(up);
-    expect(onValueChangeMock).toHaveBeenCalled();
+    const radioButtonUp = getByTestId(testIDs.radioButtonUp);
+    fireEvent.press(radioButtonUp);
     expect(onValueChangeMock).toHaveBeenCalledTimes(1);
     expect(onValueChangeMock).toHaveBeenCalledWith('up');
   });
 
   it('Press multiple radio buttons', async () => {
     const props = {onValueChangeMock};
-    const element = <RadioGroupTestComponent {...props}/>;
 
-    const {getByTestId} = render(element);
+    const {getByTestId} = render(<RadioGroupTestComponent {...props}/>);
 
-    const radioGroup = getByTestId(testIDs.radioGroup);
-    expect(radioGroup).toBeTruthy();
+    getByTestId(testIDs.radioGroup);
 
-    const up = getByTestId(testIDs.radioButtonUp);
-    expect(up).toBeTruthy();
-    fireEvent.press(up);
-    expect(onValueChangeMock).toHaveBeenCalled();
+    const radioButtonUp = getByTestId(testIDs.radioButtonUp);
+    fireEvent.press(radioButtonUp);
     expect(onValueChangeMock).toHaveBeenCalledTimes(1);
     expect(onValueChangeMock).toHaveBeenCalledWith('up');
-    const down = getByTestId(testIDs.radioButtonDown);
-    expect(down).toBeTruthy();
-    fireEvent.press(down);
-    expect(onValueChangeMock).toHaveBeenCalled();
+    const radioButtonDown = getByTestId(testIDs.radioButtonDown);
+    fireEvent.press(radioButtonDown);
     expect(onValueChangeMock).toHaveBeenCalledTimes(2);
     expect(onValueChangeMock.mock.calls).toEqual([['up'], ['down']]);
-    const left = getByTestId(testIDs.radioButtonLeft);
-    expect(left).toBeTruthy();
-    fireEvent.press(left);
-    expect(onValueChangeMock).toHaveBeenCalled();
+    const radioButtonLeft = getByTestId(testIDs.radioButtonLeft);
+    fireEvent.press(radioButtonLeft);
     expect(onValueChangeMock).toHaveBeenCalledTimes(3);
     expect(onValueChangeMock.mock.calls).toEqual([['up'], ['down'], ['left']]);
-    const right = getByTestId(testIDs.radioButtonRight);
-    expect(right).toBeTruthy();
-    fireEvent.press(right);
-    expect(onValueChangeMock).toHaveBeenCalled();
+    const radioButtonRight = getByTestId(testIDs.radioButtonRight);
+    fireEvent.press(radioButtonRight);
     expect(onValueChangeMock).toHaveBeenCalledTimes(4);
     expect(onValueChangeMock.mock.calls).toEqual([['up'], ['down'], ['left'], ['right']]);
   });
