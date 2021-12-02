@@ -48,7 +48,6 @@ components.forEach(component => {
       extendsText = `[${extendsText}](${component.extendsLink})`;
     } else {
       extendsText = `[${extendsText}](${extendsText})`;
-
     }
     content += `:::info\n`;
     content += `This component extends **${extendsText}** props.\n`;
@@ -71,14 +70,14 @@ components.forEach(component => {
 
   /* Props */
   content += `## API\n`;
-  component.props?.forEach(prop => {
+  _.sortBy(component.props, p => p.name)?.forEach(prop => {
     content += `### ${prop.name}\n`;
     content += `${prop.description}  \n`;
     // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
-    content += `<code>${_.escape(prop.type)}</code>\n\n`;
+    content += `\`${prop.type} \` \n\n`;
   });
 
-  const componentParentDir = (componentParentName || isParentComponent) ? `/${componentParentName || componentName}` : '';
+  const componentParentDir = componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
   const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
 
   if (!fs.existsSync(dirPath)) {

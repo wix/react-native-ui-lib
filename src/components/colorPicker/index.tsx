@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import ColorPalette from './ColorPalette';
-import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
 import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
+import ColorPalette from '../colorPalette';
+import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
 
 
