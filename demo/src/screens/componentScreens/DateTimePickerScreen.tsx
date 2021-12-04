@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {DateTimePicker, Text, TouchableOpacity, Colors, DateTimePickerProps} from 'react-native-ui-lib'; // eslint-disable-line
+import {DateTimePicker, Text, TouchableOpacity, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DateTimePickerScreen extends Component {
   getCustomInputValue = (value: string) => {
