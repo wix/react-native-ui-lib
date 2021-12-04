@@ -300,7 +300,7 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
 }
 
 export {DateTimePicker}; // For tests
-export default asBaseComponent(DateTimePicker);
+export default asBaseComponent<DateTimePickerProps>(DateTimePicker);
 
 const styles = StyleSheet.create({
   header: {

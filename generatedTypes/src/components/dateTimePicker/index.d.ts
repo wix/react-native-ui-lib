@@ -115,7 +115,7 @@ declare class DateTimePicker extends Component<DateTimePickerPropsInternal, Date
     render(): JSX.Element;
 }
 export { DateTimePicker };
-declare const _default: React.ComponentClass<{
+declare const _default: React.ComponentClass<DateTimePickerProps & {
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;
