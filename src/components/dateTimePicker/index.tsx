@@ -233,7 +233,8 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
   };
 
   renderHeader() {
-    const {headerStyle} = this.props;
+    // @ts-expect-error
+    const {headerStyle, useCustomTheme} = this.props;
 
     return (
       <View row spread bg-white paddingH-20 style={[styles.header, headerStyle]}>
@@ -243,7 +244,7 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
           iconStyle={{tintColor: Colors.grey10}}
           onPress={this.toggleExpandableOverlay}
         />
-        <Button link iconSource={Assets.icons.check} useCustomTheme onPress={this.onDonePressed}/>
+        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed}/>
       </View>
     );
   }
