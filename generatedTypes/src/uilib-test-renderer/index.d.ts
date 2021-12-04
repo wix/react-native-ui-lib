@@ -1,3 +1,4 @@
 export * from '@testing-library/react-native';
 import { findStyle } from './helper';
-export { findStyle };
+import { fireOnMomentumScrollEnd, fireOnScroll } from './scrollViewHelper';
+export { findStyle, fireOnMomentumScrollEnd, fireOnScroll };

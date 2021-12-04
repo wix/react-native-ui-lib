@@ -159,6 +159,14 @@ const TextField = (props: InternalTextFieldProps) => {
     return {...fieldState, disabled: others.editable === false, validateField};
   }, [fieldState, others.editable, validateField]);
 
+  const leadingAccessoryClone = useMemo(() => {
+    if (leadingAccessory) {
+      return React.cloneElement(leadingAccessory, {
+        ref: leadingAccessoryRef
+      });
+    }
+  }, [leadingAccessory]);
+
   const {margins, paddings, typography, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
@@ -188,8 +196,7 @@ const TextField = (props: InternalTextFieldProps) => {
         )}
         <View style={[paddings, fieldStyle]} row centerV>
           {/* <View row centerV> */}
-          {/* @ts-expect-error */}
-          {leadingAccessory && <View ref={leadingAccessoryRef}>{leadingAccessory}</View>}
+          {leadingAccessoryClone}
           <View flexG>
             {floatingPlaceholder && (
               <FloatingPlaceholder

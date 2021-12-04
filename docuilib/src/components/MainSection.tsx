@@ -8,7 +8,6 @@ import GoldStarSvg from '@site/static/img/goldStar.svg';
 
 export default () => {
   const {siteConfig} = useDocusaurusContext();
-  console.warn('ethan - siteConfig', siteConfig.customFields.stars)
 
   return (
     <div className={styles.main}>
