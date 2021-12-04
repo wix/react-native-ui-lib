@@ -173,7 +173,7 @@ export function renderMultipleSegmentOptions(title: string, key: string, options
 
   return (
     <View row centerV spread marginB-s4 key={key}>
-      <Text marginR-s2>{title}</Text>
+      {!!title && <Text marginR-s2>{title}</Text>}
       <SegmentedControl
         initialIndex={index}
         segments={options}

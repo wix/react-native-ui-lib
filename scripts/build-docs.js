@@ -47,7 +47,8 @@ components.forEach(component => {
     if (component.extendsLink) {
       extendsText = `[${extendsText}](${component.extendsLink})`;
     } else {
-      extendsText = `[${extendsText}](${extendsText})`;
+      const extendedComponentName = _.last(_.split(extendsText, '/')); // Incubator/TextField -> TextField
+      extendsText = `[${extendedComponentName}](/docs/components/${extendsText})`;
     }
     content += `:::info\n`;
     content += `This component extends **${extendsText}** props.\n`;

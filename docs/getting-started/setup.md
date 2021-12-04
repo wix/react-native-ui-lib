@@ -24,7 +24,9 @@ import {KeyboardTrackingView, KeyboardAwareInsetsView, KeyboardRegistry, Keyboar
 
 ## Install UILib
 
-First, run `npm install react-native-ui-lib`
+- Run `npm install react-native-ui-lib`  
+- Install mandatory [peer dependencies](#peer-dependencies), `npm i react-native-reanimated react-native-gesture-handler`
+- Install ios pods, `cd ios && pod install`
 
 If you plan on using specific components, see **UILib Packages** above.  
 *For some packages you might still need to install one of the peer dependencies*
@@ -62,10 +64,9 @@ Some of the components are using the native dependencies listed below - those ar
 
 ## Demo App
 
-Our demo app is located [here](https://github.com/wix/react-native-ui-lib/tree/master/demo). To run it:
-
-- Clone the repo
-- Install dependencies: `npm install`
-- (for iOS) `cd ios && pod install && cd ..`
-- Start the packager: `npm start`
-- Build the app: `npm run ios` or `npm run android` (or from Xcode or Android Studio).
+- Clone the project `git clone git@github.com:wix/react-native-ui-lib.git`
+- `cd react-native-ui-lib`
+- Install dependencies `npm install`
+- (for iOS) `cd ios && pod install`
+- Start the packager `npm start`
+- Build the app `npm run ios` or `npm run android` (or from Xcode or Android Studio).
