@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, ModalProps} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {View, Text, Card, Button, Incubator, Colors, BorderRadiuses} from 'react-native-ui-lib'; //eslint-disable-line
 
@@ -33,7 +33,6 @@ const colors: Item[] = [
 
 export default class IncubatorDialogScreen extends Component {
   state = {visible: false};
-  supportedOrientations: ModalProps['supportedOrientations'] = ['portrait', 'landscape'];
 
   renderVerticalItem = ({item}: {item: Item}) => {
     return (
@@ -70,14 +69,7 @@ export default class IncubatorDialogScreen extends Component {
         <View flex center>
           <Button marginV-20 label="Open Dialog" onPress={this.openDialog}/>
         </View>
-        <Incubator.Dialog
-          useSafeArea
-          visible={visible}
-          onDismiss={this.onDismiss}
-          bottom
-          centerH
-          supportedOrientations={this.supportedOrientations}
-        >
+        <Incubator.Dialog useSafeArea visible={visible} onDismiss={this.onDismiss} bottom centerH>
           <View style={styles.dialog}>
             <Text text60 margin-s2>
               Title (swipe here)

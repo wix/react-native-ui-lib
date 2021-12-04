@@ -18,8 +18,6 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
     ignoreBackgroundPress,
     modalProps = {},
     useSafeArea,
-    supportedOrientations,
-    accessibilityLabel,
     testID
   } = props;
   const transitionAnimatorRef = React.createRef<typeof TransitionView>();
@@ -105,8 +103,6 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
       onBackgroundPress={ignoreBackgroundPress ? undefined : onBackgroundPress}
       onRequestClose={ignoreBackgroundPress ? undefined : onBackgroundPress}
       onDismiss={undefined}
-      supportedOrientations={supportedOrientations}
-      accessibilityLabel={accessibilityLabel}
     >
       {FadeView}
       <View pointerEvents={'box-none'} style={alignmentStyle}>
