@@ -18,7 +18,6 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
     children,
     ignoreBackgroundPress,
     modalProps = {},
-    containerStyle,
     useSafeArea,
     testID
   } = props;
@@ -72,17 +71,13 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   },
   [onDismiss, setVisible]);
 
-  const panStyle = useMemo(() => {
-    return [containerStyle, styles.panView];
-  }, [containerStyle]);
-
   const renderDialog = () => {
     return (
       <PanView
         directions={directions}
         dismissible
         animateToOrigin
-        containerStyle={panStyle}
+        containerStyle={styles.panView}
         onDismiss={onPanViewDismiss}
       >
         <TransitionView

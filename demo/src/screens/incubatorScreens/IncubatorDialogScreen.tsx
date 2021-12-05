@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, ModalProps} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {View, Text, Card, Button, Incubator, Colors, BorderRadiuses} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Card, Button, Incubator, Colors, BorderRadiuses, Constants} from 'react-native-ui-lib'; //eslint-disable-line
 
 interface Item {
   value: string;
@@ -77,7 +77,6 @@ export default class IncubatorDialogScreen extends Component {
           bottom
           centerH
           modalProps={this.modalProps}
-          containerStyle={styles.dialogContainerStyle}
         >
           <View style={styles.dialog}>
             <Text text60 margin-s2>
@@ -99,14 +98,11 @@ export default class IncubatorDialogScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  dialogContainerStyle: {
-    width: '90%'
-  },
   dialog: {
     marginBottom: 20,
     backgroundColor: Colors.white,
-    width: '100%',
-    height: 300,
+    maxHeight: Constants.screenHeight * 0.8,
+    width: 300,
     borderRadius: BorderRadiuses.br20
   },
   verticalScroll: {

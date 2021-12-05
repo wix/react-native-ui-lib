@@ -1,5 +1,4 @@
 import {PropsWithChildren} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {ModalProps} from '../../components/modal';
 import {ViewProps} from '../../components/view';
@@ -29,10 +28,6 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    * Additional props for the modal.
    */
   modalProps?: ModalProps;
-  /**
-   * The Dialog`s container style (it is set to {position: 'absolute'})
-   */
-  containerStyle?: StyleProp<ViewStyle>;
   /**
    * Used to locate this view in end-to-end tests
    * The container has the unchanged id.
