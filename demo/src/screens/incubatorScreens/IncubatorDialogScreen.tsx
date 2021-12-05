@@ -77,6 +77,7 @@ export default class IncubatorDialogScreen extends Component {
           bottom
           centerH
           modalProps={this.modalProps}
+          containerStyle={styles.dialogContainerStyle}
         >
           <View style={styles.dialog}>
             <Text text60 margin-s2>
@@ -98,10 +99,13 @@ export default class IncubatorDialogScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  dialogContainerStyle: {
+    width: '90%'
+  },
   dialog: {
-    margin: 20,
+    marginBottom: 20,
     backgroundColor: Colors.white,
-    width: 200,
+    width: '100%',
     height: 300,
     borderRadius: BorderRadiuses.br20
   },
