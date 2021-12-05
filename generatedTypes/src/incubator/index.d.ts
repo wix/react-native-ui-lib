@@ -1,3 +1,4 @@
+export { default as ChipsInput, ChipsInputProps, ChipsInputChangeReason } from './ChipsInput';
 export { default as ExpandableOverlay } from './expandableOverlay';
 export { default as TextField, TextFieldProps, FieldContextType } from './TextField';
 export { default as Toast, ToastProps } from './toast';
