@@ -5,6 +5,7 @@ import Modal from '../../components/modal';
 import TransitionView, {TransitionViewAnimationType} from '../TransitionView';
 import PanView from '../panView';
 import useAlignmentStyle from './helpers/useAlignmentStyle';
+import useSafeAreaView from './helpers/useSafeAreaView';
 import useFadeView from './helpers/useFadeView';
 import {ImperativeDialogProps, ImperativeDialogMethods, DialogDirections, DialogDirectionsEnum} from './types';
 export {DialogDirections, DialogDirectionsEnum};
@@ -24,7 +25,8 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   const transitionAnimatorRef = React.createRef<typeof TransitionView>();
   const {overlayBackgroundColor, ...otherModalProps} = modalProps;
   const [visible, setVisible] = useState(initialVisibility);
-  const {alignmentStyle} = useAlignmentStyle(props);
+  const {alignmentType, alignmentStyle} = useAlignmentStyle(props);
+  const {topSafeArea, bottomSafeArea} = useSafeAreaView({useSafeArea, alignmentType});
   const {FadeView, hideNow, fade} = useFadeView({
     initialVisibility,
     testID: `${testID}.overlayFadingBackground`,
@@ -77,7 +79,6 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   const renderDialog = () => {
     return (
       <PanView
-        useSafeArea={useSafeArea}
         directions={directions}
         dismissible
         animateToOrigin
@@ -91,7 +92,9 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
           onAnimationStart={fade}
           onAnimationEnd={onTransitionAnimationEnd}
         >
+          {topSafeArea}
           {children}
+          {bottomSafeArea}
         </TransitionView>
       </PanView>
     );
