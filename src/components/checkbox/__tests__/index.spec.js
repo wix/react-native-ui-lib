@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
 import Checkbox from '../index';
 
-export const testID = 'checkbox';
+const testID = 'checkbox';
 const onValueChange = jest.fn();
 
 const TestCase = props => {
@@ -23,7 +23,7 @@ describe('Checkbox renderer test', () => {
     jest.clearAllMocks();
   });
 
-  it('Default value is false', async () => {
+  it('Default value is false', () => {
     const props = {onValueChange};
 
     const {getByTestId} = render(<TestCase {...props}/>);
@@ -34,7 +34,7 @@ describe('Checkbox renderer test', () => {
     expect(onValueChange).toHaveBeenCalledWith(true);
   });
 
-  it('Send value (false)', async () => {
+  it('Send value (false)', () => {
     const props = {onValueChange, value: false};
 
     const {getByTestId} = render(<TestCase {...props}/>);
@@ -45,7 +45,7 @@ describe('Checkbox renderer test', () => {
     expect(onValueChange).toHaveBeenCalledWith(true);
   });
 
-  it('Send value (true)', async () => {
+  it('Send value (true)', () => {
     const props = {onValueChange, value: true};
 
     const {getByTestId} = render(<TestCase {...props}/>);
@@ -56,7 +56,7 @@ describe('Checkbox renderer test', () => {
     expect(onValueChange).toHaveBeenCalledWith(false);
   });
 
-  it('Multiple clicks', async () => {
+  it('Multiple clicks', () => {
     const props = {onValueChange};
 
     const {getByTestId} = render(<TestCase {...props}/>);
@@ -71,7 +71,7 @@ describe('Checkbox renderer test', () => {
     expect(onValueChange.mock.calls).toEqual([[true], [false], [true]]);
   });
 
-  it('Disabled (value = false)', async () => {
+  it('Disabled (value = false)', () => {
     const props = {onValueChange, value: false, disabled: true};
 
     const {getByTestId} = render(<TestCase {...props}/>);
@@ -81,11 +81,9 @@ describe('Checkbox renderer test', () => {
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
-  it('Disabled (value = true)', async () => {
+  it('Disabled (value = true)', () => {
     const props = {onValueChange, value: true, disabled: true};
-    const element = <TestCase {...props}/>;
-
-    const {getByTestId} = render(element);
+    const {getByTestId} = render(<TestCase {...props}/>);
 
     const checkbox = getByTestId(testID);
     fireEvent.press(checkbox);
