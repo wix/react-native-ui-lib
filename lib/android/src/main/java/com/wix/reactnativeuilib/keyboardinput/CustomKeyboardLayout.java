@@ -99,8 +99,8 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
                         hideCustomKeyboardContent();
                         clearKeyboardOverlayMode();
                     }
+                    promise.resolve(null);
                 }
-                promise.resolve(null);
             }
         });
     }
