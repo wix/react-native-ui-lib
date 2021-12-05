@@ -2,7 +2,7 @@
   "name": "ChipsInput",
   "category": "incubator",
   "description": "A chips input",
-  "extends": ["TextField"],
+  "extends": ["Incubator/TextField"],
   "modifiers": ["margin", "color", "typography"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorChipsInputScreen.tsx",
   "images": [],

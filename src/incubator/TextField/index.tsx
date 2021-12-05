@@ -20,6 +20,7 @@ import {
 } from '../../commons/new';
 import View from '../../components/view';
 import {Colors} from '../../style';
+import {useMeasure} from '../../hooks';
 import {ValidationMessagePosition, Validator} from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input, {InputProps} from './Input';
@@ -151,11 +152,20 @@ const TextField = (props: InternalTextFieldProps) => {
     children,
     ...others
   } = usePreset(props);
+  const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
   const {onFocus, onBlur, onChangeText, fieldState, validateField} = useFieldState(others);
 
   const context = useMemo(() => {
     return {...fieldState, disabled: others.editable === false, validateField};
   }, [fieldState, others.editable, validateField]);
+
+  const leadingAccessoryClone = useMemo(() => {
+    if (leadingAccessory) {
+      return React.cloneElement(leadingAccessory, {
+        ref: leadingAccessoryRef
+      });
+    }
+  }, [leadingAccessory]);
 
   const {margins, paddings, typography, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
@@ -186,7 +196,7 @@ const TextField = (props: InternalTextFieldProps) => {
         )}
         <View style={[paddings, fieldStyle]} row centerV>
           {/* <View row centerV> */}
-          {leadingAccessory}
+          {leadingAccessoryClone}
           <View flex row>
             {floatingPlaceholder && (
               <FloatingPlaceholder
@@ -195,6 +205,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 floatingPlaceholderColor={floatingPlaceholderColor}
                 floatOnFocus={floatOnFocus}
                 validationMessagePosition={validationMessagePosition}
+                extraOffset={leadingAccessoryMeasurements?.width}
               />
             )}
             {children || (

@@ -53,6 +53,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const defaultPageWidth = props.loop || !props.pageWidth ? Constants.screenWidth : props.pageWidth;
     const pageHeight = props.pageHeight ?? Constants.screenHeight;
     this.isAutoScrolled = false;
+    
     this.state = {
       containerWidth: undefined,
       // @ts-ignore (defaultProps)
@@ -198,6 +199,27 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
   }
 
+  goToNextPage() {
+    const {currentPage} = this.state;
+    const pagesCount = presenter.getChildrenLength(this.props);
+    const {loop} = this.props;
+    let nextPageIndex;
+
+    if (loop) {
+      nextPageIndex = currentPage + 1;
+    } else {
+      nextPageIndex = Math.min(pagesCount - 1, currentPage + 1);
+    }
+
+    this.goToPage(nextPageIndex, true);
+
+    // in case of a loop, after we advanced right to the cloned first page,
+    // we return silently to the real first page
+    if (loop && currentPage === pagesCount) {
+      this.goToPage(0, false);
+    }
+  }
+
   getCalcIndex(index: number): number {
     // to handle scrollView index issue in Android's RTL layout
     if (Constants.isRTL && Constants.isAndroid) {
@@ -217,8 +239,10 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     if (containerWidth) {
       const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.props);
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
-      const snapToOffsets = _.times(presenter.getChildrenLength(this.props),
-        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal());
+      const snapToOffsets = _.times(
+        presenter.getChildrenLength(this.props),
+        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal()
+      );
       return snapToOffsets;
     }
   };
@@ -232,6 +256,18 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {pagingEnabled, horizontal} = this.props;
     return horizontal ? pagingEnabled && !this.shouldUsePageWidth() : true;
   }
+
+  shouldAllowAccessibilityLayout() {
+    const {allowAccessibleLayout} = this.props;
+    return allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
+  }
+
+  onContentSizeChange = () => {
+    // this is to handle initial scroll position (content offset)
+    if (Constants.isAndroid) {
+      this.updateOffset();
+    }
+  };
 
   onContainerLayout = ({
     nativeEvent: {
@@ -249,53 +285,21 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     this.setState({containerWidth, pageWidth, pageHeight, initialOffset});
   };
 
-  shouldAllowAccessibilityLayout() {
-    const {allowAccessibleLayout} = this.props;
-    return allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
-  }
-
-  onContentSizeChange = () => {
-    // this is to handle initial scroll position (content offset)
-    if (Constants.isAndroid) {
-      this.updateOffset();
-    }
-  };
-
   onMomentumScrollEnd = () => {
     // finished full page scroll
     const {currentStandingPage, currentPage} = this.state;
     const index = this.getCalcIndex(currentPage);
-
     const pagesCount = presenter.getChildrenLength(this.props);
+
     if (index < pagesCount) {
       this.setState({currentStandingPage: index});
+
       if (currentStandingPage !== index) {
         this.props.onChangePage?.(index, currentStandingPage, {isAutoScrolled: this.isAutoScrolled});
         this.isAutoScrolled = false;
       }
     }
   };
-
-  goToNextPage() {
-    const {currentPage} = this.state;
-    const pagesCount = presenter.getChildrenLength(this.props);
-    const {loop} = this.props;
-
-    let nextPageIndex;
-    if (loop) {
-      nextPageIndex = currentPage + 1;
-    } else {
-      nextPageIndex = Math.min(pagesCount - 1, currentPage + 1);
-    }
-
-    this.goToPage(nextPageIndex, true);
-
-    // in case of a loop, after we advanced right to the cloned first page,
-    // we return silently to the real first page
-    if (loop && currentPage === pagesCount) {
-      this.goToPage(0, false);
-    }
-  }
 
   onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!this.skippedInitialScroll) {
@@ -307,7 +311,6 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {pageWidth, pageHeight} = this.state;
     const offsetX = event.nativeEvent.contentOffset.x;
     const offsetY = event.nativeEvent.contentOffset.y;
-
     const offset = horizontal ? offsetX : offsetY;
     const pageSize = horizontal ? pageWidth : pageHeight;
 
@@ -332,12 +335,18 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     this.props.onScroll?.(event);
   };
 
-  // @ts-ignore
-  onScrollEvent = Animated.event([{nativeEvent: {contentOffset: {y: this.props?.animatedScrollOffset?.y, x: this.props?.animatedScrollOffset?.x}}}],
-    {
-      useNativeDriver: true,
-      listener: this.onScroll
-    });
+  onScrollEvent = Animated.event([
+    {nativeEvent: 
+      {contentOffset: 
+        // @ts-ignore
+        {y: this.props?.animatedScrollOffset?.y, x: this.props?.animatedScrollOffset?.x}
+      }
+    }
+  ],
+  {
+    useNativeDriver: true,
+    listener: this.onScroll
+  });
 
   renderChild = (child: ReactNode, key: Key): JSX.Element | undefined => {
     if (child) {
@@ -436,11 +445,12 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderAccessibleLayout() {
-    const {containerStyle, children} = this.props;
+    const {containerStyle, children, testID} = this.props;
 
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
         <ScrollView
+          testID={testID}
           ref={this.carousel}
           showsVerticalScrollIndicator={false}
           pagingEnabled
@@ -466,7 +476,11 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
     const ScrollContainer = animatedScrollOffset ? Animated.ScrollView : ScrollView;
     return (
-      <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
+      <View
+        animated={animated}
+        style={[{marginBottom}, containerStyle]}
+        onLayout={this.onContainerLayout}
+      >
         <ScrollContainer
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -502,7 +516,7 @@ export default asBaseComponent<CarouselProps, Carousel & {pageControlPositions: 
 const styles = StyleSheet.create({
   counter: {
     paddingHorizontal: 8,
-    paddingVertical: 3, // height: 24,
+    paddingVertical: 3,
     borderRadius: 20,
     backgroundColor: Colors.rgba(Colors.black, 0.6),
     position: 'absolute',
