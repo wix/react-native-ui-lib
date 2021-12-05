@@ -42,11 +42,14 @@ const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
     const reachedMaximum = maxChips && chips?.length >= maxChips;
     if (fieldValue.current && !reachedMaximum) {
       const newChip = {label: fieldValue.current};
-      onChange?.([...chips, newChip], ChipsInputChangeReason.Added, newChip);
       setMarkedForRemoval(undefined);
       // @ts-expect-error
       fieldRef.current.clear();
       fieldValue.current = '';
+      /* NOTE: Delay change event to give clear field time to complete and avoid a flickering */
+      setTimeout(() => {
+        onChange?.([...chips, newChip], ChipsInputChangeReason.Added, newChip);
+      }, 0);
     }
   }, [onChange, chips, maxChips]);
 
