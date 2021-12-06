@@ -47,18 +47,16 @@ const Dialog = (props: DialogProps) => {
     }
   }, [visible]);
 
-  const renderContent = useMemo(() => {
-    return (
-      <View style={[styles.defaultDialogStyle, containerStyle]}>
-        <DialogHeader {...headerProps}/>
-        {children}
-      </View>
-    );
-  }, [headerProps, containerStyle, children]);
+  const style = useMemo(() => {
+    return [styles.defaultDialogStyle, containerStyle];
+  }, [containerStyle]);
 
   return (
     <ImperativeDialog {...others} initialVisibility={initialVisibility.current} ref={dialogRef}>
-      {renderContent}
+      <View style={style}>
+        <DialogHeader {...headerProps}/>
+        {children}
+      </View>
     </ImperativeDialog>
   );
 };
