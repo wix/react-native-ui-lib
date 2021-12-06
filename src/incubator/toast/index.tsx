@@ -7,7 +7,7 @@ import {Colors, BorderRadiuses, Spacings, Typography, Shadows} from 'style';
 import {Constants} from 'helpers';
 import View from '../../components/view';
 import Text from '../../components/text';
-import Image from '../../components/image';
+import Icon from '../../components/icon';
 import Button from '../../components/button';
 import PanView from '../panView';
 import {ToastProps} from './types';
@@ -156,7 +156,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
 
   const renderIcon = () => {
     const tintColor = iconColor;
-    return <Image source={icon} resizeMode={'contain'} style={styles.icon} tintColor={tintColor}/>;
+    return <Icon source={icon} resizeMode={'contain'} style={styles.icon} tintColor={tintColor}/>;
   };
 
   const renderToastContent = () => {
