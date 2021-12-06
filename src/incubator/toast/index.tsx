@@ -20,6 +20,7 @@ const THRESHOLD = {x: Constants.screenWidth / 4, y: 10};
 const Toast = (props: PropsWithChildren<ToastProps>) => {
   const {
     visible,
+    preset,
     position = 'bottom',
     zIndex,
     elevation,
@@ -34,6 +35,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     swipeable,
     backgroundColor,
     onDismiss,
+    onAnimationEnd,
     children,
     testID
   } = props;
@@ -63,7 +65,10 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const {isAnimating, toggleToast, toastOpacity, toastTranslateY} = useToastAnimation({
-    ...props,
+    visible,
+    preset,
+    position,
+    onAnimationEnd,
     toastHeight,
     setDismissTimer,
     playAccessibilityFeatures
