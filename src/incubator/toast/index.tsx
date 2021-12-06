@@ -64,9 +64,8 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     }
   };
 
-  const {isAnimating, toggleToast, toastOpacity, toastTranslateY} = useToastAnimation({
+  const {isAnimating, toggleToast, opacityStyle, translateStyle} = useToastAnimation({
     visible,
-    preset,
     position,
     onAnimationEnd,
     toastHeight,
@@ -102,6 +101,14 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
       [position]: 0
     } as Pick<ViewStyle, 'top' | 'left' | 'right' | 'bottom' | 'position'>;
   }, [position]);
+
+  const toastStyle = useMemo(() => {
+    return [opacityStyle, containerStyle];
+  }, [opacityStyle, containerStyle]);
+
+  const toastContainerStyle = useMemo(() => {
+    return [positionStyle, translateStyle, {zIndex, elevation}];
+  }, [positionStyle, translateStyle, zIndex, elevation]);
 
   const onLayout = useCallback(event => {
     const height = event.nativeEvent.layout.height;
@@ -193,13 +200,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     return (
       <>
         {!isTop && !!toastHeight && renderAttachmentContent()}
-        <View
-          animated
-          useSafeArea
-          style={[{opacity: toastOpacity}, containerStyle]}
-          onLayout={onLayout}
-          pointerEvents={visible ? 'box-none' : 'none'}
-        >
+        <View animated useSafeArea style={toastStyle} onLayout={onLayout} pointerEvents={visible ? 'box-none' : 'none'}>
           {renderToastContent()}
         </View>
         {isTop && !!toastHeight && renderAttachmentContent()}
@@ -216,7 +217,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
       key="toast"
       animated
       testID={testID}
-      style={[positionStyle, {zIndex, elevation, transform: [{translateY: toastTranslateY}]}]}
+      style={toastContainerStyle}
       pointerEvents={'box-none'}
     >
       <PanView

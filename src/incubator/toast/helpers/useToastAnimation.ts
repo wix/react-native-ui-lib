@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useRef, useState, useMemo} from 'react';
 import {Animated, Easing} from 'react-native';
 import {HapticService, HapticType} from 'services';
 import {ToastProps} from '../types';
@@ -53,6 +53,10 @@ export default ({
     outputRange: [0, 1, 1]
   });
 
+  const opacityStyle = useMemo(() => {
+    return {opacity: toastOpacity};
+  }, []);
+
   const isTop = position === 'top';
   const positionMultiplier = isTop ? -1 : 1;
   const toastTranslateY = toastAnimatedValue.current.interpolate({
@@ -60,5 +64,9 @@ export default ({
     outputRange: [positionMultiplier * toastHeight, 0]
   });
 
-  return {isAnimating, toggleToast, toastOpacity, toastTranslateY};
+  const translateStyle = useMemo(() => {
+    return {transform: [{translateY: toastTranslateY}]};
+  }, []);
+
+  return {isAnimating, toggleToast, opacityStyle, translateStyle};
 };
