@@ -38,6 +38,7 @@ interface Props {
    * Custom element to render on top of the animated progress
    */
   customElement?: JSX.Element;
+  testID?: string;
 }
 export type ProgressBarProps = Props;
 
