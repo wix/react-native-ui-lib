@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Assets, Colors, Typography, View, Button, Text, Incubator} from 'react-native-ui-lib';
+import {Assets, Colors, View, Button, Text, Incubator} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions, renderBooleanOption, renderRadioGroup} from '../ExampleScreenPresenter';
 
 const {Toast} = Incubator;
@@ -57,11 +57,7 @@ export default class ToastsScreen extends Component {
   };
 
   renderBelowToast = () => {
-    return (
-      <View>
-        <Text>Attachment below toast</Text>
-      </View>
-    );
+    return <Text>Attachment below toast</Text>;
   };
 
   renderAttachment = () => {
@@ -123,7 +119,6 @@ export default class ToastsScreen extends Component {
           marginB-10
           label={'Toggle toast'}
           onPress={this.toggleVisibility}
-          throttleTime={0}
         />
       </View>
     );
