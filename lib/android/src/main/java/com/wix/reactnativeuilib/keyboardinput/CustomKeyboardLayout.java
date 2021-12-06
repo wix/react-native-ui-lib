@@ -1,5 +1,6 @@
 package com.wix.reactnativeuilib.keyboardinput;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.Window;
@@ -89,14 +90,17 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
         runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                final View focusedView = getCurrentActivity().getCurrentFocus();
-                if (focusedView instanceof EditText) {
-                    showSoftKeyboard();
-                } else {
-                    hideCustomKeyboardContent();
-                    clearKeyboardOverlayMode();
+                Activity currentActivity = getCurrentActivity();
+                if (currentActivity != null) {
+                    final View focusedView = currentActivity.getCurrentFocus();
+                    if (focusedView instanceof EditText) {
+                        showSoftKeyboard();
+                    } else {
+                        hideCustomKeyboardContent();
+                        clearKeyboardOverlayMode();
+                    }
+                    promise.resolve(null);
                 }
-                promise.resolve(null);
             }
         });
     }
@@ -105,9 +109,12 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
         runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                final View focusedView = getCurrentActivity().getCurrentFocus();
-                if (focusedView != null) {
-                    focusedView.clearFocus();
+                Activity currentActivity = getCurrentActivity();
+                if (currentActivity != null) {
+                    final View focusedView = currentActivity.getCurrentFocus();
+                    if (focusedView != null) {
+                        focusedView.clearFocus();
+                    }
                 }
             }
         });
