@@ -16,7 +16,7 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
      */
     onDismiss?: (props?: ImperativeDialogProps) => void;
     /**
-     * The direction from which and to which the dialog is animating \ panning (default bottom).
+     * The direction from which and to which the dialog is animating \ panning (default down).
      */
     direction?: DialogDirections;
     /**
