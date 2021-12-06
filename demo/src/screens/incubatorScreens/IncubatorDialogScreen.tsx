@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, ModalProps} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {View, Text, Card, Button, Incubator, Colors, BorderRadiuses, Constants, Spacings} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Card, Button, Incubator, Colors, Spacings} from 'react-native-ui-lib';
 
 interface Item {
   value: string;
@@ -82,7 +82,7 @@ export default class IncubatorDialogScreen extends Component {
         >
           <FlatList
             showsVerticalScrollIndicator={false}
-            style={styles.verticalScroll}
+            contentContainerStyle={styles.verticalScroll}
             data={colors}
             renderItem={this.renderVerticalItem}
             keyExtractor={this.keyExtractor}
@@ -95,6 +95,6 @@ export default class IncubatorDialogScreen extends Component {
 
 const styles = StyleSheet.create({
   verticalScroll: {
-    marginVertical: Spacings.s2
+    paddingVertical: Spacings.s2
   }
 });
