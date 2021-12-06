@@ -73,6 +73,10 @@ export interface ToastProps {
    */
   preset?: ToastPreset;
   /**
+   * Whether to trigger an haptic feedback once the toast is shown (requires react-native-haptic-feedback dependency)
+   */
+  enableHapticFeedback?: boolean;
+  /**
    * Test Id for component
    */
   testID?: string;

@@ -1,20 +1,20 @@
 import {useRef, useState} from 'react';
 import {Animated, Easing} from 'react-native';
 import {HapticService, HapticType} from 'services';
-import {ToastPreset, ToastProps} from '../types';
+import {ToastProps} from '../types';
 
-interface UseToastAnimationProps extends Pick<ToastProps, 'visible' | 'preset' | 'position' | 'onAnimationEnd'> {
+type UseToastAnimationProps = Pick<ToastProps, 'visible' | 'position' | 'onAnimationEnd' | 'enableHapticFeedback'> & {
   toastHeight: number;
   playAccessibilityFeatures: () => void;
   setTimer: () => void;
-}
+};
 
 export default ({
   visible,
-  preset,
   position,
   toastHeight,
   onAnimationEnd,
+  enableHapticFeedback,
   setTimer,
   playAccessibilityFeatures
 }: UseToastAnimationProps) => {
@@ -41,7 +41,7 @@ export default ({
       useNativeDriver: true
     }).start(_onAnimationEnd);
 
-    if (preset === ToastPreset.FAILURE && show) {
+    if (enableHapticFeedback && show) {
       HapticService.triggerHaptic(HapticType.impactMedium, 'Toast');
     }
 
