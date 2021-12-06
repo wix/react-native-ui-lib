@@ -49,7 +49,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   const viewRef = useRef();
   const [toastHeight, setToastHeight] = useState(500);
 
-  const {clearTimer, setDismissTimer} = useToastTimer(props);
+  const {clearTimer, setTimer} = useToastTimer(props);
   const {icon, iconColor, accessibilityMessage} = useToastPresets(props);
 
   const playAccessibilityFeatures = () => {
@@ -70,7 +70,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     position,
     onAnimationEnd,
     toastHeight,
-    setDismissTimer,
+    setTimer,
     playAccessibilityFeatures
   });
 

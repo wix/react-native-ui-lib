@@ -11,11 +11,11 @@ export default ({autoDismiss, onDismiss}: Pick<ToastProps, 'autoDismiss' | 'onDi
     }
   }, []);
 
-  const setDismissTimer = () => {
+  const setTimer = () => {
     if (autoDismiss && onDismiss) {
       timer.current = setTimeout(onDismiss, autoDismiss);
     }
   };
 
-  return {clearTimer, setDismissTimer};
+  return {clearTimer, setTimer};
 };

@@ -6,7 +6,7 @@ import {ToastPreset, ToastProps} from '../types';
 interface UseToastAnimationProps extends Pick<ToastProps, 'visible' | 'preset' | 'position' | 'onAnimationEnd'> {
   toastHeight: number;
   playAccessibilityFeatures: () => void;
-  setDismissTimer: () => void;
+  setTimer: () => void;
 }
 
 export default ({
@@ -15,7 +15,7 @@ export default ({
   position,
   toastHeight,
   onAnimationEnd,
-  setDismissTimer,
+  setTimer,
   playAccessibilityFeatures
 }: UseToastAnimationProps) => {
   const toastAnimatedValue = useRef<Animated.Value>(new Animated.Value(0));
@@ -23,7 +23,7 @@ export default ({
 
   const _onAnimationEnd = () => {
     if (visible) {
-      setDismissTimer();
+      setTimer();
     } else {
       setIsAnimating(false);
     }
