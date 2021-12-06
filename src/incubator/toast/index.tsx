@@ -20,7 +20,6 @@ const THRESHOLD = {x: Constants.screenWidth / 4, y: 10};
 const Toast = (props: PropsWithChildren<ToastProps>) => {
   const {
     visible,
-    preset,
     position = 'bottom',
     zIndex,
     elevation,
@@ -121,9 +120,13 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   const renderRightElement = () => {
     // NOTE: order does matter
     if (showLoader) {
-      const loaderColors = [Colors.rgba(Colors.white, 0.3), Colors.rgba(Colors.grey30, 0.7)];
       return (
-        <ActivityIndicator size={'small'} testID={`${testID}-loader`} color={loaderColors[1]} style={styles.loader}/>
+        <ActivityIndicator
+          size={'small'}
+          testID={`${testID}-loader`}
+          color={Colors.rgba(Colors.grey30, 0.7)}
+          style={styles.loader}
+        />
         // <Loader size={Loader.sizes.SMALL} color={loaderColors} style={styles.loader} testID={`${testID}-loader`}/>
       );
     }
@@ -213,13 +216,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   }
 
   return (
-    <View
-      key="toast"
-      animated
-      testID={testID}
-      style={toastContainerStyle}
-      pointerEvents={'box-none'}
-    >
+    <View key="toast" animated testID={testID} style={toastContainerStyle} pointerEvents={'box-none'}>
       <PanView
         directions={swipeable ? directions.current : []}
         dismissible
