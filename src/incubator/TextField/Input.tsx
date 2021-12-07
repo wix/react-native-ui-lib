@@ -41,7 +41,7 @@ const Input = ({
   formatter,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
-  const inputRef = useImperativeInputHandle(forwardedRef);
+  const inputRef = useImperativeInputHandle(forwardedRef, {onChangeText: props.onChangeText});
   const context = useContext(FieldContext);
   const placeholder = !context.isFocused ? props.placeholder : hint || props.placeholder;
   const inputColor = getColorByState(color, context);
