@@ -13,19 +13,25 @@ export enum ChipsInputChangeReason {
   Removed = 'removed'
 }
 
+type ChipsInputChipProps = ChipProps & {invalid?: boolean};
+
 export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
   /**
    * Chip items to render in the input
    */
-  chips?: ChipProps[];
+  chips?: ChipsInputChipProps[];
   /**
    * A default set of chip props to pass to all chips
    */
   defaultChipProps?: ChipProps;
   /**
+   * A default set of chip props to pass to all invalid chips
+   */
+  invalidChipProps?: ChipProps;
+  /**
    * Change callback for when chips changed (either added or removed)
    */
-  onChange?: (chips: ChipProps[], changeReason: ChipsInputChangeReason, updatedChip: ChipProps) => void;
+  onChange?: (chips: ChipsInputChipProps[], changeReason: ChipsInputChangeReason, updatedChip: ChipProps) => void;
   /**
    * Maximum chips
    */
@@ -34,7 +40,16 @@ export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
 
 const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
   const fieldRef = useCombinedRefs(refToForward);
-  const {chips = [], defaultChipProps, leadingAccessory, onChange, fieldStyle, maxChips, ...others} = props;
+  const {
+    chips = [],
+    defaultChipProps,
+    invalidChipProps,
+    leadingAccessory,
+    onChange,
+    fieldStyle,
+    maxChips,
+    ...others
+  } = props;
   const [markedForRemoval, setMarkedForRemoval] = useState<number | undefined>(undefined);
   const fieldValue = useRef(others.value);
 
@@ -110,6 +125,7 @@ const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
               marginB-s2
               dismissIcon={removeIcon}
               {...defaultChipProps}
+              {...(chip.invalid ? invalidChipProps : undefined)}
               {...chip}
               onPress={onChipPress}
               onDismiss={isMarkedForRemoval ? removeMarkedChip : undefined}
