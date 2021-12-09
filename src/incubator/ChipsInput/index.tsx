@@ -13,7 +13,7 @@ export enum ChipsInputChangeReason {
   Removed = 'removed'
 }
 
-type ChipsInputChipProps = ChipProps & {invalid?: boolean};
+export type ChipsInputChipProps = ChipProps & {invalid?: boolean};
 
 export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
   /**

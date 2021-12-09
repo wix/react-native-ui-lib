@@ -5,7 +5,7 @@ export declare enum ChipsInputChangeReason {
     Added = "added",
     Removed = "removed"
 }
-declare type ChipsInputChipProps = ChipProps & {
+export declare type ChipsInputChipProps = ChipProps & {
     invalid?: boolean;
 };
 export declare type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
