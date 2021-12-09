@@ -247,7 +247,7 @@ class Dialog extends Component<DialogProps, DialogState> {
 
   render = () => {
     const {modalVisibility} = this.state;
-    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress} = this.props;
+    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress, ...others} = this.props;
     const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
 
     return (
@@ -260,6 +260,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         onRequestClose={onBackgroundPress}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
+        {...others}
       >
         {this.renderDialogContainer()}
       </Modal>
