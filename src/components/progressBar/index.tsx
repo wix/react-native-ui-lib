@@ -1,3 +1,4 @@
+import isUndefined from 'lodash/isUndefined';
 import React, {PureComponent} from 'react';
 import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
@@ -5,7 +6,6 @@ import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Constants} from '../../helpers';
 import View from '../view';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
-
 
 const CONTAINER_HEIGHT = Spacings.s2;
 const FULL_WIDTH_CONTAINER_HEIGHT = Spacings.s1;
@@ -33,11 +33,12 @@ interface Props {
   /**
    * Progress color
    */
-  progressColor?: string,
+  progressColor?: string;
   /**
    * Custom element to render on top of the animated progress
    */
-  customElement?: JSX.Element
+  customElement?: JSX.Element;
+  testID?: string;
 }
 export type ProgressBarProps = Props;
 
@@ -50,7 +51,7 @@ class ProgressBar extends PureComponent<Props, State> {
 
   static defaultProps: Partial<Props> = {
     progress: 0
-  }
+  };
 
   progressAnimation: Animated.Value;
 
@@ -78,7 +79,7 @@ class ProgressBar extends PureComponent<Props, State> {
   };
 
   animateProgress(toValue?: number) {
-    if (toValue) {
+    if (!isUndefined(toValue)) {
       Animated.timing(this.progressAnimation, {
         duration: 220,
         easing: Easing.ease,
@@ -130,13 +131,13 @@ class ProgressBar extends PureComponent<Props, State> {
 
     if (customElement) {
       return React.cloneElement(customElement, {
-        style: [customElement.props.style, styles.progress]
+        style: [customElement.props.style, styles.customElement]
       });
     }
   }
 
   render() {
-    const {style} = this.props;
+    const {style, testID} = this.props;
     const {containerWidth} = this.state;
     const newProgress = this.progressAnimation.interpolate({
       inputRange: [0, 100],
@@ -148,6 +149,7 @@ class ProgressBar extends PureComponent<Props, State> {
         onLayout={this.getContainerWidth}
         style={[styles.container, this.getContainerStyle(), style]}
         {...this.getAccessibilityProps()}
+        testID={testID}
       >
         {!!containerWidth && (
           <Animated.View style={[styles.progress, this.getProgressStyle(), {transform: [{translateX: newProgress}]}]}>
@@ -178,6 +180,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden'
+  },
+  customElement: {
+    height: '100%',
+    width: '100%'
   },
   inlineBorderRadius: {
     borderRadius: BorderRadiuses.br100

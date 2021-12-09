@@ -1,0 +1,95 @@
+{
+  "name": "Picker",
+  "category": "form",
+  "description": "Picker Component, support single or multiple selection, blurModel and native wheel picker",
+  "modifiers": ["margin", "padding", "position"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/Default.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/MultiPicker.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/NativePicker.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/DialogPicker.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/CustomPicker.gif?raw=true"
+  ],
+  "props": [
+    {"name": "migrate", "type": "boolean", "description": "Temporary prop required for migration to Picker's new API"},
+    {"name": "value", "type": "string | number", "description": "Picker current value"},
+    {
+      "name": "onChange",
+      "type": "(value: string | number) => void",
+      "description": "Callback for when picker value change"
+    },
+    {
+      "name": "mode",
+      "type": "SINGLE | MULTI",
+      "description": "SINGLE mode or MULTI mode",
+      "default": "Picker.modes.SINGLE"
+    },
+    {"name": "selectionLimit", "type": "number", "description": "Limit the number of selected items"},
+    {"name": "enableModalBlur", "type": "boolean", "description": "Adds blur effect to picker modal (iOS only)"},
+    {
+      "name": "renderPicker",
+      "type": "(selectedItem, itemLabel) => void",
+      "description": "Render custom picker - input will be value (see above)\\Example:\\renderPicker = (selectedItem) => {...}"
+    },
+    {
+      "name": "renderItem",
+      "type": "(value, {{...props, isSelected}}, itemLabel) => void",
+      "description": "Render custom picker item"
+    },
+    {
+      "name": "renderCustomModal",
+      "type": "({visible, children, toggleModal}) => void)",
+      "description": "Render custom picker modal"
+    },
+    {
+      "name": "customPickerProps",
+      "type": "object",
+      "description": "Custom picker props (when using renderPicker, will apply on the button wrapper)"
+    },
+    {"name": "onPress", "type": "() => void", "description": "Add onPress callback for when pressing the picker"},
+    {
+      "name": "getLabel",
+      "type": "(value: string | number) => void",
+      "description": "A function that returns the label to show for the selected Picker value"
+    },
+    {"name": "topBarProps", "type": "Modal's TopBarProps", "description": "The picker modal top bar props"},
+    {"name": "showSearch", "type": "boolean", "description": "Show search input to filter picker items by label"},
+    {
+      "name": "searchStyle",
+      "type": "{color: string, placeholderTextColor: string, selectionColor: string}",
+      "description": "Style object for the search input (only when passing showSearch)"
+    },
+    {
+      "name": "searchPlaceholder",
+      "type": "string",
+      "description": "Placeholder text for the search input (only when passing showSearch)"
+    },
+    {
+      "name": "onSearchChange",
+      "type": "(searchValue: string) => void",
+      "description": "Callback for picker modal search input text change (only when passing showSearch)"
+    },
+    {
+      "name": "renderCustomSearch",
+      "type": "(props) => void",
+      "description": "Render custom search input (only when passing showSearch)"
+    },
+    {
+      "name": "useNativePicker",
+      "type": "boolean",
+      "description": "Allow to use the native picker solution (different style for iOS and Android)"
+    },
+    {
+      "name": "renderNativePicker",
+      "type": "(props) => void",
+      "description": "Callback for rendering a custom native picker inside the dialog (relevant to native picker only)"
+    },
+    {
+      "name": "listProps",
+      "type": "FlatListProps",
+      "description": "Pass props to the list component that wraps the picker options (allows to control FlatList behavior)"
+    },
+    {"name": "pickerModalProps", "type": "ModalProps", "description": "Pass props to the picker modal"}
+  ]
+}

@@ -48,6 +48,10 @@ export declare type SegmentedControlProps = {
      */
     iconOnRight?: boolean;
     /**
+     * Trailing throttle time of changing index in ms.
+     */
+    throttleTime?: number;
+    /**
      * Additional spacing styles for the container
      */
     containerStyle?: StyleProp<ViewStyle>;

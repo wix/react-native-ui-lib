@@ -1,0 +1,52 @@
+{
+  "name": "Hint",
+  "category": "overlays",
+  "description": "Hint component for displaying a tooltip over wrapped component",
+  "note": "You can either wrap a component or pass a specific targetFrame",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.tsx",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Hint/Hint.gif?raw=true"],
+  "props": [
+    {"name": "visible", "type": "boolean", "description": "Control the visibility of the hint"},
+    {"name": "color", "type": "string", "description": "The hint background color"},
+    {"name": "message", "type": "string | ReactElement", "description": "The hint message"},
+    {"name": "messageStyle", "type": "TextStyle", "description": "The hint message custom style"},
+    {"name": "icon", "type": "ImageSourcePropType", "description": "Icon to show next to the hint's message"},
+    {"name": "iconStyle", "type": "ImageStyle", "description": "The icon's style"},
+    {
+      "name": "position",
+      "type": "TOP | BOTTOM",
+      "description": "The hint's position",
+      "default": "HintPositions.BOTTOM"
+    },
+    {
+      "name": "targetFrame",
+      "type": "{x?: number, y?: number, width?: number, height?: number}",
+      "description": "Provide custom target position instead of wrapping a child"
+    },
+    {"name": "useSideTip", "type": "boolean", "description": "Show side tips instead of the middle tip"},
+    {"name": "borderRadius", "type": "number", "description": "The hint's border radius"},
+    {"name": "edgeMargins", "type": "number", "description": "Hint margins from screen edges"},
+    {"name": "offset", "type": "number", "description": "Hint offset from target"},
+    {"name": "onPress", "type": "() => void", "description": "Callback for Hint press"},
+    {
+      "name": "onBackgroundPress",
+      "type": "(event: GestureResponderEvent) => void",
+      "description": "Callback for the background press"
+    },
+    {
+      "name": "backdropColor",
+      "type": "string",
+      "description": "Color for background overlay (require onBackgroundPress)"
+    },
+    {"name": "containerWidth", "type": "number", "description": "The hint container width"},
+    {
+      "name": "customContent",
+      "type": "JSX.Element",
+      "description": "Custom content element to render inside the hint container"
+    },
+    {"name": "removePaddings", "type": "boolean", "description": "Remove all hint's paddings"},
+    {"name": "enableShadow", "type": "boolean", "description": "Enable shadow (for hint with white background only)"},
+    {"name": "testID", "type": "string", "description": "The hint's test identifier"},
+    {"name": "style", "type": "ViewStyle", "description": "Additional styling"}
+  ]
+}

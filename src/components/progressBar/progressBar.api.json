@@ -1,0 +1,17 @@
+{
+  "name": "ProgressBar",
+  "category": "basic",
+  "description": "Progress bar",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressBarScreen.js",
+  "props": [
+    {"name": "progress", "type": "number", "description": "The progress of the bar from 0 to 100", "default": "0"},
+    {"name": "fullWidth", "type": "boolean", "description": "FullWidth Ui preset"},
+    {"name": "style", "type": "ViewStyle", "description": "Override container style"},
+    {"name": "progressColor", "type": "string", "description": "Progress color"},
+    {
+      "name": "customElement",
+      "type": "JSX.Element",
+      "description": "Custom element to render on top of the animated progress"
+    }
+  ]
+}

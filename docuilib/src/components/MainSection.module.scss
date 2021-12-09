@@ -2,10 +2,10 @@
 
 .main {
   position: relative;
-  height: 75vh;
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 40px;
 
   @include desktop {
     height: 100vh;
@@ -22,16 +22,16 @@
   }
 
   .mainContent {
-    position: absolute;
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     top: 15vh;
     text-align: center;
-    padding: 0 40px;
+    padding: 40px;
 
     @include desktop() {
+      position: absolute;
       padding: 0;
       top: 15vw;
       left: 7vw;
@@ -40,9 +40,15 @@
     }
 
     > p {
-      font-size: 3em;
+      font-size: 2.5em;
       font-weight: 600;
       margin: 0;
+      line-height: 1.2;
+      
+      @include desktop {
+        font-size: 3em;
+        line-height: 1.5;
+      }
 
       > .libName {
         color: $primary;
@@ -55,8 +61,10 @@
       border: 1px solid;
       border-radius: 2px;
       align-self: center;
-
+      margin-top: 20px;
+      
       @include desktop {
+        margin-top: 0;
         align-self: flex-start;
       }
 

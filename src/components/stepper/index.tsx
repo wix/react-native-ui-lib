@@ -1,3 +1,4 @@
+import {isUndefined} from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, AccessibilityInfo, AccessibilityProps, AccessibilityActionEvent} from 'react-native';
 import {Typography, Spacings} from '../../style';
@@ -94,7 +95,7 @@ class Stepper extends PureComponent<Props, State> {
   }
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
-    if (nextProps.value && prevState.currentValue !== nextProps.value) {
+    if (!isUndefined(nextProps.value) && prevState.currentValue !== nextProps.value) {
       return ({currentValue: nextProps.value});
     }
     return null;

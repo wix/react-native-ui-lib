@@ -1,0 +1,23 @@
+{
+  "name": "ListItem",
+  "category": "basic",
+  "description": "List item component to render inside a List component",
+  "extends": ["TouchableOpacity"],
+  "extendsLink": ["https://reactnative.dev/docs/touchableopacity"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx",
+  "images": ["https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif"],
+  "props": [
+    {"name": "height", "type": "ViewStyle['height']", "description": "the list item height"},
+    {"name": "onPress", "type": "() => void", "description": "action for when pressing the item"},
+    {"name": "onLongPress", "type": "() => void", "description": "action for when long pressing the item"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styles for the top container"},
+    {
+      "name": "containerElement",
+      "type": "React.ComponentType<ListItemProps | TouchableOpacityProps>",
+      "description": "The container element to wrap the ListItem"
+    },
+    {"name": "style", "type": "ViewStyle", "description": "The inner element style"},
+    {"name": "underlayColor", "type": "string", "description": "The inner element pressed backgroundColor"},
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}

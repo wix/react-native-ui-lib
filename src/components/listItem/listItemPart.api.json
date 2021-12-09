@@ -1,0 +1,15 @@
+{
+  "name": "ListItem.Part",
+  "category": "basic",
+  "description": "A sub ListItem component for layout-ing inside a ListItem",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx",
+  "images": ["https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif"],
+  "props": [
+    {"name": "left", "type": "boolean", "description": "this part content will be aligned to left"},
+    {"name": "middle", "type": "boolean", "description": "this part content will be aligned to spreaded"},
+    {"name": "right", "type": "boolean", "description": "this part content will be aligned to right"},
+    {"name": "row", "type": "boolean", "description": "this part content direction will be row", "default": "true"},
+    {"name": "column", "type": "boolean", "description": "this part content direction will be column"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "container style"}
+  ]
+}

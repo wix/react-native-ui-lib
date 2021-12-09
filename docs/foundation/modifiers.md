@@ -1,8 +1,9 @@
 ---
-index: 5
-path: "/foundation/modifiers"
+sidebar_position: 4
+sidebar_label: Modifiers
 title: "Modifiers"
 ---
+
 As you have probably noticed already, we translate our style presets into modifiers.  
 **Modifiers** help you create a stunning UI easily and quickly.
 
@@ -111,9 +112,9 @@ The last type of modifiers is for styling your components
 ```
 
 
-! all styling modifiers are based on our [`Colors` & `Typography` presets](/react-native-ui-lib/foundation/style).  
+! all styling modifiers are based on our [`Colors` & `Typography` presets](/docs/foundation/style).  
 You can load your own presets and use them as modifiers. 
 
 
 
-Check out [this example](/react-native-ui-lib/getting-started/usage) where we use most of these props.
+Check out [this example](/docs/getting-started/usage) where we use most of these props.

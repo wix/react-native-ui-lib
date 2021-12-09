@@ -1,0 +1,96 @@
+{
+  "name": "Carousel",
+  "category": "basic",
+  "description": "Carousel for scrolling pages",
+  "extends": ["ScrollView"],
+  "extendsLink": ["https://reactnative.dev/docs/scrollview"],
+  "modifiers": [],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.tsx",
+  "images": [
+    "https://user-images.githubusercontent.com/1780255/107120258-40b5bc80-6895-11eb-9596-8065d3a940ff.gif",
+    "https://user-images.githubusercontent.com/1780255/107120257-3eebf900-6895-11eb-9800-402e9e0dc692.gif"
+  ],
+  "props": [
+    {"name": "initialPage", "type": "number", "description": "The initial page to start at", "default": "0"},
+    {
+      "name": "pageWidth",
+      "type": "number",
+      "description": "The page width (all pages should have the same width). Does not work if passing 'loop' prop"
+    },
+    {"name": "pageHeight", "type": "number", "description": "The page height (all pages should have the same height)."},
+    {"name": "itemSpacings", "type": "number", "description": "The spacing between the pages"},
+    {
+      "name": "containerMarginHorizontal",
+      "type": "number",
+      "description": "Horizontal margin for the carousel container"
+    },
+    {
+      "name": "containerPaddingVertical",
+      "type": "number",
+      "description": "Vertical padding for the carousel container (Sometimes needed when there are overflows that are cut in Android)."
+    },
+    {
+      "name": "horizontal",
+      "type": "boolean",
+      "description": "Whether pages will be rendered horizontally or vertically",
+      "default": "true"
+    },
+    {
+      "name": "loop",
+      "type": "boolean",
+      "description": "If true, will have infinite scroll (works only for horizontal carousel)"
+    },
+    {
+      "name": "onChangePage",
+      "type": "(pageIndex, oldPageIndex, info) => void",
+      "description": "Callback for page change event"
+    },
+    {
+      "name": "onScroll",
+      "type": "function",
+      "description": "Attach a callback for onScroll event of the internal ScrollView"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "description": "Should the container be animated (send the animation style via containerStyle)"
+    },
+    {"name": "containerStyle", "type": "ViewStyle", "description": "The carousel container style"},
+    {
+      "name": "pageControlPosition",
+      "type": "PageControlPosition",
+      "description": "The position of the PageControl component ['over', 'under'], otherwise it won't display"
+    },
+    {"name": "pageControlProps", "type": "PageControlProps", "description": "PageControl component props"},
+    {
+      "name": "showCounter",
+      "type": "boolean",
+      "description": "Whether to show a page counter (will not work with 'pageWidth' prop)"
+    },
+    {"name": "counterTextStyle", "type": "ViewStyle", "description": "The counter's text style"},
+    {
+      "name": "pagingEnabled",
+      "type": "boolean",
+      "description": "Will block multiple pages scroll (will not work with 'pageWidth' prop)",
+      "default": "true"
+    },
+    {"name": "allowAccessibleLayout", "type": "boolean", "description": "Whether to layout Carousel for accessibility"},
+    {
+      "name": "autoplay",
+      "type": "boolean",
+      "description": "Enable to switch automatically between the pages",
+      "default": "false"
+    },
+    {
+      "name": "autoplayInterval",
+      "type": "number",
+      "description": "Time is ms to wait before switching to the next page (requires 'autoplay' to be enabled)",
+      "default": "4000"
+    },
+    {
+      "name": "animatedScrollOffset",
+      "type": "Animated.ValueXY",
+      "description": "Pass to attach to ScrollView's Animated.event in order to animated elements base on Carousel scroll offset (pass new Animated.ValueXY())"
+    }
+  ]
+}

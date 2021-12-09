@@ -1,0 +1,33 @@
+{
+  "name": "Picker.Item",
+  "category": "form",
+  "description": "Picker.Item, for configuring the Picker's selectable options",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/Default.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/MultiPicker.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/NativePicker.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/DialogPicker.gif?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/CustomPicker.gif?raw=true"
+  ],
+  "props": [
+    {"name": "value", "type": "string | number", "description": "Item's value"},
+    {"name": "label", "type": "string", "description": "Item's label"},
+    {"name": "labelStyle", "type": "ViewStyle", "description": "Item's label style"},
+    {
+      "name": "getItemLabel",
+      "type": "(value: string | number) => string",
+      "description": "Custom function for the item label"
+    },
+    {"name": "isSelected", "type": "boolean", "description": "Is the item selected"},
+    {"name": "selectedIcon", "type": "string", "description": "Pass to change the selected icon"},
+    {"name": "selectedIconColor", "type": "ImageSource", "description": "Pass to change the selected icon color"},
+    {"name": "disabled", "type": "boolean", "description": "Is the item disabled"},
+    {"name": "onPress", "type": "(value: string | number) => void", "description": "Callback for onPress action"},
+    {
+      "name": "onSelectedLayout",
+      "type": "(event: LayoutChangeEvent) => void",
+      "description": "Callback for onLayout event"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
 import _ from 'lodash';
+import React from 'react';
 import {ItemProps} from './Item';
 import useMiddleIndex from './helpers/useListMiddleIndex';
 
@@ -44,7 +44,7 @@ const usePresenter = ({
     return items || [];
   };
 
-  const items = useRef<ItemProps[]>(children ? extractItemsFromChildren() : propItems!).current;
+  const items = children ? extractItemsFromChildren() : propItems || [];
   const middleIndex = useMiddleIndex({itemHeight, listSize: items.length});
 
   const getSelectedValueIndex = () => {

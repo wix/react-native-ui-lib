@@ -1,0 +1,89 @@
+{
+  "name": "Avatar",
+  "category": "basic",
+  "description": "Avatar component for displaying user profile images",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true"
+  ],
+  "extends": ["TouchableOpacity", "Image"],
+  "extendsLink": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx",
+    "https://github.com/wix/react-native-ui-lib/blob/master/src/components/image/index.tsx"
+  ],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx",
+  "props": [
+    {
+      "name": "animate",
+      "type": "boolean",
+      "description": "Adds fade in animation when Avatar image loads",
+      "default": "false"
+    },
+    {"name": "backgroundColor", "type": "string", "description": "Background color for Avatar"},
+    {
+      "name": "badgePosition",
+      "type": "TOP_RIGHT | TOP_LEFT | BOTTOM_RIGHT | BOTTOM_LEFT",
+      "description": "Badge location on Avatar",
+      "default": "BadgePosition.TOP_RIGHT"
+    },
+    {"name": "badgeProps", "type": "BadgeProps", "description": "Badge props passed down to Badge component"},
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "Additional spacing styles for the container"
+    },
+    {"name": "source", "type": "ImageSourcePropType", "description": "The image source (external or from assets)"},
+    {"name": "imageProps", "type": "ImageProps", "description": "Image props object"},
+    {
+      "name": "imageStyle",
+      "type": "ImageStyle",
+      "description": "Image style object used to pass additional style props by components which render image"
+    },
+    {
+      "name": "onImageLoadStart",
+      "type": "ImagePropsBase['onLoadStart']",
+      "description": "Listener-callback for when an image's (uri) loading starts (equiv. to Image.onLoadStart())."
+    },
+    {
+      "name": "onImageLoadEnd",
+      "type": "ImagePropsBase['onLoadEnd']",
+      "description": "Listener-callback for when an image's (uri) loading either succeeds or fails (equiv. to Image.onLoadEnd())."
+    },
+    {
+      "name": "onImageLoadError",
+      "type": "ImagePropsBase['onError']",
+      "description": "Listener-callback for when an image's (uri) loading fails (equiv. to Image.onError())."
+    },
+
+    {
+      "name": "name",
+      "type": "string",
+      "description": "The name of the avatar user. If no label is provided, the initials will be generated from the name. autoColorsConfig will use the name to create the background color of the Avatar."
+    },
+    {
+      "name": "useAutoColors",
+      "type": "boolean",
+      "description": "Hash the name (or label) to get a color, so each name will have a specific color. Default is false."
+    },
+    {
+      "name": "autoColorsConfig",
+      "type": "AutoColorsProps",
+      "description": "Send this to use the name to infer a backgroundColor"
+    },
+    {"name": "label", "type": "string", "description": "Label that can represent initials"},
+    {"name": "labelColor", "type": "string", "description": "The label color", "default": "Colors.grey10"},
+    {"name": "ribbonLabel", "type": "string", "description": "Ribbon label to display on the avatar"},
+    {"name": "ribbonStyle", "type": "ViewStyle", "description": "Ribbon custom style"},
+    {"name": "ribbonLabelStyle", "type": "TextStyle", "description": "Ribbon label custom style"},
+    {"name": "customRibbon", "type": "JSX.Element", "description": "Custom ribbon"},
+    {"name": "isOnline", "type": "boolean", "description": "Determine if to show online badge"},
+    {
+      "name": "status",
+      "type": "StatusModes",
+      "description": "AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)"
+    },
+    {"name": "size", "type": " number", "description": "Custom size for the Avatar", "default": "50"},
+    {"name": "onPress", "type": "(props: any) => void", "description": "Press handler"},
+    {"name": "testID", "type": "string", "description": "Test identifier"}
+  ]
+}

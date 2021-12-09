@@ -11,6 +11,7 @@ import {
   ColorsModifiers
 } from '../../commons/new';
 import {Colors} from 'style';
+import {TextUtils} from 'utils';
 
 export type TextProps = RNTextProps &
   TypographyModifiers &
@@ -21,13 +22,17 @@ export type TextProps = RNTextProps &
      */
     color?: string;
     /**
-     * whether to center the text (using textAlign)
+     * Whether to center the text (using textAlign)
      */
     center?: boolean;
     /**
-     * whether to change the text to uppercase
+     * Whether to change the text to uppercase
      */
     uppercase?: boolean;
+    /**
+     * Whether to add an underline
+     */
+    underline?: boolean;
     /**
      * Substring to highlight
      */
@@ -65,72 +70,6 @@ class Text extends PureComponent<PropsTypes> {
   //   this._root.setNativeProps(nativeProps); // eslint-disable-line
   // }
 
-  getPartsByHighlight(targetString = '', highlightString: string | string[]) {
-    if (typeof highlightString === 'string') {
-      if (_.isEmpty(highlightString.trim())) {
-        return [{string: targetString, shouldHighlight: false}];
-      }
-      return this.getTextPartsByHighlight(targetString, highlightString);
-    } else {
-      return this.getArrayPartsByHighlight(targetString, highlightString);
-    }
-  }
-
-  getTextPartsByHighlight(targetString = '', highlightString = '') {
-    if (highlightString === '') {
-      return [{string: targetString, shouldHighlight: false}];
-    }
-    const textParts = [];
-    let highlightIndex;
-    do {
-      highlightIndex = targetString.toLowerCase().indexOf(highlightString.toLowerCase());
-      if (highlightIndex !== -1) {
-        if (highlightIndex > 0) {
-          textParts.push({string: targetString.substring(0, highlightIndex), shouldHighlight: false});
-        }
-        textParts.push({string: targetString.substr(highlightIndex, highlightString.length), shouldHighlight: true});
-        targetString = targetString.substr(highlightIndex + highlightString.length);
-      } else {
-        textParts.push({string: targetString, shouldHighlight: false});
-      }
-    } while (highlightIndex !== -1);
-
-    return textParts;
-  }
-
-  getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
-    const target = _.toLower(targetString);
-    const indices = [];
-    let index = 0;
-    let lastWordLength = 0;
-    for (let j = 0; j < highlightString.length; j++) {
-      const word = _.toLower(highlightString[j]);
-      const targetSuffix = target.substring(index + lastWordLength);
-      const i = targetSuffix.indexOf(word);
-      if (i >= 0) {
-        const newIndex = index + lastWordLength + i;
-        indices.push({start: index + lastWordLength + i, end: index + lastWordLength + i + word.length});
-        index = newIndex;
-        lastWordLength = word.length;
-      } else {
-        break;
-      }
-    }
-    const parts = [];
-    for (let k = 0; k < indices.length; k++) {
-      if (k === 0 && indices[k].start !== 0) {
-        parts.push({string: targetString.substring(0, indices[k].start), shouldHighlight: false});
-      }
-      parts.push({string: targetString.substring(indices[k].start, indices[k].end), shouldHighlight: true});
-      if (k === indices.length - 1) {
-        parts.push({string: targetString.substring(indices[k].end), shouldHighlight: false});
-      } else {
-        parts.push({string: targetString.substring(indices[k].end, indices[k + 1].start), shouldHighlight: false});
-      }
-    }
-    return parts;
-  }
-
   renderText(children: any): any {
     const {highlightString, highlightStyle} = this.props;
 
@@ -142,7 +81,7 @@ class Text extends PureComponent<PropsTypes> {
       }
 
       if (_.isString(children)) {
-        const textParts = highlightString && this.getPartsByHighlight(children, highlightString);
+        const textParts = highlightString && TextUtils.getPartsByHighlight(children, highlightString);
         return (
           textParts &&
           _.map(textParts, (text, index) => {
@@ -162,7 +101,7 @@ class Text extends PureComponent<PropsTypes> {
   }
 
   render() {
-    const {modifiers, style, center, uppercase, children, forwardedRef, ...others} = this.props;
+    const {modifiers, style, center, uppercase, underline, children, forwardedRef, ...others} = this.props;
     const color = this.props.color || modifiers.color;
     const {margins, typography, backgroundColor, flexStyle} = modifiers;
     const textStyle = [
@@ -174,6 +113,7 @@ class Text extends PureComponent<PropsTypes> {
       margins,
       center && styles.centered,
       uppercase && styles.uppercase,
+      underline && styles.underline,
       style
     ];
 
@@ -197,6 +137,9 @@ const styles = StyleSheet.create({
   },
   uppercase: {
     textTransform: 'uppercase'
+  },
+  underline: {
+    textDecorationLine: 'underline'
   },
   highlight: {
     color: Colors.grey30

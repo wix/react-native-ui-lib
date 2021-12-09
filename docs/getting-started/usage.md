@@ -1,11 +1,11 @@
 ---
-index: 2
 sidebar_position: 2
-path: "/getting-started/usage"
+sidebar_label: Usage
 title: "Usage"
+# path: "/getting-started/usage"
 ---
 This is a quick example of how to use our basic components, modifiers and presets to generate a good looking screen.  
-For detailed information please go over the other sections: Style, Modifiers, Components...
+For detailed information please go over the other sections: [Style](../foundation/style.md), [Modifiers](../foundation/modifiers.md), Components...
 
 ![basic showcase](basic-showcase.png).
 

@@ -1,0 +1,61 @@
+{
+  "name": "Drawer",
+  "category": "basic",
+  "description": "Drawer Component",
+  "notes": "If your app works with RNN, your screen must be wrapped with gestureHandlerRootHOC from 'react-native-gesture-handler'. see: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DrawerScreen.tsx",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Drawer/Drawer.gif?raw=true"],
+  "props": [
+    {
+      "name": "rightItems",
+      "type": "ItemProps[]",
+      "description": "The bottom layer's items to appear when opened from the right"
+    },
+    {
+      "name": "leftItem",
+      "type": "ItemProps",
+      "description": "The bottom layer's item to appear when opened from the left (a single item)"
+    },
+    {"name": "bounciness", "type": "number", "description": "The drawer animation bounciness"},
+    {"name": "itemsMinWidth", "type": "number", "description": "Set a different minimum width"},
+    {
+      "name": "itemsTintColor",
+      "type": "string",
+      "description": "The color for the text and icon tint of the items",
+      "default": "Colors.white"
+    },
+    {"name": "itemsIconSize", "type": "number", "description": "The items' icon size", "default": "24"},
+    {"name": "itemsTextStyle", "type": "TextStyle", "description": "The items' text style"},
+    {"name": "useNativeAnimations", "type": "boolean", "description": "Perform the animation in natively"},
+    {"name": "fullSwipeLeft", "type": "boolean", "description": "Whether to allow a full left swipe"},
+    {"name": "fullLeftThreshold", "type": "number", "description": "Threshold for a left full swipe (0-1)"},
+    {"name": "onFullSwipeLeft", "type": "() => void", "description": "Callback for left item full swipe"},
+    {"name": "onWillFullSwipeLeft", "type": "() => void", "description": "Callback for just before left item full swipe"},
+    {"name": "onToggleSwipeLeft", "type": "() => {rowWidth, leftWidth, dragX, resetItemPosition}", "description": "Callback for left item toggle swipe"},
+    {
+      "name": "leftToggleHapticTrigger",
+      "type": "() => void",
+      "description": "Haptic trigger callback to use onToggleSwipeLeft",
+      "deprecated": true
+    },
+    {"name": "fullSwipeRight", "type": "boolean", "description": "Whether to allow a full right swipe"},
+    {"name": "fullRightThreshold", "type": "number", "description": "Threshold for a right full swipe (0-1)"},
+    {"name": "onFullSwipeRight", "type": "() => void", "description": "Callback for right item full swipe"},
+    {
+      "name": "onWillFullSwipeRight",
+      "type": "() => void",
+      "description": "Callback for just before right item full swipe"
+    },
+    {"name": "disableHaptic", "type": "boolean", "description": "Whether to disable the haptic"},
+    {"name": "onDragStart", "type": "() => any", "description": "Called when drag gesture starts"},
+    {"name": "onSwipeableWillOpen", "type": "() => void", "description": "Callback for open action"},
+    {"name": "onSwipeableWillClose", "type": "() => void", "description": "Callback for close action"},
+    {
+      "name": "customValue",
+      "type": "any",
+      "description": "Custom value of any type to pass on to the component and receive back in the action callbacks"
+    },
+    {"name": "style", "type": "ViewStyle", "description": "Component's style"},
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}

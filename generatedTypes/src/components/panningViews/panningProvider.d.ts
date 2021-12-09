@@ -1,10 +1,12 @@
 import { Component } from 'react';
-export declare enum PanningDirections {
+export declare enum PanningDirectionsEnum {
     UP = "up",
     DOWN = "down",
     LEFT = "left",
     RIGHT = "right"
 }
+export declare type PanningDirectionsUnion = 'up' | 'down' | 'left' | 'right';
+export declare type PanningDirections = PanningDirectionsEnum | PanningDirectionsUnion;
 export interface PanLocationProps {
     left?: number;
     top?: number;
@@ -31,7 +33,7 @@ interface State {
  */
 export default class PanningProvider extends Component<any, State> {
     static displayName: string;
-    static Directions: typeof PanningDirections;
+    static Directions: typeof PanningDirectionsEnum;
     constructor(props: any);
     getProviderContextValue: () => {
         onPanStart: () => void;

@@ -1,0 +1,45 @@
+{
+  "name": "Card",
+  "category": "basic",
+  "description": "Customizable card component that handles press events",
+  "extends": ["TouchableOpacity"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx"],
+  "modifiers": ["margin", "padding"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_01.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_02.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Card/Cards_03.png?raw=true"
+  ],
+  "props": [
+    {"name": "width", "type": "number | string", "description": "Card custom width"},
+    {"name": "height", "type": "number | string", "description": "Card custom height"},
+    {"name": "row", "type": "boolean", "description": "Should inner card flow direction be horizontal"},
+    {
+      "name": "borderRadius",
+      "type": "number",
+      "description": "Card border radius (will be passed to inner Card.Image component)"
+    },
+    {"name": "onPress", "type": "function", "description": "Callback function for card press event"},
+    {
+      "name": "enableShadow",
+      "type": "boolean",
+      "description": "Whether the card should have shadow or not",
+      "default": "true"
+    },
+    {"name": "elevation", "type": "number", "description": "Elevation value (Android only)"},
+    {"name": "enableBlur", "type": "boolean", "description": "Enable blur effect (iOS only)"},
+    {
+      "name": "blurOptions",
+      "type": "object",
+      "description": "Blur options for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)"
+    },
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styles for the card container"},
+    {"name": "selected", "type": "boolean", "description": "Adds visual indication that the card is selected"},
+    {
+      "name": "selectionOptions",
+      "type": "CardSelectionOptions",
+      "description": "Custom options for styling the selection indication"
+    }
+  ]
+}

@@ -14,6 +14,7 @@ import {
   View,
   Colors
 } from 'react-native-ui-lib';
+// @ts-expect-error
 import * as ExampleScreenPresenter from '../ExampleScreenPresenter';
 
 const AVATAR_SIZE = 48;
@@ -45,6 +46,7 @@ export default class SkeletonViewScreen extends Component {
     dataType: DATA_TYPE.List,
     listType: LIST_TYPE.Regular,
     isLarge: false,
+    showEndContent: true,
     key: 1
   };
 
@@ -67,8 +69,24 @@ export default class SkeletonViewScreen extends Component {
     this.setState({isLarge: !isLarge, key: key + 1, isDataAvailable: false});
   };
 
+  setEndContent = () => {
+    const {showEndContent, key} = this.state;
+    this.setState({showEndContent: !showEndContent, key: key + 1, isDataAvailable: false});
+  };
+
+  renderEndContent = () => {
+    const {showEndContent} = this.state;
+    if (showEndContent) {
+      return (
+        <View flex right paddingR-20>
+          <SkeletonView width={45} height={18} borderRadius={BorderRadiuses.br10}/>
+        </View>
+      );
+    }
+  };
+
   renderTopSection = () => {
-    const {isDataAvailable, isLarge, dataType} = this.state;
+    const {isDataAvailable, isLarge, showEndContent, dataType} = this.state;
     return (
       <View marginH-page marginV-s1>
         {ExampleScreenPresenter.renderHeader.call(this, 'Skeleton')}
@@ -83,19 +101,28 @@ export default class SkeletonViewScreen extends Component {
           })}
         <View row centerV spread>
           <Button
-            label={isDataAvailable ? 'Hide data' : 'Show data'}
+            label={'Show data'}
             style={[styles.toggleButton]}
-            size={Button.sizes.small}
+            size={Button.sizes.xSmall}
             outline={!isDataAvailable}
             onPress={this.toggleVisibility}
           />
           {dataType === DATA_TYPE.List && (
             <Button
-              label={isLarge ? 'Set items to small' : 'Set items to large'}
+              label={'Large items'}
               style={[styles.toggleButton]}
-              size={Button.sizes.small}
+              size={Button.sizes.xSmall}
               outline={!isLarge}
               onPress={this.setSize}
+            />
+          )}
+          {dataType === DATA_TYPE.List && (
+            <Button
+              label={'End content'}
+              style={[styles.toggleButton]}
+              size={Button.sizes.xSmall}
+              outline={!showEndContent}
+              onPress={this.setEndContent}
             />
           )}
         </View>
@@ -119,9 +146,17 @@ export default class SkeletonViewScreen extends Component {
     );
   };
 
-  renderListItemsData = (contentData?: any) => {
-    const {isLarge} = this.state;
-    const {hasAvatar, hasThumbnail} = contentData || {};
+  renderEndLabel = () => {
+    return (
+      <View centerV paddingR-20>
+        <Text>Verified</Text>
+      </View>
+    );
+  }
+
+  renderListItemsData = (customValue?: any) => {
+    const {isLarge, showEndContent} = this.state;
+    const {hasAvatar, hasThumbnail} = customValue || {};
 
     return (
       <React.Fragment>
@@ -153,6 +188,7 @@ export default class SkeletonViewScreen extends Component {
                   </ListItem.Part>
                 )}
               </ListItem.Part>
+              {showEndContent && this.renderEndLabel()}
             </ListItem>
           );
         })}
@@ -171,11 +207,10 @@ export default class SkeletonViewScreen extends Component {
     return (
       <SkeletonView
         template={SkeletonView.templates.LIST_ITEM}
-        contentType={contentType}
-        size={size}
+        listProps={{size, contentType, renderEndContent: this.renderEndContent}}
         showContent={isDataAvailable}
         renderContent={this.renderListItemsData}
-        contentData={{hasAvatar, hasThumbnail}}
+        customValue={{hasAvatar, hasThumbnail}}
         times={NUMBER_OF_ITEMS_TO_SHOW}
       />
     );

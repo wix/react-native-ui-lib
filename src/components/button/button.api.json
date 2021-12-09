@@ -1,0 +1,70 @@
+{
+  "name": "Button",
+  "category": "basic",
+  "description": "Customizable button component that handles press events",
+  "extends": ["TouchableOpacity"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx"],
+  "modifiers": ["margin", "background"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Sizes.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Typographies.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Outlines.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Corners.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Custom.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Inspirations.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Round.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Full.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Animated.gif?raw=true"
+  ],
+  "props": [
+    {"name": "label", "type": "string", "description": "Text to show inside the button"},
+    {"name": "color", "type": "string", "description": "The Button text color (inherited from Text component)"},
+    {
+      "name": "iconSource",
+      "type": "ImageProps['source'] | Function",
+      "description": "Icon image source or a callback function that returns a source"
+    },
+    {"name": "iconStyle", "type": "ImageStyle", "description": "Icon image style"},
+    {"name": "iconOnRight", "type": "boolean", "description": "Should the icon be right to the label"},
+    {"name": "supportRTL", "type": "boolean", "description": "whether the icon should flip horizontally on RTL locals"},
+    {"name": "backgroundColor", "type": "string", "description": "Color of the button background"},
+    {"name": "disabledBackgroundColor", "type": "string", "description": "Color of the disabled button background"},
+    {"name": "size", "type": "ButtonSize", "description": "Size of the button [large, medium, small, xSmall]"},
+    {"name": "borderRadius", "type": "number", "description": "Custom border radius."},
+    {"name": "onPress", "type": "(props: any) => void", "description": "Actions handler"},
+    {"name": "disabled", "type": "boolean", "description": "Disable interactions for the component"},
+    {"name": "outline", "type": "boolean", "description": "Button will have outline style"},
+    {"name": "outlineColor", "type": "string", "description": "The outline color"},
+    {"name": "outlineWidth", "type": "number", "description": "The outline width"},
+    {"name": "link", "type": "boolean", "description": "Button will look like a link"},
+    {"name": "hyperlink", "type": "boolean", "description": "Button will look like a hyperlink"},
+    {"name": "linkColor", "type": "string", "description": "label color for when it's displayed as link or hyperlink"},
+    {"name": "labelStyle", "type": "TextStyle", "description": "Additional styles for label text"},
+    {"name": "labelProps", "type": "TextProps", "description": "Props that will be passed to the button's Text label."},
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "description": "should the button act as a coast to coast button (no border radius)"
+    },
+    {"name": "round", "type": "boolean", "description": "should the button be a round button"},
+    {"name": "enableShadow", "type": "boolean", "description": "Control shadow visibility (iOS-only)"},
+    {"name": "avoidInnerPadding", "type": "boolean", "description": "avoid inner button padding"},
+    {"name": "avoidMinWidth", "type": "boolean", "description": "avoid minimum width constraints"},
+    {
+      "name": "getActiveBackgroundColor",
+      "type": "(backgroundColor: string, props: any) => string",
+      "description": "callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...}). Better set using ThemeManager"
+    },
+    {
+      "name": "animateLayout",
+      "type": "boolean",
+      "description": "should animate layout change. Note: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'"
+    },
+    {
+      "name": "animateTo",
+      "type": "ButtonAnimationDirection",
+      "description": "the direction of the animation ('left' and 'right' will effect the button's own alignment)"
+    }
+  ]
+}

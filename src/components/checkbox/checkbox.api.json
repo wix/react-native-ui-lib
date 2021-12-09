@@ -1,0 +1,39 @@
+{
+  "name": "Checkbox",
+  "category": "form",
+  "description": "Checkbox component for toggling boolean value related to some context",
+  "extends": ["TouchableOpacity"],
+  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx"],
+  "modifiers": ["margin", "background"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx",
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true"],
+  "props": [
+    {
+      "name": "value",
+      "type": "boolean",
+      "description": "The Checkbox value. If true the switch will be turned on. Default value is false"
+    },
+    {"name": "onValueChange", "type": "(value) => void", "description": "Callback function for value change event"},
+    {"name": "disabled", "type": "boolean", "description": "Whether the checkbox should be disabled"},
+    {"name": "color", "type": "string", "description": "The Checkbox color"},
+    {"name": "outline", "type": "boolean", "description": "Alternative Checkbox outline style"},
+    {"name": "size", "type": "number", "description": "The Checkbox size, affect both width and height"},
+    {"name": "borderRadius", "type": "number", "description": "The Checkbox border radius"},
+    {
+      "name": "selectedIcon",
+      "type": "ImageRequireSource",
+      "description": "The icon asset to use for the selected indication"
+    },
+
+    {"name": "iconColor", "type": "string", "description": "The selected icon color"},
+    {"name": "label", "type": "string", "description": "Add a label to the Checkbox"},
+    {"name": "labelStyle", "type": "TextStyle", "description": "Pass to style the label"},
+    {"name": "labelProps", "type": "TextProps", "description": "Props to pass on to the label component"},
+    {"name": "style", "type": "ViewStyle", "description": "Custom styling for the Checkbox"},
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "Custom styling for the checkbox and label container"
+    }
+  ]
+}

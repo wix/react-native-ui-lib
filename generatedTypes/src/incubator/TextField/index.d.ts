@@ -6,7 +6,7 @@
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
 import React, { PropsWithChildren, ReactElement } from 'react';
-import { ViewStyle, TextStyle } from 'react-native';
+import { ViewStyle, TextStyle, StyleProp } from 'react-native';
 import { ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers, PaddingModifiers, TypographyModifiers, ColorsModifiers } from '../../commons/new';
 import { ValidationMessagePosition, Validator } from './types';
 import { InputProps } from './Input';
@@ -60,7 +60,13 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
     /**
      * Internal style for the field container
      */
-    fieldStyle?: ViewStyle | ((context: FieldContextType) => ViewStyle);
+    fieldStyle?: StyleProp<ViewStyle>;
+    /**
+     * Internal dynamic style callback for the field container
+     */
+    dynamicFieldStyle?: (context: FieldContextType, props: {
+        preset: TextFieldProps['preset'];
+    }) => StyleProp<ViewStyle>;
     /**
      * Container style of the whole component
      */
@@ -68,7 +74,7 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | null;
+    preset?: 'default' | null | string;
 };
 export declare type InternalTextFieldProps = PropsWithChildren<TextFieldProps & BaseComponentInjectedProps & ForwardRefInjectedProps>;
 interface StaticMembers {

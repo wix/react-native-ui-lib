@@ -4,6 +4,14 @@ import { ViewProps } from '../view';
 import { TouchableOpacityProps } from '../touchableOpacity';
 import CardImage from './CardImage';
 import CardSection, { CardSectionProps } from './CardSection';
+export interface CardSelectionOptions {
+    icon?: number;
+    iconColor?: string;
+    color?: string;
+    borderWidth?: number;
+    indicatorSize?: number;
+    hideIndicator?: boolean;
+}
 export { CardSectionProps };
 export declare type CardProps = ViewProps & TouchableOpacityProps & {
     /**
@@ -53,14 +61,7 @@ export declare type CardProps = ViewProps & TouchableOpacityProps & {
     /**
      * Custom options for styling the selection indication
      */
-    selectionOptions?: {
-        icon?: number;
-        iconColor?: string;
-        color?: string;
-        borderWidth?: number;
-        indicatorSize?: number;
-        hideIndicator?: boolean;
-    };
+    selectionOptions?: CardSelectionOptions;
 };
 declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
     /**
@@ -110,14 +111,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * Custom options for styling the selection indication
      */
-    selectionOptions?: {
-        icon?: number | undefined;
-        iconColor?: string | undefined;
-        color?: string | undefined;
-        borderWidth?: number | undefined;
-        indicatorSize?: number | undefined;
-        hideIndicator?: boolean | undefined;
-    } | undefined;
+    selectionOptions?: CardSelectionOptions | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & {

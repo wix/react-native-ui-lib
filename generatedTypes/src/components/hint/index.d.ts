@@ -76,6 +76,10 @@ export interface HintProps {
      */
     onBackgroundPress?: (event: GestureResponderEvent) => void;
     /**
+     * Color for background overlay (require onBackgroundPress)
+     */
+    backdropColor?: string;
+    /**
      * The hint container width
      */
     containerWidth?: number;
@@ -165,6 +169,7 @@ declare class Hint extends Component<HintProps, HintState> {
     renderContent(): JSX.Element;
     renderHint(): JSX.Element | undefined;
     renderHintContainer(): JSX.Element;
+    renderMockChildren(): JSX.Element | undefined;
     renderChildren(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
     render(): {} | null;
 }

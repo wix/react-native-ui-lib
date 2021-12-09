@@ -15,7 +15,8 @@ export default class TextFieldScreen extends Component {
     errorPosition: TextField.validationMessagePositions.TOP,
     shouldDisable: false,
     value: 'Initial Value',
-    searching: false
+    searching: false,
+    preset: 'withUnderline'
   };
 
   componentDidMount() {
@@ -49,7 +50,7 @@ export default class TextFieldScreen extends Component {
   }
 
   render() {
-    const {errorPosition, shouldDisable, price} = this.state;
+    const {errorPosition, shouldDisable, price, preset} = this.state;
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-page>
@@ -97,9 +98,10 @@ export default class TextFieldScreen extends Component {
           <TextField
             ref={this.input2}
             placeholder="Enter URL"
+            floatingPlaceholder
             text70
             leadingAccessory={
-              <Text text70 blue30>
+              <Text text70 blue30 marginR-2>
                 Https://
               </Text>
             }
@@ -195,6 +197,25 @@ export default class TextFieldScreen extends Component {
             validate={'email'}
             validateOnChange
             fieldStyle={styles.withFrame}
+            editable={!shouldDisable}
+          />
+
+          <View row spread centerV>
+            <Text h3 blue50 marginV-s4>
+              Custom Field Style
+            </Text>
+            <Button
+              label={preset}
+              onPress={() => this.setState({preset: preset === 'withUnderline' ? 'withFrame' : 'withUnderline'})}
+              size={Button.sizes.xSmall}
+            />
+          </View>
+
+          <TextField
+            label="Label"
+            placeholder="Enter text..."
+            preset={preset}
+            dynamicFieldStyle={(_state, {preset}) => (preset === 'withUnderline' ? styles.withUnderline : styles.withFrame)}
             editable={!shouldDisable}
           />
 

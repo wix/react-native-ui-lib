@@ -1,0 +1,55 @@
+{
+  "name": "Chip",
+  "category": "basic",
+  "description": "Chip component",
+  "extends": ["TouchableOpacity", "View"],
+  "extendsLink": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx",
+    "https://github.com/wix/react-native-ui-lib/blob/master/src/components/view/index.tsx"
+  ],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx",
+  "images": ["https://user-images.githubusercontent.com/1780255/119636022-e9743180-be1c-11eb-8f02-22eeab6558cd.png"],
+  "props": [
+    {
+      "name": "size",
+      "type": "number | {{width: number, height: number}}",
+      "description": "Chip's size. Number or a width and height object"
+    },
+    {"name": "onPress", "type": "(props: any) => void", "description": "On Chip press callback"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
+    {"name": "backgroundColor", "type": "string", "description": "Background color"},
+    {"name": "borderRadius", "type": "number", "description": "Border radius"},
+    {
+      "name": "useSizeAsMinimum",
+      "type": "boolean",
+      "description": "Uses size as minWidth and minHeight",
+      "default": "true"
+    },
+    {
+      "name": "resetSpacings",
+      "type": "boolean",
+      "description": "Disables all internal elements default spacings. Helps reach a custom design"
+    },
+    {"name": "label", "type": "string", "description": "Main Chip text"},
+    {"name": "labelStyle", "type": "TextStyle", "description": "Label's style"},
+    {"name": "badgeProps", "type": "BadgeProps", "description": "Badge props object"},
+    {"name": "useCounter", "type": "boolean", "description": "Display badge as counter (no background)"},
+    {"name": "avatarProps", "type": "AvatarProps", "description": "Avatar props object"},
+    {"name": "iconProps", "type": "Omit<ImageProps, 'source'>", "description": "Additional icon props"},
+    {"name": "iconStyle", "type": "ImageStyle", "description": "Icon style"},
+    {"name": "iconSource", "type": "ImageSourcePropType", "description": "Left icon's source"},
+    {"name": "rightIconSource", "type": "ImageSourcePropType", "description": "Right icon's source"},
+    {"name": "leftElement", "type": "JSX.Element", "description": "Left custom element"},
+    {"name": "rightElement", "type": "JSX.Element", "description": "Right custom element"},
+    {
+      "name": "onDismiss",
+      "type": "(props: any) => void",
+      "description": "Adds a dismiss button and serves as its callback"
+    },
+    {"name": "dismissColor", "type": "string", "description": "Dismiss color"},
+    {"name": "dismissIcon", "type": "ImageSourcePropType", "description": "Dismiss asset"},
+    {"name": "dismissIconStyle", "type": "ImageStyle", "description": "Dismiss style"},
+    {"name": "dismissContainerStyle", "type": "ImageStyle", "description": "Dismiss container style"},
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}

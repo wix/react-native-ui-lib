@@ -1,0 +1,14 @@
+{
+  "name": "ProgressiveImage",
+  "category": "basic",
+  "description": "Image component that loads first a small thumbnail of the images, and fades-in the full-sized image with animation once it's loaded",
+  "extends": ["basic/AnimatedImage"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressiveImageScreen.js",
+  "props": [
+    {
+      "name": "thumbnailSource",
+      "type": "ImageSource",
+      "description": "Small thumbnail source to display while the full-size image is loading"
+    }
+  ]
+}

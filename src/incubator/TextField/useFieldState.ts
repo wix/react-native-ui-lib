@@ -60,12 +60,12 @@ export default function useFieldState({
   }, [isValid]);
 
   const validateField = useCallback((valueToValidate = value) => {
-    const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate, validationMessage);
+    const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);
 
     setIsValid(_isValid);
     setFailingValidatorIndex(_failingValidatorIndex);
   },
-  [value, validate, validationMessage]);
+  [value, validate]);
 
   const onFocus = useCallback((...args: any) => {
     setIsFocused(true);
@@ -95,8 +95,14 @@ export default function useFieldState({
   [props.onChangeText, validateOnChange, validateField]);
 
   const fieldState = useMemo(() => {
-    return {value, hasValue: !_.isEmpty(value), isValid, isFocused, failingValidatorIndex};
-  }, [value, isFocused, isValid, failingValidatorIndex]);
+    return {
+      value,
+      hasValue: !_.isEmpty(value),
+      isValid: validationMessage && !validate ? false : isValid,
+      isFocused,
+      failingValidatorIndex
+    };
+  }, [value, isFocused, isValid, failingValidatorIndex, validationMessage, validate]);
 
   return {
     onFocus,
