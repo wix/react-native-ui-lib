@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
 import {Colors, View, Text, Hint, Button, Assets, Incubator} from 'react-native-ui-lib';
-// @ts-expect-error
 import {renderMultipleSegmentOptions, renderBooleanOption} from '../ExampleScreenPresenter';
 
 const settingsIcon = require('../../assets/icons/settings.png');

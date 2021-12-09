@@ -1,0 +1,43 @@
+{
+  "name": "ColorPalette",
+  "category": "form",
+  "description": "A component for displaying a color palette",
+  "note": "This is a screen width component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true"
+  ],
+  "props": [
+    {"name": "colors", "type": "string[]", "description": "Array of colors to render in the palette"},
+    {"name": "value", "type": "string", "description": "The value of the selected swatch"},
+    {
+      "name": "usePagination",
+      "type": "boolean",
+      "description": "Whether to use pagination when number of colors exceeds the number of rows",
+      "default": "true"
+    },
+    {
+      "name": "loop",
+      "type": "boolean",
+      "description": "Whether the colors pagination scrolls in a loop",
+      "default": "true"
+    },
+    {"name": "numberOfRows", "type": "number", "description": "The number of color rows from 2 to 5", "default": "3"},
+    {
+      "name": "animatedIndex",
+      "type": "number",
+      "description": "The index of the item to animate at first render",
+      "note": "Default is last"
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: string, options: object) => void",
+      "description": "Invoked once when value changes by selecting one of the swatches in the palette"
+    },
+    {"name": "swatchStyle", "type": "ViewStyle", "description": "Style to pass all the ColorSwatches in the palette"},
+    {"name": "containerWidth", "type": "number", "description": "The container margins"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
+    {"name": "style", "type": "ViewStyle", "description": "Component's style"},
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "ColorPicker",
+  "category": "form",
+  "description": "A picker component for color selection",
+  "note": "This is a screen width component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPicker/ColorPicker.gif?raw=true"
+  ],
+  "props": [
+    {
+      "name": "colors",
+      "type": "string[]",
+      "description": "Array of colors for the picker's color palette (hex values)"
+    },
+    {"name": "value", "type": "string", "description": "The value of the selected swatch"},
+    {
+      "name": "animatedIndex",
+      "type": "number",
+      "description": "The index of the item to animate at first render",
+      "note": "Default is last"
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: string, options: object) => void",
+      "description": "Callback for the picker's color palette change"
+    },
+    {
+      "name": "accessibilityLabels",
+      "type": "{\n addButton: string,\n dismissButton: string,\n doneButton: string,\n input: string}",
+      "description": "Accessibility labels as an object of strings",
+      "default": "{\n addButton: 'add custom color using hex code',\n dismissButton: 'dismiss',\n doneButton: 'done',\n input: 'custom hex color code'\n}"
+    },
+    {"name": "style", "type": "ViewStyle", "description": "Component's style"},
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ]
+}

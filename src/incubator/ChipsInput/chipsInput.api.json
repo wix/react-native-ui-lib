@@ -1,0 +1,23 @@
+{
+  "name": "ChipsInput",
+  "category": "incubator",
+  "description": "A chips input",
+  "extends": ["Incubator/TextField"],
+  "modifiers": ["margin", "color", "typography"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorChipsInputScreen.tsx",
+  "images": [],
+  "props": [
+    {"name": "chips", "type": "ChipProps[]", "description": "List of chips to render"},
+    {
+      "name": "defaultChipProps",
+      "type": "ChipProps",
+      "description": "Default set of props to pass by default to all chips"
+    },
+    {
+      "name": "onChange",
+      "type": "(newChips, changeReason, updatedChip) => void",
+      "description": "Callback for chips change (adding or removing chip)"
+    },
+    {"name": "maxChips", "type": "number", "description": "The maximum chips to allow adding"}
+  ]
+}
