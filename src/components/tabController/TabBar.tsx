@@ -11,7 +11,7 @@ import {Colors, Spacings, Typography} from '../../style';
 import FadedScrollView from './FadedScrollView';
 
 import useScrollToItem from './useScrollToItem';
-import {orientations} from '../../helpers/Constants';
+import {orientations} from '../../commons/Constants';
 import {useDidUpdate} from 'hooks';
 
 const DEFAULT_HEIGHT = 48;
