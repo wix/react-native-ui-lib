@@ -1,3 +1,4 @@
+// @ts-nocheck
 // TODO: hideUnderline should be true by default
 // TODO: enableErrors should be false by default
 // TODO: enableErrors should derived from errorMessage prop

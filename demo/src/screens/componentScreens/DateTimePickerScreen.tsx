@@ -3,15 +3,14 @@ import {ScrollView} from 'react-native';
 import {DateTimePicker, Text, TouchableOpacity, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DateTimePickerScreen extends Component {
-
-  getCustomInputValue = value => {
+  getCustomInputValue = (value: string) => {
     if (!value) {
       return 'Default';
     }
-    return value.includes(new Date().getFullYear() + 1) ? 'Next Year' : value;
+    return value.includes((new Date().getFullYear() + 1).toString()) ? 'Next Year' : value;
   };
 
-  renderCustomInput = (props, toggle) => {
+  renderCustomInput = (props: {value: string}, toggle: (shouldToggle: boolean) => void) => {
     const {value} = props;
     return (
       <TouchableOpacity
@@ -23,7 +22,9 @@ export default class DateTimePickerScreen extends Component {
         }}
       >
         <Text>Valid from</Text>
-        <Text absR color={Colors.primary} text80BO>{this.getCustomInputValue(value)}</Text>
+        <Text absR color={Colors.primary} text80BO>
+          {this.getCustomInputValue(value)}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -33,6 +34,7 @@ export default class DateTimePickerScreen extends Component {
       <ScrollView style={{padding: 14}}>
         <Text text40>Date Time Picker</Text>
         <DateTimePicker
+          // @ts-expect-error
           containerStyle={{marginVertical: 20}}
           title={'Date'}
           placeholder={'Select a date'}
