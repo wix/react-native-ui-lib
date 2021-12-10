@@ -178,11 +178,20 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     }
 
     return (
-      <View style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}>
-        {renderIcon()}
-        {renderMessage()}
-        {renderRightElement()}
-      </View>
+      <PanView
+        directions={swipeable ? directions.current : []}
+        dismissible
+        animateToOrigin
+        directionLock
+        onDismiss={handleDismiss}
+        threshold={THRESHOLD}
+      >
+        <View style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}>
+          {renderIcon()}
+          {renderMessage()}
+          {renderRightElement()}
+        </View>
+      </PanView>
     );
   };
 
@@ -220,16 +229,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
 
   return (
     <View key="toast" animated testID={testID} style={toastContainerStyle} pointerEvents={'box-none'}>
-      <PanView
-        directions={swipeable ? directions.current : []}
-        dismissible
-        animateToOrigin
-        directionLock
-        onDismiss={handleDismiss}
-        threshold={THRESHOLD}
-      >
-        {renderToast()}
-      </PanView>
+      {renderToast()}
     </View>
   );
 };
