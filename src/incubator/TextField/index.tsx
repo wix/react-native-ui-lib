@@ -197,7 +197,7 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          <View flexG>
+          <View flex row>
             {floatingPlaceholder && (
               <FloatingPlaceholder
                 placeholder={placeholder}

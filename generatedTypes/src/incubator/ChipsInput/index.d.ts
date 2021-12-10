@@ -5,19 +5,26 @@ export declare enum ChipsInputChangeReason {
     Added = "added",
     Removed = "removed"
 }
+export declare type ChipsInputChipProps = ChipProps & {
+    invalid?: boolean;
+};
 export declare type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
     /**
      * Chip items to render in the input
      */
-    chips?: ChipProps[];
+    chips?: ChipsInputChipProps[];
     /**
      * A default set of chip props to pass to all chips
      */
     defaultChipProps?: ChipProps;
     /**
+     * A default set of chip props to pass to all invalid chips
+     */
+    invalidChipProps?: ChipProps;
+    /**
      * Change callback for when chips changed (either added or removed)
      */
-    onChange?: (chips: ChipProps[], changeReason: ChipsInputChangeReason, updatedChip: ChipProps) => void;
+    onChange?: (chips: ChipsInputChipProps[], changeReason: ChipsInputChangeReason, updatedChip: ChipProps) => void;
     /**
      * Maximum chips
      */
@@ -27,15 +34,19 @@ declare const _default: React.ForwardRefExoticComponent<Omit<TextFieldProps, "re
     /**
      * Chip items to render in the input
      */
-    chips?: ChipProps[] | undefined;
+    chips?: ChipsInputChipProps[] | undefined;
     /**
      * A default set of chip props to pass to all chips
      */
     defaultChipProps?: ChipProps | undefined;
     /**
+     * A default set of chip props to pass to all invalid chips
+     */
+    invalidChipProps?: ChipProps | undefined;
+    /**
      * Change callback for when chips changed (either added or removed)
      */
-    onChange?: ((chips: ChipProps[], changeReason: ChipsInputChangeReason, updatedChip: ChipProps) => void) | undefined;
+    onChange?: ((chips: ChipsInputChipProps[], changeReason: ChipsInputChangeReason, updatedChip: ChipProps) => void) | undefined;
     /**
      * Maximum chips
      */

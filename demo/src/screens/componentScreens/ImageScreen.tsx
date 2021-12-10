@@ -9,6 +9,8 @@ const BROKEN_URL = 'file:///Desktop/website/img/cupcake.jpg';
 const DEFAULT_SIZE = 100;
 
 const file = Assets.svgs.demo.logo;
+const uri = {uri: 'http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg'};
+const uriWithCss = {uri: 'http://thenewcode.com/assets/svg/accessibility.svg'};
 const xml = `
   <svg width="32" height="32" viewBox="0 0 32 32">
     <path
@@ -38,6 +40,13 @@ enum SizeType {
   Percentage = '50%'
 }
 
+enum SvgType {
+  File = 'file',
+  Uri = 'uri',
+  UriWithCss = 'use_with_css',
+  Xml = 'xml'
+}
+
 interface State {
   cover: boolean;
   showOverlayContent: boolean;
@@ -46,7 +55,7 @@ interface State {
   margin: number;
   showErrorImage: boolean;
   showSvg: boolean;
-  isFile: boolean;
+  svgType: SvgType;
   sizeType: SizeType;
 }
 
@@ -59,9 +68,24 @@ class ImageScreen extends Component<{}, State> {
     margin: 0,
     showErrorImage: false,
     showSvg: false,
-    isFile: false,
+    svgType: SvgType.File,
     sizeType: SizeType.None
   };
+
+  getSvgSource() {
+    const {svgType} = this.state;
+    switch (svgType) {
+      case SvgType.File:
+        return file;
+      case SvgType.Uri:
+        return uri;
+      case SvgType.UriWithCss:
+        return uriWithCss;
+      case SvgType.Xml:
+      default:
+        return xml;
+    }
+  }
 
   renderOverlayContent() {
     const {cover, overlayType, showOverlayContent} = this.state;
@@ -105,14 +129,15 @@ class ImageScreen extends Component<{}, State> {
   }
 
   renderSvgImage() {
-    const {isFile, sizeType} = this.state;
+    const {sizeType} = this.state;
     const size: any = Number(sizeType) || sizeType;
+    const source = this.getSvgSource();
     return (
       <>
         {size ? (
-          <Image source={isFile ? file : xml} width={size} height={size}/>
+          <Image source={source} width={size} height={size}/>
         ) : (
-          <Image source={isFile ? file : xml}/>
+          <Image source={source}/>
         )}
       </>
     );
@@ -134,10 +159,9 @@ class ImageScreen extends Component<{}, State> {
   }
 
   renderSvgOptions() {
-    const {isFile} = this.state;
     return (
       <>
-        {renderBooleanOption.call(this, isFile ? 'Load from file' : 'Use xml const', 'isFile')}
+        {renderRadioGroup.call(this, 'SVG Type', 'svgType', SvgType, {isRow: true})}
         {renderRadioGroup.call(this, 'Size Type', 'sizeType', SizeType, {isRow: true})}
       </>
     );
