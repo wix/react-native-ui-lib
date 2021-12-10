@@ -101,6 +101,7 @@ export default class ToastsScreen extends Component {
         onDismiss={this.toggleVisibility}
         autoDismiss={3500}
         // backgroundColor={Colors.green70}
+        // icon={Assets.icons.demo.add}
         // iconColor={Colors.green20}
         // style={{borderWidth: 1, borderColor: Colors.grey30}}
         // messageStyle={Typography.text80BO}

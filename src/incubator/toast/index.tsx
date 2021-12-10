@@ -21,6 +21,9 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   const {
     visible,
     position = 'bottom',
+    icon,
+    iconColor,
+    preset,
     zIndex,
     elevation,
     style,
@@ -49,7 +52,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   const [toastHeight, setToastHeight] = useState(500);
 
   const {clearTimer, setTimer} = useToastTimer(props);
-  const {icon, iconColor, accessibilityMessage} = useToastPresets(props);
+  const toastPreset = useToastPresets({icon, iconColor, message, preset});
 
   const playAccessibilityFeatures = () => {
     if (visible) {
@@ -58,7 +61,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
         const reactTag = findNodeHandle(viewRef.current);
         AccessibilityInfo.setAccessibilityFocus(reactTag!);
       } else if (message) {
-        AccessibilityInfo.announceForAccessibility?.(accessibilityMessage);
+        AccessibilityInfo.announceForAccessibility?.(toastPreset.accessibilityMessage);
       }
     }
   };
@@ -156,7 +159,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
           // @ts-expect-error
           ref={viewRef}
           style={[styles.message, {textAlign}, messageStyle]}
-          accessibilityLabel={accessibilityMessage}
+          accessibilityLabel={toastPreset.accessibilityMessage}
         >
           {message}
         </Text>
@@ -165,8 +168,8 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const renderIcon = () => {
-    const tintColor = iconColor;
-    return <Icon source={icon} resizeMode={'contain'} style={styles.icon} tintColor={tintColor}/>;
+    const tintColor = toastPreset.iconColor;
+    return <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={tintColor}/>;
   };
 
   const renderToastContent = () => {

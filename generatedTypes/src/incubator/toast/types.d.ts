@@ -93,9 +93,9 @@ export interface ToastProps {
     /**
      * icon tint color
      */
-    iconColor: string;
+    iconColor?: string;
     /**
      * The background color of the toast
      */
-    backgroundColor: string;
+    backgroundColor?: string;
 }
