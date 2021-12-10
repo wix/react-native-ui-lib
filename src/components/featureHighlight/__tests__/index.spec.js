@@ -1,4 +1,4 @@
-import {updateConstants} from '../../../helpers/Constants';
+import {Constants} from '../../../commons';
 import {testable as FeatureHighlight} from '../';
 
 describe('FeatureHighlight', () => {
@@ -72,5 +72,5 @@ function mockScreenDimentions() {
     screen: {height: 667, width: 375},
     window: {height: 1000, width: 1000}
   };
-  updateConstants(dimensions);
+  Constants.updateConstants(dimensions);
 }

@@ -5,14 +5,13 @@ import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
 import FadedScrollView from './FadedScrollView';
 
 import useScrollToItem from './useScrollToItem';
 import {orientations} from '../../helpers/Constants';
-import {Constants} from 'helpers';
 import {useDidUpdate} from 'hooks';
 
 const DEFAULT_HEIGHT = 48;

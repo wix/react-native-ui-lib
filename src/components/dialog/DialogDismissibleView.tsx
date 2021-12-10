@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {useEffect, useRef, useCallback, useContext} from 'react';
 import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new'
 import View from '../view';
 import PanningContext from '../panningViews/panningContext';
 import PanningProvider, {

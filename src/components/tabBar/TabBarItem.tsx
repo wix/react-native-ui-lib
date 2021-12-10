@@ -10,9 +10,8 @@ import {
   ViewStyle,
   TextStyle
 } from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';

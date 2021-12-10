@@ -1,6 +1,6 @@
 import {TextStyle} from 'react-native';
 import _ from 'lodash';
-import Constants from '../helpers/Constants';
+import Constants from '../commons/Constants';
 
 import TypographyPresets from './typographyPresets';
 

@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React, {Component, ElementRef, RefObject} from 'react';
 import {Platform, StyleSheet, ScrollView, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import ScrollBar, {ScrollBarProps} from '../scrollBar';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';

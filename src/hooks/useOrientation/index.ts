@@ -1,5 +1,5 @@
 import {useEffect, useCallback, useState} from 'react';
-import {Constants} from 'helpers';
+import {Constants} from '../../commons/new';
 import useDidUpdate from '../useDidUpdate';
 
 interface UseOrientationProps {

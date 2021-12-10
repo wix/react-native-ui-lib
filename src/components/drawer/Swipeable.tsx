@@ -10,7 +10,7 @@
 import React, {Component} from 'react';
 import {Animated, StyleSheet, View, I18nManager} from 'react-native';
 import {PanGestureHandler, TapGestureHandler, State} from 'react-native-gesture-handler';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 import {HapticService, HapticType} from '../../services';
 
 

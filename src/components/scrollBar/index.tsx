@@ -10,9 +10,8 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent
 } from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import {Constants, asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../view';
 import Image from '../image';
 

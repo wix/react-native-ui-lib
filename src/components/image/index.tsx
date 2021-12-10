@@ -10,8 +10,7 @@ import {
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
-import Constants from '../../helpers/Constants';
-import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
+import {Constants, asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
 // @ts-ignore
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
