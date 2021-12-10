@@ -38,6 +38,7 @@ interface Props {
    * Custom element to render on top of the animated progress
    */
   customElement?: JSX.Element;
+  testID?: string;
 }
 export type ProgressBarProps = Props;
 
@@ -136,7 +137,7 @@ class ProgressBar extends PureComponent<Props, State> {
   }
 
   render() {
-    const {style} = this.props;
+    const {style, testID} = this.props;
     const {containerWidth} = this.state;
     const newProgress = this.progressAnimation.interpolate({
       inputRange: [0, 100],
@@ -148,6 +149,7 @@ class ProgressBar extends PureComponent<Props, State> {
         onLayout={this.getContainerWidth}
         style={[styles.container, this.getContainerStyle(), style]}
         {...this.getAccessibilityProps()}
+        testID={testID}
       >
         {!!containerWidth && (
           <Animated.View style={[styles.progress, this.getProgressStyle(), {transform: [{translateX: newProgress}]}]}>

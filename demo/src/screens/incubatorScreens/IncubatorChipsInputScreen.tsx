@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Card, TextField, Button, Colors, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
+import _ from 'lodash';
 
 export default class ChipsInputScreen extends Component {
   state = {
@@ -21,9 +22,28 @@ export default class ChipsInputScreen extends Component {
             containerStyle: {borderWidth: 0},
             dismissColor: Colors.white
           }}
+          invalidChipProps={{
+            dismissColor: Colors.red30,
+            labelStyle: {color: Colors.red30},
+            backgroundColor: Colors.white,
+            containerStyle: {borderColor: Colors.red30}
+          }}
           chips={this.state.chips}
           leadingAccessory={<Text>TO: </Text>}
           onChange={newChips => {
+            _.chain(newChips)
+              .groupBy('label')
+              .forEach(group => {
+                if (group.length === 1) {
+                  delete group[0].invalid;
+                } else {
+                  group[group.length - 1].invalid = true;
+                }
+              })
+              .values()
+              .flatten()
+              .value();
+
             this.setState({chips: newChips});
           }}
         />
