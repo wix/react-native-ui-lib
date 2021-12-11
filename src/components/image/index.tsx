@@ -254,8 +254,7 @@ class Image extends PureComponent<Props, State> {
 
   render() {
     const {source} = this.props;
-    const isSvg = typeof source === 'string' || typeof source === 'function';
-    if (isSvg) {
+    if (SvgImage.isSvg(source)) {
       return this.renderSvg();
     } else {
       return this.renderRegularImage();

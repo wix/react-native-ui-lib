@@ -2,7 +2,6 @@
   "name": "Picker",
   "category": "form",
   "description": "Picker Component, support single or multiple selection, blurModel and native wheel picker",
-  "extends": ["TextField"],
   "modifiers": ["margin", "padding", "position"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js",
   "images": [
@@ -58,7 +57,7 @@
     {"name": "showSearch", "type": "boolean", "description": "Show search input to filter picker items by label"},
     {
       "name": "searchStyle",
-      "type": "{{color: string, placeholderTextColor: string, selectionColor: string}}",
+      "type": "{color: string, placeholderTextColor: string, selectionColor: string}",
       "description": "Style object for the search input (only when passing showSearch)"
     },
     {

@@ -7,16 +7,17 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
   module.exports = {
     title: 'RNUILib',
     tagline: 'React Native UI Lib',
-    url: 'https://github.com/wix/react-native-ui-lib',
-    baseUrl: '/',
+    url: 'https://wix.github.io',
+    baseUrl: '/react-native-ui-lib/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
     organizationName: 'wix', // Usually your GitHub org/user name.
     projectName: 'react-native-ui-lib', // Usually your repo name.
+    trailingSlash: false,
     customFields: {
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android',
-      stars: '3.8'
+      stars: '3.9'
     },
     plugins: ['docusaurus-plugin-sass'],
     presets: [
@@ -111,6 +112,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         prism: {
           theme: lightCodeTheme,
           darkTheme: darkCodeTheme
+        },
+        colorMode: {
+          disableSwitch: true
         }
       })
   }

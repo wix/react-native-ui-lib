@@ -35,6 +35,9 @@ class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, Connec
 
   constructor(props: ConnectionStatusBarProps) {
     super(props);
+    
+    this.generateStyles();
+    
     this.onConnectionChange = this.onConnectionChange.bind(this);
 
     this.state = {

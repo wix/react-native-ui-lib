@@ -119,7 +119,7 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   renderTabPages() {
-    const {asCarousel} = this.state;
+    const {asCarousel, fewItems} = this.state;
     const Container = asCarousel ? TabController.PageCarousel : View;
     const containerProps = asCarousel ? {} : {flex: true};
     return (
@@ -134,7 +134,7 @@ class TabControllerScreen extends Component<{}, State> {
           <Tab3/>
         </TabController.TabPage>
 
-        {_.map(_.takeRight(TABS, TABS.length - 3), (title, index) => {
+        {!fewItems && _.map(_.takeRight(TABS, TABS.length - 3), (title, index) => {
           return (
             <TabController.TabPage key={title} index={index + 3}>
               <View padding-s5>
