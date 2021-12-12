@@ -1,5 +1,5 @@
 import {PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 
 export enum PanningDirectionsEnum {
   UP = 'up',

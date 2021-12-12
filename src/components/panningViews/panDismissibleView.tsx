@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Animated, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {
   PanningDirections,

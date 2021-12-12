@@ -1,7 +1,6 @@
 import React, {PropsWithChildren, PureComponent} from 'react';
 import {StyleSheet, Animated} from 'react-native';
-import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Button, {ButtonProps} from '../button';

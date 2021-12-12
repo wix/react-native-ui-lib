@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle} from 'react-native';
-import {asBaseComponent, forwardRef} from '../../commons/new';
-import {Constants} from 'helpers';
+import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 // @ts-ignore need to migrate to commonsNew
 import {modifiers} from 'commons';

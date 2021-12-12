@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, StyleProp, TextStyle, ImageSourcePropType} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
-import {Constants} from '../../helpers';
+import {Constants, asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View, {ViewProps} from '../../components/view';

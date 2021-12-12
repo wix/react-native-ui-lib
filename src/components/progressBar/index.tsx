@@ -1,9 +1,8 @@
 import isUndefined from 'lodash/isUndefined';
 import React, {PureComponent} from 'react';
 import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
-import {Constants} from '../../helpers';
 import View from '../view';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 

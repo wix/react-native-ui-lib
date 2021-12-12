@@ -1,4 +1,4 @@
-import {Constants} from '../../../helpers';
+import {Constants} from '../../../commons/new';
 import {
   PanningDirectionsEnum,
   DEFAULT_THRESHOLD,

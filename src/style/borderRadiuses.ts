@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Constants from '../helpers/Constants';
+import Constants from '../commons/Constants';
 
 // TODO: enable template type after we're ready to use TS 4.4.0
 // interface IBorderRadiusesLiterals {

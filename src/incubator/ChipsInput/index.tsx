@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo, useRef, useState, forwardRef} from 'react';
 import {StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
 import {isUndefined, map} from 'lodash';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 import {useCombinedRefs} from '../../hooks';
 import TextField, {TextFieldProps} from '../TextField';
 import Chip, {ChipProps} from '../../components/chip';

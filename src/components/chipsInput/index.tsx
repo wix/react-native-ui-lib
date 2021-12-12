@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {NativeModules, StyleSheet, ViewStyle, Image, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, findNodeHandle, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps} from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography, Spacings} from '../../style';
 import Assets from '../../assets';
 import {LogService} from '../../services';
-import {asBaseComponent, BaseComponentInjectedProps, TypographyModifiers} from '../../commons/new';
+import {Constants, asBaseComponent, BaseComponentInjectedProps, TypographyModifiers} from '../../commons/new';
 // @ts-expect-error
 import {TextField} from '../inputs';
 import View from '../view';
