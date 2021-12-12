@@ -5,7 +5,7 @@ import {Colors} from '../../style';
 import Constants from '../../helpers/Constants';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import Modal from '../modal';
+import Modal, {ModalProps} from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
@@ -71,6 +71,10 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
    * The props that will be passed to the pannable header
    */
   pannableHeaderProps?: any;
+  /** 
+   * Additional props for the modal. 
+   */
+  modalProps?: ModalProps;
   /**
    * The Dialog`s container style
    */
@@ -247,7 +251,7 @@ class Dialog extends Component<DialogProps, DialogState> {
 
   render = () => {
     const {modalVisibility} = this.state;
-    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress, ...others} = this.props;
+    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress, modalProps} = this.props;
     const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
 
     return (
@@ -260,7 +264,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         onRequestClose={onBackgroundPress}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
-        {...others}
+        {...modalProps}
       >
         {this.renderDialogContainer()}
       </Modal>
