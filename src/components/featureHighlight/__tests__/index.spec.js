@@ -1,8 +1,7 @@
-import {Constants} from '../../../commons';
+import {updateConstants} from '../../../commons/Constants';
 import {testable as FeatureHighlight} from '../';
 
 describe('FeatureHighlight', () => {
-
   beforeEach(() => {
     mockScreenDimentions();
   });
@@ -59,7 +58,7 @@ describe('FeatureHighlight', () => {
       expect(FeatureHighlight.findTargetNode).toHaveBeenCalledWith(mockTarget);
 
       jest.runAllTimers();
-      
+
       expect(setTimeout).toHaveBeenCalledTimes(1);
       expect(mockTarget.measureInWindow).toBeCalled();
     });
@@ -72,5 +71,5 @@ function mockScreenDimentions() {
     screen: {height: 667, width: 375},
     window: {height: 1000, width: 1000}
   };
-  Constants.updateConstants(dimensions);
+  updateConstants(dimensions);
 }
