@@ -6,8 +6,8 @@ let orientationChangeListeners;
 
 describe('useOrientation hook', () => {
   beforeEach(() => {
-    jest.mock('../../../helpers/Constants');
-    Constants = require('../../../helpers/Constants').default;
+    jest.mock('../../../commons/Constants');
+    Constants = require('../../../commons/Constants').default;
     useOrientation = require('../index').default;
 
     orientationChangeListeners = [];
