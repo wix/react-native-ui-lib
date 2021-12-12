@@ -1,0 +1,21 @@
+{
+  "name": "Dialog",
+  "category": "incubator",
+  "description": "Component for displaying custom content inside a popup dialog",
+  "note": "Use alignment modifiers to control the dialog position (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)",
+  "modifiers": ["alignment"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorDialogScreen.js",
+  "props": [
+    {"name": "visible", "type": "boolean", "description": "The visibility of the dialog"},
+    {"name": "onDismiss", "type": "(props?: ImperativeDialogProps) => void", "description": "Callback that is called after the dialog's dismiss (after the animation has ended)."},
+    {
+      "name": "direction",
+      "type": "up | down | left | right",
+      "description": "The direction from which and to which the dialog is animating \\ panning (default bottom).",
+      "default": "down"
+    },
+    {"name": "ignoreBackgroundPress", "type": "boolean", "description": "Whether or not to ignore background press."},
+    {"name": "modalProps", "type": "ModalProps", "description": "Pass props to the dialog modal"},
+    {"name": "testID", "type": "string", "description": "Used as a testing identifier"}
+  ]
+}
