@@ -13,3 +13,4 @@ steps:
     - "npm run test"
     - "npm run build"
     - "[[ $BUILDKITE_PULL_REQUEST == 'false' ]] && npm run bkRelease && npm run demo || true"
+    timeout_in_minutes: 15
