@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps } from 'react-native';
 import { AlignmentModifiers } from '../../commons/modifiers';
+import { ModalProps } from '../modal';
 import { PanningDirections } from '../panningViews/panningProvider';
 interface RNPartialProps extends Pick<ModalPropsIOS, 'supportedOrientations'>, Pick<AccessibilityProps, 'accessibilityLabel'> {
 }
@@ -53,6 +54,10 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
      * The props that will be passed to the pannable header
      */
     pannableHeaderProps?: any;
+    /**
+     * Additional props for the modal.
+     */
+    modalProps?: ModalProps;
     /**
      * The Dialog`s container style
      */
