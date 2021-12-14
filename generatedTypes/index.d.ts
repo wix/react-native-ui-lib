@@ -42,6 +42,7 @@ export {default as Chip, ChipProps} from './src/components/chip';
 export {default as ColorPicker, ColorPickerProps} from './src/components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './src/components/colorPicker/ColorPalette';
 export {default as ColorSwatch, ColorSwatchProps} from './src/components/colorPicker/ColorSwatch';
+export {default as DateTimePicker, DateTimePickerProps} from './src/components/dateTimePicker';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './src/components/drawer';
 export {default as ProgressBar, ProgressBarProps} from './src/components/progressBar';
 export {default as FeatureHighlight, FeatureHighlightProps} from './src/components/featureHighlight';
@@ -111,5 +112,4 @@ export {
 /* All components that are missing either manual or auto generated typings */
 export const AnimatedImage;
 export const AnimatedScanner;
-export const DateTimePicker;
 export const TextField;

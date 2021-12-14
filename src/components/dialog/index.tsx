@@ -2,9 +2,8 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps} from 'react-native';
 import {Colors} from '../../style';
-import Constants from '../../helpers/Constants';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import Modal, {ModalProps} from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
@@ -46,7 +45,7 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
   /**
    * The dialog height (default: undefined)
    */
-  height?: string | number;
+  height?: string | number | null;
   /**
    * The direction of the allowed pan (default is DOWN).
    * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).
@@ -276,7 +275,7 @@ function createStyles(props: DialogProps) {
   const {width = '90%', height} = props;
   const flexType = height ? {flex: 1} : {flex: 0};
   return StyleSheet.create({
-    dialogViewSize: {width, height},
+    dialogViewSize: {width, height: height ?? undefined},
     flexType,
     container: {
       flex: 1

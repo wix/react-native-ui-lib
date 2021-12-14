@@ -2,14 +2,13 @@ import React, {PureComponent} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
 import Reanimated from 'react-native-reanimated';
 import {
+  Constants,
   asBaseComponent,
   forwardRef,
   BaseComponentInjectedProps,
   ForwardRefInjectedProps,
   ContainerModifiers
 } from '../../commons/new';
-import {Constants} from 'helpers';
-
 
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
   /**

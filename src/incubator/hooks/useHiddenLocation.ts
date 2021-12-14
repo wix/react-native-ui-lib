@@ -1,6 +1,6 @@
 import {RefObject, useCallback, useState} from 'react';
 import {View, LayoutChangeEvent} from 'react-native';
-import {Constants} from 'helpers';
+import {Constants} from '../../commons/new';
 import {PanningDirectionsEnum} from '../panView';
 
 type HiddenLocationRecord = Record<PanningDirectionsEnum, number>;

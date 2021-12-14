@@ -29,7 +29,7 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
     /**
      * The dialog height (default: undefined)
      */
-    height?: string | number;
+    height?: string | number | null;
     /**
      * The direction of the allowed pan (default is DOWN).
      * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).

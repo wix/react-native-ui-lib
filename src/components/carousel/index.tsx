@@ -8,9 +8,8 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent
 } from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import PageControl from '../pageControl';

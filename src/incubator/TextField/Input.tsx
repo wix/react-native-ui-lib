@@ -1,10 +1,9 @@
 import React, {useContext} from 'react';
 import {TextInput, TextInputProps, StyleSheet, Platform} from 'react-native';
-import {ForwardRefInjectedProps} from '../../commons/new';
+import {Constants, ForwardRefInjectedProps} from '../../commons/new';
 import {ColorType} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
-import {Constants} from '../../helpers';
 import FieldContext from './FieldContext';
 import useImperativeInputHandle from './useImperativeInputHandle';
 

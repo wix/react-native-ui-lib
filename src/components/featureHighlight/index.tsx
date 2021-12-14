@@ -11,8 +11,7 @@ import {
   LayoutChangeEvent
 } from 'react-native';
 import {Colors, Typography} from '../../style';
-import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import Button, {ButtonProps, ButtonSize} from '../button';

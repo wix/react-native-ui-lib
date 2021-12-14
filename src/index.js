@@ -232,6 +232,9 @@ export default {
   get PureBaseComponent() {
     return require('./commons').PureBaseComponent;
   },
+  get Constants() {
+    return require('./commons').Constants;
+  },
   get UIComponent() {
     return require('./commons').UIComponent;
   },
@@ -251,9 +254,6 @@ export default {
   // Helpers
   get AvatarHelper() {
     return require('./helpers').AvatarHelper;
-  },
-  get Constants() {
-    return require('./helpers').Constants;
   },
   get DocsGenerator() {
     return require('./helpers').DocsGenerator;
