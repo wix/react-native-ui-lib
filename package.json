@@ -38,6 +38,7 @@
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
     "docs:build": "(cd ./uilib-docs && npm install && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
+    "build:docs": "node scripts/build-docs.js",
     "bump:patch": "npm version patch",
     "demo": "./scripts/demo.sh",
     "release": "node ./scripts/release.js",

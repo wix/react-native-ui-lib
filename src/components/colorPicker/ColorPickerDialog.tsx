@@ -11,8 +11,7 @@ import {
   ViewStyle,
   EmitterSubscription
 } from 'react-native';
-import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View from '../view';

@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Button from '../index';
 import {Colors, ThemeManager} from '../../../style';
-import {Constants} from '../../../helpers';
+import {Constants} from '../../../commons';
 
 describe('Button', () => {
   beforeEach(() => {

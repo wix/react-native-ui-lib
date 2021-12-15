@@ -1,6 +1,6 @@
 import {Platform, TextStyle} from 'react-native';
 import _ from 'lodash';
-import Constants from '../helpers/Constants';
+import Constants from '../commons/Constants';
 
 export const WEIGHT_TYPES: {[key: string]: TextStyle['fontWeight']} = {
   THIN: '200' as const,

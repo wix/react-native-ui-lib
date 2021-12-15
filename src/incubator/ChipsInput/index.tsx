@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo, useRef, useState, forwardRef} from 'react';
 import {StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
 import {isUndefined, map} from 'lodash';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 import {useCombinedRefs} from '../../hooks';
 import TextField, {TextFieldProps} from '../TextField';
 import Chip, {ChipProps} from '../../components/chip';
@@ -57,11 +57,14 @@ const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
     const reachedMaximum = maxChips && chips?.length >= maxChips;
     if (fieldValue.current && !reachedMaximum) {
       const newChip = {label: fieldValue.current};
-      onChange?.([...chips, newChip], ChipsInputChangeReason.Added, newChip);
       setMarkedForRemoval(undefined);
       // @ts-expect-error
       fieldRef.current.clear();
       fieldValue.current = '';
+      /* NOTE: Delay change event to give clear field time to complete and avoid a flickering */
+      setTimeout(() => {
+        onChange?.([...chips, newChip], ChipsInputChangeReason.Added, newChip);
+      }, 0);
     }
   }, [onChange, chips, maxChips]);
 

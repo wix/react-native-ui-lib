@@ -13,6 +13,9 @@ module.exports = {
   get UIComponent() {
     return require('./UIComponent').default;
   },
+  get Constants() {
+    return require('./Constants').default;
+  },
   get asBaseComponent() {
     return require('./asBaseComponent').default;
   },

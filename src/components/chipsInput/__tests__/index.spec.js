@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Constants} from '../../../helpers';
+import {Constants} from '../../../commons';
 import {ChipsInput} from '../index';
 
 describe('ChipsInput', () => {

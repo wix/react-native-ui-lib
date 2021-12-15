@@ -3,7 +3,7 @@ import {Animated, LayoutChangeEvent, StyleSheet, Platform, TextStyle, StyleProp}
 import {ColorType, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 import View from '../../components/view';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';

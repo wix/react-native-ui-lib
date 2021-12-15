@@ -10,8 +10,7 @@ import {
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
-import Constants from '../../helpers/Constants';
-import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
+import {Constants, asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
 // @ts-ignore
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
@@ -254,8 +253,7 @@ class Image extends PureComponent<Props, State> {
 
   render() {
     const {source} = this.props;
-    const isSvg = typeof source === 'string' || typeof source === 'function';
-    if (isSvg) {
+    if (SvgImage.isSvg(source)) {
       return this.renderSvg();
     } else {
       return this.renderRegularImage();

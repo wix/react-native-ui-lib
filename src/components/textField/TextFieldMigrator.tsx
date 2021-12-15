@@ -1,7 +1,6 @@
 import React, {useEffect, forwardRef} from 'react';
 import {mapKeys} from 'lodash';
 import hoistStatics from 'hoist-non-react-statics';
-// @ts-ignore
 import OldTextField from './index';
 import NewTextField from '../../incubator/TextField';
 import {LogService} from '../../services';
@@ -66,6 +65,7 @@ const TextFieldMigrator = forwardRef(({migrate = false, ...props}: any, ref) => 
     // @ts-ignore
     return <NewTextField {...migratedProps} ref={ref}/>;
   } else {
+    // @ts-expect-error
     return <OldTextField {...props} ref={ref}/>;
   }
 });

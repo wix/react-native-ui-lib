@@ -3,7 +3,7 @@ import React, {useRef, useEffect, useMemo} from 'react';
 import {Animated, ImageSourcePropType} from 'react-native';
 
 import {Colors} from '../../style';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 import View from '../view';
 import Image from '../image';
 

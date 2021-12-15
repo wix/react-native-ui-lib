@@ -1,30 +1,20 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
-import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import Assets from '../../assets';
-import {asBaseComponent} from '../../commons';
-import {TextField} from '../inputs';
-import Dialog from '../dialog';
+import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
+import TextField from '../textField';
+import Dialog, {DialogProps} from '../dialog';
 import View from '../view';
 import Button from '../button';
-
 
 const MODES = {
   DATE: 'date',
   TIME: 'time'
 };
-
-
-const THEME_VARIANTS = {
-  LIGHT: 'light',
-  DARK: 'dark'
-};
-
 
 /*eslint-disable*/
 /**
@@ -37,87 +27,102 @@ const THEME_VARIANTS = {
  */
 /*eslint-enable*/
 
-class DateTimePicker extends Component {
-  static displayName = 'DateTimePicker';
+export interface DateTimePickerProps {
+  // TODO: extend TextField props
+  // ...TextField.propTypes,
+  /**
+   * The type of picker to display ('date' or 'time')
+   */
+  mode?: 'date' | 'time';
+  /**
+   * The initial value to set the picker to. Defaults to device's date / time
+   */
+  value?: Date;
+  /**
+   * The onChange callback
+   */
+  onChange?: (date: Date) => void;
+  /**
+   * The minimum date or time value to use
+   */
+  minimumDate?: Date;
+  /**
+   * The maximum date or time value to use
+   */
+  maximumDate?: Date;
+  /**
+   * The date format for the text display
+   */
+  dateFormat?: string;
+  /**
+   * A callback function to format date
+   */
+  dateFormatter?: (date: Date) => string;
+  /**
+   * The time format for the text display
+   */
+  timeFormat?: string;
+  /**
+   * A callback function to format time
+   */
+  timeFormatter?: (date: Date) => string;
+  /**
+   * Allows changing of the locale of the component (iOS only)
+   */
+  locale?: string;
+  /**
+   * Allows changing of the time picker to a 24 hour format (Android only)
+   */
+  is24Hour?: boolean;
+  /**
+   * The interval at which minutes can be selected. Possible values are: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30 (iOS only)
+   */
+  minuteInterval?: number;
+  /**
+   * Allows changing of the timeZone of the date picker. By default it uses the device's time zone (iOS only)
+   */
+  timeZoneOffsetInMinutes?: number;
+  /**
+   * Props to pass the Dialog component
+   */
+  dialogProps?: DialogProps;
+  /**
+   * style to apply to the iOS dialog header
+   */
+  headerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Render custom input
+   */
+  renderInput?: () => React.ReactElement;
+  /**
+   * Override system theme variant (dark or light mode) used by the date picker.
+   */
+  themeVariant?: 'light' | 'dark';
+  /**
+   * The component testID
+   */
+  testID?: string;
+}
 
-  static propTypes = {
-    ...TextField.propTypes,
-    /**
-     * The type of picker to display ('date' or 'time')
-     */
-    mode: PropTypes.oneOf(Object.values(MODES)),
-    /**
-     * The initial value to set the picker to. Defaults to device's date / time
-     */
-    value: PropTypes.instanceOf(Date),
-    /**
-     * The onChange callback
-     */
-    onChange: PropTypes.func,
-    /**
-     * The minimum date or time value to use
-     */
-    minimumDate: PropTypes.instanceOf(Date),
-    /**
-     * The maximum date or time value to use
-     */
-    maximumDate: PropTypes.instanceOf(Date),
-    /**
-     * The date format for the text display
-     */
-    dateFormat: PropTypes.string,
-    /**
-     * A callback function to format date
-     */
-    dateFormatter: PropTypes.func,
-    /**
-     * The time format for the text display
-     */
-    timeFormat: PropTypes.string,
-    /**
-     * A callback function to format time
-     */
-    timeFormatter: PropTypes.func,
-    /**
-     * Allows changing of the locale of the component (iOS only)
-     */
-    locale: PropTypes.string,
-    /**
-     * Allows changing of the time picker to a 24 hour format (Android only)
-     */
-    is24Hour: PropTypes.bool,
-    /**
-     * The interval at which minutes can be selected. Possible values are: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30 (iOS only)
-     */
-    minuteInterval: PropTypes.number,
-    /**
-     * Allows changing of the timeZone of the date picker. By default it uses the device's time zone (iOS only)
-     */
-    timeZoneOffsetInMinutes: PropTypes.number,
-    /**
-     * Props to pass the Dialog component
-     */
-    dialogProps: PropTypes.object,
-    /**
-     * style to apply to the iOS dialog header
-     */
-    headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Render custom input
-     */
-    renderInput: PropTypes.elementType,
-    /**
-     * Override system theme variant (dark or light mode) used by the date picker.
-     */
-    themeVariant: PropTypes.oneOf(Object.values(THEME_VARIANTS))
-  };
+interface DateTimePickerState {
+  showExpandableOverlay: boolean;
+  prevValue?: Date;
+  value?: Date;
+}
+
+type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
+
+class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePickerState> {
+  static displayName = 'DateTimePicker';
 
   static defaultProps = {
     ...TextField.defaultProps,
     mode: MODES.DATE
   };
 
-  constructor(props) {
+  chosenDate?: Date;
+
+  constructor(props: DateTimePickerPropsInternal) {
     super(props);
 
     this.chosenDate = props.value;
@@ -133,7 +138,7 @@ class DateTimePicker extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps: DateTimePickerProps, prevState: DateTimePickerState) {
     if (nextProps.value !== prevState.prevValue) {
       return {
         prevValue: prevState.value,
@@ -143,7 +148,7 @@ class DateTimePicker extends Component {
     return null;
   }
 
-  handleChange = (event = {}, date) => {
+  handleChange = (event: any = {}, date: Date) => {
     // NOTE: will be called on Android even when there was no actual change
     if (event.type !== 'dismissed' && date !== undefined) {
       this.chosenDate = date;
@@ -156,7 +161,7 @@ class DateTimePicker extends Component {
     }
   };
 
-  toggleExpandableOverlay = callback => {
+  toggleExpandableOverlay = (callback?: () => void) => {
     this.setState({showExpandableOverlay: !this.state.showExpandableOverlay}, () => {
       if (_.isFunction(callback)) {
         callback();
@@ -164,7 +169,7 @@ class DateTimePicker extends Component {
     });
   };
 
-  onToggleExpandableModal = value => {
+  onToggleExpandableModal = (value: boolean) => {
     this.toggleExpandableOverlay();
     _.invoke(this.props, 'onToggleExpandableModal', value);
   };
@@ -227,7 +232,8 @@ class DateTimePicker extends Component {
   };
 
   renderHeader() {
-    const {useCustomTheme, headerStyle} = this.props;
+    // @ts-expect-error
+    const {headerStyle, useCustomTheme} = this.props;
 
     return (
       <View row spread bg-white paddingH-20 style={[styles.header, headerStyle]}>
@@ -248,7 +254,8 @@ class DateTimePicker extends Component {
     }
 
     const {value, showExpandableOverlay} = this.state;
-    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes, themeVariant} = this.props;
+    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes, themeVariant} =
+      this.props;
 
     if (showExpandableOverlay) {
       return (
@@ -274,10 +281,12 @@ class DateTimePicker extends Component {
   };
 
   render() {
+    // @ts-expect-error
     const textInputProps = TextField.extractOwnProps(this.props);
     const {renderInput} = this.props;
 
     return (
+      // @ts-expect-error
       <TextField
         renderExpandableInput={renderInput}
         {...textInputProps}
@@ -291,8 +300,7 @@ class DateTimePicker extends Component {
 }
 
 export {DateTimePicker}; // For tests
-export default asBaseComponent(DateTimePicker);
-
+export default asBaseComponent<DateTimePickerProps>(DateTimePicker);
 
 const styles = StyleSheet.create({
   header: {
