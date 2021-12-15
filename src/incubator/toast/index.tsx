@@ -9,7 +9,7 @@ import Text from '../../components/text';
 import Icon from '../../components/icon';
 import Button from '../../components/button';
 import PanView from '../panView';
-import {ToastProps} from './types';
+import {ToastProps, ToastPresets} from './types';
 import useToastTimer from './helpers/useToastTimer';
 import useToastPresets from './helpers/useToastPresets';
 import useToastAnimation from './helpers/useToastAnimation';
@@ -273,5 +273,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export {ToastProps};
+export {ToastProps, ToastPresets};
 export default asBaseComponent<ToastProps>(Toast);

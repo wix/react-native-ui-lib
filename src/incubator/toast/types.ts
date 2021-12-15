@@ -1,7 +1,7 @@
 import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {ButtonProps} from '../../components/button';
 
-export enum ToastPreset {
+export enum ToastPresets {
   GENERAL = 'general',
   SUCCESS = 'success',
   FAILURE = 'failure',
@@ -71,7 +71,7 @@ export interface ToastProps {
   /**
    * The preset look for GENERAL, SUCCESS and FAILURE (Toast.presets.xxx)
    */
-  preset?: ToastPreset;
+  preset?: ToastPresets;
   /**
    * Whether to trigger an haptic feedback once the toast is shown (requires react-native-haptic-feedback dependency)
    */

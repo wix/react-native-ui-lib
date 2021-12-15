@@ -1,6 +1,6 @@
 import React from 'react';
-import { ToastProps } from './types';
-export { ToastProps };
+import { ToastProps, ToastPresets } from './types';
+export { ToastProps, ToastPresets };
 declare const _default: React.ComponentClass<ToastProps & {
     useCustomTheme?: boolean | undefined;
 }, any>;

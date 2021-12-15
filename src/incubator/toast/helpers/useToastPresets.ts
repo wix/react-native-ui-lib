@@ -1,6 +1,6 @@
 import 'react';
 import {Colors} from 'style';
-import {ToastProps, ToastPreset} from '../types';
+import {ToastProps, ToastPresets} from '../types';
 
 const checkMarkIcon = require('../assets/checkmarkFlat.png');
 const exclamationIcon = require('../assets/exclamationFill.png');
@@ -8,22 +8,22 @@ const infoIcon = require('../assets/info.png');
 const redCloudIcon = require('../assets/redCloud.png');
 
 const TOAST_PRESETS = {
-  [ToastPreset.GENERAL]: {
+  [ToastPresets.GENERAL]: {
     icon: infoIcon,
     iconColor: Colors.getColorTint(Colors.primary, 50),
     accessibilityMessagePrefix: ''
   },
-  [ToastPreset.SUCCESS]: {
+  [ToastPresets.SUCCESS]: {
     icon: checkMarkIcon,
     iconColor: Colors.green40,
     accessibilityMessagePrefix: 'Success'
   },
-  [ToastPreset.FAILURE]: {
+  [ToastPresets.FAILURE]: {
     icon: exclamationIcon,
     iconColor: Colors.red40,
     accessibilityMessagePrefix: 'Alert'
   },
-  [ToastPreset.OFFLINE]: {
+  [ToastPresets.OFFLINE]: {
     icon: redCloudIcon,
     iconColor: Colors.getColorTint(Colors.primary, 50),
     accessibilityMessagePrefix: 'Offline'
