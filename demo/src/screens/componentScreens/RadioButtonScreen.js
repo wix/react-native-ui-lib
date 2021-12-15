@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, ScrollView, Platform, StyleSheet} from 'react-native';
+import {TouchableOpacity, ScrollView} from 'react-native';
 import {Assets, RadioButton, Colors, Shadows, RadioGroup, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
 const starIcon = require('../../assets/icons/star.png');
 
@@ -39,7 +39,14 @@ export default class RadioButtonScreen extends Component {
   renderRadioButtonWithImage(value, icon, style) {
     return (
       <View row centerV marginR-15>
-        <RadioButton value={value} size={15} color={Colors.green30} borderRadius={0} iconSource={icon} iconStyle={style}/>
+        <RadioButton
+          value={value}
+          size={15}
+          color={Colors.green30}
+          borderRadius={0}
+          iconSource={icon}
+          iconStyle={style}
+        />
       </View>
     );
   }
@@ -55,8 +62,12 @@ export default class RadioButtonScreen extends Component {
   render() {
     return (
       <View flex useSafeArea bg-grey80>
-        <View flex>
-          <ScrollView style={{padding: 20}}>
+        <ScrollView>
+          <View padding-page>
+            <Text h1 marginB-s5>
+              Radio Buttons
+            </Text>
+
             <RadioGroup initialValue={this.state.color || null} onValueChange={value => this.setState({color: value})}>
               <Text marginB-20 text60 grey10>
                 Select a color{'\n'}
@@ -69,7 +80,11 @@ export default class RadioButtonScreen extends Component {
               <Text marginT-10>You chose: {this.state.color ? this.state.color : 'Default'}</Text>
             </RadioGroup>
 
-            <RadioGroup marginT-30 initialValue={this.state.textSide} onValueChange={value => this.setState({textSide: value})}>
+            <RadioGroup
+              marginT-30
+              initialValue={this.state.textSide}
+              onValueChange={value => this.setState({textSide: value})}
+            >
               <Text marginB-20 text60 grey10>
                 Alignments
               </Text>
@@ -129,28 +144,9 @@ export default class RadioButtonScreen extends Component {
             </View>
 
             <View style={{height: 30}}/>
-          </ScrollView>
-
-          <View paddingH-20 paddingV-10 style={[styles.shadow, {backgroundColor: Colors.grey80}]}>
-            <Text text40 grey10>
-              Radio Buttons
-            </Text>
           </View>
-        </View>
+        </ScrollView>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  shadow: {
-    ...Platform.select({
-      ios: {
-        ...Shadows.grey20.bottom
-      },
-      android: {
-        elevation: 3
-      }
-    })
-  }
-});
