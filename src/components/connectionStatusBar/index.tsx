@@ -2,11 +2,10 @@ import React, {PureComponent} from 'react';
 import _ from 'lodash';
 import {StyleSheet, Text} from 'react-native';
 import {NetInfoPackage as NetInfo} from '../../optionalDependencies';
-import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import {ConnectionStatusBarProps, ConnectionStatusBarState, DEFAULT_PROPS} from './Types';
 export {ConnectionStatusBarProps};
 
@@ -35,6 +34,9 @@ class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, Connec
 
   constructor(props: ConnectionStatusBarProps) {
     super(props);
+    
+    this.generateStyles();
+    
     this.onConnectionChange = this.onConnectionChange.bind(this);
 
     this.state = {

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {RefObject, useCallback, useRef} from 'react';
 import {ScrollView, FlatList, LayoutChangeEvent} from 'react-native';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 
 export type ScrollToSupportedViews = ScrollView | FlatList;
 

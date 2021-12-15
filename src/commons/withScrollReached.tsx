@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {FlatListProps, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
 import hoistStatics from 'hoist-non-react-statics';
-import {Constants} from '../helpers';
+import Constants from './Constants';
 
 type ScrollReachedProps = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;

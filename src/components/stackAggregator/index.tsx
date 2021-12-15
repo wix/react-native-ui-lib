@@ -1,12 +1,11 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View, {ViewProps} from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Button, {ButtonSize, ButtonProps} from '../button';
 import Card from '../card';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 
 const PEEP = 8;
 const DURATION = 300;

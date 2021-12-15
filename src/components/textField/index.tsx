@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
 import memoize from 'memoize-one';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 import {Colors, Typography, Spacings} from '../../style';
 import BaseInput from '../baseInput';
 import Modal from '../modal';

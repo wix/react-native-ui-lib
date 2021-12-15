@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
 import {Colors, Typography} from '../../style';
-import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {LoaderScreenProps} from './types';

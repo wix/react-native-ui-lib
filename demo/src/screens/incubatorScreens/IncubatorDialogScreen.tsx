@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ModalProps} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {View, Text, Card, Button, Incubator, Colors, BorderRadiuses} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Card, Button, Incubator, Colors, BorderRadiuses, Constants} from 'react-native-ui-lib'; //eslint-disable-line
 
 interface Item {
   value: string;
@@ -33,10 +33,11 @@ const colors: Item[] = [
 
 export default class IncubatorDialogScreen extends Component {
   state = {visible: false};
+  modalProps: ModalProps = {supportedOrientations: ['portrait', 'landscape']};
 
   renderVerticalItem = ({item}: {item: Item}) => {
     return (
-      <Text text50 margin-20 color={item.value}>
+      <Text text50 margin-20 color={item.value} onPress={this.closeDialog}>
         {item.label}
       </Text>
     );
@@ -54,6 +55,10 @@ export default class IncubatorDialogScreen extends Component {
     this.setState({visible: false});
   };
 
+  onDismiss = () => {
+    this.setState({visible: false});
+  };
+
   render() {
     const {visible} = this.state;
 
@@ -65,7 +70,14 @@ export default class IncubatorDialogScreen extends Component {
         <View flex center>
           <Button marginV-20 label="Open Dialog" onPress={this.openDialog}/>
         </View>
-        <Incubator.Dialog visible={visible} onDismiss={this.closeDialog} bottom containerStyle={styles.dialogContainer}>
+        <Incubator.Dialog
+          useSafeArea
+          visible={visible}
+          onDismiss={this.onDismiss}
+          bottom
+          centerH
+          modalProps={this.modalProps}
+        >
           <View style={styles.dialog}>
             <Text text60 margin-s2>
               Title (swipe here)
@@ -86,14 +98,11 @@ export default class IncubatorDialogScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  dialogContainer: {
-    bottom: 20,
-    alignSelf: 'center'
-  },
   dialog: {
+    marginBottom: 20,
     backgroundColor: Colors.white,
-    width: 200,
-    height: 300,
+    maxHeight: Constants.screenHeight * 0.8,
+    width: 300,
     borderRadius: BorderRadiuses.br20
   },
   verticalScroll: {

@@ -9,8 +9,7 @@ import {
   GestureResponderEvent
 } from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
-import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
 
