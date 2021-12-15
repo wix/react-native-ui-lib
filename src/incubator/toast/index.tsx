@@ -1,10 +1,9 @@
 import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {ActivityIndicator, StyleSheet, findNodeHandle, AccessibilityInfo, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
 import {Colors, BorderRadiuses, Spacings, Typography, Shadows} from 'style';
-import {Constants} from 'helpers';
 import View from '../../components/view';
 import Text from '../../components/text';
 import Icon from '../../components/icon';
