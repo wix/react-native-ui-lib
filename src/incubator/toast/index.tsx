@@ -167,8 +167,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const renderIcon = () => {
-    const tintColor = toastPreset.iconColor;
-    return <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={tintColor}/>;
+    return <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor}/>;
   };
 
   const renderToastContent = () => {
