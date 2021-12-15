@@ -4,7 +4,7 @@ import {HapticService, HapticType} from 'services';
 import {ToastProps} from '../types';
 
 type UseToastAnimationProps = Pick<ToastProps, 'visible' | 'position' | 'onAnimationEnd' | 'enableHapticFeedback'> & {
-  toastHeight: number;
+  toastHeight?: number;
   playAccessibilityFeatures: () => void;
   setTimer: () => void;
 };
@@ -12,7 +12,7 @@ type UseToastAnimationProps = Pick<ToastProps, 'visible' | 'position' | 'onAnima
 export default ({
   visible,
   position,
-  toastHeight,
+  toastHeight = 500,
   onAnimationEnd,
   enableHapticFeedback,
   setTimer,
@@ -66,7 +66,7 @@ export default ({
 
   const translateStyle = useMemo(() => {
     return {transform: [{translateY: toastTranslateY}]};
-  }, []);
+  }, [toastHeight]);
 
   return {isAnimating, toggleToast, opacityStyle, translateStyle};
 };

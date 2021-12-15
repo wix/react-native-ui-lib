@@ -48,7 +48,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   ]);
 
   const viewRef = useRef();
-  const [toastHeight, setToastHeight] = useState(500);
+  const [toastHeight, setToastHeight] = useState();
 
   const {clearTimer, setTimer} = useToastTimer(props);
   const toastPreset = useToastPresets({icon, iconColor, message, preset});
