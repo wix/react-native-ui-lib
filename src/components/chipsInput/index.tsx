@@ -145,9 +145,7 @@ class ChipsInput extends Component<OwnProps, State> {
       isFocused: this.input.current?.isFocused() || false
     };
 
-    if (props.tags) {
-      LogService.deprecationWarn({component: 'ChipsInput', oldProp: 'tags', newProp: 'chips'});
-    }
+    LogService.componentDeprecationWarn({oldComponent: 'ChipsInput', newComponent: 'Incubator.ChipsInput'});
   }
 
   componentDidMount() {
