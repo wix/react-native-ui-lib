@@ -18,6 +18,7 @@ const TOAST_MESSAGES = {
 };
 
 export default class ToastsScreen extends Component {
+  showToast = false; // keep this state in class instance for immediate response
   state = {
     visible: false,
     toastPosition: 'bottom' as Incubator.ToastProps['position'],
@@ -30,8 +31,10 @@ export default class ToastsScreen extends Component {
   };
 
   toggleVisibility = () => {
+    // Im using this for storing toast visible since setState is async and takes time to response
+    this.showToast = !this.showToast; 
     this.setState({
-      visible: !this.state.visible
+      visible: this.showToast
     });
   };
 
