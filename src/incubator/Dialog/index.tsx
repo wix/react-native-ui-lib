@@ -1,7 +1,7 @@
 import React, {useRef, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {Spacings, Colors, BorderRadiuses} from 'style';
-import {Constants} from 'helpers';
+import {Constants} from '../../commons/new';
 import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
 import ImperativeDialog from './ImperativeDialog';
