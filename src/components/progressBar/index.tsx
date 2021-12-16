@@ -115,7 +115,7 @@ class ProgressBar extends PureComponent<Props, State> {
     const {fullWidth, progressColor} = this.props;
     const borderRadius = fullWidth ? styles.fullWidthProgressBorderRadius : styles.inlineBorderRadius;
     const progressStyle = {
-      right: this.state.containerWidth,
+      right: Constants.isRTL ? undefined : this.state.containerWidth,
       backgroundColor: progressColor || DEFAULT_COLOR
     };
 
@@ -137,10 +137,11 @@ class ProgressBar extends PureComponent<Props, State> {
 
   render() {
     const {style, testID} = this.props;
-    const {containerWidth} = this.state;
+    const {containerWidth = 0} = this.state;
+    const outputRange = Constants.isRTL ? [containerWidth, 0] : [0, containerWidth];
     const newProgress = this.progressAnimation.interpolate({
       inputRange: [0, 100],
-      outputRange: [0, containerWidth || 0]
+      outputRange
     });
 
     return (
