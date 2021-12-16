@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 
 const INNER_PADDING = 2;

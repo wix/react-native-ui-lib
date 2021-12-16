@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Platform} from 'react-native';
 import View from '../view';
-import {asBaseComponent} from '../../commons/new';
-import Constants from '../../helpers/Constants';
+import {Constants, asBaseComponent} from '../../commons/new';
 import Colors from '../../style/colors';
 import Shadows from '../../style/shadows';
 import WizardStep from './WizardStep';

@@ -1,9 +1,8 @@
 import isUndefined from 'lodash/isUndefined';
 import React, {PureComponent} from 'react';
 import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
-import {Constants} from '../../helpers';
 import View from '../view';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 
@@ -116,7 +115,7 @@ class ProgressBar extends PureComponent<Props, State> {
     const {fullWidth, progressColor} = this.props;
     const borderRadius = fullWidth ? styles.fullWidthProgressBorderRadius : styles.inlineBorderRadius;
     const progressStyle = {
-      right: this.state.containerWidth,
+      right: Constants.isRTL ? undefined : this.state.containerWidth,
       backgroundColor: progressColor || DEFAULT_COLOR
     };
 
@@ -138,10 +137,11 @@ class ProgressBar extends PureComponent<Props, State> {
 
   render() {
     const {style, testID} = this.props;
-    const {containerWidth} = this.state;
+    const {containerWidth = 0} = this.state;
+    const outputRange = Constants.isRTL ? [containerWidth, 0] : [0, containerWidth];
     const newProgress = this.progressAnimation.interpolate({
       inputRange: [0, 100],
-      outputRange: [0, containerWidth || 0]
+      outputRange
     });
 
     return (

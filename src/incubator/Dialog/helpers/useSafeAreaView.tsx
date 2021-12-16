@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {Constants} from 'helpers';
+import {Constants} from '../../../commons/new';
 import SafeAreaSpacerView from '../../../../lib/components/SafeArea/SafeAreaSpacerView';
 import {ImperativeDialogProps} from '../types';
 import {AlignmentType} from './useAlignmentStyle';

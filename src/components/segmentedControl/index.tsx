@@ -10,10 +10,9 @@ import Reanimated, {
   runOnJS
 } from 'react-native-reanimated';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps as SegmentProps} from './segment';
-import {Constants} from 'helpers';
 import {useOrientation} from 'hooks';
 
 const BORDER_WIDTH = 1;

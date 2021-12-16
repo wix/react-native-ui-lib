@@ -3,9 +3,8 @@ import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} from 'react-native';
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
-import {Constants} from 'helpers';
 import View from '../view';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const LinearGradient = LinearGradientPackage?.default;

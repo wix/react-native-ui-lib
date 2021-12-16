@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ActionSheetIOS, StyleSheet, StyleProp, ViewStyle, ImageProps, ImageSourcePropType} from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import Dialog, {DialogProps} from '../dialog';
 import View from '../view';
 import Text from '../text';

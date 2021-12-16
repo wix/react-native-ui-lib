@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
 import Image from '../../components/image';
 import Button from '../../components/button';
