@@ -15,8 +15,7 @@ import {
   View as RNView
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
-import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';

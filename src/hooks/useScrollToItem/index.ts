@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {useState, useCallback, useEffect, useRef} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import useScrollTo, {ScrollToProps, ScrollToSupportedViews, ScrollToResultProps} from '../useScrollTo';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 
 export enum OffsetType {
   CENTER = 'CENTER',

@@ -10,8 +10,7 @@ import {
   StyleProp,
   ViewStyle
 } from 'react-native';
-import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 
 export enum GestureDirections {
   // VERTICAL

@@ -70,3 +70,10 @@ Some of the components are using the native dependencies listed below - those ar
 - (for iOS) `cd ios && pod install`
 - Start the packager `npm start`
 - Build the app `npm run ios` or `npm run android` (or from Xcode or Android Studio).
+
+## Starter Kits
+Thanks to [Batyr](https://github.com/kanzitelli) we have these amazing starter kits 
+
+- [RNUILib + ReactNativeNavigation Starter Kit](https://github.com/kanzitelli/rnn-starter)
+- [RNUILib + ReactNavigation Starter Kit](https://github.com/kanzitelli/rn-starter)
+- [RNUILib + Expo Starter Kit](https://github.com/kanzitelli/expo-starter)

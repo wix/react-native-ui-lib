@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {DeviceEventEmitter, requireNativeComponent, StyleSheet, View, ViewStyle, TextStyle} from 'react-native';
 
 import WheelPickerItem from './WheelPickerItem';
-import {Constants} from '../../../src/helpers';
+import {Constants} from '../../../src/commons/new';
 import {Typography, Colors} from '../../../src/style';
 
 import {PickerPackage, CommunityPickerPackage} from '../../../src/optionalDependencies';

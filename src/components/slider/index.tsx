@@ -15,7 +15,7 @@ import {
   AccessibilityRole,
   View as RNView
 } from 'react-native';
-import {Constants} from '../../helpers';
+import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
 import View from '../view';
 import {extractAccessibilityProps} from '../../commons/modifiers';

@@ -6,7 +6,7 @@ import {Colors, Spacings} from 'style';
 import UIComponent from '../../commons/UIComponent';
 import View from '../view';
 import Text from '../text';
-import {Constants} from 'helpers';
+import {Constants} from '../../commons/new';
 import GridListItem, {GridListItemProps} from '../gridListItem';
 import {formatLastItemLabel} from '../../helpers/FormattingPresenter';
 

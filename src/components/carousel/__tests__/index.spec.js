@@ -3,7 +3,7 @@ import React from 'react';
 import {render} from '@testing-library/react-native';
 import {Text, View} from 'react-native';
 import {fireOnScroll, fireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
-import {Constants} from '../../../helpers';
+import {Constants} from '../../../commons';
 import Carousel from '../index';
 
 const numberOfPagesShown = 5;

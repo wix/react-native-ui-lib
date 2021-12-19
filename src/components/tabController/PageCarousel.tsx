@@ -7,7 +7,7 @@ import Reanimated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated';
-import {Constants} from 'helpers';
+import {Constants} from '../../commons/new';
 
 const FIX_RTL = Constants.isRTL && Constants.isAndroid;
 
