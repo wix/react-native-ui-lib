@@ -13,7 +13,8 @@ import {
   LayoutChangeEvent,
   AccessibilityActionEvent,
   AccessibilityRole,
-  View as RNView
+  View as RNView,
+  ViewProps
 } from 'react-native';
 import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
@@ -88,6 +89,10 @@ export type SliderProps = {
      */
   thumbStyle?: ViewStyle;
   /**
+    * Defines how far a touch event can start away from the thumb.
+    */
+  thumbHitSlop?: ViewProps['hitSlop'];
+  /**
      * The active (during press) thumb style
      */
   activeThumbStyle?: ViewStyle;
@@ -131,7 +136,8 @@ const defaultProps = {
   value: 0,
   minimumValue: 0,
   maximumValue: 1,
-  step: 0
+  step: 0,
+  thumbHitSlop: {top: 10, bottom: 10, left: 24, right: 24}
 };
 
 
@@ -501,8 +507,6 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     _.invoke(AccessibilityInfo, 'announceForAccessibility', `New value ${newValue}`);
   };
 
-  thumbHitSlop = {top: 10, bottom: 10, left: 24, right: 24};
-
   /* Renders */
 
   renderThumb = () => {
@@ -514,7 +518,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
 
     return (
       <Animated.View
-        hitSlop={this.thumbHitSlop}
+        hitSlop={this.props.thumbHitSlop}
         ref={this.setThumbRef}
         onLayout={this.onThumbLayout}
         {...this._panResponder.panHandlers}
