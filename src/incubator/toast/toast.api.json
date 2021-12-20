@@ -1,0 +1,63 @@
+{
+  "name": "Toast",
+  "category": "incubator",
+  "description": "A toast component for displaying non-disruptive messages to the user",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorToastScreen.tsx",
+  "images": [],
+  "props": [
+    {"name": "visible", "type": "boolean", "description": "Whether to show or hide the toast"},
+    {"name": "position", "type": "'top' | 'bottom'", "description": "The position of the toast. 'top' or 'bottom'."},
+    {"name": "message", "type": "string", "description": "Toast message"},
+    {"name": "messageStyle", "type": "StyleProp<TextStyle>", "description": "Toast message style"},
+    {"name": "centerMessage", "type": "boolean", "description": "Should message be centered in the toast"},
+    {"name": "zIndex", "type": "number", "description": "Custom zIndex for toast"},
+    {"name": "elevation", "type": "number", "description": "Custom elevation (Android only)"},
+    {
+      "name": "action",
+      "type": "ButtonProps",
+      "description": "A single action for the user (showLoader will override this)"
+    },
+    {"name": "showLoader", "type": "boolean", "description": "Whether to show a loader"},
+    {"name": "onDismiss", "type": "() => void", "description": "Callback for the toast dismissal"},
+    {
+      "name": "swipeable",
+      "type": "boolean",
+      "description": "Whether to support dismissing the toast with a swipe gesture. Requires to pass onDismiss method to control visibility"
+    },
+    {
+      "name": "autoDismiss",
+      "type": "number",
+      "description": "Time of milliseconds to automatically invoke the onDismiss callback"
+    },
+    {
+      "name": "onAnimationEnd",
+      "type": "(visible?: boolean) => void",
+      "description": "Callback for end of toast animation"
+    },
+    {
+      "name": "renderAttachment",
+      "type": "() => JSX.Element | undefined",
+      "description": "Render a custom view that will appear permanently above or below a Toast, depends on the Toast's position and animate with it when the Toast is made visible or dismissed"
+    },
+    {
+      "name": "preset",
+      "type": "ToastPreset ('success' | 'failure' | 'general' | 'offline')",
+      "description": "Pass to have preset UI"
+    },
+    {
+      "name": "enableHapticFeedback",
+      "type": "boolean",
+      "description": "Whether to trigger an haptic feedback once the toast is shown (requires react-native-haptic-feedback dependency)"
+    },
+    {"name": "testID", "type": "string", "description": "The component test id"},
+    {"name": "style", "type": "ViewStyle", "description": "Toast style"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Toast container style"},
+    {
+      "name": "icon",
+      "type": "ImageSourcePropType",
+      "description": "A custom icon to render on the left side of the toast"
+    },
+    {"name": "iconColor", "type": "string", "description": "The icon color"},
+    {"name": "backgroundColor", "type": "string", "description": "The toast background color"}
+  ]
+}

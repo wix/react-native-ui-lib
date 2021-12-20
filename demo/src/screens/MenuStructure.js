@@ -157,6 +157,7 @@ export const navigationData = {
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: '(New) Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.incubator.IncubatorDialogScreen'},
       {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
+      {title: '(New) Toast', tags: 'toast', screen: 'unicorn.components.IncubatorToastScreen'},
       {title: 'ExpandableOverlay', tags: 'text field expandable input picker', screen: 'unicorn.components.IncubatorExpandableOverlayScreen'},
       {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'},
       {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'},
