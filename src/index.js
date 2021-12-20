@@ -100,9 +100,8 @@ export default {
     return require('./components/textArea').default;
   },
   get TextField() {
-    // TODO: Start migration by exporting TextFieldMigrator
-    // return require('./components/textField/TextFieldMigrator').default;
-    return require('./components/textField').default;
+    return require('./components/textField/TextFieldMigrator').default;
+    // return require('./components/textField').default;
   },
   // TODO: remove once TextField migration has completed
   get TextFieldMigrator() {
