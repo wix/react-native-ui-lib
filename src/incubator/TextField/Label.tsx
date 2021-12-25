@@ -25,6 +25,7 @@ export interface LabelProps {
   labelProps?: TextProps;
   validationMessagePosition?: ValidationMessagePosition;
   floatingPlaceholder?: boolean;
+  testID?: string;
 }
 
 const Label = ({
@@ -33,7 +34,8 @@ const Label = ({
   labelStyle,
   labelProps,
   validationMessagePosition,
-  floatingPlaceholder
+  floatingPlaceholder,
+  testID
 }: LabelProps) => {
   const context = useContext(FieldContext);
 
@@ -42,6 +44,7 @@ const Label = ({
   if ((label || floatingPlaceholder) && !forceHidingLabel) {
     return (
       <Text
+        testID={testID}
         color={getColorByState(labelColor, context)}
         style={[styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder]}
         {...labelProps}
