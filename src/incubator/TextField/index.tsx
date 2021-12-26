@@ -184,6 +184,7 @@ const TextField = (props: InternalTextFieldProps) => {
           labelProps={labelProps}
           floatingPlaceholder={floatingPlaceholder}
           validationMessagePosition={validationMessagePosition}
+          testID={`${props.testID}.label`}
         />
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
