@@ -83,7 +83,7 @@ export declare type SliderProps = {
      */
     testID?: string;
 } & typeof defaultProps;
-interface SliderState {
+interface State {
     containerSize: Measurements;
     trackSize: Measurements;
     thumbSize: Measurements;
@@ -112,7 +112,7 @@ declare const defaultProps: {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true
  */
-export default class Slider extends PureComponent<SliderProps, SliderState> {
+export default class Slider extends PureComponent<SliderProps, State> {
     static displayName: string;
     static defaultProps: {
         value: number;
@@ -153,7 +153,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
             label: string;
         }[];
     };
-    componentDidUpdate(prevProps: SliderProps, prevState: SliderState): void;
+    componentDidUpdate(prevProps: SliderProps, prevState: State): void;
     componentDidMount(): void;
     componentWillUnmount(): void;
     handleMoveShouldSetPanResponder: () => boolean;

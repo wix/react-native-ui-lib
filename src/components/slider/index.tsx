@@ -114,7 +114,7 @@ export type SliderProps = {
   testID?: string;
 } & typeof defaultProps;
 
-interface SliderState {
+interface State {
   containerSize: Measurements;
   trackSize: Measurements;
   thumbSize: Measurements;
@@ -146,7 +146,7 @@ const defaultProps = {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true
  */
-export default class Slider extends PureComponent<SliderProps, SliderState> {
+export default class Slider extends PureComponent<SliderProps, State> {
   static displayName = 'Slider';
 
   static defaultProps = defaultProps;
@@ -218,7 +218,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     };
   }
 
-  componentDidUpdate(prevProps: SliderProps, prevState: SliderState) {
+  componentDidUpdate(prevProps: SliderProps, prevState: State) {
     if (prevProps.value !== this.props.value) {
       this.initialValue = this.getRoundedValue(this.props.value);
       // set position for new value
@@ -513,11 +513,11 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
   /* Renders */
 
   renderThumb = () => {
-    const {thumbStyle, disabled, thumbTintColor} = this.props;
+    const {thumbStyle, disabled, thumbTintColor, thumbHitSlop} = this.props;
 
     return (
       <Animated.View
-        hitSlop={this.props.thumbHitSlop}
+        hitSlop={thumbHitSlop}
         ref={this.setThumbRef}
         onLayout={this.onThumbLayout}
         {...this._panResponder.panHandlers}
