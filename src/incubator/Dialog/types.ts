@@ -1,7 +1,9 @@
 import {PropsWithChildren} from 'react';
+import {StyleProp, TextStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {ModalProps} from '../../components/modal';
 import {ViewProps} from '../../components/view';
+import {TextProps} from '../../components/text';
 import {PanningDirections, PanningDirectionsEnum} from '../panView';
 type DialogDirections = PanningDirections;
 const DialogDirectionsEnum = PanningDirectionsEnum;
@@ -44,4 +46,55 @@ export type ImperativeDialogProps = PropsWithChildren<_DialogProps>;
 export interface ImperativeDialogMethods {
   open: () => void;
   close: () => void;
+}
+
+/**
+ * It is available as `Dialog.Text`
+ */
+export interface DialogTextProps {
+  /**
+   * Title
+   */
+  title?: string;
+  /**
+   * Title text style
+   */
+  titleStyle?: StyleProp<TextStyle>;
+  /**
+   * Title extra props
+   */
+  titleProps?: TextProps;
+  /**
+   * Subtitle
+   */
+  subtitle?: string;
+  /**
+   * Subtitle text style
+   */
+  subtitleStyle?: StyleProp<TextStyle>;
+  /**
+   * Subtitle extra props
+   */
+  subtitleProps?: TextProps;
+}
+
+export interface DialogHeaderProps extends ViewProps {
+  /**
+   * The dialog's default content (Dialog.Text)
+   */
+  text?: DialogTextProps;
+  /**
+   * Replace the header's default content (Dialog.Text)
+   */
+  renderContent?: (props: DialogHeaderProps) => React.ReactElement;
+  /**
+   * Show the header's knob (default is true)
+   * It is available as `Dialog.Knob`
+   */
+  showKnob?: boolean;
+  /**
+   * Show the header's divider (default is true)
+   * It is available as `Dialog.Divider`
+   */
+  showDivider?: boolean;
 }
