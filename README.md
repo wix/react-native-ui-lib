@@ -24,7 +24,7 @@ Download our Expo demo app <br>
 
 ## Installing
 
-See setup instructions [here](https://wix.github.io/react-native-ui-lib/getting-started/setup).
+See setup instructions [here](https://wix.github.io/react-native-ui-lib/docs/getting-started/setup).
 
 #### New Major Version 6.0
 See [breaking changes](https://wix.github.io/react-native-ui-lib/getting-started/v6)
