@@ -156,6 +156,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
+    bottomAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
@@ -486,6 +487,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
+    bottomAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
@@ -1048,6 +1050,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     charCounterStyle?: import("react-native").TextStyle | undefined;
     leadingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     trailingAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
+    bottomAccessory?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur: boolean;

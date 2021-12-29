@@ -26,6 +26,10 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
      */
     trailingAccessory?: ReactElement;
     /**
+     * Pass to render a bottom element below the input
+     */
+    bottomAccessory?: ReactElement;
+    /**
      * Pass to add floating placeholder support
      */
     floatingPlaceholder?: boolean;
