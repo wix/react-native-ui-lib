@@ -15,7 +15,7 @@ https://github.com/wix/react-native-ui-lib/discussions
 ## Description
 
 <!--
-A clear and concise description of what the bug is.
+A clear and concise description of what is the bug.
 -->
 
 ### Related to
