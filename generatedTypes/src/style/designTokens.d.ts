@@ -1,57 +1,4 @@
-import _ from 'lodash';
-import tinycolor from 'tinycolor2';
-import { Schemes, SchemeType } from './scheme';
-export declare class Colors {
-    [key: string]: any;
-    constructor();
-    /**
-     * Load custom set of colors
-     * arguments:
-     * colors - map of keys and colors values e.g {grey10: '#20303C', grey20: '#43515C'}
-     */
-    loadColors(colors: {
-        [key: string]: string;
-    }): void;
-    /**
-     * Load set of schemes for light/dark mode
-     * arguments:
-     * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
-     */
-    loadSchemes(schemes: Schemes): void;
-    /**
-     * Get app's current color scheme
-     */
-    getScheme(): 'light' | 'dark';
-    /**
-     * Set color scheme for app
-     * arguments:
-     * scheme - color scheme e.g light/dark/default
-     */
-    setScheme(scheme: SchemeType): void;
-    /**
-     * Add alpha to hex or rgb color
-     * arguments:
-     * p1 - hex color / R part of RGB
-     * p2 - opacity / G part of RGB
-     * p3 - B part of RGB
-     * p4 - opacity
-     */
-    rgba(p1: string, p2: number): string;
-    rgba(p1: number, p2: number, p3: number, p4: number): string;
-    getBackgroundKeysPattern(): RegExp;
-    isEmpty(color: string): boolean;
-    getColorTint(color: string, tintKey: string | number): any;
-    getColorName(color: string): any;
-    getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
-    generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
-    isDark(color: string): boolean;
-    isValidHex(string: string): boolean;
-    getHexString(color: tinycolor.ColorInput): string;
-    getHSL(color?: string): tinycolor.ColorFormats.HSLA;
-    isTransparent(color?: string): boolean | "" | undefined;
-    areEqual(colorA: string, colorB: string): boolean;
-}
-declare const colorObject: Colors & {
+export declare const designTokens: {
     backgroundDefault: string;
     backgroundNeutralHeavy: string;
     backgroundIdle: string;
@@ -198,7 +145,4 @@ declare const colorObject: Colors & {
     white: string;
     black: string;
     transparent: string;
-} & {
-    primary: string;
 };
-export default colorObject;
