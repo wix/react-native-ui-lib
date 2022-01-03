@@ -28,7 +28,6 @@ const middleTip = require('./assets/hintTipMiddle.png');
 const DEFAULT_COLOR = Colors.primary;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
-const DEFAULT_MAX_WIDTH = Math.min(Constants.screenWidth - 2 * Spacings.s4, 400);
 
 enum TARGET_POSITIONS {
   LEFT = 'left',
@@ -614,7 +613,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   hint: {
-    maxWidth: DEFAULT_MAX_WIDTH,
+    maxWidth: Math.min(Constants.screenWidth - 2 * Spacings.s4, 400),
     borderRadius: BorderRadiuses.br60,
     backgroundColor: DEFAULT_COLOR
   },
