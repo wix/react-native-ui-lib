@@ -58,6 +58,10 @@ export interface CheckboxProps extends TouchableOpacityProps {
      * Additional styling for checkbox and label container
      */
     containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Duration of check animation (in milliseconds)
+     */
+    animationDuration?: number;
 }
 declare const _default: React.ComponentClass<CheckboxProps & {
     useCustomTheme?: boolean | undefined;
