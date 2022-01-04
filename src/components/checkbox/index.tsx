@@ -21,6 +21,7 @@ const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.primary;
 const DEFAULT_ICON_COLOR = Colors.white;
 const DEFAULT_DISABLED_COLOR = Colors.grey50;
+const DEFAULT_ANIMATION_DURATION = 170;
 
 const DEFAULT_BORDER_WIDTH = 2;
 const DEFAULT_BORDER_RADIUS = 8;
@@ -82,6 +83,11 @@ export interface CheckboxProps extends TouchableOpacityProps {
    * Additional styling for checkbox and label container
    */
   containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Duration of check animation (in milliseconds)
+   */
+  animationDuration?: number;
+
 }
 
 interface CheckboxState {
@@ -160,7 +166,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     const {isChecked} = this.state;
 
     Animated.timing(isChecked, {
-      duration: 170,
+      duration: this.props.animationDuration || DEFAULT_ANIMATION_DURATION,
       easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
       toValue: Number(value),
       useNativeDriver: true
