@@ -112,8 +112,4 @@ const themeColors = {
   primary: colorsPalette.violet30
 };
 
-export {
-  colorsPalette,
-  themeColors,
-  extraFixColorsMap
-};
+export {colorsPalette, themeColors, extraFixColorsMap};

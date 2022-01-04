@@ -1,8 +1,6 @@
 import {colorsPalette} from './colorsPalette';
 
 export const designTokens = {
-  ...colorsPalette,
-
   // BACKGROUND
   backgroundDefault: colorsPalette.white,
   backgroundNeutralHeavy: colorsPalette.grey20,

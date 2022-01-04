@@ -2,7 +2,7 @@ import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
 import tinycolor from 'tinycolor2';
-import {themeColors} from './colorsPalette';
+import {themeColors, colorsPalette} from './colorsPalette';
 import {designTokens} from './designTokens';
 //@ts-ignore
 import ColorName from './colorName';
@@ -12,7 +12,7 @@ export class Colors {
   [key: string]: any;
 
   constructor() {
-    const colors = Object.assign(designTokens, themeColors);
+    const colors = Object.assign(colorsPalette, designTokens, themeColors);
     Object.assign(this, colors);
 
     Scheme.addChangeListener(() => {
@@ -246,7 +246,7 @@ function threeDigitHexToSix(value: string) {
   return value.replace(/./g, '$&$&');
 }
 
-const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof designTokens & typeof themeColors>;
+const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette & typeof themeColors>;
 const colorObject = new TypedColors();
-colorObject.loadColors(designTokens);
+colorObject.loadColors(colorsPalette);
 export default colorObject;
