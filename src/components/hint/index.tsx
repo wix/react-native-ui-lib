@@ -613,7 +613,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   hint: {
-    maxWidth: 400,
+    maxWidth: Math.min(Constants.screenWidth - 2 * Spacings.s4, 400),
     borderRadius: BorderRadiuses.br60,
     backgroundColor: DEFAULT_COLOR
   },
