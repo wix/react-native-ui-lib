@@ -2,7 +2,7 @@ import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
 import tinycolor from 'tinycolor2';
-import {themeColors, colorsPalette} from './colorsPalette';
+import {colorsPalette, themeColors} from './colorsPalette';
 import {designTokens} from './designTokens';
 //@ts-ignore
 import ColorName from './colorName';
