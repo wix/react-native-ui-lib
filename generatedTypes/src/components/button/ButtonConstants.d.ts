@@ -18,4 +18,3 @@ export declare const MIN_WIDTH: {
     LARGE: number;
 };
 export declare const DEFAULT_SIZE = ButtonSize.large;
-export declare const DISABLED_COLOR: string;

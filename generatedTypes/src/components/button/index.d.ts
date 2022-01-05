@@ -19,9 +19,6 @@ declare class Button extends PureComponent<Props, ButtonState> {
             justifyContent: "center";
             alignItems: "center";
         };
-        containerDisabled: {
-            backgroundColor: string;
-        };
         innerContainerLink: {
             minWidth: undefined;
             paddingHorizontal: undefined;
@@ -30,7 +27,6 @@ declare class Button extends PureComponent<Props, ButtonState> {
             backgroundColor: undefined;
         };
         shadowStyle: {
-            shadowColor: string;
             shadowOffset: {
                 height: number;
                 width: number;
@@ -161,17 +157,27 @@ declare class Button extends PureComponent<Props, ButtonState> {
     get isIconButton(): boolean | 0 | undefined;
     getBackgroundColor(): any;
     getActiveBackgroundColor(): string | undefined;
-    getLabelColor(): string | undefined;
+    getLabelColor(): any;
     getLabelSizeStyle(): object;
     getContainerSizeStyle(): any;
     getOutlineStyle(): {
         borderWidth: number;
-        borderColor: string;
+        borderColor: any;
     } | undefined;
     getBorderRadiusStyle(): {
         borderRadius: number;
     };
-    getShadowStyle(): any[] | undefined;
+    getShadowStyle(): ({
+        shadowOffset: {
+            height: number;
+            width: number;
+        };
+        shadowOpacity: number;
+        shadowRadius: number;
+        elevation: number;
+    } | {
+        shadowColor: any;
+    })[] | undefined;
     getIconStyle(): import("react-native").StyleProp<ImageStyle>[];
     getAnimationDirectionStyle(): {
         alignSelf: string;

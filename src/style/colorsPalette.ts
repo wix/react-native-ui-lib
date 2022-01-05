@@ -1,5 +1,7 @@
 const colorsPalette = {
   // GREYS
+  grey1: '#10181E',
+  grey5: '#16222A',
   grey10: '#20303C',
   grey20: '#4D5963',
   grey30: '#6E7881',
@@ -9,6 +11,8 @@ const colorsPalette = {
   grey70: '#F0F2F5',
   grey80: '#F8f9FA',
   // BLUES
+  blue1: '#05214D',
+  blue5: '#093780',
   blue10: '#0F4DC4',
   blue20: '#0F59E6',
   blue30: '#116DFF',
@@ -27,6 +31,8 @@ const colorsPalette = {
   cyan70: '#D8F4F4',
   cyan80: '#EBF9F9',
   // GREENS
+  green1: '#003226',
+  green5: '#00543F',
   green10: '#008563',
   green20: '#009872',
   green30: '#00A87E',
@@ -36,6 +42,8 @@ const colorsPalette = {
   green70: '#CFF2E9',
   green80: '#E3F7F2',
   // YELLOWS
+  yellow1: '#4D3B04',
+  yellow5: '#806206',
   yellow10: '#E89900',
   yellow20: '#F7AE00',
   yellow30: '#FFC50D',
@@ -45,6 +53,8 @@ const colorsPalette = {
   yellow70: '#FFF4D3',
   yellow80: '#FFF9E4',
   // ORANGE,
+  orange1: '#4B1E06',
+  orange5: '#7E320A',
   orange10: '#CD4700',
   orange20: '#E95504',
   orange30: '#FB6413',
@@ -54,6 +64,8 @@ const colorsPalette = {
   orange70: '#FFE5D7',
   orange80: '#FFF1EA',
   // REDS
+  red1: '#4C120E',
+  red5: '#7E1E18',
   red10: '#D52712',
   red20: '#E93222',
   red30: '#FC3D2F',
@@ -63,6 +75,8 @@ const colorsPalette = {
   red70: '#FFDEDC',
   red80: '#FFEDEC',
   // PURPLE,
+  purple1: '#301439',
+  purple5: '#50215F',
   purple10: '#791c96',
   purple20: '#8d21b0',
   purple30: '#9f42bd',
@@ -98,8 +112,4 @@ const themeColors = {
   primary: colorsPalette.violet30
 };
 
-export {
-  colorsPalette,
-  themeColors,
-  extraFixColorsMap
-};
+export {colorsPalette, themeColors, extraFixColorsMap};
