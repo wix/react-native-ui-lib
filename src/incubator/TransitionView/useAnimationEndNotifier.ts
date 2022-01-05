@@ -13,7 +13,7 @@ export interface AnimationNotifierEndProps {
 export default function useAnimationEndNotifier(props: AnimationNotifierEndProps) {
   const {onAnimationEnd} = props;
 
-  const onEnterAnimationEnd = useCallback((isFinished: boolean) => {
+  const onEnterAnimationEnd = useCallback((isFinished?: boolean) => {
     'worklet';
     if (onAnimationEnd && isFinished) {
       runOnJS(onAnimationEnd)('enter');
@@ -21,7 +21,7 @@ export default function useAnimationEndNotifier(props: AnimationNotifierEndProps
   },
   [onAnimationEnd]);
 
-  const onExitAnimationEnd = useCallback((isFinished: boolean) => {
+  const onExitAnimationEnd = useCallback((isFinished?: boolean) => {
     'worklet';
     if (onAnimationEnd && isFinished) {
       runOnJS(onAnimationEnd)('exit');

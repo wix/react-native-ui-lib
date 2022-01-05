@@ -8,7 +8,12 @@ jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => 
 // mock native modules
 jest.mock('@react-native-community/blur', () => {});
 jest.mock('@react-native-community/netinfo', () => {});
-jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
+jest.mock('react-native-reanimated', () => {
+  const reactNativeReanimated = require('react-native-reanimated/mock');
+  // TODO: revet this part once reanimated has released it (https://github.com/software-mansion/react-native-reanimated/pull/2748)
+  reactNativeReanimated.interpolateColor = jest.fn();
+  return reactNativeReanimated;
+});
 global.__reanimatedWorkletInit = jest.fn();
 jest.mock('react-native-gesture-handler', () => {});
 jest.mock('@react-native-picker/picker', () => ({Picker: {Item: {}}}));
