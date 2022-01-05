@@ -7,12 +7,26 @@ assignees: ''
 
 ---
 
-### Describe the bug
 <!--
-A clear and concise description of what the bug is.
+NOTE: please submit only bug reports here, any new questions or feature requests should be submitted in Discussions:
+https://github.com/wix/react-native-ui-lib/discussions
+ -->
+
+## Description
+
+<!--
+A clear and concise description of what is the bug.
 -->
 
-### To Reproduce
+### Related to
+
+- [ ] Components
+- [ ] Demo
+- [ ] Docs
+- [ ] Typings
+
+### Steps to reproduce
+
 <!--
 Steps to reproduce the behavior:
 1. Go to '...'
@@ -21,28 +35,50 @@ Steps to reproduce the behavior:
 4. See error
 -->
 
-### Expected behavior
+#### Expected behavior
+
 <!--
 A clear and concise description of what you expected to happen.
 -->
 
+#### Actual behavior
+
+<!--
+A clear and concise description of what actually happens.
+-->
+
+## More Info
+
 ### Code snippet
+
 <!--
 A code snippet that reproduce the issue. 
 -->
 
-### Screenshots
+```
+
+
+```
+
+### Screenshots/Video
+
 <!--
-If applicable, add screenshots to help explain your problem.
+If applicable, add screenshots or a video to help explain your problem.
 -->
 
-### Device (please complete the following information)
+### Environment
+
 <!--
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
+Fill in your RNUILib and React Native versions below.
+
+List other libraries if relevant.
 -->
 
-### Additional context
-<!--
-Add any other context about the problem here.
--->
+- React Native:
+- React Native UI Lib:
+
+### Affected platforms
+
+- [ ] Android
+- [ ] iOS
+- [ ] Web

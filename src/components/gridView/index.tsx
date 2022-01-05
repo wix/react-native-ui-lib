@@ -181,7 +181,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
 
     const {numColumns = DEFAULT_NUM_COLUMNS} = this.state;
     const itemsCount = _.size(items);
-    const rowCount = itemsCount / numColumns;
+    const rowCount = Math.ceil(itemsCount / numColumns);
     const isLastItemInRow = (index + 1) % numColumns === 0;
     const isLastRow = index + 1 > (rowCount - 1) * numColumns;
     const isLastItem = index === itemsCount - 1;

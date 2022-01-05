@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
+import {designTokens} from './designTokens';
 //@ts-ignore
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
@@ -11,7 +12,7 @@ export class Colors {
   [key: string]: any;
 
   constructor() {
-    const colors = Object.assign(colorsPalette, themeColors);
+    const colors = Object.assign(colorsPalette, designTokens, themeColors);
     Object.assign(this, colors);
 
     Scheme.addChangeListener(() => {

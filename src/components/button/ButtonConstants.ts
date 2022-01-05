@@ -1,4 +1,3 @@
-import {Colors} from '../../style';
 import {ButtonSize} from './ButtonTypes';
 
 export const PADDINGS = {
@@ -23,4 +22,3 @@ export const MIN_WIDTH = {
 };
 
 export const DEFAULT_SIZE = ButtonSize.large;
-export const DISABLED_COLOR = Colors.grey50;

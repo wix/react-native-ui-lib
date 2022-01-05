@@ -13,7 +13,7 @@ import usePresenter from './usePresenter';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-enum WheelPickerAlign {
+export enum WheelPickerAlign {
   CENTER = 'center',
   RIGHT = 'right',
   LEFT = 'left'
@@ -305,6 +305,7 @@ const WheelPicker = ({
 WheelPicker.alignments = WheelPickerAlign;
 WheelPicker.displayName = 'Incubator.WheelPicker';
 export default asBaseComponent<WheelPickerProps, typeof WheelPicker>(WheelPicker);
+export {ItemProps as WheelPickerItemProps};
 
 const styles = StyleSheet.create({
   separators: {

@@ -1,4 +1,6 @@
 declare const colorsPalette: {
+    grey1: string;
+    grey5: string;
     grey10: string;
     grey20: string;
     grey30: string;
@@ -7,6 +9,8 @@ declare const colorsPalette: {
     grey60: string;
     grey70: string;
     grey80: string;
+    blue1: string;
+    blue5: string;
     blue10: string;
     blue20: string;
     blue30: string;
@@ -23,6 +27,8 @@ declare const colorsPalette: {
     cyan60: string;
     cyan70: string;
     cyan80: string;
+    green1: string;
+    green5: string;
     green10: string;
     green20: string;
     green30: string;
@@ -31,6 +37,8 @@ declare const colorsPalette: {
     green60: string;
     green70: string;
     green80: string;
+    yellow1: string;
+    yellow5: string;
     yellow10: string;
     yellow20: string;
     yellow30: string;
@@ -39,6 +47,8 @@ declare const colorsPalette: {
     yellow60: string;
     yellow70: string;
     yellow80: string;
+    orange1: string;
+    orange5: string;
     orange10: string;
     orange20: string;
     orange30: string;
@@ -47,6 +57,8 @@ declare const colorsPalette: {
     orange60: string;
     orange70: string;
     orange80: string;
+    red1: string;
+    red5: string;
     red10: string;
     red20: string;
     red30: string;
@@ -55,6 +67,8 @@ declare const colorsPalette: {
     red60: string;
     red70: string;
     red80: string;
+    purple1: string;
+    purple5: string;
     purple10: string;
     purple20: string;
     purple30: string;

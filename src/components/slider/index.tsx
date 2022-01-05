@@ -13,7 +13,8 @@ import {
   LayoutChangeEvent,
   AccessibilityActionEvent,
   AccessibilityRole,
-  View as RNView
+  View as RNView,
+  ViewProps
 } from 'react-native';
 import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
@@ -32,98 +33,103 @@ export type SliderOnValueChange = (value: number) => void;
 
 export type SliderProps = {
   /**
-     * Initial value
-     */
+   * Initial value
+   */
   value?: number;
   /**
-     * Minimum value
-     */
+   * Minimum value
+   */
   minimumValue?: number;
   /**
-     * Maximum value
-     */
+   * Maximum value
+   */
   maximumValue?: number;
   /**
-     * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
-     */
+   * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
+   */
   step?: number;
   /**
-     * The color used for the track from minimum value to current value
-     */
+   * The color used for the track from minimum value to current value
+   */
   minimumTrackTintColor?: string;
   /**
-     * The track color
-     */
+   * The track color
+   */
   maximumTrackTintColor?: string;
   /**
-     * Custom render instead of rendering the track
-     */
+   * Custom render instead of rendering the track
+   */
   renderTrack?: () => ReactElement | ReactElement[];
   /**
-     * Thumb color
-     */
+   * Thumb color
+   */
   thumbTintColor?: string;
   /**
-     * Callback for onValueChange
-     */
+   * Callback for onValueChange
+   */
   onValueChange?: SliderOnValueChange;
   /**
-     * Callback that notifies about slider seeking is started
-     */
+   * Callback that notifies about slider seeking is started
+   */
   onSeekStart?: () => void;
   /**
-     * Callback that notifies about slider seeking is finished
-     */
+   * Callback that notifies about slider seeking is finished
+   */
   onSeekEnd?: () => void;
   /**
-     * The container style
-     */
+   * The container style
+   */
   containerStyle?: StyleProp<ViewStyle>;
   /**
-     * The track style
-     */
+   * The track style
+   */
   trackStyle?: StyleProp<ViewStyle>;
   /**
-     * The thumb style
-     */
+   * The thumb style
+   */
   thumbStyle?: ViewStyle;
   /**
-     * The active (during press) thumb style
-     */
+   * Defines how far a touch event can start away from the thumb.
+   */
+  thumbHitSlop?: ViewProps['hitSlop'];
+  /**
+   * The active (during press) thumb style
+   */
   activeThumbStyle?: ViewStyle;
   /**
-     * If true the Slider will not change it's style on press
-     */
+   * If true the Slider will not change it's style on press
+   */
   disableActiveStyling?: boolean;
   /**
-     * If true the Slider will be disabled and will appear in disabled color
-     */
+   * If true the Slider will be disabled and will appear in disabled color
+   */
   disabled?: boolean;
   /**
-     * If true the component will have accessibility features enabled
-     */
-   accessible?: boolean;
+   * If true the component will have accessibility features enabled
+   */
+  accessible?: boolean;
   /**
    * The slider's test identifier
    */
   testID?: string;
 } & typeof defaultProps;
 
-interface SliderState {
-  containerSize: Measurements,
-  trackSize: Measurements,
-  thumbSize: Measurements,
-  thumbActiveAnimation: Animated.Value,
-  measureCompleted: boolean,
+interface State {
+  containerSize: Measurements;
+  trackSize: Measurements;
+  thumbSize: Measurements;
+  thumbActiveAnimation: Animated.Value;
+  measureCompleted: boolean;
 }
 
 type Measurements = {
-  width: number, height: number
-}
+  width: number;
+  height: number;
+};
 
-type ThumbStyle = {style?: StyleProp<ViewStyle>, left?: StyleProp<number>};
+type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: StyleProp<number>};
 
-type MinTrackStyle = {style?: StyleProp<ViewStyle>, width?: StyleProp<number>};
+type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: StyleProp<number>};
 
 type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
 
@@ -131,23 +137,23 @@ const defaultProps = {
   value: 0,
   minimumValue: 0,
   maximumValue: 1,
-  step: 0
+  step: 0,
+  thumbHitSlop: {top: 10, bottom: 10, left: 24, right: 24}
 };
-
 
 /**
  * @description: A Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true
  */
-export default class Slider extends PureComponent<SliderProps, SliderState> {
+export default class Slider extends PureComponent<SliderProps, State> {
   static displayName = 'Slider';
 
   static defaultProps = defaultProps;
 
   private thumb: ElementRef<typeof RNView> | undefined = undefined;
   private _thumbStyles: ThumbStyle = {};
-  private minTrack: ElementRef<typeof RNView> | undefined = undefined; 
+  private minTrack: ElementRef<typeof RNView> | undefined = undefined;
   private _minTrackStyles: MinTrackStyle = {};
   private _x = 0;
   private _dx = 0;
@@ -156,7 +162,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     defaultScaleFactor: 1.5
   };
   private initialValue = this.getRoundedValue(this.props.value);
-  private lastValue = this.initialValue
+  private lastValue = this.initialValue;
   private initialThumbSize: Measurements = {width: THUMB_SIZE, height: THUMB_SIZE};
   private _panResponder: PanResponderInstance;
   private containerSize: Measurements | undefined;
@@ -204,12 +210,15 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
       accessible: true,
       accessibilityRole: 'adjustable' as AccessibilityRole,
       accessibilityStates: disabled ? ['disabled'] : [],
-      accessibilityActions: [{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}],
+      accessibilityActions: [
+        {name: 'increment', label: 'increment'},
+        {name: 'decrement', label: 'decrement'}
+      ],
       ...extractAccessibilityProps(this.props)
     };
   }
 
-  componentDidUpdate(prevProps: SliderProps, prevState: SliderState) {
+  componentDidUpdate(prevProps: SliderProps, prevState: State) {
     if (prevProps.value !== this.props.value) {
       this.initialValue = this.getRoundedValue(this.props.value);
       // set position for new value
@@ -232,7 +241,6 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
   componentWillUnmount() {
     Constants.removeDimensionsEventListener(this.dimensionsChangeListener || this.onOrientationChanged);
   }
-
 
   /* Gesture Recognizer */
 
@@ -329,7 +337,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
   scaleThumb = (start: boolean) => {
     const scaleFactor = start ? this.calculatedThumbActiveScale() : 1;
     this.thumbAnimationAction(scaleFactor);
-  }
+  };
 
   thumbAnimationAction = (toValue: number) => {
     const {thumbActiveAnimation} = this.state;
@@ -339,7 +347,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
       duration,
       useNativeDriver: true
     }).start();
-  }
+  };
 
   getRoundedValue(value: number) {
     const {step} = this.props;
@@ -394,12 +402,12 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     if (disabled || disableActiveStyling) {
       return 1;
     }
-    
+
     const {defaultScaleFactor} = this._thumbAnimationConstants;
-    if (!activeThumbStyle || !thumbStyle) { 
+    if (!activeThumbStyle || !thumbStyle) {
       return defaultScaleFactor;
     }
-    
+
     const scaleRatioFromSize = Number(activeThumbStyle.height) / Number(thumbStyle.height);
     return scaleRatioFromSize || defaultScaleFactor;
   };
@@ -413,7 +421,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     } else {
       this.updateStyles(this._x);
     }
-  }
+  };
 
   onOrientationChanged = () => {
     this.initialValue = this.lastValue;
@@ -472,7 +480,8 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
         containerSize: this.containerSize,
         trackSize: this.trackSize,
         thumbSize: this.thumbSize
-      }, () => {
+      },
+      () => {
         this.setState({measureCompleted: true});
       });
     }
@@ -501,20 +510,14 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     _.invoke(AccessibilityInfo, 'announceForAccessibility', `New value ${newValue}`);
   };
 
-  thumbHitSlop = {top: 10, bottom: 10, left: 24, right: 24};
-
   /* Renders */
 
   renderThumb = () => {
-    const {
-      thumbStyle,
-      disabled,
-      thumbTintColor
-    } = this.props;
+    const {thumbStyle, disabled, thumbTintColor, thumbHitSlop} = this.props;
 
     return (
       <Animated.View
-        hitSlop={this.thumbHitSlop}
+        hitSlop={thumbHitSlop}
         ref={this.setThumbRef}
         onLayout={this.onThumbLayout}
         {...this._panResponder.panHandlers}
@@ -522,9 +525,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
           styles.thumb,
           thumbStyle,
           {
-            backgroundColor: disabled
-              ? DEFAULT_COLOR
-              : thumbTintColor || ACTIVE_COLOR
+            backgroundColor: disabled ? DEFAULT_COLOR : thumbTintColor || ACTIVE_COLOR
           },
           {
             transform: [
@@ -536,7 +537,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
         ]}
       />
     );
-  }
+  };
 
   render() {
     const {
@@ -589,7 +590,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
             />
           </View>
         )}
-        
+
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
         {this.renderThumb()}
       </View>

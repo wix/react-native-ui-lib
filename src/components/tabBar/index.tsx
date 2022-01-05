@@ -3,6 +3,7 @@ import React, {Component, ElementRef, RefObject} from 'react';
 import {Platform, StyleSheet, ScrollView, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Colors} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
+import {LogService} from '../../services';
 import View from '../view';
 import ScrollBar, {ScrollBarProps} from '../scrollBar';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';
@@ -99,7 +100,7 @@ class TabBar extends Component<TabBarProps, State> {
     this.scrollBar = React.createRef();
     this.itemsRefs = [];
 
-    console.warn('TabBar component is deprecated. Please use TabController instead.');
+    LogService.componentDeprecationWarn({oldComponent: 'TabBar', newComponent: 'TabController'});
   }
 
   componentDidUpdate(prevProps: TabBarProps, prevState: State) {
