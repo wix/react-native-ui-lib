@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocuilib=self.webpackChunkdocuilib||[]).push([[6318],{3793:function(u){u.exports=JSON.parse('{"allTagsPath":"/react-native-ui-lib/blog/tags","slug":"/react-native-ui-lib/blog/tags/docusaurus","name":"docusaurus","count":4,"permalink":"/react-native-ui-lib/blog/tags/docusaurus"}')}}]);

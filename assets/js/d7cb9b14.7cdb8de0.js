@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocuilib=self.webpackChunkdocuilib||[]).push([[2256],{7585:function(a){a.exports=JSON.parse('{"allTagsPath":"/react-native-ui-lib/blog/tags","slug":"/react-native-ui-lib/blog/tags/facebook","name":"facebook","count":1,"permalink":"/react-native-ui-lib/blog/tags/facebook"}')}}]);
