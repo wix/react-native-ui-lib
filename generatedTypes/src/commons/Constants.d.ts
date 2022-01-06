@@ -27,7 +27,7 @@ declare const constants: {
         top: number;
     };
     readonly isIphoneX: boolean;
-    addDimensionsEventListener: (callback: any) => void;
+    addDimensionsEventListener: (callback: any) => import("react-native").EmitterSubscription;
     removeDimensionsEventListener: (callback: any) => void;
     readonly accessibility: {
         isScreenReaderEnabled: boolean;

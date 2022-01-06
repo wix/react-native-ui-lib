@@ -20,6 +20,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
     formatter?: ((value?: string | undefined) => string | undefined) | undefined;
+    children?: import("react").ReactNode;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
     testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
@@ -127,7 +128,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "email" | "password" | "username" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
+    autoComplete?: "name" | "email" | "password" | "username" | "birthdate-day" | "birthdate-full" | "birthdate-month" | "birthdate-year" | "cc-csc" | "cc-exp" | "cc-exp-day" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "gender" | "name-family" | "name-given" | "name-middle" | "name-middle-initial" | "name-prefix" | "name-suffix" | "password-new" | "postal-address" | "postal-address-country" | "postal-address-extended" | "postal-address-extended-postal-code" | "postal-address-locality" | "postal-address-region" | "postal-code" | "street-address" | "sms-otp" | "tel" | "tel-country-code" | "tel-national" | "tel-device" | "username-new" | "off" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -168,7 +169,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
-    children?: import("react").ReactNode;
 } | {
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
@@ -422,6 +422,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
     formatter?: ((value?: string | undefined) => string | undefined) | undefined;
+    children?: import("react").ReactNode;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
     testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
@@ -529,7 +530,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "email" | "password" | "username" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
+    autoComplete?: "name" | "email" | "password" | "username" | "birthdate-day" | "birthdate-full" | "birthdate-month" | "birthdate-year" | "cc-csc" | "cc-exp" | "cc-exp-day" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "gender" | "name-family" | "name-given" | "name-middle" | "name-middle-initial" | "name-prefix" | "name-suffix" | "password-new" | "postal-address" | "postal-address-country" | "postal-address-extended" | "postal-address-extended-postal-code" | "postal-address-locality" | "postal-address-region" | "postal-code" | "street-address" | "sms-otp" | "tel" | "tel-country-code" | "tel-national" | "tel-device" | "username-new" | "off" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -570,7 +571,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
-    children?: import("react").ReactNode;
 } | {
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
@@ -824,6 +824,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     color?: import("./types").ColorType | undefined;
     placeholderTextColor?: import("./types").ColorType | undefined;
     formatter?: ((value?: string | undefined) => string | undefined) | undefined;
+    children?: import("react").ReactNode;
     style: false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | {
         lineHeight: undefined;
         height: number | undefined;
@@ -1043,7 +1044,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionState?: import("react-native").DocumentSelectionState | undefined;
     spellCheck?: boolean | undefined;
     textContentType?: "none" | "name" | "password" | "username" | "URL" | "addressCity" | "addressCityAndState" | "addressState" | "countryName" | "creditCardNumber" | "emailAddress" | "familyName" | "fullStreetAddress" | "givenName" | "jobTitle" | "location" | "middleName" | "namePrefix" | "nameSuffix" | "nickname" | "organizationName" | "postalCode" | "streetAddressLine1" | "streetAddressLine2" | "sublocality" | "telephoneNumber" | "newPassword" | "oneTimeCode" | undefined;
-    autoCompleteType?: "name" | "email" | "password" | "username" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "postal-code" | "street-address" | "tel" | "off" | undefined;
+    autoComplete?: "name" | "email" | "password" | "username" | "birthdate-day" | "birthdate-full" | "birthdate-month" | "birthdate-year" | "cc-csc" | "cc-exp" | "cc-exp-day" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "gender" | "name-family" | "name-given" | "name-middle" | "name-middle-initial" | "name-prefix" | "name-suffix" | "password-new" | "postal-address" | "postal-address-country" | "postal-address-extended" | "postal-address-extended-postal-code" | "postal-address-locality" | "postal-address-region" | "postal-code" | "street-address" | "sms-otp" | "tel" | "tel-country-code" | "tel-national" | "tel-device" | "username-new" | "off" | undefined;
     importantForAutofill?: "auto" | "yes" | "no" | "noExcludeDescendants" | "yesExcludeDescendants" | undefined;
     disableFullscreenUI?: boolean | undefined;
     inlineImageLeft?: string | undefined;
@@ -1208,5 +1209,4 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
-    children?: import("react").ReactNode;
 };
