@@ -3503,7 +3503,7 @@ exports[`Button outline should return disabled color for outline if button is di
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#F0F2F5",
+      "borderColor": "#D2D6D8",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
