@@ -103,6 +103,7 @@ function PageCarousel({...props}) {
       scrollEventThrottle={16}
       contentOffset={initialOffset} // iOS only
       onLayout={scrollToInitial} // Android only
+      onMomentumScrollEnd={() => {}} // workaround for useAnimatedScrollHandler.onMomentumEnd not being called (https://github.com/software-mansion/react-native-reanimated/issues/2735)
     />
   );
 }
