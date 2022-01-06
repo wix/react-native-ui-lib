@@ -18,7 +18,7 @@ declare const _default: {
         ref?: any;
         children?: import("react").ReactChild | import("react").ReactChild[] | undefined;
         style?: import("react-native").ViewStyle | undefined;
-    }, "children" | keyof import("react-native").ViewProps | "useSafeArea" | "trackInteractive" | "scrollToFocusedInput" | "scrollBehavior" | "revealKeyboardInteractive" | "manageScrollView" | "requiresSameParentToManageScrollView" | "addBottomView" | "allowHitsOutsideBounds"> & import("react").RefAttributes<unknown>>;
+    }, keyof import("react-native").ViewProps | "useSafeArea" | "trackInteractive" | "scrollToFocusedInput" | "scrollBehavior" | "revealKeyboardInteractive" | "manageScrollView" | "requiresSameParentToManageScrollView" | "addBottomView" | "allowHitsOutsideBounds"> & import("react").RefAttributes<unknown>>;
     KeyboardAwareInsetsView: {
         (props: KeyboardTrackingViewProps): JSX.Element;
         displayName: string;
