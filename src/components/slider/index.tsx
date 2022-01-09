@@ -105,6 +105,10 @@ export type SliderProps = {
    */
   disabled?: boolean;
   /**
+   * If true the Slider will stay in LTR mode even if the app is on RTL mode
+   */
+  disableRTL?: boolean;
+  /**
    * If true the component will have accessibility features enabled
    */
   accessible?: boolean;
@@ -255,10 +259,11 @@ export default class Slider extends PureComponent<SliderProps, State> {
   };
 
   handlePanResponderMove = (_e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
-    if (this.props.disabled) {
+    const {disabled, disableRTL} = this.props;
+    if (disabled) {
       return;
     }
-    const dx = gestureState.dx * (Constants.isRTL ? -1 : 1);
+    const dx = gestureState.dx * (Constants.isRTL && !disableRTL ? -1 : 1);
     this.update(dx - this._dx);
     this._dx = dx;
   };
@@ -295,8 +300,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   updateStyles(x: number) {
     if (this.thumb) {
+      const {disableRTL} = this.props;
       const {trackSize} = this.state;
-      const position = x - this.initialThumbSize.width / 2;
+      const _x = Constants.isRTL && disableRTL ? trackSize.width - x : x;
+      const position = _x - this.initialThumbSize.width / 2;
       const deviation = 3;
 
       if (position + deviation < 0) {
@@ -413,10 +420,12 @@ export default class Slider extends PureComponent<SliderProps, State> {
   };
 
   updateTrackStepAndStyle = ({nativeEvent}: GestureResponderEvent) => {
-    this._x = nativeEvent.locationX;
+    const {disableRTL, step} = this.props;
+    const {trackSize} = this.state;
+    this._x = Constants.isRTL && !disableRTL ? trackSize.width - nativeEvent.locationX : nativeEvent.locationX;
     this.updateValue(this._x);
 
-    if (this.props.step > 0) {
+    if (step > 0) {
       this.bounceToStep();
     } else {
       this.updateStyles(this._x);
@@ -583,6 +592,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
                 styles.track,
                 trackStyle,
                 styles.minimumTrack,
+                Constants.isRTL && this.props.disableRTL && styles.disableRTL,
                 {
                   backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
                 }
@@ -610,6 +620,9 @@ const styles = StyleSheet.create({
   },
   minimumTrack: {
     position: 'absolute'
+  },
+  disableRTL: {
+    right: 0
   },
   thumb: {
     position: 'absolute',

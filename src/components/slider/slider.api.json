@@ -51,6 +51,11 @@
       "description": "If true the Slider will be disabled and will appear in disabled color"
     },
     {
+      "name": "disableRTL",
+      "type": "boolean",
+      "description": "If true the Slider will stay in LTR mode even if the app is on RTL mode"
+    },
+    {
       "name": "accessible",
       "type": "boolean",
       "description": "If true the component will have accessibility features enabled"

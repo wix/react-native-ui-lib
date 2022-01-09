@@ -112,6 +112,7 @@ declare const _default: React.ComponentClass<{
     activeThumbStyle?: ViewStyle | undefined;
     disableActiveStyling?: boolean | undefined;
     disabled?: boolean | undefined;
+    disableRTL?: boolean | undefined;
     accessible?: boolean | undefined;
     testID?: string | undefined;
 } & {
