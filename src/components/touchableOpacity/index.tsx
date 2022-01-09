@@ -1,12 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {
-  TouchableOpacity as RNTouchableOpacity,
-  TouchableOpacityProps as RNTouchableOpacityProps,
-  StyleProp,
-  ViewStyle,
-  Animated
-} from 'react-native';
+import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -15,6 +9,7 @@ import {
   ContainerModifiers
 } from '../../commons/new';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
+import {ViewProps} from '../view';
 
 
 export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>,
@@ -43,7 +38,7 @@ export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'st
      * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
      */
     customValue?: any;
-    style?: StyleProp<ViewStyle> | Animated.AnimatedProps<StyleProp<ViewStyle>>;
+    style?: ViewProps['style'];
     onPress?: (props?: TouchableOpacityProps | any) => void;
   }
 
