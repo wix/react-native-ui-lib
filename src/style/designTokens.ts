@@ -4,7 +4,7 @@ export const designTokens = {
   // BACKGROUND
   backgroundDefault: colorsPalette.white,
   backgroundNeutralHeavy: colorsPalette.grey20,
-  backgroundIdle: colorsPalette.grey40,
+  backgroundNeutralIdle: colorsPalette.grey40,
   backgroundNeutralMedium: colorsPalette.grey60,
   backgroundNeutral: colorsPalette.grey70,
   backgroundNeutralLight: colorsPalette.grey80,
@@ -30,8 +30,7 @@ export const designTokens = {
   textNeutralHeavy: colorsPalette.grey20,
   textNeutral: colorsPalette.grey30,
   textNeutralLight: colorsPalette.grey40,
-  textWhite: colorsPalette.white,
-  textWhiteDisabled: colorsPalette.white,
+  textDefaultLight: colorsPalette.white,
   textPrimary: colorsPalette.violet30,
   textGeneral: colorsPalette.blue30,
   textSuccess: colorsPalette.green10,
@@ -42,8 +41,7 @@ export const designTokens = {
   // ICON
   iconDefault: colorsPalette.grey10,
   iconNeutral: colorsPalette.grey20,
-  iconWhite: colorsPalette.white,
-  iconWhiteDisabled: colorsPalette.white,
+  iconDefaultLight: colorsPalette.white,
   iconPrimary: colorsPalette.violet30,
   iconPrimaryLight: colorsPalette.violet50,
   iconGeneral: colorsPalette.blue30,
@@ -56,16 +54,16 @@ export const designTokens = {
   iconDisabled: colorsPalette.grey50,
 
   // OUTLINE
-  outlineWhite: colorsPalette.white,
+  outlineLight: colorsPalette.white,
   outlineNeutral: colorsPalette.grey60,
+  outlineNeutralMedium: colorsPalette.grey50,
   outlineDisabled: colorsPalette.grey50,
+  outlineDisabledHeavy: colorsPalette.grey30,
   outlinePrimary: colorsPalette.violet30,
   outlineGeneral: colorsPalette.blue30,
   outlineWarning: colorsPalette.yellow30,
   outlineDanger: colorsPalette.red30,
 
   // DIVIDER
-  // dividerDisabled: TBD
-  dividerNeutral: colorsPalette.grey50,
-  divider: colorsPalette.grey60
+  dividerDefault: colorsPalette.grey60
 };

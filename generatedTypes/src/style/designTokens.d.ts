@@ -1,7 +1,7 @@
 export declare const designTokens: {
     backgroundDefault: string;
     backgroundNeutralHeavy: string;
-    backgroundIdle: string;
+    backgroundNeutralIdle: string;
     backgroundNeutralMedium: string;
     backgroundNeutral: string;
     backgroundNeutralLight: string;
@@ -25,8 +25,7 @@ export declare const designTokens: {
     textNeutralHeavy: string;
     textNeutral: string;
     textNeutralLight: string;
-    textWhite: string;
-    textWhiteDisabled: string;
+    textDefaultLight: string;
     textPrimary: string;
     textGeneral: string;
     textSuccess: string;
@@ -35,8 +34,7 @@ export declare const designTokens: {
     textDangerLight: string;
     iconDefault: string;
     iconNeutral: string;
-    iconWhite: string;
-    iconWhiteDisabled: string;
+    iconDefaultLight: string;
     iconPrimary: string;
     iconPrimaryLight: string;
     iconGeneral: string;
@@ -47,13 +45,14 @@ export declare const designTokens: {
     iconDanger: string;
     iconDangerLight: string;
     iconDisabled: string;
-    outlineWhite: string;
+    outlineLight: string;
     outlineNeutral: string;
+    outlineNeutralMedium: string;
     outlineDisabled: string;
+    outlineDisabledHeavy: string;
     outlinePrimary: string;
     outlineGeneral: string;
     outlineWarning: string;
     outlineDanger: string;
-    dividerNeutral: string;
-    divider: string;
+    dividerDefault: string;
 };
