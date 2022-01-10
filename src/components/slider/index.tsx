@@ -554,6 +554,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       trackStyle,
       renderTrack,
       disabled,
+      disableRTL,
       minimumTrackTintColor = ACTIVE_COLOR,
       maximumTrackTintColor = DEFAULT_COLOR,
       testID
@@ -592,7 +593,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
                 styles.track,
                 trackStyle,
                 styles.minimumTrack,
-                Constants.isRTL && this.props.disableRTL && styles.disableRTL,
+                Constants.isRTL && disableRTL && styles.trackDisableRTL,
                 {
                   backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
                 }
@@ -621,7 +622,7 @@ const styles = StyleSheet.create({
   minimumTrack: {
     position: 'absolute'
   },
-  disableRTL: {
+  trackDisableRTL: {
     right: 0
   },
   thumb: {
