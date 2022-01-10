@@ -103,7 +103,7 @@ class Button extends PureComponent<Props, ButtonState> {
     const {linkColor, outline, outlineColor, disabled, color: propsColor} = this.props;
     const isLink = this.isLink;
 
-    let color: string | undefined = Colors.textWhite;
+    let color: string | undefined = Colors.textDefaultLight;
     if (isLink) {
       color = linkColor || Colors.textPrimary;
     } else if (outline) {

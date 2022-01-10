@@ -150,7 +150,7 @@ declare const colorObject: Colors & {
 } & {
     backgroundDefault: string;
     backgroundNeutralHeavy: string;
-    backgroundIdle: string;
+    backgroundNeutralIdle: string;
     backgroundNeutralMedium: string;
     backgroundNeutral: string;
     backgroundNeutralLight: string;
@@ -171,14 +171,10 @@ declare const colorObject: Colors & {
     backgroundDark: string;
     textDisabled: string;
     textDefault: string;
-    /**
-     * Get app's current color scheme
-     */
     textNeutralHeavy: string;
     textNeutral: string;
     textNeutralLight: string;
-    textWhite: string;
-    textWhiteDisabled: string;
+    textDefaultLight: string;
     textPrimary: string;
     textGeneral: string;
     textSuccess: string;
@@ -187,8 +183,7 @@ declare const colorObject: Colors & {
     textDangerLight: string;
     iconDefault: string;
     iconNeutral: string;
-    iconWhite: string;
-    iconWhiteDisabled: string;
+    iconDefaultLight: string;
     iconPrimary: string;
     iconPrimaryLight: string;
     iconGeneral: string;
@@ -199,14 +194,15 @@ declare const colorObject: Colors & {
     iconDanger: string;
     iconDangerLight: string;
     iconDisabled: string;
-    outlineWhite: string;
+    outlineLight: string;
     outlineNeutral: string;
+    outlineNeutralMedium: string;
     outlineDisabled: string;
+    outlineDisabledHeavy: string;
     outlinePrimary: string;
     outlineGeneral: string;
     outlineWarning: string;
     outlineDanger: string;
-    dividerNeutral: string;
-    divider: string;
+    dividerDefault: string;
 };
 export default colorObject;
