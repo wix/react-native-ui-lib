@@ -75,6 +75,10 @@ export declare type SliderProps = {
      */
     disabled?: boolean;
     /**
+     * If true the Slider will stay in LTR mode even if the app is on RTL mode
+     */
+    disableRTL?: boolean;
+    /**
      * If true the component will have accessibility features enabled
      */
     accessible?: boolean;
