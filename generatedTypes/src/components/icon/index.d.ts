@@ -3,6 +3,14 @@ import { ImageProps } from 'react-native';
 import { BaseComponentInjectedProps, MarginModifiers } from '../../commons/new';
 export declare type IconProps = ImageProps & MarginModifiers & {
     /**
+     * if provided icon source will be driven from asset name
+     */
+    assetName?: string;
+    /**
+     * the asset group, default is "icons"
+     */
+    assetGroup?: string;
+    /**
      * the icon tint
      */
     tintColor?: string;
@@ -10,6 +18,10 @@ export declare type IconProps = ImageProps & MarginModifiers & {
      * the icon size
      */
     size?: number;
+    /**
+     * whether the icon should flip horizontally on RTL
+     */
+    supportRTL?: boolean;
 };
 /**
  * @description: Icon component
@@ -19,6 +31,14 @@ export declare type IconProps = ImageProps & MarginModifiers & {
 declare type Props = IconProps & BaseComponentInjectedProps;
 declare const _default: React.ComponentClass<ImageProps & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
     /**
+     * if provided icon source will be driven from asset name
+     */
+    assetName?: string | undefined;
+    /**
+     * the asset group, default is "icons"
+     */
+    assetGroup?: string | undefined;
+    /**
      * the icon tint
      */
     tintColor?: string | undefined;
@@ -26,18 +46,17 @@ declare const _default: React.ComponentClass<ImageProps & Partial<Record<"margin
      * the icon size
      */
     size?: number | undefined;
+    /**
+     * whether the icon should flip horizontally on RTL
+     */
+    supportRTL?: boolean | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
-}, any> & React.NamedExoticComponent<ImageProps & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
-    /**
-     * the icon tint
-     */
-    tintColor?: string | undefined;
-    /**
-     * the icon size
-     */
-    size?: number | undefined;
-} & BaseComponentInjectedProps> & {
-    readonly type: (props: Props) => JSX.Element;
+}, any> & {
+    (props: Props): JSX.Element;
+    displayName: string;
+    defaultProps: {
+        assetGroup: string;
+    };
 };
 export default _default;

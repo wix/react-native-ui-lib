@@ -11,7 +11,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
+  Icon,
   Button,
   TabController,
   Incubator
@@ -180,7 +180,7 @@ class MainScreen extends Component {
           filterText ? (
             <Button link iconSource={Assets.icons.demo.close} grey10 onPress={this.clearSearch}/>
           ) : (
-            <Image source={Assets.icons.demo.search}/>
+            <Icon source={Assets.icons.demo.search}/>
           )
         }
       />
@@ -210,7 +210,7 @@ class MainScreen extends Component {
           <Text style={[item.deprecate && styles.entryTextDeprecated]} grey10 text50>
             {item.title}
           </Text>
-          <Image source={chevronIcon} style={{tintColor: Colors.grey10}} supportRTL/>
+          <Icon source={chevronIcon} style={{tintColor: Colors.grey10}} supportRTL/>
         </TouchableOpacity>
       );
     } else {

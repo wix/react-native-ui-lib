@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Text, Image, Slider, GradientSlider, ColorSliderGroup, Constants} from 'react-native-ui-lib';
+import {Colors, View, Text, Icon, Slider, GradientSlider, ColorSliderGroup, Constants} from 'react-native-ui-lib';
 
 const INITIAL_VALUE = 0;
 const COLOR = Colors.blue30;
@@ -49,7 +49,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           </Text>
 
           <View row centerV style={Constants.isRTL && styles.ltr}>
-            <Image assetName={'megaphone'} style={styles.image}/>
+            <Icon assetName={'search'} style={styles.image}/>
             <Slider
               onValueChange={this.onSliderValueChange}
               value={INITIAL_VALUE}

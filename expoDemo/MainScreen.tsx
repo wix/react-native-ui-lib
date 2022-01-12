@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {SectionList, StyleSheet} from 'react-native';
-import {Colors, View, Text, TouchableOpacity, Spacings, Image, Assets, Incubator} from 'react-native-ui-lib';
+import {Colors, View, Text, TouchableOpacity, Spacings, Icon, Assets, Incubator} from 'react-native-ui-lib';
 import {menuStructure} from 'unicorn-demo-app';
 import _ from 'lodash';
 import fuzzysearch from 'fuzzysearch';
@@ -83,7 +83,7 @@ export default function MainScreen({navigation}) {
             preset={null}
             text70
             fieldStyle={styles.fieldStyle}
-            leadingAccessory={<Image source={Assets.icons.search} marginH-s2/>}
+            leadingAccessory={<Icon source={Assets.icons.search} marginH-s2/>}
           />
         }
         sections={sections}
