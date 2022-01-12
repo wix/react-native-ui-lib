@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Image, Colors, Assets, OverlayTypes} from 'react-native-ui-lib';
+import {View, Text, Icon, Image, Colors, Assets, OverlayTypes} from 'react-native-ui-lib';
 import {renderBooleanOption, renderRadioGroup, renderSliderOption} from '../ExampleScreenPresenter';
 
 const IMAGE_URL =
@@ -94,7 +94,7 @@ class ImageScreen extends Component<{}, State> {
         return (
           <View padding-20 flex bottom={overlayType === Image.overlayTypes.BOTTOM}>
             <View row centerV>
-              <Image
+              <Icon
                 style={{margin: 5, marginRight: 10}}
                 source={Assets.icons.demo.camera}
                 tintColor={overlayType !== 'none' ? Colors.white : undefined}
@@ -106,7 +106,7 @@ class ImageScreen extends Component<{}, State> {
           </View>
         );
       } else {
-        return <Image style={{margin: 5}} source={Assets.icons.demo.camera}/>;
+        return <Icon style={{margin: 5}} source={Assets.icons.demo.camera}/>;
       }
     }
   }

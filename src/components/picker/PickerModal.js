@@ -9,7 +9,7 @@ import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
 import Modal from '../modal';
 import View from '../view';
-import Image from '../image';
+import Icon from '../icon';
 
 class PickerModal extends BaseComponent {
   static displayName = 'IGNORE';
@@ -58,7 +58,7 @@ class PickerModal extends BaseComponent {
 
       return (
         <View style={this.styles.searchInputContainer}>
-          <Image style={this.styles.searchIcon} source={searchStyle.icon || Assets.icons.search}/>
+          <Icon style={this.styles.searchIcon} source={searchStyle.icon || Assets.icons.search}/>
           <TextInput
             testID={testID}
             ref={r => (this.search = r)}

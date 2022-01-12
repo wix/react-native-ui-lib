@@ -6,10 +6,10 @@ import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings} from 'style';
 import Avatar, {AvatarProps} from '../avatar';
 import Badge, {BadgeProps} from '../badge';
-import Image, {ImageProps} from '../image';
 import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
+import Icon, {IconProps} from '../icon';
 
 
 export type ChipProps = ViewProps & TouchableOpacityProps & {
@@ -76,7 +76,7 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
   /**
    * Additional icon props
    */
-  iconProps?: Omit<ImageProps, 'source'>;
+  iconProps?: Omit<IconProps, 'source'>;
   /**
    * Icon style
    */
@@ -169,8 +169,7 @@ const Chip = ({
     const isLeftIcon = iconPosition === 'left';
 
     return (
-      <Image
-      // @ts-ignore
+      <Icon
         source={isLeftIcon ? iconSource : rightIconSource}
         testID={`${testID}.icon`}
         {...iconProps}
@@ -201,8 +200,7 @@ const Chip = ({
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         testID={`${testID}.dismiss`}
       >
-        <Image
-        // @ts-ignore
+        <Icon
           source={dismissIcon}
           tintColor={dismissColor}
           style={[dismissIconStyle]}

@@ -6,7 +6,7 @@ import {PureBaseComponent} from '../../commons';
 import {Colors, Typography, BorderRadiuses} from '../../style';
 import Assets from '../../assets';
 import View from '../view';
-import Image from '../image';
+import Icon from '../icon';
 import Button from '../button';
 import Text from '../text';
 
@@ -271,7 +271,7 @@ export default class Toast extends PureBaseComponent {
     const tintColor = color || COLOR;
 
     if (icon) {
-      return <Image source={icon} resizeMode={'contain'} style={this.styles.icon} tintColor={tintColor}/>;
+      return <Icon source={icon} resizeMode={'contain'} style={this.styles.icon} tintColor={tintColor}/>;
     }
   }
 
