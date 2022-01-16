@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {LayoutChangeEvent, StyleProp, ViewStyle, FlatList} from 'react-native';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
+import { asBaseComponent } from '../../commons/new';
 import Item from './Item';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -93,4 +94,5 @@ const SortableList = ({items, itemHeight, onOrderChange, renderItem, draggableAr
   );
 };
 
-export default SortableList;
+// export default SortableList;
+export default asBaseComponent<SortableListProps<any>, typeof SortableList>(SortableList);
