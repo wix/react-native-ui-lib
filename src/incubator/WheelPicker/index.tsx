@@ -134,12 +134,14 @@ const WheelPicker = ({
     } else {
       onChange?.(value, index);
     }
-  }, [initialValue, onChange]);
+  },
+  [initialValue, onChange]);
 
   const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     _onChange(value, index);
-  }, [_onChange, getRowItemAtOffset]);
+  },
+  [_onChange, getRowItemAtOffset]);
 
   const onMomentumScrollEndAndroid = (index: number) => {
     // handle Android bug: ScrollView does not call 'onMomentumScrollEnd' when scrolled programmatically (https://github.com/facebook/react-native/issues/26661)
@@ -172,7 +174,8 @@ const WheelPicker = ({
 
   const selectItem = useCallback(index => {
     scrollToIndex(index, true);
-  }, [itemHeight]);
+  },
+  [itemHeight]);
 
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -192,11 +195,13 @@ const WheelPicker = ({
         testID={`${testID}.item_${index}`}
       />
     );
-  }, [itemHeight]);
+  },
+  [itemHeight]);
 
   const getItemLayout = useCallback((_data, index: number) => {
     return {length: itemHeight, offset: itemHeight * index, index};
-  }, [itemHeight]);
+  },
+  [itemHeight]);
 
   const updateFlatListWidth = useCallback((width: number) => {
     setFlatListWidth(width);
@@ -238,7 +243,8 @@ const WheelPicker = ({
 
   const fader = useMemo(() => (position: FaderPosition) => {
     return <Fader visible position={position} size={60}/>;
-  }, []);
+  },
+  []);
 
   const separators = useMemo(() => {
     return (

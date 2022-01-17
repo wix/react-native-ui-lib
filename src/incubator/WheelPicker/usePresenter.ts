@@ -48,7 +48,7 @@ const usePresenter = ({
     if (_.isString(value) || _.isNumber(value)) {
       return _.findIndex(items, {value});
     }
-    return _.findIndex(items, {value: (value)?.value});
+    return _.findIndex(items, {value: value?.value});
   };
 
   const getRowItemAtOffset = (offset: number): RowItem => {

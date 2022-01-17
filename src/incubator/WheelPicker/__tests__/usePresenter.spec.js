@@ -2,7 +2,6 @@ import usePresenter from '../usePresenter';
 import {renderHook} from '@testing-library/react-hooks';
 
 describe('WheelPicker presenter tests', () => {
-  
   const makeSUT = ({items = makeItems(9), children, initialValue, itemHeight = 10, preferredNumVisibleRows = 20}) => {
     return renderHook(() =>
       usePresenter({
@@ -17,7 +16,7 @@ describe('WheelPicker presenter tests', () => {
   const makeItems = (count, stringValue) => {
     const items = [];
     while (count >= items.length) {
-      const someData = stringValue ? (stringValue + items.length) : items.length;
+      const someData = stringValue ? stringValue + items.length : items.length;
       const item = {value: someData, label: someData};
       items.push(item);
     }
@@ -27,10 +26,10 @@ describe('WheelPicker presenter tests', () => {
   it('expect height of the content-view to be itemHeight * preferredNumVisibleRows', () => {
     let sut = makeSUT({items: makeItems(44), itemHeight: 10, preferredNumVisibleRows: 5});
     expect(sut.result.current.height).toEqual(50);
-    
+
     sut = makeSUT({items: makeItems(10), itemHeight: 20, preferredNumVisibleRows: 3});
     expect(sut.result.current.height).toEqual(60);
-    
+
     sut = makeSUT({items: makeItems(10), itemHeight: 0, preferredNumVisibleRows: 0});
     expect(sut.result.current.height).toEqual(0);
   });
@@ -56,13 +55,13 @@ describe('WheelPicker presenter tests', () => {
 
     sut = makeSUT({items: makeItems(18), initialValue: 18});
     expect(sut.result.current.index).toEqual(18);
-    
+
     sut = makeSUT({items: makeItems(18), initialValue: 99});
     expect(sut.result.current.index).toEqual(-1);
 
     sut = makeSUT({items: makeItems(0), initialValue: 99});
     expect(sut.result.current.index).toEqual(-1);
-    
+
     sut = makeSUT({items: makeItems(0), initialValue: 0});
     expect(sut.result.current.index).toEqual(0);
   });
@@ -74,7 +73,7 @@ describe('WheelPicker presenter tests', () => {
 
   it('Expect getRowItemAtOffset to return the right row for offset', () => {
     let sut = makeSUT({initialValue: 2, itemHeight: 100});
-    
+
     let offset = 300;
     expect(sut.result.current.getRowItemAtOffset(offset).value).toEqual(3);
 
