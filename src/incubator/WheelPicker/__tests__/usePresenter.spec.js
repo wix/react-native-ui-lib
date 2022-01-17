@@ -3,12 +3,12 @@ import {renderHook} from '@testing-library/react-hooks';
 
 describe('WheelPicker presenter tests', () => {
   
-  const makeSUT = ({selectedValue, items = makeItems(9), children, itemHeight = 10, preferredNumVisibleRows = 20}) => {
+  const makeSUT = ({items = makeItems(9), children, initialValue, itemHeight = 10, preferredNumVisibleRows = 20}) => {
     return renderHook(() =>
       usePresenter({
-        selectedValue,
         items,
         children,
+        initialValue,
         itemHeight,
         preferredNumVisibleRows
       }));
@@ -36,59 +36,49 @@ describe('WheelPicker presenter tests', () => {
   });
 
   it('Expect to find items by their string types', () => {
-    let sut = makeSUT({items: makeItems(15, 'a'), selectedValue: 'a2'});
+    let sut = makeSUT({items: makeItems(15, 'a'), initialValue: 'a2'});
     expect(sut.result.current.index).toEqual(2);
 
-    sut = makeSUT({items: makeItems(100, 'bbb'), selectedValue: 'bbb71'});
+    sut = makeSUT({items: makeItems(100, 'bbb'), initialValue: 'bbb71'});
     expect(sut.result.current.index).toEqual(71);
 
     // no data found
-    sut = makeSUT({items: makeItems(10, 'b'), selectedValue: '$$$'});
+    sut = makeSUT({items: makeItems(10, 'b'), initialValue: '$$$'});
     expect(sut.result.current.index).toEqual(-1);
   });
 
   it('Expect to find items by their number types', () => {
-    let sut = makeSUT({items: makeItems(11), selectedValue: 0});
+    let sut = makeSUT({items: makeItems(11), initialValue: 0});
     expect(sut.result.current.index).toEqual(0);
 
-    sut = makeSUT({items: makeItems(8), selectedValue: 4});
+    sut = makeSUT({items: makeItems(8), initialValue: 4});
     expect(sut.result.current.index).toEqual(4);
 
-    sut = makeSUT({items: makeItems(18), selectedValue: 18});
+    sut = makeSUT({items: makeItems(18), initialValue: 18});
     expect(sut.result.current.index).toEqual(18);
     
-    sut = makeSUT({items: makeItems(18), selectedValue: 99});
+    sut = makeSUT({items: makeItems(18), initialValue: 99});
     expect(sut.result.current.index).toEqual(-1);
 
-    sut = makeSUT({items: makeItems(0), selectedValue: 99});
+    sut = makeSUT({items: makeItems(0), initialValue: 99});
     expect(sut.result.current.index).toEqual(-1);
     
-    sut = makeSUT({items: makeItems(0), selectedValue: 0});
+    sut = makeSUT({items: makeItems(0), initialValue: 0});
     expect(sut.result.current.index).toEqual(0);
   });
 
   it('Expect to find items by their object of {value, label} types', () => {
-    const {result} = makeSUT({items: makeItems(15, 'b'), selectedValue: {value: 'b6', label: 'abc'}});
+    const {result} = makeSUT({items: makeItems(15, 'b'), initialValue: {value: 'b6', label: 'abc'}});
     expect(result.current.index).toEqual(6);
   });
 
-  it('Expect component to be controlled and not change by offset', () => {
-    const {result} = makeSUT({selectedValue: 2, itemHeight: 100});
-    
-    let offset = 300;
-    expect(result.current.shouldControlComponent(offset)).toEqual(true);
-    
-    offset = 200;
-    expect(result.current.shouldControlComponent(offset)).toEqual(false);
-  });
-
   it('Expect getRowItemAtOffset to return the right row for offset', () => {
-    let sut = makeSUT({selectedValue: 2, itemHeight: 100});
+    let sut = makeSUT({initialValue: 2, itemHeight: 100});
     
     let offset = 300;
     expect(sut.result.current.getRowItemAtOffset(offset).value).toEqual(3);
 
-    sut = makeSUT({selectedValue: 0, itemHeight: 100});
+    sut = makeSUT({initialValue: 0, itemHeight: 100});
     offset = 0;
     expect(sut.result.current.getRowItemAtOffset(offset).value).toEqual(0);
   });

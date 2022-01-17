@@ -21,13 +21,9 @@ export enum WheelPickerAlign {
 
 export interface WheelPickerProps {
   /**
-   * Initial value (doesn't work with selectedValue)
+   * Initial value
    */
   initialValue?: ItemProps | number | string;
-  /**
-   * The current selected value
-   */
-  selectedValue?: ItemProps | number | string;
   /**
    * Data source for WheelPicker
    */
@@ -99,8 +95,7 @@ const WheelPicker = ({
   align = WheelPickerAlign.CENTER,
   style,
   children,
-  initialValue,
-  selectedValue,
+  initialValue = 0,
   testID
 }: WheelPickerProps) => {
   const scrollView = useRef<Animated.ScrollView>();
@@ -112,12 +107,10 @@ const WheelPicker = ({
   const {
     height,
     items,
-    shouldControlComponent,
     index: currentIndex,
     getRowItemAtOffset
   } = usePresenter({
     initialValue,
-    selectedValue,
     items: propItems,
     children,
     itemHeight,
@@ -126,16 +119,8 @@ const WheelPicker = ({
 
   const prevInitialValue = useRef(initialValue);
   const prevIndex = useRef(currentIndex);
-  const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
   const [flatListWidth, setFlatListWidth] = useState(0);
   const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
-
-  useEffect(() => {
-    // This effect enforce the index to be controlled by selectedValue passed by the user
-    if (shouldControlComponent(scrollOffset)) {
-      scrollToIndex(currentIndex, true);
-    }
-  });
 
   useEffect(() => {
     // This effect making sure to reset index if initialValue has changed
@@ -152,7 +137,6 @@ const WheelPicker = ({
   }, [initialValue, onChange]);
 
   const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    setScrollOffset(event.nativeEvent.contentOffset.y);
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     _onChange(value, index);
   }, [_onChange, getRowItemAtOffset]);
