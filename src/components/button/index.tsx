@@ -287,9 +287,10 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return (<Image
-          source={iconSource} supportRTL={supportRTL} style={iconStyle} testID={`${testID}.icon`}
-        />);
+        return (
+          <Image
+            source={iconSource} supportRTL={supportRTL} style={iconStyle} testID={`${testID}.icon`}
+          />);
       }
     }
     return null;

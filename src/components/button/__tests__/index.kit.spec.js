@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {render, waitFor, within} from '@testing-library/react-native';
+import {render, waitFor} from '@testing-library/react-native';
 import Button from '../index';
 import View from '../../view';
 import ButtonTestKit from '../Button.driver';
