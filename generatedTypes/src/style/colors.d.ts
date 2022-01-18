@@ -52,6 +52,8 @@ export declare class Colors {
     areEqual(colorA: string, colorB: string): boolean;
 }
 declare const colorObject: Colors & {
+    grey1: string;
+    grey5: string;
     grey10: string;
     grey20: string;
     grey30: string;
@@ -60,6 +62,8 @@ declare const colorObject: Colors & {
     grey60: string;
     grey70: string;
     grey80: string;
+    blue1: string;
+    blue5: string;
     blue10: string;
     blue20: string;
     blue30: string;
@@ -76,6 +80,8 @@ declare const colorObject: Colors & {
     cyan60: string;
     cyan70: string;
     cyan80: string;
+    green1: string;
+    green5: string;
     green10: string;
     green20: string;
     green30: string;
@@ -84,6 +90,8 @@ declare const colorObject: Colors & {
     green60: string;
     green70: string;
     green80: string;
+    yellow1: string;
+    yellow5: string;
     yellow10: string;
     yellow20: string;
     yellow30: string;
@@ -92,14 +100,22 @@ declare const colorObject: Colors & {
     yellow60: string;
     yellow70: string;
     yellow80: string;
+    orange1: string;
+    orange5: string;
     orange10: string;
     orange20: string;
     orange30: string;
-    orange40: string;
+    orange40: string; /**
+     * Set color scheme for app
+     * arguments:
+     * scheme - color scheme e.g light/dark/default
+     */
     orange50: string;
     orange60: string;
     orange70: string;
     orange80: string;
+    red1: string;
+    red5: string;
     red10: string;
     red20: string;
     red30: string;
@@ -108,6 +124,8 @@ declare const colorObject: Colors & {
     red60: string;
     red70: string;
     red80: string;
+    purple1: string;
+    purple5: string;
     purple10: string;
     purple20: string;
     purple30: string;
@@ -129,5 +147,62 @@ declare const colorObject: Colors & {
     transparent: string;
 } & {
     primary: string;
+} & {
+    backgroundDefault: string;
+    backgroundNeutralHeavy: string;
+    backgroundNeutralIdle: string;
+    backgroundNeutralMedium: string;
+    backgroundNeutral: string;
+    backgroundNeutralLight: string;
+    backgroundPrimaryHeavy: string;
+    backgroundPrimaryLight: string;
+    backgroundPrimary: string;
+    backgroundGeneralHeavy: string;
+    backgroundGeneralLight: string;
+    backgroundGeneral: string;
+    backgroundSuccessHeavy: string;
+    backgroundSuccess: string;
+    backgroundWarningHeavy: string;
+    backgroundWarning: string;
+    backgroundMajor: string;
+    backgroundDangerHeavy: string;
+    backgroundDanger: string;
+    backgroundDisabled: string;
+    backgroundDark: string;
+    textDisabled: string;
+    textDefault: string;
+    textNeutralHeavy: string;
+    textNeutral: string;
+    textNeutralLight: string;
+    textDefaultLight: string;
+    textPrimary: string;
+    textGeneral: string;
+    textSuccess: string;
+    textMajor: string;
+    textDanger: string;
+    textDangerLight: string;
+    iconDefault: string;
+    iconNeutral: string;
+    iconDefaultLight: string;
+    iconPrimary: string;
+    iconPrimaryLight: string;
+    iconGeneral: string;
+    iconGeneralLight: string;
+    iconSuccess: string;
+    iconSuccessLight: string;
+    iconMajor: string;
+    iconDanger: string;
+    iconDangerLight: string;
+    iconDisabled: string;
+    outlineLight: string;
+    outlineNeutral: string;
+    outlineNeutralMedium: string;
+    outlineDisabled: string;
+    outlineDisabledHeavy: string;
+    outlinePrimary: string;
+    outlineGeneral: string;
+    outlineWarning: string;
+    outlineDanger: string;
+    dividerDefault: string;
 };
 export default colorObject;

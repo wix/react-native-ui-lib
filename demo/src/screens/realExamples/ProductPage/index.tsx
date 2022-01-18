@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {Assets, View, Text, Colors, Image, Button, Carousel, Picker} from 'react-native-ui-lib';
+import {Assets, View, Text, Icon, Colors, Image, Button, Carousel, Picker} from 'react-native-ui-lib';
 import _ from 'lodash';
 
 const colorOptions: {[key: string]: {name: string; color: string}} = {
@@ -40,7 +40,7 @@ class Product extends Component {
     return (
       <ScrollView>
         <View>
-          <Image
+          <Icon
             style={{position: 'absolute', top: 10, right: 10, zIndex: 100, tintColor: Colors.white}}
             source={Assets.icons.demo.share}
           />

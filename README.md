@@ -24,10 +24,10 @@ Download our Expo demo app <br>
 
 ## Installing
 
-See setup instructions [here](https://wix.github.io/react-native-ui-lib/getting-started/setup).
+See setup instructions [here](https://wix.github.io/react-native-ui-lib/docs/getting-started/setup).
 
 #### New Major Version 6.0
-See [breaking changes](https://wix.github.io/react-native-ui-lib/getting-started/v6)
+See [breaking changes](https://wix.github.io/react-native-ui-lib/docs/getting-started/v6)
 
 #### For React Native >= 0.60.0
 please use `react-native-ui-lib`
@@ -95,7 +95,7 @@ ThemeManager.setComponentTheme('Button', (props, context) => {
 
 ### Step 3
 Use it all together. 
-Your configurations will be applied on uilib components so you can use them easily with [modifiers](https://wix.github.io/react-native-ui-lib/foundation/modifiers). 
+Your configurations will be applied on uilib components so you can use them easily with [modifiers](https://wix.github.io/react-native-ui-lib/docs/foundation/modifiers). 
 
 ```jsx
 // MyScreen.js

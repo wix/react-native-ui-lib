@@ -305,7 +305,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
               selectionColor={textColor}
               underlineColorAndroid="transparent"
               autoCorrect={false}
-              autoCompleteType={'off'}
+              autoComplete={'off'}
               autoCapitalize={'characters'}
               // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
               returnKeyType={'done'}

@@ -108,9 +108,11 @@ declare const _default: React.ComponentClass<{
     containerStyle?: StyleProp<ViewStyle>;
     trackStyle?: StyleProp<ViewStyle>;
     thumbStyle?: ViewStyle | undefined;
+    thumbHitSlop?: import("react-native").Insets | undefined;
     activeThumbStyle?: ViewStyle | undefined;
     disableActiveStyling?: boolean | undefined;
     disabled?: boolean | undefined;
+    disableRTL?: boolean | undefined;
     accessible?: boolean | undefined;
     testID?: string | undefined;
 } & {
@@ -118,6 +120,12 @@ declare const _default: React.ComponentClass<{
     minimumValue: number;
     maximumValue: number;
     step: number;
+    thumbHitSlop: {
+        top: number;
+        bottom: number;
+        left: number;
+        right: number;
+    };
 } & {
     /**
        * The gradient color

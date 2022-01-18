@@ -47,6 +47,10 @@ export interface GridViewProps {
    * Ignored when passing 'maxItemWidth'
    */
   keepItemSize?: boolean;
+  /**
+   * Pass to render a custom item
+   */
+  renderCustomItem?: (item: GridListItemProps) => React.ReactElement;
 }
 
 interface GridViewState {
@@ -177,30 +181,39 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
 
   renderItem = (item: GridListItemProps, index: number) => {
     const {itemSize} = this.state;
-    const {items, itemSpacing} = this.props;
-
+    const {items, itemSpacing, renderCustomItem} = this.props;
     const {numColumns = DEFAULT_NUM_COLUMNS} = this.state;
+
     const itemsCount = _.size(items);
-    const rowCount = itemsCount / numColumns;
+    const rowCount = Math.ceil(itemsCount / numColumns);
     const isLastItemInRow = (index + 1) % numColumns === 0;
     const isLastRow = index + 1 > (rowCount - 1) * numColumns;
     const isLastItem = index === itemsCount - 1;
     const size =
-      typeof item.itemSize === 'object' ? {width: itemSize, height: item.itemSize?.height || itemSize} : itemSize;
-    return (
-      <GridListItem
-        key={index}
-        {...item}
-        itemSize={size}
-        containerStyle={[
-          !isLastItemInRow && {marginRight: itemSpacing},
-          !isLastRow && {marginBottom: itemSpacing},
-          item.containerStyle
-        ]}
-      >
-        {isLastItem && this.renderLastItemOverlay()}
-      </GridListItem>
-    );
+      typeof item.itemSize === 'object'
+        ? {
+          width: itemSize,
+          height: item.itemSize?.height || itemSize
+        }
+        : itemSize;
+
+    const itemProps = {
+      key: index,
+      ...item,
+      itemSize: size,
+      containerStyle: [
+        !isLastItemInRow && {
+          marginRight: itemSpacing
+        },
+        !isLastRow && {
+          marginBottom: itemSpacing
+        },
+        item.containerStyle
+      ],
+      children: isLastItem ? this.renderLastItemOverlay() : undefined
+    };
+
+    return renderCustomItem ? renderCustomItem(itemProps) : <GridListItem {...itemProps}/>;
   };
 
   render() {

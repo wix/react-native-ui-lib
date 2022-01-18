@@ -2,7 +2,7 @@ import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 import { ItemProps } from './Item';
 import { TextProps } from '../../components/text';
-declare enum WheelPickerAlign {
+export declare enum WheelPickerAlign {
     CENTER = "center",
     RIGHT = "right",
     LEFT = "left"
@@ -80,3 +80,4 @@ declare const _default: React.ComponentClass<WheelPickerProps & {
     displayName: string;
 };
 export default _default;
+export { ItemProps as WheelPickerItemProps };

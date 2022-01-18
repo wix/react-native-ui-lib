@@ -228,6 +228,11 @@ export default class TextFieldScreen extends Component {
             placeholder="Enter text..."
             multiline
             showCharCounter
+            bottomAccessory={
+              <Text text100>
+                {Assets.emojis.grapes} {Assets.emojis.melon} {Assets.emojis.banana}
+              </Text>
+            }
             charCounterStyle={{color: Colors.blue30}}
             maxLength={20}
             fieldStyle={styles.withFrame}

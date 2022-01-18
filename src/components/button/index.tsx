@@ -12,7 +12,7 @@ import Image from '../image';
 import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
-import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE, DISABLED_COLOR} from './ButtonConstants';
+import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
 const {extractColorValue, extractTypographyValue} = modifiers;
 
@@ -83,10 +83,10 @@ class Button extends PureComponent<Props, ButtonState> {
 
     if (!outline && !this.isLink) {
       if (disabled) {
-        return disabledBackgroundColor || DISABLED_COLOR;
+        return disabledBackgroundColor || Colors.backgroundDisabled;
       }
 
-      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.primary;
+      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.backgroundPrimaryHeavy;
     }
     return 'transparent';
   }
@@ -103,17 +103,17 @@ class Button extends PureComponent<Props, ButtonState> {
     const {linkColor, outline, outlineColor, disabled, color: propsColor} = this.props;
     const isLink = this.isLink;
 
-    let color: string | undefined = Colors.white;
+    let color: string | undefined = Colors.textDefaultLight;
     if (isLink) {
-      color = linkColor || Colors.primary;
+      color = linkColor || Colors.textPrimary;
     } else if (outline) {
-      color = outlineColor || Colors.primary;
+      color = outlineColor || Colors.textPrimary;
     } else if (this.isIconButton) {
       color = undefined; // Colors.grey10;
     }
 
     if (disabled && (isLink || outline)) {
-      return DISABLED_COLOR;
+      return Colors.textDisabled;
     }
 
     color = propsColor || extractColorValue(this.props) || color;
@@ -206,11 +206,11 @@ class Button extends PureComponent<Props, ButtonState> {
     if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
-        borderColor: outlineColor || Colors.primary
+        borderColor: outlineColor || Colors.outlinePrimary
       };
 
       if (disabled) {
-        outlineStyle.borderColor = Colors.grey70;
+        outlineStyle.borderColor = Colors.outlineDisabled;
       }
     }
     return outlineStyle;
@@ -233,7 +233,7 @@ class Button extends PureComponent<Props, ButtonState> {
     const {enableShadow} = this.props;
 
     if (enableShadow) {
-      return [this.styles.shadowStyle, backgroundColor && {shadowColor: backgroundColor}];
+      return [this.styles.shadowStyle, {shadowColor: backgroundColor}];
     }
   }
 
@@ -254,7 +254,7 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     if (disabled && !this.isFilled) {
-      iconStyle.tintColor = Colors.grey60;
+      iconStyle.tintColor = Colors.iconDisabled;
     }
 
     return [iconStyle, propsIconStyle];
@@ -334,7 +334,7 @@ class Button extends PureComponent<Props, ButtonState> {
           this.isLink && this.styles.innerContainerLink,
           shadowStyle,
           margins,
-          backgroundColor && {backgroundColor},
+          {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
           style
@@ -363,9 +363,6 @@ function createStyles() {
       justifyContent: 'center',
       alignItems: 'center'
     },
-    containerDisabled: {
-      backgroundColor: Colors.grey60
-    },
     innerContainerLink: {
       minWidth: undefined,
       paddingHorizontal: undefined,
@@ -374,7 +371,6 @@ function createStyles() {
       backgroundColor: undefined
     },
     shadowStyle: {
-      shadowColor: Colors.blue10,
       shadowOffset: {height: 5, width: 0},
       shadowOpacity: 0.35,
       shadowRadius: 9.5,

@@ -371,6 +371,7 @@ class Avatar extends PureComponent<AvatarProps> {
         {...extractAccessibilityProps(this.props)}
       >
         <View
+          testID={`${testID}.container`}
           style={[
             this.getInitialsContainer(),
             {backgroundColor: this.backgroundColor},

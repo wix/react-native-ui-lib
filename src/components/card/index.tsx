@@ -6,7 +6,7 @@ import {Colors, BorderRadiuses} from '../../style';
 import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
-import Image from '../image';
+import Icon from '../icon';
 import CardImage from './CardImage';
 import CardSection, {CardSectionProps} from './CardSection';
 import {BlurViewPackage} from '../../optionalDependencies';
@@ -230,7 +230,7 @@ class Card extends PureComponent<PropTypes, State> {
       >
         {!selectionOptions.hideIndicator && (
           <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
-            <Image
+            <Icon
               style={this.styles.selectedIcon}
               source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)}
             />

@@ -17,7 +17,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     trailingSlash: false,
     customFields: {
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android',
-      stars: '3.9'
+      stars: '4'
     },
     plugins: ['docusaurus-plugin-sass'],
     presets: [
@@ -50,6 +50,20 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     themeConfig:
       /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
       ({
+        algolia: {
+          // If Algolia did not provide you any appId, use 'BH4D9OD16A'
+          appId: 'BWQFOHCCF3',
+          // Public API key: it is safe to commit it
+          apiKey: '1a60a72123558930af25a58c42d0fae3',
+          indexName: 'react-native-ui-lib',
+          // Optional: see doc section below
+          contextualSearch: true
+          // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+          // externalUrlRegex: 'external\\.com|domain\\.com',
+          // Optional: Algolia search parameters
+          // searchParameters: {}
+          //... other Algolia params
+        },
         navbar: {
           title: 'RNUILib',
           hideOnScroll: true,
