@@ -18,13 +18,19 @@ const monthItems = _.map([
 ],
 item => ({label: item, value: item}));
 
-const yearItems = _.times(2030, i => i)
+const yearItems = _.times(2050, i => i)
   .reverse()
   .map(item => ({label: `${item}`, value: item}));
 const dayItems = _.times(31, i => i + 1).map(day => ({label: `${day}`, value: day}));
 
 export default () => {
   const [showDialog, setShowDialog] = useState(false);
+  const [yearsValue, setYearsValue] = useState(2022);
+
+  const updateYearsInitialValue = useCallback((increaseYears: boolean) => {
+    increaseYears ? setYearsValue(Math.min(yearsValue + 5, 2049)) : setYearsValue(Math.max(yearsValue - 5, 0));
+  },
+  [yearsValue]);
 
   const onPickDaysPress = useCallback(() => {
     setShowDialog(true);
@@ -49,11 +55,16 @@ export default () => {
         />
 
         <Text h3>Years</Text>
-        <Text bodySmall grey30>
-          (Uncontrolled, initialValue passed)
-        </Text>
         <View width={'100%'} marginT-s3>
-          <Incubator.WheelPicker numberOfVisibleRows={3} initialValue={2022} items={yearItems}/>
+          <Incubator.WheelPicker numberOfVisibleRows={3} initialValue={yearsValue} items={yearItems}/>
+        </View>
+
+        <Text marginT-10 bodySmall grey30>
+          (update value by passing a new initialValue)
+        </Text>
+        <View marginT-10 row>
+          <Button label={'-5 years'} marginR-20 onPress={() => updateYearsInitialValue(false)}/>
+          <Button label={'+5 years'} onPress={() => updateYearsInitialValue(true)}/>
         </View>
       </View>
 
