@@ -32,7 +32,6 @@ const usePresenter = ({
   itemHeight,
   preferredNumVisibleRows
 }: PropTypes): Presenter => {
-  const value = initialValue;
   const extractItemsFromChildren = (): ItemProps[] => {
     const items = React.Children.map(children, child => {
       const childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};
@@ -45,10 +44,10 @@ const usePresenter = ({
   const middleIndex = useMiddleIndex({itemHeight, listSize: items.length});
 
   const getSelectedValueIndex = () => {
-    if (_.isString(value) || _.isNumber(value)) {
-      return _.findIndex(items, {value});
+    if (_.isString(initialValue) || _.isNumber(initialValue)) {
+      return _.findIndex(items, {value: initialValue});
     }
-    return _.findIndex(items, {value: value?.value});
+    return _.findIndex(items, {value: initialValue?.value});
   };
 
   const getRowItemAtOffset = (offset: number): RowItem => {
