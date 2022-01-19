@@ -10,7 +10,7 @@ const BUTTON_ID = 'button_test_id';
 const CHILDREN_TEXT_ID = 'children_test_id';
 const CHILDREN_TEXT = 'custom button text';
 
-describe.skip('Button', () => {
+describe('Button', () => {
   it('should render a button', async () => {
     const wrapperComponent = renderWrapperScreenWithButton({});
     const buttonDriver = await ButtonTestKit({wrapperComponent, testID: BUTTON_ID});
