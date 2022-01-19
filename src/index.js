@@ -284,15 +284,15 @@ export default {
   },
 
   // TestKits
-  get TextTestKit() {
-    return require('./components/text/Text.driver').default;
-  },
-  get ImageTestKit() {
-    return require('./components/image/Image.driver').default;
-  },
-  get ButtonTestKit() {
-    return require('./components/button/Button.driver').default;
-  },
+  // get TextTestKit() {
+  //   return require('./components/text/Text.driver').default;
+  // },
+  // get ImageTestKit() {
+  //   return require('./components/image/Image.driver').default;
+  // },
+  // get ButtonTestKit() {
+  //   return require('./components/button/Button.driver').default;
+  // },
 
   // Style
   get Colors() {

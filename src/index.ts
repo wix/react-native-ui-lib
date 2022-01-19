@@ -92,9 +92,9 @@ export {default as View, ViewProps} from './components/view';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
 
 /* ===== TestKit ===== */
-export {default as TextTestKit} from './components/text/Text.driver';
-export {default as ImageTestKit} from './components/image/Image.driver';
-export {default as ButtonTestKit} from './components/button/Button.driver';
+// export {default as TextTestKit} from './components/text/Text.driver';
+// export {default as ImageTestKit} from './components/image/Image.driver';
+// export {default as ButtonTestKit} from './components/button/Button.driver';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
