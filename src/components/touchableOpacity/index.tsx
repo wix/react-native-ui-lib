@@ -70,9 +70,11 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
     };
 
     const {throttleTime = 0, throttleOptions = {leading: true, trailing: false}} = props;
-    this.onPress = _.throttle(this.onPress.bind(this),
+    this.onPress = _.throttle(
+      this.onPress.bind(this),
       throttleTime,
-      throttleOptions);
+      throttleOptions
+    );
   }
 
   getAccessibilityInfo() {

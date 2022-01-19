@@ -65,7 +65,9 @@ class CardImage extends PureComponent<Props> {
 }
 
 function createStyles({width, height, context: {position}}: Props) {
-  const {top, left, right, bottom} = CardPresenter.extractPositionValues(position);
+  const {top, left, right, bottom} = CardPresenter.extractPositionValues(
+    position
+  );
   return StyleSheet.create({
     container: {
       height: left || right ? undefined : height,

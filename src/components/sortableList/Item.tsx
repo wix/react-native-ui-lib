@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {Dimensions, Platform, StyleSheet, View} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {runOnJS, scrollTo, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
-import {getOrder, getPosition} from './Config';
+import {getOrder, getPosition} from './Presenter';
+
+export type ListRenderItemProps<T> = {
+  item: T;
+  index: number;
+};
+
+export type ListRenderItem<T> = ({item, index}: ListRenderItemProps<T>) => ReactElement;
 
 const {height} = Dimensions.get('window');
 const isAndroid = Platform.OS === 'android';
@@ -16,13 +23,13 @@ interface ItemProps<T> {
   containerHeight?: number;
   listRef: any;
   itemHeight: number;
-  onFinish: (list: T[]) => void;
-  renderItem: ({item, index}: { item: T, index: number }) => JSX.Element;
+  onFinishDrag: (list: T[]) => void;
+  renderItem: ListRenderItem<T>;
   draggableAreaSize?: number;
   draggableAreaSide: 'left' | 'right';
 }
 
-const Item = ({draggableAreaSize, draggableAreaSide, item, positions, index, containerHeight = height - 80, contentHeight, scrollY, listRef, itemHeight, onFinish, renderItem}: ItemProps<any>) => {
+const Item = ({draggableAreaSize, draggableAreaSide, item, positions, index, containerHeight = height - 80, contentHeight, scrollY, listRef, itemHeight, onFinishDrag, renderItem}: ItemProps<any>) => {
   const topAnimatedValue = useSharedValue(positions.value[index] * itemHeight);
   const zIndex = useSharedValue(0);
 
@@ -77,7 +84,7 @@ const Item = ({draggableAreaSize, draggableAreaSide, item, positions, index, con
       const lowerBound = scrollY.value;
       const upperBound = lowerBound + containerHeight - itemHeight;
       const maxScroll = contentHeight - containerHeight;
-
+      
       if (newPosition < lowerBound) {
         const leftToScrollUp = -scrollY.value;
         const diff = Math.max(leftToScrollUp, newPosition - lowerBound);
@@ -104,25 +111,25 @@ const Item = ({draggableAreaSize, draggableAreaSide, item, positions, index, con
       if (newPosition > contentHeight - itemHeight) {
         newPosition = contentHeight - itemHeight;
       }
-      topAnimatedValue.value = withTiming(newPosition, {duration: 200}, () => runOnJS(onFinish)(positions.value));
+      topAnimatedValue.value = withTiming(newPosition, {duration: 200}, () => runOnJS(onFinishDrag)(positions.value));
       zIndex.value = 0;
     }
   });
 
   return (
-    <Animated.View style={[styles.item, itemStyle]}>
-      <View style={{flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+    <Animated.View style={[styles.itemContainer, itemStyle]}>
+      <View style={styles.itemInnerContainer}>
         {
           draggableAreaSize && draggableAreaSize > 0 ?
             <React.Fragment>
-              <Animated.View style={{flex: 1, width: '100%'}}>{renderItem({item, index})}</Animated.View>
-              <PanGestureHandler onGestureEvent={onGestureEvent}>
+              <Animated.View style={styles.item}>{renderItem({item, index})}</Animated.View>
+              <PanGestureHandler onGestureEvent={onGestureEvent} >
                 <Animated.View style={[StyleSheet.absoluteFill, {width: draggableAreaSize}, draggableAreaSide === 'left' ? {right: 'auto'} : {left: 'auto'}]}/>
               </PanGestureHandler>
             </React.Fragment>
             :
-            <PanGestureHandler onGestureEvent={onGestureEvent}>
-              <Animated.View style={{flex: 1, width: '100%'}}>{renderItem({item, index})}</Animated.View>
+            <PanGestureHandler onGestureEvent={onGestureEvent} activeOffsetY={[0, 0]}>
+              <Animated.View style={styles.item}>{renderItem({item, index})}</Animated.View>
             </PanGestureHandler>
         }
       </View>
@@ -131,8 +138,18 @@ const Item = ({draggableAreaSize, draggableAreaSide, item, positions, index, con
 };
 
 const styles = StyleSheet.create({
-  item: {
+  itemContainer: {
     position: 'absolute',
+    width: '100%'
+  },
+  itemInnerContainer: {
+    flex: 1, 
+    width: '100%', 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  item: {
+    flex: 1, 
     width: '100%'
   }
 });

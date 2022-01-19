@@ -154,14 +154,16 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
     for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
 
-      promises.push(new Promise(resolve => {
-        Animated.timing(this.animatedScaleArray[index], {
-          toValue: Number(newScale),
-          easing: this.easeOut,
-          duration: DURATION,
-          useNativeDriver: true
-        }).start(resolve);
-      }));
+      promises.push(
+        new Promise(resolve => {
+          Animated.timing(this.animatedScaleArray[index], {
+            toValue: Number(newScale),
+            easing: this.easeOut,
+            duration: DURATION,
+            useNativeDriver: true
+          }).start(resolve);
+        })
+      );
     }
     return Promise.all(promises);
   }

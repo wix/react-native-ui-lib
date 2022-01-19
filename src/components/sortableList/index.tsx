@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
-import {LayoutChangeEvent, StyleProp, ViewStyle, FlatList} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {LayoutChangeEvent, StyleProp, ViewStyle, View} from 'react-native';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
-import { asBaseComponent } from '../../commons/new';
-import Item from './Item';
-
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+import Item, { ListRenderItem } from './Item';
 
 export interface SortableListProps<T> {
   /**
@@ -14,7 +12,7 @@ export interface SortableListProps<T> {
   /**
    * Takes an item from items list and renders it into the view
    */
-  renderItem: ({item, index}: { item: T, index: number }) => JSX.Element;
+  renderItem: ListRenderItem<T>;
   /**
    * Height of each item (mandatory)
    */
@@ -49,50 +47,51 @@ const SortableList = ({items, itemHeight, onOrderChange, renderItem, draggableAr
   const [containerHeight, setContainerHeight] = useState<number>();
   const positions = useSharedValue({...items.map((_item: any, index: number) => index)});
   const scrollY = useSharedValue(0);
-  const listRef = useAnimatedRef<FlatList>();
+  const listRef = useAnimatedRef<Animated.ScrollView>();
   const contentHeight = items.length * itemHeight;
 
   const onScroll = useAnimatedScrollHandler({
     onScroll: ({contentOffset: {y}}) => scrollY.value = y
   });
 
-  const onLayout = (event: LayoutChangeEvent) => {
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
     setContainerHeight(event.nativeEvent.layout.height);
-  };
+  }, []);
 
-  const sortList = (positions: any) => {
+  const sortList = useCallback((positions: any) => {
     const sortedList = new Array(items.length).fill(null);
     for (let i = 0; i < items.length; ++i) {
       const sortedIndex = positions[i];
       sortedList[sortedIndex] = items[i];
     }
     onOrderChange(sortedList);
-  };
-
-  const _renderItem = ({item, index}: { item: any, index: number }) => (
-    <Item
-      {...{item, index, positions, scrollY, containerHeight, contentHeight, listRef, itemHeight, renderItem, draggableAreaSize, draggableAreaSide}}
-      onFinish={sortList}
-    />
-  );
+  }, []);
 
   return (
-    <AnimatedFlatList
-      ref={listRef}
-      data={items}
-      renderItem={_renderItem}
-      onLayout={onLayout}
-      style={style}
-      contentContainerStyle={[{height: items.length * itemHeight}, contentContainerStyle]}
-      bounces={false}
-      scrollEventThrottle={8}
-      onScroll={onScroll}
-      showsVerticalScrollIndicator
-      persistentScrollbar
-      testID={testID}
-    />
+    <View onLayout={onLayout} style={{marginBottom: 100}}>
+      <Animated.ScrollView 
+        ref={listRef}
+        style={style}
+        contentContainerStyle={[{height: items.length * itemHeight}, contentContainerStyle]}
+        bounces={false}
+        scrollEventThrottle={16}
+        onScroll={onScroll}
+        showsVerticalScrollIndicator
+        persistentScrollbar
+        testID={testID}
+      >
+        {items.map((item: any, key: number) => {
+          return (
+            <Item 
+              {...{item, positions, key, scrollY, containerHeight, contentHeight, listRef, itemHeight, renderItem, draggableAreaSize, draggableAreaSide}}
+              onFinishDrag={sortList}
+              index={key}
+            />
+          );
+        })}
+      </Animated.ScrollView>
+    </View>
   );
 };
 
-// export default SortableList;
-export default asBaseComponent<SortableListProps<any>, typeof SortableList>(SortableList);
+export default gestureHandlerRootHOC(SortableList);

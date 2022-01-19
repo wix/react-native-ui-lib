@@ -23,11 +23,9 @@ export const getCounterText = (count: number, maxLength: number) => {
   return `${Math.min(count, maxLength)} / ${maxLength}`;
 };
 
-export const getChipDismissColor = (
-  chip: ChipsInputChipProps,
+export const getChipDismissColor = (chip: ChipsInputChipProps,
   isSelected: boolean,
-  defaultChipProps?: ChipsInputChipProps
-) => {
+  defaultChipProps?: ChipsInputChipProps) => {
   const dismissColor = defaultChipProps?.dismissColor || Colors.white;
   return !chip.invalid ? dismissColor : isSelected ? Colors.red10 : Colors.red30;
 };
