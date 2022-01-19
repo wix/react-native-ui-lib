@@ -1,5 +1,5 @@
 import {ReactElement} from 'react';
-import {FlatListProps, GestureResponderEvent, LayoutChangeEvent} from 'react-native';
+import {FlatListProps, GestureResponderEvent, LayoutChangeEvent, StyleProp, TextStyle} from 'react-native';
 import {BaseComponent} from '../commons';
 import {TextFieldProps} from './Inputs';
 import {TopBarProps} from './Modal';
@@ -21,6 +21,7 @@ export type PickerItemRenderItemFunc = (
 
 export interface PickerItemProps {
   label?: string;
+  labelStyle?: StyleProp<TextStyle>;
   value?: PickerItemValue;
   getItemLabel?: (value?: PickerItemValue) => string;
   isSelected?: boolean;

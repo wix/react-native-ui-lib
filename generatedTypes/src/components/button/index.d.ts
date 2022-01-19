@@ -157,12 +157,12 @@ declare class Button extends PureComponent<Props, ButtonState> {
     get isIconButton(): boolean | 0 | undefined;
     getBackgroundColor(): any;
     getActiveBackgroundColor(): string | undefined;
-    getLabelColor(): any;
+    getLabelColor(): string | undefined;
     getLabelSizeStyle(): object;
     getContainerSizeStyle(): any;
     getOutlineStyle(): {
         borderWidth: number;
-        borderColor: any;
+        borderColor: string;
     } | undefined;
     getBorderRadiusStyle(): {
         borderRadius: number;

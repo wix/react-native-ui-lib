@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Assets, Colors, View, Button, Text, Image, TouchableOpacity, Toast} from 'react-native-ui-lib';
+import {Assets, Colors, View, Button, Text, Icon, TouchableOpacity, Toast} from 'react-native-ui-lib';
 
 
 const colors = [Colors.green30, Colors.red30, Colors.violet30];
@@ -34,7 +34,7 @@ export default class ToastsScreen extends Component {
           return (
             <TouchableOpacity key={color} onPress={() => this.setState({selectedColor: color})}>
               <View center style={[styles.color, {backgroundColor}, isSelected && styles.selected]}>
-                {color === 'none' && <Image source={plusIcon} tintColor={Colors.black}/>}
+                {color === 'none' && <Icon source={plusIcon} tintColor={Colors.black}/>}
               </View>
             </TouchableOpacity>
           );

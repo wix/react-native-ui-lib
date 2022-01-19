@@ -11,7 +11,7 @@ import {
   Constants,
   Modal,
   BorderRadiuses,
-  Image,
+  Icon,
   TouchableOpacity
 } from 'react-native-ui-lib';
 const {PanView} = Incubator;
@@ -157,7 +157,7 @@ class PanViewScreen extends Component {
             <Text text50 marginB-s2>
               Scrollable
             </Text>
-            <Image source={Assets.icons.demo.chevronDown}/>
+            <Icon source={Assets.icons.demo.chevronDown}/>
           </View>
         </ScrollView>
         {showToast && this.renderToast()}

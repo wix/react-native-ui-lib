@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {NativeModules, StyleSheet, ViewStyle, Image, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, findNodeHandle, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps} from 'react-native';
+import {NativeModules, StyleSheet, ViewStyle, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, findNodeHandle, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps} from 'react-native';
 import {Colors, BorderRadiuses, ThemeManager, Typography, Spacings} from '../../style';
 import Assets from '../../assets';
 import {LogService} from '../../services';
@@ -11,6 +11,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Chip, {ChipProps} from '../chip';
+import Icon from '../icon';
 import {getValidationBasedColor, getCounterTextColor, getCounterText, getChipDismissColor, isDisabled} from './Presenter';
 import {TextFieldProps} from '../../../typings/components/Inputs';
 
@@ -309,7 +310,7 @@ class ChipsInput extends Component<OwnProps, State> {
     return (
       <View row centerV>
         {shouldMarkTag && (
-          <Image
+          <Icon
             style={[styles.removeIcon, tag.invalid && styles.basicTagStyle && styles.invalidTagRemoveIcon]}
             source={Assets.icons.x}
           />)

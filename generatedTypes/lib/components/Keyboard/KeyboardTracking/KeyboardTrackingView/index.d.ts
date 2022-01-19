@@ -51,5 +51,5 @@ declare const _default: React.ForwardRefExoticComponent<Pick<ViewProps & {
     ref?: any;
     children?: React.ReactChild | React.ReactChild[] | undefined;
     style?: ViewStyle | undefined;
-}, "children" | keyof ViewProps | "useSafeArea" | "trackInteractive" | "scrollToFocusedInput" | "scrollBehavior" | "revealKeyboardInteractive" | "manageScrollView" | "requiresSameParentToManageScrollView" | "addBottomView" | "allowHitsOutsideBounds"> & React.RefAttributes<unknown>>;
+}, keyof ViewProps | "useSafeArea" | "trackInteractive" | "scrollToFocusedInput" | "scrollBehavior" | "revealKeyboardInteractive" | "manageScrollView" | "requiresSameParentToManageScrollView" | "addBottomView" | "allowHitsOutsideBounds"> & React.RefAttributes<unknown>>;
 export default _default;
