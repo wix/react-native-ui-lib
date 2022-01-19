@@ -1,5 +1,10 @@
-/// <reference types="react" />
+import { ReactElement } from 'react';
 import Animated from 'react-native-reanimated';
+export declare type ListRenderItemProps<T> = {
+    item: T;
+    index: number;
+};
+export declare type ListRenderItem<T> = ({ item, index }: ListRenderItemProps<T>) => ReactElement;
 interface ItemProps<T> {
     item: any;
     index: number;
@@ -9,13 +14,10 @@ interface ItemProps<T> {
     containerHeight?: number;
     listRef: any;
     itemHeight: number;
-    onFinish: (list: T[]) => void;
-    renderItem: ({ item, index }: {
-        item: T;
-        index: number;
-    }) => JSX.Element;
+    onFinishDrag: (list: T[]) => void;
+    renderItem: ListRenderItem<T>;
     draggableAreaSize?: number;
     draggableAreaSide: 'left' | 'right';
 }
-declare const Item: ({ draggableAreaSize, draggableAreaSide, item, positions, index, containerHeight, contentHeight, scrollY, listRef, itemHeight, onFinish, renderItem }: ItemProps<any>) => JSX.Element;
+declare const Item: ({ draggableAreaSize, draggableAreaSide, item, positions, index, containerHeight, contentHeight, scrollY, listRef, itemHeight, onFinishDrag, renderItem }: ItemProps<any>) => JSX.Element;
 export default Item;
