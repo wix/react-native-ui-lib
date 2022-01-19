@@ -11,7 +11,7 @@ const CHILDREN_TEXT_ID = 'children_test_id';
 const CHILDREN_TEXT = 'custom button text';
 
 // TODO: This tests are flaky and only fail on CI - we should investigate why
-describe.skip('Button', () => {
+describe('Button', () => {
   it('should render a button', async () => {
     const wrapperComponent = renderWrapperScreenWithButton({});
     const buttonDriver = await ButtonTestKit({wrapperComponent, testID: BUTTON_ID});
@@ -35,11 +35,8 @@ describe.skip('Button', () => {
   });
 
   describe('OnPress', () => {
-    let onPressCallback;
-    beforeEach(() => onPressCallback = jest.fn());
-    afterEach(() => onPressCallback.mockClear());
-    
     it('should trigger onPress callback', async () => {
+      const onPressCallback = jest.fn();
       const wrapperComponent = renderWrapperScreenWithButton({onPress: onPressCallback});
       const buttonDriver = await ButtonTestKit({wrapperComponent, testID: BUTTON_ID});
       buttonDriver.click();
@@ -47,6 +44,7 @@ describe.skip('Button', () => {
     });
 
     it('should not trigger onPress callback if button disabled', async () => {
+      const onPressCallback = jest.fn();
       const wrapperComponent = renderWrapperScreenWithButton({onPress: onPressCallback, disabled: true});
       const buttonDriver = await ButtonTestKit({wrapperComponent, testID: BUTTON_ID});
       buttonDriver.click();
