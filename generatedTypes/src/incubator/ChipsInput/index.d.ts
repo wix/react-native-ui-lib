@@ -30,7 +30,7 @@ export declare type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
      */
     maxChips?: number;
 };
-declare const _default: React.ForwardRefExoticComponent<Omit<TextFieldProps, "ref"> & {
+declare const ChipsInput: React.ForwardRefExoticComponent<Omit<TextFieldProps, "ref"> & {
     /**
      * Chip items to render in the input
      */
@@ -52,4 +52,4 @@ declare const _default: React.ForwardRefExoticComponent<Omit<TextFieldProps, "re
      */
     maxChips?: number | undefined;
 } & React.RefAttributes<any>>;
-export default _default;
+export default ChipsInput;
