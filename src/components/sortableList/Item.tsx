@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
-import {Dimensions, Platform, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {runOnJS, scrollTo, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import { Constants } from '../../commons/new';
 import {getOrder, getPosition} from './Presenter';
 
 export type ListRenderItemProps<T> = {
@@ -11,8 +12,8 @@ export type ListRenderItemProps<T> = {
 
 export type ListRenderItem<T> = ({item, index}: ListRenderItemProps<T>) => ReactElement;
 
-const {height} = Dimensions.get('window');
-const isAndroid = Platform.OS === 'android';
+const height = Constants.screenHeight;
+const isAndroid = Constants.isAndroid;
 
 interface ItemProps<T> {
   item: any;

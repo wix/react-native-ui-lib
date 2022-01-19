@@ -195,7 +195,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
       nextProps.title !== this.props.title ||
       nextProps.visible !== this.props.visible
     );
-  };
+  }
 
   componentDidUpdate(nextProps: FeatureHighlightProps) {
     if (this.shouldSetTargetPosition(nextProps)) {
@@ -311,8 +311,8 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
         ref={
           !pageControlProps
             ? (r: ElementRef<any>) => {
-                this.viewRef = r;
-              }
+              this.viewRef = r;
+            }
             : undefined
         }
       >
@@ -401,10 +401,10 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
                 containerStyle={{marginBottom: 24}}
                 ref={(r: ElementRef<any>) => (this.viewRef = r)}
               />
-              <View accessible accessibilityLabel={'dismiss button'} />
+              <View accessible accessibilityLabel={'dismiss button'}/>
             </View>
           ) : (
-            <View flex accessible accessibilityLabel={'dismiss'} accessibilityRole={'button'} />
+            <View flex accessible accessibilityLabel={'dismiss'} accessibilityRole={'button'}/>
           )}
         </TouchableWithoutFeedback>
         {this.renderHighlightMessage()}

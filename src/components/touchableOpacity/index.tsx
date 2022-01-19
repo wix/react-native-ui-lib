@@ -153,4 +153,6 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 }
 
-export default asBaseComponent<TouchableOpacityProps>(forwardRef(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityProps>(
+  forwardRef(TouchableOpacity)
+);

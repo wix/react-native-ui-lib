@@ -238,8 +238,10 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     if (containerWidth) {
       const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.props);
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
-      const snapToOffsets = _.times(presenter.getChildrenLength(this.props),
-        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal());
+      const snapToOffsets = _.times(
+        presenter.getChildrenLength(this.props),
+        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal()
+      );
       return snapToOffsets;
     }
   };
