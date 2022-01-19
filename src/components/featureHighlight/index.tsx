@@ -180,7 +180,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
     if (prevState?.getTarget === nextProps?.getTarget) {
       return null;
     }
-
+    
     const target = nextProps?.getTarget?.();
     const node = FeatureHighlight.findTargetNode(target);
     if (node && node !== prevState?.node) {

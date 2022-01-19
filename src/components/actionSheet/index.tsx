@@ -75,7 +75,7 @@ type ActionSheetProps = {
    * Render custom action
    * Note: you will need to call onOptionPress so the option's onPress will be called
    */
-   renderAction?: (
+  renderAction?: (
     option: ButtonProps,
     index: number,
     onOptionPress: ActionSheetOnOptionPress
