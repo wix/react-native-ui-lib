@@ -293,6 +293,10 @@ export default {
   // get ButtonTestKit() {
   //   return require('./components/button/Button.driver').default;
   // },
+  // export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
+  // get TextFieldTestKit() {
+  //   return require('./incubator/TextField/TextField.driver').default;
+  // },
 
   // Style
   get Colors() {

@@ -10,9 +10,10 @@ export interface CharCounterProps {
      * Pass custom style to character counter text
      */
     charCounterStyle?: TextStyle;
+    testID: string;
 }
 declare const CharCounter: {
-    ({ maxLength, charCounterStyle }: CharCounterProps): JSX.Element | null;
+    ({ maxLength, charCounterStyle, testID }: CharCounterProps): JSX.Element | null;
     displayName: string;
 };
 export default CharCounter;

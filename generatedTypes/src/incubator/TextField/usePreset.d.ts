@@ -22,7 +22,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     formatter?: ((value?: string | undefined) => string | undefined) | undefined;
     children?: import("react").ReactNode;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
-    testID?: string | undefined;
+    testID: string;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
@@ -423,7 +423,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     formatter?: ((value?: string | undefined) => string | undefined) | undefined;
     children?: import("react").ReactNode;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
-    testID?: string | undefined;
+    testID: string;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
@@ -936,7 +936,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
         includeFontPadding?: boolean | undefined;
     } | null;
-    testID?: string | undefined;
+    testID: string;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
