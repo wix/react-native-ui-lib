@@ -451,7 +451,7 @@ class Picker extends Component {
     } = this.props;
 
     if (useNativePicker) {
-      return <NativePicker {...this.props}/>;
+      return <NativePicker forwardedRef={forwardedRef} {...this.props}/>;
     }
 
     // if (_.isFunction(renderPicker)) {
