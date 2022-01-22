@@ -100,7 +100,7 @@ class NativePicker extends BaseComponent {
   };
 
   render() {
-    const {renderPicker, customPickerProps, testID} = this.props;
+    const {renderPicker, customPickerProps, testID, forwardedRef} = this.props;
 
     if (_.isFunction(renderPicker)) {
       const {selectedValue} = this.state;
@@ -118,6 +118,7 @@ class NativePicker extends BaseComponent {
     const label = this.getLabel();
     return (
       <TextField
+        ref={forwardedRef}
         color={Colors.grey10}
         {...textInputProps}
         value={label}
