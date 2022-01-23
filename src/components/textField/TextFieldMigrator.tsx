@@ -38,13 +38,13 @@ const customMessageMap: Dictionary<string> = {
 };
 
 function migrateProps(props: any) {
-  const fixedProps = mapKeys(props, (_value, key) => {
-    if (propsMigrationMap[key]) {
+  const fixedProps = mapKeys(props, (value, key) => {
+    if (propsMigrationMap[key] && value !== undefined) {
       LogService.deprecationWarn({component: 'TextField', oldProp: key, newProp: propsMigrationMap[key]});
       return propsMigrationMap[key];
-    } else if (specialMigrationMap[key]) {
+    } else if (specialMigrationMap[key] && value !== undefined) {
       LogService.warn(`The new TextField implementation does not support the '${key}' prop. Please use the '${specialMigrationMap[key]}' instead`);
-    } else if (customMessageMap[key]) {
+    } else if (customMessageMap[key] && value !== undefined) {
       LogService.warn(`The new TextField implementation does not support the '${key}' prop. ${customMessageMap[key]}`);
     }
     return key;
@@ -53,10 +53,11 @@ function migrateProps(props: any) {
   return fixedProps;
 }
 
-const TextFieldMigrator = forwardRef(({migrate = false, ...props}: any, ref) => {
+const TextFieldMigrator = forwardRef(({migrate = false, customWarning, ...props}: any, ref) => {
   useEffect(() => {
     if (!migrate) {
-      LogService.warn(`RNUILib TextField component will soon be replaced with a new implementation, in order to start the migration - please pass the 'migrate' prop`);
+      LogService.warn(customWarning ??
+          `RNUILib TextField component will soon be replaced with a new implementation, in order to start the migration - please pass the 'migrate' prop`);
     }
   }, []);
 

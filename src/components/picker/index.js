@@ -15,6 +15,7 @@ import Modal from '../modal';
 import ExpandableOverlay from '../../incubator/expandableOverlay';
 // import Button from '../../components/button';
 import {TextField} from '../inputs';
+import TextFieldMigrator from '../textField/TextFieldMigrator';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
@@ -46,6 +47,10 @@ class Picker extends Component {
      * Temporary prop required for migration to Picker's new API
      */
     migrate: PropTypes.bool,
+    /**
+     * Temporary prop required for inner text field migration
+     */
+    migrateTextField: PropTypes.bool,
     ...TextField.propTypes,
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
@@ -447,7 +452,8 @@ class Picker extends Component {
       topBarProps,
       pickerModalProps,
       value,
-      editable
+      editable,
+      migrateTextField
     } = this.props;
 
     if (useNativePicker) {
@@ -496,7 +502,9 @@ class Picker extends Component {
           {renderPicker ? (
             renderPicker(value, this.getLabel(value))
           ) : (
-            <TextField
+            <TextFieldMigrator
+              migrate={migrateTextField}
+              customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
               ref={forwardedRef}
               {...textInputProps}
               testID={`${testID}.input`}
@@ -505,10 +513,11 @@ class Picker extends Component {
               importantForAccessibility={'no-hide-descendants'}
               value={label}
               selection={Constants.isAndroid ? {start: 0} : undefined}
-              // Disable TextField expandable feature
-              expandable={false}
-              renderExpandable={_.noop}
-              onToggleExpandableModal={_.noop}
+              /* Disable TextField expandable feature */
+              topBarProps={undefined}
+              // expandable={false}
+              // renderExpandable={_.noop}
+              // onToggleExpandableModal={_.noop}
             />
           )}
         </ExpandableOverlay>
