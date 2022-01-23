@@ -9,7 +9,7 @@ const chevronDown = require('../../assets/icons/chevronDown.png');
 const chevronUp = require('../../assets/icons/chevronUp.png');
 
 const elements = [
-  <Card style={{marginBottom: 10}} onPress={() => {}}>
+  <Card key={0} style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
       content={[
         {text: 'Card #1', text70: true, grey10: true},
@@ -17,9 +17,9 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section source={cardImage2} imageStyle={{height: 120}} />
+    <Card.Section imageSource={cardImage2} imageStyle={{height: 120}}/>
   </Card>,
-  <Card style={{marginBottom: 10}} onPress={() => {}}>
+  <Card key={1} style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
       content={[
         {text: 'Card #2', text70: true, grey10: true},
@@ -27,9 +27,9 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section source={cardImage} imageStyle={{height: 120}} />
+    <Card.Section imageSource={cardImage} imageStyle={{height: 120}}/>
   </Card>,
-  <Card style={{marginBottom: 10}} onPress={() => {}}>
+  <Card key={2} style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
       content={[
         {text: 'Card #3', text70: true, grey10: true},
@@ -37,7 +37,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section source={cardImage2} imageStyle={{height: 120}} />
+    <Card.Section imageSource={cardImage2} imageStyle={{height: 120}}/>
   </Card>
 ];
 
@@ -99,7 +99,7 @@ class ExpandableSectionScreen extends PureComponent {
             onValueChange={() => {
               this.setState({top: !this.state.top});
             }}
-          ></Switch>
+          />
         </View>
         <ExpandableSection
           top={top}
