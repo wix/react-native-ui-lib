@@ -25,7 +25,7 @@ function withScrollEnabler<PROPS, STATICS = {}>(WrappedComponent: React.Componen
     const layoutSize = useRef(0);
 
     const checkScroll = useCallback(() => {
-      const isScrollEnabled = contentSize.current > layoutSize.current;
+      const isScrollEnabled = (contentSize.current - 1) > layoutSize.current;
       if (isScrollEnabled !== scrollEnabled) {
         setScrollEnabled(isScrollEnabled);
       }
