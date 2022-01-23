@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {LayoutAnimation, StyleSheet} from 'react-native';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
@@ -35,10 +35,18 @@ export type ExpandableSectionProps = {
 function ExpandableSection(props: ExpandableSectionProps) {
   const {expanded, sectionHeader, children, top} = props;
 
-  const onPress = () => {
-    props.onPress?.();
+  const animate = () => {
     LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 300});
   };
+
+  const onPress = () => {
+    props.onPress?.();
+    animate();
+  };
+
+  useEffect(() => {
+    animate();
+  }, [expanded]);
 
   return (
     <View style={styles.container}>
