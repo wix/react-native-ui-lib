@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {LayoutAnimation, StyleSheet} from 'react-native';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
+import {useDidUpdate} from 'hooks';
 
 export type ExpandableSectionProps = {
   /**
@@ -35,6 +36,10 @@ export type ExpandableSectionProps = {
 function ExpandableSection(props: ExpandableSectionProps) {
   const {expanded, sectionHeader, children, top} = props;
 
+  /**
+   * TODO: move to reanimated LayoutAnimation after updating to version 2.3.0
+   * after migration, trigger the animation only in useDidUpdate.
+   */
   const animate = () => {
     LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 300});
   };
@@ -44,7 +49,7 @@ function ExpandableSection(props: ExpandableSectionProps) {
     animate();
   };
 
-  useEffect(() => {
+  useDidUpdate(() => {
     animate();
   }, [expanded]);
 
