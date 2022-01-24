@@ -20,9 +20,10 @@ export interface FloatingPlaceholderProps {
     floatOnFocus?: boolean;
     validationMessagePosition?: ValidationMessagePosition;
     extraOffset?: number;
+    testID: string;
 }
 declare const FloatingPlaceholder: {
-    ({ placeholder, floatingPlaceholderColor, floatingPlaceholderStyle, floatOnFocus, validationMessagePosition, extraOffset }: FloatingPlaceholderProps): JSX.Element;
+    ({ placeholder, floatingPlaceholderColor, floatingPlaceholderStyle, floatOnFocus, validationMessagePosition, extraOffset, testID }: FloatingPlaceholderProps): JSX.Element;
     displayName: string;
 };
 export default FloatingPlaceholder;

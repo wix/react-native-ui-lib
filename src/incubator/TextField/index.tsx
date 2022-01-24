@@ -212,6 +212,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 floatOnFocus={floatOnFocus}
                 validationMessagePosition={validationMessagePosition}
                 extraOffset={leadingAccessoryMeasurements?.width}
+                testID={`${props.testID}.floatingPlaceholder`}
               />
             )}
             {children || (
@@ -242,7 +243,7 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
           {bottomAccessory}
-          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle}/>}
+          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle} testID={`${props.testID}.charCounter`}/>}
         </View>
       </View>
     </FieldContext.Provider>
