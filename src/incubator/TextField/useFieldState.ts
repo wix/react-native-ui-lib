@@ -64,6 +64,8 @@ export default function useFieldState({
 
     setIsValid(_isValid);
     setFailingValidatorIndex(_failingValidatorIndex);
+
+    return _isValid;
   },
   [value, validate]);
 

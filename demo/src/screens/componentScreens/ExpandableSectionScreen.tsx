@@ -8,44 +8,44 @@ const cardImage = require('../../assets/images/card-example.jpg');
 const chevronDown = require('../../assets/icons/chevronDown.png');
 const chevronUp = require('../../assets/icons/chevronUp.png');
 
-const elements = [
-  <Card style={{marginBottom: 10}} onPress={() => {}}>
-    <Card.Section
-      content={[
-        {text: 'Card #1', text70: true, grey10: true},
-        {text: 'card description', text90: true, grey50: true}
-      ]}
-      style={{padding: 20}}
-    />
-    <Card.Section source={cardImage2} imageStyle={{height: 120}} />
-  </Card>,
-  <Card style={{marginBottom: 10}} onPress={() => {}}>
-    <Card.Section
-      content={[
-        {text: 'Card #2', text70: true, grey10: true},
-        {text: 'card description', text90: true, grey50: true}
-      ]}
-      style={{padding: 20}}
-    />
-    <Card.Section source={cardImage} imageStyle={{height: 120}} />
-  </Card>,
-  <Card style={{marginBottom: 10}} onPress={() => {}}>
-    <Card.Section
-      content={[
-        {text: 'Card #3', text70: true, grey10: true},
-        {text: 'card description', text90: true, grey50: true}
-      ]}
-      style={{padding: 20}}
-    />
-    <Card.Section source={cardImage2} imageStyle={{height: 120}} />
-  </Card>
-];
-
 class ExpandableSectionScreen extends PureComponent {
   state = {
     expanded: false,
     top: false
   };
+
+  elements = [
+    <Card key={0} style={{marginBottom: 10}} onPress={() => this.onExpand()}>
+      <Card.Section
+        content={[
+          {text: 'Card #1', text70: true, grey10: true},
+          {text: 'card description', text90: true, grey50: true}
+        ]}
+        style={{padding: 20}}
+      />
+      <Card.Section imageSource={cardImage2} imageStyle={{height: 120}}/>
+    </Card>,
+    <Card key={1} style={{marginBottom: 10}} onPress={() => this.onExpand()}>
+      <Card.Section
+        content={[
+          {text: 'Card #2', text70: true, grey10: true},
+          {text: 'card description', text90: true, grey50: true}
+        ]}
+        style={{padding: 20}}
+      />
+      <Card.Section imageSource={cardImage} imageStyle={{height: 120}}/>
+    </Card>,
+    <Card key={2} style={{marginBottom: 10}} onPress={() => this.onExpand()}>
+      <Card.Section
+        content={[
+          {text: 'Card #3', text70: true, grey10: true},
+          {text: 'card description', text90: true, grey50: true}
+        ]}
+        style={{padding: 20}}
+      />
+      <Card.Section imageSource={cardImage2} imageStyle={{height: 120}}/>
+    </Card>
+  ];
 
   onExpand() {
     this.setState({
@@ -74,7 +74,7 @@ class ExpandableSectionScreen extends PureComponent {
   getBodyElement() {
     return (
       <Carousel pageWidth={350} itemSpacings={Spacings.s2}>
-        {_.map(elements, (element, key) => {
+        {_.map(this.elements, (element, key) => {
           return (
             <View key={key} margin-12>
               {element}
@@ -99,7 +99,7 @@ class ExpandableSectionScreen extends PureComponent {
             onValueChange={() => {
               this.setState({top: !this.state.top});
             }}
-          ></Switch>
+          />
         </View>
         <ExpandableSection
           top={top}
