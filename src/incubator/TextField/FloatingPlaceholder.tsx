@@ -27,7 +27,7 @@ export interface FloatingPlaceholderProps {
   floatOnFocus?: boolean;
   validationMessagePosition?: ValidationMessagePosition;
   extraOffset?: number;
-  testID: string;
+  testID?: string;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;

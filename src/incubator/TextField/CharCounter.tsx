@@ -14,7 +14,7 @@ export interface CharCounterProps {
    * Pass custom style to character counter text
    */
   charCounterStyle?: TextStyle;
-  testID: string;
+  testID?: string;
 }
 
 const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) => {
