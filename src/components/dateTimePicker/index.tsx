@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import moment from 'moment';
+import {format as formatDate} from 'light-date';
 import React, {Component} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
@@ -194,13 +194,13 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
           return dateFormatter
             ? dateFormatter(value)
             : dateFormat
-              ? moment(value).format(dateFormat)
+              ? formatDate(value, dateFormat)
               : value.toLocaleDateString();
         case MODES.TIME:
           return timeFormatter
             ? timeFormatter(value)
             : timeFormat
-              ? moment(value).format(timeFormat)
+              ? formatDate(value, timeFormat)
               : value.toLocaleTimeString();
       }
     }
