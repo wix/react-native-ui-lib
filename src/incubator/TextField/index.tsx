@@ -39,11 +39,11 @@ export type TextFieldProps = MarginModifiers &
   ColorsModifiers &
   InputProps &
   LabelProps &
-  FloatingPlaceholderProps &
+  Omit<FloatingPlaceholderProps, 'testID'> &
   // We're declaring these props explicitly here for react-docgen (which can't read hooks)
   // FieldStateProps &
   ValidationMessageProps &
-  Omit<CharCounterProps, 'maxLength'> & {
+  Omit<CharCounterProps, 'maxLength' | 'testID'> & {
     /**
      * Pass to render a leading element
      */

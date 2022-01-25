@@ -22,7 +22,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     formatter?: ((value?: string | undefined) => string | undefined) | undefined;
     children?: import("react").ReactNode;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
-    testID: string;
+    testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
@@ -145,8 +145,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validationMessagePosition?: import("./types").ValidationMessagePosition | undefined;
     floatingPlaceholder?: boolean | undefined;
     floatingPlaceholderColor?: import("./types").ColorType | undefined;
-    floatingPlaceholderStyle?: ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle) | undefined;
     floatOnFocus?: boolean | undefined;
+    floatingPlaceholderStyle?: ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle) | undefined;
     extraOffset?: number | undefined;
     enableErrors?: boolean | undefined;
     validationMessage?: string | string[] | undefined;
@@ -423,7 +423,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     formatter?: ((value?: string | undefined) => string | undefined) | undefined;
     children?: import("react").ReactNode;
     style?: import("react-native").StyleProp<import("react-native").TextStyle>;
-    testID: string;
+    testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
@@ -546,8 +546,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validationMessagePosition?: import("./types").ValidationMessagePosition | undefined;
     floatingPlaceholder?: boolean | undefined;
     floatingPlaceholderColor?: import("./types").ColorType | undefined;
-    floatingPlaceholderStyle?: ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle) | undefined;
     floatOnFocus?: boolean | undefined;
+    floatingPlaceholderStyle?: ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle) | undefined;
     extraOffset?: number | undefined;
     enableErrors?: boolean | undefined;
     validationMessage?: string | string[] | undefined;
@@ -936,7 +936,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
         includeFontPadding?: boolean | undefined;
     } | null;
-    testID: string;
+    testID?: string | undefined;
     removeClippedSubviews?: boolean | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
     onContentSizeChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputContentSizeChangeEventData>) => void) | undefined;
@@ -1067,6 +1067,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         error: any;
         disabled: string;
     };
+    floatOnFocus?: boolean | undefined;
     floatingPlaceholderStyle: ((false | import("react-native").TextStyle | import("react-native").RegisteredStyle<import("react-native").TextStyle> | import("react-native").RecursiveArray<import("react-native").TextStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").TextStyle>> | null) & import("react-native").TextStyle) | {
         color?: import("react-native").ColorValue | undefined;
         fontFamily?: string | undefined;
@@ -1180,7 +1181,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
         includeFontPadding?: boolean | undefined;
     };
-    floatOnFocus?: boolean | undefined;
     extraOffset?: number | undefined;
     enableErrors: boolean;
     validationMessage?: string | string[] | undefined;
