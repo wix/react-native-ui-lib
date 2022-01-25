@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
 import {StyleSheet, FlatList, ViewPropTypes} from 'react-native';
 import {Navigation} from 'react-native-navigation';
@@ -230,7 +230,7 @@ class MainScreen extends Component {
         keyboardShouldPersistTaps="always"
         data={flatData}
         contentContainerStyle={{paddingTop: 20}}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(index) => index.toString()}
         renderItem={this.renderItem}
       />
     );
