@@ -11,10 +11,9 @@ import {
   ImageErrorEventData
 } from 'react-native';
 import {Constants, asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
-// @ts-ignore
-import Assets from '../../assets';
+import {getAsset, isSvg} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
-import SvgImage from './SvgImage';
+import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
 
@@ -146,7 +145,7 @@ class Image extends PureComponent<Props, State> {
     const {assetName, assetGroup, source} = this.props;
 
     if (!_.isUndefined(assetName)) {
-      return _.get(Assets, `${assetGroup}.${assetName}`);
+      return getAsset(assetName, assetGroup);
     }
     if (this.sourceTransformer) {
       return this.sourceTransformer(this.props);
@@ -253,7 +252,7 @@ class Image extends PureComponent<Props, State> {
 
   render() {
     const {source} = this.props;
-    if (SvgImage.isSvg(source)) {
+    if (isSvg(source)) {
       return this.renderSvg();
     } else {
       return this.renderRegularImage();
