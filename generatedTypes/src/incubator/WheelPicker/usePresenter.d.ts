@@ -3,7 +3,6 @@ import { ItemProps } from './Item';
 export declare type ItemValueTypes = ItemProps | number | string;
 declare type PropTypes = {
     initialValue?: ItemValueTypes;
-    selectedValue?: ItemValueTypes;
     children?: JSX.Element | JSX.Element[];
     items?: ItemProps[];
     itemHeight: number;
@@ -15,10 +14,9 @@ declare type RowItem = {
 };
 interface Presenter {
     items: ItemProps[];
-    shouldControlComponent: (offset: number) => boolean;
     index: number;
     height: number;
     getRowItemAtOffset: (offset: number) => RowItem;
 }
-declare const usePresenter: ({ initialValue, selectedValue, children, items: propItems, itemHeight, preferredNumVisibleRows }: PropTypes) => Presenter;
+declare const usePresenter: ({ initialValue, children, items: propItems, itemHeight, preferredNumVisibleRows }: PropTypes) => Presenter;
 export default usePresenter;
