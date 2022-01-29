@@ -26,15 +26,17 @@ const parentComponents = _.chain(compoundComponents)
 components.forEach(component => {
   const [componentName, componentParentName] = getComponentNameParts(component.name);
   const isParentComponent = parentComponents.includes(componentName);
+  const isIncubatorComponent = component.category === 'incubator';
 
   let content = '';
+
   /* Markdown Front Matter */
   content += `---\n`;
   if (isParentComponent) {
     content += `sidebar_position: 1\n`;
   }
   content += `id: ${component.name}\n`;
-  content += `title: ${component.name}\n`;
+  content += `title: ${isIncubatorComponent ? 'Incubator.' : ''}${component.name}\n`;
   content += `sidebar_label: ${componentName}\n`;
   content += `---\n`;
 
@@ -58,6 +60,12 @@ components.forEach(component => {
   if (component.modifiers) {
     content += `:::tip\n`;
     content += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
+    content += `:::\n`;
+  }
+
+  if (component.cation) {
+    content += `:::caution\n`;
+    content += `${component.cation}\n`;
     content += `:::\n`;
   }
 
