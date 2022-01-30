@@ -27,6 +27,7 @@ interface InternalProps extends ItemProps {
   onSelect: (index: number) => void;
   testID?: string;
   centerH?: boolean;
+  align?: 'left' | 'right' | 'center'
 }
 
 const WheelPickerItem = memo(({
@@ -42,7 +43,8 @@ const WheelPickerItem = memo(({
   inactiveColor = Colors.grey20,
   style,
   testID,
-  centerH = true
+  centerH = true,
+  align
 }: InternalProps) => {
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
@@ -64,8 +66,9 @@ const WheelPickerItem = memo(({
       style={containerStyle}
       key={index}
       centerV
-      centerH={centerH}
-      right={!centerH}
+      centerH={align ? align === 'center' : centerH}
+      right={align ? align === 'right' : !centerH}
+      left={align === 'left'}
       onPress={selectItem}
       // @ts-ignore reanimated2
       index={index}

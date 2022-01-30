@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React, {useCallback, useState} from 'react';
 import {View, Text, Incubator, Colors, Typography, Button, Dialog} from 'react-native-ui-lib';
-import _ from 'lodash';
 
 const monthItems = _.map([
   'January',
@@ -16,7 +16,7 @@ const monthItems = _.map([
   'November',
   'December'
 ],
-item => ({label: item, value: item}));
+item => ({label: item, value: item, align: 'right'}));
 
 const yearItems = _.times(2050, i => i)
   .reverse()
@@ -28,9 +28,13 @@ export default () => {
   const [yearsValue, setYearsValue] = useState(2022);
 
   const updateYearsInitialValue = useCallback((increaseYears: boolean) => {
-    increaseYears ? setYearsValue(Math.min(yearsValue + 5, 2049)) : setYearsValue(Math.max(yearsValue - 5, 0));
+    increaseYears ? setYearsValue(Math.min(yearsValue + 1, 2049)) : setYearsValue(Math.max(yearsValue - 1, 0));
   },
   [yearsValue]);
+
+  const onChange = useCallback((value) => {
+    setYearsValue(value);
+  }, []);
 
   const onPickDaysPress = useCallback(() => {
     setShowDialog(true);
@@ -44,32 +48,46 @@ export default () => {
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
 
-      <View marginT-s5 centerH>
-        <Text h3>Months</Text>
-        <Incubator.WheelPicker
-          initialValue={'February'}
-          activeTextColor={Colors.primary}
-          inactiveTextColor={Colors.grey20}
-          items={monthItems}
-          textStyle={Typography.text60R}
-        />
-
-        <Text h3>Years</Text>
-        <View width={'100%'} marginT-s3>
-          <Incubator.WheelPicker numberOfVisibleRows={3} initialValue={yearsValue} items={yearItems}/>
+      <View row center marginT-30>
+        <View center>
+          <Text h3>Months</Text>
+          <Incubator.WheelPicker
+            initialValue={'February'}
+            activeTextColor={Colors.primary}
+            inactiveTextColor={Colors.grey20}
+            items={monthItems}
+            textStyle={Typography.text60R}
+            numberOfVisibleRows={3} 
+          />
         </View>
 
-        <Text marginT-10 bodySmall grey30>
-          (update value by passing a new initialValue)
-        </Text>
-        <View marginT-10 row>
-          <Button label={'-5 years'} marginR-20 onPress={() => updateYearsInitialValue(false)}/>
-          <Button label={'+5 years'} onPress={() => updateYearsInitialValue(true)}/>
+        <View center>
+          <Text h3>Years</Text>
+          <Incubator.WheelPicker
+            numberOfVisibleRows={3} 
+            initialValue={yearsValue} 
+            items={yearItems}
+            onChange={onChange}
+          />
         </View>
       </View>
 
-      <View marginB-s10>
-        <Button marginT-40 label={'Pick Days'} marginH-100 onPress={onPickDaysPress}/>
+      <View center marginT-30>
+        <Text body>
+          Move the wheel programmatically
+        </Text>
+        <Text bodySmall grey30>
+          (by updating the initialValue prop)
+        </Text>
+        <View marginT-10 row>
+          <Button size="medium" label={'Previous'} marginR-20 onPress={() => updateYearsInitialValue(false)}/>
+          <Button size="medium" label={'Next'} onPress={() => updateYearsInitialValue(true)}/>
+        </View>
+      </View>
+
+      <View center marginT-40>
+        <Text h3 marginB-20>Days</Text>
+        <Button size="small" label={'Pick Days'} onPress={onPickDaysPress}/>
         <Dialog width={'90%'} height={260} bottom visible={showDialog} onDismiss={onDialogDismissed}>
           <Incubator.WheelPicker initialValue={5} label={'Days'} items={dayItems}/>
         </Dialog>
