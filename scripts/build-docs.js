@@ -63,7 +63,7 @@ components.forEach(component => {
     content += `:::\n`;
   }
 
-  if (component.cation) {
+  if (component.caution) {
     content += `:::caution\n`;
     content += `${component.cation}\n`;
     content += `:::\n`;
