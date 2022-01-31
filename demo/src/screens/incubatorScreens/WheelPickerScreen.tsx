@@ -16,7 +16,7 @@ const monthItems = _.map([
   'November',
   'December'
 ],
-item => ({label: item, value: item, align: 'right'}));
+item => ({label: item, value: item, align: Incubator.WheelPickerAlign.RIGHT}));
 
 const yearItems = _.times(2050, i => i)
   .reverse()

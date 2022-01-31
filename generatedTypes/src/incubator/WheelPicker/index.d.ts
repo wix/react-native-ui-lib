@@ -2,11 +2,7 @@ import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 import { ItemProps } from './Item';
 import { TextProps } from '../../components/text';
-export declare enum WheelPickerAlign {
-    CENTER = "center",
-    RIGHT = "right",
-    LEFT = "left"
-}
+import { WheelPickerAlign } from './types';
 export interface WheelPickerProps {
     /**
      * Initial value
