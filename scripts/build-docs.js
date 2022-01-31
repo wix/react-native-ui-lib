@@ -65,7 +65,7 @@ components.forEach(component => {
 
   if (component.caution) {
     content += `:::caution\n`;
-    content += `${component.cation}\n`;
+    content += `${component.caution}\n`;
     content += `:::\n`;
   }
 
