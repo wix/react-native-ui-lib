@@ -10,14 +10,9 @@ import Fader, {FaderPosition} from '../../components/fader';
 import Item, {ItemProps} from './Item';
 import Text, {TextProps} from '../../components/text';
 import usePresenter from './usePresenter';
+import {WheelPickerAlign} from './types';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-export enum WheelPickerAlign {
-  CENTER = 'center',
-  RIGHT = 'right',
-  LEFT = 'left'
-}
 
 export interface WheelPickerProps {
   /**

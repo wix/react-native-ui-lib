@@ -1,12 +1,9 @@
 import React from 'react';
-import { TextStyle } from 'react-native';
-import { TextProps } from '../../components/text';
+import { WheelPickerAlign } from './types';
 export interface ItemProps {
     label: string;
-    fakeLabel?: string;
-    fakeLabelStyle?: TextStyle;
-    fakeLabelProps?: TextProps;
     value: string | number;
+    align?: WheelPickerAlign;
 }
 declare const _default: React.ComponentClass<ItemProps & {
     useCustomTheme?: boolean | undefined;
