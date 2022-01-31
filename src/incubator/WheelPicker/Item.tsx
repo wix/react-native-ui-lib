@@ -13,9 +13,6 @@ const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
   label: string;
-  fakeLabel?: string;
-  fakeLabelStyle?: TextStyle;
-  fakeLabelProps?: TextProps;
   value: string | number;
   align?: WheelPickerAlign
 }
@@ -28,8 +25,11 @@ interface InternalProps extends ItemProps {
   inactiveColor?: string;
   style?: TextStyle;
   onSelect: (index: number) => void;
-  testID?: string;
   centerH?: boolean;
+  fakeLabel?: string;
+  fakeLabelStyle?: TextStyle;
+  fakeLabelProps?: TextProps;
+  testID?: string;
 }
 
 const WheelPickerItem = memo(({
