@@ -309,7 +309,7 @@ export function extractModifierProps(props: Dictionary<any>) {
 export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   //@ts-ignore
   const ownPropTypes = this.propTypes;
-  const ownProps = _.flow(obj => _.pickBy(obj, (_value, key) => _.includes(Object.keys(ownPropTypes), key)),
+  const ownProps = _.flow((obj: Dictionary<any>) => _.pickBy(obj, (_value, key) => _.includes(Object.keys(ownPropTypes), key)),
     obj => _.omit(obj, ignoreProps))(props);
 
   return ownProps;
@@ -317,7 +317,7 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
 
 export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[] = []) {
   const componentPropTypes = component.propTypes;
-  const componentProps = _.flow(obj => _.pickBy(obj, (_value, key) => _.includes(Object.keys(componentPropTypes), key)),
+  const componentProps = _.flow((obj: Dictionary<any>) => _.pickBy(obj, (_value, key) => _.includes(Object.keys(componentPropTypes), key)),
     obj => _.omit(obj, ignoreProps))(props);
 
   return componentProps;
