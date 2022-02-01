@@ -40,9 +40,7 @@ module.exports = async ({graphql, boundActionCreators}) => {
     }
   });
 
-  const allComponents = getRelevantComponents(
-    result.data.allComponentMetadata.edges
-  );
+  const allComponents = getRelevantComponents(result.data.allComponentMetadata.edges);
 
   // Create components pages
   allComponents.map(({node}) => {

@@ -133,15 +133,16 @@ class TabControllerScreen extends Component<{}, State> {
           <Tab3/>
         </TabController.TabPage>
 
-        {!fewItems && _.map(_.takeRight(TABS, TABS.length - 3), (title, index) => {
-          return (
-            <TabController.TabPage key={title} index={index + 3}>
-              <View padding-s5>
-                <Text text40>{title}</Text>
-              </View>
-            </TabController.TabPage>
-          );
-        })}
+        {!fewItems &&
+          _.map(_.takeRight(TABS, TABS.length - 3), (title, index) => {
+            return (
+              <TabController.TabPage key={title} index={index + 3}>
+                <View padding-s5>
+                  <Text text40>{title}</Text>
+                </View>
+              </TabController.TabPage>
+            );
+          })}
       </Container>
     );
   }

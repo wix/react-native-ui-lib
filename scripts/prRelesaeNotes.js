@@ -126,9 +126,7 @@ function generateNotes(PRs) {
     encoding: 'utf8'
   });
 
-  console.log(
-    `\x1b[1m\x1b[32m✔\x1b[0m \x1b[32muilib-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`
-  );
+  console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32muilib-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
 }
 
 function addTitle(title) {

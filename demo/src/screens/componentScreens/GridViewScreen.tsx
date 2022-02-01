@@ -174,9 +174,7 @@ class GridViewScreen extends Component {
           <GridView items={pairs} numColumns={2}/>
           <Text marginV-s5 text60BO>
             Dynamic itemSize
-            <Text text90>
-              {' '} (Using maxItemWidth)
-            </Text>
+            <Text text90>  (Using maxItemWidth)</Text>
           </Text>
           <GridView items={dynamicLayout} maxItemWidth={120}/>
           <Text marginV-s5 text60BO>
