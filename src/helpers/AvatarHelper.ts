@@ -29,12 +29,10 @@ export function getColorById(id: string, avatarColors = getAvatarColors()) {
 export function getInitials(name?: string, limit = 2) {
   let initials = '';
   if (name && _.isString(name)) {
-    const nameSplitted = _.chain(name)
-      .split(/\s+/g)
-      .filter(word => word.length > 0)
-      .take(limit)
-      .value();
-    _.each(nameSplitted, (str) => {
+    const nameSplitted = _.flow(str => _.split(str, /\s+/g),
+      arr => _.filter(arr, word => word.length > 0),
+      arr => _.take(arr, limit))(name);
+    _.each(nameSplitted, str => {
       initials += str[0];
     });
   }

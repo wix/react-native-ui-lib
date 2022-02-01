@@ -37,17 +37,16 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   generateTabItems = (fewItems = this.state.fewItems): TabControllerItemProps[] => {
-    const items: TabControllerItemProps[] = _.chain(TABS)
-      .take(fewItems ? 3 : TABS.length)
-      .map<TabControllerItemProps>((tab, index) => ({
-        label: tab,
-        key: tab,
-        icon: index === 2 ? Assets.icons.demo.dashboard : undefined,
-        badge: index === 5 ? {label: '2'} : undefined,
-        leadingAccessory: index === 3 ? <Text marginR-4>{Assets.emojis.movie_camera}</Text> : undefined,
-        trailingAccessory: index === 4 ? <Text marginL-4>{Assets.emojis.camera}</Text> : undefined
-      }))
-      .value();
+    const items: TabControllerItemProps[] = _.flow(arr => _.take(arr, fewItems ? 3 : TABS.length),
+      (arr: TabControllerItemProps[]) =>
+        _.map<TabControllerItemProps>(arr, (tab: TabControllerItemProps, index: number) => ({
+          label: tab,
+          key: tab,
+          icon: index === 2 ? Assets.icons.demo.dashboard : undefined,
+          badge: index === 5 ? {label: '2'} : undefined,
+          leadingAccessory: index === 3 ? <Text marginR-4>{Assets.emojis.movie_camera}</Text> : undefined,
+          trailingAccessory: index === 4 ? <Text marginL-4>{Assets.emojis.camera}</Text> : undefined
+        })))(TABS);
 
     const addItem: TabControllerItemProps = {
       icon: Assets.icons.demo.add,

@@ -28,12 +28,10 @@ export class Typography {
   }
 
   generateKeysPattern(): RegExp {
-    return new RegExp(_.chain(this)
-      .keys()
-      .map(key => [`${key}`])
-      .flatten()
-      .join('|')
-      .value());
+    return new RegExp(_.flow(_.keys,
+      arr => _.map(arr, key => [`${key}`]),
+      _.flatten,
+      arr => _.join(arr, '|'))(this));
   }
 
   // TODO: deprecate

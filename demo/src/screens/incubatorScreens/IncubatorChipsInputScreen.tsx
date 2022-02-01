@@ -31,18 +31,17 @@ export default class ChipsInputScreen extends Component {
           chips={this.state.chips}
           leadingAccessory={<Text>TO: </Text>}
           onChange={newChips => {
-            _.chain(newChips)
-              .groupBy('label')
-              .forEach(group => {
-                if (group.length === 1) {
-                  delete group[0].invalid;
-                } else {
-                  group[group.length - 1].invalid = true;
-                }
-              })
-              .values()
-              .flatten()
-              .value();
+            _.flow(arr => _.groupBy(arr, 'label'),
+              arr =>
+                _.forEach(arr, group => {
+                  if (group.length === 1) {
+                    delete group[0].invalid;
+                  } else {
+                    group[group.length - 1].invalid = true;
+                  }
+                }),
+              _.values,
+              _.flatten)(newChips);
 
             this.setState({chips: newChips});
           }}

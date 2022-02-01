@@ -59,36 +59,38 @@ module.exports = async ({graphql, boundActionCreators}) => {
 };
 
 function getRelevantComponents(edges) {
-  const components = _.chain(edges)
+  const components = _.flow(
     /* Filter all Ignored components */
-    .filter(e => {
-      return e.node.displayName !== 'IGNORE';
-    })
+    arr =>
+      _.filter(arr, e => {
+        return e.node.displayName !== 'IGNORE';
+      }),
     /* Group internal components with the parent component */
-    .groupBy(e => e.node.displayName)
-    .map((groupedEdge, id) => {
-      if (groupedEdge.length > 1) {
-        const edge = {
-          node: {
-            displayName: id,
-            docblock: _.chain(groupedEdge).find(e => !!e.node.docblock).get('node.docblock').value(),
-            props: _.reduce(groupedEdge, (props, e) => [...props, ...e.node.props], [])
-          }
-        };
-        
-        /* Fix duplicate props (e.g Carousel) when they appear in different files of the component code */
-        const groupedProps = _.groupBy(edge.node.props, 'name');
-        _.forEach(groupedProps, (group, groupKey) => {
-          groupedProps[groupKey] = _.reduce(group, (result, prop) => _.merge(result, prop), {})
-        });
-        edge.node.props = _.values(groupedProps);
+    arr => _.groupBy(arr, e => e.node.displayName),
+    arr =>
+      _.map(arr, (groupedEdge, id) => {
+        if (groupedEdge.length > 1) {
+          const edge = {
+            node: {
+              displayName: id,
+              docblock: _.flow(arr => _.find(arr, e => !!e.node.docblock),
+                obj => _.get(obj, 'node.docblock'))(groupedEdge),
+              props: _.reduce(groupedEdge, (props, e) => [...props, ...e.node.props], [])
+            }
+          };
 
-        return edge;
-      } else {
-        return groupedEdge[0];
-      }
-    })
-    .value();
+          /* Fix duplicate props (e.g Carousel) when they appear in different files of the component code */
+          const groupedProps = _.groupBy(edge.node.props, 'name');
+          _.forEach(groupedProps, (group, groupKey) => {
+            groupedProps[groupKey] = _.reduce(group, (result, prop) => _.merge(result, prop), {});
+          });
+          edge.node.props = _.values(groupedProps);
+
+          return edge;
+        } else {
+          return groupedEdge[0];
+        }
+      }))(edges);
 
   return components;
 }

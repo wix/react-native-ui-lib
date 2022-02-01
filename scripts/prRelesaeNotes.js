@@ -37,12 +37,10 @@ async function run() {
 async function fetchLatestReleaseDate(version) {
   const relesae = childProcess.execSync(`gh release view ${version}`).toString();
   const releaseMetaData = relesae.split('--')[0];
-  const createDate = _.chain(releaseMetaData)
-    .split('\n')
-    .find(l => l.startsWith('created'))
-    .split('\t')
-    .last()
-    .value();
+  const createDate = _.flow(str => _.split(str, '\n'),
+    arr => _.find(arr, l => l.startsWith('created')),
+    str => _.split(str, '\t'),
+    _.last)(releaseMetaData);
 
   return new Date(createDate);
 }
@@ -57,19 +55,20 @@ async function fetchMergedPRs(postMergedDate) {
   const response = await fetch(url, {headers});
   const PRs = await response.json();
 
-  const relevantPRs = _.chain(PRs)
-    .filter(pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate)
-    .sortBy('merged_at')
-    .map(pr => ({
-      state: pr.state,
-      merged_at: pr.merged_at,
-      html_url: pr.html_url,
-      branch: pr.head.ref,
-      number: pr.number,
-      title: pr.title,
-      info: parsePR(pr.body)
-    }))
-    .value();
+  const relevantPRs = _.flow(arr =>
+    _.filter(arr,
+      pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate,
+      arr => _.sortBy(arr, 'merged_at'),
+      arr =>
+        _.map(arr, pr => ({
+          state: pr.state,
+          merged_at: pr.merged_at,
+          html_url: pr.html_url,
+          branch: pr.head.ref,
+          number: pr.number,
+          title: pr.title,
+          info: parsePR(pr.body)
+        }))))(PRs);
 
   return relevantPRs;
 }

@@ -20,12 +20,10 @@ class SettingsScreen extends Component {
       screens: [
         none,
         playground,
-        ..._.chain(data)
-          .values()
-          .map('screens')
-          .flatten()
-          .map(screen => ({label: screen.title, value: screen.screen}))
-          .value()
+        ..._.flow(_.values,
+          screens => _.map(screens, 'screens'),
+          _.flatten,
+          screens => _.map(screens, screen => ({label: screen.title, value: screen.screen})))(data)
       ]
     };
   }

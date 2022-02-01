@@ -164,7 +164,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
       return;
     }
 
-    const imageBorderRadius = _.chain(items).first().get('imageProps.borderRadius').value();
+    const imageBorderRadius = _.flow(_.first, obj => _.get(obj, 'imageProps.borderRadius'))(items);
     return (
       <View
         style={[

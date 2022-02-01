@@ -7,124 +7,119 @@ import products from '../../data/products';
 
 class GridViewScreen extends Component {
   state = {
-    contacts: _.chain(conversations)
-      .take(15)
-      .map(contact => ({
-        imageProps: {source: {uri: contact.thumbnail}, borderRadius: 999, style: {backgroundColor: Colors.grey60}},
-        title: _.split(contact.name, ' ')[0],
-        onPress: () => Alert.alert('My name is ' + contact.name)
-      }))
-      .value(),
-    products: _.chain(products)
-      .take(8)
-      .map((product, index) => ({
-        imageProps: {
-          source: {uri: product.mediaUrl},
-          borderRadius: 4,
-          style: {backgroundColor: Colors.grey60, borderWidth: 1, borderColor: Colors.grey50}
-        },
-        title: product.name,
-        titleTypography: 'subtextBold',
-        onPress: () => Alert.alert('My price is ' + product.formattedPrice),
-        renderOverlay: () => {
-          if (index < 7) {
-            return <Text text={product.price} style={{alignSelf: 'center', marginTop: 3}}/>;
-          }
-        }
-      }))
-      .value(),
-    pairs: _.chain(products)
-      .take(2)
-      .map(product => ({
-        containerProps: {useNative: true, activeScale: 0.97, activeOpacity: 1},
-        renderCustomItem: () => {
-          return (
-            <Card height={150} activeOpacity={1}>
-              <Card.Image style={{flex: 1}} source={{uri: product.mediaUrl}}/>
-            </Card>
-          );
-        },
-        title: product.name,
-        subtitle: (
-          <Text>
-            <Text style={{textDecorationLine: 'line-through', color: Colors.grey30}}>{product.formattedPrice}</Text>
-            <Text style={{textDecorationLine: 'none'}}> $50</Text>
-          </Text>
-        ),
-        description: product.inventory.status,
-        descriptionLines: 2,
-        alignToStart: true,
-        onPress: () => Alert.alert('My price was ' + product.formattedPrice + ', now it is $50')
-      }))
-      .value(),
-    dynamicLayout: _.chain(products)
-      .take(3)
-      .map(product => ({
-        imageProps: {
-          source: {
-            uri: product.mediaUrl
-          }
-        },
-        itemSize: {height: 90},
-        title: 'Title',
-        subtitle: 'subtitle',
-        description: product.name,
-        descriptionLines: 2,
-        alignToStart: true,
-        onPress: () => Alert.alert('Click!')
-      }))
-      .value(),
-    overlayText: _.chain(products)
-      .take(2)
-      .map((product, index) => ({
-        imageProps: {
-          source: {
-            uri: product.mediaUrl
+    contacts: _.flow(arr => _.take(arr, 15),
+      (arr: any[]) =>
+        _.map(arr, contact => ({
+          imageProps: {source: {uri: contact.thumbnail}, borderRadius: 999, style: {backgroundColor: Colors.grey60}},
+          title: _.split(contact.name, ' ')[0],
+          onPress: () => Alert.alert('My name is ' + contact.name)
+        })))(conversations),
+    products: _.flow(arr => _.take(arr, 8),
+      (arr: any[]) =>
+        _.map(arr, (product, index) => ({
+          imageProps: {
+            source: {uri: product.mediaUrl},
+            borderRadius: 4,
+            style: {backgroundColor: Colors.grey60, borderWidth: 1, borderColor: Colors.grey50}
           },
-          overlayType: Image.overlayTypes.VERTICAL,
-          overlayColor: Colors.white
-        },
-        itemSize: {height: 240},
-        overlayText: true,
-        title: product.name,
-        subtitle: (
-          <Text>
-            <Text style={{textDecorationLine: 'line-through', color: Colors.grey30}}>{product.formattedPrice}</Text>
-            <Text style={{textDecorationLine: 'none'}}>{product.formattedPrice}</Text>
-          </Text>
-        ),
-        description: '4 items',
-        descriptionLines: 2,
-        alignToStart: true,
-        onPress: () => Alert.alert('My price was ' + product.formattedPrice + ', now it is $50'),
-        renderOverlay: () => {
-          if (index === 0) {
-            return (
-              <Text margin-10 text80BO style={{alignSelf: 'flex-start', marginTop: 12, marginLeft: 12}}>
-                {product.formattedPrice}
-              </Text>
-            );
+          title: product.name,
+          titleTypography: 'subtextBold',
+          onPress: () => Alert.alert('My price is ' + product.formattedPrice),
+          renderOverlay: () => {
+            if (index < 7) {
+              return <Text text={product.price} style={{alignSelf: 'center', marginTop: 3}}/>;
+            }
           }
-        }
-      }))
-      .value(),
-    avatars: _.chain(conversations)
-      .take(9)
-      .map(item => ({
-        renderCustomItem: () => {
-          const imageElementElement = item.thumbnail;
-          return (
-            <View flex center marginB-10>
-              <Avatar size={100} source={{uri: imageElementElement}}/>
-            </View>
-          );
-        },
-        onPress: () => Alert.alert('Your choose is  ' + item.name),
-        title: item.name,
-        titleLines: 2,
-        titleTypography: 'bodySmall'
-      }))
-      .value(),
+        })))(products),
+    pairs: _.flow(arr => _.take(arr, 2),
+      (arr: any[]) =>
+        _.map(arr, product => ({
+          containerProps: {useNative: true, activeScale: 0.97, activeOpacity: 1},
+          renderCustomItem: () => {
+            return (
+              <Card height={150} activeOpacity={1}>
+                <Card.Image style={{flex: 1}} source={{uri: product.mediaUrl}}/>
+              </Card>
+            );
+          },
+          title: product.name,
+          subtitle: (
+            <Text>
+              <Text style={{textDecorationLine: 'line-through', color: Colors.grey30}}>{product.formattedPrice}</Text>
+              <Text style={{textDecorationLine: 'none'}}> $50</Text>
+            </Text>
+          ),
+          description: product.inventory.status,
+          descriptionLines: 2,
+          alignToStart: true,
+          onPress: () => Alert.alert('My price was ' + product.formattedPrice + ', now it is $50')
+        })))(products),
+    dynamicLayout: _.flow(arr => _.take(arr, 3),
+      (arr: any[]) =>
+        _.map(arr, product => ({
+          imageProps: {
+            source: {
+              uri: product.mediaUrl
+            }
+          },
+          itemSize: {height: 90},
+          title: 'Title',
+          subtitle: 'subtitle',
+          description: product.name,
+          descriptionLines: 2,
+          alignToStart: true,
+          onPress: () => Alert.alert('Click!')
+        })))(products),
+    overlayText: _.flow(arr => _.take(arr, 2),
+      (arr: any[]) =>
+        _.map(arr, (product, index) => ({
+          imageProps: {
+            source: {
+              uri: product.mediaUrl
+            },
+            overlayType: Image.overlayTypes.VERTICAL,
+            overlayColor: Colors.white
+          },
+          itemSize: {height: 240},
+          overlayText: true,
+          title: product.name,
+          subtitle: (
+            <Text>
+              <Text style={{textDecorationLine: 'line-through', color: Colors.grey30}}>{product.formattedPrice}</Text>
+              <Text style={{textDecorationLine: 'none'}}>{product.formattedPrice}</Text>
+            </Text>
+          ),
+          description: '4 items',
+          descriptionLines: 2,
+          alignToStart: true,
+          onPress: () => Alert.alert('My price was ' + product.formattedPrice + ', now it is $50'),
+          renderOverlay: () => {
+            if (index === 0) {
+              return (
+                <Text margin-10 text80BO style={{alignSelf: 'flex-start', marginTop: 12, marginLeft: 12}}>
+                  {product.formattedPrice}
+                </Text>
+              );
+            }
+          }
+        })))(products),
+
+    avatars: _.flow(arr => _.take(arr, 9),
+      (arr: any[]) =>
+        _.map(arr, item => ({
+          renderCustomItem: () => {
+            const imageElementElement = item.thumbnail;
+            return (
+              <View flex center marginB-10>
+                <Avatar size={100} source={{uri: imageElementElement}}/>
+              </View>
+            );
+          },
+          onPress: () => Alert.alert('Your choose is  ' + item.name),
+          title: item.name,
+          titleLines: 2,
+          titleTypography: 'bodySmall'
+        })))(products),
     squares: [Colors.red30, Colors.yellow30, Colors.blue30, Colors.violet30, Colors.green30].map(color => ({
       renderCustomItem: () => <View height={50} backgroundColor={color}/>
     })),
