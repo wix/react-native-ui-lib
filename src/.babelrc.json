@@ -1,7 +1,7 @@
 {
   "presets": [
     "@babel/preset-typescript" /* , "@babel/preset-react" */,
-    ["@babel/env", {"targets": {"node": 6}}]
+    ["@babel/env", {"targets": {"node": true}}]
   ],
   "plugins": [
     ["babel-plugin-typescript-to-proptypes", {"comments": true}],
