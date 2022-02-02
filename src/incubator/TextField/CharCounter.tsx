@@ -14,17 +14,17 @@ export interface CharCounterProps {
    * Pass custom style to character counter text
    */
   charCounterStyle?: TextStyle;
+  testID: string;
 }
 
-const CharCounter = ({maxLength, charCounterStyle}: CharCounterProps) => {
+const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) => {
   const {value} = useContext(FieldContext);
-
   if (_.isUndefined(maxLength)) {
     return null;
   }
 
   return (
-    <Text grey30 style={[styles.container, charCounterStyle]}>
+    <Text grey30 style={[styles.container, charCounterStyle]} testID={testID}>
       {`${_.size(value)}/${maxLength}`}
     </Text>
   );

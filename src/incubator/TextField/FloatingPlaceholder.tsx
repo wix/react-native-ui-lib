@@ -27,6 +27,7 @@ export interface FloatingPlaceholderProps {
   floatOnFocus?: boolean;
   validationMessagePosition?: ValidationMessagePosition;
   extraOffset?: number;
+  testID: string;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
@@ -37,7 +38,8 @@ const FloatingPlaceholder = ({
   floatingPlaceholderStyle,
   floatOnFocus,
   validationMessagePosition,
-  extraOffset = 0
+  extraOffset = 0,
+  testID
 }: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
@@ -92,6 +94,7 @@ const FloatingPlaceholder = ({
         color={getColorByState(floatingPlaceholderColor, context)}
         style={[styles.placeholder, floatingPlaceholderStyle, animatedStyle]}
         onLayout={onPlaceholderLayout}
+        testID={testID}
       >
         {placeholder}
       </Text>

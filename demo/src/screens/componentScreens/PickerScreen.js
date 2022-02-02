@@ -1,7 +1,18 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Colors, Icon, Dialog, Text, Picker, Avatar, Assets, PanningProvider, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  View,
+  Colors,
+  Icon,
+  Dialog,
+  Text,
+  Picker,
+  Avatar,
+  Assets,
+  PanningProvider,
+  Typography
+} from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
@@ -239,7 +250,8 @@ export default class PickerScreen extends Component {
 
           <Picker
             migrate
-            title="Language"
+            migrateTextField
+            label="Language"
             placeholder="Favorite Language"
             value={this.state.language2}
             onChange={value => this.setState({language2: value})}

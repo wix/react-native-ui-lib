@@ -95,6 +95,7 @@ export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, Wizar
 // export {default as TextTestKit} from './components/text/Text.driver';
 // export {default as ImageTestKit} from './components/image/Image.driver';
 // export {default as ButtonTestKit} from './components/button/Button.driver';
+// export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
