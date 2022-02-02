@@ -13,7 +13,7 @@
     },
     {
       "name": "intensity",
-      "type": "low | medium | high",
+      "type": "low | medium | high | full",
       "description": "The intensity of the gradient.",
       "default": "OverlayIntensityType.LOW"
     },

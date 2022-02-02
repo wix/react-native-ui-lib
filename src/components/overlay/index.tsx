@@ -18,7 +18,8 @@ const OVERLY_TYPES = {
 export enum OverlayIntensityType {
   LOW = 'low',
   MEDIUM = 'medium',
-  HIGH = 'high'
+  HIGH = 'high',
+  FULL = 'full'
 }
 
 export type OverlayTypeType = typeof OVERLY_TYPES[keyof typeof OVERLY_TYPES];
@@ -52,6 +53,23 @@ class Overlay extends PureComponent<OverlayTypes> {
   static overlayTypes = OVERLY_TYPES;
   static intensityTypes = OverlayIntensityType;
 
+  getOpacity(intensity = this.props.intensity, color = this.props.color) {
+    switch (intensity) {
+      case OverlayIntensityType.FULL: {
+        return 1;
+      }
+      case OverlayIntensityType.HIGH: {
+        return color === Colors.white ? 0.85 : 0.75;
+      }
+      case OverlayIntensityType.MEDIUM: {
+        return color === Colors.white ? 0.7 : 0.55;
+      }
+      default: {
+        return color === Colors.white ? 0.45 : 0.4;
+      }
+    }
+  }
+
   getStyleByType(type = this.props.type) {
     const {color, intensity} = this.props;
 
@@ -61,17 +79,8 @@ class Overlay extends PureComponent<OverlayTypes> {
       case OVERLY_TYPES.BOTTOM:
         return [styles.bottom, color && {tintColor: color}];
       case OVERLY_TYPES.SOLID: {
-        if (isUndefined(color)) {
-          const opacity =
-            intensity === OverlayIntensityType.HIGH ? 0.75 : intensity === OverlayIntensityType.MEDIUM ? 0.55 : 0.4;
-          return {backgroundColor: Colors.rgba(Colors.grey10, opacity)};
-        } else if (color === Colors.white) {
-          const opacity =
-            intensity === OverlayIntensityType.HIGH ? 0.85 : intensity === OverlayIntensityType.MEDIUM ? 0.7 : 0.45;
-          return {backgroundColor: Colors.rgba(Colors.white, opacity)};
-        } else {
-          return {backgroundColor: color};
-        }
+        const chosenColor = isUndefined(color) ? Colors.grey10 : color;
+        return {backgroundColor: Colors.rgba(chosenColor, this.getOpacity(intensity, chosenColor))};
       }
       default:
         break;
