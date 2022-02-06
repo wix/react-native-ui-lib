@@ -8,11 +8,11 @@ export default function useAnimatedTranslator(props: TranslatorProps): {
     init: (to: {
         x: number;
         y: number;
-    }, animationDirection: TransitionViewDirection, callback: (isFinished: boolean) => void) => void;
+    }, animationDirection: TransitionViewDirection, callback: (isFinished?: boolean | undefined) => void) => void;
     animate: (to: {
         x: number;
         y: number;
-    }, animationDirection: TransitionViewDirection, callback: (isFinished: boolean) => void) => void;
+    }, animationDirection: TransitionViewDirection, callback: (isFinished?: boolean | undefined) => void) => void;
     animatedStyle: {
         transform: ({
             translateX: number;
