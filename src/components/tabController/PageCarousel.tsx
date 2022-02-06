@@ -1,3 +1,4 @@
+import {noop} from 'lodash';
 import React, {useCallback, useContext, useMemo, useEffect} from 'react';
 import TabBarContext from './TabBarContext';
 import Reanimated, {
@@ -101,7 +102,7 @@ function PageCarousel({...props}) {
       scrollEventThrottle={16}
       contentOffset={initialOffset} // iOS only
       onLayout={scrollToInitial} // Android only
-      onMomentumScrollEnd={() => {}} // workaround for useAnimatedScrollHandler.onMomentumEnd not being called (https://github.com/software-mansion/react-native-reanimated/issues/2735)
+      onMomentumScrollEnd={noop} // workaround for useAnimatedScrollHandler.onMomentumEnd not being called (https://github.com/software-mansion/react-native-reanimated/issues/2735)
     />
   );
 }
