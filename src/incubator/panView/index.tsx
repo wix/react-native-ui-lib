@@ -111,7 +111,7 @@ const PanView = (props: Props) => {
     translationY.value = result.y;
   };
 
-  const dismiss = useCallback((isFinished: boolean) => {
+  const dismiss = useCallback((isFinished?: boolean) => {
     'worklet';
     if (isFinished && waitingForDismiss.value && onDismiss) {
       waitingForDismiss.value = false;
