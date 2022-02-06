@@ -18,7 +18,7 @@ import {useOrientation} from 'hooks';
 const BORDER_WIDTH = 1;
 const TIMING_CONFIG = {
   duration: 300,
-  easing: Easing.bezier(0.33, 1, 0.68, 1)
+  easing: Easing.bezierFn(0.33, 1, 0.68, 1)
 };
 
 export type SegmentedControlItemProps = SegmentProps;
