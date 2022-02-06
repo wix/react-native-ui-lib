@@ -34,5 +34,10 @@
       "type": "boolean",
       "description": "Should add a GestureHandlerRootView (Android only)"
     }
+  ],
+  "snippet": [
+    "<Modal visible={$1} animationType={$2} onBackgroundPress={$3}>",
+    " $4",
+    "</Modal>"
   ]
 }

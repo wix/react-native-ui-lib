@@ -15,5 +15,8 @@
     },
     {"name": "loader", "type": "JSX.element", "description": "A component to render while the image is loading"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"}
+  ],
+  "snippet": [
+    "<AnimatedImage source={{uri: $1}}/>"
   ]
 }

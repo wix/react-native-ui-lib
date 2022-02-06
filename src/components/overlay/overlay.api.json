@@ -23,5 +23,12 @@
       "type": "JSX.Element",
       "description": "Custom overlay content to be rendered on top of the image"
     }
+  ],
+  "snippet": [
+    "<Image",
+    " source={$1}",
+    " overlayType={$2}",
+    " style={$3}",
+    "/>"
   ]
 }

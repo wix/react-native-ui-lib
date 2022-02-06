@@ -30,5 +30,8 @@
       "description": "Use absolute position for the component",
       "default": "true"
     }
+  ],
+  "snippet": [
+    "<ConnectionStatusBar onConnectionChange={$1}/>"
   ]
 }

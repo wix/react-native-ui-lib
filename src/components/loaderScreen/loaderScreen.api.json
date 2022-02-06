@@ -17,5 +17,8 @@
     {"name": "messageStyle", "type": "TextStyle", "description": "message style"},
     {"name": "overlay", "type": "boolean", "description": "Show the screen as an absolute overlay"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Custom container style"}
+  ],
+  "snippet": [
+    "<LoaderScreen message={$1} color={$2}/>"
   ]
 }

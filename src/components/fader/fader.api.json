@@ -19,5 +19,8 @@
       "description": "Change the tint color of the fade view",
       "default": "Colors.white"
     }
+  ],
+  "snippet": [
+    "<Fader visible={$1} position={$2} tintColor={$3}/>"
   ]
 }

@@ -20,5 +20,10 @@
       "type": "((value?: string) => void) | ((value?: number) => void) | ((value?: boolean) => void) | ((value?: any) => void)",
       "description": "Invoked once when value changes, by selecting one of the radio buttons in the group"
     }
+  ],
+  "snippet": [
+    "<RadioGroup initialValue={$1} onValueChange={$2}>",
+    " $3",
+    "</RadioGroup>"
   ]
 }

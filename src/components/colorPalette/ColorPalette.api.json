@@ -39,5 +39,12 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
     {"name": "style", "type": "ViewStyle", "description": "Component's style"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ],
+  "snippet": [
+    "<ColorPalette",
+    " colors={$1}",
+    " value={$2}",
+    " onValueChange={$3}",
+    "/>"
   ]
 }

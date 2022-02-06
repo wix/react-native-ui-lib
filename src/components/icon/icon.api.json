@@ -12,5 +12,8 @@
     {"name": "tintColor", "type": "string", "description": "The icon tint"},
     {"name": "size", "type": "number", "description": "The icon size"},
     {"name": "supportRTL", "type": "boolean", "description": "whether the image should flip horizontally on RTL locals"}
+  ],
+  "snippet": [
+    "<Icon source={$1} size={$2} tintColor={$3}/>"
   ]
 }

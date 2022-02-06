@@ -30,5 +30,11 @@
     },
     {"name": "imageStyle", "type": "ImageStyle", "description": "The style for the background image"},
     {"name": "imageProps", "type": "ImageProps", "description": "Other image props that will be passed to the image"}
+  ],
+  "snippet": [
+    "<Card.Section",
+    " content={$1}",
+    " contentStyle={$2}",
+    "/>"
   ]
 }

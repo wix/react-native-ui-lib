@@ -37,5 +37,12 @@
       "default": "Constants.isIOS"
     },
     {"name": "containerStyle", "type": "ViewStyle", "description": "Style for the TopBar container"}
+  ],
+  "snippet": [
+    "<Modal.TopBar",
+    " title={$1}",
+    " onCancel={$2}",
+    " onDone={$3}",
+    "/>"
   ]
 }

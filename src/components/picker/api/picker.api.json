@@ -91,5 +91,16 @@
       "description": "Pass props to the list component that wraps the picker options (allows to control FlatList behavior)"
     },
     {"name": "pickerModalProps", "type": "ModalProps", "description": "Pass props to the picker modal"}
+  ],
+  "snippet": [
+    "<Picker",
+    " value={$1}",
+    " placeholder={$2}",
+    " onChange={$3}",
+    ">",
+    " {_.map(options, option => (",
+    "  $4",
+    " ))}",
+    "</Picker>"
   ]
 }

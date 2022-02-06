@@ -35,5 +35,8 @@
       "type": "ViewStyle",
       "description": "Custom styling for the checkbox and label container"
     }
+  ],
+  "snippet": [
+    "<Checkbox value={$1} onValueChange={$2}/>"
   ]
 }

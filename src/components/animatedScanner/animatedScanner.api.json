@@ -19,5 +19,8 @@
     {"name": "onBreakpoint", "type": "({progress, isDone}) => void", "description": "Breakpoint callback"},
     {"name": "hideScannerLine", "type": "boolean", "description": "Whether to hide the scanner line"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"}
+  ],
+  "snippet": [
+    "<AnimatedScanner progress={$1} duration={$2}/>"
   ]
 }

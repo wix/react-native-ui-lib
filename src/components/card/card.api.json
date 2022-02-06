@@ -41,5 +41,10 @@
       "type": "CardSelectionOptions",
       "description": "Custom options for styling the selection indication"
     }
+  ],
+  "snippet": [
+    "<Card $1>",
+    " $2",
+    "</Card>"
   ]
 }

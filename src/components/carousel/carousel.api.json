@@ -92,5 +92,10 @@
       "type": "Animated.ValueXY",
       "description": "Pass to attach to ScrollView's Animated.event in order to animated elements base on Carousel scroll offset (pass new Animated.ValueXY())"
     }
+  ],
+  "snippet": [
+    "<Carousel onChangePage={$1}>",
+    " $2",
+    "</Carousel>"
   ]
 }

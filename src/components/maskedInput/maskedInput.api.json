@@ -20,5 +20,8 @@
       "type": "ViewStyle",
       "description": "container style for the masked input container"
     }
+  ],
+  "snippet": [
+    "<MaskedInput ref={$1} renderMaskedText={$2}/>"
   ]
 }

@@ -47,5 +47,14 @@
     },
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ],
+  "snippet": [
+    "<Dialog", 
+    " visible={$1}",
+    " onDismiss={$2}",
+    " panDirection={$3}",
+    ">",
+    " $4",
+    "</Dialog>"
   ]
 }

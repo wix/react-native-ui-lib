@@ -66,5 +66,8 @@
       "type": "ButtonAnimationDirection",
       "description": "the direction of the animation ('left' and 'right' will effect the button's own alignment)"
     }
+  ],
+  "snippet": [
+    "<Button label={$1} size={$2} backgroundColor={$3}/>"
   ]
 }

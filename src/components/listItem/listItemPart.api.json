@@ -11,5 +11,10 @@
     {"name": "row", "type": "boolean", "description": "this part content direction will be row", "default": "true"},
     {"name": "column", "type": "boolean", "description": "this part content direction will be column"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "container style"}
+  ],
+  "snippet": [
+    "<ListItem.Part $1>",
+    " $2",
+    "</ListItem.Part>"
   ]
 }

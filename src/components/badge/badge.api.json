@@ -39,5 +39,8 @@
     {"name": "iconProps", "type": "ImageProps", "description": "Additional props passed to icon"},
     {"name": "customElement", "type": "JSX.Element", "description": "Custom element to render instead of an icon"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styles for the top container"}
+  ],
+  "snippet": [
+    "<Badge label={$1} size={$2}/>"
   ]
 }

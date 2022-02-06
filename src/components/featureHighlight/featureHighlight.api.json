@@ -67,5 +67,15 @@
     },
     {"name": "pageControlProps", "type": "PageControlProps", "description": "PageControl component's props"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ],
+  "snippet": [
+    "<FeatureHighlight",
+    " visible={$1}",
+    " title={$2}",
+    " message={$3}",
+    " getTarget={$4}",
+    " confirmButtonProps={$5}",
+    " onBackgroundPress={$6}",
+    "/>"
   ]
 }

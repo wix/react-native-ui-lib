@@ -42,5 +42,8 @@
     {"name": "overlayColor", "type": "string", "description": "Pass a custom color for the overlay"},
     {"name": "customOverlayContent", "type": "JSX.Element", "description": "Render an overlay with custom content"},
     {"name": "errorSource", "type": "ImageSourcePropType", "description": "Default image source in case of an error"}
+  ],
+  "snippet": [
+    "<Image source={$1}/>"
   ]
 }

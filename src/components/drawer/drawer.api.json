@@ -57,5 +57,10 @@
     },
     {"name": "style", "type": "ViewStyle", "description": "Component's style"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ],
+  "snippet": [
+    "<Drawer $1>",
+    " $2",
+    "</Drawer>"
   ]
 }

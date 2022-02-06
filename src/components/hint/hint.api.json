@@ -48,5 +48,8 @@
     {"name": "enableShadow", "type": "boolean", "description": "Enable shadow (for hint with white background only)"},
     {"name": "testID", "type": "string", "description": "The hint's test identifier"},
     {"name": "style", "type": "ViewStyle", "description": "Additional styling"}
+  ],
+  "snippet": [
+    "<Hint visible={$1} message={$2} color={$3}/>"
   ]
 }

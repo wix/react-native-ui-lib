@@ -12,5 +12,13 @@
     {"name": "expanded", "type": "boolean", "description": "Should the ExpandableSection be expanded"},
     {"name": "top", "type": "boolean", "description": "Should it open above the 'sectionHeader'"},
     {"name": "onPress", "type": "() => void", "description": "Called when pressing the header of the ExpandableSection"}
+  ],
+  "snippet": [
+    "<ExpandableSection",
+    " top={$1}",
+    " expanded={$2}",
+    " sectionHeader={$3}",
+    " onPress={$4}",
+    ">"
   ]
 }
