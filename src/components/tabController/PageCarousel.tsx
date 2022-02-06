@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useMemo, useEffect} from 'react';
-import {NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {NativeSyntheticEvent, NativeScrollEvent, ScrollViewProps} from 'react-native';
 import TabBarContext from './TabBarContext';
 import Reanimated, {
   runOnJS,
@@ -17,7 +17,7 @@ const FIX_RTL = Constants.isRTL && Constants.isAndroid;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel
  */
-function PageCarousel(props) {
+function PageCarousel(props: ScrollViewProps) {
   const {onMomentumScrollEnd, ...others} = props;
   const carousel = useAnimatedRef<Reanimated.ScrollView>();
   const {
