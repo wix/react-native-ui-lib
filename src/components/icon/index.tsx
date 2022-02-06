@@ -1,9 +1,9 @@
 import isUndefined from 'lodash/isUndefined';
-import get from 'lodash/get';
 import React, {useMemo} from 'react';
 import {Image, ImageProps, StyleSheet} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
-import Assets from '../../assets';
+import {getAsset, isSvg} from '../../utils/imageUtils';
+import SvgImage from '../svgImage';
 
 export type IconProps = ImageProps &
   MarginModifiers & {
@@ -45,12 +45,14 @@ const Icon = (props: Props) => {
 
   const iconSource = useMemo(() => {
     if (!isUndefined(assetName)) {
-      return get(Assets, `${assetGroup}.${assetName}`);
+      return getAsset(assetName, assetGroup);
     }
     return source;
   }, [source, assetGroup, assetName]);
 
-  return (
+  return isSvg(source) ? (
+    <SvgImage data={source} {...props}/>
+  ) : (
     <Image
       {...others}
       source={iconSource}

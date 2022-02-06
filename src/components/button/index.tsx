@@ -83,10 +83,10 @@ class Button extends PureComponent<Props, ButtonState> {
 
     if (!outline && !this.isLink) {
       if (disabled) {
-        return disabledBackgroundColor || Colors.backgroundDisabled;
+        return disabledBackgroundColor || Colors.$backgroundDisabled;
       }
 
-      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.backgroundPrimaryHeavy;
+      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.$backgroundPrimaryHeavy;
     }
     return 'transparent';
   }
@@ -103,17 +103,17 @@ class Button extends PureComponent<Props, ButtonState> {
     const {linkColor, outline, outlineColor, disabled, color: propsColor} = this.props;
     const isLink = this.isLink;
 
-    let color: string | undefined = Colors.textDefaultLight;
+    let color: string | undefined = Colors.$textDefaultLight;
     if (isLink) {
-      color = linkColor || Colors.textPrimary;
+      color = linkColor || Colors.$textPrimary;
     } else if (outline) {
-      color = outlineColor || Colors.textPrimary;
+      color = outlineColor || Colors.$textPrimary;
     } else if (this.isIconButton) {
       color = undefined; // Colors.grey10;
     }
 
     if (disabled && (isLink || outline)) {
-      return Colors.textDisabled;
+      return Colors.$textDisabled;
     }
 
     color = propsColor || extractColorValue(this.props) || color;
@@ -206,11 +206,11 @@ class Button extends PureComponent<Props, ButtonState> {
     if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
-        borderColor: outlineColor || Colors.outlinePrimary
+        borderColor: outlineColor || Colors.$outlinePrimary
       };
 
       if (disabled) {
-        outlineStyle.borderColor = Colors.outlineDisabled;
+        outlineStyle.borderColor = Colors.$outlineDisabled;
       }
     }
     return outlineStyle;
@@ -254,7 +254,7 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     if (disabled && !this.isFilled) {
-      iconStyle.tintColor = Colors.iconDisabled;
+      iconStyle.tintColor = Colors.$iconDisabled;
     }
 
     return [iconStyle, propsIconStyle];
@@ -279,7 +279,7 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   renderIcon() {
-    const {iconSource, supportRTL} = this.props;
+    const {iconSource, supportRTL, testID} = this.props;
 
     if (iconSource) {
       const iconStyle = this.getIconStyle();
@@ -287,14 +287,17 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle}/>;
+        return (
+          <Image
+            source={iconSource} supportRTL={supportRTL} style={iconStyle} testID={`${testID}.icon`}
+          />);
       }
     }
     return null;
   }
 
   renderLabel() {
-    const {label, labelStyle, labelProps, hyperlink} = this.props;
+    const {label, labelStyle, labelProps, hyperlink, testID} = this.props;
     const typography = extractTypographyValue(this.props);
     const color = this.getLabelColor();
     const labelSizeStyle = this.getLabelSizeStyle();
@@ -305,6 +308,7 @@ class Button extends PureComponent<Props, ButtonState> {
           style={[this.styles.text, !!color && {color}, labelSizeStyle, {...typography}, labelStyle]}
           underline={hyperlink}
           numberOfLines={1}
+          testID={`${testID}.label`}
           {...labelProps}
         >
           {label}

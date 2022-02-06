@@ -1,0 +1,9 @@
+{
+  "name": "Toast",
+  "category": "overlays",
+  "description": "A customizable Toast component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js",
+  "caution": "Please consider moving to our new Toast implementation and use Incubator.Toast instead",
+  "images": [],
+  "props": []
+}

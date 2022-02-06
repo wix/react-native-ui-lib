@@ -283,6 +283,21 @@ export default {
     return require('../lib/components/Keyboard').default;
   },
 
+  // TestKits
+  // get TextTestKit() {
+  //   return require('./components/text/Text.driver').default;
+  // },
+  // get ImageTestKit() {
+  //   return require('./components/image/Image.driver').default;
+  // },
+  // get ButtonTestKit() {
+  //   return require('./components/button/Button.driver').default;
+  // },
+  // export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
+  // get TextFieldTestKit() {
+  //   return require('./incubator/TextField/TextField.driver').default;
+  // },
+
   // Style
   get Colors() {
     return require('./style').Colors;

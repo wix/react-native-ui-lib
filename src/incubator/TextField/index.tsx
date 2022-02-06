@@ -39,11 +39,11 @@ export type TextFieldProps = MarginModifiers &
   ColorsModifiers &
   InputProps &
   LabelProps &
-  FloatingPlaceholderProps &
+  Omit<FloatingPlaceholderProps, 'testID'> &
   // We're declaring these props explicitly here for react-docgen (which can't read hooks)
   // FieldStateProps &
   ValidationMessageProps &
-  Omit<CharCounterProps, 'maxLength'> & {
+  Omit<CharCounterProps, 'maxLength' | 'testID'> & {
     /**
      * Pass to render a leading element
      */
@@ -212,6 +212,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 floatOnFocus={floatOnFocus}
                 validationMessagePosition={validationMessagePosition}
                 extraOffset={leadingAccessoryMeasurements?.width}
+                testID={`${props.testID}.floatingPlaceholder`}
               />
             )}
             {children || (
@@ -242,7 +243,7 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
           {bottomAccessory}
-          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle}/>}
+          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle} testID={`${props.testID}.charCounter`}/>}
         </View>
       </View>
     </FieldContext.Provider>

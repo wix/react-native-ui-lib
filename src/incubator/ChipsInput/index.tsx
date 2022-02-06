@@ -38,7 +38,7 @@ export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
   maxChips?: number;
 };
 
-const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
+const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<any>) => {
   const fieldRef = useCombinedRefs(refToForward);
   const {
     chips = [],
@@ -150,17 +150,17 @@ const ChipsInput = (props: ChipsInputProps, refToForward: React.Ref<any>) => {
       accessibilityHint={props.editable ? 'press keyboard delete button to remove last tag' : undefined}
     />
   );
-};
+});
 
 const styles = StyleSheet.create({
   fieldStyle: {
     flexWrap: 'wrap'
   }
 });
-
+// @ts-expect-error
 ChipsInput.changeReasons = {
   ADDED: 'added',
   REMOVED: 'removed'
 };
 
-export default forwardRef(ChipsInput);
+export default ChipsInput;
