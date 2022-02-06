@@ -1,5 +1,5 @@
-import {noop} from 'lodash';
 import React, {useCallback, useContext, useMemo, useEffect} from 'react';
+import {NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import TabBarContext from './TabBarContext';
 import Reanimated, {
   runOnJS,
@@ -17,7 +17,8 @@ const FIX_RTL = Constants.isRTL && Constants.isAndroid;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel
  */
-function PageCarousel({...props}) {
+function PageCarousel(props) {
+  const {onMomentumScrollEnd, ...others} = props;
   const carousel = useAnimatedRef<Reanimated.ScrollView>();
   const {
     itemsCount,
@@ -91,9 +92,13 @@ function PageCarousel({...props}) {
     carousel.current?.scrollTo({x: currentPage.value * pageWidth, animated: false});
   }, [pageWidth]);
 
+  const handleOnMomentumScrollEnd = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    onMomentumScrollEnd?.(event);
+  }, [onMomentumScrollEnd]);
+
   return (
     <Reanimated.ScrollView
-      {...props}
+      {...others}
       ref={carousel}
       horizontal
       pagingEnabled
@@ -102,7 +107,7 @@ function PageCarousel({...props}) {
       scrollEventThrottle={16}
       contentOffset={initialOffset} // iOS only
       onLayout={scrollToInitial} // Android only
-      onMomentumScrollEnd={noop} // workaround for useAnimatedScrollHandler.onMomentumEnd not being called (https://github.com/software-mansion/react-native-reanimated/issues/2735)
+      onMomentumScrollEnd={handleOnMomentumScrollEnd} // TODO: workaround for useAnimatedScrollHandler.onMomentumEnd not being called (https://github.com/software-mansion/react-native-reanimated/issues/2735)
     />
   );
 }
