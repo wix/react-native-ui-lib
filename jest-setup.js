@@ -8,7 +8,12 @@ jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => 
 // mock native modules
 jest.mock('@react-native-community/blur', () => {});
 jest.mock('@react-native-community/netinfo', () => {});
-jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
+// TODO: Adding here a todo for package.json: need to remove moduleNameMapper, see this: https://github.com/software-mansion/react-native-reanimated/issues/1196
+jest.mock('react-native-reanimated', () => {
+  const reactNativeReanimated = require('react-native-reanimated/mock');
+  reactNativeReanimated.interpolateColor = jest.fn(v => v); // TODO: See this https://github.com/software-mansion/react-native-reanimated/issues/2749
+  return reactNativeReanimated;
+});
 global.__reanimatedWorkletInit = jest.fn();
 jest.mock('react-native-gesture-handler', () => {});
 jest.mock('@react-native-picker/picker', () => ({Picker: {Item: {}}}));
