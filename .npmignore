@@ -1,5 +1,6 @@
 example/
 docs/
+react-native-ui-lib-snippets/
 node_modules/
 .npmignore
 .watchmanconfig
