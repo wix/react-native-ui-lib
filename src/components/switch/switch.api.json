@@ -26,5 +26,8 @@
     {"name": "thumbStyle", "type": "ViewStyle", "description": "The Switch's thumb style"},
     {"name": "style", "type": "ViewStyle", "description": "Custom style"},
     {"name": "testID", "type": "string", "description": "Component test id"}
+  ],
+  "snippet": [
+    "<Switch value={$1} onValueChange={$2}/>"
   ]
 }

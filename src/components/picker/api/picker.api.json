@@ -98,8 +98,8 @@
     " placeholder={$2}",
     " onChange={$3}",
     ">",
-    " {_.map(options, option => (",
-    "  $4",
+    " {_.map(items, item => (",
+    "  return this.renderItem(item, index);",
     " ))}",
     "</Picker>"
   ]

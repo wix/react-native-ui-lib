@@ -45,5 +45,13 @@
     },
     {"name": "style", "type": "ViewStyle", "description": "Override container styles"},
     {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<SkeletonView",
+    " template={$1}",
+    " showContent={$2}",
+    " renderContent={$3}",
+    " times={$4}",
+    "/>"
   ]
 }
