@@ -5,8 +5,6 @@ import {menuStructure} from 'unicorn-demo-app';
 import _ from 'lodash';
 import fuzzysearch from 'fuzzysearch';
 
-
-
 const {TextField} = Incubator;
 
 const sections = _.map(menuStructure, (section, key) => {
@@ -52,7 +50,9 @@ export default function MainScreen({navigation}) {
       return <View height={Spacings.s2} bg-grey70/>;
     }
 
-    const screenId = _.chain(item.screen).split('.').last().replace('Screen', '').value();
+    const screenId = _.flow((str: string) => _.split(str, '.'),
+      _.last,
+      (str: string) => _.replace(str, 'Screen', ''))(item.screen);
 
     return (
       <TouchableOpacity
