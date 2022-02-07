@@ -22,7 +22,7 @@ export default function useAnimatedTranslator(props: TranslatorProps) {
 
   const init = useCallback((to: {x: number; y: number},
     animationDirection: TransitionViewDirection,
-    callback: (isFinished: boolean) => void) => {
+    callback: (isFinished?: boolean) => void) => {
     'worklet';
     // @ts-expect-error
     if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
@@ -39,7 +39,7 @@ export default function useAnimatedTranslator(props: TranslatorProps) {
 
   const animate = useCallback((to: {x: number; y: number},
     animationDirection: TransitionViewDirection,
-    callback: (isFinished: boolean) => void) => {
+    callback: (isFinished?: boolean) => void) => {
     'worklet';
     // @ts-expect-error
     if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {

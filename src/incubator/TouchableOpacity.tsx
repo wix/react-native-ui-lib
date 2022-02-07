@@ -135,7 +135,9 @@ function TouchableOpacity(props: Props) {
     const scale = interpolate(isActive.value, [0, 1], [1, activeScale]);
 
     return {
-      backgroundColor: interpolateColor(isActive.value, [0, 1], [backgroundColor, activeColor]),
+      backgroundColor: !feedbackColor
+        ? backgroundColor
+        : interpolateColor(isActive.value, [0, 1], [backgroundColor, activeColor]),
       opacity,
       transform: [{scale}]
     };
