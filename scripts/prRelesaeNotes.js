@@ -37,10 +37,12 @@ async function run() {
 async function fetchLatestReleaseDate(version) {
   const relesae = childProcess.execSync(`gh release view ${version}`).toString();
   const releaseMetaData = relesae.split('--')[0];
-  const createDate = _.flow(data => _.split(data, '\n'),
-    linesData => _.find(linesData, l => l.startsWith('created')),
-    createdData => _.split(createdData, '\t'),
-    _.last)(releaseMetaData);
+  const createDate = _.chain(releaseMetaData)
+    .split('\n')
+    .find(l => l.startsWith('created'))
+    .split('\t')
+    .last()
+    .value();
 
   return new Date(createDate);
 }
@@ -55,20 +57,19 @@ async function fetchMergedPRs(postMergedDate) {
   const response = await fetch(url, {headers});
   const PRs = await response.json();
 
-  const relevantPRs = _.flow(PRs =>
-    _.filter(PRs,
-      pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate,
-      PRs => _.sortBy(PRs, 'merged_at'),
-      PRs =>
-        _.map(PRs, pr => ({
-          state: pr.state,
-          merged_at: pr.merged_at,
-          html_url: pr.html_url,
-          branch: pr.head.ref,
-          number: pr.number,
-          title: pr.title,
-          info: parsePR(pr.body)
-        }))))(PRs);
+  const relevantPRs = _.chain(PRs)
+    .filter(pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate)
+    .sortBy('merged_at')
+    .map(pr => ({
+      state: pr.state,
+      merged_at: pr.merged_at,
+      html_url: pr.html_url,
+      branch: pr.head.ref,
+      number: pr.number,
+      title: pr.title,
+      info: parsePR(pr.body)
+    }))
+    .value();
 
   return relevantPRs;
 }
@@ -126,7 +127,9 @@ function generateNotes(PRs) {
     encoding: 'utf8'
   });
 
-  console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32muilib-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
+  console.log(
+    `\x1b[1m\x1b[32m✔\x1b[0m \x1b[32muilib-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`
+  );
 }
 
 function addTitle(title) {

@@ -1,8 +1,5 @@
 {
-  "presets": [
-    "@babel/preset-typescript" /* , "@babel/preset-react" */,
-    ["@babel/env", {"targets": {"node": true}}]
-  ],
+  "presets": ["@babel/preset-typescript" /* , "@babel/preset-react" */],
   "plugins": [
     ["babel-plugin-typescript-to-proptypes", {"comments": true}],
     [
@@ -19,8 +16,7 @@
           "style": "./src/style"
         }
       }
-    ],
-    ["lodash"]
+    ]
   ],
   "compact": false,
   "minified": false

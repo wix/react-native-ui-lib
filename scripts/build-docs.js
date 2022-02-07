@@ -18,7 +18,10 @@ if (!fs.existsSync(COMPONENTS_DOCS_DIR)) {
 }
 
 const compoundComponents = components.filter(c => c.name.includes('.'));
-const parentComponents = _.flow(components => _.map(components, c => c.name.split('.')[0]), _.uniq)(compoundComponents);
+const parentComponents = _.chain(compoundComponents)
+  .map(c => c.name.split('.')[0])
+  .uniq()
+  .value();
 
 components.forEach(component => {
   const [componentName, componentParentName] = getComponentNameParts(component.name);
