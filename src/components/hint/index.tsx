@@ -20,6 +20,7 @@ import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
+import Modal from '../modal';
 import TouchableOpacity from '../touchableOpacity';
 
 const sideTip = require('./assets/hintTipSide.png');
@@ -87,6 +88,10 @@ export interface HintProps {
    * Provide custom target position instead of wrapping a child
    */
   targetFrame?: HintTargetFrame;
+  /**
+   * Open the hint using a Modal component
+   */
+  useModal?: boolean;
   /**
    * Show side tips instead of the middle tip
    */
@@ -246,10 +251,14 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get targetLayout() {
-    const {targetFrame} = this.props;
-    const {targetLayout} = this.state;
+    const {onBackgroundPress, useModal, targetFrame} = this.props;
+    const {targetLayout, targetLayoutInWindow} = this.state;
 
-    return targetFrame || targetLayout;
+    if (targetFrame) {
+      return targetFrame;
+    }
+
+    return onBackgroundPress && useModal ? targetLayoutInWindow : targetLayout;
   }
 
   get showHint() {
@@ -395,27 +404,32 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   renderOverlay() {
-    const {targetLayoutInWindow = {y: 0, x: 0}} = this.state;
-    const {onBackgroundPress} = this.props;
+    const {targetLayoutInWindow} = this.state;
+    const {onBackgroundPress, backdropColor, testID} = this.props;
     if (targetLayoutInWindow) {
       const containerPosition = this.getContainerPosition();
       return (
-        <View
+        <Animated.View
           style={[
             styles.overlay,
             {
+              // @ts-expect-error
               top: containerPosition.top - targetLayoutInWindow.y,
-              left: containerPosition.left - targetLayoutInWindow.x
+              // @ts-expect-error
+              left: containerPosition.left - targetLayoutInWindow.x,
+              backgroundColor: backdropColor,
+              opacity: this.visibleAnimated
             }
           ]}
           pointerEvents="box-none"
+          testID={`${testID}.overlay`}
         >
           {onBackgroundPress && (
             <TouchableWithoutFeedback style={[StyleSheet.absoluteFillObject]} onPress={onBackgroundPress}>
               <View flex/>
             </TouchableWithoutFeedback>
           )}
-        </View>
+        </Animated.View>
       );
     }
   }
@@ -546,6 +560,8 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   render() {
+    const {onBackgroundPress, backdropColor, useModal, testID} = this.props;
+
     if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children || null;
     }
@@ -553,8 +569,25 @@ class Hint extends Component<HintProps, HintState> {
     return (
       <>
         {this.renderChildren()}
-        {this.renderOverlay()}
-        {this.renderHintContainer()}
+        {onBackgroundPress && useModal ? (
+          <Modal
+            visible={this.showHint}
+            animationType={backdropColor ? 'fade' : 'none'}
+            overlayBackgroundColor={backdropColor}
+            transparent
+            onBackgroundPress={onBackgroundPress}
+            onRequestClose={onBackgroundPress as () => void}
+            testID={`${testID}.modal`}
+          >
+            {this.renderMockChildren()}
+            {this.renderHintContainer()}
+          </Modal>
+        ) : (
+          <>
+            {onBackgroundPress && this.renderOverlay()}
+            {this.renderHintContainer()}
+          </>
+        )}
       </>
     );
   }

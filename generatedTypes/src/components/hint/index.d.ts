@@ -52,6 +52,10 @@ export interface HintProps {
      */
     targetFrame?: HintTargetFrame;
     /**
+     * Open the hint using a Modal component
+     */
+    useModal?: boolean;
+    /**
      * Show side tips instead of the middle tip
      */
     useSideTip?: boolean;

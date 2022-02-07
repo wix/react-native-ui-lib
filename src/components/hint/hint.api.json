@@ -23,6 +23,7 @@
       "type": "{x?: number, y?: number, width?: number, height?: number}",
       "description": "Provide custom target position instead of wrapping a child"
     },
+    {"name": "useModal", "type": "boolean", "description": "Open the hint using a Modal component"},
     {"name": "useSideTip", "type": "boolean", "description": "Show side tips instead of the middle tip"},
     {"name": "borderRadius", "type": "number", "description": "The hint's border radius"},
     {"name": "edgeMargins", "type": "number", "description": "Hint margins from screen edges"},
