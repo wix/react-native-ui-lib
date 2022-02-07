@@ -40,7 +40,9 @@ module.exports = async ({graphql, boundActionCreators}) => {
     }
   });
 
-  const allComponents = getRelevantComponents(result.data.allComponentMetadata.edges);
+  const allComponents = getRelevantComponents(
+    result.data.allComponentMetadata.edges
+  );
 
   // Create components pages
   allComponents.map(({node}) => {
@@ -57,38 +59,36 @@ module.exports = async ({graphql, boundActionCreators}) => {
 };
 
 function getRelevantComponents(edges) {
-  const components = _.flow(
+  const components = _.chain(edges)
     /* Filter all Ignored components */
-    components =>
-      _.filter(components, e => {
-        return e.node.displayName !== 'IGNORE';
-      }),
+    .filter(e => {
+      return e.node.displayName !== 'IGNORE';
+    })
     /* Group internal components with the parent component */
-    components => _.groupBy(components, e => e.node.displayName),
-    groups =>
-      _.map(groups, (groupedEdge, id) => {
-        if (groupedEdge.length > 1) {
-          const edge = {
-            node: {
-              displayName: id,
-              docblock: _.flow(arr => _.find(arr, e => !!e.node.docblock),
-                obj => _.get(obj, 'node.docblock'))(groupedEdge),
-              props: _.reduce(groupedEdge, (props, e) => [...props, ...e.node.props], [])
-            }
-          };
+    .groupBy(e => e.node.displayName)
+    .map((groupedEdge, id) => {
+      if (groupedEdge.length > 1) {
+        const edge = {
+          node: {
+            displayName: id,
+            docblock: _.chain(groupedEdge).find(e => !!e.node.docblock).get('node.docblock').value(),
+            props: _.reduce(groupedEdge, (props, e) => [...props, ...e.node.props], [])
+          }
+        };
+        
+        /* Fix duplicate props (e.g Carousel) when they appear in different files of the component code */
+        const groupedProps = _.groupBy(edge.node.props, 'name');
+        _.forEach(groupedProps, (group, groupKey) => {
+          groupedProps[groupKey] = _.reduce(group, (result, prop) => _.merge(result, prop), {})
+        });
+        edge.node.props = _.values(groupedProps);
 
-          /* Fix duplicate props (e.g Carousel) when they appear in different files of the component code */
-          const groupedProps = _.groupBy(edge.node.props, 'name');
-          _.forEach(groupedProps, (group, groupKey) => {
-            groupedProps[groupKey] = _.reduce(group, (result, prop) => _.merge(result, prop), {});
-          });
-          edge.node.props = _.values(groupedProps);
-
-          return edge;
-        } else {
-          return groupedEdge[0];
-        }
-      }))(edges);
+        return edge;
+      } else {
+        return groupedEdge[0];
+      }
+    })
+    .value();
 
   return components;
 }

@@ -251,9 +251,10 @@ class Picker extends Component {
     const itemsByValue = _.keyBy(items, 'value');
 
     const {getItemLabel = _.noop} = this.props;
-    return _.flow(arr =>
-      _.map(arr, item => (_.isPlainObject(item) ? getItemLabel(item) || item?.label : itemsByValue[item]?.label)),
-    arr => _.join(arr, ', '))(value);
+    return _.chain(value)
+      .map(item => (_.isPlainObject(item) ? getItemLabel(item) || item?.label : itemsByValue[item]?.label))
+      .join(', ')
+      .value();
   };
 
   getLabel = value => {

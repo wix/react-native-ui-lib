@@ -20,10 +20,12 @@ class SettingsScreen extends Component {
       screens: [
         none,
         playground,
-        ..._.flow(_.values,
-          screens => _.map(screens, 'screens'),
-          _.flatten,
-          screens => _.map(screens, screen => ({label: screen.title, value: screen.screen})))(data)
+        ..._.chain(data)
+          .values()
+          .map('screens')
+          .flatten()
+          .map(screen => ({label: screen.title, value: screen.screen}))
+          .value()
       ]
     };
   }
@@ -49,7 +51,7 @@ class SettingsScreen extends Component {
     });
   };
 
-  setDefaultScreen = screen => {
+  setDefaultScreen = (screen) => {
     this.setState({defaultScreen: screen});
     AsyncStorage.setItem('uilib.defaultScreen', screen.value);
     setTimeout(() => {
@@ -83,28 +85,25 @@ class SettingsScreen extends Component {
 
           <View style={{borderWidth: 1, borderColor: Colors.grey70, marginTop: 40}}>
             <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>
-              <Text text80 grey20>
-                Current layout direction
-              </Text>
+              <Text text80 grey20>Current layout direction</Text>
             </View>
             <View center margin-5 padding-10>
               <Text text70>{isRTL ? 'RIGHT to LEFT' : 'LEFT to RIGHT'}</Text>
             </View>
 
             <View row spread centerV style={[{padding: 12, borderTopWidth: 1}, styles.block]}>
-              <Switch value={isRTL} onValueChange={this.onDirectionChange}/>
-              <Text text80 grey20>
-                Force RTL
-              </Text>
+              <Switch
+                value={isRTL}
+                onValueChange={this.onDirectionChange}
+              />
+              <Text text80 grey20>Force RTL</Text>
             </View>
           </View>
 
           {extraSettingsUI?.()}
         </View>
 
-        <Text text30 grey10>
-          Settings
-        </Text>
+        <Text text30 grey10>Settings</Text>
         <Toast visible={showRefreshMessage} position="bottom" message="Refresh the app!"/>
       </View>
     );
