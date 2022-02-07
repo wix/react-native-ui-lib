@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, StyleProp, ViewStyle, AccessibilityProps } from 'react-native';
+import { BaseComponentInjectedProps, MarginModifiers } from '../../commons/new';
 export declare enum Template {
     LIST_ITEM = "listItem",
     TEXT_CONTENT = "content"
@@ -36,7 +37,7 @@ export interface SkeletonListProps {
      */
     renderEndContent?: () => React.ReactElement | undefined;
 }
-export interface SkeletonViewProps extends AccessibilityProps {
+export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
     /**
      * The content has been loaded, start fading out the skeleton and fading in the content
      */
@@ -138,7 +139,8 @@ interface SkeletonState {
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true
  * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
  */
-declare class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
+declare type InternalSkeletonViewProps = SkeletonViewProps & BaseComponentInjectedProps;
+declare class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     static defaultProps: {
         size: Size;
         borderRadius: number;
@@ -147,9 +149,9 @@ declare class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     static sizes: typeof Size;
     static contentTypes: typeof ContentType;
     fadeInAnimation?: Animated.CompositeAnimation;
-    constructor(props: SkeletonViewProps);
+    constructor(props: InternalSkeletonViewProps);
     componentDidMount(): void;
-    componentDidUpdate(prevProps: SkeletonViewProps): void;
+    componentDidUpdate(prevProps: InternalSkeletonViewProps): void;
     fade(isFadeIn: boolean, onAnimationEnd?: Animated.EndCallback): Animated.CompositeAnimation;
     showChildren: () => void;
     getAccessibilityProps: (accessibilityLabel: any) => {

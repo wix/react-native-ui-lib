@@ -2,6 +2,7 @@
   "name": "SkeletonView",
   "category": "layoutsAndTemplates",
   "description": "Allows showing a temporary skeleton view while your real view is loading",
+  "modifiers": ["margin"],
   "note": "Requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' libraries",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.tsx",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true"],

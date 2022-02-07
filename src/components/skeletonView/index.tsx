@@ -4,7 +4,7 @@ import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} 
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
-import {Constants, asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const LinearGradient = LinearGradientPackage?.default;
@@ -53,7 +53,7 @@ export interface SkeletonListProps {
   renderEndContent?: () => React.ReactElement | undefined;
 }
 
-export interface SkeletonViewProps extends AccessibilityProps {
+export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
   /**
    * The content has been loaded, start fading out the skeleton and fading in the content
    */
@@ -157,7 +157,10 @@ interface SkeletonState {
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true
  * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
  */
-class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
+
+type InternalSkeletonViewProps = SkeletonViewProps & BaseComponentInjectedProps;
+
+class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   static defaultProps = {
     size: Size.SMALL,
     // listProps: {size: Size.SMALL}, TODO: once size is deprecated remove it and add this
@@ -170,7 +173,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
 
   fadeInAnimation?: Animated.CompositeAnimation;
 
-  constructor(props: SkeletonViewProps) {
+  constructor(props: InternalSkeletonViewProps) {
     super(props);
 
     this.state = {
@@ -193,7 +196,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     }
   }
 
-  componentDidUpdate(prevProps: SkeletonViewProps) {
+  componentDidUpdate(prevProps: InternalSkeletonViewProps) {
     if (this.props.showContent && !prevProps.showContent) {
       this.fadeInAnimation?.stop();
       this.fade(false, this.showChildren);
@@ -407,22 +410,66 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
       return null;
     }
 
-    const {times, timesKey, renderContent, testID} = this.props;
+    const {
+      times,
+      timesKey,
+      renderContent,
+      showContent,
+      customValue,
+      contentData,
+      template,
+      listProps,
+      size,
+      contentType,
+      hideSeparator,
+      showLastSeparator,
+      height,
+      width,
+      borderRadius,
+      circle,
+      style,
+      testID,
+      ...others
+    } = this.props;
+
+    const passedProps = {
+      showContent,
+      renderContent,
+      customValue,
+      contentData,
+      template,
+      listProps,
+      size,
+      contentType,
+      hideSeparator,
+      showLastSeparator,
+      height,
+      width,
+      borderRadius,
+      circle,
+      style,
+      testID
+    };
 
     if (times) {
-      return _.times(times, index => {
-        const key = timesKey ? `${timesKey}-${index}` : `${index}`;
-        return (
-          <SkeletonView
-            {...this.props}
-            key={key}
-            testID={`${testID}-${index}`}
-            renderContent={index === 0 ? renderContent : this.renderNothing}
-            hideSeparator={this.hideSeparator || (!this.showLastSeparator && index === times - 1)}
-            times={undefined}
-          />
-        );
-      });
+      return (
+        <View {...others}>
+          {_.times(times, index => {
+            const key = timesKey ? `${timesKey}-${index}` : `${index}`;
+            return (
+              <SkeletonView
+                modifiers={{}}
+                {...passedProps}
+                key={key}
+                testID={`${testID}-${index}`}
+                renderContent={index === 0 ? renderContent : this.renderNothing}
+                hideSeparator={this.hideSeparator || (!this.showLastSeparator && index === times - 1)}
+                times={undefined}
+              />
+            );
+          })}
+        </View>
+      );
     } else {
       return this.renderSkeleton();
     }
