@@ -18,5 +18,8 @@
       "description": "Render a custom loading page when lazy loading"
     },
     {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<TabController.TabPage key={$1} lazy={$2} index={$3}>"
   ]
 }

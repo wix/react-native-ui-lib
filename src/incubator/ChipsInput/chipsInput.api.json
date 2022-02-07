@@ -19,5 +19,11 @@
       "description": "Callback for chips change (adding or removing chip)"
     },
     {"name": "maxChips", "type": "number", "description": "The maximum chips to allow adding"}
+  ],
+  "snippet": [
+    "<ChipsInput",
+    " placeholder={$1}",
+    " chips={$2}",
+    "/>"
   ]
 }

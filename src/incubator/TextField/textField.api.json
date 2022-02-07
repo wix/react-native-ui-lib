@@ -88,5 +88,11 @@
       "type": "(value) => string | undefined",
       "description": "Custom formatter for the input value (used only when input if not focused)"
     }
+  ],
+  "snippet": [
+    "<TextField",
+    " placeholder={$1}",
+    " onChangeText={$2}",
+    "/>"
   ]
 }

@@ -59,5 +59,12 @@
     },
     {"name": "iconColor", "type": "string", "description": "The icon color"},
     {"name": "backgroundColor", "type": "string", "description": "The toast background color"}
+  ],
+  "snippet": [
+    "<Toast",
+    " visible={$1}",
+    " position={$2}",
+    " onDismiss={$3}",
+    ">"
   ]
 }

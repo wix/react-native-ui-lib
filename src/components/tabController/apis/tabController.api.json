@@ -21,5 +21,10 @@
       "default": "false"
     },
     {"name": "carouselPageWidth;", "type": "number", "description": "Pass for custom carousel page width"}
+  ],
+  "snippet": [
+    "<TabController items={$1}>",
+    " $2",
+    "</TabController>"
   ]
 }

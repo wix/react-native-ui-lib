@@ -33,5 +33,12 @@
       "default": "center"
     },
     {"name": "testID", "type": "string", "description": "Align the content to center, right ot left"}
+  ],
+  "snippet": [
+    "<WheelPicker",
+    " items={$1}",
+    " initialValue={$2}",
+    " onChange={$3}",
+    "/>"
   ]
 }
