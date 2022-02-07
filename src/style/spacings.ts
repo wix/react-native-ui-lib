@@ -28,7 +28,7 @@ export class Spacings {
   }
 
   generateKeysPattern(): RegExp {
-    return new RegExp(_.flow(_.keys, arr => _.join(arr, '|'))(this));
+    return new RegExp(Object.keys(this).join('|'));
   }
 }
 const TypedSpacings = Spacings as ExtendTypeWith<typeof Spacings, typeof SpacingLiterals>;

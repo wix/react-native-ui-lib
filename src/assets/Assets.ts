@@ -6,11 +6,10 @@ interface CustomObject {
 
 function assignProperties(a: CustomObject, b: {[key: string]: any}) {
   if (a) {
-    _.flow(_.keys, arr =>
-      _.forEach(arr, key => {
-        // @ts-ignore
-        Object.defineProperty(a, key, Object.getOwnPropertyDescriptor(b, key));
-      }))(b);
+    Object.keys(b).forEach(key => {
+      // @ts-ignore
+      Object.defineProperty(a, key, Object.getOwnPropertyDescriptor(b, key));
+    });
   }
 
   return a;

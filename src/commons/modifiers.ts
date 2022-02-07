@@ -104,7 +104,7 @@ export type ContainerModifiers = AlignmentModifiers &
 export function extractColorValue(props: Dictionary<any>) {
   const schemeColors = Scheme.getScheme();
   const allColorsKeys: Array<keyof typeof Colors> = [..._.keys(Colors), ..._.keys(schemeColors)];
-  const colorPropsKeys = _.flow(_.keys, (arr: any[]) => _.filter(arr, key => _.includes(allColorsKeys, key)))(props);
+  const colorPropsKeys = Object.keys(props).filter(key => _.includes(allColorsKeys, key));
   const colorKey = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true)!;
   return schemeColors[colorKey] || Colors[colorKey];
 }
@@ -124,8 +124,7 @@ export function extractBackgroundColorValue(props: Dictionary<any>) {
   return backgroundColor;
 }
 export function extractTypographyValue(props: Dictionary<any>): object | undefined {
-  const typographyPropsKeys = _.flow(_.keys, (arr: any[]) =>
-    _.filter(arr, key => Typography.getKeysPattern().test(key)))(props);
+  const typographyPropsKeys = Object.keys(props).filter(key => Typography.getKeysPattern().test(key));
   let typography: any;
   _.forEach(typographyPropsKeys, key => {
     if (props[key] === true) {
@@ -138,7 +137,7 @@ export function extractTypographyValue(props: Dictionary<any>): object | undefin
 
 export function extractPaddingValues(props: Dictionary<any>) {
   const paddings: Partial<Record<NativePaddingKeyType, number>> = {};
-  const paddingPropsKeys = _.flow(_.keys, (arr: any[]) => _.filter(arr, key => PADDING_KEY_PATTERN.test(key)))(props);
+  const paddingPropsKeys = Object.keys(props).filter(key => PADDING_KEY_PATTERN.test(key));
   _.forEach(paddingPropsKeys, key => {
     if (props[key] === true) {
       const [paddingKey, paddingValue] = key.split('-') as [keyof typeof PADDING_VARIATIONS, string];
@@ -156,7 +155,7 @@ export function extractPaddingValues(props: Dictionary<any>) {
 
 export function extractMarginValues(props: Dictionary<any>) {
   const margins: Partial<Record<NativeMarginModifierKeyType, number>> = {};
-  const marginPropsKeys = _.flow(_.keys, (arr: any[]) => _.filter(arr, key => MARGIN_KEY_PATTERN.test(key)))(props);
+  const marginPropsKeys = Object.keys(props).filter(key => MARGIN_KEY_PATTERN.test(key));
 
   _.forEach(marginPropsKeys, key => {
     if (props[key] === true) {
@@ -309,16 +308,16 @@ export function extractModifierProps(props: Dictionary<any>) {
 export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   //@ts-ignore
   const ownPropTypes = this.propTypes;
-  const ownProps = _.flow((obj: Dictionary<any>) => _.pickBy(obj, (_value, key) => _.includes(Object.keys(ownPropTypes), key)),
-    obj => _.omit(obj, ignoreProps))(props);
+  const ownProps = _.flow((props: Dictionary<any>) => _.pickBy(props, (_value, key) => _.includes(Object.keys(ownPropTypes), key)),
+    props => _.omit(props, ignoreProps))(props);
 
   return ownProps;
 }
 
 export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[] = []) {
   const componentPropTypes = component.propTypes;
-  const componentProps = _.flow((obj: Dictionary<any>) => _.pickBy(obj, (_value, key) => _.includes(Object.keys(componentPropTypes), key)),
-    obj => _.omit(obj, ignoreProps))(props);
+  const componentProps = _.flow((props: Dictionary<any>) => _.pickBy(props, (_value, key) => _.includes(Object.keys(componentPropTypes), key)),
+    props => _.omit(props, ignoreProps))(props);
 
   return componentProps;
 }

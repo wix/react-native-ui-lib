@@ -59,14 +59,14 @@ module.exports = async ({graphql, boundActionCreators}) => {
 function getRelevantComponents(edges) {
   const components = _.flow(
     /* Filter all Ignored components */
-    arr =>
-      _.filter(arr, e => {
+    components =>
+      _.filter(components, e => {
         return e.node.displayName !== 'IGNORE';
       }),
     /* Group internal components with the parent component */
-    arr => _.groupBy(arr, e => e.node.displayName),
-    arr =>
-      _.map(arr, (groupedEdge, id) => {
+    components => _.groupBy(components, e => e.node.displayName),
+    groups =>
+      _.map(groups, (groupedEdge, id) => {
         if (groupedEdge.length > 1) {
           const edge = {
             node: {

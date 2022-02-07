@@ -7,16 +7,16 @@ import products from '../../data/products';
 
 class GridViewScreen extends Component {
   state = {
-    contacts: _.flow(arr => _.take(arr, 15),
-      (arr: any[]) =>
-        _.map(arr, contact => ({
+    contacts: _.flow(conversations => _.take(conversations, 15),
+      (contacts: any[]) =>
+        _.map(contacts, contact => ({
           imageProps: {source: {uri: contact.thumbnail}, borderRadius: 999, style: {backgroundColor: Colors.grey60}},
           title: _.split(contact.name, ' ')[0],
           onPress: () => Alert.alert('My name is ' + contact.name)
         })))(conversations),
-    products: _.flow(arr => _.take(arr, 8),
-      (arr: any[]) =>
-        _.map(arr, (product, index) => ({
+    products: _.flow(products => _.take(products, 8),
+      (products: any[]) =>
+        _.map(products, (product, index) => ({
           imageProps: {
             source: {uri: product.mediaUrl},
             borderRadius: 4,
@@ -31,9 +31,9 @@ class GridViewScreen extends Component {
             }
           }
         })))(products),
-    pairs: _.flow(arr => _.take(arr, 2),
-      (arr: any[]) =>
-        _.map(arr, product => ({
+    pairs: _.flow(products => _.take(products, 2),
+      (products: any[]) =>
+        _.map(products, product => ({
           containerProps: {useNative: true, activeScale: 0.97, activeOpacity: 1},
           renderCustomItem: () => {
             return (
@@ -54,9 +54,9 @@ class GridViewScreen extends Component {
           alignToStart: true,
           onPress: () => Alert.alert('My price was ' + product.formattedPrice + ', now it is $50')
         })))(products),
-    dynamicLayout: _.flow(arr => _.take(arr, 3),
-      (arr: any[]) =>
-        _.map(arr, product => ({
+    dynamicLayout: _.flow(products => _.take(products, 3),
+      (products: any[]) =>
+        _.map(products, product => ({
           imageProps: {
             source: {
               uri: product.mediaUrl
@@ -70,9 +70,9 @@ class GridViewScreen extends Component {
           alignToStart: true,
           onPress: () => Alert.alert('Click!')
         })))(products),
-    overlayText: _.flow(arr => _.take(arr, 2),
-      (arr: any[]) =>
-        _.map(arr, (product, index) => ({
+    overlayText: _.flow(products => _.take(products, 2),
+      (products: any[]) =>
+        _.map(products, (product, index) => ({
           imageProps: {
             source: {
               uri: product.mediaUrl
@@ -104,9 +104,9 @@ class GridViewScreen extends Component {
           }
         })))(products),
 
-    avatars: _.flow(arr => _.take(arr, 9),
-      (arr: any[]) =>
-        _.map(arr, item => ({
+    avatars: _.flow(products => _.take(products, 9),
+      (products: any[]) =>
+        _.map(products, item => ({
           renderCustomItem: () => {
             const imageElementElement = item.thumbnail;
             return (

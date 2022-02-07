@@ -37,9 +37,9 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   generateTabItems = (fewItems = this.state.fewItems): TabControllerItemProps[] => {
-    const items: TabControllerItemProps[] = _.flow(arr => _.take(arr, fewItems ? 3 : TABS.length),
-      (arr: TabControllerItemProps[]) =>
-        _.map<TabControllerItemProps>(arr, (tab: TabControllerItemProps, index: number) => ({
+    const items: TabControllerItemProps[] = _.flow(tabs => _.take(tabs, fewItems ? 3 : TABS.length),
+      (tabs: TabControllerItemProps[]) =>
+        _.map<TabControllerItemProps>(tabs, (tab: TabControllerItemProps, index: number) => ({
           label: tab,
           key: tab,
           icon: index === 2 ? Assets.icons.demo.dashboard : undefined,

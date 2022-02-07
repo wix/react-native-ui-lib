@@ -31,9 +31,9 @@ export default class ChipsInputScreen extends Component {
           chips={this.state.chips}
           leadingAccessory={<Text>TO: </Text>}
           onChange={newChips => {
-            _.flow(arr => _.groupBy(arr, 'label'),
-              arr =>
-                _.forEach(arr, group => {
+            _.flow(newChips => _.groupBy(newChips, 'label'),
+              newChips =>
+                _.forEach(newChips, group => {
                   if (group.length === 1) {
                     delete group[0].invalid;
                   } else {

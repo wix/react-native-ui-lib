@@ -29,9 +29,9 @@ export class Typography {
 
   generateKeysPattern(): RegExp {
     return new RegExp(_.flow(_.keys,
-      arr => _.map(arr, key => [`${key}`]),
+      keys => _.map(keys, key => [`${key}`]),
       _.flatten,
-      arr => _.join(arr, '|'))(this));
+      keys => _.join(keys, '|'))(this));
   }
 
   // TODO: deprecate

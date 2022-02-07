@@ -37,9 +37,9 @@ export function getColorById(id: string, avatarColors = getAvatarColors()) {
 export function getInitials(name?: string, limit = 2) {
   let initials = '';
   if (name && _.isString(name)) {
-    const nameSplitted = _.flow(str => _.split(str, /\s+/g),
-      arr => _.filter(arr, word => word.length > 0),
-      arr => _.take(arr, limit))(name);
+    const nameSplitted = _.flow(name => _.split(name, /\s+/g),
+      words => _.filter(words, word => word.length > 0),
+      words => _.take(words, limit))(name);
     _.each(nameSplitted, str => {
       initials += str[0];
     });
