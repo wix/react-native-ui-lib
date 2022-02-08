@@ -172,7 +172,7 @@ class Hint extends Component<HintProps, HintState> {
   animationDuration = 170;
 
   state = {
-    targetLayoutInWindow: undefined,
+    targetLayoutInWindow: undefined as {x: number, y: number, width: number, height: number} | undefined,
     targetLayout: this.props.targetFrame,
     hintUnmounted: !this.props.visible
   };
@@ -413,9 +413,7 @@ class Hint extends Component<HintProps, HintState> {
           style={[
             styles.overlay,
             {
-              // @ts-expect-error
               top: containerPosition.top - targetLayoutInWindow.y,
-              // @ts-expect-error
               left: containerPosition.left - targetLayoutInWindow.x,
               backgroundColor: backdropColor,
               opacity: this.visibleAnimated
@@ -425,7 +423,7 @@ class Hint extends Component<HintProps, HintState> {
           testID={`${testID}.overlay`}
         >
           {onBackgroundPress && (
-            <TouchableWithoutFeedback style={[StyleSheet.absoluteFillObject]} onPress={onBackgroundPress}>
+            <TouchableWithoutFeedback style={StyleSheet.absoluteFillObject} onPress={onBackgroundPress}>
               <View flex/>
             </TouchableWithoutFeedback>
           )}
@@ -584,7 +582,7 @@ class Hint extends Component<HintProps, HintState> {
           </Modal>
         ) : (
           <>
-            {onBackgroundPress && this.renderOverlay()}
+            {this.renderOverlay()}
             {this.renderHintContainer()}
           </>
         )}

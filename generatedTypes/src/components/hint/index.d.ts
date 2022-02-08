@@ -129,7 +129,12 @@ declare class Hint extends Component<HintProps, HintState> {
     hintRef: ElementRef<typeof RNView> | null;
     animationDuration: number;
     state: {
-        targetLayoutInWindow: undefined;
+        targetLayoutInWindow: {
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        } | undefined;
         targetLayout: HintTargetFrame | undefined;
         hintUnmounted: boolean;
     };
