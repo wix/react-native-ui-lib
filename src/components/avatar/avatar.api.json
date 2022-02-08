@@ -87,6 +87,6 @@
     {"name": "testID", "type": "string", "description": "Test identifier"}
   ],
   "snippet": [
-    "<Avatar source={uri: $1} label={$2}/>"
+    "<Avatar source={{uri: $1}} label={$2}/>"
   ]
 }
