@@ -1,7 +1,7 @@
 const childProcess = require('child_process');
 const fs = require('fs');
 
-const result = childProcess.execSync('find ../src -name "*api.json"');
+const result = childProcess.execSync('find ./src -name "*api.json"');
 const apis = result.toString().trim().split('\n');
 
 const components = apis.map(filePath => {
@@ -31,5 +31,5 @@ if (components) {
     ]
   };
   /* eslint-enable */
-  fs.writeFileSync(`snippets/snippets.code-snippets`, JSON.stringify(output));
+  fs.writeFileSync(`./react-native-ui-lib-snippets/snippets/snippets.code-snippets`, JSON.stringify(output));
 }

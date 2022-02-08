@@ -35,8 +35,5 @@
                 "path": "./snippets/snippets.code-snippets"
             }
         ]
-    },
-    "scripts": {
-        "build:snippets": "node ./snippetGenerator.js"
     }
 }
