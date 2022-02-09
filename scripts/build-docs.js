@@ -82,11 +82,8 @@ components.forEach(component => {
   if (component.snippet) {
     content += `### Usage\n`;
     content += '```\n';
-    component.snippet?.forEach(item => {
-      const line = _.replace(item, new RegExp(/\$[1-9]/, 'g'), '');
-      content += `${line}\n`;
-    });
-    content += '```\n';
+    content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
+    content += '\n```\n';
   }
 
   /* Props */
