@@ -6,9 +6,6 @@ import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
 import ImperativeDialog from './ImperativeDialog';
 import DialogHeader from './DialogHeader';
-import DialogText from './DialogText';
-import DialogKnob from './DialogKnob';
-import DialogDivider from './DialogDivider';
 import {
   ImperativeDialogProps,
   DialogDirections,
@@ -64,9 +61,6 @@ const Dialog = (props: DialogProps) => {
 Dialog.displayName = 'Incubator.Dialog';
 Dialog.directions = DialogDirectionsEnum;
 Dialog.Header = DialogHeader;
-Dialog.Text = DialogText;
-Dialog.Knob = DialogKnob;
-Dialog.Divider = DialogDivider;
 
 export default Dialog;
 

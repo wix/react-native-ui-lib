@@ -1,5 +1,6 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo} from 'react';
+import {asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
 import DialogText from './DialogText';
 import DialogKnob from './DialogKnob';
@@ -31,4 +32,4 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
   return null;
 };
 
-export default DialogHeader;
+export default asBaseComponent<DialogHeaderProps>(DialogHeader);
