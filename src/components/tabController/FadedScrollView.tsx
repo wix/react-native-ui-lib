@@ -1,4 +1,4 @@
-import React, {useCallback, useImperativeHandle, useRef} from 'react';
+import React, {useCallback, useImperativeHandle} from 'react';
 import {
   ViewProps,
   ScrollView,
@@ -10,7 +10,7 @@ import {
 import Fader from '../fader';
 import useScrollEnabler from '../../hooks/useScrollEnabler';
 import useScrollReached from '../../hooks/useScrollReached';
-import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
+import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 
 export type FadedScrollViewProps = ViewProps &
   ScrollViewProps & {
@@ -18,6 +18,14 @@ export type FadedScrollViewProps = ViewProps &
   };
 
 type Props = FadedScrollViewProps & ForwardRefInjectedProps;
+interface Statics {
+  scrollTo(
+    y?: number | {x?: number | undefined; y?: number | undefined; animated?: boolean | undefined},
+    x?: number,
+    animated?: boolean
+  ): void;
+  isScrollEnabled: () => boolean;
+}
 
 const FADER_SIZE = 76;
 
@@ -27,9 +35,9 @@ const FadedScrollView = (props: Props) => {
     onScroll: propsOnScroll,
     onContentSizeChange: propsOnContentSizeChange,
     onLayout: propsOnLayout,
-    ...other
+    ...others
   } = props;
-  const ref = useRef<ScrollView>();
+  const scrollViewRef = React.createRef<ScrollView>();
   const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal: true});
   const {
     onScroll: onScrollReached,
@@ -62,11 +70,11 @@ const FadedScrollView = (props: Props) => {
   [propsOnLayout, onLayout]);
 
   const isScrollEnabled = () => {
-    return scrollEnabled; 
+    return scrollEnabled;
   };
 
   useImperativeHandle(props.forwardedRef, () => ({
-    scrollTo: (...data: any) => ref.current?.scrollTo?.(...data),
+    scrollTo: (...data: any) => scrollViewRef.current?.scrollTo?.(...data),
     isScrollEnabled
   }));
 
@@ -78,13 +86,12 @@ const FadedScrollView = (props: Props) => {
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
           decelerationRate={'fast'}
-          {...other}
+          {...others}
           scrollEnabled={scrollEnabled}
           onContentSizeChange={_onContentSizeChange}
           onLayout={_onLayout}
           onScroll={onScroll}
-          // @ts-ignore
-          ref={ref}
+          ref={scrollViewRef}
         >
           {children}
         </ScrollView>
@@ -98,4 +105,4 @@ const FadedScrollView = (props: Props) => {
 };
 
 FadedScrollView.displayName = 'IGNORE';
-export default forwardRef<Props>(FadedScrollView);
+export default forwardRef<React.ComponentPropsWithRef<typeof FadedScrollView>, Statics>(FadedScrollView);

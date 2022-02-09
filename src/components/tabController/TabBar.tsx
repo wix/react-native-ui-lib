@@ -260,7 +260,6 @@ const TabBar = (props: Props) => {
   }, [containerWidth]);
 
   useDidUpdate(() => {
-    // @ts-expect-error TODO: fix forwardRef Statics
     if (tabBar.current?.isScrollEnabled()) {
       focusIndex(currentPage.value);
     } else {
