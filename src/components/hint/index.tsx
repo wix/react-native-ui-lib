@@ -162,7 +162,8 @@ class Hint extends Component<HintProps, HintState> {
   static displayName = 'Hint';
 
   static defaultProps = {
-    position: HintPositions.BOTTOM
+    position: HintPositions.BOTTOM,
+    useModal: true
   };
 
   static positions = HintPositions;
@@ -583,6 +584,7 @@ class Hint extends Component<HintProps, HintState> {
         ) : (
           <>
             {this.renderOverlay()}
+            {this.renderMockChildren()}
             {this.renderHintContainer()}
           </>
         )}

@@ -123,6 +123,7 @@ declare class Hint extends Component<HintProps, HintState> {
     static displayName: string;
     static defaultProps: {
         position: HintPositions;
+        useModal: boolean;
     };
     static positions: typeof HintPositions;
     targetRef: ElementRef<typeof RNView> | null;
