@@ -371,8 +371,8 @@
     "description": "A customizable WheelPicker component",
     "body": ["<WheelPicker", " items={$1}", " initialValue={$2}", " onChange={$3}", "/>"]
   },
-  "UilibImport": {
-    "prefix": "uilib",
+  "RNUilibImport": {
+    "prefix": "rnuilib",
     "description": "Import react-native-ui-lib",
     "body": ["import {$1} from 'react-native-ui-lib';"]
   }

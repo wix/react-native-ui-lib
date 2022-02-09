@@ -23,8 +23,8 @@ if (components) {
   });
 
   /* eslint-disable */
-  output.UilibImport = {
-    "prefix": "uilib",
+  output.RNUilibImport = {
+    "prefix": "rnuilib",
     "description": "Import react-native-ui-lib",
     "body": [
       "import {$1} from 'react-native-ui-lib';"
