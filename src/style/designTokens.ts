@@ -17,7 +17,7 @@ export const designTokens = {
   $backgroundSuccessHeavy: colorsPalette.green30,
   $backgroundSuccess: colorsPalette.green80,
   $backgroundWarningHeavy: colorsPalette.yellow30,
-  $backgroundWarning: colorsPalette.yellow80,
+  $backgroundWarning: colorsPalette.yellow70,
   $backgroundMajor: colorsPalette.orange80,
   $backgroundDangerHeavy: colorsPalette.red30,
   $backgroundDanger: colorsPalette.red80,
