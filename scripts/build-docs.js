@@ -80,7 +80,7 @@ components.forEach(component => {
 
   /* Snippet */
   if (component.snippet) {
-    content += `### Code Snippet\n`;
+    content += `### Usage\n`;
     content += '```\n';
     component.snippet?.forEach(item => {
       const line = _.replace(item, new RegExp(/\$[1-9]/, 'g'), '');
