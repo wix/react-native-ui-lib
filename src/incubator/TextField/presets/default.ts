@@ -2,15 +2,15 @@ import {StyleSheet} from 'react-native';
 import {Colors, Spacings, Typography} from '../../../style';
 
 const colorByState = {
-  focus: Colors.primary,
-  error: Colors.error,
-  disabled: Colors.grey40
+  focus: Colors.$textPrimary,
+  error: Colors.$textDangerLight,
+  disabled: Colors.$textNeutralLight
 };
 
 const styles = StyleSheet.create({
   field: {
     borderBottomWidth: 1,
-    borderBottomColor: Colors.grey50,
+    borderBottomColor: Colors.$outlineNeutralMedium,
     paddingBottom: Spacings.s2
   },
   input: {

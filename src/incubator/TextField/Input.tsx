@@ -8,8 +8,8 @@ import FieldContext from './FieldContext';
 import useImperativeInputHandle from './useImperativeInputHandle';
 
 const DEFAULT_INPUT_COLOR: ColorType = {
-  default: Colors.grey10,
-  disabled: Colors.grey40
+  default: Colors.$textDefault,
+  disabled: Colors.$textNeutralLight
 };
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,

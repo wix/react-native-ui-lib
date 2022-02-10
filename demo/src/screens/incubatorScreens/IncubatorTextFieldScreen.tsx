@@ -30,14 +30,14 @@ export default class TextFieldScreen extends Component {
   renderTrailingAccessory() {
     const {searching} = this.state;
     if (searching) {
-      return <ActivityIndicator color={Colors.grey10}/>;
+      return <ActivityIndicator color={Colors.$iconDefault}/>;
     } else {
       return (
         <Button
           iconSource={Assets.icons.demo.search}
           link
           marginL-s2
-          grey10
+          $iconDefault
           onPress={() => {
             this.setState({searching: true});
             setTimeout(() => {
@@ -68,8 +68,8 @@ export default class TextFieldScreen extends Component {
               placeholder="Floating placeholder"
               floatingPlaceholder
               floatingPlaceholderColor={{
-                focus: Colors.grey10,
-                default: Colors.grey30
+                focus: Colors.$textDefault,
+                default: Colors.$textNeutral
               }}
               // floatingPlaceholderStyle={Typography.text60}
               // style={Typography.text60}
@@ -114,7 +114,7 @@ export default class TextFieldScreen extends Component {
             placeholder="Enter weight"
             text70
             trailingAccessory={
-              <Text text70 grey30>
+              <Text text70 $textNeutral>
                 Kg.
               </Text>
             }
@@ -191,7 +191,7 @@ export default class TextFieldScreen extends Component {
 
           <TextField
             label="Email"
-            labelColor={{default: Colors.grey10, focus: Colors.blue20, error: Colors.red30, disabled: Colors.grey40}}
+            labelColor={{default: Colors.$textDefault, focus: Colors.$textGeneral, disabled: Colors.$textNeutralLight}}
             placeholder="Enter valid email"
             validationMessage="Email is invalid"
             validate={'email'}
@@ -233,7 +233,7 @@ export default class TextFieldScreen extends Component {
                 {Assets.emojis.grapes} {Assets.emojis.melon} {Assets.emojis.banana}
               </Text>
             }
-            charCounterStyle={{color: Colors.blue30}}
+            charCounterStyle={{color: Colors.$textGeneral}}
             maxLength={20}
             fieldStyle={styles.withFrame}
           />
@@ -258,7 +258,7 @@ export default class TextFieldScreen extends Component {
             validationMessage="Invalid price"
             // @ts-expect-error
             formatter={(value) => (isNaN(value) ? value : priceFormatter.format(Number(value)))}
-            leadingAccessory={<Text marginR-s1 grey30>$</Text>}
+            leadingAccessory={<Text marginR-s1 $textNeutral>$</Text>}
             fieldStyle={styles.withUnderline}
           />
         </View>
@@ -272,12 +272,12 @@ const styles = StyleSheet.create({
   container: {},
   withUnderline: {
     borderBottomWidth: 1,
-    borderColor: Colors.grey40,
+    borderColor: Colors.$outlineDisabledHeavy,
     paddingBottom: 4
   },
   withFrame: {
     borderWidth: 1,
-    borderColor: Colors.grey40,
+    borderColor: Colors.$outlineDisabledHeavy,
     padding: 4,
     borderRadius: 2
   }

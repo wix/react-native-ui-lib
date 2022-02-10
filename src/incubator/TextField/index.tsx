@@ -217,7 +217,7 @@ const TextField = (props: InternalTextFieldProps) => {
             )}
             {children || (
               <Input
-                placeholderTextColor={hidePlaceholder ? 'transparent' : Colors.grey30}
+                placeholderTextColor={hidePlaceholder ? 'transparent' : Colors.$textNeutral}
                 {...others}
                 style={[typographyStyle, colorStyle, others.style]}
                 onFocus={onFocus}

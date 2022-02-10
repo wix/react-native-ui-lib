@@ -24,7 +24,7 @@ const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) =>
   }
 
   return (
-    <Text grey30 style={[styles.container, charCounterStyle]} testID={testID}>
+    <Text $textNeutral style={[styles.container, charCounterStyle]} testID={testID}>
       {`${_.size(value)}/${maxLength}`}
     </Text>
   );
