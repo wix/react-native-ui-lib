@@ -40,7 +40,7 @@ export {default as ColorPalette, ColorPaletteProps} from './components/ColorPale
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as ColorSwatch, ColorSwatchProps} from './components/ColorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
-export {default as Constants} from './helpers/Constants';
+export {default as Constants} from './commons/Constants';
 export {default as DateTimePicker, DateTimePickerProps} from './components/dateTimePicker';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
