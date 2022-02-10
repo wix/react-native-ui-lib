@@ -5,7 +5,13 @@ import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps
+} from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
 import FadedScrollView from '../fadedScrollView';
@@ -116,6 +122,8 @@ type ChildProps = React.ReactElement<TabControllerItemProps>;
 interface Props extends TabControllerBarProps, BaseComponentInjectedProps, ForwardRefInjectedProps {
   children?: ChildProps[] | ChildProps;
 }
+
+const FADER_PROPS = {size: 76};
 
 /**
  * @description: TabController's TabBar component
@@ -274,6 +282,11 @@ const TabBar = (props: Props) => {
         // @ts-expect-error
         ref={tabBar}
         horizontal
+        showsHorizontalScrollIndicator={false}
+        showStartFader
+        startFaderProps={FADER_PROPS}
+        showEndFader
+        endFaderProps={FADER_PROPS}
         contentContainerStyle={scrollViewContainerStyle}
         testID={testID}
         onContentSizeChange={onContentSizeChange}

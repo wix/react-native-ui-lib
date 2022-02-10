@@ -1,38 +1,20 @@
 import React, {useRef, useMemo} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Spacings, Colors, BorderRadiuses} from 'style';
 import {Constants} from '../../commons/new';
 import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
+import FadedScrollView from '../../components/fadedScrollView';
 import ImperativeDialog from './ImperativeDialog';
 import DialogHeader from './DialogHeader';
-import {
-  ImperativeDialogProps,
-  DialogDirections,
-  DialogDirectionsEnum,
-  ImperativeDialogMethods,
-  DialogHeaderProps,
-  DialogTextProps
-} from './types';
-export {DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogTextProps};
+import {DialogProps, DialogDirections, DialogDirectionsEnum, ImperativeDialogMethods, DialogHeaderProps} from './types';
+export {DialogDirections, DialogDirectionsEnum, DialogProps, DialogHeaderProps};
 
-export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
-  /**
-   * The visibility of the dialog.
-   */
-  visible?: boolean;
-  /**
-   * The Dialog's header
-   */
-  headerProps?: DialogHeaderProps;
-  /**
-   * The Dialog`s container style (it is set to {position: 'absolute'})
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-}
+const FADER_PROPS = {size: 100};
 
 const Dialog = (props: DialogProps) => {
-  const {visible, headerProps, containerStyle, children, ...others} = props;
+  const {visible, headerProps, scrollableProps = {}, containerStyle, children, ...others} = props;
+  const {enable, ...otherScrollableProps} = scrollableProps;
   const initialVisibility = useRef(visible);
   const dialogRef = React.createRef<ImperativeDialogMethods>();
 
@@ -48,11 +30,23 @@ const Dialog = (props: DialogProps) => {
     return [styles.defaultDialogStyle, containerStyle];
   }, [containerStyle]);
 
+  const renderContent = () => {
+    if (enable) {
+      return (
+        <FadedScrollView {...otherScrollableProps} useGesture showEndFader endFaderProps={FADER_PROPS}>
+          {children}
+        </FadedScrollView>
+      );
+    } else {
+      return children;
+    }
+  };
+
   return (
     <ImperativeDialog {...others} initialVisibility={initialVisibility.current} ref={dialogRef}>
       <View style={style}>
         <DialogHeader {...headerProps}/>
-        {children}
+        {renderContent()}
       </View>
     </ImperativeDialog>
   );

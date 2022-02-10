@@ -1,9 +1,10 @@
 import {PropsWithChildren} from 'react';
-import {StyleProp, TextStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {ModalProps} from '../../components/modal';
 import {ViewProps} from '../../components/view';
 import {TextProps} from '../../components/text';
+import {FadedScrollViewProps} from '../../components/fadedScrollView';
 import {PanningDirections, PanningDirectionsEnum} from '../panView';
 type DialogDirections = PanningDirections;
 const DialogDirectionsEnum = PanningDirectionsEnum;
@@ -48,9 +49,6 @@ export interface ImperativeDialogMethods {
   close: () => void;
 }
 
-/**
- * It is available as `Dialog.Text`
- */
 export interface DialogTextProps {
   /**
    * Title
@@ -89,12 +87,37 @@ export interface DialogHeaderProps extends ViewProps {
   renderContent?: (props: DialogHeaderProps) => React.ReactElement;
   /**
    * Show the header's knob (default is true)
-   * It is available as `Dialog.Knob`
    */
   showKnob?: boolean;
   /**
    * Show the header's divider (default is true)
-   * It is available as `Dialog.Divider`
    */
   showDivider?: boolean;
+}
+
+export interface ScrollableProps extends FadedScrollViewProps {
+  // TODO: Perhaps add an enum for ScrollView \ FlatList \ RecyclerListView instead of the enable
+  /**
+   * Enable the scrollable content
+   */
+  enable?: boolean;
+}
+
+export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
+  /**
+   * The visibility of the dialog.
+   */
+  visible?: boolean;
+  /**
+   * The Dialog's header
+   */
+  headerProps?: DialogHeaderProps;
+  /**
+   * Add scrollability to the content
+   */
+  scrollableProps?: ScrollableProps;
+  /**
+   * The Dialog`s container style (it is set to {position: 'absolute'})
+   */
+  containerStyle?: StyleProp<ViewStyle>;
 }

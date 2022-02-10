@@ -1,6 +1,6 @@
+import {map} from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ModalProps} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
 import {View, Text, Card, Button, Incubator, Colors, Spacings} from 'react-native-ui-lib';
 
 interface Item {
@@ -31,21 +31,29 @@ const colors: Item[] = [
   {value: Colors.yellow70, label: 'Yellow70'}
 ];
 
+const styles = StyleSheet.create({
+  verticalScroll: {
+    paddingVertical: Spacings.s2
+  }
+});
+
+const SCROLLABLE_PROPS = {
+  enable: true,
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: styles.verticalScroll
+};
+
 export default class IncubatorDialogScreen extends Component {
   state = {visible: false};
   modalProps: ModalProps = {supportedOrientations: ['portrait', 'landscape']};
   headerProps: Incubator.DialogHeaderProps = {text: {title: 'Title (swipe here)'}};
 
-  renderVerticalItem = ({item}: {item: Item}) => {
+  renderItem = (item: Item) => {
     return (
-      <Text text50 marginH-s5 marginV-s2 color={item.value} onPress={this.closeDialog}>
+      <Text key={item.value} text50 marginH-s5 marginV-s2 color={item.value} onPress={this.closeDialog}>
         {item.label}
       </Text>
     );
-  };
-
-  keyExtractor = (item: Item) => {
-    return item.value;
   };
 
   openDialog = () => {
@@ -79,22 +87,13 @@ export default class IncubatorDialogScreen extends Component {
           centerH
           modalProps={this.modalProps}
           headerProps={this.headerProps}
+          scrollableProps={SCROLLABLE_PROPS}
         >
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.verticalScroll}
-            data={colors}
-            renderItem={this.renderVerticalItem}
-            keyExtractor={this.keyExtractor}
-          />
+          {map(colors, color => {
+            return this.renderItem(color);
+          })}
         </Incubator.Dialog>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  verticalScroll: {
-    paddingVertical: Spacings.s2
-  }
-});
