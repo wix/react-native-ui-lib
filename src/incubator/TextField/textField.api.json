@@ -54,7 +54,7 @@
     {
       "name": "fieldStyle",
       "type": "ViewStyle | (context: FieldContextType, props) => ViewStyle",
-      "description": "Internal style for the field container"
+      "description": "Internal style for the field container to style the field underline, outline and fill color"
     },
     {"name": "containerStyle", "type": "ViewStyle", "description": "Container style of the whole component"},
     {

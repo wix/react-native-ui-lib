@@ -571,6 +571,11 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
 } | {
+    fieldStyle: (import("react-native").StyleProp<import("react-native").ViewStyle> | {
+        borderBottomWidth: number;
+        borderBottomColor: string;
+        paddingBottom: number;
+    })[];
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
     marginT?: boolean | undefined;
@@ -1196,11 +1201,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur: boolean;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<import("react-native").ViewStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | {
-        borderBottomWidth: number;
-        borderBottomColor: string;
-        paddingBottom: number;
-    } | null;
     dynamicFieldStyle?: ((context: import("./FieldContext").FieldContextType, props: {
         preset: string | null | undefined;
     }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;
