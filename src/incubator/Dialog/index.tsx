@@ -7,16 +7,27 @@ import View from '../../components/view';
 import FadedScrollView from '../../components/fadedScrollView';
 import ImperativeDialog from './ImperativeDialog';
 import DialogHeader from './DialogHeader';
+import useSizeStyle from './helpers/useSizeStyle';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, ImperativeDialogMethods, DialogHeaderProps} from './types';
 export {DialogDirections, DialogDirectionsEnum, DialogProps, DialogHeaderProps};
 
 const FADER_PROPS = {size: 100};
 
 const Dialog = (props: DialogProps) => {
-  const {visible, headerProps, scrollableProps = {}, containerStyle, children, ...others} = props;
+  const {
+    visible,
+    headerProps,
+    scrollableProps = {},
+    width: propWidth,
+    height: propsHeight,
+    containerStyle,
+    children,
+    ...others
+  } = props;
   const {enable, ...otherScrollableProps} = scrollableProps;
   const initialVisibility = useRef(visible);
   const dialogRef = React.createRef<ImperativeDialogMethods>();
+  const {width, height} = useSizeStyle({width: propWidth, height: propsHeight, containerStyle});
 
   useDidUpdate(() => {
     if (visible) {
@@ -27,8 +38,8 @@ const Dialog = (props: DialogProps) => {
   }, [visible]);
 
   const style = useMemo(() => {
-    return [styles.defaultDialogStyle, containerStyle];
-  }, [containerStyle]);
+    return [styles.defaultDialogStyle, containerStyle, {width, height}];
+  }, [containerStyle, width, height]);
 
   const renderContent = () => {
     if (enable) {
@@ -63,7 +74,6 @@ const styles = StyleSheet.create({
     marginBottom: Spacings.s5,
     backgroundColor: Colors.white,
     maxHeight: Constants.screenHeight * 0.6,
-    width: 250,
     borderRadius: BorderRadiuses.br20,
     overflow: 'hidden'
   }

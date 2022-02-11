@@ -9,6 +9,20 @@ import { PanningDirections, PanningDirectionsEnum } from '../panView';
 declare type DialogDirections = PanningDirections;
 declare const DialogDirectionsEnum: typeof PanningDirectionsEnum;
 export { DialogDirections, DialogDirectionsEnum };
+export interface StyleProps {
+    /**
+     * The dialog width
+     */
+    width?: string | number;
+    /**
+     * The dialog height
+     */
+    height?: string | number;
+    /**
+     * The Dialog`s container style
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+}
 export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
     /**
      * The initial visibility of the dialog.
@@ -95,7 +109,7 @@ export interface ScrollableProps extends FadedScrollViewProps {
      */
     enable?: boolean;
 }
-export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
+export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'>, StyleProps {
     /**
      * The visibility of the dialog.
      */
@@ -108,8 +122,4 @@ export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibil
      * Add scrollability to the content
      */
     scrollableProps?: ScrollableProps;
-    /**
-     * The Dialog`s container style (it is set to {position: 'absolute'})
-     */
-    containerStyle?: StyleProp<ViewStyle>;
 }
