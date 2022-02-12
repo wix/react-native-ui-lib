@@ -1,0 +1,9 @@
+{
+  "name": "TextField",
+  "category": "form",
+  "description": "A customizable TextField component with validation features",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/InputsScreen.js",
+  "caution": "Please consider moving to our new TextField implementation and use Incubator.TextField instead",
+  "images": [],
+  "props": []
+}

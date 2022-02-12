@@ -4,6 +4,7 @@ import {DeviceEventEmitter, requireNativeComponent, StyleSheet, View, ViewStyle,
 
 import WheelPickerItem from './WheelPickerItem';
 import {Constants} from '../../../src/commons/new';
+import {LogService} from '../../../src/services';
 import {Typography, Colors} from '../../../src/style';
 
 import {PickerPackage, CommunityPickerPackage} from '../../../src/optionalDependencies';
@@ -67,6 +68,8 @@ class WheelPicker extends Component<WheelPickerProps> {
     this.onValueChange = this.onValueChange.bind(this); //eslint-disable-line
     this.getItems();
     DeviceEventEmitter.addListener('log', this.onLogReceived); // TODO: consider moving to a more generic place (base class?)
+
+    LogService.componentDeprecationWarn({oldComponent: 'WheelPicker', newComponent: 'Incubator.WheelPicker'});
   }
 
   state = {

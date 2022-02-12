@@ -39,11 +39,11 @@ export type TextFieldProps = MarginModifiers &
   ColorsModifiers &
   InputProps &
   LabelProps &
-  FloatingPlaceholderProps &
+  Omit<FloatingPlaceholderProps, 'testID'> &
   // We're declaring these props explicitly here for react-docgen (which can't read hooks)
   // FieldStateProps &
   ValidationMessageProps &
-  Omit<CharCounterProps, 'maxLength'> & {
+  Omit<CharCounterProps, 'maxLength' | 'testID'> & {
     /**
      * Pass to render a leading element
      */
@@ -52,6 +52,10 @@ export type TextFieldProps = MarginModifiers &
      * Pass to render a trailing element
      */
     trailingAccessory?: ReactElement;
+    /**
+     * Pass to render a bottom element below the input
+     */
+    bottomAccessory?: ReactElement;
     /**
      * Pass to add floating placeholder support
      */
@@ -140,6 +144,7 @@ const TextField = (props: InternalTextFieldProps) => {
     // Accessory Buttons
     leadingAccessory,
     trailingAccessory,
+    bottomAccessory,
     // Validation
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
@@ -184,6 +189,7 @@ const TextField = (props: InternalTextFieldProps) => {
           labelProps={labelProps}
           floatingPlaceholder={floatingPlaceholder}
           validationMessagePosition={validationMessagePosition}
+          testID={`${props.testID}.label`}
         />
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
@@ -206,6 +212,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 floatOnFocus={floatOnFocus}
                 validationMessagePosition={validationMessagePosition}
                 extraOffset={leadingAccessoryMeasurements?.width}
+                testID={`${props.testID}.floatingPlaceholder`}
               />
             )}
             {children || (
@@ -235,7 +242,8 @@ const TextField = (props: InternalTextFieldProps) => {
               testID={`${props.testID}.validationMessage`}
             />
           )}
-          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle}/>}
+          {bottomAccessory}
+          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle} testID={`${props.testID}.charCounter`}/>}
         </View>
       </View>
     </FieldContext.Provider>

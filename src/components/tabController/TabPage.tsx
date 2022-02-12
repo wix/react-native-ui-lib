@@ -1,7 +1,7 @@
 import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
-import {Freeze} from 'react-freeze';
+// import {Freeze} from 'react-freeze';
 import TabBarContext from './TabBarContext';
 
 export interface TabControllerPageProps {
@@ -40,7 +40,7 @@ export default function TabPage({
 }: PropsWithChildren<TabControllerPageProps>) {
   const {currentPage, asCarousel, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
-  const [focused, setFocused] = useState(false);
+  // const [focused, setFocused] = useState(false);
 
   const lazyLoad = useCallback(() => {
     if (lazy && !shouldLoad) {
@@ -51,22 +51,22 @@ export default function TabPage({
   useAnimatedReaction(() => {
     return currentPage.value;
   },
-  (currentPage, previousPage) => {
+  (currentPage/* , previousPage */) => {
     const isActive = currentPage === index;
-    const wasActive = previousPage === index;
-    const nearActive = asCarousel && (currentPage - 1 === index || currentPage + 1 === index);
-    const wasNearActive =
-        asCarousel && previousPage !== null && (previousPage - 1 === index || previousPage + 1 === index);
+    // const wasActive = previousPage === index;
+    // const nearActive = asCarousel && (currentPage - 1 === index || currentPage + 1 === index);
+    // const wasNearActive =
+    //     asCarousel && previousPage !== null && (previousPage - 1 === index || previousPage + 1 === index);
 
     if (isActive) {
       runOnJS(lazyLoad)();
     }
 
-    if (isActive || nearActive) {
-      runOnJS(setFocused)(true);
-    } else if (wasActive || wasNearActive) {
-      runOnJS(setFocused)(false);
-    }
+    // if (isActive || nearActive) {
+    //   runOnJS(setFocused)(true);
+    // } else if (wasActive || wasNearActive) {
+    //   runOnJS(setFocused)(false);
+    // }
   },
   [currentPage]);
 
@@ -85,8 +85,8 @@ export default function TabPage({
   return (
     <Reanimated.View style={style} testID={testID}>
       {!shouldLoad && renderLoading?.()}
-      {/* {shouldLoad && props.children} */}
-      <Freeze freeze={!shouldLoad || !focused}>{props.children}</Freeze>
+      {shouldLoad && props.children}
+      {/* <Freeze freeze={!shouldLoad || !focused}>{props.children}</Freeze> */}
     </Reanimated.View>
   );
 }

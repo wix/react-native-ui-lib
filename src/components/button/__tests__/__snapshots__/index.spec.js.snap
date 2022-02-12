@@ -64,6 +64,7 @@ exports[`Button backgroundColor should return backgroundColor according to modif
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -134,6 +135,7 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -204,6 +206,7 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -213,6 +216,11 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
 exports[`Button backgroundColor should return theme disabled color if button is disabled 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -274,6 +282,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -344,6 +353,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -416,6 +426,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -486,6 +497,7 @@ exports[`Button border radius should return 0 border radius when border radius p
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -556,6 +568,7 @@ exports[`Button border radius should return 0 border radius when button is full 
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -626,6 +639,7 @@ exports[`Button border radius should return given border radius when use plain n
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -701,6 +715,7 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -776,6 +791,7 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -851,6 +867,7 @@ exports[`Button container size should have no padding of button is a link nor mi
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -910,6 +927,7 @@ exports[`Button container size should have no padding of button is an icon butto
         false,
       ]
     }
+    testID="undefined.icon"
   />
   <Text
     numberOfLines={1}
@@ -951,6 +969,7 @@ exports[`Button container size should have no padding of button is an icon butto
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1023,6 +1042,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1093,6 +1113,7 @@ exports[`Button container size should return style for large button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1165,6 +1186,7 @@ exports[`Button container size should return style for large button 2`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1240,6 +1262,7 @@ exports[`Button container size should return style for medium button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1317,6 +1340,7 @@ exports[`Button container size should return style for medium button 2`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1387,6 +1411,7 @@ exports[`Button container size should return style for round button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1462,6 +1487,7 @@ exports[`Button container size should return style for small button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1539,6 +1565,7 @@ exports[`Button container size should return style for small button 2`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1614,6 +1641,7 @@ exports[`Button container size should return style for xSmall button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1691,6 +1719,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1763,6 +1792,7 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -1821,6 +1851,7 @@ exports[`Button icon should apply color on icon 1`] = `
         false,
       ]
     }
+    testID="undefined.icon"
   />
 </View>
 `;
@@ -1877,6 +1908,7 @@ exports[`Button icon should apply color on icon 2`] = `
         false,
       ]
     }
+    testID="undefined.icon"
   />
 </View>
 `;
@@ -1936,6 +1968,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
         false,
       ]
     }
+    testID="undefined.icon"
   />
 </View>
 `;
@@ -1994,6 +2027,7 @@ exports[`Button icon should return icon style according to different variations 
         false,
       ]
     }
+    testID="undefined.icon"
   />
 </View>
 `;
@@ -2050,6 +2084,7 @@ exports[`Button icon should return icon style according to different variations 
         false,
       ]
     }
+    testID="undefined.icon"
   />
 </View>
 `;
@@ -2057,6 +2092,11 @@ exports[`Button icon should return icon style according to different variations 
 exports[`Button icon should return icon style according to different variations 3`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2106,6 +2146,7 @@ exports[`Button icon should return icon style according to different variations 
         false,
       ]
     }
+    testID="undefined.icon"
   />
 </View>
 `;
@@ -2174,6 +2215,7 @@ exports[`Button icon should return the right spacing according to button size wh
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2249,6 +2291,7 @@ exports[`Button icon should return the right spacing according to button size wh
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2324,6 +2367,7 @@ exports[`Button icon should return the right spacing according to button size wh
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2399,6 +2443,7 @@ exports[`Button icon should return the right spacing according to button size wh
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2469,6 +2514,7 @@ exports[`Button label size should return style for large button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2544,6 +2590,7 @@ exports[`Button label size should return style for medium button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2619,6 +2666,7 @@ exports[`Button label size should return style for small button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2694,6 +2742,7 @@ exports[`Button label size should return style for xSmall button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2764,6 +2813,7 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2834,6 +2884,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2904,6 +2955,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -2913,6 +2965,11 @@ exports[`Button labelColor should return color according to color prop 1`] = `
 exports[`Button labelColor should return disabled text color according to theme for link/outline button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2974,6 +3031,7 @@ exports[`Button labelColor should return disabled text color according to theme 
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3044,6 +3102,7 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3102,6 +3161,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
         false,
       ]
     }
+    testID="undefined.icon"
   />
 </View>
 `;
@@ -3170,6 +3230,7 @@ exports[`Button link should render button as a link 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3242,6 +3303,7 @@ exports[`Button outline should render button with an outline 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3314,6 +3376,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3386,6 +3449,7 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3458,6 +3522,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3467,6 +3532,11 @@ exports[`Button outline should return custom borderWidth according to outlineWid
 exports[`Button outline should return disabled color for outline if button is disabled 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3483,7 +3553,7 @@ exports[`Button outline should return disabled color for outline if button is di
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#F0F2F5",
+      "borderColor": "#D2D6D8",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -3530,6 +3600,7 @@ exports[`Button outline should return disabled color for outline if button is di
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3600,6 +3671,7 @@ exports[`Button outline should return undefined when link is true, even when out
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>
@@ -3670,6 +3742,7 @@ exports[`Button should render default button 1`] = `
         ],
       ]
     }
+    testID="undefined.label"
   >
     Button
   </Text>

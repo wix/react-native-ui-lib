@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import UIComponent from '../../commons/UIComponent';
 import { GridListItemProps } from '../gridListItem';
 export interface GridViewProps {
@@ -36,6 +36,10 @@ export interface GridViewProps {
      * Ignored when passing 'maxItemWidth'
      */
     keepItemSize?: boolean;
+    /**
+     * Pass to render a custom item
+     */
+    renderCustomItem?: (item: GridListItemProps) => React.ReactElement;
 }
 interface GridViewState {
     viewWidth: number;

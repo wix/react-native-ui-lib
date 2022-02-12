@@ -110,6 +110,9 @@ const constants = {
   set isTablet(value: boolean) {
     isTablet = value;
   },
+  get isWideScreen() {
+    return isTablet || this.isLandscape;
+  },
   getSafeAreaInsets: () => {
     const orientation = getOrientation(screenHeight, screenWidth);
     return orientation === orientations.LANDSCAPE

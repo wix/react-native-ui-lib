@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import memoize from 'memoize-one';
 import {LogService} from '../../services';
-import {Colors} from '../../style';
+import {Colors, BorderRadiuses} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import Badge, {BadgeProps} from '../badge';
@@ -197,17 +197,16 @@ class Avatar extends PureComponent<AvatarProps> {
       height: size,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: size / 2
+      borderRadius: BorderRadiuses.br100
     };
   }
 
   getInitialsContainer(): StyleProp<ViewStyle> {
-    const {size} = this.props;
     return {
       ...StyleSheet.absoluteFillObject,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: size / 2
+      borderRadius: BorderRadiuses.br100
     };
   }
 
@@ -371,6 +370,7 @@ class Avatar extends PureComponent<AvatarProps> {
         {...extractAccessibilityProps(this.props)}
       >
         <View
+          testID={`${testID}.container`}
           style={[
             this.getInitialsContainer(),
             {backgroundColor: this.backgroundColor},

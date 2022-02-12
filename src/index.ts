@@ -40,7 +40,7 @@ export {default as ColorPalette, ColorPaletteProps} from './components/ColorPale
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as ColorSwatch, ColorSwatchProps} from './components/ColorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
-export {default as Constants} from './helpers/Constants';
+export {default as Constants} from './commons/Constants';
 export {default as DateTimePicker, DateTimePickerProps} from './components/dateTimePicker';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
@@ -91,20 +91,26 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './components/t
 export {default as View, ViewProps} from './components/view';
 export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
 
+/* ===== TestKit ===== */
+// export {default as TextTestKit} from './components/text/Text.driver';
+// export {default as ImageTestKit} from './components/image/Image.driver';
+// export {default as ButtonTestKit} from './components/button/Button.driver';
+// export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
+
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  BaseInput, 
-  TextArea, 
-  TextField, 
-  MaskedInput, 
+  BaseInput,
+  TextArea,
+  TextField,
+  MaskedInput,
   Picker,
-  PickerProps, 
-  SharedTransition, 
-  Toast, 
-  WheelPickerDialog, 
+  PickerProps,
+  SharedTransition,
+  Toast,
+  WheelPickerDialog,
   Assets,
-  BaseComponent, 
-  PureBaseComponent, 
-  UIComponent, 
+  BaseComponent,
+  PureBaseComponent,
+  UIComponent,
   forwardRef
 } from '../typings';

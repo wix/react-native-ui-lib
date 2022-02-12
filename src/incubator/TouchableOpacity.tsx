@@ -12,6 +12,7 @@ import Reanimated, {
 import {TapGestureHandler, LongPressGestureHandler, State} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
 import View, {ViewProps} from '../components/view';
+import {Colors} from '../../src/style';
 
 export type TouchableOpacityProps = {
   /**
@@ -85,7 +86,7 @@ function TouchableOpacity(props: Props) {
   const isLongPressed = useSharedValue(false);
 
   const backgroundColor = useMemo(() => {
-    return props.backgroundColor || modifiers.backgroundColor;
+    return props.backgroundColor || modifiers.backgroundColor || Colors.transparent;
   }, [props.backgroundColor, modifiers.backgroundColor]);
 
   const onPress = useCallback(() => {
@@ -135,7 +136,9 @@ function TouchableOpacity(props: Props) {
     const scale = interpolate(isActive.value, [0, 1], [1, activeScale]);
 
     return {
-      backgroundColor: interpolateColor(isActive.value, [0, 1], [backgroundColor, activeColor]),
+      backgroundColor: !feedbackColor
+        ? backgroundColor
+        : interpolateColor(isActive.value, [0, 1], [backgroundColor, activeColor]),
       opacity,
       transform: [{scale}]
     };
@@ -162,7 +165,7 @@ function TouchableOpacity(props: Props) {
               paddings,
               margins,
               alignments,
-              backgroundColor && {backgroundColor},
+              {backgroundColor},
               style,
               animatedStyle
             ]}

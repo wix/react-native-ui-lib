@@ -7,7 +7,6 @@ export type ItemValueTypes = ItemProps | number | string;
 
 type PropTypes = {
   initialValue?: ItemValueTypes;
-  selectedValue?: ItemValueTypes;
   children?: JSX.Element | JSX.Element[];
   items?: ItemProps[];
   itemHeight: number;
@@ -21,21 +20,18 @@ type RowItem = {
 
 interface Presenter {
   items: ItemProps[];
-  shouldControlComponent: (offset: number) => boolean;
   index: number;
   height: number;
   getRowItemAtOffset: (offset: number) => RowItem;
 }
 
 const usePresenter = ({
-  initialValue,
-  selectedValue,
+  initialValue = 0,
   children,
   items: propItems,
   itemHeight,
   preferredNumVisibleRows
 }: PropTypes): Presenter => {
-  const value = !_.isUndefined(selectedValue) ? selectedValue : initialValue;
   const extractItemsFromChildren = (): ItemProps[] => {
     const items = React.Children.map(children, child => {
       const childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};
@@ -48,17 +44,10 @@ const usePresenter = ({
   const middleIndex = useMiddleIndex({itemHeight, listSize: items.length});
 
   const getSelectedValueIndex = () => {
-    if (_.isString(value) || _.isNumber(value)) {
-      return _.findIndex(items, {value});
+    if (_.isString(initialValue) || _.isNumber(initialValue)) {
+      return _.findIndex(items, {value: initialValue});
     }
-    return _.findIndex(items, {value: (value)?.value});
-  };
-
-  const shouldControlComponent = (offset: number): boolean => {
-    if (!_.isUndefined(selectedValue)) {
-      return offset >= 0 && selectedValue !== getRowItemAtOffset(offset).value;
-    }
-    return false;
+    return _.findIndex(items, {value: initialValue?.value});
   };
 
   const getRowItemAtOffset = (offset: number): RowItem => {
@@ -68,7 +57,6 @@ const usePresenter = ({
   };
 
   return {
-    shouldControlComponent,
     index: getSelectedValueIndex(),
     items,
     height: itemHeight * preferredNumVisibleRows,

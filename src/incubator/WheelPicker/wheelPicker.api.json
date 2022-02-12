@@ -1,0 +1,37 @@
+{
+  "name": "WheelPicker",
+  "category": "incubator",
+  "description": "A customizable WheelPicker component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/WheelPickerScreen.tsx",
+  "images": [],
+  "props": [
+    {"name": "initialValue", "type": "number | string", "description": "Initial value (uncontrolled)"},
+    {"name": "items", "type": "WheelPickerItemProps[]", "description": "Data source for WheelPicker"},
+    {"name": "itemHeight", "type": "number", "description": "Height of each item in the WheelPicker", "default": "44"},
+    {"name": "numberOfVisibleRows", "type": "number", "description": "Number of rows visible", "default": "5"},
+    {"name": "activeTextColor", "type": "string", "description": "Text color for the focused row"},
+    {"name": "inactiveTextColor", "type": "string", "description": "Text color for other, non-focused rows"},
+    {"name": "textStyle", "type": "TextStyle", "description": "Row text custom style"},
+    {"name": "label", "type": "string", "description": "Additional label to render next to the items text"},
+    {"name": "labelStyle", "type": "TextStyle", "description": "Additional label's style"},
+    {"name": "labelProps", "type": "TextProps", "description": "Additional label's props"},
+    {
+      "name": "onChange",
+      "type": "(item: string | number, index: number) => void",
+      "description": "Change item event callback"
+    },
+    {
+      "name": "style",
+      "type": "ViewStyle",
+      "description": "Container's custom style",
+      "note": "height is computed according to itemHeight * numberOfVisibleRows"
+    },
+    {
+      "name": "align",
+      "type": "WheelPickerAlign",
+      "description": "Align the content to center, right ot left",
+      "default": "center"
+    },
+    {"name": "testID", "type": "string", "description": "Align the content to center, right ot left"}
+  ]
+}

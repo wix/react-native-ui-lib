@@ -5,16 +5,16 @@ import Text, {TextProps} from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
 import {asBaseComponent} from '../../commons/new';
+import {WheelPickerAlign} from './types';
+
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
   label: string;
-  fakeLabel?: string;
-  fakeLabelStyle?: TextStyle;
-  fakeLabelProps?: TextProps;
   value: string | number;
+  align?: WheelPickerAlign
 }
 
 interface InternalProps extends ItemProps {
@@ -25,8 +25,11 @@ interface InternalProps extends ItemProps {
   inactiveColor?: string;
   style?: TextStyle;
   onSelect: (index: number) => void;
-  testID?: string;
   centerH?: boolean;
+  fakeLabel?: string;
+  fakeLabelStyle?: TextStyle;
+  fakeLabelProps?: TextProps;
+  testID?: string;
 }
 
 const WheelPickerItem = memo(({
@@ -42,7 +45,8 @@ const WheelPickerItem = memo(({
   inactiveColor = Colors.grey20,
   style,
   testID,
-  centerH = true
+  centerH = true,
+  align
 }: InternalProps) => {
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
@@ -64,8 +68,9 @@ const WheelPickerItem = memo(({
       style={containerStyle}
       key={index}
       centerV
-      centerH={centerH}
-      right={!centerH}
+      centerH={align ? align === WheelPickerAlign.CENTER : centerH}
+      right={align ? align === WheelPickerAlign.RIGHT : !centerH}
+      left={align === WheelPickerAlign.LEFT}
       onPress={selectItem}
       // @ts-ignore reanimated2
       index={index}

@@ -6,6 +6,6 @@ export interface AnimationNotifierEndProps {
     onAnimationEnd?: (animationType: TransitionViewAnimationType) => void;
 }
 export default function useAnimationEndNotifier(props: AnimationNotifierEndProps): {
-    onEnterAnimationEnd: (isFinished: boolean) => void;
-    onExitAnimationEnd: (isFinished: boolean) => void;
+    onEnterAnimationEnd: (isFinished?: boolean | undefined) => void;
+    onExitAnimationEnd: (isFinished?: boolean | undefined) => void;
 };

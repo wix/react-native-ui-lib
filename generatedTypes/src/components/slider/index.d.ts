@@ -1,85 +1,93 @@
 import { PureComponent, ReactElement, ElementRef } from 'react';
-import { Animated, StyleProp, ViewStyle, PanResponderGestureState, GestureResponderEvent, LayoutChangeEvent, AccessibilityActionEvent, AccessibilityRole, View as RNView } from 'react-native';
+import { Animated, StyleProp, ViewStyle, PanResponderGestureState, GestureResponderEvent, LayoutChangeEvent, AccessibilityActionEvent, AccessibilityRole, View as RNView, ViewProps } from 'react-native';
 export declare type SliderOnValueChange = (value: number) => void;
 export declare type SliderProps = {
     /**
-       * Initial value
-       */
+     * Initial value
+     */
     value?: number;
     /**
-       * Minimum value
-       */
+     * Minimum value
+     */
     minimumValue?: number;
     /**
-       * Maximum value
-       */
+     * Maximum value
+     */
     maximumValue?: number;
     /**
-       * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
-       */
+     * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
+     */
     step?: number;
     /**
-       * The color used for the track from minimum value to current value
-       */
+     * The color used for the track from minimum value to current value
+     */
     minimumTrackTintColor?: string;
     /**
-       * The track color
-       */
+     * The track color
+     */
     maximumTrackTintColor?: string;
     /**
-       * Custom render instead of rendering the track
-       */
+     * Custom render instead of rendering the track
+     */
     renderTrack?: () => ReactElement | ReactElement[];
     /**
-       * Thumb color
-       */
+     * Thumb color
+     */
     thumbTintColor?: string;
     /**
-       * Callback for onValueChange
-       */
+     * Callback for onValueChange
+     */
     onValueChange?: SliderOnValueChange;
     /**
-       * Callback that notifies about slider seeking is started
-       */
+     * Callback that notifies about slider seeking is started
+     */
     onSeekStart?: () => void;
     /**
-       * Callback that notifies about slider seeking is finished
-       */
+     * Callback that notifies about slider seeking is finished
+     */
     onSeekEnd?: () => void;
     /**
-       * The container style
-       */
+     * The container style
+     */
     containerStyle?: StyleProp<ViewStyle>;
     /**
-       * The track style
-       */
+     * The track style
+     */
     trackStyle?: StyleProp<ViewStyle>;
     /**
-       * The thumb style
-       */
+     * The thumb style
+     */
     thumbStyle?: ViewStyle;
     /**
-       * The active (during press) thumb style
-       */
+     * Defines how far a touch event can start away from the thumb.
+     */
+    thumbHitSlop?: ViewProps['hitSlop'];
+    /**
+     * The active (during press) thumb style
+     */
     activeThumbStyle?: ViewStyle;
     /**
-       * If true the Slider will not change it's style on press
-       */
+     * If true the Slider will not change it's style on press
+     */
     disableActiveStyling?: boolean;
     /**
-       * If true the Slider will be disabled and will appear in disabled color
-       */
+     * If true the Slider will be disabled and will appear in disabled color
+     */
     disabled?: boolean;
     /**
-       * If true the component will have accessibility features enabled
-       */
+     * If true the Slider will stay in LTR mode even if the app is on RTL mode
+     */
+    disableRTL?: boolean;
+    /**
+     * If true the component will have accessibility features enabled
+     */
     accessible?: boolean;
     /**
      * The slider's test identifier
      */
     testID?: string;
 } & typeof defaultProps;
-interface SliderState {
+interface State {
     containerSize: Measurements;
     trackSize: Measurements;
     thumbSize: Measurements;
@@ -96,19 +104,31 @@ declare const defaultProps: {
     minimumValue: number;
     maximumValue: number;
     step: number;
+    thumbHitSlop: {
+        top: number;
+        bottom: number;
+        left: number;
+        right: number;
+    };
 };
 /**
  * @description: A Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true
  */
-export default class Slider extends PureComponent<SliderProps, SliderState> {
+export default class Slider extends PureComponent<SliderProps, State> {
     static displayName: string;
     static defaultProps: {
         value: number;
         minimumValue: number;
         maximumValue: number;
         step: number;
+        thumbHitSlop: {
+            top: number;
+            bottom: number;
+            left: number;
+            right: number;
+        };
     };
     private thumb;
     private _thumbStyles;
@@ -137,7 +157,7 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
             label: string;
         }[];
     };
-    componentDidUpdate(prevProps: SliderProps, prevState: SliderState): void;
+    componentDidUpdate(prevProps: SliderProps, prevState: State): void;
     componentDidMount(): void;
     componentWillUnmount(): void;
     handleMoveShouldSetPanResponder: () => boolean;
@@ -170,12 +190,6 @@ export default class Slider extends PureComponent<SliderProps, SliderState> {
     handleTrackPress: (event: GestureResponderEvent) => void;
     handleMeasure: (name: MeasuredVariableName, { nativeEvent }: LayoutChangeEvent) => void;
     onAccessibilityAction: (event: AccessibilityActionEvent) => void;
-    thumbHitSlop: {
-        top: number;
-        bottom: number;
-        left: number;
-        right: number;
-    };
     renderThumb: () => JSX.Element;
     render(): JSX.Element;
 }

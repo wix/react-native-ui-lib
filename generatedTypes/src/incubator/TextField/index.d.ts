@@ -16,7 +16,7 @@ import { FieldContextType as _FieldContextType } from './FieldContext';
 import { FloatingPlaceholderProps } from './FloatingPlaceholder';
 import { CharCounterProps } from './CharCounter';
 export declare type FieldContextType = _FieldContextType;
-export declare type TextFieldProps = MarginModifiers & PaddingModifiers & TypographyModifiers & ColorsModifiers & InputProps & LabelProps & FloatingPlaceholderProps & ValidationMessageProps & Omit<CharCounterProps, 'maxLength'> & {
+export declare type TextFieldProps = MarginModifiers & PaddingModifiers & TypographyModifiers & ColorsModifiers & InputProps & LabelProps & Omit<FloatingPlaceholderProps, 'testID'> & ValidationMessageProps & Omit<CharCounterProps, 'maxLength' | 'testID'> & {
     /**
      * Pass to render a leading element
      */
@@ -25,6 +25,10 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
      * Pass to render a trailing element
      */
     trailingAccessory?: ReactElement;
+    /**
+     * Pass to render a bottom element below the input
+     */
+    bottomAccessory?: ReactElement;
     /**
      * Pass to add floating placeholder support
      */

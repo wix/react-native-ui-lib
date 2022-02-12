@@ -100,9 +100,8 @@ export default {
     return require('./components/textArea').default;
   },
   get TextField() {
-    // TODO: Start migration by exporting TextFieldMigrator
-    // return require('./components/textField/TextFieldMigrator').default;
-    return require('./components/textField').default;
+    return require('./components/textField/TextFieldMigrator').default;
+    // return require('./components/textField').default;
   },
   // TODO: remove once TextField migration has completed
   get TextFieldMigrator() {
@@ -283,6 +282,21 @@ export default {
   get Keyboard() {
     return require('../lib/components/Keyboard').default;
   },
+
+  // TestKits
+  // get TextTestKit() {
+  //   return require('./components/text/Text.driver').default;
+  // },
+  // get ImageTestKit() {
+  //   return require('./components/image/Image.driver').default;
+  // },
+  // get ButtonTestKit() {
+  //   return require('./components/button/Button.driver').default;
+  // },
+  // export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
+  // get TextFieldTestKit() {
+  //   return require('./incubator/TextField/TextField.driver').default;
+  // },
 
   // Style
   get Colors() {

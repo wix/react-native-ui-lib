@@ -1,7 +1,18 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView, Image} from 'react-native';
-import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {ScrollView} from 'react-native';
+import {
+  View,
+  Colors,
+  Icon,
+  Dialog,
+  Text,
+  Picker,
+  Avatar,
+  Assets,
+  PanningProvider,
+  Typography
+} from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
@@ -172,7 +183,7 @@ export default class PickerScreen extends Component {
             renderPicker={({label}) => {
               return (
                 <View row>
-                  <Image style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon}/>
+                  <Icon style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon}/>
                   <Text grey10 text80>
                     {label} Posts
                   </Text>
@@ -225,7 +236,7 @@ export default class PickerScreen extends Component {
                         {item.name}
                       </Text>
                     </View>
-                    {props.isSelected && <Image source={Assets.icons.check}/>}
+                    {props.isSelected && <Icon source={Assets.icons.check}/>}
                   </View>
                 )}
                 getItemLabel={item => item.name}
@@ -239,7 +250,8 @@ export default class PickerScreen extends Component {
 
           <Picker
             migrate
-            title="Language"
+            migrateTextField
+            label="Language"
             placeholder="Favorite Language"
             value={this.state.language2}
             onChange={value => this.setState({language2: value})}
