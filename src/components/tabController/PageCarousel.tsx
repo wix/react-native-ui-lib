@@ -75,7 +75,6 @@ function PageCarousel(props: ScrollViewProps) {
     }
 
     const actualIndex = FIX_RTL ? itemsCount - index - 1 : index;
-    // @ts-expect-error
     carousel.current?.scrollTo({x: actualIndex * pageWidth, animated: false});
   },
   [pageWidth, itemsCount]);
@@ -90,7 +89,6 @@ function PageCarousel(props: ScrollViewProps) {
   });
 
   useEffect(() => {
-    // @ts-expect-error
     carousel.current?.scrollTo({x: currentPage.value * pageWidth, animated: false});
   }, [pageWidth]);
 
