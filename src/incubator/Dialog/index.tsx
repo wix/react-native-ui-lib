@@ -1,7 +1,7 @@
 import React, {useRef, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Spacings, Colors, BorderRadiuses} from 'style';
-import {Constants} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
 import ImperativeDialog from './ImperativeDialog';
@@ -40,7 +40,7 @@ Dialog.displayName = 'Incubator.Dialog';
 Dialog.directions = DialogDirectionsEnum;
 Dialog.Header = DialogHeader;
 
-export default Dialog;
+export default asBaseComponent<DialogProps>(Dialog);
 
 const styles = StyleSheet.create({
   defaultDialogStyle: {

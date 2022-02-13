@@ -1,10 +1,7 @@
-/// <reference types="react" />
+import React from 'react';
 import { DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps } from './types';
 export { DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps };
-declare const Dialog: {
-    (props: DialogProps): JSX.Element;
-    displayName: string;
-    directions: typeof import("../panView").PanningDirectionsEnum;
-    Header: (props?: DialogHeaderProps) => JSX.Element | null;
-};
-export default Dialog;
+declare const _default: React.ComponentClass<DialogProps & {
+    useCustomTheme?: boolean | undefined;
+}, any>;
+export default _default;
