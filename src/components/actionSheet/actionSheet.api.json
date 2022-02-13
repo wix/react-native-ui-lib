@@ -74,14 +74,14 @@
   ],
   "snippet": [
     "<ActionSheet",
-    " title={$1}",
-    " message={$2}",
-    " cancelButtonIndex={$3}",
-    " destructiveButtonIndex={$4}",
+    " title={'Title'$1}",
+    " message={'Message goes here'$2}",
+    " cancelButtonIndex={3$3}",
+    " destructiveButtonIndex={0$4}",
     " options={[",
     "  {label: '$5', onPress: $6},",
     "  {label: '$7', onPress: $8},",
-    "  {label: 'Cancel', onPress: $9}",
+    "  {label: 'Cancel', onPress: () => console.log('cancel')$9}",
     " ]}",
     "/>"
   ]

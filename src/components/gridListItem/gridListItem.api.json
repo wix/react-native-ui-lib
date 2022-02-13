@@ -50,6 +50,6 @@
     {"name": "testID", "type": "string", "description": "Test ID for component"}
   ],
   "snippet": [
-    "<GridListItem key={$1} title={$2} subtitle={$3} description={$4}/>"
+    "<GridListItem key={index$1} title={'Title'$2} subtitle={'Subtitle'$3} description={'Description goes here'$4}/>"
   ]
 }

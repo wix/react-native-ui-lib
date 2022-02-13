@@ -44,6 +44,6 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styling for the container"}
   ],
   "snippet": [
-    "<RadioButton value={$1} label={$2}/>"
+    "<RadioButton value={null$1} label={'Default'$2}/>"
   ]
 }

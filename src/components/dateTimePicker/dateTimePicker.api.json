@@ -63,6 +63,6 @@
     }
   ],
   "snippet": [
-    "<DateTimePicker title={$1} placeholder={$2} mode={$3}/>"
+    "<DateTimePicker title={'Select time'$1} placeholder={'Placeholder'$2} mode={'time'$3}/>"
   ]
 }

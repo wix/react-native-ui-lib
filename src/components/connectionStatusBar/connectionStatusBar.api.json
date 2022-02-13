@@ -32,6 +32,6 @@
     }
   ],
   "snippet": [
-    "<ConnectionStatusBar onConnectionChange={$1}/>"
+    "<ConnectionStatusBar onConnectionChange={() => console.log('connection changed')$1}/>"
   ]
 }

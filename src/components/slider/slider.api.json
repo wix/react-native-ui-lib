@@ -64,10 +64,10 @@
   ],
   "snippet": [
     "<Slider",
-    " value={$1}",
-    " minimumValue={$2}",
-    " maximumValue={$3}",
-    " onValueChange={$4}",
+    " value={0$1}",
+    " minimumValue={0$2}",
+    " maximumValue={10$3}",
+    " onValueChange={() => console.log('value changed')$4}",
     "/>"
   ]
 }

@@ -28,7 +28,7 @@
   "snippet": [
     "<ActionBar",
     "  actions={[",
-    "    {label: $1, onPress: $2},",
+    "    {label: 'Delete'$1, onPress: () => console.log('delete')$2},",
     "    {label: $3, onPress: $4},",
     "    {label: $5, onPress: $6}",
     "  ]}",

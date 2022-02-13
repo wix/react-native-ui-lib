@@ -15,6 +15,6 @@
     }
   ],
   "snippet": [
-    "<ProgressBar progress={$1} progressColor={$2}/>"
+    "<ProgressBar progress={55$1} progressColor={Colors.red30$2}/>"
   ]
 }

@@ -19,6 +19,6 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Custom container style"}
   ],
   "snippet": [
-    "<LoaderScreen message={$1} color={$2}/>"
+    "<LoaderScreen message={'Message goes here'$1} color={Colors.grey40$2}/>"
   ]
 }

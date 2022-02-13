@@ -54,6 +54,6 @@
     {"name": "testID", "type": "string", "description": "Used to identify the pageControl in tests"}
   ],
   "snippet": [
-    "<PageControl numOfPages={$1} currentPage={$2} containerStyle={$3} />"
+    "<PageControl numOfPages={5$1} currentPage={0$2}/>"
   ]
 }

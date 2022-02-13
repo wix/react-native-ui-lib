@@ -43,8 +43,8 @@
     }
   ],
   "snippet": [
-    "<Card $1>",
-    " $2",
+    "<Card flex center onPress={() => console.log('pressed')}$1>",
+    " <Card.Image source={{uri: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg}}/>$2",
     "</Card>"
   ]
 }

@@ -59,8 +59,8 @@
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
   ],
   "snippet": [
-    "<Drawer $1>",
-    " $2",
+    "<Drawer rightItems:{[{text: 'Read', onPress: () => console.log('read pressed')}, {text: 'Delete', onPress: () => console.log('delete pressed')}]}$1>",
+    " <ListItem><Text grey10 text60 marginL-10>The item</Text></ListItem>$2",
     "</Drawer>"
   ]
 }

@@ -44,6 +44,6 @@
     {"name": "errorSource", "type": "ImageSourcePropType", "description": "Default image source in case of an error"}
   ],
   "snippet": [
-    "<Image source={$1}/>"
+    "<Image source={{uri: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg}}/>"
   ]
 }

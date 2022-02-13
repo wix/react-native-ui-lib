@@ -21,6 +21,6 @@
     {"name": "testID", "type": "string", "description": "Component test id"}
   ],
   "snippet": [
-    "<SegmentedControl segments={$1}/>"
+    "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}]$1}/>"
   ]
 }

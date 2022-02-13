@@ -41,6 +41,6 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styles for the top container"}
   ],
   "snippet": [
-    "<Badge label={$1} size={$2}/>"
+    "<Badge label={'999'$1} size={16$2}/>"
   ]
 }

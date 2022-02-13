@@ -40,9 +40,9 @@
   ],
   "snippet": [
     "<Modal.TopBar",
-    " title={$1}",
-    " onCancel={$2}",
-    " onDone={$3}",
+    " title={'Title'$1}",
+    " onCancel={() => console.log('cancel')$2}",
+    " onDone={() => console.log('done')$3}",
     "/>"
   ]
 }

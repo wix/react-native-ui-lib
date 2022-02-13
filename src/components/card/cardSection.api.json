@@ -33,8 +33,8 @@
   ],
   "snippet": [
     "<Card.Section",
-    " content={$1}",
-    " contentStyle={$2}",
+    " content={[{text: 'Card content here', text70: true, grey10: true}]$1}",
+    " contentStyle={{alignItems: 'center'}$2}",
     "/>"
   ]
 }

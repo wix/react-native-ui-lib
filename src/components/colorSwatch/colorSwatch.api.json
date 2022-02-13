@@ -22,6 +22,6 @@
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
   ],
   "snippet": [
-    "<ColorSwatch color={$1} selected={$2} onPress={$3}/>"
+    "<ColorSwatch color={Colors.red30$1} selected={true$2} onPress={() => console.log('pressed')$3}/>"
   ]
 }

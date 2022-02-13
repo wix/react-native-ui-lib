@@ -31,6 +31,6 @@
     }
   ],
   "snippet": [
-    "<Picker.Item key={$1} value={$2} disabled={$3}/>"
+    "<Picker.Item key={index$1} value={item$2}/>"
   ]
 }

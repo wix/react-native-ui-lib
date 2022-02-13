@@ -28,6 +28,6 @@
     {"name": "testID", "type": "string", "description": "Component test id"}
   ],
   "snippet": [
-    "<Switch value={$1} onValueChange={$2}/>"
+    "<Switch value={false$1} onValueChange={() => console.log('value changed)$2}/>"
   ]
 }

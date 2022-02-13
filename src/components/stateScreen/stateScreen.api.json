@@ -17,9 +17,9 @@
   ],
   "snippet": [
     "<StateScreen",
-    " title={$1}",
-    " subtitle={$2}",
-    " ctaLabel={$3}",
+    " title={'Title'$1}",
+    " subtitle={'Subtitle'$2}",
+    " ctaLabel={'Done'$3}",
     " imageSource={$4}",
     "/>"
   ]

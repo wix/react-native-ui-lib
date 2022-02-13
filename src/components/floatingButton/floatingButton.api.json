@@ -27,6 +27,6 @@
     }
   ],
   "snippet": [
-    "<FloatingButton visible={$1} button={$2} secondaryButton={$3}/>"
+    "<FloatingButton visible={this.state.visible$1} button={button={{label: 'Approve', onPress: () => console.log('approved')}}$2}/>"
   ]
 }

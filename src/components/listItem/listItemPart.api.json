@@ -13,8 +13,8 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "container style"}
   ],
   "snippet": [
-    "<ListItem.Part $1>",
-    " $2",
+    "<ListItem.Part middle$1>",
+    " <Text grey10 text60 marginL-10>The item</Text>$2",
     "</ListItem.Part>"
   ]
 }

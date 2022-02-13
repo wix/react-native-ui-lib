@@ -50,6 +50,6 @@
     {"name": "style", "type": "ViewStyle", "description": "Additional styling"}
   ],
   "snippet": [
-    "<Hint visible={$1} message={$2} color={$3}/>"
+    "<Hint visible={this.state.visible$1} message={'Message goes here'$2} color={Colors.red30$3}/>"
   ]
 }

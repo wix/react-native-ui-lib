@@ -19,6 +19,6 @@
     {"name": "animated", "type": "boolean", "description": "Use Animated.Text as a container"}
   ],
   "snippet": [
-    "<Text $1>$2</Text>"
+    "<Text text30$1>Text goes here$2</Text>"
   ]
 }

@@ -42,9 +42,9 @@
   ],
   "snippet": [
     "<ColorPalette",
-    " colors={$1}",
-    " value={$2}",
-    " onValueChange={$3}",
+    " colors={['transparent', Colors.green30, Colors.yellow30, Colors.red30]$1}",
+    " value={this.state.selectedColor$2}",
+    " onValueChange={() => console.log('value changed)$3}",
     "/>"
   ]
 }

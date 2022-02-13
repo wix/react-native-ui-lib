@@ -21,8 +21,8 @@
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
   ],
   "snippet": [
-    "<ListItem onPress={$1}>",
-    " $2",
+    "<ListItem onPress={() => console.log('pressed)$1}>",
+    " <Text grey10 text60 marginL-10>The item</Text>$2",
     "</ListItem>"
   ]
 }

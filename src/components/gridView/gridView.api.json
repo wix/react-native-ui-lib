@@ -27,9 +27,9 @@
   ],
   "snippet": [
     "<GridView",
-    " items={$1}",
-    " numColumns={$2}",
-    " lastItemLabel={$3}",
+    " items={[{title: 'item 1', onPress: () => console.log('item 1 pressed')}, {title: 'item 2', onPress: () => console.log('item 2 pressed')}, ]$1}",
+    " numColumns={2$2}",
+    " lastItemLabel={'+'$3}",
     "/>"
   ]
 }

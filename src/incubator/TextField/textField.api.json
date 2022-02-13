@@ -90,9 +90,6 @@
     }
   ],
   "snippet": [
-    "<TextField",
-    " placeholder={$1}",
-    " onChangeText={$2}",
-    "/>"
+    "<TextField placeholder={'Placeholder$1} onChangeText={() => console.log('changed)$2}/>"
   ]
 }

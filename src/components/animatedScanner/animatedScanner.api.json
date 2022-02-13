@@ -21,6 +21,6 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"}
   ],
   "snippet": [
-    "<AnimatedScanner progress={$1} duration={$2}/>"
+    "<AnimatedScanner progress={55$1} duration={1600$2}/>"
   ]
 }

@@ -68,6 +68,6 @@
     }
   ],
   "snippet": [
-    "<Button label={$1} size={$2} backgroundColor={$3}/>"
+    "<Button label={'Press'$1} size={Button.sizes.medium$2} backgroundColor={Colors.red30$3}/>"
   ]
 }

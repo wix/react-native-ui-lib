@@ -14,6 +14,6 @@
     {"name": "supportRTL", "type": "boolean", "description": "whether the image should flip horizontally on RTL locals"}
   ],
   "snippet": [
-    "<Icon source={$1} size={$2} tintColor={$3}/>"
+    "<Icon source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/icons/delete.png'}$1} size={24$2} tintColor={Colors.grey40$3}/>"
   ]
 }

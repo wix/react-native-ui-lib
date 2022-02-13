@@ -27,7 +27,7 @@
   ],
   "snippet": [
     "<StackAggregator",
-    " onItemPress={$1}",
+    " onItemPress={() => console.log('pressed)$1}",
     ">",
     " {_.map(items, (item, index) => {",
     "  return this.renderItem(item, index);",

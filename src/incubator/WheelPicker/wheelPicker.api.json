@@ -36,9 +36,9 @@
   ],
   "snippet": [
     "<WheelPicker",
-    " items={$1}",
-    " initialValue={$2}",
-    " onChange={$3}",
+    " items={[{label: 'Yes', value: 'yes'}, {label: 'No', value: 'no'}, {label: 'Maybe', value: 'maybe'}]$1}",
+    " initialValue={'Yes'$2}",
+    " onChange={() => console.log('changed’)$3}",
     "/>"
   ]
 }
