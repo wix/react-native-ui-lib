@@ -112,7 +112,8 @@ export const navigationData = {
         screen: 'unicorn.components.FaderScreen'
       },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'},
-      {title: 'GridView', tags: 'grid view', screen: 'unicorn.components.GridViewScreen'}
+      {title: 'GridView', tags: 'grid view', screen: 'unicorn.components.GridViewScreen'},
+      {title: 'SortableGridView', tags: 'sortable grid view', screen: 'unicorn.components.SortableGridViewScreen'}
     ]
   },
   Native: {

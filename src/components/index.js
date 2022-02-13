@@ -150,6 +150,9 @@ export default {
   get SharedTransition() {
     return require('./sharedTransition').default;
   },
+  get SortableGridView() {
+    return require('./sortableGridView').default;
+  },
   get StackAggregator() {
     return require('./stackAggregator').default;
   },
