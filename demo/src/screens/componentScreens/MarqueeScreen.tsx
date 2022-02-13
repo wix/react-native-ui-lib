@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {View, Text, Marquee} from 'react-native-ui-lib';
 
@@ -12,7 +13,11 @@ export default class MarqueeScreen extends Component {
           </View>
         </Marquee>
         <Marquee duration={2000} direction={'right'}>
-          <View margin-20 style={{backgroundColor: '#FF10F0', width: 50, height: 50, borderRadius: 25}}/>
+          <View row>
+            {_.times(8, i => {
+              return <View style={{backgroundColor: '#FF10F0', width: 40, height: 8, marginRight: 10}}/>;
+            })}
+          </View>
         </Marquee>
       </View>
     );
