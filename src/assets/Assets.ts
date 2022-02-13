@@ -1,10 +1,12 @@
 import _ from 'lodash';
 
-interface CustomObject {[key: string]: any}
+interface CustomObject {
+  [key: string]: any;
+}
 
 function assignProperties(a: CustomObject, b: {[key: string]: any}) {
   if (a) {
-    _(b).keys().forEach((key) => {
+    Object.keys(b).forEach(key => {
       // @ts-ignore
       Object.defineProperty(a, key, Object.getOwnPropertyDescriptor(b, key));
     });
