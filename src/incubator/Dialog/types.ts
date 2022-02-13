@@ -1,5 +1,5 @@
 import {PropsWithChildren} from 'react';
-import {StyleProp, TextStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {ModalProps} from '../../components/modal';
 import {ViewProps} from '../../components/view';
@@ -97,4 +97,19 @@ export interface DialogHeaderProps extends ViewProps {
    * It is available as `Dialog.Divider`
    */
   showDivider?: boolean;
+}
+
+export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
+  /**
+   * The visibility of the dialog.
+   */
+  visible?: boolean;
+  /**
+   * The Dialog's header
+   */
+  headerProps?: DialogHeaderProps;
+  /**
+   * The Dialog`s container style (it is set to {position: 'absolute'})
+   */
+  containerStyle?: StyleProp<ViewStyle>;
 }
