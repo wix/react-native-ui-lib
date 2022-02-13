@@ -122,4 +122,9 @@ export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibil
      * Add scrollability to the content
      */
     scrollableProps?: ScrollableProps;
+    /**
+     * Replace the header
+     * this.props will be sent to this function
+     */
+    renderHeader?: (props: any) => React.ReactElement;
 }

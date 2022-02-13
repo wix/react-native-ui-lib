@@ -21,6 +21,7 @@ const Dialog = (props: DialogProps) => {
     width: propWidth,
     height: propsHeight,
     containerStyle,
+    renderHeader,
     children,
     ...others
   } = props;
@@ -41,6 +42,15 @@ const Dialog = (props: DialogProps) => {
     return [styles.defaultDialogStyle, containerStyle, {width, height}];
   }, [containerStyle, width, height]);
 
+  const _renderHeader = useMemo(() => {
+    if (renderHeader) {
+      return renderHeader(props);
+    } else {
+      return <DialogHeader {...headerProps}/>;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [headerProps, renderHeader]);
+
   const renderContent = () => {
     if (enable) {
       return (
@@ -56,7 +66,7 @@ const Dialog = (props: DialogProps) => {
   return (
     <ImperativeDialog {...others} initialVisibility={initialVisibility.current} ref={dialogRef}>
       <View style={style}>
-        <DialogHeader {...headerProps}/>
+        {_renderHeader}
         {renderContent()}
       </View>
     </ImperativeDialog>
