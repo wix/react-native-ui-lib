@@ -8,7 +8,7 @@ import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
-import FadedScrollView from './FadedScrollView';
+import FadedScrollView from '../fadedScrollView';
 
 import useScrollToItem from './useScrollToItem';
 import {orientations} from '../../commons/Constants';
