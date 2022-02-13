@@ -149,6 +149,9 @@ export default {
   get Slider() {
     return require('./components/slider').default;
   },
+  get SlidingView() {
+    return require('./components/slidingView').default;
+  },
   get StateScreen() {
     return require('./components/stateScreen').default;
   },

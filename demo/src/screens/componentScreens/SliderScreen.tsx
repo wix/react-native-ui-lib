@@ -44,7 +44,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <View flex padding-20>
-          <Text titleHuge marginB-20>
+          <Text text60 grey10 marginB-20>
             Sliders
           </Text>
 
