@@ -44,9 +44,6 @@ export interface ImperativeDialogMethods {
     open: () => void;
     close: () => void;
 }
-/**
- * It is available as `Dialog.Text`
- */
 export interface DialogTextProps {
     /**
      * Title
@@ -84,12 +81,10 @@ export interface DialogHeaderProps extends ViewProps {
     renderContent?: (props: DialogHeaderProps) => React.ReactElement;
     /**
      * Show the header's knob (default is true)
-     * It is available as `Dialog.Knob`
      */
     showKnob?: boolean;
     /**
      * Show the header's divider (default is true)
-     * It is available as `Dialog.Divider`
      */
     showDivider?: boolean;
 }
