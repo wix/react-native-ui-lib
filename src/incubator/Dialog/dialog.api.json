@@ -17,5 +17,14 @@
     {"name": "ignoreBackgroundPress", "type": "boolean", "description": "Whether or not to ignore background press."},
     {"name": "modalProps", "type": "ModalProps", "description": "Pass props to the dialog modal"},
     {"name": "testID", "type": "string", "description": "Used as a testing identifier"}
+  ],
+  "snippet": [
+    "<Dialog", 
+    " visible={this.state.visible$1}",
+    " onDismiss={() => console.log('dismissed')$2}",
+    " panDirection={PanningProvider.Directions.DOWN$3}",
+    ">",
+    " {<Text text60>Content</Text>}$4",
+    "</Dialog>"
   ]
 }

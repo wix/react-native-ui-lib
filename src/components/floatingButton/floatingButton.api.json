@@ -25,5 +25,8 @@
       "description": "The test id for e2e tests",
       "note": "<TestID> - the floatingButton container\n<TestID>.button - the floatingButton main button\n<TestID>.secondaryButton - the floatingButton secondaryButton"
     }
+  ],
+  "snippet": [
+    "<FloatingButton visible={this.state.visible$1} button={button={{label: 'Approve', onPress: () => console.log('approved')}}$2}/>"
   ]
 }

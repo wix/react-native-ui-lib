@@ -88,5 +88,8 @@
       "type": "(value) => string | undefined",
       "description": "Custom formatter for the input value (used only when input if not focused)"
     }
+  ],
+  "snippet": [
+    "<TextField placeholder={'Placeholder$1} onChangeText={() => console.log('changed)$2}/>"
   ]
 }

@@ -24,5 +24,14 @@
       "description": "A callback for collapse state change (value is collapsed state)"
     },
     {"name": "disablePresses", "type": "boolean", "description": "A setting that disables pressability on cards"}
+  ],
+  "snippet": [
+    "<StackAggregator",
+    " onItemPress={() => console.log('pressed)$1}",
+    ">",
+    " {_.map(items, (item, index) => {",
+    "  return this.renderItem(item, index);",
+    " })}",
+    "</StackAggregator>"
   ]
 }

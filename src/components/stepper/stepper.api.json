@@ -23,5 +23,6 @@
     {"name": "small", "type": "boolean", "description": "Renders a small sized Stepper"},
     {"name": "accessibilityLabel", "type": "string", "description": "Component accessibility label"},
     {"name": "testID", "type": "string", "description": "Test id for component"}
-  ]
+  ],
+  "snippet": ["<Stepper $1/>"]
 }

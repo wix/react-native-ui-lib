@@ -1,6 +1,6 @@
+const _ = require('lodash');
 const childProcess = require('child_process');
 const fs = require('fs');
-const _ = require('lodash');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
 
@@ -43,7 +43,7 @@ components.forEach(component => {
   /* General */
   content += `${component.description}  \n`;
   content += `[(code example)](${component.example})\n`;
-
+  
   if (component.extends) {
     let extendsText = component.extends?.join(', ');
     if (component.extendsLink) {
@@ -70,12 +70,21 @@ components.forEach(component => {
   }
 
   /* Images */
-  content += `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
+  content += 
+  `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
   component.images?.forEach(image => {
     content += `<img style={{maxHeight: '420px'}} src={'${image}'}/>`;
     content += '\n\n';
   });
   content += '</div>\n\n';
+
+  /* Snippet */
+  if (component.snippet) {
+    content += `### Usage\n`;
+    content += '```\n';
+    content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
+    content += '\n```\n';
+  }
 
   /* Props */
   content += `## API\n`;

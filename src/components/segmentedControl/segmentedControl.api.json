@@ -19,5 +19,8 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"},
     {"name": "style", "type": "ViewStyle", "description": "Custom style to inner container"},
     {"name": "testID", "type": "string", "description": "Component test id"}
+  ],
+  "snippet": [
+    "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}]$1}/>"
   ]
 }
