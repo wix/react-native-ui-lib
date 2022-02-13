@@ -1,25 +1,50 @@
-import React, {useCallback, useImperativeHandle, useRef} from 'react';
+import React, {useCallback, useImperativeHandle} from 'react';
 import {
-  ViewProps,
-  ScrollView,
+  ScrollView as RNScrollView,
   ScrollViewProps,
   NativeSyntheticEvent,
   NativeScrollEvent,
   LayoutChangeEvent
 } from 'react-native';
-import Fader from '../fader';
+import Fader, {FaderProps} from '../fader';
 import useScrollEnabler from '../../hooks/useScrollEnabler';
 import useScrollReached from '../../hooks/useScrollReached';
-import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
+import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import {ScrollView as GestureScrollView} from 'react-native-gesture-handler';
 
-export type FadedScrollViewProps = ViewProps &
-  ScrollViewProps & {
-    children?: React.ReactNode | React.ReactNode[];
-  };
+export type FadedScrollViewProps = ScrollViewProps & {
+  /**
+   * Show a fader at the start of the scroll
+   */
+  showStartFader?: boolean;
+  /**
+   * Additional props for the start fader
+   */
+  startFaderProps?: Omit<FaderProps, 'visible' | 'position'>;
+  /**
+   * Show a fader at the end of the scroll
+   */
+  showEndFader?: boolean;
+  /**
+   * Additional props for the end fader
+   */
+  endFaderProps?: Omit<FaderProps, 'visible' | 'position'>;
+  /**
+   * Use the react-native-gesture-handler version, useful when using react-native-reanimated
+   */
+  useGesture?: boolean;
+  children?: React.ReactNode | React.ReactNode[];
+};
 
 type Props = FadedScrollViewProps & ForwardRefInjectedProps;
-
-const FADER_SIZE = 76;
+interface Statics {
+  scrollTo(
+    y?: number | {x?: number | undefined; y?: number | undefined; animated?: boolean | undefined},
+    x?: number,
+    animated?: boolean
+  ): void;
+  isScrollEnabled: () => boolean;
+}
 
 const FadedScrollView = (props: Props) => {
   const {
@@ -27,21 +52,29 @@ const FadedScrollView = (props: Props) => {
     onScroll: propsOnScroll,
     onContentSizeChange: propsOnContentSizeChange,
     onLayout: propsOnLayout,
-    ...other
+    horizontal: propsHorizontal,
+    showStartFader,
+    startFaderProps,
+    showEndFader,
+    endFaderProps,
+    useGesture,
+    ...others
   } = props;
-  const ref = useRef<ScrollView>();
-  const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal: true});
+  const ScrollView = useGesture ? GestureScrollView : RNScrollView;
+  const scrollViewRef = React.createRef<typeof ScrollView>();
+  const horizontal = propsHorizontal ?? false;
+  const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal});
   const {
     onScroll: onScrollReached,
     isScrollAtStart,
     isScrollAtEnd
   } = useScrollReached({
-    horizontal: true,
+    horizontal,
     threshold: 50
   });
 
-  const showStart = scrollEnabled && !isScrollAtStart;
-  const showEnd = scrollEnabled && !isScrollAtEnd;
+  const showStart = (showStartFader && scrollEnabled && !isScrollAtStart) ?? false;
+  const showEnd = (showEndFader && scrollEnabled && !isScrollAtEnd) ?? false;
 
   const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     onScrollReached(event);
@@ -62,11 +95,12 @@ const FadedScrollView = (props: Props) => {
   [propsOnLayout, onLayout]);
 
   const isScrollEnabled = () => {
-    return scrollEnabled; 
+    return scrollEnabled;
   };
 
   useImperativeHandle(props.forwardedRef, () => ({
-    scrollTo: (...data: any) => ref.current?.scrollTo?.(...data),
+    // @ts-expect-error
+    scrollTo: (...data: any) => scrollViewRef.current?.scrollTo?.(...data),
     isScrollEnabled
   }));
 
@@ -74,22 +108,28 @@ const FadedScrollView = (props: Props) => {
     return (
       <>
         <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
           decelerationRate={'fast'}
-          {...other}
+          {...others}
+          horizontal={horizontal}
           scrollEnabled={scrollEnabled}
           onContentSizeChange={_onContentSizeChange}
           onLayout={_onLayout}
           onScroll={onScroll}
-          // @ts-ignore
-          ref={ref}
+          ref={scrollViewRef}
         >
           {children}
         </ScrollView>
-        <Fader visible={showStart} position={Fader.position.START} size={FADER_SIZE}/>
-        <Fader visible={showEnd} position={Fader.position.END} size={FADER_SIZE}/>
+        <Fader
+          visible={showStart}
+          position={horizontal ? Fader.position.START : Fader.position.TOP}
+          {...startFaderProps}
+        />
+        <Fader
+          visible={showEnd}
+          position={horizontal ? Fader.position.END : Fader.position.BOTTOM}
+          {...endFaderProps}
+        />
       </>
     );
   }
@@ -98,4 +138,5 @@ const FadedScrollView = (props: Props) => {
 };
 
 FadedScrollView.displayName = 'IGNORE';
-export default forwardRef<Props>(FadedScrollView);
+// @ts-expect-error
+export default forwardRef<FadedScrollViewProps, Statics>(FadedScrollView);

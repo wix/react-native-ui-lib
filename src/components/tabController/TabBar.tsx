@@ -117,6 +117,8 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
   children?: ChildProps[] | ChildProps;
 }
 
+const FADER_PROPS = {size: 76};
+
 /**
  * @description: TabController's TabBar component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
@@ -260,7 +262,6 @@ const TabBar = (props: Props) => {
   }, [containerWidth]);
 
   useDidUpdate(() => {
-    // @ts-expect-error TODO: fix forwardRef Statics
     if (tabBar.current?.isScrollEnabled()) {
       focusIndex(currentPage.value);
     } else {
@@ -275,6 +276,11 @@ const TabBar = (props: Props) => {
         // @ts-expect-error
         ref={tabBar}
         horizontal
+        showsHorizontalScrollIndicator={false}
+        showStartFader
+        startFaderProps={FADER_PROPS}
+        showEndFader
+        endFaderProps={FADER_PROPS}
         contentContainerStyle={scrollViewContainerStyle}
         testID={testID}
         onContentSizeChange={onContentSizeChange}
