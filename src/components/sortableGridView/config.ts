@@ -9,19 +9,17 @@ export const animationConfig = {
   duration: 350
 };
 
-export const getPositionByOrder = (order: number, numOfColumns: number) => {
+export const getPositionByOrder = (order: number, numOfColumns: number, itemSize: number) => {
   'worklet';
-  const size = getItemSize(numOfColumns);
   return {
-    x: (order % numOfColumns) * size,
-    y: Math.floor(order / numOfColumns) * size
+    x: (order % numOfColumns) * itemSize,
+    y: Math.floor(order / numOfColumns) * itemSize
   };
 };
 
-export const getOrderByPosition = (positionX: number, positionY: number, numOfColumns: number) => {
+export const getOrderByPosition = (positionX: number, positionY: number, numOfColumns: number, itemSize: number) => {
   'worklet';
-  const size = getItemSize(numOfColumns);
-  const col = Math.round(positionX / size);
-  const row = Math.round(positionY / size);
+  const col = Math.round(positionX / itemSize);
+  const row = Math.round(positionY / itemSize);
   return row * numOfColumns + col;
 };

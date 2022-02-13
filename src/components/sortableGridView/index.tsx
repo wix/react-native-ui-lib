@@ -33,7 +33,10 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
       >
 
         {/* Have support for custom renderer */}
-        <SortableGridItem key={`${item.id} - ${index}`} color={item.color}/>
+        <SortableGridItem
+          key={`${item.id} - ${index}`}
+          color={item.color}
+        />
 
       </SortableGridItemAnimationWrapper>
     );
