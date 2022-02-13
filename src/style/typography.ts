@@ -28,12 +28,10 @@ export class Typography {
   }
 
   generateKeysPattern(): RegExp {
-    return new RegExp(_.chain(this)
-      .keys()
-      .map(key => [`${key}`])
-      .flatten()
-      .join('|')
-      .value());
+    return new RegExp(_.flow(_.keys,
+      keys => _.map(keys, key => [`${key}`]),
+      _.flatten,
+      keys => _.join(keys, '|'))(this));
   }
 
   // TODO: deprecate
@@ -44,7 +42,9 @@ export class Typography {
     }
   }
 
-  async measureTextSize(text: string, typography: MeasureTextTypography = TypographyPresets.text70!, containerWidth = Constants.screenWidth) {
+  async measureTextSize(text: string,
+    typography: MeasureTextTypography = TypographyPresets.text70!,
+    containerWidth = Constants.screenWidth) {
     const rnTextSize = require('react-native-text-size').default;
     if (text) {
       const size = await rnTextSize.measure({
@@ -57,7 +57,10 @@ export class Typography {
   }
 }
 type CustomTypographyPresets = {[custom: string]: TextStyle};
-const TypedTypography = Typography as ExtendTypeWith<ExtendTypeWith<typeof Typography, typeof TypographyPresets>, CustomTypographyPresets>;
+const TypedTypography = Typography as ExtendTypeWith<
+  ExtendTypeWith<typeof Typography, typeof TypographyPresets>,
+  CustomTypographyPresets
+>;
 const typography = new TypedTypography();
 typography.loadTypographies(TypographyPresets);
 
