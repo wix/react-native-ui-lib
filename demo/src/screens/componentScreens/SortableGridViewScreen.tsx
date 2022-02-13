@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, SortableGridView} from 'react-native-ui-lib';
+import {View, SortableGridView} from 'react-native-ui-lib';
 
 const demoTiles = [
   {id: 'red', color: 'red'},
@@ -7,7 +7,9 @@ const demoTiles = [
   {id: 'blue', color: 'blue'},
   {id: 'yellow', color: 'yellow'},
   {id: 'pink', color: 'pink'},
-  {id: 'purple', color: 'purple'}
+  {id: 'purple', color: 'purple'},
+  {id: 'black', color: 'black'},
+  {id: 'cyan', color: 'cyan'}
 ];
 
 
@@ -15,10 +17,7 @@ const demoTiles = [
 const SortableGridViewScreen = () => {
     
   return (
-    <View flex>
-      <Text center h1>
-        SortableGridView
-      </Text>
+    <View>
       <SortableGridView items={demoTiles} numOfColumns={2}/>
     </View>
   );

@@ -5,12 +5,11 @@ import {MARGIN} from './config';
 
 interface SortableGridItemProps {
     color: string;
-    itemSize: number
 }
 
-const SortableGridItem: React.FC<SortableGridItemProps> = ({color, itemSize}) => {
+const SortableGridItem: React.FC<SortableGridItemProps> = ({color}) => {
   return (
-    <View style={[tileStyles.tile, {backgroundColor: color, width: itemSize, height: itemSize}]}/>
+    <View style={[tileStyles.tile, {backgroundColor: color}]}/>
   );
 };
 
@@ -19,6 +18,7 @@ export default SortableGridItem;
 const tileStyles = StyleSheet.create({
   tile: {
     borderRadius: MARGIN,
-    margin: MARGIN * 2
+    margin: MARGIN * 2,
+    flex: 1
   }
 });
