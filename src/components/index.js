@@ -156,8 +156,8 @@ export default {
   get Slider() {
     return require('./slider').default;
   },
-  get SlidingView() {
-    return require('./slidingView').default;
+  get Marquee() {
+    return require('./Marquee').default;
   },
   get GradientSlider() {
     return require('./slider/GradientSlider').default;

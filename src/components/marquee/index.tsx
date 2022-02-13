@@ -12,13 +12,13 @@ import {Constants, asBaseComponent} from '../../commons/new';
 
 export type Directions = 'left' | 'right';
 
-export type SlidingViewProps = ViewProps & {
+export type MarqueeProps = ViewProps & {
   duration?: number;
   direction?: Directions;
   width?: number;
 }
 
-const SlidingView = (props: SlidingViewProps) => {
+const Marquee = (props: MarqueeProps) => {
   const {children, duration = 6000, direction = 'left', width = Constants.screenWidth} = props;
   
   const isLeft = direction === 'left';
@@ -43,5 +43,5 @@ const SlidingView = (props: SlidingViewProps) => {
   );
 };
 
-SlidingView.displayName = 'SlidingView';
-export default asBaseComponent<SlidingViewProps>(SlidingView);
+Marquee.displayName = 'Marquee';
+export default asBaseComponent<MarqueeProps>(Marquee);
