@@ -29,6 +29,11 @@ export declare class Colors {
      */
     setScheme(scheme: SchemeType): void;
     /**
+     * Support listening to Appearance changes
+     * and change the design tokens accordingly
+     */
+    supportDarkMode(enable?: boolean): void;
+    /**
      * Add alpha to hex or rgb color
      * arguments:
      * p1 - hex color / R part of RGB
@@ -105,13 +110,14 @@ declare const colorObject: Colors & {
     orange10: string;
     orange20: string;
     orange30: string;
-    orange40: string; /**
+    orange40: string;
+    orange50: string;
+    orange60: string;
+    /**
      * Set color scheme for app
      * arguments:
      * scheme - color scheme e.g light/dark/default
      */
-    orange50: string;
-    orange60: string;
     orange70: string;
     orange80: string;
     red1: string;
@@ -132,8 +138,17 @@ declare const colorObject: Colors & {
     purple40: string;
     purple50: string;
     purple60: string;
-    purple70: string;
+    purple70: string; /**
+     * Add alpha to hex or rgb color
+     * arguments:
+     * p1 - hex color / R part of RGB
+     * p2 - opacity / G part of RGB
+     * p3 - B part of RGB
+     * p4 - opacity
+     */
     purple80: string;
+    violet1: string;
+    violet5: string;
     violet10: string;
     violet20: string;
     violet30: string;
@@ -144,11 +159,13 @@ declare const colorObject: Colors & {
     violet80: string;
     white: string;
     black: string;
+    dmBlack: string;
     transparent: string;
 } & {
     primary: string;
 } & {
     $backgroundDefault: string;
+    $backgroundElevated: string;
     $backgroundNeutralHeavy: string;
     $backgroundNeutralIdle: string;
     $backgroundNeutralMedium: string;
@@ -163,7 +180,11 @@ declare const colorObject: Colors & {
     $backgroundSuccessHeavy: string;
     $backgroundSuccess: string;
     $backgroundWarningHeavy: string;
-    $backgroundWarning: string;
+    $backgroundWarning: string; /**
+     * Load set of schemes for light/dark mode
+     * arguments:
+     * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
+     */
     $backgroundMajor: string;
     $backgroundDangerHeavy: string;
     $backgroundDanger: string;
