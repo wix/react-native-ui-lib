@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { StyleProp, TextStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { AlignmentModifiers } from '../../commons/modifiers';
 import { ModalProps } from '../../components/modal';
 import { ViewProps } from '../../components/view';
@@ -44,9 +44,6 @@ export interface ImperativeDialogMethods {
     open: () => void;
     close: () => void;
 }
-/**
- * It is available as `Dialog.Text`
- */
 export interface DialogTextProps {
     /**
      * Title
@@ -84,12 +81,24 @@ export interface DialogHeaderProps extends ViewProps {
     renderContent?: (props: DialogHeaderProps) => React.ReactElement;
     /**
      * Show the header's knob (default is true)
-     * It is available as `Dialog.Knob`
      */
     showKnob?: boolean;
     /**
      * Show the header's divider (default is true)
-     * It is available as `Dialog.Divider`
      */
     showDivider?: boolean;
+}
+export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
+    /**
+     * The visibility of the dialog.
+     */
+    visible?: boolean;
+    /**
+     * The Dialog's header
+     */
+    headerProps?: DialogHeaderProps;
+    /**
+     * The Dialog`s container style (it is set to {position: 'absolute'})
+     */
+    containerStyle?: StyleProp<ViewStyle>;
 }
