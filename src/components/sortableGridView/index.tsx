@@ -1,9 +1,8 @@
 import React, {useMemo} from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
 import SortableGridItem from './SortableGridItem';
 import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
 import {getItemSize} from './config';
-import {useSharedValue} from 'react-native-reanimated';
+import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
 
 interface SortableGridItemProps {
     id: string; color: string
@@ -18,9 +17,17 @@ interface SortableGridViewProps {
 }
 
 const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}) => {
+  const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollY = useSharedValue(0);
   const itemSize = useMemo(() => getItemSize(numOfColumns), [numOfColumns]);
   const itemsOrder = useSharedValue<ItemsOrder>(Object.assign({},
     ...items.map((item, index) => ({[`${item.id} - ${index}`]: index}))));
+
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: ({contentOffset}) => {
+      scrollY.value = contentOffset.y;
+    }
+  });
 
   const renderItem = (item: SortableGridItemProps, index: number) => {
     return (
@@ -30,6 +37,8 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
         itemSize={itemSize}
         itemsOrder={itemsOrder}
         numOfColumns={numOfColumns}
+        scrollViewRef={scrollViewRef}
+        scrollY={scrollY}
       >
 
         {/* Have support for custom renderer */}
@@ -43,16 +52,18 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
   };
     
   return (
-    <ScrollView
+    <Animated.ScrollView
+      ref={scrollViewRef}
       contentContainerStyle={{
         height: Math.ceil(items.length / numOfColumns) * itemSize
       }}
       showsVerticalScrollIndicator={false}
       bounces={false}
       scrollEventThrottle={16}
+      onScroll={onScroll}
     >
       {items.map((item, index) => renderItem(item, index))}
-    </ScrollView>
+    </Animated.ScrollView>
   );
 };
 
