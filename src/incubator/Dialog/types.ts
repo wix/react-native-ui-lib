@@ -4,10 +4,26 @@ import {AlignmentModifiers} from '../../commons/modifiers';
 import {ModalProps} from '../../components/modal';
 import {ViewProps} from '../../components/view';
 import {TextProps} from '../../components/text';
+import {FadedScrollViewProps} from '../../components/fadedScrollView';
 import {PanningDirections, PanningDirectionsEnum} from '../panView';
 type DialogDirections = PanningDirections;
 const DialogDirectionsEnum = PanningDirectionsEnum;
 export {DialogDirections, DialogDirectionsEnum};
+
+export interface StyleProps {
+  /**
+   * The dialog width
+   */
+  width?: string | number;
+  /**
+   * The dialog height
+   */
+  height?: string | number;
+  /**
+   * The Dialog`s container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+}
 
 export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
   /**
@@ -94,7 +110,15 @@ export interface DialogHeaderProps extends ViewProps {
   showDivider?: boolean;
 }
 
-export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
+export interface ScrollableProps extends FadedScrollViewProps {
+  // TODO: Perhaps add an enum for ScrollView \ FlatList \ RecyclerListView instead of the enable
+  /**
+   * Enable the scrollable content
+   */
+  enable?: boolean;
+}
+
+export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'>, StyleProps {
   /**
    * The visibility of the dialog.
    */
@@ -104,7 +128,11 @@ export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibil
    */
   headerProps?: DialogHeaderProps;
   /**
-   * The Dialog`s container style (it is set to {position: 'absolute'})
+   * Add scrollability to the content
    */
-  containerStyle?: StyleProp<ViewStyle>;
+  scrollableProps?: ScrollableProps;
+  /**
+   * Replace the header with your custom component
+   */
+  customHeader?: React.ReactElement;
 }
