@@ -7,6 +7,7 @@ import {
   findNodeHandle,
   GestureResponderEvent,
   ImageSourcePropType,
+  TouchableWithoutFeedback,
   ImageStyle,
   StyleProp,
   TextStyle,
@@ -88,6 +89,10 @@ export interface HintProps {
    */
   targetFrame?: HintTargetFrame;
   /**
+   * Open the hint using a Modal component
+   */
+  useModal?: boolean;
+  /**
    * Show side tips instead of the middle tip
    */
   useSideTip?: boolean;
@@ -157,7 +162,8 @@ class Hint extends Component<HintProps, HintState> {
   static displayName = 'Hint';
 
   static defaultProps = {
-    position: HintPositions.BOTTOM
+    position: HintPositions.BOTTOM,
+    useModal: true
   };
 
   static positions = HintPositions;
@@ -167,7 +173,7 @@ class Hint extends Component<HintProps, HintState> {
   animationDuration = 170;
 
   state = {
-    targetLayoutInWindow: undefined,
+    targetLayoutInWindow: undefined as {x: number, y: number, width: number, height: number} | undefined,
     targetLayout: this.props.targetFrame,
     hintUnmounted: !this.props.visible
   };
@@ -246,14 +252,14 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get targetLayout() {
-    const {onBackgroundPress, targetFrame} = this.props;
+    const {onBackgroundPress, useModal, targetFrame} = this.props;
     const {targetLayout, targetLayoutInWindow} = this.state;
 
     if (targetFrame) {
       return targetFrame;
     }
 
-    return onBackgroundPress ? targetLayoutInWindow : targetLayout;
+    return onBackgroundPress && useModal ? targetLayoutInWindow : targetLayout;
   }
 
   get showHint() {
@@ -300,8 +306,9 @@ class Hint extends Component<HintProps, HintState> {
 
   getContainerPosition() {
     if (this.targetLayout) {
-      return {top: this.targetLayout.y, left: this.targetLayout.x};
+      return {top: this.targetLayout.y || 0, left: this.targetLayout.x || 0};
     }
+    return {top: 0, left: 0};
   }
 
   getHintPosition() {
@@ -397,31 +404,34 @@ class Hint extends Component<HintProps, HintState> {
     return tipPositionStyle;
   }
 
-  // renderOverlay() {
-  //   const {targetLayoutInWindow} = this.state;
-  //   const {onBackgroundPress} = this.props;
-  //   if (targetLayoutInWindow) {
-  //     const containerPosition = this.getContainerPosition();
-  //     return (
-  //       <View
-  //         style={[
-  //           styles.overlay,
-  //           {
-  //             top: containerPosition.top - targetLayoutInWindow.y,
-  //             left: containerPosition.left - targetLayoutInWindow.x,
-  //           },
-  //         ]}
-  //         pointerEvents="box-none"
-  //       >
-  //         {onBackgroundPress && (
-  //           <TouchableWithoutFeedback style={[StyleSheet.absoluteFillObject]} onPress={onBackgroundPress}>
-  //             <View flex />
-  //           </TouchableWithoutFeedback>
-  //         )}
-  //       </View>
-  //     );
-  //   }
-  // }
+  renderOverlay() {
+    const {targetLayoutInWindow} = this.state;
+    const {onBackgroundPress, backdropColor, testID} = this.props;
+    if (targetLayoutInWindow) {
+      const containerPosition = this.getContainerPosition();
+      return (
+        <Animated.View
+          style={[
+            styles.overlay,
+            {
+              top: containerPosition.top - targetLayoutInWindow.y,
+              left: containerPosition.left - targetLayoutInWindow.x,
+              backgroundColor: backdropColor,
+              opacity: this.visibleAnimated
+            }
+          ]}
+          pointerEvents="box-none"
+          testID={`${testID}.overlay`}
+        >
+          {onBackgroundPress && (
+            <TouchableWithoutFeedback style={StyleSheet.absoluteFillObject} onPress={onBackgroundPress}>
+              <View flex/>
+            </TouchableWithoutFeedback>
+          )}
+        </Animated.View>
+      );
+    }
+  }
 
   renderHintTip() {
     const {position, color = DEFAULT_COLOR} = this.props;
@@ -549,7 +559,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   render() {
-    const {onBackgroundPress, backdropColor, testID} = this.props;
+    const {onBackgroundPress, backdropColor, useModal, testID} = this.props;
 
     if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children || null;
@@ -558,7 +568,7 @@ class Hint extends Component<HintProps, HintState> {
     return (
       <>
         {this.renderChildren()}
-        {onBackgroundPress ? (
+        {onBackgroundPress && useModal ? (
           <Modal
             visible={this.showHint}
             animationType={backdropColor ? 'fade' : 'none'}
@@ -572,8 +582,11 @@ class Hint extends Component<HintProps, HintState> {
             {this.renderHintContainer()}
           </Modal>
         ) : (
-          // this.renderOverlay(),
-          this.renderHintContainer()
+          <>
+            {this.renderOverlay()}
+            {this.renderMockChildren()}
+            {this.renderHintContainer()}
+          </>
         )}
       </>
     );
@@ -582,7 +595,8 @@ class Hint extends Component<HintProps, HintState> {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute'
+    position: 'absolute',
+    zIndex: 1
   },
   mockChildrenContainer: {
     position: 'absolute'
@@ -601,11 +615,11 @@ const styles = StyleSheet.create({
     right: undefined,
     bottom: undefined
   },
-  // overlay: {
-  //   position: 'absolute',
-  //   width: Constants.screenWidth,
-  //   height: Constants.screenHeight
-  // },
+  overlay: {
+    position: 'absolute',
+    width: Constants.screenWidth,
+    height: Constants.screenHeight
+  },
   animatedContainer: {
     position: 'absolute'
   },

@@ -1,5 +1,6 @@
 example/
 docs/
+extensions/
 node_modules/
 .npmignore
 .watchmanconfig
