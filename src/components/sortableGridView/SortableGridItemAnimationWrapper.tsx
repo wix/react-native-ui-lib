@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
-import Animated, {AnimatedStyleProp, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import Animated, {AnimatedStyleProp, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
 import {Constants} from 'react-native-ui-lib';
 import {ItemsOrder} from '.';
 import {animationConfig, getOrderByPosition, getPositionByOrder} from './config';
@@ -65,19 +65,16 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
     },
     onEnd: () => {
       const destination = getPositionByOrder(itemsOrder.value[id], numOfColumns, itemSize);
-      // @TODO: current bug is when value of withTiming is the same as current translate value the callback does not call
-      // Should've been fixed in https://github.com/software-mansion/react-native-reanimated/pull/2211
-      // this results in making 2 different animation values for scale and zIndex
-      translateX.value = withTiming(destination.x, animationConfig, () => shouldFrontItem.value = false);
+      translateX.value = withTiming(destination.x, animationConfig, () => {
+        shouldFrontItem.value = false;
+        shouldScaleItem.value = false;
+      });
       translateY.value = withTiming(destination.y, animationConfig);
-    },
-    onFinish: () => {
-      shouldScaleItem.value = false;
     }
   });
 
   const style = useAnimatedStyle(() => {
-    const scale = shouldScaleItem.value ? 1.1 : 1;
+    const scale = withSpring(shouldScaleItem.value ? 1.05 : 1);
     const zIndex = shouldFrontItem.value ? 100 : 0;
     return {
       ...ABSOLUTE_ITEM,
