@@ -17,7 +17,7 @@ const demoTiles = [
 const SortableGridViewScreen = () => {
     
   return (
-    <View>
+    <View flex>
       <SortableGridView items={demoTiles} numOfColumns={2}/>
     </View>
   );

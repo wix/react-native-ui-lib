@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
-import Animated, {AnimatedStyleProp, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import Animated, {AnimatedStyleProp, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {Constants} from 'react-native-ui-lib';
 import {ItemsOrder} from '.';
-import {animationConfig, getPositionByOrder} from './config';
+import {animationConfig, getOrderByPosition, getPositionByOrder} from './config';
 
 const ABSOLUTE_ITEM: AnimatedStyleProp<ViewStyle> = {
   position: 'absolute',
@@ -30,30 +30,55 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
 
   const translateX = useSharedValue(itemPosition.x);
   const translateY = useSharedValue(itemPosition.y);
-  const isGestureActive = useSharedValue(false);
+  const shouldScaleItem = useSharedValue(false);
+  const shouldFrontItem = useSharedValue(false);
+
+  useAnimatedReaction(() => itemsOrder.value[id], (newOrder) => {
+    const newPosition = getPositionByOrder(newOrder, numOfColumns, itemSize);
+    translateX.value = withTiming(newPosition.x, animationConfig);
+    translateY.value = withTiming(newPosition.y, animationConfig);
+  });
 
   const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, {x: number; y: number}>({
     onStart: (_, context) => {
       context.x = translateX.value;
       context.y = translateY.value;
-      isGestureActive.value = true;
+      shouldScaleItem.value = true;
+      shouldFrontItem.value = true;
     },
     onActive: ({translationX, translationY}, context) => {
       translateX.value = context.x + translationX;
       translateY.value = context.y + translationY;
+
+      const oldOrder = itemsOrder.value[id];
+      const newOrder = getOrderByPosition(translateX.value, translateY.value, numOfColumns, itemSize);
+      if (oldOrder !== newOrder) {
+        const itemIdToSwap = Object.keys(itemsOrder.value).find((itemId) => itemsOrder.value[itemId] === newOrder);
+        if (itemIdToSwap) {
+          // @TODO: check if I can use Object.assign instead (hermes ?)
+          const newItemsOrder = JSON.parse(JSON.stringify(itemsOrder.value));
+          newItemsOrder[id] = newOrder;
+          newItemsOrder[itemIdToSwap] = oldOrder;
+          itemsOrder.value = newItemsOrder;
+        }
+      }
     },
     onEnd: () => {
       const destination = getPositionByOrder(itemsOrder.value[id], numOfColumns, itemSize);
-      // @TODO: current bug is when value of withTiming is the same as current tranlaste value the callback does not call
+      // @TODO: current bug is when value of withTiming is the same as current translate value the callback does not call
       // Should've been fixed in https://github.com/software-mansion/react-native-reanimated/pull/2211
-      translateX.value = withTiming(destination.x, animationConfig, () => isGestureActive.value = false);
-      translateY.value = withTiming(destination.y, animationConfig, () => isGestureActive.value = false);
+      // this results in making 2 different animation values for scale and zIndex
+      translateX.value = withTiming(destination.x, animationConfig, () => shouldFrontItem.value = false);
+      translateY.value = withTiming(destination.y, animationConfig);
+    },
+    onFinish: () => {
+      shouldScaleItem.value = false;
     }
   });
 
   const style = useAnimatedStyle(() => {
-    const zIndex = isGestureActive.value ? 100 : 0;
-    // const scale = isGestureActive.value ? 1.1 : 1;
+    const scale = shouldScaleItem.value ? 1.1 : 1;
+    const zIndex = shouldFrontItem.value ? 100 : 0;
     return {
       ...ABSOLUTE_ITEM,
       width: itemSize,
@@ -62,7 +87,7 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
       transform: [
         {translateX: translateX.value},
         {translateY: translateY.value},
-        // {scale}
+        {scale}
       ]
     };
   });
