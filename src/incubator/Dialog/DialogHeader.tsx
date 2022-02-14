@@ -16,7 +16,7 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     }
   }, [showKnob]);
 
-  const _renderContent = useMemo(() => {
+  const headerContent = useMemo(() => {
     if (renderContent) {
       return renderContent(props);
     }
@@ -35,7 +35,7 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     return (
       <View {...others}>
         {knob}
-        {_renderContent}
+        {headerContent}
         {divider}
       </View>
     );
