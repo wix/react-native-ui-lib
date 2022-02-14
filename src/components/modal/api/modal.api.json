@@ -34,5 +34,10 @@
       "type": "boolean",
       "description": "Should add a GestureHandlerRootView (Android only)"
     }
+  ],
+  "snippet": [
+    "<Modal visible={this.state.visible$1} onBackgroundPress={() => console.log('background pressed)$3}>",
+    " <Text text60>Content</Text>$4",
+    "</Modal>"
   ]
 }

@@ -25,5 +25,8 @@
     },
     {"name": "enabled", "type": "boolean", "description": "Whether the step should be enabled"},
     {"name": "accessibilityInfo", "type": "string", "description": "Extra text to be read in accessibility mode"}
+  ],
+  "snippet": [
+    "<Wizard.Step state={$1} label={$2}/>"
   ]
 }

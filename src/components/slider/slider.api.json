@@ -61,5 +61,13 @@
       "description": "If true the component will have accessibility features enabled"
     },
     {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<Slider",
+    " value={0$1}",
+    " minimumValue={0$2}",
+    " maximumValue={10$3}",
+    " onValueChange={() => console.log('value changed')$4}",
+    "/>"
   ]
 }

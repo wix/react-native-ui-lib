@@ -61,5 +61,8 @@
       "type": "LIGHT | DARK",
       "description": "Override system theme variant (dark or light mode) used by the date picker"
     }
+  ],
+  "snippet": [
+    "<DateTimePicker title={'Select time'$1} placeholder={'Placeholder'$2} mode={'time'$3}/>"
   ]
 }

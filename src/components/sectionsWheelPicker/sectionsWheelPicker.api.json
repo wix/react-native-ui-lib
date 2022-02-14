@@ -25,5 +25,8 @@
     {"name": "textStyle", "type": "TextStyle", "description": "Row text style"},
     {"name": "xxx", "type": "xxxx", "description": "xxxxx"},
     {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<SectionsWheelPicker sections={$1}/>"
   ]
 }

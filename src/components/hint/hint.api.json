@@ -48,5 +48,10 @@
     {"name": "enableShadow", "type": "boolean", "description": "Enable shadow (for hint with white background only)"},
     {"name": "testID", "type": "string", "description": "The hint's test identifier"},
     {"name": "style", "type": "ViewStyle", "description": "Additional styling"}
+  ],
+  "snippet": [
+    "<Hint visible={visible$1} message={'Message goes here'$2} color={Colors.red30$3} onBackgroundPress={() => setVisible(false)$4}>",
+    "  <Text>Text to hint</Text>",
+    "</Hint>"
   ]
 }

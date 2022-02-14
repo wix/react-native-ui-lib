@@ -20,6 +20,7 @@ declare const constants: {
     readonly isShortScreen: boolean;
     readonly screenAspectRatio: number;
     isTablet: boolean;
+    readonly isWideScreen: boolean;
     getSafeAreaInsets: () => {
         left: number;
         right: number;

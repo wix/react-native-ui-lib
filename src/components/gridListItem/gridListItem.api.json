@@ -48,5 +48,8 @@
       "description": "Renders an overlay on top of the image"
     },
     {"name": "testID", "type": "string", "description": "Test ID for component"}
+  ],
+  "snippet": [
+    "<GridListItem key={index$1} title={'Title'$2} subtitle={'Subtitle'$3} description={'Description goes here'$4}/>"
   ]
 }
