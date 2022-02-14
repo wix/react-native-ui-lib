@@ -3,7 +3,7 @@ import defaultPreset from './presets/default';
 
 export default function usePreset({preset/*  = 'default' */, ...props}: InternalTextFieldProps) {
   if (preset === 'default') {
-    return {...defaultPreset, ...props};
+    return {...defaultPreset, ...props, fieldStyle: [defaultPreset.fieldStyle, props.fieldStyle]};
   }
   return props;
 }
