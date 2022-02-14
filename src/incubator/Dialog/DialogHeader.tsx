@@ -1,30 +1,42 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo} from 'react';
+import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
+import {Spacings, Colors, BorderRadiuses, Dividers} from 'style';
 import View from '../../components/view';
-import DialogText from './DialogText';
-import DialogKnob from './DialogKnob';
-import DialogDivider from './DialogDivider';
+import HeaderContent from './HeaderContent';
 import {DialogHeaderProps} from './types';
 
 const DialogHeader = (props: DialogHeaderProps = {}) => {
   const {text = {}, renderContent, showKnob = true, showDivider = true, ...others} = props;
 
-  const _renderContent = useMemo(() => {
+  const knob = useMemo(() => {
+    if (showKnob) {
+      return <View style={styles.knob}/>;
+    }
+  }, [showKnob]);
+
+  const headerContent = useMemo(() => {
     if (renderContent) {
       return renderContent(props);
     }
 
-    return <DialogText text={text}/>;
+    return <HeaderContent text={text}/>;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [renderContent, text]);
+
+  const divider = useMemo(() => {
+    if (showDivider) {
+      return <View style={Dividers.d10}/>;
+    }
+  }, [showDivider]);
 
   if (!isEmpty(props)) {
     return (
       <View {...others}>
-        <DialogKnob showKnob={showKnob}/>
-        {_renderContent}
-        <DialogDivider showDivider={showDivider}/>
+        {knob}
+        {headerContent}
+        {divider}
       </View>
     );
   }
@@ -33,3 +45,15 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
 };
 
 export default asBaseComponent<DialogHeaderProps>(DialogHeader);
+
+const styles = StyleSheet.create({
+  knob: {
+    alignSelf: 'center',
+    width: 44,
+    height: Spacings.s1,
+    marginTop: Spacings.s2,
+    marginBottom: Spacings.s2,
+    backgroundColor: Colors.grey60,
+    borderRadius: BorderRadiuses.br10
+  }
+});
