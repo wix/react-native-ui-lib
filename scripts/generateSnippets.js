@@ -31,5 +31,5 @@ if (components) {
     ]
   };
   /* eslint-enable */
-  fs.writeFileSync(`./react-native-ui-lib-snippets/snippets/snippets.code-snippets`, JSON.stringify(output));
+  fs.writeFileSync(`./extensions/rnuilib-snippets/snippets/snippets.code-snippets`, JSON.stringify(output));
 }

@@ -1,8 +1,8 @@
-# react-native-ui-lib-snippets
+# rnuilib-snippets
 
-[![Version](https://vsmarketplacebadge.apphb.com/version-short/jundat95.react-native-ui-lib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=jundat95.react-native-ui-lib-snippets)
-[![Install](https://vsmarketplacebadge.apphb.com/installs-short/jundat95.react-native-ui-lib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=jundat95.react-native-ui-lib-snippets)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating-short/jundat95.react-native-ui-lib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=jundat95.react-native-ui-lib-snippets)
+[![Version](https://vsmarketplacebadge.apphb.com/version-short/jundat95.rnuilib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=jundat95.rnuilib-snippets)
+[![Install](https://vsmarketplacebadge.apphb.com/installs-short/jundat95.rnuilib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=jundat95.rnuilib-snippets)
+[![Ratings](https://vsmarketplacebadge.apphb.com/rating-short/jundat95.rnuilib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=jundat95.rnuilib-snippets)
 
 This extension provides code snippets for `react-native-ui-lib`'s components for Vs Code editor.
 It supports JavaScript and TypeScript, ReactJavaScript and ReactTypeScript.
@@ -17,7 +17,7 @@ Also, type `uilib` and get the uilib import - `import {} from 'react-native-ui-l
 See video:
 
 <p align="center">
-  <img src="https://github.com/wix/react-native-ui-lib/blob/master/react-native-ui-lib-snippets/assets/usage.gif" alt="extension usage" />
+  <img src="https://github.com/wix/react-native-ui-lib/blob/master/extensions/rnuilib-snippets/assets/usage.gif" alt="extension usage" />
 </p>
 
 ## Requirements
