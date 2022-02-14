@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useCallback, useImperativeHandle} from 'react';
+import React, {PropsWithChildren, useCallback, useImperativeHandle, useMemo} from 'react';
 import {View as RNView, LayoutChangeEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
@@ -54,7 +54,12 @@ const TransitionView = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <AnimatedView {...others} onLayout={onLayout} style={[propsStyle, animatedStyle]} ref={containerRef}/>;
+  const style = useMemo(() => {
+    return [propsStyle, animatedStyle];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [propsStyle]);
+
+  return <AnimatedView {...others} onLayout={onLayout} style={style} ref={containerRef}/>;
 };
 
 TransitionView.displayName = 'TransitionView';

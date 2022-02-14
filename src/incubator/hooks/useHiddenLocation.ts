@@ -1,4 +1,4 @@
-import {RefObject, useCallback, useState} from 'react';
+import {RefObject, useCallback, useState, useRef} from 'react';
 import {View, LayoutChangeEvent} from 'react-native';
 import {Constants} from '../../commons/new';
 import {PanningDirectionsEnum} from '../panView';
@@ -33,10 +33,12 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
   };
 
   const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
+  const isMeasuring = useRef(false);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
-    if (containerRef.current) {
+    if (containerRef.current && !isMeasuring.current) {
+      isMeasuring.current = true;
       containerRef.current.measureInWindow((x: number, y: number) => {
         setHiddenLocation(getHiddenLocation({x, y, width, height, isDefault: false}));
       });
