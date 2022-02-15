@@ -353,6 +353,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     purple60?: boolean | undefined;
     purple70?: boolean | undefined;
     purple80?: boolean | undefined;
+    violet1?: boolean | undefined;
+    violet5?: boolean | undefined;
     violet10?: boolean | undefined;
     violet20?: boolean | undefined;
     violet30?: boolean | undefined;
@@ -361,7 +363,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     violet60?: boolean | undefined;
     violet70?: boolean | undefined;
     violet80?: boolean | undefined;
+    dmBlack?: boolean | undefined;
     $backgroundDefault?: boolean | undefined;
+    $backgroundElevated?: boolean | undefined;
     $backgroundNeutralHeavy?: boolean | undefined;
     $backgroundNeutralIdle?: boolean | undefined;
     $backgroundNeutralMedium?: boolean | undefined;
@@ -759,6 +763,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     purple60?: boolean | undefined;
     purple70?: boolean | undefined;
     purple80?: boolean | undefined;
+    violet1?: boolean | undefined;
+    violet5?: boolean | undefined;
     violet10?: boolean | undefined;
     violet20?: boolean | undefined;
     violet30?: boolean | undefined;
@@ -767,7 +773,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     violet60?: boolean | undefined;
     violet70?: boolean | undefined;
     violet80?: boolean | undefined;
+    dmBlack?: boolean | undefined;
     $backgroundDefault?: boolean | undefined;
+    $backgroundElevated?: boolean | undefined;
     $backgroundNeutralHeavy?: boolean | undefined;
     $backgroundNeutralIdle?: boolean | undefined;
     $backgroundNeutralMedium?: boolean | undefined;

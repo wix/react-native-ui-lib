@@ -1,4 +1,4 @@
-export declare const designTokens: {
+export declare const designTokensDM: {
     $backgroundDefault: string;
     $backgroundElevated: string;
     $backgroundNeutralHeavy: string;
