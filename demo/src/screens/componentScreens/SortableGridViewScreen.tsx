@@ -37,7 +37,7 @@ const SortableGridViewScreen = () => {
       <SortableGridView
         items={[...sortableProducts, ...sortableProducts]} 
         renderItem={renderDemoTile} 
-        numOfColumns={3}
+        // numOfColumns={2}
         // itemSpacing={20}
         // viewWidth={300}
       />
