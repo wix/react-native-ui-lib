@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import SortableGridItem from './SortableGridItem';
+import CustomSortableGridItem from './SortableGridItem';
 import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
 import {getItemSize, useSortableGridConfig} from './config';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
@@ -45,7 +45,7 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
       >
 
         {/* Have support for custom renderer */}
-        <SortableGridItem
+        <CustomSortableGridItem
           key={`${item.id} - ${index}`}
           color={item.color}
         />

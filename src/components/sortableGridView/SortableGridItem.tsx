@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {View} from 'react-native-ui-lib';
+import {Card} from 'react-native-ui-lib';
 import {MARGIN} from './config';
 
 interface SortableGridItemProps {
@@ -9,7 +9,7 @@ interface SortableGridItemProps {
 
 const SortableGridItem: React.FC<SortableGridItemProps> = ({color}) => {
   return (
-    <View style={[tileStyles.tile, {backgroundColor: color}]}/>
+    <Card style={[tileStyles.tile, {backgroundColor: color}]} onPress={() => console.log('hello')} enableBlur={false}/>
   );
 };
 
