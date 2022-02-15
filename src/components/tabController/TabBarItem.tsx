@@ -10,8 +10,8 @@ import TabBarContext from './TabBarContext';
 
 const TouchableOpacity = Reanimated.createAnimatedComponent(_TouchableOpacity);
 
-const DEFAULT_LABEL_COLOR = Colors.black;
-const DEFAULT_SELECTED_LABEL_COLOR = Colors.primary;
+const DEFAULT_LABEL_COLOR = Colors.$textDefault;
+const DEFAULT_SELECTED_LABEL_COLOR = Colors.$textPrimary;
 
 export interface TabControllerItemProps {
   /**
@@ -212,7 +212,7 @@ export default function TabBarItem({
         </Reanimated.Text>
       )}
       {badge && (
-        <Badge backgroundColor={Colors.red30} size={20} {...badge} containerStyle={styles.badge}/>
+        <Badge backgroundColor={Colors.$backgroundDangerHeavy} size={20} {...badge} containerStyle={styles.badge}/>
       )}
       {trailingAccessory}
     </TouchableOpacity>
