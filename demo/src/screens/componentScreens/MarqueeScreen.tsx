@@ -25,7 +25,7 @@ export default class MarqueeScreen extends Component {
             <Text text40>Hello World</Text>
           </View>
         </Marquee>
-        <Marquee duration={2000} direction={'right'}>
+        <Marquee duration={2000} direction={'left'}>
           {this.renderRow()}
         </Marquee>
       </View>

@@ -1,0 +1,27 @@
+{
+  "name": "Marquee",
+  "category": "basic",
+  "description": "Slide animated view component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MarqueeScreen.js",
+  "images": [
+  ],
+  "props": [
+    {
+      "name": "duration",
+      "type": "'left' | 'right'",
+      "description": "The direction the view should slide",
+      "default": "'right'"
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "description": "The animation duration - will effect the speed of the slide"
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "description": "The view's width",
+      "default": "screen width"
+    }
+  ]
+}

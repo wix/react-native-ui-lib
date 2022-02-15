@@ -19,11 +19,11 @@ export type MarqueeProps = ViewProps & {
 }
 
 const Marquee = (props: MarqueeProps) => {
-  const {children, duration = 6000, direction = 'left', width = Constants.screenWidth} = props;
+  const {children, duration = 6000, direction = 'right', width = Constants.screenWidth} = props;
   
-  const isLeft = direction === 'left';
-  const from = isLeft ? -width : Constants.screenWidth;
-  const to = isLeft ? Constants.screenWidth : -width;
+  const isRight = direction === 'right';
+  const from = isRight ? -width : Constants.screenWidth;
+  const to = isRight ? Constants.screenWidth : -width;
   const offset = useSharedValue(from);
   
   useEffect(() => {
