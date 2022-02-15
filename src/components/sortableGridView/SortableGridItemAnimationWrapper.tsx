@@ -91,14 +91,16 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
       const destination = getPositionByOrder(itemsOrder.value[id]);
       translateX.value = withTiming(destination.x, animationConfig, () => {
         shouldFrontItem.value = false;
-        shouldScaleItem.value = false;
       });
       translateY.value = withTiming(destination.y, animationConfig);
+    },
+    onFinish: () => {
+      shouldScaleItem.value = false;
     }
   });
 
   const style = useAnimatedStyle(() => {
-    const scale = withSpring(shouldScaleItem.value ? 1.05 : 1);
+    const scale = withSpring(shouldScaleItem.value ? 1.1 : 1);
     const zIndex = shouldFrontItem.value ? 100 : 0;
     return {
       ...ABSOLUTE_ITEM,
