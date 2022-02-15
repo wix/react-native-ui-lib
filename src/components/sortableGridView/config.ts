@@ -9,17 +9,21 @@ export const animationConfig = {
   duration: 350
 };
 
-export const getPositionByOrder = (order: number, numOfColumns: number, itemSize: number) => {
-  'worklet';
+export const useSortableGridConfig = (numOfColumns: number) => {
+  const itemSize = getItemSize(numOfColumns);
   return {
-    x: (order % numOfColumns) * itemSize,
-    y: Math.floor(order / numOfColumns) * itemSize
+    getPositionByOrder: (order: number) => {
+      'worklet';
+      return {
+        x: (order % numOfColumns) * itemSize,
+        y: Math.floor(order / numOfColumns) * itemSize
+      };
+    },
+    getOrderByPosition: (positionX: number, positionY: number) => {
+      'worklet';
+      const col = Math.round(positionX / itemSize);
+      const row = Math.round(positionY / itemSize);
+      return row * numOfColumns + col;
+    }
   };
-};
-
-export const getOrderByPosition = (positionX: number, positionY: number, numOfColumns: number, itemSize: number) => {
-  'worklet';
-  const col = Math.round(positionX / itemSize);
-  const row = Math.round(positionY / itemSize);
-  return row * numOfColumns + col;
 };

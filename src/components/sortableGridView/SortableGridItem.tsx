@@ -18,7 +18,6 @@ export default SortableGridItem;
 const tileStyles = StyleSheet.create({
   tile: {
     borderRadius: MARGIN,
-    margin: MARGIN * 2,
     flex: 1
   }
 });

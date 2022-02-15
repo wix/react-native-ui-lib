@@ -4,7 +4,7 @@ import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-ges
 import Animated, {AnimatedStyleProp, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming, scrollTo} from 'react-native-reanimated';
 import {Constants} from 'react-native-ui-lib';
 import {ItemsOrder} from '.';
-import {animationConfig, getOrderByPosition, getPositionByOrder} from './config';
+import {animationConfig, MARGIN} from './config';
 
 const ABSOLUTE_ITEM: AnimatedStyleProp<ViewStyle> = {
   position: 'absolute',
@@ -16,19 +16,20 @@ interface SortableGridItemAnimationWrapperProps {
     children: React.ReactNode;
     id: string;
     itemSize: number;
+    numOfColumns: number;
     itemsOrder: Animated.SharedValue<ItemsOrder>;
     scrollViewRef: React.RefObject<Animated.ScrollView>;
     scrollY: Animated.SharedValue<number>;
-    // If numOfColumns could be cleaned that'd be awesome
-    numOfColumns: number;
+    getPositionByOrder: (order: number) => {x: number, y: number};
+    getOrderByPosition: (x: number, y: number) => number;
 }
 
 const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrapperProps> = (props) => {
-  const {id, itemSize, numOfColumns, itemsOrder, scrollViewRef, scrollY} = props;
+  const {id, itemSize, numOfColumns, itemsOrder, scrollViewRef, scrollY, getPositionByOrder, getOrderByPosition} = props;
   const screenHeight = Constants.screenHeight;
   const contentHeight = (Object.keys(itemsOrder.value).length / numOfColumns) * itemSize;
   // @TODO: fetch config getters (getPositionByOrder, getOrderByPosition) with set numOfColumns and itemSize per render.
-  const itemPosition = getPositionByOrder(itemsOrder.value[id], numOfColumns, itemSize);
+  const itemPosition = getPositionByOrder(itemsOrder.value[id]);
 
   const translateX = useSharedValue(itemPosition.x);
   const translateY = useSharedValue(itemPosition.y);
@@ -36,7 +37,7 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
   const shouldFrontItem = useSharedValue(false);
 
   useAnimatedReaction(() => itemsOrder.value[id], (newOrder) => {
-    const newPosition = getPositionByOrder(newOrder, numOfColumns, itemSize);
+    const newPosition = getPositionByOrder(newOrder);
     translateX.value = withTiming(newPosition.x, animationConfig);
     translateY.value = withTiming(newPosition.y, animationConfig);
   });
@@ -54,7 +55,7 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
 
       // Swapping items
       const oldOrder = itemsOrder.value[id];
-      const newOrder = getOrderByPosition(translateX.value, translateY.value, numOfColumns, itemSize);
+      const newOrder = getOrderByPosition(translateX.value, translateY.value);
       if (oldOrder !== newOrder) {
         const itemIdToSwap = Object.keys(itemsOrder.value).find((itemId) => itemsOrder.value[itemId] === newOrder);
         if (itemIdToSwap) {
@@ -87,7 +88,7 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
       }
     },
     onEnd: () => {
-      const destination = getPositionByOrder(itemsOrder.value[id], numOfColumns, itemSize);
+      const destination = getPositionByOrder(itemsOrder.value[id]);
       translateX.value = withTiming(destination.x, animationConfig, () => {
         shouldFrontItem.value = false;
         shouldScaleItem.value = false;
@@ -114,7 +115,7 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
   return (
     <Animated.View style={style}>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
-        <Animated.View style={StyleSheet.absoluteFill}>
+        <Animated.View style={[StyleSheet.absoluteFill, {margin: MARGIN * 2}]}>
           {props.children}
         </Animated.View>
       </PanGestureHandler>

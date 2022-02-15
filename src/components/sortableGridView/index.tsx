@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import SortableGridItem from './SortableGridItem';
 import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
-import {getItemSize} from './config';
+import {getItemSize, useSortableGridConfig} from './config';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
 
 interface SortableGridItemProps {
@@ -20,6 +20,7 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useSharedValue(0);
   const itemSize = useMemo(() => getItemSize(numOfColumns), [numOfColumns]);
+  const {getPositionByOrder, getOrderByPosition} = useSortableGridConfig(numOfColumns);
   const itemsOrder = useSharedValue<ItemsOrder>(Object.assign({},
     ...items.map((item, index) => ({[`${item.id} - ${index}`]: index}))));
 
@@ -39,6 +40,8 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
         numOfColumns={numOfColumns}
         scrollViewRef={scrollViewRef}
         scrollY={scrollY}
+        getPositionByOrder={getPositionByOrder}
+        getOrderByPosition={getOrderByPosition}
       >
 
         {/* Have support for custom renderer */}
