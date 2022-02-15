@@ -39,6 +39,7 @@ const SortableGridViewScreen = () => {
         renderItem={renderDemoTile} 
         numOfColumns={3}
         // itemSpacing={20}
+        // viewWidth={300}
       />
       <Text center h1 marginB-20>Footer</Text>
     </View>

@@ -30,7 +30,6 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
     scrollViewRef, scrollY, getPositionByOrder, getOrderByPosition} = props;
   const screenHeight = Constants.screenHeight;
   const contentHeight = (Object.keys(itemsOrder.value).length / numOfColumns) * itemSize;
-  // @TODO: fetch config getters (getPositionByOrder, getOrderByPosition) with set numOfColumns and itemSize per render.
   const itemPosition = getPositionByOrder(itemsOrder.value[id]);
 
   const translateX = useSharedValue(itemPosition.x);

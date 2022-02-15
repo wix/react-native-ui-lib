@@ -17,13 +17,14 @@ interface SortableGridViewProps {
     numOfColumns: number;
     renderItem: (item: SortableGridItemProps) => React.ReactElement;
     itemSpacing?: number;
+    viewWidth?: number;
 }
 
-const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns, renderItem, itemSpacing}) => {
+const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns, renderItem, itemSpacing, viewWidth}) => {
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useSharedValue(0);
-  const itemSize = useMemo(() => getItemSize(numOfColumns), [numOfColumns]);
-  const {getPositionByOrder, getOrderByPosition} = useSortableGridConfig(numOfColumns);
+  const itemSize = useMemo(() => getItemSize(numOfColumns, viewWidth), [viewWidth, numOfColumns]);
+  const {getPositionByOrder, getOrderByPosition} = useSortableGridConfig(itemSize, numOfColumns);
   const itemsOrder = useSharedValue<ItemsOrder>(Object.assign({},
     ...items.map((item, index) => ({[`${item.id} - ${index}`]: index}))));
 
