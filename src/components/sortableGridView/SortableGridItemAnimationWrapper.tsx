@@ -25,7 +25,8 @@ interface SortableGridItemAnimationWrapperProps {
 }
 
 const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrapperProps> = (props) => {
-  const {id, itemSize, numOfColumns, itemsOrder, scrollViewRef, scrollY, getPositionByOrder, getOrderByPosition} = props;
+  const {id, itemSize, numOfColumns, itemsOrder, 
+    scrollViewRef, scrollY, getPositionByOrder, getOrderByPosition} = props;
   const screenHeight = Constants.screenHeight;
   const contentHeight = (Object.keys(itemsOrder.value).length / numOfColumns) * itemSize;
   // @TODO: fetch config getters (getPositionByOrder, getOrderByPosition) with set numOfColumns and itemSize per render.
@@ -59,8 +60,7 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
       if (oldOrder !== newOrder) {
         const itemIdToSwap = Object.keys(itemsOrder.value).find((itemId) => itemsOrder.value[itemId] === newOrder);
         if (itemIdToSwap) {
-          // @TODO: check if I can use Object.assign instead (hermes ?)
-          const newItemsOrder = JSON.parse(JSON.stringify(itemsOrder.value));
+          const newItemsOrder = Object.assign({}, itemsOrder.value);
           newItemsOrder[id] = newOrder;
           newItemsOrder[itemIdToSwap] = oldOrder;
           itemsOrder.value = newItemsOrder;
