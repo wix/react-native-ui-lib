@@ -32,7 +32,7 @@ export declare class Colors {
      * Support listening to Appearance changes
      * and change the design tokens accordingly
      */
-    supportDarkMode(enable?: boolean): void;
+    enableDarkMode(): void;
     /**
      * Add alpha to hex or rgb color
      * arguments:
@@ -138,14 +138,7 @@ declare const colorObject: Colors & {
     purple40: string;
     purple50: string;
     purple60: string;
-    purple70: string; /**
-     * Add alpha to hex or rgb color
-     * arguments:
-     * p1 - hex color / R part of RGB
-     * p2 - opacity / G part of RGB
-     * p3 - B part of RGB
-     * p4 - opacity
-     */
+    purple70: string;
     purple80: string;
     violet1: string;
     violet5: string;
