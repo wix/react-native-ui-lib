@@ -45,22 +45,21 @@ class CardImage extends PureComponent<Props> {
       style,
       testID,
       overlayType,
-      context: {borderStyle}
+      context: {borderStyle},
+      ...others
     } = this.props;
 
-    if (source) {
-      return (
-        <View style={[this.styles.container, borderStyle, style]}>
-          <Image
-            testID={testID}
-            source={source}
-            style={[this.styles.image]}
-            overlayType={overlayType}
-          />
-        </View>
-      );
-    }
-    return null;
+    return (
+      <View style={[this.styles.container, borderStyle, style]}>
+        <Image
+          testID={testID}
+          source={source}
+          style={[this.styles.image]}
+          overlayType={overlayType}
+          {...others}
+        />
+      </View>
+    );  
   }
 }
 
