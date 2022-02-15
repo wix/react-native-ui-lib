@@ -15,10 +15,11 @@ export type ItemsOrder = {
 interface SortableGridViewProps {
     items: SortableGridItemProps[];
     numOfColumns: number;
-    renderItem: Function;
+    renderItem: (item: SortableGridItemProps) => React.ReactElement;
+    itemSpacing?: number;
 }
 
-const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns, renderItem}) => {
+const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns, renderItem, itemSpacing}) => {
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useSharedValue(0);
   const itemSize = useMemo(() => getItemSize(numOfColumns), [numOfColumns]);
@@ -44,6 +45,7 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns,
         scrollY={scrollY}
         getPositionByOrder={getPositionByOrder}
         getOrderByPosition={getOrderByPosition}
+        itemSpacing={itemSpacing}
       >
         <View flex key={`${item.id} - ${index}`}>
           {renderItem(item)}

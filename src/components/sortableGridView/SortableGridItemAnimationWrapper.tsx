@@ -22,10 +22,11 @@ interface SortableGridItemAnimationWrapperProps {
     scrollY: Animated.SharedValue<number>;
     getPositionByOrder: (order: number) => {x: number, y: number};
     getOrderByPosition: (x: number, y: number) => number;
+    itemSpacing?: number;
 }
 
 const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrapperProps> = (props) => {
-  const {id, itemSize, numOfColumns, itemsOrder, 
+  const {id, itemSize, numOfColumns, itemsOrder, itemSpacing,
     scrollViewRef, scrollY, getPositionByOrder, getOrderByPosition} = props;
   const screenHeight = Constants.screenHeight;
   const contentHeight = (Object.keys(itemsOrder.value).length / numOfColumns) * itemSize;
@@ -117,7 +118,7 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
   return (
     <Animated.View style={style}>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
-        <Animated.View style={[StyleSheet.absoluteFill, {margin: MARGIN * 2}]}>
+        <Animated.View style={[StyleSheet.absoluteFill, {margin: itemSpacing ?? MARGIN * 2}]}>
           {props.children}
         </Animated.View>
       </PanGestureHandler>

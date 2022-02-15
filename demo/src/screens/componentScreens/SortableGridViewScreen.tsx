@@ -1,27 +1,15 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
-import {Alert, StyleSheet} from 'react-native';
+import {Alert} from 'react-native';
 import {View, SortableGridView, Card, Text} from 'react-native-ui-lib';
 import products from '../../data/products';
-
-
-const demoTiles = [
-  {id: 'red', color: 'red'},
-  {id: 'green', color: 'green'},
-  {id: 'blue', color: 'blue'},
-  {id: 'yellow', color: 'yellow'},
-  {id: 'pink', color: 'pink'},
-  {id: 'purple', color: 'purple'},
-  {id: 'black', color: 'black'},
-  {id: 'cyan', color: 'cyan'}
-];
 
 const sortableProducts = _.chain(products)
   .take(8)
   .map((product) => ({
     imageProps: {
       source: {uri: product.mediaUrl},
-      borderRadius: 4,
+      borderRadius: 4
       // style: {backgroundColor: Colors.grey60, borderWidth: 1, borderColor: Colors.grey50}
     },
     title: product.name,
@@ -31,8 +19,6 @@ const sortableProducts = _.chain(products)
     ...product
   }))
   .value();
-
-
 
 const SortableGridViewScreen = () => {
 
@@ -52,6 +38,7 @@ const SortableGridViewScreen = () => {
         items={[...sortableProducts, ...sortableProducts]} 
         renderItem={renderDemoTile} 
         numOfColumns={3}
+        // itemSpacing={20}
       />
       <Text center h1 marginB-20>Footer</Text>
     </View>
@@ -59,10 +46,3 @@ const SortableGridViewScreen = () => {
 };
 
 export default SortableGridViewScreen;
-
-const tileStyles = StyleSheet.create({
-  tile: {
-    // flex: 1
-    height: '100%', width: '100%'
-  }
-});
