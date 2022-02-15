@@ -32,7 +32,7 @@ export declare class Colors {
      * Support listening to Appearance changes
      * and change the design tokens accordingly
      */
-    enableDarkMode(): void;
+    supportDarkMode(): void;
     /**
      * Add alpha to hex or rgb color
      * arguments:
