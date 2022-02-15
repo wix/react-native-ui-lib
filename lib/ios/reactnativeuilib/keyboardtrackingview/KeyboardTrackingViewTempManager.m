@@ -505,14 +505,17 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 
 -(CGFloat)getTabBarHeight
 {
-    UITabBarController *tabBarController = [UITabBarController new];
-    CGFloat tabBarHeight = tabBarController.tabBar.frame.size.height;
-    CGFloat bottomPadding = 0;
     if (@available(iOS 11.0, *)) {
         UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-        bottomPadding = window.safeAreaInsets.bottom;
+        if ([window.rootViewController isKindOfClass:[UITabBarController class]])
+        {
+            UITabBarController *tabBarController = [UITabBarController new];
+            CGFloat tabBarHeight = tabBarController.tabBar.frame.size.height;
+            CGFloat bottomPadding = window.safeAreaInsets.bottom;
+            return tabBarHeight + bottomPadding;
+        }
     }
-    return tabBarHeight + bottomPadding;
+    return 0;
 }
 
 #pragma mark - ObservingInputAccessoryViewTempDelegate methods
