@@ -1,11 +1,12 @@
 import React, {useMemo} from 'react';
-import CustomSortableGridItem from './SortableGridItem';
 import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
 import {getItemSize, useSortableGridConfig} from './config';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
+import {View} from 'react-native-ui-lib';
+
 
 interface SortableGridItemProps {
-    id: string; color: string
+    id: string;
 }
 
 export type ItemsOrder = {
@@ -14,9 +15,10 @@ export type ItemsOrder = {
 interface SortableGridViewProps {
     items: SortableGridItemProps[];
     numOfColumns: number;
+    renderItem: Function;
 }
 
-const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}) => {
+const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns, renderItem}) => {
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useSharedValue(0);
   const itemSize = useMemo(() => getItemSize(numOfColumns), [numOfColumns]);
@@ -30,7 +32,7 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
     }
   });
 
-  const renderItem = (item: SortableGridItemProps, index: number) => {
+  const renderGridItem = (item: SortableGridItemProps, index: number) => {
     return (
       <SortableGridItemAnimationWrapper
         key={`${item.id} - ${index}`}
@@ -43,13 +45,9 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
         getPositionByOrder={getPositionByOrder}
         getOrderByPosition={getOrderByPosition}
       >
-
-        {/* Have support for custom renderer */}
-        <CustomSortableGridItem
-          key={`${item.id} - ${index}`}
-          color={item.color}
-        />
-
+        <View flex key={`${item.id} - ${index}`}>
+          {renderItem(item)}
+        </View>
       </SortableGridItemAnimationWrapper>
     );
   };
@@ -65,7 +63,7 @@ const SortableGridView: React.FC<SortableGridViewProps> = ({items, numOfColumns}
       scrollEventThrottle={16}
       onScroll={onScroll}
     >
-      {items.map((item, index) => renderItem(item, index))}
+      {items.map((item, index) => renderGridItem(item, index))}
     </Animated.ScrollView>
   );
 };
