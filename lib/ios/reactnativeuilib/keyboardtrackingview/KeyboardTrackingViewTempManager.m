@@ -525,7 +525,6 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     CGFloat bottomSafeArea = [self getBottomSafeArea];
     CGFloat tabBarHeight = [self getTabBarHeight];
     CGFloat accessoryTranslation = MIN(-bottomSafeArea, -_ObservingInputAccessoryViewTemp.keyboardHeight + tabBarHeight);
-    NSLog(@"INBAL tabBarHeight: %f", tabBarHeight);
     
     if (_ObservingInputAccessoryViewTemp.keyboardHeight <= bottomSafeArea) {
         _bottomViewHeight = kBottomViewHeightTemp;
