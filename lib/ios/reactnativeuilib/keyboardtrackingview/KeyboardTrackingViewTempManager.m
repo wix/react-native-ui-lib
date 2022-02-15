@@ -503,12 +503,26 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     });
 }
 
+-(CGFloat)getTabBarHeight
+{
+    UITabBarController *tabBarController = [UITabBarController new];
+    CGFloat tabBarHeight = tabBarController.tabBar.frame.size.height;
+    CGFloat bottomPadding = 0;
+    if (@available(iOS 11.0, *)) {
+        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+        bottomPadding = window.safeAreaInsets.bottom;
+    }
+    return tabBarHeight + bottomPadding;
+}
+
 #pragma mark - ObservingInputAccessoryViewTempDelegate methods
 
 -(void)updateTransformAndInsets
 {
     CGFloat bottomSafeArea = [self getBottomSafeArea];
-    CGFloat accessoryTranslation = MIN(-bottomSafeArea, -_ObservingInputAccessoryViewTemp.keyboardHeight);
+    CGFloat tabBarHeight = [self getTabBarHeight];
+    CGFloat accessoryTranslation = MIN(-bottomSafeArea, -_ObservingInputAccessoryViewTemp.keyboardHeight + tabBarHeight);
+    NSLog(@"INBAL tabBarHeight: %f", tabBarHeight);
     
     if (_ObservingInputAccessoryViewTemp.keyboardHeight <= bottomSafeArea) {
         _bottomViewHeight = kBottomViewHeightTemp;
