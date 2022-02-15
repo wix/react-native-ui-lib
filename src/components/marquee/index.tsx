@@ -5,7 +5,8 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   Easing,
-  withRepeat
+  withRepeat,
+  cancelAnimation
 } from 'react-native-reanimated';
 import {Constants, asBaseComponent} from '../../commons/new';
 
@@ -28,6 +29,10 @@ const Marquee = (props: MarqueeProps) => {
   
   useEffect(() => {
     offset.value = withRepeat(withTiming(to, {duration, easing: Easing.linear}), -1);
+    
+    return () => { // cleanup
+      cancelAnimation(offset);
+    };
   }, []);
 
   const animatedStyles = useAnimatedStyle(() => {

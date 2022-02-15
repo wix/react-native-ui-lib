@@ -15,7 +15,7 @@ export default class MarqueeScreen extends Component {
   
   render() {
     return (
-      <View flex padding-20>
+      <View flex padding-20 style={{overflow: 'hidden'}}>
         <Text text50 grey10 marginB-20>Marquee</Text>
         <Marquee duration={2000}>
           {this.renderRow()}
