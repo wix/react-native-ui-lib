@@ -9,7 +9,7 @@ import useImperativeInputHandle from './useImperativeInputHandle';
 
 const DEFAULT_INPUT_COLOR: ColorType = {
   default: Colors.$textDefault,
-  disabled: Colors.$textNeutralLight
+  disabled: Colors.$textDisabled
 };
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,

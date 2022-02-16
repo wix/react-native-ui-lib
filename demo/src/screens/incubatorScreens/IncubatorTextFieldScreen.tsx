@@ -191,7 +191,7 @@ export default class TextFieldScreen extends Component {
 
           <TextField
             label="Email"
-            labelColor={{default: Colors.$textDefault, focus: Colors.$textGeneral, disabled: Colors.$textNeutralLight}}
+            labelColor={{default: Colors.$textDefault, focus: Colors.$textGeneral, disabled: Colors.$textDisabled}}
             placeholder="Enter valid email"
             validationMessage="Email is invalid"
             validate={'email'}

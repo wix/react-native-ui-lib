@@ -4,7 +4,7 @@ import {Colors, Spacings, Typography} from '../../../style';
 const colorByState = {
   focus: Colors.$textPrimary,
   error: Colors.$textDangerLight,
-  disabled: Colors.$textNeutralLight
+  disabled: Colors.$textDisabled
 };
 
 const styles = StyleSheet.create({
