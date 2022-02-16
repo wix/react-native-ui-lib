@@ -16,7 +16,7 @@ const sortableProducts = _.chain(products)
 
 const SortableGridViewScreen = () => {
 
-  const renderDemoTile = useCallback((item: any) => {
+  const renderDemoTile = useCallback((item: {onPress: () => void; source: {uri: string}}) => {
     return (
       <Card
         flex
