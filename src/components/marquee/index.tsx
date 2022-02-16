@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ViewProps, View} from 'react-native';
+import {StyleSheet, ViewProps, View, ViewStyle} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -42,7 +42,7 @@ const Marquee = (props: MarqueeProps) => {
   });
 
   return (
-    <View style={{overflow: 'hidden'}}>
+    <View style={styles.container}>
       <Animated.View style={[animatedStyles, {width}]}>
         {children}
       </Animated.View>
@@ -52,3 +52,9 @@ const Marquee = (props: MarqueeProps) => {
 
 Marquee.displayName = 'Marquee';
 export default asBaseComponent<MarqueeProps>(Marquee);
+
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden'
+  }
+});
