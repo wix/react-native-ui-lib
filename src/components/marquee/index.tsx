@@ -23,12 +23,12 @@ const Marquee = (props: MarqueeProps) => {
   const {children, duration = 6000, direction = 'right', width = Constants.screenWidth} = props;
   
   const isRight = direction === 'right';
-  const from = isRight ? -width : Constants.screenWidth;
-  const to = isRight ? Constants.screenWidth : -width;
-  const offset = useSharedValue(from);
+  const fromValue = isRight ? -width : Constants.screenWidth;
+  const toValue = isRight ? Constants.screenWidth : -width;
+  const offset = useSharedValue(fromValue);
   
   useEffect(() => {
-    offset.value = withRepeat(withTiming(to, {duration, easing: Easing.linear}), -1);
+    offset.value = withRepeat(withTiming(toValue, {duration, easing: Easing.linear}), -1);
     
     return () => { // cleanup
       cancelAnimation(offset);
