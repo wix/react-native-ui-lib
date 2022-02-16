@@ -3,6 +3,7 @@ import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper
 import {DEFAULT_NO_OF_COLUMNS, getItemSize, useSortableGridConfig, ItemsOrder} from './config';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
 import {View} from 'react-native-ui-lib';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 export interface SortableGridItemProps {
@@ -72,18 +73,20 @@ const SortableGridView: React.FC<SortableGridViewProps> = (props) => {
   };
     
   return (
-    <Animated.ScrollView
-      ref={scrollViewRef}
-      contentContainerStyle={{
-        height: Math.ceil(items.length / numOfColumns) * itemSize
-      }}
-      showsVerticalScrollIndicator={false}
-      bounces={false}
-      scrollEventThrottle={16}
-      onScroll={onScroll}
-    >
-      {items.map((item, index) => renderGridItem(item, index))}
-    </Animated.ScrollView>
+    <GestureHandlerRootView>
+      <Animated.ScrollView
+        ref={scrollViewRef}
+        contentContainerStyle={{
+          height: Math.ceil(items.length / numOfColumns) * itemSize
+        }}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+        scrollEventThrottle={16}
+        onScroll={onScroll}
+      >
+        {items.map((item, index) => renderGridItem(item, index))}
+      </Animated.ScrollView>
+    </GestureHandlerRootView>
   );
 };
 
