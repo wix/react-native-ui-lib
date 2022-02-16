@@ -7,7 +7,7 @@
   ],
   "props": [
     {
-      "name": "duration",
+      "name": "direction",
       "type": "'left' | 'right'",
       "description": "The direction the view should slide",
       "default": "'right'"
