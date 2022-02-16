@@ -1,9 +1,9 @@
 import {Easing} from 'react-native-reanimated';
-import {Constants} from 'react-native-ui-lib';
+import {Constants, Spacings} from 'react-native-ui-lib';
 const WINDOW_WIDTH = Constants.windowWidth;
-export const DEFAULT_MARGIN = 8;
+export const DEFAULT_MARGIN = Spacings.s2;
 export const DEFAULT_NO_OF_COLUMNS = 3;
-export const getItemSize = (numOfColumns: number, viewWidth?: number) => ((viewWidth ?? WINDOW_WIDTH) / numOfColumns); // maybe (- MARGIN)
+export const getItemSize = (numOfColumns: number, viewWidth?: number) => ((viewWidth ?? WINDOW_WIDTH) / numOfColumns);
 
 export const animationConfig = {
   easing: Easing.inOut(Easing.ease),
