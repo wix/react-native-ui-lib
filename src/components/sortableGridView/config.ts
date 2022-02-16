@@ -1,5 +1,6 @@
 import {Easing} from 'react-native-reanimated';
-import {Constants, Spacings} from 'react-native-ui-lib';
+import Spacings from '../../style/spacings';
+import Constants from '../../commons/Constants';
 export const WINDOW_WIDTH = Constants.windowWidth;
 export const DEFAULT_MARGIN = Spacings.s2;
 export const DEFAULT_NO_OF_COLUMNS = 3;

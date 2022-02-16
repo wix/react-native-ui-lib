@@ -1,6 +1,7 @@
+export declare const WINDOW_WIDTH: number;
 export declare const DEFAULT_MARGIN: number;
 export declare const DEFAULT_NO_OF_COLUMNS = 3;
-export declare const getItemSize: (numOfColumns: number, viewWidth?: number | undefined) => number;
+export declare const getItemSize: (numOfColumns: number, viewWidth: number) => number;
 export declare const animationConfig: {
     easing: (value: number) => number;
     duration: number;

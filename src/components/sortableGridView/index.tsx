@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
 import {DEFAULT_NO_OF_COLUMNS, getItemSize, useSortableGridConfig, ItemsOrder, WINDOW_WIDTH} from './config';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
-import {View} from 'react-native-ui-lib';
+import View from '../view';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 

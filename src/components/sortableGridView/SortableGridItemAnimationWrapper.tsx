@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {AnimatedStyleProp, useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming, scrollTo} from 'react-native-reanimated';
-import {Constants} from 'react-native-ui-lib';
+import Constants from '../../commons/Constants';
 import {animationConfig, DEFAULT_MARGIN, ItemsOrder} from './config';
 
 const ABSOLUTE_ITEM: AnimatedStyleProp<ViewStyle> = {
@@ -98,11 +98,10 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
     }
   });
 
-  const style = useAnimatedStyle(() => {
+  const animatedStyle = useAnimatedStyle(() => {
     const scale = withSpring(shouldScaleItem.value ? 1.1 : 1);
     const zIndex = shouldFrontItem.value ? 100 : 0;
     return {
-      ...ABSOLUTE_ITEM,
       width: itemSize,
       height: itemSize,
       zIndex,
@@ -114,7 +113,7 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
     };
   });
   return (
-    <Animated.View style={style}>
+    <Animated.View style={[ABSOLUTE_ITEM, animatedStyle]}>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View style={[StyleSheet.absoluteFill, {margin: itemSpacing ?? DEFAULT_MARGIN * 2}]}>
           {props.children}
