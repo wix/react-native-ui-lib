@@ -22,5 +22,12 @@
     },
     {"name": "containerStyle", "type": "ViewStyle", "description": "Add or override style of the container"},
     {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<Wizard activeIndex={0$1} onActiveIndexChanged={() => console.log('changed)$2}>",
+    " {_.map(items, item => (",
+    "  return this.renderItem(item, index);",
+    " ))}",
+    "</Wizard>"
   ]
 }

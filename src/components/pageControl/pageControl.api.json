@@ -52,5 +52,8 @@
       "default": "4"
     },
     {"name": "testID", "type": "string", "description": "Used to identify the pageControl in tests"}
+  ],
+  "snippet": [
+    "<PageControl numOfPages={5$1} currentPage={0$2}/>"
   ]
 }

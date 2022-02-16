@@ -24,5 +24,8 @@
     {"name": "indicatorInsets", "type": "number", "description": "The indicator insets", "default": "Spacings.s4"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styles for the container"},
     {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<TabController.TabBar activeBackgroundColor={$1}/>"
   ]
 }

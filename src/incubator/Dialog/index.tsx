@@ -1,38 +1,13 @@
 import React, {useRef, useMemo} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Spacings, Colors, BorderRadiuses} from 'style';
-import {Constants} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
 import ImperativeDialog from './ImperativeDialog';
 import DialogHeader from './DialogHeader';
-import DialogText from './DialogText';
-import DialogKnob from './DialogKnob';
-import DialogDivider from './DialogDivider';
-import {
-  ImperativeDialogProps,
-  DialogDirections,
-  DialogDirectionsEnum,
-  ImperativeDialogMethods,
-  DialogHeaderProps,
-  DialogTextProps
-} from './types';
-export {DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogTextProps};
-
-export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
-  /**
-   * The visibility of the dialog.
-   */
-  visible?: boolean;
-  /**
-   * The Dialog's header
-   */
-  headerProps?: DialogHeaderProps;
-  /**
-   * The Dialog`s container style (it is set to {position: 'absolute'})
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-}
+import {DialogProps, DialogDirections, DialogDirectionsEnum, ImperativeDialogMethods, DialogHeaderProps} from './types';
+export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
 const Dialog = (props: DialogProps) => {
   const {visible, headerProps, containerStyle, children, ...others} = props;
@@ -64,11 +39,8 @@ const Dialog = (props: DialogProps) => {
 Dialog.displayName = 'Incubator.Dialog';
 Dialog.directions = DialogDirectionsEnum;
 Dialog.Header = DialogHeader;
-Dialog.Text = DialogText;
-Dialog.Knob = DialogKnob;
-Dialog.Divider = DialogDivider;
 
-export default Dialog;
+export default asBaseComponent<DialogProps>(Dialog);
 
 const styles = StyleSheet.create({
   defaultDialogStyle: {

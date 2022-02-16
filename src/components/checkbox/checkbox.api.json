@@ -35,5 +35,8 @@
       "type": "ViewStyle",
       "description": "Custom styling for the checkbox and label container"
     }
+  ],
+  "snippet": [
+    "<Checkbox value={false$1} onValueChange={() => console.log('value changed’)$2}/>"
   ]
 }

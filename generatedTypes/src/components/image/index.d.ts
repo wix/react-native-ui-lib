@@ -52,6 +52,10 @@ export declare type ImageProps = RNImageProps & MarginModifiers & {
      * Default image source in case of an error
      */
     errorSource?: ImageSourcePropType;
+    /**
+     * An imageId that can be used in sourceTransformer logic
+     */
+    imageId?: string;
 };
 declare type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 declare type State = {
@@ -146,6 +150,10 @@ declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"marg
      * Default image source in case of an error
      */
     errorSource?: ImageSourcePropType | undefined;
+    /**
+     * An imageId that can be used in sourceTransformer logic
+     */
+    imageId?: string | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Image;
