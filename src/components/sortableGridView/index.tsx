@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
-import {DEFAULT_NO_OF_COLUMNS, getItemSize, useSortableGridConfig, ItemsOrder} from './config';
+import {DEFAULT_NO_OF_COLUMNS, getItemSize, useSortableGridConfig, ItemsOrder, WINDOW_WIDTH} from './config';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
 import {View} from 'react-native-ui-lib';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 
 export interface SortableGridItemProps {
@@ -37,7 +37,7 @@ export interface SortableGridViewProps {
 }
 
 const SortableGridView: React.FC<SortableGridViewProps> = (props) => {
-  const {items, numOfColumns = DEFAULT_NO_OF_COLUMNS, renderItem, itemSpacing, viewWidth} = props;
+  const {items, renderItem, itemSpacing, numOfColumns = DEFAULT_NO_OF_COLUMNS, viewWidth = WINDOW_WIDTH} = props;
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useSharedValue(0);
   const itemSize = useMemo(() => getItemSize(numOfColumns, viewWidth), [viewWidth, numOfColumns]);

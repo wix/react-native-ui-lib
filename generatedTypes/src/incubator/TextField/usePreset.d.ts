@@ -91,6 +91,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
     value?: string | undefined;
+    onChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputChangeEventData>) => void) | undefined;
+    onChangeText?: ((text: string) => void) | undefined;
     autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
@@ -102,8 +104,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     keyboardType?: import("react-native").KeyboardTypeOptions | undefined;
     maxLength?: number | undefined;
     multiline?: boolean | undefined;
-    onChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputChangeEventData>) => void) | undefined;
-    onChangeText?: ((text: string) => void) | undefined;
     onEndEditing?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputEndEditingEventData>) => void) | undefined;
     onSelectionChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputSelectionChangeEventData>) => void) | undefined;
     onSubmitEditing?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputSubmitEditingEventData>) => void) | undefined;
@@ -492,6 +492,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
     value?: string | undefined;
+    onChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputChangeEventData>) => void) | undefined;
+    onChangeText?: ((text: string) => void) | undefined;
     autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
@@ -503,8 +505,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     keyboardType?: import("react-native").KeyboardTypeOptions | undefined;
     maxLength?: number | undefined;
     multiline?: boolean | undefined;
-    onChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputChangeEventData>) => void) | undefined;
-    onChangeText?: ((text: string) => void) | undefined;
     onEndEditing?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputEndEditingEventData>) => void) | undefined;
     onSelectionChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputSelectionChangeEventData>) => void) | undefined;
     onSubmitEditing?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputSubmitEditingEventData>) => void) | undefined;
@@ -1005,6 +1005,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     selectionColor?: import("react-native").ColorValue | undefined;
     textBreakStrategy?: "simple" | "highQuality" | "balanced" | undefined;
     value?: string | undefined;
+    onChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputChangeEventData>) => void) | undefined;
+    onChangeText?: ((text: string) => void) | undefined;
     autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
     autoCorrect?: boolean | undefined;
     autoFocus?: boolean | undefined;
@@ -1016,8 +1018,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     keyboardType?: import("react-native").KeyboardTypeOptions | undefined;
     maxLength?: number | undefined;
     multiline?: boolean | undefined;
-    onChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputChangeEventData>) => void) | undefined;
-    onChangeText?: ((text: string) => void) | undefined;
     onEndEditing?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputEndEditingEventData>) => void) | undefined;
     onSelectionChange?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputSelectionChangeEventData>) => void) | undefined;
     onSubmitEditing?: ((e: import("react-native").NativeSyntheticEvent<import("react-native").TextInputSubmitEditingEventData>) => void) | undefined;

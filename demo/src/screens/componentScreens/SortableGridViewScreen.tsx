@@ -7,13 +7,6 @@ import products from '../../data/products';
 const sortableProducts = _.chain(products)
   .take(8)
   .map((product) => ({
-    // imageProps: {
-    //   source: {uri: product.mediaUrl},
-    //   borderRadius: 4
-    //   style: {backgroundColor: Colors.grey60, borderWidth: 1, borderColor: Colors.grey50}
-    // },
-    // title: product.name,
-    // titleTypography: 'subtextBold',
     onPress: () => Alert.alert('My price is ' + product.formattedPrice),
     id: product.name,
     source: {uri: product.mediaUrl},
@@ -35,13 +28,15 @@ const SortableGridViewScreen = () => {
     
   return (
     <View flex>
-      <SortableGridView
-        items={[...sortableProducts, ...sortableProducts]} 
-        renderItem={renderDemoTile} 
-        // numOfColumns={2}
-        // itemSpacing={20}
-        // viewWidth={300}
-      />
+      <View flex>
+        <SortableGridView
+          items={[...sortableProducts, ...sortableProducts]} 
+          renderItem={renderDemoTile} 
+          // numOfColumns={2}
+          // itemSpacing={20}
+          // viewWidth={300}
+        />
+      </View>
       <Text center h1 marginB-20>Footer</Text>
     </View>
   );
