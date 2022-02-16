@@ -103,7 +103,7 @@ class MainScreen extends Component {
   };
 
   closeSearchBox = () => {
-    this.input.blur();
+    this.input?.blur();
   };
 
   setDefaultScreen = item => {

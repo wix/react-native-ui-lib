@@ -14,5 +14,13 @@
     {"name": "ctaLabel", "type": "string", "description": "Text to to show in the CTA button"},
     {"name": "onCtaPress", "type": "() => void", "description": "Action handler for CTA button"},
     {"name": "testID", "type": "string", "description": "Use to identify the container in tests"}
+  ],
+  "snippet": [
+    "<StateScreen",
+    " title={'Title'$1}",
+    " subtitle={'Subtitle'$2}",
+    " ctaLabel={'Done'$3}",
+    " imageSource={$4}",
+    "/>"
   ]
 }

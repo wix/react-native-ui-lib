@@ -41,6 +41,10 @@
     },
     {"name": "overlayColor", "type": "string", "description": "Pass a custom color for the overlay"},
     {"name": "customOverlayContent", "type": "JSX.Element", "description": "Render an overlay with custom content"},
-    {"name": "errorSource", "type": "ImageSourcePropType", "description": "Default image source in case of an error"}
+    {"name": "errorSource", "type": "ImageSourcePropType", "description": "Default image source in case of an error"},
+    {"name": "imageId", "type": "string", "description": "An imageId that can be used in sourceTransformer logic"}
+  ],
+  "snippet": [
+    "<Image source={{uri: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg}}/>"
   ]
 }

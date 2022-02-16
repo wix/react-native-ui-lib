@@ -77,6 +77,8 @@ declare const colorsPalette: {
     purple60: string;
     purple70: string;
     purple80: string;
+    violet1: string;
+    violet5: string;
     violet10: string;
     violet20: string;
     violet30: string;
@@ -87,6 +89,7 @@ declare const colorsPalette: {
     violet80: string;
     white: string;
     black: string;
+    dmBlack: string;
     transparent: string;
 };
 declare const extraFixColorsMap: {

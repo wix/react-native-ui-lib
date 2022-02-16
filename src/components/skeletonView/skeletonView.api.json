@@ -2,6 +2,7 @@
   "name": "SkeletonView",
   "category": "layoutsAndTemplates",
   "description": "Allows showing a temporary skeleton view while your real view is loading",
+  "modifiers": ["margin"],
   "note": "Requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' libraries",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.tsx",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true"],
@@ -44,5 +45,13 @@
     },
     {"name": "style", "type": "ViewStyle", "description": "Override container styles"},
     {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<SkeletonView",
+    " template={SkeletonView.templates.LIST_ITEM$1}",
+    " showContent={this.state.available$2}",
+    " renderContent={<ListItem><Text grey10 text60 marginL-10>The item</Text></ListItem>$3}",
+    " times={10$4}",
+    "/>"
   ]
 }

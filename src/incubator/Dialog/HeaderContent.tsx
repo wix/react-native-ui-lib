@@ -4,7 +4,7 @@ import View from '../../components/view';
 import Text from '../../components/text';
 import {DialogHeaderProps} from './types';
 
-const DialogText = (props: Pick<DialogHeaderProps, 'text'>) => {
+const HeaderContent = (props: Pick<DialogHeaderProps, 'text'>) => {
   const {text = {}} = props;
   const {title, titleStyle, titleProps, subtitle, subtitleStyle, subtitleProps} = text;
 
@@ -28,4 +28,4 @@ const DialogText = (props: Pick<DialogHeaderProps, 'text'>) => {
   return null;
 };
 
-export default React.memo(DialogText);
+export default React.memo(HeaderContent);

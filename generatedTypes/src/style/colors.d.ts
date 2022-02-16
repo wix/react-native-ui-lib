@@ -29,6 +29,11 @@ export declare class Colors {
      */
     setScheme(scheme: SchemeType): void;
     /**
+     * Support listening to Appearance changes
+     * and change the design tokens accordingly
+     */
+    supportDarkMode(): void;
+    /**
      * Add alpha to hex or rgb color
      * arguments:
      * p1 - hex color / R part of RGB
@@ -105,13 +110,14 @@ declare const colorObject: Colors & {
     orange10: string;
     orange20: string;
     orange30: string;
-    orange40: string; /**
+    orange40: string;
+    orange50: string;
+    orange60: string;
+    /**
      * Set color scheme for app
      * arguments:
      * scheme - color scheme e.g light/dark/default
      */
-    orange50: string;
-    orange60: string;
     orange70: string;
     orange80: string;
     red1: string;
@@ -134,6 +140,8 @@ declare const colorObject: Colors & {
     purple60: string;
     purple70: string;
     purple80: string;
+    violet1: string;
+    violet5: string;
     violet10: string;
     violet20: string;
     violet30: string;
@@ -144,65 +152,71 @@ declare const colorObject: Colors & {
     violet80: string;
     white: string;
     black: string;
+    dmBlack: string;
     transparent: string;
 } & {
     primary: string;
 } & {
-    backgroundDefault: string;
-    backgroundNeutralHeavy: string;
-    backgroundNeutralIdle: string;
-    backgroundNeutralMedium: string;
-    backgroundNeutral: string;
-    backgroundNeutralLight: string;
-    backgroundPrimaryHeavy: string;
-    backgroundPrimaryLight: string;
-    backgroundPrimary: string;
-    backgroundGeneralHeavy: string;
-    backgroundGeneralLight: string;
-    backgroundGeneral: string;
-    backgroundSuccessHeavy: string;
-    backgroundSuccess: string;
-    backgroundWarningHeavy: string;
-    backgroundWarning: string;
-    backgroundMajor: string;
-    backgroundDangerHeavy: string;
-    backgroundDanger: string;
-    backgroundDisabled: string;
-    backgroundDark: string;
-    textDisabled: string;
-    textDefault: string;
-    textNeutralHeavy: string;
-    textNeutral: string;
-    textNeutralLight: string;
-    textDefaultLight: string;
-    textPrimary: string;
-    textGeneral: string;
-    textSuccess: string;
-    textMajor: string;
-    textDanger: string;
-    textDangerLight: string;
-    iconDefault: string;
-    iconNeutral: string;
-    iconDefaultLight: string;
-    iconPrimary: string;
-    iconPrimaryLight: string;
-    iconGeneral: string;
-    iconGeneralLight: string;
-    iconSuccess: string;
-    iconSuccessLight: string;
-    iconMajor: string;
-    iconDanger: string;
-    iconDangerLight: string;
-    iconDisabled: string;
-    outlineLight: string;
-    outlineNeutral: string;
-    outlineNeutralMedium: string;
-    outlineDisabled: string;
-    outlineDisabledHeavy: string;
-    outlinePrimary: string;
-    outlineGeneral: string;
-    outlineWarning: string;
-    outlineDanger: string;
-    dividerDefault: string;
+    $backgroundDefault: string;
+    $backgroundElevated: string;
+    $backgroundNeutralHeavy: string;
+    $backgroundNeutralIdle: string;
+    $backgroundNeutralMedium: string;
+    $backgroundNeutral: string;
+    $backgroundNeutralLight: string;
+    $backgroundPrimaryHeavy: string;
+    $backgroundPrimaryLight: string;
+    $backgroundPrimary: string;
+    $backgroundGeneralHeavy: string;
+    $backgroundGeneralLight: string;
+    $backgroundGeneral: string;
+    $backgroundSuccessHeavy: string;
+    $backgroundSuccess: string;
+    $backgroundWarningHeavy: string;
+    $backgroundWarning: string; /**
+     * Load set of schemes for light/dark mode
+     * arguments:
+     * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
+     */
+    $backgroundMajor: string;
+    $backgroundDangerHeavy: string;
+    $backgroundDanger: string;
+    $backgroundDisabled: string;
+    $backgroundDark: string;
+    $textDisabled: string;
+    $textDefault: string;
+    $textNeutralHeavy: string;
+    $textNeutral: string;
+    $textNeutralLight: string;
+    $textDefaultLight: string;
+    $textPrimary: string;
+    $textGeneral: string;
+    $textSuccess: string;
+    $textMajor: string;
+    $textDanger: string;
+    $textDangerLight: string;
+    $iconDefault: string;
+    $iconNeutral: string;
+    $iconDefaultLight: string;
+    $iconPrimary: string;
+    $iconPrimaryLight: string;
+    $iconGeneral: string;
+    $iconGeneralLight: string;
+    $iconSuccess: string;
+    $iconSuccessLight: string;
+    $iconMajor: string;
+    $iconDanger: string;
+    $iconDangerLight: string;
+    $iconDisabled: string;
+    $outlineLight: string;
+    $outlineNeutral: string;
+    $outlineNeutralMedium: string;
+    $outlineDisabled: string;
+    $outlineDisabledHeavy: string;
+    $outlinePrimary: string;
+    $outlineGeneral: string;
+    $outlineWarning: string;
+    $outlineDanger: string;
+    $dividerDefault: string;
 };
 export default colorObject;

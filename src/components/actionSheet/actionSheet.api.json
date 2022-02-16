@@ -71,5 +71,18 @@
       "description": "In iOS, use safe area, in case component attached to the bottom"
     },
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ],
+  "snippet": [
+    "<ActionSheet",
+    " title={'Title'$1}",
+    " message={'Message goes here'$2}",
+    " cancelButtonIndex={3$3}",
+    " destructiveButtonIndex={0$4}",
+    " options={[",
+    "  {label: '$5', onPress: $6},",
+    "  {label: '$7', onPress: $8},",
+    "  {label: 'Cancel', onPress: () => console.log('cancel')$9}",
+    " ]}",
+    "/>"
   ]
 }

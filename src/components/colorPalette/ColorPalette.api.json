@@ -39,5 +39,12 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
     {"name": "style", "type": "ViewStyle", "description": "Component's style"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+  ],
+  "snippet": [
+    "<ColorPalette",
+    " colors={['transparent', Colors.green30, Colors.yellow30, Colors.red30]$1}",
+    " value={this.state.selectedColor$2}",
+    " onValueChange={() => console.log('value changed)$3}",
+    "/>"
   ]
 }
