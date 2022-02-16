@@ -18,8 +18,8 @@ const colorsPalette = {
   blue30: '#116DFF',
   blue40: '#3582FF',
   blue50: '#60A1FF',
-  blue60: '#8BC1FF',
-  blue70: '#B8D9FF',
+  blue60: '#97C7FF',
+  blue70: '#C4DFFF',
   blue80: '#E9F3FF',
   // CYANS
   cyan10: '#00AAAF',
@@ -86,6 +86,8 @@ const colorsPalette = {
   purple70: '#f1daf7',
   purple80: '#faebfd',
   // VIOLETS
+  violet1: '#170E5C',
+  violet5: '#231690',
   violet10: '#3220CD',
   violet20: '#4633E9',
   violet30: '#5A48F5',
@@ -97,6 +99,7 @@ const colorsPalette = {
   // WHITE,
   white: '#FFFFFF',
   black: '#000000',
+  dmBlack: '#0A0E12',
   transparent: 'transparent'
 };
 
