@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 2,
-    backgroundColor: Colors.$backgroundPrimary
+    backgroundColor: Colors.$backgroundPrimaryHeavy
   },
   containerShadow: {
     ...Platform.select({
