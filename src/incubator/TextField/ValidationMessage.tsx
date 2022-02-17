@@ -41,7 +41,7 @@ const ValidationMessage = ({
   const showValidationMessage = !context.isValid || (!validate && !!validationMessage);
 
   return (
-    <Text testID={testID} red30 style={[styles.validationMessage, validationMessageStyle]}>
+    <Text testID={testID} $textDangerLight style={[styles.validationMessage, validationMessageStyle]}>
       {showValidationMessage ? relevantValidationMessage : ''}
     </Text>
   );

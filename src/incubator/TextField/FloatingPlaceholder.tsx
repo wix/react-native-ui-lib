@@ -34,7 +34,7 @@ const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
 const FloatingPlaceholder = ({
   placeholder,
-  floatingPlaceholderColor = Colors.grey40,
+  floatingPlaceholderColor = Colors.$textNeutralLight,
   floatingPlaceholderStyle,
   floatOnFocus,
   validationMessagePosition,
