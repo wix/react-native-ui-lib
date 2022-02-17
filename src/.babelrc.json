@@ -16,7 +16,8 @@
           "style": "./src/style"
         }
       }
-    ]
+    ],
+    ["lodash"]
   ],
   "compact": false,
   "minified": false
