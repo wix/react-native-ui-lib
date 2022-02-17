@@ -23,5 +23,10 @@
       "description": "The view's width",
       "default": "screen width"
     }
+  ],
+  "snippet": [
+    "<Marquee duration={2000$1} direction={'left'$2}>",
+    " {<Text text40 bg-red50>Hello World</Text>$3}",
+    "</Marquee>"
   ]
 }
