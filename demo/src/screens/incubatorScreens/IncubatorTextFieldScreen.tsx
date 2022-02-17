@@ -191,7 +191,12 @@ export default class TextFieldScreen extends Component {
 
           <TextField
             label="Email"
-            labelColor={{default: Colors.$textDefault, focus: Colors.$textGeneral, disabled: Colors.$textDisabled}}
+            labelColor={{
+              default: Colors.$textDefault,
+              focus: Colors.$textGeneral,
+              error: Colors.$textDangerLight,
+              disabled: Colors.$textDisabled
+            }}
             placeholder="Enter valid email"
             validationMessage="Email is invalid"
             validate={'email'}
@@ -215,7 +220,9 @@ export default class TextFieldScreen extends Component {
             label="Label"
             placeholder="Enter text..."
             preset={preset}
-            dynamicFieldStyle={(_state, {preset}) => (preset === 'withUnderline' ? styles.withUnderline : styles.withFrame)}
+            dynamicFieldStyle={(_state, {preset}) =>
+              preset === 'withUnderline' ? styles.withUnderline : styles.withFrame
+            }
             editable={!shouldDisable}
           />
 
@@ -257,8 +264,12 @@ export default class TextFieldScreen extends Component {
             validate={'number'}
             validationMessage="Invalid price"
             // @ts-expect-error
-            formatter={(value) => (isNaN(value) ? value : priceFormatter.format(Number(value)))}
-            leadingAccessory={<Text marginR-s1 $textNeutral>$</Text>}
+            formatter={value => (isNaN(value) ? value : priceFormatter.format(Number(value)))}
+            leadingAccessory={
+              <Text marginR-s1 $textNeutral>
+                $
+              </Text>
+            }
             fieldStyle={styles.withUnderline}
           />
         </View>
