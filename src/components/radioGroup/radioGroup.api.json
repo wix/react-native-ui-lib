@@ -20,5 +20,11 @@
       "type": "((value?: string) => void) | ((value?: number) => void) | ((value?: boolean) => void) | ((value?: any) => void)",
       "description": "Invoked once when value changes, by selecting one of the radio buttons in the group"
     }
+  ],
+  "snippet": [
+    "<RadioGroup initialValue={this.state.value$1} onValueChange={() => console.log('value changed)$2}>",
+    " <RadioButton value={'yes'$3} label={'Yes'$4}/>",
+    " <RadioButton value={'no'$5} label={'No'$6}/>",
+    "</RadioGroup>"
   ]
 }

@@ -29,5 +29,8 @@
       "type": "(event: LayoutChangeEvent) => void",
       "description": "Callback for onLayout event"
     }
+  ],
+  "snippet": [
+    "<Picker.Item key={index$1} value={item$2}/>"
   ]
 }

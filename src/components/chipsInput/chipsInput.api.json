@@ -73,5 +73,11 @@
     {"name": "value", "type": "any", "description": "The input's value"},
     {"name": "selectionColor", "type": "string | number", "description": "The color for the selection state"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"}
+  ],
+  "snippet": [
+    "<ChipsInput",
+    " placeholder={'Placeholder'$1}",
+    " chips={[{label: 'Falcon 9'}, {label: 'Enterprise'}, {label: 'Challenger', borderRadius: 0}]$2}",
+    "/>"
   ]
 }

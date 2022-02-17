@@ -28,5 +28,8 @@
     },
     {"name": "style", "type": "ViewStyle", "description": "Pass custom style"},
     {"name": "testID", "type": "string", "description": "Used as a testing identifier"}
+  ],
+  "snippet": [
+    "<TabBarItem label={$1}/>"
   ]
 }

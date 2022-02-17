@@ -1,0 +1,46 @@
+{
+    "name": "rnuilib-snippets",
+    "displayName": "React Native UILIB Snippets",
+    "description": "Code snippets for react-native-ui-lib components",
+    "author": "Inbal Tish <inbaltish@gmail.com>",
+    "publisher": "wix",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wix/react-native-ui-lib"
+    },
+    "icon": "assets/icon.png",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.64.0"
+    },
+    "keywords": [
+        "react-native",
+        "snippets",
+        "javascript",
+        "typescript"
+    ],
+    "categories": [
+        "Snippets"
+    ],
+    "contributes": {
+        "snippets": [
+            {
+                "language": "typescript",
+                "path": "./snippets/snippets.code-snippets"
+            },
+            {
+                "language": "typescriptreact",
+                "path": "./snippets/snippets.code-snippets"
+            },
+            {
+                "language": "javascript",
+                "path": "./snippets/snippets.code-snippets"
+            },
+            {
+                "language": "javascriptreact",
+                "path": "./snippets/snippets.code-snippets"
+            }
+        ]
+    }
+}

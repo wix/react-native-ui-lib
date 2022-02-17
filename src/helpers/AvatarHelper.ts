@@ -6,14 +6,22 @@ export function hashStringToNumber(str: string) {
   let hash = 5381;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = ((hash << 5) + hash) + char; /* hash * 33 + c */ // eslint-disable-line
+    hash = (hash << 5) + hash + char; /* hash * 33 + c */ // eslint-disable-line
   }
   return hash;
 }
 
 export function getAvatarColors() {
-  return [Colors.blue20, Colors.cyan20, Colors.green20, Colors.yellow20,
-    Colors.orange20, Colors.red20, Colors.purple20, Colors.violet20];
+  return [
+    Colors.blue20,
+    Colors.cyan20,
+    Colors.green20,
+    Colors.yellow20,
+    Colors.orange20,
+    Colors.red20,
+    Colors.purple20,
+    Colors.violet20
+  ];
 }
 
 export function getColorById(id: string, avatarColors = getAvatarColors()) {
@@ -29,12 +37,10 @@ export function getColorById(id: string, avatarColors = getAvatarColors()) {
 export function getInitials(name?: string, limit = 2) {
   let initials = '';
   if (name && _.isString(name)) {
-    const nameSplitted = _.chain(name)
-      .split(/\s+/g)
-      .filter(word => word.length > 0)
-      .take(limit)
-      .value();
-    _.each(nameSplitted, (str) => {
+    const nameSplitted = _.flow(name => _.split(name, /\s+/g),
+      words => _.filter(words, word => word.length > 0),
+      words => _.take(words, limit))(name);
+    _.each(nameSplitted, str => {
       initials += str[0];
     });
   }

@@ -13,5 +13,8 @@
       "type": "JSX.Element",
       "description": "Custom element to render on top of the animated progress"
     }
+  ],
+  "snippet": [
+    "<ProgressBar progress={55$1} progressColor={Colors.red30$2}/>"
   ]
 }

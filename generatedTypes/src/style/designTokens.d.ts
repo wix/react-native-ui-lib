@@ -1,5 +1,6 @@
 export declare const designTokens: {
     $backgroundDefault: string;
+    $backgroundElevated: string;
     $backgroundNeutralHeavy: string;
     $backgroundNeutralIdle: string;
     $backgroundNeutralMedium: string;
