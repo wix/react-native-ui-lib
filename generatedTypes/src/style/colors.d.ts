@@ -183,6 +183,8 @@ declare const colorObject: Colors & {
     $backgroundDanger: string;
     $backgroundDisabled: string;
     $backgroundDark: string;
+    $backgroundDarkElevated: string;
+    $backgroundDarkActive: string;
     $textDisabled: string;
     $textDefault: string;
     $textNeutralHeavy: string;
