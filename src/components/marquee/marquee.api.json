@@ -22,6 +22,18 @@
       "type": "number",
       "description": "The view's width",
       "default": "screen width"
+    },
+    {
+      "name": "start",
+      "type": "number",
+      "description": "The animation starting x offset from screen edge (In 'left' direction will be subtracted from screen width)",
+      "default": "0"
+    },
+    {
+      "name": "end",
+      "type": "number",
+      "description": "The animation ending x offset from screen edge (In 'right' direction will be subtracted from screen width)",
+      "default": "screen width"
     }
   ],
   "snippet": [

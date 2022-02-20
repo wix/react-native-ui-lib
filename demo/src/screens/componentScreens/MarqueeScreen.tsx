@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {View, Text, Marquee} from 'react-native-ui-lib';
+import {Colors, View, Text, Marquee} from 'react-native-ui-lib';
 
 export default class MarqueeScreen extends Component { 
   renderRow() {
@@ -15,20 +15,24 @@ export default class MarqueeScreen extends Component {
   
   render() {
     return (
-      <View flex>
-        <Text text50 grey10 marginB-20>Marquee</Text>
-        <Marquee duration={2000}>
-          {this.renderRow()}
+      <>
+        <Marquee width={110}>
+        <Text text50 grey10 marginV-20>Marquee</Text>
         </Marquee>
-        <Marquee>
-          <View padding-20 center style={{backgroundColor: '#cfff04'}}>
-            <Text text40>Hello World</Text>
-          </View>
-        </Marquee>
-        <Marquee duration={2000} direction={'left'}>
-          {this.renderRow()}
-        </Marquee>
-      </View>
+        <View marginH-50 style={{borderWidth: 1, borderColor: Colors.orange30}}>
+          <Marquee duration={2000}>
+            {this.renderRow()}
+          </Marquee>
+          <Marquee start={50} end={50} duration={9000}>
+            <View padding-20 center style={{backgroundColor: '#cfff04'}}>
+              <Text text40>Hello World</Text>
+            </View>
+          </Marquee>
+          <Marquee duration={2000} direction={'left'}>
+            {this.renderRow()}
+          </Marquee>
+        </View>
+      </>
     );
   }
 }
