@@ -4,7 +4,6 @@ import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
 import asCardChild, {asCardChildProps} from './asCardChild';
 
-
 export type CardImageProps = ImageProps & {
   /**
    * Image width
@@ -41,32 +40,24 @@ class CardImage extends PureComponent<Props> {
 
   render() {
     const {
-      source,
       style,
-      testID,
-      overlayType,
       context: {borderStyle},
+      /* Note: Destruct position to avoid passing it to Image component cause it crashes Android (position is a saved prop) */
+      // eslint-disable-next-line
+      position,
       ...others
     } = this.props;
 
     return (
       <View style={[this.styles.container, borderStyle, style]}>
-        <Image
-          testID={testID}
-          source={source}
-          style={[this.styles.image]}
-          overlayType={overlayType}
-          {...others}
-        />
+        <Image style={[this.styles.image]} {...others}/>
       </View>
-    );  
+    );
   }
 }
 
 function createStyles({width, height, context: {position}}: Props) {
-  const {top, left, right, bottom} = CardPresenter.extractPositionValues(
-    position
-  );
+  const {top, left, right, bottom} = CardPresenter.extractPositionValues(position);
   return StyleSheet.create({
     container: {
       height: left || right ? undefined : height,
