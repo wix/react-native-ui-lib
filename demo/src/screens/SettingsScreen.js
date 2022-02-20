@@ -73,11 +73,13 @@ class SettingsScreen extends Component {
             testID={'uilib.defaultScreenPicker'}
             placeholder="Pick default screen..."
             showSearch
-            value={defaultScreen}
+            value={defaultScreen?.value}
+            label={defaultScreen?.label}
             onChange={this.setDefaultScreen}
+            migrateTextField
           >
             {_.map(filteredScreens, screen => (
-              <Picker.Item key={screen.value} value={screen}/>
+              <Picker.Item key={screen.value} value={screen.value} label={screen.label}/>
             ))}
           </Picker>
 
