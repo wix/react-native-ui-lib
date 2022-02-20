@@ -24,6 +24,8 @@ export const designTokens = {
   $backgroundDanger: colorsPalette.red80,
   $backgroundDisabled: colorsPalette.grey50,
   $backgroundDark: colorsPalette.grey10,
+  $backgroundDarkElevated: colorsPalette.grey10,
+  $backgroundDarkActive: colorsPalette.grey20,
 
   // TEXT
   $textDisabled: colorsPalette.grey50,

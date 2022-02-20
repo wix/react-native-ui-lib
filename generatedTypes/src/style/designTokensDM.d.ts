@@ -21,6 +21,8 @@ export declare const designTokensDM: {
     $backgroundDanger: string;
     $backgroundDisabled: string;
     $backgroundDark: string;
+    $backgroundDarkElevated: string;
+    $backgroundDarkActive: string;
     $textDisabled: string;
     $textDefault: string;
     $textNeutralHeavy: string;

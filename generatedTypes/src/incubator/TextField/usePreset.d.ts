@@ -386,6 +386,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     $backgroundDanger?: boolean | undefined;
     $backgroundDisabled?: boolean | undefined;
     $backgroundDark?: boolean | undefined;
+    $backgroundDarkElevated?: boolean | undefined;
+    $backgroundDarkActive?: boolean | undefined;
     $textDisabled?: boolean | undefined;
     $textDefault?: boolean | undefined;
     $textNeutralHeavy?: boolean | undefined;
@@ -796,6 +798,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     $backgroundDanger?: boolean | undefined;
     $backgroundDisabled?: boolean | undefined;
     $backgroundDark?: boolean | undefined;
+    $backgroundDarkElevated?: boolean | undefined;
+    $backgroundDarkActive?: boolean | undefined;
     $textDisabled?: boolean | undefined;
     $textDefault?: boolean | undefined;
     $textNeutralHeavy?: boolean | undefined;
