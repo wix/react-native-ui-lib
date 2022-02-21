@@ -163,13 +163,13 @@ export class Colors {
 
     const ls = [hsl.color[2]];
     let l = lightness - 10;
-    while (l >= 20) {
+    while (l >= 15) {
       ls.unshift(l);
       l -= 10;
     }
 
     l = lightness + 10;
-    while (l < 100) {
+    while (l < 95) {
       ls.push(l);
       l += 10;
     }
