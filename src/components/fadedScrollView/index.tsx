@@ -1,4 +1,4 @@
-import React, {useCallback, useImperativeHandle} from 'react';
+import React, {useCallback, useRef, useImperativeHandle} from 'react';
 import {
   ScrollView as RNScrollView,
   ScrollViewProps,
@@ -61,7 +61,7 @@ const FadedScrollView = (props: Props) => {
     ...others
   } = props;
   const ScrollView = useGesture ? GestureScrollView : RNScrollView;
-  const scrollViewRef = React.createRef<typeof ScrollView>();
+  const scrollViewRef = useRef<typeof ScrollView>();
   const horizontal = propsHorizontal ?? false;
   const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal});
   const {
@@ -116,6 +116,7 @@ const FadedScrollView = (props: Props) => {
           onContentSizeChange={_onContentSizeChange}
           onLayout={_onLayout}
           onScroll={onScroll}
+          // @ts-expect-error
           ref={scrollViewRef}
         >
           {children}
