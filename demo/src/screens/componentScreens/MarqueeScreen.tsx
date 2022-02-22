@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Colors, View, Text, Marquee} from 'react-native-ui-lib';
+import {View, Text, Marquee} from 'react-native-ui-lib';
 
 export default class MarqueeScreen extends Component { 
   renderRow() {
