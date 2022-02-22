@@ -68,7 +68,7 @@
     "@react-native-community/blur": "^3.4.1",
     "@react-native-community/datetimepicker": "^3.4.6",
     "@react-native-community/netinfo": "^5.6.2",
-    "@react-native-picker/picker": "^1.9.4",
+    "@react-native-picker/picker": "^2.3.0",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/react-native": "^7.2.0",
     "@types/hoist-non-react-statics": "^3.3.1",
