@@ -171,9 +171,9 @@ class Switch extends Component<SwitchProps> {
 function createStyles({
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
-  onColor = Colors.primary,
-  offColor = Colors.getColorTint(Colors.primary, 60),
-  disabledColor = Colors.grey70,
+  onColor = Colors.$backgroundPrimaryHeavy,
+  offColor = Colors.$backgroundNeutralIdle,
+  disabledColor = Colors.$backgroundDisabled,
   thumbColor = Colors.white,
   thumbSize = DEFAULT_THUMB_SIZE
 }: SwitchProps) {
