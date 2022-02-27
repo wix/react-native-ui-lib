@@ -138,7 +138,7 @@ export default {
     return require('./components/panningViews/panResponderView').default;
   },
   get Picker() {
-    return require('./components/picker').default;
+    return require('./components/picker/new').default;
   },
   get DateTimePicker() {
     return require('./components/dateTimePicker').default;
