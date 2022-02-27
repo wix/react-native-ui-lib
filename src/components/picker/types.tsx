@@ -58,7 +58,7 @@ export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChang
    * Example:
    * renderPicker = (selectedItem) => {...}
    */
-  renderPicker?: (value: PickerValue, label: string) => React.ReactElement;
+  renderPicker?: (value?: PickerValue, label?: string) => React.ReactElement;
   /**
    * Render custom picker item
    */

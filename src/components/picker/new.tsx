@@ -5,7 +5,7 @@
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
-import React, {useMemo, useState, useRef, useEffect, PropsWithChildren} from 'react';
+import React, {useMemo, useState, useRef, PropsWithChildren} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {
   Constants,
@@ -14,11 +14,7 @@ import {
   ForwardRefInjectedProps,
   BaseComponentInjectedProps
 } from '../../commons/new';
-import {LogService} from '../../services';
-// import View from '../../components/view';
-// import Modal from '../modal';
 import ExpandableOverlay, {ExpandableOverlayProps} from '../../incubator/expandableOverlay';
-// import Button from '../../components/button';
 // @ts-expect-error
 import {TextField} from '../inputs';
 import TextFieldMigrator from '../textField/TextFieldMigrator';
@@ -30,9 +26,11 @@ import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
 // @ts-expect-error
 import PickerContext from './PickerContext';
-// @ts-expect-error
-import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from './PickerPresenter';
-import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes, PickerSearchStyle} from './types';
+import usePickerSelection from './helpers/usePickerSelection';
+import usePickerLabel from './helpers/usePickerLabel';
+import usePickerSearch from './helpers/usePickerSearch';
+import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+import {PickerProps, PickerValue, PickerModes, PickerSearchStyle} from './types';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -54,6 +52,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     testID,
     onChange,
     onShow,
+    onSearchChange,
     renderCustomModal,
     forwardedRef,
     modifiers,
@@ -74,65 +73,44 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
   const [items] = useState(Picker.extractPickerItems(props));
-  const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
-  const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
-  const [searchValue, setSearchValue] = useState('');
-  // const [showExpandableModal, setShowExpandableModal] = useState(false);
 
   const pickerExpandable = useRef<typeof ExpandableOverlay>();
 
-  useEffect(() => {
-    if (mode === Picker.modes.SINGLE && Array.isArray(value)) {
-      LogService.warn('Picker in SINGLE mode cannot accept an array for value');
-    }
-    if (mode === Picker.modes.MULTI && !Array.isArray(value)) {
-      LogService.warn('Picker in MULTI mode must accept an array for value');
-    }
+  usePickerMigrationWarnings({value, mode});
+  const {
+    filteredChildren,
+    setSearchValue,
+    onSearchChange: _onSearchChange
+  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
+  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
+    migrate,
+    value,
+    onChange,
+    pickerExpandableRef: pickerExpandable,
+    getItemValue,
+    topBarProps,
+    setSearchValue
+  });
 
-    // TODO: this warning should be replaced by the opposite
-    // we should warn user NOT to pass an object to the value prop
-    // if (props.useNativePicker && _.isPlainObject(props.value)) {
-    //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
-    // }
-    if (_.isPlainObject(value)) {
-      LogService.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
-    }
-  }, []);
-
-  const getAccessibilityInfo = () => {
-    return {
-      accessibilityLabel: getLabelValueText()
-        ? `${props.placeholder}. selected. ${getLabelValueText()}`
-        : `Select ${props.placeholder}`,
-      accessibilityHint: getLabelValueText()
-        ? 'Double tap to edit'
-        : `Goes to ${props.placeholder}. Suggestions will be provided`
-    };
-  };
-
-  const toggleItemSelection = (item: PickerSingleValue) => {
-    let newValue;
-    const itemAsArray = [item];
-    if (!migrate) {
-      newValue = _.xorBy(multiDraftValue, itemAsArray, getItemValue || 'value');
-    } else {
-      newValue = _.xor(multiDraftValue, itemAsArray);
-    }
-
-    setMultiDraftValue(newValue);
-  };
+  const {label, accessibilityInfo} = usePickerLabel({
+    value,
+    items,
+    getItemLabel,
+    getLabel,
+    placeholder: props.placeholder
+  });
 
   const onSelectedItemLayout = (event: LayoutChangeEvent) => {
     const y = event.nativeEvent.layout.y;
     setSelectedItemPosition(y);
   };
 
-  const getContextValue = () => {
+  const contextValue = useMemo(() => {
     const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? value?.value : value;
     return {
       migrate,
       value: mode === Picker.modes.MULTI ? multiDraftValue : pickerValue,
-      onPress: mode === Picker.modes.MULTI ? toggleItemSelection : _onDoneSelecting,
+      onPress: mode === Picker.modes.MULTI ? toggleItemSelection : onDoneSelecting,
       isMultiMode: mode === Picker.modes.MULTI,
       getItemValue,
       getItemLabel,
@@ -140,78 +118,21 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
       renderItem,
       selectionLimit
     };
-  };
-
-  // @ts-expect-error should set types for children based in PickerItem
-  const getFilteredChildren = (children, searchValue: string) => {
-    return _.filter(children, child => {
-      const {label, value, getItemLabel: childGetItemLabel} = child.props;
-      const itemLabel = getItemLabelPresenter(label, value, childGetItemLabel || getItemLabel);
-      return !shouldFilterOut(searchValue, itemLabel);
-    });
-  };
-
-  const filteredChildren = useMemo(() => {
-    if (showSearch && !_.isEmpty(searchValue)) {
-      return getFilteredChildren(children, searchValue);
-    }
-
-    return children;
-  }, [children]);
-
-  const getLabelsFromArray = (value: PickerValue) => {
-    const itemsByValue = _.keyBy(items, 'value');
-
-    return _.flow(arr =>
-      _.map(arr, item => (_.isPlainObject(item) ? getItemLabel?.(item) || item?.label : itemsByValue[item]?.label)),
-    arr => _.join(arr, ', '))(value);
-  };
-
-  const _getLabel = (value: PickerValue) => {
-    if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
-      return getLabel(value);
-    }
-
-    if (_.isArray(value)) {
-      return getLabelsFromArray(value);
-    }
-
-    if (typeof value === 'object') {
-      return value?.label;
-    }
-
-    // otherwise, extract from picker items
-    const selectedItem = _.find(items, {value});
-
-    return _.get(selectedItem, 'label');
-  };
-
-  const getLabelValueText = () => {
-    return _getLabel(value);
-  };
-
-  const _onSearchChange = (searchValue: string) => {
-    setSearchValue(searchValue);
-    props.onSearchChange?.(searchValue);
-  };
-
-  const _onDoneSelecting = (item: PickerValue) => {
-    setSearchValue('');
-    setMultiFinalValue(item as PickerMultiValue);
-    // @ts-expect-error
-    pickerExpandable.current?.closeExpandable?.();
-    onChange?.(item);
-  };
-
-  const _cancelSelect = () => {
-    setMultiDraftValue(multiFinalValue);
-    // @ts-expect-error
-    pickerExpandable.current?.closeExpandable?.();
-    topBarProps?.onCancel?.();
-  };
+  }, [
+    migrate,
+    mode,
+    value,
+    multiDraftValue,
+    renderItem,
+    getItemValue,
+    getItemLabel,
+    selectionLimit,
+    onSelectedItemLayout,
+    toggleItemSelection,
+    onDoneSelecting
+  ]);
 
   const textInputProps = TextField.extractOwnProps(props);
-  const label = getLabelValueText();
   const {paddings, margins, positionStyle} = modifiers;
 
   const modalProps: ExpandableOverlayProps['modalProps'] = {
@@ -231,15 +152,15 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         onSearchChange: _onSearchChange,
         children,
         // onDone is relevant to multi mode only
-        onDone: () => _onDoneSelecting(multiDraftValue),
-        onCancel: _cancelSelect
+        onDone: () => onDoneSelecting(multiDraftValue),
+        onCancel: cancelSelect
       };
 
       return renderCustomModal(modalProps);
     }
   };
 
-  const renderExpandableModal = () => {
+  const expandableModalContent = useMemo(() => {
     return (
       // TODO: Rename this component cause it's not a modal anymore but the content of the modal
       <PickerModal
@@ -249,8 +170,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         enableModalBlur={enableModalBlur}
         topBarProps={{
           ...topBarProps,
-          onCancel: _cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => _onDoneSelecting(multiDraftValue) : undefined
+          onCancel: cancelSelect,
+          onDone: mode === Picker.modes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -264,26 +185,44 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         {filteredChildren}
       </PickerModal>
     );
-  };
+  }, [
+    testID,
+    mode,
+    selectedItemPosition,
+    enableModalBlur,
+    topBarProps,
+    cancelSelect,
+    onDoneSelecting,
+    multiDraftValue,
+    showSearch,
+    searchStyle,
+    searchPlaceholder,
+    _onSearchChange,
+    renderCustomSearch,
+    listProps,
+    onShow,
+    pickerModalProps,
+    filteredChildren
+  ]);
 
   if (useNativePicker) {
     return <NativePicker {...props}/>;
   }
 
   return (
-    <PickerContext.Provider value={getContextValue()}>
+    <PickerContext.Provider value={contextValue}>
       <ExpandableOverlay
         // @ts-expect-error
         ref={pickerExpandable}
         modalProps={modalProps}
-        expandableContent={renderExpandableModal()}
+        expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
         testID={testID}
         {...customPickerProps}
         disabled={editable === false}
       >
         {renderPicker ? (
-          renderPicker(value, _getLabel(value))
+          renderPicker(value, label)
         ) : (
           <TextFieldMigrator
             migrate={migrateTextField}
@@ -292,7 +231,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             {...textInputProps}
             testID={`${testID}.input`}
             containerStyle={[paddings, margins, positionStyle, containerStyle]}
-            {...getAccessibilityInfo()}
+            {...accessibilityInfo}
             importantForAccessibility={'no-hide-descendants'}
             value={label}
             selection={Constants.isAndroid ? {start: 0} : undefined}
