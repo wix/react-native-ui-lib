@@ -57,5 +57,6 @@ export declare const designTokens: {
     $outlineGeneral: string;
     $outlineWarning: string;
     $outlineDanger: string;
+    $outlineDark: string;
     $dividerDefault: string;
 };

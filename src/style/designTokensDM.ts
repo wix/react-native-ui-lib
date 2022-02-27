@@ -66,6 +66,7 @@ export const designTokensDM = {
   $outlineGeneral: colorsPalette.blue50,
   $outlineWarning: colorsPalette.yellow40,
   $outlineDanger: colorsPalette.red40,
+  $outlineDark: colorsPalette.grey20,
 
   // DIVIDER
   $dividerDefault: colorsPalette.grey10

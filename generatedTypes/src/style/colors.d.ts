@@ -219,6 +219,7 @@ declare const colorObject: Colors & {
     $outlineGeneral: string;
     $outlineWarning: string;
     $outlineDanger: string;
+    $outlineDark: string;
     $dividerDefault: string;
 };
 export default colorObject;

@@ -422,6 +422,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     $outlineGeneral?: boolean | undefined;
     $outlineWarning?: boolean | undefined;
     $outlineDanger?: boolean | undefined;
+    $outlineDark?: boolean | undefined;
     $dividerDefault?: boolean | undefined;
     hint?: string | undefined;
     color?: import("./types").ColorType | undefined;
@@ -834,6 +835,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     $outlineGeneral?: boolean | undefined;
     $outlineWarning?: boolean | undefined;
     $outlineDanger?: boolean | undefined;
+    $outlineDark?: boolean | undefined;
     $dividerDefault?: boolean | undefined;
     hint?: string | undefined;
     color?: import("./types").ColorType | undefined;
