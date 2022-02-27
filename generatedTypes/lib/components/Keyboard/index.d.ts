@@ -8,6 +8,7 @@ declare const _default: {
     KeyboardTrackingView: import("react").ForwardRefExoticComponent<Pick<import("react-native").ViewProps & {
         trackInteractive?: boolean | undefined;
         useSafeArea?: boolean | undefined;
+        usesBottomTabs?: boolean | undefined;
         scrollToFocusedInput?: boolean | undefined;
         scrollBehavior?: number | undefined;
         revealKeyboardInteractive?: boolean | undefined;
@@ -18,7 +19,7 @@ declare const _default: {
         ref?: any;
         children?: import("react").ReactChild | import("react").ReactChild[] | undefined;
         style?: import("react-native").ViewStyle | undefined;
-    }, keyof import("react-native").ViewProps | "useSafeArea" | "trackInteractive" | "scrollToFocusedInput" | "scrollBehavior" | "revealKeyboardInteractive" | "manageScrollView" | "requiresSameParentToManageScrollView" | "addBottomView" | "allowHitsOutsideBounds"> & import("react").RefAttributes<unknown>>;
+    }, keyof import("react-native").ViewProps | "useSafeArea" | "trackInteractive" | "usesBottomTabs" | "scrollToFocusedInput" | "scrollBehavior" | "revealKeyboardInteractive" | "manageScrollView" | "requiresSameParentToManageScrollView" | "addBottomView" | "allowHitsOutsideBounds"> & import("react").RefAttributes<unknown>>;
     KeyboardAwareInsetsView: {
         (props: KeyboardTrackingViewProps): JSX.Element;
         displayName: string;

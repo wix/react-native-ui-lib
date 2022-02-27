@@ -170,8 +170,9 @@ export default class KeyboardInputViewScreen extends PureComponent {
   };
 
   render() {
-    const {message} = this.props;
+    const {message, isModal} = this.props;
     const {receivedKeyboardData, customKeyboard, useSafeArea} = this.state;
+
     return (
       <View flex bg-grey80>
         <Text h2 marginT-page marginL-page>
@@ -201,6 +202,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           revealKeyboardInteractive
           onRequestShowKeyboard={this.onRequestShowKeyboard}
           useSafeArea={useSafeArea}
+          usesBottomTabs={!isModal}
         />
       </View>
     );

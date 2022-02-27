@@ -20,6 +20,10 @@ export type KeyboardTrackingViewProps = ViewProps & {
     * Allow control safe area
     */
    useSafeArea?: boolean;
+   /**
+    * Whether or not to include bottom tab bat inset
+    */
+   usesBottomTabs?: boolean;
 
    scrollToFocusedInput?: boolean;
    scrollBehavior?: number;
