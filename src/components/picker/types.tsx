@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 import {FlatListProps, StyleProp, ViewStyle, TextInputProps, TextStyle} from 'react-native';
 import {ExpandableOverlayProps} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
@@ -16,9 +16,10 @@ export type PickerMultiValue = PickerSingleValue[];
 export type PickerValue = PickerSingleValue | PickerMultiValue;
 
 export interface PickerSearchStyle {
-  color: string;
-  placeholderTextColor: string;
-  selectionColor: string;
+  icon?: number;
+  color?: string;
+  placeholderTextColor?: string;
+  selectionColor?: string;
 }
 
 // TODO: need to extend TextField props (and not just TextInputProps)
@@ -116,7 +117,7 @@ export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChang
   /**
    * Render custom search input (only when passing showSearch)
    */
-  renderCustomSearch?: () => React.ReactElement;
+  renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
   /**
    * Allow to use the native picker solution (different style for iOS and Android)
    */
@@ -206,9 +207,23 @@ export interface PickerItemProps {
   testID?: string;
 }
 
-export interface PickerContextProps extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
+export interface PickerContextProps
+  extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
   onPress: (value: PickerSingleValue) => void;
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
 }
+
+export type PickerItemsListProps = Pick<
+  PropsWithChildren<PickerProps>,
+  | 'topBarProps'
+  | 'listProps'
+  | 'children'
+  | 'showSearch'
+  | 'searchStyle'
+  | 'searchPlaceholder'
+  | 'onSearchChange'
+  | 'renderCustomSearch'
+  | 'testID'
+>;

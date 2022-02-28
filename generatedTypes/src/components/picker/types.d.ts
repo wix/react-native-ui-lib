@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { FlatListProps, StyleProp, ViewStyle, TextInputProps, TextStyle } from 'react-native';
 import { ExpandableOverlayProps } from '../../incubator/expandableOverlay';
 import { ModalTopBarProps } from '../modal/TopBar';
@@ -14,9 +14,10 @@ export declare type PickerSingleValue = string | number | PickerValueDeprecated;
 export declare type PickerMultiValue = PickerSingleValue[];
 export declare type PickerValue = PickerSingleValue | PickerMultiValue;
 export interface PickerSearchStyle {
-    color: string;
-    placeholderTextColor: string;
-    selectionColor: string;
+    icon?: number;
+    color?: string;
+    placeholderTextColor?: string;
+    selectionColor?: string;
 }
 export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChange'> {
     /**
@@ -108,7 +109,7 @@ export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChang
     /**
      * Render custom search input (only when passing showSearch)
      */
-    renderCustomSearch?: () => React.ReactElement;
+    renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
     /**
      * Allow to use the native picker solution (different style for iOS and Android)
      */
@@ -199,4 +200,5 @@ export interface PickerContextProps extends Pick<PickerProps, 'migrate' | 'value
     onSelectedLayout: (event: any) => any;
     selectionLimit: PickerProps['selectionLimit'];
 }
+export declare type PickerItemsListProps = Pick<PropsWithChildren<PickerProps>, 'topBarProps' | 'listProps' | 'children' | 'showSearch' | 'searchStyle' | 'searchPlaceholder' | 'onSearchChange' | 'renderCustomSearch' | 'testID'>;
 export {};

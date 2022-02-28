@@ -20,7 +20,6 @@ import {TextField} from '../inputs';
 import TextFieldMigrator from '../textField/TextFieldMigrator';
 // @ts-expect-error
 import NativePicker from './NativePicker';
-// @ts-expect-error
 import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
@@ -163,8 +162,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
       <PickerItemsList
         testID={`${testID}.modal`}
         // visible={showExpandableModal}
-        scrollPosition={selectedItemPosition}
-        enableModalBlur={enableModalBlur}
+        // scrollPosition={selectedItemPosition}
+        // enableModalBlur={enableModalBlur}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
@@ -176,8 +175,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
         listProps={listProps}
-        onShow={onShow}
-        pickerModalProps={pickerModalProps}
+        // onShow={onShow}
+        // pickerModalProps={pickerModalProps}
       >
         {filteredChildren}
       </PickerItemsList>
@@ -199,7 +198,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     listProps,
     onShow,
     pickerModalProps,
-    filteredChildren
+    filteredChildren,
+    props
   ]);
 
   if (useNativePicker) {
