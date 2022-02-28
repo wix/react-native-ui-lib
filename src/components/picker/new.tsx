@@ -22,9 +22,7 @@ import TextFieldMigrator from '../textField/TextFieldMigrator';
 import NativePicker from './NativePicker';
 // @ts-expect-error
 import PickerModal from './PickerModal';
-// @ts-expect-error
 import PickerItem from './PickerItem';
-// @ts-expect-error
 import PickerContext from './PickerContext';
 import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';

@@ -1,7 +1,6 @@
 import {useCallback, useState, useMemo} from 'react';
 import _ from 'lodash';
 import {PickerProps} from '../types';
-// @ts-expect-error
 import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from '../PickerPresenter';
 
 type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel'>;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatListProps, StyleProp, ViewStyle, TextInputProps} from 'react-native';
+import {FlatListProps, StyleProp, ViewStyle, TextInputProps, TextStyle} from 'react-native';
 import {ExpandableOverlayProps} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
 
@@ -62,7 +62,11 @@ export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChang
   /**
    * Render custom picker item
    */
-  renderItem?: () => React.ReactElement;
+  renderItem?: (
+    value: PickerValue,
+    itemProps: PickerItemProps & {isSelected: boolean},
+    label: string
+  ) => React.ReactElement;
   /**
    * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
    */
@@ -154,3 +158,57 @@ export interface PickerPropsWithMulti extends PickerBaseProps {
 }
 
 export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
+
+export interface PickerItemProps {
+  /**
+   * Item's value
+   */
+  value: PickerSingleValue;
+  /**
+   * Item's label
+   */
+  label: string;
+  /**
+   * Item's label style
+   */
+  labelStyle?: StyleProp<TextStyle>;
+  /**
+   * Custom function for the item label (e.g (value) => customLabel)
+   */
+  getItemLabel: PickerProps['getItemLabel'];
+  /**
+   * @deprecated Function to return the value out of the item value prop when value is custom shaped.
+   */
+  getItemValue: PickerProps['getItemValue'];
+  /**
+   * Render custom item
+   */
+  renderItem?: PickerProps['renderItem'];
+  /**
+   * Pass to change the selected icon
+   */
+  selectedIcon?: number;
+  /**
+   * Pass to change the selected icon color
+   */
+  selectedIconColor?: string;
+  /**
+   * Is the item disabled
+   */
+  disabled?: boolean;
+  /**
+   * Callback for onPress action
+   */
+  onPress: () => void;
+  /**
+   * Component test id
+   */
+  testID?: string;
+}
+
+export interface PickerContextProps extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
+  onPress: (value: PickerSingleValue) => void;
+  isMultiMode: boolean;
+  onSelectedLayout: (event: any) => any;
+  selectionLimit: PickerProps['selectionLimit'];
+}

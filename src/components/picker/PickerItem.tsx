@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useContext} from 'react';
-import {StyleSheet, Text as RNText} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {LogService} from '../../services';
 import {Colors, Typography} from '../../style';
 import * as Modifiers from '../../commons/modifiers';
@@ -12,12 +11,13 @@ import Image from '../image';
 import Text from '../text';
 import {getItemLabel, isItemSelected} from './PickerPresenter';
 import PickerContext from './PickerContext';
+import {PickerItemProps} from './types';
 
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
  */
-const PickerItem = props => {
+const PickerItem = (props: PickerItemProps) => {
   const {
     value,
     label,
@@ -30,10 +30,10 @@ const PickerItem = props => {
   const context = useContext(PickerContext);
   const {migrate} = context;
   const customRenderItem = context.renderItem || props.renderItem;
-  const itemValue = !migrate && _.isPlainObject(value) ? value?.value : value;
+  const itemValue = !migrate && typeof value === 'object' ? value?.value : value;
   const isSelected = isItemSelected(itemValue, context.value);
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
-  const selectedCounter = context.selectionLimit && context.value?.length;
+  const selectedCounter = context.selectionLimit && _.isArray(context.value) && context.value?.length;
   const accessibilityProps = {
     accessibilityState: isSelected ? {selected: true} : undefined,
     accessibilityHint: 'Double click to select this suggestion',
@@ -41,9 +41,9 @@ const PickerItem = props => {
   };
 
   const isItemDisabled = useMemo(() => {
-    return disabled || (!isSelected && context.selectionLimit && context.selectionLimit === selectedCounter);
+    return !!(disabled || (!isSelected && context.selectionLimit && context.selectionLimit === selectedCounter));
   }, [selectedCounter]);
-  
+
   useEffect(() => {
     if (_.isPlainObject(value)) {
       LogService.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
@@ -60,7 +60,7 @@ const PickerItem = props => {
     if (migrate) {
       context.onPress(value);
     } else {
-      context.onPress((_.isPlainObject(value) || context.isMultiMode) ? value : {value, label: itemLabel});
+      context.onPress(typeof value === 'object' || context.isMultiMode ? value : {value, label: itemLabel});
     }
   }, [migrate, value, context.onPress]);
 
@@ -71,7 +71,10 @@ const PickerItem = props => {
   const _renderItem = () => {
     return (
       <View style={styles.container} flex row spread centerV>
-        <Text numberOfLines={1} style={[styles.labelText, isItemDisabled && styles.labelTextDisabled, labelStyle]}>
+        <Text
+          numberOfLines={1}
+          style={[styles.labelText, isItemDisabled ? styles.labelTextDisabled : undefined, labelStyle]}
+        >
           {itemLabel}
         </Text>
         {selectedIndicator}
@@ -113,55 +116,5 @@ const styles = StyleSheet.create({
 });
 
 PickerItem.displayName = 'Picker.Item';
-PickerItem.propTypes = {
-  /**
-   * Item's value
-   */
-  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
-  /**
-   * Item's label
-   */
-  label: PropTypes.string,
-  /**
-   * Item's label style
-   */
-  labelStyle: RNText.propTypes.style,
-  /**
-   * Custom function for the item label (e.g (value) => customLabel)
-   */
-  getItemLabel: PropTypes.func,
-  /**
-   * DEPRECATE: Function to return the value out of the item value prop when value is custom shaped.
-   */
-  getItemValue: PropTypes.func,
-  /**
-   * Is the item selected
-   */
-  isSelected: PropTypes.bool,
-  /**
-   * Pass to change the selected icon
-   */
-  selectedIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-  /**
-   * Pass to change the selected icon color
-   */
-  selectedIconColor: PropTypes.string,
-  /**
-   * Is the item disabled
-   */
-  disabled: PropTypes.bool,
-  /**
-   * Render custom item
-   */
-  renderItem: PropTypes.elementType,
-  /**
-   * Callback for onPress action
-   */
-  onPress: PropTypes.func,
-  /**
-   * Callback for onLayout event
-   */
-  onSelectedLayout: PropTypes.func
-};
 
 export default PickerItem;

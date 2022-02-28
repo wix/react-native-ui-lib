@@ -3,7 +3,10 @@ import { ForwardRefInjectedProps, BaseComponentInjectedProps } from '../../commo
 import { PickerProps, PickerValue, PickerModes, PickerSearchStyle } from './types';
 declare const Picker: {
     (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps): JSX.Element;
-    Item: any;
+    Item: {
+        (props: import("./types").PickerItemProps): JSX.Element;
+        displayName: string;
+    };
     defaultProps: any;
     modes: {
         SINGLE: string;
