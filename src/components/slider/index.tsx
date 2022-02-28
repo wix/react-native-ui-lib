@@ -302,18 +302,9 @@ export default class Slider extends PureComponent<SliderProps, State> {
     if (this.thumb) {
       const {disableRTL} = this.props;
       const {trackSize} = this.state;
-      const _x = Constants.isRTL && disableRTL ? trackSize.width - x : x;
-      const position = _x - this.initialThumbSize.width / 2;
-      const deviation = 3;
-
-      if (position + deviation < 0) {
-        this._thumbStyles.left = 0;
-      } else if (position - deviation > trackSize.width - this.initialThumbSize.width) {
-        this._thumbStyles.left = trackSize.width - this.initialThumbSize.width;
-      } else {
-        this._thumbStyles.left = position;
-      }
-
+      const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
+      const _x = Constants.isRTL && disableRTL ? nonOverlappingTrackWidth - x : x; // adjust for RTL
+      this._thumbStyles.left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
       this.thumb.setNativeProps(this._thumbStyles);
     }
 
