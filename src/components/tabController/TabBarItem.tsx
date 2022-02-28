@@ -132,7 +132,7 @@ export default function TabBarItem({
   const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
 
   useEffect(() => {
-    if (itemWidth.current) {
+    if (props.width) {
       props.onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: itemWidth.current, height: 0}}} as LayoutChangeEvent,
         index);
     }
@@ -149,7 +149,7 @@ export default function TabBarItem({
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
 
-    if (!itemWidth.current && itemRef?.current) {
+    if (!props.width && itemRef?.current) {
       itemWidth.current = width;
       // @ts-ignore
       itemRef.current?.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
