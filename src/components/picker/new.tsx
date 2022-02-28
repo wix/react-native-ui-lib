@@ -21,7 +21,7 @@ import TextFieldMigrator from '../textField/TextFieldMigrator';
 // @ts-expect-error
 import NativePicker from './NativePicker';
 // @ts-expect-error
-import PickerModal from './PickerModal';
+import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
 import usePickerSelection from './helpers/usePickerSelection';
@@ -160,8 +160,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
 
   const expandableModalContent = useMemo(() => {
     return (
-      // TODO: Rename this component cause it's not a modal anymore but the content of the modal
-      <PickerModal
+      <PickerItemsList
         testID={`${testID}.modal`}
         // visible={showExpandableModal}
         scrollPosition={selectedItemPosition}
@@ -181,7 +180,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         pickerModalProps={pickerModalProps}
       >
         {filteredChildren}
-      </PickerModal>
+      </PickerItemsList>
     );
   }, [
     testID,

@@ -17,7 +17,7 @@ import ExpandableOverlay from '../../incubator/expandableOverlay';
 import {TextField} from '../inputs';
 import TextFieldMigrator from '../textField/TextFieldMigrator';
 import NativePicker from './NativePicker';
-import PickerModal from './PickerModal';
+import PickerModal from './PickerItemsList';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
 import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from './PickerPresenter';
