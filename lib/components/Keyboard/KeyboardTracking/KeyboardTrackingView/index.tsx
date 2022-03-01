@@ -21,7 +21,7 @@ export type KeyboardTrackingViewProps = ViewProps & {
     */
    useSafeArea?: boolean;
    /**
-    * Whether or not to include bottom tab bat inset
+    * Whether or not to include bottom tab bar inset
     */
    usesBottomTabs?: boolean;
 
