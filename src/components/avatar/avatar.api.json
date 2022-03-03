@@ -85,5 +85,8 @@
     {"name": "size", "type": " number", "description": "Custom size for the Avatar", "default": "50"},
     {"name": "onPress", "type": "(props: any) => void", "description": "Press handler"},
     {"name": "testID", "type": "string", "description": "Test identifier"}
+  ],
+  "snippet": [
+    "<Avatar source={{uri: 'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'$1}} label={IT$2}/>"
   ]
 }

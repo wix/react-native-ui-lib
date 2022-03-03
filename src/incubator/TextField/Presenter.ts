@@ -19,7 +19,7 @@ export function getColorByState(color?: ColorType, context?: FieldContextType) {
       finalColor = color?.focus;
     }
 
-    finalColor = finalColor || color?.default || Colors.grey10;
+    finalColor = finalColor || color?.default || Colors.$textDefault;
   }
 
   return finalColor;

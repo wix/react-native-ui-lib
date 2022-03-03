@@ -30,5 +30,11 @@
     },
     {"name": "imageStyle", "type": "ImageStyle", "description": "The style for the background image"},
     {"name": "imageProps", "type": "ImageProps", "description": "Other image props that will be passed to the image"}
+  ],
+  "snippet": [
+    "<Card.Section",
+    " content={[{text: 'Card content here', text70: true, grey10: true}]$1}",
+    " contentStyle={{alignItems: 'center'}$2}",
+    "/>"
   ]
 }

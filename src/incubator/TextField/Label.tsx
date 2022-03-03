@@ -30,7 +30,7 @@ export interface LabelProps {
 
 const Label = ({
   label,
-  labelColor = Colors.grey10,
+  labelColor = Colors.$textDefault,
   labelStyle,
   labelProps,
   validationMessagePosition,

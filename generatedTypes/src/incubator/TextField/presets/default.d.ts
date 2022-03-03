@@ -3,12 +3,12 @@ declare const _default: {
     validateOnBlur: boolean;
     floatingPlaceholderColor: {
         focus: string;
-        error: any;
+        error: string;
         disabled: string;
     };
     labelColor: {
         focus: string;
-        error: any;
+        error: string;
         disabled: string;
     };
     fieldStyle: {

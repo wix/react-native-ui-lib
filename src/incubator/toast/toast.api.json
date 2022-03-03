@@ -59,5 +59,13 @@
     },
     {"name": "iconColor", "type": "string", "description": "The icon color"},
     {"name": "backgroundColor", "type": "string", "description": "The toast background color"}
+  ],
+  "snippet": [
+    "<Toast",
+    "  visible={this.state.visible$1}",
+    "  position={'top'$2}",
+    "  autoDismiss={5000$2}",
+    "  onDismiss={() => console.log('dismissed)$3}",
+    ">"
   ]
 }

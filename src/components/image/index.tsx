@@ -67,7 +67,11 @@ export type ImageProps = RNImageProps & MarginModifiers & {
   /**
    * Default image source in case of an error
    */
-  errorSource?: ImageSourcePropType
+  errorSource?: ImageSourcePropType;
+  /**
+   * An imageId that can be used in sourceTransformer logic
+   */
+  imageId?: string;
 };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;

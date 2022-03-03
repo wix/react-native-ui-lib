@@ -3,6 +3,7 @@ import {colorsPalette} from './colorsPalette';
 export const designTokens = {
   // BACKGROUND
   $backgroundDefault: colorsPalette.white,
+  $backgroundElevated: colorsPalette.white,
   $backgroundNeutralHeavy: colorsPalette.grey20,
   $backgroundNeutralIdle: colorsPalette.grey40,
   $backgroundNeutralMedium: colorsPalette.grey60,
@@ -23,6 +24,8 @@ export const designTokens = {
   $backgroundDanger: colorsPalette.red80,
   $backgroundDisabled: colorsPalette.grey50,
   $backgroundDark: colorsPalette.grey10,
+  $backgroundDarkElevated: colorsPalette.grey10,
+  $backgroundDarkActive: colorsPalette.grey20,
 
   // TEXT
   $textDisabled: colorsPalette.grey50,

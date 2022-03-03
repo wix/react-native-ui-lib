@@ -24,5 +24,12 @@
       "type": "(item: GridListItemProps) => React.ReactElement",
       "description": "Pass to render a custom item"
     }
+  ],
+  "snippet": [
+    "<GridView",
+    " items={[{title: 'item 1', onPress: () => console.log('item 1 pressed')}, {title: 'item 2', onPress: () => console.log('item 2 pressed')}, ]$1}",
+    " numColumns={2$2}",
+    " lastItemLabel={'+'$3}",
+    "/>"
   ]
 }

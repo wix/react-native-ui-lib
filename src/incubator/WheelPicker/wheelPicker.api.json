@@ -33,5 +33,12 @@
       "default": "center"
     },
     {"name": "testID", "type": "string", "description": "Align the content to center, right ot left"}
+  ],
+  "snippet": [
+    "<WheelPicker",
+    "  items={[{label: 'Yes', value: 'yes'}, {label: 'No', value: 'no'}, {label: 'Maybe', value: 'maybe'}]$1}",
+    "  initialValue={'yes'$2}",
+    "  onChange={() => console.log('changed’)$3}",
+    "/>"
   ]
 }

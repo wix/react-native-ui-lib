@@ -56,7 +56,8 @@ export default class CardScannerScreen extends Component {
           <View paddingL-40 marginB-20>
             <AnimatedScanner
               backgroundColor={Colors.purple30}
-              progress={98} duration={1600}
+              progress={98}
+              duration={1600}
               containerStyle={{backgroundColor: Colors.violet50, height: 6}}
             />
           </View>

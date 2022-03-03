@@ -8,7 +8,7 @@ export default class PlaygroundScreen extends Component {
     return (
       <View bg-grey80 flex padding-20>
         <View marginT-20>
-          <TextField placeholder="Placeholder" />
+          <TextField migrate placeholder="Placeholder" />
         </View>
         <Card height={100} center padding-20>
           <Text text50>Playground Screen</Text>

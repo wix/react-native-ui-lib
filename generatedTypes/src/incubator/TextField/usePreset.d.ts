@@ -353,6 +353,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     purple60?: boolean | undefined;
     purple70?: boolean | undefined;
     purple80?: boolean | undefined;
+    violet1?: boolean | undefined;
+    violet5?: boolean | undefined;
     violet10?: boolean | undefined;
     violet20?: boolean | undefined;
     violet30?: boolean | undefined;
@@ -361,7 +363,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     violet60?: boolean | undefined;
     violet70?: boolean | undefined;
     violet80?: boolean | undefined;
+    dmBlack?: boolean | undefined;
     $backgroundDefault?: boolean | undefined;
+    $backgroundElevated?: boolean | undefined;
     $backgroundNeutralHeavy?: boolean | undefined;
     $backgroundNeutralIdle?: boolean | undefined;
     $backgroundNeutralMedium?: boolean | undefined;
@@ -382,6 +386,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     $backgroundDanger?: boolean | undefined;
     $backgroundDisabled?: boolean | undefined;
     $backgroundDark?: boolean | undefined;
+    $backgroundDarkElevated?: boolean | undefined;
+    $backgroundDarkActive?: boolean | undefined;
     $textDisabled?: boolean | undefined;
     $textDefault?: boolean | undefined;
     $textNeutralHeavy?: boolean | undefined;
@@ -571,6 +577,11 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     modifiers: import("../../commons/modifiers").ExtractedStyle;
     forwardedRef: any;
 } | {
+    fieldStyle: (import("react-native").StyleProp<import("react-native").ViewStyle> | {
+        borderBottomWidth: number;
+        borderBottomColor: string;
+        paddingBottom: number;
+    })[];
     margin?: boolean | undefined;
     marginL?: boolean | undefined;
     marginT?: boolean | undefined;
@@ -754,6 +765,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     purple60?: boolean | undefined;
     purple70?: boolean | undefined;
     purple80?: boolean | undefined;
+    violet1?: boolean | undefined;
+    violet5?: boolean | undefined;
     violet10?: boolean | undefined;
     violet20?: boolean | undefined;
     violet30?: boolean | undefined;
@@ -762,7 +775,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     violet60?: boolean | undefined;
     violet70?: boolean | undefined;
     violet80?: boolean | undefined;
+    dmBlack?: boolean | undefined;
     $backgroundDefault?: boolean | undefined;
+    $backgroundElevated?: boolean | undefined;
     $backgroundNeutralHeavy?: boolean | undefined;
     $backgroundNeutralIdle?: boolean | undefined;
     $backgroundNeutralMedium?: boolean | undefined;
@@ -783,6 +798,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     $backgroundDanger?: boolean | undefined;
     $backgroundDisabled?: boolean | undefined;
     $backgroundDark?: boolean | undefined;
+    $backgroundDarkElevated?: boolean | undefined;
+    $backgroundDarkActive?: boolean | undefined;
     $textDisabled?: boolean | undefined;
     $textDefault?: boolean | undefined;
     $textNeutralHeavy?: boolean | undefined;
@@ -1055,7 +1072,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     label?: string | undefined;
     labelColor: import("./types").ColorType | {
         focus: string;
-        error: any;
+        error: string;
         disabled: string;
     };
     labelStyle?: import("react-native").TextStyle | undefined;
@@ -1064,7 +1081,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     floatingPlaceholder?: boolean | undefined;
     floatingPlaceholderColor: import("./types").ColorType | {
         focus: string;
-        error: any;
+        error: string;
         disabled: string;
     };
     floatOnFocus?: boolean | undefined;
@@ -1196,11 +1213,6 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnChange?: boolean | undefined;
     validateOnBlur: boolean;
     onChangeValidity?: ((isValid: boolean) => void) | undefined;
-    fieldStyle: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<import("react-native").ViewStyle | import("react-native").Falsy | import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | {
-        borderBottomWidth: number;
-        borderBottomColor: string;
-        paddingBottom: number;
-    } | null;
     dynamicFieldStyle?: ((context: import("./FieldContext").FieldContextType, props: {
         preset: string | null | undefined;
     }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;

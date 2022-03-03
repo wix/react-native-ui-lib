@@ -4,6 +4,7 @@ import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
 import {designTokens} from './designTokens';
+import {designTokensDM} from './designTokensDM';
 //@ts-ignore
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
@@ -55,6 +56,15 @@ export class Colors {
     Scheme.setScheme(scheme);
   }
 
+  /**
+   * Support listening to Appearance changes
+   * and change the design tokens accordingly 
+   */
+  supportDarkMode() {
+    const designTokensColors = Scheme.getSchemeType() === 'dark' ? designTokensDM : designTokens;
+    Object.assign(this, designTokensColors);
+  }
+  
   /**
    * Add alpha to hex or rgb color
    * arguments:

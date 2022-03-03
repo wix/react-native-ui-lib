@@ -17,5 +17,8 @@
     {"name": "highlightString", "type": "string | string[]", "description": "Substring to highlight"},
     {"name": "highlightStyle", "type": "TextStyle", "description": "Custom highlight style for highlight string"},
     {"name": "animated", "type": "boolean", "description": "Use Animated.Text as a container"}
+  ],
+  "snippet": [
+    "<Text text30$1>Text goes here$2</Text>"
   ]
 }

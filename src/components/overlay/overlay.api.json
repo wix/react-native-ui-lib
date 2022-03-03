@@ -23,5 +23,11 @@
       "type": "JSX.Element",
       "description": "Custom overlay content to be rendered on top of the image"
     }
+  ],
+  "snippet": [
+    "<Image",
+    " source={{uri: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg}$1}",
+    " overlayType={Image.overlayTypes.BOTTOM$2}",
+    "/>"
   ]
 }

@@ -10,5 +10,11 @@
       "type": "ImageSource",
       "description": "Small thumbnail source to display while the full-size image is loading"
     }
+  ],
+  "snippet": [
+    "<ProgressiveImage",
+    " source={{uri: $1, cache: 'reload'}}",
+    " thumbnailSource={{uri: $2, cache: 'reload'}}",
+    "/>"
   ]
 }

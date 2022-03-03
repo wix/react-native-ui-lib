@@ -1,5 +1,6 @@
 export declare const designTokens: {
     $backgroundDefault: string;
+    $backgroundElevated: string;
     $backgroundNeutralHeavy: string;
     $backgroundNeutralIdle: string;
     $backgroundNeutralMedium: string;
@@ -20,6 +21,8 @@ export declare const designTokens: {
     $backgroundDanger: string;
     $backgroundDisabled: string;
     $backgroundDark: string;
+    $backgroundDarkElevated: string;
+    $backgroundDarkActive: string;
     $textDisabled: string;
     $textDefault: string;
     $textNeutralHeavy: string;

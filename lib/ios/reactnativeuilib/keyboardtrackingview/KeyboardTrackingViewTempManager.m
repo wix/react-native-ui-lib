@@ -51,6 +51,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 @property (nonatomic) KeyboardTrackingScrollBehavior scrollBehavior;
 @property (nonatomic) BOOL addBottomView;
 @property (nonatomic) BOOL useSafeArea;
+@property (nonatomic) BOOL usesBottomTabs;
 @property (nonatomic) BOOL scrollToFocusedInput;
 @property (nonatomic) BOOL allowHitsOutsideBounds;
 
@@ -82,6 +83,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         
         self.addBottomView = NO;
         self.scrollToFocusedInput = NO;
+        self.usesBottomTabs = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rctContentDidAppearNotification:) name:RCTContentDidAppearNotification object:nil];
     }
@@ -503,12 +505,49 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     });
 }
 
+#pragma mark - root view controller and presenting style
+
+
+- (BOOL)isModal {
+    UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+    UIViewController *presentedViewController = window.rootViewController.presentedViewController;
+
+    if (presentedViewController != nil) {
+        if ([presentedViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *presented = (UINavigationController*)presentedViewController;
+            if (presented.visibleViewController) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
+#pragma mark - TabBarController
+
+-(CGFloat)getTabBarHeight
+{
+    if (@available(iOS 11.0, *)) {
+        NSLog(@"INBAL usesBottomTabs: %d", self.usesBottomTabs);
+        if (self.usesBottomTabs == YES)
+        {
+            UITabBarController *tabBarController = [UITabBarController new];
+            CGFloat tabBarHeight = tabBarController.tabBar.frame.size.height;
+            UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+            CGFloat bottomPadding = window.safeAreaInsets.bottom;
+            return tabBarHeight + bottomPadding;
+        }
+    }
+    return 0;
+}
+
 #pragma mark - ObservingInputAccessoryViewTempDelegate methods
 
 -(void)updateTransformAndInsets
 {
     CGFloat bottomSafeArea = [self getBottomSafeArea];
-    CGFloat accessoryTranslation = MIN(-bottomSafeArea, -_ObservingInputAccessoryViewTemp.keyboardHeight);
+    CGFloat tabBarHeight = [self getTabBarHeight];
+    CGFloat accessoryTranslation = MIN(-bottomSafeArea, -_ObservingInputAccessoryViewTemp.keyboardHeight + tabBarHeight);
     
     if (_ObservingInputAccessoryViewTemp.keyboardHeight <= bottomSafeArea) {
         _bottomViewHeight = kBottomViewHeightTemp;
@@ -634,6 +673,7 @@ RCT_REMAP_VIEW_PROPERTY(manageScrollView, manageScrollView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(requiresSameParentToManageScrollView, requiresSameParentToManageScrollView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(addBottomView, addBottomView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(useSafeArea, useSafeArea, BOOL)
+RCT_REMAP_VIEW_PROPERTY(usesBottomTabs, usesBottomTabs, BOOL)
 RCT_REMAP_VIEW_PROPERTY(scrollToFocusedInput, scrollToFocusedInput, BOOL)
 RCT_REMAP_VIEW_PROPERTY(allowHitsOutsideBounds, allowHitsOutsideBounds, BOOL)
 
