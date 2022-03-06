@@ -16,7 +16,7 @@ export declare type KeyboardTrackingViewProps = ViewProps & {
      */
     useSafeArea?: boolean;
     /**
-     * Whether or not to include bottom tab bat inset
+     * Whether or not to include bottom tab bar inset
      */
     usesBottomTabs?: boolean;
     scrollToFocusedInput?: boolean;
@@ -46,7 +46,7 @@ declare const KeyboardTrackingView: React.ForwardRefExoticComponent<Pick<ViewPro
      */
     useSafeArea?: boolean | undefined;
     /**
-     * Whether or not to include bottom tab bat inset
+     * Whether or not to include bottom tab bar inset
      */
     usesBottomTabs?: boolean | undefined;
     scrollToFocusedInput?: boolean | undefined;
