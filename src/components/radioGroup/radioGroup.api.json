@@ -22,7 +22,7 @@
     }
   ],
   "snippet": [
-    "<RadioGroup initialValue={this.state.value$1} onValueChange={() => console.log('value changed)$2}>",
+    "<RadioGroup initialValue={this.state.value$1} onValueChange={() => console.log('value changed')$2}>",
     " <RadioButton value={'yes'$3} label={'Yes'$4}/>",
     " <RadioButton value={'no'$5} label={'No'$6}/>",
     "</RadioGroup>"

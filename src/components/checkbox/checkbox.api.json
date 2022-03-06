@@ -37,6 +37,6 @@
     }
   ],
   "snippet": [
-    "<Checkbox value={false$1} onValueChange={() => console.log('value changed’)$2}/>"
+    "<Checkbox value={false$1} onValueChange={() => console.log('value changed')$2}/>"
   ]
 }
