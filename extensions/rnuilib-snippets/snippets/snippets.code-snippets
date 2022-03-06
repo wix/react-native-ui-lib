@@ -3,7 +3,7 @@
     "prefix": "radioGroup",
     "description": "Wrap a group of Radio Buttons to automatically control their selection",
     "body": [
-      "<RadioGroup initialValue={this.state.value$1} onValueChange={() => console.log('value changed)$2}>",
+      "<RadioGroup initialValue={this.state.value$1} onValueChange={() => console.log('value changed')$2}>",
       " <RadioButton value={'yes'$3} label={'Yes'$4}/>",
       " <RadioButton value={'no'$5} label={'No'$6}/>",
       "</RadioGroup>"
@@ -41,8 +41,13 @@
     "prefix": "drawer",
     "description": "Drawer Component",
     "body": [
-      "<Drawer rightItems:{[{text: 'Read', onPress: () => console.log('read pressed')}, {text: 'Delete', onPress: () => console.log('delete pressed')}]}$1>",
-      " <ListItem><Text grey10 text60 marginL-10>The item</Text></ListItem>$2",
+      "<Drawer",
+      "  rightItems={[{text: 'Read', background: Colors.blue30, onPress: () => console.log('read pressed')}]$1}",
+      "  leftItem={{text: 'Delete', background: Colors.red30, onPress: () => console.log('delete pressed')}$2}",
+      ">",
+      "  <View centerV padding-s4 bg-white style={{height: 60}}>",
+      "    <Text text70>Item</Text>",
+      "  </View>",
       "</Drawer>"
     ]
   },
@@ -123,7 +128,7 @@
       "<Picker",
       " value={this.state.value$1}",
       " placeholder={'Placeholder'$2}",
-      " onChange={() => console.log('changed)$3}",
+      " onChange={() => console.log('changed')$3}",
       ">",
       " {_.map(items, item => (",
       "  return this.renderItem(item, index);",
@@ -135,7 +140,7 @@
     "prefix": "floatingButton",
     "description": "Hovering button with gradient background",
     "body": [
-      "<FloatingButton visible={this.state.visible$1} button={button={{label: 'Approve', onPress: () => console.log('approved')}}$2}/>"
+      "<FloatingButton visible={this.state.visible$1} button={{label: 'Approve', onPress: () => console.log('approved')}}$2}/>"
     ]
   },
   "MaskedInput": {
@@ -151,14 +156,14 @@
       "  visible={this.state.visible$1}",
       "  position={'top'$2}",
       "  autoDismiss={5000$2}",
-      "  onDismiss={() => console.log('dismissed)$3}",
+      "  onDismiss={() => console.log('dismissed')$3}",
       ">"
     ]
   },
   "Chip": {
     "prefix": "chip",
     "description": "Chip component",
-    "body": ["<Chip label={'Chip'$1} onPress={() => console.log('pressed’)$2}/>"]
+    "body": ["<Chip label={'Chip'$1} onPress={() => console.log('pressed')$2}/>"]
   },
   "Wizard.Step": {
     "prefix": "wizard.Step",
@@ -169,7 +174,7 @@
     "prefix": "wizard",
     "description": "A wizard presents a series of steps in  prescribed order. That the user needs to complete in order to accomplish a goal (e.g. purchase a product)",
     "body": [
-      "<Wizard activeIndex={0$1} onActiveIndexChanged={() => console.log('changed)$2}>",
+      "<Wizard activeIndex={0$1} onActiveIndexChanged={() => console.log('changed')$2}>",
       " {_.map(items, item => (",
       "  return this.renderItem(item, index);",
       " ))}",
@@ -183,14 +188,14 @@
       "<ColorPalette",
       " colors={['transparent', Colors.green30, Colors.yellow30, Colors.red30]$1}",
       " value={this.state.selectedColor$2}",
-      " onValueChange={() => console.log('value changed)$3}",
+      " onValueChange={() => console.log('value changed')$3}",
       "/>"
     ]
   },
   "Checkbox": {
     "prefix": "checkbox",
     "description": "Checkbox component for toggling boolean value related to some context",
-    "body": ["<Checkbox value={false$1} onValueChange={() => console.log('value changed’)$2}/>"]
+    "body": ["<Checkbox value={false$1} onValueChange={() => console.log('value changed')$2}/>"]
   },
   "TextField": {
     "prefix": "textField",
@@ -199,7 +204,7 @@
       "<TextField",
       "  placeholder={'Placeholder$1}",
       "  floatingPlaceholder",
-      "  onChangeText={() => console.log('changed)$2}",
+      "  onChangeText={() => console.log('changed')$2}",
       "  enableErrors",
       "  validate={['required', 'email', (value) => value.length > 6]$3}",
       "  validationMessage={['Field is required', 'Email is invalid', 'Password is too short']$4}",
@@ -225,7 +230,7 @@
     "description": "Stack aggregator component",
     "body": [
       "<StackAggregator",
-      " onItemPress={() => console.log('pressed)$1}",
+      " onItemPress={() => console.log('pressed')$1}",
       ">",
       " {_.map(items, (item, index) => {",
       "  return this.renderItem(item, index);",
@@ -271,7 +276,7 @@
     "prefix": "listItem",
     "description": "List item component to render inside a List component",
     "body": [
-      "<ListItem onPress={() => console.log('pressed)$1}>",
+      "<ListItem onPress={() => console.log('pressed')$1}>",
       " <Text grey10 text60 marginL-10>The item</Text>$2",
       "</ListItem>"
     ]
@@ -335,7 +340,7 @@
   "TouchableOpacity": {
     "prefix": "touchableOpacity",
     "description": "A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor",
-    "body": ["<TouchableOpacity onPress={() => console.log('pressed)$1}/>"]
+    "body": ["<TouchableOpacity onPress={() => console.log('pressed')$1}/>"]
   },
   "StateScreen": {
     "prefix": "stateScreen",
@@ -379,7 +384,7 @@
   "Switch": {
     "prefix": "switch",
     "description": "Switch component for toggling boolean value related to some context",
-    "body": ["<Switch value={false$1} onValueChange={() => console.log('value changed)$2}/>"]
+    "body": ["<Switch value={false$1} onValueChange={() => console.log('value changed')$2}/>"]
   },
   "DateTimePicker": {
     "prefix": "dateTimePicker",
@@ -441,7 +446,7 @@
     "prefix": "modal",
     "description": "Component that present content on top of the invoking screen",
     "body": [
-      "<Modal visible={this.state.visible$1} onBackgroundPress={() => console.log('background pressed)$3}>",
+      "<Modal visible={this.state.visible$1} onBackgroundPress={() => console.log('background pressed')$3}>",
       " <Text text60>Content</Text>$4",
       "</Modal>"
     ]
@@ -532,7 +537,7 @@
       "<WheelPicker",
       "  items={[{label: 'Yes', value: 'yes'}, {label: 'No', value: 'no'}, {label: 'Maybe', value: 'maybe'}]$1}",
       "  initialValue={'yes'$2}",
-      "  onChange={() => console.log('changed’)$3}",
+      "  onChange={() => console.log('changed')$3}",
       "/>"
     ]
   },
