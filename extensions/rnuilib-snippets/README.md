@@ -1,10 +1,5 @@
 # rnuilib-snippets
 
-[![Version](https://vsmarketplacebadge.apphb.com/version/rnuilib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=wix.rnuilib-snippets)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/rnuilib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=wix.rnuilib-snippets)
-[![Rating](https://vsmarketplacebadge.apphb.com/rating-star/rnuilib-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=wix.rnuilib-snippets)
-
-
 This extension provides code snippets for `react-native-ui-lib`'s components for Vs Code editor.
 It supports JavaScript and TypeScript, ReactJavaScript and ReactTypeScript.
 
