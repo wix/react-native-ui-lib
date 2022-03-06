@@ -8,11 +8,11 @@ It supports JavaScript and TypeScript, ReactJavaScript and ReactTypeScript.
 After installing this extension you can generate a code snippet by simply typing a component's name (camelCase) and see the option in the suggestion tooltip.
 Using the tab key you can navigate through the fields to enter your values.
 
-Also, type `uilib` and get the uilib import - `import {} from 'react-native-ui-lib'` - to import the components.
+Also, type `rnuilib` and get the uilib import - `import {} from 'react-native-ui-lib'` - to import the components.
 
 See video:
 
-![Extension usage](assets/usage.gif)
+![Extension usage](./assets/usage.gif)
 
 ## Requirements
 
