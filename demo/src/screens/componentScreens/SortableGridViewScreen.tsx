@@ -1,43 +1,49 @@
 import _ from 'lodash';
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Alert} from 'react-native';
 import {View, SortableGridView, Card, Text} from 'react-native-ui-lib';
 import products from '../../data/products';
 
 const sortableProducts = _.chain(products)
-  .take(8)
-  .map((product) => ({
+  .map((product, index) => ({
     onPress: () => Alert.alert('My price is ' + product.formattedPrice),
-    id: product.name,
-    source: {uri: product.mediaUrl},
-    ...product
+    id: `Product #${index}`,
+    imageProps: {source: {uri: product.mediaUrl}},
+    title: `Product #${index}`
+    // ...product
   }))
   .value();
 
 const SortableGridViewScreen = () => {
+  const [items, setItems] = useState(sortableProducts);
 
   const renderDemoTile = useCallback((item: {onPress: () => void; source: {uri: string}}) => {
     return (
-      <Card
-        flex
-        onPress={item.onPress} 
-      >
+      <Card flex onPress={item.onPress}>
         <Card.Section imageSource={{...item.source}} imageStyle={{height: '100%'}}/>
-      </Card>);
+      </Card>
+    );
   }, []);
-    
+
+  const onChange = useCallback(newItems => {
+    setItems(newItems);
+  }, []);
+
   return (
     <View flex>
-      <View flex>
+      <View flex padding-page>
         <SortableGridView
-          items={[...sortableProducts, ...sortableProducts]} 
-          renderItem={renderDemoTile} 
-          // numOfColumns={2}
+          items={items}
+          onChange={onChange}
+          renderItem={renderDemoTile}
+          numOfColumns={3}
           // itemSpacing={20}
           // viewWidth={300}
         />
       </View>
-      <Text center h1 marginB-20>Footer</Text>
+      <Text center h1 marginB-20>
+        Footer
+      </Text>
     </View>
   );
 };

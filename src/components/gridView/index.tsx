@@ -50,7 +50,7 @@ export interface GridViewProps {
   /**
    * Pass to render a custom item
    */
-  renderCustomItem?: (item: GridListItemProps) => React.ReactElement;
+  renderCustomItem?: (item: GridListItemProps, index:  number) => React.ReactElement;
 }
 
 interface GridViewState {
@@ -213,7 +213,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
       children: isLastItem ? this.renderLastItemOverlay() : undefined
     };
 
-    return renderCustomItem ? renderCustomItem(itemProps) : <GridListItem {...itemProps}/>;
+    return renderCustomItem ? renderCustomItem(itemProps, index) : <GridListItem {...itemProps}/>;
   };
 
   render() {
