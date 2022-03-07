@@ -18,7 +18,7 @@ export type IconProps = ImageProps &
     /**
      * the icon tint
      */
-    tintColor?: string;
+    tintColor?: string | null;
     /**
      * the icon size
      */
