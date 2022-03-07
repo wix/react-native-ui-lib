@@ -18,7 +18,7 @@ export default class MarqueeScreen extends Component {
       <>
         <Text text50 grey10 margin-20>Marquee</Text>
         <View marginH-50 style={{borderWidth: 1}}>
-          <Marquee start={50} end={50} duration={9000}>
+          <Marquee duration={9000}>
             <View padding-20 center style={{backgroundColor: '#cfff04'}}>
               <Text text40>Hello World</Text>
             </View>
