@@ -39,7 +39,7 @@ export interface GridViewProps {
     /**
      * Pass to render a custom item
      */
-    renderCustomItem?: (item: GridListItemProps) => React.ReactElement;
+    renderCustomItem?: (item: GridListItemProps, index: number) => React.ReactElement;
 }
 interface GridViewState {
     viewWidth: number;

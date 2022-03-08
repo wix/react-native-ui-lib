@@ -15,7 +15,7 @@ const sortableProducts = _.chain(products)
   .value();
 
 const SortableGridViewScreen = () => {
-  const [items, setItems] = useState(sortableProducts);
+  const [items] = useState(sortableProducts);
 
   const renderDemoTile = useCallback((item: {onPress: () => void; source: {uri: string}}) => {
     return (
@@ -25,8 +25,8 @@ const SortableGridViewScreen = () => {
     );
   }, []);
 
-  const onChange = useCallback(newItems => {
-    setItems(newItems);
+  const onChange = useCallback((_newItems, newItemsOrder) => {
+    console.log('newItemsOrder: ', newItemsOrder);
   }, []);
 
   return (

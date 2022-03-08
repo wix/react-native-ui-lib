@@ -1,8 +1,8 @@
 import Animated, {Easing} from 'react-native-reanimated';
-import Spacings from '../../style/spacings';
+// import Spacings from '../../style/spacings';
 import Constants from '../../commons/Constants';
 export const WINDOW_WIDTH = Constants.windowWidth;
-export const DEFAULT_MARGIN = Spacings.s2;
+// export const DEFAULT_MARGIN = Spacings.s2;
 export const DEFAULT_NO_OF_COLUMNS = 3;
 export const getItemSize = (numOfColumns: number, viewWidth: number) => viewWidth / numOfColumns;
 
@@ -14,8 +14,7 @@ export const animationConfig = {
 export type ItemsLayouts = ({x: number; y: number} | undefined)[];
 export type ItemsOrder = number[];
 
-export const useSortableGridConfig = (itemsOrder: Animated.SharedValue<ItemsOrder>,
-  itemsLayouts: Animated.SharedValue<ItemsLayouts>,
+export const useSortableGridConfig = (itemsLayouts: Animated.SharedValue<ItemsLayouts>,
   itemSize: number,
   numOfColumns: number) => {
   return {
@@ -56,13 +55,13 @@ export const useSortableGridConfig = (itemsOrder: Animated.SharedValue<ItemsOrde
       return row * numOfColumns + col;
     },
 
-    getItemOrderById: (itemId: number) => {
+    getItemOrderById: (itemsOrder: ItemsOrder, itemId: number) => {
       'worklet';
-      return itemsOrder.value.indexOf(itemId);
+      return itemsOrder.indexOf(itemId);
     },
-    getIdByItemOrder: (orderIndex: number) => {
+    getIdByItemOrder: (itemsOrder: ItemsOrder, orderIndex: number) => {
       'worklet';
-      return itemsOrder.value[orderIndex];
+      return itemsOrder[orderIndex];
     }
   };
 };

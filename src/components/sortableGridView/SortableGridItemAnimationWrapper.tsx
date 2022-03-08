@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect} from 'react';
-import {LayoutChangeEvent /* , StyleSheet, ViewStyle */} from 'react-native';
+import React, {useCallback} from 'react';
+import {LayoutChangeEvent} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   // AnimatedStyleProp,
@@ -9,11 +9,10 @@ import Animated, {
   useSharedValue,
   withSpring,
   withTiming,
-  // scrollTo,
   runOnJS
 } from 'react-native-reanimated';
-// import Constants from '../../commons/Constants';
-import {animationConfig, /* DEFAULT_MARGIN, */ ItemsOrder} from './config';
+
+import {animationConfig, ItemsOrder} from './config';
 
 // const ABSOLUTE_ITEM: AnimatedStyleProp<ViewStyle> = {
 //   position: 'absolute',
@@ -23,7 +22,7 @@ import {animationConfig, /* DEFAULT_MARGIN, */ ItemsOrder} from './config';
 
 interface SortableGridItemAnimationWrapperProps {
   children: React.ReactNode;
-  id: string;
+  // id: string;
   index: number;
   // itemSize: number;
   // numOfColumns: number;
@@ -33,13 +32,14 @@ interface SortableGridItemAnimationWrapperProps {
   // scrollY: Animated.SharedValue<number>;
   getPositionByOrder: (newOrder: number, oldOrder: number) => {x: number; y: number};
   getOrderByPosition: (x: number, y: number) => number;
+  getIdByItemOrder: (itemsOrder: ItemsOrder, itemOrder: number) => number;
+  getItemOrderById: (itemsOrder: ItemsOrder, itemId: number) => number;
   onChange: () => void;
   // itemSpacing?: number;
 }
 
 const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrapperProps> = props => {
   const {
-    id,
     itemsOrder,
     getPositionByOrder,
     getOrderByPosition,
@@ -68,20 +68,8 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
   // useAnimatedReaction(() => itemsOrder.value[index],
   useAnimatedReaction(() => itemsOrder.value.indexOf(index), // Note: It doesn't work with the getItemOrderById util
     (newOrder, prevOrder) => {
-
-      console.log('ethan - useAnimatedReaction', index, prevOrder, newOrder)
-      if (prevOrder && newOrder !== prevOrder) {
+      if (prevOrder !== null && newOrder !== prevOrder) {
         const translation = getPositionByOrder(newOrder, prevOrder);
-
-        console.log('ethan - reaction',
-          ' index:',
-          index,
-          ' prevOrder:',
-          prevOrder,
-          ' newOrder:',
-          newOrder,
-          ' translation:',
-          translation);
 
         translateX.value = withTiming(translateX.value + translation.x, animationConfig);
         translateY.value = withTiming(translateY.value + translation.y, animationConfig);
@@ -91,35 +79,30 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
       }
     });
 
-  const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, {x: number; y: number}>({
+  const onGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    {x: number; y: number; originalItemsOrder: number[]}
+  >({
     onStart: (_, context) => {
       context.x = translateX.value;
       context.y = translateY.value;
       shouldScaleItem.value = true;
       shouldFrontItem.value = true;
+      context.originalItemsOrder = [...itemsOrder.value];
     },
     onActive: ({translationX, translationY}, context) => {
       translateX.value = context.x + translationX;
       translateY.value = context.y + translationY;
 
       // Swapping items
-      // const oldOrder = itemsOrder.value[index];
-      const oldOrder = getItemOrderById(index);
+      const oldOrder = getItemOrderById(itemsOrder.value, index);
       const newOrder = getOrderByPosition(translateX.value, translateY.value) + index;
 
-      console.log('ethan - orders', oldOrder, newOrder);
-
       if (oldOrder !== newOrder) {
-        // const itemIdToSwap = Object.keys(itemsOrder.value).find(itemId => itemsOrder.value[itemId] === newOrder);
-        // const itemIdToSwap = itemsOrder.value[newOrder];
-        const itemIdToSwap = getIdByItemOrder(newOrder);
+        const itemIdToSwap = getIdByItemOrder(itemsOrder.value, newOrder);
 
-        console.log('ethan - time to swap with', itemIdToSwap);
-
-        if (itemIdToSwap) {
-          // const newItemsOrder = Object.assign({}, itemsOrder.value);
+        if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
-          // newItemsOrder[index] = newOrder;
           newItemsOrder[newOrder] = index;
           newItemsOrder[oldOrder] = itemIdToSwap;
           itemsOrder.value = newItemsOrder;
@@ -146,12 +129,14 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
         scrollTo(scrollViewRef, 0, scrollY.value, false);
       } */
     },
-    onEnd: () => {
-      // const translation = getPositionByOrder(itemsOrder.value[index], index);
-      translateX.value = withTiming(translateX.value, animationConfig, () => {
+    onEnd: (_, context) => {
+      const translation = getPositionByOrder(getItemOrderById(itemsOrder.value, index),
+        getItemOrderById(context.originalItemsOrder, index));
+
+      translateX.value = withTiming(context.x + translation.x, animationConfig, () => {
         shouldFrontItem.value = false;
       });
-      translateY.value = withTiming(translateY.value, animationConfig);
+      translateY.value = withTiming(context.y + translation.y, animationConfig);
     },
     onFinish: () => {
       shouldScaleItem.value = false;
@@ -172,18 +157,9 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
   });
 
   return (
-    <Animated.View style={[animatedStyle]} onLayout={onLayout}>
+    <Animated.View style={animatedStyle} onLayout={onLayout}>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
-        <Animated.View
-          style={
-            [
-              /* StyleSheet.absoluteFill, */
-              /* {margin: itemSpacing ?? DEFAULT_MARGIN * 2} */
-            ]
-          }
-        >
-          {props.children}
-        </Animated.View>
+        <Animated.View>{props.children}</Animated.View>
       </PanGestureHandler>
     </Animated.View>
   );

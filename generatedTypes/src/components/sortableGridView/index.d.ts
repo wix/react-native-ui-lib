@@ -1,20 +1,19 @@
 import React from 'react';
-export interface SortableGridItemProps {
-    /**
-     * unique identifier for a sortable grid item
-     */
-    id: string;
-}
+import { GridListItemProps } from '../gridListItem';
 export interface SortableGridViewProps {
     /**
      * The list of itemProps to be rendered by renderItem
      */
-    items: SortableGridItemProps[];
+    items: GridListItemProps[];
     /**
-    * Render method for sortable grid items,
-    * these components will be rendered inside the assigned space calculated by the grid
-    */
-    renderItem: (item: SortableGridItemProps) => React.ReactElement;
+     * Callback with new items ordered and the new order
+     */
+    onChange: (newItems: GridListItemProps[], newOrder: number[]) => void;
+    /**
+     * Render method for sortable grid items,
+     * these components will be rendered inside the assigned space calculated by the grid
+     */
+    renderItem: (item: GridListItemProps) => React.ReactElement;
     /**
      * Number of items to show in a row
      */

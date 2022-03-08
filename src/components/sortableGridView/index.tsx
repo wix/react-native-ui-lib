@@ -1,32 +1,29 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
-import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
-import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
-import _ from 'lodash';
+// TODO: Use gesture-handler v2 API
+// TODO: Start drag gesture with long press
+// TODO: Support scrolling while dragging 
+import React, {useCallback, useMemo, useState} from 'react';
+import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import GridView, {GridViewProps} from '../gridView';
+import _ from 'lodash';
+import GridView from '../gridView';
 import GridListItem, {GridListItemProps} from '../gridListItem';
+import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
 import {DEFAULT_NO_OF_COLUMNS, getItemSize, useSortableGridConfig, ItemsLayouts, WINDOW_WIDTH} from './config';
 
-export interface SortableGridItemProps extends GridListItemProps {
-  /**
-   * unique identifier for a sortable grid item
-   */
-  id: string;
-}
 export interface SortableGridViewProps {
   /**
    * The list of itemProps to be rendered by renderItem
    */
-  items: SortableGridItemProps[];
+  items: GridListItemProps[];
   /**
-   * Callback with new items orderer
+   * Callback with new items ordered and the new order
    */
-  onChange: (newItems: SortableGridItemProps[]) => void;
+  onChange: (newItems: GridListItemProps[], newOrder: number[]) => void;
   /**
    * Render method for sortable grid items,
    * these components will be rendered inside the assigned space calculated by the grid
    */
-  renderItem: (item: SortableGridItemProps) => React.ReactElement;
+  renderItem: (item: GridListItemProps) => React.ReactElement;
   /**
    * Number of items to show in a row
    */
@@ -43,7 +40,6 @@ export interface SortableGridViewProps {
 
 const SortableGridView: React.FC<SortableGridViewProps> = props => {
   const {
-    items,
     onChange,
     // renderItem,
     itemSpacing,
@@ -52,26 +48,25 @@ const SortableGridView: React.FC<SortableGridViewProps> = props => {
   } = props;
   // const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   // const scrollY = useSharedValue(0);
+  const [items] = useState(props.items);
   const itemSize = useMemo(() => getItemSize(numOfColumns, viewWidth), [viewWidth, numOfColumns]);
   const itemsLayouts = useSharedValue<ItemsLayouts>(_.times(items.length, () => undefined));
   const itemsOrder = useSharedValue<number[]>(_.map(items, (_v, i) => i));
-  const {getPositionByOrder, getOrderByPosition, getIdByItemOrder, getItemOrderById, updateItemLayout} = useSortableGridConfig(itemsOrder,
-    itemsLayouts,
-    itemSize,
-    numOfColumns);
+  const {getPositionByOrder, getOrderByPosition, getIdByItemOrder, getItemOrderById, updateItemLayout} =
+    useSortableGridConfig(itemsLayouts, itemSize, numOfColumns);
 
-  useEffect(() => {
-    itemsOrder.value = _.map(items, (_v, i) => i);
-  }, [items]);
+  // useEffect(() => {
+  //   itemsOrder.value = _.map(items, (_v, i) => i);
+  // }, [items]);
 
   const _onChange = useCallback(() => {
-    const newItems: SortableGridItemProps[] = [];
+    const newItems: GridListItemProps[] = [];
     itemsOrder.value.forEach(itemIndex => {
       newItems.push(items[itemIndex]);
     });
 
-    onChange?.(newItems);
-  }, [items, onChange]);
+    onChange?.(newItems, itemsOrder.value);
+  }, [onChange]);
 
   // const onScroll = useAnimatedScrollHandler({
   //   onScroll: ({contentOffset}) => {
@@ -79,19 +74,18 @@ const SortableGridView: React.FC<SortableGridViewProps> = props => {
   //   }
   // });
 
-  const renderGridItem = (item: SortableGridItemProps, index: number) => {
+  const renderGridItem = (item: GridListItemProps, index: number) => {
     return (
       <SortableGridItemAnimationWrapper
-        key={`${item.id} - ${index}`}
-        id={item.id}
+        key={`${index}`}
         index={index}
         itemsOrder={itemsOrder}
         onItemLayout={updateItemLayout}
         getPositionByOrder={getPositionByOrder}
         getOrderByPosition={getOrderByPosition}
-        onChange={_onChange}
         getIdByItemOrder={getIdByItemOrder}
         getItemOrderById={getItemOrderById}
+        onChange={_onChange}
       >
         <GridListItem {...item}/>
       </SortableGridItemAnimationWrapper>
