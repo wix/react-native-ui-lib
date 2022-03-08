@@ -10,7 +10,7 @@
         "url": "https://github.com/wix/react-native-ui-lib"
     },
     "icon": "assets/icon.png",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "engines": {
         "vscode": "^1.64.0"
     },

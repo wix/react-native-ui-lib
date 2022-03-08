@@ -49,6 +49,7 @@ export declare class Colors {
     getColorName(color: string): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
+    shouldGenerateDarkerPalette(color: string): boolean;
     isDark(color: string): boolean;
     isValidHex(string: string): boolean;
     getHexString(color: tinycolor.ColorInput): string;
