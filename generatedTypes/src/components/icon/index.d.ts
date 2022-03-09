@@ -13,7 +13,7 @@ export declare type IconProps = ImageProps & MarginModifiers & {
     /**
      * the icon tint
      */
-    tintColor?: string;
+    tintColor?: string | null;
     /**
      * the icon size
      */
@@ -41,7 +41,7 @@ declare const _default: React.ComponentClass<ImageProps & Partial<Record<"margin
     /**
      * the icon tint
      */
-    tintColor?: string | undefined;
+    tintColor?: string | null | undefined;
     /**
      * the icon size
      */
