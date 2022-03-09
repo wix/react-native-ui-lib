@@ -1,5 +1,3 @@
-// TODO: Use gesture-handler v2 API
-// TODO: Start drag gesture with long press
 // TODO: Support scrolling while dragging
 import React, {useCallback, useMemo, useState} from 'react';
 import {useSharedValue} from 'react-native-reanimated';

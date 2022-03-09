@@ -1,14 +1,20 @@
 import _ from 'lodash';
 import React, {useCallback, useState} from 'react';
-import {Alert} from 'react-native';
-import {View, SortableGridView, Card, Text} from 'react-native-ui-lib';
+import {Alert, StyleSheet} from 'react-native';
+import {View, SortableGridView, Card, Text, BorderRadiuses} from 'react-native-ui-lib';
 import products from '../../data/products';
+
+const styles = StyleSheet.create({
+  image: {
+    borderRadius: BorderRadiuses.br20
+  }
+});
 
 const sortableProducts = _.chain(products)
   .map((product, index) => ({
     onPress: () => Alert.alert('My price is ' + product.formattedPrice),
     id: `Product #${index}`,
-    imageProps: {source: {uri: product.mediaUrl}},
+    imageProps: {source: {uri: product.mediaUrl}, style: styles.image},
     title: `Product #${index}`
     // ...product
   }))

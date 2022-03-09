@@ -1,9 +1,14 @@
 import React, {PropsWithChildren, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
-import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
+import {
+  // PanGestureHandler,
+  // PanGestureHandlerGestureEvent,
+  GestureDetector,
+  Gesture
+} from 'react-native-gesture-handler';
 import Animated, {
   // AnimatedStyleProp,
-  useAnimatedGestureHandler,
+  // useAnimatedGestureHandler,
   useAnimatedReaction,
   useAnimatedStyle,
   useSharedValue,
@@ -11,6 +16,7 @@ import Animated, {
   withTiming,
   runOnJS
 } from 'react-native-reanimated';
+import View from '../view';
 
 import {animationConfig, ItemsOrder} from './config';
 
@@ -55,8 +61,13 @@ const SortableGridItem = (props: PropsWithChildren<SortableGridItemProps>) => {
 
   const translateX = useSharedValue(0 /* itemPosition.x */);
   const translateY = useSharedValue(0 /* itemPosition.y */);
-  const shouldScaleItem = useSharedValue(false);
-  const shouldFrontItem = useSharedValue(false);
+  // const shouldScaleItem = useSharedValue(false);
+  // const shouldFrontItem = useSharedValue(false);
+  const isDragging = useSharedValue(false);
+  const tempItemsOrder = useSharedValue(itemsOrder.value);
+  const tempTranslateX = useSharedValue(0);
+  const tempTranslateY = useSharedValue(0);
+  // const dragContext = useSharedValue({x: 0, y: 0});
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     'worklet';
@@ -78,74 +89,130 @@ const SortableGridItem = (props: PropsWithChildren<SortableGridItemProps>) => {
       }
     });
 
-  const onGestureEvent = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    {x: number; y: number; originalItemsOrder: number[]}
-  >({
-    onStart: (_, context) => {
-      context.x = translateX.value;
-      context.y = translateY.value;
-      shouldScaleItem.value = true;
-      shouldFrontItem.value = true;
-      context.originalItemsOrder = [...itemsOrder.value];
-    },
-    onActive: ({translationX, translationY}, context) => {
-      translateX.value = context.x + translationX;
-      translateY.value = context.y + translationY;
+  // const onGestureEvent = useAnimatedGestureHandler<
+  //   PanGestureHandlerGestureEvent,
+  //   {x: number; y: number; originalItemsOrder: number[]}
+  // >({
+  //   onStart: (_, context) => {
+  //     context.x = translateX.value;
+  //     context.y = translateY.value;
+  //     shouldScaleItem.value = true;
+  //     shouldFrontItem.value = true;
+  //     context.originalItemsOrder = [...itemsOrder.value];
+  //   },
+  //   onActive: ({translationX, translationY}, context) => {
+  //     translateX.value = context.x + translationX;
+  //     translateY.value = context.y + translationY;
 
-      // Swapping items
-      const oldOrder = getItemOrderById(itemsOrder.value, index);
-      const newOrder = getOrderByPosition(translateX.value, translateY.value) + index;
+  //     // Swapping items
+  //     const oldOrder = getItemOrderById(itemsOrder.value, index);
+  //     const newOrder = getOrderByPosition(translateX.value, translateY.value) + index;
 
-      if (oldOrder !== newOrder) {
-        const itemIdToSwap = getIdByItemOrder(itemsOrder.value, newOrder);
+  //     if (oldOrder !== newOrder) {
+  //       const itemIdToSwap = getIdByItemOrder(itemsOrder.value, newOrder);
 
-        if (itemIdToSwap !== undefined) {
-          const newItemsOrder = [...itemsOrder.value];
-          newItemsOrder[newOrder] = index;
-          newItemsOrder[oldOrder] = itemIdToSwap;
-          itemsOrder.value = newItemsOrder;
+  //       if (itemIdToSwap !== undefined) {
+  //         const newItemsOrder = [...itemsOrder.value];
+  //         newItemsOrder[newOrder] = index;
+  //         newItemsOrder[oldOrder] = itemIdToSwap;
+  //         itemsOrder.value = newItemsOrder;
+  //       }
+  //     }
+
+  //     // Handle scrolling
+  //     /* const lowerBound = scrollY.value;
+  //     const upperBound = scrollY.value + screenHeight - itemSize * 1.5;
+  //     const maxScrollValue = contentHeight - screenHeight;
+  //     const leftToScroll = maxScrollValue - scrollY.value;
+  //     if (translateY.value < lowerBound) {
+  //       const diff = Math.min(lowerBound - translateY.value, lowerBound);
+  //       scrollY.value -= diff;
+  //       context.y -= diff;
+  //       translateY.value = context.y + translationY;
+  //       scrollTo(scrollViewRef, 0, scrollY.value, false);
+  //     }
+  //     if (translateY.value > upperBound) {
+  //       const diff = Math.min(translateY.value - upperBound, leftToScroll);
+  //       scrollY.value += diff;
+  //       context.y += diff;
+  //       translateY.value = context.y + translationY;
+  //       scrollTo(scrollViewRef, 0, scrollY.value, false);
+  //     } */
+  //   },
+  //   onEnd: (_, context) => {
+  //     const translation = getPositionByOrder(getItemOrderById(itemsOrder.value, index),
+  //       getItemOrderById(context.originalItemsOrder, index));
+
+  //     translateX.value = withTiming(context.x + translation.x, animationConfig, () => {
+  //       shouldFrontItem.value = false;
+  //     });
+  //     translateY.value = withTiming(context.y + translation.y, animationConfig);
+  //   },
+  //   onFinish: () => {
+  //     shouldScaleItem.value = false;
+  //     runOnJS(onChange)();
+  //   }
+  // });
+
+  const longPressGesture = Gesture.LongPress()
+    .onStart(() => {
+      console.log('ethan - long press');
+      isDragging.value = true;
+    })
+    .minDuration(250);
+
+  const dragGesture = Gesture.Pan()
+    .onStart(() => {
+      if (isDragging.value) {
+        tempTranslateX.value = translateX.value;
+        tempTranslateY.value = translateY.value;
+        tempItemsOrder.value = itemsOrder.value;
+      }
+    })
+    .onUpdate(event => {
+      if (isDragging.value) {
+        translateX.value = tempTranslateX.value + event.translationX;
+        translateY.value = tempTranslateY.value + event.translationY;
+
+        // Swapping items
+        const oldOrder = getItemOrderById(itemsOrder.value, index);
+        const newOrder = getOrderByPosition(translateX.value, translateY.value) + index;
+
+        if (oldOrder !== newOrder) {
+          const itemIdToSwap = getIdByItemOrder(itemsOrder.value, newOrder);
+
+          if (itemIdToSwap !== undefined) {
+            const newItemsOrder = [...itemsOrder.value];
+            newItemsOrder[newOrder] = index;
+            newItemsOrder[oldOrder] = itemIdToSwap;
+            itemsOrder.value = newItemsOrder;
+          }
         }
       }
+    })
+    .onEnd(() => {
+      if (isDragging.value) {
+        const translation = getPositionByOrder(getItemOrderById(itemsOrder.value, index),
+          getItemOrderById(tempItemsOrder.value, index));
 
-      // Handle scrolling
-      /* const lowerBound = scrollY.value;
-      const upperBound = scrollY.value + screenHeight - itemSize * 1.5;
-      const maxScrollValue = contentHeight - screenHeight;
-      const leftToScroll = maxScrollValue - scrollY.value;
-      if (translateY.value < lowerBound) {
-        const diff = Math.min(lowerBound - translateY.value, lowerBound);
-        scrollY.value -= diff;
-        context.y -= diff;
-        translateY.value = context.y + translationY;
-        scrollTo(scrollViewRef, 0, scrollY.value, false);
+        translateX.value = withTiming(tempTranslateX.value + translation.x, animationConfig);
+        translateY.value = withTiming(tempTranslateY.value + translation.y, animationConfig);
       }
-      if (translateY.value > upperBound) {
-        const diff = Math.min(translateY.value - upperBound, leftToScroll);
-        scrollY.value += diff;
-        context.y += diff;
-        translateY.value = context.y + translationY;
-        scrollTo(scrollViewRef, 0, scrollY.value, false);
-      } */
-    },
-    onEnd: (_, context) => {
-      const translation = getPositionByOrder(getItemOrderById(itemsOrder.value, index),
-        getItemOrderById(context.originalItemsOrder, index));
+    })
+    .onFinalize(() => {
+      if (isDragging.value) {
+        isDragging.value = false;
+        // shouldScaleItem.value = false;
+        runOnJS(onChange)();
+      }
+    })
+    .simultaneousWithExternalGesture(longPressGesture);
 
-      translateX.value = withTiming(context.x + translation.x, animationConfig, () => {
-        shouldFrontItem.value = false;
-      });
-      translateY.value = withTiming(context.y + translation.y, animationConfig);
-    },
-    onFinish: () => {
-      shouldScaleItem.value = false;
-      runOnJS(onChange)();
-    }
-  });
+  const composedGesture = Gesture.Race(dragGesture, longPressGesture);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const scale = withSpring(shouldScaleItem.value ? 1.1 : 1);
-    const zIndex = shouldFrontItem.value ? 100 : 0;
+    const scale = withSpring(isDragging.value ? 1.1 : 1);
+    const zIndex = isDragging.value ? 100 : 0;
 
     return {
       // width: itemSize,
@@ -156,11 +223,13 @@ const SortableGridItem = (props: PropsWithChildren<SortableGridItemProps>) => {
   });
 
   return (
-    <Animated.View style={animatedStyle} onLayout={onLayout}>
-      <PanGestureHandler onGestureEvent={onGestureEvent}>
-        <Animated.View>{props.children}</Animated.View>
-      </PanGestureHandler>
-    </Animated.View>
+    <View reanimated style={animatedStyle} onLayout={onLayout}>
+      {/* <PanGestureHandler onGestureEvent={onGestureEvent}> */}
+      <GestureDetector gesture={composedGesture}>
+        <View reanimated>{props.children}</View>
+      </GestureDetector>
+      {/* </PanGestureHandler> */}
+    </View>
   );
 };
 
