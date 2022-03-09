@@ -160,16 +160,17 @@ export class Colors {
   generateColorPalette = _.memoize(color => {
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
+    const lightColorsThreshold = this.shouldGenerateDarkerPalette(color) ? 5 : 0;
 
     const ls = [hsl.color[2]];
     let l = lightness - 10;
-    while (l >= 20) {
+    while (l >= 20 - lightColorsThreshold) {
       ls.unshift(l);
       l -= 10;
     }
 
     l = lightness + 10;
-    while (l < 100) {
+    while (l < 100 - lightColorsThreshold) {
       ls.push(l);
       l += 10;
     }
@@ -184,6 +185,12 @@ export class Colors {
     const adjusted = adjustSaturation(sliced, color);
     return adjusted || sliced;
   });
+
+  shouldGenerateDarkerPalette(color: string) {
+    const hsl = Color(color).hsl();
+    const hue = hsl.color[0];
+    return _.inRange(hue, 51, 184);
+  }
 
   isDark(color: string) {
     const lum = tinycolor(color).getLuminance();

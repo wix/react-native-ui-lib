@@ -53,6 +53,6 @@
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
   ],
   "snippet": [
-    "<Chip label={'Chip'$1} onPress={() => console.log('pressed’)$2}/>"
+    "<Chip label={'Chip'$1} onPress={() => console.log('pressed')$2}/>"
   ]
 }

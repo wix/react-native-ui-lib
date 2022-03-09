@@ -126,7 +126,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
         <ActivityIndicator
           size={'small'}
           testID={`${testID}-loader`}
-          color={Colors.rgba(Colors.grey30, 0.7)}
+          color={Colors.rgba(Colors.$backgroundNeutralHeavy, 0.6)}
           style={styles.loader}
         />
         // <Loader size={Loader.sizes.SMALL} color={loaderColors} style={styles.loader} testID={`${testID}-loader`}/>
@@ -138,11 +138,11 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
         <Button
           link
           style={styles.action}
-          color={Colors.grey20}
+          color={Colors.$backgroundNeutralHeavy}
           {...action}
           labelStyle={Typography.bodySmallBold}
           accessibilityRole={'button'}
-          activeBackgroundColor={Colors.grey70}
+          activeBackgroundColor={Colors.$backgroundNeutral}
           testID={`${testID}-action`}
         />
       );
@@ -234,7 +234,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
 
 const styles = StyleSheet.create({
   toastContent: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.$backgroundElevated,
     minHeight: 48,
     flexDirection: 'row',
     alignSelf: 'center',
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   },
   message: {
     ...Typography.bodySmall,
-    color: Colors.grey10,
+    color: Colors.$textDefault,
     marginLeft: Spacings.s2,
     marginRight: Spacings.s5
   },
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     marginRight: Spacings.s3
   },
   action: {
-    backgroundColor: Colors.grey80,
+    backgroundColor: Colors.$backgroundNeutralLight,
     borderTopRightRadius: BorderRadiuses.br40,
     borderBottomRightRadius: BorderRadiuses.br40,
     paddingHorizontal: Spacings.s3,
