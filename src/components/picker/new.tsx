@@ -156,9 +156,6 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
-        // visible={showExpandableModal}
-        // scrollPosition={selectedItemPosition}
-        // enableModalBlur={enableModalBlur}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
@@ -170,8 +167,6 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
         listProps={listProps}
-        // onShow={onShow}
-        // pickerModalProps={pickerModalProps}
       >
         {filteredChildren}
       </PickerItemsList>
@@ -227,11 +222,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             importantForAccessibility={'no-hide-descendants'}
             value={label}
             selection={Constants.isAndroid ? {start: 0} : undefined}
-            /* Disable TextField expandable feature */
+            /* Note: Disable TextField expandable feature */
             topBarProps={undefined}
-            // expandable={false}
-            // renderExpandable={_.noop}
-            // onToggleExpandableModal={_.noop}
           />
         )}
       </ExpandableOverlay>
