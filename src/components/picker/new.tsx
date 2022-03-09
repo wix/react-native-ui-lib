@@ -29,11 +29,6 @@ import usePickerSearch from './helpers/usePickerSearch';
 import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
 import {PickerProps, PickerValue, PickerModes, PickerSearchStyle} from './types';
 
-const PICKER_MODES = {
-  SINGLE: 'SINGLE',
-  MULTI: 'MULTI'
-};
-
 const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps) => {
   const {
     mode,
@@ -247,9 +242,9 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
 Picker.Item = PickerItem;
 Picker.defaultProps = {
   ...TextField.defaultProps,
-  mode: PICKER_MODES.SINGLE
+  mode: PickerModes.SINGLE
 };
-Picker.modes = PICKER_MODES;
+Picker.modes = PickerModes;
 Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
   const {children} = props;
   const items = React.Children.map(children, child => ({
