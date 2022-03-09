@@ -1,13 +1,13 @@
 // TODO: Use gesture-handler v2 API
 // TODO: Start drag gesture with long press
-// TODO: Support scrolling while dragging 
+// TODO: Support scrolling while dragging
 import React, {useCallback, useMemo, useState} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import _ from 'lodash';
 import GridView from '../gridView';
 import GridListItem, {GridListItemProps} from '../gridListItem';
-import SortableGridItemAnimationWrapper from './SortableGridItemAnimationWrapper';
+import SortableGridItem from './SortableGridItem';
 import {DEFAULT_NO_OF_COLUMNS, getItemSize, useSortableGridConfig, ItemsLayouts, WINDOW_WIDTH} from './config';
 
 export interface SortableGridViewProps {
@@ -76,7 +76,7 @@ const SortableGridView: React.FC<SortableGridViewProps> = props => {
 
   const renderGridItem = (item: GridListItemProps, index: number) => {
     return (
-      <SortableGridItemAnimationWrapper
+      <SortableGridItem
         key={`${index}`}
         index={index}
         itemsOrder={itemsOrder}
@@ -88,7 +88,7 @@ const SortableGridView: React.FC<SortableGridViewProps> = props => {
         onChange={_onChange}
       >
         <GridListItem {...item}/>
-      </SortableGridItemAnimationWrapper>
+      </SortableGridItem>
     );
   };
 

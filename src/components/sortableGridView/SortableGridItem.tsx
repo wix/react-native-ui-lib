@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {PropsWithChildren, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
@@ -20,8 +20,7 @@ import {animationConfig, ItemsOrder} from './config';
 //   left: 0
 // };
 
-interface SortableGridItemAnimationWrapperProps {
-  children: React.ReactNode;
+interface SortableGridItemProps {
   // id: string;
   index: number;
   // itemSize: number;
@@ -38,7 +37,7 @@ interface SortableGridItemAnimationWrapperProps {
   // itemSpacing?: number;
 }
 
-const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrapperProps> = props => {
+const SortableGridItem = (props: PropsWithChildren<SortableGridItemProps>) => {
   const {
     itemsOrder,
     getPositionByOrder,
@@ -165,4 +164,4 @@ const SortableGridItemAnimationWrapper: React.FC<SortableGridItemAnimationWrappe
   );
 };
 
-export default SortableGridItemAnimationWrapper;
+export default SortableGridItem;
