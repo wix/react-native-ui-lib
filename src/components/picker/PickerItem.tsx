@@ -56,6 +56,10 @@ const PickerItem = (props: PickerItemProps) => {
     }
   }, [isSelected, isItemDisabled, selectedIcon, selectedIconColor]);
 
+  const itemLabelStyle = useMemo(() => {
+    return [styles.labelText, isItemDisabled ? styles.labelTextDisabled : undefined, labelStyle];
+  }, [isItemDisabled, labelStyle]);
+
   const _onPress = useCallback(() => {
     if (migrate) {
       context.onPress(value);
@@ -71,10 +75,7 @@ const PickerItem = (props: PickerItemProps) => {
   const _renderItem = () => {
     return (
       <View style={styles.container} flex row spread centerV>
-        <Text
-          numberOfLines={1}
-          style={[styles.labelText, isItemDisabled ? styles.labelTextDisabled : undefined, labelStyle]}
-        >
+        <Text numberOfLines={1} style={itemLabelStyle}>
           {itemLabel}
         </Text>
         {selectedIndicator}
