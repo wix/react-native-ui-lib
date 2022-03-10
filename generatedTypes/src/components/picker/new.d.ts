@@ -8,10 +8,7 @@ declare const Picker: {
         displayName: string;
     };
     defaultProps: any;
-    modes: {
-        SINGLE: string;
-        MULTI: string;
-    };
+    modes: typeof PickerModes;
     extractPickerItems(props: PropsWithChildren<PickerProps>): {
         value: any;
         label: any;
@@ -19,7 +16,19 @@ declare const Picker: {
 };
 export { PickerProps, PickerValue, PickerModes, PickerSearchStyle };
 export { Picker };
-declare const _default: React.ComponentClass<{
+declare const _default: React.ComponentClass<PickerProps & {
     useCustomTheme?: boolean | undefined;
-}, any>;
+}, any> & {
+    (props: React.PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps): JSX.Element;
+    Item: {
+        (props: import("./types").PickerItemProps): JSX.Element;
+        displayName: string;
+    };
+    defaultProps: any;
+    modes: typeof PickerModes;
+    extractPickerItems(props: React.PropsWithChildren<PickerProps>): {
+        value: any;
+        label: any;
+    }[] | null | undefined;
+};
 export default _default;
