@@ -61,8 +61,10 @@ export class Colors {
    * and change the design tokens accordingly 
    */
   supportDarkMode() {
-    const designTokensColors = Scheme.getSchemeType() === 'dark' ? designTokensDM : designTokens;
-    Object.assign(this, designTokensColors);
+    if (__DEV__) { // TODO: remove condition when dark mode will be released
+      const designTokensColors = Scheme.getSchemeType() === 'dark' ? designTokensDM : designTokens;
+      Object.assign(this, designTokensColors);
+    }
   }
   
   /**
