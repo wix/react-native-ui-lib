@@ -1,7 +1,8 @@
 import React, { PropsWithChildren } from 'react';
-import { FlatListProps, StyleProp, ViewStyle, TextInputProps, TextStyle } from 'react-native';
+import { FlatListProps, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { ExpandableOverlayProps } from '../../incubator/expandableOverlay';
 import { ModalTopBarProps } from '../modal/TopBar';
+import { TextFieldProps } from '../../../typings/components/Inputs';
 export declare enum PickerModes {
     SINGLE = "SINGLE",
     MULTI = "MULTI"
@@ -19,7 +20,7 @@ export interface PickerSearchStyle {
     placeholderTextColor?: string;
     selectionColor?: string;
 }
-export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChange'> {
+export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChange'> {
     /**
      * Temporary prop required for migration to Picker's new API
      */
@@ -147,7 +148,7 @@ export interface PickerPropsWithMulti extends PickerBaseProps {
     mode: PickerModes.MULTI;
     value: PickerMultiValue;
 }
-export declare type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
+export declare type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti);
 export interface PickerItemProps {
     /**
      * Item's value

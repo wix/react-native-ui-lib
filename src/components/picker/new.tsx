@@ -27,7 +27,7 @@ import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
-import {PickerProps, PickerValue, PickerModes, PickerSearchStyle} from './types';
+import {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle} from './types';
 
 const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps) => {
   const {
@@ -248,6 +248,6 @@ Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
   return items;
 };
 
-export {PickerProps, PickerValue, PickerModes, PickerSearchStyle};
+export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle};
 export {Picker}; // For tests
 export default asBaseComponent<PickerProps, typeof Picker>(forwardRef(Picker));

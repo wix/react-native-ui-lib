@@ -1,7 +1,9 @@
 import React, {PropsWithChildren} from 'react';
-import {FlatListProps, StyleProp, ViewStyle, TextInputProps, TextStyle} from 'react-native';
+import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
+// TODO: Replace with new TextField Props after migration to new TextField has completed
+import {TextFieldProps} from '../../../typings/components/Inputs';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -23,7 +25,7 @@ export interface PickerSearchStyle {
 }
 
 // TODO: need to extend TextField props (and not just TextInputProps)
-export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChange'> {
+export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChange'> {
   /**
    * Temporary prop required for migration to Picker's new API
    */
@@ -158,7 +160,7 @@ export interface PickerPropsWithMulti extends PickerBaseProps {
   value: PickerMultiValue;
 }
 
-export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
+export type PickerProps = & (PickerPropsWithSingle | PickerPropsWithMulti);
 
 export interface PickerItemProps {
   /**
