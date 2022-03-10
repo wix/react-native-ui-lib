@@ -141,11 +141,11 @@ export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChang
     testID?: string;
 }
 export interface PickerPropsWithSingle extends PickerBaseProps {
-    mode: PickerModes.SINGLE;
+    mode?: PickerModes.SINGLE;
     value: PickerSingleValue;
 }
 export interface PickerPropsWithMulti extends PickerBaseProps {
-    mode: PickerModes.MULTI;
+    mode?: PickerModes.MULTI;
     value: PickerMultiValue;
 }
 export declare type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti);

@@ -119,10 +119,10 @@ export {
   PureBaseComponent,
   UIComponent,
   forwardRef,
-  AvatarHelper,
-  TextField
+  AvatarHelper
 } from '../typings';
 
 /* All components that are missing either manual or auto generated typings */
 export const AnimatedImage;
 export const AnimatedScanner;
+export const TextField;
