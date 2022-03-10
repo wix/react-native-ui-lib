@@ -176,11 +176,11 @@ export interface PickerItemProps {
   /**
    * Custom function for the item label (e.g (value) => customLabel)
    */
-  getItemLabel: PickerProps['getItemLabel'];
+  getItemLabel?: PickerProps['getItemLabel'];
   /**
    * @deprecated Function to return the value out of the item value prop when value is custom shaped.
    */
-  getItemValue: PickerProps['getItemValue'];
+  getItemValue?: PickerProps['getItemValue'];
   /**
    * Render custom item
    */
@@ -200,7 +200,7 @@ export interface PickerItemProps {
   /**
    * Callback for onPress action
    */
-  onPress: () => void;
+  onPress?: () => void;
   /**
    * Component test id
    */
