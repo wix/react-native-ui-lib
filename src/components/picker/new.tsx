@@ -43,6 +43,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     containerStyle,
     testID,
     onChange,
+    onPress,
     onShow,
     onSearchChange,
     renderCustomModal,
@@ -204,6 +205,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         modalProps={modalProps}
         expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
+        onPress={onPress}
         testID={testID}
         {...customPickerProps}
         disabled={editable === false}
