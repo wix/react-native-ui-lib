@@ -11,14 +11,17 @@ import {
   Avatar,
   Assets,
   PanningProvider,
-  Typography
+  Typography,
+  PickerProps,
+  DialogProps
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
-import tagIcon from '../../assets/icons/tags.png';
-import dropdown from '../../assets/icons/chevronDown.png';
 import {longOptions} from './PickerScreenLongOptions';
 
-const contacts = _.map(contactsData, c => ({...c, value: c.name, label: c.name}));
+const tagIcon = require('../../assets/icons/tags.png');
+const dropdown = require('../../assets/icons/chevronDown.png');
+
+const contacts = _.map(contactsData, (c, index) => ({...c, value: index, label: c.name}));
 
 const options = [
   {label: 'JavaScript', value: 'js'},
@@ -35,26 +38,19 @@ const filters = [
 ];
 
 export default class PickerScreen extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    itemsCount: 1,
+    // language: {value: 'java', label: 'Java'},
+    language: undefined,
+    language2: options[2].value, // for migrated picker example
+    languages: [],
+    nativePickerValue: 'java',
+    customModalValues: [],
+    filter: filters[0],
+    contact: 0
+  };
 
-    this.state = {
-      itemsCount: 1,
-      // language: {value: 'java', label: 'Java'},
-      language: undefined,
-      language2: options[2].value, // for migrated picker example
-      languages: [],
-      nativePickerValue: 'java',
-      customModalValues: [],
-      filter: filters[0],
-      contact: contacts[0],
-      tags: [{label: 'Amit'}, {label: 'Ethan'}],
-      tags2: ['Tags', 'Input'],
-      tags3: ['Non', 'Removable', 'Tags']
-    };
-  }
-
-  dialogHeader = props => {
+  dialogHeader: DialogProps['renderPannableHeader'] = props => {
     const {title} = props;
     return (
       <Text margin-15 text60>
@@ -63,7 +59,7 @@ export default class PickerScreen extends Component {
     );
   };
 
-  renderDialog = modalProps => {
+  renderDialog: PickerProps['renderCustomModal'] = modalProps => {
     const {visible, children, toggleModal, onDone} = modalProps;
 
     return (
@@ -99,19 +95,18 @@ export default class PickerScreen extends Component {
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
             topBarProps={{title: 'Languages'}}
-            style={{color: Colors.red20}}
+            // style={{color: Colors.red20}}
             showSearch
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // onSearchChange={value => console.warn('value', value)}
           >
             {_.map(longOptions, option => (
-              <Picker.Item key={option.value} value={option} disabled={option.disabled}/>
+              <Picker.Item key={option.value} value={option} label={''} disabled={option.disabled}/>
             ))}
           </Picker>
 
           <Picker
-            marginT-20
             placeholder="Favorite Languages (up to 3)"
             value={this.state.languages}
             onChange={items => this.setState({languages: items})}
@@ -120,7 +115,7 @@ export default class PickerScreen extends Component {
             rightIconSource={dropdown}
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option} disabled={option.disabled}/>
+              <Picker.Item key={option.value} value={option} label={''} disabled={option.disabled}/>
             ))}
           </Picker>
 
@@ -131,7 +126,7 @@ export default class PickerScreen extends Component {
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             rightIconSource={dropdown}
-            containerStyle={{marginTop: 20}}
+            // containerStyle={{marginTop: 20}}
             // renderPicker={() => {
             //   return (
             //     <View>
@@ -154,7 +149,6 @@ export default class PickerScreen extends Component {
           </Picker>
 
           <Picker
-            marginT-20
             title="Custom modal"
             placeholder="Pick multiple Languages"
             value={this.state.customModalValues}
@@ -174,13 +168,13 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Text marginT-20 marginB-10 text70 grey60>
+          <Text marginB-10 text70>
             Custom Picker:
           </Text>
           <Picker
             value={this.state.filter}
             onChange={filter => this.setState({filter})}
-            renderPicker={({label}) => {
+            renderPicker={(_value?: any, label?: string) => {
               return (
                 <View row>
                   <Icon style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon}/>
@@ -192,24 +186,40 @@ export default class PickerScreen extends Component {
             }}
           >
             {_.map(filters, filter => (
-              <Picker.Item key={filter.value} value={filter}/>
+              <Picker.Item key={filter.value} value={filter} label={''}/>
             ))}
           </Picker>
 
-          <Text marginT-20 marginB-10 text70 grey60>
+          <Text text60 marginT-s5>
+            Migrated Pickers
+          </Text>
+
+          <Text marginT-20 marginB-10 text70>
             Custom Picker Items:
           </Text>
           <Picker
+            migrate
             value={this.state.contact}
-            onChange={contact => this.setState({contact})}
-            getItemValue={contact => contact.name}
-            renderPicker={contact => {
+            onChange={contact => {
+              this.setState({contact});
+            }}
+            // getItemValue={contact => contact?.value}
+            renderPicker={(contactValue?: number) => {
+              const contact = contacts[contactValue!] ?? undefined;
               return (
                 <View row>
-                  <Avatar size={30} source={{uri: contact.thumbnail}}/>
-                  <Text text70 marginL-10>
-                    {contact.name}
-                  </Text>
+                  {contact ? (
+                    <>
+                      <Avatar size={30} source={{uri: contact?.thumbnail}}/>
+                      <Text text70 marginL-10>
+                        {contact?.name}
+                      </Text>
+                    </>
+                  ) : (
+                    <Text text70 grey30>
+                      Pick a contact
+                    </Text>
+                  )}
                 </View>
               );
             }}
@@ -217,36 +227,36 @@ export default class PickerScreen extends Component {
             {_.map(contacts, contact => (
               <Picker.Item
                 key={contact.name}
-                value={contact}
-                renderItem={(item, props) => (
-                  <View
-                    style={{
-                      height: 56,
-                      borderBottomWidth: 1,
-                      borderColor: Colors.grey80
-                    }}
-                    paddingH-15
-                    row
-                    centerV
-                    spread
-                  >
-                    <View row centerV>
-                      <Avatar size={35} source={{uri: item.thumbnail}}/>
-                      <Text marginL-10 text70 grey10>
-                        {item.name}
-                      </Text>
+                value={contact.value}
+                label={contact.label}
+                renderItem={(contactValue, props) => {
+                  const contact = contacts[contactValue as number];
+                  return (
+                    <View
+                      style={{
+                        height: 56,
+                        borderBottomWidth: 1,
+                        borderColor: Colors.grey80
+                      }}
+                      paddingH-15
+                      row
+                      centerV
+                      spread
+                    >
+                      <View row centerV>
+                        <Avatar size={35} source={{uri: contact?.thumbnail}}/>
+                        <Text marginL-10 text70 grey10>
+                          {contact?.name}
+                        </Text>
+                      </View>
+                      {props.isSelected && <Icon source={Assets.icons.check}/>}
                     </View>
-                    {props.isSelected && <Icon source={Assets.icons.check}/>}
-                  </View>
-                )}
-                getItemLabel={item => item.name}
+                  );
+                }}
+                getItemLabel={contactValue => contacts[contactValue as number]?.name}
               />
             ))}
           </Picker>
-
-          <Text text60 marginT-s5 marginB-s2>
-            Migrated Picker
-          </Text>
 
           <Picker
             migrate
@@ -259,6 +269,7 @@ export default class PickerScreen extends Component {
             showSearch
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
+            marginT-s4
             // mode={Picker.modes.MULTI}
             // useNativePicker
           >
