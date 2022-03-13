@@ -8,10 +8,7 @@ declare const Picker: {
         displayName: string;
     };
     defaultProps: any;
-    modes: {
-        SINGLE: string;
-        MULTI: string;
-    };
+    modes: typeof PickerModes;
     extractPickerItems(props: PropsWithChildren<PickerProps>): {
         value: any;
         label: any;

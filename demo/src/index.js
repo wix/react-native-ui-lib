@@ -111,6 +111,9 @@ module.exports = {
       get SkeletonViewScreen() {
         return require('./screens/componentScreens/SkeletonViewScreen').default;
       },
+      get SortableListScreen() {
+        return require('./screens/componentScreens/SortableListScreen').default;
+      },
       get StepperScreen() {
         return require('./screens/componentScreens/StepperScreen').default;
       },

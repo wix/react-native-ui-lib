@@ -215,6 +215,9 @@ export default {
   get SkeletonView() {
     return require('./components/skeletonView').default;
   },
+  get SortableList() {
+    return require('./components/sortableList').default;
+  },
 
   // Assets
   get Assets() {

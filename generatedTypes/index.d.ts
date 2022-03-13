@@ -71,6 +71,7 @@ export {default as PanGestureView, PanGestureViewProps} from './src/components/p
 export {default as PanningContext} from './src/components/panningViews/panningContext';
 export {default as asPanViewConsumer} from './src/components/panningViews/asPanViewConsumer';
 export {default as SkeletonView, SkeletonViewProps} from './src/components/skeletonView';
+export {default as SortableList, SortableListProps} from './src/components/sortableList';
 export {
   default as PanningProvider,
   PanningDirections,
