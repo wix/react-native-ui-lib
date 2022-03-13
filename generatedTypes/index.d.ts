@@ -44,7 +44,7 @@ export {default as ColorPalette, ColorPaletteProps} from './src/components/color
 export {default as ColorSwatch, ColorSwatchProps} from './src/components/colorPicker/ColorSwatch';
 export {default as DateTimePicker, DateTimePickerProps} from './src/components/dateTimePicker';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './src/components/drawer';
-export {default as Picker, PickerProps, PickerValue, PickerModes, PickerSearchStyle} from './src/components/picker/new';
+export {default as Picker, PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle} from './src/components/picker/new';
 export {default as ProgressBar, ProgressBarProps} from './src/components/progressBar';
 export {default as FeatureHighlight, FeatureHighlightProps} from './src/components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './src/components/floatingButton';
