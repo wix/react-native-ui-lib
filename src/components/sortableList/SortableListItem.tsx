@@ -6,9 +6,7 @@ import {BaseItemProps} from './types';
 import useDraggableAnimation from './useDraggableAnimation';
 import SortableListContext from './SortableListContext';
 
-type SortableListItemProps = Pick<BaseItemProps, 'index'>;
-
-type Props = PropsWithChildren<SortableListItemProps>;
+type Props = PropsWithChildren<Pick<BaseItemProps, 'index'>>;
 
 const SortableListItem = (props: Props) => {
   const {children, index} = props;

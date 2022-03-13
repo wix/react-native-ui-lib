@@ -1,9 +1,9 @@
 import { SharedValue } from 'react-native-reanimated';
 import { BaseItemProps } from './types';
-export interface AtRestItemsTranslationProps extends BaseItemProps {
+interface Props extends BaseItemProps {
     isDragged: SharedValue<boolean>;
 }
-declare const useAtRestItemsTranslation: (props: AtRestItemsTranslationProps) => {
+declare const useAtRestItemsTranslation: (props: Props) => {
     atRestSwappedTranslation: SharedValue<number>;
     onDragEnd: () => void;
 };

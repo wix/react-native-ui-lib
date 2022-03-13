@@ -9,7 +9,7 @@ import {
 import {BaseItemProps} from './types';
 import SortableListContext from './SortableListContext';
 
-export interface DragAfterLongPressGestureProps extends Pick<BaseItemProps, 'index'> {
+interface Props extends Pick<BaseItemProps, 'index'> {
   isDragged: SharedValue<boolean>;
   ref: any;
   onDragStart?: (event: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => void;
@@ -17,7 +17,7 @@ export interface DragAfterLongPressGestureProps extends Pick<BaseItemProps, 'ind
   onDragEnd?: () => void;
 }
 
-const useDragAfterLongPressGesture = (props: DragAfterLongPressGestureProps) => {
+const useDragAfterLongPressGesture = (props: Props) => {
   const {index, isDragged, ref, onDragStart, onDragUpdate, onDragEnd} = props;
 
   const {onDragStateChange, onDrag} = useContext(SortableListContext);

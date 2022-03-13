@@ -4,11 +4,11 @@ import {useAnimatedReaction, useSharedValue, withTiming, SharedValue} from 'reac
 import {BaseItemProps} from './types';
 import SortableListContext from './SortableListContext';
 
-export interface AtRestItemsTranslationProps extends BaseItemProps {
+interface Props extends BaseItemProps {
   isDragged: SharedValue<boolean>;
 }
 
-const useAtRestItemsTranslation = (props: AtRestItemsTranslationProps) => {
+const useAtRestItemsTranslation = (props: Props) => {
   const {index, height, isDragged} = props;
 
   const {currentByInitialIndices} = useContext(SortableListContext);

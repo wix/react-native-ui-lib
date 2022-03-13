@@ -6,11 +6,11 @@ import {BaseItemProps, ScrollProps} from './types';
 
 import useIndicesManager from './useIndicesManager';
 
-export interface SwapItemsProps extends BaseItemProps, ScrollProps {
+interface Props extends BaseItemProps, ScrollProps {
   drag: SharedValue<number>;
 }
 
-const useSwapItems = (props: SwapItemsProps) => {
+const useSwapItems = (props: Props) => {
   const {index, height, drag, scroll} = props;
 
   const {requestIndexChange} = useIndicesManager();
