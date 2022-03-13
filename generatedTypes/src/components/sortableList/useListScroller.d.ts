@@ -9,10 +9,10 @@ interface Props {
     draggedItemRef?: any;
     absMeasurements?: any;
 }
-declare const useScroller: (props: Props) => {
+declare const useListScroller: (props: Props) => {
     scrollRef: import("react").MutableRefObject<any>;
     onScrollStart: () => void;
     onScrollEnd: () => void;
     cleanScrollValues: () => void;
 };
-export default useScroller;
+export default useListScroller;

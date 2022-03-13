@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useCallback} from 'react';
 import {runOnJS, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
-import useScroller from './useScroller';
+import useListScroller from './useListScroller';
 import useScrollThreshold from './useScrollThreshold';
 
 const SCROLL_RATE_DIVIDER = 5;
@@ -27,7 +27,7 @@ const useListScroll = () => {
     onScroll: ({contentOffset: {y}}) => (scroll.value = y)
   });
 
-  const {scrollRef, onScrollStart, onScrollEnd, cleanScrollValues} = useScroller({
+  const {scrollRef, onScrollStart, onScrollEnd, cleanScrollValues} = useListScroller({
     scroll,
     isScrolling,
     scrollRate,

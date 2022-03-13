@@ -14,7 +14,7 @@ interface Props {
   absMeasurements?: any;
 }
 
-const useScroller = (props: Props) => {
+const useListScroller = (props: Props) => {
   // TODO: move props to local members or function params
   const {scroll, isScrolling, scrollRate, maxScroll, draggedItemRef, absMeasurements} = props;
 
@@ -63,4 +63,4 @@ const useScroller = (props: Props) => {
   return {scrollRef, onScrollStart, onScrollEnd, cleanScrollValues};
 };
 
-export default useScroller;
+export default useListScroller;
