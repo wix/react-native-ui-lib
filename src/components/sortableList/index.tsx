@@ -49,6 +49,7 @@ const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) =>
           showsVerticalScrollIndicator={false}
           {...others}
           data={data}
+          // @ts-expect-error
           ref={scrollRef}
           onScroll={onScroll}
           onContentSizeChange={onContentSizeChange}
