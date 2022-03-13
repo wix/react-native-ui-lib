@@ -129,6 +129,10 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    */
   width?: number;
   /**
+   * For flexing the view to the full container width (doesn't apply on templates)
+   */
+  fullWidth?: boolean;
+  /**
    * The border radius of the skeleton view
    */
   borderRadius?: number;
@@ -229,18 +233,22 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
 
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
     const {circleOverride, style} = input || {};
-    const {circle, width = 0, height = 0} = this.props;
+    const {circle, width = 0, height = 0, fullWidth} = this.props;
     let {borderRadius} = this.props;
+    let widthStyle;
     let size;
+
     if (circle || circleOverride) {
       borderRadius = BorderRadiuses.br100;
       size = Math.max(width, height);
+    } else if (fullWidth) {
+      widthStyle = {width: '100%'};
     }
 
     return {
       shimmerColors: [Colors.grey70, Colors.grey60, Colors.grey70],
       isReversed: Constants.isRTL,
-      style: [{borderRadius}, style],
+      style: [{borderRadius}, widthStyle, style],
       width: size || width,
       height: size || height
     };

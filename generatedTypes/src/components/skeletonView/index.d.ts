@@ -113,6 +113,10 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
      */
     width?: number;
     /**
+     * For flexing the view to the full container width (doesn't apply on templates)
+     */
+    fullWidth?: boolean;
+    /**
      * The border radius of the skeleton view
      */
     borderRadius?: number;
