@@ -1,9 +1,7 @@
 import { SharedValue } from 'react-native-reanimated';
 import { GestureStateChangeEvent, GestureUpdateEvent, PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
-import { BaseItemProps } from './types';
-interface Props extends Pick<BaseItemProps, 'index'> {
+interface Props {
     isDragged: SharedValue<boolean>;
-    ref: any;
     onDragStart?: (event: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => void;
     onDragUpdate?: (event: GestureUpdateEvent<PanGestureHandlerEventPayload>) => void;
     onDragEnd?: () => void;

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useCallback, useContext} from 'react';
 import {useAnimatedReaction, useSharedValue, withTiming, SharedValue} from 'react-native-reanimated';
-import {BaseItemProps} from './types';
+import {BaseItemProps, ANIMATION_END_DURATION} from './types';
 import SortableListContext from './SortableListContext';
 
 interface Props extends BaseItemProps {
@@ -36,7 +36,7 @@ const useAtRestItemsTranslation = (props: Props) => {
     if (currentByInitialIndices) {
       // Update the dragged item's (which will now rest) translation to it's new place.
       const restLocation = getSwappedTranslation(currentByInitialIndices.value[index]);
-      atRestSwappedTranslation.value = withTiming(restLocation, {duration: 200}); // TODO: ANIMATION_END_DURATION
+      atRestSwappedTranslation.value = withTiming(restLocation, {duration: ANIMATION_END_DURATION});
     }
   }, [height]);
 

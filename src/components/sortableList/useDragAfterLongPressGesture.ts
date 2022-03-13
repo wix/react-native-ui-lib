@@ -1,26 +1,20 @@
-import {useContext} from 'react';
-import {useSharedValue, useAnimatedReaction, SharedValue, runOnJS} from 'react-native-reanimated';
+import {useSharedValue, useAnimatedReaction, SharedValue} from 'react-native-reanimated';
 import {
   Gesture,
   GestureStateChangeEvent,
   GestureUpdateEvent,
   PanGestureHandlerEventPayload
 } from 'react-native-gesture-handler';
-import {BaseItemProps} from './types';
-import SortableListContext from './SortableListContext';
 
-interface Props extends Pick<BaseItemProps, 'index'> {
+interface Props {
   isDragged: SharedValue<boolean>;
-  ref: any;
   onDragStart?: (event: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => void;
   onDragUpdate?: (event: GestureUpdateEvent<PanGestureHandlerEventPayload>) => void;
   onDragEnd?: () => void;
 }
 
 const useDragAfterLongPressGesture = (props: Props) => {
-  const {index, isDragged, ref, onDragStart, onDragUpdate, onDragEnd} = props;
-
-  const {onDragStateChange, onDrag} = useContext(SortableListContext);
+  const {isDragged, onDragStart, onDragUpdate, onDragEnd} = props;
 
   const isLongPressed = useSharedValue<boolean>(false);
   const showDraggedAnimation = useSharedValue<boolean>(false);
@@ -47,23 +41,15 @@ const useDragAfterLongPressGesture = (props: Props) => {
       }
     })
     .onStart(event => {
-      if (onDragStateChange) {
-        runOnJS(onDragStateChange)(index);
-      }
-
       onDragStart?.(event);
     })
     .onUpdate(event => {
       // TODO: Do we need to move this to onTouchesMove and verify there's still only one touch?
-      onDrag?.(event.absoluteY, ref.current);
       onDragUpdate?.(event);
     })
     .onEnd(() => {
       isDragged.value = false;
       onDragEnd?.();
-      if (onDragStateChange) {
-        runOnJS(onDragStateChange)(undefined);
-      }
     });
 
   const dragAfterLongPressGesture = Gesture.Simultaneous(longPressGesture, dragGesture);

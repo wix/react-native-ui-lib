@@ -1,11 +1,13 @@
-import {useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming} from 'react-native-reanimated';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming, runOnJS} from 'react-native-reanimated';
 import useDragAfterLongPressGesture from './useDragAfterLongPressGesture';
-import {BaseItemProps} from './types';
+import {BaseItemProps, ANIMATION_END_DURATION} from './types';
 import useSwapItems from './useSwapItems';
 import useAtRestItemsTranslation from './useAtRestItemsTranslation';
 import useItemScroll from './useItemScroll';
+import SortableListContext from './SortableListContext';
+import {useCallback, useContext} from 'react';
 
-const ANIMATION_END_DURATION = 200;
 const ANIMATION_SCALE_FACTOR = 1.2;
 
 const useDraggableAnimation = (props: BaseItemProps) => {
@@ -17,29 +19,48 @@ const useDraggableAnimation = (props: BaseItemProps) => {
   const scaleY = useSharedValue<number>(1);
   const zIndex = useSharedValue<number>(0);
 
-  const {onDragUpdate, onDragEnd: swapOnDragEnd, swapItemsIfNeeded} = useSwapItems({index, height, drag, scroll});
+  const {onDragStateChange, onDrag} = useContext(SortableListContext);
+
+  const {
+    onDragUpdate: swap_onDragUpdate,
+    onDragEnd: swap_onDragEnd,
+    swapItemsIfNeeded
+  } = useSwapItems({index, height, drag, scroll});
   const {ref} = useItemScroll({scroll, swapItemsIfNeeded});
-  const {atRestSwappedTranslation, onDragEnd: atRestOnDragEnd} = useAtRestItemsTranslation({index, height, isDragged});
+  const {atRestSwappedTranslation, onDragEnd: atRest_onDragEnd} = useAtRestItemsTranslation({index, height, isDragged});
+
+  const onDragStart = useCallback(() => {
+    'worklet';
+    if (onDragStateChange) {
+      runOnJS(onDragStateChange)(index);
+    }
+
+    drag.value = 0;
+  }, [onDragStateChange]);
+
+  const onDragUpdate = useCallback(event => {
+    'worklet';
+    onDrag?.(event.absoluteY, ref.current);
+    drag.value = event.translationY;
+    swap_onDragUpdate(event);
+  },
+  [onDrag, swap_onDragUpdate]);
+
+  const onDragEnd = useCallback(() => {
+    'worklet';
+    drag.value = withTiming(0, {duration: ANIMATION_END_DURATION});
+    swap_onDragEnd();
+    atRest_onDragEnd();
+    if (onDragStateChange) {
+      runOnJS(onDragStateChange)(undefined);
+    }
+  }, [onDragStateChange, swap_onDragEnd, atRest_onDragEnd]);
 
   const {dragAfterLongPressGesture, showDraggedAnimation} = useDragAfterLongPressGesture({
-    index,
     isDragged,
-    ref,
-    onDragStart: () => {
-      'worklet';
-      drag.value = 0;
-    },
-    onDragUpdate: event => {
-      'worklet';
-      drag.value = event.translationY;
-      onDragUpdate(event);
-    },
-    onDragEnd: () => {
-      'worklet';
-      drag.value = withTiming(0, {duration: ANIMATION_END_DURATION});
-      swapOnDragEnd();
-      atRestOnDragEnd();
-    }
+    onDragStart,
+    onDragUpdate,
+    onDragEnd
   });
 
   useAnimatedReaction(() => {
