@@ -235,12 +235,13 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     const {circleOverride, style} = input || {};
     const {circle, width, height = 0} = this.props;
     let {borderRadius} = this.props;
+    const numericWidth = this.getWidth(width);
     let widthStyle;
     let size;
-    const defaultWidth = this.getWidth(width);
+
     if (circle || circleOverride) {
       borderRadius = BorderRadiuses.br100;
-      size = Math.max(defaultWidth, height);
+      size = Math.max(numericWidth, height);
     } else if (_.isString(width)) {
       widthStyle = {width};
     }
@@ -249,7 +250,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
       shimmerColors: [Colors.grey70, Colors.grey60, Colors.grey70],
       isReversed: Constants.isRTL,
       style: [{borderRadius}, widthStyle, style],
-      width: size || defaultWidth,
+      width: size || numericWidth,
       height: size || height
     };
   };
