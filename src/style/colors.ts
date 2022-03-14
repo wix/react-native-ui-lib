@@ -11,6 +11,7 @@ import Scheme, {Schemes, SchemeType} from './scheme';
 
 export class Colors {
   [key: string]: any;
+  shouldSupportDarkMode = false;
 
   constructor() {
     const colors = Object.assign(colorsPalette, designTokens, themeColors);
@@ -58,13 +59,14 @@ export class Colors {
 
   /**
    * Support listening to Appearance changes
-   * and change the design tokens accordingly 
+   * and change the design tokens accordingly
    */
   supportDarkMode() {
     const designTokensColors = Scheme.getSchemeType() === 'dark' ? designTokensDM : designTokens;
+    this.shouldSupportDarkMode = true;
     Object.assign(this, designTokensColors);
   }
-  
+
   /**
    * Add alpha to hex or rgb color
    * arguments:
@@ -132,7 +134,8 @@ export class Colors {
     const colorKey = _.findKey(this, (_value, key) => this[key] === color);
 
     if (colorKey) {
-      const requiredColorKey = `${colorKey.slice(0, -2)}${tintKey}`;
+      const key = this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? 90 - Number(tintKey) : tintKey;
+      const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
       const requiredColor = this[requiredColorKey];
 
       if (_.isUndefined(requiredColor)) {
@@ -183,7 +186,8 @@ export class Colors {
 
     const sliced = tints.slice(0, 8);
     const adjusted = adjustSaturation(sliced, color);
-    return adjusted || sliced;
+    const palette = adjusted || sliced;
+    return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
   shouldGenerateDarkerPalette(color: string) {

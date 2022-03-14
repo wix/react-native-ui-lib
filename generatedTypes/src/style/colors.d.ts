@@ -3,6 +3,7 @@ import tinycolor from 'tinycolor2';
 import { Schemes, SchemeType } from './scheme';
 export declare class Colors {
     [key: string]: any;
+    shouldSupportDarkMode: boolean;
     constructor();
     /**
      * Load custom set of colors
@@ -114,11 +115,6 @@ declare const colorObject: Colors & {
     orange40: string;
     orange50: string;
     orange60: string;
-    /**
-     * Set color scheme for app
-     * arguments:
-     * scheme - color scheme e.g light/dark/default
-     */
     orange70: string;
     orange80: string;
     red1: string;
@@ -128,7 +124,10 @@ declare const colorObject: Colors & {
     red30: string;
     red40: string;
     red50: string;
-    red60: string;
+    red60: string; /**
+     * Support listening to Appearance changes
+     * and change the design tokens accordingly
+     */
     red70: string;
     red80: string;
     purple1: string;
@@ -174,11 +173,7 @@ declare const colorObject: Colors & {
     $backgroundSuccessHeavy: string;
     $backgroundSuccess: string;
     $backgroundWarningHeavy: string;
-    $backgroundWarning: string; /**
-     * Load set of schemes for light/dark mode
-     * arguments:
-     * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
-     */
+    $backgroundWarning: string;
     $backgroundMajor: string;
     $backgroundDangerHeavy: string;
     $backgroundDanger: string;
@@ -186,6 +181,9 @@ declare const colorObject: Colors & {
     $backgroundDark: string;
     $backgroundDarkElevated: string;
     $backgroundDarkActive: string;
+    /**
+     * Get app's current color scheme
+     */
     $textDisabled: string;
     $textDefault: string;
     $textNeutralHeavy: string;
@@ -200,7 +198,14 @@ declare const colorObject: Colors & {
     $textDangerLight: string;
     $iconDefault: string;
     $iconNeutral: string;
-    $iconDefaultLight: string;
+    $iconDefaultLight: string; /**
+     * Add alpha to hex or rgb color
+     * arguments:
+     * p1 - hex color / R part of RGB
+     * p2 - opacity / G part of RGB
+     * p3 - B part of RGB
+     * p4 - opacity
+     */
     $iconPrimary: string;
     $iconPrimaryLight: string;
     $iconGeneral: string;
