@@ -109,13 +109,9 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
      */
     height?: number;
     /**
-     * The width of the skeleton view
+     * The width of the skeleton view (string is not supported for 'circle')
      */
-    width?: number;
-    /**
-     * For flexing the view to the full container width (doesn't apply on templates)
-     */
-    fullWidth?: boolean;
+    width?: number | string;
     /**
      * The border radius of the skeleton view
      */
@@ -162,6 +158,7 @@ declare class SkeletonView extends Component<InternalSkeletonViewProps, Skeleton
         accessible: boolean;
         accessibilityLabel: any;
     };
+    getWidth(width: SkeletonViewProps['width']): number;
     getDefaultSkeletonProps: (input?: {
         circleOverride: boolean;
         style: StyleProp<ViewStyle>;
