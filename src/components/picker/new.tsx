@@ -211,6 +211,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         disabled={editable === false}
       >
         {renderPicker ? (
+          // @ts-expect-error TS throws a weird error, might be an issue with TS
           renderPicker(value, label)
         ) : (
           <TextFieldMigrator

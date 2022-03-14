@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, ReactNode} from 'react';
 import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
@@ -15,7 +15,22 @@ type PickerValueDeprecated = {value: string | number; label: string};
 
 export type PickerSingleValue = string | number | PickerValueDeprecated;
 export type PickerMultiValue = PickerSingleValue[];
-export type PickerValue = PickerSingleValue | PickerMultiValue;
+export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
+
+type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
+  ? (value?: ValueType, label?: string) => React.ReactElement
+  : never;
+type RenderPicker = RenderPickerOverloads<PickerValue>;
+
+type RenderCustomModalProps = {
+  visible: boolean;
+  toggleModal: (show: boolean) => void;
+  onSearchChange: (searchValue: string) => void;
+  children: ReactNode;
+  // onDone is relevant to multi mode only
+  onDone: () => void;
+  onCancel: () => void;
+};
 
 export interface PickerSearchStyle {
   icon?: number;
@@ -39,7 +54,6 @@ export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChang
    * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
    */
   value?: PickerValue;
-
   /**
    * Callback for when picker value change
    */
@@ -61,7 +75,7 @@ export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChang
    * Example:
    * renderPicker = (selectedItem) => {...}
    */
-  renderPicker?: (value?: PickerValue, label?: string) => React.ReactElement;
+  renderPicker?: RenderPicker;
   /**
    * Render custom picker item
    */
@@ -73,7 +87,7 @@ export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChang
   /**
    * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
    */
-  renderCustomModal?: (modalProps: ExpandableOverlayProps['modalProps']) => React.ReactElement;
+  renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
   /**
    * Custom picker props (when using renderPicker, will apply on the button wrapper)
    */
@@ -152,15 +166,15 @@ export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChang
 
 export interface PickerPropsWithSingle extends PickerBaseProps {
   mode?: PickerModes.SINGLE;
-  value: PickerSingleValue;
+  value?: PickerSingleValue;
 }
 
 export interface PickerPropsWithMulti extends PickerBaseProps {
   mode?: PickerModes.MULTI;
-  value: PickerMultiValue;
+  value?: PickerMultiValue;
 }
 
-export type PickerProps = & (PickerPropsWithSingle | PickerPropsWithMulti);
+export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
 
 export interface PickerItemProps {
   /**
