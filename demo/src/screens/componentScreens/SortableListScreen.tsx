@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import {SortableList, SortableListProps, View, BorderRadiuses, Icon, Button, Colors} from 'react-native-ui-lib'; //eslint-disable-line
-import {SharedValue} from 'react-native-reanimated';
+import {SortableList, View, BorderRadiuses, Button, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import SortableListItemDecorator from '../../../../src/components/sortableList/SortableListItemDecorator';
 
 interface Item {
   originalIndex: number;
@@ -21,39 +21,53 @@ const SortableListScreen = () => {
   }, []);
 
   const onOrderChange = useCallback((newData: Item[]) => {
-    // TODO:
     console.log('New order:', newData);
   }, []);
 
-  const getAnimatedStyle = (isDragged: SharedValue<boolean>) => {
-    'worklet';
-    // Can't make dragged item bigger because changing ScrollView's overflow to hidden the scrolled items will be shown.
-    return {transform: [{scale: isDragged.value ? 1 : 0.95}]};
-  };
+  const atRestAnimatedBackgroundStyle = useMemo(() => {
+    return {backgroundColor: Colors.green10, borderRadius: BorderRadiuses.br30};
+  }, []);
 
+  const draggedAnimatedBackgroundStyle = useMemo(() => {
+    return {backgroundColor: Colors.red10, borderRadius: BorderRadiuses.br30};
+  }, []);
+
+  const atRestAnimatedScaleStyle = useMemo(() => {
+    return {transform: [{scaleY: 1}]};
+  }, []);
+
+  const draggedAnimatedScaleStyle = useMemo(() => {
+    return {transform: [{scaleY: 1.2}]};
+  }, []);
+
+  // @ts-ignore
   const renderItem = useCallback(({item, _index}) => {
     return (
-      <Button
-        style={styles.itemContainer}
-        label={`${item.originalIndex}`}
-        borderRadius={BorderRadiuses.br30}
-        onPress={() => console.log('Original index is', item.originalIndex)}
-      />
+      <SortableListItemDecorator
+        atRestAnimatedStyle={atRestAnimatedScaleStyle}
+        draggedAnimatedStyle={draggedAnimatedScaleStyle}
+      >
+        <SortableListItemDecorator
+          atRestAnimatedStyle={atRestAnimatedBackgroundStyle}
+          draggedAnimatedStyle={draggedAnimatedBackgroundStyle}
+        >
+          <Button
+            style={styles.itemContainer}
+            label={`${item.originalIndex}`}
+            borderRadius={BorderRadiuses.br30}
+            onPress={() => console.log('Original index is', item.originalIndex)}
+            backgroundColor={Colors.transparent}
+          />
+        </SortableListItemDecorator>
+      </SortableListItemDecorator>
     );
-  }, []);
+  },
+  [atRestAnimatedBackgroundStyle, draggedAnimatedBackgroundStyle, atRestAnimatedScaleStyle, draggedAnimatedScaleStyle]);
 
   return (
     <GestureHandlerRootView style={styles.gestureHandler}>
       <View flex useSafeArea margin-page>
-        <SortableList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          onOrderChange={onOrderChange}
-          //   renderContent={renderContent}
-          //   keyExtractor={keyExtractor}
-          //   getAnimatedStyle={getAnimatedStyle}
-        />
+        <SortableList data={data} renderItem={renderItem} keyExtractor={keyExtractor} onOrderChange={onOrderChange}/>
       </View>
     </GestureHandlerRootView>
   );
@@ -67,10 +81,5 @@ const styles = StyleSheet.create({
   itemContainer: {
     borderColor: Colors.black,
     borderWidth: 1
-  },
-  iconStyle: {
-    position: 'absolute',
-    padding: 8,
-    right: 8
   }
 });

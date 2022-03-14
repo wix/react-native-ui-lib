@@ -8,15 +8,12 @@ import useItemScroll from './useItemScroll';
 import SortableListContext from './SortableListContext';
 import {useCallback, useContext} from 'react';
 
-const ANIMATION_SCALE_FACTOR = 1.2;
-
 const useDraggableAnimation = (props: BaseItemProps) => {
   const {height, index} = props;
 
   const isDragged = useSharedValue<boolean>(false);
   const drag = useSharedValue<number>(0);
   const scroll = useSharedValue(0);
-  const scaleY = useSharedValue<number>(1);
   const zIndex = useSharedValue<number>(0);
 
   const {onDragStateChange, onDrag} = useContext(SortableListContext);
@@ -69,24 +66,22 @@ const useDraggableAnimation = (props: BaseItemProps) => {
   (isDragged, wasDragged) => {
     if (wasDragged !== null && isDragged !== wasDragged) {
       if (isDragged) {
-        scaleY.value = withTiming(ANIMATION_SCALE_FACTOR, {duration: 100});
         zIndex.value = withTiming(999, {duration: 100});
       } else {
-        scaleY.value = withTiming(1, {duration: ANIMATION_END_DURATION});
         zIndex.value = withTiming(0, {duration: ANIMATION_END_DURATION});
       }
     }
   });
 
   const draggedAnimatedStyle = useAnimatedStyle(() => {
-    const translateY = (drag.value + scroll.value) / ANIMATION_SCALE_FACTOR + atRestSwappedTranslation.value;
+    const translateY = drag.value + scroll.value + atRestSwappedTranslation.value;
     return {
-      transform: [{scaleY: scaleY.value}, {translateY}],
+      transform: [{translateY}],
       zIndex: zIndex.value
     };
   });
 
-  return {dragAfterLongPressGesture, draggedAnimatedStyle};
+  return {dragAfterLongPressGesture, draggedAnimatedStyle, isDragged: showDraggedAnimation};
 };
 
 export default useDraggableAnimation;

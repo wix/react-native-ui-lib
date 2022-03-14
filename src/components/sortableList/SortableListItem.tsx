@@ -1,10 +1,12 @@
-import React, {PropsWithChildren, useCallback, useContext, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {PropsWithChildren, useCallback, useContext, useMemo, useState} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {GestureDetector} from 'react-native-gesture-handler';
 import {BaseItemProps} from './types';
 import useDraggableAnimation from './useDraggableAnimation';
 import SortableListContext from './SortableListContext';
+import SortableListItemContext from './SortableListItemContext';
 
 type Props = PropsWithChildren<Pick<BaseItemProps, 'index'>>;
 
@@ -13,7 +15,7 @@ const SortableListItem = (props: Props) => {
 
   const [height, setHeight] = useState<number>(0);
   const {setItemHeight} = useContext(SortableListContext);
-  const {dragAfterLongPressGesture, draggedAnimatedStyle} = useDraggableAnimation({
+  const {dragAfterLongPressGesture, draggedAnimatedStyle, isDragged} = useDraggableAnimation({
     height,
     index
   });
@@ -26,12 +28,18 @@ const SortableListItem = (props: Props) => {
   },
   [setHeight, setItemHeight]);
 
+  const context = useMemo(() => {
+    return {isDragged};
+  }, []);
+
   return (
-    <GestureDetector gesture={dragAfterLongPressGesture}>
-      <Animated.View style={draggedAnimatedStyle} onLayout={onLayout}>
-        {children}
-      </Animated.View>
-    </GestureDetector>
+    <SortableListItemContext.Provider value={context}>
+      <GestureDetector gesture={dragAfterLongPressGesture}>
+        <Animated.View style={draggedAnimatedStyle} onLayout={onLayout}>
+          {children}
+        </Animated.View>
+      </GestureDetector>
+    </SortableListItemContext.Provider>
   );
 };
 
