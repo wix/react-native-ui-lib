@@ -125,13 +125,9 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    */
   height?: number;
   /**
-   * The width of the skeleton view
+   * The width of the skeleton view (string is not supported for 'circle')
    */
-  width?: number;
-  /**
-   * For flexing the view to the full container width (doesn't apply on templates)
-   */
-  fullWidth?: boolean;
+  width?: number | string;
   /**
    * The border radius of the skeleton view
    */
@@ -231,25 +227,29 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     };
   };
 
+  getWidth(width: SkeletonViewProps['width']) {
+    return _.isUndefined(width) || _.isString(width) ? 0 : width;
+  }
+
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
     const {circleOverride, style} = input || {};
-    const {circle, width = 0, height = 0, fullWidth} = this.props;
+    const {circle, width, height = 0} = this.props;
     let {borderRadius} = this.props;
     let widthStyle;
     let size;
-
+    const defaultWidth = this.getWidth(width);
     if (circle || circleOverride) {
       borderRadius = BorderRadiuses.br100;
-      size = Math.max(width, height);
-    } else if (fullWidth) {
-      widthStyle = {width: '100%'};
+      size = Math.max(defaultWidth, height);
+    } else if (_.isString(width)) {
+      widthStyle = {width};
     }
 
     return {
       shimmerColors: [Colors.grey70, Colors.grey60, Colors.grey70],
       isReversed: Constants.isRTL,
       style: [{borderRadius}, widthStyle, style],
-      width: size || width,
+      width: size || defaultWidth,
       height: size || height
     };
   };
@@ -327,7 +327,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   };
 
   renderListItemTemplate = () => {
-    const {style, ...others} = this.props;
+    const {style, width, ...others} = this.props; // eslint-disable-line
 
     return (
       <View style={[styles.listItem, style]} {...this.getAccessibilityProps('Loading list item')} {...others}>
@@ -361,8 +361,9 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   };
 
   renderAdvanced = () => {
-    const {children, renderContent, showContent, style, ...others} = this.props;
+    const {children, renderContent, showContent, style, width, ...others} = this.props; // eslint-disable-line
     const data = showContent && _.isFunction(renderContent) ? renderContent(this.props) : children;
+    
     return (
       <View style={style} {...this.getAccessibilityProps('Loading content')}>
         <ShimmerPlaceholder {...this.getDefaultSkeletonProps()} {...others}>
@@ -452,7 +453,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
       hideSeparator,
       showLastSeparator,
       height,
-      width,
+      width: this.getWidth(width),
       borderRadius,
       circle,
       style,

@@ -341,9 +341,9 @@ export default class SkeletonViewScreen extends Component {
           />
         </View>
         <SkeletonView
+          width={'100%'}
           height={10}
           borderRadius={5}
-          fullWidth
           showContent={isDataAvailable}
           renderContent={() => <Text>Lorem Ipsum is simply dummy text of the industry.</Text>}
         />
