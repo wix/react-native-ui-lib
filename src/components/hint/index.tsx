@@ -306,9 +306,8 @@ class Hint extends Component<HintProps, HintState> {
 
   getContainerPosition() {
     if (this.targetLayout) {
-      return {top: this.targetLayout.y || 0, left: this.targetLayout.x || 0};
+      return {top: this.targetLayout.y, left: this.targetLayout.x};
     }
-    return {top: 0, left: 0};
   }
 
   getHintPosition() {
@@ -408,7 +407,7 @@ class Hint extends Component<HintProps, HintState> {
     const {targetLayoutInWindow} = this.state;
     const {onBackgroundPress, backdropColor, testID} = this.props;
     if (targetLayoutInWindow) {
-      const containerPosition = this.getContainerPosition();
+      const containerPosition = this.getContainerPosition() as {top: number, left: number};
       return (
         <Animated.View
           style={[
