@@ -16,7 +16,7 @@ const useDraggableAnimation = (props: BaseItemProps) => {
   const scroll = useSharedValue(0);
   const zIndex = useSharedValue<number>(0);
 
-  const {onDragStateChange, onDrag} = useContext(SortableListContext);
+  const {scrollWhileDragging, onDragStateChange, onDrag} = useContext(SortableListContext);
 
   const {
     onDragUpdate: swap_onDragUpdate,
@@ -37,7 +37,10 @@ const useDraggableAnimation = (props: BaseItemProps) => {
 
   const onDragUpdate = useCallback(event => {
     'worklet';
-    onDrag?.(event.absoluteY, ref.current);
+    if (scrollWhileDragging) {
+      onDrag?.(event.absoluteY, ref.current);
+    }
+
     drag.value = event.translationY;
     swap_onDragUpdate(event);
   },

@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {isArray, times} from 'lodash';
 import React, {useMemo, useCallback} from 'react';
+import {FlatListProps} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import View from '../view';
 import SortableListContext from './SortableListContext';
@@ -14,15 +15,23 @@ function getIndices<ItemT>(data: AnimatedFlatListProps<ItemT>['data']) {
   return times(length, index => index);
 }
 
-export interface SortableListProps<ItemT> extends Omit<AnimatedFlatListProps<ItemT>, 'extraData'> {
+export interface SortableListProps<ItemT> extends Omit<AnimatedFlatListProps<ItemT>, 'extraData' | 'data'> {
+  /**
+   * The data of the list, do not update the data.
+   */
+  data: FlatListProps<ItemT>['data'];
   /**
    * A callback to get the new order (or swapped items).
    */
   onOrderChange: (data: ItemT[] /* TODO: add more data? */) => void;
+  /**
+   * Enable scrolling while dragging (experimental, default is false).
+   */
+  scrollWhileDragging?: boolean;
 }
 
 const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) => {
-  const {data, onOrderChange, ...others} = props;
+  const {data, onOrderChange, scrollWhileDragging = false, ...others} = props;
 
   const currentByInitialIndices = useSharedValue<number[]>(getIndices(data));
   const initialByCurrentIndices = useSharedValue<number[]>(getIndices(data));
@@ -39,7 +48,14 @@ const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) =>
   [cleanScrollValues, onOrderChange]);
 
   const context = useMemo(() => {
-    return {currentByInitialIndices, initialByCurrentIndices, onDragStateChange, onDrag, setItemHeight};
+    return {
+      currentByInitialIndices,
+      initialByCurrentIndices,
+      scrollWhileDragging,
+      onDragStateChange,
+      onDrag,
+      setItemHeight
+    };
   }, []);
 
   return (

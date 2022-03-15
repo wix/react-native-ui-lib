@@ -1,0 +1,34 @@
+{
+  "name": "SortableList",
+  "category": "basic",
+  "description": "A sortable list component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableListScreen.tsx",
+  "props": [
+    {
+      "name": "data",
+      "type": "ItemT[]",
+      "description": "The initial data of the list, do not update the data.",
+      "required": true
+    },
+    {
+      "name": "onOrderChange",
+      "type": "(data: ItemT[]) => void",
+      "description": "A callback to get the new order (or swapped items).",
+      "required": true
+    },
+    {
+      "name": "scrollWhileDragging",
+      "type": "boolean",
+      "description": "Enable scrolling while dragging (experimental, default is false).",
+      "default": "false"
+    }
+  ],
+  "snippet": [
+    "<SortableList",
+    "data={data$1}",
+    "onOrderChange={onOrderChange$2}",
+    "renderItem={renderItem$3}",
+    "keyExtractor={keyExtractor$4}",
+    "/>"
+  ]
+}
