@@ -11,7 +11,7 @@ import Scheme, {Schemes, SchemeType} from './scheme';
 
 export class Colors {
   [key: string]: any;
-  shouldSupportDarkMode = false;
+  private shouldSupportDarkMode = false;
 
   constructor() {
     const colors = Object.assign(colorsPalette, designTokens, themeColors);
@@ -134,7 +134,8 @@ export class Colors {
     const colorKey = _.findKey(this, (_value, key) => this[key] === color);
 
     if (colorKey) {
-      const key = this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? 90 - Number(tintKey) : tintKey;
+      const key =
+        this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? this.getInvertedTintKey(tintKey) : tintKey;
       const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
       const requiredColor = this[requiredColorKey];
 
@@ -144,6 +145,24 @@ export class Colors {
       return requiredColor;
     }
     return this.getTintedColorForDynamicHex(color, tintKey);
+  }
+
+  getInvertedTintKey(tintKey: string | number) {
+    let invertedTintKey;
+    switch (tintKey) {
+      case 1:
+      case 80:
+        invertedTintKey = 81 - Number(tintKey);
+        break;
+      case 5:
+      case 70:
+        invertedTintKey = 75 - Number(tintKey);
+        break;
+      default:
+        invertedTintKey = 90 - Number(tintKey);
+        break;
+    }
+    return invertedTintKey;
   }
 
   getColorName(color: string) {

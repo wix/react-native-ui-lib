@@ -3,7 +3,7 @@ import tinycolor from 'tinycolor2';
 import { Schemes, SchemeType } from './scheme';
 export declare class Colors {
     [key: string]: any;
-    shouldSupportDarkMode: boolean;
+    private shouldSupportDarkMode;
     constructor();
     /**
      * Load custom set of colors
@@ -47,6 +47,7 @@ export declare class Colors {
     getBackgroundKeysPattern(): RegExp;
     isEmpty(color: string): boolean;
     getColorTint(color: string, tintKey: string | number): any;
+    getInvertedTintKey(tintKey: string | number): number;
     getColorName(color: string): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
@@ -116,7 +117,11 @@ declare const colorObject: Colors & {
     orange50: string;
     orange60: string;
     orange70: string;
-    orange80: string;
+    orange80: string; /**
+     * Set color scheme for app
+     * arguments:
+     * scheme - color scheme e.g light/dark/default
+     */
     red1: string;
     red5: string;
     red10: string;
@@ -124,10 +129,7 @@ declare const colorObject: Colors & {
     red30: string;
     red40: string;
     red50: string;
-    red60: string; /**
-     * Support listening to Appearance changes
-     * and change the design tokens accordingly
-     */
+    red60: string;
     red70: string;
     red80: string;
     purple1: string;
@@ -141,6 +143,14 @@ declare const colorObject: Colors & {
     purple70: string;
     purple80: string;
     violet1: string;
+    /**
+     * Add alpha to hex or rgb color
+     * arguments:
+     * p1 - hex color / R part of RGB
+     * p2 - opacity / G part of RGB
+     * p3 - B part of RGB
+     * p4 - opacity
+     */
     violet5: string;
     violet10: string;
     violet20: string;
@@ -181,12 +191,14 @@ declare const colorObject: Colors & {
     $backgroundDark: string;
     $backgroundDarkElevated: string;
     $backgroundDarkActive: string;
-    /**
-     * Get app's current color scheme
-     */
     $textDisabled: string;
     $textDefault: string;
     $textNeutralHeavy: string;
+    /**
+     * Set color scheme for app
+     * arguments:
+     * scheme - color scheme e.g light/dark/default
+     */
     $textNeutral: string;
     $textNeutralLight: string;
     $textDefaultLight: string;
@@ -198,14 +210,7 @@ declare const colorObject: Colors & {
     $textDangerLight: string;
     $iconDefault: string;
     $iconNeutral: string;
-    $iconDefaultLight: string; /**
-     * Add alpha to hex or rgb color
-     * arguments:
-     * p1 - hex color / R part of RGB
-     * p2 - opacity / G part of RGB
-     * p3 - B part of RGB
-     * p4 - opacity
-     */
+    $iconDefaultLight: string;
     $iconPrimary: string;
     $iconPrimaryLight: string;
     $iconGeneral: string;
