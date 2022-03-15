@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import { AnimatedFlatListProps } from './AnimatedFlatList';
 export interface SortableListProps<ItemT> extends Omit<AnimatedFlatListProps<ItemT>, 'extraData'> {
     /**
@@ -6,5 +6,8 @@ export interface SortableListProps<ItemT> extends Omit<AnimatedFlatListProps<Ite
      */
     onOrderChange: (data: ItemT[]) => void;
 }
-declare const SortableList: <ItemT extends unknown>(props: SortableListProps<ItemT>) => JSX.Element;
+declare const SortableList: {
+    <ItemT extends unknown>(props: SortableListProps<ItemT>): JSX.Element;
+    SortableListItemDecorator: (props: React.PropsWithChildren<import("./SortableListItemDecorator").SortableListItemDecoratorProps>) => JSX.Element;
+};
 export default SortableList;

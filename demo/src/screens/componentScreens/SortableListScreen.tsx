@@ -3,7 +3,6 @@ import React, {useCallback, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {SortableList, View, BorderRadiuses, Button, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import SortableListItemDecorator from '../../../../src/components/sortableList/SortableListItemDecorator';
 
 interface Item {
   originalIndex: number;
@@ -43,11 +42,11 @@ const SortableListScreen = () => {
   // @ts-ignore
   const renderItem = useCallback(({item, _index}) => {
     return (
-      <SortableListItemDecorator
+      <SortableList.SortableListItemDecorator
         atRestAnimatedStyle={atRestAnimatedScaleStyle}
         draggedAnimatedStyle={draggedAnimatedScaleStyle}
       >
-        <SortableListItemDecorator
+        <SortableList.SortableListItemDecorator
           atRestAnimatedStyle={atRestAnimatedBackgroundStyle}
           draggedAnimatedStyle={draggedAnimatedBackgroundStyle}
         >
@@ -58,8 +57,8 @@ const SortableListScreen = () => {
             onPress={() => console.log('Original index is', item.originalIndex)}
             backgroundColor={Colors.transparent}
           />
-        </SortableListItemDecorator>
-      </SortableListItemDecorator>
+        </SortableList.SortableListItemDecorator>
+      </SortableList.SortableListItemDecorator>
     );
   },
   [atRestAnimatedBackgroundStyle, draggedAnimatedBackgroundStyle, atRestAnimatedScaleStyle, draggedAnimatedScaleStyle]);

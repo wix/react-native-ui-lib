@@ -7,6 +7,7 @@ import SortableListContext from './SortableListContext';
 import AnimatedFlatList, {AnimatedFlatListProps} from './AnimatedFlatList';
 import SortableListItem from './SortableListItem';
 import useListScroll from './useListScroll';
+import SortableListItemDecorator from './SortableListItemDecorator';
 
 function getIndices<ItemT>(data: AnimatedFlatListProps<ItemT>['data']) {
   const length = isArray(data) ? data.length : 0;
@@ -60,5 +61,7 @@ const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) =>
     </SortableListContext.Provider>
   );
 };
+
+SortableList.SortableListItemDecorator = SortableListItemDecorator;
 
 export default SortableList;
