@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   itemContainer: {
+    height: 52,
     borderColor: Colors.black,
     borderWidth: 1
   }
