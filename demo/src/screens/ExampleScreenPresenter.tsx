@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {StyleSheet} from 'react-native';
 import {
   Checkbox,
@@ -13,7 +13,8 @@ import {
   SegmentedControlItemProps,
   Text,
   TextProps,
-  View
+  View,
+  ViewProps
 } from 'react-native-ui-lib';
 
 interface RadioGroupOptions {
@@ -30,19 +31,26 @@ export function renderHeader(title: string, others: TextProps) {
   );
 }
 
-export function renderBooleanOption(title: string, key: string) {
+export function renderBooleanOption(title: string,
+  data: string | [boolean, Dispatch<SetStateAction<boolean>>],
+  others?: ViewProps) {
   // @ts-ignore
-  const value = this.state[key];
+  const value = (typeof data === 'string' ? this.state[data] : data[0]) as boolean;
+  const str = typeof data === 'string' ? data : `${value}`;
+  const onValueChange =
+    typeof data === 'string'
+      ? // @ts-ignore
+      (newValue: boolean) => this.setState({[data]: newValue})
+      : (newValue: boolean) => data[1](newValue);
   return (
-    <View row centerV spread marginB-s4 key={key}>
+    <View row centerV spread marginB-s4 key={str} {...others}>
       <Text flex>{title}</Text>
       <Switch
         useCustomTheme
-        key={key}
-        testID={key}
+        key={str}
+        testID={str}
         value={value}
-        // @ts-ignore
-        onValueChange={value => this.setState({[key]: value})}
+        onValueChange={onValueChange}
       />
     </View>
   );
