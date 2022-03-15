@@ -156,7 +156,6 @@ const SortableGridItem = (props: PropsWithChildren<SortableGridItemProps>) => {
 
   const longPressGesture = Gesture.LongPress()
     .onStart(() => {
-      console.log('ethan - long press');
       isDragging.value = true;
     })
     .minDuration(250);
