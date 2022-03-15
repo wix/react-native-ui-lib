@@ -1,19 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useCallback, useContext} from 'react';
-import {useAnimatedReaction, useSharedValue, withTiming, SharedValue} from 'react-native-reanimated';
+import {useAnimatedReaction, withTiming, SharedValue} from 'react-native-reanimated';
 import {BaseItemProps, ANIMATION_END_DURATION} from './types';
 import SortableListContext from './SortableListContext';
 
 interface Props extends BaseItemProps {
   isDragged: SharedValue<boolean>;
+  atRestSwappedTranslation: SharedValue<number>;
 }
 
 const useAtRestItemsTranslation = (props: Props) => {
-  const {index, height, isDragged} = props;
+  const {index, height, atRestSwappedTranslation, isDragged} = props;
 
   const {currentByInitialIndices} = useContext(SortableListContext);
-
-  const atRestSwappedTranslation = useSharedValue(0);
 
   const getSwappedTranslation = (currentIndex: number) => {
     'worklet';
@@ -40,7 +39,7 @@ const useAtRestItemsTranslation = (props: Props) => {
     }
   }, [height]);
 
-  return {atRestSwappedTranslation, onDragEnd};
+  return {onDragEnd};
 };
 
 export default useAtRestItemsTranslation;

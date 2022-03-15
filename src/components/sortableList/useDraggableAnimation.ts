@@ -13,6 +13,7 @@ const useDraggableAnimation = (props: BaseItemProps) => {
 
   const isDragged = useSharedValue<boolean>(false);
   const drag = useSharedValue<number>(0);
+  const atRestSwappedTranslation = useSharedValue(0);
   const scroll = useSharedValue(0);
   const zIndex = useSharedValue<number>(0);
 
@@ -22,9 +23,9 @@ const useDraggableAnimation = (props: BaseItemProps) => {
     onDragUpdate: swap_onDragUpdate,
     onDragEnd: swap_onDragEnd,
     swapItemsIfNeeded
-  } = useSwapItems({index, height, drag, scroll});
+  } = useSwapItems({index, height, drag, scroll, atRestSwappedTranslation});
   const {ref} = useItemScroll({scroll, swapItemsIfNeeded});
-  const {atRestSwappedTranslation, onDragEnd: atRest_onDragEnd} = useAtRestItemsTranslation({index, height, isDragged});
+  const {onDragEnd: atRest_onDragEnd} = useAtRestItemsTranslation({index, height, isDragged, atRestSwappedTranslation});
 
   const onDragStart = useCallback(() => {
     'worklet';

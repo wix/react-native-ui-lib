@@ -8,10 +8,11 @@ import useIndicesManager from './useIndicesManager';
 
 interface Props extends BaseItemProps, ScrollProps {
   drag: SharedValue<number>;
+  atRestSwappedTranslation: SharedValue<number>;
 }
 
 const useSwapItems = (props: Props) => {
-  const {index, height, drag, scroll} = props;
+  const {index, height, drag, scroll, atRestSwappedTranslation} = props;
 
   const {requestIndexChange} = useIndicesManager();
 
@@ -21,11 +22,17 @@ const useSwapItems = (props: Props) => {
   const swapItemsIfNeeded = useCallback(() => {
     'worklet';
     const threshold = height / 2;
-    if (velocity.value > 0 && drag.value + scroll.value - draggedSwappedTranslation.value > threshold) {
+    if (
+      velocity.value > 0 &&
+      drag.value + scroll.value + atRestSwappedTranslation.value - draggedSwappedTranslation.value > threshold
+    ) {
       if (requestIndexChange(index, true)) {
         draggedSwappedTranslation.value += height;
       }
-    } else if (velocity.value < 0 && drag.value + scroll.value - draggedSwappedTranslation.value < -threshold) {
+    } else if (
+      velocity.value < 0 &&
+      drag.value + scroll.value + atRestSwappedTranslation.value - draggedSwappedTranslation.value < -threshold
+    ) {
       if (requestIndexChange(index, false)) {
         draggedSwappedTranslation.value -= height;
       }
