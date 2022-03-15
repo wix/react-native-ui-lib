@@ -1,7 +1,9 @@
-import React, {PropsWithChildren} from 'react';
-import {FlatListProps, StyleProp, ViewStyle, TextInputProps, TextStyle} from 'react-native';
+import React, {PropsWithChildren, ReactNode} from 'react';
+import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
+// TODO: Replace with new TextField Props after migration to new TextField has completed
+import {TextFieldProps} from '../../../typings/components/Inputs';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -13,7 +15,22 @@ type PickerValueDeprecated = {value: string | number; label: string};
 
 export type PickerSingleValue = string | number | PickerValueDeprecated;
 export type PickerMultiValue = PickerSingleValue[];
-export type PickerValue = PickerSingleValue | PickerMultiValue;
+export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
+
+type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
+  ? (value?: ValueType, label?: string) => React.ReactElement
+  : never;
+type RenderPicker = RenderPickerOverloads<PickerValue>;
+
+type RenderCustomModalProps = {
+  visible: boolean;
+  toggleModal: (show: boolean) => void;
+  onSearchChange: (searchValue: string) => void;
+  children: ReactNode;
+  // onDone is relevant to multi mode only
+  onDone: () => void;
+  onCancel: () => void;
+};
 
 export interface PickerSearchStyle {
   icon?: number;
@@ -23,7 +40,7 @@ export interface PickerSearchStyle {
 }
 
 // TODO: need to extend TextField props (and not just TextInputProps)
-export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChange'> {
+export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChange'> {
   /**
    * Temporary prop required for migration to Picker's new API
    */
@@ -37,7 +54,6 @@ export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChang
    * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
    */
   value?: PickerValue;
-
   /**
    * Callback for when picker value change
    */
@@ -59,7 +75,7 @@ export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChang
    * Example:
    * renderPicker = (selectedItem) => {...}
    */
-  renderPicker?: (value?: PickerValue, label?: string) => React.ReactElement;
+  renderPicker?: RenderPicker;
   /**
    * Render custom picker item
    */
@@ -71,7 +87,7 @@ export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChang
   /**
    * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
    */
-  renderCustomModal?: (modalProps: ExpandableOverlayProps['modalProps']) => React.ReactElement;
+  renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
   /**
    * Custom picker props (when using renderPicker, will apply on the button wrapper)
    */
@@ -149,13 +165,13 @@ export interface PickerBaseProps extends Omit<TextInputProps, 'value' | 'onChang
 }
 
 export interface PickerPropsWithSingle extends PickerBaseProps {
-  mode: PickerModes.SINGLE;
-  value: PickerSingleValue;
+  mode?: PickerModes.SINGLE;
+  value?: PickerSingleValue;
 }
 
 export interface PickerPropsWithMulti extends PickerBaseProps {
-  mode: PickerModes.MULTI;
-  value: PickerMultiValue;
+  mode?: PickerModes.MULTI;
+  value?: PickerMultiValue;
 }
 
 export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
@@ -176,11 +192,11 @@ export interface PickerItemProps {
   /**
    * Custom function for the item label (e.g (value) => customLabel)
    */
-  getItemLabel: PickerProps['getItemLabel'];
+  getItemLabel?: PickerProps['getItemLabel'];
   /**
    * @deprecated Function to return the value out of the item value prop when value is custom shaped.
    */
-  getItemValue: PickerProps['getItemValue'];
+  getItemValue?: PickerProps['getItemValue'];
   /**
    * Render custom item
    */
@@ -200,7 +216,7 @@ export interface PickerItemProps {
   /**
    * Callback for onPress action
    */
-  onPress: () => void;
+  onPress?: () => void;
   /**
    * Component test id
    */

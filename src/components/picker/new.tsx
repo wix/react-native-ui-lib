@@ -27,7 +27,7 @@ import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
-import {PickerProps, PickerValue, PickerModes, PickerSearchStyle} from './types';
+import {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle} from './types';
 
 const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps) => {
   const {
@@ -43,6 +43,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     containerStyle,
     testID,
     onChange,
+    onPress,
     onShow,
     onSearchChange,
     renderCustomModal,
@@ -53,14 +54,14 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     pickerModalProps,
     listProps,
     value,
-    editable,
     getLabel,
     getItemLabel,
     getItemValue,
     renderItem,
     children,
     migrate,
-    migrateTextField
+    migrateTextField,
+    ...others
   } = props;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
@@ -124,7 +125,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     onDoneSelecting
   ]);
 
-  const textInputProps = TextField.extractOwnProps(props);
+  // const textInputProps = TextField.extractOwnProps(props);
   const {paddings, margins, positionStyle} = modifiers;
 
   const modalProps: ExpandableOverlayProps['modalProps'] = {
@@ -204,18 +205,21 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         modalProps={modalProps}
         expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
+        onPress={onPress}
         testID={testID}
         {...customPickerProps}
-        disabled={editable === false}
+        disabled={props.editable === false}
       >
         {renderPicker ? (
+          // @ts-expect-error TS throws a weird error, might be an issue with TS
           renderPicker(value, label)
         ) : (
           <TextFieldMigrator
             migrate={migrateTextField}
             customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
             ref={forwardedRef}
-            {...textInputProps}
+            // {...textInputProps}
+            {...others}
             testID={`${testID}.input`}
             containerStyle={[paddings, margins, positionStyle, containerStyle]}
             {...accessibilityInfo}
@@ -248,6 +252,6 @@ Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
   return items;
 };
 
-export {PickerProps, PickerValue, PickerModes, PickerSearchStyle};
+export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle};
 export {Picker}; // For tests
-export default asBaseComponent(forwardRef(Picker));
+export default asBaseComponent<PickerProps, typeof Picker>(forwardRef(Picker));
