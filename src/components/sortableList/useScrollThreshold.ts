@@ -26,8 +26,8 @@ const useScrollThreshold = () => {
   useEffect(() => {
     if (itemHeight > 0 && absMeasurements !== undefined) {
       scrollThreshold.value = {
-        top: absMeasurements.y + itemHeight / 2,
-        bottom: listHeight + absMeasurements.y - itemHeight / 2
+        top: absMeasurements.y + 2 * itemHeight,
+        bottom: listHeight + absMeasurements.y - itemHeight
       };
     }
   }, [listHeight, itemHeight, absMeasurements]);
