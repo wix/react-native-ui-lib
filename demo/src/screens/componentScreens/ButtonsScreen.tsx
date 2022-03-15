@@ -11,8 +11,8 @@ import {
 } from 'react-native-ui-lib'; //eslint-disable-line
 
 const ButtonSpace = 20;
-const plusIcon = require('../../assets/icons/plus.png');
-const settingsIcon = require('../../assets/icons/settings.png');
+const plusIcon = Assets.getAssetByPath('icons.demo.plus');
+const settingsIcon = Assets.getAssetByPath('icons.demo.settings');
 const labelButton = {label: 'Animated'};
 const iconButton = {round: true, iconStyle: {tintColor: Colors.white}};
 
