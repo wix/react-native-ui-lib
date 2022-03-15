@@ -54,14 +54,14 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     pickerModalProps,
     listProps,
     value,
-    editable,
     getLabel,
     getItemLabel,
     getItemValue,
     renderItem,
     children,
     migrate,
-    migrateTextField
+    migrateTextField,
+    ...others
   } = props;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
@@ -125,7 +125,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     onDoneSelecting
   ]);
 
-  const textInputProps = TextField.extractOwnProps(props);
+  // const textInputProps = TextField.extractOwnProps(props);
   const {paddings, margins, positionStyle} = modifiers;
 
   const modalProps: ExpandableOverlayProps['modalProps'] = {
@@ -208,7 +208,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         onPress={onPress}
         testID={testID}
         {...customPickerProps}
-        disabled={editable === false}
+        disabled={props.editable === false}
       >
         {renderPicker ? (
           // @ts-expect-error TS throws a weird error, might be an issue with TS
@@ -218,7 +218,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             migrate={migrateTextField}
             customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
             ref={forwardedRef}
-            {...textInputProps}
+            // {...textInputProps}
+            {...others}
             testID={`${testID}.input`}
             containerStyle={[paddings, margins, positionStyle, containerStyle]}
             {...accessibilityInfo}
