@@ -6,11 +6,16 @@ const SvgCssUri = SvgPackage?.SvgCssUri;
 // const SvgProps = SvgPackage?.SvgProps; TODO: not sure how (or if) we can use their props
 
 export interface SvgImageProps {
+  /**
+   * the asset tint
+   */
+  tintColor?: string | null;
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
 }
 
 function SvgImage(props: SvgImageProps) {
-  const {data, ...others} = props;
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const {data, tintColor: _tintColor, ...others} = props;
 
   if (!SvgXml) {
     // eslint-disable-next-line max-len
