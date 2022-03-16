@@ -134,8 +134,12 @@ export class Colors {
     const colorKey = _.findKey(this, (_value, key) => this[key] === color);
 
     if (colorKey) {
+      const colorKeys = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
+      const keyIndex = _.indexOf(colorKeys, Number(tintKey));
       const key =
-        this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? this.getInvertedTintKey(tintKey) : tintKey;
+        this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark'
+          ? colorKeys[colorKeys.length - 1 - keyIndex]
+          : tintKey;
       const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
       const requiredColor = this[requiredColorKey];
 
@@ -145,24 +149,6 @@ export class Colors {
       return requiredColor;
     }
     return this.getTintedColorForDynamicHex(color, tintKey);
-  }
-
-  getInvertedTintKey(tintKey: string | number) {
-    let invertedTintKey;
-    switch (tintKey) {
-      case 1:
-      case 80:
-        invertedTintKey = 81 - Number(tintKey);
-        break;
-      case 5:
-      case 70:
-        invertedTintKey = 75 - Number(tintKey);
-        break;
-      default:
-        invertedTintKey = 90 - Number(tintKey);
-        break;
-    }
-    return invertedTintKey;
   }
 
   getColorName(color: string) {
