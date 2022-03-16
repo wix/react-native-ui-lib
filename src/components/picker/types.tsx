@@ -159,6 +159,10 @@ export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChang
    */
   onShow?: () => void;
   /**
+   * Add safe area in the Picker modal view
+   */
+  useSafeArea?: boolean;
+  /**
    * Component test id
    */
   testID?: string;
@@ -241,5 +245,6 @@ export type PickerItemsListProps = Pick<
   | 'searchPlaceholder'
   | 'onSearchChange'
   | 'renderCustomSearch'
+  | 'useSafeArea'
   | 'testID'
 >;
