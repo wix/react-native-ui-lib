@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {View, Text, Image, Colors, Constants, Avatar, GridView, Shadows, Card} from 'react-native-ui-lib';
+import {View, Text, Image, Colors, Constants, Avatar, GridView, Card} from 'react-native-ui-lib';
 import React, {Component} from 'react';
 import {Alert, ScrollView} from 'react-native';
 import conversations from '../../data/conversations';
@@ -153,7 +153,7 @@ class GridViewScreen extends Component {
             items={contacts}
             // viewWidth={300}
             numColumns={6}
-            lastItemOverlayColor={Colors.primary}
+            lastItemOverlayColor={Colors.rgba(Colors.primary, 0.6)}
             lastItemLabel={7}
           />
 
@@ -163,7 +163,7 @@ class GridViewScreen extends Component {
           <GridView
             items={products}
             numColumns={4}
-            lastItemOverlayColor={Colors.primary}
+            lastItemOverlayColor={Colors.rgba(Colors.primary, 0.6)}
             lastItemLabel={42}
             keepItemSize
           />
