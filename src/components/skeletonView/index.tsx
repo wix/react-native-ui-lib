@@ -129,7 +129,7 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    */
   width?: number;
   /**
-   * The width of the skeleton view
+   * The colors of the skeleton view
    */
   colors?: string[]
   /**
