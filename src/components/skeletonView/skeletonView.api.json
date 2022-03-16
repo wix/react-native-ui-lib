@@ -37,6 +37,7 @@
     {"name": "timesKey", "type": "string", "description": "A key prefix for the duplicated SkeletonViews"},
     {"name": "height", "type": "number", "description": "The height of the skeleton view"},
     {"name": "width", "type": "number", "description": "The width of the skeleton view"},
+    {"name": "colors", "type": "string[]", "description": "The colors of the skeleton view"},
     {"name": "borderRadius", "type": "number", "description": "The border radius of the skeleton view"},
     {
       "name": "circle",
