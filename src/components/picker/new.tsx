@@ -5,7 +5,7 @@
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
-import React, {useMemo, useState, useRef, PropsWithChildren} from 'react';
+import React, {useMemo, useState, useRef, PropsWithChildren, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {
   Constants,
