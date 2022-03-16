@@ -14,6 +14,7 @@ export interface SvgImageProps {
 }
 
 function SvgImage(props: SvgImageProps) {
+  // tintColor crashes Android, so we're removing this until we properly support it.
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   const {data, tintColor, ...others} = props;
 
