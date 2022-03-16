@@ -5,7 +5,7 @@
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
-import React, {useMemo, useState, useRef, PropsWithChildren} from 'react';
+import React, {useMemo, useState, useRef, PropsWithChildren, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {
   Constants,
@@ -59,6 +59,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     getItemValue,
     renderItem,
     children,
+    useSafeArea,
     migrate,
     migrateTextField,
     ...others
@@ -168,6 +169,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
         listProps={listProps}
+        useSafeArea={useSafeArea}
       >
         {filteredChildren}
       </PickerItemsList>
@@ -186,7 +188,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     _onSearchChange,
     renderCustomSearch,
     listProps,
-    filteredChildren
+    filteredChildren,
+    useSafeArea
   ]);
 
   if (useNativePicker) {
