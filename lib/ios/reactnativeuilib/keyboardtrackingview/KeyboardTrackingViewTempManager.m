@@ -176,6 +176,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     
     for (UIView* subview in allSubviews)
     {
+        NSString* className = NSStringFromClass([subview class]);
         if(_manageScrollView)
         {
             if(_scrollViewToManage == nil)
@@ -201,7 +202,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
             }
         }
         
-        if ([subview isKindOfClass:NSClassFromString(@"RCTTextField")])
+        if ([className isEqualToString:@"RCTTextField"])
         {
             UITextField *textField = nil;
             Ivar backedTextInputIvar = class_getInstanceVariable([subview class], "_backedTextInput");
@@ -215,15 +216,15 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
             }
             [self setupTextField:textField];
         }
-        else if ([subview isKindOfClass:NSClassFromString(@"RCTUITextField")] && [subview isKindOfClass:[UITextField class]])
+        else if ([className isEqualToString:@"RCTUITextField"])
         {
             [self setupTextField:(UITextField*)subview];
         }
-        else if ([subview isKindOfClass:NSClassFromString(@"RCTMultilineTextInputView")])
+        else if ([className isEqualToString:@"RCTMultilineTextInputView"])
         {
             [self setupTextView:[subview valueForKey:@"_backedTextInputView"]];
         }
-        else if ([subview isKindOfClass:NSClassFromString(@"RCTTextView")])
+        else if ([className isEqualToString:@"RCTTextView"])
         {
             UITextView *textView = nil;
             Ivar backedTextInputIvar = class_getInstanceVariable([subview class], "_backedTextInput");
@@ -237,7 +238,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
             }
             [self setupTextView:textView];
         }
-        else if ([subview isKindOfClass:NSClassFromString(@"RCTUITextView")] && [subview isKindOfClass:[UITextView class]])
+        else if ([className isEqualToString:@"RCTUITextView"])
         {
             [self setupTextView:(UITextView*)subview];
         }
