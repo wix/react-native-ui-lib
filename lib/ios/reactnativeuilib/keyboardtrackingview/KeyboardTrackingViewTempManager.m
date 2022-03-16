@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 @property (nonatomic) CGFloat originalHeight;
 @property (nonatomic) KeyboardTrackingScrollBehavior scrollBehavior;
 @property (nonatomic) BOOL addBottomView;
-@property (nonatomic) UIColor* bottomViewColor;
+@property (nonatomic) UIColor* bottomViewBackgroundColor;
 @property (nonatomic) BOOL useSafeArea;
 @property (nonatomic) BOOL usesBottomTabs;
 @property (nonatomic) BOOL scrollToFocusedInput;
@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         _bottomViewHeight = kBottomViewHeightTemp;
         
         self.addBottomView = NO;
-        self.bottomViewColor = nil;
+        self.bottomViewBackgroundColor = nil;
         self.scrollToFocusedInput = NO;
         self.usesBottomTabs = NO;
         
@@ -453,9 +453,9 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     if (self.addBottomView)
     {
         _bottomView = _bottomView ? _bottomView : [UIView new];
-        if (self.bottomViewColor)
+        if (self.bottomViewBackgroundColor)
         {
-          _bottomView.backgroundColor =  self.bottomViewColor;
+          _bottomView.backgroundColor =  self.bottomViewBackgroundColor;
         }
         else
         {
@@ -682,7 +682,7 @@ RCT_REMAP_VIEW_PROPERTY(revealKeyboardInteractive, revealKeyboardInteractive, BO
 RCT_REMAP_VIEW_PROPERTY(manageScrollView, manageScrollView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(requiresSameParentToManageScrollView, requiresSameParentToManageScrollView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(addBottomView, addBottomView, BOOL)
-RCT_REMAP_VIEW_PROPERTY(bottomViewColor, bottomViewColor, UIColor)
+RCT_REMAP_VIEW_PROPERTY(bottomViewBackgroundColor, bottomViewBackgroundColor, UIColor)
 RCT_REMAP_VIEW_PROPERTY(useSafeArea, useSafeArea, BOOL)
 RCT_REMAP_VIEW_PROPERTY(usesBottomTabs, usesBottomTabs, BOOL)
 RCT_REMAP_VIEW_PROPERTY(scrollToFocusedInput, scrollToFocusedInput, BOOL)
