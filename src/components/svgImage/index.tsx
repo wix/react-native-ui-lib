@@ -15,7 +15,7 @@ export interface SvgImageProps {
 
 function SvgImage(props: SvgImageProps) {
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const {data, tintColor: _tintColor, ...others} = props;
+  const {data, tintColor, ...others} = props;
 
   if (!SvgXml) {
     // eslint-disable-next-line max-len
