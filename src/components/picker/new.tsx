@@ -93,10 +93,10 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     placeholder: props.placeholder
   });
 
-  const onSelectedItemLayout = (event: LayoutChangeEvent) => {
+  const onSelectedItemLayout = useCallback((event: LayoutChangeEvent) => {
     const y = event.nativeEvent.layout.y;
     setSelectedItemPosition(y);
-  };
+  }, []);
 
   const contextValue = useMemo(() => {
     const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? value?.value : value;
@@ -176,7 +176,6 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     testID,
     mode,
     selectedItemPosition,
-    enableModalBlur,
     topBarProps,
     cancelSelect,
     onDoneSelecting,
@@ -187,10 +186,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     _onSearchChange,
     renderCustomSearch,
     listProps,
-    onShow,
-    pickerModalProps,
-    filteredChildren,
-    props
+    filteredChildren
   ]);
 
   if (useNativePicker) {
