@@ -129,6 +129,11 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    */
   width?: number;
   /**
+   * The colors of the skeleton view, the array length has to be >=2
+   * default: [Colors.grey70, Colors.grey60, Colors.grey70]
+   */
+  colors?: string[]
+  /**
    * The border radius of the skeleton view
    */
   borderRadius?: number;
@@ -229,7 +234,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
 
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
     const {circleOverride, style} = input || {};
-    const {circle, width = 0, height = 0} = this.props;
+    const {circle, colors, width = 0, height = 0} = this.props;
     let {borderRadius} = this.props;
     let size;
     if (circle || circleOverride) {
@@ -238,7 +243,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     }
 
     return {
-      shimmerColors: [Colors.grey70, Colors.grey60, Colors.grey70],
+      shimmerColors: colors || [Colors.grey70, Colors.grey60, Colors.grey70],
       isReversed: Constants.isRTL,
       style: [{borderRadius}, style],
       width: size || width,
@@ -425,6 +430,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
       showLastSeparator,
       height,
       width,
+      colors,
       borderRadius,
       circle,
       style,
@@ -445,6 +451,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
       showLastSeparator,
       height,
       width,
+      colors,
       borderRadius,
       circle,
       style,
