@@ -4,6 +4,7 @@ import Layout from '@theme/Layout';
 // import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 // import HomepageFeatures from '../components/HomepageFeatures';
 
+import StandWithUkraine from '../components/StandWithUkraine';
 import MainSection from '../components/MainSection';
 import ComponentsSection from '../components/ComponentsSection';
 import FeaturesSection from '../components/FeaturesSection';
@@ -13,16 +14,19 @@ import LibrariesSection from '../components/LibrariesSection';
 export default function Home(): JSX.Element {
   // const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout
-      /* title={`Hello from ${siteConfig.title}`} */ description="Description will go into a meta tag in <head />"
-    >
-      <main>
-        <MainSection/>
-        <ComponentsSection/>
-        <FeaturesSection/>
-        <CodeSection/>
-        <LibrariesSection/>
-      </main>
-    </Layout>
+    <>
+      <StandWithUkraine />
+      <Layout
+        /* title={`Hello from ${siteConfig.title}`} */ description="Description will go into a meta tag in <head />"
+      >
+        <main>
+          <MainSection />
+          <ComponentsSection />
+          <FeaturesSection />
+          <CodeSection />
+          <LibrariesSection />
+        </main>
+      </Layout>
+    </>
   );
 }

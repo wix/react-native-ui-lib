@@ -146,6 +146,10 @@ export interface PickerBaseProps extends Omit<TextFieldProps, 'value' | 'onChang
      */
     onShow?: () => void;
     /**
+     * Add safe area in the Picker modal view
+     */
+    useSafeArea?: boolean;
+    /**
      * Component test id
      */
     testID?: string;
@@ -211,5 +215,5 @@ export interface PickerContextProps extends Pick<PickerProps, 'migrate' | 'value
     onSelectedLayout: (event: any) => any;
     selectionLimit: PickerProps['selectionLimit'];
 }
-export declare type PickerItemsListProps = Pick<PropsWithChildren<PickerProps>, 'topBarProps' | 'listProps' | 'children' | 'showSearch' | 'searchStyle' | 'searchPlaceholder' | 'onSearchChange' | 'renderCustomSearch' | 'testID'>;
+export declare type PickerItemsListProps = Pick<PropsWithChildren<PickerProps>, 'topBarProps' | 'listProps' | 'children' | 'showSearch' | 'searchStyle' | 'searchPlaceholder' | 'onSearchChange' | 'renderCustomSearch' | 'useSafeArea' | 'testID'>;
 export {};

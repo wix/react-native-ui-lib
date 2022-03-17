@@ -1,5 +1,9 @@
 /// <reference types="react" />
 export interface SvgImageProps {
+    /**
+     * the asset tint
+     */
+    tintColor?: string | null;
     data: any;
 }
 declare function SvgImage(props: SvgImageProps): JSX.Element | null;
