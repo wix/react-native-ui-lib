@@ -161,49 +161,48 @@ const SortableGridItem = (props: PropsWithChildren<SortableGridItemProps>) => {
     .minDuration(250);
 
   const dragGesture = Gesture.Pan()
-    .onStart(() => {
+    .manualActivation(true)
+    .onTouchesMove((_e, state) => {
       if (isDragging.value) {
-        tempTranslateX.value = translateX.value;
-        tempTranslateY.value = translateY.value;
-        tempItemsOrder.value = itemsOrder.value;
+        state.activate();
+      } else {
+        state.fail();
       }
     })
+    .onStart(() => {
+      tempTranslateX.value = translateX.value;
+      tempTranslateY.value = translateY.value;
+      tempItemsOrder.value = itemsOrder.value;
+    })
     .onUpdate(event => {
-      if (isDragging.value) {
-        translateX.value = tempTranslateX.value + event.translationX;
-        translateY.value = tempTranslateY.value + event.translationY;
+      translateX.value = tempTranslateX.value + event.translationX;
+      translateY.value = tempTranslateY.value + event.translationY;
 
-        // Swapping items
-        const oldOrder = getItemOrderById(itemsOrder.value, index);
-        const newOrder = getOrderByPosition(translateX.value, translateY.value) + index;
+      // Swapping items
+      const oldOrder = getItemOrderById(itemsOrder.value, index);
+      const newOrder = getOrderByPosition(translateX.value, translateY.value) + index;
 
-        if (oldOrder !== newOrder) {
-          const itemIdToSwap = getIdByItemOrder(itemsOrder.value, newOrder);
+      if (oldOrder !== newOrder) {
+        const itemIdToSwap = getIdByItemOrder(itemsOrder.value, newOrder);
 
-          if (itemIdToSwap !== undefined) {
-            const newItemsOrder = [...itemsOrder.value];
-            newItemsOrder[newOrder] = index;
-            newItemsOrder[oldOrder] = itemIdToSwap;
-            itemsOrder.value = newItemsOrder;
-          }
+        if (itemIdToSwap !== undefined) {
+          const newItemsOrder = [...itemsOrder.value];
+          newItemsOrder[newOrder] = index;
+          newItemsOrder[oldOrder] = itemIdToSwap;
+          itemsOrder.value = newItemsOrder;
         }
       }
     })
     .onEnd(() => {
-      if (isDragging.value) {
-        const translation = getPositionByOrder(getItemOrderById(itemsOrder.value, index),
-          getItemOrderById(tempItemsOrder.value, index));
+      const translation = getPositionByOrder(getItemOrderById(itemsOrder.value, index),
+        getItemOrderById(tempItemsOrder.value, index));
 
-        translateX.value = withTiming(tempTranslateX.value + translation.x, animationConfig);
-        translateY.value = withTiming(tempTranslateY.value + translation.y, animationConfig);
-      }
+      translateX.value = withTiming(tempTranslateX.value + translation.x, animationConfig);
+      translateY.value = withTiming(tempTranslateY.value + translation.y, animationConfig);
     })
     .onFinalize(() => {
-      if (isDragging.value) {
-        isDragging.value = false;
-        // shouldScaleItem.value = false;
-        runOnJS(onChange)();
-      }
+      isDragging.value = false;
+      runOnJS(onChange)();
     })
     .simultaneousWithExternalGesture(longPressGesture);
 

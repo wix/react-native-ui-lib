@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {useCallback, useState} from 'react';
-import {Alert, StyleSheet} from 'react-native';
-import {View, SortableGridView, Card, Text, BorderRadiuses} from 'react-native-ui-lib';
+import {Alert, StyleSheet, ScrollView} from 'react-native';
+import {View, SortableGridView, Card, BorderRadiuses} from 'react-native-ui-lib';
 import products from '../../data/products';
 
 const styles = StyleSheet.create({
@@ -36,7 +36,7 @@ const SortableGridViewScreen = () => {
   }, []);
 
   return (
-    <View flex>
+    <ScrollView>
       <View flex padding-page>
         <SortableGridView
           items={items}
@@ -47,10 +47,7 @@ const SortableGridViewScreen = () => {
           // viewWidth={300}
         />
       </View>
-      <Text center h1 marginB-20>
-        Footer
-      </Text>
-    </View>
+    </ScrollView>
   );
 };
 
