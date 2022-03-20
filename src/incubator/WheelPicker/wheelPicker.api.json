@@ -32,7 +32,8 @@
       "description": "Align the content to center, right ot left",
       "default": "center"
     },
-    {"name": "testID", "type": "string", "description": "Align the content to center, right ot left"}
+    {"name": "separatorsStyle", "type": "ViewStyle", "description": "Extra style for the separators"},
+    {"name": "testID", "type": "string", "description": "test identifier"}
   ],
   "snippet": [
     "<WheelPicker",
