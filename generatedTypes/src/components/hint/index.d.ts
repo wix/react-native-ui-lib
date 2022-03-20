@@ -127,7 +127,7 @@ declare class Hint extends Component<HintProps, HintState> {
     };
     static positions: typeof HintPositions;
     targetRef: ElementRef<typeof RNView> | null;
-    hintRef: ElementRef<typeof RNView> | null;
+    hintRef: React.RefObject<RNView>;
     animationDuration: number;
     state: {
         targetLayoutInWindow: {
@@ -140,12 +140,12 @@ declare class Hint extends Component<HintProps, HintState> {
         hintUnmounted: boolean;
     };
     visibleAnimated: Animated.Value;
+    componentDidMount(): void;
     componentDidUpdate(prevProps: HintProps): void;
     animateHint: () => void;
     toggleAnimationEndedToRemoveHint: () => void;
     focusAccessibilityOnHint: () => void;
     setTargetRef: (ref: ElementRef<typeof RNView>) => void;
-    setHintRef: (ref: ElementRef<typeof RNView>) => void;
     onTargetLayout: ({ nativeEvent: { layout } }: LayoutChangeEvent) => void;
     getAccessibilityInfo(): {
         accessible: boolean;
