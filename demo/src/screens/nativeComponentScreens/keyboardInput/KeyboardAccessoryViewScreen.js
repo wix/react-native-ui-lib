@@ -31,7 +31,7 @@ const keyboards = [
   }
 ];
 
-export default class KeyboardInputViewScreen extends PureComponent {
+export default class KeyboardAccessoryViewScreen extends PureComponent {
   state = {
     customKeyboard: {
       component: undefined,
@@ -170,7 +170,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
   };
 
   render() {
-    const {message, isModal} = this.props;
+    const {message/* , isModal */} = this.props;
     const {receivedKeyboardData, customKeyboard, useSafeArea} = this.state;
 
     return (
@@ -202,7 +202,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           revealKeyboardInteractive
           onRequestShowKeyboard={this.onRequestShowKeyboard}
           useSafeArea={useSafeArea}
-          usesBottomTabs={!isModal}
+          // usesBottomTabs={!isModal}
         />
       </View>
     );
