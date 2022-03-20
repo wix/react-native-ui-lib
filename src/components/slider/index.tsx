@@ -299,7 +299,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   updateStyles(x: number) {
-    if (this.thumb) {
+    if (this.thumb.current) {
       const {disableRTL} = this.props;
       const {trackSize} = this.state;
       const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
@@ -308,7 +308,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       this.thumb.current?.setNativeProps(this._thumbStyles);
     }
 
-    if (this.minTrack) {
+    if (this.minTrack.current) {
       this._minTrackStyles.width = Math.min(this.state.trackSize.width, x);
       this.minTrack.current?.setNativeProps(this._minTrackStyles);
     }
@@ -320,7 +320,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   updateThumbStyle(start: boolean) {
-    if (this.thumb && !this.props.disableActiveStyling) {
+    if (this.thumb.current && !this.props.disableActiveStyling) {
       const {thumbStyle, activeThumbStyle} = this.props;
       const style = thumbStyle || styles.thumb;
       const activeStyle = activeThumbStyle || styles.activeThumb;
