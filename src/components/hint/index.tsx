@@ -594,8 +594,7 @@ class Hint extends Component<HintProps, HintState> {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    zIndex: 1
+    position: 'absolute'
   },
   mockChildrenContainer: {
     position: 'absolute'
