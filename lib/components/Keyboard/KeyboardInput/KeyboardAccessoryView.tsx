@@ -258,8 +258,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       kbComponent,
       onItemSelected,
       onRequestShowKeyboard,
-      useSafeArea,
-      usesBottomTabs
+      useSafeArea
     } = this.props;
 
     return (
@@ -274,7 +273,6 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
         requiresSameParentToManageScrollView={requiresSameParentToManageScrollView}
         addBottomView={addBottomView}
         allowHitsOutsideBounds={allowHitsOutsideBounds}
-        usesBottomTabs={usesBottomTabs}
       >
         <>
           {renderContent?.()}
