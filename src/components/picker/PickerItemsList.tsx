@@ -20,6 +20,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     searchPlaceholder = 'Search...',
     onSearchChange,
     renderCustomSearch,
+    useSafeArea,
     testID
   } = props;
 
@@ -51,10 +52,11 @@ const PickerItemsList = (props: PickerItemsListProps) => {
 
   const renderItem = useCallback(({index}) => {
     return React.Children.toArray(children)[index];
-  }, [children]);
+  },
+  [children]);
 
   return (
-    <>
+    <View useSafeArea={useSafeArea}>
       <Modal.TopBar {...topBarProps}/>
       {renderSearchInput()}
 
@@ -65,7 +67,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         keyExtractor={keyExtractor}
         {...listProps}
       />
-    </>
+    </View>
   );
 };
 

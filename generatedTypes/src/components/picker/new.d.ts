@@ -16,17 +16,17 @@ declare const Picker: {
 };
 export { PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle };
 export { Picker };
-declare const _default: React.ComponentClass<(import("./types").PickerPropsWithSingle | import("./types").PickerPropsWithMulti) & {
+declare const _default: React.ComponentClass<PickerProps & {
     useCustomTheme?: boolean | undefined;
 }, any> & {
-    (props: React.PropsWithChildren<import("./types").PickerPropsWithSingle | import("./types").PickerPropsWithMulti> & ForwardRefInjectedProps & BaseComponentInjectedProps): JSX.Element;
+    (props: React.PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps): JSX.Element;
     Item: {
         (props: PickerItemProps): JSX.Element;
         displayName: string;
     };
     defaultProps: any;
     modes: typeof PickerModes;
-    extractPickerItems(props: React.PropsWithChildren<import("./types").PickerPropsWithSingle | import("./types").PickerPropsWithMulti>): {
+    extractPickerItems(props: React.PropsWithChildren<PickerProps>): {
         value: any;
         label: any;
     }[] | null | undefined;
