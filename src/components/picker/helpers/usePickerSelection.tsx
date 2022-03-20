@@ -35,6 +35,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
   [multiDraftValue, getItemValue]);
 
   const cancelSelect = useCallback(() => {
+    setSearchValue('');
     setMultiDraftValue(multiFinalValue);
     pickerExpandableRef.current?.closeExpandable?.();
     topBarProps?.onCancel?.();
