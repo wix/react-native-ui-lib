@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet, TextInput} from 'react-native';
 import {
@@ -12,7 +13,6 @@ import {
   Switch,
   Assets
 } from 'react-native-ui-lib';
-import _ from 'lodash';
 import './demoKeyboards';
 
 const KeyboardAccessoryView = Keyboard.KeyboardAccessoryView;
@@ -20,7 +20,7 @@ const KeyboardUtils = Keyboard.KeyboardUtils;
 const KeyboardRegistry = Keyboard.KeyboardRegistry;
 const TrackInteractive = true;
 
-const keyboards = [
+const demoKeyboards = [
   {
     id: 'unicorn.ImagesKeyboard',
     icon: Assets.icons.demo.image
@@ -119,7 +119,7 @@ export default class KeyboardAccessoryViewScreen extends PureComponent {
         </View>
         <View row paddingH-s4 marginT-s2 spread>
           <View row>
-            {keyboards.map(keyboard => (
+            {demoKeyboards.map(keyboard => (
               <Button
                 key={keyboard.id}
                 grey10
