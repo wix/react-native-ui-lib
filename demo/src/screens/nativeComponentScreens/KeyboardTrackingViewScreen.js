@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {
@@ -5,17 +6,14 @@ import {
   Text,
   View,
   TextField,
-  Image,
   Button,
   Colors,
   Switch,
   Constants,
   Spacings
 } from 'react-native-ui-lib';
-import _ from 'lodash';
 
 const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
-
 const messages = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   'integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit amet porttitor eget dolor',
@@ -104,7 +102,7 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
               floatOnFocus
               enableErrors={false}
             />
-            <Button label="Send" link marginL-s4 />
+            <Button label="Send" link marginL-s4/>
           </View>
         </KeyboardTrackingView>
       </View>
