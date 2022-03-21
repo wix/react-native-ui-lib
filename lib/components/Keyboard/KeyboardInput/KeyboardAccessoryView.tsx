@@ -113,10 +113,11 @@ export type KeyboardAccessoryViewProps = {
    * default: true
    */
   useSafeArea?: boolean;
+
   /**
    * iOS only.
    * Whether or not to include bottom tab bat inset
-   * default: true
+   * default: false
    */
   usesBottomTabs?: boolean;
 
@@ -258,7 +259,8 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       kbComponent,
       onItemSelected,
       onRequestShowKeyboard,
-      useSafeArea
+      useSafeArea,
+      usesBottomTabs
     } = this.props;
 
     return (
@@ -273,6 +275,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
         requiresSameParentToManageScrollView={requiresSameParentToManageScrollView}
         addBottomView={addBottomView}
         allowHitsOutsideBounds={allowHitsOutsideBounds}
+        usesBottomTabs={usesBottomTabs}
       >
         <>
           {renderContent?.()}
