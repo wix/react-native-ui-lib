@@ -59,6 +59,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     getItemValue,
     renderItem,
     children,
+    useSafeArea,
     migrate,
     migrateTextField,
     ...others
@@ -168,6 +169,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
         listProps={listProps}
+        useSafeArea={useSafeArea}
       >
         {filteredChildren}
       </PickerItemsList>
@@ -186,7 +188,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     _onSearchChange,
     renderCustomSearch,
     listProps,
-    filteredChildren
+    filteredChildren,
+    useSafeArea
   ]);
 
   if (useNativePicker) {

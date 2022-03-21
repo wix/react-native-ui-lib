@@ -62,12 +62,16 @@ export interface WheelPickerProps {
      * Align the content to center, right ot left (default: center)
      */
     align?: WheelPickerAlign;
+    /**
+     * Extra style for the separators
+     */
+    separatorsStyle?: ViewStyle;
     testID?: string;
 }
 declare const _default: React.ComponentClass<WheelPickerProps & {
     useCustomTheme?: boolean | undefined;
 }, any> & {
-    ({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, align, style, children, initialValue, testID }: WheelPickerProps): JSX.Element;
+    ({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, label, labelStyle, labelProps, onChange, align, style, children, initialValue, separatorsStyle, testID }: WheelPickerProps): JSX.Element;
     alignments: typeof WheelPickerAlign;
     displayName: string;
 };
