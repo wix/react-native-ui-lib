@@ -1,17 +1,17 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {ScrollView, StyleSheet, TextInput} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {
-  Keyboard,
-  Text,
-  View,
+  Constants,
+  Assets,
   Colors,
   Spacings,
-  Constants,
-  Typography,
+  Keyboard,
+  View,
+  Text,
+  TextField,
   Button,
-  Switch,
-  Assets
+  Switch
 } from 'react-native-ui-lib';
 import './demoKeyboards';
 
@@ -105,14 +105,16 @@ export default class KeyboardAccessoryViewScreen extends PureComponent {
   renderKeyboardAccessoryViewContent = () => {
     return (
       <View style={styles.keyboardContainer} paddingV-s4>
-        <View row paddingH-s4>
-          <TextInput
-            style={styles.textInput}
+        <View bg-white row spread centerV paddingH-s5 paddingV-s3>
+          <TextField
             ref={r => {
               this.textInputRef = r;
             }}
+            containerStyle={styles.textField}
+            hideUnderline
             placeholder={'Message'}
-            underlineColorAndroid="transparent"
+            floatingPlaceholder={false}
+            enableErrors={false}
             onFocus={this.resetKeyboardView}
           />
           <Button link grey10 iconSource={Assets.icons.demo.close} onPress={KeyboardUtils.dismiss} marginL-s2/>
@@ -181,6 +183,7 @@ export default class KeyboardAccessoryViewScreen extends PureComponent {
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={TrackInteractive ? 'interactive' : 'none'}
+          showsVerticalScrollIndicator={false}
         >
           <Text text40 grey10 marginV-20 center>
             {message}
@@ -215,13 +218,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  textInput: {
+  textField: {
     flex: 1,
-    paddingVertical: Spacings.s2,
-    paddingHorizontal: Spacings.s3,
-    ...Typography.text70,
-    lineHeight: undefined,
     backgroundColor: Colors.grey60,
+    paddingVertical: Spacings.s2,
+    paddingHorizontal: Spacings.s4,
     borderRadius: 8
   },
   button: {

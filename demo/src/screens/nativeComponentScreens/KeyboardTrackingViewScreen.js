@@ -2,15 +2,15 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {
+  Constants,
+  Colors,
+  Spacings,
   Keyboard,
-  Text,
   View,
+  Text,
   TextField,
   Button,
-  Colors,
-  Switch,
-  Constants,
-  Spacings
+  Switch
 } from 'react-native-ui-lib';
 
 const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
@@ -66,6 +66,7 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={trackInteractive ? 'interactive' : 'none'}
+          showsVerticalScrollIndicator={false}
         >
           <Text h1 grey10 marginB-s1>
             Keyboard Tracking View
@@ -86,20 +87,14 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
         <KeyboardTrackingView
           style={styles.trackingToolbarContainer}
           trackInteractive={trackInteractive}
+          useSafeArea
         >
           <View bg-white row spread centerV paddingH-s5 paddingV-s3>
             <TextField
-              containerStyle={{
-                flex: 1,
-                backgroundColor: Colors.grey60,
-                paddingVertical: Spacings.s2,
-                paddingHorizontal: Spacings.s4,
-                borderRadius: 8
-              }}
+              containerStyle={styles.textField}
               hideUnderline
               placeholder={'Message'}
               floatingPlaceholder={false}
-              floatOnFocus
               enableErrors={false}
             />
             <Button label="Send" link marginL-s4/>
@@ -114,15 +109,18 @@ const styles = StyleSheet.create({
   scrollContainer: {
     paddingHorizontal: Spacings.s5
   },
-  image: {
-    height: 250,
-    marginBottom: Spacings.s3
-  },
   trackingToolbarContainer: {
     position: Constants.isIOS ? 'absolute' : 'relative',
     bottom: 0,
     width: '100%',
     borderWidth: 1,
     borderColor: Colors.grey60
+  },
+  textField: {
+    flex: 1,
+    backgroundColor: Colors.grey60,
+    paddingVertical: Spacings.s2,
+    paddingHorizontal: Spacings.s4,
+    borderRadius: 8
   }
 });
