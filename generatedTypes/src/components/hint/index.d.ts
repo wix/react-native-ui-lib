@@ -163,9 +163,9 @@ declare class Hint extends Component<HintProps, HintState> {
     get useSideTip(): boolean;
     getTargetPositionOnScreen(): TARGET_POSITIONS;
     getContainerPosition(): {
-        top: number;
-        left: number;
-    };
+        top: number | undefined;
+        left: number | undefined;
+    } | undefined;
     getHintPosition(): HintPositionStyle;
     getHintPadding(): Paddings;
     getHintAnimatedStyle: () => {
@@ -175,6 +175,7 @@ declare class Hint extends Component<HintProps, HintState> {
         }[];
     };
     getTipPosition(): Position;
+    isUsingModal: () => boolean | undefined;
     renderOverlay(): JSX.Element | undefined;
     renderHintTip(): JSX.Element;
     renderContent(): JSX.Element;
