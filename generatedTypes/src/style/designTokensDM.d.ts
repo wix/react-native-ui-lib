@@ -23,6 +23,7 @@ export declare const designTokensDM: {
     $backgroundDark: string;
     $backgroundDarkElevated: string;
     $backgroundDarkActive: string;
+    $backgroundInverted: string;
     $textDisabled: string;
     $textDefault: string;
     $textNeutralHeavy: string;
