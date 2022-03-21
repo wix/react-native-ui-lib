@@ -173,7 +173,7 @@ class Hint extends Component<HintProps, HintState> {
   animationDuration = 170;
 
   state = {
-    targetLayoutInWindow: undefined as {x: number, y: number, width: number, height: number} | undefined,
+    targetLayoutInWindow: undefined as {x: number; y: number; width: number; height: number} | undefined,
     targetLayout: this.props.targetFrame,
     hintUnmounted: !this.props.visible
   };
@@ -402,11 +402,16 @@ class Hint extends Component<HintProps, HintState> {
     return tipPositionStyle;
   }
 
+  isUsingModal = () => {
+    const {onBackgroundPress, useModal} = this.props;
+    return onBackgroundPress && useModal;
+  };
+
   renderOverlay() {
     const {targetLayoutInWindow} = this.state;
     const {onBackgroundPress, backdropColor, testID} = this.props;
     if (targetLayoutInWindow) {
-      const containerPosition = this.getContainerPosition() as {top: number, left: number};
+      const containerPosition = this.getContainerPosition() as {top: number; left: number};
       return (
         <Animated.View
           style={[
@@ -514,7 +519,7 @@ class Hint extends Component<HintProps, HintState> {
         // this view must be collapsable, don't pass testID or backgroundColor etc'.
         collapsable
         testID={undefined}
-        style={[styles.container, style, this.getContainerPosition()]}
+        style={[styles.container, style, this.getContainerPosition(), !this.isUsingModal() && styles.overlayContainer]}
       >
         {this.renderHint()}
       </View>
@@ -557,7 +562,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   render() {
-    const {onBackgroundPress, backdropColor, useModal, testID} = this.props;
+    const {onBackgroundPress, backdropColor, testID} = this.props;
 
     if (!this.props.visible && this.state.hintUnmounted) {
       return this.props.children || null;
@@ -566,7 +571,7 @@ class Hint extends Component<HintProps, HintState> {
     return (
       <>
         {this.renderChildren()}
-        {onBackgroundPress && useModal ? (
+        {this.isUsingModal() ? (
           <Modal
             visible={this.showHint}
             animationType={backdropColor ? 'fade' : 'none'}
@@ -594,6 +599,10 @@ class Hint extends Component<HintProps, HintState> {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute'
+  },
+  overlayContainer: {
+    zIndex: 10,
+    elevation: 10
   },
   mockChildrenContainer: {
     position: 'absolute'

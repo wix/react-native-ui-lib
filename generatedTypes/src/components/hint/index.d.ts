@@ -175,6 +175,7 @@ declare class Hint extends Component<HintProps, HintState> {
         }[];
     };
     getTipPosition(): Position;
+    isUsingModal: () => boolean | undefined;
     renderOverlay(): JSX.Element | undefined;
     renderHintTip(): JSX.Element;
     renderContent(): JSX.Element;
