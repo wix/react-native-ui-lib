@@ -169,7 +169,7 @@ class Hint extends Component<HintProps, HintState> {
   static positions = HintPositions;
 
   targetRef: ElementRef<typeof RNView> | null = null;
-  hintRef: ElementRef<typeof RNView> | null = null;
+  hintRef = React.createRef<RNView>();
   animationDuration = 170;
 
   state = {
@@ -179,6 +179,10 @@ class Hint extends Component<HintProps, HintState> {
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
+
+  componentDidMount() {
+    this.focusAccessibilityOnHint();
+  }
 
   componentDidUpdate(prevProps: HintProps) {
     if (prevProps.visible !== this.props.visible) {
@@ -201,7 +205,7 @@ class Hint extends Component<HintProps, HintState> {
   focusAccessibilityOnHint = () => {
     const {message} = this.props;
     const targetRefTag = findNodeHandle(this.targetRef);
-    const hintRefTag = findNodeHandle(this.hintRef);
+    const hintRefTag = findNodeHandle(this.hintRef.current);
 
     if (targetRefTag && _.isString(message)) {
       AccessibilityInfo.setAccessibilityFocus(targetRefTag);
@@ -212,11 +216,6 @@ class Hint extends Component<HintProps, HintState> {
 
   setTargetRef = (ref: ElementRef<typeof RNView>) => {
     this.targetRef = ref;
-    this.focusAccessibilityOnHint();
-  };
-
-  setHintRef = (ref: ElementRef<typeof RNView>) => {
-    this.hintRef = ref;
     this.focusAccessibilityOnHint();
   };
 
@@ -471,7 +470,7 @@ class Hint extends Component<HintProps, HintState> {
           {backgroundColor: color},
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
-        ref={this.setHintRef}
+        ref={this.hintRef}
       >
         {customContent}
         {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
