@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Colors, Spacings} from 'style';
+import {Spacings} from 'style';
 // TODO: we should use asBaseComponent here instead of using UIComponent directly
 import UIComponent from '../../commons/UIComponent';
 import View from '../view';
@@ -145,19 +145,8 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
     return (containerWidth - itemSpacing * (numColumns - 1)) / numColumns;
   }
 
-  getThemeColor(placeColor: string) {
-    if (_.toLower(placeColor) === _.toLower(Colors.white)) {
-      return Colors.black;
-    } else if (Colors.isDark(placeColor)) {
-      return placeColor;
-    } else {
-      return Colors.getColorTint(placeColor, 30);
-    }
-  }
-
   renderLastItemOverlay() {
-    const {lastItemLabel, items} = this.props;
-    const overlayColor = this.getThemeColor(this.props.lastItemOverlayColor ?? '');
+    const {lastItemLabel, items, lastItemOverlayColor} = this.props;
     const formattedLabel = formatLastItemLabel(lastItemLabel, {shouldAddPlus: true});
 
     if (!lastItemLabel) {
@@ -166,12 +155,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
 
     const imageBorderRadius = _.flow(_.first, item => _.get(item, 'imageProps.borderRadius'))(items);
     return (
-      <View
-        style={[
-          styles.overlayContainer,
-          {backgroundColor: Colors.rgba(overlayColor, 0.6), borderRadius: imageBorderRadius}
-        ]}
-      >
+      <View style={[styles.overlayContainer, {backgroundColor: lastItemOverlayColor, borderRadius: imageBorderRadius}]}>
         <Text mainBold white>
           {formattedLabel}
         </Text>

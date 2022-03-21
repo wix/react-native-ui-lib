@@ -79,6 +79,10 @@ module.exports = {
     const colorExceptions = ['transparent'];
 
     function isColorException(colorString = '') {
+      if (colorString === null) {
+        return true;
+      }
+
       const lowerCaseColorString = colorString.toLowerCase();
       return colorExceptions.indexOf(lowerCaseColorString) !== -1;
     }

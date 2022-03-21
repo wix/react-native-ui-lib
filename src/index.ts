@@ -72,6 +72,7 @@ export {
 } from './components/panningViews/panningProvider';
 export {default as PanResponderView, PanResponderViewProps} from './components/panningViews/panResponderView';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
+export {default as Picker, PickerProps, PickerValue, PickerModes, PickerSearchStyle} from './components/picker/new';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
@@ -104,8 +105,6 @@ export {
   TextArea,
   TextField,
   MaskedInput,
-  Picker,
-  PickerProps,
   SharedTransition,
   Toast,
   WheelPickerDialog,

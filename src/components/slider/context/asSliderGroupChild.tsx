@@ -1,4 +1,4 @@
-import React, {Component, ElementRef} from 'react';
+import React, {Component} from 'react';
 import {View} from 'react-native';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import SliderContext from './SliderContext';
@@ -6,14 +6,14 @@ import SliderContext from './SliderContext';
 
 const getConsumer = (WrappedComponent: React.ComponentClass<any>) => (
   class SliderContextConsumer extends Component {
-    contentRef: ElementRef<typeof View> | undefined;
+    contentRef = React.createRef<View>();
 
     render() {
       return (
         <SliderContext.Consumer>
           {(context) => (
             <WrappedComponent
-              ref={(r: ElementRef<typeof View>) => (this.contentRef = r)}
+              ref={this.contentRef}
               sliderContext={context}
               {...this.props}
             />

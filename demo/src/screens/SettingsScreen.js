@@ -74,7 +74,7 @@ class SettingsScreen extends Component {
             placeholder="Pick default screen..."
             showSearch
             value={defaultScreen?.value}
-            label={defaultScreen?.label}
+            label={'Default Screen'}
             onChange={this.setDefaultScreen}
             migrateTextField
           >

@@ -17,7 +17,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     trailingSlash: false,
     customFields: {
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android',
-      stars: '4.1'
+      stars: '4.2'
     },
     plugins: ['docusaurus-plugin-sass'],
     presets: [
@@ -29,7 +29,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             sidebarPath: require.resolve('./sidebars.js'),
             path: '../docs',
             // Please change this to your repo.
-            editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/'
+            editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
+            docLayoutComponent: '@site/src/components/CustomLayout'
           },
           blog: {
             showReadingTime: true,

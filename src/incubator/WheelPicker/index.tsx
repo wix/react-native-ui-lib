@@ -73,6 +73,10 @@ export interface WheelPickerProps {
    * Align the content to center, right ot left (default: center)
    */
   align?: WheelPickerAlign;
+  /**
+   * Extra style for the separators
+   */
+  separatorsStyle?: ViewStyle;
   testID?: string;
 }
 
@@ -91,6 +95,7 @@ const WheelPicker = ({
   style,
   children,
   initialValue = 0,
+  separatorsStyle,
   testID
 }: WheelPickerProps) => {
   const scrollView = useRef<Animated.ScrollView>();
@@ -244,7 +249,7 @@ const WheelPicker = ({
   const separators = useMemo(() => {
     return (
       <View absF centerV pointerEvents="none">
-        <View style={styles.separators}/>
+        <View style={[styles.separators, separatorsStyle]}/>
       </View>
     );
   }, []);
