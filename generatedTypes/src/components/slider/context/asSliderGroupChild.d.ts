@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 declare function asSliderGroupChild(WrappedComponent: any): {
     new (props: {} | Readonly<{}>): {
-        contentRef: View | undefined;
+        contentRef: React.RefObject<View>;
         render(): JSX.Element;
         context: any;
         setState<K extends never>(state: {} | ((prevState: Readonly<{}>, props: Readonly<{}>) => {} | Pick<{}, K> | null) | Pick<{}, K> | null, callback?: (() => void) | undefined): void;
@@ -28,7 +28,7 @@ declare function asSliderGroupChild(WrappedComponent: any): {
         UNSAFE_componentWillUpdate?(nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): void;
     };
     new (props: {}, context: any): {
-        contentRef: View | undefined;
+        contentRef: React.RefObject<View>;
         render(): JSX.Element;
         context: any;
         setState<K extends never>(state: {} | ((prevState: Readonly<{}>, props: Readonly<{}>) => {} | Pick<{}, K> | null) | Pick<{}, K> | null, callback?: (() => void) | undefined): void;
