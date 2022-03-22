@@ -14,6 +14,10 @@ export interface GridListProps<T> extends FlatListProps<T> {
      */
     itemSpacing?: number;
     /**
+     * List padding (used for item size calculation)
+     */
+    listPadding?: number;
+    /**
      * whether to keep the items initial size when orientation changes,
      * in which case the apt number of columns will be calculated automatically.
      * Ignored when passing 'maxItemWidth'

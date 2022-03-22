@@ -38,14 +38,18 @@ class GridListScreen extends Component {
         // numColumns={2}
         maxItemWidth={140}
         itemSpacing={Spacings.s3}
-        containerWidth={Constants.screenWidth - Spacings.s5 * 2}
-        contentContainerStyle={{padding: Spacings.s5}}
+        listPadding={Spacings.s5}
+        // keepItemSize
+        contentContainerStyle={styles.list}
       />
     );
   }
 }
 
 const styles = StyleSheet.create({
+  list: {
+    padding: Spacings.s5
+  },
   itemImage: {
     width: '100%',
     height: 85,

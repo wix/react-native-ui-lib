@@ -13,9 +13,14 @@
       "description": "Allow a responsive item width to the maximum item width"
     },
     {
+      "name": "listPadding",
+      "type": "number",
+      "description": "List padding (used for item size calculation)"
+    },
+    {
       "name": "containerWidth",
       "type": "number",
-      "description": "Pass when you want to use a custom container width for calculation (good for when list has outer padding)"
+      "description": "Pass when you want to use a custom container width for calculation"
     },
     {
       "name": "keepItemSize",

@@ -1,8 +1,7 @@
-// TODO: Support orientation change
-// TODO: Support keeping item size on orientation change
 import React, {useCallback, useMemo} from 'react';
 import {FlatList, FlatListProps} from 'react-native';
 import {Spacings} from 'style';
+import {useOrientation} from 'hooks';
 import {Constants} from '../../commons/new';
 import View from '../view';
 
@@ -23,13 +22,17 @@ export interface GridListProps<T> extends FlatListProps<T> {
    */
   itemSpacing?: number;
   /**
+   * List padding (used for item size calculation)
+   */
+  listPadding?: number;
+  /**
    * whether to keep the items initial size when orientation changes,
    * in which case the apt number of columns will be calculated automatically.
    * Ignored when passing 'maxItemWidth'
    */
   keepItemSize?: boolean;
   /**
-   * Pass when you want to use a custom container width for calculation (good for when list has outer padding)
+   * Pass when you want to use a custom container width for calculation
    */
   containerWidth?: number;
 }
@@ -40,9 +43,17 @@ function GridList<T = any>(props: GridListProps<T>) {
     numColumns = DEFAULT_NUM_COLUMNS,
     itemSpacing = DEFAULT_ITEM_SPACINGS,
     maxItemWidth,
-    containerWidth = Constants.screenWidth,
+    listPadding = 0,
+    keepItemSize,
     ...others
   } = props;
+
+  const {orientation} = useOrientation();
+
+  const containerWidth = useMemo(() => {
+    return (props.containerWidth ?? Constants.screenWidth) - listPadding * 2;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listPadding, orientation]);
 
   const numberOfColumns = useMemo(() => {
     if (maxItemWidth) {
@@ -50,11 +61,14 @@ function GridList<T = any>(props: GridListProps<T>) {
     } else {
       return numColumns;
     }
-  }, [numColumns, maxItemWidth, itemSpacing, containerWidth]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numColumns, maxItemWidth, itemSpacing, keepItemSize ? containerWidth : undefined]);
 
   const itemSize = useMemo(() => {
     return (containerWidth - itemSpacing * (numberOfColumns - 1)) / numberOfColumns;
-  }, [numberOfColumns, itemSpacing, containerWidth]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numberOfColumns, itemSpacing, keepItemSize ? undefined : containerWidth]);
 
   const itemContainerStyle = useMemo(() => {
     return {width: itemSize + itemSpacing, paddingRight: itemSpacing, marginBottom: itemSpacing};
@@ -62,13 +76,11 @@ function GridList<T = any>(props: GridListProps<T>) {
 
   const _renderItem = useCallback((...args) => {
     // @ts-expect-error
-    return <View style={itemContainerStyle}>{renderItem?.(...args)}</View>;
+    return <View style={[itemContainerStyle]}>{renderItem?.(...args)}</View>;
   },
   [renderItem, itemContainerStyle]);
 
-  console.log('ethan - grid list item size', itemSize, numberOfColumns);
-
-  return <FlatList {...others} renderItem={_renderItem} numColumns={numberOfColumns}/>;
+  return <FlatList key={numberOfColumns} {...others} renderItem={_renderItem} numColumns={numberOfColumns}/>;
 }
 
 export default GridList;
