@@ -201,8 +201,12 @@ const SortableGridItem = (props: PropsWithChildren<SortableGridItemProps>) => {
       translateY.value = withTiming(tempTranslateY.value + translation.y, animationConfig);
     })
     .onFinalize(() => {
-      isDragging.value = false;
-      runOnJS(onChange)();
+      if (isDragging.value) {
+        isDragging.value = false;
+        if (tempItemsOrder.value.toString() !== itemsOrder.value.toString()) {
+          runOnJS(onChange)();
+        }
+      }
     })
     .simultaneousWithExternalGesture(longPressGesture);
 
