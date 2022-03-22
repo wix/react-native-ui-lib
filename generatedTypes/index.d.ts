@@ -48,6 +48,7 @@ export {default as Picker, PickerProps, PickerItemProps, PickerValue, PickerMode
 export {default as ProgressBar, ProgressBarProps} from './src/components/progressBar';
 export {default as FeatureHighlight, FeatureHighlightProps} from './src/components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps} from './src/components/floatingButton';
+export {default as GridList, GridListProps} from './src/components/gridList';
 export {default as GridListItem, GridListItemProps} from './src/components/gridListItem';
 export {default as GridView, GridViewProps} from './src/components/gridView';
 export {default as Hint, HintProps} from './src/components/hint';

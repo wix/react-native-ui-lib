@@ -69,6 +69,9 @@ export default {
   get GridListItem() {
     return require('./components/gridListItem').default;
   },
+  get GridList() {
+    return require('./components/gridList').default;
+  },
   get GridView() {
     return require('./components/gridView').default;
   },
