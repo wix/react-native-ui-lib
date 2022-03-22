@@ -91,8 +91,9 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
         >
           <View bg-white row spread centerV paddingH-s5 paddingV-s3>
             <TextField
+              migrate
               containerStyle={styles.textField}
-              hideUnderline
+              preset={null}
               placeholder={'Message'}
               floatingPlaceholder={false}
               enableErrors={false}
