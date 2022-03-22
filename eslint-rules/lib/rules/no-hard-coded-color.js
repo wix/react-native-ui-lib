@@ -32,8 +32,8 @@ module.exports = {
             message: `Found '${colorString}'. Use UILib colors instead of hardcoded colors.${dueDateNotice}`,
             fix(fixer) {
               if (node) {
-                const {validColors} = context.options[0];
-                const {customColors: extraColors} = context.options[0];
+                const validColors = context.options[0] && context.options[0].validColors;
+                const extraColors = context.options[0] && context.options[0].customColors;
                 if (validColors) {
                   const validColorsDic = _.chain(validColors)
                     .mapValues(value => value.toLowerCase())
