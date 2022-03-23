@@ -39,6 +39,7 @@ export class TextArea extends BaseInput<TextAreaProps> {}
 export type InputColorValue = ColorValue | { [key: string]: ColorValue };
 
 export interface TextBaseInputProps {
+  migrate?: boolean;
   floatingPlaceholder?: boolean;
   floatingPlaceholderColor?: InputColorValue;
   helperText?: string;

@@ -1,21 +1,19 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {
-  Keyboard,
-  Text,
-  View,
-  TextField,
-  Image,
-  Button,
-  Colors,
-  Switch,
   Constants,
-  Spacings
+  Colors,
+  Spacings,
+  Keyboard,
+  View,
+  Text,
+  TextField,
+  Button,
+  Switch
 } from 'react-native-ui-lib';
-import _ from 'lodash';
 
 const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
-
 const messages = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   'integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit amet porttitor eget dolor',
@@ -68,6 +66,7 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={trackInteractive ? 'interactive' : 'none'}
+          showsVerticalScrollIndicator={false}
         >
           <Text h1 grey10 marginB-s1>
             Keyboard Tracking View
@@ -88,23 +87,18 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
         <KeyboardTrackingView
           style={styles.trackingToolbarContainer}
           trackInteractive={trackInteractive}
+          useSafeArea
         >
           <View bg-white row spread centerV paddingH-s5 paddingV-s3>
             <TextField
-              containerStyle={{
-                flex: 1,
-                backgroundColor: Colors.grey60,
-                paddingVertical: Spacings.s2,
-                paddingHorizontal: Spacings.s4,
-                borderRadius: 8
-              }}
-              hideUnderline
+              migrate
+              containerStyle={styles.textField}
+              preset={null}
               placeholder={'Message'}
               floatingPlaceholder={false}
-              floatOnFocus
               enableErrors={false}
             />
-            <Button label="Send" link marginL-s4 />
+            <Button label="Send" link marginL-s4/>
           </View>
         </KeyboardTrackingView>
       </View>
@@ -116,15 +110,18 @@ const styles = StyleSheet.create({
   scrollContainer: {
     paddingHorizontal: Spacings.s5
   },
-  image: {
-    height: 250,
-    marginBottom: Spacings.s3
-  },
   trackingToolbarContainer: {
     position: Constants.isIOS ? 'absolute' : 'relative',
     bottom: 0,
     width: '100%',
     borderWidth: 1,
     borderColor: Colors.grey60
+  },
+  textField: {
+    flex: 1,
+    backgroundColor: Colors.grey60,
+    paddingVertical: Spacings.s2,
+    paddingHorizontal: Spacings.s4,
+    borderRadius: 8
   }
 });

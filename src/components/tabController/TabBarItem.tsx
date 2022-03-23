@@ -10,8 +10,8 @@ import TabBarContext from './TabBarContext';
 
 const TouchableOpacity = Reanimated.createAnimatedComponent(_TouchableOpacity);
 
-const DEFAULT_LABEL_COLOR = Colors.black;
-const DEFAULT_SELECTED_LABEL_COLOR = Colors.primary;
+const DEFAULT_LABEL_COLOR = Colors.$textDefault;
+const DEFAULT_SELECTED_LABEL_COLOR = Colors.$textPrimary;
 
 export interface TabControllerItemProps {
   /**
@@ -132,7 +132,7 @@ export default function TabBarItem({
   const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
 
   useEffect(() => {
-    if (itemWidth.current) {
+    if (props.width) {
       props.onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: itemWidth.current, height: 0}}} as LayoutChangeEvent,
         index);
     }
@@ -149,7 +149,7 @@ export default function TabBarItem({
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
 
-    if (!itemWidth.current && itemRef?.current) {
+    if (!props.width && itemRef?.current) {
       itemWidth.current = width;
       // @ts-ignore
       itemRef.current?.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
@@ -212,7 +212,7 @@ export default function TabBarItem({
         </Reanimated.Text>
       )}
       {badge && (
-        <Badge backgroundColor={Colors.red30} size={20} {...badge} containerStyle={styles.badge}/>
+        <Badge backgroundColor={Colors.$backgroundDangerHeavy} size={20} {...badge} containerStyle={styles.badge}/>
       )}
       {trailingAccessory}
     </TouchableOpacity>

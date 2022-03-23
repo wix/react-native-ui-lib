@@ -51,6 +51,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 @property (nonatomic) KeyboardTrackingScrollBehavior scrollBehavior;
 @property (nonatomic) BOOL addBottomView;
 @property (nonatomic) BOOL useSafeArea;
+@property (nonatomic) BOOL usesBottomTabs;
 @property (nonatomic) BOOL scrollToFocusedInput;
 @property (nonatomic) BOOL allowHitsOutsideBounds;
 
@@ -82,6 +83,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         
         self.addBottomView = NO;
         self.scrollToFocusedInput = NO;
+        self.usesBottomTabs = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rctContentDidAppearNotification:) name:RCTContentDidAppearNotification object:nil];
     }
@@ -503,14 +505,16 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     });
 }
 
+#pragma mark - TabBarController
+
 -(CGFloat)getTabBarHeight
 {
     if (@available(iOS 11.0, *)) {
-        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-        if ([window.rootViewController isKindOfClass:[UITabBarController class]])
+        if (self.usesBottomTabs == YES)
         {
             UITabBarController *tabBarController = [UITabBarController new];
             CGFloat tabBarHeight = tabBarController.tabBar.frame.size.height;
+            UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
             CGFloat bottomPadding = window.safeAreaInsets.bottom;
             return tabBarHeight + bottomPadding;
         }
@@ -650,6 +654,7 @@ RCT_REMAP_VIEW_PROPERTY(manageScrollView, manageScrollView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(requiresSameParentToManageScrollView, requiresSameParentToManageScrollView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(addBottomView, addBottomView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(useSafeArea, useSafeArea, BOOL)
+RCT_REMAP_VIEW_PROPERTY(usesBottomTabs, usesBottomTabs, BOOL)
 RCT_REMAP_VIEW_PROPERTY(scrollToFocusedInput, scrollToFocusedInput, BOOL)
 RCT_REMAP_VIEW_PROPERTY(allowHitsOutsideBounds, allowHitsOutsideBounds, BOOL)
 

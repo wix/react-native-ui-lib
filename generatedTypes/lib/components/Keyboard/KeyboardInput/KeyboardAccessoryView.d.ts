@@ -87,6 +87,12 @@ export declare type KeyboardAccessoryViewProps = {
      * default: true
      */
     useSafeArea?: boolean;
+    /**
+     * iOS only.
+     * Whether or not to include bottom tab bat inset
+     * default: true
+     */
+    usesBottomTabs?: boolean;
     children?: React.ReactChild;
 };
 /**

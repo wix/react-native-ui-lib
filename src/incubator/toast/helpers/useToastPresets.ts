@@ -10,22 +10,22 @@ const redCloudIcon = require('../assets/redCloud.png');
 const TOAST_PRESETS = {
   [ToastPresets.GENERAL]: {
     icon: infoIcon,
-    iconColor: Colors.getColorTint(Colors.primary, 50),
+    iconColor: Colors.$iconPrimaryLight,
     accessibilityMessagePrefix: ''
   },
   [ToastPresets.SUCCESS]: {
     icon: checkMarkIcon,
-    iconColor: Colors.green40,
+    iconColor: Colors.$iconSuccessLight,
     accessibilityMessagePrefix: 'Success'
   },
   [ToastPresets.FAILURE]: {
     icon: exclamationIcon,
-    iconColor: Colors.red40,
+    iconColor: Colors.$iconDangerLight,
     accessibilityMessagePrefix: 'Alert'
   },
   [ToastPresets.OFFLINE]: {
     icon: redCloudIcon,
-    iconColor: Colors.getColorTint(Colors.primary, 50),
+    iconColor: Colors.$iconPrimaryLight,
     accessibilityMessagePrefix: 'Offline'
   }
 };

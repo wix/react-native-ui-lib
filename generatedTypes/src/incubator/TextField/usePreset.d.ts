@@ -386,6 +386,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     $backgroundDanger?: boolean | undefined;
     $backgroundDisabled?: boolean | undefined;
     $backgroundDark?: boolean | undefined;
+    $backgroundDarkElevated?: boolean | undefined;
+    $backgroundDarkActive?: boolean | undefined;
+    $backgroundInverted?: boolean | undefined;
     $textDisabled?: boolean | undefined;
     $textDefault?: boolean | undefined;
     $textNeutralHeavy?: boolean | undefined;
@@ -796,6 +799,9 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     $backgroundDanger?: boolean | undefined;
     $backgroundDisabled?: boolean | undefined;
     $backgroundDark?: boolean | undefined;
+    $backgroundDarkElevated?: boolean | undefined;
+    $backgroundDarkActive?: boolean | undefined;
+    $backgroundInverted?: boolean | undefined;
     $textDisabled?: boolean | undefined;
     $textDefault?: boolean | undefined;
     $textNeutralHeavy?: boolean | undefined;
@@ -1068,7 +1074,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     label?: string | undefined;
     labelColor: import("./types").ColorType | {
         focus: string;
-        error: any;
+        error: string;
         disabled: string;
     };
     labelStyle?: import("react-native").TextStyle | undefined;
@@ -1077,7 +1083,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     floatingPlaceholder?: boolean | undefined;
     floatingPlaceholderColor: import("./types").ColorType | {
         focus: string;
-        error: any;
+        error: string;
         disabled: string;
     };
     floatOnFocus?: boolean | undefined;

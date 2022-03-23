@@ -15,7 +15,7 @@ import {orientations} from '../../commons/Constants';
 import {useDidUpdate} from 'hooks';
 
 const DEFAULT_HEIGHT = 48;
-const DEFAULT_BACKGROUND_COLOR = Colors.white;
+const DEFAULT_BACKGROUND_COLOR = Colors.$backgroundElevated;
 
 const DEFAULT_LABEL_STYLE = {
   ...Typography.text80M,
@@ -117,7 +117,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
   children?: ChildProps[] | ChildProps;
 }
 
-const FADER_PROPS = {size: 76};
+const FADER_PROPS = {size: 76, tintColor: Colors.$backgroundDefault};
 
 /**
  * @description: TabController's TabBar component
@@ -323,19 +323,19 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 2,
-    backgroundColor: Colors.primary
+    backgroundColor: Colors.$backgroundPrimaryHeavy
   },
   containerShadow: {
     ...Platform.select({
       ios: {
-        shadowColor: Colors.grey10,
+        shadowColor: Colors.black,
         shadowOpacity: 0.05,
         shadowRadius: 2,
         shadowOffset: {height: 6, width: 0}
       },
       android: {
         elevation: 5,
-        backgroundColor: Colors.white
+        backgroundColor: Colors.$backgroundElevated
       }
     })
   },

@@ -58,4 +58,8 @@ export class Assets {
 
     return this;
   }
+
+  getAssetByPath(path: string) {
+    return _.get(this, path);
+  }
 }

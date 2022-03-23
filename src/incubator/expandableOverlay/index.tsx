@@ -64,11 +64,16 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     topBarProps,
     renderCustomOverlay,
     disabled,
+    onPress,
+    customValue,
     testID,
     ...others
   } = props;
   const [visible, setExpandableVisible] = useState(false);
-  const openExpandable = useCallback(() => setExpandableVisible(true), []);
+  const openExpandable = useCallback(() => {
+    setExpandableVisible(true);
+    onPress?.(props);
+  }, [onPress, customValue]);
   const closeExpandable = useCallback(() => {
     setExpandableVisible(false);
     useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();

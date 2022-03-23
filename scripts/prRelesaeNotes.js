@@ -55,20 +55,18 @@ async function fetchMergedPRs(postMergedDate) {
   const response = await fetch(url, {headers});
   const PRs = await response.json();
 
-  const relevantPRs = _.flow(PRs =>
-    _.filter(PRs,
-      pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate,
-      PRs => _.sortBy(PRs, 'merged_at'),
-      PRs =>
-        _.map(PRs, pr => ({
-          state: pr.state,
-          merged_at: pr.merged_at,
-          html_url: pr.html_url,
-          branch: pr.head.ref,
-          number: pr.number,
-          title: pr.title,
-          info: parsePR(pr.body)
-        }))))(PRs);
+  const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate),
+    prs => _.sortBy(prs, 'merged_at'),
+    prs =>
+      _.map(prs, pr => ({
+        state: pr.state,
+        merged_at: pr.merged_at,
+        html_url: pr.html_url,
+        branch: pr.head.ref,
+        number: pr.number,
+        title: pr.title,
+        info: parsePR(pr.body)
+      })))(PRs);
 
   return relevantPRs;
 }

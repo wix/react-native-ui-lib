@@ -15,6 +15,10 @@ export declare type KeyboardTrackingViewProps = ViewProps & {
      * Allow control safe area
      */
     useSafeArea?: boolean;
+    /**
+     * Whether or not to include bottom tab bar inset
+     */
+    usesBottomTabs?: boolean;
     scrollToFocusedInput?: boolean;
     scrollBehavior?: number;
     revealKeyboardInteractive?: boolean;
@@ -41,6 +45,10 @@ declare const KeyboardTrackingView: React.ForwardRefExoticComponent<Pick<ViewPro
      * Allow control safe area
      */
     useSafeArea?: boolean | undefined;
+    /**
+     * Whether or not to include bottom tab bar inset
+     */
+    usesBottomTabs?: boolean | undefined;
     scrollToFocusedInput?: boolean | undefined;
     scrollBehavior?: number | undefined;
     revealKeyboardInteractive?: boolean | undefined;
@@ -51,5 +59,5 @@ declare const KeyboardTrackingView: React.ForwardRefExoticComponent<Pick<ViewPro
     ref?: any;
     children?: React.ReactChild | React.ReactChild[] | undefined;
     style?: ViewStyle | undefined;
-}, keyof ViewProps | "useSafeArea" | "trackInteractive" | "scrollToFocusedInput" | "scrollBehavior" | "revealKeyboardInteractive" | "manageScrollView" | "requiresSameParentToManageScrollView" | "addBottomView" | "allowHitsOutsideBounds"> & React.RefAttributes<unknown>>;
+}, keyof ViewProps | "useSafeArea" | "trackInteractive" | "usesBottomTabs" | "scrollToFocusedInput" | "scrollBehavior" | "revealKeyboardInteractive" | "manageScrollView" | "requiresSameParentToManageScrollView" | "addBottomView" | "allowHitsOutsideBounds"> & React.RefAttributes<unknown>>;
 export default KeyboardTrackingView;

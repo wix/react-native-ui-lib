@@ -73,7 +73,6 @@ declare class GridView extends UIComponent<GridViewProps, GridViewState> {
     getGridContainerWidth(): number;
     calcNumberOfColumns(): number;
     calcItemSize(): number;
-    getThemeColor(placeColor: string): any;
     renderLastItemOverlay(): JSX.Element | undefined;
     renderItem: (item: GridListItemProps, index: number) => JSX.Element;
     render(): JSX.Element;

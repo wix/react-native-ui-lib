@@ -11,6 +11,7 @@ import Scheme, {Schemes, SchemeType} from './scheme';
 
 export class Colors {
   [key: string]: any;
+  private shouldSupportDarkMode = false;
 
   constructor() {
     const colors = Object.assign(colorsPalette, designTokens, themeColors);
@@ -58,13 +59,14 @@ export class Colors {
 
   /**
    * Support listening to Appearance changes
-   * and change the design tokens accordingly 
+   * and change the design tokens accordingly
    */
   supportDarkMode() {
     const designTokensColors = Scheme.getSchemeType() === 'dark' ? designTokensDM : designTokens;
+    this.shouldSupportDarkMode = true;
     Object.assign(this, designTokensColors);
   }
-  
+
   /**
    * Add alpha to hex or rgb color
    * arguments:
@@ -132,7 +134,13 @@ export class Colors {
     const colorKey = _.findKey(this, (_value, key) => this[key] === color);
 
     if (colorKey) {
-      const requiredColorKey = `${colorKey.slice(0, -2)}${tintKey}`;
+      const colorKeys = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
+      const keyIndex = _.indexOf(colorKeys, Number(tintKey));
+      const key =
+        this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark'
+          ? colorKeys[colorKeys.length - 1 - keyIndex]
+          : tintKey;
+      const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
       const requiredColor = this[requiredColorKey];
 
       if (_.isUndefined(requiredColor)) {
@@ -160,16 +168,17 @@ export class Colors {
   generateColorPalette = _.memoize(color => {
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
+    const lightColorsThreshold = this.shouldGenerateDarkerPalette(color) ? 5 : 0;
 
     const ls = [hsl.color[2]];
     let l = lightness - 10;
-    while (l >= 20) {
+    while (l >= 20 - lightColorsThreshold) {
       ls.unshift(l);
       l -= 10;
     }
 
     l = lightness + 10;
-    while (l < 100) {
+    while (l < 100 - lightColorsThreshold) {
       ls.push(l);
       l += 10;
     }
@@ -182,8 +191,15 @@ export class Colors {
 
     const sliced = tints.slice(0, 8);
     const adjusted = adjustSaturation(sliced, color);
-    return adjusted || sliced;
+    const palette = adjusted || sliced;
+    return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
+
+  shouldGenerateDarkerPalette(color: string) {
+    const hsl = Color(color).hsl();
+    const hue = hsl.color[0];
+    return _.inRange(hue, 51, 184);
+  }
 
   isDark(color: string) {
     const lum = tinycolor(color).getLuminance();
