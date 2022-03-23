@@ -20,10 +20,10 @@ const BlurView = BlurViewPackage?.BlurView;
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
   borderWidth: 2,
-  color: Colors.primary,
+  color: Colors.$backgroundPrimaryHeavy,
   indicatorSize: 20,
   icon: Assets.icons.checkSmall,
-  iconColor: Colors.white,
+  iconColor: Colors.$iconDefaultLight,
   hideIndicator: false
 };
 
@@ -186,7 +186,7 @@ class Card extends PureComponent<PropTypes, State> {
   }
 
   get backgroundStyle() {
-    const {enableBlur, backgroundColor = Colors.white} = this.props;
+    const {enableBlur, backgroundColor = Colors.$backgroundElevated} = this.props;
 
     if (Constants.isIOS && enableBlur) {
       return {backgroundColor: Colors.rgba(backgroundColor, 0.85)};
@@ -308,7 +308,7 @@ function createStyles({width, height, borderRadius, selectionOptions}: CardProps
     },
     containerShadow: {
       // sh30 bottom
-      shadowColor: Colors.grey40,
+      shadowColor: Colors.$backgroundNeutralIdle,
       shadowOpacity: 0.25,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0}
