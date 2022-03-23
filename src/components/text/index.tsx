@@ -102,7 +102,7 @@ class Text extends PureComponent<PropsTypes> {
 
   render() {
     const {modifiers, style, center, uppercase, underline, children, forwardedRef, ...others} = this.props;
-    const color = this.props.color || modifiers.color;
+    const color = this.props.color || modifiers.color || Colors.$textDefault;
     const {margins, typography, backgroundColor, flexStyle} = modifiers;
     const textStyle = [
       styles.container,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline'
   },
   highlight: {
-    color: Colors.grey30
+    color: Colors.$textNeutral
   },
   notHighlight: {
     color: undefined

@@ -1,19 +1,19 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView, View, Text, StyleSheet, Alert} from 'react-native';
-import {Avatar, AvatarHelper, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {ScrollView, StyleSheet, Alert} from 'react-native';
+import {Avatar, AvatarHelper, View, Text, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 const star = require('../../assets/icons/star.png');
-const onlineColor = Colors.green30;
+const onlineColor = Colors.$backgroundSuccessHeavy;
 const examples = [
   {title: 'Custom Background', backgroundColor: Colors.violet60},
   {title: 'Empty Avatar with ribbon', ribbonLabel: 'New'},
   {
     title: 'Initials with Color',
     label: 'AD',
-    backgroundColor: Colors.yellow60,
-    labelColor: Colors.orange20,
+    backgroundColor: Colors.$backgroundWarning,
+    labelColor: Colors.$textMajor,
     ribbonLabel: 'New',
     ribbonStyle: {backgroundColor: Colors.purple30}
   },
@@ -24,7 +24,7 @@ const examples = [
       uri:
         'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'
     },
-    badgeProps: {size: 10, backgroundColor: Colors.yellow30},
+    badgeProps: {size: 10, backgroundColor: Colors.$backgroundWarningHeavy},
     badgePosition: 'BOTTOM_RIGHT'
   },
 
@@ -35,7 +35,7 @@ const examples = [
       uri:
         'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'
     },
-    badgeProps: {size: 10, backgroundColor: Colors.grey50},
+    badgeProps: {size: 10, backgroundColor: Colors.$backgroundDisabled},
     badgePosition: 'BOTTOM_LEFT'
   },
   {
@@ -65,8 +65,8 @@ const examples = [
       icon: star,
       size: 14,
       borderWidth: 1.5,
-      borderColor: Colors.white,
-      iconStyle: {backgroundColor: Colors.yellow20}
+      borderColor: Colors.$outlineLight,
+      iconStyle: {backgroundColor: Colors.$backgroundWarningHeavy}
     }
   },
   {
@@ -79,7 +79,7 @@ const examples = [
   {
     title: 'Invalid Gravatar (see logs)',
     label: '🤦',
-    backgroundColor: Colors.grey60,
+    backgroundColor: Colors.$backgroundNeutralMedium,
     source: {uri: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=404'},
     onImageLoadStart: () => console.log('AvatarScreen: Invalid avatar load STARTED...'), // eslint-disable-line
     onImageLoadEnd: () => console.log('AvatarScreen: Invalid avatar load ENDED'), // eslint-disable-line
@@ -88,26 +88,26 @@ const examples = [
   {
     title: 'Monitored Avatar (see logs)',
     label: '?!',
-    backgroundColor: Colors.blue20,
+    backgroundColor: Colors.$backgroundGeneralHeavy,
     source: {uri: 'https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg'},
     onImageLoadStart: () => console.log('AvatarScreen: Monitored avatar load STARTED...'), // eslint-disable-line
     onImageLoadEnd: () => console.log('AvatarScreen: Monitored avatar load ENDED') // eslint-disable-line
   },
   {
     title: 'Empty Gravatar',
-    backgroundColor: Colors.red60,
+    backgroundColor: Colors.$backgroundDanger,
     source: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'}
   },
   {
     title: 'With custom badge label',
     label: 'LD',
-    backgroundColor: Colors.red60,
+    backgroundColor: Colors.$backgroundDanger,
     badgePosition: 'BOTTOM_RIGHT',
     badgeProps: {
       label: '+2',
       size: 24,
       borderWidth: 1.5,
-      borderColor: Colors.white
+      borderColor: Colors.$outlineLight
     }
   }
 ];
