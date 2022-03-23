@@ -117,7 +117,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
   children?: ChildProps[] | ChildProps;
 }
 
-const FADER_PROPS = {size: 76};
+const FADER_PROPS = {size: 76, tintColor: Colors.$backgroundDefault};
 
 /**
  * @description: TabController's TabBar component
