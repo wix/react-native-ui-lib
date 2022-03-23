@@ -152,6 +152,9 @@ export default {
   get Slider() {
     return require('./components/slider').default;
   },
+  get SortableGridList() {
+    return require('./components/sortableGridList').default;
+  },
   get StateScreen() {
     return require('./components/stateScreen').default;
   },

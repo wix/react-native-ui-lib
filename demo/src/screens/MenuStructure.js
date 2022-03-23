@@ -113,6 +113,7 @@ export const navigationData = {
       },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'},
       {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
+      {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'},
       {title: 'GridView', tags: 'grid view', screen: 'unicorn.components.GridViewScreen'}
     ]
   },

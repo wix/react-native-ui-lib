@@ -24,7 +24,7 @@ export interface GridListProps<T> extends FlatListProps<T> {
      */
     keepItemSize?: boolean;
     /**
-     * Pass when you want to use a custom container width for calculation (good for when list has outer padding)
+     * Pass when you want to use a custom container width for calculation
      */
     containerWidth?: number;
 }

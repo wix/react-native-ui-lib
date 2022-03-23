@@ -82,6 +82,7 @@ export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './compon
 export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {default as Slider, SliderProps} from './components/slider';
+export {default as SortableGridList, SortableGridListProps} from './components/sortableGridList';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as Stepper, StepperProps} from './components/stepper';

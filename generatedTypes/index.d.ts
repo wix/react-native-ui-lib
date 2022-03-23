@@ -64,6 +64,7 @@ export {
   SegmentedControlItemProps
 } from './src/components/segmentedControl';
 export {default as Slider, SliderProps} from './src/components/slider';
+export {default as SortableGridList, SortableGridListProps} from './src/components/sortableGridList';
 export {default as Switch, SwitchProps} from './src/components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './src/components/tabController';
 export {default as TabBar, TabBarProps} from './src/components/TabBar';
