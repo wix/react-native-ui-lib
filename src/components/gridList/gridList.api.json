@@ -5,7 +5,7 @@
   "extends": ["FlatList"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridListScreen.tsx",
   "props": [
-    {"name": "numColumns", "type": "number", "description": "Number of items to show in a row"},
+    {"name": "numColumns", "type": "number", "description": Number of items to show in a row (ignored when passing maxItemWidth)"},
     {"name": "itemSpacing", "type": "number", "description": "Spacing between each item"},
     {
       "name": "maxItemWidth",

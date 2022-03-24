@@ -16,7 +16,7 @@ class GridListScreen extends Component {
           <Text>{item.name}</Text>
           <Text>{item.formattedPrice}</Text>
           {item.inventory.status === 'Out of Stock' && (
-            <Text text90M red30>
+            <Text text90M $textDangerLight>
               {item.inventory.status}
             </Text>
           )}
@@ -48,7 +48,7 @@ class GridListScreen extends Component {
 
 const styles = StyleSheet.create({
   list: {
-    padding: Spacings.s5
+    paddingTop: Spacings.s5
   },
   itemImage: {
     width: '100%',
