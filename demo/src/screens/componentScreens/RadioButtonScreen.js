@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, ScrollView} from 'react-native';
-import {Assets, RadioButton, Colors, Shadows, RadioGroup, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, View, Text, RadioButton, RadioGroup} from 'react-native-ui-lib'; //eslint-disable-line
 const starIcon = require('../../assets/icons/star.png');
 
 const COLORS = {
@@ -11,8 +11,10 @@ const COLORS = {
 
 export default class RadioButtonScreen extends Component {
   static colors = COLORS;
+  
   constructor(props) {
     super(props);
+    
     this.state = {
       color: undefined,
       messageType: undefined,
@@ -61,89 +63,85 @@ export default class RadioButtonScreen extends Component {
 
   render() {
     return (
-      <View flex useSafeArea bg-grey80>
-        <ScrollView>
-          <View padding-page>
-            <Text h1 marginB-s5>
-              Radio Buttons
+      <View flex useSafeArea>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{padding: 20}}>
+          <Text h1 marginB-s5 $textDefault>
+            Radio Buttons
+          </Text>
+
+          <RadioGroup initialValue={this.state.color || null} onValueChange={value => this.setState({color: value})}>
+            <Text marginB-20 text60 grey10>
+              Select a color{'\n'}
+              (enum with default value)
             </Text>
+            {this.renderRadioButton(null, 'Default')}
+            {this.renderRadioButtonForColorEnum(RadioButtonScreen.colors.ORANGE)}
+            {this.renderRadioButtonForColorEnum(RadioButtonScreen.colors.PURPLE)}
+            {this.renderRadioButtonForColorEnum(RadioButtonScreen.colors.GREEN)}
+            <Text marginT-10>You chose: {this.state.color ? this.state.color : 'Default'}</Text>
+          </RadioGroup>
 
-            <RadioGroup initialValue={this.state.color || null} onValueChange={value => this.setState({color: value})}>
-              <Text marginB-20 text60 grey10>
-                Select a color{'\n'}
-                (enum with default value)
-              </Text>
-              {this.renderRadioButton(null, 'Default')}
-              {this.renderRadioButtonForColorEnum(RadioButtonScreen.colors.ORANGE)}
-              {this.renderRadioButtonForColorEnum(RadioButtonScreen.colors.PURPLE)}
-              {this.renderRadioButtonForColorEnum(RadioButtonScreen.colors.GREEN)}
-              <Text marginT-10>You chose: {this.state.color ? this.state.color : 'Default'}</Text>
-            </RadioGroup>
-
-            <RadioGroup
-              marginT-30
-              initialValue={this.state.textSide}
-              onValueChange={value => this.setState({textSide: value})}
-            >
-              <Text marginB-20 text60 grey10>
-                Alignments
-              </Text>
-              {this.renderRadioButtonWithImageAndText('right-icon', 'Text on right')}
-              {this.renderRadioButtonWithImageAndText('left-icon', 'Text on left', true)}
-              {this.renderRadioButton('left-content', 'Content on left', true)}
-              {this.renderRadioButton('right-content', 'Content on right', {contentOnRight: true})}
-              <Text marginT-10>You chose: {this.state.textSide}</Text>
-            </RadioGroup>
-
-            <RadioGroup marginT-30 initialValue={this.state.value} onValueChange={value => this.setState({value})}>
-              <Text marginB-20 text60 grey10>
-                Yes or No?
-              </Text>
-              <View row>
-                {this.renderRadioButtonWithImage('yes', Assets.icons.check, {tintColor: 'green'})}
-                {this.renderRadioButtonWithImage('no', Assets.icons.x, {tintColor: 'red'})}
-              </View>
-              <Text marginT-10>You chose: {this.state.value}</Text>
-            </RadioGroup>
-
-            <Text marginV-20 text60 grey10>
-              Use it without RadioGroup
+          <RadioGroup
+            marginT-30
+            initialValue={this.state.textSide}
+            onValueChange={value => this.setState({textSide: value})}
+          >
+            <Text marginB-20 text60 grey10>
+              Alignments
             </Text>
-            <View row centerV marginB-10>
-              <RadioButton
-                selected={this.state.individualValue2}
-                onPress={() => this.setState({individualValue2: !this.state.individualValue2})}
-                label="Individual Radio Button (with style)"
-                labelStyle={{fontSize: 16, fontWeight: 'bold'}}
-              />
-            </View>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => this.setState({individualValue: !this.state.individualValue})}
-              accessible={false}
-            >
-              <View row centerV>
-                <RadioButton selected={this.state.individualValue} label="Individual Radio Button (wrapped)"/>
-              </View>
-            </TouchableOpacity>
-            <View row centerV marginT-10>
-              <RadioButton
-                disabled
-                selected={this.state.disabledValue}
-                onPress={() => this.setState({disabledValue: !this.state.disabledValue})}
-                label="Disabled Radio Button"
-              />
-            </View>
-            <View row centerV marginT-10>
-              <RadioButton
-                disabled
-                selected={this.state.disabledSelectedValue}
-                onPress={() => this.setState({disabledSelectedValue: !this.state.disabledSelectedValue})}
-                label="Disabled Selected Radio Button"
-              />
-            </View>
+            {this.renderRadioButtonWithImageAndText('right-icon', 'Text on right')}
+            {this.renderRadioButtonWithImageAndText('left-icon', 'Text on left', true)}
+            {this.renderRadioButton('left-content', 'Content on left', true)}
+            {this.renderRadioButton('right-content', 'Content on right', {contentOnRight: true})}
+            <Text marginT-10>You chose: {this.state.textSide}</Text>
+          </RadioGroup>
 
-            <View style={{height: 30}}/>
+          <RadioGroup marginT-30 initialValue={this.state.value} onValueChange={value => this.setState({value})}>
+            <Text marginB-20 text60 grey10>
+              Yes or No?
+            </Text>
+            <View row>
+              {this.renderRadioButtonWithImage('yes', Assets.icons.check, {tintColor: 'green'})}
+              {this.renderRadioButtonWithImage('no', Assets.icons.x, {tintColor: 'red'})}
+            </View>
+            <Text marginT-10>You chose: {this.state.value}</Text>
+          </RadioGroup>
+
+          <Text marginV-20 text60 grey10>
+            Use it without RadioGroup
+          </Text>
+          <View row centerV marginB-10>
+            <RadioButton
+              selected={this.state.individualValue2}
+              onPress={() => this.setState({individualValue2: !this.state.individualValue2})}
+              label="Individual Radio Button (with style)"
+              labelStyle={{fontSize: 16, fontWeight: 'bold'}}
+            />
+          </View>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => this.setState({individualValue: !this.state.individualValue})}
+            accessible={false}
+          >
+            <View row centerV>
+              <RadioButton selected={this.state.individualValue} label="Individual Radio Button (wrapped)"/>
+            </View>
+          </TouchableOpacity>
+          <View row centerV marginT-10>
+            <RadioButton
+              disabled
+              selected={this.state.disabledValue}
+              onPress={() => this.setState({disabledValue: !this.state.disabledValue})}
+              label="Disabled Radio Button"
+            />
+          </View>
+          <View row centerV marginT-10>
+            <RadioButton
+              disabled
+              selected={this.state.disabledSelectedValue}
+              onPress={() => this.setState({disabledSelectedValue: !this.state.disabledSelectedValue})}
+              label="Disabled Selected Radio Button"
+            />
           </View>
         </ScrollView>
       </View>
