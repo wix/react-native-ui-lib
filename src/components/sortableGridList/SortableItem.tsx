@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, useCallback} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
@@ -16,6 +16,7 @@ interface SortableItemProps extends ReturnType<typeof usePresenter> {
   index: number;
   itemsOrder: Animated.SharedValue<ItemsOrder>;
   onChange: () => void;
+  style: StyleProp<ViewStyle>;
 }
 
 function SortableItem(props: PropsWithChildren<SortableItemProps>) {
@@ -23,6 +24,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
     index,
     itemsOrder,
     onChange,
+    style,
     getItemOrderById,
     getOrderByPosition,
     getIdByItemOrder,
@@ -123,11 +125,11 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
     };
   });
   return (
-    <GestureDetector gesture={gesture}>
-      <View reanimated style={animatedStyle} onLayout={onLayout}>
-        {props.children}
-      </View>
-    </GestureDetector>
+    <View reanimated style={[style, animatedStyle]} onLayout={onLayout}>
+      <GestureDetector gesture={gesture}>
+        <View>{props.children}</View>
+      </GestureDetector>
+    </View>
   );
 }
 

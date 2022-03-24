@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {
+  View,
   Text,
   Constants,
   SortableGridList,
@@ -24,39 +25,31 @@ class GridListScreen extends Component {
 
   renderItem: GridListProps<typeof products[0]>['renderItem'] = ({item}) => {
     return (
-      <Card flex onPress={() => console.log('ethan - item press')}>
+      <Card flex onPress={() => console.log('item press')}>
         <Card.Section imageSource={{uri: item.mediaUrl}} imageStyle={styles.itemImage}/>
-        {/* <View padding-s2>
-          <Text>{item.name}</Text>
-          <Text>{item.formattedPrice}</Text>
-          {item.inventory.status === 'Out of Stock' && (
-            <Text text90M red30>
-              {item.inventory.status}
-            </Text>
-          )}
-        </View> */}
       </Card>
     );
   };
 
   render() {
     return (
-      <SortableGridList<typeof products[0]>
-        ListHeaderComponent={
-          <Text h1 marginB-s5>
-            SortableGridList
-          </Text>
-        }
-        data={products}
-        renderItem={this.renderItem}
-        // numColumns={2}
-        maxItemWidth={140}
-        itemSpacing={Spacings.s3}
-        listPadding={Spacings.s5}
-        // keepItemSize
-        contentContainerStyle={styles.list}
-        onOrderChange={this.onOrderChange}
-      />
+      <View flex>
+        <Text h1 margin-s5>
+          SortableGridList
+        </Text>
+        <SortableGridList
+          data={products}
+          renderItem={this.renderItem}
+          // numColumns={2}
+          maxItemWidth={140}
+          itemSpacing={Spacings.s3}
+          // itemSpacing={0}
+          listPadding={Spacings.s5}
+          // keepItemSize
+          contentContainerStyle={styles.list}
+          onOrderChange={this.onOrderChange}
+        />
+      </View>
     );
   }
 }
