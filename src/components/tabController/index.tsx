@@ -38,6 +38,10 @@ export interface TabControllerProps {
    * Pass for custom carousel page width
    */
   carouselPageWidth?: number;
+  /**
+   * Send if a SafeView is used in the context of the TabController.
+   */
+  useSafeArea?: boolean;
 }
 
 /**
@@ -54,9 +58,16 @@ function TabController({
   items,
   onChangeIndex = _.noop,
   carouselPageWidth,
+  useSafeArea,
   children
 }: PropsWithChildren<TabControllerProps>) {
-  const [screenWidth, setScreenWidth] = useState<number>(Constants.windowWidth);
+
+  const getScreenWidth = () => {
+    const {left, right} = Constants.getSafeAreaInsets();
+    return Constants.windowWidth - (useSafeArea && Constants.isIphoneX ? left + right : 0);
+  };
+
+  const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth());
 
   if (items?.length < 2) {
     console.warn('TabController component expect a minimum of 2 items');
@@ -64,7 +75,7 @@ function TabController({
 
   useOrientation({
     onOrientationChange: () => {
-      setScreenWidth(Constants.windowWidth);
+      setScreenWidth(getScreenWidth());
     }
   });
 
