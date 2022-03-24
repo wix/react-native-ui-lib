@@ -117,7 +117,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
 
   const animatedStyle = useAnimatedStyle(() => {
     const scale = withSpring(isDragging.value ? 1.1 : 1);
-    const zIndex = isDragging.value ? 100 : 0;
+    const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
 
     return {
       zIndex,

@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {FlatListProps, ScrollView, ScrollViewProps} from 'react-native';
+import {StyleSheet, FlatListProps, ScrollView, ScrollViewProps} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useSharedValue} from 'react-native-reanimated';
 import _ from 'lodash';
@@ -40,6 +40,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
     const lastItemInRow = (index + 1) % numberOfColumns === 0;
     return (
       <SortableItem
+        key={index}
         {...presenter}
         style={[itemContainerStyle, lastItemInRow && {marginRight: 0}]}
         itemsOrder={itemsOrder}
@@ -54,7 +55,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
 
   return (
     <GestureHandlerRootView>
-      <ScrollView contentContainerStyle={[{flexWrap: 'wrap', flexDirection: 'row'}, contentContainerStyle]}>
+      <ScrollView contentContainerStyle={[styles.listContent, contentContainerStyle]}>
         {data?.map((item, index) => _renderItem({item, index}))}
       </ScrollView>
     </GestureHandlerRootView>
@@ -62,3 +63,10 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
 }
 
 export default SortableGridList;
+
+const styles = StyleSheet.create({
+  listContent: {
+    flexWrap: 'wrap',
+    flexDirection: 'row'
+  }
+});
