@@ -150,7 +150,7 @@ class TabControllerScreen extends Component<{}, State> {
   render() {
     const {key, initialIndex, /* selectedIndex, */ asCarousel, centerSelected, fewItems, items} = this.state;
     return (
-      <View flex bg-grey70>
+      <View flex bg-$backgroundDefault>
         <TabController
           key={key}
           asCarousel={asCarousel}

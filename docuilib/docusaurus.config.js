@@ -29,7 +29,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             sidebarPath: require.resolve('./sidebars.js'),
             path: '../docs',
             // Please change this to your repo.
-            editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/'
+            editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
+            docLayoutComponent: '@site/src/components/CustomLayout'
           },
           blog: {
             showReadingTime: true,

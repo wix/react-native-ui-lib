@@ -452,6 +452,7 @@ class Picker extends Component {
       pickerModalProps,
       value,
       editable,
+      onPress,
       migrateTextField
     } = this.props;
 
@@ -494,6 +495,7 @@ class Picker extends Component {
           modalProps={modalProps}
           expandableContent={this.renderExpandableModal()}
           renderCustomOverlay={renderCustomModal ? this.renderCustomModal : undefined}
+          onPress={onPress}
           testID={testID}
           {...customPickerProps}
           disabled={editable === false}

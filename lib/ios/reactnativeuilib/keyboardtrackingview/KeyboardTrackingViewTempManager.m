@@ -505,30 +505,11 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     });
 }
 
-#pragma mark - root view controller and presenting style
-
-
-- (BOOL)isModal {
-    UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-    UIViewController *presentedViewController = window.rootViewController.presentedViewController;
-
-    if (presentedViewController != nil) {
-        if ([presentedViewController isKindOfClass:[UINavigationController class]]) {
-            UINavigationController *presented = (UINavigationController*)presentedViewController;
-            if (presented.visibleViewController) {
-                return YES;
-            }
-        }
-    }
-    return NO;
-}
-
 #pragma mark - TabBarController
 
 -(CGFloat)getTabBarHeight
 {
     if (@available(iOS 11.0, *)) {
-        NSLog(@"INBAL usesBottomTabs: %d", self.usesBottomTabs);
         if (self.usesBottomTabs == YES)
         {
             UITabBarController *tabBarController = [UITabBarController new];

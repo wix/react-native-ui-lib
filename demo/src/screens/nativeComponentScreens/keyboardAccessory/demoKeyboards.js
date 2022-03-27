@@ -1,9 +1,9 @@
+import _ from 'lodash';
 import React from 'react';
 import {ScrollView} from 'react-native';
 import {Keyboard, View, Text, Image, Spacings} from 'react-native-ui-lib';
-import _ from 'lodash';
-const KeyboardRegistry = Keyboard.KeyboardRegistry;
 
+const KeyboardRegistry = Keyboard.KeyboardRegistry;
 const images = [
   'https://images.pexels.com/photos/1148521/pexels-photo-1148521.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=200',
   'https://images.pexels.com/photos/1528975/pexels-photo-1528975.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=200',
@@ -43,11 +43,5 @@ function CustomKeyboard() {
   );
 }
 
-KeyboardRegistry.registerKeyboard(
-  'unicorn.ImagesKeyboard',
-  () => ImagesKeyboard
-);
-KeyboardRegistry.registerKeyboard(
-  'unicorn.CustomKeyboard',
-  () => CustomKeyboard
-);
+KeyboardRegistry.registerKeyboard('unicorn.ImagesKeyboard', () => ImagesKeyboard);
+KeyboardRegistry.registerKeyboard('unicorn.CustomKeyboard', () => CustomKeyboard);

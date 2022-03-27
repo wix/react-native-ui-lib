@@ -5,7 +5,7 @@
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
-import React, {useMemo, useState, useRef, PropsWithChildren} from 'react';
+import React, {useMemo, useState, useRef, PropsWithChildren, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {
   Constants,
@@ -43,6 +43,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     containerStyle,
     testID,
     onChange,
+    onPress,
     onShow,
     onSearchChange,
     renderCustomModal,
@@ -53,14 +54,15 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     pickerModalProps,
     listProps,
     value,
-    editable,
     getLabel,
     getItemLabel,
     getItemValue,
     renderItem,
     children,
+    useSafeArea,
     migrate,
-    migrateTextField
+    migrateTextField,
+    ...others
   } = props;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
@@ -92,10 +94,10 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     placeholder: props.placeholder
   });
 
-  const onSelectedItemLayout = (event: LayoutChangeEvent) => {
+  const onSelectedItemLayout = useCallback((event: LayoutChangeEvent) => {
     const y = event.nativeEvent.layout.y;
     setSelectedItemPosition(y);
-  };
+  }, []);
 
   const contextValue = useMemo(() => {
     const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? value?.value : value;
@@ -124,7 +126,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     onDoneSelecting
   ]);
 
-  const textInputProps = TextField.extractOwnProps(props);
+  // const textInputProps = TextField.extractOwnProps(props);
   const {paddings, margins, positionStyle} = modifiers;
 
   const modalProps: ExpandableOverlayProps['modalProps'] = {
@@ -167,6 +169,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
         listProps={listProps}
+        useSafeArea={useSafeArea}
       >
         {filteredChildren}
       </PickerItemsList>
@@ -175,7 +178,6 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     testID,
     mode,
     selectedItemPosition,
-    enableModalBlur,
     topBarProps,
     cancelSelect,
     onDoneSelecting,
@@ -186,10 +188,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     _onSearchChange,
     renderCustomSearch,
     listProps,
-    onShow,
-    pickerModalProps,
     filteredChildren,
-    props
+    useSafeArea
   ]);
 
   if (useNativePicker) {
@@ -204,18 +204,21 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         modalProps={modalProps}
         expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
+        onPress={onPress}
         testID={testID}
         {...customPickerProps}
-        disabled={editable === false}
+        disabled={props.editable === false}
       >
         {renderPicker ? (
+          // @ts-expect-error TS throws a weird error, might be an issue with TS
           renderPicker(value, label)
         ) : (
           <TextFieldMigrator
             migrate={migrateTextField}
             customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
             ref={forwardedRef}
-            {...textInputProps}
+            // {...textInputProps}
+            {...others}
             testID={`${testID}.input`}
             containerStyle={[paddings, margins, positionStyle, containerStyle]}
             {...accessibilityInfo}

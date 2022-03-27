@@ -4,7 +4,7 @@ import Assets from '../assets';
 
 export function isSvgUri(source: ImageProps['source']) {
   // @ts-expect-error
-  return typeof source === 'object' && source?.uri?.endsWith('.svg');
+  return typeof source === 'object' && source?.uri?.endsWith?.('.svg');
 }
 
 export function isSvg(source: ImageProps['source']) {
