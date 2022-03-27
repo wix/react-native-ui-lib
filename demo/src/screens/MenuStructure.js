@@ -136,7 +136,7 @@ export const navigationData = {
         tags: 'KeyboardTracking',
         screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'
       },
-      {title: 'KeyboardAccessoryView', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'}
+      {title: 'KeyboardAccessoryView', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardAccessoryViewScreen'}
     ]
   },
   AnimationsAndGestures: {

@@ -26,6 +26,7 @@ export const designTokensDM = {
   $backgroundDark: colorsPalette.grey10,
   $backgroundDarkElevated: colorsPalette.grey20,
   $backgroundDarkActive: colorsPalette.grey20,
+  $backgroundInverted: colorsPalette.white,
 
   // TEXT
   $textDisabled: colorsPalette.grey20,

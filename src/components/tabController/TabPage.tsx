@@ -14,7 +14,7 @@ export interface TabControllerPageProps {
    */
   lazy?: boolean;
   /**
-   * How long to wait till lazy load complete (good for showing loader screens)
+   * How long to wait till lazy load complete (good for showing loader screens and when loading big pages)
    */
   lazyLoadTime?: number;
   /**
@@ -36,6 +36,7 @@ export default function TabPage({
   index,
   lazy,
   renderLoading,
+  lazyLoadTime = 100,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
   const {currentPage, asCarousel, containerWidth} = useContext(TabBarContext);
@@ -44,14 +45,16 @@ export default function TabPage({
 
   const lazyLoad = useCallback(() => {
     if (lazy && !shouldLoad) {
-      setLoaded(true);
+      setTimeout(() => {
+        setLoaded(true);
+      }, lazyLoadTime);
     }
   }, [lazy, shouldLoad]);
 
   useAnimatedReaction(() => {
     return currentPage.value;
   },
-  (currentPage/* , previousPage */) => {
+  (currentPage /* , previousPage */) => {
     const isActive = currentPage === index;
     // const wasActive = previousPage === index;
     // const nearActive = asCarousel && (currentPage - 1 === index || currentPage + 1 === index);
@@ -68,7 +71,7 @@ export default function TabPage({
     //   runOnJS(setFocused)(false);
     // }
   },
-  [currentPage]);
+  [currentPage, lazyLoad]);
 
   const animatedPageStyle = useAnimatedStyle(() => {
     const isActive = Math.round(currentPage.value) === index;

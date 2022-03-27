@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent, ReactElement, ElementRef} from 'react';
+import React, {PureComponent, ReactElement} from 'react';
 import {
   StyleSheet,
   PanResponder,
@@ -155,9 +155,9 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   static defaultProps = defaultProps;
 
-  private thumb: ElementRef<typeof RNView> | undefined = undefined;
+  private thumb = React.createRef<RNView>();
   private _thumbStyles: ThumbStyle = {};
-  private minTrack: ElementRef<typeof RNView> | undefined = undefined;
+  private minTrack = React.createRef<RNView>();
   private _minTrackStyles: MinTrackStyle = {};
   private _x = 0;
   private _dx = 0;
@@ -299,18 +299,18 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   updateStyles(x: number) {
-    if (this.thumb) {
+    if (this.thumb.current) {
       const {disableRTL} = this.props;
       const {trackSize} = this.state;
       const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
       const _x = Constants.isRTL && disableRTL ? nonOverlappingTrackWidth - x : x; // adjust for RTL
       this._thumbStyles.left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
-      this.thumb.setNativeProps(this._thumbStyles);
+      this.thumb.current?.setNativeProps(this._thumbStyles);
     }
 
-    if (this.minTrack) {
+    if (this.minTrack.current) {
       this._minTrackStyles.width = Math.min(this.state.trackSize.width, x);
-      this.minTrack.setNativeProps(this._minTrackStyles);
+      this.minTrack.current?.setNativeProps(this._minTrackStyles);
     }
   }
 
@@ -320,14 +320,14 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   updateThumbStyle(start: boolean) {
-    if (this.thumb && !this.props.disableActiveStyling) {
+    if (this.thumb.current && !this.props.disableActiveStyling) {
       const {thumbStyle, activeThumbStyle} = this.props;
       const style = thumbStyle || styles.thumb;
       const activeStyle = activeThumbStyle || styles.activeThumb;
 
       const activeOrInactiveStyle = !this.props.disabled ? (start ? activeStyle : style) : {};
       this._thumbStyles.style = _.omit(activeOrInactiveStyle, 'height', 'width');
-      this.thumb.setNativeProps(this._thumbStyles);
+      this.thumb.current?.setNativeProps(this._thumbStyles);
       this.scaleThumb(start);
     }
   }
@@ -387,13 +387,6 @@ export default class Slider extends PureComponent<SliderProps, State> {
     return range;
   }
 
-  setMinTrackRef = (ref: ElementRef<typeof RNView>) => {
-    this.minTrack = ref;
-  };
-
-  setThumbRef = (ref: ElementRef<typeof RNView>) => {
-    this.thumb = ref;
-  };
 
   calculatedThumbActiveScale = () => {
     const {activeThumbStyle, thumbStyle, disabled, disableActiveStyling} = this.props;
@@ -518,7 +511,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
     return (
       <Animated.View
         hitSlop={thumbHitSlop}
-        ref={this.setThumbRef}
+        ref={this.thumb}
         onLayout={this.onThumbLayout}
         {...this._panResponder.panHandlers}
         style={[
@@ -579,7 +572,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
               onLayout={this.onTrackLayout}
             />
             <View
-              ref={this.setMinTrackRef}
+              ref={this.minTrack}
               style={[
                 styles.track,
                 trackStyle,
