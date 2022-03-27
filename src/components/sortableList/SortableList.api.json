@@ -2,6 +2,7 @@
   "name": "SortableList",
   "category": "basic",
   "description": "A sortable list component",
+  "extends": ["FlatList"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableListScreen.tsx",
   "props": [
     {
