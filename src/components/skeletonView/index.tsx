@@ -238,7 +238,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
 
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
     const {circleOverride, style} = input || {};
-    const {circle, colors, width = 0, height = 0} = this.props;
+    const {circle, colors, width, height = 0} = this.props;
     let {borderRadius} = this.props;
     const numericWidth = this.getWidth(width);
     let widthStyle;
@@ -461,7 +461,6 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
       showLastSeparator,
       height,
       width: this.getWidth(width),
-      width,
       colors,
       borderRadius,
       circle,
