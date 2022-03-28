@@ -47,7 +47,6 @@ export declare class Colors {
     getBackgroundKeysPattern(): RegExp;
     isEmpty(color: string): boolean;
     getColorTint(color: string, tintKey: string | number): any;
-    getInvertedTintKey(tintKey: string | number): number;
     getColorName(color: string): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
@@ -193,13 +192,12 @@ declare const colorObject: Colors & {
     $backgroundDarkActive: string;
     $backgroundInverted: string;
     $textDisabled: string;
-    $textDefault: string;
-    $textNeutralHeavy: string;
-    /**
+    $textDefault: string; /**
      * Set color scheme for app
      * arguments:
      * scheme - color scheme e.g light/dark/default
      */
+    $textNeutralHeavy: string;
     $textNeutral: string;
     $textNeutralLight: string;
     $textDefaultLight: string;
