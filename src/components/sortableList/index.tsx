@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {LayoutChangeEvent, StyleProp, ViewStyle, View} from 'react-native';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Animated, {useAnimatedRef, useAnimatedScrollHandler, useSharedValue} from 'react-native-reanimated';
-import Item, { ListRenderItem } from './Item';
+import Item, {ListRenderItem} from './Item';
 
 export interface SortableListProps<T> {
   /**
@@ -83,9 +83,10 @@ const SortableList = ({items, itemHeight, onOrderChange, renderItem, draggableAr
         {items.map((item: any, key: number) => {
           return (
             <Item 
-              {...{item, positions, key, scrollY, containerHeight, contentHeight, listRef, itemHeight, renderItem, draggableAreaSize, draggableAreaSide}}
+              {...{item, positions, scrollY, containerHeight, contentHeight, listRef, itemHeight, renderItem, draggableAreaSize, draggableAreaSide}}
               onFinishDrag={sortList}
               index={key}
+              key={key}
             />
           );
         })}
