@@ -44,7 +44,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           onPress={() => this.setState({selected2: !selected2})}
           activeOpacity={1}
           selectionOptions={{
-            color: Colors.$backgroundInverted,
+            color: Colors.grey40,
             indicatorSize: 25,
             borderWidth: 3
           }}
@@ -82,7 +82,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           222 Join Old The Town Barbershop Official Store. Download the Wix app
           to...
         </Text>
-        <Text text90 $textDefault>
+        <Text text90 $textDisabled>
           wix.to/A465c
         </Text>
       </View>
