@@ -3,6 +3,7 @@
  * The real index file that will be bundled is "src/index.js".
  * Please use this file for declaring all the exports, so they could be picked up by typescript's complier
  */
+export {default as Assets} from './src/assets';
 export * from './src/style';
 export * from './src/services';
 export * from './lib/components';
@@ -11,6 +12,8 @@ export * as Hooks from './src/hooks';
 export * as Modifiers from './src/commons/modifiers';
 export {
   asBaseComponent,
+  forwardRef,
+  UIComponent,
   withScrollEnabler,
   withScrollReached,
   WithScrollEnablerProps,
@@ -114,11 +117,8 @@ export {
   SharedTransition,
   Toast,
   WheelPickerDialog,
-  Assets,
   BaseComponent,
   PureBaseComponent,
-  UIComponent,
-  forwardRef,
   AvatarHelper
 } from '../typings';
 
