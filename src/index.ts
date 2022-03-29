@@ -21,6 +21,7 @@ export {
   ColorsModifiers,
   BackgroundColorModifier
 } from './commons/new';
+export {BaseComponent, PureBaseComponent} from './commons';
 export * as Incubator from './incubator';
 export * as Hooks from './hooks';
 export * as Modifiers from './commons/modifiers';
@@ -32,6 +33,7 @@ export {default as ActionSheet} from './components/actionSheet';
 export {default as Avatar, AvatarProps} from './components/avatar';
 export {AvatarHelper} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
+export {default as BaseInput} from './components/baseInput';
 export {default as Button, ButtonProps, ButtonSize, ButtonAnimationDirection} from './components/button';
 export {default as Card, CardProps, CardSectionProps, CardSelectionOptions} from './components/card';
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
@@ -59,6 +61,7 @@ export {default as Icon, IconProps} from './components/icon';
 export {default as Image, ImageProps} from './components/image';
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
+export {default as MaskedInput} from './components/maskedInput';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
@@ -90,6 +93,7 @@ export {
   SegmentedControlProps,
   SegmentedControlItemProps
 } from './components/segmentedControl';
+export {default as SharedTransition} from './components/sharedTransition';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {default as Slider, SliderProps} from './components/slider';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
@@ -99,6 +103,9 @@ export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/TabBar'; //TODO: remove on V7
 export {default as Text, TextProps} from './components/text';
+export {default as TextArea} from './components/textArea';
+export {default as TextField} from './components/textField/TextFieldMigrator';
+export {default as Toast} from './components/toast';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
 export {default as View, ViewProps} from './components/view';
 export {
@@ -109,6 +116,7 @@ export {
   WizardStepConfig,
   WizardStepsConfig
 } from './components/wizard';
+export {default as WheelPickerDialog} from './components/wheelPickerDialog';
 
 /* ===== TestKit ===== */
 // export {default as TextTestKit} from './components/text/Text.driver';
@@ -117,14 +125,14 @@ export {
 // export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
 
 //================ Manual typings (all those exports should be removed one day) ==========
-export {
-  BaseInput,
-  TextArea,
-  TextField,
-  MaskedInput,
-  SharedTransition,
-  Toast,
-  WheelPickerDialog,
-  BaseComponent,
-  PureBaseComponent
-} from '../typings';
+// export {
+//   // BaseInput,
+//   // TextArea,
+//   // TextField,
+//   // MaskedInput,
+//   // SharedTransition,
+//   // Toast,
+//   // WheelPickerDialog,
+//   // BaseComponent,
+//   // PureBaseComponent
+// } from '../typings';
