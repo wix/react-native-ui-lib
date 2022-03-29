@@ -18,9 +18,9 @@ import Text, {TextProps} from '../text';
 import View from '../view';
 
 const DEFAULT_SIZE = 24;
-const DEFAULT_COLOR = Colors.primary;
-const DEFAULT_ICON_COLOR = Colors.white;
-const DEFAULT_DISABLED_COLOR = Colors.grey50;
+const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
+const DEFAULT_ICON_COLOR = Colors.$iconDefaultLight;
+const DEFAULT_DISABLED_COLOR = Colors.$backgroundDisabled;
 
 const DEFAULT_BORDER_WIDTH = 2;
 const DEFAULT_BORDER_RADIUS = 8;
@@ -188,9 +188,9 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
         return iconColor || DEFAULT_COLOR;
       }
     } else if (disabled) {
-      return Colors.white;
+      return DEFAULT_ICON_COLOR;
     } else {
-      return iconColor || Colors.white;
+      return iconColor || DEFAULT_ICON_COLOR;
     }
   };
 
@@ -276,7 +276,8 @@ function createStyles(props: CheckboxProps) {
     },
     checkboxLabel: {
       marginLeft: Spacings.s3,
-      alignSelf: 'center'
+      alignSelf: 'center',
+      color: Colors.$textDefault
     }
   });
 }
