@@ -17,7 +17,7 @@
     "emitDeclarationOnly": true,
     // "noImplicitAny": false
     "declaration": true,
-    "declarationDir": "./generatedTypes",
+    // "declarationDir": "./generatedTypes",
     "baseUrl": ".",
     "paths": {
       "react-native-ui-lib": ["index.d.ts"],

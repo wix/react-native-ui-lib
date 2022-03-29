@@ -31,7 +31,7 @@
     "build:lib": "./node_modules/.bin/babel lib --out-dir lib --config-file ./src/.babelrc.json --extensions '.ts,.tsx'",
     "build:exports": "npm run build:src && npm run build:lib",
     "build:packages": "node scripts/buildPackages.js",
-    "build": "tsc --p tsconfig.build.json && npm run build:exports && npm run build:packages",
+    "build": "node scripts/build.js",
     "prepush": "npm run build:dev && npm run test",
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:deploy": "./scripts/deployDocs.sh",
