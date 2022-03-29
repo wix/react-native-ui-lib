@@ -20,7 +20,7 @@ import asRadioGroupChild from '../radioGroup/asRadioGroupChild';
 import {RadioGroupContextProps} from '../radioGroup/RadioGroupContext';
 
 const DEFAULT_SIZE = 24;
-const DEFAULT_COLOR = Colors.primary;
+const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 
 export type RadioButtonProps = RadioGroupContextProps &
   ViewProps & {
@@ -195,7 +195,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
       style.push({borderRadius});
     }
     if (color) {
-      style.push({borderColor: disabled ? Colors.grey70 : color});
+      style.push({borderColor: disabled ? Colors.$backgroundDisabled : color});
     }
 
     style.push(propsStyle);
@@ -210,7 +210,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
       style.push({borderRadius});
     }
     if (color) {
-      style.push({backgroundColor: disabled ? Colors.grey70 : color});
+      style.push({backgroundColor: disabled ? Colors.$backgroundDisabled : color});
     }
 
     return style;
@@ -220,7 +220,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     const {label, labelStyle, contentOnRight} = this.props;
     return (
       label && (
-        <Text marginL-10={!contentOnRight} marginR-10={contentOnRight} style={labelStyle}>
+        <Text marginL-10={!contentOnRight} marginR-10={contentOnRight} $textDefault style={labelStyle}>
           {label}
         </Text>
       )
@@ -278,14 +278,14 @@ function createStyles(props: RadioButtonProps) {
   return StyleSheet.create({
     radioButtonOutline: {
       borderWidth: 2,
-      borderColor: disabled ? Colors.grey70 : color,
+      borderColor: disabled ? Colors.$backgroundDisabled : color,
       width: size,
       height: size,
       borderRadius,
       padding: 3
     },
     radioButtonInner: {
-      backgroundColor: disabled ? Colors.grey70 : color,
+      backgroundColor: disabled ? Colors.$backgroundDisabled : color,
       flex: 1,
       borderRadius
     },
