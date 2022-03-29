@@ -25,6 +25,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     preset,
     zIndex,
     elevation,
+    enableHapticFeedback,
     style,
     containerStyle,
     message,
@@ -71,7 +72,8 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     onAnimationEnd,
     toastHeight,
     setTimer,
-    playAccessibilityFeatures
+    playAccessibilityFeatures,
+    enableHapticFeedback
   });
 
   useEffect(() => {
