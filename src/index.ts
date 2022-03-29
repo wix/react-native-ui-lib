@@ -5,10 +5,13 @@
  */
 
 /* ===== General Stuff ===== */
+export {default as Assets} from './assets';
 export * from './style';
 export * from './services';
 export * from '../lib/components';
 export {
+  forwardRef,
+  UIComponent,
   BaseComponentInjectedProps,
   ForwardRefInjectedProps,
   ContainerModifiers,
@@ -59,7 +62,11 @@ export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScr
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
-export {default as PanDismissibleView, PanDismissibleViewProps, DismissibleAnimationProps} from './components/panningViews/panDismissibleView';
+export {
+  default as PanDismissibleView,
+  PanDismissibleViewProps,
+  DismissibleAnimationProps
+} from './components/panningViews/panDismissibleView';
 export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanListenerView, PanListenerViewProps} from './components/panningViews/panListenerView';
 export {default as PanningContext} from './components/panningViews/panningContext';
@@ -78,7 +85,11 @@ export {default as RadioButton, RadioButtonProps} from './components/radioButton
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
 export {default as ScrollBar, ScrollBarProps} from './components/ScrollBar';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
-export {default as SegmentedControl, SegmentedControlProps, SegmentedControlItemProps} from './components/segmentedControl';
+export {
+  default as SegmentedControl,
+  SegmentedControlProps,
+  SegmentedControlItemProps
+} from './components/segmentedControl';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {default as Slider, SliderProps} from './components/slider';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
@@ -90,7 +101,14 @@ export {default as TabBar, TabBarProps} from './components/TabBar'; //TODO: remo
 export {default as Text, TextProps} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
 export {default as View, ViewProps} from './components/view';
-export {default as Wizard, WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig} from './components/wizard';
+export {
+  default as Wizard,
+  WizardProps,
+  WizardStepProps,
+  WizardStepStates,
+  WizardStepConfig,
+  WizardStepsConfig
+} from './components/wizard';
 
 /* ===== TestKit ===== */
 // export {default as TextTestKit} from './components/text/Text.driver';
@@ -107,9 +125,6 @@ export {
   SharedTransition,
   Toast,
   WheelPickerDialog,
-  Assets,
   BaseComponent,
-  PureBaseComponent,
-  UIComponent,
-  forwardRef
+  PureBaseComponent
 } from '../typings';
