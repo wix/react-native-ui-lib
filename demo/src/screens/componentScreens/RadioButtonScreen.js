@@ -70,7 +70,7 @@ export default class RadioButtonScreen extends Component {
           </Text>
 
           <RadioGroup initialValue={this.state.color || null} onValueChange={value => this.setState({color: value})}>
-            <Text marginB-20 text60 grey10>
+            <Text marginB-20 text60 $textDefault>
               Select a color{'\n'}
               (enum with default value)
             </Text>
@@ -86,7 +86,7 @@ export default class RadioButtonScreen extends Component {
             initialValue={this.state.textSide}
             onValueChange={value => this.setState({textSide: value})}
           >
-            <Text marginB-20 text60 grey10>
+            <Text marginB-20 text60 $textDefault>
               Alignments
             </Text>
             {this.renderRadioButtonWithImageAndText('right-icon', 'Text on right')}
@@ -97,7 +97,7 @@ export default class RadioButtonScreen extends Component {
           </RadioGroup>
 
           <RadioGroup marginT-30 initialValue={this.state.value} onValueChange={value => this.setState({value})}>
-            <Text marginB-20 text60 grey10>
+            <Text marginB-20 text60 $textDefault>
               Yes or No?
             </Text>
             <View row>
@@ -107,7 +107,7 @@ export default class RadioButtonScreen extends Component {
             <Text marginT-10>You chose: {this.state.value}</Text>
           </RadioGroup>
 
-          <Text marginV-20 text60 grey10>
+          <Text marginV-20 text60 $textDefault>
             Use it without RadioGroup
           </Text>
           <View row centerV marginB-10>
