@@ -1,5 +1,5 @@
 import {Appearance} from 'react-native';
-import {remove, xor, isEmpty} from 'lodash';
+import {remove, xor, isEmpty, merge} from 'lodash';
 
 export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
@@ -61,7 +61,7 @@ class Scheme {
       throw new Error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
     }
 
-    this.schemes = schemes;
+    merge(this.schemes, schemes);
   }
 
   /**
