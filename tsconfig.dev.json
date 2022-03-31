@@ -5,5 +5,5 @@
     "noEmit": true
   },
   "include": ["src/**/*", "typings/**/*", "lib/components/**/*"],
-  "exclude": ["node_modules", "src/components/baseInput/index.tsx", "src/**/__tests__"]
+  "exclude": ["node_modules", "src/**/__tests__"]
 }
