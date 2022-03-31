@@ -206,9 +206,9 @@ const TabBar = (props: Props) => {
           iconColor={iconColor}
           selectedIconColor={selectedIconColor}
           activeBackgroundColor={activeBackgroundColor}
-          key={item.label}
           {...item}
           {...context}
+          key={`${index}_${item.label}`}
           index={index}
           onLayout={onItemLayout}
         />
