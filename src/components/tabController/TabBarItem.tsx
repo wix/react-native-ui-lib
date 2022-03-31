@@ -149,7 +149,7 @@ export default function TabBarItem({
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
 
-    if (!props.width && itemRef?.current) {
+    if (!itemWidth.current && itemRef?.current) {
       itemWidth.current = width;
       // @ts-ignore
       itemRef.current?.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
