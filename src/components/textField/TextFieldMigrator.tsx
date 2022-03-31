@@ -66,6 +66,7 @@ const TextFieldMigrator = forwardRef(({migrate = false, customWarning, ...props}
     // @ts-ignore
     return <NewTextField {...migratedProps} ref={ref}/>;
   } else {
+    // @ts-expect-error
     return <OldTextField {...props} ref={ref}/>;
   }
 });

@@ -286,6 +286,7 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
     const {renderInput} = this.props;
 
     return (
+      // @ts-expect-error
       <TextField
         renderExpandableInput={renderInput}
         {...textInputProps}
