@@ -1,11 +1,10 @@
-// @ts-nocheck
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import 'react';
-import {ViewPropTypes, TextInput as RNTextInput} from 'react-native';
-import {Colors, Typography} from '../../style';
-import {BaseComponent} from '../../commons';
+import {Component} from 'react';
+import {ViewPropTypes, TextInput as RNTextInput, StyleProp, ViewStyle, TextInputProps} from 'react-native';
 import Validators from './Validators';
+import {Colors, Typography} from '../../style';
+import * as Modifiers from '../../commons/modifiers';
 
 const VALIDATORS = {
   REQUIRED: 'required',
@@ -15,10 +14,50 @@ const VALIDATORS = {
   PRICE: 'price'
 };
 
-export default class BaseInput extends BaseComponent {
+interface BaseInputProps extends TextInputProps {
+  /**
+   * text color
+   */
+  color: string;
+  /**
+   * text input container style
+   */
+  containerStyle: StyleProp<ViewStyle>;
+  /**
+   * validator type or custom validator function
+   */
+  validate: string | Function | (string | Function)[];
+  /**
+   * Whether to mark required field with an asterisk
+   */
+  markRequired: boolean;
+  /**
+   * the message to be displayed when the validation fails
+   */
+  errorMessage: string | string[];
+  /**
+   * whether to run the validation on mount
+   */
+  validateOnStart: boolean;
+  /**
+   * whether to run the validation on text changed
+   */
+  validateOnChange: boolean;
+  /**
+   * whether to run the validation on blur
+   */
+  validateOnBlur: boolean;
+  /**
+   * callback for validity change
+   */
+  onChangeValidity: Function;
+}
+
+export default class BaseInput extends Component<BaseInputProps> {
   static displayName = 'BaseInput';
 
   static propTypes = {
+    // @ts-expect-error
     ...RNTextInput.propTypes,
     // ...BaseComponent.propTypes,
     /**
@@ -67,17 +106,12 @@ export default class BaseInput extends BaseComponent {
     validateOnBlur: true
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      ...this.state,
-      value: props.value,
-      focused: false,
-      valid: false,
-      error: undefined
-    };
-  }
+  state = {
+    value: this.props.value,
+    focused: false,
+    valid: false,
+    error: undefined
+  };
 
   componentDidMount() {
     const {validateOnStart} = this.props;
@@ -87,12 +121,12 @@ export default class BaseInput extends BaseComponent {
   }
 
   /** Events */
-  onFocus = (...args) => {
+  onFocus = (...args: any) => {
     _.invoke(this.props, 'onFocus', ...args);
     this.setState({focused: true});
   };
 
-  onBlur = (...args) => {
+  onBlur = (...args: any) => {
     _.invoke(this.props, 'onBlur', ...args);
     this.setState({focused: false});
 
@@ -102,11 +136,11 @@ export default class BaseInput extends BaseComponent {
     }
   };
 
-  onChange = event => {
+  onChange = (event: any) => {
     _.invoke(this.props, 'onChange', event);
   };
 
-  onChangeText = text => {
+  onChangeText = (text: string) => {
     _.invoke(this.props, 'onChangeText', text);
     this.setState({value: text});
 
@@ -118,7 +152,8 @@ export default class BaseInput extends BaseComponent {
 
   /** Actions */
   getTypography() {
-    return this.extractTypographyValue() || Typography.text70;
+    Modifiers;
+    return Modifiers.extractTypographyValue(this.props) || Typography.text70;
   }
 
   hasText() {
@@ -127,22 +162,27 @@ export default class BaseInput extends BaseComponent {
   }
 
   isFocused() {
+    // @ts-expect-error
     return this.input.isFocused();
   }
 
   focus() {
+    // @ts-expect-error
     this.input.focus();
   }
 
   blur() {
+    // @ts-expect-error
     this.input.blur();
   }
 
   clear() {
+    // @ts-expect-error
     this.input.clear();
   }
 
-  validate = (value = _.get(this, 'state.value'), dryRun) => {
+  // @ts-expect-error
+  validate = (value = _.get(this, 'state.value'), dryRun: boolean) => {
     // 'input.state.value'
     const {validate} = this.props;
     if (!validate) {
@@ -158,7 +198,9 @@ export default class BaseInput extends BaseComponent {
       let validatorFunction;
       if (_.isFunction(validator)) {
         validatorFunction = validator;
+        // @ts-expect-error
       } else if (_.isString(validator) && !!Validators[validator]) {
+        // @ts-expect-error
         validatorFunction = Validators[validator];
       }
 
@@ -175,6 +217,7 @@ export default class BaseInput extends BaseComponent {
     if (!isValid) {
       const {errorMessage} = this.props;
       if (_.isArray(errorMessage)) {
+        // @ts-expect-error
         error = errorMessage[failingValidatorIndex];
       } else {
         error = errorMessage;
@@ -203,8 +246,8 @@ export default class BaseInput extends BaseComponent {
     return validate === VALIDATORS.REQUIRED;
   }
 
-  getRequiredPlaceholder(placeholder) {
-    const {markRequired} = this.getThemeProps();
+  getRequiredPlaceholder(placeholder: string) {
+    const {markRequired} = this.props;
     const shouldDisplayPlaceholderAsRequired = this.isRequiredField() && markRequired && placeholder;
 
     if (shouldDisplayPlaceholderAsRequired) {
@@ -214,6 +257,7 @@ export default class BaseInput extends BaseComponent {
   }
 
   getErrorMessage() {
+    // @ts-expect-error
     const {error: propsError} = this.props;
     const {error: stateError} = this.state;
 
