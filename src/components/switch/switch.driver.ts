@@ -11,7 +11,7 @@ export const SwitchDriverFactory = ({wrappedComponent, testID}: {wrappedComponen
     press: () => fireEvent(switchComp, 'press'),
     getAccessibilityValue: () => switchComp.props.accessibilityValue.text === '1',
     isDisabled: () => switchComp.props.accessibilityState.disabled === true,
-    isChecked: () => switchComp.props.accessibilityState['0'] === 'checked',
+    isChecked: () => switchComp.props.accessibilityState.checked === 'checked',
     getColor: () => switchComp.props.style.backgroundColor
   };
 
