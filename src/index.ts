@@ -4,7 +4,11 @@ export * from './style';
 export * from './services';
 export * from '../lib/components';
 export {
+  asBaseComponent,
+  Constants,
   forwardRef,
+  withScrollEnabler,
+  withScrollReached,
   UIComponent,
   BaseComponentInjectedProps,
   ForwardRefInjectedProps,
@@ -42,7 +46,6 @@ export {default as ColorPalette, ColorPaletteProps} from './components/colorPale
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as ColorSwatch, ColorSwatchProps} from './components/colorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
-export {default as Constants} from './commons/Constants';
 export {default as DateTimePicker, DateTimePickerProps} from './components/dateTimePicker';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
