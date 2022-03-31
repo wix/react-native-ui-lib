@@ -1,4 +1,4 @@
-export declare const designTokensDM: {
+declare const _default: {
     $backgroundDefault: string;
     $backgroundElevated: string;
     $backgroundNeutralHeavy: string;
@@ -60,3 +60,4 @@ export declare const designTokensDM: {
     $outlineDanger: string;
     $dividerDefault: string;
 };
+export default _default;
