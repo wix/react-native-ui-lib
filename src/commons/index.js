@@ -1,7 +1,7 @@
 const createBaseComponentClass = usePure => require('./baseComponent').default(usePure);
 
-let BaseComponentClass;
-let PureBaseComponentClass;
+let BaseComponentClass = createBaseComponentClass(false);
+let PureBaseComponentClass = createBaseComponentClass(true);
 
 module.exports = {
   get BaseComponent() {
