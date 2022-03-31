@@ -302,6 +302,12 @@ export default {
   get Colors() {
     return require('./style').Colors;
   },
+  get DesignTokens() {
+    return require('./style').DesignTokens;
+  },
+  get DesignTokensDM() {
+    return require('./style').DesignTokensDM;
+  },
   get ColorName() {
     return require('./style').ColorName;
   },
