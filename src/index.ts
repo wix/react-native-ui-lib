@@ -8,7 +8,9 @@ export {
   Constants,
   forwardRef,
   withScrollEnabler,
+  WithScrollEnablerProps,
   withScrollReached,
+  WithScrollReachedProps,
   UIComponent,
   BaseComponentInjectedProps,
   ForwardRefInjectedProps,
@@ -31,6 +33,10 @@ export {Incubator, Hooks, Modifiers};
 /* ===== Components ===== */
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as ActionSheet} from './components/actionSheet';
+// @ts-expect-error
+export {default as AnimatedImage} from './components/animatedImage';
+// @ts-expect-error
+export {default as AnimatedScanner} from './components/animatedScanner';
 export {default as Avatar, AvatarProps} from './components/avatar';
 export {AvatarHelper} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
@@ -48,6 +54,7 @@ export {default as ColorSwatch, ColorSwatchProps} from './components/colorSwatch
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as DateTimePicker, DateTimePickerProps} from './components/dateTimePicker';
 export {default as Dialog, DialogProps} from './components/dialog';
+export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
@@ -83,7 +90,7 @@ export {
 } from './components/panningViews/panningProvider';
 export {default as PanResponderView, PanResponderViewProps} from './components/panningViews/panResponderView';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
-export {default as Picker, PickerProps, PickerValue, PickerModes, PickerSearchStyle} from './components/picker/new';
+export {default as Picker, PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle} from './components/picker/new';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
