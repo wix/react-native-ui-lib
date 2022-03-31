@@ -1,10 +1,10 @@
 // @ts-nocheck
+import {Component} from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import 'react';
 import {ViewPropTypes, TextInput as RNTextInput} from 'react-native';
 import {Colors, Typography} from '../../style';
-import {BaseComponent} from '../../commons';
+// import {BaseComponent} from '../../commons';
 import Validators from './Validators';
 
 const VALIDATORS = {
@@ -15,7 +15,7 @@ const VALIDATORS = {
   PRICE: 'price'
 };
 
-export default class BaseInput extends BaseComponent {
+export default class BaseInput extends Component {
   static displayName = 'BaseInput';
 
   static propTypes = {
