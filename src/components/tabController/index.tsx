@@ -44,6 +44,11 @@ export interface TabControllerProps {
   useSafeArea?: boolean;
 }
 
+const getScreenWidth = (useSafeArea: boolean) => {
+  const {left, right} = Constants.getSafeAreaInsets();
+  return Constants.windowWidth - (useSafeArea && Constants.isIphoneX ? left + right : 0);
+};
+
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
@@ -58,16 +63,10 @@ function TabController({
   items,
   onChangeIndex = _.noop,
   carouselPageWidth,
-  useSafeArea,
+  useSafeArea = false,
   children
 }: PropsWithChildren<TabControllerProps>) {
-
-  const getScreenWidth = () => {
-    const {left, right} = Constants.getSafeAreaInsets();
-    return Constants.windowWidth - (useSafeArea && Constants.isIphoneX ? left + right : 0);
-  };
-
-  const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth());
+  const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth(useSafeArea));
 
   if (items?.length < 2) {
     console.warn('TabController component expect a minimum of 2 items');
@@ -75,7 +74,7 @@ function TabController({
 
   useOrientation({
     onOrientationChange: () => {
-      setScreenWidth(getScreenWidth());
+      setScreenWidth(getScreenWidth(useSafeArea));
     }
   });
 
