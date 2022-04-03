@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import {StyleSheet} from 'react-native';
-import {Typography, Colors, Scheme, BorderRadiuses, Spacings, ThemeManager} from '../style';
+import {Typography, Colors, Scheme, DesignTokens, BorderRadiuses, Spacings, ThemeManager} from '../style';
 import {BorderRadiusesLiterals} from '../style/borderRadiuses';
 import TypographyPresets from '../style/typographyPresets';
 import {SpacingLiterals} from '../style/spacings';
 import {colorsPalette} from '../style/colorsPalette';
-import {designTokens} from '../style/designTokens';
 export const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
 export const PADDING_KEY_PATTERN = new RegExp(`padding[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
 export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
@@ -65,7 +64,7 @@ export type MarginLiterals = keyof typeof MARGIN_VARIATIONS;
 export type NativeMarginModifierKeyType = typeof MARGIN_VARIATIONS[MarginLiterals];
 export type FlexLiterals = keyof typeof STYLE_KEY_CONVERTERS;
 export type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexLiterals];
-export type ColorLiterals = keyof (typeof colorsPalette & typeof designTokens);
+export type ColorLiterals = keyof (typeof colorsPalette & typeof DesignTokens);
 export type TypographyLiterals = keyof typeof TypographyPresets;
 export type BorderRadiusLiterals = keyof typeof BorderRadiusesLiterals;
 export type AlignmentLiterals =

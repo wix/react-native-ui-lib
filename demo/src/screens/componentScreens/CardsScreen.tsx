@@ -44,7 +44,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           onPress={() => this.setState({selected2: !selected2})}
           activeOpacity={1}
           selectionOptions={{
-            color: Colors.grey10,
+            color: Colors.grey40,
             indicatorSize: 25,
             borderWidth: 3
           }}
@@ -59,13 +59,13 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     return (
       <Card.Section
         content={[
-          {text: 'You’re Invited!', text70: true, grey10: true},
+          {text: 'You’re Invited!', text70: true, $textDefault: true},
           {
             text: '222 Join Old The Town Barbershop Official Store. Download the Wix app to...',
             text80: true,
-            grey10: true
+            $textDefault: true
           },
-          {text: 'wix.to/A465c', text90: true, grey50: true}
+          {text: 'wix.to/A465c', text90: true, $textDisabled: true}
         ]}
         style={{padding: 20, flex: 1}}
       />
@@ -75,14 +75,14 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
   renderText = () => {
     return (
       <View padding-20 flex>
-        <Text text70 grey10>
+        <Text text70 $textDefault>
           You’re Invited!
         </Text>
-        <Text text80 grey10>
+        <Text text80 $textDefault>
           222 Join Old The Town Barbershop Official Store. Download the Wix app
           to...
         </Text>
-        <Text text90 grey50>
+        <Text text90 $textDisabled>
           wix.to/A465c
         </Text>
       </View>
@@ -98,7 +98,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
         onPress={() => {}}
         borderRadius={borderRadius}
         useNative
-        backgroundColor={Colors.white}
+        bg-$backgroundElevated
         activeOpacity={1}
         activeScale={isImageOnLeft ? 0.96 : 1.04}
       >
@@ -123,10 +123,9 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     return (
       <Card style={{marginBottom: 10}} onPress={() => {}}>
         <Card.Section
-          bg-white
           content={[
-            {text: 'You’re Invited!', text70: true, grey10: true},
-            {text: 'join now', text90: true, grey50: true}
+            {text: 'You’re Invited!', text70: true, $textDefault: true},
+            {text: 'join now', text90: true, $textDisabled: true}
           ]}
           style={{padding: 20}}
         />
@@ -139,20 +138,20 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     return (
       <Card {...cardProps} flex height={160} onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
         <Card.Section
-          bg-red30
+          bg-$backgroundDangerHeavy
           padding-20
           flex-3
           content={[
-            {text: 'Special sale!', text70: true, white: true},
-            {text: '10%', text60: true, white: true}
+            {text: 'Special sale!', text70: true, $textDefaultLight: true},
+            {text: '10%', text60: true, $textDefaultLight: true}
           ]}
           contentStyle={{alignItems: 'center'}}
         />
         <Card.Section
-          bg-white
+          bg-$backgroundElevated
           padding-20
           flex
-          content={[{text: 'All site', text70: true, grey10: true}]}
+          content={[{text: 'All site', text70: true, $textDefault: true}]}
           contentStyle={{alignItems: 'center', margin: 0, padding: 0}}
         />
       </Card>
@@ -173,9 +172,9 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <Card {...cardProps} flex marginV-10 onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
         {image}
         <Card.Section
-          bg-white
+          bg-$backgroundElevated
           padding-20
-          content={[{text: 'All site', text70: true, grey10: true}]}
+          content={[{text: 'All site', text70: true, $textDefault: true}]}
           contentStyle={{alignItems: 'center'}}
         />
       </Card>
@@ -190,7 +189,6 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           this.renderComplexImage({'marginR-5': true},
             <Card.Section
               flex
-              backgroundColor={Colors.blue20}
               imageSource={featureIcon}
               imageStyle={{
                 width: 25,
@@ -211,8 +209,8 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
               imageSource={cardImage2}
               imageStyle={{height: '100%'}}
               content={[
-                {text: 'Special sale!', text70: true, blue10: true},
-                {text: '10%', text60: true, blue10: true}
+                {text: 'Special sale!', text70: true, $textGeneral: true},
+                {text: '10%', text60: true, $textGeneral: true}
               ]}
               contentStyle={{
                 flex: 1,
@@ -230,9 +228,9 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <ScrollView style={{height: 100, marginBottom: 20}} horizontal showsHorizontalScrollIndicator={false}>
         {_.times(4, i => {
           return (
-            <Card key={i} width={100} style={{marginRight: 20}} backgroundColor={Colors.white}>
+            <Card key={i} width={100} style={{marginRight: 20}}>
               <View padding-15>
-                <Text text30 grey30>
+                <Text text30 $textNeutral>
                   {i}
                 </Text>
               </View>
@@ -253,7 +251,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
   renderComplexExample = () => {
     return _.map(posts, (post, i) => {
-      const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
+      const statusColor = post.status === 'Published' ? Colors.$textSuccess : Colors.$textMajor;
 
       return (
         <Card
@@ -266,23 +264,23 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
             imageStyle={{height: 160}}
           />
 
-          <View padding-20 bg-white>
-            <Text text40 color={Colors.grey10}>
+          <View padding-20>
+            <Text text40 $textDefault>
               {post.title}
             </Text>
             <View row>
               <Text text90 color={statusColor}>
                 {post.status}
               </Text>
-              <Text text90> | {post.timestamp}</Text>
+              <Text text90 $textDefault> | {post.timestamp}</Text>
             </View>
 
-            <Text text70 color={Colors.grey10}>
+            <Text text70 $textDefault>
               {post.description}
             </Text>
 
             <View>
-              <Text text90 color={Colors.grey50}>
+              <Text text90 $textDisabled>
                 {post.likes} Likes
               </Text>
               <View row right>
@@ -314,25 +312,25 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
   render() {
     return (
-      <View bg-grey70>
+      <View>
         <ScrollView>
           <View flex padding-20>
-            <Text h1 marginB-s4>Cards</Text>
-            <Text h3>Selectable Cards</Text>
+            <Text h1 marginB-s4 $textDefault>Cards</Text>
+            <Text h3 $textDefault>Selectable Cards</Text>
             {this.renderSelectableCards()}
-            <Text h3 marginV-s5>
+            <Text h3 marginV-s5 $textDefault>
               Horizontal Cards
             </Text>
             {this.renderHorizontalCard(true, 0, true)}
             {this.renderHorizontalCard(true, 20, false)}
             {this.renderHorizontalCard(false, 0, false)}
             {this.renderHorizontalCard(false, 20, true)}
-            <Text h3 marginV-s5>
+            <Text h3 marginV-s5 $textDefault>
               Card Sections
             </Text>
             {this.renderCoupons()}
             {this.renderComplexImages()}
-            <Text h3 marginB-s4>
+            <Text h3 marginB-s4 $textDefault>
               Others
             </Text>
             {this.renderCustomContent()}

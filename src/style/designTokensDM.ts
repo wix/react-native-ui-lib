@@ -1,6 +1,6 @@
 import {colorsPalette} from './colorsPalette';
 
-export const designTokensDM = {
+export default {
   // BACKGROUND
   $backgroundDefault: colorsPalette.dmBlack,
   $backgroundElevated: colorsPalette.grey10,
