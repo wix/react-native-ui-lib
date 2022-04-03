@@ -1,4 +1,4 @@
 {
   "main": "../src/testkit",
-  "types": "../generatedTypes/src/testkit"
+  "types": "../src/testkit"
 }
