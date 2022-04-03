@@ -3,8 +3,8 @@ import _ from 'lodash';
 import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
-import {designTokens} from './designTokens';
-import {designTokensDM} from './designTokensDM';
+import DesignTokens from './designTokens';
+import DesignTokensDM from './designTokensDM';
 //@ts-ignore
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
@@ -14,7 +14,7 @@ export class Colors {
   private shouldSupportDarkMode = false;
 
   constructor() {
-    const colors = Object.assign(colorsPalette, designTokens, themeColors);
+    const colors = Object.assign(colorsPalette, DesignTokens, themeColors);
     Object.assign(this, colors);
 
     Scheme.addChangeListener(() => {
@@ -62,7 +62,7 @@ export class Colors {
    * and change the design tokens accordingly
    */
   supportDarkMode() {
-    const designTokensColors = Scheme.getSchemeType() === 'dark' ? designTokensDM : designTokens;
+    const designTokensColors = Scheme.getSchemeType() === 'dark' ? DesignTokensDM : DesignTokens;
     this.shouldSupportDarkMode = true;
     Object.assign(this, designTokensColors);
   }
@@ -274,7 +274,7 @@ function threeDigitHexToSix(value: string) {
 
 const TypedColors = Colors as ExtendTypeWith<
   typeof Colors,
-  typeof colorsPalette & typeof themeColors & typeof designTokens
+  typeof colorsPalette & typeof themeColors & typeof DesignTokens
 >;
 const colorObject = new TypedColors();
 colorObject.loadColors(colorsPalette);

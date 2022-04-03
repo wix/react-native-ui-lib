@@ -105,7 +105,7 @@ const FloatingPlaceholder = ({
 const styles = StyleSheet.create({
   placeholder: {
     ...Platform.select({
-      android: {textAlignVertical: 'center', flex: 1}
+      android: {textAlignVertical: 'center', flexShrink: 1}
     })
   },
   hidden: {
