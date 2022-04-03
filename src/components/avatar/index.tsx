@@ -407,7 +407,7 @@ function createStyles(props: AvatarProps) {
       lineHeight: undefined
     },
     ribbon: {
-      backgroundColor: Colors.$backgroundPrimaryLight,
+      backgroundColor: Colors.$backgroundPrimaryHeavy,
       paddingHorizontal: 6,
       paddingVertical: 3
     }
