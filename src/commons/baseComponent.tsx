@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 // import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors} from '../style';
 import * as Modifiers from './modifiers';
 
-export default function baseComponent(usePure) {
+export default function baseComponent(usePure: boolean): ComponentType {
   const parent = usePure ? React.PureComponent : React.Component;
   class BaseComponent extends parent {
     // static propTypes = {
@@ -14,9 +14,12 @@ export default function baseComponent(usePure) {
     //   useNativeDriver: PropTypes.bool,
     // };
 
+    styles: any;
+    view: any;
+
     static extractOwnProps = Modifiers.extractOwnProps;
 
-    constructor(props) {
+    constructor(props: any) {
       super(props);
       if (!this.styles) {
         this.generateStyles();
@@ -28,7 +31,7 @@ export default function baseComponent(usePure) {
     }
 
     // TODO: remove this after migrating all components to use asBaseComponent HOC
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps: any) {
       this.updateModifiers(this.getThemeProps(), nextProps);
     }
 
@@ -71,7 +74,7 @@ export default function baseComponent(usePure) {
     }
 
     // TODO: stop using this and remove it
-    extractContainerStyle(props) {
+    extractContainerStyle(props: any) {
       let containerStyle = {};
       if (props.containerStyle) {
         containerStyle = _.pickBy(props.containerStyle, (_value, key) => {
@@ -82,12 +85,12 @@ export default function baseComponent(usePure) {
       return containerStyle;
     }
 
-    updateModifiers(currentProps, nextProps) {
+    updateModifiers(currentProps: any, nextProps: any) {
       const ignoredKeys = ['children', 'forwardedRef', 'style', 'testID'];
       const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter(key => !ignoredKeys.includes(key));
       const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
 
-      const options = {};
+      const options: any = {};
       if (_.find(changedKeys, key => Modifiers.FLEX_KEY_PATTERN.test(key))) {
         options.flex = true;
       }
@@ -124,7 +127,7 @@ export default function baseComponent(usePure) {
       flex: true
     },
     props = this.getThemeProps()) {
-      const style = {};
+      const style: any = {};
 
       if (options.backgroundColor) {
         style.backgroundColor = Modifiers.extractBackgroundColorValue(props);
@@ -154,10 +157,10 @@ export default function baseComponent(usePure) {
     // }
 
     // React Native Methods
-    setRef = r => (this.view = r);
+    setRef = (r: any) => (this.view = r);
     getRef = () => this.view;
-    measureInWindow = (...args) => this.getRef().measureInWindow(...args);
-    measure = (...args) => this.getRef().measure(...args); // TODO: do we need this
+    measureInWindow = (...args: any) => this.getRef().measureInWindow(...args);
+    measure = (...args: any) => this.getRef().measure(...args); // TODO: do we need this
   }
 
   return BaseComponent;
