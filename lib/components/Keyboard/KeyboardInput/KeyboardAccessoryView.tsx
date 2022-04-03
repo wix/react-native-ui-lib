@@ -113,10 +113,11 @@ export type KeyboardAccessoryViewProps = {
    * default: true
    */
   useSafeArea?: boolean;
+
   /**
    * iOS only.
    * Whether or not to include bottom tab bat inset
-   * default: true
+   * default: false
    */
   usesBottomTabs?: boolean;
 

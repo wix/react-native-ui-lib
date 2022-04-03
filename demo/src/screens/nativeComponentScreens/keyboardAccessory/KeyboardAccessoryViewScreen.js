@@ -1,18 +1,18 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {ScrollView, StyleSheet, TextInput} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {
-  Keyboard,
-  Text,
-  View,
+  Constants,
+  Assets,
   Colors,
   Spacings,
-  Constants,
-  Typography,
+  Keyboard,
+  View,
+  Text,
+  TextField,
   Button,
-  Switch,
-  Assets
+  Switch
 } from 'react-native-ui-lib';
-import _ from 'lodash';
 import './demoKeyboards';
 
 const KeyboardAccessoryView = Keyboard.KeyboardAccessoryView;
@@ -20,7 +20,7 @@ const KeyboardUtils = Keyboard.KeyboardUtils;
 const KeyboardRegistry = Keyboard.KeyboardRegistry;
 const TrackInteractive = true;
 
-const keyboards = [
+const demoKeyboards = [
   {
     id: 'unicorn.ImagesKeyboard',
     icon: Assets.icons.demo.image
@@ -31,7 +31,7 @@ const keyboards = [
   }
 ];
 
-export default class KeyboardInputViewScreen extends PureComponent {
+export default class KeyboardAccessoryViewScreen extends PureComponent {
   state = {
     customKeyboard: {
       component: undefined,
@@ -105,21 +105,24 @@ export default class KeyboardInputViewScreen extends PureComponent {
   renderKeyboardAccessoryViewContent = () => {
     return (
       <View style={styles.keyboardContainer} paddingV-s4>
-        <View row paddingH-s4>
-          <TextInput
-            style={styles.textInput}
+        <View bg-white row spread centerV paddingH-s5 paddingV-s3>
+          <TextField
+            migrate
             ref={r => {
               this.textInputRef = r;
             }}
+            containerStyle={styles.textField}
+            preset={null}
             placeholder={'Message'}
-            underlineColorAndroid="transparent"
+            floatingPlaceholder={false}
+            enableErrors={false}
             onFocus={this.resetKeyboardView}
           />
           <Button link grey10 iconSource={Assets.icons.demo.close} onPress={KeyboardUtils.dismiss} marginL-s2/>
         </View>
         <View row paddingH-s4 marginT-s2 spread>
           <View row>
-            {keyboards.map(keyboard => (
+            {demoKeyboards.map(keyboard => (
               <Button
                 key={keyboard.id}
                 grey10
@@ -170,7 +173,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
   };
 
   render() {
-    const {message, isModal} = this.props;
+    const {message/* , isModal */} = this.props;
     const {receivedKeyboardData, customKeyboard, useSafeArea} = this.state;
 
     return (
@@ -181,6 +184,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={TrackInteractive ? 'interactive' : 'none'}
+          showsVerticalScrollIndicator={false}
         >
           <Text text40 grey10 marginV-20 center>
             {message}
@@ -202,7 +206,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           revealKeyboardInteractive
           onRequestShowKeyboard={this.onRequestShowKeyboard}
           useSafeArea={useSafeArea}
-          usesBottomTabs={!isModal}
+          // usesBottomTabs={!isModal}
         />
       </View>
     );
@@ -215,13 +219,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  textInput: {
+  textField: {
     flex: 1,
-    paddingVertical: Spacings.s2,
-    paddingHorizontal: Spacings.s3,
-    ...Typography.text70,
-    lineHeight: undefined,
     backgroundColor: Colors.grey60,
+    paddingVertical: Spacings.s2,
+    paddingHorizontal: Spacings.s4,
     borderRadius: 8
   },
   button: {

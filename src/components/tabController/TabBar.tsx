@@ -117,7 +117,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
   children?: ChildProps[] | ChildProps;
 }
 
-const FADER_PROPS = {size: 76};
+const FADER_PROPS = {size: 76, tintColor: Colors.$backgroundDefault};
 
 /**
  * @description: TabController's TabBar component
@@ -206,9 +206,9 @@ const TabBar = (props: Props) => {
           iconColor={iconColor}
           selectedIconColor={selectedIconColor}
           activeBackgroundColor={activeBackgroundColor}
-          key={item.label}
           {...item}
           {...context}
+          key={`${index}_${item.label}`}
           index={index}
           onLayout={onItemLayout}
         />
