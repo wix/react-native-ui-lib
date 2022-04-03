@@ -130,7 +130,7 @@ export default class AvatarsScreen extends Component {
       <ScrollView contentContainerStyle={styles.container}>
         {_.map(examples, (example, i) => (
           <View key={i} style={styles.section}>
-            <Text style={{...Typography.text80}}>{example.title}</Text>
+            <Text $textDefault style={{...Typography.text80}}>{example.title}</Text>
             <Avatar containerStyle={{marginVertical: 5}} {...example} onPress={() => this.onAvatarPress(example)}/>
           </View>
         ))}
@@ -141,7 +141,8 @@ export default class AvatarsScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 25
+    padding: 25,
+    backgroundColor: Colors.$backgroundDefault
   },
   section: {
     flexDirection: 'row',
