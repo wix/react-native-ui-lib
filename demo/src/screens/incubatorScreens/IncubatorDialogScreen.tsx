@@ -65,7 +65,7 @@ export default class IncubatorDialogScreen extends Component {
 
     return (
       <View bg-$backgroundNeutralLight flex padding-20>
-        <Card bg-$backgroundDefault height={100} center padding-20>
+        <Card height={100} center padding-20>
           <Text $textDefault text50>IncubatorDialogScreen</Text>
         </Card>
         <View flex center>
