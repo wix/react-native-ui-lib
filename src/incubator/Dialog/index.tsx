@@ -45,7 +45,7 @@ export default asBaseComponent<DialogProps>(Dialog);
 const styles = StyleSheet.create({
   defaultDialogStyle: {
     marginBottom: Spacings.s5,
-    backgroundColor: Colors.$backgroundElevated,
+    backgroundColor: Colors.$backgroundDefault,
     maxHeight: Constants.screenHeight * 0.6,
     width: 250,
     borderRadius: BorderRadiuses.br20,

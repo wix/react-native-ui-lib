@@ -321,10 +321,10 @@ Scroll: ${scroll}`;
 
 const styles = StyleSheet.create({
   dialog: {
-    backgroundColor: Colors.$backgroundElevated
+    backgroundColor: Colors.$backgroundDefault
   },
   roundedDialog: {
-    backgroundColor: Colors.$backgroundElevated,
+    backgroundColor: Colors.$backgroundDefault,
     marginBottom: Constants.isIphoneX ? 0 : 20,
     borderRadius: 12
   },
