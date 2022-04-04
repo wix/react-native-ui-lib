@@ -91,7 +91,7 @@ interface DialogState {
   fadeOut?: boolean;
 }
 
-const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.grey10, 0.6);
+const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.$backgroundDarkElevated, 0.6);
 
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog

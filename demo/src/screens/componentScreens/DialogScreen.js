@@ -111,9 +111,11 @@ export default class DialogScreen extends Component {
   getWarning = () => {
     const {showHeader, scroll, panDirection} = this.state;
     if (!showHeader && scroll !== this.SCROLL_TYPE.NONE) {
-      return <Text color={Colors.red30}>It is recommended to have pannable header with scrollable content</Text>;
+      return (
+        <Text color={Colors.$textDangerLight}>It is recommended to have pannable header with scrollable content</Text>
+      );
     } else if (showHeader && panDirection !== PanningProvider.Directions.DOWN) {
-      return <Text color={Colors.red30}>It is recommended to have pannable header with direction=down</Text>;
+      return <Text color={Colors.$textDangerLight}>It is recommended to have pannable header with direction=down</Text>;
     }
   };
 
@@ -130,7 +132,7 @@ Scroll: ${scroll}`;
     return (
       <View>
         <View margin-20>
-          <Text>{title}</Text>
+          <Text $textDefault>{title}</Text>
         </View>
         <View height={2} bg-grey70/>
       </View>
@@ -151,7 +153,7 @@ Scroll: ${scroll}`;
 
   renderVerticalItem = ({item: color}) => {
     return (
-      <Text text50 margin-20 color={color.value}>
+      <Text $textDefault text50 margin-20 color={color.value}>
         {color.label}
       </Text>
     );
@@ -212,8 +214,8 @@ Scroll: ${scroll}`;
     const data = (
       <View spread flex={scroll !== this.SCROLL_TYPE.NONE}>
         <View marginT-20 marginH-20>
-          {!showHeader && <Text text50>{this.title}</Text>}
-          <Text marginT-20={!showHeader}>{this.getMessage()}</Text>
+          {!showHeader && <Text $textDefault text50>{this.title}</Text>}
+          <Text $textDefault marginT-20={!showHeader}>{this.getMessage()}</Text>
           {this.getWarning()}
         </View>
         {content}
@@ -260,12 +262,12 @@ Scroll: ${scroll}`;
     return (
       <ScrollView>
         <View flex padding-12>
-          <Text text30 grey10 marginB-20>
+          <Text $textDefault text30 marginB-20>
             Dialog
           </Text>
 
           <RadioGroup marginT-20 initialValue={panDirection} onValueChange={this.setPanDirection}>
-            <Text>Panning Direction:</Text>
+            <Text $textDefault>Panning Direction:</Text>
             <View row marginV-10>
               <RadioButton value={null} label={'None'}/>
               <RadioButton value={PanningProvider.Directions.UP} label={'Up'} marginL-10/>
@@ -276,7 +278,7 @@ Scroll: ${scroll}`;
           </RadioGroup>
 
           <RadioGroup marginT-20 initialValue={position} onValueChange={this.setPosition}>
-            <Text>Position:</Text>
+            <Text $textDefault>Position:</Text>
             <View row marginV-10>
               <RadioButton value={'top'} label={'Top'}/>
               <RadioButton value={null} label={'Center'} marginL-10/>
@@ -285,7 +287,7 @@ Scroll: ${scroll}`;
           </RadioGroup>
 
           <RadioGroup marginT-20 initialValue={scroll} onValueChange={this.setScroll}>
-            <Text>Scroll:</Text>
+            <Text $textDefault>Scroll:</Text>
             <View row marginV-10>
               <RadioButton value={this.SCROLL_TYPE.NONE} label={'None'}/>
               <RadioButton value={this.SCROLL_TYPE.VERTICAL} label={'Vertical'} marginL-10/>
@@ -294,17 +296,17 @@ Scroll: ${scroll}`;
           </RadioGroup>
 
           <View row marginT-20 centerV>
-            <Text>Toggle pannable header:</Text>
+            <Text $textDefault>Toggle pannable header:</Text>
             <Switch value={showHeader} onValueChange={this.toggleShowHeader} marginL-10/>
           </View>
 
           <View row marginT-20 centerV>
-            <Text>Add some style:</Text>
+            <Text $textDefault>Add some style:</Text>
             <Switch value={isRounded} onValueChange={this.toggleIsRounded} marginL-10/>
           </View>
 
           <View row marginT-20 centerV>
-            <Text>Ignore Background Press:</Text>
+            <Text $textDefault>Ignore Background Press:</Text>
             <Switch value={ignoreBackgroundPress} onValueChange={this.toggleIgnoreBackgroundPress} marginL-10/>
           </View>
 
@@ -319,10 +321,10 @@ Scroll: ${scroll}`;
 
 const styles = StyleSheet.create({
   dialog: {
-    backgroundColor: Colors.white
+    backgroundColor: Colors.$backgroundElevated
   },
   roundedDialog: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.$backgroundElevated,
     marginBottom: Constants.isIphoneX ? 0 : 20,
     borderRadius: 12
   },

@@ -3,7 +3,7 @@ import Colors from './colors';
 const Dividers = {
   d10: {
     borderBottomWidth: 1,
-    borderColor: Colors.grey60
+    borderColor: Colors.grey60 // TODO: - design tokens - incubator knob as well
   },
   d20: {
     borderBottomWidth: 8,

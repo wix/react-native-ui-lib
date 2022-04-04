@@ -12,12 +12,12 @@ const HeaderContent = (props: Pick<DialogHeaderProps, 'text'>) => {
     return (
       <View marginH-s5 marginV-s1>
         {!isEmpty(title) && (
-          <Text {...titleProps} marginB-s3 style={titleStyle}>
+          <Text $textDefault {...titleProps} marginB-s3 style={titleStyle}>
             {title}
           </Text>
         )}
         {!isEmpty(subtitle) && (
-          <Text {...subtitleProps} marginB-s3 style={subtitleStyle}>
+          <Text $textDefault {...subtitleProps} marginB-s3 style={subtitleStyle}>
             {subtitle}
           </Text>
         )}

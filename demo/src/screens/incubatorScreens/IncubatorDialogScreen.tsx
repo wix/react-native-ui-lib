@@ -64,9 +64,9 @@ export default class IncubatorDialogScreen extends Component {
     const {visible} = this.state;
 
     return (
-      <View bg-grey80 flex padding-20>
-        <Card height={100} center padding-20>
-          <Text text50>IncubatorDialogScreen</Text>
+      <View bg-$backgroundNeutralLight flex padding-20>
+        <Card bg-$backgroundDefault height={100} center padding-20>
+          <Text $textDefault text50>IncubatorDialogScreen</Text>
         </Card>
         <View flex center>
           <Button marginV-s5 label="Open Dialog" onPress={this.openDialog}/>
