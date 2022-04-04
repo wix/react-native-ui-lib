@@ -145,7 +145,7 @@ const Chip = ({
   borderRadius = BorderRadiuses.br100,
   containerStyle,
   onDismiss,
-  dismissColor,
+  dismissColor = Colors.$iconDefault,
   dismissIcon = Assets.icons.x,
   dismissIconStyle,
   dismissContainerStyle,
@@ -203,7 +203,7 @@ const Chip = ({
       >
         <Icon
           source={dismissIcon}
-          tintColor={dismissColor || Colors.$iconDefault}
+          tintColor={dismissColor}
           style={[dismissIconStyle]}
           accessibilityLabel="dismiss"
           testID={`${testID}.dismissIcon`}
