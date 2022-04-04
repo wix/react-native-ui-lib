@@ -72,7 +72,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   static displayName = 'ColorPicker';
 
   static defaultProps = {
-    initialColor: Colors.grey80
+    initialColor: Colors.$backgroundNeutralLight
   };
 
   constructor(props: Props) {
@@ -229,7 +229,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
         <Button
           link
           iconSource={Assets.icons.x}
-          iconStyle={{tintColor: Colors.grey10}}
+          iconStyle={{tintColor: Colors.$iconDefault}}
           onPress={this.onDismiss}
           accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
         />
@@ -247,7 +247,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
 
   renderSliders() {
     const {keyboardHeight, color} = this.state;
-    const colorValue = color.a === 0 ? Colors.black : Colors.getHexString(color);
+    const colorValue = color.a === 0 ? Colors.$backgroundInverted : Colors.getHexString(color);
 
     return (
       <ColorSliderGroup
