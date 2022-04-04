@@ -4,7 +4,7 @@ import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
 import DesignTokens from './designTokens';
-import DesignTokensDM from './designTokensDM';
+// import DesignTokensDM from './designTokensDM';
 //@ts-ignore
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
@@ -16,7 +16,9 @@ export class Colors {
   constructor() {
     const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
-    this.loadSchemes({light: DesignTokens, dark: DesignTokensDM});
+    // TODO: For now we load the same design tokens for both schemes to not force it until it's ready
+    this.loadSchemes({light: DesignTokens, dark: DesignTokens});
+    // this.loadSchemes({light: DesignTokens, dark: DesignTokensDM});
 
     Scheme.addChangeListener(() => {
       Object.assign(this, Scheme.getScheme());
