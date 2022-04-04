@@ -1,5 +1,5 @@
 import {Appearance, PlatformColor} from 'react-native';
-import {remove, xor, isEmpty, merge, forEach} from 'lodash';
+import {remove, xor, isEmpty, merge, forEach, cloneDeep} from 'lodash';
 
 export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
@@ -62,7 +62,7 @@ class Scheme {
       throw new Error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
     }
 
-    const platformColorsSchemes: Schemes = {...schemes};
+    const platformColorsSchemes: Schemes = cloneDeep(schemes);
 
     forEach(schemes, (scheme, schemeKey) => {
       forEach(scheme, (colorValue, colorKey) => {
@@ -70,7 +70,7 @@ class Scheme {
         Object.defineProperty(platformColorsSchemes[schemeKey], colorKey, {
           get: () => {
             if (this.usePlatformColors) {
-              PlatformColor(colorKey);
+              return PlatformColor(colorKey);
             } else {
               return colorValue;
             }
