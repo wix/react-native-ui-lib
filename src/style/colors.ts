@@ -14,8 +14,9 @@ export class Colors {
   private shouldSupportDarkMode = false;
 
   constructor() {
-    const colors = Object.assign(colorsPalette, DesignTokens, themeColors);
+    const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
+    this.loadSchemes({light: DesignTokens, dark: DesignTokensDM});
 
     Scheme.addChangeListener(() => {
       Object.assign(this, Scheme.getScheme());
@@ -62,9 +63,14 @@ export class Colors {
    * and change the design tokens accordingly
    */
   supportDarkMode() {
-    const designTokensColors = Scheme.getSchemeType() === 'dark' ? DesignTokensDM : DesignTokens;
     this.shouldSupportDarkMode = true;
-    Object.assign(this, designTokensColors);
+  }
+
+  /**
+   * Should use RN PlatformColor API for retrieving design token colors from native
+   */
+  enablePlatformColors() {
+    Scheme.enablePlatformColors();
   }
 
   /**

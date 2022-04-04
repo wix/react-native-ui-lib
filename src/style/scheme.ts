@@ -1,5 +1,5 @@
-import {Appearance} from 'react-native';
-import {remove, xor, isEmpty, merge} from 'lodash';
+import {Appearance, PlatformColor} from 'react-native';
+import {remove, xor, isEmpty, merge, forEach} from 'lodash';
 
 export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
@@ -9,6 +9,7 @@ class Scheme {
   currentScheme: SchemeType = 'default';
   schemes: Schemes = {light: {}, dark: {}};
   changeListeners: SchemeChangeListener[] = [];
+  private usePlatformColors = false;
 
   constructor() {
     Appearance.addChangeListener(() => {
@@ -61,7 +62,24 @@ class Scheme {
       throw new Error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
     }
 
-    merge(this.schemes, schemes);
+    const platformColorsSchemes: Schemes = {...schemes};
+
+    forEach(schemes, (scheme, schemeKey) => {
+      forEach(scheme, (colorValue, colorKey) => {
+        // @ts-expect-error
+        Object.defineProperty(platformColorsSchemes[schemeKey], colorKey, {
+          get: () => {
+            if (this.usePlatformColors) {
+              PlatformColor(colorKey);
+            } else {
+              return colorValue;
+            }
+          }
+        });
+      });
+    });
+
+    merge(this.schemes, platformColorsSchemes);
   }
 
   /**
@@ -69,6 +87,13 @@ class Scheme {
    */
   getScheme() {
     return this.schemes[this.getSchemeType()];
+  }
+
+  /**
+   * Should use RN PlatformColor API for retrieving design token colors from native
+   */
+  enablePlatformColors() {
+    this.usePlatformColors = true;
   }
 
   /**
