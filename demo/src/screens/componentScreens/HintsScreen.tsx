@@ -45,7 +45,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
 
   renderCustomContent() {
     return (
-      <Text text70 white>
+      <Text text70 $textDefaultLight>
         Click
         <Text onPress={() => Alert.alert('custom content :)')} text70BO red40>
           {' here '}
@@ -71,9 +71,9 @@ export default class HintsScreen extends Component<HintScreenProps> {
         <Incubator.ExpandableOverlay
           useDialog
           expandableContent={this.renderScreenOptions()}
-          dialogProps={{bottom: true}}
+          dialogProps={{bottom: true, useSafeArea: true}}
         >
-          <Button round iconSource={Assets.icons.demo.settings} white/>
+          <Button round iconSource={Assets.icons.demo.settings} $backgroundDefault/>
         </Incubator.ExpandableOverlay>
       </View>
     );
@@ -81,7 +81,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
 
   renderScreenOptions() {
     return (
-      <View bg-white br20 padding-20 collapsable={false}>
+      <View bg-$backgroundDefault br20 padding-20 collapsable={false}>
         <Text h2 marginB-s4>
           Hint Options
         </Text>
@@ -141,14 +141,14 @@ export default class HintsScreen extends Component<HintScreenProps> {
           flex
           padding-20
           paddingT-100
-          bg-grey80
+          bg-$backgroundNeutralLight
           style={{zIndex: 10}}
           key={useTargetFrame ? 'withTargetFrame' : 'withElement'}
         >
           {/* <Button bg-purple30 label="Background" style={{position: 'absolute', right: 50, bottom: 100}}/> */}
           <Hint
             visible={showHint}
-            // color={Colors.orange30}
+            // color={Colors.$backgroundMajorHeavy}
             message={message}
             // message={
             //   <Text>
@@ -170,7 +170,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
             onBackgroundPress={useBackdrop && !useTargetFrame ? this.toggleHint : undefined}
-            backdropColor={Colors.rgba(Colors.grey10, 0.3)}
+            backdropColor={Colors.rgba(Colors.$backgroundInverted, 0.3)}
             customContent={
               showCustomContent
                 ? this.renderCustomContent()
@@ -178,7 +178,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
                   ? this.renderReactionStrip()
                   : undefined
             }
-            color={!showCustomContent && showReactionStrip ? Colors.white : undefined}
+            color={!showCustomContent && showReactionStrip ? Colors.$backgroundDefault : undefined}
             removePaddings={!showCustomContent && showReactionStrip}
             enableShadow={enableShadow}
             testID={'Hint'}
