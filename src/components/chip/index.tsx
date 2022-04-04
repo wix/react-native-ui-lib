@@ -3,7 +3,7 @@ import React, {useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Spacings} from 'style';
+import {BorderRadiuses, Spacings, Colors} from 'style';
 import Avatar, {AvatarProps} from '../avatar';
 import Badge, {BadgeProps} from '../badge';
 import Text from '../text';
@@ -172,6 +172,7 @@ const Chip = ({
       <Icon
         source={isLeftIcon ? iconSource : rightIconSource}
         testID={`${testID}.icon`}
+        tintColor={Colors.$iconDefault}
         {...iconProps}
         style={[getMargins('iconSource'), iconStyle]}
       />
@@ -202,7 +203,7 @@ const Chip = ({
       >
         <Icon
           source={dismissIcon}
-          tintColor={dismissColor}
+          tintColor={dismissColor || Colors.$iconDefault}
           style={[dismissIconStyle]}
           accessibilityLabel="dismiss"
           testID={`${testID}.dismissIcon`}
@@ -228,6 +229,7 @@ const Chip = ({
       <Text
         text90M
         numberOfLines={1}
+        $textDefault
         style={[styles.label, getMargins('label'), labelStyle]}
         testID={`${testID}.label`}
       >
@@ -338,6 +340,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     borderWidth: 1,
+    borderColor: Colors.$backgroundInverted,
     borderRadius: BorderRadiuses.br100
   },
   label: {

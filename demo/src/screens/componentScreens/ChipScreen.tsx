@@ -81,7 +81,7 @@ export default class ChipScreen extends Component {
   renderExample = (text: string, chip: JSX.Element) => {
     return (
       <View row spread marginB-12>
-        <Text text70>{text}</Text>
+        <Text text70 $textDefault>{text}</Text>
         {chip}
       </View>
     );
@@ -91,10 +91,10 @@ export default class ChipScreen extends Component {
     return (
       <View style={{padding: 20}}>
         {this.state.showDialog && this.renderPickerDialog()}
-        <Text marginB-20 text40>
+        <Text marginB-20 text40 $textDefault>
           Chip
         </Text>
-        <Text marginB-10 text70BO>
+        <Text marginB-10 text70BO $textDefault>
           Default
         </Text>
         {this.renderExample('Label', <Chip label={'Chip'}/>)}
@@ -102,19 +102,23 @@ export default class ChipScreen extends Component {
         {this.renderExample('Label + onDismiss',
           <Chip
             label={'Chip'}
-            iconColor={Colors.black}
+            iconProps={{tintColor: Colors.$iconDefault}}
             onDismiss={() => Alert.alert('onDismiss')}
             onPress={() => Alert.alert('onPress')}
             dismissIconStyle={{width: 10, height: 10}}
           />)}
         {this.renderExample('Icon',
-          <Chip iconSource={checkmark} iconStyle={{width: 24, height: 24}} iconProps={{tintColor: Colors.black}}/>)}
+          <Chip
+            iconSource={checkmark}
+            iconStyle={{width: 24, height: 24}}
+            iconProps={{tintColor: Colors.$iconDefault}}
+          />)}
         {this.renderExample('Left icon',
           <Chip
             label={'Chip'}
             iconSource={checkmark}
             iconStyle={{width: 24, height: 24}}
-            iconProps={{tintColor: Colors.black}}
+            iconProps={{tintColor: Colors.$iconDefault}}
           />)}
         {this.renderExample('Right icon + onPress + dynamic label',
           <Chip
@@ -135,7 +139,7 @@ export default class ChipScreen extends Component {
               label: '4',
               labelStyle: {
                 ...Typography.text80R,
-                color: Colors.grey20
+                color: Colors.$textNeutralHeavy
               }
             }}
           />)}
@@ -148,7 +152,7 @@ export default class ChipScreen extends Component {
             }}
           />)}
 
-        <Text marginT-20 marginB-10 text70BO>
+        <Text marginT-20 marginB-10 text70BO $textDefault>
           Custom
         </Text>
         <View center row>
@@ -163,6 +167,7 @@ export default class ChipScreen extends Component {
             iconSource={checkmark}
             label={'Chip'}
             labelStyle={{color: Colors.white}}
+            iconProps={{tintColor: Colors.white}}
             containerStyle={{borderColor: Colors.green20, backgroundColor: Colors.green20, marginLeft: Spacings.s3}}
           />
           <Chip
@@ -171,7 +176,6 @@ export default class ChipScreen extends Component {
             label={'Chip'}
             labelStyle={{color: Colors.red20, marginHorizontal: Spacings.s3, ...Typography.text70BO}}
             iconStyle={{width: 16, height: 16}}
-            iconColor={Colors.black}
             avatarProps={{source: avatarImage, size: 28}}
             onDismiss={() => Alert.alert('onDismiss')}
             dismissIconStyle={{width: 10, height: 10, marginRight: Spacings.s3}}
@@ -188,10 +192,10 @@ export default class ChipScreen extends Component {
             labelStyle={{marginRight: Spacings.s1}}
             badgeProps={{
               label: '44',
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.$backgroundDefault,
               borderWidth: 2,
-              borderColor: Colors.black,
-              labelStyle: {color: Colors.black}
+              borderColor: Colors.$backgroundInverted,
+              labelStyle: {color: Colors.$textDefault}
             }}
             containerStyle={{
               borderWidth: 0,
