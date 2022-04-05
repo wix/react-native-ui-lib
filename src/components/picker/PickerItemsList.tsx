@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.grey60
+    borderBottomColor: Colors.$outlineNeutral
   },
   searchIcon: {
     marginRight: 12

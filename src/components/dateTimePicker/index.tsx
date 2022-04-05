@@ -236,11 +236,11 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
     const {headerStyle, useCustomTheme} = this.props;
 
     return (
-      <View row spread bg-white paddingH-20 style={[styles.header, headerStyle]}>
+      <View row spread bg-$backgroundDefault paddingH-20 style={[styles.header, headerStyle]}>
         <Button
           link
           iconSource={Assets.icons.x}
-          iconStyle={{tintColor: Colors.grey10}}
+          iconStyle={{tintColor: Colors.$iconDefault}}
           onPress={this.toggleExpandableOverlay}
         />
         <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed}/>
@@ -306,10 +306,10 @@ const styles = StyleSheet.create({
   header: {
     height: 56,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.grey80
+    borderBottomColor: Colors.$outlineNeutral
   },
   dialog: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.$backgroundDefault,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12
   }
