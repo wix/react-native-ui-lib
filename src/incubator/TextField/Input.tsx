@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import {TextInput, TextInputProps, StyleSheet, Platform} from 'react-native';
+import {TextInput, StyleSheet, Platform} from 'react-native';
 import {Constants, ForwardRefInjectedProps} from '../../commons/new';
-import {ColorType} from './types';
+import {InputProps, ColorType} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
 import FieldContext from './FieldContext';
@@ -11,26 +11,6 @@ const DEFAULT_INPUT_COLOR: ColorType = {
   default: Colors.$textDefault,
   disabled: Colors.$textDisabled
 };
-export interface InputProps
-  extends Omit<TextInputProps, 'placeholderTextColor'>,
-    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'> {
-  /**
-   * A hint text to display when focusing the field
-   */
-  hint?: string;
-  /**
-   * Input color
-   */
-  color?: ColorType;
-  /**
-   * placeholder text color
-   */
-  placeholderTextColor?: ColorType;
-  /**
-   * Custom formatter for the input value (used only when input if not focused)
-   */
-  formatter?: (value?: string) => string | undefined;
-}
 
 const Input = ({
   style,

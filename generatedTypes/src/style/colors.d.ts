@@ -47,7 +47,6 @@ export declare class Colors {
     getBackgroundKeysPattern(): RegExp;
     isEmpty(color: string): boolean;
     getColorTint(color: string, tintKey: string | number): any;
-    getInvertedTintKey(tintKey: string | number): number;
     getColorName(color: string): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
@@ -117,11 +116,7 @@ declare const colorObject: Colors & {
     orange50: string;
     orange60: string;
     orange70: string;
-    orange80: string; /**
-     * Set color scheme for app
-     * arguments:
-     * scheme - color scheme e.g light/dark/default
-     */
+    orange80: string;
     red1: string;
     red5: string;
     red10: string;
@@ -130,6 +125,10 @@ declare const colorObject: Colors & {
     red40: string;
     red50: string;
     red60: string;
+    /**
+     * Support listening to Appearance changes
+     * and change the design tokens accordingly
+     */
     red70: string;
     red80: string;
     purple1: string;
@@ -142,8 +141,7 @@ declare const colorObject: Colors & {
     purple60: string;
     purple70: string;
     purple80: string;
-    violet1: string;
-    /**
+    violet1: string; /**
      * Add alpha to hex or rgb color
      * arguments:
      * p1 - hex color / R part of RGB
@@ -195,11 +193,6 @@ declare const colorObject: Colors & {
     $textDisabled: string;
     $textDefault: string;
     $textNeutralHeavy: string;
-    /**
-     * Set color scheme for app
-     * arguments:
-     * scheme - color scheme e.g light/dark/default
-     */
     $textNeutral: string;
     $textNeutralLight: string;
     $textDefaultLight: string;

@@ -175,7 +175,7 @@ declare class SkeletonView extends Component<InternalSkeletonViewProps, Skeleton
         height: number;
     };
     get size(): Size | undefined;
-    get contentSize(): 48 | 40;
+    get contentSize(): 40 | 48;
     get contentType(): ContentType | undefined;
     get hideSeparator(): boolean | undefined;
     get showLastSeparator(): boolean | undefined;

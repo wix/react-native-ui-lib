@@ -28,7 +28,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
     const {showSecondary} = this.state;
     return (
       <View style={styles.container}>
-        <Text text60 center marginB-s4>
+        <Text text60 center $textDefault marginB-s4>
           Trigger Floating Button
         </Text>
         {renderBooleanOption.call(this, 'Show Floating Button', 'showButton')}
@@ -36,10 +36,10 @@ export default class FloatingButtonScreen extends Component<{}, State> {
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View paddingT-20>
-            <Text text70 style={{fontWeight: 'bold'}}>
+            <Text text70 $textDefault style={{fontWeight: 'bold'}}>
               Scroll behind a FloatingButton
             </Text>
-            <Text text80 marginT-10 style={{lineHeight: 24}}>
+            <Text text80 $textDefault marginT-10 style={{lineHeight: 24}}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
               industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
               scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
@@ -70,7 +70,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
               ? {
                 label: 'Not now',
                 onPress: this.notNow,
-                color: Colors.red30
+                color: Colors.$textDangerLight
               }
               : undefined
           }
@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
     padding: 30,
     paddingBottom: 0,
     flex: 1,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.$backgroundDefault
   }
 });

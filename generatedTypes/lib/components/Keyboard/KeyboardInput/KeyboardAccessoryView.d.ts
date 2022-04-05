@@ -90,7 +90,7 @@ export declare type KeyboardAccessoryViewProps = {
     /**
      * iOS only.
      * Whether or not to include bottom tab bat inset
-     * default: true
+     * default: false
      */
     usesBottomTabs?: boolean;
     children?: React.ReactChild;

@@ -282,14 +282,14 @@ function createStyles(props: BadgeProps) {
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: (!props.icon || props.customElement) ? Colors.primary : undefined,
+      backgroundColor: (!props.icon || props.customElement) ? Colors.$backgroundPrimaryHeavy : undefined,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'
     },
     label: {
       ...Typography.text90,
-      color: Colors.white,
+      color: Colors.$textDefaultLight,
       backgroundColor: 'transparent'
     },
     labelSmall: {
