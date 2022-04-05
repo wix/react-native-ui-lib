@@ -1,6 +1,7 @@
 import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
+import View from '../view';
 // import {Freeze} from 'react-freeze';
 import TabBarContext from './TabBarContext';
 
@@ -72,9 +73,9 @@ export default function TabPage({
     // }
   },
   [currentPage, lazyLoad]);
-
+  
+  const isActive = Math.round(currentPage.value) === index;
   const animatedPageStyle = useAnimatedStyle(() => {
-    const isActive = Math.round(currentPage.value) === index;
     return {
       opacity: isActive || asCarousel ? 1 : 0,
       zIndex: isActive || asCarousel ? 1 : 0
@@ -87,8 +88,11 @@ export default function TabPage({
 
   return (
     <Reanimated.View style={style} testID={testID}>
-      {!shouldLoad && renderLoading?.()}
-      {shouldLoad && props.children}
+      <View testID={isActive ? `currentlyVisibleTabPage`: undefined}>
+        {!shouldLoad && renderLoading?.()}
+        {shouldLoad && props.children}
+      </View>
+
       {/* <Freeze freeze={!shouldLoad || !focused}>{props.children}</Freeze> */}
     </Reanimated.View>
   );
