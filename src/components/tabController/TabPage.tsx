@@ -88,7 +88,7 @@ export default function TabPage({
 
   return (
     <Reanimated.View style={style} testID={testID}>
-      <View testID={isActive ? `currentlyVisibleTabPage`: undefined}>
+      <View testID={isActive ? `currentlyVisibleTabPage` : undefined}>
         {!shouldLoad && renderLoading?.()}
         {shouldLoad && props.children}
       </View>
