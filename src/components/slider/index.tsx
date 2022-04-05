@@ -25,9 +25,9 @@ const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;
 const BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
-const DEFAULT_COLOR = Colors.grey50;
-const ACTIVE_COLOR = Colors.violet30;
-const INACTIVE_COLOR = Colors.grey60;
+const DEFAULT_COLOR = Colors.$backgroundDisabled;
+const ACTIVE_COLOR = Colors.$backgroundPrimaryHeavy;
+const INACTIVE_COLOR = Colors.$backgroundNeutralMedium;
 
 export type SliderOnValueChange = (value: number) => void;
 
@@ -386,7 +386,6 @@ export default class Slider extends PureComponent<SliderProps, State> {
     const range = maximumValue - minimumValue;
     return range;
   }
-
 
   calculatedThumbActiveScale = () => {
     const {activeThumbStyle, thumbStyle, disabled, disableActiveStyling} = this.props;
