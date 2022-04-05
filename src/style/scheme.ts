@@ -1,5 +1,6 @@
 import {Appearance, PlatformColor} from 'react-native';
 import {remove, xor, isEmpty, merge, forEach, cloneDeep} from 'lodash';
+import {Constants} from '../commons/new';
 
 export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
@@ -70,7 +71,12 @@ class Scheme {
         Object.defineProperty(platformColorsSchemes[schemeKey], colorKey, {
           get: () => {
             if (this.usePlatformColors) {
-              return PlatformColor(colorKey);
+              if (Constants.isAndroid) {
+                // Remove the $ prefix cause it's not allowed in Android and add the @color prefix
+                return PlatformColor(`@color/${colorKey.replace(/^[$]/, '')}`);
+              } else {
+                return PlatformColor(colorKey);
+              }
             } else {
               return colorValue;
             }
