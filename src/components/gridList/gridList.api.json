@@ -34,8 +34,7 @@
     " maxItemWidth={140$2}",
     " numColumns={2$3}",
     " itemSpacing={Spacings.s3$4}",
-    " containerWidth={Constants.screenWidth - (Spacings.s5 * 2)}",
-    " contentContainerStyle={{padding: Spacings.s5}}",
+    " listPadding={Spacings.s5}",
     "/>"
   ]
 }
