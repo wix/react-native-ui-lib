@@ -12,6 +12,7 @@ function GridList<T = any>(props: GridListProps<T>) {
     maxItemWidth,
     listPadding = 0,
     keepItemSize,
+    containerWidth,
     contentContainerStyle,
     ...others
   } = props;
@@ -21,7 +22,8 @@ function GridList<T = any>(props: GridListProps<T>) {
     itemSpacing,
     maxItemWidth,
     listPadding,
-    keepItemSize
+    keepItemSize,
+    containerWidth
   });
 
   const listContentStyle = useMemo(() => {
