@@ -1,21 +1,9 @@
 import React, {useContext} from 'react';
-import {TextStyle, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
-
-export interface CharCounterProps {
-  /**
-   * Should show a character counter (works only with maxLength)
-   */
-  showCharCounter?: boolean;
-  maxLength?: number;
-  /**
-   * Pass custom style to character counter text
-   */
-  charCounterStyle?: TextStyle;
-  testID: string;
-}
+import {CharCounterProps} from './types';
 
 const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) => {
   const {value} = useContext(FieldContext);

@@ -53,8 +53,8 @@ export default () => {
           <Text h3>Months</Text>
           <Incubator.WheelPicker
             initialValue={'February'}
-            activeTextColor={Colors.primary}
-            inactiveTextColor={Colors.grey20}
+            activeTextColor={Colors.$textPrimary}
+            inactiveTextColor={Colors.$textNeutralHeavy}
             items={monthItems}
             textStyle={Typography.text60R}
             numberOfVisibleRows={3} 
@@ -76,7 +76,7 @@ export default () => {
         <Text body>
           Move the wheel programmatically
         </Text>
-        <Text bodySmall grey30>
+        <Text bodySmall $textNeutral>
           (by updating the initialValue prop)
         </Text>
         <View marginT-10 row>

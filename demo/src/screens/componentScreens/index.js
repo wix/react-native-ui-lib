@@ -26,6 +26,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
   registrar('unicorn.components.IconScreen', () => require('./IconScreen').default);
   registrar('unicorn.components.ImageScreen', () => require('./ImageScreen').default);
+  registrar('unicorn.components.GridListScreen', () => require('./GridListScreen').default);
   registrar('unicorn.components.GridViewScreen', () => require('./GridViewScreen').default);
   registrar('unicorn.components.KeyboardAwareScrollViewScreen', () => require('./KeyboardAwareScrollViewScreen').default);
   registrar('unicorn.components.MaskedInputScreen', () => require('./MaskedInputScreen').default);

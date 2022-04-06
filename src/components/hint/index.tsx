@@ -26,7 +26,7 @@ import TouchableOpacity from '../touchableOpacity';
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
 
-const DEFAULT_COLOR = Colors.primary;
+const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 
@@ -647,12 +647,12 @@ const styles = StyleSheet.create({
   },
   hintMessage: {
     ...Typography.text70,
-    color: Colors.white,
+    color: Colors.$textDefaultLight,
     flexShrink: 1
   },
   icon: {
     marginRight: Spacings.s4,
-    tintColor: Colors.white
+    tintColor: Colors.$backgroundDefault
   }
 });
 
