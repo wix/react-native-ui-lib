@@ -1,34 +1,12 @@
 import React, {useContext, useEffect, useRef, useCallback, useState, useMemo} from 'react';
-import {Animated, LayoutChangeEvent, StyleSheet, Platform, TextStyle, StyleProp} from 'react-native';
-import {ColorType, ValidationMessagePosition} from './types';
+import {Animated, LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
+import {FloatingPlaceholderProps, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
 import {Constants} from '../../commons/new';
 import View from '../../components/view';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
-
-export interface FloatingPlaceholderProps {
-  /**
-   * The placeholder for the field
-   */
-  placeholder?: string;
-  /**
-   * The floating placeholder color
-   */
-  floatingPlaceholderColor?: ColorType;
-  /**
-   * Custom style to pass to the floating placeholder
-   */
-  floatingPlaceholderStyle?: StyleProp<TextStyle>;
-  /**
-   * Should placeholder float on focus or when start typing
-   */
-  floatOnFocus?: boolean;
-  validationMessagePosition?: ValidationMessagePosition;
-  extraOffset?: number;
-  testID: string;
-}
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 

@@ -13,8 +13,8 @@ class GridListScreen extends Component {
       <Card flex>
         <Card.Section imageSource={{uri: item.mediaUrl}} imageStyle={styles.itemImage}/>
         <View padding-s2>
-          <Text>{item.name}</Text>
-          <Text>{item.formattedPrice}</Text>
+          <Text $textDefault>{item.name}</Text>
+          <Text $textDefault>{item.formattedPrice}</Text>
           {item.inventory.status === 'Out of Stock' && (
             <Text text90M $textDangerLight>
               {item.inventory.status}

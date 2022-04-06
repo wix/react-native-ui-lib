@@ -41,8 +41,8 @@ const WheelPickerItem = memo(({
   itemHeight,
   onSelect,
   offset,
-  activeColor = Colors.primary,
-  inactiveColor = Colors.grey20,
+  activeColor = Colors.$textPrimary,
+  inactiveColor = Colors.$textNeutralHeavy,
   style,
   testID,
   centerH = true,
@@ -86,7 +86,7 @@ const WheelPickerItem = memo(({
         {label}
       </AnimatedText>
       {fakeLabel && (
-        <Text marginL-s2 marginR-s5 text80M color={'white'} {...fakeLabelProps} style={fakeLabelStyle}>
+        <Text marginL-s2 marginR-s5 text80M $textDefaultLight {...fakeLabelProps} style={fakeLabelStyle}>
           {fakeLabel}
         </Text>
       )}

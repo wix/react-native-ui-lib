@@ -20,6 +20,7 @@ export default {
   $backgroundWarningHeavy: colorsPalette.yellow40,
   $backgroundWarning: colorsPalette.yellow5,
   $backgroundMajor: colorsPalette.orange1,
+  $backgroundMajorHeavy: colorsPalette.orange40,
   $backgroundDangerHeavy: colorsPalette.red40,
   $backgroundDanger: colorsPalette.red1,
   $backgroundDisabled: colorsPalette.grey20,
@@ -67,6 +68,7 @@ export default {
   $outlineGeneral: colorsPalette.blue50,
   $outlineWarning: colorsPalette.yellow40,
   $outlineDanger: colorsPalette.red40,
+  $outlineInverted: colorsPalette.grey10,
 
   // DIVIDER
   $dividerDefault: colorsPalette.grey10

@@ -7,7 +7,7 @@ import {ModalProps} from '../../../components/modal';
 import {TransitionViewAnimationType} from '../../TransitionView';
 import {ImperativeDialogProps} from '../types';
 
-const DEFAULT_OVERLAY_BACKGROUND_COLORS = Colors.rgba(Colors.black, 0.2);
+const DEFAULT_OVERLAY_BACKGROUND_COLORS = Colors.rgba(Colors.grey20, 0.65);
 
 export type AnimationType = TransitionViewAnimationType;
 

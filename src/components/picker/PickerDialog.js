@@ -43,7 +43,7 @@ class PickerDialog extends BaseComponent {
     const {panDirection} = this.props;
     return (
       <Dialog {...dialogProps} width="100%" bottom animationConfig={{duration: 300}} panDirection={panDirection}>
-        <View flex bg-white>
+        <View flex bg-$backgroundDefault>
           {this.renderHeader()}
           <View centerV flex>
             {this.props.children}
@@ -58,7 +58,7 @@ class PickerDialog extends BaseComponent {
 const styles = StyleSheet.create({
   header: {
     height: 44,
-    backgroundColor: Colors.grey80,
+    backgroundColor: Colors.$backgroundNeutralLight,
     paddingHorizontal: 17,
     flexDirection: 'row',
     justifyContent: 'space-between',
