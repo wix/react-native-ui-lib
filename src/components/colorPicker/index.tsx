@@ -104,8 +104,8 @@ class ColorPicker extends PureComponent<Props> {
         />
         <View style={styles.buttonContainer}>
           <Button
-            color={Colors.grey10}
-            outlineColor={Colors.grey10}
+            color={Colors.$textDefault}
+            outlineColor={Colors.$textDefault}
             style={styles.button}
             round
             outline
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
     paddingTop: 1,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.$backgroundDefault
   },
   button: {
     width: SWATCH_SIZE,

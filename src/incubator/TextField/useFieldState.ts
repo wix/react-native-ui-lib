@@ -2,26 +2,7 @@ import {useCallback, useState, useEffect, useMemo} from 'react';
 import _ from 'lodash';
 import * as Presenter from './Presenter';
 import {useDidUpdate} from 'hooks';
-import {Validator} from './types';
-import {InputProps} from './Input';
-
-export interface FieldStateProps extends InputProps {
-  validateOnStart?: boolean;
-  validateOnChange?: boolean;
-  validateOnBlur?: boolean;
-  /**
-   * A single or multiple validator. Can be a string (required, email) or custom function.
-   */
-  validate?: Validator | Validator[];
-  /**
-   * The validation message to display when field is invalid (depends on validate)
-   */
-  validationMessage?: string | string[];
-  /**
-   * Callback for when field validity has changed
-   */
-  onChangeValidity?: (isValid: boolean) => void;
-}
+import {FieldStateProps} from './types';
 
 export default function useFieldState({
   validate,

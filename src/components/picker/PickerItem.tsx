@@ -24,7 +24,7 @@ const PickerItem = (props: PickerItemProps) => {
     labelStyle,
     disabled,
     selectedIcon = Assets.icons.check,
-    selectedIconColor = Colors.primary,
+    selectedIconColor = Colors.$iconPrimary,
     testID
   } = props;
   const context = useContext(PickerContext);
@@ -52,7 +52,7 @@ const PickerItem = (props: PickerItemProps) => {
 
   const selectedIndicator = useMemo(() => {
     if (isSelected) {
-      return <Image source={selectedIcon} tintColor={isItemDisabled ? Colors.grey60 : selectedIconColor}/>;
+      return <Image source={selectedIcon} tintColor={isItemDisabled ? Colors.$iconDisabled : selectedIconColor}/>;
     }
   }, [isSelected, isItemDisabled, selectedIcon, selectedIconColor]);
 
@@ -102,17 +102,17 @@ const styles = StyleSheet.create({
   container: {
     height: 56.5,
     paddingHorizontal: 23,
-    borderColor: Colors.rgba(Colors.grey10, 0.1),
+    borderColor: Colors.$outlineNeutral,
     borderBottomWidth: 1
   },
   labelText: {
     ...Typography.text70,
-    color: Colors.grey10,
+    color: Colors.$textDefault,
     flex: 1,
     textAlign: 'left'
   },
   labelTextDisabled: {
-    color: Colors.grey60
+    color: Colors.$textDisabled
   }
 });
 
