@@ -1,6 +1,6 @@
 import {Appearance, PlatformColor} from 'react-native';
 import {remove, xor, isEmpty, merge, forEach, cloneDeep} from 'lodash';
-import {Constants} from '../commons/new';
+import Constants from '../commons/Constants';
 
 export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
