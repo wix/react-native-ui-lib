@@ -17,16 +17,16 @@ export default class ChipsInputScreen extends Component {
         <Incubator.ChipsInput
           placeholder="Enter chips"
           defaultChipProps={{
-            backgroundColor: Colors.primary,
-            labelStyle: {color: Colors.white},
+            backgroundColor: Colors.$backgroundPrimaryHeavy,
+            labelStyle: {color: Colors.$textDefaultLight},
             containerStyle: {borderWidth: 0},
-            dismissColor: Colors.white
+            dismissColor: Colors.$iconDefaultLight
           }}
           invalidChipProps={{
-            dismissColor: Colors.red30,
-            labelStyle: {color: Colors.red30},
-            backgroundColor: Colors.white,
-            containerStyle: {borderColor: Colors.red30}
+            dismissColor: Colors.$iconDanger,
+            labelStyle: {color: Colors.$textDanger},
+            backgroundColor: Colors.$backgroundDefault,
+            containerStyle: {borderColor: Colors.$outlineDanger}
           }}
           chips={this.state.chips}
           leadingAccessory={<Text>TO: </Text>}

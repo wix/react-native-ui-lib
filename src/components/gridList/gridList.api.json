@@ -1,0 +1,40 @@
+{
+  "name": "GridList",
+  "category": "layoutsAndTemplates",
+  "description": "An auto-generated grid list that calculate item size according to given props",
+  "extends": ["FlatList"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridListScreen.tsx",
+  "props": [
+    {"name": "numColumns", "type": "number", "description": "Number of items to show in a row (ignored when passing maxItemWidth)"},
+    {"name": "itemSpacing", "type": "number", "description": "Spacing between each item"},
+    {
+      "name": "maxItemWidth",
+      "type": "number",
+      "description": "Allow a responsive item width to the maximum item width"
+    },
+    {
+      "name": "listPadding",
+      "type": "number",
+      "description": "List padding (used for item size calculation)"
+    },
+    {
+      "name": "containerWidth",
+      "type": "number",
+      "description": "Pass when you want to use a custom container width for calculation"
+    },
+    {
+      "name": "keepItemSize",
+      "type": "boolean",
+      "description": "whether to keep the items initial size when orientation changes, in which case the apt number of columns will be calculated automatically."
+    }
+  ],
+  "snippet": [
+    "<GridList>",
+    " data={items$1}",
+    " maxItemWidth={140$2}",
+    " numColumns={2$3}",
+    " itemSpacing={Spacings.s3$4}",
+    " listPadding={Spacings.s5}",
+    "/>"
+  ]
+}

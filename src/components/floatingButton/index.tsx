@@ -115,6 +115,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
             style={styles.image}
             source={gradientImage()}
             resizeMode={'stretch'}
+            tintColor={Colors.$backgroundDefault}
           />
         </View>
       );
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   shadow: {
-    shadowColor: Colors.grey40,
+    shadowColor: Colors.$backgroundNeutralIdle,
     shadowOffset: {height: 5, width: 0},
     shadowOpacity: 0.35,
     shadowRadius: 12,

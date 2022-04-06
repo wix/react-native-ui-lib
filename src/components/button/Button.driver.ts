@@ -1,11 +1,10 @@
+import _ from 'lodash';
 import {fireEvent, RenderAPI} from '@testing-library/react-native';
 import {ReactTestInstance} from 'react-test-renderer';
-import TextDriver from '../text/Text.driver';
-import ImageDriver from '../image/Image.driver';
-import _ from 'lodash';
+import {TextDriver} from '../text/Text.driver';
+import {ImageDriver} from '../image/Image.driver';
 
-
-const ButtonDriverFactory = async ({wrapperComponent, testID}: {wrapperComponent: RenderAPI, testID: string}) => {
+export const ButtonDriver = async ({wrapperComponent, testID}: {wrapperComponent: RenderAPI; testID: string}) => {
   const button: ReactTestInstance | null = await wrapperComponent.queryByTestId(testID);
   const label = await TextDriver({wrapperComponent, testID: `${testID}.label`});
   const icon = await ImageDriver({wrapperComponent, testID: `${testID}.icon`});
@@ -17,7 +16,7 @@ const ButtonDriverFactory = async ({wrapperComponent, testID}: {wrapperComponent
       if (button) {
         fireEvent.press(button);
       } else {
-        console.warn(`ButtonDriverFactory: cannot click because testID:${testID} were not found`);
+        console.warn(`ButtonDriver: cannot click because testID:${testID} were not found`);
       }
     },
     // label
@@ -29,5 +28,3 @@ const ButtonDriverFactory = async ({wrapperComponent, testID}: {wrapperComponent
     isIconExists: () => icon.exists()
   };
 };
-
-export default ButtonDriverFactory;

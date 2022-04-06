@@ -47,7 +47,6 @@ export declare class Colors {
     getBackgroundKeysPattern(): RegExp;
     isEmpty(color: string): boolean;
     getColorTint(color: string, tintKey: string | number): any;
-    getInvertedTintKey(tintKey: string | number): number;
     getColorName(color: string): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;

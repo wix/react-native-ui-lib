@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import TextTestKit from '../Text.driver';
+import {TextDriver} from '../Text.driver';
 import View from '../../view';
 import Text from '../index';
 
@@ -9,7 +9,7 @@ const TEXT_CONTENT = 'text content';
 describe('Text', () => {
   it('should render Text Component', async () => {
     const wrapperComponent = renderWrapperScreenWithText({});
-    const textDriver = await TextTestKit({wrapperComponent, testID: TEXT_ID});
+    const textDriver = await TextDriver({wrapperComponent, testID: TEXT_ID});
     expect(textDriver.getTextContent()).toEqual(TEXT_CONTENT);
   });
 
@@ -17,14 +17,14 @@ describe('Text', () => {
     it('should press the text, and run callback', async () => {
       const onPressCallback = jest.fn();
       const wrapperComponent = renderWrapperScreenWithText({onPress: () => onPressCallback()});
-      const textDriver = await TextTestKit({wrapperComponent, testID: TEXT_ID});
+      const textDriver = await TextDriver({wrapperComponent, testID: TEXT_ID});
       textDriver.click();
       expect(onPressCallback).toHaveBeenCalledTimes(1);
     });
 
     it('should not be pressable if onPress prop is not supplied', async () => {
       const wrapperComponent = renderWrapperScreenWithText({});
-      const textDriver = await TextTestKit({wrapperComponent, testID: TEXT_ID});
+      const textDriver = await TextDriver({wrapperComponent, testID: TEXT_ID});
       expect(textDriver.isClickable()).toBeFalsy();
     });
   });

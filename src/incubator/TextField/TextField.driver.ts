@@ -1,9 +1,9 @@
 import {fireEvent, RenderAPI} from '@testing-library/react-native';
 import {ReactTestInstance} from 'react-test-renderer';
-import TextDriver from '../../components/text/Text.driver';
 import _ from 'lodash';
+import {TextDriver} from '../../components/text/Text.driver';
 
-const TextFieldDriverFactory = async ({wrapperComponent, testID}: {wrapperComponent: RenderAPI, testID: string}) => {
+export const TextFieldDriver = async ({wrapperComponent, testID}: {wrapperComponent: RenderAPI; testID: string}) => {
   const textInput: ReactTestInstance | null = await wrapperComponent.queryByTestId(testID);
   const label = await TextDriver({wrapperComponent, testID: `${testID}.label`});
   const validationMsg = await TextDriver({wrapperComponent, testID: `${testID}.validationMessage`});
@@ -41,7 +41,7 @@ const TextFieldDriverFactory = async ({wrapperComponent, testID}: {wrapperCompon
       if (textInput) {
         fireEvent.changeText(textInput, text);
       } else {
-        console.warn(`TextFieldDriverFactory: cannot change text because testID:${testID} were not found`);
+        console.warn(`TextFieldDriver: cannot change text because testID:${testID} were not found`);
       }
     },
     // placeholder
@@ -67,8 +67,5 @@ const TextFieldDriverFactory = async ({wrapperComponent, testID}: {wrapperCompon
     getCharCounterRootElement: () => charCounter.getRootElement(),
     isCharCounterExists: () => charCounter.exists(),
     getCharCounterContent: () => charCounter.getTextContent()
-
   };
 };
-
-export default TextFieldDriverFactory;

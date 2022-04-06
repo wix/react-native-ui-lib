@@ -367,8 +367,8 @@ class ColorPalette extends PureComponent<Props, State> {
         </Carousel>
         <PageControl
           size={6}
-          color={Colors.grey10}
-          inactiveColor={Colors.grey50}
+          color={Colors.$backgroundInverted}
+          inactiveColor={Colors.$backgroundDisabled}
           spacing={8}
           numOfPages={colorGroups.length}
           currentPage={currentPage}
@@ -393,11 +393,11 @@ const styles = StyleSheet.create({
   },
   paginationContainer: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.$backgroundDefault,
     paddingBottom: VERTICAL_PADDING
   },
   scrollContainer: {
-    backgroundColor: Colors.white
+    backgroundColor: Colors.$backgroundDefault
   },
   page: {
     flexWrap: 'wrap'

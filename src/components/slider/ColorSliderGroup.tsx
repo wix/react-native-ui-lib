@@ -10,38 +10,38 @@ type SliderOnValueChange = (value: string) => void;
 
 export type ColorSliderGroupProps = {
   /**
-     * The gradient color
-     */
+   * The gradient color
+   */
   initialColor: string;
   /**
-     * Callback for onValueChange returns the new hex color
-     */
+   * Callback for onValueChange returns the new hex color
+   */
   onValueChange?: SliderOnValueChange;
   /**
-     * Group container style
-     */
+   * Group container style
+   */
   containerStyle?: StyleProp<ViewStyle>;
   /**
-     * Sliders style
-     */
+   * Sliders style
+   */
   sliderContainerStyle?: StyleProp<ViewStyle>;
   /**
-     * Show the sliders labels (defaults are: Hue, Lightness, Saturation)
-     */
+   * Show the sliders labels (defaults are: Hue, Lightness, Saturation)
+   */
   showLabels?: boolean;
   /**
-     * In case you would like to change the default labels (translations etc.), you can provide
-     * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
-     */
+   * In case you would like to change the default labels (translations etc.), you can provide
+   * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
+   */
   labels?: {[key in GradientSliderTypes]: string};
   /**
-     * The labels style
-     */
+   * The labels style
+   */
   labelsStyle?: StyleProp<TextStyle>;
   /**
-     * If true the component will have accessibility features enabled
-     */
-   accessible?: boolean;
+   * If true the component will have accessibility features enabled
+   */
+  accessible?: boolean;
 };
 
 interface ColorSliderGroupState {
@@ -62,20 +62,21 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
 
   state = {
     initialColor: this.props.initialColor
-  }
+  };
 
-  static getDerivedStateFromProps: GetDerivedStateFromProps<ColorSliderGroupProps, ColorSliderGroupState> = (nextProps, prevState) => {
+  static getDerivedStateFromProps: GetDerivedStateFromProps<ColorSliderGroupProps, ColorSliderGroupState> = (nextProps,
+    prevState) => {
     if (prevState.initialColor !== nextProps.initialColor) {
       return {
         initialColor: nextProps.initialColor
       };
     }
     return null;
-  }
+  };
 
   onValueChange = (value: string) => {
     _.invoke(this.props, 'onValueChange', value);
-  }
+  };
 
   renderSlider = (type: GradientSliderTypes) => {
     const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.props;
@@ -83,14 +84,14 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
     return (
       <>
         {showLabels && labels && (
-          <Text grey30 text80 style={labelsStyle} accessible={accessible}>
+          <Text $textNeutral text80 style={labelsStyle} accessible={accessible}>
             {labels[type]}
           </Text>
         )}
-        <GradientSlider 
-          color={this.props.initialColor} 
-          type={type} 
-          containerStyle={sliderContainerStyle} 
+        <GradientSlider
+          color={this.props.initialColor}
+          type={type}
+          containerStyle={sliderContainerStyle}
           accessible={accessible}
         />
       </>

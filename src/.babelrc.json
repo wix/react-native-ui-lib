@@ -5,7 +5,7 @@
     [
       "module-resolver",
       {
-        "root": ["./src"],
+        "root": ["./src", "./testkit"],
         "alias": {
           "commons": "./src/commons",
           "helpers": "./src/helpers",
