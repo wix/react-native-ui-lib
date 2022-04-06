@@ -14,7 +14,7 @@ import {
 
 import products from '../../data/products';
 
-class GridListScreen extends Component {
+class SortableGridListScreen extends Component {
   state = {
     orientation: Constants.orientation
   };
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default GridListScreen;
+export default SortableGridListScreen;

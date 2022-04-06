@@ -14,9 +14,9 @@ export const animationConfig = {
 export type ItemsLayouts = ({width: number; height: number} | undefined)[];
 export type ItemsOrder = number[];
 
-const usePresenter = (itemsSize: number, numOfColumns: number, itemSpacing: number) => {
+const usePresenter = (itemsCount: number, numOfColumns: number, itemSpacing: number) => {
 
-  const itemsLayouts = useSharedValue<ItemsLayouts>(_.times(itemsSize, () => undefined));
+  const itemsLayouts = useSharedValue<ItemsLayouts>(_.times(itemsCount, () => undefined));
   const itemSize = getItemSize(numOfColumns, Constants.screenWidth);
 
   return {
