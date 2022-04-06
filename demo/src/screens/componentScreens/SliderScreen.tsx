@@ -44,7 +44,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <View flex padding-20>
-          <Text titleHuge marginB-20>
+          <Text titleHuge $textDefault marginB-20>
             Sliders
           </Text>
 
@@ -59,12 +59,14 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
               containerStyle={styles.sliderContainer}
               disableRTL
             />
-            <Text bodySmall grey30 style={styles.text}>
+            <Text bodySmall $textNeutral style={styles.text}>
               {sliderValue}%
             </Text>
           </View>
 
-          <Text marginT-30>Negatives</Text>
+          <Text $textDefault marginT-30>
+            Negatives
+          </Text>
           <Slider
             minimumValue={-100}
             maximumValue={100}
@@ -82,18 +84,14 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             containerStyle={styles.slider}
           />
 
-          <Text marginT-20>Disabled</Text>
-          <Slider
-            minimumValue={100}
-            maximumValue={200}
-            value={120}
-            minimumTrackTintColor={Colors.red30}
-            thumbTintColor={Colors.green30}
-            containerStyle={styles.slider}
-            disabled
-          />
+          <Text $textDefault marginT-20>
+            Disabled
+          </Text>
+          <Slider minimumValue={100} maximumValue={200} value={120} containerStyle={styles.slider} disabled/>
 
-          <Text marginT-15>Custom with Steps</Text>
+          <Text $textDefault marginT-15>
+            Custom with Steps
+          </Text>
           <Slider
             value={50}
             minimumValue={0}
@@ -108,9 +106,11 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             maximumTrackTintColor={Colors.violet70}
           />
 
-          <Text marginT-15>Gradient Sliders</Text>
+          <Text $textDefault marginT-15>
+            Gradient Sliders
+          </Text>
           <View row centerV>
-            <Text text90 grey30>
+            <Text text90 $textNeutral>
               DEFAULT
             </Text>
             <GradientSlider
@@ -123,7 +123,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             </View>
           </View>
           <View row centerV>
-            <Text text90 grey30>
+            <Text text90 $textNeutral>
               HUE
             </Text>
             <GradientSlider
@@ -137,7 +137,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             </View>
           </View>
 
-          <Text marginT-25 marginB-20>
+          <Text $textDefault marginT-25 marginB-20>
             Color Slider Group
           </Text>
           <ColorSliderGroup
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse'
   },
   image: {
-    tintColor: Colors.grey30
+    tintColor: Colors.$iconNeutral
   },
   text: {
     width: 40
@@ -196,10 +196,10 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: Colors.grey60
+    borderColor: Colors.$outlineNeutral
   },
   group: {
-    backgroundColor: Colors.grey60,
+    backgroundColor: Colors.$backgroundNeutralMedium,
     padding: 10,
     borderRadius: 6
   }

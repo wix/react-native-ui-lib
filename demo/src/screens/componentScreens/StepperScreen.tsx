@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Stepper} from 'react-native-ui-lib'; //eslint-disable-line
 
-
 export default class StepperScreen extends Component {
   state = {
     stepperValue: 1
@@ -22,32 +21,44 @@ export default class StepperScreen extends Component {
 
     return (
       <View padding-page>
-        <Text text40 marginB-20>Stepper</Text>
+        <Text text40 $textDefault marginB-20>
+          Stepper
+        </Text>
 
         <View centerV>
           <View row spread centerV>
-            <Text text70>Default</Text>
+            <Text text70 $textDefault>
+              Default
+            </Text>
             <Stepper/>
           </View>
 
           <View row spread centerV marginT-30>
-            <Text text70>Disabled</Text>
+            <Text text70 $textDefault>
+              Disabled
+            </Text>
             <Stepper disabled/>
           </View>
 
           <View row spread marginT-30>
-            <Text text70>Step (0.5)</Text>
+            <Text text70 $textDefault>
+              Step (0.5)
+            </Text>
             <Stepper step={0.5}/>
           </View>
 
           <View row spread marginT-30>
-            <Text text70>Small</Text>
+            <Text text70 $textDefault>
+              Small
+            </Text>
             <Stepper small/>
           </View>
 
           <View marginT-30>
             <View row spread centerV>
-              <Text text70>Custom</Text>
+              <Text text70 $textDefault>
+                Custom
+              </Text>
               <Stepper
                 onValueChange={this.onValueChange}
                 maxValue={this.stepperProps.maxValue}
@@ -57,10 +68,18 @@ export default class StepperScreen extends Component {
               />
             </View>
             <View padding-5>
-              <Text text80M>Stepper value: {stepperValue}</Text>
-              <Text marginT-3>Initial value: {this.stepperProps.value}</Text>
-              <Text marginT-3>Min value: {this.stepperProps.minValue}</Text>
-              <Text marginT-3>Max value: {this.stepperProps.maxValue}</Text>
+              <Text text80M $textDefault>
+                Stepper value: {stepperValue}
+              </Text>
+              <Text $textDefault marginT-3>
+                Initial value: {this.stepperProps.value}
+              </Text>
+              <Text $textDefault marginT-3>
+                Min value: {this.stepperProps.minValue}
+              </Text>
+              <Text $textDefault marginT-3>
+                Max value: {this.stepperProps.maxValue}
+              </Text>
             </View>
           </View>
         </View>
