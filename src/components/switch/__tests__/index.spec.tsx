@@ -1,8 +1,8 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import Switch, {SwitchProps} from './index';
-import {SwitchDriverFactory} from './switch.driver';
-import View from '../view';
+import Switch, {SwitchProps} from '../index';
+import {SwitchDriverFactory} from '../switch.driver';
+import View from '../../view';
 
 describe('Switch', () => {
 
