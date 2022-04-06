@@ -24,9 +24,8 @@
     {"name": "inactiveTextColor", "type": "string", "description": "Text color for other, non-focused rows"},
     {"name": "textStyle", "type": "TextStyle", "description": "Row text style"},
     {"name": "xxx", "type": "xxxx", "description": "xxxxx"},
-    {"name": "testID", "type": "string", "description": "The component test id"}
+    {"name": "testID", "type": "string", "description": "The component test id"},
+    {"name": "faderProps", "type": "FaderProps", "description": "Custom props for fader."}
   ],
-  "snippet": [
-    "<SectionsWheelPicker sections={$1}/>"
-  ]
+  "snippet": ["<SectionsWheelPicker sections={$1}/>"]
 }
