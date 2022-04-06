@@ -247,4 +247,6 @@ index.ios.js
 *.ts
 *.tsx
 # include the .d.ts files
-!*.d.ts 
+!*.d.ts
+
+!testkit/*.ts
