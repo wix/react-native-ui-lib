@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
 import Switch, {SwitchProps} from '../index';
-import {SwitchDriverFactory} from '../switch.driver';
+import {SwitchDriver} from '../switch.driver';
 import View from '../../view';
 
 describe('Switch', () => {
@@ -14,7 +14,7 @@ describe('Switch', () => {
       disabled: false
     };
     const component = render(<View><Switch {...defaultProps} {...props}/></View>);
-    const driver = SwitchDriverFactory({
+    const driver = SwitchDriver({
       wrappedComponent: component,
       testID
     });

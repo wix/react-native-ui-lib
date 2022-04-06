@@ -1,5 +1,4 @@
-export {SwitchDriverFactory} from '../components/switch/switch.driver';
-
-export {default as ButtonDriverFactory} from '../components/button/Button.driver';
-export {default as TextDriverFactory} from '../components/Text/Text.driver';
-export {default as ImageDriverFactory} from '../components/image/Image.driver';
+export {ButtonDriver} from '../components/button/Button.driver';
+export {ImageDriver} from '../components/image/Image.driver';
+export {TextDriver} from '../components/Text/Text.driver';
+export {SwitchDriver} from '../components/switch/switch.driver';

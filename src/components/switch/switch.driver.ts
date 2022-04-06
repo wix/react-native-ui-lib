@@ -1,8 +1,6 @@
 import {RenderAPI, fireEvent} from '@testing-library/react-native';
 
-
-export const SwitchDriverFactory = ({wrappedComponent, testID}: {wrappedComponent: RenderAPI, testID: string}) => {
-
+export const SwitchDriver = ({wrappedComponent, testID}: {wrappedComponent: RenderAPI; testID: string}) => {
   const switchComp = wrappedComponent.getByTestId(testID);
 
   return {
@@ -14,5 +12,4 @@ export const SwitchDriverFactory = ({wrappedComponent, testID}: {wrappedComponen
     isChecked: () => switchComp.props.accessibilityState.checked === 'checked',
     getColor: () => switchComp.props.style.backgroundColor
   };
-
 };
