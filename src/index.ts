@@ -61,6 +61,7 @@ export {default as FeatureHighlight, FeatureHighlightProps} from './components/f
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
 export {default as GridListItem, GridListItemProps} from './components/gridListItem';
+export {default as GridList, GridListProps} from './components/gridList';
 export {default as GridView, GridViewProps} from './components/gridView';
 export {default as HapticService, HapticType} from './services/HapticService';
 export {default as Hint, HintProps} from './components/hint';
