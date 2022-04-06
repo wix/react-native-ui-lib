@@ -34,6 +34,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
+  const isFloating = useSharedValue(false);
   const isDragging = useSharedValue(false);
   const tempItemsOrder = useSharedValue(itemsOrder.value);
   const tempTranslateX = useSharedValue(0);
@@ -59,16 +60,23 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
 
   const longPressGesture = Gesture.LongPress()
     .onStart(() => {
-      isDragging.value = true;
+      isFloating.value = true;
+    })
+    .onTouchesCancelled(() => {
+      if (!isDragging.value) {
+        isFloating.value = false;
+      }
     })
     .minDuration(250);
 
   const dragGesture = Gesture.Pan()
     .manualActivation(true)
     .onTouchesMove((_e, state) => {
-      if (isDragging.value) {
+      if (isFloating.value) {
+        isDragging.value = true;
         state.activate();
       } else {
+        isDragging.value = false;
         state.fail();
       }
     })
@@ -106,6 +114,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
     .onFinalize(() => {
       if (isDragging.value) {
         isDragging.value = false;
+        isFloating.value = false;
         if (tempItemsOrder.value.toString() !== itemsOrder.value.toString()) {
           runOnJS(onChange)();
         }
@@ -116,8 +125,8 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
   const gesture = Gesture.Race(dragGesture, longPressGesture);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const scale = withSpring(isDragging.value ? 1.1 : 1);
-    const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
+    const scale = withSpring(isFloating.value ? 1.1 : 1);
+    const zIndex = isFloating.value ? 100 : withTiming(0, animationConfig);
 
     return {
       zIndex,
