@@ -71,16 +71,16 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             minimumValue={-100}
             maximumValue={100}
             value={-30}
-            minimumTrackTintColor={Colors.$backgroundDangerHeavy}
-            thumbTintColor={Colors.$backgroundDangerHeavy}
+            minimumTrackTintColor={Colors.red30}
+            thumbTintColor={Colors.red50}
             containerStyle={styles.slider}
           />
           <Slider
             minimumValue={-300}
             maximumValue={-100}
             value={-130}
-            minimumTrackTintColor={Colors.$backgroundDangerHeavy}
-            thumbTintColor={Colors.$backgroundDangerHeavy}
+            minimumTrackTintColor={Colors.red30}
+            thumbTintColor={Colors.red50}
             containerStyle={styles.slider}
           />
 
