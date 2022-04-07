@@ -238,13 +238,13 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
 
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
     const {circleOverride, style} = input || {};
-    const {circle, colors, width = 0, height = 0, shimmerStyle} = this.props;
+    const {circle, colors, width, height = 0, shimmerStyle} = this.props;
     let {borderRadius} = this.props;
     let size;
 
     if (circle || circleOverride) {
       borderRadius = BorderRadiuses.br100;
-      size = Math.max(width, height);
+      size = Math.max(width || 0, height);
     } 
 
     return {
@@ -330,7 +330,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   };
 
   renderListItemTemplate = () => {
-    const {style, width, ...others} = this.props; // eslint-disable-line
+    const {style, ...others} = this.props;
 
     return (
       <View style={[styles.listItem, style]} {...this.getAccessibilityProps('Loading list item')} {...others}>
@@ -364,7 +364,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   };
 
   renderAdvanced = () => {
-    const {children, renderContent, showContent, style, width, ...others} = this.props; // eslint-disable-line
+    const {children, renderContent, showContent, style, ...others} = this.props;
     const data = showContent && _.isFunction(renderContent) ? renderContent(this.props) : children;
     
     return (

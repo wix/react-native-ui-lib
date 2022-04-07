@@ -346,6 +346,7 @@ export default class SkeletonViewScreen extends Component {
           borderRadius={5}
           showContent={isDataAvailable}
           renderContent={() => <Text>Lorem Ipsum is simply dummy text of the industry.</Text>}
+          colors={[Colors.red70, Colors.red50, Colors.red70]}
         />
       </View>
     );
