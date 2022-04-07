@@ -141,11 +141,14 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    * Whether the skeleton is a circle (will override the borderRadius)
    */
   circle?: boolean;
+  /** 
+   * Additional style to the skeleton view
+   */
+  shimmerStyle?: StyleProp<ViewStyle>;
   /**
    * Override container styles
    */
   style?: StyleProp<ViewStyle>;
-  shimmerStyle?: StyleProp<ViewStyle>;
   /**
    * Used to locate this view in end-to-end tests
    */
