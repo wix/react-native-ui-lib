@@ -341,7 +341,7 @@ export default class SkeletonViewScreen extends Component {
           />
         </View>
         <SkeletonView
-          width={'100%'}
+          shimmerStyle={{width: '100%'/* , height: 30 */}}
           height={10}
           borderRadius={5}
           showContent={isDataAvailable}

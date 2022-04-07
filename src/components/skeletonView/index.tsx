@@ -125,9 +125,9 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    */
   height?: number;
   /**
-   * The width of the skeleton view (string is not supported for 'circle')
+   * The width of the skeleton view
    */
-  width?: number | string;
+  width?: number;
   /**
    * The colors of the skeleton view, the array length has to be >=2
    * default: [Colors.grey70, Colors.grey60, Colors.grey70]
@@ -145,6 +145,7 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    * Override container styles
    */
   style?: StyleProp<ViewStyle>;
+  shimmerStyle?: StyleProp<ViewStyle>;
   /**
    * Used to locate this view in end-to-end tests
    */
@@ -232,31 +233,24 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     };
   };
 
-  getWidth(width: SkeletonViewProps['width']) {
-    return _.isUndefined(width) || _.isString(width) ? 0 : width;
-  }
-
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
     const {circleOverride, style} = input || {};
-    const {circle, colors, width, height = 0} = this.props;
+    const {circle, colors, width = 0, height = 0, shimmerStyle} = this.props;
     let {borderRadius} = this.props;
-    const numericWidth = this.getWidth(width);
-    let widthStyle;
     let size;
 
     if (circle || circleOverride) {
       borderRadius = BorderRadiuses.br100;
-      size = Math.max(numericWidth, height);
-    } else if (_.isString(width)) {
-      widthStyle = {width};
-    }
+      size = Math.max(width, height);
+    } 
 
     return {
       shimmerColors: colors || [Colors.grey70, Colors.grey60, Colors.grey70],
       isReversed: Constants.isRTL,
-      style: [{borderRadius}, widthStyle, style],
-      width: size || numericWidth,
-      height: size || height
+      style: [{borderRadius}, style],
+      width: size || width,
+      height: size || height,
+      shimmerStyle
     };
   };
 
@@ -460,7 +454,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
       hideSeparator,
       showLastSeparator,
       height,
-      width: this.getWidth(width),
+      width,
       colors,
       borderRadius,
       circle,
