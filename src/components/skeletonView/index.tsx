@@ -243,7 +243,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     }
 
     return {
-      shimmerColors: colors || [Colors.grey70, Colors.grey60, Colors.grey70],
+      shimmerColors: colors || [Colors.$backgroundNeutral, Colors.$backgroundNeutralMedium, Colors.$backgroundNeutral],
       isReversed: Constants.isRTL,
       style: [{borderRadius}, style],
       width: size || width,
