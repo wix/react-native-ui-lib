@@ -409,7 +409,13 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {pageControlPosition, pageControlProps = {}} = this.props;
 
     if (pageControlPosition) {
-      const {size = 6, spacing = 8, color = Colors.grey20, inactiveColor = Colors.grey60, ...others} = pageControlProps;
+      const {
+        size = 6,
+        spacing = 8,
+        color = Colors.$backgroundNeutralHeavy,
+        inactiveColor = Colors.$backgroundNeutralMedium,
+        ...others
+      } = pageControlProps;
       const pagesCount = presenter.getChildrenLength(this.props);
       const containerStyle =
         pageControlPosition === PageControlPosition.UNDER
