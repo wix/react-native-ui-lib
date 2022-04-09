@@ -87,7 +87,7 @@ class CarouselScreen extends Component<Props, State> {
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text h1 margin-20>
+        <Text h1 margin-20 $textDefault>
           Carousel
         </Text>
 
@@ -115,7 +115,6 @@ class CarouselScreen extends Component<Props, State> {
           containerStyle={{height: 160}}
           pageControlPosition={Carousel.pageControlPositions.UNDER}
           pageControlProps={{onPagePress: this.onPagePress, limitShownPages}}
-          // showCounter
           allowAccessibleLayout
         >
           {_.map([...Array(numberOfPagesShown)], (item, index) => (
@@ -143,6 +142,7 @@ class CarouselScreen extends Component<Props, State> {
               containerStyle: styles.loopCarousel
             }}
             pageControlPosition={Carousel.pageControlPositions.OVER}
+            showCounter
           >
             {IMAGES.map((image, i) => {
               return (

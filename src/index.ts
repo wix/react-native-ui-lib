@@ -61,6 +61,7 @@ export {default as FeatureHighlight, FeatureHighlightProps} from './components/f
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
 export {default as GridListItem, GridListItemProps} from './components/gridListItem';
+export {default as GridList, GridListProps} from './components/gridList';
 export {default as GridView, GridViewProps} from './components/gridView';
 export {default as HapticService, HapticType} from './services/HapticService';
 export {default as Hint, HintProps} from './components/hint';
@@ -105,6 +106,7 @@ export {
 export {default as SharedTransition} from './components/sharedTransition';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {default as Slider, SliderProps} from './components/slider';
+export {default as SortableGridList, SortableGridListProps} from './components/sortableGridList';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as Stepper, StepperProps} from './components/stepper';
@@ -136,6 +138,7 @@ export {default as WheelPickerDialog} from './components/wheelPickerDialog';
 // export {default as ButtonTestKit} from './components/button/Button.driver';
 // export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
 
+// export {default as ButtonDriverFactory} from './components/button/Button.driver';
 //================ Manual typings (all those exports should be removed one day) ==========
 // export {
 //   // BaseInput,

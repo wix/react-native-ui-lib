@@ -18,7 +18,7 @@ const FIX_RTL = Constants.isRTL && Constants.isAndroid;
  * @notes: You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel
  */
 function PageCarousel(props: ScrollViewProps) {
-  const {onMomentumScrollEnd, ...others} = props;
+  const {onMomentumScrollEnd, style, ...others} = props;
   const carousel = useAnimatedRef<Reanimated.ScrollView>();
   const {
     itemsCount,
@@ -96,9 +96,14 @@ function PageCarousel(props: ScrollViewProps) {
     onMomentumScrollEnd?.(event);
   }, [onMomentumScrollEnd]);
 
+  const _style = useMemo(() => {
+    return [{width: pageWidth}, style];
+  }, [pageWidth, style]);
+
   return (
     <Reanimated.ScrollView
       {...others}
+      style={_style}
       ref={carousel}
       horizontal
       pagingEnabled

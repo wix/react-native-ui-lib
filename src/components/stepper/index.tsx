@@ -7,10 +7,9 @@ import View from '../view';
 import Text from '../text';
 import Button from '../button';
 
-
 enum ActionType {
   MINUS = 'minus',
-  PLUS = 'plus',
+  PLUS = 'plus'
 }
 const minusOutline = require('./assets/minusOutline.png');
 const minusOutlineSmall = require('./assets/minusOutlineSmall.png');
@@ -69,7 +68,7 @@ interface State {
 class Stepper extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    
+
     const {value, minValue = 0, maxValue = 1, testID} = props;
     let initialValue = 0;
     if (minValue) {
@@ -96,7 +95,7 @@ class Stepper extends PureComponent<Props, State> {
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
     if (!isUndefined(nextProps.value) && prevState.currentValue !== nextProps.value) {
-      return ({currentValue: nextProps.value});
+      return {currentValue: nextProps.value};
     }
     return null;
   }
@@ -195,7 +194,12 @@ class Stepper extends PureComponent<Props, State> {
     return (
       <View row centerV {...this.getAccessibilityProps()}>
         {this.renderButton(ActionType.MINUS)}
-        <Text grey50={disabled} style={[Typography.text70M, styles.text]} testID={`${testID}.currentValue`}>
+        <Text
+          $textDefault
+          $textDisabled={disabled}
+          style={[Typography.text70M, styles.text]}
+          testID={`${testID}.currentValue`}
+        >
           {currentValue}
         </Text>
         {this.renderButton(ActionType.PLUS)}

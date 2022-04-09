@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Button, StackAggregator} from 'react-native-ui-lib';
+import {Colors, View, Text, Button, StackAggregator} from 'react-native-ui-lib';
 
 
 const contents = [
@@ -32,7 +32,7 @@ export default class StackAggregatorScreen extends Component {
 
   render() {
     return (
-      <ScrollView bg-grey80 keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
+      <ScrollView keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
         <Text center grey40 text90 marginT-20>Thu, 10 Dec, 11:29</Text>
         <StackAggregator
           containerStyle={{marginTop: 12}}
@@ -48,7 +48,7 @@ export default class StackAggregatorScreen extends Component {
           containerStyle={{marginTop: 12}}
           onItemPress={this.onItemPress}
           collapsed={false}
-          // contentContainerStyle={{backgroundColor: Colors.red30}}
+          contentContainerStyle={{backgroundColor: Colors.red70}}
           // itemBorderRadius={10}
           // buttonProps={{color: Colors.green30, labelStyle: {...Typography.text80, fontWeight: '500'}}}
         >

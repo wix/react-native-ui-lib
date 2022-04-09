@@ -83,7 +83,7 @@ class PickerDialog extends BaseComponent {
 const styles = StyleSheet.create({
   dialog: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.$backgroundDefault,
     overflow: 'hidden',
     borderRadius: BorderRadiuses.br10,
     paddingHorizontal: 24

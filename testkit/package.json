@@ -1,0 +1,4 @@
+{
+  "main": "../src/testkit",
+  "types": "../src/testkit"
+}

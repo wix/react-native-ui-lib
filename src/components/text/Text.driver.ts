@@ -2,8 +2,7 @@ import {fireEvent, RenderAPI} from '@testing-library/react-native';
 import {ReactTestInstance} from 'react-test-renderer';
 import _ from 'lodash';
 
-const TextDriverFactory = async ({wrapperComponent, testID}: {wrapperComponent: RenderAPI, testID: string}) => {
-
+export const TextDriver = async ({wrapperComponent, testID}: {wrapperComponent: RenderAPI; testID: string}) => {
   const text: ReactTestInstance | null = await wrapperComponent.queryByTestId(testID);
   return {
     exists: () => !!text,
@@ -21,11 +20,8 @@ const TextDriverFactory = async ({wrapperComponent, testID}: {wrapperComponent: 
       if (text) {
         fireEvent.press(text);
       } else {
-        console.warn(`TextDriverFactory: cannot click because testID:${testID} were not found`);
+        console.warn(`TextDriver: cannot click because testID:${testID} were not found`);
       }
     }
-
   };
 };
-
-export default TextDriverFactory;

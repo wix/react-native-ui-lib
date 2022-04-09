@@ -118,6 +118,46 @@ const products = [
       quantity: 8
     },
     mediaUrl: 'https://static.wixstatic.com/media/84770f_c611ded729fd4461a1bb57134d4e9dd2.png_128'
+  },
+  {
+    name: 'I\'m a Product',
+    formattedPrice: '$19.99',
+    inventory: {
+      trackingMethod: 'status',
+      status: 'In Stock',
+      quantity: 3
+    },
+    mediaUrl: 'https://images.pexels.com/photos/3612182/pexels-photo-3612182.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=150'
+  },
+  {
+    name: 'I\'m a Product',
+    formattedPrice: '$19.99',
+    inventory: {
+      trackingMethod: 'status',
+      status: 'In Stock',
+      quantity: 22
+    },
+    mediaUrl: 'https://images.pexels.com/photos/4841529/pexels-photo-4841529.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=150'
+  },
+  {
+    name: 'I\'m a Product',
+    formattedPrice: '$19.99',
+    inventory: {
+      trackingMethod: 'status',
+      status: 'In Stock',
+      quantity: 10
+    },
+    mediaUrl: 'https://images.pexels.com/photos/4173450/pexels-photo-4173450.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=150'
+  },
+  {
+    name: 'I\'m a Product',
+    formattedPrice: '$19.99',
+    inventory: {
+      trackingMethod: 'status',
+      status: 'In Stock',
+      quantity: 10
+    },
+    mediaUrl: 'https://images.pexels.com/photos/10513273/pexels-photo-10513273.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=150'
   }
 ];
 

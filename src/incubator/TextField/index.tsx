@@ -168,5 +168,5 @@ const TextField = (props: InternalTextFieldProps) => {
 TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
-export {TextFieldProps, FieldContextType};
+export {TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers};
 export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any));

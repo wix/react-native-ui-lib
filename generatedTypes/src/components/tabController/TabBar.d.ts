@@ -76,6 +76,10 @@ export interface TabControllerBarProps {
      */
     indicatorInsets?: number;
     /**
+     * Send to get a constant width of the indicator (overrides indicatorInsets)
+     */
+    indicatorWidth?: number;
+    /**
      * Additional styles for the container
      */
     containerStyle?: StyleProp<ViewStyle>;
