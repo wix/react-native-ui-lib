@@ -75,6 +75,7 @@
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
+    "@types/react": "^17.0.44",
     "@types/react-native": "0.66.4",
     "@types/tinycolor2": "^1.4.2",
     "@types/url-parse": "^1.4.3",
