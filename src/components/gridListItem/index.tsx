@@ -1,11 +1,11 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import _ from 'lodash';
 import * as Modifiers from '../../commons/modifiers';
 import {Colors, Spacings, Typography} from 'style';
 import View, {ViewProps} from '../view';
-import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
+import Text from '../text';
 import Image, {ImageProps} from '../image';
 
 export interface GridListItemProps {
@@ -165,17 +165,17 @@ class GridListItem extends Component<GridListItemProps> {
       children,
       title,
       titleTypography,
-      titleColor,
+      titleColor = Colors.$textDefault,
       titleLines,
       overlayText,
       overlayTextContainerStyle,
       subtitle,
       subtitleTypography,
-      subtitleColor,
+      subtitleColor = Colors.$textDefault,
       subtitleLines,
       description,
       descriptionTypography,
-      descriptionColor,
+      descriptionColor = Colors.$textDefault,
       descriptionLines,
       onPress,
       renderOverlay
@@ -255,8 +255,7 @@ const styles = StyleSheet.create({
   },
   description: {
     textAlign: 'center',
-    ...Typography.subtext,
-    color: Colors.grey30
+    ...Typography.subtext
   },
   contentAlignedToStart: {
     textAlign: 'left'

@@ -26,6 +26,10 @@ export interface TabControllerProps {
      * Pass for custom carousel page width
      */
     carouselPageWidth?: number;
+    /**
+     * Send if a SafeView is used in the context of the TabController.
+     */
+    useSafeArea?: boolean;
 }
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
@@ -34,7 +38,7 @@ export interface TabControllerProps {
  * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-declare function TabController({ initialIndex, selectedIndex, asCarousel, items, onChangeIndex, carouselPageWidth, children }: PropsWithChildren<TabControllerProps>): JSX.Element;
+declare function TabController({ initialIndex, selectedIndex, asCarousel, items, onChangeIndex, carouselPageWidth, useSafeArea, children }: PropsWithChildren<TabControllerProps>): JSX.Element;
 declare namespace TabController {
     var TabBar: React.ComponentClass<import("./TabBar").TabControllerBarProps & {
         useCustomTheme?: boolean | undefined;

@@ -3,8 +3,8 @@ import _ from 'lodash';
 import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
-import {designTokens} from './designTokens';
-import {designTokensDM} from './designTokensDM';
+import DesignTokens from './designTokens';
+// import DesignTokensDM from './designTokensDM';
 //@ts-ignore
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
@@ -14,8 +14,11 @@ export class Colors {
   private shouldSupportDarkMode = false;
 
   constructor() {
-    const colors = Object.assign(colorsPalette, designTokens, themeColors);
+    const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
+    // TODO: For now we load the same design tokens for both schemes to not force it until it's ready
+    this.loadSchemes({light: DesignTokens, dark: DesignTokens});
+    // this.loadSchemes({light: DesignTokens, dark: DesignTokensDM});
 
     Scheme.addChangeListener(() => {
       Object.assign(this, Scheme.getScheme());
@@ -62,9 +65,14 @@ export class Colors {
    * and change the design tokens accordingly
    */
   supportDarkMode() {
-    const designTokensColors = Scheme.getSchemeType() === 'dark' ? designTokensDM : designTokens;
     this.shouldSupportDarkMode = true;
-    Object.assign(this, designTokensColors);
+  }
+
+  /**
+   * Should use RN PlatformColor API for retrieving design token colors from native
+   */
+  enablePlatformColors() {
+    Scheme.enablePlatformColors();
   }
 
   /**
@@ -274,7 +282,7 @@ function threeDigitHexToSix(value: string) {
 
 const TypedColors = Colors as ExtendTypeWith<
   typeof Colors,
-  typeof colorsPalette & typeof themeColors & typeof designTokens
+  typeof colorsPalette & typeof themeColors & typeof DesignTokens
 >;
 const colorObject = new TypedColors();
 colorObject.loadColors(colorsPalette);

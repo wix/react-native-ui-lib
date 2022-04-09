@@ -32,7 +32,7 @@ export default class ToastsScreen extends Component {
 
   toggleVisibility = () => {
     // Im using this for storing toast visible since setState is async and takes time to response
-    this.showToast = !this.showToast; 
+    this.showToast = !this.showToast;
     this.setState({
       visible: this.showToast
     });
@@ -40,9 +40,9 @@ export default class ToastsScreen extends Component {
 
   renderCustomContent = () => {
     return (
-      <View flex padding-10 bg-white>
-        <Text text60>This is a custom content</Text>
-        <Text>
+      <View bg-$backgroundNeutralLight flex padding-10>
+        <Text $textDefault text60>This is a custom content</Text>
+        <Text $textDefault>
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry
           standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
           make a type specimen book.
@@ -54,13 +54,17 @@ export default class ToastsScreen extends Component {
   renderAboveToast = () => {
     return (
       <View flex bottom right paddingB-50 paddingR-20 pointerEvents={'box-none'}>
-        <Button iconSource={Assets.icons.demo.dashboard} color={Colors.white} style={{height: 50, width: 50}}/>
+        <Button
+          iconSource={Assets.icons.demo.dashboard}
+          color={Colors.$backgroundDefault}
+          style={{height: 50, width: 50}}
+        />
       </View>
     );
   };
 
   renderBelowToast = () => {
-    return <Text>Attachment below toast</Text>;
+    return <Text $textDefault>Attachment below toast</Text>;
   };
 
   renderAttachment = () => {
@@ -103,10 +107,10 @@ export default class ToastsScreen extends Component {
         swipeable={isSwipeable}
         onDismiss={this.toggleVisibility}
         autoDismiss={3500}
-        // backgroundColor={Colors.green70}
+        // backgroundColor={Colors.$backgroundSuccess}
         // icon={Assets.icons.demo.add}
-        // iconColor={Colors.green20}
-        // style={{borderWidth: 1, borderColor: Colors.grey30}}
+        // iconColor={Colors.$backgroundSuccessHeavy}
+        // style={{borderWidth: 1, borderColor: Colors.$outlineNeutralMedium}}
         // messageStyle={Typography.text80BO}
       >
         {isCustomContent ? this.renderCustomContent() : undefined}
@@ -131,11 +135,11 @@ export default class ToastsScreen extends Component {
   render() {
     return (
       <View flex padding-page>
-        <Text h1 marginB-s4>
+        <Text $textDefault h1 marginB-s4>
           Toast
         </Text>
 
-        <View flex style={styles.scrollViewContainer}>
+        <View flex>
           <ScrollView contentContainerStyle={styles.scrollView}>
             {renderMultipleSegmentOptions.call(this, 'Toast Position', 'toastPosition', [
               {label: 'Bottom', value: 'bottom'},
@@ -153,7 +157,7 @@ export default class ToastsScreen extends Component {
               {None: '', Label: 'label', Icon: 'icon'},
               {isRow: true})}
 
-            <Text h3 marginV-s2>
+            <Text $textDefault h3 marginV-s2>
               Presets
             </Text>
 
@@ -177,14 +181,5 @@ export default class ToastsScreen extends Component {
 const styles = StyleSheet.create({
   scrollView: {
     paddingBottom: 80
-  },
-  color: {
-    width: 30,
-    height: 30,
-    borderRadius: 15
-  },
-  selected: {
-    borderWidth: 2,
-    borderColor: Colors.grey10
   }
 });

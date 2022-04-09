@@ -25,7 +25,7 @@ interface RadioGroupOptions {
 
 export function renderHeader(title: string, others: TextProps) {
   return (
-    <Text text30 grey10 {...others}>
+    <Text text30 $textDefault {...others}>
       {title}
     </Text>
   );
@@ -44,7 +44,7 @@ export function renderBooleanOption(title: string,
       : (newValue: boolean) => data[1](newValue);
   return (
     <View row centerV spread marginB-s4 key={str} {...others}>
-      <Text flex>{title}</Text>
+      <Text $textDefault flex>{title}</Text>
       <Switch
         useCustomTheme
         key={str}
@@ -59,7 +59,7 @@ export function renderBooleanOption(title: string,
 export function renderBooleanGroup(title: string, options: string[]) {
   return (
     <View marginB-s2>
-      <Text text70M marginB-s2>
+      <Text text70M $textDefault marginB-s2>
         {title}
       </Text>
       <View row style={styles.rowWrap}>
@@ -77,7 +77,7 @@ export function renderBooleanGroup(title: string, options: string[]) {
                 // @ts-ignore
                 onValueChange={value => this.setState({[key]: value})}
               />
-              <Text text70 marginR-s3 marginB-s2>
+              <Text text70 marginR-s3 $textDefault marginB-s2>
                 {key}
               </Text>
             </View>
@@ -97,7 +97,7 @@ export function renderRadioGroup(title: string,
   return (
     <View marginB-s2>
       {!_.isUndefined(title) && (
-        <Text text70M marginB-s2>
+        <Text text70M $textDefault marginB-s2>
           {title}
         </Text>
       )}
@@ -133,7 +133,7 @@ export function renderColorOption(title: string,
   const value = this.state[key];
   return (
     <View marginV-s2>
-      <Text text70M>{title}</Text>
+      <Text text70M $textDefault>{title}</Text>
       <ColorPalette
         value={value}
         colors={colors}
@@ -151,7 +151,7 @@ export function renderSliderOption(title: string,
   const value = this.state[key] || initial;
   return (
     <View marginV-s2>
-      <Text marginB-s1 text70M>
+      <Text marginB-s1 text70M $textDefault>
         {title}
       </Text>
       <View row centerV>
@@ -165,7 +165,7 @@ export function renderSliderOption(title: string,
           // @ts-ignore
           onValueChange={value => this.setState({[key]: value})}
         />
-        <Text marginL-s4 text70 style={styles.text}>
+        <Text marginL-s4 text70 $textDefault style={styles.text}>
           {sliderText}
           {value}
         </Text>
@@ -181,7 +181,7 @@ export function renderMultipleSegmentOptions(title: string, key: string, options
 
   return (
     <View row centerV spread marginB-s4 key={key}>
-      {!!title && <Text marginR-s2>{title}</Text>}
+      {!!title && <Text $textDefault marginR-s2>{title}</Text>}
       <SegmentedControl
         initialIndex={index}
         segments={options}

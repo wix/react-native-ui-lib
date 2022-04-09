@@ -12,7 +12,7 @@ interface State {
   paletteChange: boolean
 }
 
-const INITIAL_COLOR = Colors.blue30;
+const INITIAL_COLOR = Colors.$backgroundPrimaryHeavy;
 const colors = [
   '#20303C', '#43515C', '#66737C', '#858F96', '#A3ABB0', '#C2C7CB', '#E0E3E5', '#F2F4F5',
   '#3182C8', '#4196E0', '#459FED', '#57a8ef', '#8fc5f4', '#b5d9f8', '#daecfb', '#ecf5fd',
@@ -28,7 +28,7 @@ const colors = [
 export default class ColorPickerScreen extends Component<Props, State> {
   state: State = {
     color: INITIAL_COLOR,
-    textColor: Colors.white,
+    textColor: Colors.$textDefaultLight,
     customColors: [],
     paletteChange: false
   };
@@ -63,17 +63,17 @@ export default class ColorPickerScreen extends Component<Props, State> {
 
     return (
       <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 20}}>
-        <View center bg-white marginV-10>
+        <View center bg-$backgroundDefault marginV-10>
           <Text text60 margin-10 style={{color}}>
             Selected Color: {color}
           </Text>
-          <View center marginB-10 style={{height: 50, width: 200, backgroundColor: color}}>
+          <View center marginB-10 style={{height: 50, width: 200, backgroundColor: color}} >
             <Text text60 style={{color: textColor}}>
               {color}
             </Text>
           </View>
         </View>
-        <View bg-white>
+        <View bg-$backgroundDefault>
           <Text text60 marginL-20 marginB-4 marginT-24>
             Theme Color
           </Text>
@@ -93,7 +93,7 @@ export default class ColorPickerScreen extends Component<Props, State> {
           />
         </View>
 
-        <View marginV-10 bg-white>
+        <View marginV-10 bg-$backgroundDefault>
           <Text center text60 marginT-10>
             Color Name
           </Text>
@@ -117,6 +117,6 @@ export default class ColorPickerScreen extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.grey80
+    backgroundColor: Colors.$backgroundNeutralLight
   }
 });

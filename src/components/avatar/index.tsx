@@ -179,7 +179,7 @@ class Avatar extends PureComponent<AvatarProps> {
   static defaultProps = {
     animate: false,
     size: 50,
-    labelColor: Colors.grey10,
+    labelColor: Colors.$textDefault,
     badgePosition: BadgePosition.TOP_RIGHT
   };
 
@@ -266,7 +266,7 @@ class Avatar extends PureComponent<AvatarProps> {
         <View style={this.getRibbonStyle()}>{customRibbon}</View>
       ) : (
         <View style={[this.getRibbonStyle(), this.styles.ribbon, ribbonStyle]}>
-          <Text numberOfLines={1} text100 white style={[ribbonLabelStyle]}>
+          <Text numberOfLines={1} text100 $textDefaultLight style={[ribbonLabelStyle]}>
             {ribbonLabel}
           </Text>
         </View>
@@ -332,7 +332,7 @@ class Avatar extends PureComponent<AvatarProps> {
     const {
       avatarColors = AvatarHelper.getAvatarColors(),
       hashFunction = AvatarHelper.hashStringToNumber,
-      defaultColor = Colors.grey80
+      defaultColor = Colors.$backgroundNeutralLight
     } = autoColorsConfig || {};
     if (useAutoColors) {
       return this.getBackgroundColor(name, avatarColors, hashFunction, defaultColor);
@@ -407,7 +407,7 @@ function createStyles(props: AvatarProps) {
       lineHeight: undefined
     },
     ribbon: {
-      backgroundColor: Colors.primary,
+      backgroundColor: Colors.$backgroundPrimaryHeavy,
       paddingHorizontal: 6,
       paddingVertical: 3
     }

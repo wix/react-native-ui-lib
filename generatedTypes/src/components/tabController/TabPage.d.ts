@@ -9,7 +9,7 @@ export interface TabControllerPageProps {
      */
     lazy?: boolean;
     /**
-     * How long to wait till lazy load complete (good for showing loader screens)
+     * How long to wait till lazy load complete (good for showing loader screens and when loading big pages)
      */
     lazyLoadTime?: number;
     /**

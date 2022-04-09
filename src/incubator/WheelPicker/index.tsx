@@ -84,7 +84,7 @@ const WheelPicker = ({
   items: propItems,
   itemHeight = 44,
   numberOfVisibleRows = 5,
-  activeTextColor = Colors.primary,
+  activeTextColor = Colors.$textPrimary,
   inactiveTextColor,
   textStyle,
   label,
@@ -255,7 +255,7 @@ const WheelPicker = ({
   }, []);
 
   return (
-    <View testID={testID} bg-white style={style}>
+    <View testID={testID} bg-$backgroundDefault style={style}>
       <View row centerH>
         <View flexG>
           <AnimatedFlatList
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     height: Spacings.s9,
-    borderColor: Colors.grey60
+    borderColor: Colors.$outlineNeutral
   },
   label: {
     position: 'absolute',

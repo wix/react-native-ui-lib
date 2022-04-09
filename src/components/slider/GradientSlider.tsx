@@ -20,42 +20,42 @@ export enum GradientSliderTypes {
 
 export type GradientSliderProps = SliderProps & {
   /**
-     * The gradient color
-     */
+   * The gradient color
+   */
   color?: string;
   /**
-     * The gradient type (default, hue, lightness, saturation)
-     */
+   * The gradient type (default, hue, lightness, saturation)
+   */
   type?: GradientSliderTypes;
   /**
-     * The gradient steps
-     */
+   * The gradient steps
+   */
   gradientSteps?: number;
   /**
-     * Callback for onValueChange, returns the updated color
-     */
+   * Callback for onValueChange, returns the updated color
+   */
   onValueChange?: SliderOnValueChange;
   /**
-     * If true the component will have accessibility features enabled
-     */
+   * If true the component will have accessibility features enabled
+   */
   accessible?: boolean;
-   /**
-     * The container style
-     */
+  /**
+   * The container style
+   */
   containerStyle?: StyleProp<ViewStyle>;
   /**
-     * If true the Slider will be disabled and will appear in disabled color
-     */
+   * If true the Slider will be disabled and will appear in disabled color
+   */
   disabled?: boolean;
-}
+};
 
 type GradientSliderComponentProps = {
   /**
-     * Context of the slider group
-     */
-   sliderContext: SliderContextProps;
-} & GradientSliderProps & typeof defaultProps;
-
+   * Context of the slider group
+   */
+  sliderContext: SliderContextProps;
+} & GradientSliderProps &
+  typeof defaultProps;
 
 interface GradientSliderState {
   color: tinycolor.ColorFormats.HSLA;
@@ -66,7 +66,7 @@ interface GradientSliderState {
 const defaultProps = {
   type: GradientSliderTypes.DEFAULT,
   gradientSteps: 120,
-  color: Colors.blue30
+  color: Colors.$backgroundPrimaryHeavy
 };
 
 /**
@@ -111,50 +111,38 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
   getStepColor = (i: number) => {
     const color = this.getColor();
     return tinycolor({...color, a: i}).toHslString();
-  }
+  };
 
   renderDefaultGradient = () => {
     const {gradientSteps} = this.props;
 
-    return (
-      <Gradient
-        gradientSteps={gradientSteps}
-        maximumValue={1}
-        getStepColor={this.getStepColor}
-      />
-    );
-  }
+    return <Gradient gradientSteps={gradientSteps} maximumValue={1} getStepColor={this.getStepColor}/>;
+  };
 
   renderHueGradient = () => {
     const {gradientSteps} = this.props;
 
-    return (
-      <HueGradient gradientSteps={gradientSteps}/>
-    );
-  }
+    return <HueGradient gradientSteps={gradientSteps}/>;
+  };
 
   renderLightnessGradient = () => {
     const color = this.getColor();
     const {gradientSteps} = this.props;
 
-    return (
-      <LightnessGradient color={color} gradientSteps={gradientSteps}/>
-    );
-  }
+    return <LightnessGradient color={color} gradientSteps={gradientSteps}/>;
+  };
 
   renderSaturationGradient = () => {
     const color = this.getColor();
     const {gradientSteps} = this.props;
 
-    return (
-      <SaturationGradient color={color} gradientSteps={gradientSteps}/>
-    );
-  }
+    return <SaturationGradient color={color} gradientSteps={gradientSteps}/>;
+  };
 
   onValueChange = (value: string, alpha: number) => {
     // alpha returns for type.DEFAULT
     _.invoke(this.props, 'onValueChange', value, alpha);
-  }
+  };
 
   updateColor(color: tinycolor.ColorFormats.HSLA) {
     if (!_.isEmpty(this.props.sliderContext)) {

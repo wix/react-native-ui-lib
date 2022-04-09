@@ -2,8 +2,10 @@ import React, {useEffect, forwardRef} from 'react';
 import {mapKeys} from 'lodash';
 import hoistStatics from 'hoist-non-react-statics';
 import OldTextField from './index';
-import NewTextField from '../../incubator/TextField';
+import NewTextField, {TextFieldStaticMembers} from '../../incubator/TextField';
 import {LogService} from '../../services';
+
+export interface TextFieldMigratorComponent extends React.ForwardRefExoticComponent<any>, TextFieldStaticMembers {}
 
 const propsMigrationMap: Dictionary<string> = {
   /* LABEL */
@@ -69,7 +71,7 @@ const TextFieldMigrator = forwardRef(({migrate = false, customWarning, ...props}
     // @ts-expect-error
     return <OldTextField {...props} ref={ref}/>;
   }
-});
+}) as TextFieldMigratorComponent;
 
 hoistStatics(TextFieldMigrator, NewTextField);
 TextFieldMigrator.displayName = 'TextField';
