@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: Colors.$outlineNeutral
+    borderColor: Colors.$outlineDefault
   },
   group: {
     backgroundColor: Colors.$backgroundNeutralMedium,
