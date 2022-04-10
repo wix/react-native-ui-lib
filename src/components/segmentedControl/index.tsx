@@ -202,7 +202,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.$backgroundNeutralMedium,
-    borderColor: Colors.$outlineNeutral,
+    borderColor: Colors.$outlineDefault,
     borderWidth: BORDER_WIDTH
   },
   selectedSegment: {
