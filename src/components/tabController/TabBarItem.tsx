@@ -131,6 +131,8 @@ export default function TabBarItem({
   const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(labelStyle)));
   const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
 
+  // NOTE: We clone these color values in refs because they might contain a PlatformColor value
+  //       which throws an error (see https://github.com/software-mansion/react-native-reanimated/issues/3164)
   const inactiveColor = useRef(_.cloneDeep(labelColor));
   const activeColor = useRef(_.cloneDeep(!ignore ? selectedLabelColor : inactiveColor.current));
 
