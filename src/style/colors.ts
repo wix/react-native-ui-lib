@@ -1,6 +1,7 @@
 import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
+import {OpaqueColorValue} from 'react-native';
 import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
 import DesignTokens from './designTokens';
@@ -92,6 +93,11 @@ export class Colors {
     let green;
     let blue;
 
+    // Handle design token PlatformColor object
+    if (typeof p1 === 'object') {
+      p1 = colorStringValue(p1);
+    }
+
     if (arguments.length === 2 && typeof p1 === 'string') {
       hex = p1;
       opacity = p2;
@@ -129,22 +135,18 @@ export class Colors {
     }
   }
 
-  /**
-   * Return the original color string value by its colorKey based on the current scheme(light/dark)
-   */
-  getColorValue(colorKey: string) {
-    return Scheme.getScheme(true)[colorKey] ?? this[colorKey];
-  }
-
-  getColorName(color: string) {
+  getColorName(colorValue: string) {
+    const color = colorStringValue(colorValue);
     return ColorName.name(color)[1];
   }
 
-  getColorTint(color: string, tintKey: string | number) {
-    if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(color)) {
+  getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number) {
+    if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
-      return color;
+      return colorValue;
     }
+
+    const color = colorStringValue(colorValue);
 
     if (color === 'transparent') {
       return color;
@@ -170,7 +172,7 @@ export class Colors {
     return this.getTintedColorForDynamicHex(color, tintKey);
   }
 
-  getTintedColorForDynamicHex(color: string, tintKey: string | number) {
+  private getTintedColorForDynamicHex(color: string, tintKey: string | number) {
     // Handles dynamic colors (non uilib colors)
     let tintLevel = Math.floor(Number(tintKey) / 10);
     tintLevel = Math.max(1, tintLevel);
@@ -210,13 +212,14 @@ export class Colors {
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
-  shouldGenerateDarkerPalette(color: string) {
+  private shouldGenerateDarkerPalette(color: string) {
     const hsl = Color(color).hsl();
     const hue = hsl.color[0];
     return _.inRange(hue, 51, 184);
   }
 
-  isDark(color: string) {
+  isDark(colorValue: string | OpaqueColorValue) {
+    const color = colorStringValue(colorValue);
     const lum = tinycolor(color).getLuminance();
     return lum < 0.55;
   }
@@ -232,9 +235,15 @@ export class Colors {
   isTransparent(color?: string) {
     return color && _.toUpper(color) === _.toUpper('transparent');
   }
-  areEqual(colorA: string, colorB: string) {
+  areEqual(colorAValue: string | OpaqueColorValue, colorBValue: string | OpaqueColorValue) {
+    const colorA = colorStringValue(colorAValue);
+    const colorB = colorStringValue(colorBValue);
     return _.toLower(colorA) === _.toLower(colorB);
   }
+}
+
+function colorStringValue(color: string | object) {
+  return color.toString();
 }
 
 function adjustSaturation(colors: string[], color: string) {
