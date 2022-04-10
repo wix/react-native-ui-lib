@@ -16,12 +16,6 @@
       "type": "(data: ItemT[]) => void",
       "description": "A callback to get the new order (or swapped items).",
       "required": true
-    },
-    {
-      "name": "scrollWhileDragging",
-      "type": "boolean",
-      "description": "Enable scrolling while dragging (experimental, default is false).",
-      "default": "false"
     }
   ],
   "snippet": [

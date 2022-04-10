@@ -2,17 +2,17 @@
 import {useCallback} from 'react';
 import {SharedValue, useSharedValue} from 'react-native-reanimated';
 import {GestureUpdateEvent, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
-import {BaseItemProps, ScrollProps} from './types';
+import {BaseItemProps} from './types';
 
 import useIndicesManager from './useIndicesManager';
 
-interface Props extends BaseItemProps, ScrollProps {
+interface Props extends BaseItemProps {
   drag: SharedValue<number>;
   atRestSwappedTranslation: SharedValue<number>;
 }
 
 const useSwapItems = (props: Props) => {
-  const {index, height, drag, scroll, atRestSwappedTranslation} = props;
+  const {index, height, drag, atRestSwappedTranslation} = props;
 
   const {requestIndexChange} = useIndicesManager();
 
@@ -24,14 +24,14 @@ const useSwapItems = (props: Props) => {
     const threshold = height / 2;
     if (
       velocity.value > 0 &&
-      drag.value + scroll.value + atRestSwappedTranslation.value - draggedSwappedTranslation.value > threshold
+      drag.value + atRestSwappedTranslation.value - draggedSwappedTranslation.value > threshold
     ) {
       if (requestIndexChange(index, true)) {
         draggedSwappedTranslation.value += height;
       }
     } else if (
       velocity.value < 0 &&
-      drag.value + scroll.value + atRestSwappedTranslation.value - draggedSwappedTranslation.value < -threshold
+      drag.value + atRestSwappedTranslation.value - draggedSwappedTranslation.value < -threshold
     ) {
       if (requestIndexChange(index, false)) {
         draggedSwappedTranslation.value -= height;

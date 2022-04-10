@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {useCallback, useContext} from 'react';
 import {useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming, runOnJS} from 'react-native-reanimated';
+import {GestureUpdateEvent, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import useDragAfterLongPressGesture from './useDragAfterLongPressGesture';
 import {BaseItemProps, ANIMATION_END_DURATION} from './types';
 import useSwapItems from './useSwapItems';
 import useAtRestItemsTranslation from './useAtRestItemsTranslation';
-import useItemScroll from './useItemScroll';
 import SortableListContext from './SortableListContext';
-import {useCallback, useContext} from 'react';
 
 const useDraggableAnimation = (props: BaseItemProps) => {
   const {height, index} = props;
@@ -17,14 +17,14 @@ const useDraggableAnimation = (props: BaseItemProps) => {
   const scroll = useSharedValue(0);
   const zIndex = useSharedValue<number>(0);
 
-  const {scrollWhileDragging, onDragStateChange, onDrag} = useContext(SortableListContext);
+  const {onDragStateChange} = useContext(SortableListContext);
 
-  const {
-    onDragUpdate: swap_onDragUpdate,
-    onDragEnd: swap_onDragEnd,
-    swapItemsIfNeeded
-  } = useSwapItems({index, height, drag, scroll, atRestSwappedTranslation});
-  const {ref} = useItemScroll({scroll, swapItemsIfNeeded});
+  const {onDragUpdate: swap_onDragUpdate, onDragEnd: swap_onDragEnd} = useSwapItems({
+    index,
+    height,
+    drag,
+    atRestSwappedTranslation
+  });
   const {onDragEnd: atRest_onDragEnd} = useAtRestItemsTranslation({index, height, isDragged, atRestSwappedTranslation});
 
   const onDragStart = useCallback(() => {
@@ -36,16 +36,12 @@ const useDraggableAnimation = (props: BaseItemProps) => {
     drag.value = 0;
   }, [onDragStateChange]);
 
-  const onDragUpdate = useCallback(event => {
+  const onDragUpdate = useCallback((event: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
     'worklet';
-    if (scrollWhileDragging) {
-      onDrag?.(event.absoluteY, ref.current);
-    }
-
     drag.value = event.translationY;
     swap_onDragUpdate(event);
   },
-  [onDrag, swap_onDragUpdate]);
+  [swap_onDragUpdate]);
 
   const onDragEnd = useCallback(() => {
     'worklet';
@@ -85,7 +81,7 @@ const useDraggableAnimation = (props: BaseItemProps) => {
     };
   });
 
-  return {dragAfterLongPressGesture, draggedAnimatedStyle, isDragged: showDraggedAnimation};
+  return {dragAfterLongPressGesture, draggedAnimatedStyle};
 };
 
 export default useDraggableAnimation;
