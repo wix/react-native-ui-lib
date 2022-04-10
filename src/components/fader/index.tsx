@@ -51,7 +51,7 @@ function Fader(props: FaderProps) {
     size = DEFAULT_FADE_SIZE,
     position = FaderPosition.END,
     visible,
-    tintColor = Colors.$backgroundElevated
+    tintColor = Colors.$backgroundDefault
   } = props;
 
   const styles = useMemo(() => {
