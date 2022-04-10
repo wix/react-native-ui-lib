@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {PropsWithChildren, useCallback, useState} from 'react';
 import {LayoutChangeEvent} from 'react-native';
-import Animated from 'react-native-reanimated';
 import {GestureDetector} from 'react-native-gesture-handler';
+import View from '../view';
 import {BaseItemProps} from './types';
 import useDraggableAnimation from './useDraggableAnimation';
 
@@ -26,11 +26,10 @@ const SortableListItem = (props: Props) => {
   });
 
   return (
-    // @ts-expect-error
     <GestureDetector gesture={dragAfterLongPressGesture}>
-      <Animated.View style={draggedAnimatedStyle} onLayout={onLayout}>
+      <View reanimated style={draggedAnimatedStyle} onLayout={onLayout}>
         {children}
-      </Animated.View>
+      </View>
     </GestureDetector>
   );
 };
