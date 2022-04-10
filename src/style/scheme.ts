@@ -9,7 +9,6 @@ export type SchemeChangeListener = (schemeType?: 'light' | 'dark') => void;
 class Scheme {
   private currentScheme: SchemeType = 'default';
   private schemes: Schemes = {light: {}, dark: {}};
-  private schemesJS: Schemes = {light: {}, dark: {}};
   private changeListeners: SchemeChangeListener[] = [];
   private usePlatformColors = false;
 
@@ -64,40 +63,38 @@ class Scheme {
       throw new Error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
     }
 
-    merge(this.schemesJS, schemes);
-
     const platformColorsSchemes: Schemes = cloneDeep(schemes);
+
     forEach(schemes, (scheme, schemeKey) => {
       forEach(scheme, (colorValue, colorKey) => {
         // @ts-expect-error
         Object.defineProperty(platformColorsSchemes[schemeKey], colorKey, {
           get: () => {
+            let color: any = colorValue;
             if (this.usePlatformColors) {
               if (Constants.isAndroid) {
                 // Remove the $ prefix cause it's not allowed in Android and add the @color prefix
-                return PlatformColor(`@color/${colorKey.replace(/^[$]/, '')}`);
+                color = PlatformColor(`@color/${colorKey.replace(/^[$]/, '')}`);
               } else {
-                return PlatformColor(colorKey);
+                color = PlatformColor(colorKey);
               }
-            } else {
-              return colorValue;
+              // Get the original hex string value by calling toString()
+              color.toString = () => schemes[this.getSchemeType()][colorKey];
             }
+            return color;
           }
         });
       });
     });
+
     merge(this.schemes, platformColorsSchemes);
   }
 
   /**
    * Retrieve scheme by current scheme type
    */
-  getScheme(useJS = false) {
-    if (useJS) {
-      return this.schemesJS[this.getSchemeType()];
-    } else {
-      return this.schemes[this.getSchemeType()];
-    }
+  getScheme() {
+    return this.schemes[this.getSchemeType()];
   }
 
   /**
