@@ -8,17 +8,17 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {
   Assets,
   Colors,
+  Spacings,
   View,
   Text,
+  TextField,
   TouchableOpacity,
   Icon,
   Button,
-  TabController,
-  Incubator
+  TabController
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
-const {TextField} = Incubator;
 const settingsIcon = require('../assets/icons/settings.png');
 const chevronIcon = require('../assets/icons/chevronRight.png');
 
@@ -55,8 +55,6 @@ class MainScreen extends Component {
       currentPage: 0,
       filteredNavigationData: data
     };
-
-    this.filterExplorerScreens = _.throttle(this.filterExplorerScreens, 300);
 
     Navigation.events().bindComponent(this);
   }
@@ -119,11 +117,11 @@ class MainScreen extends Component {
     }, 0);
   };
 
-  updateSearch = filterText => {
+  updateSearch = _.throttle(filterText => {
     this.setState({filterText}, () => {
       this.filterExplorerScreens();
     });
-  };
+  }, 800);
 
   clearSearch = () => {
     this.updateSearch('');
@@ -164,8 +162,8 @@ class MainScreen extends Component {
     return (
       <TextField
         migrate
+        preset={null}
         ref={r => (this.input = r)}
-        value={filterText}
         testID="uilib.search_for_component"
         placeholder="Search for your component..."
         onChangeText={this.updateSearch}
@@ -178,9 +176,9 @@ class MainScreen extends Component {
         text70
         trailingAccessory={
           filterText ? (
-            <Button link iconSource={Assets.icons.demo.close} grey10 onPress={this.clearSearch}/>
+            <Button link iconSource={Assets.icons.demo.close} $iconDefault onPress={this.clearSearch}/>
           ) : (
-            <Icon source={Assets.icons.demo.search}/>
+            <Icon tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
           )
         }
       />
@@ -230,7 +228,7 @@ class MainScreen extends Component {
         keyboardShouldPersistTaps="always"
         data={flatData}
         contentContainerStyle={{paddingTop: 20}}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_item, index) => index.toString()}
         renderItem={this.renderItem}
       />
     );
@@ -299,12 +297,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through'
   },
   searchContainer: {
-    padding: 16,
-    paddingBottom: 0
+    padding: Spacings.s4,
+    paddingBottom: 0,
+    marginBottom: Spacings.s2
   },
   searchField: {
-    padding: 12,
-    backgroundColor: Colors.grey80,
+    padding: Spacings.s3,
+    backgroundColor: Colors.$backgroundNeutralLight,
     borderRadius: 8
   }
 });
