@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   container: {
     height: 56.5,
     paddingHorizontal: 23,
-    borderColor: Colors.$outlineNeutral,
+    borderColor: Colors.$outlineDefault,
     borderBottomWidth: 1
   },
   labelText: {
