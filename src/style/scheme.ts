@@ -7,9 +7,10 @@ export type SchemeType = 'default' | 'light' | 'dark';
 export type SchemeChangeListener = (schemeType?: 'light' | 'dark') => void;
 
 class Scheme {
-  currentScheme: SchemeType = 'default';
-  schemes: Schemes = {light: {}, dark: {}};
-  changeListeners: SchemeChangeListener[] = [];
+  private currentScheme: SchemeType = 'default';
+  private schemes: Schemes = {light: {}, dark: {}};
+  private schemesJS: Schemes = {light: {}, dark: {}};
+  private changeListeners: SchemeChangeListener[] = [];
   private usePlatformColors = false;
 
   constructor() {
@@ -63,8 +64,9 @@ class Scheme {
       throw new Error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
     }
 
-    const platformColorsSchemes: Schemes = cloneDeep(schemes);
+    merge(this.schemesJS, schemes);
 
+    const platformColorsSchemes: Schemes = cloneDeep(schemes);
     forEach(schemes, (scheme, schemeKey) => {
       forEach(scheme, (colorValue, colorKey) => {
         // @ts-expect-error
@@ -84,15 +86,18 @@ class Scheme {
         });
       });
     });
-
     merge(this.schemes, platformColorsSchemes);
   }
 
   /**
    * Retrieve scheme by current scheme type
    */
-  getScheme() {
-    return this.schemes[this.getSchemeType()];
+  getScheme(useJS = false) {
+    if (useJS) {
+      return this.schemesJS[this.getSchemeType()];
+    } else {
+      return this.schemes[this.getSchemeType()];
+    }
   }
 
   /**
