@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Dispatch, SetStateAction} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {
   Checkbox,
@@ -13,8 +13,7 @@ import {
   SegmentedControlItemProps,
   Text,
   TextProps,
-  View,
-  ViewProps
+  View
 } from 'react-native-ui-lib';
 
 interface RadioGroupOptions {
@@ -25,32 +24,25 @@ interface RadioGroupOptions {
 
 export function renderHeader(title: string, others: TextProps) {
   return (
-    <Text text30 $textDefault {...others}>
+    <Text text30 grey10 {...others}>
       {title}
     </Text>
   );
 }
 
-export function renderBooleanOption(title: string,
-  data: string | [boolean, Dispatch<SetStateAction<boolean>>],
-  others?: ViewProps) {
+export function renderBooleanOption(title: string, key: string) {
   // @ts-ignore
-  const value = (typeof data === 'string' ? this.state[data] : data[0]) as boolean;
-  const str = typeof data === 'string' ? data : `${value}`;
-  const onValueChange =
-    typeof data === 'string'
-      ? // @ts-ignore
-      (newValue: boolean) => this.setState({[data]: newValue})
-      : (newValue: boolean) => data[1](newValue);
+  const value = this.state[key];
   return (
-    <View row centerV spread marginB-s4 key={str} {...others}>
-      <Text $textDefault flex>{title}</Text>
+    <View row centerV spread marginB-s4 key={key}>
+      <Text flex>{title}</Text>
       <Switch
         useCustomTheme
-        key={str}
-        testID={str}
+        key={key}
+        testID={key}
         value={value}
-        onValueChange={onValueChange}
+        // @ts-ignore
+        onValueChange={value => this.setState({[key]: value})}
       />
     </View>
   );
@@ -59,7 +51,7 @@ export function renderBooleanOption(title: string,
 export function renderBooleanGroup(title: string, options: string[]) {
   return (
     <View marginB-s2>
-      <Text text70M $textDefault marginB-s2>
+      <Text text70M marginB-s2>
         {title}
       </Text>
       <View row style={styles.rowWrap}>
@@ -77,7 +69,7 @@ export function renderBooleanGroup(title: string, options: string[]) {
                 // @ts-ignore
                 onValueChange={value => this.setState({[key]: value})}
               />
-              <Text text70 marginR-s3 $textDefault marginB-s2>
+              <Text text70 marginR-s3 marginB-s2>
                 {key}
               </Text>
             </View>
@@ -97,7 +89,7 @@ export function renderRadioGroup(title: string,
   return (
     <View marginB-s2>
       {!_.isUndefined(title) && (
-        <Text text70M $textDefault marginB-s2>
+        <Text text70M marginB-s2>
           {title}
         </Text>
       )}
@@ -133,7 +125,7 @@ export function renderColorOption(title: string,
   const value = this.state[key];
   return (
     <View marginV-s2>
-      <Text text70M $textDefault>{title}</Text>
+      <Text text70M>{title}</Text>
       <ColorPalette
         value={value}
         colors={colors}
@@ -151,7 +143,7 @@ export function renderSliderOption(title: string,
   const value = this.state[key] || initial;
   return (
     <View marginV-s2>
-      <Text marginB-s1 text70M $textDefault>
+      <Text marginB-s1 text70M>
         {title}
       </Text>
       <View row centerV>
@@ -165,7 +157,7 @@ export function renderSliderOption(title: string,
           // @ts-ignore
           onValueChange={value => this.setState({[key]: value})}
         />
-        <Text marginL-s4 text70 $textDefault style={styles.text}>
+        <Text marginL-s4 text70 style={styles.text}>
           {sliderText}
           {value}
         </Text>
@@ -181,7 +173,7 @@ export function renderMultipleSegmentOptions(title: string, key: string, options
 
   return (
     <View row centerV spread marginB-s4 key={key}>
-      {!!title && <Text $textDefault marginR-s2>{title}</Text>}
+      {!!title && <Text marginR-s2>{title}</Text>}
       <SegmentedControl
         initialIndex={index}
         segments={options}
