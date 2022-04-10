@@ -108,8 +108,8 @@ interface Props extends TabControllerItemProps {
 export default function TabBarItem({
   index,
   label,
-  labelColor,
-  selectedLabelColor,
+  labelColor = DEFAULT_LABEL_COLOR,
+  selectedLabelColor = DEFAULT_SELECTED_LABEL_COLOR,
   labelStyle,
   selectedLabelStyle,
   icon,
@@ -130,6 +130,11 @@ export default function TabBarItem({
   // JSON.parse(JSON.stringify is due to an issue with reanimated
   const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(labelStyle)));
   const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
+
+  // NOTE: We clone these color values in refs because they might contain a PlatformColor value
+  //       which throws an error (see https://github.com/software-mansion/react-native-reanimated/issues/3164)
+  const inactiveColor = useRef(_.cloneDeep(labelColor));
+  const activeColor = useRef(_.cloneDeep(!ignore ? selectedLabelColor : inactiveColor.current));
 
   useEffect(() => {
     if (props.width) {
@@ -165,21 +170,15 @@ export default function TabBarItem({
 
   const animatedLabelColorStyle = useAnimatedStyle(() => {
     const isActive = currentPage.value === index;
-    const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
-    const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
-
     return {
-      color: isActive ? activeColor : inactiveColor
+      color: isActive ? activeColor.current : inactiveColor.current
     };
   });
 
   const animatedIconStyle = useAnimatedStyle(() => {
     const isActive = currentPage.value === index;
-    const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
-    const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
-
     return {
-      tintColor: isActive ? activeColor : inactiveColor
+      tintColor: isActive ? activeColor.current : inactiveColor.current
     };
   });
 
