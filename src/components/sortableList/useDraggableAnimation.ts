@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useCallback, useContext} from 'react';
-import {useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming, runOnJS} from 'react-native-reanimated';
+import {useSharedValue, useAnimatedStyle, withTiming, withSpring, runOnJS} from 'react-native-reanimated';
 import {GestureUpdateEvent, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import useDragAfterLongPressGesture from './useDragAfterLongPressGesture';
 import {BaseItemProps, ANIMATION_END_DURATION} from './types';
@@ -15,7 +15,6 @@ const useDraggableAnimation = (props: BaseItemProps) => {
   const drag = useSharedValue<number>(0);
   const atRestSwappedTranslation = useSharedValue(0);
   const scroll = useSharedValue(0);
-  const zIndex = useSharedValue<number>(0);
 
   const {onDragStateChange} = useContext(SortableListContext);
 
@@ -53,31 +52,20 @@ const useDraggableAnimation = (props: BaseItemProps) => {
     }
   }, [onDragStateChange, swap_onDragEnd, atRest_onDragEnd]);
 
-  const {dragAfterLongPressGesture, showDraggedAnimation} = useDragAfterLongPressGesture({
+  const {dragAfterLongPressGesture, isFloating} = useDragAfterLongPressGesture({
     isDragged,
     onDragStart,
     onDragUpdate,
     onDragEnd
   });
 
-  useAnimatedReaction(() => {
-    return showDraggedAnimation.value;
-  },
-  (isDragged, wasDragged) => {
-    if (wasDragged !== null && isDragged !== wasDragged) {
-      if (isDragged) {
-        zIndex.value = withTiming(999, {duration: 100});
-      } else {
-        zIndex.value = withTiming(0, {duration: ANIMATION_END_DURATION});
-      }
-    }
-  });
-
   const draggedAnimatedStyle = useAnimatedStyle(() => {
+    const scaleY = withSpring(isFloating.value ? 1.1 : 1);
+    const zIndex = isFloating.value ? 100 : 0;
     const translateY = drag.value + scroll.value + atRestSwappedTranslation.value;
     return {
-      transform: [{translateY}],
-      zIndex: zIndex.value
+      zIndex,
+      transform: [{translateY}, {scaleY}]
     };
   });
 

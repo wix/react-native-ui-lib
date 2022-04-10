@@ -17,7 +17,7 @@ const useDragAfterLongPressGesture = (props: Props) => {
   const {isDragged, onDragStart, onDragUpdate, onDragEnd} = props;
 
   const isLongPressed = useSharedValue<boolean>(false);
-  const showDraggedAnimation = useSharedValue<boolean>(false);
+  const isFloating = useSharedValue<boolean>(false);
 
   const longPressGesture = Gesture.LongPress()
     .minDuration(150)
@@ -30,12 +30,13 @@ const useDragAfterLongPressGesture = (props: Props) => {
 
   const dragGesture = Gesture.Pan()
     .manualActivation(true)
-    .onTouchesMove((event, stateManager) => {
+    .onTouchesMove((_event, stateManager) => {
       if (!isDragged.value) {
-        if (isLongPressed.value && event.allTouches.length === 1) {
-          stateManager.activate();
+        if (isLongPressed.value) {
           isDragged.value = true;
+          stateManager.activate();
         } else {
+          isDragged.value = false;
           stateManager.fail();
         }
       }
@@ -48,8 +49,13 @@ const useDragAfterLongPressGesture = (props: Props) => {
       onDragUpdate?.(event);
     })
     .onEnd(() => {
-      isDragged.value = false;
       onDragEnd?.();
+    })
+    .onFinalize(() => {
+      if (isDragged.value) {
+        isDragged.value = false;
+        isLongPressed.value = false;
+      }
     });
 
   const dragAfterLongPressGesture = Gesture.Simultaneous(longPressGesture, dragGesture);
@@ -59,11 +65,11 @@ const useDragAfterLongPressGesture = (props: Props) => {
   },
   (current, previous) => {
     if (previous !== null && current !== previous) {
-      showDraggedAnimation.value = current;
+      isFloating.value = current;
     }
   });
 
-  return {dragAfterLongPressGesture, showDraggedAnimation};
+  return {dragAfterLongPressGesture, isFloating};
 };
 
 export default useDragAfterLongPressGesture;
