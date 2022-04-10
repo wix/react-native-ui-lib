@@ -129,6 +129,17 @@ export class Colors {
     }
   }
 
+  /**
+   * Return the original color string value by its colorKey based on the current scheme(light/dark)
+   */
+  getColorValue(colorKey: string) {
+    return Scheme.getScheme(true)[colorKey] ?? this[colorKey];
+  }
+
+  getColorName(color: string) {
+    return ColorName.name(color)[1];
+  }
+
   getColorTint(color: string, tintKey: string | number) {
     if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(color)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
@@ -157,10 +168,6 @@ export class Colors {
       return requiredColor;
     }
     return this.getTintedColorForDynamicHex(color, tintKey);
-  }
-
-  getColorName(color: string) {
-    return ColorName.name(color)[1];
   }
 
   getTintedColorForDynamicHex(color: string, tintKey: string | number) {
