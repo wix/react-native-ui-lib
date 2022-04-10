@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     height: Spacings.s9,
-    borderColor: Colors.$outlineNeutral
+    borderColor: Colors.$outlineDefault
   },
   label: {
     position: 'absolute',

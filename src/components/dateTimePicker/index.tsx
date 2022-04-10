@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
   header: {
     height: 56,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.$outlineNeutral
+    borderBottomColor: Colors.$outlineDefault
   },
   dialog: {
     backgroundColor: Colors.$backgroundDefault,
