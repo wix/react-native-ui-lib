@@ -1,4 +1,4 @@
-import {useSharedValue, useAnimatedReaction, SharedValue} from 'react-native-reanimated';
+import {useSharedValue, useAnimatedReaction} from 'react-native-reanimated';
 import {
   Gesture,
   GestureStateChangeEvent,
@@ -7,15 +7,15 @@ import {
 } from 'react-native-gesture-handler';
 
 interface Props {
-  isDragged: SharedValue<boolean>;
   onDragStart?: (event: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => void;
   onDragUpdate?: (event: GestureUpdateEvent<PanGestureHandlerEventPayload>) => void;
   onDragEnd?: () => void;
 }
 
 const useDragAfterLongPressGesture = (props: Props) => {
-  const {isDragged, onDragStart, onDragUpdate, onDragEnd} = props;
+  const {onDragStart, onDragUpdate, onDragEnd} = props;
 
+  const isDragging = useSharedValue(false);
   const isLongPressed = useSharedValue<boolean>(false);
   const isFloating = useSharedValue<boolean>(false);
 
@@ -31,12 +31,12 @@ const useDragAfterLongPressGesture = (props: Props) => {
   const dragGesture = Gesture.Pan()
     .manualActivation(true)
     .onTouchesMove((_event, stateManager) => {
-      if (!isDragged.value) {
+      if (!isDragging.value) {
         if (isLongPressed.value) {
-          isDragged.value = true;
+          isDragging.value = true;
           stateManager.activate();
         } else {
-          isDragged.value = false;
+          isDragging.value = false;
           stateManager.fail();
         }
       }
@@ -52,8 +52,8 @@ const useDragAfterLongPressGesture = (props: Props) => {
       onDragEnd?.();
     })
     .onFinalize(() => {
-      if (isDragged.value) {
-        isDragged.value = false;
+      if (isDragging.value) {
+        isDragging.value = false;
         isLongPressed.value = false;
       }
     });
@@ -61,7 +61,7 @@ const useDragAfterLongPressGesture = (props: Props) => {
   const dragAfterLongPressGesture = Gesture.Simultaneous(longPressGesture, dragGesture);
 
   useAnimatedReaction(() => {
-    return isDragged.value || isLongPressed.value;
+    return isDragging.value || isLongPressed.value;
   },
   (current, previous) => {
     if (previous !== null && current !== previous) {

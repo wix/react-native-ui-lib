@@ -1,15 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {isArray, times} from 'lodash';
+import {map} from 'lodash';
 import React, {useMemo, useCallback} from 'react';
 import {FlatList, FlatListProps} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import SortableListContext from './SortableListContext';
 import SortableListItem from './SortableListItem';
-
-function getIndices<ItemT>(data: FlatListProps<ItemT>['data']) {
-  const length = isArray(data) ? data.length : 0;
-  return times(length, index => index);
-}
 
 export interface SortableListProps<ItemT> extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'> {
   /**
@@ -25,21 +20,25 @@ export interface SortableListProps<ItemT> extends Omit<FlatListProps<ItemT>, 'ex
 const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) => {
   const {data, onOrderChange, ...others} = props;
 
-  const currentByInitialIndices = useSharedValue<number[]>(getIndices(data));
-  const initialByCurrentIndices = useSharedValue<number[]>(getIndices(data));
+  const itemsOrder = useSharedValue<number[]>(map(props.data, (_v, i) => i));
+  const itemHeight = useSharedValue<number>(1);
 
-  const onDragStateChange = useCallback((index?: number) => {
-    if (index === undefined && isArray(data)) {
-      onOrderChange(times(data.length, index => data[initialByCurrentIndices.value[index]]));
+  const onChange = useCallback(() => {
+    const newData: ItemT[] = [];
+    if (data?.length) {
+      itemsOrder.value.forEach(itemIndex => {
+        newData.push(data[itemIndex]);
+      });
     }
-  },
-  [onOrderChange]);
+
+    onOrderChange?.(newData);
+  }, [onOrderChange, data]);
 
   const context = useMemo(() => {
     return {
-      currentByInitialIndices,
-      initialByCurrentIndices,
-      onDragStateChange
+      itemsOrder,
+      onChange,
+      itemHeight
     };
   }, []);
 
