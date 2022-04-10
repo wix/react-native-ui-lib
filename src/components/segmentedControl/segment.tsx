@@ -57,7 +57,7 @@ export type SegmentProps = SegmentedControlItemProps & {
  */
 const Segment = React.memo((props: SegmentProps) => {
   const {
-    activeColor = Colors.primary,
+    activeColor = Colors.$textPrimary,
     label,
     iconSource,
     iconStyle,
