@@ -52,10 +52,10 @@ export default {
   $iconGeneral: colorsPalette.blue30,
   $iconGeneralLight: colorsPalette.blue50,
   $iconSuccess: colorsPalette.green10,
-  $iconSuccessLight: colorsPalette.green40,
+  $iconSuccessLight: colorsPalette.green30,
   $iconMajor: colorsPalette.orange10,
   $iconDanger: colorsPalette.red10,
-  $iconDangerLight: colorsPalette.red40,
+  $iconDangerLight: colorsPalette.red30,
   $iconDisabled: colorsPalette.grey50,
 
   // OUTLINE
@@ -66,8 +66,5 @@ export default {
   $outlineGeneral: colorsPalette.blue30,
   $outlineWarning: colorsPalette.yellow30,
   $outlineDanger: colorsPalette.red30,
-  $outlineInverted: colorsPalette.white,
-
-  // DIVIDER
-  $dividerDefault: colorsPalette.grey60
+  $outlineInverted: colorsPalette.white
 };
