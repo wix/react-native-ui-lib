@@ -1,8 +1,9 @@
 import _ from 'lodash';
-import React, {useCallback} from 'react';
+import React, {useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../view';
 import Image, {ImageProps} from '../image';
+import {Colors} from 'style';
 
 export enum FaderPosition {
   /**
@@ -33,7 +34,7 @@ export type FaderProps = Pick<ImageProps, 'supportRTL'> & {
    */
   size?: number;
   /**
-   * Change the default (white) tint color of the fade view.
+   * Change the default tint color of the fade view.
    */
   tintColor?: string;
 };
@@ -46,38 +47,39 @@ const DEFAULT_FADE_SIZE = 50;
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Fader/Fader.gif?raw=true
  */
 function Fader(props: FaderProps) {
-  const getFadeSize = useCallback(() => {
-    return props.size || DEFAULT_FADE_SIZE;
-  }, [props.size]);
+  const {
+    size = DEFAULT_FADE_SIZE,
+    position = FaderPosition.END,
+    visible,
+    tintColor = Colors.$backgroundDefault
+  } = props;
 
-  const fadeSize = getFadeSize();
-  const getStyles = useCallback(() => {
-    const position = props.position || FaderPosition.END;
+  const styles = useMemo(() => {
     let containerStyle, imageStyle, imageSource;
     switch (position) {
       case FaderPosition.LEFT:
       case FaderPosition.START:
-        containerStyle = {...staticStyles.containerLeft, width: fadeSize};
-        imageStyle = {height: '100%', width: fadeSize};
+        containerStyle = {...staticStyles.containerLeft, width: size};
+        imageStyle = {height: '100%', width: size};
         imageSource = require('./gradientLeft.png');
         break;
       case FaderPosition.RIGHT:
       case FaderPosition.END:
-        containerStyle = {...staticStyles.containerRight, width: fadeSize};
-        imageStyle = {height: '100%', width: fadeSize};
+        containerStyle = {...staticStyles.containerRight, width: size};
+        imageStyle = {height: '100%', width: size};
         imageSource = require('./gradientRight.png');
         break;
       case FaderPosition.TOP:
-        containerStyle = {...staticStyles.containerTop, height: fadeSize};
-        imageStyle = {height: fadeSize, width: '100%'};
+        containerStyle = {...staticStyles.containerTop, height: size};
+        imageStyle = {height: size, width: '100%'};
         imageSource = require('./gradientTop.png');
         break;
       case FaderPosition.BOTTOM:
         containerStyle = {
           ...staticStyles.containerBottom,
-          height: fadeSize
+          height: size
         };
-        imageStyle = {height: fadeSize, width: '100%'};
+        imageStyle = {height: size, width: '100%'};
         imageSource = require('./gradientBottom.png');
         break;
     }
@@ -87,17 +89,15 @@ function Fader(props: FaderProps) {
       imageStyle,
       imageSource
     };
-  }, [fadeSize, props.position]);
-
-  const styles = getStyles();
+  }, [size, position]);
 
   return (
     <View pointerEvents={'none'} style={styles.containerStyle}>
-      {(props.visible || _.isUndefined(props.visible)) && (
+      {(visible || _.isUndefined(visible)) && (
         <Image
           supportRTL
           source={styles.imageSource}
-          tintColor={props.tintColor}
+          tintColor={tintColor}
           style={styles.imageStyle}
           resizeMode={'stretch'}
         />
