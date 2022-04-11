@@ -192,6 +192,7 @@ export default function TabBarItem({
       // @ts-expect-error
       ref={itemRef}
       style={_style}
+      bg-$backgroundElevated
       onLayout={onLayout}
       activeBackgroundColor={activeBackgroundColor}
       activeOpacity={activeOpacity}
