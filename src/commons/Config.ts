@@ -1,4 +1,7 @@
 interface ConfigOptions {
+  /**
+   * Should use platform colors for design tokens
+   */
   usePlatformColors?: boolean;
 }
 
