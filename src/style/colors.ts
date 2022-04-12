@@ -70,13 +70,6 @@ export class Colors {
   }
 
   /**
-   * Should use RN PlatformColor API for retrieving design token colors from native
-   */
-  enablePlatformColors() {
-    Scheme.enablePlatformColors();
-  }
-
-  /**
    * Add alpha to hex or rgb color
    * arguments:
    * p1 - hex color / R part of RGB

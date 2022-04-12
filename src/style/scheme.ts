@@ -97,14 +97,6 @@ class Scheme {
     return this.schemes[this.getSchemeType()];
   }
 
-  // TODO: Remove this method, use config instead
-  /**
-   * Should use RN PlatformColor API for retrieving design token colors from native
-   */
-  enablePlatformColors() {
-    // this.usePlatformColors = true;
-  }
-
   /**
    * Add a change scheme event listener
    */
