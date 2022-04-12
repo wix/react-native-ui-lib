@@ -1,6 +1,7 @@
 import {Appearance, PlatformColor} from 'react-native';
 import {remove, xor, isEmpty, merge, forEach, cloneDeep} from 'lodash';
 import Constants from '../commons/Constants';
+import Config from '../commons/Config';
 
 export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
@@ -10,7 +11,6 @@ class Scheme {
   private currentScheme: SchemeType = 'default';
   private schemes: Schemes = {light: {}, dark: {}};
   private changeListeners: SchemeChangeListener[] = [];
-  private usePlatformColors = false;
 
   constructor() {
     Appearance.addChangeListener(() => {
@@ -71,7 +71,7 @@ class Scheme {
         Object.defineProperty(platformColorsSchemes[schemeKey], colorKey, {
           get: () => {
             let color: any = colorValue;
-            if (this.usePlatformColors) {
+            if (Config.usePlatformColors) {
               if (Constants.isAndroid) {
                 // Remove the $ prefix cause it's not allowed in Android and add the @color prefix
                 color = PlatformColor(`@color/${colorKey.replace(/^[$]/, '')}`);
@@ -97,11 +97,12 @@ class Scheme {
     return this.schemes[this.getSchemeType()];
   }
 
+  // TODO: Remove this method, use config instead
   /**
    * Should use RN PlatformColor API for retrieving design token colors from native
    */
   enablePlatformColors() {
-    this.usePlatformColors = true;
+    // this.usePlatformColors = true;
   }
 
   /**
