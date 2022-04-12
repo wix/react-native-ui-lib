@@ -273,5 +273,6 @@ const styles = StyleSheet.create({
   }
 });
 
+Toast.presets = ToastPresets;
 export {ToastProps, ToastPresets};
-export default asBaseComponent<ToastProps>(Toast);
+export default asBaseComponent<ToastProps, typeof Toast>(Toast);
