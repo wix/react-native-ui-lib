@@ -6,7 +6,11 @@ interface ConfigOptions {
 }
 
 class Config {
-  usePlatformColors = false;
+  usePlatformColors?: boolean;
+
+  constructor() {
+    this.setConfig({});
+  }
 
   public setConfig(options: ConfigOptions) {
     const {usePlatformColors = false} = options;
