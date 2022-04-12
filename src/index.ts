@@ -26,6 +26,25 @@ export {
 export {BaseComponent, PureBaseComponent} from './commons';
 
 import * as Incubator from './incubator';
+export {
+  ChipsInputProps,
+  ChipsInputChangeReason,
+  ChipsInputChipProps,
+  TextFieldProps,
+  FieldContextType,
+  ToastProps,
+  ToastPresets,
+  WheelPickerProps,
+  WheelPickerItemProps,
+  WheelPickerAlign,
+  PanViewProps,
+  PanViewDirections,
+  PanViewDismissThreshold,
+  TransitionViewProps,
+  TransitionViewDirection,
+  TransitionViewDirectionEnum,
+  TransitionViewAnimationType
+} from './incubator';
 import * as Hooks from './hooks';
 import * as Modifiers from './commons/modifiers';
 export {default as LogService} from './services/LogService';
@@ -46,7 +65,7 @@ export {default as Button, ButtonProps, ButtonSize, ButtonAnimationDirection} fr
 export {default as Card, CardProps, CardSectionProps, CardSelectionOptions} from './components/card';
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as Checkbox, CheckboxProps} from './components/checkbox';
-export {default as ChipsInput, ChipsInputProps, ChipsInputChipProps} from './components/chipsInput';
+export {default as ChipsInput} from './components/chipsInput';
 export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPalette';
@@ -92,7 +111,14 @@ export {
 } from './components/panningViews/panningProvider';
 export {default as PanResponderView, PanResponderViewProps} from './components/panningViews/panResponderView';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
-export {default as Picker, PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle} from './components/picker/new';
+export {
+  default as Picker,
+  PickerProps,
+  PickerItemProps,
+  PickerValue,
+  PickerModes,
+  PickerSearchStyle
+} from './components/picker/new';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
