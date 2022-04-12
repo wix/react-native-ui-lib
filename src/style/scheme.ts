@@ -8,7 +8,7 @@ export type SchemeType = 'default' | 'light' | 'dark';
 export type SchemeChangeListener = (schemeType?: 'light' | 'dark') => void;
 
 class Scheme {
-  private currentScheme: SchemeType = 'default';
+  private currentScheme: SchemeType = Config.appScheme;
   private schemes: Schemes = {light: {}, dark: {}};
   private changeListeners: SchemeChangeListener[] = [];
 

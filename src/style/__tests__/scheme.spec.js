@@ -10,8 +10,8 @@ describe('Scheme', () => {
       expect(Scheme.schemes).toEqual({dark: {}, light: {}});
     });
 
-    it('should initial current scheme type be "default"', () => {
-      expect(Scheme.currentScheme).toBe('default');
+    it('should initial current scheme type be "light"', () => {
+      expect(Scheme.currentScheme).toBe('light');
     });
 
     it('should retrieve actual scheme type (defaulting to "light")', () => {
