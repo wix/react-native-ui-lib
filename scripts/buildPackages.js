@@ -7,6 +7,10 @@ const packages = [
     content: `module.exports = require('./lib/components/Keyboard').default;\n`
   },
   {
+    filename: 'config.js',
+    content: `module.exports = require('./src/commons/Config').default;\n`
+  },
+  {
     filename: 'core.js',
     components: ['View', 'Text', 'Image', 'TouchableOpacity', 'Button'],
     styleComponents: [
@@ -52,9 +56,7 @@ packages.forEach((package) => {
     content += 'module.exports = {\n';
     _.forEach(package.components, (component) => {
       content += `get ${component}() {\n`;
-      content += `return require('./src/components/${_.camelCase(
-        component
-      )}').default;`;
+      content += `return require('./src/components/${_.camelCase(component)}').default;`;
       content += `},\n`;
 
       typings = addTyping(typings, component);
@@ -62,9 +64,7 @@ packages.forEach((package) => {
 
     _.forEach(package.styleComponents, (component) => {
       content += `get ${component}() {\n`;
-      content += `return require('./src/style/${_.camelCase(
-        component
-      )}').default;`;
+      content += `return require('./src/style/${_.camelCase(component)}').default;`;
       content += `},\n`;
 
       typings = addTyping(typings, component);
@@ -88,15 +88,11 @@ fs.readdir(path, (err, files) => {
     files
       .filter((f) => f !== 'index.js')
       .forEach((file) => {
-        fs.writeFileSync(
-          `${file}.js`,
-          `module.exports = require('${path}/${file}').default;\n`
-        );
+        fs.writeFileSync(`${file}.js`,
+          `module.exports = require('${path}/${file}').default;\n`);
         const componentName = _.upperFirst(file);
-        fs.writeFileSync(
-          `${file}.d.ts`,
-          `import {${componentName}} from './generatedTypes';\nexport default ${componentName};\n`
-        );
+        fs.writeFileSync(`${file}.d.ts`,
+          `import {${componentName}} from './generatedTypes';\nexport default ${componentName};\n`);
       });
   }
 });
