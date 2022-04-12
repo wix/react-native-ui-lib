@@ -77,6 +77,14 @@ export interface WheelPickerProps {
    * Extra style for the separators
    */
   separatorsStyle?: ViewStyle;
+  /* 
+   * If fader should be rendered or not
+   */
+  showFader?: boolean;
+  /**
+   * Fader tint color
+   */
+  faderTintColor?: string;
   testID?: string;
 }
 
@@ -96,6 +104,8 @@ const WheelPicker = ({
   children,
   initialValue = 0,
   separatorsStyle,
+  showFader = true,
+  faderTintColor = Colors.$backgroundDefault,
   testID
 }: WheelPickerProps) => {
   const scrollView = useRef<Animated.ScrollView>();
@@ -241,8 +251,8 @@ const WheelPicker = ({
     );
   }, [flatListWidth, labelContainerStyle, label, labelProps, activeTextColor, labelStyle]);
 
-  const fader = useMemo(() => (position: FaderPosition) => {
-    return <Fader visible position={position} size={60}/>;
+  const fader = useMemo(() => (position: FaderPosition, tintColor: string) => {
+    return <Fader visible position={position} size={60} tintColor={tintColor} />;
   },
   []);
 
@@ -285,8 +295,8 @@ const WheelPicker = ({
         </View>
       </View>
       {label && labelContainer}
-      {fader(FaderPosition.BOTTOM)}
-      {fader(FaderPosition.TOP)}
+      {showFader && fader(FaderPosition.BOTTOM, faderTintColor)}
+      {showFader && fader(FaderPosition.TOP, faderTintColor)}
       {separators}
     </View>
   );

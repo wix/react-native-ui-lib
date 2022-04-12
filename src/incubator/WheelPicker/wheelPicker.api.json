@@ -33,6 +33,8 @@
       "default": "center"
     },
     {"name": "separatorsStyle", "type": "ViewStyle", "description": "Extra style for the separators"},
+    {"name": "showFader", "type": "boolean", "description": "If fader should be rendered or not"},
+    {"name": "faderTintColor", "type": "string", "description": "Fader tint color"},
     {"name": "testID", "type": "string", "description": "test identifier"}
   ],
   "snippet": [
