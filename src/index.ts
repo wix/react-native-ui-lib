@@ -5,6 +5,7 @@ export * from './services';
 export * from '../lib/components';
 export {
   asBaseComponent,
+  Config,
   Constants,
   forwardRef,
   withScrollEnabler,
