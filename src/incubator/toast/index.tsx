@@ -32,6 +32,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     renderAttachment,
     centerMessage,
     showLoader,
+    loaderElement,
     action,
     swipeable,
     backgroundColor,
@@ -123,13 +124,14 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     // NOTE: order does matter
     if (showLoader) {
       return (
-        <ActivityIndicator
-          size={'small'}
-          testID={`${testID}-loader`}
-          color={Colors.rgba(Colors.$backgroundNeutralHeavy, 0.6)}
-          style={styles.loader}
-        />
-        // <Loader size={Loader.sizes.SMALL} color={loaderColors} style={styles.loader} testID={`${testID}-loader`}/>
+        loaderElement ?? (
+          <ActivityIndicator
+            size={'small'}
+            testID={`${testID}-loader`}
+            color={Colors.rgba(Colors.$backgroundNeutralHeavy, 0.6)}
+            style={styles.loader}
+          />
+        )
       );
     }
 
@@ -167,7 +169,9 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const renderIcon = () => {
-    return <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor}/>;
+    return (
+      <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor}/>
+    );
   };
 
   const renderToastContent = () => {
