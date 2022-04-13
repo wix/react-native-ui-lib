@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {Constants} from '../../../commons/new';
 import {Colors, Spacings, Typography} from '../../../style';
 
 const colorByState = {
@@ -11,7 +10,7 @@ const colorByState = {
 const styles = StyleSheet.create({
   field: {
     borderBottomWidth: 1,
-    borderBottomColor: Constants.isAndroid ? Colors.$outlineDisabled.toString() : Colors.$outlineDisabled,
+    borderBottomColor: Colors.$outlineDisabled,
     paddingBottom: Spacings.s2
   },
   input: {
