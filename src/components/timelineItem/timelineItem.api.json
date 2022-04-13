@@ -1,0 +1,25 @@
+{
+  "name": "TimelineItem",
+  "category": "basic",
+  "description": "A timeline item to render as part of a timeline list",
+  "extends": ["View"],
+  "extendsLink": ["https://reactnative.dev/docs/view"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/src/components/timelineItem/index.tsx",
+  "images": [],
+  "props": [
+    {"name": "backgroundColor", "type": "string", "description": "Background color for the item"},
+    {
+      "name": "renderContent",
+      "type": "any",
+      "description": "Custom content to render right to the timeline indicator"
+    },
+    {"name": "renderHeader", "type": "any", "description": "Custom content to render on top of the content"},
+    {
+      "name": "indicationAlignment",
+      "type": "top | center",
+      "description": "Whether to align the timeline point indication at the top or the center (top alignment allowed only when passing 'renderTitle'",
+      "default": "center"
+    }
+  ],
+  "snippet": ["<TimelineItem renderContent={$1}/>"]
+}

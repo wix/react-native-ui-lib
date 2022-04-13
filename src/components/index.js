@@ -137,6 +137,9 @@ export default {
   get TabBar() { //TODO: remove on V7
     return require('./tabBar').default;
   },
+  get TimelineItem() {
+    return require('./timelineItem').default;
+  },
   get ChipsInput() {
     return require('./ChipsInput').default;
   },
