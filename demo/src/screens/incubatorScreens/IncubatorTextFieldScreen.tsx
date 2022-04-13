@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {TextInput, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incubator, Constants} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 const {TextField} = Incubator;
 const {KeyboardAwareInsetsView} = Keyboard;
 
@@ -283,12 +283,12 @@ const styles = StyleSheet.create({
   container: {},
   withUnderline: {
     borderBottomWidth: 1,
-    borderColor: Constants.isAndroid ? Colors.$outlineDisabledHeavy.toString() : Colors.$outlineDisabledHeavy,
+    borderColor: Colors.$outlineDisabledHeavy,
     paddingBottom: 4
   },
   withFrame: {
     borderWidth: 1,
-    borderColor: Constants.isAndroid ? Colors.$outlineDisabledHeavy.toString() : Colors.$outlineDisabledHeavy,
+    borderColor: Colors.$outlineDisabledHeavy,
     padding: 4,
     borderRadius: 2
   }
