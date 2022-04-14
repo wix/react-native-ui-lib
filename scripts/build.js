@@ -1,4 +1,5 @@
 const childProcess = require('child_process');
+const fs = require('fs');
 
 const BABEL_OPTIONS = `--config-file ./src/.babelrc.json --extensions '.ts,.tsx' --ignore "src/**/*.d.ts"`;
 const BABEL_INDEX_EXPORTS_OPTIONS = `--config-file ./src/.babelrc.exports.js`;
@@ -19,5 +20,10 @@ childProcess.execSync(`./node_modules/.bin/babel ./src/index.js -o ./src/index.j
 
 console.info('## Build standalone components packages ##');
 require('./buildPackages');
+
+console.info('## Override package.json main entry to use src/index.js file ##');
+const package = JSON.parse(fs.readFileSync('./package.json'));
+package.main = 'src/index.js';
+fs.writeFileSync('./package.json', JSON.stringify(package, null, 2), {encoding: 'utf8'});
 
 console.info('## Complete RNUILib Build ##');
