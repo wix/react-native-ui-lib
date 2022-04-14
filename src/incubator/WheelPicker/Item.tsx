@@ -7,14 +7,13 @@ import {Colors, Spacings} from '../../../src/style';
 import {asBaseComponent} from '../../commons/new';
 import {WheelPickerAlign} from './types';
 
-
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
   label: string;
   value: string | number;
-  align?: WheelPickerAlign
+  align?: WheelPickerAlign;
 }
 
 interface InternalProps extends ItemProps {
@@ -54,7 +53,7 @@ const WheelPickerItem = memo(({
   const animatedColorStyle = useAnimatedStyle(() => {
     const color = interpolateColor(offset.value,
       [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
-      [inactiveColor, activeColor, inactiveColor]);
+      [inactiveColor.toString(), activeColor.toString(), inactiveColor.toString()]);
     return {color};
   }, [itemHeight]);
 
