@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, memo} from 'react';
+import React, {useCallback, useMemo, memo, useRef} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
 import Text, {TextProps} from '../../components/text';
@@ -49,11 +49,13 @@ const WheelPickerItem = memo(({
 }: InternalProps) => {
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
+  const _activeColor = useRef(activeColor.toString());
+  const _inactiveColor = useRef(inactiveColor.toString());
 
   const animatedColorStyle = useAnimatedStyle(() => {
     const color = interpolateColor(offset.value,
       [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
-      [inactiveColor.toString(), activeColor.toString(), inactiveColor.toString()]);
+      [_inactiveColor.current, _activeColor.current, _inactiveColor.current]);
     return {color};
   }, [itemHeight]);
 
