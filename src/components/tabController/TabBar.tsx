@@ -5,7 +5,13 @@ import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps
+} from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
 import FadedScrollView from '../fadedScrollView';
@@ -190,14 +196,16 @@ const TabBar = (props: Props) => {
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
 
-  useAnimatedReaction(() => {
-    return Math.round(currentPage.value);
-  },
-  (currIndex, prevIndex) => {
-    if (prevIndex !== null && currIndex !== prevIndex) {
-      runOnJS(focusIndex)(currIndex);
+  useAnimatedReaction(
+    () => {
+      return Math.round(currentPage.value);
+    },
+    (currIndex, prevIndex) => {
+      if (prevIndex !== null && currIndex !== prevIndex) {
+        runOnJS(focusIndex)(currIndex);
+      }
     }
-  });
+  );
 
   const tabBarItems = useMemo((): ReactNode => {
     return _.map(items, (item, index) => {
@@ -238,19 +246,25 @@ const TabBar = (props: Props) => {
     let width, marginHorizontal;
     if (indicatorWidth) {
       width = indicatorWidth;
-      marginHorizontal = interpolate(value,
+      marginHorizontal = interpolate(
+        value,
         itemsWidthsAnimated.value.map((_v: number, i: number) => i),
-        itemsWidthsAnimated.value.map((v: number) => (v - indicatorWidth) / 2));
+        itemsWidthsAnimated.value.map((v: number) => (v - indicatorWidth) / 2)
+      );
     } else {
       marginHorizontal = indicatorInsets;
-      width = interpolate(value,
+      width = interpolate(
+        value,
         itemsWidthsAnimated.value.map((_v: number, i: number) => i),
-        itemsWidthsAnimated.value.map((v: number) => v - 2 * indicatorInsets));
+        itemsWidthsAnimated.value.map((v: number) => v - 2 * indicatorInsets)
+      );
     }
 
-    const left = interpolate(value,
+    const left = interpolate(
+      value,
       itemsOffsetsAnimated.value.map((_v: any, i: number) => i),
-      itemsOffsetsAnimated.value);
+      itemsOffsetsAnimated.value
+    );
 
     return {
       marginHorizontal,
@@ -302,7 +316,7 @@ const TabBar = (props: Props) => {
       >
         <View style={tabBarContainerStyle}>{tabBarItems}</View>
         {itemsCount > 1 && (
-          <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
+          <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]} />
         )}
       </FadedScrollView>
     </View>
@@ -337,7 +351,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 2,
-    backgroundColor: Colors.$backgroundPrimaryHeavy
+    backgroundColor: Colors.primary
   },
   containerShadow: {
     ...Platform.select({
