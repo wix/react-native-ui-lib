@@ -11,7 +11,7 @@ import {asBaseComponent, forwardRef} from '../../commons/new';
 import View from '../../components/view';
 import {Colors} from '../../style';
 import {useMeasure} from '../../hooks';
-import {TextFieldProps, InternalTextFieldProps, ValidationMessagePosition, FieldContextType} from './types';
+import {TextFieldProps, InternalTextFieldProps, ValidationMessagePosition, FieldContextType, TextFieldMethods} from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
 import ValidationMessage from './ValidationMessage';
@@ -168,5 +168,5 @@ const TextField = (props: InternalTextFieldProps) => {
 TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
-export {TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers};
+export {TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers, TextFieldMethods};
 export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any));

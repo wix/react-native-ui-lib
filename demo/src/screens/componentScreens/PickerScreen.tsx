@@ -13,7 +13,8 @@ import {
   PanningProvider,
   Typography,
   PickerProps,
-  DialogProps
+  DialogProps,
+  Button
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import {longOptions} from './PickerScreenLongOptions';
@@ -38,6 +39,7 @@ const filters = [
 ];
 
 export default class PickerScreen extends Component {
+  picker = React.createRef();
   state = {
     itemsCount: 1,
     // language: {value: 'java', label: 'Java'},
@@ -258,25 +260,36 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Picker
-            migrate
-            migrateTextField
-            label="Language"
-            placeholder="Favorite Language"
-            value={this.state.language2}
-            onChange={value => this.setState({language2: value})}
-            topBarProps={{title: 'Languages'}}
-            showSearch
-            searchPlaceholder={'Search a language'}
-            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
-            marginT-s4
-            // mode={Picker.modes.MULTI}
-            // useNativePicker
-          >
-            {_.map(options, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-            ))}
-          </Picker>
+          <View>
+            <Picker
+              migrate
+              // @ts-expect-error
+              ref={this.picker}
+              migrateTextField
+              label="Language"
+              placeholder="Favorite Language"
+              value={this.state.language2}
+              onChange={value => this.setState({language2: value})}
+              topBarProps={{title: 'Languages'}}
+              showSearch
+              searchPlaceholder={'Search a language'}
+              searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
+              marginT-s4
+              enableErrors={false}
+              // mode={Picker.modes.MULTI}
+              // useNativePicker
+            >
+              {_.map(options, option => (
+                <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
+              ))}
+            </Picker>
+            <Button
+              label="Open Picker Manually"
+              link
+              style={{alignSelf: 'flex-start'}}
+              onPress={() => this.picker.current?.openExpandable?.()}
+            />
+          </View>
         </View>
       </ScrollView>
     );

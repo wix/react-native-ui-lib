@@ -12,6 +12,12 @@ export interface RenderCustomOverlayProps {
   toggleExpandable: () => void;
 }
 
+export interface ExpandableOverlayMethods {
+  openExpandable: () => void;
+  closeExpandable: () => void;
+  toggleExpandable: () => void;
+}
+
 export type ExpandableOverlayProps = TouchableOpacityProps &
   PropsWithChildren<{
     /**
@@ -47,11 +53,6 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
      */
     disabled?: boolean;
   }>;
-
-interface ExpandableOverlayMethods {
-  openExpandable: () => void;
-  closeExpandable: () => void;
-}
 
 const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   const {
