@@ -31,7 +31,7 @@
     "docs:build": "node scripts/buildDocs.js",
     "snippets:build": "node scripts/generateSnippets.js",
     "demo": "./scripts/demo.sh",
-    "bkRelease": "node ./scripts/bkRelease.js"
+    "release": "node ./scripts/release.js"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
