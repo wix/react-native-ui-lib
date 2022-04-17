@@ -126,7 +126,7 @@ class Image extends PureComponent<Props, State> {
     if (Constants.isAndroid) {
       const {source} = this.props;
       const url = _.get(source, 'uri');
-      const isGif = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/.test(url);
+      const isGif = /(http(s?):)([/|.|\w|\s|-])*\.gif/.test(url);
       return isGif;
     }
   }
