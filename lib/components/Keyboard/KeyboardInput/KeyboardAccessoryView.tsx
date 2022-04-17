@@ -51,7 +51,7 @@ export type KeyboardAccessoryViewProps = {
   /**
    * Callback that will be called when an item on the keyboard has been pressed.
    */
-  onItemSelected?: () => void;
+  onItemSelected?: (component?: string, args?: any) => void;
   /**
    * Callback that will be called if KeyboardRegistry.requestShowKeyboard is called.
    */
