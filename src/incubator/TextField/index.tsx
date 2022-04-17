@@ -6,7 +6,7 @@
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
 import React, {useMemo} from 'react';
-import {omit} from 'lodash';
+import {isEmpty, trim, omit} from 'lodash';
 import {asBaseComponent, forwardRef} from '../../commons/new';
 import View from '../../components/view';
 import {Colors} from '../../style';
@@ -87,6 +87,7 @@ const TextField = (props: InternalTextFieldProps) => {
 
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
+  const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
 
   return (
     <FieldContext.Provider value={context}>
@@ -106,6 +107,7 @@ const TextField = (props: InternalTextFieldProps) => {
             validate={others.validate}
             validationMessage={others.validationMessage}
             validationMessageStyle={validationMessageStyle}
+            retainSpace={retainTopMessageSpace}
             testID={`${props.testID}.validationMessage`}
           />
         )}
