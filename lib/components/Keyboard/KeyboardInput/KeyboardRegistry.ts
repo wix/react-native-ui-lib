@@ -115,6 +115,7 @@ export default class KeyboardRegistry {
   };
 
   /**
+   * @deprecated
    * iOS only (experimental)
    * Call to make the keyboard full screen
    * componentID (string) - the ID of the keyboard.
