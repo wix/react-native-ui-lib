@@ -152,7 +152,7 @@ export default class SkeletonViewScreen extends Component {
         <Text>Verified</Text>
       </View>
     );
-  }
+  };
 
   renderListItemsData = (customValue?: any) => {
     const {isLarge, showEndContent} = this.state;
@@ -162,11 +162,7 @@ export default class SkeletonViewScreen extends Component {
       <React.Fragment>
         {_.times(NUMBER_OF_ITEMS_TO_SHOW, index => {
           return (
-            <ListItem
-              key={index}
-              height={90}
-              onPress={() => Alert.alert(`pressed on order #${index + 1}`)}
-            >
+            <ListItem key={index} height={90} onPress={() => Alert.alert(`pressed on order #${index + 1}`)}>
               {hasAvatar && this.renderAvatar()}
               {hasThumbnail && this.renderThumbnail()}
               <ListItem.Part middle column containerStyle={[styles.border, {marginLeft: 18}]}>
@@ -338,7 +334,7 @@ export default class SkeletonViewScreen extends Component {
           />
         </View>
         <SkeletonView
-          shimmerStyle={{width: '100%'/* , height: 30 */}}
+          shimmerStyle={{width: '100%' /* , height: 30 */}}
           height={10}
           borderRadius={5}
           showContent={isDataAvailable}
@@ -347,7 +343,7 @@ export default class SkeletonViewScreen extends Component {
         />
       </View>
     );
-  }
+  };
 
   renderContent = () => {
     const {isDataAvailable} = this.state;
