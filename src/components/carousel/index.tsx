@@ -246,6 +246,21 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     }
   };
 
+  getContentOffset = (snapToOffsets: number[] | undefined) => {
+    const {horizontal, initialPage} = this.props;
+    const {initialOffset} = this.state;
+    let contentOffset = initialOffset;
+    if (snapToOffsets && initialPage !== undefined) {
+      const offset = snapToOffsets[initialPage];
+      contentOffset = {
+        x: horizontal ? offset : 0,
+        y: horizontal ? 0 : offset
+      };
+    }
+
+    return contentOffset;
+  }
+
   shouldUsePageWidth() {
     const {loop, pageWidth} = this.props;
     return !loop && pageWidth;
@@ -477,13 +492,13 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   renderCarousel() {
     const {containerStyle, animated, horizontal, animatedScrollOffset, ...others} = this.props;
-    const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth()
       ? {paddingRight: this.getItemSpacings(this.props)}
       : undefined;
     const snapToOffsets = this.getSnapToOffsets();
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
     const ScrollContainer = animatedScrollOffset ? Animated.ScrollView : ScrollView;
+    const contentOffset = this.getContentOffset(snapToOffsets);
     return (
       <View
         animated={animated}
@@ -502,8 +517,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           horizontal={horizontal}
           pagingEnabled={this.shouldEnablePagination()}
           snapToOffsets={snapToOffsets}
-          contentOffset={initialOffset} // iOS only
-          onContentSizeChange={this.onContentSizeChange}
+          contentOffset={contentOffset}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
         >
           {this.renderChildren()}
