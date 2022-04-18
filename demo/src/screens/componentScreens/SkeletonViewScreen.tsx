@@ -14,7 +14,6 @@ import {
   View,
   Colors
 } from 'react-native-ui-lib';
-// @ts-expect-error
 import * as ExampleScreenPresenter from '../ExampleScreenPresenter';
 
 const AVATAR_SIZE = 48;
@@ -165,8 +164,6 @@ export default class SkeletonViewScreen extends Component {
           return (
             <ListItem
               key={index}
-              activeBackgroundColor={Colors.grey60}
-              activeOpacity={0.3}
               height={90}
               onPress={() => Alert.alert(`pressed on order #${index + 1}`)}
             >
@@ -337,7 +334,7 @@ export default class SkeletonViewScreen extends Component {
             borderRadius={5}
             style={{marginTop: 5}}
             showContent={isDataAvailable}
-            renderContent={() => <Button label='Info' size={'small'} link/>}
+            renderContent={() => <Button label={'Info'} size={Button.sizes.small} link/>}
           />
         </View>
         <SkeletonView
