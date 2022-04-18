@@ -321,7 +321,7 @@ class Button extends PureComponent<Props, ButtonState> {
   render() {
     const {onPress, disabled, style, testID, animateLayout, modifiers, forwardedRef, ...others} = this.props;
     const shadowStyle = this.getShadowStyle();
-    const {margins} = modifiers;
+    const {margins, paddings} = modifiers;
     const backgroundColor = this.getBackgroundColor();
     const outlineStyle = this.getOutlineStyle();
     const containerSizeStyle = this.getContainerSizeStyle();
@@ -338,6 +338,7 @@ class Button extends PureComponent<Props, ButtonState> {
           this.isLink && this.styles.innerContainerLink,
           shadowStyle,
           margins,
+          paddings,
           {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
