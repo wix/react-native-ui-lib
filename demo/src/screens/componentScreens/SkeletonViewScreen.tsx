@@ -43,7 +43,7 @@ const LIST_TYPE = {
 export default class SkeletonViewScreen extends Component {
   state = {
     isDataAvailable: false,
-    dataType: DATA_TYPE.Images,
+    dataType: DATA_TYPE.List,
     listType: LIST_TYPE.Regular,
     isLarge: false,
     showEndContent: true,
