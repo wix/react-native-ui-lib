@@ -4,7 +4,14 @@ import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} 
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
-import {Constants, asBaseComponent, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  BaseComponentInjectedProps,
+  AlignmentModifiers,
+  PaddingModifiers,
+  MarginModifiers
+} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const LinearGradient = LinearGradientPackage?.default;
@@ -53,7 +60,7 @@ export interface SkeletonListProps {
   renderEndContent?: () => React.ReactElement | undefined;
 }
 
-export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
+export interface SkeletonViewProps extends AccessibilityProps, AlignmentModifiers, PaddingModifiers, MarginModifiers {
   /**
    * The content has been loaded, start fading out the skeleton and fading in the content
    */

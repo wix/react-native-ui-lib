@@ -14,7 +14,6 @@ import {
   View,
   Colors
 } from 'react-native-ui-lib';
-// @ts-expect-error
 import * as ExampleScreenPresenter from '../ExampleScreenPresenter';
 
 const AVATAR_SIZE = 48;
@@ -153,7 +152,7 @@ export default class SkeletonViewScreen extends Component {
         <Text>Verified</Text>
       </View>
     );
-  }
+  };
 
   renderListItemsData = (customValue?: any) => {
     const {isLarge, showEndContent} = this.state;
@@ -163,13 +162,7 @@ export default class SkeletonViewScreen extends Component {
       <React.Fragment>
         {_.times(NUMBER_OF_ITEMS_TO_SHOW, index => {
           return (
-            <ListItem
-              key={index}
-              activeBackgroundColor={Colors.grey60}
-              activeOpacity={0.3}
-              height={90}
-              onPress={() => Alert.alert(`pressed on order #${index + 1}`)}
-            >
+            <ListItem key={index} height={90} onPress={() => Alert.alert(`pressed on order #${index + 1}`)}>
               {hasAvatar && this.renderAvatar()}
               {hasThumbnail && this.renderThumbnail()}
               <ListItem.Part middle column containerStyle={[styles.border, {marginLeft: 18}]}>
@@ -248,16 +241,17 @@ export default class SkeletonViewScreen extends Component {
     const imageSize = this.getImageSize();
 
     return (
-      <View row spread margin-page>
-        <SkeletonView
-          width={imageSize}
-          height={imageSize}
-          showContent={isDataAvailable}
-          renderContent={this.renderImagesData}
-          accessibilityLabel={'Loading image'}
-          times={IMAGE_URIS.length}
-        />
-      </View>
+      <SkeletonView
+        row
+        spread
+        margin-page
+        width={imageSize}
+        height={imageSize}
+        showContent={isDataAvailable}
+        renderContent={this.renderImagesData}
+        accessibilityLabel={'Loading image'}
+        times={IMAGE_URIS.length}
+      />
     );
   };
 
@@ -337,11 +331,11 @@ export default class SkeletonViewScreen extends Component {
             borderRadius={5}
             style={{marginTop: 5}}
             showContent={isDataAvailable}
-            renderContent={() => <Button label='Info' size={'small'} link/>}
+            renderContent={() => <Button label={'Info'} size={Button.sizes.small} link/>}
           />
         </View>
         <SkeletonView
-          shimmerStyle={{width: '100%'/* , height: 30 */}}
+          shimmerStyle={{width: '100%' /* , height: 30 */}}
           height={10}
           borderRadius={5}
           showContent={isDataAvailable}
@@ -350,7 +344,7 @@ export default class SkeletonViewScreen extends Component {
         />
       </View>
     );
-  }
+  };
 
   renderContent = () => {
     const {isDataAvailable} = this.state;

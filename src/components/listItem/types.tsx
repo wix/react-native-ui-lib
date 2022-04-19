@@ -1,5 +1,5 @@
 import {PropsWithChildren, PureComponent} from 'react';
-import {ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
 export type ListItemProps = TouchableOpacityProps &
@@ -60,7 +60,7 @@ export type ListItemPartProps = PropsWithChildren<{
   /**
    * container style
    */
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
 }>;
 
 /**
