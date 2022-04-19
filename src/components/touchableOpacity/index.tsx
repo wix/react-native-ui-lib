@@ -119,7 +119,7 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
     const {useNative, activeScale, style, modifiers, forwardedRef, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
-    if (useNative || !!activeScale) {
+    if (useNative || !_.isUndefined(activeScale)) {
       // @ts-ignore
       return <IncubatorTouchableOpacity {...this.props}/>;
     }
