@@ -23,6 +23,7 @@
       "note": "Defaults to device's date and time"
     },
     {"name": "onChange", "type": "() => Date", "description": "Called when the date/time change"},
+    {"name": "editable", "type": "boolean", "description": "Should this input be editable or disabled"},
     {"name": "minimumDate", "type": "Date", "description": "The minimum date or time value to use"},
     {"name": "maximumDate", "type": "Date", "description": "The maximum date or time value to use"},
     {"name": "dateFormat", "type": "string", "description": "The date format for the text display"},
