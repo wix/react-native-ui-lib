@@ -54,6 +54,7 @@ class ListItem extends Component<ListItemProps, ListItemState> {
 
   renderCustomContainer = (Container: React.ComponentType) => {
     const {...others} = this.props;
+    // @ts-expect-error
     return <Container {...others}>{this.renderChildren()}</Container>;
   };
 

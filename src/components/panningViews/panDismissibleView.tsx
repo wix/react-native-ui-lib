@@ -54,6 +54,7 @@ export interface PanDismissibleViewProps {
    * since it looks better and most cases.
    */
   allowDiagonalDismiss?: boolean;
+  children?: React.ReactNode;
 }
 
 const DEFAULT_DIRECTIONS = [
