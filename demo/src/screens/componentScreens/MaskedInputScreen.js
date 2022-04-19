@@ -70,6 +70,7 @@ export default class MaskedInputScreen extends Component {
             Time Format
           </Text>
           <MaskedInput
+            migrate
             ref={r => (this.minput = r)}
             renderMaskedText={this.renderTimeText}
             keyboardType={'numeric'}
@@ -82,6 +83,7 @@ export default class MaskedInputScreen extends Component {
             Price/Discount
           </Text>
           <MaskedInput
+            migrate
             ref={r => (this.priceInput = r)}
             renderMaskedText={this.renderPrice}
             keyboardType={'numeric'}
