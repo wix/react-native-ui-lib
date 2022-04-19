@@ -31,6 +31,10 @@ export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'st
      */
     activeBackgroundColor?: string;
     /**
+     * Will apply scale press feedback. This will enforce the useNative prop
+     */
+    activeScale?: number;
+    /**
      * Should use a more native touchable opacity component
      */
     useNative?: boolean;
@@ -112,10 +116,10 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 
   render() {
-    const {useNative, style, modifiers, forwardedRef, ...others} = this.props;
+    const {useNative, activeScale, style, modifiers, forwardedRef, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
-    if (useNative) {
+    if (useNative || !!activeScale) {
       // @ts-ignore
       return <IncubatorTouchableOpacity {...this.props}/>;
     }
