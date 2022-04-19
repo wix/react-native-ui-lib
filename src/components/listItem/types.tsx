@@ -1,4 +1,4 @@
-import {PropsWithChildren, PureComponent} from 'react';
+import {PropsWithChildren} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
@@ -62,33 +62,3 @@ export type ListItemPartProps = PropsWithChildren<{
    */
   containerStyle?: StyleProp<ViewStyle>;
 }>;
-
-/**
- * @description: List item component to render inside a List component
- * @extends: TouchableOpacity
- * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx
- */
-// @ts-ignore
-class FakeListItemForDocs extends PureComponent<ListItemProps> {
-  // eslint-disable-line
-  static displayName = 'ListItem';
-
-  render() {
-    return null;
-  }
-}
-
-/**
- * @description: ListItem.Part, a sub ListItem component for layout-ing inside a ListItem
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx
- */
-// @ts-ignore
-class FakeListItemPartForDocs extends PureComponent<ListItemPartProps> {
-  // eslint-disable-line
-  static displayName = 'ListItemPart';
-
-  render() {
-    return null;
-  }
-}

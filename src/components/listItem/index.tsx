@@ -11,6 +11,12 @@ type ListItemState = {
   pressed: boolean;
 };
 
+/**
+ * @description: List item component to render inside a List component
+ * @extends: TouchableOpacity
+ * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx
+ */
 class ListItem extends Component<ListItemProps, ListItemState> {
   static displayName = 'ListItem';
 
