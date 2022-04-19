@@ -73,10 +73,11 @@ export default class MaskedInputScreen extends Component {
             migrate
             ref={r => (this.minput = r)}
             renderMaskedText={this.renderTimeText}
+            formatter={value => value?.replace(/\D/g, '')}
             keyboardType={'numeric'}
             maxLength={4}
-            value={timeValue}
-            onChangeText={value => this.setState({timeValue: value})}
+            initialValue={timeValue}
+            // onChangeText={value => this.setState({timeValue: value})}
           />
 
           <Text text70 marginT-40>
@@ -86,6 +87,7 @@ export default class MaskedInputScreen extends Component {
             migrate
             ref={r => (this.priceInput = r)}
             renderMaskedText={this.renderPrice}
+            formatter={value => value?.replace(/\D/g, '')}
             keyboardType={'numeric'}
           />
           <View centerH marginT-100>

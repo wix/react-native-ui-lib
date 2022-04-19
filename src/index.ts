@@ -86,7 +86,7 @@ export {default as Icon, IconProps} from './components/icon';
 export {default as Image, ImageProps} from './components/image';
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
-export {default as MaskedInput} from './components/maskedInput';
+export {default as MaskedInput, MaskedInputProps} from './components/maskedInput';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';

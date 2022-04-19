@@ -1,7 +1,7 @@
 import React, {forwardRef} from 'react';
 // @ts-expect-error
 import MaskedInputOld from './old';
-import MaskedInputNew from './new';
+import MaskedInputNew, {MaskedInputProps} from './new';
 
 function MaskedInputMigrator(props: any, refToForward: any) {
   const {migrate, ...others} = props;
@@ -13,4 +13,5 @@ function MaskedInputMigrator(props: any, refToForward: any) {
   }
 }
 
+export {MaskedInputProps};
 export default forwardRef(MaskedInputMigrator);

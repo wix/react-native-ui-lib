@@ -16,9 +16,17 @@ import TouchableOpacity from '../touchableOpacity';
 
 export interface MaskedInputProps extends TextInputProps {
   /**
+   * Initial value to pass to masked input
+   */
+  initialValue?: string;
+  /**
    * callback for rendering the custom input out of the value returns from the actual input
    */
   renderMaskedText?: ReactElement;
+  /**
+   * Custom formatter for the input value
+   */
+  formatter?: (value?: string) => string | undefined;
   /**
    * container style for the masked input container
    */
@@ -31,15 +39,15 @@ export interface MaskedInputProps extends TextInputProps {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MaskedInputScreen.js
  */
 function MaskedInput(props: MaskedInputProps, ref: ForwardedRef<any>) {
-  const {containerStyle, renderMaskedText, onChangeText, ...others} = props;
-  const [value, setValue] = useState(props.value);
+  const {initialValue, formatter = _.identity, containerStyle, renderMaskedText, onChangeText, ...others} = props;
+  const [value, setValue] = useState(initialValue);
   const inputRef = useRef<TextInput>();
   const keyboardDidHideListener = useRef<any>();
 
   useImperativeHandle(ref, () => {
     return {
       isFocused: () => inputRef.current?.isFocused(),
-      focus: () => inputRef.current?.focus(),
+      focus,
       blur: () => inputRef.current?.blur(),
       clear: () => {
         inputRef.current?.clear();
@@ -51,26 +59,27 @@ function MaskedInput(props: MaskedInputProps, ref: ForwardedRef<any>) {
   });
 
   useEffect(() => {
-    if (props.value !== value) {
-      setValue(props.value);
+    if (initialValue !== value) {
+      setValue(initialValue);
     }
-  }, [props.value]);
+  }, [initialValue]);
 
   useEffect(() => {
     keyboardDidHideListener.current = Keyboard.addListener('keyboardDidHide', () => {
-      if (inputRef.current?.isFocused?.()) {
-        inputRef.current?.blur?.();
+      if (inputRef.current?.isFocused()) {
+        inputRef.current?.blur();
       }
     });
 
     return () => keyboardDidHideListener.current.remove();
   }, []);
 
-  const _onChangeText = useCallback(value => {
-    setValue(value);
-    onChangeText?.(value);
+  const _onChangeText = useCallback((value: string) => {
+    const formattedValue = formatter(value) ?? '';
+    setValue(formattedValue);
+    onChangeText?.(formattedValue);
   },
-  [onChangeText]);
+  [onChangeText, formatter]);
 
   const focus = useCallback(() => {
     inputRef.current?.focus?.();
@@ -87,6 +96,7 @@ function MaskedInput(props: MaskedInputProps, ref: ForwardedRef<any>) {
     <TouchableOpacity style={containerStyle} activeOpacity={1} onPress={focus}>
       <TextInput
         {...others}
+        value={value}
         // @ts-expect-error
         ref={inputRef}
         style={styles.hiddenInput}
