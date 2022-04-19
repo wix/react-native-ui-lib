@@ -13,6 +13,7 @@ import {
   PanningProvider,
   Typography,
   PickerProps,
+  PickerMethods,
   DialogProps,
   Button
 } from 'react-native-ui-lib'; //eslint-disable-line
@@ -39,7 +40,7 @@ const filters = [
 ];
 
 export default class PickerScreen extends Component {
-  picker = React.createRef();
+  picker = React.createRef<PickerMethods>();
   state = {
     itemsCount: 1,
     // language: {value: 'java', label: 'Java'},
