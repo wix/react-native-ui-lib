@@ -43,7 +43,7 @@ const LIST_TYPE = {
 export default class SkeletonViewScreen extends Component {
   state = {
     isDataAvailable: false,
-    dataType: DATA_TYPE.List,
+    dataType: DATA_TYPE.Images,
     listType: LIST_TYPE.Regular,
     isLarge: false,
     showEndContent: true,
@@ -241,16 +241,17 @@ export default class SkeletonViewScreen extends Component {
     const imageSize = this.getImageSize();
 
     return (
-      <View row spread margin-page>
-        <SkeletonView
-          width={imageSize}
-          height={imageSize}
-          showContent={isDataAvailable}
-          renderContent={this.renderImagesData}
-          accessibilityLabel={'Loading image'}
-          times={IMAGE_URIS.length}
-        />
-      </View>
+      <SkeletonView
+        row
+        spread
+        margin-page
+        width={imageSize}
+        height={imageSize}
+        showContent={isDataAvailable}
+        renderContent={this.renderImagesData}
+        accessibilityLabel={'Loading image'}
+        times={IMAGE_URIS.length}
+      />
     );
   };
 
