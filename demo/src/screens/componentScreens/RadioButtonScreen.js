@@ -11,10 +11,10 @@ const COLORS = {
 
 export default class RadioButtonScreen extends Component {
   static colors = COLORS;
-  
+
   constructor(props) {
     super(props);
-    
+
     this.state = {
       color: undefined,
       messageType: undefined,
@@ -89,10 +89,10 @@ export default class RadioButtonScreen extends Component {
             <Text marginB-20 text60 $textDefault>
               Alignments
             </Text>
-            {this.renderRadioButtonWithImageAndText('right-icon', 'Text on right')}
-            {this.renderRadioButtonWithImageAndText('left-icon', 'Text on left', true)}
-            {this.renderRadioButton('left-content', 'Content on left', true)}
-            {this.renderRadioButton('right-content', 'Content on right', {contentOnRight: true})}
+            {this.renderRadioButtonWithImageAndText('left-icon', 'Text on right')}
+            {this.renderRadioButtonWithImageAndText('right-icon', 'Text on left', true)}
+            {this.renderRadioButton('right-content', 'Content on right', true)}
+            {this.renderRadioButton('left-content', 'Content on left', {contentOnLeft: true})}
             <Text marginT-10>You chose: {this.state.textSide}</Text>
           </RadioGroup>
 
@@ -116,7 +116,7 @@ export default class RadioButtonScreen extends Component {
               onPress={() => this.setState({individualValue2: !this.state.individualValue2})}
               label="Individual Radio Button (with style)"
               labelStyle={{fontSize: 16, fontWeight: 'bold'}}
-              contentOnRight
+              contentOnLeft
             />
           </View>
           <TouchableOpacity
@@ -125,7 +125,11 @@ export default class RadioButtonScreen extends Component {
             accessible={false}
           >
             <View row centerV>
-              <RadioButton contentOnRight selected={this.state.individualValue} label="Individual Radio Button (wrapped)"/>
+              <RadioButton
+                contentOnLeft
+                selected={this.state.individualValue}
+                label="Individual Radio Button (wrapped)"
+              />
             </View>
           </TouchableOpacity>
           <View row centerV marginT-10>
@@ -134,7 +138,7 @@ export default class RadioButtonScreen extends Component {
               selected={this.state.disabledValue}
               onPress={() => this.setState({disabledValue: !this.state.disabledValue})}
               label="Disabled Radio Button"
-              contentOnRight
+              contentOnLeft
             />
           </View>
           <View row centerV marginT-10>
@@ -143,7 +147,7 @@ export default class RadioButtonScreen extends Component {
               selected={this.state.disabledSelectedValue}
               onPress={() => this.setState({disabledSelectedValue: !this.state.disabledSelectedValue})}
               label="Disabled Selected Radio Button"
-              contentOnRight
+              contentOnLeft
             />
           </View>
         </ScrollView>

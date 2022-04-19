@@ -73,9 +73,13 @@ export type RadioButtonProps = RadioGroupContextProps &
      */
     iconOnRight?: boolean;
     /**
-     * Should the content be rendered right to the button
+     * @deprecated The content is on right by default, for content on left use 'contentOnLeft'
      */
     contentOnRight?: boolean;
+    /**
+     * Should the content be rendered left to the button
+     */
+    contentOnLeft?: boolean;
     /**
      * Additional styling for the container
      */
@@ -108,6 +112,8 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     image: StyleProp<ImageStyle>;
   };
 
+  isContentOnLeft?: boolean;
+
   constructor(props: Props) {
     super(props);
     this.styles = createStyles(props);
@@ -115,6 +121,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
       opacityAnimationValue: new Animated.Value(0),
       scaleAnimationValue: new Animated.Value(0.8)
     };
+    this.isContentOnLeft = props.contentOnLeft || props.contentOnRight;
   }
 
   componentDidMount() {
@@ -217,10 +224,10 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   renderLabel() {
-    const {label, labelStyle, contentOnRight} = this.props;
+    const {label, labelStyle} = this.props;
     return (
       label && (
-        <Text marginL-10={!contentOnRight} marginR-10={contentOnRight} $textDefault style={labelStyle}>
+        <Text marginL-10={!this.isContentOnLeft} marginR-10={this.isContentOnLeft} $textDefault style={labelStyle}>
           {label}
         </Text>
       )
@@ -250,7 +257,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   render() {
-    const {onPress, onValueChange, contentOnRight, containerStyle, ...others} = this.props;
+    const {onPress, onValueChange, containerStyle, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
@@ -263,13 +270,13 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         style={containerStyle}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
-        flex={contentOnRight}
-        spread={contentOnRight}
+        flex={this.isContentOnLeft}
+        spread={this.isContentOnLeft}
       >
-        {!contentOnRight && this.renderButton()}
+        {!this.isContentOnLeft && this.renderButton()}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
         {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
-        {contentOnRight && this.renderButton()}
+        {this.isContentOnLeft && this.renderButton()}
       </Container>
     );
   }
