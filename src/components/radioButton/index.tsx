@@ -263,6 +263,8 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         style={containerStyle}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
+        flex={contentOnRight}
+        spread={contentOnRight}
       >
         {!contentOnRight && this.renderButton()}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
