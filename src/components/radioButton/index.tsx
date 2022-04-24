@@ -112,7 +112,6 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     image: StyleProp<ImageStyle>;
   };
 
-  isContentOnLeft?: boolean;
 
   constructor(props: Props) {
     super(props);
@@ -121,7 +120,6 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
       opacityAnimationValue: new Animated.Value(0),
       scaleAnimationValue: new Animated.Value(0.8)
     };
-    this.isContentOnLeft = props.contentOnLeft || props.contentOnRight;
   }
 
   componentDidMount() {
@@ -132,6 +130,11 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     if (prevProps.selected !== this.props.selected) {
       this.animate();
     }
+  }
+
+  get isContentOnLeft() {
+    const {contentOnLeft, contentOnRight} = this.props;
+    return contentOnLeft || contentOnRight;
   }
 
   animate() {
