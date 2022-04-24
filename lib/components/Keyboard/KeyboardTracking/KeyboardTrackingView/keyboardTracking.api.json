@@ -1,5 +1,5 @@
 {
-  "name": "KeyboardTracking",
+  "name": "KeyboardTrackingView",
   "category": "keyboard",
   "description": "A UI component that enables 'keyboard tracking' for this view and it's sub-views.\nWould typically be used when you have a TextField or TextInput inside this view.",
   "notes": "This view is useful only for iOS.",
