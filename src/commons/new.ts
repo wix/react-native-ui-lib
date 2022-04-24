@@ -9,6 +9,7 @@ export {default as Config} from './Config';
 
 export {
   ContainerModifiers,
+  AlignmentModifiers,
   MarginModifiers,
   PaddingModifiers,
   TypographyModifiers,

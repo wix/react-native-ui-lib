@@ -92,11 +92,11 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     containerStyle,
     style,
     segments,
-    activeColor = Colors.primary,
+    activeColor = Colors.$textPrimary,
     borderRadius = BorderRadiuses.br100,
-    backgroundColor = Colors.grey80,
-    activeBackgroundColor = Colors.white,
-    inactiveColor = Colors.grey20,
+    backgroundColor = Colors.$backgroundNeutralLight,
+    activeBackgroundColor = Colors.$backgroundDefault,
+    inactiveColor = Colors.$textNeutralHeavy,
     outlineColor = activeColor,
     outlineWidth = BORDER_WIDTH,
     throttleTime = 0,
@@ -201,8 +201,8 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.grey80,
-    borderColor: Colors.grey60,
+    backgroundColor: Colors.$backgroundNeutralLight,
+    borderColor: Colors.$outlineDefault,
     borderWidth: BORDER_WIDTH
   },
   selectedSegment: {

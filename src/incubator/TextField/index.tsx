@@ -6,12 +6,12 @@
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
 import React, {useMemo} from 'react';
-import {omit} from 'lodash';
+import {isEmpty, trim, omit} from 'lodash';
 import {asBaseComponent, forwardRef} from '../../commons/new';
 import View from '../../components/view';
 import {Colors} from '../../style';
 import {useMeasure} from '../../hooks';
-import {TextFieldProps, InternalTextFieldProps, ValidationMessagePosition, FieldContextType} from './types';
+import {TextFieldProps, InternalTextFieldProps, ValidationMessagePosition, FieldContextType, TextFieldMethods} from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
 import ValidationMessage from './ValidationMessage';
@@ -87,6 +87,7 @@ const TextField = (props: InternalTextFieldProps) => {
 
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
+  const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
 
   return (
     <FieldContext.Provider value={context}>
@@ -106,6 +107,7 @@ const TextField = (props: InternalTextFieldProps) => {
             validate={others.validate}
             validationMessage={others.validationMessage}
             validationMessageStyle={validationMessageStyle}
+            retainSpace={retainTopMessageSpace}
             testID={`${props.testID}.validationMessage`}
           />
         )}
@@ -168,5 +170,5 @@ const TextField = (props: InternalTextFieldProps) => {
 TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
-export {TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers};
+export {TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers, TextFieldMethods};
 export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any));

@@ -4,7 +4,14 @@ import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} 
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
-import {Constants, asBaseComponent, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  BaseComponentInjectedProps,
+  AlignmentModifiers,
+  PaddingModifiers,
+  MarginModifiers
+} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const LinearGradient = LinearGradientPackage?.default;
@@ -53,7 +60,7 @@ export interface SkeletonListProps {
   renderEndContent?: () => React.ReactElement | undefined;
 }
 
-export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
+export interface SkeletonViewProps extends AccessibilityProps, AlignmentModifiers, PaddingModifiers, MarginModifiers {
   /**
    * The content has been loaded, start fading out the skeleton and fading in the content
    */
@@ -132,7 +139,7 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    * The colors of the skeleton view, the array length has to be >=2
    * default: [Colors.grey70, Colors.grey60, Colors.grey70]
    */
-  colors?: string[]
+  colors?: string[];
   /**
    * The border radius of the skeleton view
    */
@@ -141,7 +148,7 @@ export interface SkeletonViewProps extends AccessibilityProps, MarginModifiers {
    * Whether the skeleton is a circle (will override the borderRadius)
    */
   circle?: boolean;
-  /** 
+  /**
    * Additional style to the skeleton view
    */
   shimmerStyle?: StyleProp<ViewStyle>;
@@ -245,7 +252,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     if (circle || circleOverride) {
       borderRadius = BorderRadiuses.br100;
       size = Math.max(width || 0, height);
-    } 
+    }
 
     return {
       shimmerColors: colors || [Colors.$backgroundNeutral, Colors.$backgroundNeutralMedium, Colors.$backgroundNeutral],
@@ -366,9 +373,9 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   renderAdvanced = () => {
     const {children, renderContent, showContent, style, ...others} = this.props;
     const data = showContent && _.isFunction(renderContent) ? renderContent(this.props) : children;
-    
+
     return (
-      <View style={style} {...this.getAccessibilityProps('Loading content')}>
+      <View style={style} {...this.getAccessibilityProps('Loading content')} {...others}>
         <ShimmerPlaceholder {...this.getDefaultSkeletonProps()} {...others}>
           {showContent && data}
         </ShimmerPlaceholder>

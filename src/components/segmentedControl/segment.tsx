@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
-import {Colors, Spacings, Typography} from '../../style';
+import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 
@@ -57,7 +57,7 @@ export type SegmentProps = SegmentedControlItemProps & {
  */
 const Segment = React.memo((props: SegmentProps) => {
   const {
-    activeColor = Colors.primary,
+    activeColor,
     label,
     iconSource,
     iconStyle,

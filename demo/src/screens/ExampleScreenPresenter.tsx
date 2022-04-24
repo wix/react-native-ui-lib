@@ -22,7 +22,7 @@ interface RadioGroupOptions {
   useValueAsLabel?: boolean;
 }
 
-export function renderHeader(title: string, others: TextProps) {
+export function renderHeader(title: string, others?: TextProps) {
   return (
     <Text text30 $textDefault {...others}>
       {title}
