@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, ScrollView} from 'react-native';
+import {TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import {Assets, Colors, View, Text, RadioButton, RadioGroup} from 'react-native-ui-lib'; //eslint-disable-line
 const starIcon = require('../../assets/icons/star.png');
 
@@ -117,6 +117,7 @@ export default class RadioButtonScreen extends Component {
               label="Individual Radio Button (with style)"
               labelStyle={{fontSize: 16, fontWeight: 'bold'}}
               contentOnLeft
+              containerStyle={styles.contentOnLeft}
             />
           </View>
           <TouchableOpacity
@@ -127,6 +128,7 @@ export default class RadioButtonScreen extends Component {
             <View row centerV>
               <RadioButton
                 contentOnLeft
+                containerStyle={styles.contentOnLeft}
                 selected={this.state.individualValue}
                 label="Individual Radio Button (wrapped)"
               />
@@ -139,6 +141,7 @@ export default class RadioButtonScreen extends Component {
               onPress={() => this.setState({disabledValue: !this.state.disabledValue})}
               label="Disabled Radio Button"
               contentOnLeft
+              containerStyle={styles.contentOnLeft}
             />
           </View>
           <View row centerV marginT-10>
@@ -148,6 +151,7 @@ export default class RadioButtonScreen extends Component {
               onPress={() => this.setState({disabledSelectedValue: !this.state.disabledSelectedValue})}
               label="Disabled Selected Radio Button"
               contentOnLeft
+              containerStyle={styles.contentOnLeft}
             />
           </View>
         </ScrollView>
@@ -155,3 +159,10 @@ export default class RadioButtonScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  contentOnLeft: {
+    flex: 1,
+    justifyContent: 'space-between'
+  }
+});

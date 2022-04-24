@@ -112,7 +112,6 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     image: StyleProp<ImageStyle>;
   };
 
-
   constructor(props: Props) {
     super(props);
     this.styles = createStyles(props);
@@ -273,8 +272,6 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         style={containerStyle}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
-        flex={this.isContentOnLeft}
-        spread={this.isContentOnLeft}
       >
         {!this.isContentOnLeft && this.renderButton()}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
