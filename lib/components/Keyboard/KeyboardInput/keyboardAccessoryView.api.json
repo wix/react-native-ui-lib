@@ -89,7 +89,7 @@
     {
       "name": "usesBottomTabs",
       "type": "boolean",
-      "description": "Whether or not to include bottom tab bat inset\niOS only.",
+      "description": "Whether or not to include bottom tab bar inset\niOS only.",
       "default": "false"
     }
   ],
