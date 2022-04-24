@@ -1,3 +1,4 @@
+import {ReactElement} from 'react';
 import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {ButtonProps} from '../../components/button';
 
@@ -46,6 +47,10 @@ export interface ToastProps {
    * should show a loader
    */
   showLoader?: boolean;
+  /**
+   * should show a loader
+   */
+  loaderElement?: ReactElement;
   /**
    * callback for dismiss action
    */

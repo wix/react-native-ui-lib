@@ -10,7 +10,7 @@ const CONTAINER_HEIGHT = Spacings.s2;
 const FULL_WIDTH_CONTAINER_HEIGHT = Spacings.s1;
 const TABLET_CONTAINER_HEIGHT = 6;
 const TABLET_FULL_WIDTH_CONTAINER_HEIGHT = 10;
-const DEFAULT_COLOR = Colors.primary;
+const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 
 /**
  * @description: Progress bar
@@ -166,7 +166,7 @@ export default asBaseComponent<ProgressBarProps, typeof ProgressBar>(ProgressBar
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.grey60,
+    backgroundColor: Colors.$backgroundNeutralMedium,
     overflow: 'hidden',
     borderRadius: BorderRadiuses.br100
   },

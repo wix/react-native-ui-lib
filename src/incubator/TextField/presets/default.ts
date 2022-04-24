@@ -10,7 +10,7 @@ const colorByState = {
 const styles = StyleSheet.create({
   field: {
     borderBottomWidth: 1,
-    borderBottomColor: Colors.$outlineNeutralMedium,
+    borderBottomColor: Colors.$outlineDisabled,
     paddingBottom: Spacings.s2
   },
   input: {

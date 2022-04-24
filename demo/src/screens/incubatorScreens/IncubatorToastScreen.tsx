@@ -110,7 +110,7 @@ export default class ToastsScreen extends Component {
         // backgroundColor={Colors.$backgroundSuccess}
         // icon={Assets.icons.demo.add}
         // iconColor={Colors.$backgroundSuccessHeavy}
-        // style={{borderWidth: 1, borderColor: Colors.$outlineNeutralMedium}}
+        // style={{borderWidth: 1, borderColor: Colors.$outlineDisabled}}
         // messageStyle={Typography.text80BO}
       >
         {isCustomContent ? this.renderCustomContent() : undefined}

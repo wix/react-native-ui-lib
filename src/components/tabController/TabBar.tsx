@@ -121,7 +121,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
   children?: ChildProps[] | ChildProps;
 }
 
-const FADER_PROPS = {size: 76, tintColor: Colors.$backgroundDefault};
+const FADER_PROPS = {size: 76, tintColor: Colors.$backgroundElevated};
 
 /**
  * @description: TabController's TabBar component
@@ -285,7 +285,7 @@ const TabBar = (props: Props) => {
   }, [containerWidth]);
 
   return (
-    <View style={_containerStyle} key={key}>
+    <View style={_containerStyle} key={key} bg-$backgroundElevated>
       <FadedScrollView
         // @ts-expect-error
         ref={tabBar}
