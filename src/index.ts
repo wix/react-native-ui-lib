@@ -5,6 +5,7 @@ export * from './services';
 export * from '../lib/components';
 export {
   asBaseComponent,
+  Config,
   Constants,
   forwardRef,
   withScrollEnabler,
@@ -25,6 +26,22 @@ export {
 export {BaseComponent, PureBaseComponent} from './commons';
 
 import * as Incubator from './incubator';
+export {
+  TextFieldProps,
+  FieldContextType,
+  ToastProps,
+  ToastPresets,
+  WheelPickerProps,
+  WheelPickerItemProps,
+  WheelPickerAlign,
+  PanViewProps,
+  PanViewDirections,
+  PanViewDismissThreshold,
+  TransitionViewProps,
+  TransitionViewDirection,
+  TransitionViewDirectionEnum,
+  TransitionViewAnimationType
+} from './incubator';
 import * as Hooks from './hooks';
 import * as Modifiers from './commons/modifiers';
 export {default as LogService} from './services/LogService';
@@ -91,7 +108,15 @@ export {
 } from './components/panningViews/panningProvider';
 export {default as PanResponderView, PanResponderViewProps} from './components/panningViews/panResponderView';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
-export {default as Picker, PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle} from './components/picker/new';
+export {
+  default as Picker,
+  PickerProps,
+  PickerItemProps,
+  PickerValue,
+  PickerModes,
+  PickerSearchStyle,
+  PickerMethods
+} from './components/picker/new';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';

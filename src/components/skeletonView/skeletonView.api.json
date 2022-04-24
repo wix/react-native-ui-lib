@@ -49,6 +49,7 @@
       "type": "boolean",
       "description": "Whether the skeleton is a circle (will override the borderRadius)"
     },
+    {"name": "shimmerStyle", "type": "ViewStyle", "description": "Additional style to the skeleton view"},
     {"name": "style", "type": "ViewStyle", "description": "Override container styles"},
     {"name": "testID", "type": "string", "description": "The component test id"}
   ],

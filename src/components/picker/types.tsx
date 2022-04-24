@@ -1,9 +1,10 @@
 import React, {PropsWithChildren, ReactNode} from 'react';
 import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {ExpandableOverlayProps} from '../../incubator/expandableOverlay';
+import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
 // TODO: Replace with new TextField Props after migration to new TextField has completed
 import {TextFieldProps} from '../../../typings/components/Inputs';
+import {TextFieldMethods} from '../../incubator/TextField';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -248,3 +249,5 @@ export type PickerItemsListProps = Pick<
   | 'useSafeArea'
   | 'testID'
 >;
+
+export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;

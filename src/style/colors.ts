@@ -1,6 +1,7 @@
 import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
+import {OpaqueColorValue} from 'react-native';
 import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
 import DesignTokens from './designTokens';
@@ -14,8 +15,9 @@ export class Colors {
   private shouldSupportDarkMode = false;
 
   constructor() {
-    const colors = Object.assign(colorsPalette, DesignTokens, themeColors);
+    const colors = Object.assign(colorsPalette, themeColors);
     Object.assign(this, colors);
+    this.loadSchemes({light: DesignTokens, dark: DesignTokensDM});
 
     Scheme.addChangeListener(() => {
       Object.assign(this, Scheme.getScheme());
@@ -62,9 +64,7 @@ export class Colors {
    * and change the design tokens accordingly
    */
   supportDarkMode() {
-    const designTokensColors = Scheme.getSchemeType() === 'dark' ? DesignTokensDM : DesignTokens;
     this.shouldSupportDarkMode = true;
-    Object.assign(this, designTokensColors);
   }
 
   /**
@@ -83,6 +83,11 @@ export class Colors {
     let red;
     let green;
     let blue;
+
+    // Handle design token PlatformColor object
+    if (typeof p1 === 'object') {
+      p1 = colorStringValue(p1);
+    }
 
     if (arguments.length === 2 && typeof p1 === 'string') {
       hex = p1;
@@ -121,11 +126,18 @@ export class Colors {
     }
   }
 
-  getColorTint(color: string, tintKey: string | number) {
-    if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(color)) {
+  getColorName(colorValue: string) {
+    const color = colorStringValue(colorValue);
+    return ColorName.name(color)[1];
+  }
+
+  getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number) {
+    if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
-      return color;
+      return colorValue;
     }
+
+    const color = colorStringValue(colorValue);
 
     if (color === 'transparent') {
       return color;
@@ -151,11 +163,7 @@ export class Colors {
     return this.getTintedColorForDynamicHex(color, tintKey);
   }
 
-  getColorName(color: string) {
-    return ColorName.name(color)[1];
-  }
-
-  getTintedColorForDynamicHex(color: string, tintKey: string | number) {
+  private getTintedColorForDynamicHex(color: string, tintKey: string | number) {
     // Handles dynamic colors (non uilib colors)
     let tintLevel = Math.floor(Number(tintKey) / 10);
     tintLevel = Math.max(1, tintLevel);
@@ -195,13 +203,14 @@ export class Colors {
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
-  shouldGenerateDarkerPalette(color: string) {
+  private shouldGenerateDarkerPalette(color: string) {
     const hsl = Color(color).hsl();
     const hue = hsl.color[0];
     return _.inRange(hue, 51, 184);
   }
 
-  isDark(color: string) {
+  isDark(colorValue: string | OpaqueColorValue) {
+    const color = colorStringValue(colorValue);
     const lum = tinycolor(color).getLuminance();
     return lum < 0.55;
   }
@@ -217,9 +226,15 @@ export class Colors {
   isTransparent(color?: string) {
     return color && _.toUpper(color) === _.toUpper('transparent');
   }
-  areEqual(colorA: string, colorB: string) {
+  areEqual(colorAValue: string | OpaqueColorValue, colorBValue: string | OpaqueColorValue) {
+    const colorA = colorStringValue(colorAValue);
+    const colorB = colorStringValue(colorBValue);
     return _.toLower(colorA) === _.toLower(colorB);
   }
+}
+
+function colorStringValue(color: string | object) {
+  return color.toString();
 }
 
 function adjustSaturation(colors: string[], color: string) {

@@ -1,0 +1,11 @@
+{
+  "name": "KeyboardAwareInsetsView",
+  "category": "keyboard",
+  "description": "Used to add an inset when a keyboard is used and might hide part of the screen.",
+  "notes": "This view is useful only for iOS.",
+  "extends": "KeyboardTrackingView",
+  "extendsLink": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/lib/components/Keyboard/KeyboardTracking/KeyboardTrackingView/index.tsx"
+  ],
+  "snippet": ["<KeyboardAwareInsetsView/>"]
+}

@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, memo} from 'react';
+import React, {useCallback, useMemo, memo, useRef} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
 import Text, {TextProps} from '../../components/text';
@@ -7,14 +7,13 @@ import {Colors, Spacings} from '../../../src/style';
 import {asBaseComponent} from '../../commons/new';
 import {WheelPickerAlign} from './types';
 
-
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
   label: string;
   value: string | number;
-  align?: WheelPickerAlign
+  align?: WheelPickerAlign;
 }
 
 interface InternalProps extends ItemProps {
@@ -50,11 +49,13 @@ const WheelPickerItem = memo(({
 }: InternalProps) => {
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
+  const _activeColor = useRef(activeColor.toString());
+  const _inactiveColor = useRef(inactiveColor.toString());
 
   const animatedColorStyle = useAnimatedStyle(() => {
     const color = interpolateColor(offset.value,
       [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
-      [inactiveColor, activeColor, inactiveColor]);
+      [_inactiveColor.current, _activeColor.current, _inactiveColor.current]);
     return {color};
   }, [itemHeight]);
 

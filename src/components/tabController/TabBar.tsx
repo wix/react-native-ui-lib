@@ -102,6 +102,10 @@ export interface TabControllerBarProps {
    */
   indicatorInsets?: number;
   /**
+   * Send to get a constant width of the indicator (overrides indicatorInsets)
+   */
+  indicatorWidth?: number;
+  /**
    * Additional styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -117,7 +121,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
   children?: ChildProps[] | ChildProps;
 }
 
-const FADER_PROPS = {size: 76, tintColor: Colors.$backgroundDefault};
+const FADER_PROPS = {size: 76, tintColor: Colors.$backgroundElevated};
 
 /**
  * @description: TabController's TabBar component
@@ -143,6 +147,7 @@ const TabBar = (props: Props) => {
     centerSelected,
     spreadItems,
     indicatorInsets = Spacings.s4,
+    indicatorWidth,
     containerStyle,
     testID
   } = props;
@@ -230,16 +235,25 @@ const TabBar = (props: Props) => {
 
   const _indicatorTransitionStyle = useAnimatedStyle(() => {
     const value = targetPage.value;
-    const width = interpolate(value,
-      itemsWidthsAnimated.value.map((_v: number, i: number) => i),
-      itemsWidthsAnimated.value.map((v: number) => v - 2 * indicatorInsets));
+    let width, marginHorizontal;
+    if (indicatorWidth) {
+      width = indicatorWidth;
+      marginHorizontal = interpolate(value,
+        itemsWidthsAnimated.value.map((_v: number, i: number) => i),
+        itemsWidthsAnimated.value.map((v: number) => (v - indicatorWidth) / 2));
+    } else {
+      marginHorizontal = indicatorInsets;
+      width = interpolate(value,
+        itemsWidthsAnimated.value.map((_v: number, i: number) => i),
+        itemsWidthsAnimated.value.map((v: number) => v - 2 * indicatorInsets));
+    }
 
     const left = interpolate(value,
       itemsOffsetsAnimated.value.map((_v: any, i: number) => i),
       itemsOffsetsAnimated.value);
 
     return {
-      marginHorizontal: indicatorInsets,
+      marginHorizontal,
       width,
       left
     };
@@ -271,7 +285,7 @@ const TabBar = (props: Props) => {
   }, [containerWidth]);
 
   return (
-    <View style={_containerStyle} key={key}>
+    <View style={_containerStyle} key={key} bg-$backgroundElevated>
       <FadedScrollView
         // @ts-expect-error
         ref={tabBar}

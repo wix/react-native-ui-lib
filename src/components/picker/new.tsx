@@ -14,7 +14,7 @@ import {
   ForwardRefInjectedProps,
   BaseComponentInjectedProps
 } from '../../commons/new';
-import ExpandableOverlay, {ExpandableOverlayProps} from '../../incubator/expandableOverlay';
+import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 // @ts-expect-error
 import {TextField} from '../inputs';
 import TextFieldMigrator from '../textField/TextFieldMigrator';
@@ -26,8 +26,9 @@ import PickerContext from './PickerContext';
 import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
+import useImperativePickerHandle from './helpers/useImperativePickerHandle';
 import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
-import {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle} from './types';
+import {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle, PickerMethods} from './types';
 
 const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps) => {
   const {
@@ -68,9 +69,11 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
   const [items] = useState(Picker.extractPickerItems(props));
 
-  const pickerExpandable = useRef<typeof ExpandableOverlay>();
+  const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
   usePickerMigrationWarnings({value, mode});
+
+  const pickerRef = useImperativePickerHandle(forwardedRef, pickerExpandable);
   const {
     filteredChildren,
     setSearchValue,
@@ -199,7 +202,6 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
   return (
     <PickerContext.Provider value={contextValue}>
       <ExpandableOverlay
-        // @ts-expect-error
         ref={pickerExpandable}
         modalProps={modalProps}
         expandableContent={expandableModalContent}
@@ -216,7 +218,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
           <TextFieldMigrator
             migrate={migrateTextField}
             customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
-            ref={forwardedRef}
+            ref={pickerRef}
             // {...textInputProps}
             {...others}
             testID={`${testID}.input`}
@@ -251,6 +253,6 @@ Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
   return items;
 };
 
-export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle};
+export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle, PickerMethods};
 export {Picker}; // For tests
 export default asBaseComponent<PickerProps, typeof Picker>(forwardRef(Picker));

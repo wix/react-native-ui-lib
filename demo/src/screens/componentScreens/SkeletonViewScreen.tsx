@@ -14,7 +14,6 @@ import {
   View,
   Colors
 } from 'react-native-ui-lib';
-// @ts-expect-error
 import * as ExampleScreenPresenter from '../ExampleScreenPresenter';
 
 const AVATAR_SIZE = 48;
@@ -29,9 +28,10 @@ const NUMBER_OF_ITEMS_TO_SHOW = 10;
 
 const DATA_TYPE = {
   List: 'list',
+  Content: 'content',
   Images: 'images',
   Avatars: 'avatars',
-  Content: 'content'
+  Custom: 'custom'
 };
 
 const LIST_TYPE = {
@@ -152,7 +152,7 @@ export default class SkeletonViewScreen extends Component {
         <Text>Verified</Text>
       </View>
     );
-  }
+  };
 
   renderListItemsData = (customValue?: any) => {
     const {isLarge, showEndContent} = this.state;
@@ -162,13 +162,7 @@ export default class SkeletonViewScreen extends Component {
       <React.Fragment>
         {_.times(NUMBER_OF_ITEMS_TO_SHOW, index => {
           return (
-            <ListItem
-              key={index}
-              activeBackgroundColor={Colors.grey60}
-              activeOpacity={0.3}
-              height={90}
-              onPress={() => Alert.alert(`pressed on order #${index + 1}`)}
-            >
+            <ListItem key={index} height={90} onPress={() => Alert.alert(`pressed on order #${index + 1}`)}>
               {hasAvatar && this.renderAvatar()}
               {hasThumbnail && this.renderThumbnail()}
               <ListItem.Part middle column containerStyle={[styles.border, {marginLeft: 18}]}>
@@ -247,16 +241,17 @@ export default class SkeletonViewScreen extends Component {
     const imageSize = this.getImageSize();
 
     return (
-      <View row spread margin-page>
-        <SkeletonView
-          width={imageSize}
-          height={imageSize}
-          showContent={isDataAvailable}
-          renderContent={this.renderImagesData}
-          accessibilityLabel={'Loading image'}
-          times={IMAGE_URIS.length}
-        />
-      </View>
+      <SkeletonView
+        row
+        spread
+        margin-page
+        width={imageSize}
+        height={imageSize}
+        showContent={isDataAvailable}
+        renderContent={this.renderImagesData}
+        accessibilityLabel={'Loading image'}
+        times={IMAGE_URIS.length}
+      />
     );
   };
 
@@ -317,6 +312,40 @@ export default class SkeletonViewScreen extends Component {
     );
   };
 
+  renderCustom = () => {
+    const {isDataAvailable} = this.state;
+
+    return (
+      <View margin-20>
+        <View row spread marginB-8>
+          <SkeletonView
+            width={120}
+            height={20}
+            borderRadius={5}
+            showContent={isDataAvailable}
+            renderContent={() => <Text text60BO>Lorem Ipsum</Text>}
+          />
+          <SkeletonView
+            width={40}
+            height={10}
+            borderRadius={5}
+            style={{marginTop: 5}}
+            showContent={isDataAvailable}
+            renderContent={() => <Button label={'Info'} size={Button.sizes.small} link/>}
+          />
+        </View>
+        <SkeletonView
+          shimmerStyle={{width: '100%' /* , height: 30 */}}
+          height={10}
+          borderRadius={5}
+          showContent={isDataAvailable}
+          renderContent={() => <Text>Lorem Ipsum is simply dummy text of the industry.</Text>}
+          colors={[Colors.red70, Colors.red50, Colors.red70]}
+        />
+      </View>
+    );
+  };
+
   renderContent = () => {
     const {isDataAvailable} = this.state;
     return (
@@ -345,12 +374,14 @@ export default class SkeletonViewScreen extends Component {
           case LIST_TYPE.Thumbnail:
             return this.renderListItemsWithThumbnail();
         }
+      case DATA_TYPE.Content:
+        return this.renderContent();
       case DATA_TYPE.Images:
         return this.renderImages();
       case DATA_TYPE.Avatars:
         return this.renderAvatarStrip();
-      case DATA_TYPE.Content:
-        return this.renderContent();
+      case DATA_TYPE.Custom:
+        return this.renderCustom();
     }
   };
 
@@ -385,7 +416,7 @@ const styles = StyleSheet.create({
     paddingLeft: Spacings.s5
   },
   avatar: {
-    marginHorizontal: 14
+    marginVertical: 8
   },
   image: {
     flex: 1,

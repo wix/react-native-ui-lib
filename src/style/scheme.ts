@@ -1,14 +1,16 @@
-import {Appearance} from 'react-native';
-import {remove, xor, isEmpty, merge} from 'lodash';
+import {Appearance, PlatformColor} from 'react-native';
+import {remove, xor, isEmpty, merge, forEach, cloneDeep} from 'lodash';
+import Constants from '../commons/Constants';
+import Config from '../commons/Config';
 
 export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
 export type SchemeChangeListener = (schemeType?: 'light' | 'dark') => void;
 
 class Scheme {
-  currentScheme: SchemeType = 'default';
-  schemes: Schemes = {light: {}, dark: {}};
-  changeListeners: SchemeChangeListener[] = [];
+  private currentScheme: SchemeType = Config.appScheme;
+  private schemes: Schemes = {light: {}, dark: {}};
+  private changeListeners: SchemeChangeListener[] = [];
 
   constructor() {
     Appearance.addChangeListener(() => {
@@ -61,7 +63,31 @@ class Scheme {
       throw new Error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
     }
 
-    merge(this.schemes, schemes);
+    const platformColorsSchemes: Schemes = cloneDeep(schemes);
+
+    forEach(schemes, (scheme, schemeKey) => {
+      forEach(scheme, (colorValue, colorKey) => {
+        // @ts-expect-error
+        Object.defineProperty(platformColorsSchemes[schemeKey], colorKey, {
+          get: () => {
+            let color: any = colorValue;
+            if (Config.usePlatformColors) {
+              if (Constants.isAndroid) {
+                // Remove the $ prefix cause it's not allowed in Android and add the @color prefix
+                color = PlatformColor(`@color/${colorKey.replace(/^[$]/, '')}`);
+              } else {
+                color = PlatformColor(colorKey);
+              }
+              // Get the original hex string value by calling toString()
+              color.toString = () => schemes[this.getSchemeType()][colorKey];
+            }
+            return color;
+          }
+        });
+      });
+    });
+
+    merge(this.schemes, platformColorsSchemes);
   }
 
   /**
