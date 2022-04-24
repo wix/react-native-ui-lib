@@ -14,7 +14,7 @@
       "name": "renderCustomItem",
       "type": "() => React.ReactElement",
       "description": "Custom GridListItem to be rendered in the GridView",
-      "required": ""
+      "required": true
     },
     {"name": "itemSize", "type": "number | ImageSize", "description": "The item size"},
     {"name": "title", "type": "string | React.ReactElement", "description": "Title content text"},
