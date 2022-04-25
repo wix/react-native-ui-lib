@@ -4,6 +4,10 @@ import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import {ListItemPartProps} from './types';
 
+/**
+ * @description: ListItem.Part, a sub ListItem component for layout-ing inside a ListItem
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx
+ */
 class ListItemPart extends Component<ListItemPartProps> {
   static displayName = 'ListItem.Part';
 

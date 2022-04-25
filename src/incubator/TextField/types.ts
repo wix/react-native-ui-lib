@@ -227,3 +227,11 @@ export type FieldContextType = {
   disabled: boolean;
   validateField: () => void;
 };
+
+export interface TextFieldMethods {
+  isFocused: () => void;
+  focus: () => void;
+  blur: () => void;
+  clear: () => void;
+  validate: () => boolean;
+}
