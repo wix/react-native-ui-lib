@@ -215,7 +215,7 @@ export type TextFieldProps = MarginModifiers &
   };
 
 export type InternalTextFieldProps = PropsWithChildren<
-  TextFieldProps & BaseComponentInjectedProps & ForwardRefInjectedProps & {placeholderColor: ColorType}
+  TextFieldProps & BaseComponentInjectedProps & ForwardRefInjectedProps
 >;
 
 export type FieldContextType = {

@@ -43,7 +43,7 @@ const TextField = (props: InternalTextFieldProps) => {
     floatingPlaceholderColor,
     floatingPlaceholderStyle,
     floatOnFocus,
-    placeholderColor,
+    placeholderTextColor,
     hint,
     // Label
     label,
@@ -128,7 +128,7 @@ const TextField = (props: InternalTextFieldProps) => {
             )}
             {children || (
               <Input
-                placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderColor}
+                placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
                 {...others}
                 style={[typographyStyle, colorStyle, others.style]}
                 onFocus={onFocus}
