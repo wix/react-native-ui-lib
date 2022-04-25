@@ -1,4 +1,4 @@
-import {RefObject, useCallback, useState} from 'react';
+import {RefObject, useCallback, useState, useEffect} from 'react';
 import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue} from '../types';
 
@@ -12,6 +12,13 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
   const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue} = props;
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
+
+  useEffect(() => {
+    if (multiFinalValue !== value) {
+      setMultiDraftValue(value as PickerMultiValue);
+      setMultiFinalValue(value as PickerMultiValue);
+    }
+  }, [value]);
 
   const onDoneSelecting = useCallback((item: PickerValue) => {
     setSearchValue('');
