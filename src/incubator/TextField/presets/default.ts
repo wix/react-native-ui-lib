@@ -7,7 +7,7 @@ const colorByState = {
   disabled: Colors.$textDisabled
 };
 
-const placeHolderTextColorByState = {
+const placeholderTextColorByState = {
   default: Colors.$textNeutral,
   error: Colors.$textNeutral,
   focus: Colors.$textNeutral,
@@ -32,7 +32,7 @@ export default {
   enableErrors: true,
   validateOnBlur: true,
   floatingPlaceholderColor: colorByState,
-  placeholderTextColor: placeHolderTextColorByState,
+  placeholderTextColor: placeholderTextColorByState,
   labelColor: colorByState,
   fieldStyle: styles.field,
   style: styles.input,
