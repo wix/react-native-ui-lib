@@ -518,6 +518,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           pagingEnabled={this.shouldEnablePagination()}
           snapToOffsets={snapToOffsets}
           contentOffset={contentOffset}
+          // onContentSizeChange={this.onContentSizeChange}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
         >
           {this.renderChildren()}
