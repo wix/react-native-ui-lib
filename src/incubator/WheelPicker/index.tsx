@@ -1,7 +1,7 @@
 // TODO: Support style customization
 import {isFunction, isUndefined} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
-import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
+import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet, ListRenderItemInfo, FlatListProps} from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {Colors, Spacings} from 'style';
 import {Constants, asBaseComponent} from '../../commons/new';
@@ -12,7 +12,7 @@ import Text, {TextProps} from '../../components/text';
 import usePresenter from './usePresenter';
 import {WheelPickerAlign} from './types';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const AnimatedFlatList = Animated.createAnimatedComponent<FlatListProps<ItemProps>>(FlatList);
 
 export interface WheelPickerProps {
   /**
@@ -172,12 +172,12 @@ const WheelPicker = ({
     scrollToIndex(currentIndex, false);
   }, []);
 
-  const selectItem = useCallback(index => {
+  const selectItem = useCallback((index: number) => {
     scrollToIndex(index, true);
   },
   [itemHeight]);
 
-  const renderItem = useCallback(({item, index}) => {
+  const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps>) => {
     return (
       <Item
         index={index}
@@ -198,7 +198,7 @@ const WheelPicker = ({
   },
   [itemHeight]);
 
-  const getItemLayout = useCallback((_data, index: number) => {
+  const getItemLayout = useCallback((_data: any, index: number) => {
     return {length: itemHeight, offset: itemHeight * index, index};
   },
   [itemHeight]);

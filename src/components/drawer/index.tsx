@@ -13,7 +13,7 @@ import {LogService} from '../../services';
 const DEFAULT_BG = Colors.primary;
 const DEFAULT_BOUNCINESS = 0;
 
-interface ItemProps {
+interface DrawerItemProps {
   width?: number;
   background?: string;
   text?: string;
@@ -25,7 +25,7 @@ interface ItemProps {
   customElement?: ReactNode;
 }
 
-interface Props {
+interface DrawerProps {
   /**
    * The drawer animation bounciness
    */
@@ -37,11 +37,11 @@ interface Props {
   /**
    * The bottom layer's items to appear when opened from the right
    */
-  rightItems?: ItemProps[];
+  rightItems?: DrawerItemProps[];
   /**
    * The bottom layer's item to appear when opened from the left (a single item)
    */
-  leftItem?: ItemProps;
+  leftItem?: DrawerItemProps;
   /**
    * Set a different minimum width
    */
@@ -126,10 +126,8 @@ interface Props {
    * Used as testing identifier
    */
   testID?: string;
+  children?: React.ReactNode;
 }
-
-export type DrawerProps = Props;
-export type DrawerItemProps = ItemProps;
 
 /**
  * @description: Drawer Component
@@ -138,7 +136,7 @@ export type DrawerItemProps = ItemProps;
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Drawer/Drawer.gif?raw=true
  */
-class Drawer extends PureComponent<Props> {
+class Drawer extends PureComponent<DrawerProps> {
   static displayName = 'Drawer';
 
   static defaultProps = {
@@ -171,7 +169,7 @@ class Drawer extends PureComponent<Props> {
     return this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
   });
 
-  private getActionsContainerStyle(items: ItemProps[]) {
+  private getActionsContainerStyle(items: DrawerItemProps[]) {
     return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
   }
 
@@ -203,7 +201,7 @@ class Drawer extends PureComponent<Props> {
 
   /** Events */
 
-  private onActionPress = (item: ItemProps) => {
+  private onActionPress = (item: DrawerItemProps) => {
     if (!item.keepOpen) {
       this.closeDrawer();
     }
@@ -296,7 +294,7 @@ class Drawer extends PureComponent<Props> {
     return this.renderActions(rightItems, progress /* , dragX */);
   };
 
-  private renderActions(items: ItemProps[] | undefined, progress: Animated.Value /* , dragX: Animated.Value */) {
+  private renderActions(items: DrawerItemProps[] | undefined, progress: Animated.Value /* , dragX: Animated.Value */) {
     if (items) {
       return (
         // @ts-ignore
@@ -333,6 +331,7 @@ class Drawer extends PureComponent<Props> {
     });
 
     return (
+      // @ts-expect-error related to missing children type started on react 18
       <RectButton
         key={index}
         testID={item.testID}
@@ -417,6 +416,7 @@ class Drawer extends PureComponent<Props> {
   }
 }
 
+export {DrawerProps, DrawerItemProps};
 export default asBaseComponent<DrawerProps, typeof Drawer>(Drawer);
 
 const styles = StyleSheet.create({

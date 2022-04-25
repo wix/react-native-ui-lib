@@ -91,6 +91,7 @@ export interface WizardProps {
    */
   containerStyle?: StyleProp<ViewStyle>;
   testID?: string;
+  children?: React.ReactNode;
 }
 
 // @ts-ignore

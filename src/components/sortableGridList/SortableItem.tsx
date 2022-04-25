@@ -135,6 +135,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
   });
   return (
     <View reanimated style={[style, animatedStyle]} onLayout={onLayout}>
+      {/* @ts-expect-error related to children type issue that started on react 18 */}
       <GestureDetector gesture={gesture}>
         <View>{props.children}</View>
       </GestureDetector>

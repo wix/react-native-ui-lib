@@ -101,6 +101,7 @@ export interface GridListItemProps {
    * Test ID for component
    */
   testID?: string;
+  children?: React.ReactNode;
 }
 
 interface RenderContentType {
