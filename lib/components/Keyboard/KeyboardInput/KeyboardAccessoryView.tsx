@@ -245,35 +245,22 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
 
   render() {
     const {
-      revealKeyboardInteractive,
-      manageScrollView,
-      requiresSameParentToManageScrollView,
-      addBottomView,
-      bottomViewColor,
-      allowHitsOutsideBounds,
       renderContent,
       kbInputRef,
       kbComponent,
       onItemSelected,
       onRequestShowKeyboard,
       useSafeArea,
-      usesBottomTabs
+      ...others
     } = this.props;
 
     return (
       <KeyboardTrackingView
+        {...others}
+        scrollBehavior={this.getIOSTrackingScrollBehavior()}
         ref={(r: any) => (this.trackingViewRef = r)}
         style={styles.trackingToolbarContainer}
-        // @ts-ignore
         onLayout={this.onContainerComponentHeightChanged}
-        scrollBehavior={this.getIOSTrackingScrollBehavior()}
-        revealKeyboardInteractive={revealKeyboardInteractive}
-        manageScrollView={manageScrollView}
-        requiresSameParentToManageScrollView={requiresSameParentToManageScrollView}
-        addBottomView={addBottomView}
-        bottomViewColor={bottomViewColor}
-        allowHitsOutsideBounds={allowHitsOutsideBounds}
-        usesBottomTabs={usesBottomTabs}
       >
         <>{renderContent?.()}</>
         <CustomKeyboardView
