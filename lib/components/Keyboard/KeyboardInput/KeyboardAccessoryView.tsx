@@ -249,6 +249,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       manageScrollView,
       requiresSameParentToManageScrollView,
       addBottomView,
+      bottomViewColor,
       allowHitsOutsideBounds,
       renderContent,
       kbInputRef,
