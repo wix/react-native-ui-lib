@@ -18,7 +18,6 @@ import Text from '../text';
 import Image from '../image';
 import Badge, {BadgeProps} from '../badge';
 
-
 const INDICATOR_HEIGHT = 2;
 const INDICATOR_BG_COLOR = Colors.primary;
 const HORIZONTAL_PADDING = Constants.isTablet ? Spacings.s7 : Spacings.s5;
@@ -100,6 +99,7 @@ export interface TabBarItemProps {
   indicatorStyle?: StyleProp<ViewStyle>; // for inner use
   style?: ViewStyle;
   testID?: string;
+  children?: React.ReactNode;
 }
 
 interface State {

@@ -82,6 +82,7 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
    * Used as a testing identifier
    */
   testID?: string;
+  children?: React.ReactNode;
 }
 
 interface DialogState {
