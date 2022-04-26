@@ -2,7 +2,7 @@
   "name": "Card.Section",
   "category": "basic",
   "description": "Inner component for rendering content easily inside a Card component",
-  "extends": ["View"],
+  "extends": ["basic/View"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx",
   "props": [
     {
