@@ -31,10 +31,6 @@ export type KeyboardAccessoryViewProps = {
    */
   renderContent?: () => React.ReactElement;
   /**
-   * A callback for when the height is changed
-   */
-  onHeightChanged?: (height: number) => void;
-  /**
    * iOS only.
    * The reference to the actual text input (or the keyboard may not reset when instructed to, etc.).
    * This is required.
@@ -48,6 +44,10 @@ export type KeyboardAccessoryViewProps = {
    * The props that will be sent to the KeyboardComponent
    */
   kbInitialProps?: any;
+  /**
+   * A callback for when the height is changed
+   */
+  onHeightChanged?: (height: number) => void;
   /**
    * Callback that will be called when an item on the keyboard has been pressed.
    */
@@ -64,21 +64,18 @@ export type KeyboardAccessoryViewProps = {
    * iOS only.
    * The scrolling behavior, use KeyboardAccessoryView.iosScrollBehaviors.X where X is:
    * NONE, SCROLL_TO_BOTTOM_INVERTED_ONLY or FIXED_OFFSET
-   *
    * default: FIXED_OFFSET
    */
   iOSScrollBehavior?: number;
   /**
    * iOS only.
    * Show the keyboard on a negative scroll
-   *
    * default: false
    */
   revealKeyboardInteractive?: boolean;
   /**
    * iOS only.
    * Set to false to turn off inset management and manage it yourself
-   *
    * default: true
    */
   manageScrollView?: boolean;
@@ -88,39 +85,39 @@ export type KeyboardAccessoryViewProps = {
    * it means that the ScrollView found is the wrong one and you'll have
    * to have the KeyboardAccessoryView and the ScrollView as siblings
    * and set this to true
-   *
    * default: false
    */
   requiresSameParentToManageScrollView?: boolean;
   /**
    * iOS only.
-   * Add a (white) SafeArea view beneath the KeyboardAccessoryView
-   *
+   * Allow hitting sub-views that are placed beyond the view bounds
+   * default: false
+   */
+  allowHitsOutsideBounds?: boolean;
+  /**
+   * iOS only.
+   * Add a SafeArea view beneath the KeyboardAccessoryView
    * default: false
    */
   addBottomView?: boolean;
   /**
    * iOS only.
-   * Allow hitting sub-views that are placed beyond the view bounds
-   *
-   * default: false
+   * The bottom view's color as an hex string
+   * default: '#ffffff'
    */
-  allowHitsOutsideBounds?: boolean;
-
+  bottomViewColor?: string;
   /**
    * iOS only.
    * Whether or not to handle SafeArea
    * default: true
    */
   useSafeArea?: boolean;
-
   /**
    * iOS only.
    * Whether or not to include bottom tab bat inset
    * default: false
    */
   usesBottomTabs?: boolean;
-
   children?: React.ReactChild;
 };
 
@@ -130,7 +127,6 @@ export type KeyboardAccessoryViewProps = {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/KeyboardAccessoryView/KeyboardAccessoryView.gif?raw=true
  */
 class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
-
   static iosScrollBehaviors = IOS_SCROLL_BEHAVIORS;
 
   static defaultProps = {
@@ -274,12 +270,11 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
         manageScrollView={manageScrollView}
         requiresSameParentToManageScrollView={requiresSameParentToManageScrollView}
         addBottomView={addBottomView}
+        bottomViewColor={bottomViewColor}
         allowHitsOutsideBounds={allowHitsOutsideBounds}
         usesBottomTabs={usesBottomTabs}
       >
-        <>
-          {renderContent?.()}
-        </>
+        <>{renderContent?.()}</>
         <CustomKeyboardView
           inputRef={kbInputRef}
           component={kbComponent}

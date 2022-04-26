@@ -13,11 +13,6 @@
       "description": "Content to be rendered above the keyboard"
     },
     {
-      "name": "onHeightChanged",
-      "type": "(height: number) => void",
-      "description": "A callback for when the height is changed"
-    },
-    {
       "name": "kbInputRef",
       "type": "any",
       "description": "The reference to the actual text input (or the keyboard may not reset when instructed to, etc.).\niOS only.",
@@ -29,6 +24,11 @@
       "description": "The keyboard ID (the componentID sent to KeyboardRegistry)"
     },
     {"name": "kbInitialProps", "type": "any", "description": "The props that will be sent to the KeyboardComponent"},
+    {
+      "name": "onHeightChanged",
+      "type": "(height: number) => void",
+      "description": "A callback for when the height is changed"
+    },
     {
       "name": "onItemSelected",
       "type": "() => void",
@@ -54,42 +54,56 @@
       "name": "revealKeyboardInteractive",
       "type": "boolean",
       "description": "Show the keyboard on a negative scroll\niOS only.",
+      "note": "KeyboardTrackingView prop. iOS only",
       "default": "false"
     },
     {
       "name": "manageScrollView",
       "type": "boolean",
       "description": "Set to false to turn off inset management and manage it yourself\niOS only.",
+      "note": "KeyboardTrackingView prop. iOS only",
       "default": "true"
     },
     {
       "name": "requiresSameParentToManageScrollView",
       "type": "boolean",
       "description": "Set to true manageScrollView is set to true and still does not work,\nit means that the ScrollView found is the wrong one and you'll have\nto have the KeyboardAccessoryView and the ScrollView as siblings\nand set this to true\niOS only.",
-      "default": "false"
-    },
-    {
-      "name": "addBottomView",
-      "type": "boolean",
-      "description": "Add a (white) SafeArea view beneath the KeyboardAccessoryView\niOS only.",
+      "note": "KeyboardTrackingView prop. iOS only",
       "default": "false"
     },
     {
       "name": "allowHitsOutsideBounds",
       "type": "boolean",
       "description": "Allow hitting sub-views that are placed beyond the view bounds\niOS only.",
+      "note": "KeyboardTrackingView prop. iOS only",
       "default": "false"
+    },
+    {
+      "name": "addBottomView",
+      "type": "boolean",
+      "description": "Add a view beneath the KeyboardAccessoryView\niOS only.",
+      "note": "KeyboardTrackingView prop. iOS only",
+      "default": "false"
+    },
+    {
+      "name": "bottomViewColor", 
+      "type": "string", 
+      "description": "The bottom view's color as an hex string\niOS only.",       
+      "note": "KeyboardTrackingView prop. iOS only",
+      "default": "#ffffff"
     },
     {
       "name": "useSafeArea",
       "type": "boolean",
       "description": "Whether or not to handle SafeArea\niOS only.",
+      "note": "KeyboardTrackingView prop. iOS only",
       "default": "true"
     },
     {
       "name": "usesBottomTabs",
       "type": "boolean",
       "description": "Whether or not to include bottom tab bar inset\niOS only.",
+      "note": "KeyboardTrackingView prop. iOS only",
       "default": "false"
     }
   ],

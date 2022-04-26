@@ -50,6 +50,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 @property (nonatomic) CGFloat originalHeight;
 @property (nonatomic) KeyboardTrackingScrollBehavior scrollBehavior;
 @property (nonatomic) BOOL addBottomView;
+@property (nonatomic, strong) NSString *bottomViewColor;
 @property (nonatomic) BOOL useSafeArea;
 @property (nonatomic) BOOL usesBottomTabs;
 @property (nonatomic) BOOL scrollToFocusedInput;
@@ -82,6 +83,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         _bottomViewHeight = kBottomViewHeightTemp;
         
         self.addBottomView = NO;
+        self.bottomViewColor = @"#ffffff";
         self.scrollToFocusedInput = NO;
         self.usesBottomTabs = NO;
         
@@ -440,10 +442,45 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 
 #pragma mark - bottom view
 
+- (unsigned int)intFromHexString:(NSString *)hexStr
+{
+  unsigned int hexInt = 0;
+  // Create scanner
+  NSScanner *scanner = [NSScanner scannerWithString:hexStr];
+  // Tell scanner to skip the # character
+  [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"#"]];
+  // Scan hex value
+  [scanner scanHexInt:&hexInt];
+  return hexInt;
+}
+
+- (UIColor *)getUIColorObjectFromHexString:(NSString *)hexStr alpha:(CGFloat)alpha
+{
+  // Convert hex string to an integer
+  unsigned int hexint = [self intFromHexString:hexStr];
+  // Create a color object, specifying alpha as well
+  UIColor *color =
+    [UIColor colorWithRed:((CGFloat) ((hexint & 0xFF0000) >> 16))/255
+    green:((CGFloat) ((hexint & 0xFF00) >> 8))/255
+    blue:((CGFloat) (hexint & 0xFF))/255
+    alpha:alpha];
+  return color;
+}
+
 -(void)setAddBottomView:(BOOL)addBottomView
 {
     _addBottomView = addBottomView;
+    
     [self addBottomViewIfNecessary];
+}
+
+-(void)setBottomViewColor:(NSString *)bottomViewColor
+{
+    _bottomViewColor = bottomViewColor;
+    
+    if (self.addBottomView && _bottomView != nil) {
+        _bottomView.backgroundColor = [self getUIColorObjectFromHexString:_bottomViewColor alpha:1];
+    }
 }
 
 -(void)addBottomViewIfNecessary
@@ -451,7 +488,8 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     if (self.addBottomView && _bottomView == nil)
     {
         _bottomView = [UIView new];
-        _bottomView.backgroundColor = [UIColor whiteColor];
+        _bottomView.backgroundColor = [self getUIColorObjectFromHexString:self.bottomViewColor alpha:1];
+
         [self addSubview:_bottomView];
         [self updateBottomViewFrame];
     }
@@ -653,6 +691,7 @@ RCT_REMAP_VIEW_PROPERTY(revealKeyboardInteractive, revealKeyboardInteractive, BO
 RCT_REMAP_VIEW_PROPERTY(manageScrollView, manageScrollView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(requiresSameParentToManageScrollView, requiresSameParentToManageScrollView, BOOL)
 RCT_REMAP_VIEW_PROPERTY(addBottomView, addBottomView, BOOL)
+RCT_REMAP_VIEW_PROPERTY(bottomViewColor, bottomViewColor, NSString)
 RCT_REMAP_VIEW_PROPERTY(useSafeArea, useSafeArea, BOOL)
 RCT_REMAP_VIEW_PROPERTY(usesBottomTabs, usesBottomTabs, BOOL)
 RCT_REMAP_VIEW_PROPERTY(scrollToFocusedInput, scrollToFocusedInput, BOOL)
