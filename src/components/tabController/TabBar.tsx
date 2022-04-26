@@ -5,7 +5,13 @@ import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps
+} from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
 import FadedScrollView from '../fadedScrollView';
@@ -210,6 +216,7 @@ const TabBar = (props: Props) => {
           uppercase={uppercase}
           iconColor={iconColor}
           selectedIconColor={selectedIconColor}
+          backgroundColor={backgroundColor}
           activeBackgroundColor={activeBackgroundColor}
           {...item}
           {...context}
@@ -228,6 +235,7 @@ const TabBar = (props: Props) => {
     uppercase,
     iconColor,
     selectedIconColor,
+    backgroundColor,
     activeBackgroundColor,
     centerSelected,
     onItemLayout
