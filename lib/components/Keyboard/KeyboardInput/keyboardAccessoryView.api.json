@@ -107,5 +107,12 @@
       "default": "false"
     }
   ],
-  "snippet": ["KeyboardRegistry.registerKeyboard('keyboardName$1', () => KeyboardComponent$2)"]
-}
+  "snippet": [
+    "<KeyboardAccessoryView",
+    " renderContent={this.renderContent()}",
+    " kbInputRef={this.inputRef}",
+    " kbComponent={$1}",
+    " kbInitialProps={$2}",
+    " onHeightChanged={this.onHeightChanged()}",
+    "/>"
+  ]}

@@ -76,11 +76,11 @@
   ],
   "snippet": [
     "<KeyboardTrackingView",
-    "style={$1}",
-    "trackInteractive",
-    "useSafeArea",
+    " style={$1}",
+    " trackInteractive",
+    " useSafeArea",
     ">",
-    "%2",
+    " $2",
     "</KeyboardTrackingView>"
   ]
 }
