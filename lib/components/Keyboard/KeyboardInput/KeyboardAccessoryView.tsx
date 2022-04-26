@@ -102,8 +102,8 @@ export type KeyboardAccessoryViewProps = {
   addBottomView?: boolean;
   /**
    * iOS only.
-   * The bottom view's color as an hex string
-   * default: '#ffffff'
+   * The bottom view's color
+   * default: 'white'
    */
   bottomViewColor?: string;
   /**

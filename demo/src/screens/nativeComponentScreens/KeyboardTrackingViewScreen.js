@@ -62,7 +62,7 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
     const {trackInteractive} = this.state;
 
     return (
-      <View flex bg-blue80 paddingT-page>
+      <View flex bg-grey80 paddingT-page>
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={trackInteractive ? 'interactive' : 'none'}
@@ -89,9 +89,9 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
           trackInteractive={trackInteractive}
           useSafeArea
           addBottomView
-          bottomViewColor={Colors.grey80}
+          bottomViewColor={Colors.violet80}
         >
-          <View bg-grey80 row spread centerV paddingH-s5 paddingV-s3>
+          <View bg-violet80 row spread centerV paddingH-s5 paddingV-s3>
             <TextField
               migrate
               containerStyle={styles.textField}
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   textField: {
     flex: 1,
-    backgroundColor: Colors.grey50,
+    backgroundColor: Colors.grey80,
     paddingVertical: Spacings.s2,
     paddingHorizontal: Spacings.s4,
     borderRadius: 8

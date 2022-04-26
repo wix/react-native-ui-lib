@@ -88,9 +88,9 @@
     {
       "name": "bottomViewColor", 
       "type": "string", 
-      "description": "The bottom view's color as an hex string\niOS only.",       
+      "description": "The bottom view's color\niOS only.",       
       "note": "KeyboardTrackingView prop. iOS only",
-      "default": "#ffffff"
+      "default": "white"
     },
     {
       "name": "useSafeArea",
