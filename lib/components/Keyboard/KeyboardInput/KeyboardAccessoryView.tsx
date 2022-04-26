@@ -9,7 +9,7 @@ import {
   BackHandler,
   LayoutChangeEvent
 } from 'react-native';
-import KeyboardTrackingView from '../KeyboardTracking/KeyboardTrackingView';
+import KeyboardTrackingView, {KeyboardTrackingViewProps} from '../KeyboardTracking/KeyboardTrackingView';
 import CustomKeyboardView from './CustomKeyboardView';
 import KeyboardUtils from './utils/KeyboardUtils';
 
@@ -25,7 +25,9 @@ const IOS_SCROLL_BEHAVIORS = IsIOS
   }
   : {};
 
-export type KeyboardAccessoryViewProps = {
+type kbTrackingViewProps = Pick<KeyboardTrackingViewProps, 'revealKeyboardInteractive' | 'manageScrollView' | 'requiresSameParentToManageScrollView' | 'allowHitsOutsideBounds' | 'addBottomView' | 'bottomViewColor' | 'useSafeArea' | 'usesBottomTabs'>;
+
+export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
   /**
    * Content to be rendered above the keyboard
    */
@@ -67,57 +69,6 @@ export type KeyboardAccessoryViewProps = {
    * default: FIXED_OFFSET
    */
   iOSScrollBehavior?: number;
-  /**
-   * iOS only.
-   * Show the keyboard on a negative scroll
-   * default: false
-   */
-  revealKeyboardInteractive?: boolean;
-  /**
-   * iOS only.
-   * Set to false to turn off inset management and manage it yourself
-   * default: true
-   */
-  manageScrollView?: boolean;
-  /**
-   * iOS only.
-   * Set to true manageScrollView is set to true and still does not work,
-   * it means that the ScrollView found is the wrong one and you'll have
-   * to have the KeyboardAccessoryView and the ScrollView as siblings
-   * and set this to true
-   * default: false
-   */
-  requiresSameParentToManageScrollView?: boolean;
-  /**
-   * iOS only.
-   * Allow hitting sub-views that are placed beyond the view bounds
-   * default: false
-   */
-  allowHitsOutsideBounds?: boolean;
-  /**
-   * iOS only.
-   * Add a SafeArea view beneath the KeyboardAccessoryView
-   * default: false
-   */
-  addBottomView?: boolean;
-  /**
-   * iOS only.
-   * The bottom view's color
-   * default: 'white'
-   */
-  bottomViewColor?: string;
-  /**
-   * iOS only.
-   * Whether or not to handle SafeArea
-   * default: true
-   */
-  useSafeArea?: boolean;
-  /**
-   * iOS only.
-   * Whether or not to include bottom tab bat inset
-   * default: false
-   */
-  usesBottomTabs?: boolean;
   children?: React.ReactChild;
 };
 
