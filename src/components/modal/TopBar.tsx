@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, StyleProp, TextStyle, ImageSourcePropType} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
@@ -49,6 +50,14 @@ export interface ModalTopBarProps {
    */
   onCancel?: (props?: any) => void;
   /**
+   * buttons to render on the right side of the top bar
+   */
+  rightButtons?: topBarButtonProp | topBarButtonProp[];
+  /**
+   * buttons to render on the left side of the top bar
+   */
+  leftButtons?: topBarButtonProp | topBarButtonProp[];
+  /**
    * whether to include status bar or not (height claculations)
    */
   includeStatusBar?: boolean;
@@ -92,21 +101,18 @@ class TopBar extends Component<ModalTopBarProps> {
 
   renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps}: topBarButtonProp) {
     if (onPress && (label || icon)) {
-      // @ts-ignore
-      const {iconStyle, labelStyle, ...otherButtonProps} = buttonProps;
-
       return (
         <Button
           link
           onPress={onPress}
           label={label}
-          labelStyle={[styles.actionLabel, labelStyle]}
+          labelStyle={[styles.actionLabel, buttonProps?.labelStyle]}
           iconSource={icon}
-          iconStyle={[styles.icon, iconStyle]}
+          iconStyle={[styles.icon, buttonProps?.iconStyle]}
           {...DEFAULT_BUTTON_PROPS}
           accessibilityLabel={accessibilityLabel}
-          {...otherButtonProps}
           hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}
+          {...buttonProps}
         />
       );
     }
@@ -134,6 +140,24 @@ class TopBar extends Component<ModalTopBarProps> {
     });
   }
 
+  renderLeftButtons = () => {
+    const {leftButtons} = this.props;
+    if (_.isArray(leftButtons)) {
+      return _.map(leftButtons, button => this.renderTopBarButton(button));
+    } else {
+      return leftButtons && this.renderTopBarButton(leftButtons);
+    }
+  };
+
+  renderRightButtons = () => {
+    const {rightButtons} = this.props;
+    if (_.isArray(rightButtons)) {
+      return _.map(rightButtons, button => this.renderTopBarButton(button));
+    } else {
+      return rightButtons && this.renderTopBarButton(rightButtons);
+    }
+  };
+
   render() {
     const {title, titleStyle, includeStatusBar, containerStyle, useSafeArea} = this.props;
 
@@ -143,6 +167,7 @@ class TopBar extends Component<ModalTopBarProps> {
         <View style={styles.container}>
           <View row flex bottom paddingL-15 centerV>
             {this.renderCancel()}
+            {this.renderLeftButtons()}
           </View>
           <View row flex-3 bottom centerH centerV>
             <Text accessible={!!title} numberOfLines={1} text70 style={[styles.title, titleStyle]}>
@@ -150,6 +175,7 @@ class TopBar extends Component<ModalTopBarProps> {
             </Text>
           </View>
           <View row flex bottom right paddingR-15 centerV>
+            {this.renderRightButtons()}
             {this.renderDone()}
           </View>
         </View>
