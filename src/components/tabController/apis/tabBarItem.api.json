@@ -9,7 +9,12 @@
     {"name": "labelStyle;", "type": "TextStyle", "description": "Custom label style"},
     {"name": "selectedLabelStyle", "type": "TextStyle", "description": "Custom selected label style"},
     {"name": "labelColor", "type": "string", "description": "The default label color", "default": "Colors.black"},
-    {"name": "selectedLabelColor", "type": "string", "description": "The selected label color", "default": "Colors.primary"},
+    {
+      "name": "selectedLabelColor",
+      "type": "string",
+      "description": "The selected label color",
+      "default": "Colors.primary"
+    },
     {"name": "icon", "type": "number", "description": "Icon of the tab"},
     {"name": "iconColor", "type": "string", "description": "Icon tint color"},
     {"name": "selectedIconColor", "type": "string", "description": "Icon selected tint color"},
@@ -22,6 +27,11 @@
     {"name": "uppercase", "type": "boolean", "description": "Whether to change the text to uppercase"},
     {"name": "activeOpacity", "type": "number", "description": "The active opacity when pressing a tab"},
     {
+      "name": "backgroundColor",
+      "type": "string",
+      "description": " Apply background color for the tab bar item"
+    },
+    {
       "name": "activeBackgroundColor",
       "type": "string",
       "description": " Apply background color on press for TouchableOpacity"
@@ -29,7 +39,5 @@
     {"name": "style", "type": "ViewStyle", "description": "Pass custom style"},
     {"name": "testID", "type": "string", "description": "Used as a testing identifier"}
   ],
-  "snippet": [
-    "<TabBarItem label={$1}/>"
-  ]
+  "snippet": ["<TabBarItem label={$1}/>"]
 }
