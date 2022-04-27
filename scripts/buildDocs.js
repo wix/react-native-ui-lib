@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
 
-const result = childProcess.execSync('find ./src -name "*api.json"');
+const result = childProcess.execSync('find ./src ./lib/components -name "*api.json"');
 const apiFiles = result.toString().trim().split('\n');
 
 const components = apiFiles.map(filePath => {

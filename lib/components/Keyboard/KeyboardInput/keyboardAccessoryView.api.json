@@ -1,0 +1,62 @@
+{
+  "name": "KeyboardAccessoryView",
+  "category": "keyboard",
+  "description": "View that allows replacing the default keyboard with other components",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/nativeComponentScreens/keyboardInput/KeyboardInputViewScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/KeyboardAccessoryView/KeyboardAccessoryView.gif?raw=true"
+  ],
+  "props": [
+    {
+      "name": "renderContent",
+      "type": "() => React.ReactElement",
+      "description": "Content to be rendered above the keyboard"
+    },
+    {
+      "name": "kbInputRef",
+      "type": "any",
+      "description": "The reference to the actual text input (or the keyboard may not reset when instructed to, etc.).\niOS only.",
+      "required": true
+    },
+    {
+      "name": "kbComponent",
+      "type": "string",
+      "description": "The keyboard ID (the componentID sent to KeyboardRegistry)"
+    },
+    {"name": "kbInitialProps", "type": "any", "description": "The props that will be sent to the KeyboardComponent"},
+    {
+      "name": "onHeightChanged",
+      "type": "(height: number) => void",
+      "description": "A callback for when the height is changed"
+    },
+    {
+      "name": "onItemSelected",
+      "type": "() => void",
+      "description": "Callback that will be called when an item on the keyboard has been pressed."
+    },
+    {
+      "name": "onRequestShowKeyboard",
+      "type": "() => void",
+      "description": "Callback that will be called if KeyboardRegistry.requestShowKeyboard is called."
+    },
+    {
+      "name": "onKeyboardResigned",
+      "type": "() => void",
+      "description": "Callback that will be called once the keyboard has been closed"
+    },
+    {
+      "name": "iOSScrollBehavior",
+      "type": "number",
+      "description": "The scrolling behavior, use KeyboardAccessoryView.iosScrollBehaviors.X where X is:\nNONE, SCROLL_TO_BOTTOM_INVERTED_ONLY or FIXED_OFFSET\niOS only.",
+      "default": "FIXED_OFFSET"
+    }
+  ],
+  "snippet": [
+    "<KeyboardAccessoryView",
+    " renderContent={this.renderContent()}",
+    " kbInputRef={this.inputRef}",
+    " kbComponent={$1}",
+    " kbInitialProps={$2}",
+    " onHeightChanged={this.onHeightChanged()}",
+    "/>"
+  ]}

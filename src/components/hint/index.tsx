@@ -144,6 +144,7 @@ export interface HintProps {
    * Additional styling
    */
   style?: StyleProp<ViewStyle>;
+  children?: React.ReactNode;
 }
 
 interface HintState {

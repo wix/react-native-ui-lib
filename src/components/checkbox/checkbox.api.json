@@ -3,7 +3,6 @@
   "category": "form",
   "description": "Checkbox component for toggling boolean value related to some context",
   "extends": ["TouchableOpacity"],
-  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx"],
   "modifiers": ["margin", "background"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true"],

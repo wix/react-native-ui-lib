@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {ActivityIndicator, StyleSheet, findNodeHandle, AccessibilityInfo, ViewStyle} from 'react-native';
+import {ActivityIndicator, StyleSheet, findNodeHandle, AccessibilityInfo, ViewStyle, LayoutChangeEvent} from 'react-native';
 import _ from 'lodash';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
@@ -49,7 +49,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   ]);
 
   const viewRef = useRef();
-  const [toastHeight, setToastHeight] = useState();
+  const [toastHeight, setToastHeight] = useState<number | undefined>();
 
   const {clearTimer, setTimer} = useToastTimer(props);
   const toastPreset = useToastPresets({icon, iconColor, message, preset});
@@ -112,7 +112,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     return [positionStyle, translateStyle, {zIndex, elevation}];
   }, [positionStyle, translateStyle, zIndex, elevation]);
 
-  const onLayout = useCallback(event => {
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
     const height = event.nativeEvent.layout.height;
     if (height !== toastHeight) {
       setToastHeight(height);
