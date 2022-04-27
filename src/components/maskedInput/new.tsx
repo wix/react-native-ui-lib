@@ -14,7 +14,7 @@ import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
-export interface MaskedInputProps extends TextInputProps {
+export interface MaskedInputProps extends Omit<TextInputProps, 'value'> {
   /**
    * Initial value to pass to masked input
    */
