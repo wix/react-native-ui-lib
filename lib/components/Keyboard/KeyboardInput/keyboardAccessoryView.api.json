@@ -59,6 +59,6 @@
     " kbComponent={$1}",
     " kbInitialProps={$2}",
     " onHeightChanged={this.onHeightChanged()}",
-    " scrollBehavior={KeyboardTrackingView.scrollBehaviors.NONE$3}",
+    " scrollBehavior={KeyboardAccessoryView.iosScrollBehaviors.NONE$3}",
     "/>"
   ]}
