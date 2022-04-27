@@ -16,16 +16,37 @@ import products from '../../data/products';
 
 class SortableGridListScreen extends Component {
   state = {
-    orientation: Constants.orientation
+    orientation: Constants.orientation,
+    items: []
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: products.slice(0, 5)
+    };
+  }
 
   onOrderChange: SortableGridListProps['onOrderChange'] = (_newOrderedData, newOrder) => {
     console.log('newOrder:', newOrder);
   };
 
-  renderItem: GridListProps<typeof products[0]>['renderItem'] = ({item}) => {
+  addItem = () => {
+    this.setState({
+      items: [...this.state.items, products[0]]
+    });
+  }
+
+  removeItem = () => {
+    this.setState({
+      items: [...this.state.items.slice(0, this.state.items.length - 1)]
+    });
+  }
+
+  renderItem: GridListProps<typeof products[0]>['renderItem'] = ({item, index}) => {
+    const onPressHandler = index % 2 === 0 ? this.removeItem : this.addItem;
     return (
-      <Card flex onPress={() => console.log('item press')}>
+      <Card flex onPress={onPressHandler}>
         <Card.Section imageSource={{uri: item.mediaUrl}} imageStyle={styles.itemImage}/>
       </Card>
     );
@@ -38,7 +59,7 @@ class SortableGridListScreen extends Component {
           SortableGridList
         </Text>
         <SortableGridList
-          data={products}
+          data={this.state.items}
           renderItem={this.renderItem}
           // numColumns={2}
           maxItemWidth={140}
