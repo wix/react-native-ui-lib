@@ -19,8 +19,7 @@ import {useOrientation} from 'hooks';
 const BORDER_WIDTH = 1;
 const TIMING_CONFIG: WithTimingConfig = {
   duration: 300,
-  // @ts-expect-error TODO: change this to bezierFn or to the new implementation
-  easing: Easing.bezier(0.33, 1, 0.68, 1)
+  easing: Easing.bezier(0.33, 1, 0.68, 1).factory()
 };
 
 export type SegmentedControlItemProps = SegmentProps;
