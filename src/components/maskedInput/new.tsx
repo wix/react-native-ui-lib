@@ -82,7 +82,7 @@ function MaskedInput(props: MaskedInputProps, ref: ForwardedRef<any>) {
   [onChangeText, formatter]);
 
   const focus = useCallback(() => {
-    inputRef.current?.focus?.();
+    inputRef.current?.focus();
   }, []);
 
   const _renderMaskedText = () => {
