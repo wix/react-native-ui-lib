@@ -9,7 +9,7 @@ import TextField from '../textField';
 import {DialogProps} from '../dialog';
 import View from '../view';
 import Button from '../button';
-import ExpandableOverlay, {RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
+import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
 
 const MODES = {
   DATE: 'date',
@@ -124,12 +124,11 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
   };
 
   chosenDate?: Date;
+  expandable = React.createRef<ExpandableOverlayMethods>();
 
   constructor(props: DateTimePickerPropsInternal) {
     super(props);
-
     this.chosenDate = props.value;
-    this.expandable = React.createRef();
 
     if (!RNDateTimePicker) {
       console.error(`RNUILib DateTimePicker component requires installing "@react-native-community/datetimepicker" dependency`);
@@ -210,7 +209,12 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
       // onDismiss: this.toggleExpandableOverlay,
       containerStyle: styles.dialog,
       testID: `${testID}.dialog`,
-      supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right'] as DialogProps['supportedOrientations'],
+      supportedOrientations: [
+        'portrait',
+        'landscape',
+        'landscape-left',
+        'landscape-right'
+      ] as DialogProps['supportedOrientations'],
       ...dialogProps
     };
   };
@@ -293,7 +297,11 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
             renderInput({...this.props, value: this.getStringValue()})
           ) : (
             /* @ts-expect-error */
-            <TextField {...textInputProps} value={this.getStringValue()}/>
+            <TextField
+              {...textInputProps}
+              expandable={!!textInputProps.renderExpandableInput}
+              value={this.getStringValue()}
+            />
           )}
         </ExpandableOverlay>
       </>
