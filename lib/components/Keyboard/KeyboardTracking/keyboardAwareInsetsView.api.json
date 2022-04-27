@@ -1,0 +1,8 @@
+{
+  "name": "KeyboardAwareInsetsView",
+  "category": "keyboard",
+  "description": "Used to add an inset when a keyboard is used and might hide part of the screen.",
+  "note": "This view is useful only for iOS.",
+  "extends": ["KeyboardTrackingView"],
+  "snippet": ["<KeyboardAwareInsetsView/>"]
+}

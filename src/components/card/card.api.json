@@ -3,7 +3,6 @@
   "category": "basic",
   "description": "Customizable card component that handles press events",
   "extends": ["TouchableOpacity"],
-  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx"],
   "modifiers": ["margin", "padding"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx",
   "images": [

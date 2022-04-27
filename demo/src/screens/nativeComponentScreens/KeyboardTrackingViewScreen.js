@@ -88,8 +88,10 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
           style={styles.trackingToolbarContainer}
           trackInteractive={trackInteractive}
           useSafeArea
+          addBottomView
+          bottomViewColor={Colors.violet80}
         >
-          <View bg-white row spread centerV paddingH-s5 paddingV-s3>
+          <View bg-violet80 row spread centerV paddingH-s5 paddingV-s3>
             <TextField
               migrate
               containerStyle={styles.textField}
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   },
   textField: {
     flex: 1,
-    backgroundColor: Colors.grey60,
+    backgroundColor: Colors.grey80,
     paddingVertical: Spacings.s2,
     paddingHorizontal: Spacings.s4,
     borderRadius: 8

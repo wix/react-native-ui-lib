@@ -3,7 +3,6 @@
   "category": "form",
   "description": "Chips input component",
   "extends": ["TextField"],
-  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/textField/index.tsx"],
   "modifiers": ["typography"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.js",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ChipsInput/ChipsInput.gif?raw=true"],

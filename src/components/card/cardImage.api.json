@@ -3,7 +3,6 @@
   "category": "basic",
   "description": "Inner component for the Card component (better be a direct child)",
   "extends": ["Image"],
-  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/image/index.tsx"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx",
   "props": [
     {"name": "width", "type": "number", "description": "Width"},

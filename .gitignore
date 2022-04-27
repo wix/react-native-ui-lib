@@ -44,7 +44,6 @@ buck-out/
 \.buckd/
 *.keystore
 
-lib/
 .vscode
 
 # fastlane
