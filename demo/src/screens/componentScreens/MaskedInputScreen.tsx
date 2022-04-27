@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Typography, View, Text, MaskedInput, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {Typography, View, Text, MaskedInput, Button, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class MaskedInputScreen extends Component {
-  minInput = React.createRef<any>()
-  priceInput = React.createRef<any>()
+  minInput = React.createRef<any>();
+  priceInput = React.createRef<any>();
   state = {
     error: '',
     timeValue: '15'
@@ -54,6 +54,20 @@ export default class MaskedInputScreen extends Component {
     );
   }
 
+  renderPINCode = (value = '') => {
+    return (
+      <View row centerH>
+        {_.times(4, i => {
+          return (
+            <View marginR-s3 center style={styles.pinCodeSquare}>
+              <Text h1>{value[i]}</Text>
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
+
   render() {
     const {timeValue} = this.state;
 
@@ -88,6 +102,19 @@ export default class MaskedInputScreen extends Component {
             formatter={(value: string) => value?.replace(/\D/g, '')}
             keyboardType={'numeric'}
           />
+
+          <Text text70 marginT-s5 marginB-s4>
+            PIN Code
+          </Text>
+          <MaskedInput
+            migrate
+            maxLength={4}
+            ref={this.priceInput}
+            renderMaskedText={this.renderPINCode}
+            formatter={(value: string) => value?.replace(/\D/g, '')}
+            keyboardType={'numeric'}
+          />
+
           <View centerH marginT-100>
             <Button label="Clear All" onPress={this.clearInputs}/>
           </View>
@@ -109,5 +136,12 @@ const styles = StyleSheet.create({
   header: {
     ...Typography.text60,
     marginVertical: 20
+  },
+  pinCodeSquare: {
+    width: 50,
+    height: 70,
+    borderWidth: 2,
+    borderColor: Colors.grey30,
+    borderRadius: 4
   }
 });
