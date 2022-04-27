@@ -1,9 +1,15 @@
 import React, {forwardRef} from 'react';
-import {Platform, ViewStyle, ViewProps} from 'react-native';
+import {Platform, NativeModules, ViewStyle, ViewProps} from 'react-native';
 import {default as KeyboardTrackingViewIOS} from './KeyboardTrackingView.ios';
 import {default as KeyboardTrackingViewAndroid} from './KeyboardTrackingView.android';
 
 const isAndroid = Platform.OS === 'android';
+const SCROLL_BEHAVIORS = {
+  NONE: NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorNone,
+  SCROLL_TO_BOTTOM_INVERTED_ONLY: 
+    NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorScrollToBottomInvertedOnly,
+  FIXED_OFFSET: NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorFixedOffset
+};
 
 export type KeyboardTrackingViewProps = ViewProps & {
   /**
@@ -46,6 +52,10 @@ export type KeyboardTrackingViewProps = ViewProps & {
    */
   allowHitsOutsideBounds?: boolean;
   scrollToFocusedInput?: boolean;
+  /**
+   * iOS only.
+   * The scrolling behavior (NONE | SCROLL_TO_BOTTOM_INVERTED_ONLY | FIXED_OFFSET)
+   */
   scrollBehavior?: number;
   /**
    * iOS only.
@@ -82,3 +92,5 @@ const KeyboardTrackingView = forwardRef(({children, ...others}: KeyboardTracking
 });
 
 export default KeyboardTrackingView;
+// @ts-expect-error
+KeyboardTrackingView.scrollBehaviors = SCROLL_BEHAVIORS;

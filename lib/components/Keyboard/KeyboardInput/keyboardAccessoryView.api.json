@@ -47,8 +47,9 @@
     {
       "name": "iOSScrollBehavior",
       "type": "number",
-      "description": "The scrolling behavior, use KeyboardAccessoryView.iosScrollBehaviors.X where X is:\nNONE, SCROLL_TO_BOTTOM_INVERTED_ONLY or FIXED_OFFSET\niOS only.",
-      "default": "FIXED_OFFSET"
+      "description": "The scrolling behavior. DEPRECATED: Use 'scrollBehavior' prop instead and take values from 'KeyboardTrackingView.scrollBehaviors' (instead of KeyboardAccessoryView.iosScrollBehaviors)",
+      "default": "FIXED_OFFSET",
+      "deprecated": true
     }
   ],
   "snippet": [
@@ -58,5 +59,6 @@
     " kbComponent={$1}",
     " kbInitialProps={$2}",
     " onHeightChanged={this.onHeightChanged()}",
+    " scrollBehavior={KeyboardTrackingView.scrollBehaviors.NONE$3}",
     "/>"
   ]}

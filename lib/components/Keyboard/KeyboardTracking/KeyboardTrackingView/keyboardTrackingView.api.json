@@ -14,7 +14,10 @@
       "description": "Enables tracking of the keyboard when it's dismissed interactively (false by default).\nWhy? When using an external keyboard (BT),\nyou still get the keyboard events and the view just hovers when you focus the input.\nAlso, if you're not using interactive style of dismissing the keyboard\n(or if you don't have an input inside this view) it doesn't make sense to track it anyway.\n(This is caused because of the usage of inputAccessory to be able to track the keyboard interactive change and it introduces this bug)"
     },
     {"name": "scrollToFocusedInput", "type": "boolean", "description": ""},
-    {"name": "scrollBehavior", "type": "number", "description": ""},
+    {
+      "name": "scrollBehavior",
+      "type": "number",
+      "description": "The scrolling behavior (use KeyboardTrackingView.scrollBehaviors.NONE | SCROLL_TO_BOTTOM_INVERTED_ONLY | FIXED_OFFSET)"},
     {
       "name": "revealKeyboardInteractive",
       "type": "boolean",

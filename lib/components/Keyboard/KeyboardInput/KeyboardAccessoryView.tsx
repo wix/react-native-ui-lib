@@ -16,16 +16,7 @@ import KeyboardUtils from './utils/KeyboardUtils';
 const IsIOS = Platform.OS === 'ios';
 const IsAndroid = Platform.OS === 'android';
 
-const IOS_SCROLL_BEHAVIORS = IsIOS
-  ? {
-    NONE: NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorNone,
-    SCROLL_TO_BOTTOM_INVERTED_ONLY:
-        NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorScrollToBottomInvertedOnly,
-    FIXED_OFFSET: NativeModules.KeyboardTrackingViewTempManager?.KeyboardTrackingScrollBehaviorFixedOffset
-  }
-  : {};
-
-type kbTrackingViewProps = Pick<KeyboardTrackingViewProps, 'revealKeyboardInteractive' | 'manageScrollView' | 'requiresSameParentToManageScrollView' | 'allowHitsOutsideBounds' | 'addBottomView' | 'bottomViewColor' | 'useSafeArea' | 'usesBottomTabs'>;
+type kbTrackingViewProps = Pick<KeyboardTrackingViewProps, 'scrollBehavior' | 'revealKeyboardInteractive' | 'manageScrollView' | 'requiresSameParentToManageScrollView' | 'allowHitsOutsideBounds' | 'addBottomView' | 'bottomViewColor' | 'useSafeArea' | 'usesBottomTabs'>;
 
 export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
   /**
@@ -63,10 +54,8 @@ export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
    */
   onKeyboardResigned?: () => void;
   /**
-   * iOS only.
-   * The scrolling behavior, use KeyboardAccessoryView.iosScrollBehaviors.X where X is:
-   * NONE, SCROLL_TO_BOTTOM_INVERTED_ONLY or FIXED_OFFSET
-   * default: FIXED_OFFSET
+   * @deprecated
+   * Please use 'scrollBehavior' prop instead and take values from 'KeyboardTrackingView.scrollBehaviors' (instead of KeyboardAccessoryView.iosScrollBehaviors)
    */
   iOSScrollBehavior?: number;
   children?: React.ReactChild;
@@ -78,10 +67,10 @@ export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/KeyboardAccessoryView/KeyboardAccessoryView.gif?raw=true
  */
 class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
-  static iosScrollBehaviors = IOS_SCROLL_BEHAVIORS;
+  // @ts-expect-error
+  static iosScrollBehaviors = KeyboardTrackingView.scrollBehaviors;
 
   static defaultProps = {
-    iOSScrollBehavior: -1,
     revealKeyboardInteractive: false,
     manageScrollView: true,
     requiresSameParentToManageScrollView: false,
@@ -131,16 +120,6 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       return true;
     }
     return false;
-  }
-
-  getIOSTrackingScrollBehavior() {
-    const {iOSScrollBehavior} = this.props;
-
-    let scrollBehavior = iOSScrollBehavior;
-    if (IsIOS && scrollBehavior === -1) {
-      scrollBehavior = KeyboardAccessoryView.iosScrollBehaviors.FIXED_OFFSET;
-    }
-    return scrollBehavior;
   }
 
   async getNativeProps() {
@@ -202,13 +181,15 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       onItemSelected,
       onRequestShowKeyboard,
       useSafeArea,
+      scrollBehavior = KeyboardAccessoryView.iosScrollBehaviors.FIXED_OFFSET,
+      iOSScrollBehavior,
       ...others
     } = this.props;
 
     return (
       <KeyboardTrackingView
         {...others}
-        scrollBehavior={this.getIOSTrackingScrollBehavior()}
+        scrollBehavior={IsIOS ? iOSScrollBehavior || scrollBehavior : undefined}
         ref={(r: any) => (this.trackingViewRef = r)}
         style={styles.trackingToolbarContainer}
         onLayout={this.onContainerComponentHeightChanged}
