@@ -9,7 +9,9 @@ jest.mock('@react-native-community/netinfo', () => {});
 // TODO: Adding here a todo for package.json: need to remove moduleNameMapper, see this: https://github.com/software-mansion/react-native-reanimated/issues/1196
 jest.mock('react-native-reanimated', () => {
   const reactNativeReanimated = require('react-native-reanimated/mock');
-  reactNativeReanimated.interpolateColor = jest.fn(v => v); // TODO: See this https://github.com/software-mansion/react-native-reanimated/issues/2749
+  reactNativeReanimated.Easing.bezier = jest.fn(() => {
+    return {factory: jest.fn()};
+  });
   return reactNativeReanimated;
 });
 global.__reanimatedWorkletInit = jest.fn();
