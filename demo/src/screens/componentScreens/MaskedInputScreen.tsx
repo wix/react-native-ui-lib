@@ -4,27 +4,25 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {Typography, View, Text, MaskedInput, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class MaskedInputScreen extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      error: '',
-      timeValue: '15'
-    };
-  }
+  minInput = React.createRef<any>()
+  priceInput = React.createRef<any>()
+  state = {
+    error: '',
+    timeValue: '15'
+  };
 
   componentDidMount() {
     setTimeout(() => {
-      this.minput.focus();
+      this.minInput.current.focus();
     }, 500);
   }
 
   clearInputs = () => {
-    this.minput.clear();
-    this.priceInput.clear();
+    this.minInput.current.clear();
+    this.priceInput.current.clear();
   };
 
-  renderTimeText(value) {
+  renderTimeText(value: string) {
     const paddedValue = _.padStart(value, 4, '0');
     const hours = paddedValue.substr(0, 2);
     const minutes = paddedValue.substr(2, 2);
@@ -39,7 +37,7 @@ export default class MaskedInputScreen extends Component {
     );
   }
 
-  renderPrice(value) {
+  renderPrice(value: string) {
     const hasValue = Boolean(value && value.length > 0);
     return (
       <View row center>
@@ -71,9 +69,9 @@ export default class MaskedInputScreen extends Component {
           </Text>
           <MaskedInput
             migrate
-            ref={r => (this.minput = r)}
+            ref={this.minInput}
             renderMaskedText={this.renderTimeText}
-            formatter={value => value?.replace(/\D/g, '')}
+            formatter={(value: string) => value?.replace(/\D/g, '')}
             keyboardType={'numeric'}
             maxLength={4}
             initialValue={timeValue}
@@ -85,9 +83,9 @@ export default class MaskedInputScreen extends Component {
           </Text>
           <MaskedInput
             migrate
-            ref={r => (this.priceInput = r)}
+            ref={this.priceInput}
             renderMaskedText={this.renderPrice}
-            formatter={value => value?.replace(/\D/g, '')}
+            formatter={(value: string) => value?.replace(/\D/g, '')}
             keyboardType={'numeric'}
           />
           <View centerH marginT-100>
