@@ -55,7 +55,8 @@ export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
   onKeyboardResigned?: () => void;
   /**
    * @deprecated
-   * Please use 'scrollBehavior' prop instead and take values from 'KeyboardTrackingView.scrollBehaviors' (instead of KeyboardAccessoryView.iosScrollBehaviors)
+   * Please use 'scrollBehavior' prop instead
+   * The scrolling behavior (use KeyboardAccessoryView.iosScrollBehaviors.NONE | SCROLL_TO_BOTTOM_INVERTED_ONLY | FIXED_OFFSET)
    */
   iOSScrollBehavior?: number;
   children?: React.ReactChild;
@@ -67,7 +68,6 @@ export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/KeyboardAccessoryView/KeyboardAccessoryView.gif?raw=true
  */
 class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
-  // @ts-expect-error
   static iosScrollBehaviors = KeyboardTrackingView.scrollBehaviors;
 
   static defaultProps = {
@@ -181,7 +181,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       onItemSelected,
       onRequestShowKeyboard,
       useSafeArea,
-      scrollBehavior = KeyboardAccessoryView.iosScrollBehaviors.FIXED_OFFSET,
+      scrollBehavior = KeyboardTrackingView.scrollBehaviors.FIXED_OFFSET,
       iOSScrollBehavior,
       ...others
     } = this.props;
