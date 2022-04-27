@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, ModalProps} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {View, Text, Card, Button, Incubator, Colors, Spacings} from 'react-native-ui-lib';
+import {View, Text, Card, Button, Incubator, Colors, Spacings, ModalProps} from 'react-native-ui-lib';
 
 interface Item {
   value: string;
