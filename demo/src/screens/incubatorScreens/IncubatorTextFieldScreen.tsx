@@ -272,6 +272,17 @@ export default class TextFieldScreen extends Component {
             }
             fieldStyle={styles.withUnderline}
           />
+
+          <Text h3 blue50 marginV-s4>
+            Centered
+          </Text>
+
+          <TextField
+            label="PIN"
+            placeholder="XXXX"
+            labelStyle={{alignSelf: 'center'}}
+            containerStyle={{alignSelf: 'center'}}
+          />
         </View>
         <KeyboardAwareInsetsView/>
       </ScrollView>
