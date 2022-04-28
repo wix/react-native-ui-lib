@@ -43,13 +43,6 @@
       "name": "onKeyboardResigned",
       "type": "() => void",
       "description": "Callback that will be called once the keyboard has been closed"
-    },
-    {
-      "name": "iOSScrollBehavior",
-      "type": "number",
-      "description": "Use 'scrollBehavior' prop instead. The scrolling behavior (use KeyboardAccessoryView.iosScrollBehaviors.NONE | SCROLL_TO_BOTTOM_INVERTED_ONLY | FIXED_OFFSET).",
-      "default": "FIXED_OFFSET",
-      "deprecated": true
     }
   ],
   "snippet": [
@@ -59,6 +52,6 @@
     " kbComponent={$1}",
     " kbInitialProps={$2}",
     " onHeightChanged={this.onHeightChanged()}",
-    " scrollBehavior={KeyboardAccessoryView.iosScrollBehaviors.NONE$3}",
+    " scrollBehavior={KeyboardAccessoryView.scrollBehaviors.NONE$3}",
     "/>"
   ]}

@@ -92,3 +92,5 @@ const KeyboardTrackingView = forwardRef(({children, ...others}: KeyboardTracking
 });
 
 export default KeyboardTrackingView as (typeof KeyboardTrackingView & {scrollBehaviors: typeof SCROLL_BEHAVIORS});
+// @ts-expect-error
+KeyboardTrackingView.scrollBehaviors = SCROLL_BEHAVIORS;
