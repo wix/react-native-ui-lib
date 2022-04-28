@@ -246,7 +246,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     }
   };
 
-  getContentOffset = (snapToOffsets: number[] | undefined) => {
+  getInitialContentOffset = (snapToOffsets: number[] | undefined) => {
     const {horizontal, initialPage} = this.props;
     const {initialOffset} = this.state;
     let contentOffset = initialOffset;
@@ -498,7 +498,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const snapToOffsets = this.getSnapToOffsets();
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
     const ScrollContainer = animatedScrollOffset ? Animated.ScrollView : ScrollView;
-    const contentOffset = this.getContentOffset(snapToOffsets);
+    const contentOffset = this.getInitialContentOffset(snapToOffsets);
     return (
       <View
         animated={animated}
