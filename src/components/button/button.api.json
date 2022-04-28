@@ -2,7 +2,7 @@
   "name": "Button",
   "category": "basic",
   "description": "Customizable button component that handles press events",
-  "extends": ["TouchableOpacity"],
+  "extends": ["basic/TouchableOpacity"],
   "modifiers": ["margin", "background"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx",
   "images": [
