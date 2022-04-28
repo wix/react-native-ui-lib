@@ -49,7 +49,11 @@ export interface ModalProps extends RNModalProps {
    */
   useGestureHandlerRootView?: boolean;
   /**
-   * Send in order to add a KeyboardAvoidingView (iOS only)
+   * Should add a KeyboardAvoidingView (iOS only)
+   */
+  useKeyboardAvoidingView?: boolean;
+  /**
+   * Send additional props to the KeyboardAvoidingView (iOS only)
    */
   keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
 }
@@ -99,16 +103,23 @@ class Modal extends Component<ModalProps> {
   }
 
   render() {
-    const {blurView, enableModalBlur, visible, useGestureHandlerRootView, keyboardAvoidingViewProps, ...others} =
-      this.props;
+    const {
+      blurView,
+      enableModalBlur,
+      visible,
+      useGestureHandlerRootView,
+      useKeyboardAvoidingView,
+      keyboardAvoidingViewProps,
+      ...others
+    } = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
     const useGestureHandler = useGestureHandlerRootView && Constants.isAndroid;
     const GestureContainer = useGestureHandler ? GestureHandlerRootView : React.Fragment;
     const gestureContainerProps = useGestureHandler ? {style: styles.fill} : {};
-    const useKeyboardAvoiding = keyboardAvoidingViewProps && Constants.isIOS;
+    const useKeyboardAvoiding = useKeyboardAvoidingView && Constants.isIOS;
     const KeyboardAvoidingContainer = useKeyboardAvoiding ? KeyboardAvoidingView : React.Fragment;
     const keyboardAvoidingContainerProps = useKeyboardAvoiding
-      ? {behavior: 'padding', ...keyboardAvoidingViewProps, style: [styles.fill, keyboardAvoidingViewProps.style]}
+      ? {behavior: 'padding', ...keyboardAvoidingViewProps, style: [styles.fill, keyboardAvoidingViewProps?.style]}
       : {};
     const Container: any = blurView ? blurView : defaultContainer;
 
