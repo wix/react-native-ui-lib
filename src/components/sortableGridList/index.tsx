@@ -3,6 +3,7 @@ import {StyleSheet, FlatListProps, ScrollView, ScrollViewProps, ListRenderItemIn
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useSharedValue} from 'react-native-reanimated';
 import _ from 'lodash';
+import {useDidUpdate} from 'hooks';
 import {GridListBaseProps} from '../gridList';
 import SortableItem from './SortableItem';
 import usePresenter, {ItemsOrder} from './usePresenter';
@@ -20,7 +21,11 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
 
   const {itemContainerStyle, numberOfColumns} = useGridLayout(props);
   const {numColumns = DEFAULT_NUM_COLUMNS, itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
-  const itemsOrder = useSharedValue<number[]>(_.map(props.data, (_v, i) => i));
+  const itemsOrder = useSharedValue<number[]>(_.map(data, (_v, i) => i));
+
+  useDidUpdate(() => {
+    itemsOrder.value = _.map(data, (_v, i) => i);
+  }, [data]);
 
   // TODO: Get the number of columns from GridList calculation somehow
   const presenter = usePresenter(props.data?.length ?? 0, numColumns, itemSpacing);
