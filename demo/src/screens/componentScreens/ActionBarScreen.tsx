@@ -19,12 +19,12 @@ export default class ActionBarScreen extends Component {
 
   render() {
     return (
-      <View flex bg-grey80>
+      <View flex bg-$backgroundNeutralLight>
         <PageControl
           containerStyle={[styles.pageControl, styles.absoluteContainer]}
           numOfPages={6}
           currentPage={this.state.currentPage}
-          color={Colors.grey10}
+          color={Colors.$backgroundInverted}
           size={15}
         />
         <Carousel
@@ -35,7 +35,7 @@ export default class ActionBarScreen extends Component {
           <View style={styles.page}>
             <ActionBar
               actions={[
-                {label: 'Delete', onPress: () => Alert.alert('delete'), red30: true},
+                {label: 'Delete', onPress: () => Alert.alert('delete'), $textDangerLight: true},
                 {label: 'Replace Photo', onPress: () => Alert.alert('replace photo')},
                 {label: 'Edit', onPress: () => Alert.alert('edit')}
               ]}
@@ -44,17 +44,17 @@ export default class ActionBarScreen extends Component {
 
           <View style={styles.page}>
             <ActionBar
-              backgroundColor={Colors.primary}
+              backgroundColor={Colors.$backgroundPrimaryHeavy}
               actions={[
-                {label: 'Hide', onPress: () => Alert.alert('hide'), white: true},
-                {label: 'Add Discount', onPress: () => Alert.alert('add discount'), white: true},
-                {label: 'Duplicate', onPress: () => Alert.alert('duplicate'), white: true}
+                {label: 'Hide', onPress: () => Alert.alert('hide'), $textDefaultLight: true},
+                {label: 'Add Discount', onPress: () => Alert.alert('add discount'), $textDefaultLight: true},
+                {label: 'Duplicate', onPress: () => Alert.alert('duplicate'), $textDefaultLight: true}
               ]}
             />
           </View>
 
           <View style={styles.page}>
-            <ActionBar actions={[{label: 'Delete', red30: true}, {label: 'Edit'}]}/>
+            <ActionBar actions={[{label: 'Delete', $textDangerLight: true}, {label: 'Edit'}]}/>
           </View>
 
           <View style={styles.page}>
@@ -65,9 +65,9 @@ export default class ActionBarScreen extends Component {
             <ActionBar
               centered
               actions={[
-                {label: 'Bold', labelStyle: {color: Colors.grey10, ...Typography.text60, fontWeight: '400'}},
-                {label: 'Italic', text60: true, labelStyle: {fontStyle: 'italic', color: Colors.grey10}},
-                {label: 'Link', text60: true, labelStyle: {textDecorationLine: 'underline', color: Colors.grey10}}
+                {label: 'Bold', labelStyle: {color: Colors.$textDefault, ...Typography.text60, fontWeight: '400'}},
+                {label: 'Italic', text60: true, labelStyle: {fontStyle: 'italic', color: Colors.$textDefault}},
+                {label: 'Link', text60: true, labelStyle: {textDecorationLine: 'underline', color: Colors.$textDefault}}
               ]}
             />
           </View>

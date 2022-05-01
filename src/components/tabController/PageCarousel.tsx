@@ -37,7 +37,7 @@ function PageCarousel(props: ScrollViewProps) {
     }
   }, []);
 
-  const calcOffset = useCallback(offset => {
+  const calcOffset = useCallback((offset: number) => {
     'worklet';
     return FIX_RTL ? pageWidth * (itemsCount - 1) - offset : offset;
   },
@@ -67,7 +67,7 @@ function PageCarousel(props: ScrollViewProps) {
     }
   });
 
-  const scrollToItem = useCallback(index => {
+  const scrollToItem = useCallback((index: number) => {
     if (indexChangeReason.value === 'byScroll') {
       indexChangeReason.value = undefined;
     } else {

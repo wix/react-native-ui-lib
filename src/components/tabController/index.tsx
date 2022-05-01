@@ -95,7 +95,7 @@ function TabController({
   const targetPage = useSharedValue(initialIndex);
   // const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
 
-  const setCurrentIndex = useCallback(index => {
+  const setCurrentIndex = useCallback((index: number) => {
     'worklet';
     currentPage.value = index;
   }, []);

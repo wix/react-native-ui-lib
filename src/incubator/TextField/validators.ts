@@ -7,11 +7,11 @@ const integerRegEx = /^-?\d*$/; // allows empty string
 const priceRegEx = /^[0-9]{1,9}([.][0-9]{1,2})?$/;
 
 const validators = {
-  required: (value: string) => !_.isEmpty(value),
-  email: (value: string) => new EmailValidator().isValid(value),
-  url: (value: string) => urlRegEx.test(value),
-  number: (value: string) => integerRegEx.test(value) || decimalNumberRegEx.test(value),
-  price: (value: string) => priceRegEx.test(value)
+  required: (value = '') => !_.isEmpty(value),
+  email: (value = '') => new EmailValidator().isValid(value),
+  url: (value = '') => urlRegEx.test(value),
+  number: (value = '') => integerRegEx.test(value) || decimalNumberRegEx.test(value),
+  price: (value = '') => priceRegEx.test(value)
 };
 
 export default validators;

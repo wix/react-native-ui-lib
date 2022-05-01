@@ -209,6 +209,20 @@ ruleTester.run('function-deprecation', rule, {
       options: options,
       code: `${fullClassDeprecated5}`,
     },
+    {
+      options: options,
+      code: `
+import {a, c} from '${ourSource}';
+import {b} from '${notOurSource}';
+b.deprecatedFunction2();`
+    },
+    {
+      options: options,
+      code: `
+import {a, c} from '${ourSource}';
+import {b} from '${notOurSource}';
+b.deprecatedFunction3();`
+    },
   ],
   invalid: [
     {
@@ -326,6 +340,14 @@ deprecatedFunction(getProp())`,
       errors: [
         { message: classFunctionError }
       ],
+    },
+    {
+      options: options,
+      code: `
+import {a, c} from '${ourSource}';
+import {b} from '${notOurSource}';
+a.deprecatedFunction3();`,
+      errors: [{message: `The 'deprecatedFunction3' function is deprecated. please stop using it.`}]
     },
   ],
 });

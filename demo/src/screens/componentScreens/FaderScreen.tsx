@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     height: itemHeight,
     width: itemWidth,
     backgroundColor: Colors.$backgroundDefault,
-    borderColor: Colors.$outlineNeutralMedium,
+    borderColor: Colors.$outlineDisabled,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center'

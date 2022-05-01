@@ -3,6 +3,7 @@
   "category": "layoutsAndTemplates",
   "description": "An auto-generated grid list that calculate item size according to given props",
   "extends": ["FlatList"],
+  "extendsLink": ["https://reactnative.dev/docs/flatlist"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridListScreen.tsx",
   "props": [
     {"name": "numColumns", "type": "number", "description": "Number of items to show in a row (ignored when passing maxItemWidth)"},

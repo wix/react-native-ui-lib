@@ -265,7 +265,7 @@ class ScrollBar extends Component<Props, State> {
 }
 
 const Item = ({children, index, onLayout}: any) => {
-  const onItemLayout = useCallback(({nativeEvent: {layout}}) => {
+  const onItemLayout = useCallback(({nativeEvent: {layout}}: LayoutChangeEvent) => {
     onLayout({layout, index});
   }, [children]);
 

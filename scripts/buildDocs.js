@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
 
-const result = childProcess.execSync('find ./src -name "*api.json"');
+const result = childProcess.execSync('find ./src ./lib/components -name "*api.json"');
 const apiFiles = result.toString().trim().split('\n');
 
 const components = apiFiles.map(filePath => {
@@ -46,8 +46,7 @@ components.forEach(component => {
     if (component.extendsLink) {
       extendsText = `[${extendsText}](${component.extendsLink})`;
     } else {
-      const extendedComponentName = _.last(_.split(extendsText, '/')); // Incubator/TextField -> TextField
-      extendsText = `[${extendedComponentName}](/docs/components/${extendsText})`;
+      extendsText = _.map(component.extends, generateExtendsLink).join(', ');
     }
     content += `:::info\n`;
     content += `This component extends **${extendsText}** props.\n`;
@@ -109,4 +108,10 @@ function getComponentNameParts(componentName) {
   } else {
     return [parts[1], parts[0]];
   }
+}
+
+function generateExtendsLink(extendsLink) {
+  const extendedComponentName = _.last(_.split(extendsLink, '/')); // Incubator/TextField -> TextField
+  const extendsText = `[${extendedComponentName}](/docs/components/${extendsLink})`;
+  return extendsText;
 }

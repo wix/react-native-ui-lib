@@ -27,7 +27,7 @@ const OverlayFadingBackground = ({
     propsOnFadeDone?.();
   }, [propsOnFadeDone]);
 
-  const animateFading = useCallback((toValue) => {
+  const animateFading = useCallback((toValue: number) => {
     isAnimating.current = true;
     Animated.timing(fadeAnimation, {
       toValue,

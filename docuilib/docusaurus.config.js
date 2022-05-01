@@ -17,7 +17,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     trailingSlash: false,
     customFields: {
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android',
-      stars: '4.2'
+      stars: '4.4'
     },
     plugins: ['docusaurus-plugin-sass'],
     presets: [

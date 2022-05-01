@@ -76,7 +76,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
     }
   }, [chips, markedForRemoval, onChange]);
 
-  const onChipPress = useCallback(({customValue: index}) => {
+  const onChipPress = useCallback(({customValue: index}: {customValue: number}) => {
     const selectedChip = chips[index];
     selectedChip?.onPress?.();
 
@@ -84,7 +84,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
   },
   [chips]);
 
-  const onChangeText = useCallback(value => {
+  const onChangeText = useCallback((value: string) => {
     fieldValue.current = value;
     props.onChangeText?.(value);
 

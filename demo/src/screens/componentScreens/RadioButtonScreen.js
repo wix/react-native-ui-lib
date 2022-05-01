@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, ScrollView} from 'react-native';
+import {TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import {Assets, Colors, View, Text, RadioButton, RadioGroup} from 'react-native-ui-lib'; //eslint-disable-line
 const starIcon = require('../../assets/icons/star.png');
 
@@ -11,10 +11,10 @@ const COLORS = {
 
 export default class RadioButtonScreen extends Component {
   static colors = COLORS;
-  
+
   constructor(props) {
     super(props);
-    
+
     this.state = {
       color: undefined,
       messageType: undefined,
@@ -89,10 +89,10 @@ export default class RadioButtonScreen extends Component {
             <Text marginB-20 text60 $textDefault>
               Alignments
             </Text>
-            {this.renderRadioButtonWithImageAndText('right-icon', 'Text on right')}
-            {this.renderRadioButtonWithImageAndText('left-icon', 'Text on left', true)}
-            {this.renderRadioButton('left-content', 'Content on left', true)}
-            {this.renderRadioButton('right-content', 'Content on right', {contentOnRight: true})}
+            {this.renderRadioButtonWithImageAndText('left-icon', 'Text on right')}
+            {this.renderRadioButtonWithImageAndText('right-icon', 'Text on left', true)}
+            {this.renderRadioButton('right-content', 'Content on right', true)}
+            {this.renderRadioButton('left-content', 'Content on left', {contentOnLeft: true})}
             <Text marginT-10>You chose: {this.state.textSide}</Text>
           </RadioGroup>
 
@@ -116,6 +116,8 @@ export default class RadioButtonScreen extends Component {
               onPress={() => this.setState({individualValue2: !this.state.individualValue2})}
               label="Individual Radio Button (with style)"
               labelStyle={{fontSize: 16, fontWeight: 'bold'}}
+              contentOnLeft
+              containerStyle={styles.contentOnLeft}
             />
           </View>
           <TouchableOpacity
@@ -124,7 +126,12 @@ export default class RadioButtonScreen extends Component {
             accessible={false}
           >
             <View row centerV>
-              <RadioButton selected={this.state.individualValue} label="Individual Radio Button (wrapped)"/>
+              <RadioButton
+                contentOnLeft
+                containerStyle={styles.contentOnLeft}
+                selected={this.state.individualValue}
+                label="Individual Radio Button (wrapped)"
+              />
             </View>
           </TouchableOpacity>
           <View row centerV marginT-10>
@@ -133,6 +140,8 @@ export default class RadioButtonScreen extends Component {
               selected={this.state.disabledValue}
               onPress={() => this.setState({disabledValue: !this.state.disabledValue})}
               label="Disabled Radio Button"
+              contentOnLeft
+              containerStyle={styles.contentOnLeft}
             />
           </View>
           <View row centerV marginT-10>
@@ -141,6 +150,8 @@ export default class RadioButtonScreen extends Component {
               selected={this.state.disabledSelectedValue}
               onPress={() => this.setState({disabledSelectedValue: !this.state.disabledSelectedValue})}
               label="Disabled Selected Radio Button"
+              contentOnLeft
+              containerStyle={styles.contentOnLeft}
             />
           </View>
         </ScrollView>
@@ -148,3 +159,10 @@ export default class RadioButtonScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  contentOnLeft: {
+    flex: 1,
+    justifyContent: 'space-between'
+  }
+});

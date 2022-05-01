@@ -68,7 +68,7 @@ const PickerItem = (props: PickerItemProps) => {
     }
   }, [migrate, value, context.onPress]);
 
-  const onSelectedLayout = useCallback((...args) => {
+  const onSelectedLayout = useCallback((...args: any[]) => {
     _.invoke(context, 'onSelectedLayout', ...args);
   }, []);
 

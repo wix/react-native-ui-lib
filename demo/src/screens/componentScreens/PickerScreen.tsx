@@ -13,7 +13,9 @@ import {
   PanningProvider,
   Typography,
   PickerProps,
-  DialogProps
+  PickerMethods,
+  DialogProps,
+  Button
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import {longOptions} from './PickerScreenLongOptions';
@@ -38,6 +40,7 @@ const filters = [
 ];
 
 export default class PickerScreen extends Component {
+  picker = React.createRef<PickerMethods>();
   state = {
     itemsCount: 1,
     // language: {value: 'java', label: 'Java'},
@@ -260,6 +263,8 @@ export default class PickerScreen extends Component {
 
           <Picker
             migrate
+            // @ts-expect-error
+            ref={this.picker}
             migrateTextField
             label="Language"
             placeholder="Favorite Language"
@@ -270,6 +275,7 @@ export default class PickerScreen extends Component {
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             marginT-s4
+            enableErrors={false}
             // mode={Picker.modes.MULTI}
             // useNativePicker
           >
@@ -277,6 +283,12 @@ export default class PickerScreen extends Component {
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
+          <Button
+            label="Open Picker Manually"
+            link
+            style={{alignSelf: 'flex-start'}}
+            onPress={() => this.picker.current?.openExpandable?.()}
+          />
         </View>
       </ScrollView>
     );

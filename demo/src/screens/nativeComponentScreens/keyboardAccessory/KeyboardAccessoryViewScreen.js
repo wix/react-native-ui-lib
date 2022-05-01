@@ -107,7 +107,7 @@ export default class KeyboardAccessoryViewScreen extends PureComponent {
       <View style={styles.keyboardContainer} paddingV-s4>
         <View bg-white row spread centerV paddingH-s5 paddingV-s3>
           <TextField
-            migrate
+            // migrate
             ref={r => {
               this.textInputRef = r;
             }}
