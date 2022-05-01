@@ -9,6 +9,7 @@ import Animated, {
   withSpring,
   withTiming
 } from 'react-native-reanimated';
+import _ from 'lodash';
 import {useDidUpdate} from 'hooks';
 import usePresenter, {ItemsOrder, animationConfig} from './usePresenter';
 import View from '../view';
@@ -34,7 +35,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
     getTranslationByOrderChange,
     updateItemLayout
   } = props;
-  const initialIndex = useSharedValue(itemsOrder.value.indexOf(id));
+  const initialIndex = useSharedValue(_.map(data, 'id').indexOf(id));
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
@@ -57,7 +58,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
         translateX.value = 0;
         translateY.value = 0;
       } else if (prevOrder !== null && newOrder !== prevOrder) {
-  
         const translation = getTranslationByOrderChange(newOrder, prevOrder);
         translateX.value = withTiming(translateX.value + translation.x, animationConfig);
         translateY.value = withTiming(translateY.value + translation.y, animationConfig);

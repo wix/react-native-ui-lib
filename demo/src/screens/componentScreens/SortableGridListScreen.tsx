@@ -22,7 +22,8 @@ class SortableGridListScreen extends Component {
   state = {
     orientation: Constants.orientation,
     selectedItemId: undefined,
-    items: productsWithIds
+    items: productsWithIds,
+    removedItems: [] as Item[]
   };
   itemsOrdered = this.state.items;
 
@@ -41,12 +42,24 @@ class SortableGridListScreen extends Component {
   };
 
   removeSelectedItem = () => {
-    const {selectedItemId} = this.state;
+    const {selectedItemId, removedItems} = this.state;
     if (!_.isUndefined(selectedItemId)) {
       const newItems = [...this.itemsOrdered];
-      _.remove(newItems, item => item.id === selectedItemId);
-      this.setState({items: newItems, selectedItemId: undefined});
+      const removed = _.remove(newItems, item => item.id === selectedItemId);
+      removedItems.push(removed[0]);
+      this.setState({items: newItems, selectedItemId: undefined, removedItems});
       this.itemsOrdered = newItems;
+    }
+  };
+
+  addItem = () => {
+    const {removedItems} = this.state;
+    const itemToAdd = removedItems.pop();
+    if (itemToAdd) {
+      this.itemsOrdered.push(itemToAdd);
+      const newItems = [...this.itemsOrdered];
+
+      this.setState({items: newItems, selectedItemId: undefined, removedItems});
     }
   };
 
@@ -70,14 +83,19 @@ class SortableGridListScreen extends Component {
   };
 
   render() {
-    const {items} = this.state;
+    const {items, removedItems} = this.state;
     return (
       <View flex>
         <Text h1 margin-s5>
           SortableGridList
         </Text>
         <View row center marginB-s2>
-          <Button label="Add Item" size={Button.sizes.xSmall}/>
+          <Button
+            label="Add Item"
+            size={Button.sizes.xSmall}
+            disabled={removedItems.length === 0}
+            onPress={this.addItem}
+          />
           <Button label="Remove Item" size={Button.sizes.xSmall} marginL-s3 onPress={this.removeSelectedItem}/>
         </View>
         <SortableGridList
