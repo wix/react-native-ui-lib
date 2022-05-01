@@ -67,7 +67,7 @@ export default function useFieldState({
   },
   [props.onBlur, validateOnBlur, validateField]);
 
-  const onChangeText = useCallback(text => {
+  const onChangeText = useCallback((text: string) => {
     setValue(text);
     props.onChangeText?.(text);
 

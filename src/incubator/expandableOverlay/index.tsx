@@ -44,7 +44,7 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
     /**
      * A custom overlay to render instead of Modal or Dialog components
      */
-    renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement | undefined;
+    renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement | undefined | null;
     /**
      * Disabled opening expandable overlay
      */

@@ -160,6 +160,7 @@ export interface SkeletonViewProps extends AccessibilityProps, AlignmentModifier
    * Used to locate this view in end-to-end tests
    */
   testID?: string;
+  children?: React.ReactNode;
 }
 
 interface SkeletonState {

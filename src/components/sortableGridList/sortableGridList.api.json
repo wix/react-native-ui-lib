@@ -2,7 +2,7 @@
   "name": "SortableGridList",
   "category": "layoutsAndTemplates",
   "description": "An sortable grid list (based on GridList component)",
-  "notes": "This component supports square items only",
+  "note": "This component supports square items only",
   "extends": ["layoutsAndTemplates/GridList"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableGridListScreen.tsx",
   "props": [

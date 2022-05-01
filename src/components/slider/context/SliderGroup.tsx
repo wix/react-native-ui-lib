@@ -9,10 +9,11 @@ interface SliderGroupProps {
   color: string;
   onValueChange: (color: string) => void;
   style?: StyleProp<ViewStyle>;
+  children?: React.ReactNode;
 }
 
 interface SliderGroupState {
-  value: tinycolor.ColorFormats.HSLA
+  value: tinycolor.ColorFormats.HSLA;
 }
 
 export default class SliderGroup extends Component<SliderGroupProps, SliderGroupState> {
@@ -36,14 +37,12 @@ export default class SliderGroup extends Component<SliderGroupProps, SliderGroup
   setValue = (value: tinycolor.ColorFormats.HSLA) => {
     this.setState({value});
     _.invoke(this.props, 'onValueChange', Colors.getHexString(value));
-  }
+  };
 
   render() {
     return (
       <View {...this.props}>
-        <SliderContext.Provider value={this.getContextProviderValue()}>
-          {this.props.children}
-        </SliderContext.Provider>
+        <SliderContext.Provider value={this.getContextProviderValue()}>{this.props.children}</SliderContext.Provider>
       </View>
     );
   }

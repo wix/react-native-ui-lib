@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, FlatListProps, ScrollView, ScrollViewProps} from 'react-native';
+import {StyleSheet, FlatListProps, ScrollView, ScrollViewProps, ListRenderItemInfo} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useSharedValue} from 'react-native-reanimated';
 import _ from 'lodash';
@@ -36,7 +36,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
     onOrderChange?.(newData, itemsOrder.value);
   }, [onOrderChange, data]);
 
-  const _renderItem = useCallback(({item, index}) => {
+  const _renderItem = useCallback(({item, index}: ListRenderItemInfo<T>) => {
     const lastItemInRow = (index + 1) % numberOfColumns === 0;
     return (
       <SortableItem
@@ -56,7 +56,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   return (
     <GestureHandlerRootView>
       <ScrollView contentContainerStyle={[styles.listContent, contentContainerStyle]}>
-        {data?.map((item, index) => _renderItem({item, index}))}
+        {data?.map((item, index) => _renderItem({item, index} as ListRenderItemInfo<T>))}
       </ScrollView>
     </GestureHandlerRootView>
   );
