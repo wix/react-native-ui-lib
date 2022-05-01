@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {Easing, useSharedValue} from 'react-native-reanimated';
 import Constants from '../../commons/Constants';
 
@@ -11,34 +10,32 @@ export const animationConfig = {
   duration: 350
 };
 
-export type ItemsLayouts = ({width: number; height: number} | undefined)[];
-export type ItemsOrder = number[];
+export type ItemLayout = {width: number; height: number} | undefined;
+export type ItemsOrder = string[];
 
-const usePresenter = (itemsCount: number, numOfColumns: number, itemSpacing: number) => {
-
-  const itemsLayouts = useSharedValue<ItemsLayouts>(_.times(itemsCount, () => undefined));
+const usePresenter = (numOfColumns: number, itemSpacing: number) => {
+  const itemLayout = useSharedValue<ItemLayout>(undefined);
   const itemSize = getItemSize(numOfColumns, Constants.screenWidth);
 
   return {
-    updateItemLayout: (index: number, layout: {width: number;height: number}) => {
+    updateItemLayout: (layout: {width: number; height: number}) => {
       'worklet';
-      itemsLayouts.value[index] = layout;
 
-      if (itemsLayouts.value.findIndex(item => item === undefined) === -1) {
-        itemsLayouts.value = [...itemsLayouts.value];
+      if (itemLayout.value === undefined) {
+        itemLayout.value = layout;
       }
     },
     getTranslationByOrderChange: (newOrder: number, oldOrder: number) => {
       'worklet';
       const oldRow = Math.floor(oldOrder / numOfColumns);
       const oldColumn = oldOrder % numOfColumns;
-      
+
       const newRow = Math.floor(newOrder / numOfColumns);
       const newColumn = newOrder % numOfColumns;
 
       const translation = {
-        x: (newColumn - oldColumn) * ((itemsLayouts.value[0]?.width ?? 0) + itemSpacing),
-        y: (newRow - oldRow) * ((itemsLayouts.value[0]?.height ?? 0) + itemSpacing)
+        x: (newColumn - oldColumn) * ((itemLayout.value?.width ?? 0) + itemSpacing),
+        y: (newRow - oldRow) * ((itemLayout.value?.height ?? 0) + itemSpacing)
       };
       return translation;
     },
@@ -49,7 +46,7 @@ const usePresenter = (itemsCount: number, numOfColumns: number, itemSpacing: num
       return row * numOfColumns + col;
     },
 
-    getItemOrderById: (itemsOrder: ItemsOrder, itemId: number) => {
+    getItemOrderById: (itemsOrder: ItemsOrder, itemId: string) => {
       'worklet';
       return itemsOrder.indexOf(itemId);
     },

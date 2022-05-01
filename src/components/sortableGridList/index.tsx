@@ -10,10 +10,12 @@ import usePresenter, {ItemsOrder} from './usePresenter';
 
 import useGridLayout, {DEFAULT_ITEM_SPACINGS, DEFAULT_NUM_COLUMNS} from '../gridList/useGridLayout';
 
+type ItemProps<T> = T & {id: string};
+
 export interface SortableGridListProps<T = any> extends GridListBaseProps, ScrollViewProps {
-  data: FlatListProps<T>['data'];
-  renderItem: FlatListProps<T>['renderItem'];
-  onOrderChange?: (newData: T[], newOrder: ItemsOrder) => void;
+  data: FlatListProps<ItemProps<T>>['data'];
+  renderItem: FlatListProps<ItemProps<T>>['renderItem'];
+  onOrderChange?: (newData: ItemProps<T>[], newOrder: ItemsOrder) => void;
 }
 
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
@@ -21,47 +23,51 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
 
   const {itemContainerStyle, numberOfColumns} = useGridLayout(props);
   const {numColumns = DEFAULT_NUM_COLUMNS, itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
-  const itemsOrder = useSharedValue<number[]>(_.map(data, (_v, i) => i));
+  const itemsOrder = useSharedValue<ItemsOrder>(_.map(data, item => item.id));
 
   useDidUpdate(() => {
-    itemsOrder.value = _.map(data, (_v, i) => i);
+    itemsOrder.value = _.map(data, item => item.id);
   }, [data]);
 
   // TODO: Get the number of columns from GridList calculation somehow
-  const presenter = usePresenter(props.data?.length ?? 0, numColumns, itemSpacing);
+  const presenter = usePresenter(numColumns, itemSpacing);
 
   const onChange = useCallback(() => {
-    const newData: T[] = [];
+    const newData: ItemProps<T>[] = [];
+    const dataByIds = _.mapKeys(data, 'id');
     if (data?.length) {
-      itemsOrder.value.forEach(itemIndex => {
-        newData.push(data[itemIndex]);
+      itemsOrder.value.forEach(itemId => {
+        newData.push(dataByIds[itemId]);
       });
     }
 
     onOrderChange?.(newData, itemsOrder.value);
   }, [onOrderChange, data]);
 
-  const _renderItem = useCallback(({item, index}: ListRenderItemInfo<T>) => {
+  const _renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps<T>>) => {
     const lastItemInRow = (index + 1) % numberOfColumns === 0;
+
     return (
       <SortableItem
         key={index}
+        data={data}
         {...presenter}
         style={[itemContainerStyle, lastItemInRow && {marginRight: 0}]}
         itemsOrder={itemsOrder}
-        index={index}
+        id={item.id}
         onChange={onChange}
       >
         {/* @ts-expect-error */}
         {renderItem({item, index})}
       </SortableItem>
     );
-  }, []);
+  },
+  [data]);
 
   return (
     <GestureHandlerRootView>
       <ScrollView contentContainerStyle={[styles.listContent, contentContainerStyle]}>
-        {data?.map((item, index) => _renderItem({item, index} as ListRenderItemInfo<T>))}
+        {data?.map((item, index) => _renderItem({item, index} as ListRenderItemInfo<ItemProps<T>>))}
       </ScrollView>
     </GestureHandlerRootView>
   );

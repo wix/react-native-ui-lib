@@ -9,11 +9,13 @@ import Animated, {
   withSpring,
   withTiming
 } from 'react-native-reanimated';
+import {useDidUpdate} from 'hooks';
 import usePresenter, {ItemsOrder, animationConfig} from './usePresenter';
 import View from '../view';
 
 interface SortableItemProps extends ReturnType<typeof usePresenter> {
-  index: number;
+  id: string;
+  data: any;
   itemsOrder: Animated.SharedValue<ItemsOrder>;
   onChange: () => void;
   style: StyleProp<ViewStyle>;
@@ -21,7 +23,8 @@ interface SortableItemProps extends ReturnType<typeof usePresenter> {
 
 function SortableItem(props: PropsWithChildren<SortableItemProps>) {
   const {
-    index,
+    data,
+    id,
     itemsOrder,
     onChange,
     style,
@@ -31,6 +34,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
     getTranslationByOrderChange,
     updateItemLayout
   } = props;
+  const initialIndex = useSharedValue(itemsOrder.value.indexOf(id));
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
@@ -40,23 +44,34 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
   const tempTranslateX = useSharedValue(0);
   const tempTranslateY = useSharedValue(0);
 
-  const onLayout = useCallback((event: LayoutChangeEvent) => {
-    'worklet';
-    const {width, height} = event.nativeEvent.layout;
-    updateItemLayout(index, {width, height});
-  }, []);
+  const dataHasChanged = useSharedValue(false);
 
-  useAnimatedReaction(() => itemsOrder.value.indexOf(index), // Note: It doesn't work with the getItemOrderById util
+  useDidUpdate(() => {
+    dataHasChanged.value = true;
+  }, [data]);
+
+  useAnimatedReaction(() => getItemOrderById(itemsOrder.value, id),
     (newOrder, prevOrder) => {
-      if (prevOrder !== null && newOrder !== prevOrder) {
+      if (dataHasChanged.value) {
+        dataHasChanged.value = false;
+        translateX.value = 0;
+        translateY.value = 0;
+      } else if (prevOrder !== null && newOrder !== prevOrder) {
+  
         const translation = getTranslationByOrderChange(newOrder, prevOrder);
         translateX.value = withTiming(translateX.value + translation.x, animationConfig);
         translateY.value = withTiming(translateY.value + translation.y, animationConfig);
-      } else if (newOrder === index) {
+      } else if (newOrder === initialIndex.value) {
         translateX.value = withTiming(0, animationConfig);
         translateY.value = withTiming(0, animationConfig);
       }
     });
+
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    'worklet';
+    const {width, height} = event.nativeEvent.layout;
+    updateItemLayout({width, height});
+  }, []);
 
   const longPressGesture = Gesture.LongPress()
     .onStart(() => {
@@ -90,23 +105,23 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
       translateY.value = tempTranslateY.value + event.translationY;
 
       // Swapping items
-      const oldOrder = getItemOrderById(itemsOrder.value, index);
-      const newOrder = getOrderByPosition(translateX.value, translateY.value) + index;
+      const oldOrder = getItemOrderById(itemsOrder.value, id);
+      const newOrder = getOrderByPosition(translateX.value, translateY.value) + initialIndex.value;
 
       if (oldOrder !== newOrder) {
         const itemIdToSwap = getIdByItemOrder(itemsOrder.value, newOrder);
 
         if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
-          newItemsOrder[newOrder] = index;
+          newItemsOrder[newOrder] = id;
           newItemsOrder[oldOrder] = itemIdToSwap;
           itemsOrder.value = newItemsOrder;
         }
       }
     })
     .onEnd(() => {
-      const translation = getTranslationByOrderChange(getItemOrderById(itemsOrder.value, index),
-        getItemOrderById(tempItemsOrder.value, index));
+      const translation = getTranslationByOrderChange(getItemOrderById(itemsOrder.value, id),
+        getItemOrderById(tempItemsOrder.value, id));
 
       translateX.value = withTiming(tempTranslateX.value + translation.x, animationConfig);
       translateY.value = withTiming(tempTranslateY.value + translation.y, animationConfig);
@@ -133,6 +148,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
       transform: [{translateX: translateX.value}, {translateY: translateY.value}, {scale}]
     };
   });
+
   return (
     <View reanimated style={[style, animatedStyle]} onLayout={onLayout}>
       {/* @ts-expect-error related to children type issue that started on react 18 */}
