@@ -18,15 +18,19 @@ export interface SortableGridListProps<T = any> extends GridListBaseProps, Scrol
   onOrderChange?: (newData: ItemProps<T>[], newOrder: ItemsOrder) => void;
 }
 
+function generateItemsOrder(data: SortableGridListProps['data']) {
+  return _.map(data, (item) => item.id);
+}
+
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   const {renderItem, onOrderChange, contentContainerStyle, ...others} = props;
 
   const {itemContainerStyle, numberOfColumns} = useGridLayout(props);
   const {numColumns = DEFAULT_NUM_COLUMNS, itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
-  const itemsOrder = useSharedValue<ItemsOrder>(_.map(data, item => item.id));
+  const itemsOrder = useSharedValue<ItemsOrder>(generateItemsOrder(data));
 
   useDidUpdate(() => {
-    itemsOrder.value = _.map(data, item => item.id);
+    itemsOrder.value = generateItemsOrder(data);
   }, [data]);
 
   // TODO: Get the number of columns from GridList calculation somehow
