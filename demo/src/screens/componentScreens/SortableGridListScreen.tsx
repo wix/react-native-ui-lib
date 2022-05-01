@@ -98,18 +98,20 @@ class SortableGridListScreen extends Component {
           />
           <Button label="Remove Item" size={Button.sizes.xSmall} marginL-s3 onPress={this.removeSelectedItem}/>
         </View>
-        <SortableGridList
-          data={items}
-          renderItem={this.renderItem}
-          // numColumns={2}
-          maxItemWidth={140}
-          itemSpacing={Spacings.s3}
-          // itemSpacing={0}
-          listPadding={Spacings.s5}
-          // keepItemSize
-          contentContainerStyle={styles.list}
-          onOrderChange={this.onOrderChange}
-        />
+        <View flex>
+          <SortableGridList
+            data={items}
+            renderItem={this.renderItem}
+            // numColumns={2}
+            maxItemWidth={140}
+            itemSpacing={Spacings.s3}
+            // itemSpacing={0}
+            listPadding={Spacings.s5}
+            // keepItemSize
+            contentContainerStyle={styles.list}
+            onOrderChange={this.onOrderChange}
+          />
+        </View>
       </View>
     );
   }
