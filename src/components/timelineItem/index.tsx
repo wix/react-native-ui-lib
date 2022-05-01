@@ -15,25 +15,25 @@ const CONTENT_POINT_SIZE = 20;
 const ICON_SIZE = 12;
 
 export enum StateTypes {
-  CURRENT = 'current',
+  CURRENT = 'current', // default
   NEXT = 'next',
   ERROR = 'error',
   SUCCESS = 'success'
 }
 
 export enum LineTypes {
-  FULL = 'full',
+  FULL = 'full', // default
   DASHED = 'dashed'
 }
 
 export enum PointTypes {
-  FULL = 'full',
+  BULLET = 'bullet', // default
   HOLLOW = 'hollow',
   HALO = 'halo'
 }
 
 export enum AlignmentType {
-  CENTER = 'center',
+  CENTER = 'center', // default
   TOP = 'top'
 }
 
@@ -121,22 +121,20 @@ const TimelineItem = (props: TimelineItemProps) => {
     return [styles.point, pointSizeStyle, pointColorStyle, haloStyle, hollowStyle];
   }, [point?.type, point?.color, point?.label, point?.icon, getStateColor]);
 
-  const renderPoint = () => {
+  const renderPointContent = () => {
     if (point?.icon) {
-      return (
-        <View center style={pointStyle}>
-          <Icon source={point?.icon} size={ICON_SIZE} tintColor={Colors.white}/>
-        </View>
-      );
+      return <Icon source={point?.icon} size={ICON_SIZE} tintColor={Colors.white}/>;
+    } else if (point?.label) {
+      return <Text white subtext>{point?.label}</Text>;
     }
-    if (point?.label) {
-      return (
-        <View center style={pointStyle}>
-          <Text white subtext>{point?.label}</Text>
-        </View>
-      );
-    }
-    return <View style={pointStyle}/>;
+  };
+
+  const renderPoint = () => {
+    return (
+      <View center style={pointStyle}>
+        {renderPointContent()}
+      </View>
+    );
   };
 
   const onHeaderLayout = useCallback((nativeEvent: LayoutChangeEvent) => {
