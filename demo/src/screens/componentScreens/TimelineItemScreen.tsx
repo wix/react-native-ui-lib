@@ -1,12 +1,12 @@
 import React, {useCallback} from 'react';
 import {ScrollView} from 'react-native';
-import {Colors, TimelineItem, Card, Text} from 'react-native-ui-lib';
+import {Assets, Colors, TimelineItem, Card, Text} from 'react-native-ui-lib';
 
 const TimelineItemScreen = () => {
   
   const renderContent = useCallback(() => {
     return (
-      <Card flex style={{height: 200, backgroundColor: 'green'}}>
+      <Card flex center style={{height: 200, backgroundColor: Colors.green50}}>
         <Text>This is content</Text>
       </Card>
     );
@@ -14,7 +14,18 @@ const TimelineItemScreen = () => {
 
   return (
     <ScrollView>
-      <TimelineItem state={TimelineItem.states.NEXT} renderContent={renderContent}/>
+      <TimelineItem 
+        state={TimelineItem.states.NEXT} 
+        renderContent={renderContent}
+        topLine={{type: TimelineItem.lineTypes.DASHED, color: Colors.violet40}}
+        // bottomLine={{type: TimelineItem.lineTypes.FULL}}
+        point={{
+          type: TimelineItem.pointTypes.HALO,
+          color: Colors.orange40,
+          // icon: Assets.icons.demo.camera,
+          label: 2
+        }}
+      />
     </ScrollView>
   );
 };

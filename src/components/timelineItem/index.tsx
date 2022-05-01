@@ -1,7 +1,18 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {StyleSheet, ImageRequireSource, LayoutChangeEvent} from 'react-native';
+// import Dash from 'react-native-dash';
 import {Colors} from '../../style';
 import View from '../view';
+import Icon from '../icon';
+import Text from '../text';
+
+
+const POINT_SIZE = 12;
+const HALO_WIDTH = 4;
+const HALO_TINT = 70;
+const HOLLO_WIDTH = 2;
+const CONTENT_POINT_SIZE = 20;
+const ICON_SIZE = 12;
 
 export enum StateTypes {
   CURRENT = 'current',
@@ -15,9 +26,10 @@ export enum LineTypes {
   DASHED = 'dashed'
 }
 
-export type LineProps = {
-  type?: LineTypes;
-  color?: string;
+export enum PointTypes {
+  FULL = 'full',
+  HOLLOW = 'hollow',
+  HALO = 'halo'
 }
 
 export enum AlignmentType {
@@ -25,11 +37,16 @@ export enum AlignmentType {
   TOP = 'top'
 }
 
-export type PointProps = {
+export type LineProps = {
+  type?: LineTypes;
   color?: string;
-  label?: number;
+}
+
+export type PointProps = {
+  type?: PointTypes;
+  color?: string;
   icon?: ImageRequireSource;
-  showHalo?: boolean;
+  label?: number;
   alignment?: AlignmentType;
 }
 
@@ -45,7 +62,7 @@ export type TimelineItemProps = {
 const TimelineItem = (props: TimelineItemProps) => {
   const {state = StateTypes.CURRENT, topLine, bottomLine, point, renderHeader, renderContent} = props;
 
-  const getStateColor = () => {
+  const getStateColor = useCallback(() => {
     switch (state) {
       case StateTypes.CURRENT:
         return Colors.$backgroundPrimaryHeavy;
@@ -54,16 +71,27 @@ const TimelineItem = (props: TimelineItemProps) => {
       case StateTypes.ERROR:
         return Colors.$backgroundDangerHeavy;
       case StateTypes.SUCCESS:
-        return Colors.$backgroundSuccess;
+        return Colors.$backgroundSuccessHeavy;
       default: 
         return Colors.$backgroundPrimaryHeavy;
     }
-  };
+  }, [state]);
 
   const renderLine = (type?: LineTypes, color?: string) => {
-    return (
-      <View style={{flex: 1, width: 2, backgroundColor: color || getStateColor()}}/>
-    );
+    const lineColor = color || getStateColor();
+    if (type === LineTypes.DASHED) {
+      // return (
+      //   <Dash 
+      //     dashGap={6}
+      //     dashLength={6}
+      //     dashThickness={2}
+      //     dashColor={lineColor}
+      //     style={{flex: 1, flexDirection: 'column'}}
+      //   />
+      // );
+      return <View style={{flex: 1, width: 2, backgroundColor: lineColor}}/>;
+    }
+    return <View style={{flex: 1, width: 2, backgroundColor: lineColor}}/>;
   };
 
   const renderTopLine = () => {
@@ -74,10 +102,41 @@ const TimelineItem = (props: TimelineItemProps) => {
     return renderLine(bottomLine?.type, bottomLine?.color);
   };
 
+  const pointStyle = useMemo(() => {
+    const hasHalo = point?.type === PointTypes.HALO;
+    const isHollow = point?.type === PointTypes.HOLLOW;
+    const hasContent = point?.label || point?.icon;
+
+    const size = hasContent ? CONTENT_POINT_SIZE : POINT_SIZE;
+    const pointSize = hasHalo ? size + HALO_WIDTH * 2 : size;
+    const pointSizeStyle = {width: pointSize, height: pointSize, borderRadius: pointSize / 2};
+
+    const pointColor = point?.color || getStateColor();
+    const pointColorStyle = {backgroundColor: pointColor};
+
+    const haloStyle = hasHalo && {borderWidth: HALO_WIDTH, borderColor: Colors.getColorTint(pointColor, HALO_TINT)};
+    const hollowStyle = !hasContent && isHollow && 
+      {backgroundColor: Colors.white, borderWidth: HOLLO_WIDTH, borderColor: pointColor};
+    
+    return [styles.point, pointSizeStyle, pointColorStyle, haloStyle, hollowStyle];
+  }, [point?.type, point?.color, point?.label, point?.icon, getStateColor]);
+
   const renderPoint = () => {
-    return (
-      <View style={[styles.point, {backgroundColor: point?.color || getStateColor()}]}/>
-    );
+    if (point?.icon) {
+      return (
+        <View center style={pointStyle}>
+          <Icon source={point?.icon} size={ICON_SIZE} tintColor={Colors.white}/>
+        </View>
+      );
+    }
+    if (point?.label) {
+      return (
+        <View center style={pointStyle}>
+          <Text white subtext>{point?.label}</Text>
+        </View>
+      );
+    }
+    return <View style={pointStyle}/>;
   };
 
   const onHeaderLayout = useCallback((nativeEvent: LayoutChangeEvent) => {
@@ -132,8 +191,11 @@ const TimelineItem = (props: TimelineItemProps) => {
 };
 
 export default TimelineItem;
-TimelineItem.displayName = "TimelineItem";
+TimelineItem.displayName = 'TimelineItem';
 TimelineItem.states = StateTypes;
+TimelineItem.lineTypes = LineTypes;
+TimelineItem.pointTypes = PointTypes;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -150,9 +212,6 @@ const styles = StyleSheet.create({
     width: 20
   },
   point: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
     marginVertical: 4
   }
 });
