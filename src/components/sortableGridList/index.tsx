@@ -1,25 +1,18 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, FlatListProps, ScrollView, ScrollViewProps, ListRenderItemInfo} from 'react-native';
+import {StyleSheet, ScrollView, ListRenderItemInfo} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useSharedValue} from 'react-native-reanimated';
 import _ from 'lodash';
 import {useDidUpdate} from 'hooks';
-import {GridListBaseProps} from '../gridList';
+
 import SortableItem from './SortableItem';
-import usePresenter, {ItemsOrder} from './usePresenter';
+import usePresenter from './usePresenter';
+import {ItemsOrder, SortableGridListProps, ItemProps} from './types';
 
 import useGridLayout, {DEFAULT_ITEM_SPACINGS, DEFAULT_NUM_COLUMNS} from '../gridList/useGridLayout';
 
-type ItemProps<T> = T & {id: string};
-
-export interface SortableGridListProps<T = any> extends GridListBaseProps, ScrollViewProps {
-  data: FlatListProps<ItemProps<T>>['data'];
-  renderItem: FlatListProps<ItemProps<T>>['renderItem'];
-  onOrderChange?: (newData: ItemProps<T>[], newOrder: ItemsOrder) => void;
-}
-
 function generateItemsOrder(data: SortableGridListProps['data']) {
-  return _.map(data, (item) => item.id);
+  return _.map(data, item => item.id);
 }
 
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
@@ -77,6 +70,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   );
 }
 
+export {SortableGridListProps};
 export default SortableGridList;
 
 const styles = StyleSheet.create({

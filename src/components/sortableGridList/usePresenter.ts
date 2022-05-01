@@ -1,5 +1,6 @@
 import {Easing, useSharedValue} from 'react-native-reanimated';
 import Constants from '../../commons/Constants';
+import {ItemLayout, ItemsOrder} from './types';
 
 export const WINDOW_WIDTH = Constants.windowWidth;
 export const DEFAULT_NO_OF_COLUMNS = 3;
@@ -9,9 +10,6 @@ export const animationConfig = {
   easing: Easing.inOut(Easing.ease),
   duration: 350
 };
-
-export type ItemLayout = {width: number; height: number} | undefined;
-export type ItemsOrder = string[];
 
 const usePresenter = (numOfColumns: number, itemSpacing: number) => {
   const itemLayout = useSharedValue<ItemLayout>(undefined);

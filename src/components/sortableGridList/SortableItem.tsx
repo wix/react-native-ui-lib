@@ -1,7 +1,7 @@
 import React, {PropsWithChildren, useCallback} from 'react';
-import {LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
-import Animated, {
+import {
   runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
@@ -11,18 +11,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import _ from 'lodash';
 import {useDidUpdate} from 'hooks';
-import usePresenter, {ItemsOrder, animationConfig} from './usePresenter';
+import usePresenter, {animationConfig} from './usePresenter';
+import {SortableItemProps} from './types';
 import View from '../view';
 
-interface SortableItemProps extends ReturnType<typeof usePresenter> {
-  id: string;
-  data: any;
-  itemsOrder: Animated.SharedValue<ItemsOrder>;
-  onChange: () => void;
-  style: StyleProp<ViewStyle>;
-}
-
-function SortableItem(props: PropsWithChildren<SortableItemProps>) {
+function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<typeof usePresenter>>) {
   const {
     data,
     id,
