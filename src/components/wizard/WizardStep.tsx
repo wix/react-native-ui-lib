@@ -118,7 +118,7 @@ export default asBaseComponent<WizardStepProps>(WizardStep);
 const styles = StyleSheet.create({
   connector: {
     borderWidth: 0.5,
-    borderColor: Colors.grey60
+    borderColor: Colors.$outlineDisabled
   },
   circle: {
     width: 24,
@@ -130,6 +130,6 @@ const styles = StyleSheet.create({
   },
   label: {
     marginHorizontal: 8,
-    color: Colors.grey20
+    color: Colors.$textNeutralHeavy
   }
 });
