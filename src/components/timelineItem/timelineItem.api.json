@@ -33,6 +33,9 @@
       "name": "point",
       "type": "PointProps",
       "description": "The point props"
+    },
+    {
+      "name": "testID", "type": "string", "description": "The test id for e2e tests"
     }
   ],
   "snippet": ["<TimelineItem renderContent={$1} state={TimelineItem.states.NEXT$2}/>"]
