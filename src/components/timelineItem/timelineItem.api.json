@@ -13,13 +13,27 @@
       "type": "any",
       "description": "Custom content to render right to the timeline indicator"
     },
-    {"name": "renderHeader", "type": "any", "description": "Custom content to render on top of the content"},
     {
-      "name": "indicationAlignment",
-      "type": "top | center",
-      "description": "Whether to align the timeline point indication at the top or the center (top alignment allowed only when passing 'renderTitle'",
-      "default": "center"
+      "name": "state",
+      "type": "current | next | error | success",
+      "description": "The state of the timeline. Will affect the color of the indication (use static 'states')",
+      "default": "current"
+    },
+    {
+      "name": "topLine",
+      "type": "LineProps",
+      "description": "The top line props"
+    },
+    {
+      "name": "bottomLine",
+      "type": "LineProps",
+      "description": "The bottom line props"
+    },
+    {
+      "name": "point",
+      "type": "PointProps",
+      "description": "The point props"
     }
   ],
-  "snippet": ["<TimelineItem renderContent={$1}/>"]
+  "snippet": ["<TimelineItem renderContent={$1} state={TimelineItem.states.NEXT$2}/>"]
 }

@@ -1,13 +1,17 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {ScrollView} from 'react-native';
-import {Assets, Colors, TimelineItem, Card, Text} from 'react-native-ui-lib';
+import {Assets, Colors, TimelineItem, View, Card, Text} from 'react-native-ui-lib';
 
 const TimelineItemScreen = () => {
-  
+  const header = useRef();
+
   const renderContent = useCallback(() => {
     return (
-      <Card flex center style={{height: 200, backgroundColor: Colors.green50}}>
-        <Text>This is content</Text>
+      <Card flex padding-page>
+        <Text text70BO ref={header}>title</Text>
+        <View flex margin-10>
+          <Text>content</Text>
+        </View>
       </Card>
     );
   }, []);
@@ -15,15 +19,70 @@ const TimelineItemScreen = () => {
   return (
     <ScrollView>
       <TimelineItem 
-        state={TimelineItem.states.NEXT} 
+        height={200}
         renderContent={renderContent}
-        topLine={{type: TimelineItem.lineTypes.DASHED, color: Colors.violet40}}
-        // bottomLine={{type: TimelineItem.lineTypes.FULL}}
+        bottomLine={{type: TimelineItem.lineTypes.DASHED}}
+        point={{alignmentTargetRef: header}}
+      />
+      <TimelineItem 
+        height={120}
+        renderContent={renderContent}
+        topLine={{
+          type: TimelineItem.lineTypes.DASHED
+        }}
+        bottomLine={{
+          state: TimelineItem.states.SUCCESS
+        }}
+        point={{
+          state: TimelineItem.states.SUCCESS,
+          label: 2
+        }}
+      />
+      <TimelineItem 
+        height={120}
+        renderContent={renderContent}
+        topLine={{
+          state: TimelineItem.states.SUCCESS
+        }}
+        bottomLine={{
+          state: TimelineItem.states.ERROR
+        }}
+        point={{
+          state: TimelineItem.states.ERROR,
+          type: TimelineItem.pointTypes.HALO
+        }}
+      />
+      <TimelineItem 
+        height={120}
+        renderContent={renderContent}
+        topLine={{
+          state: TimelineItem.states.ERROR
+        }}
+        bottomLine={{
+          type: TimelineItem.lineTypes.DASHED,
+          color: Colors.orange40
+        }}
         point={{
           type: TimelineItem.pointTypes.HALO,
           color: Colors.orange40,
-          // icon: Assets.icons.demo.camera,
-          label: 2
+          icon: Assets.icons.demo.camera,
+          alignmentTargetRef: header
+        }}
+      />
+      <TimelineItem 
+        height={80}
+        renderContent={renderContent}
+        topLine={{
+          type: TimelineItem.lineTypes.DASHED,
+          color: Colors.orange40
+        }}
+        bottomLine={{
+          state: TimelineItem.states.NEXT,
+          initial: true
+        }}
+        point={{
+          state: TimelineItem.states.NEXT,
+          type: TimelineItem.pointTypes.HOLLOW
         }}
       />
     </ScrollView>
