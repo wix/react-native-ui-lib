@@ -38,17 +38,17 @@ const SegmentedControlScreen = () => {
           />
           <SegmentedControl
             containerStyle={styles.container}
-            activeColor={Colors.red30}
+            activeColor={Colors.$textDangerLight}
             segments={segments.third}
           />
           <SegmentedControl
             containerStyle={styles.container}
             segments={segments.forth}
-            activeColor={Colors.grey10}
+            activeColor={Colors.$textDefault}
             borderRadius={BorderRadiuses.br20}
-            backgroundColor={Colors.grey10}
-            activeBackgroundColor={Colors.grey40}
-            inactiveColor={Colors.grey70}
+            backgroundColor={Colors.$backgroundInverted}
+            activeBackgroundColor={Colors.$backgroundNeutralIdle}
+            inactiveColor={Colors.$textDisabled}
           />
         </View>
         <SegmentedControl
@@ -60,7 +60,7 @@ const SegmentedControlScreen = () => {
           segments={segments.sixth}
         />
       </View>
-      <Text text40 grey10>
+      <Text text40 $textDefault>
         Segmented Control
       </Text>
     </View>

@@ -65,7 +65,7 @@ const examples = [
       icon: star,
       size: 14,
       borderWidth: 1.5,
-      borderColor: Colors.$outlineLight,
+      borderColor: Colors.$outlineInverted,
       iconStyle: {backgroundColor: Colors.$backgroundWarningHeavy}
     }
   },
@@ -107,7 +107,7 @@ const examples = [
       label: '+2',
       size: 24,
       borderWidth: 1.5,
-      borderColor: Colors.$outlineLight
+      borderColor: Colors.$outlineInverted
     }
   }
 ];

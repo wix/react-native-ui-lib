@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleSheet, FlatList, TextInput} from 'react-native';
+import {StyleSheet, FlatList, TextInput, ListRenderItemInfo} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
 import Modal from '../modal';
 import View from '../view';
 import Icon from '../icon';
-import {PickerItemsListProps} from './types';
+import {PickerItemProps, PickerItemsListProps} from './types';
 
 const keyExtractor = (_item: string, index: number) => index.toString();
 
@@ -50,7 +50,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     }
   };
 
-  const renderItem = useCallback(({index}) => {
+  const renderItem = useCallback(({index}: ListRenderItemInfo<PickerItemProps>) => {
     return React.Children.toArray(children)[index];
   },
   [children]);
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.$outlineNeutral
+    borderBottomColor: Colors.$outlineDefault
   },
   searchIcon: {
     marginRight: 12

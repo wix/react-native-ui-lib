@@ -41,14 +41,14 @@ export default class ProgressBarScreen extends Component {
 
     return (
       <ScrollView>
-        <View flex bg-grey80 spread paddingV-18>
+        <View flex bg-$backgroundNeutralLight spread paddingV-18>
           <View paddingL-18 marginB-18>
-            <Text text40 grey10>
+            <Text $textDefault text40>
               ProgressBar
             </Text>
           </View>
 
-          <Text text70 style={styles.text}>
+          <Text $textDefault text70 style={styles.text}>
             Default
           </Text>
           <ProgressBar
@@ -56,7 +56,7 @@ export default class ProgressBarScreen extends Component {
             style={styles.progressBar}
           />
 
-          <Text text70 style={styles.text}>
+          <Text $textDefault text70 style={styles.text}>
             FullWidth
           </Text>
           <ProgressBar
@@ -65,7 +65,7 @@ export default class ProgressBarScreen extends Component {
             fullWidth
           />
 
-          <Text text70 style={styles.text}>
+          <Text $textDefault text70 style={styles.text}>
             Styled
           </Text>
           <ProgressBar
@@ -74,7 +74,7 @@ export default class ProgressBarScreen extends Component {
             progressColor={Colors.purple70}
           />
 
-          <Text text70 style={styles.text}>
+          <Text $textDefault text70 style={styles.text}>
             Custom Element
           </Text>
           <ProgressBar

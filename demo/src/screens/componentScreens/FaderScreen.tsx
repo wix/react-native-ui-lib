@@ -18,7 +18,7 @@ class FaderScreen extends Component<WithScrollReachedProps> {
   renderItem = (index: number) => {
     return (
       <View key={index} style={styles.item}>
-        <Text>{index + 1}</Text>
+        <Text $textDefault>{index + 1}</Text>
       </View>
     );
   };
@@ -31,7 +31,7 @@ class FaderScreen extends Component<WithScrollReachedProps> {
         : !scrollReachedProps.isScrollAtStart;
 
     return (
-      <View margin-10>
+      <View padding-10>
         {renderHeader('Fader', {'marginB-10': true})}
         <View center>
           <View style={styles.container}>
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
   item: {
     height: itemHeight,
     width: itemWidth,
-    backgroundColor: Colors.grey60,
-    borderColor: Colors.grey40,
+    backgroundColor: Colors.$backgroundDefault,
+    borderColor: Colors.$outlineDisabled,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center'

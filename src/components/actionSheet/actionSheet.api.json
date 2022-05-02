@@ -2,8 +2,7 @@
   "name": "ActionSheet",
   "category": "overlays",
   "description": "Cross platform Action Sheet, with a support for native iOS solutions",
-  "extends": ["Dialog"],
-  "extendsLink": ["https://github.com/wix/react-native-ui-lib/blob/master/src/components/dialog/index.tsx"],
+  "extends": ["overlays/Dialog"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.tsx",
   "images": ["https://media.giphy.com/media/l0HUpXOR6RqB2ct5S/giphy.gif"],
   "props": [

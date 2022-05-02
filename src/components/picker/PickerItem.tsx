@@ -68,7 +68,7 @@ const PickerItem = (props: PickerItemProps) => {
     }
   }, [migrate, value, context.onPress]);
 
-  const onSelectedLayout = useCallback((...args) => {
+  const onSelectedLayout = useCallback((...args: any[]) => {
     _.invoke(context, 'onSelectedLayout', ...args);
   }, []);
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   container: {
     height: 56.5,
     paddingHorizontal: 23,
-    borderColor: Colors.$outlineNeutral,
+    borderColor: Colors.$outlineDefault,
     borderBottomWidth: 1
   },
   labelText: {

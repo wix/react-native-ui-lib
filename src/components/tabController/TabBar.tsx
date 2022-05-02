@@ -5,11 +5,17 @@ import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps
+} from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
 import FadedScrollView from '../fadedScrollView';
-
+import {FaderProps} from '../fader';
 import useScrollToItem from './useScrollToItem';
 import {orientations} from '../../commons/Constants';
 import {useDidUpdate} from 'hooks';
@@ -26,6 +32,8 @@ const DEFAULT_SELECTED_LABEL_STYLE = {
   ...Typography.text80M,
   letterSpacing: 0
 };
+
+const DEFAULT_FADER_PROPS = {size: 76, tintColor: Colors.$backgroundElevated};
 
 export interface TabControllerBarProps {
   /**
@@ -86,6 +94,10 @@ export interface TabControllerBarProps {
    */
   backgroundColor?: string;
   /**
+   * Props for the start \ end faders
+   */
+  faderProps?: Pick<FaderProps, 'size' | 'tintColor'>;
+  /**
    * The TabBar container width
    */
   containerWidth?: number;
@@ -121,8 +133,6 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
   children?: ChildProps[] | ChildProps;
 }
 
-const FADER_PROPS = {size: 76, tintColor: Colors.$backgroundDefault};
-
 /**
  * @description: TabController's TabBar component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
@@ -143,6 +153,7 @@ const TabBar = (props: Props) => {
     selectedIconColor,
     activeBackgroundColor,
     backgroundColor,
+    faderProps,
     containerWidth: propsContainerWidth,
     centerSelected,
     spreadItems,
@@ -210,6 +221,7 @@ const TabBar = (props: Props) => {
           uppercase={uppercase}
           iconColor={iconColor}
           selectedIconColor={selectedIconColor}
+          backgroundColor={backgroundColor}
           activeBackgroundColor={activeBackgroundColor}
           {...item}
           {...context}
@@ -228,6 +240,7 @@ const TabBar = (props: Props) => {
     uppercase,
     iconColor,
     selectedIconColor,
+    backgroundColor,
     activeBackgroundColor,
     centerSelected,
     onItemLayout
@@ -285,16 +298,16 @@ const TabBar = (props: Props) => {
   }, [containerWidth]);
 
   return (
-    <View style={_containerStyle} key={key}>
+    <View style={_containerStyle} key={key} bg-$backgroundElevated>
       <FadedScrollView
         // @ts-expect-error
         ref={tabBar}
         horizontal
         showsHorizontalScrollIndicator={false}
         showStartFader
-        startFaderProps={FADER_PROPS}
+        startFaderProps={faderProps}
         showEndFader
-        endFaderProps={FADER_PROPS}
+        endFaderProps={faderProps}
         contentContainerStyle={scrollViewContainerStyle}
         testID={testID}
         onContentSizeChange={onContentSizeChange}
@@ -314,6 +327,7 @@ TabBar.defaultProps = {
   labelStyle: DEFAULT_LABEL_STYLE,
   selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
   backgroundColor: DEFAULT_BACKGROUND_COLOR,
+  faderProps: DEFAULT_FADER_PROPS,
   spreadItems: true
 };
 

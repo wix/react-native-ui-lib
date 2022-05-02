@@ -79,6 +79,10 @@ export interface TabControllerItemProps {
    */
   activeOpacity?: number;
   /**
+   * Apply background color for the tab bar item
+   */
+  backgroundColor?: string;
+  /**
    * TODO: rename to feedbackColor
    * Apply background color on press for TouchableOpacity
    */
@@ -118,6 +122,7 @@ export default function TabBarItem({
   trailingAccessory,
   uppercase,
   activeOpacity = 0.9,
+  backgroundColor = Colors.$backgroundElevated,
   activeBackgroundColor,
   testID,
   ignore,
@@ -193,6 +198,7 @@ export default function TabBarItem({
       ref={itemRef}
       style={_style}
       onLayout={onLayout}
+      backgroundColor={backgroundColor}
       activeBackgroundColor={activeBackgroundColor}
       activeOpacity={activeOpacity}
       onPress={onPress}

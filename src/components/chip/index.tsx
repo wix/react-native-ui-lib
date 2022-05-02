@@ -165,7 +165,7 @@ const Chip = ({
   ...others
 }: ChipProps) => {
 
-  const renderIcon = useCallback((iconPosition) => {
+  const renderIcon = useCallback((iconPosition: 'left' | 'right') => {
     const isLeftIcon = iconPosition === 'left';
 
     return (

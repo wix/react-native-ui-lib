@@ -25,5 +25,14 @@
   {
     "function": "deprecatedInheritedFunction",
     "message": "please stop using it."
+  },
+  {    
+    "function": "deprecatedFunction2",
+    "message": "please stop using it."
+  },
+  {    
+    "function": "deprecatedFunction3",
+    "source": "our-source",
+    "message": "please stop using it."
   }
 ]
