@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
-import {Colors} from '../../style';
+import {BorderRadiuses, Colors} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
@@ -110,9 +110,9 @@ class ColorSwatch extends PureComponent<Props> {
   getTintColor(color?: string) {
     if (color) {
       if (Colors.isTransparent(color)) {
-        return Colors.black;
+        return Colors.$iconDefault;
       }
-      return Colors.isDark(color) ? Colors.white : Colors.black;
+      return Colors.isDark(color) ? Colors.$iconDefaultLight : Colors.$iconDefault;
     }
   }
 
@@ -202,12 +202,15 @@ function createStyles({color = Colors.grey30}) {
       borderRadius: DEFAULT_SIZE / 2,
       margin: SWATCH_MARGIN,
       borderWidth: color === 'transparent' ? undefined : 1,
-      borderColor: Colors.rgba(Colors.grey30, 0.2)
+      borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
     },
     transparentImage: {
       ...StyleSheet.absoluteFillObject,
       width: DEFAULT_SIZE,
-      height: DEFAULT_SIZE
+      height: DEFAULT_SIZE,
+      // borderWidth: 1,
+      // borderRadius: BorderRadiuses.br100,
+      // borderColor:Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
     }
   });
 }
