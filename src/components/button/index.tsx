@@ -109,7 +109,7 @@ class Button extends PureComponent<Props, ButtonState> {
     } else if (outline) {
       color = outlineColor || Colors.$textPrimary;
     } else if (this.isIconButton) {
-      color = undefined; // Colors.grey10;
+      color = Colors.$iconDefaultLight;
     }
 
     if (disabled && (isLink || outline)) {
