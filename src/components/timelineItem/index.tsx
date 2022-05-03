@@ -35,11 +35,6 @@ export enum PointTypes {
   HALO = 'halo'
 }
 
-export enum AlignmentType {
-  CENTER = 'center', // default
-  TOP = 'top'
-}
-
 export type LineProps = {
   state?: StateTypes;
   type?: LineTypes;
@@ -57,7 +52,7 @@ export type PointProps = {
   /** to align point to this view's center */
   alignmentTargetRef?: React.MutableRefObject<undefined>;
   /** the target view's top parent view */
-  parentRef?: React.MutableRefObject<undefined>;
+  targetContainerRef?: React.MutableRefObject<undefined>;
 }
 
 type Position = {
@@ -80,21 +75,21 @@ const TimelineItem = (props: TimelineItemProps) => {
   const {height, topLine, bottomLine, point, renderContent} = props;
   const [targetMeasurements, setTargetMeasurements] = useState<Position | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Position | undefined>();
-  const [circleMeasurements, setCircleMeasurements] = useState<Position | undefined>();
+  const [pointMeasurements, setCircleMeasurements] = useState<Position | undefined>();
 
   const onMeasure: MeasureOnSuccessCallback = (x, y, width, height) => {
-    // console.warn('target: ', x, y, width, height);
     setTargetMeasurements({x, y, width, height});
   };
 
   useEffect(() => {
     setTimeout(() => {
-      if (point?.alignmentTargetRef?.current && point?.parentRef) {
+      if (point?.alignmentTargetRef?.current && point?.targetContainerRef) {
         // point.alignmentTargetRef.current.measure?.(onMeasure); // Android always returns x, y = 0
-        point.alignmentTargetRef.current.measureLayout?.(point.parentRef.current, onMeasure);
+        //@ts-expect-error
+        point.alignmentTargetRef.current.measureLayout?.(point.targetContainerRef.current, onMeasure);
       }
     }, 0);
-  }, [point?.alignmentTargetRef]);
+  }, [point?.alignmentTargetRef, point?.targetContainerRef]);
 
   const visible = useMemo(() => {
     return {opacity: contentContainerMeasurements ? 1 : 0};
@@ -119,20 +114,24 @@ const TimelineItem = (props: TimelineItemProps) => {
     }
   };
 
-  const getLineHeight = useCallback(() => {
+  const getLineColor = useCallback((line?: LineProps) => {
+    return line?.color || getStateColor(line?.state);
+  }, []);
+
+  const calcLineHeight = useCallback(() => {
     let height = 0;
-    if (targetMeasurements && contentContainerMeasurements && circleMeasurements) {
-      const circleCenter = circleMeasurements.height / 2;
+    if (targetMeasurements && contentContainerMeasurements && pointMeasurements) {
+      const pointCenter = pointMeasurements.height / 2;
       const contentY = contentContainerMeasurements.y + CONTENT_CONTAINER_PADDINGS / 2;
       const targetCenterY = targetMeasurements?.y + targetMeasurements?.height / 2;
-      height = contentY + targetCenterY - circleCenter;
+      height = contentY + targetCenterY - pointCenter;
     }
     return height;
-  }, [targetMeasurements, contentContainerMeasurements, circleMeasurements]);
+  }, [targetMeasurements, contentContainerMeasurements, pointMeasurements]);
 
-  const alignItemStyle = useMemo(() => {
-    return point?.alignmentTargetRef ? {height: getLineHeight()} : {flex: 1};
-  }, [point?.alignmentTargetRef, getLineHeight]);
+  const lineStyle = useMemo(() => {
+    return point?.alignmentTargetRef ? {height: calcLineHeight()} : styles.line;
+  }, [point?.alignmentTargetRef, calcLineHeight]);
 
   const pointStyle = useMemo(() => {
     const hasHalo = point?.type === PointTypes.HALO;
@@ -164,7 +163,7 @@ const TimelineItem = (props: TimelineItemProps) => {
   }, []);
 
   const renderLine = (line?: LineProps, style?: ViewStyle) => {
-    const lineColor = line?.color || getStateColor(line?.state);
+    const lineColor = getLineColor(line);
     
     if (line?.type === LineTypes.DASHED) {
       return (
@@ -177,7 +176,6 @@ const TimelineItem = (props: TimelineItemProps) => {
         />
       );
     }
-
     return <View style={[styles.fullLine, {backgroundColor: lineColor}, style]}/>;
   };
 
@@ -185,7 +183,7 @@ const TimelineItem = (props: TimelineItemProps) => {
     return (
       <>
         {renderStartPoint(topLine)}
-        {renderLine(topLine, alignItemStyle)}
+        {renderLine(topLine, lineStyle)}
       </>
     );
   };
@@ -193,7 +191,7 @@ const TimelineItem = (props: TimelineItemProps) => {
   const renderBottomLine = () => {
     return (
       <>
-        {renderLine(bottomLine, {flex: 1})}
+        {renderLine(bottomLine, styles.line)}
         {renderStartPoint(bottomLine)}
       </>
     );
@@ -201,7 +199,7 @@ const TimelineItem = (props: TimelineItemProps) => {
 
   const renderStartPoint = (line?: LineProps) => {
     if (line?.entry) {
-      const lineColor = line?.color || getStateColor(line?.state);
+      const lineColor = getLineColor(line);
       return <View style={[styles.entryPoint, {backgroundColor: lineColor}]}/>;
     }
   };
@@ -283,5 +281,8 @@ const styles = StyleSheet.create({
   dashedLine: {
     flexDirection: 'column', 
     overflow: 'hidden'
+  },
+  line: {
+    flex: 1
   }
 });

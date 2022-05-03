@@ -1,5 +1,5 @@
 import React, {useCallback, useRef} from 'react';
-import {ScrollView/* , LayoutChangeEvent */} from 'react-native';
+import {ScrollView} from 'react-native';
 import {Assets, Colors, TimelineItem, TimelineItemProps, View, Card, Text} from 'react-native-ui-lib';
 
 const contents = [
@@ -12,19 +12,14 @@ const contents = [
 ];
 
 const TimelineItemScreen = () => {
-  const parent = useRef();
+  const targetContainer = useRef();
   const target = useRef();
-
-  // const onLayout = useCallback((event: LayoutChangeEvent) => {
-  //   const {x, y, width, height} = event.nativeEvent.layout;
-  //   console.warn('onLayout: ', x, y, width, height);
-  // }, []);
 
   const renderContent = useCallback((props: TimelineItemProps) => {
     const index = Number(props.testID) || 0;
     return (
-      <Card flex padding-page ref={parent}>
-        <Text text70BO ref={target}/*  onLayout={onLayout} */>Step {index + 1}</Text>
+      <Card flex padding-page ref={targetContainer}>
+        <Text text70BO ref={target}>Step {index + 1}</Text>
         <View flex marginT-5 padding-5 bg-grey80 br30>
           <Text>{contents[index]}</Text>
         </View>
@@ -41,7 +36,7 @@ const TimelineItemScreen = () => {
           renderContent={renderContent}
           topLine={{type: TimelineItem.lineTypes.DASHED}}
           point={{
-            parentRef: parent,
+            targetContainerRef: targetContainer,
             alignmentTargetRef: target
           }}
           testID={'0'}
@@ -87,7 +82,7 @@ const TimelineItemScreen = () => {
             type: TimelineItem.pointTypes.HALO,
             color: Colors.orange40,
             icon: Assets.icons.demo.camera,
-            parentRef: parent,
+            targetContainerRef: targetContainer,
             alignmentTargetRef: target
           }}
           testID={'3'}
