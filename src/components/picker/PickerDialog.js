@@ -1,17 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import {BaseComponent} from '../../commons';
-import {extractComponentProps} from '../../commons/modifiers';
 import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors} from '../../style';
 
-class PickerDialog extends BaseComponent {
-  static displayName = 'IGNORE';
+class PickerDialog extends Component {
   static propTypes = {
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
@@ -38,11 +35,10 @@ class PickerDialog extends BaseComponent {
 
 
   render() {
-    const dialogProps = extractComponentProps(Dialog, this.props);
-    // TODO: should be taken from dialogProps but there's an issue with "babel-plugin-typescript-to-proptypes" plugin
-    const {panDirection} = this.props;
+    const {panDirection, visible, height, pickerModalProps} = this.props;
+
     return (
-      <Dialog {...dialogProps} width="100%" bottom animationConfig={{duration: 300}} panDirection={panDirection}>
+      <Dialog {...pickerModalProps} visible={visible} height={height} width="100%" bottom animationConfig={{duration: 300}} panDirection={panDirection}>
         <View flex bg-$backgroundDefault>
           {this.renderHeader()}
           <View centerV flex>
