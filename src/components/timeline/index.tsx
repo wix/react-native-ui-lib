@@ -84,7 +84,7 @@ const Timeline = (props: TimelineProps) => {
   useEffect(() => {
     setTimeout(() => {
       if (point?.alignmentTargetRef?.current && point?.targetContainerRef) {
-        // point.alignmentTargetRef.current.measure?.(onMeasure); // Android always returns x, y = 0
+        // point.alignmentTargetRef.current.measure?.(onMeasure); // Android always returns x, y = 0 (see: https://github.com/facebook/react-native/issues/4753)
         //@ts-expect-error
         point.alignmentTargetRef.current.measureLayout?.(point.targetContainerRef.current, onMeasure);
       }
