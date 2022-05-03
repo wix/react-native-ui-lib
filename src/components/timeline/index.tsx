@@ -1,10 +1,10 @@
 import React, {useCallback, useMemo, useEffect, useState} from 'react';
 import {StyleSheet, ImageRequireSource, ViewStyle, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
-import Dash from 'react-native-dash';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Icon from '../icon';
 import Text from '../text';
+import Dash from './Dash';
 
 
 const LINE_WIDTH = 2;
