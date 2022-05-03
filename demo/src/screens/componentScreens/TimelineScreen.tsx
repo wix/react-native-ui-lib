@@ -1,6 +1,6 @@
 import React, {useCallback, useRef} from 'react';
 import {ScrollView} from 'react-native';
-import {Assets, Colors, TimelineItem, TimelineItemProps, View, Card, Text} from 'react-native-ui-lib';
+import {Assets, Colors, TimelineItem as Timeline, TimelineProps, View, Card, Text} from 'react-native-ui-lib';
 
 const contents = [
   'Current (default) state with dashed and full (default) lines.\nAligned to title',
@@ -11,11 +11,11 @@ const contents = [
   'Next state with hollow point and entry point.'
 ];
 
-const TimelineItemScreen = () => {
+const TimelineScreen = () => {
   const targetContainer = useRef();
   const target = useRef();
 
-  const renderContent = useCallback((props: TimelineItemProps) => {
+  const renderContent = useCallback((props: TimelineProps) => {
     const index = Number(props.testID) || 0;
     return (
       <Card flex padding-page ref={targetContainer}>
@@ -31,55 +31,55 @@ const TimelineItemScreen = () => {
     <>
       <Text h1 $textDefault margin-20>Timeline</Text>
       <ScrollView contentContainerStyle={{paddingBottom: 20}}>
-        <TimelineItem 
+        <Timeline 
           height={180}
           renderContent={renderContent}
-          topLine={{type: TimelineItem.lineTypes.DASHED}}
+          topLine={{type: Timeline.lineTypes.DASHED}}
           point={{
             targetContainerRef: targetContainer,
             alignmentTargetRef: target
           }}
           testID={'0'}
         />
-        <TimelineItem 
+        <Timeline 
           height={120}
           renderContent={renderContent}
           bottomLine={{
-            state: TimelineItem.states.SUCCESS
+            state: Timeline.states.SUCCESS
           }}
           point={{
-            state: TimelineItem.states.SUCCESS,
+            state: Timeline.states.SUCCESS,
             label: 2
           }}
           testID={'1'}
         />
-        <TimelineItem 
+        <Timeline 
           height={120}
           renderContent={renderContent}
           topLine={{
-            state: TimelineItem.states.SUCCESS
+            state: Timeline.states.SUCCESS
           }}
           bottomLine={{
-            state: TimelineItem.states.ERROR
+            state: Timeline.states.ERROR
           }}
           point={{
-            state: TimelineItem.states.ERROR,
+            state: Timeline.states.ERROR,
             icon: Assets.icons.demo.settings
           }}
           testID={'2'}
         />
-        <TimelineItem 
+        <Timeline 
           height={150}
           renderContent={renderContent}
           topLine={{
-            state: TimelineItem.states.ERROR
+            state: Timeline.states.ERROR
           }}
           bottomLine={{
-            type: TimelineItem.lineTypes.DASHED,
+            type: Timeline.lineTypes.DASHED,
             color: Colors.orange40
           }}
           point={{
-            type: TimelineItem.pointTypes.HALO,
+            type: Timeline.pointTypes.HALO,
             color: Colors.orange40,
             icon: Assets.icons.demo.camera,
             targetContainerRef: targetContainer,
@@ -87,37 +87,37 @@ const TimelineItemScreen = () => {
           }}
           testID={'3'}
         />
-        <TimelineItem 
+        <Timeline 
           height={120}
           renderContent={renderContent}
           topLine={{
-            type: TimelineItem.lineTypes.DASHED,
+            type: Timeline.lineTypes.DASHED,
             color: Colors.orange40
           }}
           bottomLine={{
-            state: TimelineItem.states.NEXT,
-            type: TimelineItem.lineTypes.DASHED
+            state: Timeline.states.NEXT,
+            type: Timeline.lineTypes.DASHED
           }}
           point={{
-            state: TimelineItem.states.NEXT,
-            type: TimelineItem.pointTypes.HALO
+            state: Timeline.states.NEXT,
+            type: Timeline.pointTypes.HALO
           }}
           testID={'4'}
         />
-        <TimelineItem 
+        <Timeline 
           height={150}
           renderContent={renderContent}
           topLine={{
-            state: TimelineItem.states.NEXT,
-            type: TimelineItem.lineTypes.DASHED
+            state: Timeline.states.NEXT,
+            type: Timeline.lineTypes.DASHED
           }}
           bottomLine={{
-            state: TimelineItem.states.NEXT,
+            state: Timeline.states.NEXT,
             entry: true
           }}
           point={{
-            state: TimelineItem.states.NEXT,
-            type: TimelineItem.pointTypes.HOLLOW
+            state: Timeline.states.NEXT,
+            type: Timeline.pointTypes.HOLLOW
           }}
           testID={'5'}
         />
@@ -126,4 +126,4 @@ const TimelineItemScreen = () => {
   );
 };
 
-export default TimelineItemScreen;
+export default TimelineScreen;

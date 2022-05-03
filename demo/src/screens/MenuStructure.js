@@ -84,7 +84,7 @@ export const navigationData = {
       {title: 'Contacts List', tags: 'list contacts', screen: 'unicorn.lists.ContactsListScreen'},
       {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
       {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
-      {title: 'TimelineItem', tags: 'timelineItem', screen: 'unicorn.components.TimelineItemScreen'}
+      {title: 'Timeline', tags: 'timeline', screen: 'unicorn.components.TimelineScreen'}
     ]
   },
   LayoutsAndTemplates: {

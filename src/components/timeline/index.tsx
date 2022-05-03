@@ -62,16 +62,16 @@ type Position = {
   height: number;
 };
 
-export type TimelineItemProps = {
+export type TimelineProps = {
   height: number;
   topLine?: LineProps;
   bottomLine?: LineProps;
   point?: PointProps;
-  renderContent?: (props: TimelineItemProps) => JSX.Element;
+  renderContent?: (props: TimelineProps) => JSX.Element;
   testID?: string;
 };
 
-const TimelineItem = (props: TimelineItemProps) => {
+const Timeline = (props: TimelineProps) => {
   const {height, topLine, bottomLine, point, renderContent} = props;
   const [targetMeasurements, setTargetMeasurements] = useState<Position | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Position | undefined>();
@@ -247,11 +247,11 @@ const TimelineItem = (props: TimelineItemProps) => {
   );
 };
 
-export default TimelineItem;
-TimelineItem.displayName = 'TimelineItem';
-TimelineItem.states = StateTypes;
-TimelineItem.lineTypes = LineTypes;
-TimelineItem.pointTypes = PointTypes;
+export default Timeline;
+Timeline.displayName = 'Timeline';
+Timeline.states = StateTypes;
+Timeline.lineTypes = LineTypes;
+Timeline.pointTypes = PointTypes;
 
 
 const styles = StyleSheet.create({

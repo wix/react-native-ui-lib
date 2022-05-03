@@ -62,7 +62,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.lists.BasicListScreen', () => require('./BasicListScreen').default);
   registrar('unicorn.lists.ContactsListScreen', () => require('./ContactsListScreen').default);
   registrar('unicorn.lists.ConversationListScreen', () => require('./ConversationListScreen').default);
-  registrar('unicorn.components.TimelineItemScreen', () => require('./TimelineItemScreen').default);
+  registrar('unicorn.components.TimelineScreen', () => require('./TimelineScreen').default);
   // Full Screen components
   registrar('unicorn.screens.EmptyStateScreen', () => require('./EmptyStateScreen').default);
   registrar('unicorn.components.FaderScreen', () => require('./FaderScreen').default);

@@ -1,5 +1,5 @@
 {
-  "name": "TimelineItem",
+  "name": "Timeline",
   "category": "basic",
   "description": "A timeline item to render as part of a timeline list",
   "extends": ["View"],
@@ -38,5 +38,5 @@
       "name": "testID", "type": "string", "description": "The test id for e2e tests"
     }
   ],
-  "snippet": ["<TimelineItem renderContent={$1} state={TimelineItem.states.NEXT$2}/>"]
+  "snippet": ["<Timeline renderContent={$1} state={Timeline.states.NEXT$2}/>"]
 }
