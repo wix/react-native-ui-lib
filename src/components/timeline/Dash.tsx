@@ -5,22 +5,24 @@
  */
 
 import React from 'react';
-import {View, StyleSheet, ViewProps} from 'react-native';
+import {View, StyleSheet, ViewProps, ViewStyle} from 'react-native';
 import MeasureMeHOC from 'react-native-measureme';
 
 interface DashProps extends ViewProps {
-  style?: ViewStyle,
-  dashGap: number,
-  dashLength: number,
-  dashThickness: number,
-  dashColor?: string,
-  dashStyle?: ViewStyle
+  dashGap: number;
+  dashLength: number;
+  dashThickness: number;
+  dashColor?: string;
+  dashStyle?: ViewStyle;
+  style?: ViewStyle;
+  width?: number;
+  height?: number;
 }
 
 const Dash = (props: DashProps) => {
   const {style, width, height, dashGap, dashLength, dashStyle, onLayout} = props;
   const isRow = isStyleRow(style);
-  const length = isRow ? width : height;
+  const length = (isRow ? width : height) || 0;
   const n = Math.ceil(length / (dashGap + dashLength));
   const calculatedDashStyles = getDashStyle(props);
   const dash = [];
@@ -50,15 +52,18 @@ const styles = StyleSheet.create({
 });
 
 // util
-const isStyleRow = style => {
-  const flatStyle = StyleSheet.flatten(style || {});
-  return flatStyle.flexDirection !== 'column';
+const isStyleRow = (style?: ViewStyle) => {
+  if (style) {
+    const flatStyle = StyleSheet.flatten(style || {});
+    return flatStyle.flexDirection !== 'column';
+  }
+  return false;
 };
 
-const getDashStyleId = ({dashGap, dashLength, dashThickness, dashColor}, isRow) =>
+const getDashStyleId = ({dashGap, dashLength, dashThickness, dashColor}: DashProps, isRow: boolean) =>
   `${dashGap}-${dashLength}-${dashThickness}-${dashColor}-${isRow ? 'row' : 'column'}`;
 
-const createDashStyleSheet = ({dashGap, dashLength, dashThickness, dashColor}, isRow) => {
+const createDashStyleSheet = ({dashGap, dashLength, dashThickness, dashColor}: DashProps, isRow: boolean) => {
   const idStyle = {
     width: isRow ? dashLength : dashThickness,
     height: isRow ? dashThickness : dashLength,
@@ -69,11 +74,11 @@ const createDashStyleSheet = ({dashGap, dashLength, dashThickness, dashColor}, i
   return idStyle;
 };
 
-let stylesStore = {};
-const getDashStyle = props => {
+let stylesStore: {[id: string]: ViewStyle} = {};
+const getDashStyle = (props: DashProps) => {
   const isRow = isStyleRow(props.style);
   const id = getDashStyleId(props, isRow);
-  if (!stylesStore[id]) {
+  if (id && !stylesStore[id]) {
     stylesStore = {
       ...stylesStore,
       [id]: createDashStyleSheet(props, isRow)
