@@ -7,7 +7,6 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 
-
 interface Props {
   /**
    * The identifier value of the ColorSwatch in a ColorSwatch palette.
@@ -192,7 +191,6 @@ class ColorSwatch extends PureComponent<Props> {
 
 export default asBaseComponent<Props>(ColorSwatch);
 
-
 function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({
     container: {
@@ -208,9 +206,9 @@ function createStyles({color = Colors.grey30}) {
       ...StyleSheet.absoluteFillObject,
       width: DEFAULT_SIZE,
       height: DEFAULT_SIZE,
-      // borderWidth: 1,
-      // borderRadius: BorderRadiuses.br100,
-      // borderColor:Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
+      borderWidth: 1,
+      borderRadius: BorderRadiuses.br100,
+      borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
     }
   });
 }
