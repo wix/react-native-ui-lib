@@ -5,7 +5,7 @@ import {WizardStepsConfig} from './types';
 
 export const StatesConfig: WizardStepsConfig = {
   enabled: {color: Colors.$textNeutralHeavy, circleColor: Colors.$outlineDisabled, enabled: true},
-  disabled: {color: Colors.$textDisabled, circleColor: Colors.outlineDefault},
+  disabled: {color: Colors.$textDisabled, circleColor: Colors.$outlineDefault},
   error: {
     color: Colors.$iconDangerLight,
     circleColor: Colors.$outlineDanger,
