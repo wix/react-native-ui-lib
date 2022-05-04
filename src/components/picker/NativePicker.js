@@ -7,6 +7,8 @@ import {Colors} from '../../style';
 import {WheelPicker} from '../../incubator';
 
 class NativePicker extends Component {
+  static displayName = 'NativePicker';
+
   state = {
     selectedValue: this.props.value,
     items: this.extractPickerItems(this.props),

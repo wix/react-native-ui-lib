@@ -9,7 +9,7 @@ import Text from '../text';
 import {Colors, BorderRadiuses} from '../../style';
 
 class PickerDialog extends Component {
-  static displayName = 'IGNORE';
+  static displayName = 'PickerDialog';
   static propTypes = {
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
