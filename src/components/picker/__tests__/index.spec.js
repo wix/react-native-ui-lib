@@ -13,15 +13,16 @@ const countries = [
 describe('Picker', () => {
   describe('getLabel', () => {
     it('should get label of a simple item', () => {
-      let uut = new _Picker({value: countries[2]});
-      expect(uut.getLabelValueText()).toEqual(countries[2].label);
-      uut = new _Picker({value: countries[3]});
-      expect(uut.getLabelValueText()).toEqual(countries[3].label);
-    });
 
+      let renderTree = render(<TestCase value={countries[2]}/>);
+      renderTree.getByDisplayValue(countries[2].label);
+      renderTree = render(<TestCase value={countries[3]}/>);
+      renderTree.getByDisplayValue(countries[3].label);
+    });
+    
     it('should get label out of an array of items', () => {
-      const uut = new _Picker({value: [countries[2], countries[4]]});
-      expect(uut.getLabelValueText()).toEqual(`${countries[2].label}, ${countries[4].label}`);
+      const renderTree = render(<TestCase value={[countries[2], countries[4]]}/>);
+      renderTree.getByDisplayValue(`${countries[2].label}, ${countries[4].label}`);
     });
   });
 
