@@ -39,6 +39,7 @@ export default {
   $textPrimary: colorsPalette.violet30,
   $textGeneral: colorsPalette.blue30,
   $textSuccess: colorsPalette.green10,
+  $textSuccessLight: colorsPalette.green30,
   $textMajor: colorsPalette.orange10,
   $textDanger: colorsPalette.red10,
   $textDangerLight: colorsPalette.red30,
