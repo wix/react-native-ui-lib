@@ -9,7 +9,7 @@ import Text from '../text';
 import {Colors} from '../../style';
 
 class PickerDialog extends Component {
-  static displayName = 'NativePicker';
+  static displayName = 'PickerDialog';
   static propTypes = {
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
