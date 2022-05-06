@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet} from 'react-native';
 import View from '../view';
 import {Constants, asBaseComponent} from '../../commons/new';
 import Colors from '../../style/colors';
@@ -103,19 +103,14 @@ export default asBaseComponent<WizardProps, typeof Wizard>(Wizard);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.$backgroundElevated,
     paddingVertical: 10,
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    ...Platform.select({
-      ios: {
-        ...Shadows.white30.bottom
-      },
-      android: {
-        elevation: 2
-      }
-    })
+    ...Shadows.sh10.bottom,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.$outlineDisabled
   }
 });

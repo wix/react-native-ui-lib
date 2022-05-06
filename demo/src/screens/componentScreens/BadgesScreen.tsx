@@ -56,23 +56,23 @@ export default class BadgesScreen extends Component {
               label={'999'}
               labelFormatterLimit={2}
               borderWidth={2}
-              borderColor={Colors.white}
+              borderColor={Colors.$outlineInverted}
             />
             <Badge labelFormatterLimit={1} size={16} label={'99999999'}/>
           </View>
 
           <View row spread marginV-20>
-            <Badge size={20} label={value.toString()} backgroundColor={Colors.red30}/>
+            <Badge size={20} label={value.toString()} backgroundColor={Colors.$backgroundDangerHeavy}/>
             <Badge
               label={value.toString()}
-              backgroundColor={Colors.red30}
+              backgroundColor={Colors.$backgroundDangerHeavy}
               borderWidth={1}
               borderColor={Colors.$outlinePrimary}
             />
             <Badge
               size={16}
               label={value.toString()}
-              backgroundColor={Colors.red30}
+              backgroundColor={Colors.$backgroundDangerHeavy}
             />
           </View>
           <View center>
@@ -94,9 +94,9 @@ export default class BadgesScreen extends Component {
               </Text>
             </View>
             <View center style={{justifyContent: 'space-around', width: 40, height: 140}}>
-              <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} size={6}/>
-              <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.red30} size={10}/>
-              <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={14}/>
+              <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.$backgroundSuccessHeavy} size={6}/>
+              <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.$backgroundDangerHeavy} size={10}/>
+              <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.$backgroundGeneralHeavy} size={14}/>
             </View>
           </View>
 
@@ -109,8 +109,8 @@ export default class BadgesScreen extends Component {
                 size={16} 
                 icon={star} 
                 borderWidth={1} 
-                borderColor={Colors.red30} 
-                iconStyle={{tintColor: Colors.red30}}
+                borderColor={Colors.$outlineDanger} 
+                iconStyle={{tintColor: Colors.$iconDangerLight}}
               />
               <Text $textDefault text80 style={{marginTop: 10}}>
                 small(16)
@@ -118,21 +118,21 @@ export default class BadgesScreen extends Component {
             </View>
 
             <View center>
-              <Badge icon={star} iconStyle={{tintColor: Colors.red30}}/>
+              <Badge icon={star} iconStyle={{tintColor: Colors.$iconDangerLight}}/>
               <Text $textDefault text80 style={{marginTop: 10}}>
                 default(20)
               </Text>
             </View>
 
             <View center>
-              <Badge size={24} icon={star} iconStyle={{backgroundColor: Colors.red30}}/>
+              <Badge size={24} icon={star} iconStyle={{backgroundColor: Colors.$iconDangerLight}}/>
               <Text $textDefault text80 style={{marginTop: 10}}>
                 large(24)
               </Text>
             </View>
 
             <View center>
-              <Badge icon={star} borderRadius={6} iconStyle={{backgroundColor: Colors.red30}}/>
+              <Badge icon={star} borderRadius={6} iconStyle={{backgroundColor: Colors.$iconDangerLight}}/>
               <Text $textDefault text80 style={{marginTop: 10}}>
                 border radius
               </Text>
@@ -143,8 +143,8 @@ export default class BadgesScreen extends Component {
             Counter Icon Badges
           </Text>
           <View row spread marginH-50>
-            <Badge marginR-10 label={'9999'} labelFormatterLimit={3} icon={bell} backgroundColor={Colors.red30}/>
-            <Badge marginR-10 label={'4'} icon={bell} backgroundColor={Colors.red30}/>
+            <Badge marginR-10 label={'9999'} labelFormatterLimit={3} icon={bell} backgroundColor={Colors.$backgroundDangerHeavy}/>
+            <Badge marginR-10 label={'4'} icon={bell} backgroundColor={Colors.$backgroundDangerHeavy}/>
           </View>
 
           <Text row center text50 $textDefault margin-25>
@@ -152,7 +152,7 @@ export default class BadgesScreen extends Component {
           </Text>
           <View row spread marginH-50>
             <Badge marginR-10 label={'17'} customElement={this.customElement1}/>
-            <Badge marginR-10 customElement={this.customElement2} backgroundColor={Colors.grey30}/>
+            <Badge marginR-10 customElement={this.customElement2} backgroundColor={Colors.$backgroundNeutralHeavy}/>
           </View>
         </ScrollView>
       </View>
