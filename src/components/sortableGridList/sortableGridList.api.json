@@ -12,6 +12,11 @@
       "name": "onOrderChange",
       "type": "(newData: T[], newOrder: ItemsOrder) => void",
       "description": "Order change callback"
+    },
+    {
+      "name": "extraData",
+      "type": "any",
+      "description": "Pass any extra data that should trigger a re-render"
     }
   ],
   "snippet": [

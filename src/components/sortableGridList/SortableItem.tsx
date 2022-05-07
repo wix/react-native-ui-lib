@@ -38,25 +38,38 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
   const tempTranslateX = useSharedValue(0);
   const tempTranslateY = useSharedValue(0);
 
-  const dataHasChanged = useSharedValue(false);
+  const dataManuallyChanged = useSharedValue(false);
 
   useDidUpdate(() => {
-    dataHasChanged.value = true;
+    dataManuallyChanged.value = true;
+    initialIndex.value = _.map(data, 'id').indexOf(id);
   }, [data]);
 
-  useAnimatedReaction(() => getItemOrderById(itemsOrder.value, id),
-    (newOrder, prevOrder) => {
-      if (dataHasChanged.value) {
-        dataHasChanged.value = false;
-        translateX.value = 0;
-        translateY.value = 0;
-      } else if (prevOrder !== null && newOrder !== prevOrder) {
-        const translation = getTranslationByOrderChange(newOrder, prevOrder);
-        translateX.value = withTiming(translateX.value + translation.x, animationConfig);
-        translateY.value = withTiming(translateY.value + translation.y, animationConfig);
-      } else if (newOrder === initialIndex.value) {
-        translateX.value = withTiming(0, animationConfig);
-        translateY.value = withTiming(0, animationConfig);
+  useAnimatedReaction(() => itemsOrder.value,
+    (currItemsOrder, prevItemsOrder) => {
+      // Note: Unfortunately itemsOrder sharedValue is being initialized on each render
+      // Therefore I added this extra check here that compares current and previous values
+      // See open issue: https://github.com/software-mansion/react-native-reanimated/issues/3224
+      if (prevItemsOrder === null || currItemsOrder.join(',') === prevItemsOrder.join(',')) {
+        return;
+      } else {
+        const newOrder = getItemOrderById(currItemsOrder, id);
+        const prevOrder = getItemOrderById(prevItemsOrder, id);
+
+        if (newOrder === initialIndex.value) {
+          if (dataManuallyChanged.value) {
+            translateX.value = 0;
+            translateY.value = 0;
+          } else {
+            translateX.value = withTiming(0, animationConfig);
+            translateY.value = withTiming(0, animationConfig);
+          }
+          dataManuallyChanged.value = false;
+        } else if (newOrder !== prevOrder) {
+          const translation = getTranslationByOrderChange(newOrder, prevOrder);
+          translateX.value = withTiming(translateX.value + translation.x, animationConfig);
+          translateY.value = withTiming(translateY.value + translation.y, animationConfig);
+        }
       }
     });
 
@@ -152,4 +165,4 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
   );
 }
 
-export default SortableItem;
+export default React.memo(SortableItem);

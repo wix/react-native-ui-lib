@@ -46,7 +46,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
 
     return (
       <SortableItem
-        key={index}
+        key={item.id}
         data={data}
         {...presenter}
         style={[itemContainerStyle, lastItemInRow && {marginRight: 0}]}

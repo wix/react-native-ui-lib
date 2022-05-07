@@ -11,6 +11,7 @@ export interface SortableGridListProps<T = any> extends GridListBaseProps, Scrol
   data: FlatListProps<ItemProps<T>>['data'];
   renderItem: FlatListProps<ItemProps<T>>['renderItem'];
   onOrderChange?: (newData: ItemProps<T>[], newOrder: ItemsOrder) => void;
+  extraData?: any;
 }
 
 export interface SortableItemProps {
