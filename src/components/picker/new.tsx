@@ -86,7 +86,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     pickerExpandableRef: pickerExpandable,
     getItemValue,
     topBarProps,
-    setSearchValue
+    setSearchValue,
+    mode
   });
 
   const {label, accessibilityInfo} = usePickerLabel({
