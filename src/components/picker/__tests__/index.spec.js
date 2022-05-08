@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {fireEvent, render} from '@testing-library/react-native';
-import Picker, {Picker as _Picker} from '../index';
+import Picker from '../index';
 
 const countries = [
   {label: 'Israel', value: 'IL'},
