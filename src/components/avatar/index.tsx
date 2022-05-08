@@ -251,9 +251,9 @@ class Avatar extends PureComponent<AvatarProps> {
         <Badge
           backgroundColor={this.getBadgeColor()}
           size={this.getBadgeSize()}
+          testID={`${testID}.onlineBadge`}
           {...badgeProps}
           containerStyle={this.getBadgePosition()}
-          testID={`${testID}.onlineBadge`}
         />
       );
     }
