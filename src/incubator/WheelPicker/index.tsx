@@ -247,7 +247,7 @@ const WheelPicker = ({
   }, [flatListWidth, labelContainerStyle, label, labelProps, activeTextColor, labelStyle]);
 
   const fader = useMemo(() => (position: FaderPosition) => {
-    return <Fader visible position={position} size={60} {...faderProps} />;
+    return <Fader visible position={position} size={60} {...faderProps}/>;
   },
   []);
 
