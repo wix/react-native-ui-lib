@@ -100,7 +100,7 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getLabelColor() {
-    const {linkColor, outline, outlineColor, disabled, color: propsColor} = this.props;
+    const {linkColor, outline, outlineColor, disabled, color: propsColor, backgroundColor} = this.props;
     const isLink = this.isLink;
 
     let color: string | undefined = Colors.$textDefaultLight;
@@ -109,7 +109,7 @@ class Button extends PureComponent<Props, ButtonState> {
     } else if (outline) {
       color = outlineColor || Colors.$textPrimary;
     } else if (this.isIconButton) {
-      color = Colors.$iconDefaultLight;
+      color = backgroundColor === 'transparent' ? undefined : Colors.$iconDefaultLight;
     }
 
     if (disabled && (isLink || outline)) {
@@ -287,10 +287,7 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return (
-          <Image
-            source={iconSource} supportRTL={supportRTL} style={iconStyle} testID={`${testID}.icon`}
-          />);
+        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle} testID={`${testID}.icon`}/>;
       }
     }
     return null;
