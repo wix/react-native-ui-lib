@@ -6,6 +6,7 @@ import {Typography, View, Text, MaskedInput, Button, Colors} from 'react-native-
 export default class MaskedInputScreen extends Component {
   minInput = React.createRef<any>();
   priceInput = React.createRef<any>();
+  pinCodeInput = React.createRef<any>();
   state = {
     error: '',
     timeValue: '15'
@@ -20,6 +21,7 @@ export default class MaskedInputScreen extends Component {
   clearInputs = () => {
     this.minInput.current.clear();
     this.priceInput.current.clear();
+    this.pinCodeInput.current.clear();
   };
 
   renderTimeText(value: string) {
@@ -59,7 +61,7 @@ export default class MaskedInputScreen extends Component {
       <View row centerH>
         {_.times(4, i => {
           return (
-            <View marginR-s3 center style={styles.pinCodeSquare}>
+            <View key={i} marginR-s3 center style={styles.pinCodeSquare}>
               <Text h1>{value[i]}</Text>
             </View>
           );
@@ -109,7 +111,7 @@ export default class MaskedInputScreen extends Component {
           <MaskedInput
             migrate
             maxLength={4}
-            ref={this.priceInput}
+            ref={this.pinCodeInput}
             renderMaskedText={this.renderPINCode}
             formatter={(value: string) => value?.replace(/\D/g, '')}
             keyboardType={'numeric'}
