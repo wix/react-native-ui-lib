@@ -56,15 +56,19 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
         const newOrder = getItemOrderById(currItemsOrder, id);
         const prevOrder = getItemOrderById(prevItemsOrder, id);
 
+        /* In case the order of the item has returned back to its initial index we reset its position */
         if (newOrder === initialIndex.value) {
+          /* Reset without an animation when the change is due to manual data change */
           if (dataManuallyChanged.value) {
             translateX.value = 0;
             translateY.value = 0;
+          /* Reset with an animation when the change id due to user reordering */
           } else {
             translateX.value = withTiming(0, animationConfig);
             translateY.value = withTiming(0, animationConfig);
           }
           dataManuallyChanged.value = false;
+        /* Handle an order change, animate item to its new position  */
         } else if (newOrder !== prevOrder) {
           const translation = getTranslationByOrderChange(newOrder, prevOrder);
           translateX.value = withTiming(translateX.value + translation.x, animationConfig);
