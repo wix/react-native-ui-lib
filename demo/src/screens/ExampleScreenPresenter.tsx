@@ -22,6 +22,11 @@ interface RadioGroupOptions {
   useValueAsLabel?: boolean;
 }
 
+interface BooleanGroupOptions {
+  spread?: boolean;
+  afterValueChanged?: () => void;
+}
+
 export function renderHeader(title: string, others?: TextProps) {
   return (
     <Text text30 $textDefault {...others}>
@@ -30,19 +35,19 @@ export function renderHeader(title: string, others?: TextProps) {
   );
 }
 
-export function renderBooleanOption(title: string, key: string) {
+export function renderBooleanOption(title: string, key: string, {spread, afterValueChanged}: BooleanGroupOptions = {spread: true}) {
   // @ts-ignore
   const value = this.state[key];
   return (
-    <View row centerV spread marginB-s4 key={key}>
-      <Text $textDefault flex>{title}</Text>
+    <View row centerV spread={spread} marginB-s4 key={key}>
+      <Text $textDefault flex={spread} marginR-s4={!spread}>{title}</Text>
       <Switch
         useCustomTheme
         key={key}
         testID={key}
         value={value}
         // @ts-ignore
-        onValueChange={value => this.setState({[key]: value})}
+        onValueChange={value => this.setState({[key]: value}, afterValueChanged)}
       />
     </View>
   );
