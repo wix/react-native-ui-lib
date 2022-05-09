@@ -515,6 +515,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
         {...this._panResponder.panHandlers}
         style={[
           styles.thumb,
+          disabled && styles.disabledThumb,
           thumbStyle,
           {
             backgroundColor: disabled ? DEFAULT_COLOR : thumbTintColor || ACTIVE_COLOR
@@ -620,6 +621,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: SHADOW_RADIUS,
     elevation: 2
+  },
+  disabledThumb: {
+    borderColor: Colors.$backgroundElevated
   },
   activeThumb: {
     width: THUMB_SIZE + 16,

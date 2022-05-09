@@ -1,30 +1,30 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Typography, View, Text, MaskedInput, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {Typography, View, Text, MaskedInput, Button, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class MaskedInputScreen extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      error: '',
-      timeValue: '15'
-    };
-  }
+  minInput = React.createRef<any>();
+  priceInput = React.createRef<any>();
+  pinCodeInput = React.createRef<any>();
+  state = {
+    error: '',
+    timeValue: '15'
+  };
 
   componentDidMount() {
     setTimeout(() => {
-      this.minput.focus();
+      this.minInput.current.focus();
     }, 500);
   }
 
   clearInputs = () => {
-    this.minput.clear();
-    this.priceInput.clear();
+    this.minInput.current.clear();
+    this.priceInput.current.clear();
+    this.pinCodeInput.current.clear();
   };
 
-  renderTimeText(value) {
+  renderTimeText(value: string) {
     const paddedValue = _.padStart(value, 4, '0');
     const hours = paddedValue.substr(0, 2);
     const minutes = paddedValue.substr(2, 2);
@@ -39,7 +39,7 @@ export default class MaskedInputScreen extends Component {
     );
   }
 
-  renderPrice(value) {
+  renderPrice(value: string) {
     const hasValue = Boolean(value && value.length > 0);
     return (
       <View row center>
@@ -56,6 +56,20 @@ export default class MaskedInputScreen extends Component {
     );
   }
 
+  renderPINCode = (value = '') => {
+    return (
+      <View row centerH>
+        {_.times(4, i => {
+          return (
+            <View key={i} marginR-s3 center style={styles.pinCodeSquare}>
+              <Text h1>{value[i]}</Text>
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
+
   render() {
     const {timeValue} = this.state;
 
@@ -70,22 +84,39 @@ export default class MaskedInputScreen extends Component {
             Time Format
           </Text>
           <MaskedInput
-            ref={r => (this.minput = r)}
+            migrate
+            ref={this.minInput}
             renderMaskedText={this.renderTimeText}
+            formatter={(value: string) => value?.replace(/\D/g, '')}
             keyboardType={'numeric'}
             maxLength={4}
-            value={timeValue}
-            onChangeText={value => this.setState({timeValue: value})}
+            initialValue={timeValue}
+            // onChangeText={value => this.setState({timeValue: value})}
           />
 
           <Text text70 marginT-40>
             Price/Discount
           </Text>
           <MaskedInput
-            ref={r => (this.priceInput = r)}
+            migrate
+            ref={this.priceInput}
             renderMaskedText={this.renderPrice}
+            formatter={(value: string) => value?.replace(/\D/g, '')}
             keyboardType={'numeric'}
           />
+
+          <Text text70 marginT-s5 marginB-s4>
+            PIN Code
+          </Text>
+          <MaskedInput
+            migrate
+            maxLength={4}
+            ref={this.pinCodeInput}
+            renderMaskedText={this.renderPINCode}
+            formatter={(value: string) => value?.replace(/\D/g, '')}
+            keyboardType={'numeric'}
+          />
+
           <View centerH marginT-100>
             <Button label="Clear All" onPress={this.clearInputs}/>
           </View>
@@ -107,5 +138,12 @@ const styles = StyleSheet.create({
   header: {
     ...Typography.text60,
     marginVertical: 20
+  },
+  pinCodeSquare: {
+    width: 50,
+    height: 70,
+    borderWidth: 2,
+    borderColor: Colors.grey30,
+    borderRadius: 4
   }
 });

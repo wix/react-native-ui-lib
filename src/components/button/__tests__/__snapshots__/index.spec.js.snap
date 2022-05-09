@@ -1958,7 +1958,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
         Object {},
         Array [
           Object {
-            "tintColor": undefined,
+            "tintColor": "#FFFFFF",
           },
           Object {
             "marginRight": 9,
@@ -2139,7 +2139,7 @@ exports[`Button icon should return icon style according to different variations 
         Object {},
         Array [
           Object {
-            "tintColor": undefined,
+            "tintColor": "#FFFFFF",
           },
           undefined,
         ],
@@ -3154,7 +3154,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
         Object {},
         Array [
           Object {
-            "tintColor": undefined,
+            "tintColor": "#FFFFFF",
           },
           undefined,
         ],

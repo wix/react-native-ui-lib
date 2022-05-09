@@ -347,6 +347,7 @@ class ColorPalette extends PureComponent<Props, State> {
         height={SCROLLABLE_HEIGHT}
         containerProps={{width: !scrollable ? contentWidth : undefined}}
         gradientHeight={SCROLLABLE_HEIGHT - 12}
+        gradientColor={Colors.$backgroundDefault}
       >
         {this.renderPalette(others, styles.scrollContent, this.colors, 0)}
       </ScrollBar>

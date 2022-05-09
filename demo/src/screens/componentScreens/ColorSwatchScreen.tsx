@@ -4,7 +4,12 @@ import {ScrollView} from 'react-native';
 import {Constants, Colors, View, Text, ColorSwatch, ColorPalette} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class ColorSwatchScreen extends Component {
-  colors = ['transparent', Colors.green30, Colors.yellow30, Colors.red30];
+  colors = [
+    'transparent',
+    Colors.$backgroundSuccessHeavy,
+    Colors.$backgroundWarningHeavy,
+    Colors.$backgroundDangerHeavy
+  ];
   mainColors = [
     '#66737C',
     '#459FED',
@@ -50,7 +55,7 @@ export default class ColorSwatchScreen extends Component {
     const {color, color1, color2, selected} = this.state;
 
     return (
-      <ScrollView style={{backgroundColor: Colors.grey80}}>
+      <ScrollView style={{backgroundColor: Colors.$backgroundNeutralLight}}>
         <View flex center useSafeArea>
           <Text margin-5 text60 grey10>
             Single ColorSwatch
@@ -58,7 +63,7 @@ export default class ColorSwatchScreen extends Component {
           <View row>
             <ColorSwatch selected={selected} onPress={this.onPress}/>
             <View>
-              <ColorSwatch selected color={Colors.orange60}/>
+              <ColorSwatch selected color={Colors.$backgroundMajor}/>
               <Text>Disabled</Text>
             </View>
           </View>
