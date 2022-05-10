@@ -1,11 +1,11 @@
 import React, {useCallback, useMemo, useEffect, useState} from 'react';
-import {StyleSheet, ImageRequireSource, ViewStyle, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, ViewStyle, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Icon from '../icon';
 import Text from '../text';
 import Dash from './Dash';
-
+import {TimelineProps, LineProps, Position, StateTypes, PointTypes, LineTypes} from './types';
 
 const LINE_WIDTH = 2;
 const POINT_SIZE = 12;
@@ -17,59 +17,6 @@ const ICON_SIZE = 12;
 const CONTENT_CONTAINER_PADDINGS = Spacings.s2;
 const POINT_MARGINS = Spacings.s1;
 
-export enum StateTypes {
-  CURRENT = 'current', // default
-  NEXT = 'next',
-  ERROR = 'error',
-  SUCCESS = 'success'
-}
-
-export enum LineTypes {
-  SOLID = 'solid', // default
-  DASHED = 'dashed'
-}
-
-export enum PointTypes {
-  BULLET = 'bullet', // default
-  CIRCLE = 'circle',
-  OUTLINE = 'outline'
-}
-
-export type LineProps = {
-  state?: StateTypes;
-  type?: LineTypes;
-  color?: string;
-  /** to mark as entry point */
-  entry?: boolean;
-}
-
-export type PointProps = {
-  state?: StateTypes;
-  type?: PointTypes;
-  color?: string;
-  icon?: ImageRequireSource;
-  label?: number;
-  /** to align point to this view's center */
-  alignmentTargetRef?: React.MutableRefObject<undefined>;
-  /** the target view's top parent view */
-  targetContainerRef?: React.MutableRefObject<undefined>;
-}
-
-type Position = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
-export type TimelineProps = {
-  height: number;
-  topLine?: LineProps;
-  bottomLine?: LineProps;
-  point?: PointProps;
-  renderContent?: (props: TimelineProps) => JSX.Element;
-  testID?: string;
-};
 
 const Timeline = (props: TimelineProps) => {
   const {height, topLine, bottomLine, point, renderContent} = props;
