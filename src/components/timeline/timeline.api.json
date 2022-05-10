@@ -4,7 +4,7 @@
   "description": "A timeline item to render as part of a timeline list",
   "extends": ["View"],
   "extendsLink": ["https://reactnative.dev/docs/view"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/src/components/timelineItem/index.tsx",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/src/components/timeline/index.tsx",
   "images": [],
   "props": [
     {"name": "backgroundColor", "type": "string", "description": "Background color for the item"},
@@ -38,5 +38,23 @@
       "name": "testID", "type": "string", "description": "The test id for e2e tests"
     }
   ],
-  "snippet": ["<Timeline renderContent={$1} state={Timeline.states.NEXT$2}/>"]
+  "snippet": [
+    "<Timeline ",
+      "renderContent={$1}",
+      "state={Timeline.states.NEXT$2}/>",
+      "topLine={{",
+        "state: Timeline.states.ERROR",
+      "}$3}",
+      "bottomLine={{",
+        "type: Timeline.lineTypes.DASHED,",
+        "color: Colors.orange40",
+      "}$4}",
+      "point={{",
+        "type: Timeline.pointTypes.OUTLINE,",
+        "color: Colors.orange40,",
+        "icon: Assets.icons.demo.camera,",
+        "targetContainerRef: targetContainer,",
+        "alignmentTargetRef: target",
+      "}$5}"
+    ]
 }

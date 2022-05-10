@@ -9,8 +9,8 @@ import Dash from './Dash';
 
 const LINE_WIDTH = 2;
 const POINT_SIZE = 12;
-const HALO_WIDTH = 4;
-const HALO_TINT = 70;
+const OUTLINE_WIDTH = 4;
+const OUTLINE_TINT = 70;
 const HOLLO_WIDTH = 2;
 const CONTENT_POINT_SIZE = 20;
 const ICON_SIZE = 12;
@@ -25,14 +25,14 @@ export enum StateTypes {
 }
 
 export enum LineTypes {
-  FULL = 'full', // default
+  SOLID = 'solid', // default
   DASHED = 'dashed'
 }
 
 export enum PointTypes {
   BULLET = 'bullet', // default
-  HOLLOW = 'hollow',
-  HALO = 'halo'
+  CIRCLE = 'circle',
+  OUTLINE = 'outline'
 }
 
 export type LineProps = {
@@ -89,15 +89,15 @@ const Timeline = (props: TimelineProps) => {
         point.alignmentTargetRef.current.measureLayout?.(point.targetContainerRef.current, onMeasure);
       }
     }, 0);
-  }, [point?.alignmentTargetRef, point?.targetContainerRef]);
+  }, [point]);
 
-  const visible = useMemo(() => {
+  const visibleStyle = useMemo(() => {
     return {opacity: contentContainerMeasurements ? 1 : 0};
   }, [contentContainerMeasurements]);
 
   const containerStyle = useMemo(() => {
-    return [styles.container, visible, {height}];
-  }, [visible, height]);
+    return [styles.container, visibleStyle, {height}];
+  }, [visibleStyle, height]);
 
   const getStateColor = (state?: StateTypes) => {
     switch (state) {
@@ -134,22 +134,22 @@ const Timeline = (props: TimelineProps) => {
   }, [point?.alignmentTargetRef, calcLineHeight]);
 
   const pointStyle = useMemo(() => {
-    const hasHalo = point?.type === PointTypes.HALO;
-    const isHollow = point?.type === PointTypes.HOLLOW;
+    const hasOutline = point?.type === PointTypes.OUTLINE;
+    const isCircle = point?.type === PointTypes.CIRCLE;
     const hasContent = point?.label || point?.icon;
 
     const size = hasContent ? CONTENT_POINT_SIZE : POINT_SIZE;
-    const pointSize = hasHalo ? size + HALO_WIDTH * 2 : size;
+    const pointSize = hasOutline ? size + OUTLINE_WIDTH * 2 : size;
     const pointSizeStyle = {width: pointSize, height: pointSize, borderRadius: pointSize / 2};
 
     const pointColor = point?.color || getStateColor(point?.state);
     const pointColorStyle = {backgroundColor: pointColor};
 
-    const haloStyle = hasHalo && {borderWidth: HALO_WIDTH, borderColor: Colors.getColorTint(pointColor, HALO_TINT)};
-    const hollowStyle = !hasContent && isHollow && 
+    const outlineStyle = hasOutline && {borderWidth: OUTLINE_WIDTH, borderColor: Colors.getColorTint(pointColor, OUTLINE_TINT)};
+    const circleStyle = !hasContent && isCircle && 
       {backgroundColor: Colors.white, borderWidth: HOLLO_WIDTH, borderColor: pointColor};
     
-    return [styles.point, pointSizeStyle, pointColorStyle, haloStyle, hollowStyle];
+    return [styles.point, pointSizeStyle, pointColorStyle, outlineStyle, circleStyle];
   }, [point?.state, point?.type, point?.color, point?.label, point?.icon]);
 
   const onPointLayout = useCallback((event: LayoutChangeEvent) => {
@@ -163,7 +163,7 @@ const Timeline = (props: TimelineProps) => {
   }, []);
 
   const renderLine = (line?: LineProps, style?: ViewStyle) => {
-    const lineColor = getLineColor(line);
+    const lineColor = line ? getLineColor(line) : 'transparent';
     
     if (line?.type === LineTypes.DASHED) {
       return (
@@ -176,7 +176,7 @@ const Timeline = (props: TimelineProps) => {
         />
       );
     }
-    return <View style={[styles.fullLine, {backgroundColor: lineColor}, style]}/>;
+    return <View style={[styles.solidLine, {backgroundColor: lineColor}, style]}/>;
   };
 
   const renderTopLine = () => {
@@ -189,12 +189,14 @@ const Timeline = (props: TimelineProps) => {
   };
 
   const renderBottomLine = () => {
-    return (
-      <>
-        {renderLine(bottomLine, styles.line)}
-        {renderStartPoint(bottomLine)}
-      </>
-    );
+    if (bottomLine) {
+      return (
+        <>
+          {renderLine(bottomLine, styles.line)}
+          {renderStartPoint(bottomLine)}
+        </>
+      );
+    }
   };
 
   const renderStartPoint = (line?: LineProps) => {
@@ -221,7 +223,7 @@ const Timeline = (props: TimelineProps) => {
     
   };
 
-  const renderIndicator = () => {
+  const renderTimeline = () => {
     return (
       <View style={styles.indicatorContainer}>
         {renderTopLine()}
@@ -241,7 +243,7 @@ const Timeline = (props: TimelineProps) => {
 
   return (
     <View row style={containerStyle}>
-      {renderIndicator()}
+      {renderTimeline()}
       {renderContentContainer()}
     </View>
   );
@@ -274,7 +276,7 @@ const styles = StyleSheet.create({
     width: 12,
     height: 2
   },
-  fullLine: {
+  solidLine: {
     width: LINE_WIDTH,
     overflow: 'hidden'
   },

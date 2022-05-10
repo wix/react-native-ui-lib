@@ -1,14 +1,14 @@
 import React, {useCallback, useRef} from 'react';
 import {ScrollView} from 'react-native';
-import {Assets, Colors, TimelineItem as Timeline, TimelineProps, View, Card, Text} from 'react-native-ui-lib';
+import {Assets, Colors, Timeline, TimelineProps, View, Card, Text} from 'react-native-ui-lib';
 
 const contents = [
-  'Current (default) state with dashed and full (default) lines.\nAligned to title',
+  'Current (default) state with dashed and solid (default) lines.\nAligned to title',
   'Success state with label.',
   'Error state with icon.',
-  'Custom color with icon and halo.\nAligned to title',
-  'Next state with halo.',
-  'Next state with hollow point and entry point.'
+  'Custom color with icon and outline.\nAligned to title',
+  'Next state with outline.',
+  'Next state with circle point and entry point.'
 ];
 
 const TimelineScreen = () => {
@@ -34,7 +34,7 @@ const TimelineScreen = () => {
         <Timeline 
           height={180}
           renderContent={renderContent}
-          topLine={{type: Timeline.lineTypes.DASHED}}
+          bottomLine={{type: Timeline.lineTypes.DASHED}}
           point={{
             targetContainerRef: targetContainer,
             alignmentTargetRef: target
@@ -44,6 +44,7 @@ const TimelineScreen = () => {
         <Timeline 
           height={120}
           renderContent={renderContent}
+          topLine={{type: Timeline.lineTypes.DASHED}}
           bottomLine={{
             state: Timeline.states.SUCCESS
           }}
@@ -79,7 +80,7 @@ const TimelineScreen = () => {
             color: Colors.orange40
           }}
           point={{
-            type: Timeline.pointTypes.HALO,
+            type: Timeline.pointTypes.OUTLINE,
             color: Colors.orange40,
             icon: Assets.icons.demo.camera,
             targetContainerRef: targetContainer,
@@ -100,7 +101,7 @@ const TimelineScreen = () => {
           }}
           point={{
             state: Timeline.states.NEXT,
-            type: Timeline.pointTypes.HALO
+            type: Timeline.pointTypes.OUTLINE
           }}
           testID={'4'}
         />
@@ -117,7 +118,7 @@ const TimelineScreen = () => {
           }}
           point={{
             state: Timeline.states.NEXT,
-            type: Timeline.pointTypes.HOLLOW
+            type: Timeline.pointTypes.CIRCLE
           }}
           testID={'5'}
         />
