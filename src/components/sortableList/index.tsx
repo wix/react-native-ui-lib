@@ -5,9 +5,11 @@ import {FlatList, FlatListProps, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import SortableListContext from './SortableListContext';
-import SortableListItem from './SortableListItem';
+import SortableListItem, {SortableListItemProps} from './SortableListItem';
 
-export interface SortableListProps<ItemT> extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'> {
+export interface SortableListProps<ItemT>
+  extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'>,
+    Pick<SortableListItemProps, 'disableHaptic'> {
   /**
    * The data of the list, do not update the data.
    */
@@ -19,7 +21,7 @@ export interface SortableListProps<ItemT> extends Omit<FlatListProps<ItemT>, 'ex
 }
 
 const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) => {
-  const {data, onOrderChange, ...others} = props;
+  const {data, onOrderChange, disableHaptic, ...others} = props;
 
   const itemsOrder = useSharedValue<number[]>(map(props.data, (_v, i) => i));
   const itemHeight = useSharedValue<number>(1);
@@ -46,7 +48,8 @@ const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) =>
       itemsOrder,
       onChange,
       itemHeight,
-      onItemLayout
+      onItemLayout,
+      disableHaptic
     };
   }, []);
 

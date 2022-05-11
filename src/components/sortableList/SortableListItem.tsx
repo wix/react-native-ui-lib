@@ -15,8 +15,12 @@ import SortableListContext from './SortableListContext';
 import usePresenter from './usePresenter';
 import useDragAfterLongPressGesture from './useDragAfterLongPressGesture';
 
-interface SortableListItemProps {
+export interface SortableListItemProps {
   index: number;
+  /**
+   * Whether to disable the haptic feedback
+   */
+  disableHaptic?: boolean;
 }
 
 type Props = PropsWithChildren<SortableListItemProps>;
@@ -27,7 +31,7 @@ const animationConfig = {
 };
 
 const SortableListItem = (props: Props) => {
-  const {children, index} = props;
+  const {children, index, disableHaptic} = props;
 
   const {itemHeight, onItemLayout, itemsOrder, onChange} = useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
@@ -87,7 +91,8 @@ const SortableListItem = (props: Props) => {
   const {dragAfterLongPressGesture, isFloating} = useDragAfterLongPressGesture({
     onDragStart,
     onDragUpdate,
-    onDragEnd
+    onDragEnd,
+    hapticComponentName: disableHaptic ? null : 'SortableList'
   });
 
   const draggedAnimatedStyle = useAnimatedStyle(() => {

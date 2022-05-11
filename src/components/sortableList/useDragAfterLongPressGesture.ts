@@ -1,19 +1,21 @@
-import {useSharedValue, useAnimatedReaction} from 'react-native-reanimated';
+import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import {
   Gesture,
   GestureStateChangeEvent,
   GestureUpdateEvent,
   PanGestureHandlerEventPayload
 } from 'react-native-gesture-handler';
+import {HapticService, HapticType} from '../../services';
 
 interface Props {
   onDragStart?: (event: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => void;
   onDragUpdate?: (event: GestureUpdateEvent<PanGestureHandlerEventPayload>) => void;
   onDragEnd?: () => void;
+  hapticComponentName: string | null;
 }
 
 const useDragAfterLongPressGesture = (props: Props) => {
-  const {onDragStart, onDragUpdate, onDragEnd} = props;
+  const {onDragStart, onDragUpdate, onDragEnd, hapticComponentName} = props;
 
   const isDragging = useSharedValue(false);
   const isLongPressed = useSharedValue<boolean>(false);
@@ -35,6 +37,9 @@ const useDragAfterLongPressGesture = (props: Props) => {
         if (isLongPressed.value) {
           isDragging.value = true;
           stateManager.activate();
+          if (hapticComponentName) {
+            runOnJS(HapticService.triggerHaptic)(HapticType.selection, hapticComponentName);
+          }
         } else {
           isDragging.value = false;
           stateManager.fail();
