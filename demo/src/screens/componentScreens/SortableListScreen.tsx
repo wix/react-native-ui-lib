@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SortableList, View, BorderRadiuses, Button, Colors} from 'react-native-ui-lib';
 import {renderHeader} from '../ExampleScreenPresenter';
 
@@ -37,20 +36,17 @@ const SortableListScreen = () => {
   }, []);
 
   return (
-    <GestureHandlerRootView style={styles.gestureHandler}>
+    <View flex>
       {renderHeader('Sortable List', {'margin-10': true})}
       <View flex useSafeArea margin-page>
         <SortableList data={data} renderItem={renderItem} keyExtractor={keyExtractor} onOrderChange={onOrderChange}/>
       </View>
-    </GestureHandlerRootView>
+    </View>
   );
 };
 
 export default SortableListScreen;
 const styles = StyleSheet.create({
-  gestureHandler: {
-    flex: 1
-  },
   itemContainer: {
     height: 52,
     borderColor: Colors.black,

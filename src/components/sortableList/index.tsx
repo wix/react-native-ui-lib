@@ -3,6 +3,7 @@ import {map} from 'lodash';
 import React, {useMemo, useCallback} from 'react';
 import {FlatList, FlatListProps} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import SortableListContext from './SortableListContext';
 import SortableListItem from './SortableListItem';
 
@@ -43,14 +44,16 @@ const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) =>
   }, []);
 
   return (
-    <SortableListContext.Provider value={context}>
-      <FlatList
-        {...others}
-        data={data}
-        CellRendererComponent={SortableListItem}
-        removeClippedSubviews={false} // Workaround for crashing on Android (ArrayIndexOutOfBoundsException in ViewGroupDrawingOrderHelper.getChildDrawingOrder)
-      />
-    </SortableListContext.Provider>
+    <GestureHandlerRootView>
+      <SortableListContext.Provider value={context}>
+        <FlatList
+          {...others}
+          data={data}
+          CellRendererComponent={SortableListItem}
+          removeClippedSubviews={false} // Workaround for crashing on Android (ArrayIndexOutOfBoundsException in ViewGroupDrawingOrderHelper.getChildDrawingOrder)
+        />
+      </SortableListContext.Provider>
+    </GestureHandlerRootView>
   );
 };
 
