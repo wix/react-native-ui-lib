@@ -428,7 +428,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
         size = 6,
         spacing = 8,
         color = Colors.$backgroundNeutralHeavy,
-        inactiveColor = Colors.$backgroundNeutralMedium,
+        inactiveColor = Colors.$backgroundDisabled,
         ...others
       } = pageControlProps;
       const pagesCount = presenter.getChildrenLength(this.props);

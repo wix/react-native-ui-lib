@@ -6,7 +6,7 @@ import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-r
 import {Colors, Spacings} from 'style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
-import Fader, {FaderPosition} from '../../components/fader';
+import Fader, {FaderPosition, FaderProps} from '../../components/fader';
 import Item, {ItemProps} from './Item';
 import Text, {TextProps} from '../../components/text';
 import usePresenter from './usePresenter';
@@ -78,6 +78,10 @@ export interface WheelPickerProps {
    */
   separatorsStyle?: ViewStyle;
   testID?: string;
+  /**
+   * Change the default (white) tint color of the fade view.
+   */
+  faderProps?: Omit<FaderProps, 'visible' | 'position'>;
 }
 
 const WheelPicker = ({
@@ -96,7 +100,8 @@ const WheelPicker = ({
   children,
   initialValue = 0,
   separatorsStyle,
-  testID
+  testID,
+  faderProps
 }: WheelPickerProps) => {
   const scrollView = useRef<Animated.ScrollView>();
   const offset = useSharedValue(0);
@@ -242,7 +247,7 @@ const WheelPicker = ({
   }, [flatListWidth, labelContainerStyle, label, labelProps, activeTextColor, labelStyle]);
 
   const fader = useMemo(() => (position: FaderPosition) => {
-    return <Fader visible position={position} size={60}/>;
+    return <Fader visible position={position} size={60} {...faderProps}/>;
   },
   []);
 
