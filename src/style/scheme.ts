@@ -1,5 +1,5 @@
 import {Appearance, PlatformColor} from 'react-native';
-import {remove, xor, isEmpty, merge, forEach, cloneDeep} from 'lodash';
+import {remove, xor, isEmpty, merge, forEach, cloneDeep, debounce} from 'lodash';
 import Constants from '../commons/Constants';
 import Config from '../commons/Config';
 
@@ -13,11 +13,15 @@ class Scheme {
   private changeListeners: SchemeChangeListener[] = [];
 
   constructor() {
-    Appearance.addChangeListener(() => {
+    // iOS 13 and above will trigger this call with the wrong colorScheme value when app goes to background.
+    // The best solution is to debounce the calls by 10ms 
+    // https://github.com/facebook/react-native/issues/28525
+    const schemeChangeDebounced = debounce(() => {
       if (this.currentScheme === 'default') {
         this.broadcastSchemeChange();
       }
-    });
+    }, 200, { leading: false, trailing: true })
+    Appearance.addChangeListener(schemeChangeDebounced);
   }
 
   private broadcastSchemeChange() {

@@ -36,9 +36,6 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     }
 
     appearanceListener = () => {
-      // iOS 13 and above will trigger this call with the wrong colorScheme value. So just ignore returned colorScheme for now
-      // https://github.com/facebook/react-native/issues/28525
-      // this.setState({colorScheme: Appearance.getColorScheme()});
       this.setState({colorScheme: Scheme.getSchemeType()});
     };
 
