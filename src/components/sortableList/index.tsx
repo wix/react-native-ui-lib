@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {map} from 'lodash';
 import React, {useMemo, useCallback} from 'react';
-import {FlatList, FlatListProps} from 'react-native';
+import {FlatList, FlatListProps, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import SortableListContext from './SortableListContext';
@@ -35,11 +35,18 @@ const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) =>
     onOrderChange?.(newData);
   }, [onOrderChange, data]);
 
+  const onItemLayout = useCallback((event: LayoutChangeEvent) => {
+    // Round height for Android
+    const newHeight = Math.round(event.nativeEvent.layout.height);
+    itemHeight.value = newHeight;
+  }, []);
+
   const context = useMemo(() => {
     return {
       itemsOrder,
       onChange,
-      itemHeight
+      itemHeight,
+      onItemLayout
     };
   }, []);
 

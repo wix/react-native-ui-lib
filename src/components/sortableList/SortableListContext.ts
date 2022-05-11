@@ -1,10 +1,12 @@
 import {createContext} from 'react';
+import {ViewProps} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
 interface SortableListContextType {
   itemsOrder: SharedValue<number[]>;
   onChange: () => void;
   itemHeight: SharedValue<number>;
+  onItemLayout: ViewProps['onLayout'];
 }
 
 // @ts-ignore

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {PropsWithChildren, useCallback, useContext} from 'react';
-import {LayoutChangeEvent} from 'react-native';
 import {
   useSharedValue,
   useAnimatedReaction,
@@ -30,17 +29,11 @@ const animationConfig = {
 const SortableListItem = (props: Props) => {
   const {children, index} = props;
 
-  const {itemHeight, itemsOrder, onChange} = useContext(SortableListContext);
+  const {itemHeight, onItemLayout, itemsOrder, onChange} = useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const translateY = useSharedValue(0);
   const tempTranslateY = useSharedValue(0);
   const tempItemsOrder = useSharedValue(itemsOrder.value);
-
-  const onLayout = useCallback((event: LayoutChangeEvent) => {
-    // Round height for Android
-    const newHeight = Math.round(event.nativeEvent.layout.height);
-    itemHeight.value = newHeight;
-  }, []);
 
   useAnimatedReaction(() => itemsOrder.value.indexOf(index),
     (newIndex, oldIndex) => {
@@ -108,8 +101,9 @@ const SortableListItem = (props: Props) => {
   });
 
   return (
+    // @ts-expect-error related to children type issue that started on react 18
     <GestureDetector gesture={dragAfterLongPressGesture}>
-      <View reanimated style={draggedAnimatedStyle} onLayout={index === 0 ? onLayout : undefined}>
+      <View reanimated style={draggedAnimatedStyle} onLayout={index === 0 ? onItemLayout : undefined}>
         {children}
       </View>
     </GestureDetector>
