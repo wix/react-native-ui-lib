@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const {handleError} = require('../utils');
+const {addToImports, handleError} = require('../utils');
 
 const RULE_ID = 'function-deprecation';
 const MAP_SCHEMA = {
@@ -98,6 +98,7 @@ module.exports = {
     const { deprecations, source } = context.options[0];
     const relevantDeprecationsData = [];
     let everythingIsImported = false;
+    const imports = [];
 
     function getDeprecation(value) {
       if (value && value.name) {
@@ -110,6 +111,7 @@ module.exports = {
     }
 
     function searchForPossibleDeprecation(node) {
+      addToImports(node, imports)
       const importSource = node.source.value;
       if (source === importSource) {
         const specifiers = node.specifiers;
@@ -206,11 +208,28 @@ module.exports = {
               }
             });
           } else {
-            reportDeprecatedFunction(node, {
-              name: relevantDeprecation.deprecation.function,
-              message: relevantDeprecation.deprecation.message,
-              fix: relevantDeprecation.deprecation.fix,
-            });
+            const calleeType = _.get(node, 'callee.type');
+            const caller = _.get(node, 'callee.object.name');
+            if (calleeType === 'Identifier') {
+              reportDeprecatedFunction(node, {
+                name: relevantDeprecation.deprecation.function,
+                message: relevantDeprecation.deprecation.message,
+                fix: relevantDeprecation.deprecation.fix,
+              });
+            } else if (calleeType === 'MemberExpression' && caller) {
+              imports.forEach(currentImport => {
+                if (
+                  Object.values(currentImport)[0][caller] &&
+                  Object.keys(currentImport)[0] === relevantDeprecation.deprecation.source
+                ) {
+                  reportDeprecatedFunction(node, {
+                    name: relevantDeprecation.deprecation.function,
+                    message: relevantDeprecation.deprecation.message,
+                    fix: relevantDeprecation.deprecation.fix,
+                  });
+                }
+              });
+            }
           }
         }
       }

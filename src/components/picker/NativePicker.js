@@ -1,14 +1,14 @@
 import _ from 'lodash';
-import React from 'react';
-import {BaseComponent} from '../../commons';
+import React, {Component} from 'react';
 import TextField from '../textField';
 import PickerDialog from './PickerDialog';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
 import {WheelPicker} from '../../incubator';
 
-class NativePicker extends BaseComponent {
-  static displayName = 'IGNORE';
+class NativePicker extends Component {
+  static displayName = 'NativePicker';
+
   state = {
     selectedValue: this.props.value,
     items: this.extractPickerItems(this.props),
@@ -87,7 +87,7 @@ class NativePicker extends BaseComponent {
     return (
       <PickerDialog
         height={this.PICKER_HEIGHT + this.MENU_HEIGHT}
-        {...this.getThemeProps()}
+        {...this.props}
         visible={showDialog}
         panDirection={null}
         onDismiss={this.onCancel}

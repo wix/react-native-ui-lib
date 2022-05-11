@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
+import React, {PropsWithChildren, PureComponent} from 'react';
 import {
   StyleSheet,
   ImageSourcePropType,
@@ -49,7 +49,7 @@ export type AutoColorsProps = {
   defaultColor?: string;
 };
 
-export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
+export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & PropsWithChildren<{
   /**
    * Adds fade in animation when Avatar image loads
    */
@@ -153,7 +153,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    * Used as a testing identifier
    */
   testID?: string;
-};
+}>;
 
 /**
  * @description: Avatar component for displaying user profile images
@@ -251,9 +251,9 @@ class Avatar extends PureComponent<AvatarProps> {
         <Badge
           backgroundColor={this.getBadgeColor()}
           size={this.getBadgeSize()}
+          testID={`${testID}.onlineBadge`}
           {...badgeProps}
           containerStyle={this.getBadgePosition()}
-          testID={`${testID}.onlineBadge`}
         />
       );
     }

@@ -37,8 +37,8 @@ function ImagesKeyboard() {
 
 function CustomKeyboard() {
   return (
-    <View flex padding-s4>
-      <Text h3>Custom Keyboard</Text>
+    <View flex bg-violet80 center>
+      <Text h2>Custom Keyboard</Text>
     </View>
   );
 }

@@ -9,7 +9,6 @@ import React, {useMemo} from 'react';
 import {isEmpty, trim, omit} from 'lodash';
 import {asBaseComponent, forwardRef} from '../../commons/new';
 import View from '../../components/view';
-import {Colors} from '../../style';
 import {useMeasure} from '../../hooks';
 import {TextFieldProps, InternalTextFieldProps, ValidationMessagePosition, FieldContextType, TextFieldMethods} from './types';
 import {shouldHidePlaceholder} from './Presenter';
@@ -44,6 +43,7 @@ const TextField = (props: InternalTextFieldProps) => {
     floatingPlaceholderColor,
     floatingPlaceholderStyle,
     floatOnFocus,
+    placeholderTextColor,
     hint,
     // Label
     label,
@@ -114,7 +114,7 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          <View flex row>
+          <View flexG /* flex row */>
             {floatingPlaceholder && (
               <FloatingPlaceholder
                 placeholder={placeholder}
@@ -128,7 +128,7 @@ const TextField = (props: InternalTextFieldProps) => {
             )}
             {children || (
               <Input
-                placeholderTextColor={hidePlaceholder ? 'transparent' : Colors.$textNeutral}
+                placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
                 {...others}
                 style={[typographyStyle, colorStyle, others.style]}
                 onFocus={onFocus}

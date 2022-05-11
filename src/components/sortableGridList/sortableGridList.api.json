@@ -2,16 +2,21 @@
   "name": "SortableGridList",
   "category": "layoutsAndTemplates",
   "description": "An sortable grid list (based on GridList component)",
-  "notes": "This component supports square items only",
+  "note": "This component supports square items only",
   "extends": ["layoutsAndTemplates/GridList"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableGridListScreen.tsx",
   "props": [
-    {"name": "data", "type": "any[]", "description": "Data of items"},
+    {"name": "data", "type": "any[] & {id: string}", "description": "Data of items with an id prop as unique identifier"},
     {"name": "renderItem", "type": "FlatListProps['renderItem']", "description": "Custom render item callback"},
     {
       "name": "onOrderChange",
       "type": "(newData: T[], newOrder: ItemsOrder) => void",
       "description": "Order change callback"
+    },
+    {
+      "name": "extraData",
+      "type": "any",
+      "description": "Pass any extra data that should trigger a re-render"
     }
   ],
   "snippet": [

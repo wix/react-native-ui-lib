@@ -30,7 +30,7 @@ function GridList<T = any>(props: GridListProps<T>) {
     return [{paddingHorizontal: listPadding}, contentContainerStyle];
   }, [listPadding, contentContainerStyle]);
 
-  const _renderItem = useCallback((...args) => {
+  const _renderItem = useCallback((...args: any[]) => {
     // @ts-expect-error
     return <View style={itemContainerStyle}>{renderItem?.(...args)}</View>;
   },

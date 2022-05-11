@@ -89,7 +89,7 @@ function withFieldState(
     );
 
     const onChangeText = useCallback(
-      (text) => {
+      (text: string) => {
         setValue(text);
         props.onChangeText?.(text);
 

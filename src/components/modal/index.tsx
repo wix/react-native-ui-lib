@@ -6,7 +6,9 @@ import {
   Modal as RNModal,
   ModalProps as RNModalProps,
   TouchableWithoutFeedback,
-  GestureResponderEvent
+  GestureResponderEvent,
+  KeyboardAvoidingView,
+  KeyboardAvoidingViewProps
 } from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
@@ -46,6 +48,14 @@ export interface ModalProps extends RNModalProps {
    * Should add a GestureHandlerRootView (Android only)
    */
   useGestureHandlerRootView?: boolean;
+  /**
+   * Should add a KeyboardAvoidingView (iOS only)
+   */
+  useKeyboardAvoidingView?: boolean;
+  /**
+   * Send additional props to the KeyboardAvoidingView (iOS only)
+   */
+  keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
 }
 
 /**
@@ -93,20 +103,35 @@ class Modal extends Component<ModalProps> {
   }
 
   render() {
-    const {blurView, enableModalBlur, visible, useGestureHandlerRootView, ...others} = this.props;
+    const {
+      blurView,
+      enableModalBlur,
+      visible,
+      useGestureHandlerRootView,
+      useKeyboardAvoidingView,
+      keyboardAvoidingViewProps,
+      ...others
+    } = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
     const useGestureHandler = useGestureHandlerRootView && Constants.isAndroid;
     const GestureContainer = useGestureHandler ? GestureHandlerRootView : React.Fragment;
     const gestureContainerProps = useGestureHandler ? {style: styles.fill} : {};
+    const useKeyboardAvoiding = useKeyboardAvoidingView && Constants.isIOS;
+    const KeyboardAvoidingContainer = useKeyboardAvoiding ? KeyboardAvoidingView : React.Fragment;
+    const keyboardAvoidingContainerProps = useKeyboardAvoiding
+      ? {behavior: 'padding', ...keyboardAvoidingViewProps, style: [styles.fill, keyboardAvoidingViewProps?.style]}
+      : {};
     const Container: any = blurView ? blurView : defaultContainer;
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
         <GestureContainer {...gestureContainerProps}>
-          <Container style={styles.fill} blurType="light">
-            {this.renderTouchableOverlay()}
-            {this.props.children}
-          </Container>
+          <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
+            <Container style={styles.fill} blurType="light">
+              {this.renderTouchableOverlay()}
+              {this.props.children}
+            </Container>
+          </KeyboardAvoidingContainer>
         </GestureContainer>
       </RNModal>
     );

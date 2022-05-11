@@ -6,11 +6,7 @@
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true",
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true"
   ],
-  "extends": ["TouchableOpacity", "Image"],
-  "extendsLink": [
-    "https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx",
-    "https://github.com/wix/react-native-ui-lib/blob/master/src/components/image/index.tsx"
-  ],
+  "extends": ["basic/TouchableOpacity", "basic/Image"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx",
   "props": [
     {

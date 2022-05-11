@@ -1,0 +1,95 @@
+{
+  "name": "KeyboardTrackingView",
+  "category": "keyboard",
+  "description": "A UI component that enables 'keyboard tracking' for this view and it's sub-views.\nWould typically be used when you have a TextField or TextInput inside this view.",
+  "note": "This view is useful only for iOS.",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/nativeComponentScreens/KeyboardTrackingViewScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/KeyboardTrackingView/KeyboardTrackingView.gif?raw=true"
+  ],
+  "props": [
+    {
+      "name": "trackInteractive",
+      "type": "boolean",
+      "description": "Enables tracking of the keyboard when it's dismissed interactively (false by default).\nWhy? When using an external keyboard (BT),\nyou still get the keyboard events and the view just hovers when you focus the input.\nAlso, if you're not using interactive style of dismissing the keyboard\n(or if you don't have an input inside this view) it doesn't make sense to track it anyway.\n(This is caused because of the usage of inputAccessory to be able to track the keyboard interactive change and it introduces this bug)"
+    },
+    {
+      "name": "scrollToFocusedInput",
+      "type": "boolean",
+      "description": "Should the scrollView scroll to the focused input"
+    },
+    {
+      "name": "scrollBehavior",
+      "type": "number",
+      "description": "The scrolling behavior (use KeyboardTrackingView.scrollBehaviors.NONE | SCROLL_TO_BOTTOM_INVERTED_ONLY | FIXED_OFFSET)",
+      "note": "iOS only"
+    },
+    {
+      "name": "revealKeyboardInteractive",
+      "type": "boolean",
+      "description": "Show the keyboard on a negative scroll\niOS only.",
+      "note": "iOS only",
+      "default": "false"
+    },
+    {
+      "name": "manageScrollView",
+      "type": "boolean",
+      "description": "Set to false to turn off inset management and manage it yourself\niOS only.",
+      "note": "iOS only",
+      "default": "true"
+    },
+    {
+      "name": "requiresSameParentToManageScrollView",
+      "type": "boolean",
+      "description": "Set to true manageScrollView is set to true and still does not work,\nit means that the ScrollView found is the wrong one and you'll have\nto have the KeyboardAccessoryView and the ScrollView as siblings\nand set this to true\niOS only.",
+      "note": "iOS only",
+      "default": "false"
+    },
+    {
+      "name": "allowHitsOutsideBounds",
+      "type": "boolean",
+      "description": "Allow hitting sub-views that are placed beyond the view bounds\niOS only.",
+      "note": "iOS only",
+      "default": "false"
+    },
+    {
+      "name": "addBottomView",
+      "type": "boolean",
+      "description": "Add a view beneath the KeyboardAccessoryView\niOS only.",
+      "note": "iOS only",
+      "default": "false"
+    },
+    {
+      "name": "bottomViewColor", 
+      "type": "string", 
+      "description": "The bottom view's color\niOS only.",       
+      "note": "iOS only",
+      "default": "white"
+    },
+    {
+      "name": "useSafeArea",
+      "type": "boolean",
+      "description": "Whether or not to handle SafeArea\niOS only.",
+      "note": "iOS only",
+      "default": "true"
+    },
+    {
+      "name": "usesBottomTabs",
+      "type": "boolean",
+      "description": "Whether or not to include bottom tab bar inset\niOS only.",
+      "note": "iOS only",
+      "default": "false"
+    },
+    {"name": "ref", "type": "any", "description": ""},
+    {"name": "style", "type": "ViewStyle", "description": ""}
+  ],
+  "snippet": [
+    "<KeyboardTrackingView",
+    " style={$1}",
+    " trackInteractive",
+    " useSafeArea",
+    ">",
+    " $2",
+    "</KeyboardTrackingView>"
+  ]
+}

@@ -1,18 +1,18 @@
 // TODO: Support style customization
 import {isFunction, isUndefined} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
-import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet} from 'react-native';
+import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet, ListRenderItemInfo, FlatListProps} from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {Colors, Spacings} from 'style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
-import Fader, {FaderPosition} from '../../components/fader';
+import Fader, {FaderPosition, FaderProps} from '../../components/fader';
 import Item, {ItemProps} from './Item';
 import Text, {TextProps} from '../../components/text';
 import usePresenter from './usePresenter';
 import {WheelPickerAlign} from './types';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const AnimatedFlatList = Animated.createAnimatedComponent<FlatListProps<ItemProps>>(FlatList);
 
 export interface WheelPickerProps {
   /**
@@ -78,6 +78,10 @@ export interface WheelPickerProps {
    */
   separatorsStyle?: ViewStyle;
   testID?: string;
+  /**
+   * Change the default (white) tint color of the fade view.
+   */
+  faderProps?: Omit<FaderProps, 'visible' | 'position'>;
 }
 
 const WheelPicker = ({
@@ -96,7 +100,8 @@ const WheelPicker = ({
   children,
   initialValue = 0,
   separatorsStyle,
-  testID
+  testID,
+  faderProps
 }: WheelPickerProps) => {
   const scrollView = useRef<Animated.ScrollView>();
   const offset = useSharedValue(0);
@@ -172,12 +177,12 @@ const WheelPicker = ({
     scrollToIndex(currentIndex, false);
   }, []);
 
-  const selectItem = useCallback(index => {
+  const selectItem = useCallback((index: number) => {
     scrollToIndex(index, true);
   },
   [itemHeight]);
 
-  const renderItem = useCallback(({item, index}) => {
+  const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps>) => {
     return (
       <Item
         index={index}
@@ -198,7 +203,7 @@ const WheelPicker = ({
   },
   [itemHeight]);
 
-  const getItemLayout = useCallback((_data, index: number) => {
+  const getItemLayout = useCallback((_data: any, index: number) => {
     return {length: itemHeight, offset: itemHeight * index, index};
   },
   [itemHeight]);
@@ -242,7 +247,7 @@ const WheelPicker = ({
   }, [flatListWidth, labelContainerStyle, label, labelProps, activeTextColor, labelStyle]);
 
   const fader = useMemo(() => (position: FaderPosition) => {
-    return <Fader visible position={position} size={60}/>;
+    return <Fader visible position={position} size={60} {...faderProps}/>;
   },
   []);
 
