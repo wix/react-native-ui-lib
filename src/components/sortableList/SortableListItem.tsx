@@ -11,6 +11,7 @@ import {
 } from 'react-native-reanimated';
 import {GestureDetector, GestureUpdateEvent, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import View from '../view';
+import {Shadows, Colors} from '../../style';
 import SortableListContext from './SortableListContext';
 import usePresenter from './usePresenter';
 import useDragAfterLongPressGesture from './useDragAfterLongPressGesture';
@@ -98,10 +99,23 @@ const SortableListItem = (props: Props) => {
   const draggedAnimatedStyle = useAnimatedStyle(() => {
     const scaleY = withSpring(isFloating.value ? 1.1 : 1);
     const zIndex = isFloating.value ? 100 : withTiming(0, animationConfig);
+    const opacity = isFloating.value ? 0.95 : 1;
+    const shadow = isFloating.value
+      ? {
+        ...Shadows.sh30.bottom,
+        ...Shadows.sh30.top
+      }
+      : {
+        shadowColor: Colors.transparent,
+        elevation: 0
+      };
 
     return {
+      backgroundColor: Colors.$backgroundDefault, // required for elevation to work in Android
       zIndex,
-      transform: [{translateY: translateY.value}, {scaleY}]
+      transform: [{translateY: translateY.value}, {scaleY}],
+      opacity,
+      ...shadow
     };
   });
 
