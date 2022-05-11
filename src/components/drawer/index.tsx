@@ -331,7 +331,6 @@ class Drawer extends PureComponent<DrawerProps> {
     });
 
     return (
-      // @ts-expect-error related to missing children type started on react 18
       <RectButton
         key={index}
         testID={item.testID}

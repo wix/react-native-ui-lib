@@ -125,3 +125,6 @@ class MyScreen extends Component {
   }
 }
 ```
+
+## Contributing
+See [Contribution Guide](https://github.com/wix/react-native-ui-lib/blob/master/CONTRIBUTING.md)
