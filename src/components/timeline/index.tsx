@@ -2,21 +2,13 @@ import React, {useCallback, useMemo, useEffect, useState, useRef} from 'react';
 import {StyleSheet, ViewStyle, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
-import Icon from '../icon';
-import Text from '../text';
 import Dash from './Dash';
+import Point from './Point';
 import {TimelineProps, LineProps, Position, StateTypes, PointTypes, LineTypes} from './types';
 export {TimelineProps};
 
 const LINE_WIDTH = 2;
-const POINT_SIZE = 12;
-const OUTLINE_WIDTH = 4;
-const OUTLINE_TINT = 70;
-const CIRCLE_WIDTH = 2;
-const CONTENT_POINT_SIZE = 20;
-const ICON_SIZE = 12;
 const CONTENT_CONTAINER_PADDINGS = Spacings.s2;
-const POINT_MARGINS = Spacings.s1;
 const ENTRY_POINT_HEIGHT = 2;
 
 
@@ -92,26 +84,6 @@ const Timeline = (props: TimelineProps) => {
     }
   }, [contentContainerMeasurements, pointMeasurements, topLineHeight, bottomLine?.entry, topLine?.entry]);
 
-  const pointStyle = useMemo(() => {
-    const hasOutline = point?.type === PointTypes.OUTLINE;
-    const isCircle = point?.type === PointTypes.CIRCLE;
-    const hasContent = point?.label || point?.icon;
-
-    const size = hasContent ? CONTENT_POINT_SIZE : POINT_SIZE;
-    const pointSize = hasOutline ? size + OUTLINE_WIDTH * 2 : size;
-    const pointSizeStyle = {width: pointSize, height: pointSize, borderRadius: pointSize / 2};
-
-    const pointColor = point?.color || getStateColor(point?.state);
-    const pointColorStyle = {backgroundColor: pointColor};
-
-    const outlineStyle = hasOutline && 
-      {borderWidth: OUTLINE_WIDTH, borderColor: Colors.getColorTint(pointColor, OUTLINE_TINT)};
-    const circleStyle = !hasContent && isCircle && 
-      {backgroundColor: Colors.white, borderWidth: CIRCLE_WIDTH, borderColor: pointColor};
-    
-    return [styles.point, pointSizeStyle, pointColorStyle, outlineStyle, circleStyle];
-  }, [point?.state, point?.type, point?.color, point?.label, point?.icon]);
-
   const onPointLayout = useCallback((event: LayoutChangeEvent) => {
     const {x, y, width, height} = event.nativeEvent.layout;
     setPointMeasurements({x, y, width, height});
@@ -166,19 +138,9 @@ const Timeline = (props: TimelineProps) => {
     }
   };
 
-  const renderPointContent = () => {
-    if (point?.icon) {
-      return <Icon source={point?.icon} size={ICON_SIZE} tintColor={Colors.white}/>;
-    } else if (point?.label) {
-      return <Text white subtext>{point?.label}</Text>;
-    }
-  };
-
   const renderPoint = () => {
     return (
-      <View center style={pointStyle} onLayout={onPointLayout}>
-        {renderPointContent()}
-      </View>
+      <Point {...point} onLayout={onPointLayout} color={point?.color || getStateColor(point?.state)}/>
     );
   };
 
@@ -216,9 +178,6 @@ const styles = StyleSheet.create({
     marginRight: Spacings.s2,
     width: 20
   },
-  point: {
-    marginVertical: POINT_MARGINS
-  },
   entryPoint: {
     width: 12,
     height: ENTRY_POINT_HEIGHT
@@ -230,8 +189,5 @@ const styles = StyleSheet.create({
   dashedLine: {
     flexDirection: 'column', 
     overflow: 'hidden'
-  },
-  line: {
-    flex: 1
   }
 });
