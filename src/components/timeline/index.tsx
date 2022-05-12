@@ -1,13 +1,12 @@
 import React, {useCallback, useMemo, useEffect, useState, useRef} from 'react';
-import {StyleSheet, ViewStyle, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
-import Dash from './Dash';
 import Point from './Point';
-import {TimelineProps, LineProps, Position, StateTypes, PointTypes, LineTypes} from './types';
+import Line from './Line';
+import {TimelineProps, Position, StateTypes, PointTypes, LineTypes} from './types';
 export {TimelineProps};
 
-const LINE_WIDTH = 2;
 const CONTENT_CONTAINER_PADDINGS = Spacings.s2;
 const ENTRY_POINT_HEIGHT = 2;
 
@@ -56,10 +55,6 @@ const Timeline = (props: TimelineProps) => {
     }
   };
 
-  const getLineColor = useCallback((line?: LineProps) => {
-    return line?.color || getStateColor(line?.state);
-  }, []);
-
   const topLineHeight = useMemo(() => {
     let height = 0;
     if (contentContainerMeasurements && pointMeasurements) {
@@ -94,61 +89,34 @@ const Timeline = (props: TimelineProps) => {
     setContentContainerMeasurements({x, y, width, height});
   }, []);
 
-  const renderLine = (line?: LineProps, style?: ViewStyle) => {
-    const lineColor = line ? getLineColor(line) : 'transparent';
-    
-    if (line?.type === LineTypes.DASHED) {
-      return (
-        <Dash 
-          dashGap={6}
-          dashLength={6}
-          dashThickness={2}
-          dashColor={lineColor}
-          style={[styles.dashedLine, style]}
-        />
-      );
-    }
-    return <View style={[styles.solidLine, {backgroundColor: lineColor}, style]}/>;
-  };
-
   const renderTopLine = () => {
     return (
-      <>
-        {renderStartPoint(topLine)}
-        {renderLine(topLine, {height: topLineHeight})}
-      </>
+      <Line
+        {...topLine}
+        top
+        style={{height: topLineHeight}}
+        color={topLine ? topLine?.color || getStateColor(topLine?.state) : undefined}
+      />
     );
   };
 
   const renderBottomLine = () => {
     if (bottomLine) {
       return (
-        <>
-          {renderLine(bottomLine, bottomLineStyle)}
-          {renderStartPoint(bottomLine)}
-        </>
+        <Line
+          {...bottomLine}
+          style={bottomLineStyle}
+          color={bottomLine?.color || getStateColor(bottomLine?.state)}
+        />
       );
     }
-  };
-
-  const renderStartPoint = (line?: LineProps) => {
-    if (line?.entry) {
-      const lineColor = getLineColor(line);
-      return <View style={[styles.entryPoint, {backgroundColor: lineColor}]}/>;
-    }
-  };
-
-  const renderPoint = () => {
-    return (
-      <Point {...point} onLayout={onPointLayout} color={point?.color || getStateColor(point?.state)}/>
-    );
   };
 
   return (
     <View row style={containerStyle}>
       <View style={styles.timelineContainer}>
         {renderTopLine()}
-        {renderPoint()}
+        <Point {...point} onLayout={onPointLayout} color={point?.color || getStateColor(point?.state)}/>
         {renderBottomLine()}
       </View>
       <View style={styles.contentContainer} onLayout={onContentContainerLayout} ref={contentContainerRef}>
@@ -177,17 +145,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: Spacings.s2,
     width: 20
-  },
-  entryPoint: {
-    width: 12,
-    height: ENTRY_POINT_HEIGHT
-  },
-  solidLine: {
-    width: LINE_WIDTH,
-    overflow: 'hidden'
-  },
-  dashedLine: {
-    flexDirection: 'column', 
-    overflow: 'hidden'
   }
 });
