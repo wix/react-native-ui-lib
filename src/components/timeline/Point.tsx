@@ -1,6 +1,6 @@
 
 import React, {useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Icon from '../icon';
@@ -15,8 +15,11 @@ const OUTLINE_WIDTH = 4;
 const OUTLINE_TINT = 70;
 const ICON_SIZE = 12;
 
+type PointPropsInternal = PointProps & {
+  onLayout?: (event: LayoutChangeEvent) => void;
+};
 
-const Point = (props: PointProps) => {
+const Point = (props: PointPropsInternal) => {
   const {icon, label, type, color, onLayout} = props;
 
   const pointStyle = useMemo(() => {
@@ -31,7 +34,7 @@ const Point = (props: PointProps) => {
     const pointColorStyle = {backgroundColor: color};
 
     const outlineStyle = hasOutline && 
-      {borderWidth: OUTLINE_WIDTH, borderColor: Colors.getColorTint(color, OUTLINE_TINT)};
+      {borderWidth: OUTLINE_WIDTH, borderColor: color && Colors.getColorTint(color, OUTLINE_TINT)};
     const circleStyle = !hasContent && isCircle && 
       {backgroundColor: Colors.white, borderWidth: CIRCLE_WIDTH, borderColor: color};
     

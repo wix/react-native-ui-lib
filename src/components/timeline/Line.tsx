@@ -1,6 +1,6 @@
 
 import React, {useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import View from '../view';
 import Dash from './Dash';
 import {LineProps, LineTypes} from './types';
@@ -8,7 +8,12 @@ import {LineProps, LineTypes} from './types';
 const LINE_WIDTH = 2;
 const ENTRY_POINT_HEIGHT = 2;
 
-const Line = (props: LineProps) => {
+type LinePropsInternal = LineProps & {
+  top?: boolean;
+  style?: ViewStyle;
+};
+
+const Line = (props: LinePropsInternal) => {
   const {type, color = 'transparent', entry, top, style} = props;
 
   const solidLineStyle = useMemo(() => {
