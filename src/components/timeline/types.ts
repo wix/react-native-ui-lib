@@ -1,4 +1,5 @@
-import {ImageRequireSource} from 'react-native';
+import React from 'react';
+import {ImageRequireSource, ViewProps} from 'react-native';
 
 export enum StateTypes {
   CURRENT = 'current', // default
@@ -34,8 +35,6 @@ export type PointProps = {
   label?: number;
   /** to align point to this view's center */
   alignmentTargetRef?: React.MutableRefObject<undefined>;
-  /** the target view's top parent view */
-  targetContainerRef?: React.MutableRefObject<undefined>;
 }
 
 export type Position = {
@@ -45,11 +44,9 @@ export type Position = {
   height: number;
 };
 
-export type TimelineProps = {
-  height: number;
+export type TimelineProps = ViewProps & {
   topLine?: LineProps;
   bottomLine?: LineProps;
   point?: PointProps;
-  renderContent?: (props: TimelineProps) => JSX.Element;
   testID?: string;
 };

@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useEffect, useState} from 'react';
+import React, {useCallback, useMemo, useEffect, useState, useRef} from 'react';
 import {StyleSheet, ViewStyle, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
@@ -6,23 +6,26 @@ import Icon from '../icon';
 import Text from '../text';
 import Dash from './Dash';
 import {TimelineProps, LineProps, Position, StateTypes, PointTypes, LineTypes} from './types';
+export {TimelineProps};
 
 const LINE_WIDTH = 2;
 const POINT_SIZE = 12;
 const OUTLINE_WIDTH = 4;
 const OUTLINE_TINT = 70;
-const HOLLO_WIDTH = 2;
+const CIRCLE_WIDTH = 2;
 const CONTENT_POINT_SIZE = 20;
 const ICON_SIZE = 12;
 const CONTENT_CONTAINER_PADDINGS = Spacings.s2;
 const POINT_MARGINS = Spacings.s1;
+const ENTRY_POINT_HEIGHT = 2;
 
 
 const Timeline = (props: TimelineProps) => {
-  const {height, topLine, bottomLine, point, renderContent} = props;
+  const {topLine, bottomLine, point, children} = props;
   const [targetMeasurements, setTargetMeasurements] = useState<Position | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Position | undefined>();
-  const [pointMeasurements, setCircleMeasurements] = useState<Position | undefined>();
+  const [pointMeasurements, setPointMeasurements] = useState<Position | undefined>();
+  const contentContainerRef = useRef();
 
   const onMeasure: MeasureOnSuccessCallback = (x, y, width, height) => {
     setTargetMeasurements({x, y, width, height});
@@ -30,21 +33,21 @@ const Timeline = (props: TimelineProps) => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (point?.alignmentTargetRef?.current && point?.targetContainerRef) {
+      if (point?.alignmentTargetRef?.current && contentContainerRef?.current && contentContainerMeasurements) {
         // point.alignmentTargetRef.current.measure?.(onMeasure); // Android always returns x, y = 0 (see: https://github.com/facebook/react-native/issues/4753)
         //@ts-expect-error
-        point.alignmentTargetRef.current.measureLayout?.(point.targetContainerRef.current, onMeasure);
+        point.alignmentTargetRef.current.measureLayout?.(contentContainerRef.current, onMeasure);
       }
     }, 0);
-  }, [point]);
+  }, [point, contentContainerMeasurements]);
 
   const visibleStyle = useMemo(() => {
     return {opacity: contentContainerMeasurements ? 1 : 0};
   }, [contentContainerMeasurements]);
 
   const containerStyle = useMemo(() => {
-    return [styles.container, visibleStyle, {height}];
-  }, [visibleStyle, height]);
+    return [styles.container, visibleStyle];
+  }, [visibleStyle]);
 
   const getStateColor = (state?: StateTypes) => {
     switch (state) {
@@ -65,20 +68,29 @@ const Timeline = (props: TimelineProps) => {
     return line?.color || getStateColor(line?.state);
   }, []);
 
-  const calcLineHeight = useCallback(() => {
+  const topLineHeight = useMemo(() => {
     let height = 0;
-    if (targetMeasurements && contentContainerMeasurements && pointMeasurements) {
+    if (contentContainerMeasurements && pointMeasurements) {
       const pointCenter = pointMeasurements.height / 2;
-      const contentY = contentContainerMeasurements.y + CONTENT_CONTAINER_PADDINGS / 2;
-      const targetCenterY = targetMeasurements?.y + targetMeasurements?.height / 2;
-      height = contentY + targetCenterY - pointCenter;
+      const contentY = contentContainerMeasurements.y - CONTENT_CONTAINER_PADDINGS / 2;
+      const targetCenterY = targetMeasurements ? targetMeasurements?.y + targetMeasurements?.height / 2 
+        : contentContainerMeasurements.y + contentContainerMeasurements.height / 2;
+      const entryPointHeight = topLine?.entry ? ENTRY_POINT_HEIGHT : 0;
+      height = contentY + targetCenterY - pointCenter - entryPointHeight;
     }
     return height;
-  }, [targetMeasurements, contentContainerMeasurements, pointMeasurements]);
+  }, [targetMeasurements, contentContainerMeasurements, pointMeasurements, topLine?.entry]);
 
-  const lineStyle = useMemo(() => {
-    return point?.alignmentTargetRef ? {height: calcLineHeight()} : styles.line;
-  }, [point?.alignmentTargetRef, calcLineHeight]);
+  const bottomLineStyle = useMemo(() => {
+    if (contentContainerMeasurements && pointMeasurements) {
+      const containerHeight = contentContainerMeasurements.height - CONTENT_CONTAINER_PADDINGS;
+      const bottomEntryPointHeight = bottomLine?.entry ? ENTRY_POINT_HEIGHT : 0;
+      const topEntryPointHeight = topLine?.entry ? ENTRY_POINT_HEIGHT : 0;
+      const height = 
+        containerHeight - topLineHeight - pointMeasurements.height - bottomEntryPointHeight - topEntryPointHeight;
+      return {height};
+    }
+  }, [contentContainerMeasurements, pointMeasurements, topLineHeight, bottomLine?.entry, topLine?.entry]);
 
   const pointStyle = useMemo(() => {
     const hasOutline = point?.type === PointTypes.OUTLINE;
@@ -92,16 +104,17 @@ const Timeline = (props: TimelineProps) => {
     const pointColor = point?.color || getStateColor(point?.state);
     const pointColorStyle = {backgroundColor: pointColor};
 
-    const outlineStyle = hasOutline && {borderWidth: OUTLINE_WIDTH, borderColor: Colors.getColorTint(pointColor, OUTLINE_TINT)};
+    const outlineStyle = hasOutline && 
+      {borderWidth: OUTLINE_WIDTH, borderColor: Colors.getColorTint(pointColor, OUTLINE_TINT)};
     const circleStyle = !hasContent && isCircle && 
-      {backgroundColor: Colors.white, borderWidth: HOLLO_WIDTH, borderColor: pointColor};
+      {backgroundColor: Colors.white, borderWidth: CIRCLE_WIDTH, borderColor: pointColor};
     
     return [styles.point, pointSizeStyle, pointColorStyle, outlineStyle, circleStyle];
   }, [point?.state, point?.type, point?.color, point?.label, point?.icon]);
 
   const onPointLayout = useCallback((event: LayoutChangeEvent) => {
     const {x, y, width, height} = event.nativeEvent.layout;
-    setCircleMeasurements({x, y, width, height});
+    setPointMeasurements({x, y, width, height});
   }, []);
 
   const onContentContainerLayout = useCallback((event: LayoutChangeEvent) => {
@@ -130,7 +143,7 @@ const Timeline = (props: TimelineProps) => {
     return (
       <>
         {renderStartPoint(topLine)}
-        {renderLine(topLine, lineStyle)}
+        {renderLine(topLine, {height: topLineHeight})}
       </>
     );
   };
@@ -139,7 +152,7 @@ const Timeline = (props: TimelineProps) => {
     if (bottomLine) {
       return (
         <>
-          {renderLine(bottomLine, styles.line)}
+          {renderLine(bottomLine, bottomLineStyle)}
           {renderStartPoint(bottomLine)}
         </>
       );
@@ -167,31 +180,18 @@ const Timeline = (props: TimelineProps) => {
         {renderPointContent()}
       </View>
     );
-    
-  };
-
-  const renderTimeline = () => {
-    return (
-      <View style={styles.indicatorContainer}>
-        {renderTopLine()}
-        {renderPoint()}
-        {renderBottomLine()}
-      </View>
-    );
-  };
-
-  const renderContentContainer = () => {
-    return (
-      <View style={styles.contentContainer} onLayout={onContentContainerLayout}>
-        {renderContent?.(props)}
-      </View>
-    );
   };
 
   return (
     <View row style={containerStyle}>
-      {renderTimeline()}
-      {renderContentContainer()}
+      <View style={styles.timelineContainer}>
+        {renderTopLine()}
+        {renderPoint()}
+        {renderBottomLine()}
+      </View>
+      <View style={styles.contentContainer} onLayout={onContentContainerLayout} ref={contentContainerRef}>
+        {children}
+      </View>
     </View>
   );
 };
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: CONTENT_CONTAINER_PADDINGS
   },
-  indicatorContainer: {
+  timelineContainer: {
     alignItems: 'center',
     marginRight: Spacings.s2,
     width: 20
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   entryPoint: {
     width: 12,
-    height: 2
+    height: ENTRY_POINT_HEIGHT
   },
   solidLine: {
     width: LINE_WIDTH,
