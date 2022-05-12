@@ -13,6 +13,7 @@ import {ToastProps, ToastPresets} from './types';
 import useToastTimer from './helpers/useToastTimer';
 import useToastPresets from './helpers/useToastPresets';
 import useToastAnimation from './helpers/useToastAnimation';
+import KeyboardAwareInsetsView from '../../../lib/components/Keyboard/KeyboardTracking/KeyboardAwareInsetsView';
 
 const THRESHOLD = {x: Constants.screenWidth / 4, y: 10};
 
@@ -38,6 +39,8 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     backgroundColor,
     onDismiss,
     onAnimationEnd,
+    useKeyboardAwareInsetsView,
+    keyboardAwareInsetsViewProps,
     children,
     testID
   } = props;
@@ -229,10 +232,15 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     return renderAttachment ? _renderAttachment(positionStyle, zIndex) : null;
   }
 
+  const useKeyboardAwareInsets = useKeyboardAwareInsetsView && Constants.isIOS;
+  const KeyboardAwareContainer = useKeyboardAwareInsets ? KeyboardAwareInsetsView : React.Fragment;
+
   return (
-    <View key="toast" animated testID={testID} style={toastContainerStyle} pointerEvents={'box-none'}>
-      {renderToast()}
-    </View>
+    <KeyboardAwareContainer {...keyboardAwareInsetsViewProps}>
+      <View key="toast" animated testID={testID} style={toastContainerStyle} pointerEvents={'box-none'}>
+        {renderToast()}
+      </View>
+    </KeyboardAwareContainer>
   );
 };
 

@@ -1,6 +1,7 @@
 import {ReactElement} from 'react';
 import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {ButtonProps} from '../../components/button';
+import {KeyboardTrackingViewProps} from '../../../lib/components/Keyboard/KeyboardTracking/KeyboardTrackingView';
 
 export enum ToastPresets {
   GENERAL = 'general',
@@ -105,4 +106,13 @@ export interface ToastProps {
    * The background color of the toast
    */
   backgroundColor?: string;
+  /**
+   * Should add a KeyboardAwareInsetsView (iOS only)
+   * When this is applied the "action" prop cannot be used (the click will not go through)
+   */
+  useKeyboardAwareInsetsView?: boolean;
+  /**
+   * Send additional props to the KeyboardAwareInsetsView (iOS only)
+   */
+  keyboardAwareInsetsViewProps?: KeyboardTrackingViewProps;
 }

@@ -58,7 +58,9 @@
       "description": "A custom icon to render on the left side of the toast"
     },
     {"name": "iconColor", "type": "string", "description": "The icon color"},
-    {"name": "backgroundColor", "type": "string", "description": "The toast background color"}
+    {"name": "backgroundColor", "type": "string", "description": "The toast background color"},
+    {"name": "useKeyboardAwareInsetsView", "type": "boolean", "description": "Should add a KeyboardAwareInsetsView (iOS only)\nWhen this is applied the 'action' prop cannot be used (the click will not go through)"},
+    {"name": "keyboardAwareInsetsViewProps", "type": "KeyboardTrackingViewProps", "description": "Send additional props to the KeyboardAwareInsetsView (iOS only)"}
   ],
   "snippet": [
     "<Toast",
