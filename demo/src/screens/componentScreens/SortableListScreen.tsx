@@ -31,6 +31,7 @@ const SortableListScreen = () => {
         // overriding the BG color to anything other than white will cause Android's elevation to fail
         // backgroundColor={Colors.red30}
         centerV
+        marginH-page
       >
         <View flex row spread centerV>
           <Icon source={Assets.icons.demo.drag} tintColor={Colors.$iconDisabled}/>
@@ -46,7 +47,7 @@ const SortableListScreen = () => {
   return (
     <View flex bg-$backgroundDefault>
       {renderHeader('Sortable List', {'margin-10': true})}
-      <View flex useSafeArea margin-page>
+      <View flex useSafeArea>
         <SortableList data={data} renderItem={renderItem} keyExtractor={keyExtractor} onOrderChange={onOrderChange}/>
       </View>
     </View>
