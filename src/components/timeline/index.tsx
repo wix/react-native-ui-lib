@@ -4,8 +4,15 @@ import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Point from './Point';
 import Line from './Line';
-import {TimelineProps, Position, StateTypes, PointTypes, LineTypes} from './types';
-export {TimelineProps};
+import {TimelineProps, PointProps, LineProps, StateTypes, PointTypes, LineTypes, Position} from './types';
+export {
+  TimelineProps,
+  PointProps as TimelinePointProps,
+  LineProps as TimelineLineProps,
+  StateTypes as TimelineStateTypes,
+  PointTypes as TimelinePointTypes,
+  LineTypes as TimelineLineTypes
+};
 
 const CONTENT_CONTAINER_PADDINGS = Spacings.s2;
 const ENTRY_POINT_HEIGHT = 2;
