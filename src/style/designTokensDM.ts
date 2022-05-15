@@ -3,7 +3,7 @@ import {colorsPalette} from './colorsPalette';
 export default {
   // BACKGROUND
   $backgroundDefault: colorsPalette.dmBlack,
-  $backgroundElevated: colorsPalette.grey10,
+  $backgroundElevated: colorsPalette.grey1,
   $backgroundNeutralHeavy: colorsPalette.grey50,
   $backgroundNeutralIdle: colorsPalette.grey30,
   $backgroundNeutralMedium: colorsPalette.grey10,
@@ -39,6 +39,7 @@ export default {
   $textPrimary: colorsPalette.violet50,
   $textGeneral: colorsPalette.blue50,
   $textSuccess: colorsPalette.green60,
+  $textSuccessLight: colorsPalette.green40,
   $textMajor: colorsPalette.orange60,
   $textDanger: colorsPalette.red60,
   $textDangerLight: colorsPalette.red40,

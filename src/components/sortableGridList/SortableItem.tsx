@@ -1,7 +1,7 @@
 import React, {PropsWithChildren, useCallback} from 'react';
-import {LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
-import Animated, {
+import {
   runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
@@ -9,19 +9,16 @@ import Animated, {
   withSpring,
   withTiming
 } from 'react-native-reanimated';
-import usePresenter, {ItemsOrder, animationConfig} from './usePresenter';
+import _ from 'lodash';
+import {useDidUpdate} from 'hooks';
+import usePresenter, {animationConfig} from './usePresenter';
+import {SortableItemProps} from './types';
 import View from '../view';
 
-interface SortableItemProps extends ReturnType<typeof usePresenter> {
-  index: number;
-  itemsOrder: Animated.SharedValue<ItemsOrder>;
-  onChange: () => void;
-  style: StyleProp<ViewStyle>;
-}
-
-function SortableItem(props: PropsWithChildren<SortableItemProps>) {
+function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<typeof usePresenter>>) {
   const {
-    index,
+    data,
+    id,
     itemsOrder,
     onChange,
     style,
@@ -31,6 +28,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
     getTranslationByOrderChange,
     updateItemLayout
   } = props;
+  const initialIndex = useSharedValue(_.map(data, 'id').indexOf(id));
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
@@ -40,23 +38,50 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
   const tempTranslateX = useSharedValue(0);
   const tempTranslateY = useSharedValue(0);
 
+  const dataManuallyChanged = useSharedValue(false);
+
+  useDidUpdate(() => {
+    dataManuallyChanged.value = true;
+    initialIndex.value = _.map(data, 'id').indexOf(id);
+  }, [data]);
+
+  useAnimatedReaction(() => itemsOrder.value,
+    (currItemsOrder, prevItemsOrder) => {
+      // Note: Unfortunately itemsOrder sharedValue is being initialized on each render
+      // Therefore I added this extra check here that compares current and previous values
+      // See open issue: https://github.com/software-mansion/react-native-reanimated/issues/3224
+      if (prevItemsOrder === null || currItemsOrder.join(',') === prevItemsOrder.join(',')) {
+        return;
+      } else {
+        const newOrder = getItemOrderById(currItemsOrder, id);
+        const prevOrder = getItemOrderById(prevItemsOrder, id);
+
+        /* In case the order of the item has returned back to its initial index we reset its position */
+        if (newOrder === initialIndex.value) {
+          /* Reset without an animation when the change is due to manual data change */
+          if (dataManuallyChanged.value) {
+            translateX.value = 0;
+            translateY.value = 0;
+          /* Reset with an animation when the change id due to user reordering */
+          } else {
+            translateX.value = withTiming(0, animationConfig);
+            translateY.value = withTiming(0, animationConfig);
+          }
+          dataManuallyChanged.value = false;
+        /* Handle an order change, animate item to its new position  */
+        } else if (newOrder !== prevOrder) {
+          const translation = getTranslationByOrderChange(newOrder, prevOrder);
+          translateX.value = withTiming(translateX.value + translation.x, animationConfig);
+          translateY.value = withTiming(translateY.value + translation.y, animationConfig);
+        }
+      }
+    });
+
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     'worklet';
     const {width, height} = event.nativeEvent.layout;
-    updateItemLayout(index, {width, height});
+    updateItemLayout({width, height});
   }, []);
-
-  useAnimatedReaction(() => itemsOrder.value.indexOf(index), // Note: It doesn't work with the getItemOrderById util
-    (newOrder, prevOrder) => {
-      if (prevOrder !== null && newOrder !== prevOrder) {
-        const translation = getTranslationByOrderChange(newOrder, prevOrder);
-        translateX.value = withTiming(translateX.value + translation.x, animationConfig);
-        translateY.value = withTiming(translateY.value + translation.y, animationConfig);
-      } else if (newOrder === index) {
-        translateX.value = withTiming(0, animationConfig);
-        translateY.value = withTiming(0, animationConfig);
-      }
-    });
 
   const longPressGesture = Gesture.LongPress()
     .onStart(() => {
@@ -90,23 +115,23 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
       translateY.value = tempTranslateY.value + event.translationY;
 
       // Swapping items
-      const oldOrder = getItemOrderById(itemsOrder.value, index);
-      const newOrder = getOrderByPosition(translateX.value, translateY.value) + index;
+      const oldOrder = getItemOrderById(itemsOrder.value, id);
+      const newOrder = getOrderByPosition(translateX.value, translateY.value) + initialIndex.value;
 
       if (oldOrder !== newOrder) {
         const itemIdToSwap = getIdByItemOrder(itemsOrder.value, newOrder);
 
         if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
-          newItemsOrder[newOrder] = index;
+          newItemsOrder[newOrder] = id;
           newItemsOrder[oldOrder] = itemIdToSwap;
           itemsOrder.value = newItemsOrder;
         }
       }
     })
     .onEnd(() => {
-      const translation = getTranslationByOrderChange(getItemOrderById(itemsOrder.value, index),
-        getItemOrderById(tempItemsOrder.value, index));
+      const translation = getTranslationByOrderChange(getItemOrderById(itemsOrder.value, id),
+        getItemOrderById(tempItemsOrder.value, id));
 
       translateX.value = withTiming(tempTranslateX.value + translation.x, animationConfig);
       translateY.value = withTiming(tempTranslateY.value + translation.y, animationConfig);
@@ -133,6 +158,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
       transform: [{translateX: translateX.value}, {translateY: translateY.value}, {scale}]
     };
   });
+
   return (
     <View reanimated style={[style, animatedStyle]} onLayout={onLayout}>
       {/* @ts-expect-error related to children type issue that started on react 18 */}
@@ -143,4 +169,4 @@ function SortableItem(props: PropsWithChildren<SortableItemProps>) {
   );
 }
 
-export default SortableItem;
+export default React.memo(SortableItem);

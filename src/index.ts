@@ -86,8 +86,7 @@ export {default as Icon, IconProps} from './components/icon';
 export {default as Image, ImageProps} from './components/image';
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
-// @ts-expect-error
-export {default as MaskedInput} from './components/maskedInput';
+export {default as MaskedInput, MaskedInputProps} from './components/maskedInput';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
@@ -116,7 +115,7 @@ export {
   PickerModes,
   PickerSearchStyle,
   PickerMethods
-} from './components/picker/new';
+} from './components/picker';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
