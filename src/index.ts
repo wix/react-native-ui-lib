@@ -137,7 +137,7 @@ export {default as Stepper, StepperProps} from './components/stepper';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/tabBar'; //TODO: remove on V7
-export {default as Timeline, TimelineProps} from './components/timeline';
+export {default as Timeline, TimelineProps, TimelinePointProps, TimelineLineProps, TimelineStateTypes, TimelinePointTypes, TimelineLineTypes} from './components/timeline';
 export {default as Text, TextProps} from './components/text';
 // @ts-expect-error
 export {default as TextArea} from './components/textArea';
