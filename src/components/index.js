@@ -156,6 +156,9 @@ export default {
   get Slider() {
     return require('./slider').default;
   },
+  get SortableList() {
+    return require('./sortableList').default;
+  },
   get GradientSlider() {
     return require('./slider/GradientSlider').default;
   },
