@@ -1,5 +1,5 @@
-import React from 'react';
-import {ImageRequireSource, ViewProps} from 'react-native';
+import React, {PropsWithChildren} from 'react';
+import {ImageRequireSource} from 'react-native';
 
 export enum StateTypes {
   CURRENT = 'current', // default
@@ -44,9 +44,9 @@ export type Position = {
   height: number;
 };
 
-export type TimelineProps = ViewProps & {
+export type TimelineProps = & PropsWithChildren< {
   topLine?: LineProps;
   bottomLine?: LineProps;
   point?: PointProps;
   testID?: string;
-};
+}>;
