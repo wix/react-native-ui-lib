@@ -28,6 +28,8 @@ const Timeline = (props: TimelineProps) => {
         // point.alignmentTargetRef.current.measure?.(onMeasure); // Android always returns x, y = 0 (see: https://github.com/facebook/react-native/issues/4753)
         //@ts-expect-error
         point.alignmentTargetRef.current.measureLayout?.(contentContainerRef.current, onMeasure);
+      } else if (point?.alignmentTargetRef === undefined) {
+        setTargetMeasurements(undefined);
       }
     }, 0);
   }, [point?.alignmentTargetRef, contentContainerMeasurements]);
