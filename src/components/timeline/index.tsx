@@ -30,7 +30,7 @@ const Timeline = (props: TimelineProps) => {
         point.alignmentTargetRef.current.measureLayout?.(contentContainerRef.current, onMeasure);
       }
     }, 0);
-  }, [point.alignmentTargetRef, contentContainerMeasurements]);
+  }, [point?.alignmentTargetRef, contentContainerMeasurements]);
 
   const visibleStyle = useMemo(() => {
     return {opacity: contentContainerMeasurements ? 1 : 0};
