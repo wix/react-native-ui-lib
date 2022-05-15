@@ -16,7 +16,7 @@ const Timeline = (props: TimelineProps) => {
   const [targetMeasurements, setTargetMeasurements] = useState<Position | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Position | undefined>();
   const [pointMeasurements, setPointMeasurements] = useState<Position | undefined>();
-  const contentContainerRef = useRef();
+  const contentContainerRef = useRef<any>();
 
   const onMeasure: MeasureOnSuccessCallback = (x, y, width, height) => {
     setTargetMeasurements({x, y, width, height});
