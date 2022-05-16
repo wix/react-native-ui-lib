@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useEffect, useState, useRef} from 'react';
-import {StyleSheet, MeasureOnSuccessCallback, LayoutChangeEvent, LayoutAnimation} from 'react-native';
+import {StyleSheet, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Point from './Point';
@@ -28,10 +28,6 @@ const Timeline = (props: TimelineProps) => {
   const onMeasure: MeasureOnSuccessCallback = (x, y, width, height) => {
     setAnchorMeasurements({x, y, width, height});
   };
-
-  useEffect(() => {
-    LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 300});
-  }, [children]);
 
   useEffect(() => {
     setTimeout(() => {

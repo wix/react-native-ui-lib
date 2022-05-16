@@ -32,8 +32,8 @@ const TimelineScreen = () => {
         </Text>
         <View marginT-5 padding-8 bg-grey70 br30>
           <Text>{contents[index]}</Text>
-          <Button marginT-10 link size={'small'} label={!expand ? 'Expand' : 'Close'} onPress={onPressExpand}/>
-          <View style={{height: expand ? 100 : 0, margin: 10, backgroundColor: 'red'}}/>
+          <Button marginT-10 size={'small'} label={!expand ? 'Expand' : 'Close'} onPress={onPressExpand}/>
+          {expand && <View style={{height: 100, marginTop: 10, backgroundColor: 'red'}}/>}
         </View>
       </Card>
     );
