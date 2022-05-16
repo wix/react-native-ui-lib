@@ -128,13 +128,12 @@ export default class PickerScreen extends Component {
           </Picker>
 
           <Picker
-            title="Native Picker"
+            label="Native Picker"
             placeholder="Pick a Language"
             useNativePicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             rightIconSource={dropdown}
-            migrateTextField
             // containerStyle={{marginTop: 20}}
             // renderPicker={() => {
             //   return (
@@ -158,7 +157,7 @@ export default class PickerScreen extends Component {
           </Picker>
 
           <Picker
-            title="Custom modal"
+            label="Custom modal"
             placeholder="Pick multiple Languages"
             value={this.state.customModalValues}
             onChange={items => this.setState({customModalValues: items})}
@@ -250,7 +249,7 @@ export default class PickerScreen extends Component {
                       style={{
                         height: 56,
                         borderBottomWidth: 1,
-                        borderColor: Colors.$backgroundNeutralLight
+                        borderColor: Colors.$backgroundNeutral
                       }}
                       paddingH-15
                       row
