@@ -30,6 +30,10 @@ const Timeline = (props: TimelineProps) => {
   };
 
   useEffect(() => {
+    LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 300});
+  }, [children]);
+
+  useEffect(() => {
     setTimeout(() => {
       if (point?.anchorRef?.current && contentContainerRef?.current && contentContainerMeasurements) {
         // point.anchorRef.current.measure?.(onMeasure); // Android always returns x, y = 0 (see: https://github.com/facebook/react-native/issues/4753)
