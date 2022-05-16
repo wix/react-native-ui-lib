@@ -132,5 +132,5 @@ function addTitle(title) {
 }
 
 function addEntry(pr) {
-  releaseNotes += `• ${pr.info.changelog || pr.title} (${pr.info['jira issue']}) (#${pr.number}) \n`;
+  releaseNotes += `• ${pr.info.changelog || pr.title} (#${pr.number}) \n`;
 }

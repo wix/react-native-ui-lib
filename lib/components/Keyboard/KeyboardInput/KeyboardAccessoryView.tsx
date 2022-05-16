@@ -185,7 +185,6 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       kbComponent,
       onItemSelected,
       onRequestShowKeyboard,
-      useSafeArea,
       scrollBehavior,
       iOSScrollBehavior,
       ...others
@@ -206,7 +205,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
           initialProps={this.processInitialProps()}
           onItemSelected={onItemSelected}
           onRequestShowKeyboard={onRequestShowKeyboard}
-          useSafeArea={useSafeArea}
+          useSafeArea={others.useSafeArea}
         />
       </KeyboardTrackingView>
     );
