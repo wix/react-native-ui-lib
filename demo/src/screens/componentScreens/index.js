@@ -46,6 +46,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.SkeletonViewScreen', () => require('./SkeletonViewScreen').default);
   registrar('unicorn.components.SliderScreen', () => require('./SliderScreen').default);
   registrar('unicorn.components.SortableGridListScreen', () => require('./SortableGridListScreen').default);
+  registrar('unicorn.components.SortableListScreen', () => require('./SortableListScreen').default);
   registrar('unicorn.components.StackAggregatorScreen', () => require('./StackAggregatorScreen').default);
   registrar('unicorn.components.StepperScreen', () => require('./StepperScreen').default);
   registrar('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);
