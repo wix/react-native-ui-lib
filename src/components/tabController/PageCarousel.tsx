@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo, useEffect} from 'react';
+import React, {forwardRef, useCallback, useContext, useMemo, useEffect, useImperativeHandle} from 'react';
 import {NativeSyntheticEvent, NativeScrollEvent, ScrollViewProps} from 'react-native';
 import TabBarContext from './TabBarContext';
 import Reanimated, {
@@ -17,7 +17,7 @@ const FIX_RTL = Constants.isRTL && Constants.isAndroid;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel
  */
-function PageCarousel(props: ScrollViewProps) {
+ const PageCarousel = forwardRef(function (props: ScrollViewProps, ref:any) {
   const {onMomentumScrollEnd, style, ...others} = props;
   const carousel = useAnimatedRef<Reanimated.ScrollView>();
   const {
@@ -30,6 +30,12 @@ function PageCarousel(props: ScrollViewProps) {
   } = useContext(TabBarContext);
   const initialOffset = useMemo(() => ({x: currentPage.value * pageWidth, y: 0}), []);
   const indexChangeReason = useSharedValue<'byScroll' | 'byPress' | undefined>(undefined);
+
+  useImperativeHandle(ref,()=>({  
+    setNativeProps:(nativeProps:any)=>{
+      carousel.current?.setNativeProps(nativeProps) 
+    }
+  }),[]);
 
   const scrollToInitial = useCallback(() => {
     if (Constants.isAndroid && currentPage.value) {
@@ -115,6 +121,6 @@ function PageCarousel(props: ScrollViewProps) {
       onMomentumScrollEnd={handleOnMomentumScrollEnd} // TODO: workaround for useAnimatedScrollHandler.onMomentumEnd not being called (https://github.com/software-mansion/react-native-reanimated/issues/2735)
     />
   );
-}
+})
 
 export default PageCarousel;
