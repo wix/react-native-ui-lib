@@ -34,7 +34,7 @@ export type PointProps = {
   icon?: ImageRequireSource;
   label?: number;
   /** to align point to this view's center */
-  alignmentTargetRef?: React.MutableRefObject<undefined>;
+  anchorRef?: React.MutableRefObject<undefined>;
 }
 
 export type Position = {

@@ -12,28 +12,28 @@ const contents = [
 ];
 
 const TimelineScreen = () => {
-  const [targetIndex, setTargetIndex] = useState(0);
+  const [anchorIndex, setAnchorIndex] = useState(0);
   const [expand, setExpand] = useState(false);
-  const target = useRef();
+  const anchor = useRef();
 
   const onPress = useCallback(() => {
-    setTargetIndex(targetIndex === 0 ? 1 : 0);
-  }, [targetIndex]);
+    setAnchorIndex(anchorIndex === 0 ? 1 : 0);
+  }, [anchorIndex]);
 
   const onPressExpand = useCallback(() => {
     setExpand(!expand);
   }, [expand]);
 
-  const renderContent = (index = 0, targetRef?: any) => {
+  const renderContent = (index = 0, anchorRef?: any) => {
     return (
       <Card padding-page>
-        <Text text70BO ref={targetRef}>
+        <Text text70BO ref={anchorRef}>
           Step {index + 1}
         </Text>
         <View marginT-5 padding-8 bg-grey70 br30>
           <Text>{contents[index]}</Text>
-          <Button marginT-10 size={'small'} label={'Expand'} onPress={onPressExpand}/>
-          {expand && <View style={{height: 100, margin: 10, backgroundColor: 'red'}}/>}
+          <Button marginT-10 link size={'small'} label={!expand ? 'Expand' : 'Close'} onPress={onPressExpand}/>
+          <View style={{height: expand ? 100 : 0, margin: 10, backgroundColor: 'red'}}/>
         </View>
       </Card>
     );
@@ -41,20 +41,24 @@ const TimelineScreen = () => {
 
   return (
     <>
-      <Text h1 $textDefault margin-20>
-        Timeline
-      </Text>
-      <Button marginT-10 size={'small'} label={'Change target'} onPress={onPress}/>
+      <View row margin-20 spread>
+        <Text h1 $textDefault margin-20>
+          Timeline
+        </Text>
+        <Button margin-20 link size={'small'} label={'Change Points Anchor'} onPress={onPress}/>
+      </View>
       <ScrollView contentContainerStyle={styles.container}>
         <Timeline
+          // key={String(expand)}
           // topLine={{
           //   type: Timeline.lineTypes.DASHED, 
           //   entry: true
           // }}
           bottomLine={{type: Timeline.lineTypes.DASHED}}
-          point={{alignmentTargetRef: targetIndex === 0 ? target : undefined}}
+          // bottomLine={{state: Timeline.states.SUCCESS}}
+          point={{anchorRef: anchorIndex === 0 ? anchor : undefined}}
         >
-          {renderContent(0, targetIndex === 0 ? target : undefined)}
+          {renderContent(0, anchorIndex === 0 ? anchor : undefined)}
         </Timeline>
         <Timeline
           topLine={{type: Timeline.lineTypes.DASHED}}
@@ -62,10 +66,10 @@ const TimelineScreen = () => {
           point={{
             state: Timeline.states.SUCCESS,
             label: 2,
-            alignmentTargetRef: targetIndex === 1 ? target : undefined
+            anchorRef: anchorIndex === 1 ? anchor : undefined
           }}
         >
-          {renderContent(1, targetIndex === 1 ? target : undefined)}
+          {renderContent(1, anchorIndex === 1 ? anchor : undefined)}
         </Timeline>
 
         <Timeline

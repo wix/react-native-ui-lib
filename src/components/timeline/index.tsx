@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useEffect, useState, useRef} from 'react';
-import {StyleSheet, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, MeasureOnSuccessCallback, LayoutChangeEvent, LayoutAnimation} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Point from './Point';
@@ -20,26 +20,26 @@ const ENTRY_POINT_HEIGHT = 2;
 
 const Timeline = (props: TimelineProps) => {
   const {topLine, bottomLine, point, children} = props;
-  const [targetMeasurements, setTargetMeasurements] = useState<Position | undefined>();
+  const [anchorMeasurements, setAnchorMeasurements] = useState<Position | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Position | undefined>();
   const [pointMeasurements, setPointMeasurements] = useState<Position | undefined>();
   const contentContainerRef = useRef<any>();
 
   const onMeasure: MeasureOnSuccessCallback = (x, y, width, height) => {
-    setTargetMeasurements({x, y, width, height});
+    setAnchorMeasurements({x, y, width, height});
   };
 
   useEffect(() => {
     setTimeout(() => {
-      if (point?.alignmentTargetRef?.current && contentContainerRef?.current && contentContainerMeasurements) {
-        // point.alignmentTargetRef.current.measure?.(onMeasure); // Android always returns x, y = 0 (see: https://github.com/facebook/react-native/issues/4753)
+      if (point?.anchorRef?.current && contentContainerRef?.current && contentContainerMeasurements) {
+        // point.anchorRef.current.measure?.(onMeasure); // Android always returns x, y = 0 (see: https://github.com/facebook/react-native/issues/4753)
         //@ts-expect-error
-        point.alignmentTargetRef.current.measureLayout?.(contentContainerRef.current, onMeasure);
-      } else if (point?.alignmentTargetRef === undefined) {
-        setTargetMeasurements(undefined);
+        point.anchorRef.current.measureLayout?.(contentContainerRef.current, onMeasure);
+      } else if (point?.anchorRef === undefined) {
+        setAnchorMeasurements(undefined);
       }
     }, 0);
-  }, [point?.alignmentTargetRef, contentContainerMeasurements]);
+  }, [point?.anchorRef, contentContainerMeasurements]);
 
   const visibleStyle = useMemo(() => {
     return {opacity: contentContainerMeasurements ? 1 : 0};
@@ -69,13 +69,17 @@ const Timeline = (props: TimelineProps) => {
     if (contentContainerMeasurements && pointMeasurements) {
       const pointCenter = pointMeasurements.height / 2;
       const contentY = contentContainerMeasurements.y - CONTENT_CONTAINER_PADDINGS / 2;
-      const targetCenterY = targetMeasurements ? targetMeasurements?.y + targetMeasurements?.height / 2 
+      const anchorCenterY = anchorMeasurements ? anchorMeasurements?.y + anchorMeasurements?.height / 2 
         : contentContainerMeasurements.y + contentContainerMeasurements.height / 2;
       const entryPointHeight = topLine?.entry ? ENTRY_POINT_HEIGHT : 0;
-      height = contentY + targetCenterY - pointCenter - entryPointHeight;
+      height = contentY + anchorCenterY - pointCenter - entryPointHeight;
     }
     return height;
-  }, [targetMeasurements, contentContainerMeasurements, pointMeasurements, topLine?.entry]);
+  }, [anchorMeasurements, contentContainerMeasurements, pointMeasurements, topLine?.entry]);
+
+  const topLineStyle = useMemo(() => {
+    return {height: topLineHeight};
+  }, [topLineHeight]);
 
   const bottomLineStyle = useMemo(() => {
     if (contentContainerMeasurements && pointMeasurements) {
@@ -103,7 +107,7 @@ const Timeline = (props: TimelineProps) => {
       <Line
         {...topLine}
         top
-        style={{height: topLineHeight}}
+        style={topLineStyle}
         color={topLine ? topLine?.color || getStateColor(topLine?.state) : undefined}
       />
     );
