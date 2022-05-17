@@ -226,6 +226,7 @@ export type FieldContextType = {
   failingValidatorIndex?: number;
   disabled: boolean;
   validateField: () => void;
+  checkValidity: () => boolean;
 };
 
 export interface TextFieldMethods {
@@ -234,4 +235,5 @@ export interface TextFieldMethods {
   blur: () => void;
   clear: () => void;
   validate: () => boolean;
+  isValid: () => boolean;
 }
