@@ -18,6 +18,9 @@ import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} fro
 // @ts-expect-error
 import {TextField} from '../inputs';
 import TextFieldMigrator from '../textField/TextFieldMigrator';
+import Icon from '../icon';
+import View from '../view';
+import Text from '../text';
 // @ts-expect-error
 import NativePicker from './NativePicker';
 import PickerItemsList from './PickerItemsList';
@@ -28,11 +31,22 @@ import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
 import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
-import {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle, PickerMethods} from './types';
+import {
+  PickerProps,
+  PickerItemProps,
+  PickerValue,
+  PickerModes,
+  PickerFieldTypes,
+  PickerSearchStyle,
+  PickerMethods
+} from './types';
+
+const dropdown = require('./assets/dropdown.png');
 
 const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps) => {
   const {
     mode,
+    fieldType = PickerFieldTypes.form,
     selectionLimit,
     showSearch,
     searchStyle,
@@ -65,6 +79,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     migrateTextField,
     ...others
   } = props;
+  const {paddings, margins, positionStyle} = modifiers;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
   const [items] = useState(Picker.extractPickerItems(props));
@@ -130,9 +145,6 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     onDoneSelecting
   ]);
 
-  // const textInputProps = TextField.extractOwnProps(props);
-  const {paddings, margins, positionStyle} = modifiers;
-
   const modalProps: ExpandableOverlayProps['modalProps'] = {
     animationType: 'slide',
     transparent: Constants.isIOS && enableModalBlur,
@@ -141,6 +153,22 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     onShow,
     ...pickerModalProps
   };
+
+  const propsByFieldType = useMemo(() => {
+    if (fieldType === PickerFieldTypes.filter) {
+      return {
+        label: undefined,
+        preset: null,
+        containerStyle: {flexDirection: 'row'},
+        trailingAccessory: <Icon source={dropdown}/>
+      };
+    } else if (fieldType === PickerFieldTypes.settings) {
+      return {
+        label: undefined,
+        preset: null
+      };
+    }
+  }, [fieldType]);
 
   const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({visible, toggleExpandable}) => {
     if (renderCustomModal) {
@@ -196,6 +224,27 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     useSafeArea
   ]);
 
+  const renderPickerInnerInput = () => {
+    if (fieldType === PickerFieldTypes.filter) {
+      return (
+        <Text text70 style={others.style}>
+          {label ?? others.placeholder}
+        </Text>
+      );
+    } else if (fieldType === PickerFieldTypes.settings) {
+      return (
+        <View row spread>
+          <Text text70 style={others.labelStyle}>
+            {others.label}
+          </Text>
+          <Text text70 $textPrimary style={others.style}>
+            {label ?? others.placeholder}
+          </Text>
+        </View>
+      );
+    }
+  };
+
   if (useNativePicker) {
     return <NativePicker {...props}/>;
   }
@@ -222,15 +271,18 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             ref={pickerRef}
             // {...textInputProps}
             {...others}
+            {...propsByFieldType}
             testID={`${testID}.input`}
-            containerStyle={[paddings, margins, positionStyle, containerStyle]}
+            containerStyle={[paddings, margins, positionStyle, containerStyle, propsByFieldType?.containerStyle]}
             {...accessibilityInfo}
             importantForAccessibility={'no-hide-descendants'}
             value={label}
             selection={Constants.isAndroid ? {start: 0} : undefined}
             /* Note: Disable TextField expandable feature */
             topBarProps={undefined}
-          />
+          >
+            {renderPickerInnerInput()}
+          </TextFieldMigrator>
         )}
       </ExpandableOverlay>
     </PickerContext.Provider>
@@ -243,6 +295,7 @@ Picker.defaultProps = {
   mode: PickerModes.SINGLE
 };
 Picker.modes = PickerModes;
+Picker.fieldTypes = PickerFieldTypes;
 Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
   const {children} = props;
   const items = React.Children.map(children, child => ({
