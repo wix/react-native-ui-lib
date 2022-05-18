@@ -37,7 +37,7 @@ export type PointProps = {
   anchorRef?: React.MutableRefObject<undefined>;
 }
 
-export type Position = {
+export type Layout = {
   x: number;
   y: number;
   width: number;

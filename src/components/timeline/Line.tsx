@@ -34,9 +34,6 @@ const Line = (props: LinePropsInternal) => {
     if (type === LineTypes.DASHED) {
       return (
         <Dash 
-          dashGap={6}
-          dashLength={6}
-          dashThickness={2}
           dashColor={color}
           style={dashedLineStyle}
         />

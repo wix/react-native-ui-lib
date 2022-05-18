@@ -4,7 +4,7 @@ import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Point from './Point';
 import Line from './Line';
-import {TimelineProps, PointProps, LineProps, StateTypes, PointTypes, LineTypes, Position} from './types';
+import {TimelineProps, PointProps, LineProps, StateTypes, PointTypes, LineTypes, Layout} from './types';
 export {
   TimelineProps,
   PointProps as TimelinePointProps,
@@ -20,9 +20,9 @@ const ENTRY_POINT_HEIGHT = 2;
 
 const Timeline = (props: TimelineProps) => {
   const {topLine, bottomLine, point, children} = props;
-  const [anchorMeasurements, setAnchorMeasurements] = useState<Position | undefined>();
-  const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Position | undefined>();
-  const [pointMeasurements, setPointMeasurements] = useState<Position | undefined>();
+  const [anchorMeasurements, setAnchorMeasurements] = useState<Layout | undefined>();
+  const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Layout | undefined>();
+  const [pointMeasurements, setPointMeasurements] = useState<Layout | undefined>();
   const contentContainerRef = useRef<any>();
 
   const onMeasure: MeasureOnSuccessCallback = (x, y, width, height) => {
@@ -118,7 +118,7 @@ const Timeline = (props: TimelineProps) => {
       return (
         <Line
           {...bottomLine}
-          style={bottomLineStyle}
+          style={bottomLineStyle/* {flex: 1} */}
           color={bottomLine?.color || getStateColor(bottomLine?.state)}
         />
       );

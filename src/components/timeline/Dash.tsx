@@ -4,9 +4,9 @@
  * copied as a result of 'SyntaxError: Cannot use import statement outside a module' pointing to util.js file
  */
 
-import React from 'react';
-import {View, StyleSheet, ViewProps, ViewStyle} from 'react-native';
-import MeasureMeHOC from 'react-native-measureme';
+import React, {useState, useCallback} from 'react';
+import {View, StyleSheet, StyleProp, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {Layout} from './types';
 
 interface DashProps extends ViewProps {
   dashGap: number;
@@ -14,34 +14,43 @@ interface DashProps extends ViewProps {
   dashThickness: number;
   dashColor?: string;
   dashStyle?: ViewStyle;
-  style?: ViewStyle;
-  width?: number;
-  height?: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Dash = (props: DashProps) => {
-  const {style, width, height, dashGap, dashLength, dashStyle, onLayout} = props;
+  const {style, dashGap, dashLength, dashStyle, onLayout} = props;
+  const [measurements, setMeasurements] = useState<Layout | undefined>();
   const isRow = isStyleRow(style);
-  const length = (isRow ? width : height) || 0;
-  const n = Math.ceil(length / (dashGap + dashLength));
-  const calculatedDashStyles = getDashStyle(props);
-  const dash = [];
+
+  const renderDash = () => {
+    const length = (isRow ? measurements?.width : measurements?.height) || 0;
+    const n = Math.ceil(length / (dashGap + dashLength));
+    const calculatedDashStyles = getDashStyle(props);
+    const dash = [];
   
-  for (let i = 0; i < n; i++) {
-    dash.push(<View key={i} style={[calculatedDashStyles, dashStyle]}/>);
-  }
+    for (let i = 0; i < n; i++) {
+      dash.push(<View key={i} style={[calculatedDashStyles, dashStyle]}/>);
+    }
+    return dash;
+  };
+
+  const onDashLayout = useCallback((event: LayoutChangeEvent) => {
+    const {x, y, width, height} = event.nativeEvent.layout;
+    setMeasurements({x, y, width, height});
+    onLayout?.(event);
+  }, [onLayout]);
 
   return (
-    <View onLayout={onLayout} style={[style, isRow ? styles.row : styles.column]}>
-      {dash}
+    <View onLayout={onDashLayout} style={[style, isRow ? styles.row : styles.column]}>
+      {renderDash()}
     </View>
   );
 };
 
-export default MeasureMeHOC(Dash);
+export default Dash;
 Dash.defaultProps = {
-  dashGap: 2,
-  dashLength: 4,
+  dashGap: 6,
+  dashLength: 6,
   dashThickness: 2,
   dashColor: 'black'
 };
@@ -52,7 +61,7 @@ const styles = StyleSheet.create({
 });
 
 // util
-const isStyleRow = (style?: ViewStyle) => {
+const isStyleRow = (style?: StyleProp<ViewStyle>) => {
   if (style) {
     const flatStyle = StyleSheet.flatten(style || {});
     return flatStyle.flexDirection !== 'column';
