@@ -81,16 +81,6 @@ const Timeline = (props: TimelineProps) => {
     return {height: topLineHeight};
   }, [topLineHeight]);
 
-  const bottomLineStyle = useMemo(() => {
-    if (contentContainerMeasurements && pointMeasurements) {
-      const containerHeight = contentContainerMeasurements.height - CONTENT_CONTAINER_PADDINGS;
-      const bottomEntryPointHeight = bottomLine?.entry ? ENTRY_POINT_HEIGHT : 0;
-      const topEntryPointHeight = topLine?.entry ? ENTRY_POINT_HEIGHT : 0;
-      const height = 
-        containerHeight - topLineHeight - pointMeasurements.height - bottomEntryPointHeight - topEntryPointHeight;
-      return {height};
-    }
-  }, [contentContainerMeasurements, pointMeasurements, topLineHeight, bottomLine?.entry, topLine?.entry]);
 
   const onPointLayout = useCallback((event: LayoutChangeEvent) => {
     const {x, y, width, height} = event.nativeEvent.layout;
@@ -118,7 +108,7 @@ const Timeline = (props: TimelineProps) => {
       return (
         <Line
           {...bottomLine}
-          style={bottomLineStyle/* {flex: 1} */}
+          style={styles.bottomLine}
           color={bottomLine?.color || getStateColor(bottomLine?.state)}
         />
       );
@@ -158,5 +148,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: Spacings.s2,
     width: 20
+  },
+  bottomLine: {
+    flex: 1
   }
 });

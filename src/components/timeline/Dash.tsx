@@ -4,11 +4,13 @@
  * copied as a result of 'SyntaxError: Cannot use import statement outside a module' pointing to util.js file
  */
 
-import React, {useState, useCallback} from 'react';
-import {View, StyleSheet, StyleProp, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
+import React, {useState, useCallback, useMemo} from 'react';
+import {StyleSheet, StyleProp, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
+import View from '../view';
 import {Layout} from './types';
 
 interface DashProps extends ViewProps {
+  vertical?: boolean;
   dashGap: number;
   dashLength: number;
   dashThickness: number;
@@ -18,30 +20,46 @@ interface DashProps extends ViewProps {
 }
 
 const Dash = (props: DashProps) => {
-  const {style, dashGap, dashLength, dashStyle, onLayout} = props;
+  const {style, vertical, dashGap, dashLength, dashThickness, dashStyle, onLayout} = props;
   const [measurements, setMeasurements] = useState<Layout | undefined>();
   const isRow = isStyleRow(style);
+
+  const onDashLayout = useCallback((event: LayoutChangeEvent) => {
+    const {x, y, width, height} = event.nativeEvent.layout;
+    setMeasurements({x, y, width, height});
+    onLayout?.(event);
+  },
+  [onLayout]);
+
+  const lineStyle = useMemo(() => {
+    if (vertical) {
+      return {
+        width: dashThickness,
+        height: dashLength
+      };
+    } else {
+      return {
+        height: dashThickness,
+        width: dashLength
+      };
+    }
+  }, [vertical, dashThickness, dashLength]);
 
   const renderDash = () => {
     const length = (isRow ? measurements?.width : measurements?.height) || 0;
     const n = Math.ceil(length / (dashGap + dashLength));
     const calculatedDashStyles = getDashStyle(props);
     const dash = [];
-  
+
     for (let i = 0; i < n; i++) {
       dash.push(<View key={i} style={[calculatedDashStyles, dashStyle]}/>);
     }
     return dash;
   };
 
-  const onDashLayout = useCallback((event: LayoutChangeEvent) => {
-    const {x, y, width, height} = event.nativeEvent.layout;
-    setMeasurements({x, y, width, height});
-    onLayout?.(event);
-  }, [onLayout]);
 
   return (
-    <View onLayout={onDashLayout} style={[style, isRow ? styles.row : styles.column]}>
+    <View onLayout={onDashLayout} style={[lineStyle, style, isRow ? styles.row : styles.column]}>
       {renderDash()}
     </View>
   );

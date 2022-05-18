@@ -1,4 +1,3 @@
-
 import React, {useMemo} from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
 import View from '../view';
@@ -13,7 +12,7 @@ type LinePropsInternal = LineProps & {
   style?: ViewStyle;
 };
 
-const Line = (props: LinePropsInternal) => {
+const Line = React.memo((props: LinePropsInternal) => {
   const {type, color = 'transparent', entry, top, style} = props;
 
   const solidLineStyle = useMemo(() => {
@@ -30,14 +29,9 @@ const Line = (props: LinePropsInternal) => {
     }
   };
 
-  const renderLine = () => {    
+  const renderLine = () => {
     if (type === LineTypes.DASHED) {
-      return (
-        <Dash 
-          dashColor={color}
-          style={dashedLineStyle}
-        />
-      );
+      return <Dash vertical dashColor={color} style={dashedLineStyle}/>;
     }
     return <View style={solidLineStyle}/>;
   };
@@ -49,7 +43,7 @@ const Line = (props: LinePropsInternal) => {
       {!top && renderStartPoint()}
     </>
   );
-};
+});
 
 export default Line;
 
@@ -63,7 +57,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   dashedLine: {
-    flexDirection: 'column', 
+    flexDirection: 'column',
     overflow: 'hidden'
   }
 });
