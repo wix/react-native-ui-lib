@@ -128,7 +128,7 @@ export default class PickerScreen extends Component {
           </Picker>
 
           <Picker
-            label="Native Picker"
+            title="Native Picker"
             placeholder="Pick a Language"
             useNativePicker
             value={this.state.nativePickerValue}
