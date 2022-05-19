@@ -270,8 +270,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
             ref={pickerRef}
             // {...textInputProps}
-            {...others}
             {...propsByFieldType}
+            {...others}
             testID={`${testID}.input`}
             containerStyle={[paddings, margins, positionStyle, containerStyle, propsByFieldType?.containerStyle]}
             {...accessibilityInfo}
