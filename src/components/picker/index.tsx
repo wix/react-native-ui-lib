@@ -79,6 +79,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     migrateTextField,
     ...others
   } = props;
+  const {preset} = others;
   const {paddings, margins, positionStyle} = modifiers;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
@@ -157,15 +158,14 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
   const propsByFieldType = useMemo(() => {
     if (fieldType === PickerFieldTypes.filter) {
       return {
-        label: undefined,
-        preset: null,
+        preset: preset || null,
         containerStyle: {flexDirection: 'row'},
         trailingAccessory: <Icon source={dropdown}/>
       };
     } else if (fieldType === PickerFieldTypes.settings) {
       return {
-        label: undefined,
-        preset: null
+        preset: preset || null,
+        label: undefined
       };
     }
   }, [fieldType]);
@@ -270,8 +270,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
             ref={pickerRef}
             // {...textInputProps}
-            {...propsByFieldType}
             {...others}
+            {...propsByFieldType}
             testID={`${testID}.input`}
             containerStyle={[paddings, margins, positionStyle, containerStyle, propsByFieldType?.containerStyle]}
             {...accessibilityInfo}
