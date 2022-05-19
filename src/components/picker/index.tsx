@@ -307,6 +307,6 @@ Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
   return items;
 };
 
-export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerSearchStyle, PickerMethods};
+export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
 export {Picker}; // For tests
 export default asBaseComponent<PickerProps, typeof Picker>(forwardRef(Picker));
