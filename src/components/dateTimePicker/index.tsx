@@ -41,7 +41,7 @@ export interface DateTimePickerProps {
   /**
    * The onChange callback
    */
-  onChange?: (date?: Date) => void;
+  onChange?: (date: Date) => void;
   /**
    * Should this input be editable or disabled
    */
@@ -174,7 +174,7 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
       this.chosenDate = new Date();
     }
 
-    this.props.onChange?.(this.chosenDate);
+    this.props.onChange?.(this.chosenDate!);
     this.setState({value: this.chosenDate});
   };
 
