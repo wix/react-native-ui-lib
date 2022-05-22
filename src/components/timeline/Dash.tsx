@@ -22,7 +22,7 @@ const Dash = (props: DashProps) => {
     setMeasurements({x, y, width, height});
   }, []);
 
-  const calculatedDashStyle = useMemo(() => {
+  const dashStyle = useMemo(() => {
     return {
       width: vertical ? dashThickness : dashLength,
       height: vertical ? dashLength : dashThickness,
@@ -47,7 +47,7 @@ const Dash = (props: DashProps) => {
     const dash = [];
     
     for (let i = 0; i < n; i++) {
-      dash.push(<View key={i} style={calculatedDashStyle}/>);
+      dash.push(<View key={i} style={dashStyle}/>);
     }
 
     return dash;
