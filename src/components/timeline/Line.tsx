@@ -16,11 +16,11 @@ const Line = React.memo((props: LinePropsInternal) => {
   const {type, color = 'transparent', entry, top, style} = props;
 
   const solidLineStyle = useMemo(() => {
-    return [styles.solidLine, {backgroundColor: color}, style];
+    return [style, styles.solidLine, {backgroundColor: color}];
   }, [color, style]);
 
   const dashedLineStyle = useMemo(() => {
-    return [styles.dashedLine, style];
+    return [style, styles.dashedLine];
   }, [style]);
 
   const renderStartPoint = () => {
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   dashedLine: {
-    flexDirection: 'column',
     overflow: 'hidden'
   }
 });
