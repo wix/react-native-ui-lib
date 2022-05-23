@@ -14,7 +14,6 @@ import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
-import Colors from '../../style/colors';
 
 const BlurView = BlurViewPackage?.BlurView;
 
@@ -144,8 +143,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   },
   fill: {
-    flex: 1,
-    backgroundColor: Colors.$backgroundDefault
+    flex: 1
   },
   accessibleOverlayView: {
     height: 50,

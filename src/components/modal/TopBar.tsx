@@ -170,7 +170,7 @@ class TopBar extends Component<ModalTopBarProps> {
             {this.renderLeftButtons()}
           </View>
           <View row flex-3 bottom centerH centerV>
-            <Text accessible={!!title} numberOfLines={1} text70 style={[styles.title, titleStyle]}>
+            <Text $textDefault accessible={!!title} numberOfLines={1} text70 style={[styles.title, titleStyle]}>
               {title}
             </Text>
           </View>
