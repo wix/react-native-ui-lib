@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   icon: {
     // width: 16,
     // height: 16,
-    tintColor: Colors.grey10,
+    tintColor: Colors.$iconDefault,
     marginBottom: 2
   }
 });

@@ -41,7 +41,7 @@ export interface DateTimePickerProps {
   /**
    * The onChange callback
    */
-  onChange?: (date?: Date) => void;
+  onChange?: (date: Date) => void;
   /**
    * Should this input be editable or disabled
    */
@@ -197,7 +197,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
       chosenDate.current = new Date();
     }
 
-    onChange?.(chosenDate.current);
+    onChange?.(chosenDate.current!);
     setValue(chosenDate.current);
   }, [toggleExpandableOverlay, onChange]);
 

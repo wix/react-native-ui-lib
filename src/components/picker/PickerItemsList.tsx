@@ -32,7 +32,11 @@ const PickerItemsList = (props: PickerItemsListProps) => {
 
       return (
         <View style={styles.searchInputContainer}>
-          <Icon style={styles.searchIcon} source={searchStyle.icon || Assets.icons.search}/>
+          <Icon
+            style={styles.searchIcon}
+            tintColor={Colors.$iconDefault}
+            source={searchStyle.icon || Assets.icons.search}
+          />
           <TextInput
             testID={testID}
             // ref={r => (this.search = r)}
