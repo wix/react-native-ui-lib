@@ -60,7 +60,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   [children]);
 
   return (
-    <View flex useSafeArea={useSafeArea}>
+    <View bg-$backgroundDefault flex useSafeArea={useSafeArea}>
       <Modal.TopBar {...topBarProps}/>
       {renderSearchInput()}
 
