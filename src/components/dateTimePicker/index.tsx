@@ -19,7 +19,7 @@ const MODES = {
 /*eslint-disable*/
 /**
  * @description: Date and Time Picker Component that wraps RNDateTimePicker for date and time modes.
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DateTimePickerScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DateTimePickerScreen.tsx
  * @important: DateTimePicker uses a native library. You MUST add and link the native library to both iOS and Android projects.
  * @extends: TextField, react-native-community/datetimepicker
  * @extendsLink: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker
