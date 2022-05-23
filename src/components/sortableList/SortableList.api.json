@@ -7,8 +7,8 @@
   "props": [
     {
       "name": "data",
-      "type": "ItemT[]",
-      "description": "The initial data of the list, do not update the data.",
+      "type": "ItemT[] (ItemT extends {id: string})",
+      "description": "The data of the list, with an id prop as unique identifier.",
       "required": true
     },
     {
