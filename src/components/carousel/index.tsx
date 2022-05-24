@@ -228,6 +228,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     return index;
   }
 
+  // TODO: currently this returns pagesCount offsets, not starting from 0; look into changing this into (pagesCount - 1) or to have the 1st item as 0
   getSnapToOffsets = (): number[] | undefined => {
     const {containerWidth, pageWidth} = this.state;
 
@@ -251,7 +252,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {initialOffset} = this.state;
     let contentOffset = initialOffset;
     if (snapToOffsets && initialPage !== undefined) {
-      const offset = snapToOffsets[initialPage];
+      const offset = initialPage === 0 ? 0 : snapToOffsets[initialPage - 1];
       contentOffset = {
         x: horizontal ? offset : 0,
         y: horizontal ? 0 : offset
