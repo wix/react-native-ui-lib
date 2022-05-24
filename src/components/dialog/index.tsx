@@ -9,7 +9,7 @@ import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import OverlayFadingBackground from './OverlayFadingBackground';
-import PanningProvider, {PanningDirections} from '../panningViews/panningProvider';
+import PanningProvider, {PanningDirections, PanningDirectionsEnum} from '../panningViews/panningProvider';
 
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
@@ -104,6 +104,7 @@ const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.grey20, 0.65);
  */
 class Dialog extends Component<DialogProps, DialogState> {
   static displayName = 'Dialog';
+  static directions = PanningDirectionsEnum;
 
   static defaultProps = {
     overlayBackgroundColor: DEFAULT_OVERLAY_BACKGROUND_COLOR
@@ -293,4 +294,4 @@ function createStyles(props: DialogProps) {
   });
 }
 
-export default asBaseComponent<DialogProps>(Dialog);
+export default asBaseComponent<DialogProps, typeof Dialog>(Dialog);
