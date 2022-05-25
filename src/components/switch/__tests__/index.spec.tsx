@@ -8,7 +8,7 @@ describe('Switch', () => {
     SwitchDriver.clear();
   });
 
-  const switchTextDriver = (testID: string, props: Partial<SwitchProps>) => {
+  const switchDriver = (testID: string, props: Partial<SwitchProps>) => {
     const defaultProps: SwitchProps = {
       testID,
       value: false,
@@ -27,7 +27,7 @@ describe('Switch', () => {
   it('Should fire onChange event', async () => {
     const testId = 'switch-comp';
     const onChange = jest.fn();
-    const driver = await switchTextDriver(testId, {onValueChange: onChange});
+    const driver = await switchDriver(testId, {onValueChange: onChange});
     await driver.press();
     expect(onChange).toHaveBeenCalled();
   });
@@ -35,7 +35,7 @@ describe('Switch', () => {
   it('Should fire onChange event with false value when toggling off', async () => {
     const testId = 'switch-comp';
     const onChange = jest.fn();
-    const driver = await switchTextDriver(testId, {onValueChange: onChange, value: true});
+    const driver = await switchDriver(testId, {onValueChange: onChange, value: true});
     await driver.press();
     expect(onChange).toHaveBeenCalledWith(false);
   });
@@ -43,7 +43,7 @@ describe('Switch', () => {
   it('Should fire onChange event with true value when toggling on', async () => {
     const testId = 'switch-comp';
     const onChange = jest.fn();
-    const driver = await switchTextDriver(testId, {onValueChange: onChange, value: false});
+    const driver = await switchDriver(testId, {onValueChange: onChange, value: false});
     await driver.press();
     expect(onChange).toHaveBeenCalledWith(true);
   });
@@ -51,7 +51,7 @@ describe('Switch', () => {
   it('Should not fire onChange when disabled', async () => {
     const testId = 'switch-comp';
     const onValueChange = jest.fn();
-    const driver = await switchTextDriver(testId, {disabled: true, onValueChange});
+    const driver = await switchDriver(testId, {disabled: true, onValueChange});
 
     await driver.press();
     expect(onValueChange).not.toHaveBeenCalled();
@@ -59,56 +59,56 @@ describe('Switch', () => {
 
   it('Accessibility value should be true when checked', async () => {
     const testId = 'switch-comp';
-    const driver = await switchTextDriver(testId, {value: true});
+    const driver = await switchDriver(testId, {value: true});
 
     expect(await driver.getAccessibilityValue()).toBe(true);
   });
 
   it('Accessibility value should be false when not checked', async () => {
     const testId = 'switch-comp';
-    const driver = await switchTextDriver(testId, {value: false});
+    const driver = await switchDriver(testId, {value: false});
 
     expect(await driver.isChecked()).toBe(false);
   });
 
   it('Accessibility value should be checked when checked', async () => {
     const testId = 'switch-comp';
-    const driver = await switchTextDriver(testId, {value: true});
+    const driver = await switchDriver(testId, {value: true});
 
     expect(await driver.isChecked()).toBe(true);
   });
 
   it('Accessibility value should be false when not checked', async () => {
     const testId = 'switch-comp';
-    const driver = await switchTextDriver(testId, {value: false});
+    const driver = await switchDriver(testId, {value: false});
 
     expect(await driver.getAccessibilityValue()).toBe(false);
   });
 
   it('Should be disabled', async () => {
     const testId = 'switch-comp';
-    const driver = await switchTextDriver(testId, {disabled: true});
+    const driver = await switchDriver(testId, {disabled: true});
 
     expect(await driver.isDisabled()).toBe(true);
   });
 
   it('Should be disabled', async () => {
     const testId = 'switch-comp';
-    const driver = await switchTextDriver(testId, {disabled: false});
+    const driver = await switchDriver(testId, {disabled: false});
 
     expect(await driver.isDisabled()).toBe(false);
   });
 
   it('Should pass correct color when on', async () => {
     const testId = 'switch-comp';
-    const driver = await switchTextDriver(testId, {value: true, onColor: 'red'});
+    const driver = await switchDriver(testId, {value: true, onColor: 'red'});
 
     expect(await driver.getColor()).toBe('red');
   });
 
   it('Should pass correct color when off', async () => {
     const testId = 'switch-comp';
-    const driver = await switchTextDriver(testId, {value: false, offColor: 'red'});
+    const driver = await switchDriver(testId, {value: false, offColor: 'red'});
 
     expect(await driver.getColor()).toBe('red');
   });
