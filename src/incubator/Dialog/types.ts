@@ -23,6 +23,10 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    */
   direction?: DialogDirections;
   /**
+   * The Dialog`s container style (it is set to {position: 'absolute'})
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
    * Whether or not to ignore background press.
    */
   ignoreBackgroundPress?: boolean;
@@ -104,7 +108,7 @@ export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibil
    */
   headerProps?: DialogHeaderProps;
   /**
-   * The Dialog`s container style (it is set to {position: 'absolute'})
+   * The width of the Dialog
    */
-  containerStyle?: StyleProp<ViewStyle>;
+  width?: ViewStyle['width'];
 }

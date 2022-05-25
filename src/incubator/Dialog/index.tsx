@@ -10,7 +10,7 @@ import {DialogProps, DialogDirections, DialogDirectionsEnum, ImperativeDialogMet
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
 const Dialog = (props: DialogProps) => {
-  const {visible, headerProps, containerStyle, children, ...others} = props;
+  const {visible, headerProps, containerStyle, width = 250, children, ...others} = props;
   const initialVisibility = useRef(visible);
   const dialogRef = React.createRef<ImperativeDialogMethods>();
 
@@ -26,8 +26,17 @@ const Dialog = (props: DialogProps) => {
     return [styles.defaultDialogStyle, containerStyle];
   }, [containerStyle]);
 
+  const widthStyle = useMemo(() => {
+    return {width};
+  }, [width]);
+
   return (
-    <ImperativeDialog {...others} initialVisibility={initialVisibility.current} ref={dialogRef}>
+    <ImperativeDialog
+      {...others}
+      initialVisibility={initialVisibility.current}
+      ref={dialogRef}
+      containerStyle={widthStyle}
+    >
       <View style={style}>
         <DialogHeader {...headerProps}/>
         {children}
@@ -47,7 +56,6 @@ const styles = StyleSheet.create({
     marginBottom: Spacings.s5,
     backgroundColor: Colors.$backgroundDefault,
     maxHeight: Constants.screenHeight * 0.6,
-    width: 250,
     borderRadius: BorderRadiuses.br20,
     overflow: 'hidden'
   }

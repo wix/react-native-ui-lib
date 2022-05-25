@@ -15,6 +15,7 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
     initialVisibility = false,
     onDismiss,
     direction = DialogDirectionsEnum.DOWN,
+    containerStyle,
     children,
     ignoreBackgroundPress,
     modalProps = {},
@@ -71,15 +72,13 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   },
   [onDismiss, setVisible]);
 
+  const style = useMemo(() => {
+    return [styles.panView, containerStyle];
+  }, [containerStyle]);
+
   const renderDialog = () => {
     return (
-      <PanView
-        directions={directions}
-        dismissible
-        animateToOrigin
-        containerStyle={styles.panView}
-        onDismiss={onPanViewDismiss}
-      >
+      <PanView directions={directions} dismissible animateToOrigin containerStyle={style} onDismiss={onPanViewDismiss}>
         <TransitionView
           ref={transitionAnimatorRef}
           enterFrom={direction}
