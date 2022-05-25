@@ -90,7 +90,7 @@ class Modal extends Component<ModalProps> {
         <View
           useSafeArea={isScreenReaderEnabled}
           style={!isScreenReaderEnabled && [styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
-          testID={testID}
+          testID={`${testID}.TouchableOverlay`}
         >
           {/*
             // @ts-ignore */}

@@ -1,27 +1,21 @@
-import {fireEvent, RenderAPI} from '@testing-library/react-native';
-import {ReactTestInstance} from 'react-test-renderer';
-import _ from 'lodash';
+import {ComponentDriver} from '../../testkit';
 
-export const TextDriver = async ({wrapperComponent, testID}: {wrapperComponent: RenderAPI; testID: string}) => {
-  const text: ReactTestInstance | null = await wrapperComponent.queryByTestId(testID);
-  return {
-    exists: () => !!text,
-    getRootElement: () => text,
-    getTextContent: () => {
-      if (text) {
-        return text.props.children;
-      } else {
-        console.warn(`Text component with testId:${testID}, is not found. So you can't get the content`);
-        return null;
-      }
-    },
-    isClickable: () => typeof _.get(text, 'props.onPress') === 'function',
-    click: () => {
-      if (text) {
-        fireEvent.press(text);
-      } else {
-        console.warn(`TextDriver: cannot click because testID:${testID} were not found`);
-      }
+export class TextDriver extends ComponentDriver {
+  getTextContent = async () => {
+    if (await this.exists()) {
+      return (await this.getElementProps()).children;
+    } else {
+      console.warn(`Text component with testID:${this.testID}, is not found. So you can't get the content`);
+      return null;
     }
-  };
-};
+  }
+
+  isPressable = async () => {
+    if (this.exists()) {
+      return typeof (await this.getElementProps()).onPress === 'function';
+    } else {
+      console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
+      return null;
+    }
+  }
+}

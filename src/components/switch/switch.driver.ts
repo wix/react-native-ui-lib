@@ -1,15 +1,11 @@
-import {RenderAPI, fireEvent} from '@testing-library/react-native';
+import {ComponentDriver} from '../../testkit';
 
-export const SwitchDriver = ({wrappedComponent, testID}: {wrappedComponent: RenderAPI; testID: string}) => {
-  const switchComp = wrappedComponent.getByTestId(testID);
+export class SwitchDriver extends ComponentDriver {
+  getAccessibilityValue = async () => (await this.getElementProps()).accessibilityValue.text === '1';
 
-  return {
-    exists: () => !!switchComp,
-    getRootElement: () => switchComp,
-    press: () => fireEvent(switchComp, 'press'),
-    getAccessibilityValue: () => switchComp.props.accessibilityValue.text === '1',
-    isDisabled: () => switchComp.props.accessibilityState.disabled === true,
-    isChecked: () => switchComp.props.accessibilityState.checked === 'checked',
-    getColor: () => switchComp.props.style.backgroundColor
-  };
-};
+  isDisabled = async () => (await this.getElementProps()).accessibilityState.disabled === true;
+
+  isChecked = async () => (await this.getElementProps()).accessibilityState.checked === 'checked';
+
+  getColor = async () => (await this.getElementProps()).style.backgroundColor;
+}
