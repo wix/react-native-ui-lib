@@ -83,7 +83,8 @@ export const navigationData = {
       {title: 'Basic List', tags: 'basic list', screen: 'unicorn.lists.BasicListScreen'},
       {title: 'Contacts List', tags: 'list contacts', screen: 'unicorn.lists.ContactsListScreen'},
       {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
-      {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'}
+      {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
+      {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'}
     ]
   },
   LayoutsAndTemplates: {
@@ -96,6 +97,7 @@ export const navigationData = {
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
+      {title: 'Timeline', tags: 'timeline', screen: 'unicorn.components.TimelineScreen'},
       {
         title: 'withScrollEnabler',
         tags: 'scroll enabled withScrollEnabler',

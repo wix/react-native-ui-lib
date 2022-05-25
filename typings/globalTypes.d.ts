@@ -9,6 +9,8 @@ declare module 'react-native-color' {
   declare const Gradient: any;
 }
 
+declare module 'react-native-measureme';
+
 interface Extendable {
   [key: string]: any;
 }

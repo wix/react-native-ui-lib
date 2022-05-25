@@ -67,11 +67,11 @@ const TextField = (props: InternalTextFieldProps) => {
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
-  const {onFocus, onBlur, onChangeText, fieldState, validateField} = useFieldState(others);
+  const {onFocus, onBlur, onChangeText, fieldState, validateField, checkValidity} = useFieldState(others);
 
   const context = useMemo(() => {
-    return {...fieldState, disabled: others.editable === false, validateField};
-  }, [fieldState, others.editable, validateField]);
+    return {...fieldState, disabled: others.editable === false, validateField, checkValidity};
+  }, [fieldState, others.editable, validateField, checkValidity]);
 
   const leadingAccessoryClone = useMemo(() => {
     if (leadingAccessory) {

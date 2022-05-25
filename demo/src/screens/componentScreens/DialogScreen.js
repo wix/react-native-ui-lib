@@ -50,7 +50,7 @@ export default class DialogScreen extends Component {
     ];
 
     this.state = {
-      panDirection: PanningProvider.Directions.DOWN,
+      panDirection: Dialog.directions.DOWN,
       position: 'bottom',
       scroll: this.SCROLL_TYPE.NONE,
       showHeader: true,
@@ -114,7 +114,7 @@ export default class DialogScreen extends Component {
       return (
         <Text color={Colors.$textDangerLight}>It is recommended to have pannable header with scrollable content</Text>
       );
-    } else if (showHeader && panDirection !== PanningProvider.Directions.DOWN) {
+    } else if (showHeader && panDirection !== Dialog.directions.DOWN) {
       return <Text color={Colors.$textDangerLight}>It is recommended to have pannable header with direction=down</Text>;
     }
   };
@@ -270,10 +270,10 @@ Scroll: ${scroll}`;
             <Text $textDefault>Panning Direction:</Text>
             <View row marginV-10>
               <RadioButton value={null} label={'None'}/>
-              <RadioButton value={PanningProvider.Directions.UP} label={'Up'} marginL-10/>
-              <RadioButton value={PanningProvider.Directions.DOWN} label={'Down'} marginL-10/>
-              <RadioButton value={PanningProvider.Directions.LEFT} label={'Left'} marginL-10/>
-              <RadioButton value={PanningProvider.Directions.RIGHT} label={'Right'} marginL-10/>
+              <RadioButton value={Dialog.directions.UP} label={'Up'} marginL-10/>
+              <RadioButton value={Dialog.directions.DOWN} label={'Down'} marginL-10/>
+              <RadioButton value={Dialog.directions.LEFT} label={'Left'} marginL-10/>
+              <RadioButton value={Dialog.directions.RIGHT} label={'Right'} marginL-10/>
             </View>
           </RadioGroup>
 

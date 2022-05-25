@@ -40,6 +40,11 @@ export default function useFieldState({
     onChangeValidity?.(isValid);
   }, [isValid]);
 
+  const checkValidity = useCallback((valueToValidate = value) => {
+    const [_isValid] = Presenter.validate(valueToValidate, validate);
+    return _isValid;
+  }, [value, validate]);
+
   const validateField = useCallback((valueToValidate = value) => {
     const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);
 
@@ -92,6 +97,7 @@ export default function useFieldState({
     onBlur,
     onChangeText,
     fieldState,
-    validateField
+    validateField,
+    checkValidity
   };
 }

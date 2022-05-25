@@ -2,13 +2,12 @@
 import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement} from 'react';
 import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
+import Reanimated, {runOnJS, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
+import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps} from '../badge';
-import _TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 import TabBarContext from './TabBarContext';
-
-const TouchableOpacity = Reanimated.createAnimatedComponent(_TouchableOpacity);
 
 const DEFAULT_LABEL_COLOR = Colors.$textDefault;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.$textPrimary;
@@ -132,6 +131,7 @@ export default function TabBarItem({
   const {currentPage, setCurrentIndex} = useContext(TabBarContext);
   const itemRef = useRef();
   const itemWidth = useRef(props.width);
+  const isPressed = useSharedValue(false);
   // JSON.parse(JSON.stringify is due to an issue with reanimated
   const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(labelStyle)));
   const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
@@ -147,14 +147,6 @@ export default function TabBarItem({
         index);
     }
   }, []);
-
-  const onPress = useCallback(() => {
-    if (!ignore) {
-      setCurrentIndex(index);
-    }
-
-    props.onPress?.(index);
-  }, [index, props.onPress, ignore]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
@@ -187,40 +179,63 @@ export default function TabBarItem({
     };
   });
 
+  const pressStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: isPressed.value ? activeBackgroundColor : backgroundColor,
+      opacity: isPressed.value ? activeOpacity : 1
+    };
+  });
+
   const _style = useMemo(() => {
     const constantWidthStyle = itemWidth.current ? {flex: 0, width: itemWidth.current} : undefined;
-    return [styles.tabItem, style, constantWidthStyle];
+    return [styles.tabItem, style, constantWidthStyle, pressStyle];
   }, [style]);
 
+  const gesture = Gesture.Tap()
+    .maxDuration(60000)
+    .onEnd(() => {
+      if (!ignore) {
+        setCurrentIndex(index);
+      }
+
+      props.onPress && runOnJS(props.onPress)(index);
+    })
+    .onFinalize(() => {
+      isPressed.value = false;
+    })
+    .onTouchesDown(() => {
+      isPressed.value = true;
+    });
+
   return (
-    <TouchableOpacity
-      // @ts-expect-error
-      ref={itemRef}
-      style={_style}
-      onLayout={onLayout}
-      backgroundColor={backgroundColor}
-      activeBackgroundColor={activeBackgroundColor}
-      activeOpacity={activeOpacity}
-      onPress={onPress}
-      testID={testID}
-    >
-      {leadingAccessory}
-      {icon && (
-        <Reanimated.Image
-          source={icon}
-          style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, animatedIconStyle]}
-        />
-      )}
-      {!_.isEmpty(label) && (
-        <Reanimated.Text style={[styles.tabItemLabel, labelStyle, animatedLabelStyle, animatedLabelColorStyle]}>
-          {uppercase ? _.toUpper(label) : label}
-        </Reanimated.Text>
-      )}
-      {badge && (
-        <Badge backgroundColor={Colors.$backgroundDangerHeavy} size={20} {...badge} containerStyle={styles.badge}/>
-      )}
-      {trailingAccessory}
-    </TouchableOpacity>
+    // @ts-expect-error caused by @types/react v18 and should be fixed by gesture-handler lib
+    <GestureDetector gesture={gesture}>
+      <View
+        reanimated
+        // @ts-expect-error
+        ref={itemRef}
+        style={_style}
+        onLayout={onLayout}
+        testID={testID}
+      >
+        {leadingAccessory}
+        {icon && (
+          <Reanimated.Image
+            source={icon}
+            style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, animatedIconStyle]}
+          />
+        )}
+        {!_.isEmpty(label) && (
+          <Reanimated.Text style={[styles.tabItemLabel, labelStyle, animatedLabelStyle, animatedLabelColorStyle]}>
+            {uppercase ? _.toUpper(label) : label}
+          </Reanimated.Text>
+        )}
+        {badge && (
+          <Badge backgroundColor={Colors.$backgroundDangerHeavy} size={20} {...badge} containerStyle={styles.badge}/>
+        )}
+        {trailingAccessory}
+      </View>
+    </GestureDetector>
   );
 }
 
