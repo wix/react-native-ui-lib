@@ -1,17 +1,14 @@
-import {ReactTestInstance} from 'react-test-renderer';
 import {UniDriver, UniDriverClass} from './UniDriver';
-import {TestingLibraryDriver} from './testing-library/TestingLibraryDriver';
-
-type ComponenXorUniDriver = XOR<{uniDriver: UniDriver}, {component: JSX.Element | ReactTestInstance[]}>
+import {TestingLibraryDriver} from './drivers/TestingLibraryDriver';
 
 export type ComponentDriverArgs = {
   testID: string;
   Driver?: UniDriverClass;
-} & ComponenXorUniDriver
+  component: JSX.Element
+}
 
 /**
- * You mast to pass the component or the uniDriver
- * if you chooses to passing component please run clear after each test
+ * Please run clear after each test
  * */
 export class ComponentDriver {
   protected readonly testID: string;
@@ -22,36 +19,21 @@ export class ComponentDriver {
     ComponentDriver.uniDrivers = {};
   }
 
-
   constructor({
     testID,
     component,
-    uniDriver,
     Driver = TestingLibraryDriver
   }: ComponentDriverArgs) {
     this.testID = testID;
-    if (uniDriver && component) {
-      console.warn('You need to pass the uniDriver or the component');
+    const hash = require('object-hash');
+    const componentHashcode = hash(component);
+    if (!ComponentDriver.uniDrivers[componentHashcode]) {
+      ComponentDriver.uniDrivers[componentHashcode] = new Driver(component);
     }
-
-    if (component) {
-      const hash = require('object-hash');
-      const componentHashcode = hash(component);
-      if (!ComponentDriver.uniDrivers[componentHashcode]) {
-        ComponentDriver.uniDrivers[componentHashcode] = new Driver(component);
-      }
-      this.uniDriver = ComponentDriver.uniDrivers[componentHashcode];
-    } else if (uniDriver) {
-      this.uniDriver = uniDriver;
-    } else {
-      throw new Error('You mast to pass uniDriver or component');
-    }
+    this.uniDriver = ComponentDriver.uniDrivers[componentHashcode];
   }
 
-  exists = async (): Promise<boolean> => {
-    const text = await this.getByTestId(this.testID);
-    return !!text;
-  }
+  exists = async (): Promise<boolean> => !!(await this.getElement());
 
   getElement = () => {
     return this.getByTestId(this.testID);

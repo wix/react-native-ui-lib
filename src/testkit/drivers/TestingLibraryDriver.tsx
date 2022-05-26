@@ -1,12 +1,12 @@
 import {UniDriver} from '../UniDriver';
 import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
 import {ReactTestInstance} from 'react-test-renderer';
+import {act} from '@testing-library/react-hooks';
+import _ from 'lodash';
 import {NoSelectorException} from '../NoSelectorException';
 import {SelectorChainingException} from '../SelectorChainingException';
 import {MultipleInstancesException} from '../MultipleInstancesException';
 import {SelectorNotFoundException} from '../SelectorNotFoundException';
-import {act} from '@testing-library/react-hooks';
-import _ from 'lodash';
 
 export class TestingLibraryDriver implements UniDriver {
   private readonly renderAPI: RenderAPI | null;

@@ -3,7 +3,7 @@ import {waitFor} from '@testing-library/react-native';
 import View from '../../../components/view';
 import {TextFieldDriver} from '../TextField.driver';
 import TextField from '../index';
-import {TestingLibraryDriver} from '../../../testkit/testing-library/TestingLibraryDriver';
+import {TestingLibraryDriver} from '../../../testkit/drivers/TestingLibraryDriver';
 import {Validator} from '../types';
 
 const TEXT_FIELD_TEST_ID = 'text_field_test_id';
