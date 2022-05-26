@@ -8,11 +8,11 @@ import SortableListContext from './SortableListContext';
 import SortableListItem from './SortableListItem';
 import {useDidUpdate} from 'hooks';
 
-interface ItemId {
+interface ItemWithId {
   id: string;
 }
 
-export interface SortableListProps<ItemT extends ItemId> extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'> {
+export interface SortableListProps<ItemT extends ItemWithId> extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'> {
   /**
    * The data of the list, do not update the data.
    */
@@ -27,11 +27,11 @@ export interface SortableListProps<ItemT extends ItemId> extends Omit<FlatListPr
   enableHaptic?: boolean;
 }
 
-function generateItemsOrder<ItemT extends ItemId>(data: SortableListProps<ItemT>['data']) {
+function generateItemsOrder<ItemT extends ItemWithId>(data: SortableListProps<ItemT>['data']) {
   return map(data, item => item.id);
 }
 
-const SortableList = <ItemT extends ItemId>(props: SortableListProps<ItemT>) => {
+const SortableList = <ItemT extends ItemWithId>(props: SortableListProps<ItemT>) => {
   const {data, onOrderChange, enableHaptic, ...others} = props;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
