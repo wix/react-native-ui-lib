@@ -2,19 +2,12 @@ import {ReactTestInstance} from 'react-test-renderer';
 import {UniDriver, UniDriverClass} from './UniDriver';
 import {TestingLibraryDriver} from './testing-library/TestingLibraryDriver';
 
-interface ComponentDriverArgsWithComponent {
+type ComponenXorUniDriver = XOR<{uniDriver: UniDriver}, {component: JSX.Element | ReactTestInstance[]}>
+
+export type ComponentDriverArgs = {
   testID: string;
   Driver?: UniDriverClass;
-  component: JSX.Element | ReactTestInstance[]
-}
-
-interface ComponentDriverArgsWithUniDriver {
-  testID: string;
-  Driver?: UniDriverClass;
-  uniDriver: UniDriver;
-}
-
-export type ComponentDriverArgs = XOR<ComponentDriverArgsWithComponent, ComponentDriverArgsWithUniDriver>
+} & ComponenXorUniDriver
 
 /**
  * You mast to pass the component or the uniDriver
