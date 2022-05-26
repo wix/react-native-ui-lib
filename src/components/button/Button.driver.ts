@@ -1,30 +1,36 @@
-import _ from 'lodash';
-import {fireEvent, RenderAPI} from '@testing-library/react-native';
-import {ReactTestInstance} from 'react-test-renderer';
-import {TextDriver} from '../text/Text.driver';
 import {ImageDriver} from '../image/Image.driver';
+import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
+import {TextDriver} from '../text/Text.driver';
 
-export const ButtonDriver = async ({wrapperComponent, testID}: {wrapperComponent: RenderAPI; testID: string}) => {
-  const button: ReactTestInstance | null = await wrapperComponent.queryByTestId(testID);
-  const label = await TextDriver({wrapperComponent, testID: `${testID}.label`});
-  const icon = await ImageDriver({wrapperComponent, testID: `${testID}.icon`});
-  return {
-    exists: () => !!button,
-    getRootElement: () => button,
-    isClickable: () => !_.get(button, 'props.accessibilityState.disabled'),
-    click: () => {
-      if (button) {
-        fireEvent.press(button);
-      } else {
-        console.warn(`ButtonDriver: cannot click because testID:${testID} were not found`);
-      }
-    },
-    // label
-    getLabelRootElement: () => label.getRootElement(),
-    isLabelExists: () => label.exists(),
-    getLabelContent: () => label.getTextContent(),
-    // icon
-    getIconRootElement: () => icon.getRootElement(),
-    isIconExists: () => icon.exists()
-  };
-};
+/**
+ * Please run clear after each test
+ * */
+export class ButtonDriver extends ComponentDriver {
+  private readonly labelDriver: TextDriver;
+  private readonly iconDriver: ImageDriver;
+
+  constructor(componentDriverArgs: ComponentDriverArgs) {
+    super(componentDriverArgs);
+
+    this.labelDriver = new TextDriver({...componentDriverArgs, testID: `${this.testID}.label`});
+    this.iconDriver = new ImageDriver({...componentDriverArgs, testID: `${this.testID}.icon`});
+  }
+
+  isPressable = async () => {
+    if (this.exists()) {
+      return typeof (await this.getElementProps()).onPress === 'function';
+    } else {
+      console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
+      return null;
+    }
+  }
+
+  // label
+  getLabelRootElement = () => this.labelDriver.getElement();
+  isLabelExists = () => this.labelDriver.exists();
+  getLabelContent = () => this.labelDriver.getTextContent();
+  // icon
+  getIconElement = () => this.iconDriver.getElement();
+  isIconExists = () => this.iconDriver.exists()
+
+}
