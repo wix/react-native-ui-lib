@@ -226,10 +226,10 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   renderLabel() {
-    const {label, labelStyle} = this.props;
+    const {label, labelStyle, testID} = this.props;
     return (
       label && (
-        <Text marginL-10={!this.isContentOnLeft} marginR-10={this.isContentOnLeft} $textDefault style={labelStyle}>
+        <Text marginL-10={!this.isContentOnLeft} marginR-10={this.isContentOnLeft} $textDefault style={labelStyle} testID={`${testID}.label`}>
           {label}
         </Text>
       )
@@ -237,9 +237,9 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   renderIcon() {
-    const {iconSource, iconStyle} = this.props;
+    const {iconSource, iconStyle, testID} = this.props;
     const style = [this.styles.image, iconStyle];
-    return iconSource && <Image style={style} source={iconSource}/>;
+    return iconSource && <Image style={style} source={iconSource} testID={`${testID}.icon`}/>;
   }
 
   renderButton() {
