@@ -27,6 +27,14 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
+   * The height of the Dialog
+   */
+  height?: ViewStyle['height'];
+  /**
+   * The maximum height of the Dialog
+   */
+  maxHeight?: ViewStyle['maxHeight'];
+  /**
    * Whether or not to ignore background press.
    */
   ignoreBackgroundPress?: boolean;
@@ -111,4 +119,8 @@ export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibil
    * The width of the Dialog
    */
   width?: ViewStyle['width'];
+  /**
+   * The maximum width of the Dialog
+   */
+  maxWidth?: ViewStyle['maxWidth'];
 }

@@ -1,11 +1,9 @@
 import React, {useMemo, useCallback, useState, useImperativeHandle, forwardRef} from 'react';
-import {StyleSheet} from 'react-native';
 import View from '../../components/view';
 import Modal from '../../components/modal';
 import TransitionView, {TransitionViewAnimationType} from '../TransitionView';
 import PanView from '../panView';
 import useAlignmentStyle from './helpers/useAlignmentStyle';
-import useSafeAreaView from './helpers/useSafeAreaView';
 import useFadeView from './helpers/useFadeView';
 import {ImperativeDialogProps, ImperativeDialogMethods, DialogDirections, DialogDirectionsEnum} from './types';
 export {DialogDirections, DialogDirectionsEnum};
@@ -16,6 +14,8 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
     onDismiss,
     direction = DialogDirectionsEnum.DOWN,
     containerStyle,
+    height,
+    maxHeight,
     children,
     ignoreBackgroundPress,
     modalProps = {},
@@ -25,8 +25,7 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   const transitionAnimatorRef = React.createRef<typeof TransitionView>();
   const {overlayBackgroundColor, ...otherModalProps} = modalProps;
   const [visible, setVisible] = useState(initialVisibility);
-  const {alignmentType, alignmentStyle} = useAlignmentStyle(props);
-  const {topSafeArea, bottomSafeArea} = useSafeAreaView({useSafeArea, alignmentType});
+  const {alignmentStyle} = useAlignmentStyle(props);
   const {FadeView, hideNow, fade} = useFadeView({
     initialVisibility,
     testID: `${testID}.overlayFadingBackground`,
@@ -72,13 +71,17 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
   },
   [onDismiss, setVisible]);
 
-  const style = useMemo(() => {
-    return [styles.panView, containerStyle];
-  }, [containerStyle]);
-
   const renderDialog = () => {
     return (
-      <PanView directions={directions} dismissible animateToOrigin containerStyle={style} onDismiss={onPanViewDismiss}>
+      <PanView
+        directions={directions}
+        dismissible
+        animateToOrigin
+        containerStyle={containerStyle}
+        onDismiss={onPanViewDismiss}
+        height={height}
+        maxHeight={maxHeight}
+      >
         <TransitionView
           ref={transitionAnimatorRef}
           enterFrom={direction}
@@ -86,9 +89,7 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
           onAnimationStart={fade}
           onAnimationEnd={onTransitionAnimationEnd}
         >
-          {topSafeArea}
           {children}
-          {bottomSafeArea}
         </TransitionView>
       </PanView>
     );
@@ -107,7 +108,7 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
       onDismiss={undefined}
     >
       {FadeView}
-      <View pointerEvents={'box-none'} style={alignmentStyle}>
+      <View useSafeArea={useSafeArea} pointerEvents={'box-none'} style={alignmentStyle}>
         {renderDialog()}
       </View>
     </Modal>
@@ -117,9 +118,3 @@ const ImperativeDialog = (props: ImperativeDialogProps, ref: any) => {
 ImperativeDialog.displayName = 'IGNORE';
 
 export default forwardRef<ImperativeDialogMethods, ImperativeDialogProps>(ImperativeDialog);
-
-const styles = StyleSheet.create({
-  panView: {
-    position: 'absolute'
-  }
-});

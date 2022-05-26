@@ -1,7 +1,7 @@
 import React, {useRef, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Spacings, Colors, BorderRadiuses} from 'style';
-import {asBaseComponent, Constants} from '../../commons/new';
+import {asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
 import ImperativeDialog from './ImperativeDialog';
@@ -10,7 +10,17 @@ import {DialogProps, DialogDirections, DialogDirectionsEnum, ImperativeDialogMet
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
 const Dialog = (props: DialogProps) => {
-  const {visible, headerProps, containerStyle, width = 250, children, ...others} = props;
+  const {
+    visible,
+    headerProps,
+    containerStyle,
+    width = 250,
+    maxWidth,
+    height,
+    maxHeight = '60%',
+    children,
+    ...others
+  } = props;
   const initialVisibility = useRef(visible);
   const dialogRef = React.createRef<ImperativeDialogMethods>();
 
@@ -27,8 +37,8 @@ const Dialog = (props: DialogProps) => {
   }, [containerStyle]);
 
   const widthStyle = useMemo(() => {
-    return {width};
-  }, [width]);
+    return {width, maxWidth};
+  }, [width, maxWidth]);
 
   return (
     <ImperativeDialog
@@ -36,6 +46,8 @@ const Dialog = (props: DialogProps) => {
       initialVisibility={initialVisibility.current}
       ref={dialogRef}
       containerStyle={widthStyle}
+      height={height}
+      maxHeight={maxHeight}
     >
       <View style={style}>
         <DialogHeader {...headerProps}/>
@@ -55,7 +67,6 @@ const styles = StyleSheet.create({
   defaultDialogStyle: {
     marginBottom: Spacings.s5,
     backgroundColor: Colors.$backgroundDefault,
-    maxHeight: Constants.screenHeight * 0.6,
     borderRadius: BorderRadiuses.br20,
     overflow: 'hidden'
   }

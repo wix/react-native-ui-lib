@@ -2,7 +2,7 @@ import {isEmpty} from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleProp, View as RNView, ViewStyle} from 'react-native';
 import {PanGestureHandler, PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
-import Animated, {
+import {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
@@ -57,6 +57,14 @@ export interface PanViewProps extends ViewProps {
    * Add a style to the container
    */
   containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The height of the view
+   */
+  height?: ViewStyle['height'];
+  /**
+   * The maximum height of the view
+   */
+  maxHeight?: ViewStyle['maxHeight'];
 }
 
 interface Props extends PanViewProps {
@@ -79,6 +87,8 @@ const PanView = (props: Props) => {
     directionLock,
     threshold,
     containerStyle,
+    height,
+    maxHeight,
     children,
     ...others
   } = props;
@@ -88,9 +98,11 @@ const PanView = (props: Props) => {
   const translationY = useSharedValue<number>(0);
   const animatedStyle = useAnimatedStyle(() => {
     return {
+      height,
+      maxHeight,
       transform: [{translateX: translationX.value}, {translateY: translationY.value}]
     };
-  }, []);
+  }, [height, maxHeight]);
 
   const containerRef = React.createRef<RNView>();
   const {onLayout, hiddenLocation} = useHiddenLocation({containerRef});
@@ -164,18 +176,12 @@ const PanView = (props: Props) => {
   [directions, dismissible, setTranslation, returnToOrigin]);
 
   return (
-    // TODO: delete comments once completed
     <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
       {/* @ts-expect-error missing children TS error started with react 18 */}
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : onGestureEvent}>
-        <Animated.View
-          // !visible.current && styles.hidden is done to fix a bug is iOS
-          //   style={[style, animatedStyle, !visible.current && styles.hidden]}
-          style={animatedStyle}
-          //   style={[style]}
-        >
+        <View reanimated style={animatedStyle}>
           <View {...others}>{children}</View>
-        </Animated.View>
+        </View>
       </PanGestureHandler>
     </View>
   );
