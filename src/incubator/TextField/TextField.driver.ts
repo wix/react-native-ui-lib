@@ -53,7 +53,7 @@ export class TextFieldDriver extends ComponentDriver {
       const hasInputText = !!await this.getContent();
       return hasPlaceholderProp && (!hasInputText || (hasInputText && await this.floatingPlaceholderDriver.exists()));
     } else {
-      console.warn(`TextField component with testId:${this.testID}, is not found. So you can't get his placeholder`);
+      console.warn(`TextField component with testId:${this.testID}, is not found.`);
     }
   }
 
