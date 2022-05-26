@@ -1,7 +1,6 @@
 import {ReactTestInstance} from 'react-test-renderer';
 import {UniDriver, UniDriverClass} from './UniDriver';
 import {TestingLibraryDriver} from './testing-library/TestingLibraryDriver';
-import {XOR} from '../../typings';
 
 interface ComponentDriverArgsWithComponent {
   testID: string;
