@@ -22,9 +22,9 @@ export interface SortableListProps<ItemT extends ItemId> extends Omit<FlatListPr
    */
   onOrderChange: (data: ItemT[] /* TODO: add more data? */) => void;
   /**
-   * Whether to disable the haptic feedback
+   * Whether to enable the haptic feedback
    */
-  disableHaptic?: boolean;
+  enableHaptic?: boolean;
 }
 
 function generateItemsOrder<ItemT extends ItemId>(data: SortableListProps<ItemT>['data']) {
@@ -32,7 +32,7 @@ function generateItemsOrder<ItemT extends ItemId>(data: SortableListProps<ItemT>
 }
 
 const SortableList = <ItemT extends ItemId>(props: SortableListProps<ItemT>) => {
-  const {data, onOrderChange, disableHaptic, ...others} = props;
+  const {data, onOrderChange, enableHaptic, ...others} = props;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
   const itemHeight = useSharedValue<number>(52);
@@ -78,7 +78,7 @@ const SortableList = <ItemT extends ItemId>(props: SortableListProps<ItemT>) => 
       onChange,
       itemHeight,
       onItemLayout,
-      disableHaptic
+      enableHaptic
     };
   }, [data]);
 

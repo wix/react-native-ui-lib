@@ -19,9 +19,9 @@
       "required": true
     },
     {
-      "name": "disableHaptic",
+      "name": "enableHaptic",
       "type": "boolean",
-      "description": "Whether to disable the haptic feedback."
+      "description": "Whether to enable the haptic feedback."
     }
   ],
   "snippet": [

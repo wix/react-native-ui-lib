@@ -31,7 +31,7 @@ const animationConfig = {
 const SortableListItem = (props: Props) => {
   const {children, index} = props;
 
-  const {getIdByIndex, getInitialIndexById, itemHeight, onItemLayout, itemsOrder, onChange, disableHaptic} =
+  const {getIdByIndex, getInitialIndexById, itemHeight, onItemLayout, itemsOrder, onChange, enableHaptic} =
     useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const id: string = getIdByIndex(index);
@@ -118,7 +118,7 @@ const SortableListItem = (props: Props) => {
     onDragStart,
     onDragUpdate,
     onDragEnd,
-    hapticComponentName: disableHaptic ? null : 'SortableList'
+    hapticComponentName: enableHaptic ? 'SortableList' : null
   });
 
   const draggedAnimatedStyle = useAnimatedStyle(() => {

@@ -9,7 +9,7 @@ interface SortableListContextType {
   onChange: () => void;
   itemHeight: SharedValue<number>;
   onItemLayout: ViewProps['onLayout'];
-  disableHaptic?: boolean;
+  enableHaptic?: boolean;
 }
 
 // @ts-ignore
