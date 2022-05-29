@@ -86,11 +86,11 @@ const TimelineScreen = () => {
           topLine={{state: Timeline.states.ERROR}}
           bottomLine={{
             type: Timeline.lineTypes.DASHED,
-            color: Colors.orange40
+            color: Colors.purple30
           }}
           point={{
             type: Timeline.pointTypes.OUTLINE,
-            color: Colors.orange40,
+            color: Colors.purple30,
             icon: Assets.icons.demo.camera
           }}
         >
@@ -99,7 +99,7 @@ const TimelineScreen = () => {
         <Timeline
           topLine={{
             type: Timeline.lineTypes.DASHED,
-            color: Colors.orange40
+            color: Colors.purple30
           }}
           bottomLine={{
             state: Timeline.states.NEXT,
