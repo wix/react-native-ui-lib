@@ -49,7 +49,7 @@ describe('Button', () => {
     beforeEach(() => onPressCallback = jest.fn());
     afterEach(() => onPressCallback.mockClear());
 
-    it('should trigger onPress callback', async () => {
+    it.skip('should trigger onPress callback', async () => {
       const component = WrapperScreenWithButton({onPress: onPressCallback});
       const buttonDriver = new ButtonDriver({component, testID: BUTTON_ID});
 

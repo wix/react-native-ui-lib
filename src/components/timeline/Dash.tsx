@@ -38,7 +38,7 @@ const Dash = (props: DashProps) => {
       width: vertical ? dashThickness : dashLength,
       height: vertical ? dashLength : dashThickness
     };
-    return [style, directionStyle, sizeStyle];
+    return [directionStyle, sizeStyle, style];
   }, [style, vertical, dashThickness, dashLength]);
 
   const renderDash = () => {
