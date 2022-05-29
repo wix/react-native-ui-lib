@@ -36,7 +36,7 @@ const Point = (props: PointPropsInternal) => {
     const outlineStyle = hasOutline && 
       {borderWidth: OUTLINE_WIDTH, borderColor: color && Colors.getColorTint(color, OUTLINE_TINT)};
     const circleStyle = !hasContent && isCircle && 
-      {backgroundColor: Colors.$backgroundDefault, borderWidth: CIRCLE_WIDTH, borderColor: color};
+      {backgroundColor: 'transparent', borderWidth: CIRCLE_WIDTH, borderColor: color};
     
     return [styles.point, pointSizeStyle, pointColorStyle, outlineStyle, circleStyle];
   }, [type, color, label, icon]);
