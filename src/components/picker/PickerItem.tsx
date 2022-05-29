@@ -93,7 +93,7 @@ const PickerItem = (props: PickerItemProps) => {
       throttleTime={0}
       {...accessibilityProps}
     >
-      {customRenderItem ? customRenderItem(value, {...props, isSelected}, itemLabel) : _renderItem()}
+      {customRenderItem ? customRenderItem(value, {...props, isSelected, isItemDisabled}, itemLabel) : _renderItem()}
     </TouchableOpacity>
   );
 };
