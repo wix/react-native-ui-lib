@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Colors} from '../../style';
 import View, {ViewProps} from '../view';
@@ -6,6 +6,7 @@ import TouchableOpacity from '../touchableOpacity';
 import Button, {ButtonSize, ButtonProps} from '../button';
 import Card from '../card';
 import {Constants, asBaseComponent} from '../../commons/new';
+import {useDidUpdate} from '../../hooks';
 
 const PEEP = 8;
 const DURATION = 300;
@@ -17,11 +18,11 @@ export type StackAggregatorProps = ViewProps & {
    /**
      * The initial state of the stack
      */
-    collapsed: boolean;
+    collapsed?: boolean;
     /**
      * Component Children
      */
-     children: JSX.Element | JSX.Element[]
+    children: JSX.Element | JSX.Element[]
     /**
      * The container style
      */
@@ -51,15 +52,9 @@ export type StackAggregatorProps = ViewProps & {
      */
     onCollapseChanged?: (changed: boolean) => void;
     /**
-     * A setting that disables pressability on cards
+     * A setting that disables the cards' onPress
      */
     disablePresses?: boolean;
-};
-
-
-type State = {
-  collapsed: boolean;
-  firstItemHeight?: number;
 };
 
 /**
@@ -67,201 +62,178 @@ type State = {
  * @modifiers: margin, padding
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.tsx
  */
-class StackAggregator extends PureComponent<StackAggregatorProps, State> {
-  static displayName = 'StackAggregator';
+const StackAggregator = (props: StackAggregatorProps) => {
+  const {
+    children,
+    containerStyle,
+    buttonProps,
+    collapsed,
+    disablePresses,
+    onItemPress,
+    contentContainerStyle,
+    itemBorderRadius,
+    onCollapseWillChange,
+    onCollapseChanged
+  } = props;
+  const [firstItemHeight, setFirstItemHeight] = useState<number>();
+  const [isCollapsed, setIsCollapsed] = useState(collapsed);
 
-  animatedScale: Animated.Value;
-  animatedOpacity: any;
-  animatedContentOpacity: any;
-  itemsCount = React.Children.count(this.props.children);
-  easeOut = Easing.bezier(0, 0, 0.58, 1);
-  animatedScaleArray: Animated.Value[];
-
-  static defaultProps = {
-    disablePresses: false,
-    collapsed: true,
-    itemBorderRadius: 0
-  };
-
-  constructor(props: StackAggregatorProps) {
-    super(props);
-    this.state = {
-      collapsed: props.collapsed,
-      firstItemHeight: undefined
-    };
-    this.animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1);
-    this.animatedOpacity = new Animated.Value(this.state.collapsed ? buttonStartValue : 1);
-    this.animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1);
-    this.animatedScaleArray = this.getAnimatedScales();
-  }
-
-  componentDidUpdate(_prevProps: StackAggregatorProps, prevState: State) {
-    if (prevState.collapsed !== this.state?.collapsed) {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    }
-  }
-
-  getAnimatedScales = () => {
-    return React.Children.map(this.props.children, (_item, index) => {
-      return new Animated.Value(this.getItemScale(index));
-    }) as Animated.Value[];
-  }
-
-  getItemScale = (index: number) => {
-    if (this.state.collapsed) {
-      if (index === this.itemsCount - 2) {
+  const animatedScale = new Animated.Value(isCollapsed ? buttonStartValue : 1);
+  const animatedOpacity = new Animated.Value(isCollapsed ? buttonStartValue : 1);
+  const animatedContentOpacity = new Animated.Value(isCollapsed ? 0 : 1);
+  const itemsCount = React.Children.count(children);
+  const easeOut = Easing.bezier(0, 0, 0.58, 1);
+  
+  const getItemScale = (index: number) => {
+    if (isCollapsed) {
+      if (index === itemsCount - 2) {
         return 0.95;
       }
-      if (index === this.itemsCount - 1) {
+      if (index === itemsCount - 1) {
         return 0.9;
       }
     }
     return 1;
-  }
-
-  animate = async () => {
-    return Promise.all([this.animateValues(), this.animateCards()]);
   };
 
-  animateValues() {
-    const {collapsed} = this.state;
-    const newValue = collapsed ? buttonStartValue : 1;
+  const getAnimatedScales = () => {
+    return React.Children.map(children, (_item, index) => {
+      return new Animated.Value(getItemScale(index));
+    }) as Animated.Value[];
+  };
+
+  const animatedScaleArray: Animated.Value[] = getAnimatedScales();
+
+  useDidUpdate(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    onCollapseWillChange?.(isCollapsed);
+    animate();
+    onCollapseChanged?.(isCollapsed);
+  }, [isCollapsed, onCollapseWillChange, onCollapseChanged]);
+
+  const animate = () => {
+    return Promise.all([animateValues(), animateCards()]);
+  };
+
+  const animateValues = () => {
+    const newValue = isCollapsed ? buttonStartValue : 1;
     return new Promise(resolve => {
       Animated.parallel([
-        Animated.timing(this.animatedOpacity, {
+        Animated.timing(animatedOpacity, {
           duration: DURATION,
           toValue: Number(newValue),
           useNativeDriver: true
         }),
-        Animated.timing(this.animatedScale, {
+        Animated.timing(animatedScale, {
           toValue: Number(newValue),
-          easing: this.easeOut,
+          easing: easeOut,
           duration: DURATION,
           useNativeDriver: true
         }),
-        Animated.timing(this.animatedContentOpacity, {
-          toValue: Number(collapsed ? 0 : 1),
-          easing: this.easeOut,
+        Animated.timing(animatedContentOpacity, {
+          toValue: Number(isCollapsed ? 0 : 1),
+          easing: easeOut,
           duration: DURATION,
           useNativeDriver: true
         })
       ]).start(resolve);
     });
-  }
+  };
 
-  animateCards() {
+  const animateCards = () => {
     const promises = [];
-    for (let index = 0; index < this.itemsCount; index++) {
-      const newScale = this.getItemScale(index);
+    for (let index = 0; index < itemsCount; index++) {
+      const newScale = getItemScale(index);
 
-      promises.push(
-        new Promise(resolve => {
-          Animated.timing(this.animatedScaleArray[index], {
-            toValue: Number(newScale),
-            easing: this.easeOut,
-            duration: DURATION,
-            useNativeDriver: true
-          }).start(resolve);
-        })
-      );
+      promises.push(new Promise(resolve => {
+        Animated.timing(animatedScaleArray[index], {
+          toValue: Number(newScale),
+          easing: easeOut,
+          duration: DURATION,
+          useNativeDriver: true
+        }).start(resolve);
+      }));
     }
     return Promise.all(promises);
-  }
-
-  close = () => {
-    this.setState({collapsed: true}, async () => {
-      this.props.onCollapseWillChange?.(true);
-      if (this.props.onCollapseChanged) {
-        await this.animate();
-        this.props.onCollapseChanged(true);
-      } else {
-        this.animate();
-      }
-    });
   };
 
-  open = () => {
-    this.setState({collapsed: false}, async () => {
-      this.props.onCollapseWillChange?.(false);
-      if (this.props.onCollapseChanged) {
-        await this.animate();
-        this.props.onCollapseChanged(false);
-      } else {
-        this.animate();
-      }
-    });
+  const close = () => {
+    setIsCollapsed(true);
   };
 
-  getTop(index: number) {
+  const open = () => {
+    setIsCollapsed(false);
+  };
+
+  const getTop = (index: number) => {
     let start = 0;
 
-    if (index === this.itemsCount - 2) {
+    if (index === itemsCount - 2) {
       start += PEEP;
     }
-    if (index === this.itemsCount - 1) {
+    if (index === itemsCount - 1) {
       start += PEEP * 2;
     }
 
     return start;
-  }
+  };
 
-  getStyle(index: number): StyleProp<ViewStyle> {
-    const {collapsed} = this.state;
-    const top = this.getTop(index);
-
-    if (collapsed) {
+  const getItemStyle = (index: number) => {
+    if (isCollapsed) {
       return {
         position: index !== 0 ? 'absolute' : undefined,
-        top
+        top: getTop(index)
       };
     }
+
     return {
       marginBottom: MARGIN_BOTTOM,
       marginTop: index === 0 ? 40 : undefined
     };
-  }
+  };
 
-  onLayout = (event: LayoutChangeEvent) => {
-    const height = event.nativeEvent.layout.height;
-
-    if (height) {
-      this.setState({firstItemHeight: height});
+  const _onItemPress = (index: number) => {
+    if (!disablePresses) {
+      onItemPress?.(index);
     }
   };
 
-  onItemPress = (index: number) => {
-    this.props.onItemPress?.(index);
+  const onLayout = (event: LayoutChangeEvent) => {
+    const height = event.nativeEvent.layout.height;
+
+    if (height) {
+      setFirstItemHeight(height);
+    }
   };
 
-  renderItem = (item: JSX.Element | JSX.Element[], index: number) => {
-    const {contentContainerStyle, itemBorderRadius} = this.props;
-    const {firstItemHeight, collapsed} = this.state;
-
+  const renderItem = (item: JSX.Element | JSX.Element[], index: number) => {
+    console.warn('animatedContentOpacity: ', animatedContentOpacity);
     return (
       <Animated.View
         key={index}
-        onLayout={index === 0 ? this.onLayout : undefined}
+        onLayout={index === 0 ? onLayout : undefined}
         style={[
           Constants.isIOS && styles.containerShadow,
-          this.getStyle(index),
+          //@ts-expect-error 'position' doesn't match AnimatedInterpolation type
+          getItemStyle(index),
           {
             borderRadius: Constants.isIOS ? itemBorderRadius : undefined,
             alignSelf: 'center',
-            zIndex: this.itemsCount - index,
-            transform: [{scaleX: this.animatedScaleArray[index]}],
+            zIndex: itemsCount - index,
+            transform: [{scaleX: animatedScaleArray[index]}],
             width: Constants.screenWidth - 40,
-            height: collapsed ? firstItemHeight : undefined
+            height: isCollapsed ? firstItemHeight : undefined
           }
         ]}
         collapsable={false}
       >
         <Card
           style={[contentContainerStyle, styles.card]}
-          onPress={() => this.props.disablePresses && this.onItemPress(index)}
+          onPress={() => _onItemPress(index)}
           borderRadius={itemBorderRadius}
           elevation={5}
         >
-          <Animated.View style={index !== 0 ? {opacity: this.animatedContentOpacity} : undefined} collapsable={false}>
+          <Animated.View style={index !== 0 ? {opacity: animatedContentOpacity} : undefined} collapsable={false}>
             {item}
           </Animated.View>
         </Card>
@@ -269,55 +241,59 @@ class StackAggregator extends PureComponent<StackAggregatorProps, State> {
     );
   };
 
-  render() {
-    const {children, containerStyle, buttonProps} = this.props;
-    const {collapsed, firstItemHeight} = this.state;
+  return (
+    <View style={containerStyle}>
+      <View style={{marginBottom: PEEP * 3}}>
+        <Animated.View
+          style={{
+            position: 'absolute',
+            right: 0,
+            opacity: animatedOpacity,
+            transform: [{scale: animatedScale}]
+          }}
+        >
+          <Button
+            label={'Show less'}
+            iconSource={icon}
+            link
+            size={ButtonSize.small}
+            {...buttonProps}
+            marginH-24
+            marginB-20
+            onPress={close}
+            style={{zIndex: 100}}
+          />
+        </Animated.View>
 
-    return (
-      <View style={containerStyle}>
-        <View style={{marginBottom: PEEP * 3}}>
-          <Animated.View
-            style={{
-              position: 'absolute',
-              right: 0,
-              opacity: this.animatedOpacity,
-              transform: [{scale: this.animatedScale}]
-            }}
-          >
-            <Button
-              label={'Show less'}
-              iconSource={icon}
-              link
-              size={ButtonSize.small}
-              {...buttonProps}
-              marginH-24
-              marginB-20
-              onPress={this.close}
-            />
-          </Animated.View>
+        {React.Children.map(children, (item, index) => {
+          return renderItem(item as JSX.Element | JSX.Element[], index);
+        })}
 
-          {React.Children.map(children, (item, index) => {
-            return this.renderItem(item as JSX.Element | JSX.Element[], index);
-          })}
-
-          {collapsed && (
-            <TouchableOpacity
-              onPress={this.open}
-              activeOpacity={1}
-              style={[
-                styles.touchable,
-                {
-                  height: firstItemHeight ? firstItemHeight + PEEP * 2 : undefined,
-                  zIndex: this.itemsCount
-                }
-              ]}
-            />
-          )}
-        </View>
+        {isCollapsed && (
+          <TouchableOpacity
+            onPress={open}
+            activeOpacity={1}
+            style={[
+              styles.touchable,
+              {
+                height: firstItemHeight ? firstItemHeight + PEEP * 2 : undefined,
+                zIndex: itemsCount
+              }
+            ]}
+          />
+        )}
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
+
+export default asBaseComponent<StackAggregatorProps>(StackAggregator);
+StackAggregator.displayName = 'StackAggregator';
+StackAggregator.defaultProps = {
+  collapsed: true,
+  disablePresses: false,
+  itemBorderRadius: 0
+};
 
 const styles = StyleSheet.create({
   touchable: {
@@ -336,5 +312,3 @@ const styles = StyleSheet.create({
     flexShrink: 1
   }
 });
-
-export default asBaseComponent<StackAggregatorProps>(StackAggregator);

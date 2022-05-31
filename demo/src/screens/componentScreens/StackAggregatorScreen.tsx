@@ -4,7 +4,7 @@ import {ScrollView} from 'react-native';
 import {Colors, View, Text, Button, StackAggregator} from 'react-native-ui-lib';
 
 
-const contents = [
+const TEXTS = [
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
@@ -12,7 +12,10 @@ const contents = [
 ];
 
 export default class StackAggregatorScreen extends Component {
-  
+  state = { 
+    contents: TEXTS
+  };
+
   onItemPress = (index: number) => {
     console.warn('item pressed: ', index);
   }
@@ -21,11 +24,17 @@ export default class StackAggregatorScreen extends Component {
     console.warn('item\'s button pressed: ', index);
   }
 
+  refreshItems = () => {
+    const newItems = _.clone(this.state.contents);
+    newItems.push('New Item');
+    this.setState({contents: newItems});
+  }
+
   renderItem = (_: string, index: number) => {
     return (
       <View key={index} center padding-12>
         <Button label={`${index}`} marginB-10 size={Button.sizes.small} onPress={() => this.onPress(index)}/>
-        <Text>{contents[index]}</Text>
+        <Text>{this.state.contents[index]}</Text>
       </View>
     );
   }
@@ -33,12 +42,16 @@ export default class StackAggregatorScreen extends Component {
   render() {
     return (
       <ScrollView keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
+        <View right margin-5>
+          <Button link label="Update content" onPress={this.refreshItems}/>
+        </View>
         <Text center grey40 text90 marginT-20>Thu, 10 Dec, 11:29</Text>
         <StackAggregator
           containerStyle={{marginTop: 12}}
           onItemPress={this.onItemPress}
+          collapsed={false}
         >
-          {_.map(contents, (item, index) => {
+          {_.map(this.state.contents, (item, index) => {
             return this.renderItem(item, index);
           })}
         </StackAggregator>
@@ -47,12 +60,12 @@ export default class StackAggregatorScreen extends Component {
         <StackAggregator
           containerStyle={{marginTop: 12}}
           onItemPress={this.onItemPress}
-          collapsed={false}
+          // collapsed={false}
           contentContainerStyle={{backgroundColor: Colors.red70}}
           // itemBorderRadius={10}
           // buttonProps={{color: Colors.green30, labelStyle: {...Typography.text80, fontWeight: '500'}}}
         >
-          {_.map(contents, (item, index) => {
+          {_.map(this.state.contents, (item, index) => {
             return this.renderItem(item, index);
           })}
         </StackAggregator>
