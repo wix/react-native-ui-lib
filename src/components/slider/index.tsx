@@ -467,7 +467,6 @@ export default class Slider extends PureComponent<SliderProps, State> {
     }
     this[name] = size;
     if (this.containerSize && this.thumbSize && this.trackSize) {
-      // console.warn('post return');
       this.setState({
         containerSize: this.containerSize,
         trackSize: this.trackSize,
@@ -532,17 +531,55 @@ export default class Slider extends PureComponent<SliderProps, State> {
     );
   };
 
-  render() {
+  renderTrack() {
     const {
-      containerStyle,
       trackStyle,
       renderTrack,
       disabled,
       disableRTL,
       minimumTrackTintColor = ACTIVE_COLOR,
-      maximumTrackTintColor = DEFAULT_COLOR,
-      testID
+      maximumTrackTintColor = DEFAULT_COLOR
     } = this.props;
+
+    return (
+      _.isFunction(renderTrack) ? (
+        <View
+          style={[styles.track, {backgroundColor: maximumTrackTintColor}, trackStyle]}
+          onLayout={this.onTrackLayout}
+        >
+          {renderTrack()}
+        </View>
+      ) : (
+        <View>
+          <View
+            style={[
+              styles.track,
+              trackStyle,
+              {
+                backgroundColor: disabled ? INACTIVE_COLOR : maximumTrackTintColor
+              }
+            ]}
+            onLayout={this.onTrackLayout}
+          />
+          <View
+            ref={this.minTrack}
+            style={[
+              styles.track,
+              trackStyle,
+              styles.minimumTrack,
+              Constants.isRTL && disableRTL && styles.trackDisableRTL,
+              {
+                backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
+              }
+            ]}
+          />
+        </View>
+      )
+    );
+  }
+
+  render() {
+    const {containerStyle, testID} = this.props;
 
     return (
       <View
@@ -552,40 +589,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
         testID={testID}
         {...this.getAccessibilityProps()}
       >
-        {_.isFunction(renderTrack) ? (
-          <View
-            style={[styles.track, {backgroundColor: maximumTrackTintColor}, trackStyle]}
-            onLayout={this.onTrackLayout}
-          >
-            {renderTrack()}
-          </View>
-        ) : (
-          <View>
-            <View
-              style={[
-                styles.track,
-                trackStyle,
-                {
-                  backgroundColor: disabled ? INACTIVE_COLOR : maximumTrackTintColor
-                }
-              ]}
-              onLayout={this.onTrackLayout}
-            />
-            <View
-              ref={this.minTrack}
-              style={[
-                styles.track,
-                trackStyle,
-                styles.minimumTrack,
-                Constants.isRTL && disableRTL && styles.trackDisableRTL,
-                {
-                  backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
-                }
-              ]}
-            />
-          </View>
-        )}
-
+        {this.renderTrack()}
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
         {this.renderThumb()}
       </View>
