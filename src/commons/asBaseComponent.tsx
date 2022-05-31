@@ -24,7 +24,8 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     static defaultProps: any;
 
     state = {
-      error: false
+      error: false,
+      colorScheme: Scheme.getSchemeType()
     };
 
     componentDidMount() {
@@ -35,8 +36,10 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       Scheme.removeChangeListener(this.appearanceListener);
     }
 
-    appearanceListener = () => {
-      this.setState({colorScheme: Scheme.getSchemeType()});
+    appearanceListener = (colorScheme: 'light' | 'dark') => {
+      if (this.state.colorScheme !== colorScheme) {
+        this.setState({colorScheme: Scheme.getSchemeType()});
+      }
     };
 
     static getThemeProps = (props: any, context: any) => {

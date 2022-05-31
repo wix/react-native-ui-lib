@@ -5,7 +5,7 @@ import Config from '../commons/Config';
 
 export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
-export type SchemeChangeListener = (schemeType?: 'light' | 'dark') => void;
+export type SchemeChangeListener = (schemeType: 'light' | 'dark') => void;
 
 class Scheme {
   private currentScheme: SchemeType = Config.appScheme;
@@ -20,7 +20,7 @@ class Scheme {
       if (this.currentScheme === 'default') {
         this.broadcastSchemeChange();
       }
-    }, 200, { leading: false, trailing: true })
+    }, 200, {leading: false, trailing: true});
     Appearance.addChangeListener(schemeChangeDebounced);
   }
 
