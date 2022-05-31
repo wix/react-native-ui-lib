@@ -4,7 +4,7 @@
   "description": "Chips input component",
   "extends": ["incubator/TextField"],
   "modifiers": ["typography"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.js",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.tsx",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ChipsInput/ChipsInput.gif?raw=true"],
   "props": [
     {
