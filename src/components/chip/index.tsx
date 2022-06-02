@@ -171,7 +171,7 @@ const Chip = ({
     return (
       <Icon
         source={isLeftIcon ? iconSource : rightIconSource}
-        testID={`${testID}.icon`}
+        testID={`${testID}.icon.${iconPosition}`}
         tintColor={Colors.$iconDefault}
         {...iconProps}
         style={[getMargins('iconSource'), iconStyle]}
@@ -193,24 +193,23 @@ const Chip = ({
     );
   }, [badgeProps]);
 
-  const renderOnDismiss = useCallback(() => {
-    return (
-      <TouchableOpacity
-        style={[getMargins('dismiss'), dismissContainerStyle]}
-        onPress={onDismiss}
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-        testID={`${testID}.dismiss`}
-      >
-        <Icon
-          source={dismissIcon}
-          tintColor={dismissColor}
-          style={[dismissIconStyle]}
-          accessibilityLabel="dismiss"
-          testID={`${testID}.dismissIcon`}
-        />
-      </TouchableOpacity>
-    );
-  }, [dismissContainerStyle, onDismiss, dismissIcon, dismissIconStyle]);
+  const renderOnDismiss = () => (
+    <TouchableOpacity
+      style={[getMargins('dismiss'), dismissContainerStyle]}
+      onPress={onDismiss}
+      hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+      testID={`${testID}.dismiss`}
+    >
+      <Icon
+        source={dismissIcon}
+        tintColor={dismissColor}
+        style={[dismissIconStyle]}
+        accessibilityLabel="dismiss"
+        testID={`${testID}.dismissIcon`}
+      />
+    </TouchableOpacity>
+  );
+
 
   const renderAvatar = useCallback(() => {
     return (

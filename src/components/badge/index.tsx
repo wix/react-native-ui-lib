@@ -222,7 +222,7 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor, label} = this.props;
+    const {icon, iconStyle, iconProps, borderColor, label, testID} = this.props;
     const flex = label ? 0 : 1;
     return (
       icon && (
@@ -232,6 +232,7 @@ class Badge extends PureComponent<BadgeProps> {
           //@ts-ignore
           borderColor={borderColor}
           {...iconProps}
+          testID={`${testID}.icon`}
           style={{
             flex,
             ...iconStyle

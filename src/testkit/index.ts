@@ -10,3 +10,7 @@ export {CheckboxDriver} from '../components/checkbox/Checkbox.driver';
 export {HintDriver} from '../components/hint/Hint.driver';
 export {RadioButtonDriver} from '../components/radioButton/RadioButton.driver';
 export {RadioGroupDriver} from '../components/radioGroup/RadioGroup.driver';
+export {AvatarDriver} from '../components/avatar/Avatar.driver';
+export {IconDriver} from '../components/icon/Icon.driver';
+export {BadgeDriver} from '../components/badge/Badge.driver';
+export {ChipDriver} from '../components/chip/Chip.driver';
