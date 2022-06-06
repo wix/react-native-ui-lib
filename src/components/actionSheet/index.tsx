@@ -16,7 +16,7 @@ import PanningProvider from '../panningViews/panningProvider';
 const VERTICAL_PADDING = 8;
 type ActionSheetOnOptionPress = (index: number) => void;
 
-type ActionSheetProps = {
+export type ActionSheetProps = {
   /**
    * Whether to show the action sheet or not
    */
@@ -167,7 +167,7 @@ class ActionSheet extends Component<ActionSheetProps> {
       >
         <View row paddingL-16 flex centerV>
           {this.handleRenderIcon(option)}
-          <Text text70 grey10 numberOfLines={1}>
+          <Text text70 grey10 numberOfLines={1} testID={`${option.testID}.label`}>
             {option.label}
           </Text>
         </View>
@@ -189,12 +189,12 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   renderTitle() {
-    const {title} = this.props;
+    const {title, testID} = this.props;
 
     if (!_.isEmpty(title)) {
       return (
         <View height={56} paddingL-16 centerV>
-          <Text grey40 text70 style={{alignSelf: 'flex-start'}}>
+          <Text grey40 text70 style={{alignSelf: 'flex-start'}} testID={`${testID}.title`}>
             {title}
           </Text>
         </View>
