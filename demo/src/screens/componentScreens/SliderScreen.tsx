@@ -61,7 +61,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             <Text $textDefault marginB-10>
               Range slider
             </Text>
-            <View row spread style={Constants.isRTL && styles.ltr}>
+            <View row spread>
               <Text bodySmall $textNeutral>
                 {sliderMinValue}%
               </Text>
