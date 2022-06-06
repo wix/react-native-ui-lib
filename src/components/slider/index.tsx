@@ -244,6 +244,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
   componentDidUpdate(prevProps: SliderProps, prevState: State) {
     if (!this.props.useRange && prevProps.value !== this.props.value) {
       this.initialValue = this.getRoundedValue(this.props.value);
+      
       // set position for new value
       this._x = this.getXForValue(this.initialValue);
       this.moveTo(this._x);
@@ -251,6 +252,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
     if (prevState.measureCompleted !== this.state.measureCompleted) {
       this.initialThumbSize = this.state.thumbSize; // for thumb enlargement
+      
       // set initial position
       this._x = this.getXForValue(this.initialValue);
       this._x_min = this.getXForValue(this.minInitialValue);
@@ -352,10 +354,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
   moveTo(x: number) {
     if (this.isDefaultThumbActive()) {
       if (this.thumb.current) {
-        const {disableRTL, useRange} = this.props;
+        const {useRange} = this.props;
         const {trackSize, thumbSize} = this.state;
         const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
-        const _x = Constants.isRTL && disableRTL ? nonOverlappingTrackWidth - x : x; // adjust for RTL
+        const _x = this.shouldForceLTR ? trackSize.width - x : x; // adjust for RTL
         const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
         
         if (useRange) {
@@ -385,9 +387,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
     const {trackSize, thumbSize} = this.state;
 
     if (this.minThumb.current) {
-      const {disableRTL} = this.props;
       const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
-      const _x = Constants.isRTL && disableRTL ? nonOverlappingTrackWidth - x : x; // adjust for RTL
+      const _x = this.shouldForceLTR ? nonOverlappingTrackWidth - x : x; // adjust for RTL
       const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
       
       const maxThumbPosition = this._thumbStyles?.left as number;
@@ -422,6 +423,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
   };
 
   /** Values */
+
+  shouldForceLTR = Constants.isRTL && this.props.disableRTL;
 
   isDefaultThumbActive = () => {
     return this.activeThumbRef === this.thumb;
@@ -616,7 +619,6 @@ export default class Slider extends PureComponent<SliderProps, State> {
       trackStyle,
       renderTrack,
       disabled,
-      disableRTL,
       minimumTrackTintColor = ACTIVE_COLOR,
       maximumTrackTintColor = DEFAULT_COLOR
     } = this.props;
@@ -647,7 +649,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
               styles.track,
               trackStyle,
               styles.minimumTrack,
-              Constants.isRTL && disableRTL && styles.trackDisableRTL,
+              this.shouldForceLTR && styles.trackDisableRTL,
               {
                 backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
               }
