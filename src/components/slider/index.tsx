@@ -362,9 +362,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
           const minThumbPosition = this._minThumbStyles?.left as number;
           if (left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP) {
             this._thumbStyles.left = left;
-            const width = trackSize.width - minThumbPosition - (trackSize.width - x);
-            console.warn('width: ', width, minThumbPosition);
+            
+            const width = left - minThumbPosition;
             this._minTrackStyles.width = width;
+            
             this.updateValue(x);
           }
         } else {
@@ -396,10 +397,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
         this._minTrackStyles.width = maxThumbPosition - x;
         this._minTrackStyles.left = x;
         
-        this.updateValue(x);
-
         this.minThumb.current?.setNativeProps(this._minThumbStyles);
         this.minTrack.current?.setNativeProps(this._minTrackStyles);
+
+        this.updateValue(x);
       }
     }
   }
