@@ -13,6 +13,8 @@ interface SliderScreenState {
   alpha: number;
   color: string;
   sliderValue: number;
+  sliderMinValue: number;
+  sliderMaxValue: number;
 }
 
 export default class SliderScreen extends Component<SliderScreenProps, SliderScreenState> {
@@ -22,12 +24,19 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     this.state = {
       alpha: 1,
       color: COLOR,
-      sliderValue: INITIAL_VALUE
+      sliderValue: INITIAL_VALUE,
+      sliderMinValue: 0,
+      sliderMaxValue: 100
     };
   }
 
   onSliderValueChange = (value: number) => {
     this.setState({sliderValue: value});
+  };
+
+  onSliderRangeChange = (values: {min: number, max: number}) => {
+    const {min, max} = values;
+    this.setState({sliderMinValue: min, sliderMaxValue: max});
   };
 
   onGradientValueChange = (value: string, alpha: number) => {
@@ -39,15 +48,41 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
   };
 
   render() {
-    const {color, alpha, sliderValue} = this.state;
+    const {color, alpha, sliderValue, sliderMinValue, sliderMaxValue} = this.state;
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <View flex padding-20>
-          <Text titleHuge $textDefault marginB-20>
+          <Text text40 $textDefault marginB-20>
             Sliders
           </Text>
 
+          <View marginB-30>
+            <Text $textDefault marginB-10>
+              Range slider
+            </Text>
+            <View row spread style={Constants.isRTL && styles.ltr}>
+              <Text bodySmall $textNeutral>
+                {sliderMinValue}%
+              </Text>
+              <Text bodySmall $textNeutral>
+                {sliderMaxValue}%
+              </Text>
+            </View>
+            <Slider
+              onRangeChange={this.onSliderRangeChange}
+              value={INITIAL_VALUE}
+              minimumValue={0}
+              maximumValue={100}
+              step={1}
+              disableRTL
+              useRange
+            />
+          </View>
+
+          <Text $textDefault marginB-10>
+            Default slider
+          </Text>
           <View row centerV style={Constants.isRTL && styles.ltr}>
             <Icon assetName={'search'} style={styles.image}/>
             <Slider
@@ -189,7 +224,9 @@ const styles = StyleSheet.create({
   activeThumb: {
     width: 40,
     height: 40,
-    borderRadius: 20
+    borderRadius: 20,
+    borderColor: Colors.yellow30,
+    borderWidth: 2
   },
   box: {
     width: 20,

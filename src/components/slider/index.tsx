@@ -7,7 +7,6 @@ import {
   Animated,
   StyleProp,
   ViewStyle,
-  PanResponderInstance,
   PanResponderGestureState,
   GestureResponderEvent,
   LayoutChangeEvent,
@@ -19,17 +18,19 @@ import {
 import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
 import View from '../view';
+import Thumb from './Thumb';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;
-const BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
 const DEFAULT_COLOR = Colors.$backgroundDisabled;
 const ACTIVE_COLOR = Colors.$backgroundPrimaryHeavy;
 const INACTIVE_COLOR = Colors.$backgroundNeutralMedium;
+const MIN_RANGE_GAP = 4;
 
 export type SliderOnValueChange = (value: number) => void;
+export type SliderOnRangeChange = (values: {min: number, max: number}) => void;
 
 export type SliderProps = {
   /**
@@ -105,6 +106,14 @@ export type SliderProps = {
    */
   disabled?: boolean;
   /**
+   * If true the Slider will display a second thumb for the min value
+   */
+  useRange?: boolean;
+   /**
+   * Callback for onRangeChange
+   */
+  onRangeChange?: SliderOnRangeChange;
+  /**
    * If true the Slider will stay in LTR mode even if the app is on RTL mode
    */
   disableRTL?: boolean;
@@ -133,7 +142,7 @@ type Measurements = {
 
 type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: StyleProp<number>};
 
-type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: StyleProp<number>};
+type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: StyleProp<number>, left?: StyleProp<number>};
 
 type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
 
@@ -156,19 +165,26 @@ export default class Slider extends PureComponent<SliderProps, State> {
   static defaultProps = defaultProps;
 
   private thumb = React.createRef<RNView>();
-  private _thumbStyles: ThumbStyle = {};
+  private minThumb = React.createRef<RNView>();
+  private activeThumbRef: React.RefObject<RNView>;
+  private panResponder;
+  
   private minTrack = React.createRef<RNView>();
   private _minTrackStyles: MinTrackStyle = {};
+  
   private _x = 0;
-  private _dx = 0;
-  private _thumbAnimationConstants = {
-    duration: 100,
-    defaultScaleFactor: 1.5
-  };
-  private initialValue = this.getRoundedValue(this.props.value);
+  private _x_min = 0;
+  private lastDx = 0;
+
+  private initialValue = this.getRoundedValue(this.props.useRange ? this.props.maximumValue : this.props.value);
+  private minInitialValue = this.getRoundedValue(this.props.minimumValue);
   private lastValue = this.initialValue;
+  private lastMinValue = this.minInitialValue;
+
+  private _thumbStyles: ThumbStyle = {};
+  private _minThumbStyles: ThumbStyle = {left: this.minInitialValue};
+
   private initialThumbSize: Measurements = {width: THUMB_SIZE, height: THUMB_SIZE};
-  private _panResponder: PanResponderInstance;
   private containerSize: Measurements | undefined;
   private trackSize: Measurements | undefined;
   private thumbSize: Measurements | undefined;
@@ -177,6 +193,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
   constructor(props: SliderProps) {
     super(props);
 
+    this.activeThumbRef = this.thumb;
+
     this.state = {
       containerSize: {width: 0, height: 0},
       trackSize: {width: 0, height: 0},
@@ -184,9 +202,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
       thumbActiveAnimation: new Animated.Value(1),
       measureCompleted: false
     };
+
     this.checkProps(props);
 
-    this._panResponder = PanResponder.create({
+    this.panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
       onPanResponderGrant: this.handlePanResponderGrant,
       onPanResponderMove: this.handlePanResponderMove,
@@ -223,18 +242,19 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   componentDidUpdate(prevProps: SliderProps, prevState: State) {
-    if (prevProps.value !== this.props.value) {
+    if (!this.props.useRange && prevProps.value !== this.props.value) {
       this.initialValue = this.getRoundedValue(this.props.value);
       // set position for new value
       this._x = this.getXForValue(this.initialValue);
-      this.updateStyles(this._x);
+      this.moveTo(this._x);
     }
 
     if (prevState.measureCompleted !== this.state.measureCompleted) {
       this.initialThumbSize = this.state.thumbSize; // for thumb enlargement
       // set initial position
       this._x = this.getXForValue(this.initialValue);
-      this.updateStyles(this._x);
+      this._x_min = this.getXForValue(this.minInitialValue);
+      this.moveTo(this._x);
     }
   }
 
@@ -253,8 +273,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
   };
 
   handlePanResponderGrant = () => {
-    this.updateThumbStyle(true);
-    this._dx = 0;
+    this.lastDx = 0;
     this.onSeekStart();
   };
 
@@ -263,89 +282,149 @@ export default class Slider extends PureComponent<SliderProps, State> {
     if (disabled) {
       return;
     }
+    // dx = accumulated distance since touch start
     const dx = gestureState.dx * (Constants.isRTL && !disableRTL ? -1 : 1);
-    this.update(dx - this._dx);
-    this._dx = dx;
+    this.update(dx - this.lastDx);
+    this.lastDx = dx;
   };
 
   handlePanResponderEnd = () => {
-    this.updateThumbStyle(false);
     this.bounceToStep();
     this.onSeekEnd();
   };
 
   /* Actions */
 
+  setActiveThumb = (ref: React.RefObject<RNView>) => {
+    this.activeThumbRef = ref;
+  }
+
+  get_x() {
+    if (this.isDefaultThumbActive()) {
+      return this._x;
+    } else {
+      return this._x_min;
+    }
+  }
+
+  set_x(x: number) {
+    if (this.isDefaultThumbActive()) {
+      this._x = x;
+    } else {
+      this._x_min = x;
+    }
+  }
+
   update(dx: number) {
     // calc x in range (instead of: this._x += dx)
-    let x = this._x;
+    let x = this.get_x();
     x += dx;
     x = Math.max(Math.min(x, this.state.trackSize.width), 0);
 
-    this._x = x;
-
-    this.updateStyles(this._x);
-    this.updateValue(this._x);
+    this.set_x(x);
+    this.moveTo(x);
+    if (!this.props.useRange) {
+      this.updateValue(x);
+    }
   }
 
   bounceToStep() {
     if (this.props.step > 0) {
-      const v = this.getValueForX(this._x);
-      const round = this.getRoundedValue(v);
-      const x = this.getXForValue(round);
-      this._x = x;
-      this.updateStyles(x);
-    }
-  }
+      const value = this.getValueForX(this.get_x());
+      const roundedValue = this.getRoundedValue(value);
+      const x = this.getXForValue(roundedValue);
 
-  updateStyles(x: number) {
-    if (this.thumb.current) {
-      const {disableRTL} = this.props;
-      const {trackSize} = this.state;
-      const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
-      const _x = Constants.isRTL && disableRTL ? nonOverlappingTrackWidth - x : x; // adjust for RTL
-      this._thumbStyles.left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
-      this.thumb.current?.setNativeProps(this._thumbStyles);
-    }
-
-    if (this.minTrack.current) {
-      this._minTrackStyles.width = Math.min(this.state.trackSize.width, x);
-      this.minTrack.current?.setNativeProps(this._minTrackStyles);
+      this.set_x(x);
+      this.moveTo(x);
     }
   }
 
   updateValue(x: number) {
     const value = this.getValueForX(x);
-    this.onValueChange(value);
-  }
 
-  updateThumbStyle(start: boolean) {
-    if (this.thumb.current && !this.props.disableActiveStyling) {
-      const {thumbStyle, activeThumbStyle} = this.props;
-      const style = thumbStyle || styles.thumb;
-      const activeStyle = activeThumbStyle || styles.activeThumb;
-
-      const activeOrInactiveStyle = !this.props.disabled ? (start ? activeStyle : style) : {};
-      this._thumbStyles.style = _.omit(activeOrInactiveStyle, 'height', 'width');
-      this.thumb.current?.setNativeProps(this._thumbStyles);
-      this.scaleThumb(start);
+    if (this.props.useRange) {
+      this.onRangeChange(value);
+    } else {
+      this.onValueChange(value);
     }
   }
 
-  scaleThumb = (start: boolean) => {
-    const scaleFactor = start ? this.calculatedThumbActiveScale() : 1;
-    this.thumbAnimationAction(scaleFactor);
+  moveTo(x: number) {
+    if (this.isDefaultThumbActive()) {
+      if (this.thumb.current) {
+        const {disableRTL, useRange} = this.props;
+        const {trackSize, thumbSize} = this.state;
+        const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
+        const _x = Constants.isRTL && disableRTL ? nonOverlappingTrackWidth - x : x; // adjust for RTL
+        const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
+        
+        if (useRange) {
+          const minThumbPosition = this._minThumbStyles?.left as number;
+          if (left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP) {
+            this._thumbStyles.left = left;
+            const width = trackSize.width - minThumbPosition - (trackSize.width - x);
+            console.warn('width: ', width, minThumbPosition);
+            this._minTrackStyles.width = width;
+            this.updateValue(x);
+          }
+        } else {
+          this._thumbStyles.left = left;
+          this._minTrackStyles.width = Math.min(trackSize.width, x);
+        }
+        
+        this.thumb.current?.setNativeProps(this._thumbStyles);
+        this.minTrack.current?.setNativeProps(this._minTrackStyles);
+      }
+    } else {
+      this.moveMinTo(x);
+    }
+  }
+
+  moveMinTo(x: number) {
+    const {trackSize, thumbSize} = this.state;
+
+    if (this.minThumb.current) {
+      const {disableRTL} = this.props;
+      const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
+      const _x = Constants.isRTL && disableRTL ? nonOverlappingTrackWidth - x : x; // adjust for RTL
+      const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
+      
+      const maxThumbPosition = this._thumbStyles?.left as number;
+      if (left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP) {
+        this._minThumbStyles.left = left;
+        
+        this._minTrackStyles.width = maxThumbPosition - x;
+        this._minTrackStyles.left = x;
+        
+        this.updateValue(x);
+
+        this.minThumb.current?.setNativeProps(this._minThumbStyles);
+        this.minTrack.current?.setNativeProps(this._minTrackStyles);
+      }
+    }
+  }
+
+  updateTrackStepAndStyle = ({nativeEvent}: GestureResponderEvent) => {
+    const {disableRTL, step, useRange} = this.props;
+    const {trackSize} = this.state;
+
+    this.set_x(Constants.isRTL && !disableRTL ? trackSize.width - nativeEvent.locationX : nativeEvent.locationX);
+    if (!useRange) {
+      this.updateValue(this.get_x());
+    }
+
+    if (step > 0) {
+      this.bounceToStep();
+    } else {
+      this.moveTo(this.get_x());
+    }
   };
 
-  thumbAnimationAction = (toValue: number) => {
-    const {thumbActiveAnimation} = this.state;
-    const {duration} = this._thumbAnimationConstants;
-    Animated.timing(thumbActiveAnimation, {
-      toValue,
-      duration,
-      useNativeDriver: true
-    }).start();
-  };
+  /** Values */
+
+  isDefaultThumbActive = () => {
+    return this.activeThumbRef === this.thumb;
+  }
 
   getRoundedValue(value: number) {
     const {step} = this.props;
@@ -359,12 +438,12 @@ export default class Slider extends PureComponent<SliderProps, State> {
     return v;
   }
 
-  getXForValue(v: number) {
+  getXForValue(value: number) {
     const {minimumValue} = this.props;
     const range = this.getRange();
-    const relativeValue = minimumValue - v;
-    const value = minimumValue < 0 ? Math.abs(relativeValue) : v - minimumValue; // for negatives
-    const ratio = value / range;
+    const relativeValue = minimumValue - value;
+    const v = minimumValue < 0 ? Math.abs(relativeValue) : value - minimumValue; // for negatives
+    const ratio = v / range;
     const x = ratio * this.state.trackSize.width;
     return x;
   }
@@ -387,40 +466,24 @@ export default class Slider extends PureComponent<SliderProps, State> {
     return range;
   }
 
-  calculatedThumbActiveScale = () => {
-    const {activeThumbStyle, thumbStyle, disabled, disableActiveStyling} = this.props;
-    if (disabled || disableActiveStyling) {
-      return 1;
-    }
-
-    const {defaultScaleFactor} = this._thumbAnimationConstants;
-    if (!activeThumbStyle || !thumbStyle) {
-      return defaultScaleFactor;
-    }
-
-    const scaleRatioFromSize = Number(activeThumbStyle.height) / Number(thumbStyle.height);
-    return scaleRatioFromSize || defaultScaleFactor;
-  };
-
-  updateTrackStepAndStyle = ({nativeEvent}: GestureResponderEvent) => {
-    const {disableRTL, step} = this.props;
-    const {trackSize} = this.state;
-    this._x = Constants.isRTL && !disableRTL ? trackSize.width - nativeEvent.locationX : nativeEvent.locationX;
-    this.updateValue(this._x);
-
-    if (step > 0) {
-      this.bounceToStep();
-    } else {
-      this.updateStyles(this._x);
-    }
-  };
+  /* Events */
 
   onOrientationChanged = () => {
     this.initialValue = this.lastValue;
+    this.minInitialValue = this.lastMinValue;
     this.setState({measureCompleted: false});
   };
 
-  /* Events */
+  onRangeChange = (value: number) => {
+    if (this.isDefaultThumbActive()) {
+      this.lastValue = value;
+    } else {
+      this.lastMinValue = value;
+    }
+
+    const values = {min: this.lastMinValue, max: this.lastValue};
+    _.invoke(this.props, 'onRangeChange', values);
+  };
 
   onValueChange = (value: number) => {
     this.lastValue = value;
@@ -497,36 +560,52 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
     this._x = this.getXForValue(newValue);
     this.updateValue(this._x);
-    this.updateStyles(this._x);
+    this.moveTo(this._x);
     _.invoke(AccessibilityInfo, 'announceForAccessibility', `New value ${newValue}`);
   };
 
+  onMinTouchStart = () => {
+    this.setActiveThumb(this.minThumb);
+  }
+
+  onTouchStart = () => {
+    this.setActiveThumb(this.thumb);
+  }
+
+  getThumbProps = () => {
+    const {thumbStyle, activeThumbStyle, disableActiveStyling, disabled, thumbTintColor, thumbHitSlop} = this.props;
+
+    return {
+      disabled,
+      thumbTintColor,
+      thumbStyle,
+      activeThumbStyle,
+      disableActiveStyling,
+      thumbHitSlop,
+      onLayout: this.onThumbLayout
+    };
+  }
+
   /* Renders */
+  renderMinThumb = () => {
+    return (
+      <Thumb
+        ref={this.minThumb}
+        onTouchStart={this.onMinTouchStart}
+        {...this.getThumbProps()}
+        thumbTintColor={'red'}
+        {...this.panResponder.panHandlers}
+      />
+    );
+  };
 
   renderThumb = () => {
-    const {thumbStyle, disabled, thumbTintColor, thumbHitSlop} = this.props;
-
     return (
-      <Animated.View
-        hitSlop={thumbHitSlop}
+      <Thumb
         ref={this.thumb}
-        onLayout={this.onThumbLayout}
-        {...this._panResponder.panHandlers}
-        style={[
-          styles.thumb,
-          disabled && styles.disabledThumb,
-          thumbStyle,
-          {
-            backgroundColor: disabled ? DEFAULT_COLOR : thumbTintColor || ACTIVE_COLOR
-          },
-          {
-            transform: [
-              {
-                scale: this.state.thumbActiveAnimation
-              }
-            ]
-          }
-        ]}
+        onTouchStart={this.onTouchStart}
+        {...this.getThumbProps()}
+        {...this.panResponder.panHandlers}
       />
     );
   };
@@ -579,8 +658,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   render() {
-    const {containerStyle, testID} = this.props;
-
+    const {containerStyle, testID, useRange} = this.props;
+    
     return (
       <View
         style={[styles.container, containerStyle]}
@@ -591,6 +670,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       >
         {this.renderTrack()}
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
+        {useRange && this.renderMinThumb()}
         {this.renderThumb()}
       </View>
     );
@@ -612,28 +692,6 @@ const styles = StyleSheet.create({
   },
   trackDisableRTL: {
     right: 0
-  },
-  thumb: {
-    position: 'absolute',
-    width: THUMB_SIZE,
-    height: THUMB_SIZE,
-    borderRadius: THUMB_SIZE / 2,
-    borderWidth: BORDER_WIDTH,
-    borderColor: Colors.white,
-    shadowColor: Colors.rgba(Colors.black, 0.3),
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 0.9,
-    shadowRadius: SHADOW_RADIUS,
-    elevation: 2
-  },
-  disabledThumb: {
-    borderColor: Colors.$backgroundElevated
-  },
-  activeThumb: {
-    width: THUMB_SIZE + 16,
-    height: THUMB_SIZE + 16,
-    borderRadius: (THUMB_SIZE + 16) / 2,
-    borderWidth: BORDER_WIDTH
   },
   touchArea: {
     ...StyleSheet.absoluteFillObject,
