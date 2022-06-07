@@ -1,113 +1,115 @@
 import React from 'react';
-import {render} from '@testing-library/react-native';
 import Switch, {SwitchProps} from '../index';
-import {SwitchDriver} from '../switch.driver';
 import View from '../../view';
+import {SwitchDriver} from '../Switch.driver';
 
 describe('Switch', () => {
+  afterEach(() => {
+    SwitchDriver.clear();
+  });
 
-  const renderSwitch = (testID: string, props: Partial<SwitchProps>) => {
+  const switchDriver = (testID: string, props: Partial<SwitchProps>) => {
     const defaultProps: SwitchProps = {
       testID,
       value: false,
       onValueChange: jest.fn(),
       disabled: false
     };
-    const component = render(<View><Switch {...defaultProps} {...props}/></View>);
-    const driver = SwitchDriver({
-      wrappedComponent: component,
+
+    const component = (<View><Switch {...defaultProps} {...props}/></View>);
+    return new SwitchDriver({
+      component,
       testID
     });
-
-    return {driver};
   };
 
 
-  it('Should fire onChange event', () => {
+  it('Should fire onChange event', async () => {
     const testId = 'switch-comp';
     const onChange = jest.fn();
-    const {driver} = renderSwitch(testId, {onValueChange: onChange});
-    driver.press();
+    const driver = await switchDriver(testId, {onValueChange: onChange});
+    await driver.press();
     expect(onChange).toHaveBeenCalled();
   });
 
-  it('Should fire onChange event with false value when toggling off', () => {
+  it('Should fire onChange event with false value when toggling off', async () => {
     const testId = 'switch-comp';
     const onChange = jest.fn();
-    const {driver} = renderSwitch(testId, {onValueChange: onChange, value: true});
-    driver.press();
+    const driver = await switchDriver(testId, {onValueChange: onChange, value: true});
+    await driver.press();
     expect(onChange).toHaveBeenCalledWith(false);
   });
-  it('Should fire onChange event with true value when toggling on', () => {
+
+  it('Should fire onChange event with true value when toggling on', async () => {
     const testId = 'switch-comp';
     const onChange = jest.fn();
-    const {driver} = renderSwitch(testId, {onValueChange: onChange, value: false});
-    driver.press();
+    const driver = await switchDriver(testId, {onValueChange: onChange, value: false});
+    await driver.press();
     expect(onChange).toHaveBeenCalledWith(true);
   });
 
-  it('Should not fire onChange when disabled', () => {
+  it('Should not fire onChange when disabled', async () => {
     const testId = 'switch-comp';
     const onValueChange = jest.fn();
-    const {driver} = renderSwitch(testId, {disabled: true, onValueChange});
+    const driver = await switchDriver(testId, {disabled: true, onValueChange});
 
-    driver.press();
+    await driver.press();
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
-  it('Accessibility value should be true when checked', () => {
+  it('Accessibility value should be true when checked', async () => {
     const testId = 'switch-comp';
-    const {driver} = renderSwitch(testId, {value: true});
+    const driver = await switchDriver(testId, {value: true});
 
-    expect(driver.getAccessibilityValue()).toBe(true);
+    expect(await driver.getAccessibilityValue()).toBe(true);
   });
 
-  it('Accessibility value should be false when not checked', () => {
+  it('Accessibility value should be false when not checked', async () => {
     const testId = 'switch-comp';
-    const {driver} = renderSwitch(testId, {value: false});
+    const driver = await switchDriver(testId, {value: false});
 
-    expect(driver.isChecked()).toBe(false);
+    expect(await driver.isChecked()).toBe(false);
   });
 
-  it('Accessibility value should be checked when checked', () => {
+  it('Accessibility value should be checked when checked', async () => {
     const testId = 'switch-comp';
-    const {driver} = renderSwitch(testId, {value: true});
+    const driver = await switchDriver(testId, {value: true});
 
-    expect(driver.isChecked()).toBe(true);
+    expect(await driver.isChecked()).toBe(true);
   });
 
-  it('Accessibility value should be false when not checked', () => {
+  it('Accessibility value should be false when not checked', async () => {
     const testId = 'switch-comp';
-    const {driver} = renderSwitch(testId, {value: false});
+    const driver = await switchDriver(testId, {value: false});
 
-    expect(driver.getAccessibilityValue()).toBe(false);
+    expect(await driver.getAccessibilityValue()).toBe(false);
   });
 
-  it('Should be disabled', () => {
+  it('Should be disabled', async () => {
     const testId = 'switch-comp';
-    const {driver} = renderSwitch(testId, {disabled: true});
+    const driver = await switchDriver(testId, {disabled: true});
 
-    expect(driver.isDisabled()).toBe(true);
+    expect(await driver.isDisabled()).toBe(true);
   });
 
-  it('Should be disabled', () => {
+  it('Should be disabled', async () => {
     const testId = 'switch-comp';
-    const {driver} = renderSwitch(testId, {disabled: false});
+    const driver = await switchDriver(testId, {disabled: false});
 
-    expect(driver.isDisabled()).toBe(false);
+    expect(await driver.isDisabled()).toBe(false);
   });
 
-  it('Should pass correct color when on', () => {
+  it('Should pass correct color when on', async () => {
     const testId = 'switch-comp';
-    const {driver} = renderSwitch(testId, {value: true, onColor: 'red'});
+    const driver = await switchDriver(testId, {value: true, onColor: 'red'});
 
-    expect(driver.getColor()).toBe('red');
+    expect(await driver.getColor()).toBe('red');
   });
 
-  it('Should pass correct color when off', () => {
+  it('Should pass correct color when off', async () => {
     const testId = 'switch-comp';
-    const {driver} = renderSwitch(testId, {value: false, offColor: 'red'});
+    const driver = await switchDriver(testId, {value: false, offColor: 'red'});
 
-    expect(driver.getColor()).toBe('red');
+    expect(await driver.getColor()).toBe('red');
   });
 });

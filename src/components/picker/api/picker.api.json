@@ -3,7 +3,7 @@
   "category": "form",
   "description": "Picker Component, support single or multiple selection, blurModel and native wheel picker",
   "modifiers": ["margin", "padding", "position"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/Default.gif?raw=true",
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/MultiPicker.gif?raw=true",
