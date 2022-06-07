@@ -2,6 +2,7 @@ import moment from 'moment';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
+import {useDidUpdate} from 'hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
@@ -146,7 +147,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     }
   }, []);
 
-  useEffect(() => {
+  useDidUpdate(() => {
     setValue(propsValue);
   }, [propsValue]);
 
@@ -213,7 +214,8 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     } else if (event.type === 'dismissed' && Constants.isAndroid) {
       toggleExpandableOverlay();
     }
-  }, [onDonePressed, toggleExpandableOverlay]);
+  },
+  [onDonePressed, toggleExpandableOverlay]);
 
   const renderHeader = () => {
     return (
@@ -275,7 +277,8 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     if (visible) {
       return renderDateTimePicker();
     }
-  }, [renderDateTimePicker]);
+  },
+  [renderDateTimePicker]);
 
   return (
     <>
