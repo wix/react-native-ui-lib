@@ -588,9 +588,9 @@ export default class Slider extends PureComponent<SliderProps, State> {
   renderMinThumb = () => {
     return (
       <Thumb
+        {...this.getThumbProps()}
         ref={this.minThumb}
         onTouchStart={this.onMinTouchStart}
-        {...this.getThumbProps()}
         thumbTintColor={'red'}
         {...this.panResponder.panHandlers}
       />
@@ -600,9 +600,9 @@ export default class Slider extends PureComponent<SliderProps, State> {
   renderThumb = () => {
     return (
       <Thumb
+        {...this.getThumbProps()}
         ref={this.thumb}
         onTouchStart={this.onTouchStart}
-        {...this.getThumbProps()}
         {...this.panResponder.panHandlers}
       />
     );

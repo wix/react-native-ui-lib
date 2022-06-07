@@ -59,7 +59,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           <Text text40 $textDefault marginB-20>
             Sliders
           </Text>
-          
+
           {Constants.isRTL && renderBooleanOption.call(this, 'Force LTR', 'forceLTR')}
 
           <View marginB-30>
@@ -99,8 +99,8 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
               containerStyle={styles.sliderContainer}
               disableRTL={forceLTR}
             />
-            <Text bodySmall $textNeutral style={styles.text}>
-              {sliderValue}%
+            <Text bodySmall $textNeutral style={styles.text} numberOfLines={1}>
+              ${sliderValue}
             </Text>
           </View>
 
