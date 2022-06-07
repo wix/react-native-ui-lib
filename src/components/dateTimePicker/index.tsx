@@ -112,6 +112,7 @@ type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedPr
 
 function DateTimePicker(props: DateTimePickerPropsInternal) {
   const {
+    value: propsValue,
     renderInput,
     editable,
     mode = MODES.DATE,
@@ -135,8 +136,8 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     ...others
   } = props;
 
-  const [value, setValue] = useState(props.value);
-  const chosenDate = useRef(props.value);
+  const [value, setValue] = useState(propsValue);
+  const chosenDate = useRef(propsValue);
   const expandable = useRef<ExpandableOverlayMethods>();
 
   useEffect(() => {
@@ -146,8 +147,8 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
   }, []);
 
   useEffect(() => {
-    setValue(props.value);
-  }, [props.value]);
+    setValue(propsValue);
+  }, [propsValue]);
 
   const _dialogProps = useMemo(() => {
     return {
