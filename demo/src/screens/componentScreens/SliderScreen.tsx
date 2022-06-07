@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {Colors, View, Text, Icon, Slider, GradientSlider, ColorSliderGroup, Constants} from 'react-native-ui-lib';
+import {renderBooleanOption, renderRadioGroup, renderSliderOption} from '../ExampleScreenPresenter';
 
 const INITIAL_VALUE = 0;
 const COLOR = Colors.blue30;
@@ -15,6 +16,7 @@ interface SliderScreenState {
   sliderValue: number;
   sliderMinValue: number;
   sliderMaxValue: number;
+  forceLTR: boolean;
 }
 
 export default class SliderScreen extends Component<SliderScreenProps, SliderScreenState> {
@@ -26,7 +28,8 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
       color: COLOR,
       sliderValue: INITIAL_VALUE,
       sliderMinValue: 0,
-      sliderMaxValue: 100
+      sliderMaxValue: 100,
+      forceLTR: false
     };
   }
 
@@ -47,8 +50,12 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     console.warn('onGroupValueChange: ', value);
   };
 
+  reverseStyle = () => {
+    return Constants.isRTL && this.state.forceLTR && styles.ltr;
+  }
+
   render() {
-    const {color, alpha, sliderValue, sliderMinValue, sliderMaxValue} = this.state;
+    const {color, alpha, sliderValue, sliderMinValue, sliderMaxValue, forceLTR} = this.state;
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -56,17 +63,17 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           <Text text40 $textDefault marginB-20>
             Sliders
           </Text>
-
+          {Constants.isRTL && renderBooleanOption.call(this, 'Force LTR', 'forceLTR')}
           <View marginB-30>
             <Text $textDefault marginB-10>
               Range slider
             </Text>
-            <View row spread>
+            <View row spread style={this.reverseStyle()}>
               <Text bodySmall $textNeutral>
-                {sliderMinValue}%
+                min: {sliderMinValue}%
               </Text>
               <Text bodySmall $textNeutral>
-                {sliderMaxValue}%
+                max: {sliderMaxValue}%
               </Text>
             </View>
             <Slider
@@ -75,7 +82,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
               minimumValue={0}
               maximumValue={100}
               step={1}
-              disableRTL
+              disableRTL={forceLTR}
               useRange
             />
           </View>
@@ -83,7 +90,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           <Text $textDefault marginB-10>
             Default slider
           </Text>
-          <View row centerV style={Constants.isRTL && styles.ltr}>
+          <View row centerV style={this.reverseStyle()}>
             <Icon assetName={'search'} style={styles.image}/>
             <Slider
               onValueChange={this.onSliderValueChange}
@@ -92,7 +99,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
               maximumValue={100}
               step={1}
               containerStyle={styles.sliderContainer}
-              disableRTL
+              disableRTL={forceLTR}
             />
             <Text bodySmall $textNeutral style={styles.text}>
               {sliderValue}%

@@ -280,12 +280,12 @@ export default class Slider extends PureComponent<SliderProps, State> {
   };
 
   handlePanResponderMove = (_e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
-    const {disabled, disableRTL} = this.props;
+    const {disabled} = this.props;
     if (disabled) {
       return;
     }
     // dx = accumulated distance since touch start
-    const dx = gestureState.dx * (Constants.isRTL && !disableRTL ? -1 : 1);
+    const dx = gestureState.dx * (Constants.isRTL && !this.disableRTL ? -1 : 1);
     this.update(dx - this.lastDx);
     this.lastDx = dx;
   };
@@ -407,10 +407,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   updateTrackStepAndStyle = ({nativeEvent}: GestureResponderEvent) => {
-    const {disableRTL, step, useRange} = this.props;
+    const {step, useRange} = this.props;
     const {trackSize} = this.state;
 
-    this.set_x(Constants.isRTL && !disableRTL ? trackSize.width - nativeEvent.locationX : nativeEvent.locationX);
+    this.set_x(Constants.isRTL && !this.disableRTL ? trackSize.width - nativeEvent.locationX : nativeEvent.locationX);
     if (!useRange) {
       this.updateValue(this.get_x());
     }
@@ -424,7 +424,15 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   /** Values */
 
-  shouldForceLTR = Constants.isRTL && this.props.disableRTL;
+  get disableRTL() {
+    const {disableRTL, useRange} = this.props;
+    if (useRange) { // block forceRTL on range slider
+      return false;
+    }
+    return disableRTL;
+  }
+
+  shouldForceLTR = Constants.isRTL && this.disableRTL;
 
   isDefaultThumbActive = () => {
     return this.activeThumbRef === this.thumb;
@@ -485,7 +493,13 @@ export default class Slider extends PureComponent<SliderProps, State> {
       this.lastMinValue = value;
     }
 
-    const values = {min: this.lastMinValue, max: this.lastValue};
+    let values = {min: this.lastMinValue, max: this.lastValue};
+    
+    if (Constants.isRTL && this.props.disableRTL) { // forceRTL for range slider
+      const {maximumValue} = this.props;
+      values = {min: maximumValue - this.lastValue, max: maximumValue - this.lastMinValue};
+    }
+
     _.invoke(this.props, 'onRangeChange', values);
   };
 
