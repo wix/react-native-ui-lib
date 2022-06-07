@@ -18,7 +18,7 @@ import {
 import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
 import View from '../view';
-import Thumb from './Thumb';
+import Thumb, {ThumbProps} from './Thumb';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const TRACK_SIZE = 6;
@@ -32,7 +32,7 @@ const MIN_RANGE_GAP = 4;
 export type SliderOnValueChange = (value: number) => void;
 export type SliderOnRangeChange = (values: {min: number, max: number}) => void;
 
-export type SliderProps = {
+export type SliderProps = ThumbProps & {
   /**
    * Initial value
    */
@@ -62,10 +62,6 @@ export type SliderProps = {
    */
   renderTrack?: () => ReactElement | ReactElement[];
   /**
-   * Thumb color
-   */
-  thumbTintColor?: string;
-  /**
    * Callback for onValueChange
    */
   onValueChange?: SliderOnValueChange;
@@ -85,22 +81,6 @@ export type SliderProps = {
    * The track style
    */
   trackStyle?: StyleProp<ViewStyle>;
-  /**
-   * The thumb style
-   */
-  thumbStyle?: ViewStyle;
-  /**
-   * Defines how far a touch event can start away from the thumb.
-   */
-  thumbHitSlop?: ViewProps['hitSlop'];
-  /**
-   * The active (during press) thumb style
-   */
-  activeThumbStyle?: ViewStyle;
-  /**
-   * If true the Slider will not change it's style on press
-   */
-  disableActiveStyling?: boolean;
   /**
    * If true the Slider will be disabled and will appear in disabled color
    */
