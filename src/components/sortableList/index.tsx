@@ -60,21 +60,9 @@ const SortableList = <ItemT extends ItemWithId>(props: SortableListProps<ItemT>)
     itemHeight.value = newHeight;
   }, []);
 
-  const getItemIdByIndex = useCallback((index: number) => {
-    // @ts-ignore TODO: support data = null \ undefined
-    return data[index].id;
-  },
-  [data]);
-
-  const getItemInitialIndexById = useCallback((id: string) => {
-    return map(data, 'id').indexOf(id);
-  },
-  [data]);
-
   const context = useMemo(() => {
     return {
-      getIdByIndex: getItemIdByIndex,
-      getInitialIndexById: getItemInitialIndexById,
+      data,
       itemsOrder,
       onChange,
       itemHeight,

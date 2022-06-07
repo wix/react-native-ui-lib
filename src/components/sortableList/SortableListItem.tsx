@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {map} from 'lodash';
 import React, {PropsWithChildren, useCallback, useContext} from 'react';
 import {
   useSharedValue,
@@ -31,11 +32,11 @@ const animationConfig = {
 const SortableListItem = (props: Props) => {
   const {children, index} = props;
 
-  const {getIdByIndex, getInitialIndexById, itemHeight, onItemLayout, itemsOrder, onChange, enableHaptic} =
+  const {data, itemHeight, onItemLayout, itemsOrder, onChange, enableHaptic} =
     useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
-  const id: string = getIdByIndex(index);
-  const initialIndex = useSharedValue<number>(getInitialIndexById(id));
+  const id: string = data[index].id;
+  const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
   const translateY = useSharedValue<number>(0);
   const tempTranslateY = useSharedValue<number>(0);
   const tempItemsOrder = useSharedValue<string[]>(itemsOrder.value);
@@ -43,8 +44,8 @@ const SortableListItem = (props: Props) => {
 
   useDidUpdate(() => {
     dataManuallyChanged.value = true;
-    initialIndex.value = getInitialIndexById(id);
-  }, [getInitialIndexById]);
+    initialIndex.value = map(data, 'id').indexOf(id);
+  }, [data]);
 
   useAnimatedReaction(() => itemsOrder.value,
     (currItemsOrder, prevItemsOrder) => {

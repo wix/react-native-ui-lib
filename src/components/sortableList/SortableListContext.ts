@@ -3,8 +3,7 @@ import {ViewProps} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
 interface SortableListContextType {
-  getIdByIndex: (index: number) => string;
-  getInitialIndexById: (id: string) => number;
+  data: any
   itemsOrder: SharedValue<string[]>;
   onChange: () => void;
   itemHeight: SharedValue<number>;
