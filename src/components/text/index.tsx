@@ -130,7 +130,8 @@ class Text extends PureComponent<PropsTypes> {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    textAlign: 'left'
+    textAlign: 'left', 
+    color: Colors.$textDefault
   },
   centered: {
     textAlign: 'center'
