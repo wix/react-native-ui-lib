@@ -1,7 +1,8 @@
 import moment from 'moment';
-import React, {Component} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
+import {useDidUpdate} from 'hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
@@ -108,79 +109,67 @@ export interface DateTimePickerProps {
   testID?: string;
 }
 
-interface DateTimePickerState {
-  prevValue?: Date;
-  value?: Date;
-}
-
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
 
-class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePickerState> {
-  static displayName = 'DateTimePicker';
+function DateTimePicker(props: DateTimePickerPropsInternal) {
+  const {
+    value: propsValue,
+    renderInput,
+    editable,
+    mode = MODES.DATE,
+    dateFormat,
+    timeFormat,
+    dateFormatter,
+    timeFormatter,
+    minimumDate,
+    maximumDate,
+    locale,
+    is24Hour,
+    minuteInterval,
+    timeZoneOffsetInMinutes,
+    themeVariant,
+    onChange,
+    dialogProps,
+    headerStyle,
+    // @ts-expect-error
+    useCustomTheme,
+    testID,
+    ...others
+  } = props;
 
-  static defaultProps = {
-    ...TextField.defaultProps,
-    mode: MODES.DATE
-  };
+  const [value, setValue] = useState(propsValue);
+  const chosenDate = useRef(propsValue);
+  const expandable = useRef<ExpandableOverlayMethods>();
 
-  chosenDate?: Date;
-  expandable = React.createRef<ExpandableOverlayMethods>();
-
-  constructor(props: DateTimePickerPropsInternal) {
-    super(props);
-    this.chosenDate = props.value;
-
+  useEffect(() => {
     if (!RNDateTimePicker) {
       console.error(`RNUILib DateTimePicker component requires installing "@react-native-community/datetimepicker" dependency`);
     }
-  }
+  }, []);
 
-  state = {
-    prevValue: this.props.value,
-    value: this.props.value
-  };
+  useDidUpdate(() => {
+    setValue(propsValue);
+  }, [propsValue]);
 
-  static getDerivedStateFromProps(nextProps: DateTimePickerProps, prevState: DateTimePickerState) {
-    if (nextProps.value !== prevState.prevValue) {
-      return {
-        prevValue: prevState.value,
-        value: nextProps.value
-      };
-    }
-    return null;
-  }
+  const _dialogProps = useMemo(() => {
+    return {
+      width: '100%',
+      height: null,
+      bottom: true,
+      centerH: true,
+      containerStyle: styles.dialog,
+      testID: `${testID}.dialog`,
+      supportedOrientations: [
+        'portrait',
+        'landscape',
+        'landscape-left',
+        'landscape-right'
+      ] as DialogProps['supportedOrientations'],
+      ...dialogProps
+    };
+  }, [dialogProps, testID]);
 
-  handleChange = (event: any = {}, date: Date) => {
-    // NOTE: will be called on Android even when there was no actual change
-    if (event.type !== 'dismissed' && date !== undefined) {
-      this.chosenDate = date;
-
-      if (Constants.isAndroid) {
-        this.onDonePressed();
-      }
-    } else if (event.type === 'dismissed' && Constants.isAndroid) {
-      this.toggleExpandableOverlay();
-    }
-  };
-
-  toggleExpandableOverlay = () => {
-    this.expandable.current?.toggleExpandable?.();
-  };
-
-  onDonePressed = () => {
-    this.toggleExpandableOverlay();
-    if (Constants.isIOS && !this.chosenDate) {
-      // since handleChange() is not called on iOS when there is no actual change
-      this.chosenDate = new Date();
-    }
-
-    this.props.onChange?.(this.chosenDate!);
-    this.setState({value: this.chosenDate});
-  };
-
-  getStringValue = () => {
-    const {value} = this.state;
-    const {mode, dateFormat, timeFormat, dateFormatter, timeFormatter} = this.props;
+  const getStringValue = () => {
     if (value) {
       switch (mode) {
         case MODES.DATE:
@@ -199,72 +188,59 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
     }
   };
 
-  getDialogProps = () => {
-    const {testID, dialogProps} = this.props;
-    return {
-      width: '100%',
-      height: null,
-      bottom: true,
-      centerH: true,
-      // onDismiss: this.toggleExpandableOverlay,
-      containerStyle: styles.dialog,
-      testID: `${testID}.dialog`,
-      supportedOrientations: [
-        'portrait',
-        'landscape',
-        'landscape-left',
-        'landscape-right'
-      ] as DialogProps['supportedOrientations'],
-      ...dialogProps
-    };
-  };
+  const toggleExpandableOverlay = useCallback(() => {
+    expandable.current?.toggleExpandable?.();
+  }, []);
 
-  renderIOSExpandableOverlay = () => {
-    return (
-      <>
-        {this.renderHeader()}
-        {this.renderDateTimePicker()}
-      </>
-    );
-  };
+  const onDonePressed = useCallback(() => {
+    toggleExpandableOverlay();
+    if (Constants.isIOS && !chosenDate.current) {
+      // since handleChange() is not called on iOS when there is no actual change
+      chosenDate.current = new Date();
+    }
 
-  renderHeader() {
-    // @ts-expect-error
-    const {headerStyle, useCustomTheme} = this.props;
+    onChange?.(chosenDate.current!);
+    setValue(chosenDate.current);
+  }, [toggleExpandableOverlay, onChange]);
 
+  const handleChange = useCallback((event: any = {}, date: Date) => {
+    // NOTE: will be called on Android even when there was no actual change
+    if (event.type !== 'dismissed' && date !== undefined) {
+      chosenDate.current = date;
+
+      if (Constants.isAndroid) {
+        onDonePressed();
+      }
+    } else if (event.type === 'dismissed' && Constants.isAndroid) {
+      toggleExpandableOverlay();
+    }
+  },
+  [onDonePressed, toggleExpandableOverlay]);
+
+  const renderHeader = () => {
     return (
       <View row spread bg-$backgroundDefault paddingH-20 style={[styles.header, headerStyle]}>
         <Button
           link
           iconSource={Assets.icons.x}
           iconStyle={{tintColor: Colors.$iconDefault}}
-          onPress={this.toggleExpandableOverlay}
+          onPress={toggleExpandableOverlay}
         />
-        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed}/>
+        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={onDonePressed}/>
       </View>
     );
-  }
-
-  renderAndroidDateTimePicker = ({visible}: RenderCustomOverlayProps) => {
-    if (visible) {
-      return this.renderDateTimePicker();
-    }
   };
 
-  renderDateTimePicker() {
+  const renderDateTimePicker = useCallback(() => {
     if (!RNDateTimePicker) {
       return null;
     }
-
-    const {value} = this.state;
-    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes, themeVariant} =
-      this.props;
 
     return (
       <RNDateTimePicker
         mode={mode}
         value={value || new Date()}
-        onChange={this.handleChange}
+        onChange={handleChange}
         minimumDate={minimumDate}
         maximumDate={maximumDate}
         locale={locale}
@@ -275,40 +251,66 @@ class DateTimePicker extends Component<DateTimePickerPropsInternal, DateTimePick
         themeVariant={themeVariant}
       />
     );
-  }
+  }, [
+    mode,
+    value,
+    handleChange,
+    minimumDate,
+    maximumDate,
+    locale,
+    is24Hour,
+    minuteInterval,
+    timeZoneOffsetInMinutes,
+    themeVariant
+  ]);
 
-  render() {
-    // @ts-expect-error
-    const textInputProps = TextField.extractOwnProps(this.props);
-    const {renderInput, editable} = this.props;
-
+  const renderIOSExpandableOverlay = () => {
     return (
       <>
-        <ExpandableOverlay
-          ref={this.expandable}
-          expandableContent={Constants.isIOS ? this.renderIOSExpandableOverlay() : undefined}
-          useDialog
-          dialogProps={this.getDialogProps()}
-          disabled={editable === false}
-          // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
-          renderCustomOverlay={Constants.isAndroid ? this.renderAndroidDateTimePicker : undefined}
-        >
-          {renderInput ? (
-            renderInput({...this.props, value: this.getStringValue()})
-          ) : (
-            /* @ts-expect-error */
-            <TextField
-              {...textInputProps}
-              expandable={!!textInputProps.renderExpandableInput}
-              value={this.getStringValue()}
-            />
-          )}
-        </ExpandableOverlay>
+        {renderHeader()}
+        {renderDateTimePicker()}
       </>
     );
-  }
+  };
+
+  const renderAndroidDateTimePicker = useCallback(({visible}: RenderCustomOverlayProps) => {
+    if (visible) {
+      return renderDateTimePicker();
+    }
+  },
+  [renderDateTimePicker]);
+
+  return (
+    <>
+      <ExpandableOverlay
+        // @ts-expect-error
+        ref={expandable}
+        expandableContent={Constants.isIOS ? renderIOSExpandableOverlay() : undefined}
+        useDialog
+        dialogProps={_dialogProps}
+        disabled={editable === false}
+        // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
+        renderCustomOverlay={Constants.isAndroid ? renderAndroidDateTimePicker : undefined}
+      >
+        {renderInput ? (
+          renderInput({...props, value: getStringValue()})
+        ) : (
+          /* @ts-expect-error */
+          <TextField
+            {...others}
+            testID={testID}
+            editable={editable}
+            // @ts-expect-error should be remove after completing TextField migration
+            expandable={!!others.renderExpandableInput}
+            value={getStringValue()}
+          />
+        )}
+      </ExpandableOverlay>
+    </>
+  );
 }
 
+DateTimePicker.displayName = 'DateTimePicker';
 export {DateTimePicker}; // For tests
 export default asBaseComponent<DateTimePickerProps>(DateTimePicker);
 

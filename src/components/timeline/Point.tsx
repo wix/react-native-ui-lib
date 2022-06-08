@@ -36,16 +36,16 @@ const Point = (props: PointPropsInternal) => {
     const outlineStyle = hasOutline && 
       {borderWidth: OUTLINE_WIDTH, borderColor: color && Colors.getColorTint(color, OUTLINE_TINT)};
     const circleStyle = !hasContent && isCircle && 
-      {backgroundColor: Colors.white, borderWidth: CIRCLE_WIDTH, borderColor: color};
+      {backgroundColor: 'transparent', borderWidth: CIRCLE_WIDTH, borderColor: color};
     
     return [styles.point, pointSizeStyle, pointColorStyle, outlineStyle, circleStyle];
   }, [type, color, label, icon]);
 
   const renderPointContent = () => {
     if (icon) {
-      return <Icon source={icon} size={ICON_SIZE} tintColor={Colors.white}/>;
+      return <Icon source={icon} size={ICON_SIZE} tintColor={Colors.$iconDefaultLight}/>;
     } else if (label) {
-      return <Text white subtext>{label}</Text>;
+      return <Text $textDefaultLight subtextBold>{label}</Text>;
     }
   };
 
