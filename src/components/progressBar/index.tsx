@@ -14,7 +14,7 @@ const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 
 /**
  * @description: Progress bar
- * @example:https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressBarScreen.js
+ * @example:https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressBarScreen.tsx
  */
 interface Props {
   /**

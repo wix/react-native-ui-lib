@@ -90,7 +90,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     renderItem?: (
       value: PickerValue,
-      itemProps: PickerItemProps & {isSelected: boolean},
+      itemProps: PickerItemProps & {isSelected: boolean, isItemDisabled: boolean},
       label: string
     ) => React.ReactElement;
     /**

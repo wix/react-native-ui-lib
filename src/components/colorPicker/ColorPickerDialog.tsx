@@ -355,7 +355,7 @@ const BORDER_RADIUS = 12;
 
 const styles = StyleSheet.create({
   dialog: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.$backgroundDefault,
     borderTopLeftRadius: BORDER_RADIUS,
     borderTopRightRadius: BORDER_RADIUS
   },
@@ -367,7 +367,8 @@ const styles = StyleSheet.create({
   header: {
     height: 56,
     borderTopLeftRadius: BORDER_RADIUS,
-    borderTopRightRadius: BORDER_RADIUS
+    borderTopRightRadius: BORDER_RADIUS,
+    backgroundColor: Colors.$backgroundDefault
   },
   inputContainer: {
     alignItems: 'center',

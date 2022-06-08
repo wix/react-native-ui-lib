@@ -3,12 +3,13 @@
   "category": "basic",
   "description": "A sortable list component",
   "extends": ["FlatList"],
+  "extendsLink": ["https://reactnative.dev/docs/flatlist"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableListScreen.tsx",
   "props": [
     {
       "name": "data",
-      "type": "ItemT[]",
-      "description": "The initial data of the list, do not update the data.",
+      "type": "ItemT[] (ItemT extends {id: string})",
+      "description": "The data of the list, with an id prop as unique identifier.",
       "required": true
     },
     {
@@ -18,9 +19,9 @@
       "required": true
     },
     {
-      "name": "disableHaptic",
+      "name": "enableHaptic",
       "type": "boolean",
-      "description": "Whether to disable the haptic feedback."
+      "description": "Whether to enable the haptic feedback.\n(please note that react-native-haptic-feedback does not support the specific haptic type on Android starting on an unknown version, you can use 1.8.2 for it to work properly)"
     }
   ],
   "snippet": [

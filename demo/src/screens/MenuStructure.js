@@ -97,6 +97,7 @@ export const navigationData = {
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
+      {title: 'Timeline', tags: 'timeline', screen: 'unicorn.components.TimelineScreen'},
       {
         title: 'withScrollEnabler',
         tags: 'scroll enabled withScrollEnabler',

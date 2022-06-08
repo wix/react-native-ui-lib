@@ -1,15 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {map} from 'lodash';
+import {map, mapKeys} from 'lodash';
 import React, {useMemo, useCallback} from 'react';
 import {FlatList, FlatListProps, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import SortableListContext from './SortableListContext';
-import SortableListItem, {SortableListItemProps} from './SortableListItem';
+import SortableListItem from './SortableListItem';
+import {useDidUpdate} from 'hooks';
 
-export interface SortableListProps<ItemT>
-  extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'>,
-    Pick<SortableListItemProps, 'disableHaptic'> {
+interface ItemWithId {
+  id: string;
+}
+
+export interface SortableListProps<ItemT extends ItemWithId> extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'> {
   /**
    * The data of the list, do not update the data.
    */
@@ -18,19 +21,33 @@ export interface SortableListProps<ItemT>
    * A callback to get the new order (or swapped items).
    */
   onOrderChange: (data: ItemT[] /* TODO: add more data? */) => void;
+  /**
+   * Whether to enable the haptic feedback
+   * (please note that react-native-haptic-feedback does not support the specific haptic type on Android starting on an unknown version, you can use 1.8.2 for it to work properly)
+   */
+  enableHaptic?: boolean;
 }
 
-const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) => {
-  const {data, onOrderChange, disableHaptic, ...others} = props;
+function generateItemsOrder<ItemT extends ItemWithId>(data: SortableListProps<ItemT>['data']) {
+  return map(data, item => item.id);
+}
 
-  const itemsOrder = useSharedValue<number[]>(map(props.data, (_v, i) => i));
-  const itemHeight = useSharedValue<number>(1);
+const SortableList = <ItemT extends ItemWithId>(props: SortableListProps<ItemT>) => {
+  const {data, onOrderChange, enableHaptic, ...others} = props;
+
+  const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
+  const itemHeight = useSharedValue<number>(52);
+
+  useDidUpdate(() => {
+    itemsOrder.value = generateItemsOrder(data);
+  }, [data]);
 
   const onChange = useCallback(() => {
     const newData: ItemT[] = [];
+    const dataByIds = mapKeys(data, 'id');
     if (data?.length) {
-      itemsOrder.value.forEach(itemIndex => {
-        newData.push(data[itemIndex]);
+      itemsOrder.value.forEach(itemId => {
+        newData.push(dataByIds[itemId]);
       });
     }
 
@@ -45,13 +62,14 @@ const SortableList = <ItemT extends unknown>(props: SortableListProps<ItemT>) =>
 
   const context = useMemo(() => {
     return {
+      data,
       itemsOrder,
       onChange,
       itemHeight,
       onItemLayout,
-      disableHaptic
+      enableHaptic
     };
-  }, []);
+  }, [data]);
 
   return (
     <GestureHandlerRootView>
