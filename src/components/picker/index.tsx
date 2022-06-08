@@ -160,7 +160,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
       return {
         preset: preset || null,
         containerStyle: {flexDirection: 'row'},
-        trailingAccessory: <Icon source={dropdown}/>
+        trailingAccessory: <Icon marginL-s1 source={dropdown}/>
       };
     } else if (fieldType === PickerFieldTypes.settings) {
       return {
