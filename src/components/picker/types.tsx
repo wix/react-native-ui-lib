@@ -49,6 +49,7 @@ export interface PickerSearchStyle {
 // TODO: need to extend TextField props (and not just TextInputProps)
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   Omit<NewTextFieldProps, 'value' | 'onChange'> & {
+    /* ...TextField.propTypes, */
     /**
      * Temporary prop required for migration to Picker's new API
      */
@@ -57,7 +58,9 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      * Temporary prop required for inner text field migration
      */
     migrateTextField?: boolean;
-    /* ...TextField.propTypes, */
+    /**
+     * Pass for different field type UI (form, filter or settings)
+     */
     fieldType?: PickerFieldTypes;
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
@@ -90,7 +93,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     renderItem?: (
       value: PickerValue,
-      itemProps: PickerItemProps & {isSelected: boolean, isItemDisabled: boolean},
+      itemProps: PickerItemProps & {isSelected: boolean; isItemDisabled: boolean},
       label: string
     ) => React.ReactElement;
     /**
