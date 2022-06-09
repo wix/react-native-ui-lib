@@ -2,11 +2,10 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Animated, View, StyleSheet} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
+import View from '../../components/view';
 import Image from '../../components/image';
 import {BaseComponent} from '../../commons';
-
-const UIAnimatedImage = Animated.createAnimatedComponent(Image);
 
 /**
  * @description: Image component that fades-in the image with animation once it's loaded
@@ -55,10 +54,10 @@ class AnimatedImage extends BaseComponent {
   render() {
     const {containerStyle, source, loader, style, testID, ...others} = this.props;
     return (
-      <View style={containerStyle}>
-        <UIAnimatedImage
+      <View animated style={[{opacity: this.state.opacity}, containerStyle]}>
+        <Image
           {...others}
-          style={[{opacity: this.state.opacity}, style]}
+          style={style}
           source={source}
           onLoad={this.onLoad}
           testID={testID}
