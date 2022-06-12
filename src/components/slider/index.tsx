@@ -603,7 +603,6 @@ export default class Slider extends PureComponent<SliderProps, State> {
         {...this.getThumbProps()}
         ref={this.minThumb}
         onTouchStart={this.onMinTouchStart}
-        thumbTintColor={'red'}
         {...this.panResponder.panHandlers}
       />
     );

@@ -62,30 +62,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
 
           {Constants.isRTL && renderBooleanOption.call(this, 'Force LTR', 'forceLTR')}
 
-          <View marginB-30>
-            <Text $textDefault marginB-10>
-              Range slider
-            </Text>
-            <View row spread style={this.getReverseStyle()}>
-              <Text bodySmall $textNeutral>
-                min. {sliderMinValue}%
-              </Text>
-              <Text bodySmall $textNeutral>
-                max. {sliderMaxValue}%
-              </Text>
-            </View>
-            <Slider
-              useRange
-              onRangeChange={this.onSliderRangeChange}
-              value={INITIAL_VALUE}
-              minimumValue={0}
-              maximumValue={100}
-              step={1}
-              disableRTL={forceLTR}
-            />
-          </View>
-
-          <Text $textDefault marginB-10>
+          <Text $textDefault text70BO marginB-10>
             Default slider
           </Text>
           <View row centerV style={this.getReverseStyle()}>
@@ -104,7 +81,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             </Text>
           </View>
 
-          <Text $textDefault marginT-30>
+          <Text $textDefault text70BO marginT-30>
             Negatives
           </Text>
           <Slider
@@ -124,12 +101,12 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             containerStyle={styles.slider}
           />
 
-          <Text $textDefault marginT-20>
+          <Text $textDefault text70BO marginT-20>
             Disabled
           </Text>
           <Slider minimumValue={100} maximumValue={200} value={120} containerStyle={styles.slider} disabled/>
 
-          <Text $textDefault marginT-15>
+          <Text $textDefault text70BO marginT-15>
             Custom with Steps
           </Text>
           <Slider
@@ -146,7 +123,28 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             maximumTrackTintColor={Colors.violet70}
           />
 
-          <Text $textDefault marginT-15>
+          <Text $textDefault text70BO marginV-15>
+            Range slider
+          </Text>
+          <View row spread style={this.getReverseStyle()}>
+            <Text bodySmall $textNeutral>
+              min. {sliderMinValue}%
+            </Text>
+            <Text bodySmall $textNeutral>
+              max. {sliderMaxValue}%
+            </Text>
+          </View>
+          <Slider
+            useRange
+            onRangeChange={this.onSliderRangeChange}
+            value={INITIAL_VALUE}
+            minimumValue={0}
+            maximumValue={100}
+            step={1}
+            disableRTL={forceLTR}
+          />
+
+          <Text $textDefault text70BO marginT-15>
             Gradient Sliders
           </Text>
           <View row centerV>
@@ -177,7 +175,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             </View>
           </View>
 
-          <Text $textDefault marginT-25 marginB-20>
+          <Text $textDefault text70BO marginV-15>
             Color Slider Group
           </Text>
           <ColorSliderGroup
