@@ -38,6 +38,7 @@ const useDragAfterLongPressGesture = (props: Props) => {
           isDragging.value = true;
           stateManager.activate();
           if (hapticComponentName) {
+            // TODO: this should be changed IMO since Android does not support this type - consulting UX
             runOnJS(HapticService.triggerHaptic)(HapticType.selection, hapticComponentName);
           }
         } else {

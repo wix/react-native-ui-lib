@@ -40,6 +40,12 @@ const filters = [
   {label: 'Scheduled', value: 3}
 ];
 
+const schemes = [
+  {label: 'Default', value: 1},
+  {label: 'Light', value: 2},
+  {label: 'Dark', value: 3}
+];
+
 export default class PickerScreen extends Component {
   picker = React.createRef<PickerMethods>();
   state = {
@@ -51,6 +57,7 @@ export default class PickerScreen extends Component {
     nativePickerValue: 'java',
     customModalValues: [],
     filter: filters[0],
+    scheme: schemes[0].value,
     contact: 0
   };
 
@@ -299,6 +306,39 @@ export default class PickerScreen extends Component {
             style={{alignSelf: 'flex-start'}}
             onPress={() => this.picker.current?.openExpandable?.()}
           />
+
+          <Text text60 marginT-s5>
+            Different Field Types
+          </Text>
+          <Text text80 marginB-s5>(Form/Filter/Settings)</Text>
+
+          <Picker
+            migrate
+            migrateTextField
+            value={this.state.filter}
+            onChange={value => this.setState({filter: value})}
+            placeholder="Filter posts"
+            fieldType={Picker.fieldTypes.filter}
+            marginB-s3
+          >
+            {filters.map(filter => (
+              <Picker.Item key={filter.value} {...filter}/>
+            ))}
+          </Picker>
+
+          <Picker
+            migrate
+            migrateTextField
+            value={this.state.scheme}
+            onChange={value => this.setState({scheme: value})}
+            label="Color Scheme"
+            placeholder="Filter posts"
+            fieldType={Picker.fieldTypes.settings}
+          >
+            {schemes.map(scheme => (
+              <Picker.Item key={scheme.value} {...scheme}/>
+            ))}
+          </Picker>
         </View>
       </ScrollView>
     );
