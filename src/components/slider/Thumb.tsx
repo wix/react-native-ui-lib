@@ -9,8 +9,8 @@ import {
   Animated,
   GestureResponderEvent
 } from 'react-native';
-import {Colors} from '../../style';
 import {useCombinedRefs} from 'hooks';
+import {Colors} from '../../style';
 
 export interface ThumbProps extends ViewProps {
   /**
@@ -37,10 +37,8 @@ export interface ThumbProps extends ViewProps {
    * If true the Slider will be disabled and will appear in disabled color
    */
   disabled?: boolean;
+  /** ref to thumb component */
   ref?: React.RefObject<RNView>;
-  onPanResponderGrant?: any;
-  onPanResponderMove?: any;
-  onPanResponderRelease?: any;
 }
 type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: StyleProp<number>};
 
@@ -89,6 +87,7 @@ const Thumb = forwardRef((props: ThumbProps, ref: any) => {
       const style = thumbStyle || styles.thumb;
       const activeStyle = activeThumbStyle || styles.activeThumb;
       const activeOrInactiveStyle = !disabled ? (start ? activeStyle : style) : {};
+      
       thumbStyles.style = _.omit(activeOrInactiveStyle, 'height', 'width');
       //@ts-expect-error
       thumbRef.current?.setNativeProps(thumbStyles);
