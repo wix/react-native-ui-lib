@@ -31,21 +31,21 @@ describe('Picker', () => {
     it('should open picker overlay after pressing the picker', async () => {
       const driver = new PickerDriver({component: <TestCase/>, testID});
 
-      expect((await driver.getPickerOverlayProp()).visible).toBe(false);
+      expect((await driver.getPickerOverlayProps()).visible).toBe(false);
 
       await driver.press();
 
-      expect((await driver.getPickerOverlayProp()).visible).toBe(true);
+      expect((await driver.getPickerOverlayProps()).visible).toBe(true);
     });
 
     it('should not open picker overlay after pressing when picker is disabled', async () => {
       const driver = new PickerDriver({component: <TestCase editable={false}/>, testID});
 
-      expect((await driver.getPickerOverlayProp()).visible).toBe(false);
+      expect((await driver.getPickerOverlayProps()).visible).toBe(false);
 
       await driver.press();
 
-      expect((await driver.getPickerOverlayProp()).visible).toBe(false);
+      expect((await driver.getPickerOverlayProps()).visible).toBe(false);
     });
   });
 });
