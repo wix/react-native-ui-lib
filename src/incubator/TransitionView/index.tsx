@@ -1,17 +1,14 @@
-import React, {PropsWithChildren, useCallback, useImperativeHandle} from 'react';
+import React, {PropsWithChildren, useCallback, useImperativeHandle, useMemo} from 'react';
 import {View as RNView, LayoutChangeEvent} from 'react-native';
-import Animated from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import {TransitionViewAnimationType} from './useAnimationEndNotifier';
 import {TransitionViewDirection, TransitionViewDirectionEnum} from './useAnimatedTranslator';
 import useAnimatedTransition, {AnimatedTransitionProps} from './useAnimatedTransition';
-const AnimatedView = Animated.createAnimatedComponent(View);
 export {TransitionViewDirection, TransitionViewDirectionEnum, TransitionViewAnimationType};
 
-// TODO: might need to create a file for types and create a fake component for docs
-export interface TransitionViewProps extends AnimatedTransitionProps, ViewProps {
+export interface TransitionViewProps extends Omit<AnimatedTransitionProps, 'hiddenLocation'>, ViewProps {
   ref?: any;
 }
 
@@ -34,7 +31,7 @@ const TransitionView = (props: Props) => {
   } = props;
   const containerRef = React.createRef<RNView>();
   const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
-  const {exit, animatedStyle} = useAnimatedTransition({
+  const {animateOut, animatedStyle} = useAnimatedTransition({
     hiddenLocation,
     enterFrom,
     exitTo,
@@ -44,9 +41,9 @@ const TransitionView = (props: Props) => {
 
   useImperativeHandle(forwardedRef,
     () => ({
-      animateOut: exit // TODO: should this be renamed as well?
+      animateOut
     }),
-    [exit]);
+    [animateOut]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     hiddenLocationOnLayout(event);
@@ -54,7 +51,11 @@ const TransitionView = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <AnimatedView {...others} onLayout={onLayout} style={[propsStyle, animatedStyle]} ref={containerRef}/>;
+  const style = useMemo(() => {
+    return [propsStyle, animatedStyle];
+  }, [propsStyle, animatedStyle]);
+
+  return <View reanimated {...others} onLayout={onLayout} style={style} ref={containerRef}/>;
 };
 
 TransitionView.displayName = 'TransitionView';

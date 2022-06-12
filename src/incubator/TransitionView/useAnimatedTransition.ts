@@ -21,13 +21,10 @@ export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
    * If this is given there will be an exit animation to this direction.
    */
   exitTo?: TransitionViewDirection;
+  hiddenLocation: HiddenLocation;
 }
 
-type Props = AnimatedTransitionProps & {
-  hiddenLocation: HiddenLocation;
-};
-
-export default function useAnimatedTransition(props: Props) {
+export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   const {hiddenLocation, enterFrom, exitTo, onAnimationStart, onAnimationEnd} = props;
 
   const {init, animate, animatedStyle} = useAnimatedTranslator({initialVisibility: !enterFrom});
@@ -66,7 +63,7 @@ export default function useAnimatedTransition(props: Props) {
     }
   }, [onEnterAnimationEnd]);
 
-  const exit = useCallback(() => {
+  const animateOut = useCallback(() => {
     'worklet';
     if (exitTo) {
       if (onAnimationStart) {
@@ -77,5 +74,5 @@ export default function useAnimatedTransition(props: Props) {
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd]);
 
-  return {exit, animatedStyle};
+  return {animateOut, animatedStyle};
 }
