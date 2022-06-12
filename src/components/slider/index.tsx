@@ -12,8 +12,7 @@ import {
   LayoutChangeEvent,
   AccessibilityActionEvent,
   AccessibilityRole,
-  View as RNView,
-  ViewProps
+  View as RNView
 } from 'react-native';
 import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
@@ -390,7 +389,20 @@ export default class Slider extends PureComponent<SliderProps, State> {
     const {step, useRange} = this.props;
     const {trackSize} = this.state;
 
-    this.set_x(Constants.isRTL && !this.disableRTL ? trackSize.width - nativeEvent.locationX : nativeEvent.locationX);
+    const newX = Constants.isRTL && !this.disableRTL ? trackSize.width - nativeEvent.locationX : nativeEvent.locationX;
+
+    if (useRange) {
+      if (this.isDefaultThumbActive() && this._minThumbStyles?.left && newX < this._minThumbStyles?.left) {
+        // new x is smaller then min but the active thumb is the max
+        this.setActiveThumb(this.minThumb);
+      } else if (!this.isDefaultThumbActive() && this._thumbStyles.left && newX > this._thumbStyles.left) {
+        // new x is bigger then max but the active thumb is the min
+        this.setActiveThumb(this.thumb);
+      }
+    }
+      
+    this.set_x(newX);
+    
     if (!useRange) {
       this.updateValue(this.get_x());
     }
