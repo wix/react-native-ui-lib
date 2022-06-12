@@ -208,7 +208,6 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
     }
 
     return (
-      //@ts-expect-error
       <Slider
         {...others}
         renderTrack={renderTrack}

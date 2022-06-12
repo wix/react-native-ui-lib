@@ -31,7 +31,7 @@ const MIN_RANGE_GAP = 4;
 export type SliderOnValueChange = (value: number) => void;
 export type SliderOnRangeChange = (values: {min: number, max: number}) => void;
 
-export type SliderProps = ThumbProps & {
+export type SliderProps = Omit<ThumbProps, 'ref'> & {
   /**
    * Initial value
    */
