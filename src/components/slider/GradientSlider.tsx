@@ -141,12 +141,12 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
 
   onValueChange = (value: string, alpha: number) => {
     // alpha returns for type.DEFAULT
-    _.invoke(this.props, 'onValueChange', value, alpha);
+    this.props.onValueChange?.(value, alpha);
   };
 
   updateColor(color: tinycolor.ColorFormats.HSLA) {
     if (!_.isEmpty(this.props.sliderContext)) {
-      _.invoke(this.props.sliderContext, 'setValue', color);
+      this.props.sliderContext.setValue?.(color);
     } else {
       this.setState({color});
       const hex = Colors.getHexString(color);

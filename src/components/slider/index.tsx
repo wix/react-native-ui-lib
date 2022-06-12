@@ -492,20 +492,20 @@ export default class Slider extends PureComponent<SliderProps, State> {
       values = {min: maximumValue - this.lastValue, max: maximumValue - this.lastMinValue};
     }
 
-    _.invoke(this.props, 'onRangeChange', values);
+    this.props.onRangeChange?.(values);
   };
 
   onValueChange = (value: number) => {
     this.lastValue = value;
-    _.invoke(this.props, 'onValueChange', value);
+    this.props.onValueChange?.(value);
   };
 
   onSeekStart() {
-    _.invoke(this.props, 'onSeekStart');
+    this.props.onSeekStart?.();
   }
 
   onSeekEnd() {
-    _.invoke(this.props, 'onSeekEnd');
+    this.props.onSeekEnd?.();
   }
 
   onContainerLayout = (nativeEvent: LayoutChangeEvent) => {
@@ -571,7 +571,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
     this._x = this.getXForValue(newValue);
     this.updateValue(this._x);
     this.moveTo(this._x);
-    _.invoke(AccessibilityInfo, 'announceForAccessibility', `New value ${newValue}`);
+    AccessibilityInfo.announceForAccessibility?.(`New value ${newValue}`);
   };
 
   onMinTouchStart = () => {
