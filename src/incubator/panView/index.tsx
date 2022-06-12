@@ -164,16 +164,10 @@ const PanView = (props: Props) => {
   [directions, dismissible, setTranslation, returnToOrigin]);
 
   return (
-    // TODO: delete comments once completed
     <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
       {/* @ts-expect-error missing children TS error started with react 18 */}
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : onGestureEvent}>
-        <Animated.View
-          // !visible.current && styles.hidden is done to fix a bug is iOS
-          //   style={[style, animatedStyle, !visible.current && styles.hidden]}
-          style={animatedStyle}
-          //   style={[style]}
-        >
+        <Animated.View style={animatedStyle}>
           <View {...others}>{children}</View>
         </Animated.View>
       </PanGestureHandler>
