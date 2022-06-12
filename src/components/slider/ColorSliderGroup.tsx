@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React, {PureComponent, GetDerivedStateFromProps} from 'react';
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
-import _ from 'lodash';
 import {asBaseComponent} from '../../commons/new';
 import GradientSlider, {GradientSliderTypes} from './GradientSlider';
 import SliderGroup from './context/SliderGroup';

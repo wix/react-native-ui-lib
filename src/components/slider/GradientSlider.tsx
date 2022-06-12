@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
+import React, {Component} from 'react';
+import {StyleProp, ViewStyle} from 'react-native';
 import {HueGradient, LightnessGradient, SaturationGradient, Gradient} from 'react-native-color';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -208,6 +208,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
     }
 
     return (
+      //@ts-expect-error
       <Slider
         {...others}
         renderTrack={renderTrack}
@@ -219,6 +220,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
         containerStyle={containerStyle}
         disabled={disabled}
         accessible={accessible}
+        useRange={false}
       />
     );
   }
