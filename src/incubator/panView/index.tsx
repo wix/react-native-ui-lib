@@ -14,7 +14,7 @@ import usePanGesture, {
 } from './usePanGesture';
 export {PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
 
-export interface PanViewProps extends PanGestureProps, ViewProps {
+export interface PanViewProps extends Omit<PanGestureProps, 'hiddenLocation'>, ViewProps {
   /**
    * Add a style to the container
    */
