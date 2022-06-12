@@ -7,6 +7,7 @@ import useAnimationEndNotifier, {
   AnimationNotifierEndProps,
   TransitionViewAnimationType
 } from './useAnimationEndNotifier';
+export {TransitionViewAnimationType};
 
 export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
   /**
@@ -48,11 +49,11 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   useEffect(() => {
     if (!hiddenLocation.isDefault && enterFrom) {
       const location = getLocation(enterFrom);
-      init(location, enterFrom, enter);
+      init(location, enterFrom, animatedIn);
     }
   }, [hiddenLocation.isDefault]);
 
-  const enter = useCallback(() => {
+  const animatedIn = useCallback(() => {
     'worklet';
     if (enterFrom) {
       if (onAnimationStart) {
@@ -74,5 +75,5 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd]);
 
-  return {animateOut, animatedStyle};
+  return {animatedIn, animateOut, transitionAnimatedStyle: animatedStyle};
 }

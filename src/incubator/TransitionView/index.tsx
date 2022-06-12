@@ -3,9 +3,8 @@ import {View as RNView, LayoutChangeEvent} from 'react-native';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocation from '../hooks/useHiddenLocation';
-import {TransitionViewAnimationType} from './useAnimationEndNotifier';
 import {TransitionViewDirection, TransitionViewDirectionEnum} from './useAnimatedTranslator';
-import useAnimatedTransition, {AnimatedTransitionProps} from './useAnimatedTransition';
+import useAnimatedTransition, {AnimatedTransitionProps, TransitionViewAnimationType} from './useAnimatedTransition';
 export {TransitionViewDirection, TransitionViewDirectionEnum, TransitionViewAnimationType};
 
 export interface TransitionViewProps extends Omit<AnimatedTransitionProps, 'hiddenLocation'>, ViewProps {
@@ -31,7 +30,7 @@ const TransitionView = (props: Props) => {
   } = props;
   const containerRef = React.createRef<RNView>();
   const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
-  const {animateOut, animatedStyle} = useAnimatedTransition({
+  const {animateOut, transitionAnimatedStyle} = useAnimatedTransition({
     hiddenLocation,
     enterFrom,
     exitTo,
@@ -52,8 +51,8 @@ const TransitionView = (props: Props) => {
   }, []);
 
   const style = useMemo(() => {
-    return [propsStyle, animatedStyle];
-  }, [propsStyle, animatedStyle]);
+    return [propsStyle, transitionAnimatedStyle];
+  }, [propsStyle, transitionAnimatedStyle]);
 
   return <View reanimated {...others} onLayout={onLayout} style={style} ref={containerRef}/>;
 };
