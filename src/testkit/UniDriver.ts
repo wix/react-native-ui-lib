@@ -1,6 +1,7 @@
 export interface UniDriver {
   selectorByTestId(testId: string): Promise<UniDriver>;
   selectorByText(text: string): Promise<UniDriver>;
+  getByDisplayValue(value: string): Promise<UniDriver>;
   first(): Promise<UniDriver>;
   at(index: number): Promise<UniDriver>;
   instance(): Promise<any>;

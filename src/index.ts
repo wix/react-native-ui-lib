@@ -84,6 +84,10 @@ export {default as HapticService, HapticType} from './services/HapticService';
 export {default as Hint, HintProps} from './components/hint';
 export {default as Icon, IconProps} from './components/icon';
 export {default as Image, ImageProps} from './components/image';
+// @ts-expect-error
+export {default as KeyboardAwareScrollView} from './components/KeyboardAwareScrollView/KeyboardAwareScrollView';
+// @ts-expect-error
+export {default as KeyboardAwareFlatList} from './components/KeyboardAwareScrollView/KeyboardAwareFlatList';
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 export {default as MaskedInput, MaskedInputProps} from './components/maskedInput';
@@ -113,6 +117,7 @@ export {
   PickerItemProps,
   PickerValue,
   PickerModes,
+  PickerFieldTypes,
   PickerSearchStyle,
   PickerMethods
 } from './components/picker';

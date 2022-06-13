@@ -47,6 +47,14 @@ export class TestingLibraryDriver implements UniDriver {
     return new TestingLibraryDriver(instances);
   };
 
+  getByDisplayValue = async (value: string): Promise<UniDriver> => {
+    if (!this.renderAPI) {
+      throw new SelectorChainingException();
+    }
+    const instances = await this.renderAPI?.findAllByDisplayValue(value).catch(() => []);
+    return new TestingLibraryDriver(instances);
+  }
+
   first = (): Promise<UniDriver> => this.at(0);
 
   at = (index: number): Promise<UniDriver> => {
