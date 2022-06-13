@@ -5,7 +5,7 @@ export const animationConfig = {
   duration: 350
 };
 
-export type ItemsOrder = number[];
+type ItemsOrder = string[];
 
 const usePresenter = () => {
   return {
@@ -21,7 +21,7 @@ const usePresenter = () => {
       'worklet';
       return Math.round(positionY / itemHeight);
     },
-    getItemIndexById: (itemsOrder: ItemsOrder, itemId: number) => {
+    getItemIndexById: (itemsOrder: ItemsOrder, itemId: string) => {
       'worklet';
       return itemsOrder.indexOf(itemId);
     },

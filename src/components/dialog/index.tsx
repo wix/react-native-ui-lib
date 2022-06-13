@@ -10,6 +10,7 @@ import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import OverlayFadingBackground from './OverlayFadingBackground';
 import PanningProvider, {PanningDirections, PanningDirectionsEnum} from '../panningViews/panningProvider';
+export {PanningDirections as DialogDirections, PanningDirectionsEnum as DialogDirectionsEnum};
 
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss

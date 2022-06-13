@@ -24,6 +24,15 @@ const TimelineScreen = () => {
     setExpand(!expand);
   }, [expand]);
 
+  const renderExtraContent = () => {
+    return (
+      <View style={{flex: 1, marginTop: 10, backgroundColor: Colors.grey70}}>
+        <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry</Text>
+      </View>
+    );
+  };
+
   const renderContent = (index = 0, anchorRef?: any) => {
     return (
       <Card padding-page>
@@ -32,8 +41,10 @@ const TimelineScreen = () => {
         </Text>
         <View marginT-5 padding-8 bg-grey70 br30>
           <Text>{contents[index]}</Text>
-          <Button marginT-10 size={'small'} label={!expand ? 'Expand' : 'Close'} onPress={onPressExpand}/>
-          {expand && <View style={{height: 100, marginTop: 10, backgroundColor: 'red'}}/>}
+          <View right>
+            <Button marginT-10 link size={'small'} label={!expand ? 'More info' : 'Close'} onPress={onPressExpand}/>
+          </View>
+          {expand && renderExtraContent()}
         </View>
       </Card>
     );
@@ -86,11 +97,11 @@ const TimelineScreen = () => {
           topLine={{state: Timeline.states.ERROR}}
           bottomLine={{
             type: Timeline.lineTypes.DASHED,
-            color: Colors.orange40
+            color: Colors.purple30
           }}
           point={{
             type: Timeline.pointTypes.OUTLINE,
-            color: Colors.orange40,
+            color: Colors.purple30,
             icon: Assets.icons.demo.camera
           }}
         >
@@ -99,7 +110,7 @@ const TimelineScreen = () => {
         <Timeline
           topLine={{
             type: Timeline.lineTypes.DASHED,
-            color: Colors.orange40
+            color: Colors.purple30
           }}
           bottomLine={{
             state: Timeline.states.NEXT,
