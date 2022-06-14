@@ -98,6 +98,10 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
 
     this.registerForKeyboardResignedEvent();
     this.registerAndroidBackHandler();
+
+    if (props.iOSScrollBehavior) {
+      console.warn(`The 'Keyboard.KeyboardAccessoryView' component's prop 'iOSScrollBehavior' is deprecated. 'iOSScrollBehavior' prop is deprecated. Please use 'scrollBehavior' prop instead and pass it 'scrollBehaviors' ('iosScrollBehaviors' enum is deprecated).`);
+    }
   }
 
   componentWillUnmount() {
