@@ -1,15 +1,12 @@
 import {useCallback} from 'react';
 import {useSharedValue, useAnimatedStyle, withSpring, withTiming} from 'react-native-reanimated';
-import {PanningDirections, PanningDirectionsEnum} from '../panView';
+import {PanningDirections, PanningDirectionsEnum, DEFAULT_ANIMATION_CONFIG} from '../panView';
 export const TransitionViewDirectionEnum = PanningDirectionsEnum;
 export type TransitionViewDirection = PanningDirections;
 
 export interface TranslatorProps {
   initialVisibility: boolean;
 }
-
-const DEFAULT_ANIMATION_VELOCITY = 300;
-const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 100, mass: 0.4};
 
 export default function useAnimatedTranslator(props: TranslatorProps) {
   const {initialVisibility} = props;

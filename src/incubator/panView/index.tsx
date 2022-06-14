@@ -10,9 +10,17 @@ import usePanGesture, {
   PanGestureProps,
   PanViewDirections,
   PanViewDirectionsEnum,
-  PanViewDismissThreshold
+  PanViewDismissThreshold,
+  DEFAULT_ANIMATION_CONFIG
 } from './usePanGesture';
-export {PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
+export {
+  PanningDirections,
+  PanningDirectionsEnum,
+  PanViewDirections,
+  PanViewDirectionsEnum,
+  PanViewDismissThreshold,
+  DEFAULT_ANIMATION_CONFIG
+};
 
 export interface PanViewProps extends Omit<PanGestureProps, 'hiddenLocation'>, ViewProps {
   /**
