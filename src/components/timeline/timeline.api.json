@@ -1,0 +1,60 @@
+{
+  "name": "Timeline",
+  "category": "basic",
+  "description": "A timeline item to render as part of a timeline list",
+  "extends": ["View"],
+  "extendsLink": ["https://reactnative.dev/docs/view"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/src/components/timeline/index.tsx",
+  "images": [],
+  "props": [
+    {"name": "backgroundColor", "type": "string", "description": "Background color for the item"},
+    {
+      "name": "renderContent",
+      "type": "any",
+      "description": "Custom content to render right to the timeline indicator"
+    },
+    {
+      "name": "state",
+      "type": "current | next | error | success",
+      "description": "The state of the timeline. Will affect the color of the indication (use static 'states')",
+      "default": "current"
+    },
+    {
+      "name": "topLine",
+      "type": "LineProps",
+      "description": "The top line props"
+    },
+    {
+      "name": "bottomLine",
+      "type": "LineProps",
+      "description": "The bottom line props"
+    },
+    {
+      "name": "point",
+      "type": "PointProps",
+      "description": "The point props"
+    },
+    {
+      "name": "testID", "type": "string", "description": "The test id for e2e tests"
+    }
+  ],
+  "snippet": [
+    "<Timeline ",
+      "renderContent={$1}",
+      "state={Timeline.states.NEXT$2}/>",
+      "topLine={{",
+        "state: Timeline.states.ERROR",
+      "}$3}",
+      "bottomLine={{",
+        "type: Timeline.lineTypes.DASHED,",
+        "color: Colors.orange40",
+      "}$4}",
+      "point={{",
+        "type: Timeline.pointTypes.OUTLINE,",
+        "color: Colors.orange40,",
+        "icon: Assets.icons.demo.camera,",
+        "targetContainerRef: targetContainer,",
+        "alignmentTargetRef: target",
+      "}$5}"
+    ]
+}

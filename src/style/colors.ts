@@ -210,7 +210,7 @@ export class Colors {
   }
 
   isDark(colorValue: string | OpaqueColorValue) {
-    const color = colorStringValue(colorValue);
+    const color = colorValue === null ? undefined : colorStringValue(colorValue);
     const lum = tinycolor(color).getLuminance();
     return lum < 0.55;
   }

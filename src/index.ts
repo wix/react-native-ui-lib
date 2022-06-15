@@ -70,7 +70,7 @@ export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/s
 export {default as ColorSwatch, ColorSwatchProps} from './components/colorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as DateTimePicker, DateTimePickerProps} from './components/dateTimePicker';
-export {default as Dialog, DialogProps} from './components/dialog';
+export {default as Dialog, DialogProps, DialogDirections, DialogDirectionsEnum} from './components/dialog';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
@@ -84,6 +84,10 @@ export {default as HapticService, HapticType} from './services/HapticService';
 export {default as Hint, HintProps} from './components/hint';
 export {default as Icon, IconProps} from './components/icon';
 export {default as Image, ImageProps} from './components/image';
+// @ts-expect-error
+export {default as KeyboardAwareScrollView} from './components/KeyboardAwareScrollView/KeyboardAwareScrollView';
+// @ts-expect-error
+export {default as KeyboardAwareFlatList} from './components/KeyboardAwareScrollView/KeyboardAwareFlatList';
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 export {default as MaskedInput, MaskedInputProps} from './components/maskedInput';
@@ -113,6 +117,7 @@ export {
   PickerItemProps,
   PickerValue,
   PickerModes,
+  PickerFieldTypes,
   PickerSearchStyle,
   PickerMethods
 } from './components/picker';
@@ -131,12 +136,14 @@ export {default as SharedTransition} from './components/sharedTransition';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {default as Slider, SliderProps} from './components/slider';
 export {default as SortableGridList, SortableGridListProps} from './components/sortableGridList';
+export {default as SortableList, SortableListProps} from './components/sortableList';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as Stepper, StepperProps} from './components/stepper';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/tabBar'; //TODO: remove on V7
+export {default as Timeline, TimelineProps, TimelinePointProps, TimelineLineProps, TimelineStateTypes, TimelinePointTypes, TimelineLineTypes} from './components/timeline';
 export {default as Text, TextProps} from './components/text';
 // @ts-expect-error
 export {default as TextArea} from './components/textArea';

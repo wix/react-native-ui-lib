@@ -170,7 +170,7 @@ class TopBar extends Component<ModalTopBarProps> {
             {this.renderLeftButtons()}
           </View>
           <View row flex-3 bottom centerH centerV>
-            <Text accessible={!!title} numberOfLines={1} text70 style={[styles.title, titleStyle]}>
+            <Text $textDefault accessible={!!title} numberOfLines={1} text70 style={[styles.title, titleStyle]}>
               {title}
             </Text>
           </View>
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   icon: {
     // width: 16,
     // height: 16,
-    tintColor: Colors.grey10,
+    tintColor: Colors.$iconDefault,
     marginBottom: 2
   }
 });

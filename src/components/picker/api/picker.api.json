@@ -3,7 +3,7 @@
   "category": "form",
   "description": "Picker Component, support single or multiple selection, blurModel and native wheel picker",
   "modifiers": ["margin", "padding", "position"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/Default.gif?raw=true",
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Picker/MultiPicker.gif?raw=true",
@@ -24,6 +24,12 @@
       "type": "SINGLE | MULTI",
       "description": "SINGLE mode or MULTI mode",
       "default": "Picker.modes.SINGLE"
+    },
+    {
+      "name": "fieldType",
+      "type": "PickerFieldTypes",
+      "description": "Pass for different field type UI (form, filter or settings)",
+      "default": "Picker.modes.FORM"
     },
     {"name": "selectionLimit", "type": "number", "description": "Limit the number of selected items"},
     {"name": "enableModalBlur", "type": "boolean", "description": "Adds blur effect to picker modal (iOS only)"},

@@ -1,0 +1,35 @@
+{
+  "name": "SortableList",
+  "category": "basic",
+  "description": "A sortable list component",
+  "extends": ["FlatList"],
+  "extendsLink": ["https://reactnative.dev/docs/flatlist"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableListScreen.tsx",
+  "props": [
+    {
+      "name": "data",
+      "type": "ItemT[] (ItemT extends {id: string})",
+      "description": "The data of the list, with an id prop as unique identifier.",
+      "required": true
+    },
+    {
+      "name": "onOrderChange",
+      "type": "(data: ItemT[]) => void",
+      "description": "A callback to get the new order (or swapped items).",
+      "required": true
+    },
+    {
+      "name": "enableHaptic",
+      "type": "boolean",
+      "description": "Whether to enable the haptic feedback.\n(please note that react-native-haptic-feedback does not support the specific haptic type on Android starting on an unknown version, you can use 1.8.2 for it to work properly)"
+    }
+  ],
+  "snippet": [
+    "<SortableList",
+    "data={data$1}",
+    "onOrderChange={onOrderChange$2}",
+    "renderItem={renderItem$3}",
+    "keyExtractor={keyExtractor$4}",
+    "/>"
+  ]
+}

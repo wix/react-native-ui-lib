@@ -22,6 +22,7 @@ import {longOptions} from './PickerScreenLongOptions';
 
 const tagIcon = require('../../assets/icons/tags.png');
 const dropdown = require('../../assets/icons/chevronDown.png');
+const dropdownIcon = <Icon source={dropdown} tintColor={Colors.$iconDefault}/>;
 
 const contacts = _.map(contactsData, (c, index) => ({...c, value: index, label: c.name}));
 
@@ -39,6 +40,12 @@ const filters = [
   {label: 'Scheduled', value: 3}
 ];
 
+const schemes = [
+  {label: 'Default', value: 1},
+  {label: 'Light', value: 2},
+  {label: 'Dark', value: 3}
+];
+
 export default class PickerScreen extends Component {
   picker = React.createRef<PickerMethods>();
   state = {
@@ -50,13 +57,14 @@ export default class PickerScreen extends Component {
     nativePickerValue: 'java',
     customModalValues: [],
     filter: filters[0],
+    scheme: schemes[0].value,
     contact: 0
   };
 
   dialogHeader: DialogProps['renderPannableHeader'] = props => {
     const {title} = props;
     return (
-      <Text margin-15 text60>
+      <Text margin-15 text60 $textDefault>
         {title}
       </Text>
     );
@@ -76,7 +84,7 @@ export default class PickerScreen extends Component {
         height="45%"
         bottom
         useSafeArea
-        containerStyle={{backgroundColor: Colors.white}}
+        containerStyle={{backgroundColor: Colors.$backgroundDefault}}
         renderPannableHeader={this.dialogHeader}
         panDirection={PanningProvider.Directions.DOWN}
         pannableHeaderProps={{title: 'Custom modal'}}
@@ -90,7 +98,9 @@ export default class PickerScreen extends Component {
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-20>
-          <Text text40>Picker</Text>
+          <Text text40 $textDefault>
+            Picker
+          </Text>
           <Picker
             placeholder="Favorite Language"
             floatingPlaceholder
@@ -103,6 +113,7 @@ export default class PickerScreen extends Component {
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // onSearchChange={value => console.warn('value', value)}
+            migrateTextField
           >
             {_.map(longOptions, option => (
               <Picker.Item key={option.value} value={option} label={''} disabled={option.disabled}/>
@@ -115,7 +126,8 @@ export default class PickerScreen extends Component {
             onChange={items => this.setState({languages: items})}
             mode={Picker.modes.MULTI}
             selectionLimit={3}
-            rightIconSource={dropdown}
+            trailingAccessory={dropdownIcon}
+            migrateTextField
           >
             {_.map(options, option => (
               <Picker.Item key={option.value} value={option} label={''} disabled={option.disabled}/>
@@ -152,12 +164,13 @@ export default class PickerScreen extends Component {
           </Picker>
 
           <Picker
-            title="Custom modal"
+            label="Custom modal"
             placeholder="Pick multiple Languages"
             value={this.state.customModalValues}
             onChange={items => this.setState({customModalValues: items})}
             mode={Picker.modes.MULTI}
-            rightIconSource={dropdown}
+            trailingAccessory={dropdownIcon}
+            migrateTextField
             renderCustomModal={this.renderDialog}
           >
             {_.map(options, option => (
@@ -171,7 +184,7 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Text marginB-10 text70>
+          <Text marginB-10 text70 $textDefault>
             Custom Picker:
           </Text>
           <Picker
@@ -180,8 +193,12 @@ export default class PickerScreen extends Component {
             renderPicker={(_value?: any, label?: string) => {
               return (
                 <View row>
-                  <Icon style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon}/>
-                  <Text grey10 text80>
+                  <Icon
+                    style={{marginRight: 1, height: 16, resizeMode: 'contain'}}
+                    source={tagIcon}
+                    tintColor={Colors.$iconDefault}
+                  />
+                  <Text $textDefault text80>
                     {label} Posts
                   </Text>
                 </View>
@@ -193,11 +210,11 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Text text60 marginT-s5>
+          <Text text60 marginT-s5 $textDefault>
             Migrated Pickers
           </Text>
 
-          <Text marginT-20 marginB-10 text70>
+          <Text marginT-20 marginB-10 text70 $textDefault>
             Custom Picker Items:
           </Text>
           <Picker
@@ -214,12 +231,12 @@ export default class PickerScreen extends Component {
                   {contact ? (
                     <>
                       <Avatar size={30} source={{uri: contact?.thumbnail}}/>
-                      <Text text70 marginL-10>
+                      <Text text70 marginL-10 $textDefault>
                         {contact?.name}
                       </Text>
                     </>
                   ) : (
-                    <Text text70 grey30>
+                    <Text text70 $textNeutral>
                       Pick a contact
                     </Text>
                   )}
@@ -239,7 +256,7 @@ export default class PickerScreen extends Component {
                       style={{
                         height: 56,
                         borderBottomWidth: 1,
-                        borderColor: Colors.grey80
+                        borderColor: Colors.$backgroundNeutral
                       }}
                       paddingH-15
                       row
@@ -248,11 +265,11 @@ export default class PickerScreen extends Component {
                     >
                       <View row centerV>
                         <Avatar size={35} source={{uri: contact?.thumbnail}}/>
-                        <Text marginL-10 text70 grey10>
+                        <Text marginL-10 text70 $textDefault>
                           {contact?.name}
                         </Text>
                       </View>
-                      {props.isSelected && <Icon source={Assets.icons.check}/>}
+                      {props.isSelected && <Icon source={Assets.icons.check} tintColor={Colors.$iconDefault}/>}
                     </View>
                   );
                 }}
@@ -289,6 +306,39 @@ export default class PickerScreen extends Component {
             style={{alignSelf: 'flex-start'}}
             onPress={() => this.picker.current?.openExpandable?.()}
           />
+
+          <Text text60 marginT-s5>
+            Different Field Types
+          </Text>
+          <Text text80 marginB-s5>(Form/Filter/Settings)</Text>
+
+          <Picker
+            migrate
+            migrateTextField
+            value={this.state.filter}
+            onChange={value => this.setState({filter: value})}
+            placeholder="Filter posts"
+            fieldType={Picker.fieldTypes.filter}
+            marginB-s3
+          >
+            {filters.map(filter => (
+              <Picker.Item key={filter.value} {...filter}/>
+            ))}
+          </Picker>
+
+          <Picker
+            migrate
+            migrateTextField
+            value={this.state.scheme}
+            onChange={value => this.setState({scheme: value})}
+            label="Color Scheme"
+            placeholder="Filter posts"
+            fieldType={Picker.fieldTypes.settings}
+          >
+            {schemes.map(scheme => (
+              <Picker.Item key={scheme.value} {...scheme}/>
+            ))}
+          </Picker>
         </View>
       </ScrollView>
     );

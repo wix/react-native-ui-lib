@@ -206,6 +206,7 @@ export default class KeyboardAccessoryViewScreen extends PureComponent {
           revealKeyboardInteractive
           onRequestShowKeyboard={this.onRequestShowKeyboard}
           useSafeArea={useSafeArea}
+          addBottomView={useSafeArea}
           // usesBottomTabs={!isModal}
         />
       </View>

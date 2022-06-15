@@ -57,7 +57,7 @@ type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPro
  * @extends: Text
  * @extendsLink: https://reactnative.dev/docs/text
  * @modifiers: margins, color, typography
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.tsx
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Modifiers.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Transformation.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Highlights.png?raw=true
  */
 class Text extends PureComponent<PropsTypes> {
@@ -130,7 +130,8 @@ class Text extends PureComponent<PropsTypes> {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    textAlign: 'left'
+    textAlign: 'left',
+    color: Colors.$textDefault
   },
   centered: {
     textAlign: 'center'

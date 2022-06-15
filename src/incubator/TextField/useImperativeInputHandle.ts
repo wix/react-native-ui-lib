@@ -17,6 +17,10 @@ const useImperativeInputHandle = (ref: React.Ref<any>, props: Pick<TextInputProp
       },
       validate: () => {
         return context.validateField();
+      },
+      // Note: This returns field validity without actually validating it
+      isValid: () => {
+        return context.checkValidity();
       }
     };
   });
