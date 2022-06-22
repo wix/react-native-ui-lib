@@ -60,4 +60,16 @@ export class ComponentDriver {
       .selectorByTestId(testID)
       .then((driver) => driver.getInstanceProps());
   };
+
+  selectorByText = (text: string) => {
+    return this.uniDriver
+      .selectorByText(text)
+      .then((driver) => driver.instance());
+  }
+
+  getByDisplayValue = (text: string) => {
+    return this.uniDriver
+      .getByDisplayValue(text)
+      .then((driver) => driver.instance());
+  }
 }

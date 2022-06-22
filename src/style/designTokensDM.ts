@@ -27,7 +27,7 @@ export default {
   $backgroundDark: colorsPalette.grey10,
   $backgroundDarkElevated: colorsPalette.grey20,
   $backgroundDarkActive: colorsPalette.grey20,
-  $backgroundInverted: colorsPalette.white,
+  $backgroundInverted: colorsPalette.grey80,
 
   // TEXT
   $textDisabled: colorsPalette.grey20,
@@ -35,7 +35,7 @@ export default {
   $textNeutralHeavy: colorsPalette.grey50,
   $textNeutral: colorsPalette.grey40,
   $textNeutralLight: colorsPalette.grey30,
-  $textDefaultLight: colorsPalette.black,
+  $textDefaultLight: colorsPalette.grey10,
   $textPrimary: colorsPalette.violet50,
   $textGeneral: colorsPalette.blue50,
   $textSuccess: colorsPalette.green60,
@@ -47,7 +47,7 @@ export default {
   // ICON
   $iconDefault: colorsPalette.grey60,
   $iconNeutral: colorsPalette.grey50,
-  $iconDefaultLight: colorsPalette.black,
+  $iconDefaultLight: colorsPalette.grey10,
   $iconPrimary: colorsPalette.violet50,
   $iconPrimaryLight: colorsPalette.violet30,
   $iconGeneral: colorsPalette.blue50,
