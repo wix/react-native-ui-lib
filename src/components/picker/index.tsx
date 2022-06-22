@@ -43,6 +43,12 @@ import {
 
 const dropdown = require('./assets/dropdown.png');
 
+const DIALOG_PROPS = {
+  bottom: true,
+  width: '100%',
+  height: 250
+};
+
 const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps) => {
   const {
     mode,
@@ -53,6 +59,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     searchPlaceholder,
     renderCustomSearch,
     useNativePicker,
+    useWheelPicker,
     renderPicker,
     customPickerProps,
     containerStyle,
@@ -190,6 +197,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
+        useWheelPicker={useWheelPicker}
+        items={items}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
@@ -221,7 +230,9 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     renderCustomSearch,
     listProps,
     filteredChildren,
-    useSafeArea
+    useSafeArea,
+    useWheelPicker,
+    items
   ]);
 
   const renderPickerInnerInput = () => {
@@ -253,7 +264,9 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     <PickerContext.Provider value={contextValue}>
       <ExpandableOverlay
         ref={pickerExpandable}
+        useDialog={useWheelPicker}
         modalProps={modalProps}
+        dialogProps={DIALOG_PROPS}
         expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
         onPress={onPress}
@@ -304,7 +317,7 @@ Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
     // @ts-expect-error handle use PickerItemProps once exist
     label: child?.props.label
   }));
-  return items;
+  return items ?? [];
 };
 
 export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
