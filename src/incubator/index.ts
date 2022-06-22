@@ -14,4 +14,4 @@ export {
   TransitionViewDirectionEnum,
   TransitionViewAnimationType
 } from './TransitionView';
-export {default as Dialog, DialogProps, DialogHeaderProps} from './Dialog';
+export {default as Dialog, DialogProps, DialogHeaderProps} from './Dialog2';

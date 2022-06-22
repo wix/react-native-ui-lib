@@ -36,13 +36,14 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
-    if (containerRef.current) {
+    if (containerRef.current && hiddenLocation.isDefault) {
       containerRef.current.measureInWindow((x: number, y: number) => {
         setHiddenLocation(getHiddenLocation({x, y, width, height, isDefault: false}));
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [containerRef]);
 
   return {onLayout, hiddenLocation};
 }
