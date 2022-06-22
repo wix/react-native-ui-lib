@@ -1,13 +1,6 @@
 import {useCallback} from 'react';
 import {PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
-import {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  withTiming,
-  useAnimatedGestureHandler,
-  runOnJS
-} from 'react-native-reanimated';
+import {useSharedValue, withSpring, withTiming, useAnimatedGestureHandler, runOnJS} from 'react-native-reanimated';
 import {
   PanningDirections,
   PanningDirectionsEnum,
@@ -73,11 +66,6 @@ const usePanGesture = (props: PanGestureProps) => {
   const waitingForDismiss = useSharedValue<boolean>(false);
   const translationX = useSharedValue<number>(0);
   const translationY = useSharedValue<number>(0);
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{translateX: translationX.value}, {translateY: translationY.value}]
-    };
-  }, []);
 
   const getTranslationOptions = () => {
     'worklet';
@@ -147,7 +135,7 @@ const usePanGesture = (props: PanGestureProps) => {
   },
   [directions, dismissible, setTranslation, returnToOrigin]);
 
-  return {panAnimatedStyle: animatedStyle, panGestureEvent: onGestureEvent};
+  return {translation: {x: translationX, y: translationY}, panGestureEvent: onGestureEvent};
 };
 
 export default usePanGesture;

@@ -117,6 +117,7 @@ export {
   PickerItemProps,
   PickerValue,
   PickerModes,
+  PickerFieldTypes,
   PickerSearchStyle,
   PickerMethods
 } from './components/picker';

@@ -12,6 +12,7 @@ import usePanGesture, {
   PanViewDirectionsEnum,
   PanViewDismissThreshold
 } from './usePanGesture';
+import {useAnimatedStyle} from 'react-native-reanimated';
 export {PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
 
 export interface PanViewProps extends Omit<PanGestureProps, 'hiddenLocation'>, ViewProps {
@@ -40,7 +41,7 @@ const PanView = (props: Props) => {
 
   const containerRef = React.createRef<RNView>();
   const {onLayout, hiddenLocation} = useHiddenLocation({containerRef});
-  const {panAnimatedStyle, panGestureEvent} = usePanGesture({
+  const {translation, panGestureEvent} = usePanGesture({
     directions,
     dismissible,
     animateToOrigin,
@@ -50,11 +51,17 @@ const PanView = (props: Props) => {
     hiddenLocation
   });
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateX: translation.x.value}, {translateY: translation.y.value}]
+    };
+  }, []);
+
   return (
     <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
       {/* @ts-expect-error missing children TS error started with react 18 */}
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View reanimated style={panAnimatedStyle}>
+        <View reanimated style={animatedStyle}>
           <View {...others}>{children}</View>
         </View>
       </PanGestureHandler>
