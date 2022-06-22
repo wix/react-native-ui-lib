@@ -73,7 +73,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   useEffect(() => {
     if (!hiddenLocation.isDefault && enterFrom) {
       const location = getLocation(enterFrom);
-      initPosition(location, enterFrom, animatedIn);
+      initPosition(location, enterFrom, animateIn);
     }
   }, [hiddenLocation.isDefault]);
 
@@ -91,7 +91,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   },
   []);
 
-  const animatedIn = useCallback(() => {
+  const animateIn = useCallback(() => {
     'worklet';
     if (enterFrom) {
       if (onAnimationStart) {
@@ -113,5 +113,5 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd]);
 
-  return {animatedIn, animateOut, translation: {x: translationX, y: translationY}};
+  return {animateIn, animateOut, translation: {x: translationX, y: translationY}};
 }
