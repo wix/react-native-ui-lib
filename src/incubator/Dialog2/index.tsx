@@ -3,7 +3,7 @@ import React, {useRef, useMemo, useCallback, useState} from 'react';
 import {StyleSheet, View as RNView} from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from 'style';
-import {asBaseComponent, Constants} from '../../commons/new';
+import {asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
 import Modal from '../../components/modal';
