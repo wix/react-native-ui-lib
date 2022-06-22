@@ -3,11 +3,18 @@ import {View as RNView, LayoutChangeEvent} from 'react-native';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocation from '../hooks/useHiddenLocation';
-import {TransitionViewDirection, TransitionViewDirectionEnum} from './useAnimatedTranslator';
-import useAnimatedTransition, {AnimatedTransitionProps, TransitionViewAnimationType} from './useAnimatedTransition';
+import useAnimatedTransition, {
+  AnimatedTransitionProps,
+  TransitionViewAnimationType,
+  TransitionViewDirection,
+  TransitionViewDirectionEnum
+} from './useAnimatedTransition';
+import {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 export {TransitionViewDirection, TransitionViewDirectionEnum, TransitionViewAnimationType};
 
-export interface TransitionViewProps extends Omit<AnimatedTransitionProps, 'hiddenLocation'>, ViewProps {
+export interface TransitionViewProps
+  extends Omit<AnimatedTransitionProps, 'hiddenLocation' | 'onInitPosition'>,
+    ViewProps {
   ref?: any;
 }
 
@@ -29,9 +36,19 @@ const TransitionView = (props: Props) => {
     ...others
   } = props;
   const containerRef = React.createRef<RNView>();
+  const opacity = useSharedValue<number>(Number(!enterFrom));
   const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
-  const {animateOut, transitionAnimatedStyle} = useAnimatedTransition({
+
+  const onInitPosition = useCallback(() => {
+    if (opacity.value === 0) {
+      opacity.value = withTiming(1, {duration: 0});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const {animateOut, translation} = useAnimatedTransition({
     hiddenLocation,
+    onInitPosition,
     enterFrom,
     exitTo,
     onAnimationStart,
@@ -50,9 +67,17 @@ const TransitionView = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateX: translation.x.value}, {translateY: translation.y.value}],
+      // TODO: do we want to take the component's opacity here? - I think combining opacities is buggy
+      opacity: opacity.value
+    };
+  }, []);
+
   const style = useMemo(() => {
-    return [propsStyle, transitionAnimatedStyle];
-  }, [propsStyle, transitionAnimatedStyle]);
+    return [propsStyle, animatedStyle];
+  }, [propsStyle, animatedStyle]);
 
   return <View reanimated {...others} onLayout={onLayout} style={style} ref={containerRef}/>;
 };
