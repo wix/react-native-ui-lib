@@ -5,7 +5,7 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.tsx",
   "images": [],
   "props": [
-    {"name": "value", "type": "number", "description": "Value or variable used by the Stepper"},
+    {"name": "value", "type": "number", "description": "Stepper value"},
     {"name": "minValue", "type": "number", "description": "Minimum value"},
     {"name": "maxValue", "type": "number", "description": "Maximum value"},
     {

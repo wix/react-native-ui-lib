@@ -19,7 +19,7 @@ const DEFAULT_STEP = 1;
 
 interface Props {
   /**
-   * Value or variable used by the Stepper.
+   * Stepper value.
    */
   value?: number;
   /**
