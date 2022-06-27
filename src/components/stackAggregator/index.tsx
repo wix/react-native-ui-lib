@@ -222,6 +222,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
         onLayout={index === 0 ? onLayout : undefined}
         style={[
           Constants.isIOS && styles.containerShadow,
+          contentContainerStyle,
           //@ts-expect-error 'position' doesn't match AnimatedInterpolation type
           getItemStyle(index),
           {
