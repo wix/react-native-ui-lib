@@ -198,6 +198,16 @@ const StackAggregator = (props: StackAggregatorProps) => {
     };
   };
 
+  const touchableOpacityStyle = useMemo(() => {
+    return [
+      styles.touchable,
+      {
+        height: firstItemHeight ? firstItemHeight + PEEP * 2 : undefined,
+        zIndex: itemsCount
+      }
+    ];
+  }, [firstItemHeight, itemsCount]);
+
   const _onItemPress = (index: number) => {
     if (!disablePresses) {
       onItemPress?.(index);
@@ -215,7 +225,6 @@ const StackAggregator = (props: StackAggregatorProps) => {
   const renderItem = (item: JSX.Element | JSX.Element[], index: number) => {
     return (
       <Animated.View
-        // key={index}
         onLayout={index === 0 ? onLayout : undefined}
         style={[
           Constants.isIOS && styles.containerShadow,
@@ -234,7 +243,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
         collapsable={false}
       >
         <Card
-          style={[contentContainerStyle, styles.card]}
+          style={styles.card}
           onPress={() => _onItemPress(index)}
           borderRadius={itemBorderRadius}
           elevation={5}
@@ -279,13 +288,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
           <TouchableOpacity
             onPress={open}
             activeOpacity={1}
-            style={[
-              styles.touchable,
-              {
-                height: firstItemHeight ? firstItemHeight + PEEP * 2 : undefined,
-                zIndex: itemsCount
-              }
-            ]}
+            style={touchableOpacityStyle}
           />
         )}
       </View>
@@ -318,7 +321,8 @@ const styles = StyleSheet.create({
   },
   card: {
     overflow: 'hidden',
-    flexShrink: 1
+    flexShrink: 1,
+    backgroundColor: 'transparent'
   },
   button: {
     zIndex: 100
