@@ -30,7 +30,7 @@ export type StackAggregatorProps = ViewProps & {
     /**
      * The content container style
      */
-    contentContainerStyle?: StyleProp<ViewStyle>;
+    contentContainerStyle?: ViewStyle;
     /**
      * The items border radius
      */
@@ -67,7 +67,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
     children,
     containerStyle,
     buttonProps,
-    collapsed = false,
+    collapsed = true,
     disablePresses,
     onItemPress,
     contentContainerStyle,
@@ -215,6 +215,10 @@ const StackAggregator = (props: StackAggregatorProps) => {
     }
   };
 
+  const itemBackground = useMemo(() => {
+    return contentContainerStyle?.backgroundColor || Colors.white;
+  }, [contentContainerStyle]);
+
   const renderItem = (item: JSX.Element | JSX.Element[], index: number) => {
     return (
       <Animated.View
@@ -230,7 +234,8 @@ const StackAggregator = (props: StackAggregatorProps) => {
             zIndex: itemsCount - index,
             transform: [{scaleX: animatedScaleArray[index]}],
             width: Constants.screenWidth - 40,
-            height: isCollapsed ? firstItemHeight : undefined
+            height: isCollapsed ? firstItemHeight : undefined,
+            backgroundColor: itemBackground
           }
         ]}
         collapsable={false}
@@ -312,7 +317,6 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   containerShadow: {
-    backgroundColor: Colors.white,
     shadowColor: Colors.grey40,
     shadowOpacity: 0.25,
     shadowRadius: 12,
