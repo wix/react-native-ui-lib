@@ -3,11 +3,12 @@ import {ViewProps} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
 interface SortableListContextType {
-  itemsOrder: SharedValue<number[]>;
+  data: any
+  itemsOrder: SharedValue<string[]>;
   onChange: () => void;
   itemHeight: SharedValue<number>;
   onItemLayout: ViewProps['onLayout'];
-  disableHaptic?: boolean;
+  enableHaptic?: boolean;
 }
 
 // @ts-ignore

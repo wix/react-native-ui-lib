@@ -214,7 +214,7 @@ const WheelPicker = ({
 
   const alignmentStyle = useMemo(() => {
     return align === WheelPickerAlign.RIGHT
-      ? {alignSelf: undefined}
+      ? {alignSelf: 'flex-end'}
       : align === WheelPickerAlign.LEFT
         ? {alignSelf: 'flex-start'}
         : {alignSelf: 'center'};

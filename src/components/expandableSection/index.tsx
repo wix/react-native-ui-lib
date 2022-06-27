@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {LayoutAnimation, StyleSheet} from 'react-native';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
@@ -53,10 +53,16 @@ function ExpandableSection(props: ExpandableSectionProps) {
     animate();
   }, [expanded]);
 
+  const accessibilityState = useMemo(() => {
+    return {expanded};
+  }, [expanded]);
+
   return (
     <View style={styles.container}>
       {top && expanded && children}
-      <TouchableOpacity onPress={onPress}>{sectionHeader}</TouchableOpacity>
+      <TouchableOpacity onPress={onPress} accessibilityState={accessibilityState}>
+        {sectionHeader}
+      </TouchableOpacity>
       {!top && expanded && children}
     </View>
   );
