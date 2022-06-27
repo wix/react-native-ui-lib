@@ -89,7 +89,7 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    */
   useRange?: boolean;
    /**
-   * Callback for onRangeChange
+   * Callback for onRangeChange. Returns values object with the min and max values
    */
   onRangeChange?: SliderOnRangeChange;
   /**
