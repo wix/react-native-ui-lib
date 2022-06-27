@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Colors} from '../../style';
 import View, {ViewProps} from '../view';
@@ -67,7 +67,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
     children,
     containerStyle,
     buttonProps,
-    collapsed,
+    collapsed = false,
     disablePresses,
     onItemPress,
     contentContainerStyle,
@@ -77,11 +77,13 @@ const StackAggregator = (props: StackAggregatorProps) => {
   } = props;
   const [firstItemHeight, setFirstItemHeight] = useState<number>();
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
+  const itemsCount = React.Children.count(children);
 
   const animatedScale = new Animated.Value(isCollapsed ? buttonStartValue : 1);
   const animatedOpacity = new Animated.Value(isCollapsed ? buttonStartValue : 1);
-  const animatedContentOpacity = new Animated.Value(isCollapsed ? 0 : 1);
-  const itemsCount = React.Children.count(children);
+  const animatedContentOpacity = useMemo(() => {
+    return new Animated.Value(isCollapsed ? 0 : 1);
+  }, [isCollapsed]);
   const easeOut = Easing.bezier(0, 0, 0.58, 1);
   
   const getItemScale = (index: number) => {
@@ -185,12 +187,19 @@ const StackAggregator = (props: StackAggregatorProps) => {
         top: getTop(index)
       };
     }
-
     return {
       marginBottom: MARGIN_BOTTOM,
       marginTop: index === 0 ? 40 : undefined
     };
   };
+
+  const itemContainerStyle = useMemo(() => {
+    return {opacity: animatedContentOpacity};
+  }, [animatedContentOpacity]);
+
+  const cardStyle = useMemo(() => {
+    return [contentContainerStyle, styles.card];
+  }, [contentContainerStyle]);
 
   const _onItemPress = (index: number) => {
     if (!disablePresses) {
@@ -207,10 +216,9 @@ const StackAggregator = (props: StackAggregatorProps) => {
   };
 
   const renderItem = (item: JSX.Element | JSX.Element[], index: number) => {
-    console.warn('animatedContentOpacity: ', animatedContentOpacity);
     return (
       <Animated.View
-        key={index}
+        // key={index}
         onLayout={index === 0 ? onLayout : undefined}
         style={[
           Constants.isIOS && styles.containerShadow,
@@ -228,12 +236,12 @@ const StackAggregator = (props: StackAggregatorProps) => {
         collapsable={false}
       >
         <Card
-          style={[contentContainerStyle, styles.card]}
+          style={cardStyle}
           onPress={() => _onItemPress(index)}
           borderRadius={itemBorderRadius}
           elevation={5}
         >
-          <Animated.View style={index !== 0 ? {opacity: animatedContentOpacity} : undefined} collapsable={false}>
+          <Animated.View style={index !== 0 ? itemContainerStyle : undefined} collapsable={false}>
             {item}
           </Animated.View>
         </Card>
@@ -243,7 +251,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
 
   return (
     <View style={containerStyle}>
-      <View style={{marginBottom: PEEP * 3}}>
+      <View style={styles.subContainer}>
         <Animated.View
           style={{
             position: 'absolute',
@@ -261,7 +269,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
             marginH-24
             marginB-20
             onPress={close}
-            style={{zIndex: 100}}
+            style={styles.button}
           />
         </Animated.View>
 
@@ -296,6 +304,9 @@ StackAggregator.defaultProps = {
 };
 
 const styles = StyleSheet.create({
+  subContainer: {
+    marginBottom: PEEP * 3
+  },
   touchable: {
     position: 'absolute',
     width: '100%'
@@ -310,5 +321,8 @@ const styles = StyleSheet.create({
   card: {
     overflow: 'hidden',
     flexShrink: 1
+  },
+  button: {
+    zIndex: 100
   }
 });
