@@ -67,7 +67,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
     children,
     containerStyle,
     buttonProps,
-    collapsed = false,
+    collapsed = true,
     disablePresses,
     onItemPress,
     contentContainerStyle,
