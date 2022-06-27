@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
-import _ from 'lodash';
-import SliderContext from './SliderContext';
 import {Colors} from '../../../style';
+import SliderContext from './SliderContext';
 import View from '../../view';
 
 interface SliderGroupProps {
@@ -36,7 +35,7 @@ export default class SliderGroup extends Component<SliderGroupProps, SliderGroup
 
   setValue = (value: tinycolor.ColorFormats.HSLA) => {
     this.setState({value});
-    _.invoke(this.props, 'onValueChange', Colors.getHexString(value));
+    this.props.onValueChange?.(Colors.getHexString(value));
   };
 
   render() {
