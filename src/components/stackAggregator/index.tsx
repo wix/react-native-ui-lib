@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useCallback} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Colors} from '../../style';
 import View, {ViewProps} from '../view';
@@ -86,7 +86,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
   }, [isCollapsed]);
   const easeOut = Easing.bezier(0, 0, 0.58, 1);
   
-  const getItemScale = (index: number) => {
+  const getItemScale = useCallback((index: number) => {
     if (isCollapsed) {
       if (index === itemsCount - 2) {
         return 0.95;
@@ -96,15 +96,17 @@ const StackAggregator = (props: StackAggregatorProps) => {
       }
     }
     return 1;
-  };
+  }, [isCollapsed, itemsCount]);
 
-  const getAnimatedScales = () => {
+  const getAnimatedScales = useCallback(() => {
     return React.Children.map(children, (_item, index) => {
       return new Animated.Value(getItemScale(index));
     }) as Animated.Value[];
-  };
+  }, [children, getItemScale]);
 
-  const animatedScaleArray: Animated.Value[] = getAnimatedScales();
+  const animatedScaleArray = useMemo(() => {
+    return getAnimatedScales();
+  }, [getAnimatedScales]);
 
   useDidUpdate(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -113,12 +115,15 @@ const StackAggregator = (props: StackAggregatorProps) => {
     onCollapseChanged?.(isCollapsed);
   }, [isCollapsed, onCollapseWillChange, onCollapseChanged]);
 
+  /** Animations */
+
   const animate = () => {
     return Promise.all([animateValues(), animateCards()]);
   };
 
   const animateValues = () => {
     const newValue = isCollapsed ? buttonStartValue : 1;
+    
     return new Promise(resolve => {
       Animated.parallel([
         Animated.timing(animatedOpacity, {
@@ -149,7 +154,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
 
       promises.push(new Promise(resolve => {
         Animated.timing(animatedScaleArray[index], {
-          toValue: Number(newScale),
+          toValue: newScale,
           easing: easeOut,
           duration: DURATION,
           useNativeDriver: true
@@ -193,14 +198,6 @@ const StackAggregator = (props: StackAggregatorProps) => {
     };
   };
 
-  const itemContainerStyle = useMemo(() => {
-    return {opacity: animatedContentOpacity};
-  }, [animatedContentOpacity]);
-
-  const cardStyle = useMemo(() => {
-    return [contentContainerStyle, styles.card];
-  }, [contentContainerStyle]);
-
   const _onItemPress = (index: number) => {
     if (!disablePresses) {
       onItemPress?.(index);
@@ -237,12 +234,12 @@ const StackAggregator = (props: StackAggregatorProps) => {
         collapsable={false}
       >
         <Card
-          style={cardStyle}
+          style={[contentContainerStyle, styles.card]}
           onPress={() => _onItemPress(index)}
           borderRadius={itemBorderRadius}
           elevation={5}
         >
-          <Animated.View style={index !== 0 ? itemContainerStyle : undefined} collapsable={false}>
+          <Animated.View style={index !== 0 ? {opacity: animatedContentOpacity} : undefined} collapsable={false}>
             {item}
           </Animated.View>
         </Card>
