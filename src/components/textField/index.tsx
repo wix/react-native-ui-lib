@@ -293,7 +293,7 @@ export default class TextField extends BaseInput {
     const error = this.getErrorMessage();
     const {disabledColor} = this.getThemeProps();
 
-    if (_.isString(colorProp)) {
+    if (_.isString(Colors.getColorName(colorProp))) {
       return colorProp || Colors.grey10;
     } else if (_.isPlainObject(colorProp)) {
       const mergedColorState = {...COLOR_BY_STATE, ...colorProp};
