@@ -29,7 +29,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     testID
   } = props;
   const context = useContext(PickerContext);
-  const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items[0].value);
+  const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0].value);
 
   const renderSearchInput = () => {
     if (showSearch) {

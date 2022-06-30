@@ -265,7 +265,7 @@ export type PickerItemsListProps = Pick<
   | 'useWheelPicker'
   | 'testID'
 > & {
-  items: {value: any; label: any}[];
+  items?: {value: any; label: any}[];
 };
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;

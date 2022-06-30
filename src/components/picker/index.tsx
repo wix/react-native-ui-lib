@@ -198,7 +198,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
       <PickerItemsList
         testID={`${testID}.modal`}
         useWheelPicker={useWheelPicker}
-        items={items}
+        items={useWheelPicker ? items : undefined}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
