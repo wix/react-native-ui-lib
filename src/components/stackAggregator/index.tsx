@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useCallback} from 'react';
+import React, {useState, useMemo, useCallback, useEffect} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Colors} from '../../style';
 import View, {ViewProps} from '../view';
@@ -75,10 +75,23 @@ const StackAggregator = (props: StackAggregatorProps) => {
     onCollapseWillChange,
     onCollapseChanged
   } = props;
+  const itemsCount = React.Children.count(children);
   const [firstItemHeight, setFirstItemHeight] = useState<number>();
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
-  const itemsCount = React.Children.count(children);
 
+  useEffect(() => {
+    setIsCollapsed(collapsed);
+  }, [collapsed]);
+
+  useDidUpdate(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    onCollapseWillChange?.(isCollapsed);
+    animate();
+    onCollapseChanged?.(isCollapsed);
+  }, [isCollapsed, onCollapseWillChange, onCollapseChanged]);
+
+  /** Animations */
+  
   const animatedScale = new Animated.Value(isCollapsed ? buttonStartValue : 1);
   const animatedOpacity = new Animated.Value(isCollapsed ? buttonStartValue : 1);
   const animatedContentOpacity = useMemo(() => {
@@ -107,15 +120,6 @@ const StackAggregator = (props: StackAggregatorProps) => {
   const animatedScaleArray = useMemo(() => {
     return getAnimatedScales();
   }, [getAnimatedScales]);
-
-  useDidUpdate(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    onCollapseWillChange?.(isCollapsed);
-    animate();
-    onCollapseChanged?.(isCollapsed);
-  }, [isCollapsed, onCollapseWillChange, onCollapseChanged]);
-
-  /** Animations */
 
   const animate = () => {
     return Promise.all([animateValues(), animateCards()]);
@@ -164,6 +168,8 @@ const StackAggregator = (props: StackAggregatorProps) => {
     return Promise.all(promises);
   };
 
+  /** Actions */
+
   const close = () => {
     setIsCollapsed(true);
   };
@@ -171,6 +177,8 @@ const StackAggregator = (props: StackAggregatorProps) => {
   const open = () => {
     setIsCollapsed(false);
   };
+
+  /** Styles */
 
   const getTop = (index: number) => {
     let start = 0;
@@ -208,6 +216,8 @@ const StackAggregator = (props: StackAggregatorProps) => {
     ];
   }, [firstItemHeight, itemsCount]);
 
+  /** Events */
+
   const _onItemPress = (index: number) => {
     if (!disablePresses) {
       onItemPress?.(index);
@@ -221,6 +231,8 @@ const StackAggregator = (props: StackAggregatorProps) => {
       setFirstItemHeight(height);
     }
   };
+
+  /** Renders */
 
   const renderItem = (item: JSX.Element | JSX.Element[], index: number) => {
     return (

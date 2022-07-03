@@ -13,7 +13,8 @@ const TEXTS = [
 
 export default class StackAggregatorScreen extends Component {
   state = { 
-    contents: TEXTS
+    contents: TEXTS,
+    collapsed: true
   };
 
   onItemPress = (index: number) => {
@@ -30,6 +31,10 @@ export default class StackAggregatorScreen extends Component {
     this.setState({contents: newItems});
   }
 
+  toggleCollapsed = () => {
+    this.setState({collapsed: !this.state.collapsed});
+  }
+
   renderItem = (_: string, index: number) => {
     return (
       <View key={index} center padding-12>
@@ -40,16 +45,19 @@ export default class StackAggregatorScreen extends Component {
   }
 
   render() {
+    const {collapsed} = this.state;
+
     return (
       <ScrollView keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
-        <View right margin-5>
+        <View row spread margin-5>
+          <Button link label={collapsed ? 'Open Stack' : 'Close Stack'} onPress={this.toggleCollapsed}/>
           <Button link label="Update content" onPress={this.refreshItems}/>
         </View>
         <Text center grey40 text90 marginT-20>Thu, 10 Dec, 11:29</Text>
         <StackAggregator
           containerStyle={{marginTop: 12}}
           onItemPress={this.onItemPress}
-          collapsed={false}
+          collapsed={collapsed}
         >
           {_.map(this.state.contents, (item, index) => {
             return this.renderItem(item, index);
