@@ -13,7 +13,7 @@ const ruleTester = new RuleTester();
 
 const ruleOptions = [{deprecations: deprecationsJson}];
 const invalidExample =
-  "import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>";
+  `import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>`;
 
 ruleTester.run('component-prop-deprecation', rule, {
   valid: [
@@ -118,7 +118,9 @@ ruleTester.run('component-prop-deprecation', rule, {
     {
       options: ruleOptions,
       code: invalidExample,
-      errors: [{message: "The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead."}]
+      errors: [{
+        message: `The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead.`
+      }]
     },
     {
       options: [{...ruleOptions[0], dueDate: '10/11/18'}],
@@ -126,7 +128,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       errors: [
         {
           message:
-            "The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!" // eslint-disable-line
+            `The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!`
         }
       ]
     },
@@ -137,7 +139,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       errors: [
         {
           message:
-            "The 'Thumbnail' component's prop 'url' is deprecated. Please use the 'uri' prop instead. Please fix this issue by 10/11/18!" // eslint-disable-line
+            `The 'Thumbnail' component's prop 'url' is deprecated. Please use the 'uri' prop instead. Please fix this issue by 10/11/18!`
         }
       ]
     },
@@ -145,13 +147,13 @@ ruleTester.run('component-prop-deprecation', rule, {
       options: ruleOptions,
       code: 'import {Button} from \'module-with-deprecations\'; <Button text="my button"/>',
       output: 'import {Button} from \'module-with-deprecations\'; <Button label="my button"/>',
-      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
       code: 'import {List} from \'another-module-with-deprecations\'; <List text="my list"/>',
       output: 'import {List} from \'another-module-with-deprecations\'; <List label="my list"/>',
-      errors: [{message: "The 'List' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'List' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
@@ -161,7 +163,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       output: `import {Button} from 'module-with-deprecations';
         const props = {label: "button", color: "red"};
         <Button {...props} value="value"/>`,
-      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
@@ -171,7 +173,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       output: `import {Button as B} from 'module-with-deprecations';
         const props = {label: "button", color: "red"};
         <B {...props} value="value"/>`,
-      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
@@ -183,7 +185,7 @@ ruleTester.run('component-prop-deprecation', rule, {
         const {Button} = module;
         const props = {label: "button", color: "red"};
         <Button {...props} value="value"/>`,
-      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
@@ -193,7 +195,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       output: `import * as module from 'module-with-deprecations';
         const props = {label: "button", color: "red"};
         <module.Button {...props} value="value"/>`,
-      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
@@ -203,7 +205,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       output: `const Button = require('module-with-deprecations').Button
         const props = {label: "button", color: "red"};
         <Button {...props} value="value"/>`,
-      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
@@ -213,7 +215,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       output: `const {Button, List} = require('module-with-deprecations')
         const props = {label: "button", color: "red"};
         const test = <Button {...props} value="value"/>;`,
-      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
@@ -227,7 +229,7 @@ ruleTester.run('component-prop-deprecation', rule, {
         const props = {label: "button", color: "red"};
         const test1 = <Button {...props} value="value"/>;
         const test2 = <TextField>Bla</TextField>;`,
-      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: [{...ruleOptions[0], dueDate: '10/11/18'}],
@@ -252,19 +254,19 @@ ruleTester.run('component-prop-deprecation', rule, {
       errors: [
         {
           message:
-            "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'Thumbnail' component's prop 'url' is deprecated. Please use the 'uri' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Thumbnail' component's prop 'url' is deprecated. Please use the 'uri' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'List' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!"
+            `The 'List' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!`
         }
       ]
     },
@@ -293,19 +295,19 @@ ruleTester.run('component-prop-deprecation', rule, {
       errors: [
         {
           message:
-            "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'Thumbnail' component's prop 'url' is deprecated. Please use the 'uri' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Thumbnail' component's prop 'url' is deprecated. Please use the 'uri' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'List' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!"
+            `The 'List' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!`
         }
       ]
     },
@@ -334,19 +336,19 @@ ruleTester.run('component-prop-deprecation', rule, {
       errors: [
         {
           message:
-            "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'Thumbnail' component's prop 'url' is deprecated. Please use the 'uri' prop instead. Please fix this issue by 10/11/18!"
+            `The 'Thumbnail' component's prop 'url' is deprecated. Please use the 'uri' prop instead. Please fix this issue by 10/11/18!`
         },
         {
           message:
-            "The 'List' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!"
+            `The 'List' component's prop 'text' is deprecated. Please use the 'label' prop instead. Please fix this issue by 10/11/18!`
         }
       ]
     },
@@ -358,7 +360,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       output: `const {List} = require('module-with-deprecations')
         const props = {label: "list"};
         const test = <List.Item {...props} value="value"/>;`,
-      errors: [{message: "The 'List.Item' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'List.Item' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
@@ -368,22 +370,22 @@ ruleTester.run('component-prop-deprecation', rule, {
       output: `import * as module from 'module-with-deprecations';
         const props = {label: "list"};
         <module.List.Item {...props} value="value"/>`,
-      errors: [{message: "The 'List.Item' component's prop 'text' is deprecated. Please use the 'label' prop instead."}]
+      errors: [{message: `The 'List.Item' component's prop 'text' is deprecated. Please use the 'label' prop instead.`}]
     },
     {
       options: ruleOptions,
       code: 'import {Text} from \'module-with-deprecations\'; <Text t="title" s="subtitle"/>',
       output: 'import {Text} from \'module-with-deprecations\'; <Text title="title" subtitle="subtitle"/>',
       errors: [
-        {message: "The 'Text' component's prop 't' is deprecated. Please use the 'title' prop instead."},
-        {message: "The 'Text' component's prop 's' is deprecated. Please use the 'subtitle' prop instead."}
+        {message: `The 'Text' component's prop 't' is deprecated. Please use the 'title' prop instead.`},
+        {message: `The 'Text' component's prop 's' is deprecated. Please use the 'subtitle' prop instead.`}
       ]
     },
     {
       options: ruleOptions,
       code: 'import {Picker} from \'module-with-deprecations\'; <Picker t="title" s="subtitle"/>',
       errors: [
-        {message: "The 'Picker' component's prop 'migrate' is required. Please make sure to pass the 'migrate' prop."}
+        {message: `The 'Picker' component's prop 'migrate' is required. Please make sure to pass the 'migrate' prop.`}
       ]
     }
   ]

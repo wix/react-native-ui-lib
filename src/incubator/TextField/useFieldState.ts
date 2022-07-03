@@ -15,7 +15,7 @@ export default function useFieldState({
 }: FieldStateProps) {
   const [value, setValue] = useState(props.value);
   const [isFocused, setIsFocused] = useState(false);
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
   const [failingValidatorIndex, setFailingValidatorIndex] = useState<number | undefined>(undefined);
 
   useEffect(() => {
@@ -37,7 +37,9 @@ export default function useFieldState({
   }, [props.value, validateOnChange]);
 
   useDidUpdate(() => {
-    onChangeValidity?.(isValid);
+    if (!_.isUndefined(isValid)) {
+      onChangeValidity?.(isValid);
+    }
   }, [isValid]);
 
   const checkValidity = useCallback((valueToValidate = value) => {
@@ -86,7 +88,7 @@ export default function useFieldState({
     return {
       value,
       hasValue: !_.isEmpty(value),
-      isValid: validationMessage && !validate ? false : isValid,
+      isValid: validationMessage && !validate ? false : isValid ?? true,
       isFocused,
       failingValidatorIndex
     };
