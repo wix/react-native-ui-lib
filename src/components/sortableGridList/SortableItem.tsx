@@ -32,7 +32,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
-  const isFloating = useSharedValue(false);
   const isDragging = useSharedValue(false);
   const tempItemsOrder = useSharedValue(itemsOrder.value);
   const tempTranslateX = useSharedValue(0);
@@ -62,13 +61,13 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
           if (dataManuallyChanged.value) {
             translateX.value = 0;
             translateY.value = 0;
-          /* Reset with an animation when the change id due to user reordering */
+            /* Reset with an animation when the change id due to user reordering */
           } else {
             translateX.value = withTiming(0, animationConfig);
             translateY.value = withTiming(0, animationConfig);
           }
           dataManuallyChanged.value = false;
-        /* Handle an order change, animate item to its new position  */
+          /* Handle an order change, animate item to its new position  */
         } else if (newOrder !== prevOrder) {
           const translation = getTranslationByOrderChange(newOrder, prevOrder);
           translateX.value = withTiming(translateX.value + translation.x, animationConfig);
@@ -83,29 +82,10 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     updateItemLayout({width, height});
   }, []);
 
-  const longPressGesture = Gesture.LongPress()
+  const dragOnLongPressGesture = Gesture.Pan()
+    .activateAfterLongPress(250)
     .onStart(() => {
-      isFloating.value = true;
-    })
-    .onTouchesCancelled(() => {
-      if (!isDragging.value) {
-        isFloating.value = false;
-      }
-    })
-    .minDuration(250);
-
-  const dragGesture = Gesture.Pan()
-    .manualActivation(true)
-    .onTouchesMove((_e, state) => {
-      if (isFloating.value) {
-        isDragging.value = true;
-        state.activate();
-      } else {
-        isDragging.value = false;
-        state.fail();
-      }
-    })
-    .onStart(() => {
+      isDragging.value = true;
       tempTranslateX.value = translateX.value;
       tempTranslateY.value = translateY.value;
       tempItemsOrder.value = itemsOrder.value;
@@ -139,19 +119,15 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     .onFinalize(() => {
       if (isDragging.value) {
         isDragging.value = false;
-        isFloating.value = false;
         if (tempItemsOrder.value.toString() !== itemsOrder.value.toString()) {
           runOnJS(onChange)();
         }
       }
-    })
-    .simultaneousWithExternalGesture(longPressGesture);
-
-  const gesture = Gesture.Race(dragGesture, longPressGesture);
+    });
 
   const animatedStyle = useAnimatedStyle(() => {
-    const scale = withSpring(isFloating.value ? 1.1 : 1);
-    const zIndex = isFloating.value ? 100 : withTiming(0, animationConfig);
+    const scale = withSpring(isDragging.value ? 1.1 : 1);
+    const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
 
     return {
       zIndex,
@@ -161,7 +137,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
 
   return (
     <View reanimated style={[style, animatedStyle]} onLayout={onLayout}>
-      <GestureDetector gesture={gesture}>
+      <GestureDetector gesture={dragOnLongPressGesture}>
         <View>{props.children}</View>
       </GestureDetector>
     </View>
