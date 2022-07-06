@@ -208,7 +208,6 @@ export default function TabBarItem({
     });
 
   return (
-    // @ts-expect-error caused by @types/react v18 and should be fixed by gesture-handler lib
     <GestureDetector gesture={gesture}>
       <View
         reanimated
