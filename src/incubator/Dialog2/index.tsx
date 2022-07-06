@@ -147,7 +147,7 @@ const Dialog = (props: DialogProps) => {
     return (
       // @ts-expect-error missing children TS error started with react 18
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View reanimated style={style} onLayout={onLayout} ref={containerRef} bg-red10>
+        <View reanimated style={style} onLayout={onLayout} ref={containerRef}>
           <DialogHeader {...headerProps}/>
           {children}
         </View>
