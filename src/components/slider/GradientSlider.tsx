@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
+import React, {Component} from 'react';
+import {StyleProp, ViewStyle} from 'react-native';
 import {HueGradient, LightnessGradient, SaturationGradient, Gradient} from 'react-native-color';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -141,12 +141,12 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
 
   onValueChange = (value: string, alpha: number) => {
     // alpha returns for type.DEFAULT
-    _.invoke(this.props, 'onValueChange', value, alpha);
+    this.props.onValueChange?.(value, alpha);
   };
 
   updateColor(color: tinycolor.ColorFormats.HSLA) {
     if (!_.isEmpty(this.props.sliderContext)) {
-      _.invoke(this.props.sliderContext, 'setValue', color);
+      this.props.sliderContext.setValue?.(color);
     } else {
       this.setState({color});
       const hex = Colors.getHexString(color);
@@ -219,6 +219,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
         containerStyle={containerStyle}
         disabled={disabled}
         accessible={accessible}
+        useRange={false}
       />
     );
   }
