@@ -59,7 +59,6 @@ const PanView = (props: Props) => {
 
   return (
     <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
-      {/* @ts-expect-error missing children TS error started with react 18 */}
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
         <View reanimated style={animatedStyle}>
           <View {...others}>{children}</View>

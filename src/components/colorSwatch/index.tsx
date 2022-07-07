@@ -111,7 +111,7 @@ class ColorSwatch extends PureComponent<Props> {
       if (Colors.isTransparent(color)) {
         return Colors.$iconDefault;
       }
-      return Colors.isDark(color) ? Colors.$iconDefaultLight : Colors.$iconDefault;
+      return Colors.isDark(color) ? Colors.white : Colors.grey10;
     }
   }
 

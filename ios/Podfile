@@ -10,7 +10,7 @@ target 'rnuilib' do
 
   use_react_native!(
     :path => config[:reactNativePath],
-    :hermes_enabled => false
+    :hermes_enabled => true
   )
 
   target 'rnuilibTests' do
