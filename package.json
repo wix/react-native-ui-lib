@@ -94,7 +94,7 @@
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
     "react-native": "0.68.2",
-    "react-native-gesture-handler": "2.4.1",
+    "react-native-gesture-handler": "2.5.0",
     "react-native-haptic-feedback": "^1.11.0",
     "react-native-linear-gradient": "2.5.6",
     "react-native-navigation": "^7.19.1",

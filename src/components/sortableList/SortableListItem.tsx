@@ -146,7 +146,6 @@ const SortableListItem = (props: Props) => {
   });
 
   return (
-    // @ts-expect-error related to children type issue that started on react 18
     <GestureDetector gesture={dragAfterLongPressGesture}>
       <View reanimated style={draggedAnimatedStyle} onLayout={index === 0 ? onItemLayout : undefined}>
         {children}
