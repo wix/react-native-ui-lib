@@ -127,7 +127,7 @@ ruleTester.run('component-prop-deprecation', rule, {
       options: ruleOptions,
       code: invalidKeyboardExample,
       errors: [{
-        message: `The 'Keyboard.KeyboardAccessoryView' component's prop 'iOSScrollBehavior' is deprecated. 'iOSScrollBehavior' prop is deprecated. Please use 'scrollBehavior' prop instead and pass it 'scrollBehaviors' ('iosScrollBehaviors' enum is deprecated).`
+        message: `The 'Keyboard.KeyboardAccessoryView' component's prop 'iOSScrollBehavior' is deprecated. 'iOSScrollBehavior' prop is deprecated. Please use 'scrollBehavior' prop instead and pass it 'Keyboard.KeyboardAccessoryView.scrollBehaviors' ('Keyboard.KeyboardAccessoryView.iosScrollBehaviors' enum is deprecated).`
       }]
     },
     {
