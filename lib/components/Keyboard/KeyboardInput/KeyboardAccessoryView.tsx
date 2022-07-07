@@ -102,8 +102,8 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
 
     if (props.iOSScrollBehavior) {
       LogService.warn(`The 'Keyboard.KeyboardAccessoryView' component's prop 'iOSScrollBehavior' is deprecated. 
-        Please use 'scrollBehavior' prop instead and pass it 'scrollBehaviors' 
-        ('iosScrollBehaviors' enum is deprecated).`);
+        Please use 'scrollBehavior' prop instead and pass it 'Keyboard.KeyboardAccessoryView.scrollBehaviors' 
+        ('Keyboard.KeyboardAccessoryView.iosScrollBehaviors' enum is deprecated).`);
     }
   }
 
