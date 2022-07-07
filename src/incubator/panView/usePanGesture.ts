@@ -15,6 +15,12 @@ import {HiddenLocation} from '../hooks/useHiddenLocation';
 export type PanViewDirections = PanningDirections;
 export const PanViewDirectionsEnum = PanningDirectionsEnum;
 export type PanViewDismissThreshold = PanningDismissThreshold;
+export const DEFAULT_DIRECTIONS = [
+  PanViewDirectionsEnum.UP,
+  PanViewDirectionsEnum.DOWN,
+  PanViewDirectionsEnum.LEFT,
+  PanViewDirectionsEnum.RIGHT
+];
 
 export interface PanGestureProps {
   /**
@@ -51,12 +57,7 @@ const SPRING_BACK_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damp
 
 const usePanGesture = (props: PanGestureProps) => {
   const {
-    directions = [
-      PanViewDirectionsEnum.UP,
-      PanViewDirectionsEnum.DOWN,
-      PanViewDirectionsEnum.LEFT,
-      PanViewDirectionsEnum.RIGHT
-    ],
+    directions = DEFAULT_DIRECTIONS,
     dismissible,
     animateToOrigin,
     onDismiss,

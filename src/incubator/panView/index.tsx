@@ -12,6 +12,7 @@ import usePanGesture, {
   PanViewDirections,
   PanViewDirectionsEnum,
   PanViewDismissThreshold,
+  DEFAULT_DIRECTIONS,
   DEFAULT_ANIMATION_CONFIG
 } from './usePanGesture';
 export {
@@ -20,6 +21,7 @@ export {
   PanViewDirections,
   PanViewDirectionsEnum,
   PanViewDismissThreshold,
+  DEFAULT_DIRECTIONS,
   DEFAULT_ANIMATION_CONFIG
 };
 
@@ -36,7 +38,7 @@ interface Props extends PanViewProps {
 
 const PanView = (props: Props) => {
   const {
-    directions,
+    directions = DEFAULT_DIRECTIONS,
     dismissible,
     animateToOrigin,
     onDismiss,
@@ -67,7 +69,6 @@ const PanView = (props: Props) => {
 
   return (
     <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
-      {/* @ts-expect-error missing children TS error started with react 18 */}
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
         <View reanimated style={animatedStyle}>
           <View {...others}>{children}</View>
