@@ -10,7 +10,8 @@ import usePanGesture, {
   PanGestureProps,
   PanViewDirections,
   PanViewDirectionsEnum,
-  PanViewDismissThreshold
+  PanViewDismissThreshold,
+  DEFAULT_DIRECTIONS
 } from './usePanGesture';
 import {useAnimatedStyle} from 'react-native-reanimated';
 export {PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
@@ -28,7 +29,7 @@ interface Props extends PanViewProps {
 
 const PanView = (props: Props) => {
   const {
-    directions,
+    directions = DEFAULT_DIRECTIONS,
     dismissible,
     animateToOrigin,
     onDismiss,
