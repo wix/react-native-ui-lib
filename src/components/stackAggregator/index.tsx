@@ -78,13 +78,14 @@ const StackAggregator = (props: StackAggregatorProps) => {
   const itemsCount = React.Children.count(children);
   const [firstItemHeight, setFirstItemHeight] = useState<number>();
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
+  
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
   useEffect(() => {
     setIsCollapsed(collapsed);
   }, [collapsed]);
 
   useDidUpdate(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     onCollapseWillChange?.(isCollapsed);
     animate();
     onCollapseChanged?.(isCollapsed);
