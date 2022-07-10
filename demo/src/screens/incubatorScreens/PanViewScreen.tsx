@@ -44,6 +44,9 @@ const colors: Item[] = [
   {value: Colors.yellow50, label: 'Yellow50'},
   {value: Colors.yellow70, label: 'Yellow70'}
 ];
+const TOAST_DIRECTIONS = [PanView.directions.LEFT, PanView.directions.DOWN, PanView.directions.RIGHT];
+const DIALOG_DIRECTIONS = [PanView.directions.DOWN];
+const TOAST_THRESHOLD = {y: 10};
 
 class PanViewScreen extends Component {
   state = {
@@ -78,10 +81,9 @@ class PanViewScreen extends Component {
           visible
         >
           <PanView
-            directions={[PanView.directions.DOWN]}
+            directions={DIALOG_DIRECTIONS}
             dismissible
             animateToOrigin
-            // threshold={{y: 10}}
             containerStyle={styles.panView}
             onDismiss={this.onDialogDismissed}
           >
@@ -111,11 +113,11 @@ class PanViewScreen extends Component {
   renderToast = () => {
     return (
       <PanView
-        directions={[PanView.directions.LEFT, PanView.directions.DOWN, PanView.directions.RIGHT]}
+        directions={TOAST_DIRECTIONS}
         dismissible
         animateToOrigin
         directionLock
-        threshold={{y: 10}}
+        threshold={TOAST_THRESHOLD}
         containerStyle={styles.panView}
         onDismiss={this.onToastDismissed}
       >
@@ -146,7 +148,7 @@ class PanViewScreen extends Component {
     const {showToast, showDialog} = this.state;
     const Container = showDialog ? View : GestureHandlerRootView;
     return (
-      <Container style={[styles.root, styles.gestureHandler]}>
+      <Container style={styles.root}>
         <View marginL-page height={50} centerV>
           <Text text50>New Pan View</Text>
         </View>
@@ -171,10 +173,8 @@ export default PanViewScreen;
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
     backgroundColor: Colors.grey80
-  },
-  gestureHandler: {
-    flex: 1
   },
   panView: {
     flex: 1,

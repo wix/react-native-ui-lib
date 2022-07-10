@@ -1,5 +1,15 @@
 [
   {
+    "component": "Keyboard.KeyboardAccessoryView",
+    "source": "module-with-deprecations",
+    "props": [
+      {
+        "prop": "iOSScrollBehavior",
+        "message": "'iOSScrollBehavior' prop is deprecated. Please use 'scrollBehavior' prop instead and pass it 'Keyboard.KeyboardAccessoryView.scrollBehaviors' ('Keyboard.KeyboardAccessoryView.iosScrollBehaviors' enum is deprecated)."
+      }
+    ]
+  },
+  {
     "component": "Avatar",
     "source": "module-with-deprecations",
     "props": [
