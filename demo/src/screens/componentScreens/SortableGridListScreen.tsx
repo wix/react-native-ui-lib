@@ -15,7 +15,7 @@ import {
 import _ from 'lodash';
 import products from '../../data/products';
 
-const productsWithIds = products.map((product, index) => ({...product, id: index.toString()}));
+const productsWithIds = products.map((product) => ({...product}));
 type Item = typeof productsWithIds[0];
 
 class SortableGridListScreen extends Component {
