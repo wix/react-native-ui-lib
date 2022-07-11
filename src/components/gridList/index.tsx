@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {FlatList} from 'react-native';
 import useGridLayout from './useGridLayout';
 import View from '../view';
