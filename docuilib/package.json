@@ -1,6 +1,6 @@
 {
-  "name": "docuilib",
-  "version": "0.0.0",
+  "name": "uilib-docs",
+  "version": "1.0.18",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
