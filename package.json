@@ -109,7 +109,7 @@
   "peerDependencies": {
     "react": ">=17.0.1",
     "react-native": ">=0.64.1",
-    "react-native-gesture-handler": ">=1.9.0",
+    "react-native-gesture-handler": ">=2.5.0",
     "react-native-reanimated": ">=2.0.0"
   },
   "jest": {
