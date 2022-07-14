@@ -12,7 +12,7 @@ const examples = [
   {
     title: 'Initials with Color',
     label: 'AD',
-    backgroundColor: Colors.$backgroundWarning,
+    backgroundColor: Colors.$backgroundWarningLight,
     labelColor: Colors.$textMajor,
     ribbonLabel: 'New',
     ribbonStyle: {backgroundColor: Colors.purple30}
@@ -95,13 +95,13 @@ const examples = [
   },
   {
     title: 'Empty Gravatar',
-    backgroundColor: Colors.$backgroundDanger,
+    backgroundColor: Colors.$backgroundDangerLight,
     source: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'}
   },
   {
     title: 'With custom badge label',
     label: 'LD',
-    backgroundColor: Colors.$backgroundDanger,
+    backgroundColor: Colors.$backgroundDangerLight,
     badgePosition: 'BOTTOM_RIGHT',
     badgeProps: {
       label: '+2',
