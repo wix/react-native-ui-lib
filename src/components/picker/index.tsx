@@ -7,6 +7,7 @@
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, PropsWithChildren, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
+import {Typography} from 'style';
 import {
   Constants,
   asBaseComponent,
@@ -63,6 +64,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     renderPicker,
     customPickerProps,
     containerStyle,
+    labelStyle,
     testID,
     onChange,
     onPress,
@@ -167,7 +169,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
       return {
         preset: preset || null,
         containerStyle: {flexDirection: 'row'},
-        trailingAccessory: <Icon marginL-s1 source={dropdown}/>
+        labelStyle: Typography.text70,
+        trailingAccessory: props.trailingAccessory ?? <Icon marginL-s1 source={dropdown}/>
       };
     } else if (fieldType === PickerFieldTypes.settings) {
       return {
@@ -175,7 +178,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         label: undefined
       };
     }
-  }, [fieldType]);
+  }, [fieldType, preset, props.trailingAccessory]);
 
   const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({visible, toggleExpandable}) => {
     if (renderCustomModal) {
@@ -245,7 +248,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     } else if (fieldType === PickerFieldTypes.settings) {
       return (
         <View row spread>
-          <Text text70 style={others.labelStyle}>
+          <Text text70 style={labelStyle}>
             {others.label}
           </Text>
           <Text text70 $textPrimary style={others.style}>
@@ -287,6 +290,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             {...propsByFieldType}
             testID={`${testID}.input`}
             containerStyle={[paddings, margins, positionStyle, containerStyle, propsByFieldType?.containerStyle]}
+            labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
             {...accessibilityInfo}
             importantForAccessibility={'no-hide-descendants'}
             value={label}
