@@ -103,7 +103,7 @@ export default class ButtonsScreen extends Component {
             <Button
               label={'Dark Label'}
               $textDanger
-              backgroundColor={Colors.$backgroundDanger}
+              backgroundColor={Colors.$backgroundDangerLight}
               style={{marginBottom: ButtonSpace}}
             />
             <Button label={'With Shadow'} enableShadow style={{marginBottom: ButtonSpace}}/>
@@ -275,12 +275,12 @@ export default class ButtonsScreen extends Component {
             <Button
               fullWidth
               size="medium"
-              bg-$backgroundDanger
+              bg-$backgroundDangerLight
               $textDefault
               label="Medium Size Full Width"
               marginB-10
             />
-            <Button fullWidth size="small" bg-$backgroundSuccess $textSuccess label="Small Size Full Width"/>
+            <Button fullWidth size="small" bg-$backgroundSuccessLight $textSuccess label="Small Size Full Width"/>
           </View>
         </ScrollView>
       </View>
