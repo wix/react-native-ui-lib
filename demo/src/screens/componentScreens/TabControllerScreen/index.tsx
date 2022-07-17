@@ -174,7 +174,7 @@ class TabControllerScreen extends Component<{}, State> {
             // iconColor={'green'}
             // selectedIconColor={'blue'}
             enableShadow
-            activeBackgroundColor={Colors.$backgroundPrimaryLight}
+            activeBackgroundColor={Colors.$backgroundPrimaryMedium}
             centerSelected={centerSelected}
           >
             {/* {this.renderTabItems()} */}

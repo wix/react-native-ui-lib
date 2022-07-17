@@ -178,6 +178,7 @@ interface SkeletonState {
 type InternalSkeletonViewProps = SkeletonViewProps & BaseComponentInjectedProps;
 
 class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
+  static displayName = 'SkeletonView';
   static defaultProps = {
     size: Size.SMALL,
     // listProps: {size: Size.SMALL}, TODO: once size is deprecated remove it and add this
