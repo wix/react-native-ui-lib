@@ -16,6 +16,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     projectName: 'react-native-ui-lib', // Usually your repo name.
     trailingSlash: false,
     customFields: {
+      docsMainEntry: 'getting-started/setup',
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android',
       stars: '4.6'
     },
