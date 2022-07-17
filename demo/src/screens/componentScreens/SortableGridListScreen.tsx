@@ -120,7 +120,7 @@ class SortableGridListScreen extends Component {
 
 const styles = StyleSheet.create({
   list: {
-    padding: Spacings.s5
+    paddingTop: Spacings.s5
   },
   itemImage: {
     width: '100%',
