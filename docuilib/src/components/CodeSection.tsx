@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Link from '@docusaurus/Link';
 import classnames from 'classnames';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import {foundationSnippet, themeSnippet, modifiersSnippet} from './CodeSectionSnippets';
 import styles from './CodeSection.module.scss';
@@ -16,6 +17,8 @@ const tabs = [
 
 export default () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const {siteConfig} = useDocusaurusContext();
+  const {docsMainEntry} = siteConfig.customFields;
 
   return (
     <div className={styles.codeSection}>
@@ -23,7 +26,7 @@ export default () => {
       <div className={styles.codeExample}>
         <TabBar onChangeIndex={setSelectedTab} selectedIndex={selectedTab}/>
         <Tab {...tabs[selectedTab]}/>
-        <Link className={styles.docsButton} to="docs/getting-started/setup">
+        <Link className={styles.docsButton} to={`docs/${docsMainEntry}`}>
           <button className={'button dark'}>View Docs</button>
         </Link>
       </div>

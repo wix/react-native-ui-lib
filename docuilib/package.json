@@ -1,7 +1,6 @@
 {
-  "name": "docuilib",
-  "version": "0.0.0",
-  "private": true,
+  "name": "uilib-docs",
+  "version": "2.1.0",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
@@ -48,5 +47,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "files": [
+    "src",
+    "static",
+    "docusaurus.config.js",
+    "sidebars.js"
+  ]
 }

@@ -107,7 +107,7 @@ export default class ToastsScreen extends Component {
         swipeable={isSwipeable}
         onDismiss={this.toggleVisibility}
         autoDismiss={3500}
-        // backgroundColor={Colors.$backgroundSuccess}
+        // backgroundColor={Colors.$backgroundSuccessLight}
         // icon={Assets.icons.demo.add}
         // iconColor={Colors.$backgroundSuccessHeavy}
         // style={{borderWidth: 1, borderColor: Colors.$outlineDisabled}}
