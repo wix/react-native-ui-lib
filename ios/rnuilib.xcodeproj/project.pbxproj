@@ -15,6 +15,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* rnuilibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rnuilibTests.m */; };
+		8E52CBDF2887DD21009D5EC5 /* DesignTokens.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E52CBDE2887DD21009D5EC5 /* DesignTokens.xcassets */; };
 		8E8B0D662744D9CD0026B520 /* void.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8B0D652744D9CD0026B520 /* void.swift */; };
 		8EA1FC8C2519E7F7008B4B36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EA1FC8B2519E7F7008B4B36 /* LaunchScreen.storyboard */; };
 		AF7086C5E11D38CFBEB20C79 /* libPods-rnuilib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3637F09D204DA39F84CE0A /* libPods-rnuilib.a */; };
@@ -55,6 +56,7 @@
 		4F15E4C4D4931613EAD48585 /* Pods-rnuilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.release.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.release.xcconfig"; sourceTree = "<group>"; };
 		666D1B6A60C23741B20A5051 /* Pods-rnuilib-rnuilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-rnuilibTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-rnuilibTests/Pods-rnuilib-rnuilibTests.debug.xcconfig"; sourceTree = "<group>"; };
 		71C796B95A6CB852F0146DEF /* Pods-rnuilib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.debug.xcconfig"; sourceTree = "<group>"; };
+		8E52CBDE2887DD21009D5EC5 /* DesignTokens.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DesignTokens.xcassets; sourceTree = "<group>"; };
 		8E8B0D652744D9CD0026B520 /* void.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = void.swift; sourceTree = "<group>"; };
 		8EA1FC8B2519E7F7008B4B36 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = rnuilib/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8E874090C50DE6EC77F7F72 /* libPods-rnuilib-rnuilibTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-rnuilibTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +118,7 @@
 		13B07FAE1A68108700A75B9A /* rnuilib */ = {
 			isa = PBXGroup;
 			children = (
+				8E52CBDE2887DD21009D5EC5 /* DesignTokens.xcassets */,
 				10A864C0285B5CB00011FF03 /* AppDelegate.mm */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -327,6 +330,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				8EA1FC8C2519E7F7008B4B36 /* LaunchScreen.storyboard in Resources */,
+				8E52CBDF2887DD21009D5EC5 /* DesignTokens.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
