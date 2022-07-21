@@ -1,6 +1,6 @@
 {
   "name": "LoaderScreen",
-  "category": "layoutsAndTemplates",
+  "category": "layout",
   "description": "Component that shows a full screen with an activity indicator",
   "extends": ["ActivityIndicator"],
   "extendsLink": ["https://reactnative.dev/docs/activityindicator"],

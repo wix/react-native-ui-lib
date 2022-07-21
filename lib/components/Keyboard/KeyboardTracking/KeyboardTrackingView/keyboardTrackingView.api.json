@@ -1,6 +1,6 @@
 {
   "name": "KeyboardTrackingView",
-  "category": "keyboard",
+  "category": "infra",
   "description": "A UI component that enables 'keyboard tracking' for this view and it's sub-views.\nWould typically be used when you have a TextField or TextInput inside this view.",
   "note": "This view is useful only for iOS.",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/nativeComponentScreens/KeyboardTrackingViewScreen.js",

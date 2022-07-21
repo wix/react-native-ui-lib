@@ -1,6 +1,6 @@
 {
   "name": "AnimatedScanner",
-  "category": "basic",
+  "category": "media",
   "description": "description",
   "extends": ["Animated.View"],
   "extendsLink": ["https://reactnative.dev/docs/animated"],
