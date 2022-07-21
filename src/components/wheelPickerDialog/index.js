@@ -6,7 +6,7 @@ import Typography from '../../style/typography';
 import View from '../view';
 import Text from '../text';
 import {WheelPicker} from '../../nativeComponents';
-
+import {PickerPackage, CommunityPickerPackage} from '../../../src/optionalDependencies';
 
 export default class WheelPickerDialog extends Component {
   static displayName = 'IGNORE';
@@ -50,10 +50,22 @@ export default class WheelPickerDialog extends Component {
     onValueChange: PropTypes.func
   }
 
-  state = {
-    initialSelectedValue: this.props.selectedValue,
-    currentValue: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      initialSelectedValue: props.selectedValue,
+      currentValue: false
+    };
+
+    if (!PickerPackage) {
+      if (CommunityPickerPackage) {
+        // eslint-disable-next-line max-len
+        console.warn(`RNUILib Picker will soon migrate to use "@react-native-picker/picker" package instead of '@react-native-community/picker'`);
+      } else {
+        console.error(`RNUILib Picker requires installing "@react-native-picker/picker" dependency`);
+      }
+    }
+  }
 
   onValueChange = (value, index) => {
     if (this.props.onValueChange) {
