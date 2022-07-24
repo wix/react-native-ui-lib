@@ -78,8 +78,6 @@ const StackAggregator = (props: StackAggregatorProps) => {
   const itemsCount = React.Children.count(children);
   const [firstItemHeight, setFirstItemHeight] = useState<number>();
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
-  
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
   useEffect(() => {
     setIsCollapsed(collapsed);
@@ -172,10 +170,12 @@ const StackAggregator = (props: StackAggregatorProps) => {
   /** Actions */
 
   const close = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsCollapsed(true);
   };
 
   const open = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsCollapsed(false);
   };
 
