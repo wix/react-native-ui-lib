@@ -1,17 +1,10 @@
-import React, {PureComponent} from 'react';
+import React, {useMemo} from 'react';
 import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated, StyleProp} from 'react-native';
 import _ from 'lodash';
-import {
-  asBaseComponent,
-  forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
-  MarginModifiers,
-  TypographyModifiers,
-  ColorsModifiers
-} from '../../commons/new';
+import {MarginModifiers, TypographyModifiers, ColorsModifiers} from '../../commons/new';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
+import {useModifiers, useThemeProps} from 'hooks';
 
 export type TextProps = RNTextProps &
   TypographyModifiers &
@@ -50,7 +43,7 @@ export type TextProps = RNTextProps &
   };
 export type TextPropTypes = TextProps; //TODO: remove after ComponentPropTypes deprecation;
 
-type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextProps;
+const AnimatedText = Animated.createAnimatedComponent(RNText);
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
@@ -60,23 +53,40 @@ type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPro
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.tsx
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Modifiers.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Transformation.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Text/Highlights.png?raw=true
  */
-class Text extends PureComponent<PropsTypes> {
-  static displayName = 'Text';
-  private TextContainer: React.ClassType<any, any, any> = this.props.animated
-    ? Animated.createAnimatedComponent(RNText)
-    : RNText;
+const Text = (props: TextProps, ref: any) => {
+  const themeProps = useThemeProps(props, 'Text');
+  const {
+    animated,
+    children,
+    highlightString,
+    highlightStyle,
+    style,
+    center,
+    uppercase,
+    underline,
+    color: propsColor,
+    ...others
+  } = themeProps;
+  const {
+    margins,
+    typography,
+    backgroundColor,
+    flexStyle,
+    color: modifiersColor
+  } = useModifiers(others, {
+    typography: true,
+    color: true,
+    backgroundColor: true,
+    margins: true,
+    position: true,
+    flex: true
+  });
 
-  // setNativeProps(nativeProps) {
-  //   this._root.setNativeProps(nativeProps); // eslint-disable-line
-  // }
-
-  renderText(children: any): any {
-    const {highlightString, highlightStyle} = this.props;
-
+  const renderText = (children: any): any => {
     if (!_.isEmpty(highlightString)) {
       if (_.isArray(children)) {
-        return _.map(children, child => {
-          return this.renderText(child);
+        return _.map(children, (child: any) => {
+          return renderText(child);
         });
       }
 
@@ -98,13 +108,13 @@ class Text extends PureComponent<PropsTypes> {
       }
     }
     return children;
-  }
+  };
 
-  render() {
-    const {modifiers, style, center, uppercase, underline, children, forwardedRef, ...others} = this.props;
-    const color = this.props.color || modifiers.color;
-    const {margins, typography, backgroundColor, flexStyle} = modifiers;
-    const textStyle = [
+  const TextComponents = animated ? AnimatedText : RNText;
+
+  const textStyle = useMemo(() => {
+    const color = propsColor || modifiersColor;
+    return [
       styles.container,
       typography,
       color && {color},
@@ -116,16 +126,25 @@ class Text extends PureComponent<PropsTypes> {
       underline && styles.underline,
       style
     ];
+  }, [
+    propsColor,
+    modifiersColor,
+    typography,
+    backgroundColor,
+    flexStyle,
+    margins,
+    center,
+    uppercase,
+    underline,
+    style
+  ]);
 
-    const TextContainer = this.TextContainer;
-
-    return (
-      <TextContainer {...others} style={textStyle} ref={forwardedRef}>
-        {this.renderText(children)}
-      </TextContainer>
-    );
-  }
-}
+  return (
+    <TextComponents {...others} style={textStyle} ref={ref}>
+      {renderText(children)}
+    </TextComponents>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -152,4 +171,4 @@ const styles = StyleSheet.create({
 
 export {Text}; // For tests
 
-export default asBaseComponent<TextProps>(forwardRef<PropsTypes>(Text));
+export default React.forwardRef<RNText, TextProps>(Text);

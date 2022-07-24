@@ -67,6 +67,7 @@ const FloatingPlaceholder = ({
 
   return (
     <View absF style={hidePlaceholder && styles.hidden}>
+      {/* @ts-expect-error TS error is caused due to animatedStyle passed to style prop */}
       <Text
         animated
         color={getColorByState(floatingPlaceholderColor, context)}

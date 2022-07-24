@@ -4,11 +4,11 @@ import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanima
 import Text, {TextProps} from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, asClassComponent} from '../../commons/new';
 import {WheelPickerAlign} from './types';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
-const AnimatedText = Animated.createAnimatedComponent(Text);
+const AnimatedText = Animated.createAnimatedComponent(asClassComponent(Text));
 
 export interface ItemProps {
   label: string;

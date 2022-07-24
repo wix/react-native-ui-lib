@@ -32,6 +32,18 @@ export interface ExtractedStyle {
   positionStyle?: ReturnType<typeof extractPositionStyle>;
 }
 
+type ModifiersOptions = {
+  color?: boolean;
+  typography?: boolean;
+  backgroundColor?: boolean;
+  borderRadius?: boolean;
+  paddings?: boolean;
+  margins?: boolean;
+  alignments?: boolean;
+  flex?: boolean;
+  position?: boolean;
+};
+
 const PADDING_VARIATIONS = {
   padding: 'padding',
   paddingL: 'paddingLeft',
@@ -322,9 +334,10 @@ export function extractComponentProps(component: any, props: Dictionary<any>, ig
 }
 
 //@ts-ignore
-export function getThemeProps(props = this.props, context = this.context) {
-  //@ts-ignore
-  const componentName = this.displayName || this.constructor.displayName || this.constructor.name;
+export function getThemeProps(props = this.props, context = this.context, componentDisplayName = '') {
+  const componentName =
+    //@ts-ignore
+    componentDisplayName || this.displayName || this.constructor.displayName || this.constructor.name;
 
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
@@ -342,7 +355,7 @@ export function getThemeProps(props = this.props, context = this.context) {
   return {...themeProps, ...props, ...forcedThemeProps};
 }
 
-export function generateModifiersStyle(options = {
+export function generateModifiersStyle(options: ModifiersOptions = {
   color: true,
   typography: true,
   backgroundColor: true,

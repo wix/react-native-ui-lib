@@ -1,8 +1,11 @@
 import _ from 'lodash';
+import type {Context} from 'react';
 import Colors from './colors';
 
 
 export class ThemeManager {
+
+  private themeContext: Context<any> | undefined;
 
   theme = {
     primaryColor: Colors.primary,
@@ -36,6 +39,14 @@ export class ThemeManager {
   getItem(key: string) {
     // return this.theme[key];
     return _.get(this.theme, key);
+  }
+
+  setThemeContext(context: Context<any>) {
+    this.themeContext = context;
+  }
+
+  getThemeContext() {
+    return this.themeContext;
   }
 
   setComponentTheme(componentName: string, overrides: Dictionary<any> | Function) {

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
-import {OpaqueColorValue} from 'react-native';
+import type {OpaqueColorValue} from 'react-native';
 import tinycolor from 'tinycolor2';
 import {colorsPalette, themeColors} from './colorsPalette';
 import DesignTokens from './designTokens';
