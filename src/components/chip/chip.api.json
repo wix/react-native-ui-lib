@@ -1,6 +1,6 @@
 {
   "name": "Chip",
-  "category": "infra",
+  "category": "controls",
   "description": "Chip component",
   "extends": ["TouchableOpacity", "View"],
   "extendsLink": [
