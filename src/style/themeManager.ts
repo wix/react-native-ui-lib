@@ -5,7 +5,7 @@ import Colors from './colors';
 
 export class ThemeManager {
 
-  private themeContext?: Context<ContextType>;
+  private themeContext?: Context<any>;
 
   theme = {
     primaryColor: Colors.primary,
