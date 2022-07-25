@@ -32,7 +32,7 @@ export interface ExtractedStyle {
   positionStyle?: ReturnType<typeof extractPositionStyle>;
 }
 
-type ModifiersOptions = {
+export type ModifiersOptions = {
   color?: boolean;
   typography?: boolean;
   backgroundColor?: boolean;
