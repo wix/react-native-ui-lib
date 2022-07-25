@@ -78,7 +78,6 @@ const Text = (props: TextProps, ref: any) => {
     color: true,
     backgroundColor: true,
     margins: true,
-    position: true,
     flex: true
   });
 
