@@ -103,7 +103,7 @@ export type ContainerModifiers = AlignmentModifiers &
   BorderRadiusModifiers &
   BackgroundColorModifier;
 
-export function updateModifiers() {
+export function updateColorModifiers() {
   SCHEME_COLORS = Scheme.getScheme();
   ALL_COLORS = {...Colors, ...SCHEME_COLORS};
   BACKGROUND_COLOR_KEYS_PATTERN = Colors.getBackgroundKeysPattern();
