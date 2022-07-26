@@ -1,54 +1,45 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
-import {
-  asBaseComponent,
-  forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
-  ContainerModifiers
-} from '../../commons/new';
+import {useModifiers, useThemeProps} from 'hooks';
+import {ContainerModifiers} from '../../commons/new';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 import {ViewProps} from '../view';
 
+export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>, ContainerModifiers {
+  /**
+   * background color for TouchableOpacity
+   */
+  backgroundColor?: string;
+  /**
+   * throttle time in MS for onPress callback
+   */
+  throttleTime?: number;
+  /**
+   * throttle options {leading, trailing}
+   */
+  throttleOptions?: {leading: boolean; trailing: boolean};
+  /**
+   * Apply background color on TouchableOpacity when active (press is on)
+   */
+  activeBackgroundColor?: string;
+  /**
+   * Will apply scale press feedback. This will enforce the useNative prop
+   */
+  activeScale?: number;
+  /**
+   * Should use a more native touchable opacity component
+   */
+  useNative?: boolean;
+  /**
+   * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
+   */
+  customValue?: any;
+  style?: ViewProps['style'];
+  onPress?: (props?: TouchableOpacityProps | any) => void;
+}
 
-export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>,
-  ContainerModifiers {
-    /**
-     * background color for TouchableOpacity
-     */
-    backgroundColor?: string;
-    /**
-     * throttle time in MS for onPress callback
-     */
-    throttleTime?: number;
-    /**
-     * throttle options {leading, trailing}
-     */
-    throttleOptions?: {leading: boolean; trailing: boolean};
-    /**
-     * Apply background color on TouchableOpacity when active (press is on)
-     */
-    activeBackgroundColor?: string;
-    /**
-     * Will apply scale press feedback. This will enforce the useNative prop
-     */
-    activeScale?: number;
-    /**
-     * Should use a more native touchable opacity component
-     */
-    useNative?: boolean;
-    /**
-     * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
-     */
-    customValue?: any;
-    style?: ViewProps['style'];
-    onPress?: (props?: TouchableOpacityProps | any) => void;
-  }
-
-type Props = BaseComponentInjectedProps &
-  ForwardRefInjectedProps &
-  TouchableOpacityProps;
+const DEFAULT_THROTTLE_OPTIONS = {leading: true, trailing: false};
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -58,100 +49,105 @@ type Props = BaseComponentInjectedProps &
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx
  */
-class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
-  static displayName = 'TouchableOpacity';
+function TouchableOpacity(props: TouchableOpacityProps, ref: any) {
+  const themeProps = useThemeProps(props, 'TouchableOpacity');
+  const {
+    useNative,
+    activeScale,
+    style,
+    customValue,
+    onPress,
+    onPressIn,
+    onPressOut,
+    backgroundColor: propsBackgroundColor,
+    activeBackgroundColor,
+    throttleTime = 0,
+    throttleOptions = DEFAULT_THROTTLE_OPTIONS,
+    ...others
+  } = themeProps;
+  const {
+    borderRadius,
+    paddings,
+    margins,
+    alignments,
+    flexStyle,
+    backgroundColor: modifiersBackgroundColor
+  } = useModifiers(themeProps, {
+    borderRadius: true,
+    paddings: true,
+    margins: true,
+    alignments: true,
+    flex: true,
+    backgroundColor: true
+  });
+  const [active, setActive] = useState(false);
 
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      active: false
-    };
-
-    const {throttleTime = 0, throttleOptions = {leading: true, trailing: false}} = props;
-    this.onPress = _.throttle(
-      this.onPress.bind(this),
-      throttleTime,
-      throttleOptions
-    );
-  }
-
-  getAccessibilityInfo() {
-    const {disabled} = this.props;
-
+  const getAccessibilityInfo = () => {
     return {
       accessibilityRole: 'button',
-      accessibilityStates: disabled ? ['disabled'] : []
+      accessibilityStates: props.disabled ? ['disabled'] : []
     };
-  }
+  };
 
-  onPressIn = (...args: any) => {
-    this.setState({active: true});
-    //@ts-expect-error
-    this.props.onPressIn?.(...args);
-  }
-
-  onPressOut = (...args: any) => {
-    this.setState({active: false});
-    //@ts-expect-error
-    this.props.onPressOut?.(...args);
-  }
-
-  get backgroundColorStyle() {
-    const {backgroundColor: propsBackgroundColor, modifiers} = this.props;
-    const backgroundColor = propsBackgroundColor || modifiers.backgroundColor;
+  const backgroundColorStyle = useMemo(() => {
+    const backgroundColor = propsBackgroundColor || modifiersBackgroundColor;
 
     if (backgroundColor) {
       return {backgroundColor};
     }
-  }
+  }, [propsBackgroundColor, modifiersBackgroundColor]);
 
-  get activeBackgroundStyle() {
-    const {active} = this.state;
-    const {activeBackgroundColor} = this.props;
-
+  const activeBackgroundStyle = useMemo(() => {
     if (active && activeBackgroundColor) {
       return {backgroundColor: activeBackgroundColor};
     }
+  }, [active, activeBackgroundColor]);
+
+  const _onPress = useCallback(_.throttle(() => {
+    onPress?.(props);
+  },
+  throttleTime,
+  throttleOptions),
+  [customValue, onPress, throttleTime, throttleOptions]);
+
+  const _onPressIn = useCallback((...args: any) => {
+    setActive(true);
+    onPressIn?.(...args);
+  },
+  [onPressIn]);
+
+  const _onPressOut = useCallback((...args: any) => {
+    setActive(false);
+    onPressOut?.(...args);
+  },
+  [onPressOut]);
+
+  if (useNative || !_.isUndefined(activeScale)) {
+    // @ts-ignore
+    return <IncubatorTouchableOpacity {...props}/>;
   }
 
-  render() {
-    const {useNative, activeScale, style, modifiers, forwardedRef, ...others} = this.props;
-    const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
-
-    if (useNative || !_.isUndefined(activeScale)) {
-      // @ts-ignore
-      return <IncubatorTouchableOpacity {...this.props}/>;
-    }
-
-    return (
-      // @ts-ignore
-      <RNTouchableOpacity
-        {...this.getAccessibilityInfo()}
-        {...others}
-        onPress={this.onPress}
-        onPressIn={this.onPressIn}
-        onPressOut={this.onPressOut}
-        style={[
-          this.backgroundColorStyle,
-          borderRadius && {borderRadius},
-          flexStyle,
-          paddings,
-          margins,
-          alignments,
-          style,
-          this.activeBackgroundStyle
-        ]}
-        ref={forwardedRef}
-      />
-    );
-  }
-
-  onPress() {
-    this.props.onPress?.(this.props);
-  }
+  return (
+    // @ts-ignore
+    <RNTouchableOpacity
+      {...getAccessibilityInfo()}
+      {...others}
+      onPress={_onPress}
+      onPressIn={_onPressIn}
+      onPressOut={_onPressOut}
+      style={[
+        backgroundColorStyle,
+        borderRadius && {borderRadius},
+        flexStyle,
+        paddings,
+        margins,
+        alignments,
+        style,
+        activeBackgroundStyle
+      ]}
+      ref={ref}
+    />
+  );
 }
 
-export default asBaseComponent<TouchableOpacityProps>(
-  forwardRef(TouchableOpacity)
-);
+export default React.forwardRef<RNTouchableOpacity, TouchableOpacityProps>(TouchableOpacity);
