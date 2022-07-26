@@ -152,4 +152,11 @@ const styles = StyleSheet.create({
 
 export {Text}; // For tests
 
-export default asBaseComponent<TextProps>(forwardRef<PropsTypes>(Text));
+
+const modifiersOptions = {
+  margins: true,
+  typography: true,
+  backgroundColor: true,
+  flexStyle: true
+};
+export default asBaseComponent<TextProps>(forwardRef<PropsTypes>(Text), {modifiersOptions});
