@@ -33,6 +33,18 @@ export interface ExtractedStyle {
   positionStyle?: ReturnType<typeof extractPositionStyle>;
 }
 
+export type ModifiersOptions = {
+  color?: boolean;
+  typography?: boolean;
+  backgroundColor?: boolean;
+  borderRadius?: boolean;
+  paddings?: boolean;
+  margins?: boolean;
+  alignments?: boolean;
+  flex?: boolean;
+  position?: boolean;
+}
+
 const PADDING_VARIATIONS = {
   padding: 'padding',
   paddingL: 'paddingLeft',
@@ -341,7 +353,7 @@ export function getThemeProps(props = this.props, context = this.context) {
   return {...themeProps, ...props, ...forcedThemeProps};
 }
 
-export function generateModifiersStyle(options = {
+export function generateModifiersStyle(options: ModifiersOptions = {
   color: true,
   typography: true,
   backgroundColor: true,
