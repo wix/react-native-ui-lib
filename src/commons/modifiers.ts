@@ -369,6 +369,10 @@ props: Dictionary<any>) {
   const boundProps = props || this.props;
   const style: ExtractedStyle = {};
 
+  if (!_.find(boundProps, prop => prop === true)) {
+    return style;
+  }
+
   if (options.color) {
     style.color = extractColorValue(boundProps);
   }
