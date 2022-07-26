@@ -484,6 +484,7 @@ class ChipsInput extends Component<OwnProps, State> {
     const Container = maxHeight ? ScrollView : View;
     return (
       <Container
+        // @ts-expect-error
         ref={this.scrollRef}
         showsVerticalScrollIndicator={false}
         style={!maxHeight && styles.tagsList}
