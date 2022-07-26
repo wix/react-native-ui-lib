@@ -20,7 +20,7 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
    */
   animated?: boolean;
   /**
-    * Use Animate.View (from react-native-reanimated) as a container
+   * Use Animate.View (from react-native-reanimated) as a container
    */
   reanimated?: boolean;
   /**
@@ -138,4 +138,14 @@ class View extends PureComponent<PropsTypes, ViewState> {
   }
 }
 
-export default asBaseComponent<ViewProps>(forwardRef(View));
+const modifiersOptions = {
+  backgroundColor: true,
+  borderRadius: true,
+  paddings: true,
+  margins: true,
+  alignments: true,
+  flex: true,
+  position: true
+};
+
+export default asBaseComponent<ViewProps>(forwardRef(View), {modifiersOptions});
