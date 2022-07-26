@@ -234,7 +234,7 @@ export class Colors {
 }
 
 function colorStringValue(color: string | object) {
-  return color.toString();
+  return color?.toString();
 }
 
 function adjustSaturation(colors: string[], color: string) {
