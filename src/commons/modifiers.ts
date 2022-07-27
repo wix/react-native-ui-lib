@@ -43,7 +43,7 @@ export type ModifiersOptions = {
   alignments?: boolean;
   flex?: boolean;
   position?: boolean;
-}
+};
 
 const PADDING_VARIATIONS = {
   padding: 'padding',
@@ -333,9 +333,10 @@ export function extractComponentProps(component: any, props: Dictionary<any>, ig
 }
 
 //@ts-ignore
-export function getThemeProps(props = this.props, context = this.context) {
-  //@ts-ignore
-  const componentName = this.displayName || this.constructor.displayName || this.constructor.name;
+export function getThemeProps(props = this.props, context = this.context, componentDisplayName = '') {
+  const componentName =
+    //@ts-ignore
+    componentDisplayName || this.displayName || this.constructor.displayName || this.constructor.name;
 
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
