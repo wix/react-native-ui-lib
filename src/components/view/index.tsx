@@ -100,6 +100,23 @@ function View(props: ViewProps, ref: any) {
     return container;
   }, [useSafeArea, animated, reanimated]);
 
+  const _style = useMemo(() => {
+    return [
+      backgroundColor && {
+        backgroundColor
+      },
+      borderRadius && {
+        borderRadius
+      },
+      flexStyle,
+      positionStyle,
+      paddings,
+      margins,
+      alignments,
+      style
+    ];
+  }, [backgroundColor, borderRadius, flexStyle, positionStyle, paddings, margins, alignments, style]);
+
   if (!ready) {
     return null;
   }
@@ -109,16 +126,7 @@ function View(props: ViewProps, ref: any) {
       accessibilityElementsHidden={inaccessible}
       importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
       {...others}
-      style={[
-        backgroundColor && {backgroundColor},
-        borderRadius && {borderRadius},
-        flexStyle,
-        positionStyle,
-        paddings,
-        margins,
-        alignments,
-        style
-      ]}
+      style={_style}
       ref={ref}
     >
       {children}
