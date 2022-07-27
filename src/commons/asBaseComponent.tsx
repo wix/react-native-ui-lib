@@ -18,11 +18,6 @@ export interface AsBaseComponentOptions {
   modifiersOptions?: Modifiers.ModifiersOptions;
 }
 
-// TODO: find a proper way to inject this type in the private repo
-type ThemeComponent = {
-  useCustomTheme?: boolean;
-};
-
 const EMPTY_MODIFIERS = {};
 
 function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>,
