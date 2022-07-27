@@ -1,6 +1,6 @@
 {
   "name": "TouchableOpacity",
-  "category": "basic",
+  "category": "infra",
   "description": "A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor",
   "extends": ["TouchableOpacity"],
   "extendsLink": ["https://reactnative.dev/docs/touchableopacity"],

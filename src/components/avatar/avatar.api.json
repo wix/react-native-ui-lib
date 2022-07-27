@@ -1,6 +1,6 @@
 {
   "name": "Avatar",
-  "category": "basic",
+  "category": "media",
   "description": "Avatar component for displaying user profile images",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true",

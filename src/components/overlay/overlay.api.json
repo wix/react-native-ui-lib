@@ -1,6 +1,6 @@
 {
   "name": "Overlay",
-  "category": "basic",
+  "category": "infra",
   "description": "Overlay view with types",
   "extends": ["Image"],
   "extendsLink": ["https://reactnative.dev/docs/image"],
