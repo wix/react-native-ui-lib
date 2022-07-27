@@ -55,8 +55,7 @@ export {default as AnimatedImage} from './components/animatedImage';
 // @ts-expect-error
 export {default as AnimatedScanner} from './components/animatedScanner';
 export {default as Avatar, AvatarProps} from './components/avatar';
-export {AvatarHelper} from './helpers';
-export {default as Profiler} from './helpers/Profiler';
+export {AvatarHelper, Profiler} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as BaseInput} from './components/baseInput';
 export {default as Button, ButtonProps, ButtonSize, ButtonAnimationDirection} from './components/button';
