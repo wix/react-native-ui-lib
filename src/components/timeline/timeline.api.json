@@ -1,6 +1,6 @@
 {
   "name": "Timeline",
-  "category": "basic",
+  "category": "lists",
   "description": "A timeline item to render as part of a timeline list",
   "extends": ["View"],
   "extendsLink": ["https://reactnative.dev/docs/view"],

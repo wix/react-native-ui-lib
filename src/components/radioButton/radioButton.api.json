@@ -1,6 +1,6 @@
 {
   "name": "RadioButton",
-  "category": "form",
+  "category": "controls",
   "description": "A Radio Button component, should be wrapped with a RadioGroup",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/RadioButtonScreen.js",
   "images": [

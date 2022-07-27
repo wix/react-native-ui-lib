@@ -1,6 +1,6 @@
 {
   "name": "ExpandableSection",
-  "category": "basic",
+  "category": "infra",
   "description": "Component to render expanded section below or above the SectionHeader",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ExpandableSectionScreen.tsx",
   "images": [

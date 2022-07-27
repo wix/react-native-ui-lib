@@ -1,6 +1,6 @@
 {
   "name": "ConnectionStatusBar",
-  "category": "basic",
+  "category": "status",
   "description": "Top bar to show a 'no internet' connection status",
   "note": [
     "Run on real device for best results",
