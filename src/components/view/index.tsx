@@ -4,7 +4,7 @@ import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleP
 import Reanimated from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 
-export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
+export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers {
   /**
    * If true, will render as SafeAreaView
    */
