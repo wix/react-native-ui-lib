@@ -1,16 +1,10 @@
-import React, {PureComponent} from 'react';
+import {useModifiers, useThemeProps} from 'hooks';
+import React, {useEffect, useMemo, useState} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
 import Reanimated from 'react-native-reanimated';
-import {
-  Constants,
-  asBaseComponent,
-  forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
-  ContainerModifiers
-} from '../../commons/new';
+import {Constants, ContainerModifiers} from '../../commons/new';
 
-export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
+export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers {
   /**
    * If true, will render as SafeAreaView
    */
@@ -46,98 +40,6 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
   style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
 
-type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewProps;
-
-interface ViewState {
-  ready: boolean;
-}
-
-/**
- * @description: An enhanced View component
- * @extends: View
- * @extendsLink: https://reactnative.dev/docs/view
- * @modifiers: margins, paddings, alignments, background, borderRadius
- */
-class View extends PureComponent<PropsTypes, ViewState> {
-  static displayName = 'View';
-  private Container: React.ClassType<any, any, any>;
-
-  constructor(props: PropsTypes) {
-    super(props);
-
-    this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
-    if (props.reanimated) {
-      this.Container = Reanimated.createAnimatedComponent(this.Container);
-    } else if (props.animated) {
-      this.Container = Animated.createAnimatedComponent(this.Container);
-    }
-
-    this.state = {
-      ready: !props.renderDelay
-    };
-  }
-
-  componentDidMount() {
-    const {renderDelay} = this.props;
-    if (renderDelay) {
-      setTimeout(() => {
-        this.setState({ready: true});
-      }, renderDelay);
-    }
-  }
-
-  // TODO: do we need this?
-  setNativeProps(nativeProps: any) {
-    //@ts-ignore
-    this._root.setNativeProps(nativeProps); // eslint-disable-line
-  }
-
-  render() {
-    if (!this.state.ready) {
-      return null;
-    }
-
-    // (!) extract left, top, bottom... props to avoid passing them on Android
-    // eslint-disable-next-line
-    const {
-      modifiers,
-      style,
-      /* eslint-disable */
-      left,
-      top,
-      right,
-      bottom,
-      flex: propsFlex,
-      /* eslint-enable */
-      forwardedRef,
-      inaccessible,
-      ...others
-    } = this.props;
-    const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle, positionStyle} = modifiers;
-    const Element = this.Container;
-    return (
-      <Element
-        accessibilityElementsHidden={inaccessible}
-        importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
-        {...others}
-        style={[
-          backgroundColor && {backgroundColor},
-          borderRadius && {borderRadius},
-          flexStyle,
-          positionStyle,
-          paddings,
-          margins,
-          alignments,
-          style
-        ]}
-        ref={forwardedRef}
-      >
-        {this.props.children}
-      </Element>
-    );
-  }
-}
-
 const modifiersOptions = {
   backgroundColor: true,
   borderRadius: true,
@@ -148,4 +50,88 @@ const modifiersOptions = {
   position: true
 };
 
-export default asBaseComponent<ViewProps>(forwardRef(View), {modifiersOptions});
+/**
+ * @description: An enhanced View component
+ * @extends: View
+ * @extendsLink: https://reactnative.dev/docs/view
+ * @modifiers: margins, paddings, alignments, background, borderRadius
+ */
+function View(props: ViewProps, ref: any) {
+  const themeProps = useThemeProps(props, 'View');
+  const {
+    renderDelay,
+    style,
+    // (!) extract left, top, bottom... props to avoid passing them on Android
+    /* eslint-disable */
+    left,
+    top,
+    right,
+    bottom,
+    flex: propsFlex,
+    /* eslint-enable */
+    inaccessible,
+    useSafeArea,
+    animated,
+    reanimated,
+    children,
+    ...others
+  } = themeProps;
+  const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle, positionStyle} = useModifiers(themeProps,
+    modifiersOptions);
+  const [ready, setReady] = useState(!renderDelay);
+
+  useEffect(() => {
+    if (renderDelay) {
+      setTimeout(() => {
+        setReady(true);
+      }, renderDelay);
+    }
+  }, []);
+
+  const ViewContainer = useMemo(() => {
+    const container = useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
+
+    if (reanimated) {
+      return Reanimated.createAnimatedComponent(container);
+    } else if (animated) {
+      return Animated.createAnimatedComponent(container);
+    }
+
+    return container;
+  }, [useSafeArea, animated, reanimated]);
+
+  const _style = useMemo(() => {
+    return [
+      backgroundColor && {
+        backgroundColor
+      },
+      borderRadius && {
+        borderRadius
+      },
+      flexStyle,
+      positionStyle,
+      paddings,
+      margins,
+      alignments,
+      style
+    ];
+  }, [backgroundColor, borderRadius, flexStyle, positionStyle, paddings, margins, alignments, style]);
+
+  if (!ready) {
+    return null;
+  }
+
+  return (
+    <ViewContainer
+      accessibilityElementsHidden={inaccessible}
+      importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
+      {...others}
+      style={_style}
+      ref={ref}
+    >
+      {children}
+    </ViewContainer>
+  );
+}
+
+export default React.forwardRef<RNView, ViewProps>(View);
