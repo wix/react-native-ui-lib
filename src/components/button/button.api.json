@@ -1,6 +1,6 @@
 {
   "name": "Button",
-  "category": "basic",
+  "category": "controls",
   "description": "Customizable button component that handles press events",
   "extends": ["basic/TouchableOpacity"],
   "modifiers": ["margin", "background"],

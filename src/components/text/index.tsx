@@ -154,9 +154,10 @@ export {Text}; // For tests
 
 
 const modifiersOptions = {
+  color: true,
   margins: true,
   typography: true,
   backgroundColor: true,
-  flexStyle: true
+  flex: true
 };
 export default asBaseComponent<TextProps>(forwardRef<PropsTypes>(Text), {modifiersOptions});

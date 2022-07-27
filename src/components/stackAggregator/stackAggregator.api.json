@@ -1,6 +1,6 @@
 {
   "name": "StackAggregator",
-  "category": "basic",
+  "category": "layout",
   "description": "Stack aggregator component",
   "modifiers": ["margin", "padding"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StackAggregatorScreen.tsx",
