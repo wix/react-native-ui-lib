@@ -4,14 +4,7 @@ import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} 
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
-import {
-  Constants,
-  asBaseComponent,
-  BaseComponentInjectedProps,
-  AlignmentModifiers,
-  PaddingModifiers,
-  MarginModifiers
-} from '../../commons/new';
+import {Constants, AlignmentModifiers, PaddingModifiers, MarginModifiers} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const LinearGradient = LinearGradientPackage?.default;
@@ -175,9 +168,7 @@ interface SkeletonState {
  * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
  */
 
-type InternalSkeletonViewProps = SkeletonViewProps & BaseComponentInjectedProps;
-
-class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
+class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   static displayName = 'SkeletonView';
   static defaultProps = {
     size: Size.SMALL,
@@ -191,7 +182,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
 
   fadeInAnimation?: Animated.CompositeAnimation;
 
-  constructor(props: InternalSkeletonViewProps) {
+  constructor(props: SkeletonViewProps) {
     super(props);
 
     this.state = {
@@ -214,7 +205,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     }
   }
 
-  componentDidUpdate(prevProps: InternalSkeletonViewProps) {
+  componentDidUpdate(prevProps: SkeletonViewProps) {
     if (this.props.showContent && !prevProps.showContent) {
       this.fadeInAnimation?.stop();
       this.fade(false, this.showChildren);
@@ -481,7 +472,6 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
             const key = timesKey ? `${timesKey}-${index}` : `${index}`;
             return (
               <SkeletonView
-                modifiers={{}}
                 {...passedProps}
                 key={key}
                 testID={`${testID}-${index}`}
@@ -499,7 +489,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   }
 }
 
-export default asBaseComponent<SkeletonViewProps, typeof SkeletonView>(SkeletonView);
+export default SkeletonView;
 
 const styles = StyleSheet.create({
   listItem: {
