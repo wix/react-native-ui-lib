@@ -1,6 +1,6 @@
 {
   "name": "Wizard.Step",
-  "category": "layoutsAndTemplates",
+  "category": "navigation",
   "description": "A wizard presents a series of steps in  prescribed order. That the user needs to complete in order to accomplish a goal (e.g. purchase a product)",
   "note": "Use Wizard with nested Wizard.Step(s) to achieve the desired result.",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.tsx",

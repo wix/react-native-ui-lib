@@ -3,6 +3,7 @@ const childProcess = require('child_process');
 const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
+const VALID_CATEGORIES = ['foundation', 'assets', 'navigation', 'layout', 'controls', 'status', 'media', 'lists', 'form', 'dateTime', 'overlays', 'charts', 'incubator', 'infra'];
 
 const result = childProcess.execSync('find ./src ./lib/components -name "*api.json"');
 const apiFiles = result.toString().trim().split('\n');
@@ -25,6 +26,10 @@ components.forEach(component => {
   const isParentComponent = parentComponents.includes(componentName);
   const isIncubatorComponent = component.category === 'incubator';
 
+  if (!VALID_CATEGORIES.includes(component.category)) {
+    console.error(`${componentName} has invalid category "${component.category}"`);
+  }
+
   let content = '';
 
   /* Markdown Front Matter */
@@ -40,7 +45,7 @@ components.forEach(component => {
   /* General */
   content += `${component.description}  \n`;
   content += `[(code example)](${component.example})\n`;
-  
+
   if (component.extends) {
     let extendsText = component.extends?.join(', ');
     if (component.extendsLink) {
@@ -66,8 +71,8 @@ components.forEach(component => {
   }
 
   /* Images */
-  content += 
-  `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
+  content +=
+    `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
   component.images?.forEach(image => {
     content += `<img style={{maxHeight: '420px'}} src={'${image}'}/>`;
     content += '\n\n';
@@ -95,10 +100,10 @@ components.forEach(component => {
   const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
 
   if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, {recursive: true});
+    fs.mkdirSync(dirPath, { recursive: true });
   }
 
-  fs.writeFileSync(`${dirPath}/${component.name}.md`, content, {encoding: 'utf8'});
+  fs.writeFileSync(`${dirPath}/${component.name}.md`, content, { encoding: 'utf8' });
 });
 
 function getComponentNameParts(componentName) {

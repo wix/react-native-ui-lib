@@ -1,6 +1,6 @@
 {
   "name": "Fader",
-  "category": "layoutsAndTemplates",
+  "category": "infra",
   "description": "A gradient fading overlay to render on top of overflowing content (like scroll component)",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FaderScreen.tsx",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Fader/Fader.gif?raw=true"],

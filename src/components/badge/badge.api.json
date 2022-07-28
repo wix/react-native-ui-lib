@@ -1,6 +1,6 @@
 {
   "name": "Badge",
-  "category": "basic",
+  "category": "status",
   "description": "Round colored badge, typically used to show a number",
   "extends": ["basic/TouchableOpacity", "basic/View"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx",

@@ -11,8 +11,6 @@ import Button from '../button';
 import Text from '../text';
 
 
-// Create animated view base on uilib view for the safeArea support
-const AnimatedView = Animated.createAnimatedComponent(View);
 const COLOR = Colors.white;
 
 /**
@@ -330,22 +328,24 @@ export default class Toast extends PureBaseComponent {
     });
 
     return (
-      <AnimatedView
+      <View
+        animated
         testID={testID}
         style={[positionStyle, {zIndex, transform: [{translateY}]}]}
         pointerEvents={'box-none'}
       >
         {!isTop && !!toastHeight && this.renderAttachmentContent()}
-        <AnimatedView
+        <View
           useSafeArea
+          animated
           style={[{backgroundColor: bg, opacity}, style]}
           onLayout={this.onToastLayout}
           pointerEvents={visible ? 'auto' : 'none'}
         >
           {this.renderContent()}
-        </AnimatedView>
+        </View>
         {isTop && !!toastHeight && this.renderAttachmentContent()}
-      </AnimatedView>
+      </View>
     );
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "Modal.TopBar",
-  "category": "layoutsAndTemplates",
+  "category": "overlays",
   "description": "Modal.TopBar, inner component for configuring the Modal component's title, buttons and statusBar",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.tsx",
   "images": ["https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif"],

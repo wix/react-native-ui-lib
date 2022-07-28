@@ -10,76 +10,82 @@ import {
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
-import {Constants, asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  ForwardRefInjectedProps,
+  BaseComponentInjectedProps,
+  MarginModifiers
+} from '../../commons/new';
 import {getAsset, isSvg} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
 
-
-export type ImageProps = RNImageProps & MarginModifiers & {
-  /**
-   * custom source transform handler for manipulating the image source (great for size control)
-   */
-  sourceTransformer?: (props: any) => ImageSourcePropType;
-  /**
-   * if provided image source will be driven from asset name
-   */
-  assetName?: string;
-  /**
-   * the asset group, default is "icons"
-   */
-  assetGroup?: string;
-  /**
-   * the asset tint
-   */
-  tintColor?: string;
-  /**
-   * whether the image should flip horizontally on RTL locals
-   */
-  supportRTL?: boolean;
-  /**
-   * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
-   */
-  cover?: boolean;
-  /**
-   * The aspect ratio for the image
-   */
-  aspectRatio?: number;
-  /**
-   * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
-   * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
-   */
-  overlayType?: OverlayTypeType;
-  /**
-   * The intensity of the overlay ('LOW' | 'MEDIUM' | 'HIGH'), default is 'LOW'.
-   */
-   overlayIntensity?: OverlayIntensityType;
-  /**
-   * Pass a custom color for the overlay
-   */
-  overlayColor?: string;
-  /**
-   * Render an overlay with custom content
-   */
-  customOverlayContent?: JSX.Element;
-  /**
-   * Default image source in case of an error
-   */
-  errorSource?: ImageSourcePropType;
-  /**
-   * An imageId that can be used in sourceTransformer logic
-   */
-  imageId?: string;
-};
+export type ImageProps = RNImageProps &
+  MarginModifiers & {
+    /**
+     * custom source transform handler for manipulating the image source (great for size control)
+     */
+    sourceTransformer?: (props: any) => ImageSourcePropType;
+    /**
+     * if provided image source will be driven from asset name
+     */
+    assetName?: string;
+    /**
+     * the asset group, default is "icons"
+     */
+    assetGroup?: string;
+    /**
+     * the asset tint
+     */
+    tintColor?: string;
+    /**
+     * whether the image should flip horizontally on RTL locals
+     */
+    supportRTL?: boolean;
+    /**
+     * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
+     */
+    cover?: boolean;
+    /**
+     * The aspect ratio for the image
+     */
+    aspectRatio?: number;
+    /**
+     * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
+     * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
+     */
+    overlayType?: OverlayTypeType;
+    /**
+     * The intensity of the overlay ('LOW' | 'MEDIUM' | 'HIGH'), default is 'LOW'.
+     */
+    overlayIntensity?: OverlayIntensityType;
+    /**
+     * Pass a custom color for the overlay
+     */
+    overlayColor?: string;
+    /**
+     * Render an overlay with custom content
+     */
+    customOverlayContent?: JSX.Element;
+    /**
+     * Default image source in case of an error
+     */
+    errorSource?: ImageSourcePropType;
+    /**
+     * An imageId that can be used in sourceTransformer logic
+     */
+    imageId?: string;
+  };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
 type State = {
-  error: boolean,
-  prevSource: ImageSourcePropType
-}
+  error: boolean;
+  prevSource: ImageSourcePropType;
+};
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -171,22 +177,11 @@ class Image extends PureComponent<Props, State> {
   };
 
   renderErrorImage = () => {
-    const {
-      style,
-      cover,
-      modifiers
-    } = this.props;
+    const {style, cover, modifiers} = this.props;
     const {margins} = modifiers;
 
     return (
-      <View
-        style={[
-          margins,
-          style,
-          styles.errorImageContainer,
-          cover && styles.coverImage
-        ]}
-      >
+      <View style={[margins, style, styles.errorImageContainer, cover && styles.coverImage]}>
         {this.renderImage(true)}
       </View>
     );
@@ -286,4 +281,4 @@ const styles = StyleSheet.create({
 
 hoistNonReactStatic(Image, RNImage);
 export {Image};
-export default asBaseComponent<ImageProps, typeof Image>(Image);
+export default asBaseComponent<ImageProps, typeof Image>(Image, {modifiersOptions: {margins: true}});
