@@ -167,7 +167,6 @@ interface SkeletonState {
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true
  * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
  */
-
 class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   static displayName = 'SkeletonView';
   static defaultProps = {
@@ -181,6 +180,16 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   static contentTypes: typeof ContentType = ContentType;
 
   fadeInAnimation?: Animated.CompositeAnimation;
+  contentAccessibilityProps?: any;
+  listItemAccessibilityProps?: any;
+
+  getAccessibilityProps(accessibilityLabel: string, accessibilityProps: any) {
+    return {
+      accessible: true,
+      accessibilityLabel,
+      ...accessibilityProps
+    };
+  }
 
   constructor(props: SkeletonViewProps) {
     super(props);
@@ -196,6 +205,13 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
       console.error(`RNUILib SkeletonView's requires installing "react-native-shimmer-placeholder" dependency`);
     } else if (ShimmerPlaceholder === undefined) {
       ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+    }
+
+    const accessibilityProps = extractAccessibilityProps(this.props);
+    if (props.template === Template.LIST_ITEM) {
+      this.listItemAccessibilityProps = this.getAccessibilityProps('Loading list item', accessibilityProps);
+    } else {
+      this.contentAccessibilityProps = this.getAccessibilityProps('Loading content', accessibilityProps);
     }
   }
 
@@ -226,14 +242,6 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
 
   showChildren = () => {
     this.setState({isAnimating: false});
-  };
-
-  getAccessibilityProps = (accessibilityLabel: any) => {
-    return {
-      accessible: true,
-      accessibilityLabel,
-      ...extractAccessibilityProps(this.props)
-    };
   };
 
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
@@ -333,7 +341,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     const {style, ...others} = this.props;
 
     return (
-      <View style={[styles.listItem, style]} {...this.getAccessibilityProps('Loading list item')} {...others}>
+      <View style={[styles.listItem, style]} {...this.listItemAccessibilityProps} {...others}>
         {this.renderListItemLeftContent()}
         {this.renderListItemContentStrips()}
       </View>
@@ -342,7 +350,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
 
   renderTextContentTemplate = () => {
     return (
-      <View {...this.getAccessibilityProps('Loading content')} {...this.props}>
+      <View {...this.contentAccessibilityProps} {...this.props}>
         {this.renderStrip(true, 235, 0)}
         {this.renderStrip(true, 260, 12)}
         {this.renderStrip(true, 190, 12)}
@@ -368,7 +376,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     const data = showContent && _.isFunction(renderContent) ? renderContent(this.props) : children;
 
     return (
-      <View style={style} {...this.getAccessibilityProps('Loading content')} {...others}>
+      <View style={style} {...this.contentAccessibilityProps} {...others}>
         <ShimmerPlaceholder {...this.getDefaultSkeletonProps()} {...others}>
           {showContent && data}
         </ShimmerPlaceholder>
