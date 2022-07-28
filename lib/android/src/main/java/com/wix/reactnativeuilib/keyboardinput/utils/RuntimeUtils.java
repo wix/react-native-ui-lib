@@ -14,7 +14,9 @@ public class RuntimeUtils {
     };
 
     public static void runOnUIThread(Runnable runnable) {
-        ReactContextHolder.getContext().runOnUiQueueThread(runnable);
+        if (ReactContextHolder.getContext() != null) {
+            ReactContextHolder.getContext().runOnUiQueueThread(runnable);
+        }
     }
 
     public static void dispatchUIUpdates(final Runnable userRunnable) {
@@ -22,7 +24,9 @@ public class RuntimeUtils {
             @Override
             public void run() {
                 userRunnable.run();
-                ReactContextHolder.getContext().runOnNativeModulesQueueThread(sUIUpdateClosure);
+                if (ReactContextHolder.getContext() != null) {
+                    ReactContextHolder.getContext().runOnNativeModulesQueueThread(sUIUpdateClosure);
+                }
             }
         });
     }
