@@ -22,15 +22,15 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
       return renderContent(props);
     }
 
-    if (title || subtitle) {
+    if (!isEmpty(title) || !isEmpty(subtitle)) {
       return (
         <View marginH-s5 marginV-s1>
-          {!isEmpty(title) && (
+          {title && (
             <Text $textDefault {...titleProps} marginB-s3 style={titleStyle}>
               {title}
             </Text>
           )}
-          {!isEmpty(subtitle) && (
+          {subtitle && (
             <Text $textDefault {...subtitleProps} marginB-s3 style={subtitleStyle}>
               {subtitle}
             </Text>
