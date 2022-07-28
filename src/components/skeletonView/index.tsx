@@ -203,7 +203,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
       console.error(`RNUILib SkeletonView's requires installing "react-native-linear-gradient" dependency`);
     } else if (_.isUndefined(createShimmerPlaceholder)) {
       console.error(`RNUILib SkeletonView's requires installing "react-native-shimmer-placeholder" dependency`);
-    } else {
+    } else if (ShimmerPlaceholder === undefined) {
       ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
     }
   }
