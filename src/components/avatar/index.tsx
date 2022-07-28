@@ -24,7 +24,6 @@ import Image, {ImageProps} from '../image';
 import AnimatedImage from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
 
-
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
   TOP_LEFT = 'TOP_LEFT',
@@ -49,111 +48,112 @@ export type AutoColorsProps = {
   defaultColor?: string;
 };
 
-export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & PropsWithChildren<{
-  /**
-   * Adds fade in animation when Avatar image loads
-   */
-  animate?: boolean;
-  /**
-   * Background color for Avatar
-   */
-  backgroundColor?: string;
-  /**
-   * Badge location on Avatar
-   */
-  badgePosition?: BadgePosition;
-  /**
-   * Badge props passed down to Badge component
-   */
-  badgeProps?: BadgeProps;
-  /**
-   * Additional spacing styles for the container
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * The image source (external or assets)
-   */
-  source?: ImageSourcePropType;
-  /**
-   * @deprecated use 'source' prop
-   */
-  imageSource?: ImageSourcePropType;
-  /**
-   * Image props object
-   */
-  imageProps?: ImageProps;
-  /**
-   * Image style object used to pass additional style props
-   * by components which render image
-   */
-  imageStyle?: ImageStyle;
-  /**
-   * Listener-callback for when an image's (uri) loading
-   * starts (equiv. to Image.onLoadStart()).
-   */
-  onImageLoadStart?: ImagePropsBase['onLoadStart'];
-  /**
-   * Listener-callback for when an image's (uri) loading
-   * either succeeds or fails (equiv. to Image.onLoadEnd()).
-   */
-  onImageLoadEnd?: ImagePropsBase['onLoadEnd'];
-  /**
-   * Listener-callback for when an image's (uri) loading
-   * fails (equiv. to Image.onError()).
-   */
-  onImageLoadError?: ImagePropsBase['onError'];
-  /**
-   * The name of the avatar user.
-   * If no label is provided, the initials will be generated from the name.
-   * autoColorsConfig will use the name to create the background color of the Avatar.
-   */
-  name?: string;
-  /**
-   * Hash the name (or label) to get a color, so each name will have a specific color.
-   * Default is false.
-   */
-  useAutoColors?: boolean;
-  /**
-   * Send this to use the name to infer a backgroundColor
-   */
-  autoColorsConfig?: AutoColorsProps;
-  /**
-   * Label that can represent initials
-   */
-  label?: string;
-  /**
-   * The label color
-   */
-  labelColor?: string;
-  /**
-   * ribbon label to display on the avatar
-   */
-  ribbonLabel?: string;
-  /**
-   * ribbon custom style
-   */
-  ribbonStyle?: StyleProp<ViewStyle>;
-  /**
-   * ribbon label custom style
-   */
-  ribbonLabelStyle?: StyleProp<TextStyle>;
-  /**
-   * Custom ribbon
-   */
-  customRibbon?: JSX.Element;
-  /**
-   * Custom size for the Avatar
-   */
-  size: number;
-  /**
-   * Press handler
-   */
-  onPress?: (props: any) => void;
-  /**
-   * Used as a testing identifier
-   */
-  testID?: string;
-}>;
+export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
+  PropsWithChildren<{
+    /**
+     * Adds fade in animation when Avatar image loads
+     */
+    animate?: boolean;
+    /**
+     * Background color for Avatar
+     */
+    backgroundColor?: string;
+    /**
+     * Badge location on Avatar
+     */
+    badgePosition?: BadgePosition;
+    /**
+     * Badge props passed down to Badge component
+     */
+    badgeProps?: BadgeProps;
+    /**
+     * Additional spacing styles for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * The image source (external or assets)
+     */
+    source?: ImageSourcePropType;
+    /**
+     * @deprecated use 'source' prop
+     */
+    imageSource?: ImageSourcePropType;
+    /**
+     * Image props object
+     */
+    imageProps?: ImageProps;
+    /**
+     * Image style object used to pass additional style props
+     * by components which render image
+     */
+    imageStyle?: ImageStyle;
+    /**
+     * Listener-callback for when an image's (uri) loading
+     * starts (equiv. to Image.onLoadStart()).
+     */
+    onImageLoadStart?: ImagePropsBase['onLoadStart'];
+    /**
+     * Listener-callback for when an image's (uri) loading
+     * either succeeds or fails (equiv. to Image.onLoadEnd()).
+     */
+    onImageLoadEnd?: ImagePropsBase['onLoadEnd'];
+    /**
+     * Listener-callback for when an image's (uri) loading
+     * fails (equiv. to Image.onError()).
+     */
+    onImageLoadError?: ImagePropsBase['onError'];
+    /**
+     * The name of the avatar user.
+     * If no label is provided, the initials will be generated from the name.
+     * autoColorsConfig will use the name to create the background color of the Avatar.
+     */
+    name?: string;
+    /**
+     * Hash the name (or label) to get a color, so each name will have a specific color.
+     * Default is false.
+     */
+    useAutoColors?: boolean;
+    /**
+     * Send this to use the name to infer a backgroundColor
+     */
+    autoColorsConfig?: AutoColorsProps;
+    /**
+     * Label that can represent initials
+     */
+    label?: string;
+    /**
+     * The label color
+     */
+    labelColor?: string;
+    /**
+     * ribbon label to display on the avatar
+     */
+    ribbonLabel?: string;
+    /**
+     * ribbon custom style
+     */
+    ribbonStyle?: StyleProp<ViewStyle>;
+    /**
+     * ribbon label custom style
+     */
+    ribbonLabelStyle?: StyleProp<TextStyle>;
+    /**
+     * Custom ribbon
+     */
+    customRibbon?: JSX.Element;
+    /**
+     * Custom size for the Avatar
+     */
+    size: number;
+    /**
+     * Press handler
+     */
+    onPress?: (props: any) => void;
+    /**
+     * Used as a testing identifier
+     */
+    testID?: string;
+  }>;
 
 /**
  * @description: Avatar component for displaying user profile images
@@ -266,7 +266,7 @@ class Avatar extends PureComponent<AvatarProps> {
         <View style={this.getRibbonStyle()}>{customRibbon}</View>
       ) : (
         <View style={[this.getRibbonStyle(), this.styles.ribbon, ribbonStyle]}>
-          <Text numberOfLines={1} text100 $textDefaultLight style={[ribbonLabelStyle]}>
+          <Text numberOfLines={1} text100 $textDefaultLight style={ribbonLabelStyle}>
             {ribbonLabel}
           </Text>
         </View>
