@@ -73,3 +73,4 @@ docs/**/*.md
 /ios/Podfile.lock
 expoDemo/ios/Pods
 
+.reassure 
