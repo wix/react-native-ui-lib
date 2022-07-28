@@ -137,6 +137,7 @@ class ColorSwatch extends PureComponent<Props> {
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
+    const accessibilityInfo = Constants.accessibility.isScreenReaderEnabled && this.getAccessibilityInfo();
 
     return (
       <Container
@@ -148,7 +149,7 @@ class ColorSwatch extends PureComponent<Props> {
         onPress={this.onPress}
         style={[this.styles.container, style]}
         onLayout={this.onLayout}
-        {...this.getAccessibilityInfo()}
+        {...accessibilityInfo}
       >
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
