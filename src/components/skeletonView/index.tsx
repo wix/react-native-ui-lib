@@ -6,7 +6,6 @@ import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
 import {Constants, AlignmentModifiers, PaddingModifiers, MarginModifiers} from '../../commons/new';
-import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const LinearGradient = LinearGradientPackage?.default;
 
@@ -184,17 +183,11 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   contentAccessibilityProps?: AccessibilityProps;
   listItemAccessibilityProps?: AccessibilityProps;
 
-  setAccessibilityProps(props: SkeletonViewProps) {
-    if (!Constants.accessibility.isScreenReaderEnabled) {
-      return;
-    }
-
-    const isListItem = props.template === Template.LIST_ITEM;
-    const accessibilityLabel = isListItem ? 'Loading list item' : 'Loading content';
+  setAccessibilityProps(template?: Template) {
+    const isListItem = template === Template.LIST_ITEM;
     const accessibilityProps = {
       accessible: true,
-      accessibilityLabel,
-      ...extractAccessibilityProps(props)
+      accessibilityLabel: isListItem ? 'Loading list item' : 'Loading content'
     };
 
     if (isListItem) {
@@ -220,7 +213,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
       ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
     }
 
-    this.setAccessibilityProps(props);
+    this.setAccessibilityProps(props.template);
   }
 
   componentDidMount() {
