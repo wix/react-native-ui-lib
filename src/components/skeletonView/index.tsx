@@ -180,15 +180,27 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   static contentTypes: typeof ContentType = ContentType;
 
   fadeInAnimation?: Animated.CompositeAnimation;
-  contentAccessibilityProps?: any;
-  listItemAccessibilityProps?: any;
+  contentAccessibilityProps?: AccessibilityProps;
+  listItemAccessibilityProps?: AccessibilityProps;
 
-  getAccessibilityProps(accessibilityLabel: string, accessibilityProps: any) {
-    return {
+  setAccessibilityProps(props: SkeletonViewProps) {
+    if (!Constants.accessibility.isScreenReaderEnabled) {
+      return;
+    }
+
+    const isListItem = props.template === Template.LIST_ITEM;
+    const accessibilityLabel = isListItem ? 'Loading list item' : 'Loading content';
+    const accessibilityProps = {
       accessible: true,
       accessibilityLabel,
-      ...accessibilityProps
+      ...extractAccessibilityProps(props)
     };
+
+    if (isListItem) {
+      this.listItemAccessibilityProps = accessibilityProps;
+    } else {
+      this.contentAccessibilityProps = accessibilityProps;
+    }
   }
 
   constructor(props: SkeletonViewProps) {
@@ -207,12 +219,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
       ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
     }
 
-    const accessibilityProps = extractAccessibilityProps(this.props);
-    if (props.template === Template.LIST_ITEM) {
-      this.listItemAccessibilityProps = this.getAccessibilityProps('Loading list item', accessibilityProps);
-    } else {
-      this.contentAccessibilityProps = this.getAccessibilityProps('Loading content', accessibilityProps);
-    }
+    this.setAccessibilityProps(props);
   }
 
   componentDidMount() {
