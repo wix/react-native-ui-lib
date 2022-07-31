@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} from 'react-native';
+import memoize from 'memoize-one';
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
@@ -344,11 +345,15 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     );
   };
 
+  getListItemStyle = memoize(style => {
+    return [styles.listItem, style];
+  });
+
   renderListItemTemplate = () => {
     const {style, ...others} = this.props;
 
     return (
-      <View style={[styles.listItem, style]} {...this.listItemAccessibilityProps} {...others}>
+      <View style={this.getListItemStyle(style)} {...this.listItemAccessibilityProps} {...others}>
         {this.renderListItemLeftContent()}
         {this.renderListItemContentStrips()}
       </View>
