@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, Animated} from 'react-native';
-// @ts-expect-error
+// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
 import {PointPropType} from 'deprecated-react-native-prop-types';
 import {PageControlProps} from '../pageControl';
 

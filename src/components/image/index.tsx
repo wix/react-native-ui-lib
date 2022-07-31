@@ -9,7 +9,7 @@ import {
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
-// @ts-expect-error
+// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
 import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 import {
   Constants,
