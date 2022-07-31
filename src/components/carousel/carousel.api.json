@@ -1,6 +1,6 @@
 {
   "name": "Carousel",
-  "category": "basic",
+  "category": "layout",
   "description": "Carousel for scrolling pages",
   "extends": ["ScrollView"],
   "extendsLink": ["https://reactnative.dev/docs/scrollview"],

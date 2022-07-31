@@ -1,6 +1,6 @@
 {
   "name": "Stepper",
-  "category": "Form",
+  "category": "form",
   "description": "A stepper component",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.tsx",
   "images": [],

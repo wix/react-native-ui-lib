@@ -1,20 +1,25 @@
 import _ from 'lodash';
-import React, {useCallback} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 import {StyleSheet, FlatList, TextInput, ListRenderItemInfo} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
 import Modal from '../modal';
 import View from '../view';
+import Text from '../text';
 import Icon from '../icon';
-import {PickerItemProps, PickerItemsListProps} from './types';
+import WheelPicker from '../../incubator/WheelPicker';
+import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
+import PickerContext from './PickerContext';
 
 const keyExtractor = (_item: string, index: number) => index.toString();
 
 const PickerItemsList = (props: PickerItemsListProps) => {
   const {
+    useWheelPicker,
     topBarProps,
     listProps,
     children,
+    items,
     showSearch,
     searchStyle = {},
     searchPlaceholder = 'Search...',
@@ -23,6 +28,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     useSafeArea,
     testID
   } = props;
+  const context = useContext(PickerContext);
+  const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0].value);
 
   const renderSearchInput = () => {
     if (showSearch) {
@@ -59,11 +66,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   },
   [children]);
 
-  return (
-    <View bg-$backgroundDefault flex useSafeArea={useSafeArea}>
-      <Modal.TopBar {...topBarProps}/>
-      {renderSearchInput()}
-
+  const renderList = () => {
+    return (
       <FlatList
         data={_.times(React.Children.count(children))}
         // @ts-expect-error
@@ -71,6 +75,34 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         keyExtractor={keyExtractor}
         {...listProps}
       />
+    );
+  };
+
+  const renderWheel = () => {
+    return (
+      <View>
+        <View row spread padding-page>
+          <Text>{topBarProps.title}</Text>
+          <Text text70 primary accessibilityRole={'button'} onPress={() => context.onPress(wheelPickerValue)}>
+            {topBarProps.doneLabel ?? 'Select'}
+          </Text>
+        </View>
+        <WheelPicker initialValue={context.value as PickerSingleValue} items={items} onChange={setWheelPickerValue}/>
+      </View>
+    );
+  };
+
+  return (
+    <View bg-$backgroundDefault flex useSafeArea={useSafeArea}>
+      {!useWheelPicker && (
+        <>
+          {<Modal.TopBar {...topBarProps}/>}
+          {renderSearchInput()}
+          {renderList()}
+        </>
+      )}
+
+      {useWheelPicker && renderWheel()}
     </View>
   );
 };

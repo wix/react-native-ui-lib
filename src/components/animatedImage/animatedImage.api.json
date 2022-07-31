@@ -1,6 +1,6 @@
 {
   "name": "AnimatedImage",
-  "category": "basic",
+  "category": "media",
   "description": "Image component that fades-in the image with animation once it's loaded",
   "extends": ["basic/Image"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AnimatedImageScreen.js",

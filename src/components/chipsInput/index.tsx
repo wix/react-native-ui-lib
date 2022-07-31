@@ -5,8 +5,7 @@ import {Colors, BorderRadiuses, ThemeManager, Typography, Spacings} from '../../
 import Assets from '../../assets';
 import {LogService} from '../../services';
 import {Constants, asBaseComponent, BaseComponentInjectedProps, TypographyModifiers} from '../../commons/new';
-// @ts-expect-error
-import {TextField} from '../inputs';
+import TextFieldMigrator from '../textField/TextFieldMigrator';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
@@ -453,7 +452,7 @@ class ChipsInput extends Component<OwnProps, State> {
 
     return (
       <View style={styles.inputWrapper}>
-        <TextField
+        <TextFieldMigrator
           ref={this.input}
           text80
           blurOnSubmit={false}
@@ -485,6 +484,7 @@ class ChipsInput extends Component<OwnProps, State> {
     const Container = maxHeight ? ScrollView : View;
     return (
       <Container
+        // @ts-expect-error
         ref={this.scrollRef}
         showsVerticalScrollIndicator={false}
         style={!maxHeight && styles.tagsList}

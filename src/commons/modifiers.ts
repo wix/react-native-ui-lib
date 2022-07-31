@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {StyleSheet} from 'react-native';
-import {Typography, Colors, Scheme, DesignTokens, BorderRadiuses, Spacings, ThemeManager} from '../style';
+import {Typography, Colors, DesignTokens, BorderRadiuses, Spacings, ThemeManager} from '../style';
 import {BorderRadiusesLiterals} from '../style/borderRadiuses';
 import TypographyPresets from '../style/typographyPresets';
 import {SpacingLiterals} from '../style/spacings';
@@ -10,6 +10,7 @@ export const PADDING_KEY_PATTERN = new RegExp(`padding[LTRBHV]?-([0-9]*|${Spacin
 export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
 export const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
 export const POSITION_KEY_PATTERN = /^abs([F|L|R|T|B|V|H])?$/;
+const BACKGROUND_COLOR_KEYS_PATTERN = Colors.getBackgroundKeysPattern();
 
 export interface AlteredOptions {
   flex?: boolean;
@@ -31,6 +32,18 @@ export interface ExtractedStyle {
   flexStyle?: ReturnType<typeof extractFlexStyle>;
   positionStyle?: ReturnType<typeof extractPositionStyle>;
 }
+
+export type ModifiersOptions = {
+  color?: boolean;
+  typography?: boolean;
+  backgroundColor?: boolean;
+  borderRadius?: boolean;
+  paddings?: boolean;
+  margins?: boolean;
+  alignments?: boolean;
+  flex?: boolean;
+  position?: boolean;
+};
 
 const PADDING_VARIATIONS = {
   padding: 'padding',
@@ -101,29 +114,27 @@ export type ContainerModifiers = AlignmentModifiers &
   BackgroundColorModifier;
 
 export function extractColorValue(props: Dictionary<any>) {
-  const schemeColors = Scheme.getScheme();
-  const allColorsKeys: Array<keyof typeof Colors> = [..._.keys(Colors), ..._.keys(schemeColors)];
-  const colorPropsKeys = Object.keys(props).filter(key => _.includes(allColorsKeys, key));
+  const colorPropsKeys = Object.keys(props).filter(key => Colors[key] !== undefined);
   const colorKey = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true)!;
-  return schemeColors[colorKey] || Colors[colorKey];
+
+  return Colors[colorKey];
 }
 
 export function extractBackgroundColorValue(props: Dictionary<any>) {
   let backgroundColor;
 
-  const schemeColors = Scheme.getScheme();
-
   const keys = Object.keys(props);
-  const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop) && !!props[prop])!;
+  const bgProp = _.findLast(keys, prop => BACKGROUND_COLOR_KEYS_PATTERN.test(prop) && !!props[prop])!;
   if (props[bgProp]) {
-    const key = bgProp.replace(Colors.getBackgroundKeysPattern(), '');
-    backgroundColor = schemeColors[key] || Colors[key];
+    const key = bgProp.replace(BACKGROUND_COLOR_KEYS_PATTERN, '');
+    backgroundColor = Colors[key];
   }
 
   return backgroundColor;
 }
 export function extractTypographyValue(props: Dictionary<any>): object | undefined {
-  const typographyPropsKeys = Object.keys(props).filter(key => Typography.getKeysPattern().test(key));
+  const typographyPropsKeys = Object.keys(props).filter(key => Typography[key] !== undefined);
+
   let typography: any;
   _.forEach(typographyPropsKeys, key => {
     if (props[key] === true) {
@@ -322,9 +333,10 @@ export function extractComponentProps(component: any, props: Dictionary<any>, ig
 }
 
 //@ts-ignore
-export function getThemeProps(props = this.props, context = this.context) {
-  //@ts-ignore
-  const componentName = this.displayName || this.constructor.displayName || this.constructor.name;
+export function getThemeProps(props = this.props, context = this.context, componentDisplayName = '') {
+  const componentName =
+    //@ts-ignore
+    componentDisplayName || this.displayName || this.constructor.displayName || this.constructor.name;
 
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
@@ -342,7 +354,7 @@ export function getThemeProps(props = this.props, context = this.context) {
   return {...themeProps, ...props, ...forcedThemeProps};
 }
 
-export function generateModifiersStyle(options = {
+export function generateModifiersStyle(options: ModifiersOptions = {
   color: true,
   typography: true,
   backgroundColor: true,
@@ -357,6 +369,10 @@ props: Dictionary<any>) {
   //@ts-ignore
   const boundProps = props || this.props;
   const style: ExtractedStyle = {};
+
+  if (!_.find(boundProps, prop => prop === true)) {
+    return style;
+  }
 
   if (options.color) {
     style.color = extractColorValue(boundProps);

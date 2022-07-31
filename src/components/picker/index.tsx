@@ -7,6 +7,7 @@
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, PropsWithChildren, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
+import {Typography} from 'style';
 import {
   Constants,
   asBaseComponent,
@@ -43,6 +44,12 @@ import {
 
 const dropdown = require('./assets/dropdown.png');
 
+const DIALOG_PROPS = {
+  bottom: true,
+  width: '100%',
+  height: 250
+};
+
 const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps) => {
   const {
     mode,
@@ -53,9 +60,11 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     searchPlaceholder,
     renderCustomSearch,
     useNativePicker,
+    useWheelPicker,
     renderPicker,
     customPickerProps,
     containerStyle,
+    labelStyle,
     testID,
     onChange,
     onPress,
@@ -160,7 +169,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
       return {
         preset: preset || null,
         containerStyle: {flexDirection: 'row'},
-        trailingAccessory: <Icon marginL-s1 source={dropdown}/>
+        labelStyle: Typography.text70,
+        trailingAccessory: props.trailingAccessory ?? <Icon marginL-s1 source={dropdown}/>
       };
     } else if (fieldType === PickerFieldTypes.settings) {
       return {
@@ -168,7 +178,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         label: undefined
       };
     }
-  }, [fieldType]);
+  }, [fieldType, preset, props.trailingAccessory]);
 
   const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({visible, toggleExpandable}) => {
     if (renderCustomModal) {
@@ -190,6 +200,8 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
+        useWheelPicker={useWheelPicker}
+        items={useWheelPicker ? items : undefined}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
@@ -221,7 +233,9 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     renderCustomSearch,
     listProps,
     filteredChildren,
-    useSafeArea
+    useSafeArea,
+    useWheelPicker,
+    items
   ]);
 
   const renderPickerInnerInput = () => {
@@ -234,7 +248,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     } else if (fieldType === PickerFieldTypes.settings) {
       return (
         <View row spread>
-          <Text text70 style={others.labelStyle}>
+          <Text text70 style={labelStyle}>
             {others.label}
           </Text>
           <Text text70 $textPrimary style={others.style}>
@@ -253,7 +267,9 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     <PickerContext.Provider value={contextValue}>
       <ExpandableOverlay
         ref={pickerExpandable}
+        useDialog={useWheelPicker}
         modalProps={modalProps}
+        dialogProps={DIALOG_PROPS}
         expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
         onPress={onPress}
@@ -274,6 +290,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             {...propsByFieldType}
             testID={`${testID}.input`}
             containerStyle={[paddings, margins, positionStyle, containerStyle, propsByFieldType?.containerStyle]}
+            labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
             {...accessibilityInfo}
             importantForAccessibility={'no-hide-descendants'}
             value={label}
@@ -304,7 +321,7 @@ Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
     // @ts-expect-error handle use PickerItemProps once exist
     label: child?.props.label
   }));
-  return items;
+  return items ?? [];
 };
 
 export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
