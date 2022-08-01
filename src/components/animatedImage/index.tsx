@@ -1,11 +1,27 @@
 // TODO: consider unify this component functionality with our Image component
-import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Animated, StyleSheet} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, ImageLoadEventData} from 'react-native';
+import Animated, {FadeIn} from 'react-native-reanimated';
 import View from '../../components/view';
-import Image from '../../components/image';
-import {BaseComponent} from '../../commons';
+import Image, {ImageProps} from '../../components/image';
+import {asBaseComponent} from '../../commons/new';
+
+const UIAnimatedImage = Animated.createAnimatedComponent<ImageProps>(Image);
+
+export interface AnimatedImageProps extends ImageProps {
+  /**
+   * Additional spacing styles for the container
+   */
+  containerStyle: StyleProp<ViewStyle>;
+  /**
+   * Duration for the fade animation when the image is loaded
+   */
+  animationDuration?: number;
+  /**
+   * A component to render while the image is loading
+   */
+  loader?: React.ReactElement;
+}
 
 /**
  * @description: Image component that fades-in the image with animation once it's loaded
@@ -13,61 +29,47 @@ import {BaseComponent} from '../../commons';
  * @gif: https://media.giphy.com/media/l0HU7jj0ivEFyZIA0/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AnimatedImageScreen.js
  */
-class AnimatedImage extends BaseComponent {
-  static displayName = 'AnimatedImage';
-  static propTypes = {
-    /**
-     * Image prop Types
-     */
-    ...Image.propTypes,
-    /**
-     * Additional spacing styles for the container
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Duration for the fade animation when the image is loaded
-     */
-    animationDuration: PropTypes.number,
-    /**
-     * A component to render while the image is loading
-     */
-    loader: PropTypes.element
-  };
+const AnimatedImage = (props: AnimatedImageProps) => {
+  const {
+    containerStyle,
+    source,
+    loader,
+    style,
+    onLoad: propsOnLoad,
+    animationDuration = 300,
+    testID,
+    ...others
+  } = props;
+  const [isLoading, setIsLoading] = useState(true);
 
-  static defaultProps = {
-    animationDuration: 300
-  };
+  const onLoad = useCallback((event: NativeSyntheticEvent<ImageLoadEventData>) => {
+    setIsLoading(false);
+    propsOnLoad?.(event);
+  },
+  [setIsLoading, propsOnLoad]);
 
-  constructor(props) {
-    super(props);
-    this.state = {opacity: new Animated.Value(0), isLoading: true};
+  return (
+    <View reanimated style={containerStyle}>
+      <UIAnimatedImage
+        entering={FadeIn.duration(animationDuration)}
+        {...others}
+        style={style}
+        source={source}
+        onLoad={onLoad}
+        testID={testID}
+      />
+      {isLoading && loader && <View style={styles.loader}>{loader}</View>}
+    </View>
+  );
+};
+
+AnimatedImage.displayName = 'AnimatedImage';
+
+export default asBaseComponent<AnimatedImageProps>(AnimatedImage);
+
+const styles = StyleSheet.create({
+  loader: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center'
   }
-
-  onLoad = (...args) => {
-    this.setState({isLoading: false}, () => {
-      const animationParams = {toValue: 1, duration: this.props.animationDuration, useNativeDriver: true};
-      Animated.timing(this.state.opacity, animationParams).start();
-    });
-    _.invoke(this.props, 'onLoad', ...args);
-  };
-
-  render() {
-    const {containerStyle, source, loader, style, testID, ...others} = this.props;
-    return (
-      <View animated style={[{opacity: this.state.opacity}, containerStyle]}>
-        <Image
-          {...others}
-          style={style}
-          source={source}
-          onLoad={this.onLoad}
-          testID={testID}
-        />
-        {this.state.isLoading && loader && (
-          <View style={{...StyleSheet.absoluteFillObject, justifyContent: 'center'}}>{loader}</View>
-        )}
-      </View>
-    );
-  }
-}
-
-export default AnimatedImage;
+});
