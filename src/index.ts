@@ -50,7 +50,6 @@ export {Incubator, Hooks, Modifiers};
 /* ===== Components ===== */
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as ActionSheet} from './components/actionSheet';
-// @ts-expect-error
 export {default as AnimatedImage} from './components/animatedImage';
 // @ts-expect-error
 export {default as AnimatedScanner} from './components/animatedScanner';
