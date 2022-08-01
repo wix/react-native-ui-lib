@@ -68,11 +68,6 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
     this.onPress = _.throttle(this.onPress.bind(this), throttleTime, throttleOptions);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // Object.entries(this.props).forEach(([key, val]) => prevProps[key] !== val && console.log(`Prop '${key}' changed`));
-    // Object.entries(this.state).forEach(([key, val]) => prevState[key] !== val && console.log(`State '${key}' changed`));
-  }
-
   getAccessibilityInfo() {
     const {disabled} = this.props;
 

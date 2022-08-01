@@ -69,23 +69,21 @@ class MainScreen extends Component {
   sectionListRef = React.createRef();
   scrollViewRef = React.createRef();
 
-  scrollChipsOnly = false;
+  onPressFlag = false;
+  onUserScroll = false;
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.selectedSection !== this.state.selectedSection) {
-      console.log(`prev: ${prevState.selectedSection} || new: ${this.state.selectedSection}`);
-      console.log(`scrollChipsOnly: ${this.scrollChipsOnly}`);
-      if (!this.scrollChipsOnly) {
-        this.scrollChipsOnly = true;
-        console.log(`inside 2 actions`);
-        this.scrollToSection(this.state.selectedSection);
-        this.scrollChipsSection(this.state.selectedSection);
-      } else {
-        this.scrollChipsSection(this.state.selectedSection);
+  componentDidUpdate(prevState) {
+    const {selectedSection} = this.state;
+    if (prevState.selectedSection !== selectedSection) {
+      console.log(`In componentDidUpdate`);
+      if (this.onPressFlag) {
+        this.scrollToSection(selectedSection);
+        this.scrollChipsSection(selectedSection);
       }
-      setTimeout(() => {
-        this.scrollChipsOnly = false;
-      }, 1500);
+      if (this.onUserScroll) {
+        this.scrollChipsSection(selectedSection);
+      }
+      this.onPressFlag = false;
     }
   }
 
@@ -121,6 +119,7 @@ class MainScreen extends Component {
       itemIndex: 0,
       viewPosition: 0
     });
+    console.log(`onUserScroll: ${this.onUserScroll}`);
   };
 
   scrollChipsSection = index => {
@@ -235,10 +234,10 @@ class MainScreen extends Component {
   };
 
   onPress = ({customValue: index}) => {
-    // console.log(`Adi - onPress!!!! The new index: ${index} || The current in state: ${this.state.selectedSection}`)
     console.log(`onPress`);
     const {chipsLabels} = this.state;
-    this.scrollChipsOnly = false;
+    this.onPressFlag = true;
+    this.onUserScroll = false;
     this.setState({
       selectedSection: index,
       faderStart: index != 0,
@@ -247,28 +246,19 @@ class MainScreen extends Component {
   };
 
   onCheckViewableItems = ({viewableItems}) => {
-    console.log(`onCheckViewableItems`);
-    // console.log('Adi - viewableItems', _.map(viewableItems, item => `${item.section.title} - ${item.item.title}`));
     const {chipsLabels, selectedSection} = this.state;
-    if (this.scrollChipsOnly === false) {
+    if (this.onPressFlag === false && this.onUserScroll === true) {
       const title = viewableItems[0].section.title;
-      // console.log('Adi - current section', title);
       const sectionIndex = _.findIndex(chipsLabels, c => {
         return c === title;
       });
-      // console.log(`Adi - || The title: ${title} ||   onCheckViewableItems!!!! The current state: ${selectedSection} || The changing selection: ${sectionIndex}`)
-      if (sectionIndex != -1) {
-        // console.log(`Adi - Changing the state from onCheckViewableItems, the new index ${sectionIndex}`)
-        // this.scrollChipsSection(sectionIndex);
-        setTimeout(() => {
-          this.scrollChipsOnly = true;
-        }, 1500);
+
+      if (sectionIndex != -1 && sectionIndex != selectedSection) {
         this.setState({
           selectedSection: sectionIndex,
           faderStart: sectionIndex != 0,
           faderEnd: sectionIndex !== chipsLabels.length - 1
         });
-        this.scrollChipsOnly = false;
       }
     }
   };
@@ -366,10 +356,8 @@ class MainScreen extends Component {
     const chipsLabels = this.state.chipsLabels;
     const sectionsData = this.state.sectionsData;
 
-    // console.log(`selectedSection:${selectedSection}`)
-
     return (
-      <View testID="demo_main_screen" flex style={containerStyle}>
+      <View testID="demo_main_screen" flex style={containerStyle} useSafeArea>
         {this.renderSearch(this.navigationData)}
 
         {showResults && this.renderSearchResults(filteredNavigationData)}
@@ -377,6 +365,7 @@ class MainScreen extends Component {
           <>
             <ChipsSeparator/>
             <ScrollView
+              decelerationRate="fast"
               horizontal
               showsHorizontalScrollIndicator={false}
               ref={this.scrollViewRef}
@@ -402,7 +391,25 @@ class MainScreen extends Component {
             ItemSeparatorComponent={this.itemSeparator}
             onViewableItemsChanged={this.onCheckViewableItems}
             viewabilityConfig={{
-              itemVisiblePercentThreshold: 90 //means if 50% of the item is visible
+              itemVisiblePercentThreshold: 60 //means if 50% of the item is visible
+            }}
+            onScrollBeginDrag={() => {
+              console.log(`onScrollBeginDrag`);
+              this.onUserScroll = true;
+            }}
+            onScrollEndDrag={() => {
+              console.log(`onScrollEndDrag`);
+              this.onUserScroll = false;
+            }}
+            onEndReached={() => {
+              const {chipsLabels} = this.state;
+              this.onUserScroll = false;
+              this.scrollChipsSection(chipsLabels.length - 1);
+              this.setState({
+                selectedSection: chipsLabels.length - 1,
+                faderStart: true,
+                faderEnd: false
+              });
             }}
           />
         )}
@@ -429,7 +436,6 @@ const styles = StyleSheet.create({
   },
   searchField: {
     padding: Spacings.s3,
-    // backgroundColor: Colors.$backgroundNeutralLight,
     borderRadius: 8
   },
   chipsSeparatorContainer: {
