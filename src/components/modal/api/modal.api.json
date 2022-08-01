@@ -1,6 +1,6 @@
 {
   "name": "Modal",
-  "category": "layoutsAndTemplates",
+  "category": "overlays",
   "description": "Component that present content on top of the invoking screen",
   "extends": ["Modal"],
   "extendsLink": ["https://reactnative.dev/docs/modal"],

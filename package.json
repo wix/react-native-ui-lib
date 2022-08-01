@@ -21,12 +21,13 @@
     "pretest": "npm run lint",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:perf": "TEST_RUNNER_ARGS='--testMatch **/*.perf.js' reassure measure",
     "lint": "eslint src -c .eslintrc.js --ext .tsx,.ts,.js",
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "xcode": "xed ios",
     "build:dev": "tsc --p tsconfig.dev.json",
     "build": "node scripts/build.js",
-    "prepush": "npm run build:dev && npm run test",
+    "pre-push": "npm run build:dev && npm run test",
     "docs:deploy": "./scripts/deployDocs.sh",
     "docs:build": "node scripts/buildDocs.js",
     "snippets:build": "node scripts/generateSnippets.js",
@@ -103,6 +104,7 @@
     "react-native-svg": "^12.1.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "^17.0.1",
+    "reassure": "^0.4.1",
     "shell-utils": "^1.0.10",
     "typescript": "4.3.2"
   },
@@ -127,6 +129,7 @@
     "setupFiles": [
       "./jest-setup.js"
     ],
+    "testMatch": ["**/*.spec.(js|tsx)"],
     "moduleNameMapper": {
       "^react-native-reanimated$": "<rootDir>/node_modules/react-native-reanimated/src/Animated.js"
     }

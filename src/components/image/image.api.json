@@ -1,6 +1,6 @@
 {
   "name": "Image",
-  "category": "basic",
+  "category": "media",
   "description": "Image wrapper with extra functionality like source transform and assets support",
   "extends": ["Image"],
   "extendsLink": ["https://reactnative.dev/docs/image"],

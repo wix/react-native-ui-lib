@@ -1,6 +1,6 @@
 {
   "name": "TabController.PageCarousel",
-  "category": "layoutsAndTemplates",
+  "category": "navigation",
   "description": "TabController's PageCarousel component",
   "note": "You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel",
   "extends": ["ScrollView"],
