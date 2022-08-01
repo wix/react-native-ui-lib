@@ -4,7 +4,6 @@ import {StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, ImageLoadEventDa
 import Animated, {FadeIn} from 'react-native-reanimated';
 import View from '../../components/view';
 import Image, {ImageProps} from '../../components/image';
-import {asBaseComponent} from '../../commons/new';
 
 const UIAnimatedImage = Animated.createAnimatedComponent<ImageProps>(Image);
 
@@ -65,7 +64,7 @@ const AnimatedImage = (props: AnimatedImageProps) => {
 
 AnimatedImage.displayName = 'AnimatedImage';
 
-export default asBaseComponent<AnimatedImageProps>(AnimatedImage);
+export default AnimatedImage;
 
 const styles = StyleSheet.create({
   loader: {
