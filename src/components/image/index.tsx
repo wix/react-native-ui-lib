@@ -206,7 +206,6 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
-    console.log(`useImageInsideContainer: ${useImageInsideContainer}`);
 
     return (
       // @ts-ignore
