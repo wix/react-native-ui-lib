@@ -149,7 +149,8 @@ const modifiersOptions = {
   paddings: true,
   margins: true,
   alignments: true,
-  flex: true
+  flex: true,
+  backgroundColor: true
 };
 
 export default asBaseComponent<TouchableOpacityProps>(forwardRef(TouchableOpacity), {modifiersOptions});
