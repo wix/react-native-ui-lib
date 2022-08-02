@@ -11,7 +11,7 @@ export interface AnimatedImageProps extends ImageProps {
   /**
    * Additional spacing styles for the container
    */
-  containerStyle: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * Duration for the fade animation when the image is loaded
    */
