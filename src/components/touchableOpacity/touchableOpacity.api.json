@@ -5,7 +5,7 @@
   "extends": ["TouchableOpacity"],
   "extendsLink": ["https://reactnative.dev/docs/touchableopacity"],
   "modifiers": ["margins", "paddings", "alignments", "background", "borderRadius"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TouchableOpacityScreen.js",
   "images": ["https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif"],
   "props": [
     {"name": "backgroundColor", "type": "string", "description": "Background color for TouchableOpacity"},
