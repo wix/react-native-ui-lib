@@ -54,6 +54,10 @@ interface Props {
    * Test id for component
    */
   testID?: string;
+  /**
+   * useCustomTheme for component.
+   */
+  useCustomTheme?: boolean;
 }
 export type StepperProps = Props;
 
@@ -173,6 +177,7 @@ class Stepper extends PureComponent<Props, State> {
     const allowStepChange = this.allowStepChange(actionType);
     const minusButton = small ? minusOutlineSmall : minusOutline;
     const plusButton = small ? plusOutlineSmall : plusOutline;
+    const useCustomTheme = !!this.props?.useCustomTheme;
 
     return (
       <Button
@@ -182,7 +187,7 @@ class Stepper extends PureComponent<Props, State> {
         disabled={disabled || !allowStepChange}
         onPress={() => this.handleStepChange(actionType)}
         testID={actionType === ActionType.MINUS ? `${testID}.minusStep` : `${testID}.plusStep`}
-        useCustomTheme
+        useCustomTheme={useCustomTheme}
       />
     );
   }
