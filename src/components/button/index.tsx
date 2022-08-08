@@ -82,7 +82,8 @@ class Button extends PureComponent<Props, ButtonState> {
       return backgroundColor || modifiersBackgroundColor || Colors.$backgroundPrimaryHeavy;
     }
     return 'transparent';
-  });
+  },
+  _.isEqual);
 
   getActiveBackgroundColor = memoize(({
     getActiveBackgroundColor,
@@ -102,7 +103,8 @@ class Button extends PureComponent<Props, ButtonState> {
       }),
       this.props);
     }
-  });
+  },
+  _.isEqual);
 
   getLabelColor = memoize(({linkColor, outline, outlineColor, disabled, propsColor, backgroundColor, modifiersColor}) => {
     const isLink = this.isLink;
@@ -122,7 +124,8 @@ class Button extends PureComponent<Props, ButtonState> {
 
     color = propsColor || modifiersColor || color;
     return color;
-  });
+  },
+  _.isEqual);
 
   getLabelSizeStyle = memoize(({propsSize}) => {
     const size = propsSize || DEFAULT_SIZE;
@@ -135,7 +138,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
     const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
     return labelSizeStyle;
-  });
+  }, _.isEqual);
 
   getContainerSizeStyle = memoize(({outline, avoidMinWidth, avoidInnerPadding, round, size: propsSize, outlineWidth: propsOutlineWidth}) => {
     const size = propsSize || DEFAULT_SIZE;
@@ -200,7 +203,8 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     return containerSizeStyle;
-  });
+  },
+  _.isEqual);
 
   getOutlineStyle = memoize(({outline, outlineColor, outlineWidth, disabled}) => {
     let outlineStyle;
@@ -215,7 +219,7 @@ class Button extends PureComponent<Props, ButtonState> {
       }
     }
     return outlineStyle;
-  });
+  }, _.isEqual);
 
   getBorderRadiusStyle = memoize(({fullWidth, propsBorderRadius, modifiersBorderRadius}) => {
     if (this.isLink || fullWidth || propsBorderRadius === 0) {
@@ -224,13 +228,13 @@ class Button extends PureComponent<Props, ButtonState> {
 
     const borderRadius = propsBorderRadius || modifiersBorderRadius || BorderRadiuses.br100;
     return {borderRadius};
-  });
+  }, _.isEqual);
 
   getShadowStyle = memoize(({enableShadow, backgroundColor}) => {
     if (enableShadow) {
       return [this.styles.shadowStyle, {shadowColor: backgroundColor}];
     }
-  });
+  }, _.isEqual);
 
   getIconStyle = memoize(({
     disabled,
@@ -271,7 +275,8 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     return [iconStyle, propsIconStyle];
-  });
+  },
+  _.isEqual);
 
   getAnimationDirectionStyle = memoize(({animateTo}) => {
     let style;
@@ -287,7 +292,7 @@ class Button extends PureComponent<Props, ButtonState> {
         break;
     }
     return style;
-  });
+  }, _.isEqual);
 
   getTextStyle = memoize(({
     typography,
@@ -312,7 +317,8 @@ class Button extends PureComponent<Props, ButtonState> {
       modifiersColor
     });
     return [this.styles.text, !!color && {color}, labelSizeStyle, typography, labelStyle];
-  });
+  },
+  _.isEqual);
 
   getContainerStyle = memoize(({
     outline,
@@ -372,7 +378,8 @@ class Button extends PureComponent<Props, ButtonState> {
       outlineStyle,
       style
     ];
-  });
+  },
+  _.isEqual);
 
   renderIcon() {
     const {
