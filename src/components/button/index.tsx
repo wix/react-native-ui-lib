@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import memoize from 'memoize-one';
 import React, {PureComponent} from 'react';
 import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
@@ -73,7 +72,9 @@ class Button extends PureComponent<Props, ButtonState> {
     return iconSource && !label;
   }
 
-  getBackgroundColor = memoize(({disabled, outline, disabledBackgroundColor, backgroundColor, modifiersBackgroundColor}) => {
+  getBackgroundColor() {
+    const {disabled, outline, disabledBackgroundColor, backgroundColor, modifiers} = this.props;
+    const {backgroundColor: modifiersBackgroundColor} = modifiers;
     if (!outline && !this.isLink) {
       if (disabled) {
         return disabledBackgroundColor || Colors.$backgroundDisabled;
@@ -82,31 +83,18 @@ class Button extends PureComponent<Props, ButtonState> {
       return backgroundColor || modifiersBackgroundColor || Colors.$backgroundPrimaryHeavy;
     }
     return 'transparent';
-  },
-  _.isEqual);
+  }
 
-  getActiveBackgroundColor = memoize(({
-    getActiveBackgroundColor,
-    disabled,
-    outline,
-    disabledBackgroundColor,
-    backgroundColor,
-    modifiersBackgroundColor
-  }) => {
+  getActiveBackgroundColor() {
+    const {getActiveBackgroundColor} = this.props;
     if (getActiveBackgroundColor) {
-      return getActiveBackgroundColor(this.getBackgroundColor({
-        disabled,
-        outline,
-        disabledBackgroundColor,
-        backgroundColor,
-        modifiersBackgroundColor
-      }),
-      this.props);
+      return getActiveBackgroundColor(this.getBackgroundColor(), this.props);
     }
-  },
-  _.isEqual);
+  }
 
-  getLabelColor = memoize(({linkColor, outline, outlineColor, disabled, propsColor, backgroundColor, modifiersColor}) => {
+  getLabelColor() {
+    const {linkColor, outline, outlineColor, disabled, color: propsColor, backgroundColor, modifiers} = this.props;
+    const {color: modifiersColor} = modifiers;
     const isLink = this.isLink;
 
     let color: string | undefined = Colors.$textDefaultLight;
@@ -124,11 +112,10 @@ class Button extends PureComponent<Props, ButtonState> {
 
     color = propsColor || modifiersColor || color;
     return color;
-  },
-  _.isEqual);
+  }
 
-  getLabelSizeStyle = memoize(({propsSize}) => {
-    const size = propsSize || DEFAULT_SIZE;
+  getLabelSizeStyle() {
+    const size = this.props.size || DEFAULT_SIZE;
 
     const LABEL_STYLE_BY_SIZE: Dictionary<TextStyle | undefined> = {};
     LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = Typography.text80;
@@ -138,9 +125,17 @@ class Button extends PureComponent<Props, ButtonState> {
 
     const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
     return labelSizeStyle;
-  }, _.isEqual);
+  }
 
-  getContainerSizeStyle = memoize(({outline, avoidMinWidth, avoidInnerPadding, round, size: propsSize, outlineWidth: propsOutlineWidth}) => {
+  getContainerSizeStyle() {
+    const {
+      outline,
+      avoidMinWidth,
+      avoidInnerPadding,
+      round,
+      size: propsSize,
+      outlineWidth: propsOutlineWidth
+    } = this.props;
     const size = propsSize || DEFAULT_SIZE;
     const outlineWidth = propsOutlineWidth || 1;
 
@@ -177,10 +172,10 @@ class Button extends PureComponent<Props, ButtonState> {
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
         if (round) {
-            style.padding -= outlineWidth; // eslint-disable-line
+          style.padding -= outlineWidth; // eslint-disable-line
         } else {
-            style.paddingVertical -= outlineWidth; // eslint-disable-line
-            style.paddingHorizontal -= outlineWidth; // eslint-disable-line
+          style.paddingVertical -= outlineWidth; // eslint-disable-line
+          style.paddingHorizontal -= outlineWidth; // eslint-disable-line
         }
       });
     }
@@ -203,10 +198,10 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     return containerSizeStyle;
-  },
-  _.isEqual);
+  }
 
-  getOutlineStyle = memoize(({outline, outlineColor, outlineWidth, disabled}) => {
+  getOutlineStyle() {
+    const {outline, outlineColor, outlineWidth, disabled} = this.props;
     let outlineStyle;
     if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
@@ -219,46 +214,34 @@ class Button extends PureComponent<Props, ButtonState> {
       }
     }
     return outlineStyle;
-  }, _.isEqual);
+  }
 
-  getBorderRadiusStyle = memoize(({fullWidth, propsBorderRadius, modifiersBorderRadius}) => {
+  getBorderRadiusStyle() {
+    const {fullWidth, borderRadius: propsBorderRadius, modifiers} = this.props;
+    const {borderRadius: modifiersBorderRadius} = modifiers;
+
     if (this.isLink || fullWidth || propsBorderRadius === 0) {
       return {borderRadius: 0};
     }
 
     const borderRadius = propsBorderRadius || modifiersBorderRadius || BorderRadiuses.br100;
     return {borderRadius};
-  }, _.isEqual);
+  }
 
-  getShadowStyle = memoize(({enableShadow, backgroundColor}) => {
+  getShadowStyle() {
+    const backgroundColor = this.getBackgroundColor();
+    const {enableShadow} = this.props;
     if (enableShadow) {
       return [this.styles.shadowStyle, {shadowColor: backgroundColor}];
     }
-  }, _.isEqual);
+  }
 
-  getIconStyle = memoize(({
-    disabled,
-    propsIconStyle,
-    iconOnRight,
-    propsSize,
-    linkColor,
-    outline,
-    outlineColor,
-    propsColor,
-    backgroundColor,
-    modifiersColor
-  }) => {
+  getIconStyle() {
+    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize} = this.props;
+
     const size = propsSize || DEFAULT_SIZE;
     const iconStyle: ImageStyle = {
-      tintColor: this.getLabelColor({
-        linkColor,
-        outline,
-        outlineColor,
-        disabled,
-        propsColor,
-        backgroundColor,
-        modifiersColor
-      })
+      tintColor: this.getLabelColor()
     };
     const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
 
@@ -275,10 +258,11 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     return [iconStyle, propsIconStyle];
-  },
-  _.isEqual);
+  }
 
-  getAnimationDirectionStyle = memoize(({animateTo}) => {
+  getAnimationDirectionStyle() {
+    const {animateTo} = this.props;
+
     let style;
     switch (animateTo) {
       case 'left':
@@ -292,79 +276,25 @@ class Button extends PureComponent<Props, ButtonState> {
         break;
     }
     return style;
-  }, _.isEqual);
+  }
 
-  getTextStyle = memoize(({
-    typography,
-    labelStyle,
-    propsSize,
-    linkColor,
-    outline,
-    outlineColor,
-    disabled,
-    propsColor,
-    backgroundColor,
-    modifiersColor
-  }) => {
-    const labelSizeStyle = this.getLabelSizeStyle({propsSize});
-    const color = this.getLabelColor({
-      linkColor,
-      outline,
-      outlineColor,
-      disabled,
-      propsColor,
-      backgroundColor,
-      modifiersColor
-    });
+  getTextStyle() {
+    const {labelStyle, modifiers} = this.props;
+    const {typography} = modifiers;
+    const labelSizeStyle = this.getLabelSizeStyle();
+    const color = this.getLabelColor();
     return [this.styles.text, !!color && {color}, labelSizeStyle, typography, labelStyle];
-  },
-  _.isEqual);
+  }
 
-  getContainerStyle = memoize(({
-    outline,
-    animateLayout,
-    margins,
-    paddings,
-    style,
-    modifiersBackgroundColor,
-    backgroundColor,
-    disabled,
-    enableShadow,
-    disabledBackgroundColor,
-    outlineColor,
-    outlineWidth,
-    avoidMinWidth,
-    avoidInnerPadding,
-    round,
-    size,
-    fullWidth,
-    borderRadius,
-    modifiersBorderRadius,
-    animateTo
-  }) => {
-    const shadowStyle = this.getShadowStyle({enableShadow, backgroundColor});
-    const backgroundColorStyle = this.getBackgroundColor({
-      disabled,
-      outline,
-      disabledBackgroundColor,
-      backgroundColor,
-      modifiersBackgroundColor
-    });
-    const outlineStyle = this.getOutlineStyle({outline, outlineColor, outlineWidth, disabled});
-    const containerSizeStyle = this.getContainerSizeStyle({
-      outline,
-      avoidMinWidth,
-      avoidInnerPadding,
-      round,
-      size,
-      outlineWidth
-    });
-    const borderRadiusStyle = this.getBorderRadiusStyle({
-      fullWidth,
-      propsBorderRadius: borderRadius,
-      modifiersBorderRadius
-    });
-    const animationDirectionStyle = this.getAnimationDirectionStyle({animateTo});
+  getContainerStyle() {
+    const {animateLayout, style, modifiers} = this.props;
+    const {margins, paddings} = modifiers;
+    const shadowStyle = this.getShadowStyle();
+    const backgroundColorStyle = this.getBackgroundColor();
+    const outlineStyle = this.getOutlineStyle();
+    const containerSizeStyle = this.getContainerSizeStyle();
+    const borderRadiusStyle = this.getBorderRadiusStyle();
+    const animationDirectionStyle = this.getAnimationDirectionStyle();
     return [
       this.styles.container,
       animateLayout && animationDirectionStyle,
@@ -378,40 +308,13 @@ class Button extends PureComponent<Props, ButtonState> {
       outlineStyle,
       style
     ];
-  },
-  _.isEqual);
+  }
 
   renderIcon() {
-    const {
-      iconSource,
-      supportRTL,
-      testID,
-      disabled,
-      iconStyle: propsIconStyle,
-      iconOnRight,
-      size: propsSize,
-      linkColor,
-      outline,
-      outlineColor,
-      color: propsColor,
-      backgroundColor,
-      modifiers
-    } = this.props;
-    const {color: modifiersColor} = modifiers;
+    const {iconSource, supportRTL, testID} = this.props;
 
     if (iconSource) {
-      const iconStyle = this.getIconStyle({
-        disabled,
-        propsIconStyle,
-        iconOnRight,
-        propsSize,
-        linkColor,
-        outline,
-        outlineColor,
-        propsColor,
-        backgroundColor,
-        modifiersColor
-      });
+      const iconStyle = this.getIconStyle();
 
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
@@ -423,38 +326,15 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   renderLabel() {
-    const {
-      label,
-      labelStyle,
-      labelProps,
-      hyperlink,
-      testID,
-      modifiers,
-      size: propsSize,
-      linkColor,
-      outline,
-      outlineColor,
-      disabled,
-      color: propsColor,
-      backgroundColor
-    } = this.props;
-    const {typography, color: modifiersColor} = modifiers;
+    const {label, labelStyle, labelProps, hyperlink, testID, modifiers} = this.props;
+    const color = this.getLabelColor();
+    const labelSizeStyle = this.getLabelSizeStyle();
+    const {typography} = modifiers;
 
     if (label) {
       return (
         <Text
-          style={this.getTextStyle({
-            typography,
-            labelStyle,
-            propsSize,
-            linkColor,
-            outline,
-            outlineColor,
-            disabled,
-            propsColor,
-            backgroundColor,
-            modifiersColor
-          })}
+          style={[this.styles.text, !!color && {color}, labelSizeStyle, typography, labelStyle]}
           underline={hyperlink}
           numberOfLines={1}
           testID={`${testID}.label`}
@@ -468,72 +348,33 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   render() {
-    const {
-      onPress,
-      disabled,
-      style,
-      testID,
-      outline,
-      animateLayout,
-      modifiers,
-      enableShadow,
-      disabledBackgroundColor,
-      outlineColor,
-      outlineWidth,
-      backgroundColor,
-      forwardedRef,
-      avoidMinWidth,
-      avoidInnerPadding,
-      round,
-      size,
-      fullWidth,
-      borderRadius,
-      animateTo,
-      getActiveBackgroundColor,
-      ...others
-    } = this.props;
-    const {
-      margins,
-      paddings,
-      backgroundColor: modifiersBackgroundColor,
-      borderRadius: modifiersBorderRadius
-    } = modifiers;
+    const {onPress, disabled, style, testID, animateLayout, modifiers, forwardedRef, ...others} = this.props;
+    const shadowStyle = this.getShadowStyle();
+    const {margins, paddings} = modifiers;
+    const backgroundColor = this.getBackgroundColor();
+    const outlineStyle = this.getOutlineStyle();
+    const containerSizeStyle = this.getContainerSizeStyle();
+    const borderRadiusStyle = this.getBorderRadiusStyle();
 
     return (
       <TouchableOpacity
         row
         centerV
-        style={this.getContainerStyle({
-          outline,
-          animateLayout,
+        style={[
+          this.styles.container,
+          animateLayout && this.getAnimationDirectionStyle(),
+          containerSizeStyle,
+          this.isLink && this.styles.innerContainerLink,
+          shadowStyle,
           margins,
           paddings,
-          style,
-          modifiersBackgroundColor,
-          backgroundColor,
-          disabled,
-          enableShadow,
-          disabledBackgroundColor,
-          outlineColor,
-          outlineWidth,
-          avoidMinWidth,
-          avoidInnerPadding,
-          round,
-          size,
-          fullWidth,
-          borderRadius,
-          modifiersBorderRadius,
-          animateTo
-        })}
+          {backgroundColor},
+          borderRadiusStyle,
+          outlineStyle,
+          style
+        ]}
         activeOpacity={0.6}
-        activeBackgroundColor={this.getActiveBackgroundColor({
-          getActiveBackgroundColor,
-          disabled,
-          outline,
-          disabledBackgroundColor,
-          backgroundColor,
-          modifiersBackgroundColor
-        })}
+        activeBackgroundColor={this.getActiveBackgroundColor()}
         onLayout={this.onLayout}
         onPress={onPress}
         disabled={disabled}
