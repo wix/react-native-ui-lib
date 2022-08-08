@@ -75,7 +75,6 @@ class MainScreen extends Component {
   componentDidUpdate(prevState) {
     const {selectedSection} = this.state;
     if (prevState.selectedSection !== selectedSection) {
-      console.log(`In componentDidUpdate`);
       if (this.onPressFlag) {
         this.scrollToSection(selectedSection);
         this.scrollChipsSection(selectedSection);
@@ -119,7 +118,6 @@ class MainScreen extends Component {
       itemIndex: 0,
       viewPosition: 0
     });
-    console.log(`onUserScroll: ${this.onUserScroll}`);
   };
 
   scrollChipsSection = index => {
@@ -234,7 +232,6 @@ class MainScreen extends Component {
   };
 
   onPress = ({customValue: index}) => {
-    console.log(`onPress`);
     const {chipsLabels} = this.state;
     this.onPressFlag = true;
     this.onUserScroll = false;
@@ -369,7 +366,6 @@ class MainScreen extends Component {
               horizontal
               showsHorizontalScrollIndicator={false}
               ref={this.scrollViewRef}
-              onScrollToIndexFailed={() => console.log('first')}
             >
               {chipsLabels.map((label, index) => {
                 return this.renderChip(label, index);
@@ -394,12 +390,16 @@ class MainScreen extends Component {
               itemVisiblePercentThreshold: 60 //means if 50% of the item is visible
             }}
             onScrollBeginDrag={() => {
-              console.log(`onScrollBeginDrag`);
               this.onUserScroll = true;
             }}
             onScrollEndDrag={() => {
-              console.log(`onScrollEndDrag`);
               this.onUserScroll = false;
+            }}
+            onMomentumScrollBegin={() => {
+              this.onUserScroll = true;
+            }}
+            onMomentumScrollEnd={() => {
+              this.onUserScroll = true;
             }}
             onEndReached={() => {
               const {chipsLabels} = this.state;
