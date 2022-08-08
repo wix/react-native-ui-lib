@@ -58,7 +58,7 @@ exports[`Button backgroundColor should return backgroundColor according to modif
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -129,7 +129,7 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -200,7 +200,7 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -276,7 +276,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -347,7 +347,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -420,7 +420,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -491,7 +491,7 @@ exports[`Button border radius should return 0 border radius when border radius p
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -562,7 +562,7 @@ exports[`Button border radius should return 0 border radius when button is full 
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -633,7 +633,7 @@ exports[`Button border radius should return given border radius when use plain n
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -1037,7 +1037,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -1108,7 +1108,7 @@ exports[`Button container size should return style for large button 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -1181,7 +1181,7 @@ exports[`Button container size should return style for large button 2`] = `
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -1406,7 +1406,7 @@ exports[`Button container size should return style for round button 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -1787,7 +1787,7 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -2210,7 +2210,7 @@ exports[`Button icon should return the right spacing according to button size wh
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -2509,7 +2509,7 @@ exports[`Button label size should return style for large button 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -2808,7 +2808,7 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
           Object {
             "color": "#FFD54E",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -2879,7 +2879,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
           Object {
             "color": "#D52712",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -2950,7 +2950,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
           Object {
             "color": "green",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3026,7 +3026,7 @@ exports[`Button labelColor should return disabled text color according to theme 
           Object {
             "color": "#D2D6D8",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3097,7 +3097,7 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
           Object {
             "color": "#FDB893",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3225,7 +3225,7 @@ exports[`Button link should render button as a link 1`] = `
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3298,7 +3298,7 @@ exports[`Button outline should render button with an outline 1`] = `
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3371,7 +3371,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3444,7 +3444,7 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
           Object {
             "color": "blue",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3517,7 +3517,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3595,7 +3595,7 @@ exports[`Button outline should return disabled color for outline if button is di
           Object {
             "color": "#D2D6D8",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3666,7 +3666,7 @@ exports[`Button outline should return undefined when link is true, even when out
           Object {
             "color": "#5A48F5",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],
@@ -3737,7 +3737,7 @@ exports[`Button should render default button 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
+          undefined,
           undefined,
           undefined,
         ],

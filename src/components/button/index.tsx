@@ -131,7 +131,7 @@ class Button extends PureComponent<Props, ButtonState> {
     LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = Typography.text80;
     LABEL_STYLE_BY_SIZE[Button.sizes.small] = Typography.text80;
     LABEL_STYLE_BY_SIZE[Button.sizes.medium] = Typography.text80;
-    LABEL_STYLE_BY_SIZE[Button.sizes.large] = {};
+    LABEL_STYLE_BY_SIZE[Button.sizes.large] = undefined;
 
     const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
     return labelSizeStyle;
