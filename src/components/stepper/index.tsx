@@ -177,7 +177,7 @@ class Stepper extends PureComponent<Props, State> {
     const allowStepChange = this.allowStepChange(actionType);
     const minusButton = small ? minusOutlineSmall : minusOutline;
     const plusButton = small ? plusOutlineSmall : plusOutline;
-    const useCustomTheme = !!this.props?.useCustomTheme;
+    const useCustomTheme = this.props?.useCustomTheme;
 
     return (
       <Button
