@@ -359,8 +359,8 @@ class MainScreen extends Component {
 
         {showResults && this.renderSearchResults(filteredNavigationData)}
         {showSectionList && (
-          <>
-            <ChipsSeparator/>
+          <View>
+            <View style={styles.chipsSeparatorContainer}/>
             <ScrollView
               decelerationRate="fast"
               horizontal
@@ -371,10 +371,10 @@ class MainScreen extends Component {
                 return this.renderChip(label, index);
               })}
             </ScrollView>
-            <Fader size={25} visible={this.state.faderStart} position={Fader.position.START}/>
-            <Fader size={25} visible={this.state.faderEnd} position={Fader.position.END}/>
-            <ChipsSeparator/>
-          </>
+            <Fader size={35} visible={this.state.faderStart} position={Fader.position.START}/>
+            <Fader size={35} visible={this.state.faderEnd} position={Fader.position.END}/>
+            <View style={styles.chipsSeparatorContainer}/>
+          </View>
         )}
 
         {showSectionList && (
@@ -464,13 +464,5 @@ const styles = StyleSheet.create({
     color: Colors.blue30
   }
 });
-
-function ChipsSeparator(props) {
-  return (
-    <>
-      <View style={styles.chipsSeparatorContainer}/>
-    </>
-  );
-}
 
 export default gestureHandlerRootHOC(MainScreen);
