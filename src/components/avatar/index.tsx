@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PropsWithChildren, PureComponent, ReactElement} from 'react';
+import React, {PropsWithChildren, PureComponent} from 'react';
 import {
   StyleSheet,
   ImageSourcePropType,
