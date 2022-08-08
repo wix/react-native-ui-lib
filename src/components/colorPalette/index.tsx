@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import memoize from 'memoize-one';
 import React, {PureComponent} from 'react';
-import {StyleSheet, UIManager, findNodeHandle, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
@@ -9,7 +9,6 @@ import Carousel from '../carousel';
 import ScrollBar from '../scrollBar';
 import PageControl from '../pageControl';
 import ColorSwatch, {SWATCH_SIZE} from '../colorSwatch';
-
 
 interface Props {
   /**
@@ -58,10 +57,10 @@ interface Props {
 export type ColorPaletteProps = Props;
 
 interface State {
-  currentPage: number,
-  scrollable: boolean,
-  orientation?: string,
-  contentWidth?: number
+  currentPage: number;
+  scrollable: boolean;
+  orientation?: string;
+  contentWidth?: number;
 }
 
 const VERTICAL_PADDING = 16;
@@ -100,7 +99,7 @@ class ColorPalette extends PureComponent<Props, State> {
 
   carousel: React.RefObject<typeof Carousel> = React.createRef();
   scrollBar: React.RefObject<any> = React.createRef();
-  itemsRefs?: React.RefObject<typeof ColorSwatch>[] = undefined;
+  itemsRefs?: any = React.createRef();
   selectedColorIndex?: number = undefined;
   selectedPage?: number = undefined;
   currentColorsCount?: number = undefined;
@@ -113,6 +112,9 @@ class ColorPalette extends PureComponent<Props, State> {
 
   componentDidMount() {
     this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChanged);
+    _.times(this.props.colors.length, i => {
+      this.itemsRefs.current[i] = React.createRef();
+    });
   }
 
   componentWillUnmount() {
@@ -127,7 +129,7 @@ class ColorPalette extends PureComponent<Props, State> {
   };
 
   initLocalVariables() {
-    this.itemsRefs = undefined;
+    this.itemsRefs.current = [];
     this.selectedColorIndex = undefined;
     this.selectedPage = undefined;
     this.currentColorsCount = this.colors.length;
@@ -211,35 +213,29 @@ class ColorPalette extends PureComponent<Props, State> {
   scrollToSelected() {
     const {scrollable, currentPage} = this.state;
 
-    if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs) {
-      const childRef = this.itemsRefs[this.selectedColorIndex];
+    if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs.current) {
+      const childRef: any = this.itemsRefs.current[this.selectedColorIndex].current;
 
       if (childRef) {
-        const handle = findNodeHandle(childRef.current);
-        if (handle) {
-          //@ts-ignore
-          UIManager.measureLayoutRelativeToParent(handle, e => {
-            console.warn(e);
-          },
-          (x: number, _y: number, w: number, _h: number) => {
-            if (x + w > this.containerWidth) {
-              this.scrollBar?.current?.scrollTo({
-                x: x + w + HORIZONTAL_PADDING - this.containerWidth,
-                y: 0,
-                animated: false
-              });
-            }
+        const childLayout = childRef.getLayout();
+        if (childLayout.x + childLayout.width > this.containerWidth) {
+          this.scrollBar?.current?.scrollTo({
+            x: childLayout.x + childLayout.width + HORIZONTAL_PADDING - this.containerWidth,
+            y: 0,
+            animated: false
           });
         }
+      } else if (this.usePagination) {
+        this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
       }
-    } else if (this.usePagination) {
-      this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
     }
   }
 
   onContentSizeChange = (contentWidth: number) => {
     this.setState({
-      scrollable: contentWidth > this.containerWidth, contentWidth});
+      scrollable: contentWidth > this.containerWidth,
+      contentWidth
+    });
   };
 
   onChangePage = (index: number) => {
@@ -292,12 +288,6 @@ class ColorPalette extends PureComponent<Props, State> {
     }
   };
 
-  addRefByIndex = (index: number, ref?: any) => {
-    if (this.itemsRefs && ref) {
-      this.itemsRefs[index] = ref;
-    }
-  }
-
   renderColorSwatch(color: string, index: number) {
     const {animatedIndex, testID} = this.props;
 
@@ -311,7 +301,7 @@ class ColorPalette extends PureComponent<Props, State> {
         selected={this.value === color}
         animated={index === animatedIndex}
         onPress={this.onValueChange}
-        ref={r => this.addRefByIndex(index, r)}
+        ref={this.itemsRefs.current[index]}
         testID={`${testID}-${color}`}
       />
     );
@@ -319,7 +309,6 @@ class ColorPalette extends PureComponent<Props, State> {
 
   renderPalette(props: Props, contentStyle: StyleProp<ViewStyle>, colors: string[], pageIndex: number) {
     const {style, ...others} = props;
-    this.itemsRefs = [];
 
     return (
       <View key={pageIndex} {...others} style={[styles.paletteContainer, contentStyle, style]} onLayout={this.onLayout}>
