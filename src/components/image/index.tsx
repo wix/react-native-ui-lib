@@ -206,7 +206,6 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
-    const resizeMode = useImageInsideContainer ? 'contain' : undefined;
 
     return (
       // @ts-ignore
@@ -218,10 +217,10 @@ class Image extends PureComponent<Props, State> {
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
           !useImageInsideContainer && margins,
+          useImageInsideContainer && styles.containImage,
           style,
           useImageInsideContainer && styles.shrink
         ]}
-        resizeMode={resizeMode}
         accessible={false}
         accessibilityRole={'image'}
         {...others}
@@ -276,6 +275,9 @@ const styles = StyleSheet.create({
   },
   shrink: {
     flexShrink: 1
+  },
+  containImage: {
+    resizeMode: 'contain'
   }
 });
 
