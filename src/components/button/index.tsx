@@ -75,6 +75,7 @@ class Button extends PureComponent<Props, ButtonState> {
   getBackgroundColor() {
     const {disabled, outline, disabledBackgroundColor, backgroundColor, modifiers} = this.props;
     const {backgroundColor: modifiersBackgroundColor} = modifiers;
+
     if (!outline && !this.isLink) {
       if (disabled) {
         return disabledBackgroundColor || Colors.$backgroundDisabled;
@@ -87,6 +88,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getActiveBackgroundColor() {
     const {getActiveBackgroundColor} = this.props;
+
     if (getActiveBackgroundColor) {
       return getActiveBackgroundColor(this.getBackgroundColor(), this.props);
     }
@@ -202,6 +204,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getOutlineStyle() {
     const {outline, outlineColor, outlineWidth, disabled} = this.props;
+    
     let outlineStyle;
     if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
@@ -231,6 +234,7 @@ class Button extends PureComponent<Props, ButtonState> {
   getShadowStyle() {
     const backgroundColor = this.getBackgroundColor();
     const {enableShadow} = this.props;
+    
     if (enableShadow) {
       return [this.styles.shadowStyle, {shadowColor: backgroundColor}];
     }
@@ -238,7 +242,6 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getIconStyle() {
     const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize} = this.props;
-
     const size = propsSize || DEFAULT_SIZE;
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
@@ -276,38 +279,6 @@ class Button extends PureComponent<Props, ButtonState> {
         break;
     }
     return style;
-  }
-
-  getTextStyle() {
-    const {labelStyle, modifiers} = this.props;
-    const {typography} = modifiers;
-    const labelSizeStyle = this.getLabelSizeStyle();
-    const color = this.getLabelColor();
-    return [this.styles.text, !!color && {color}, labelSizeStyle, typography, labelStyle];
-  }
-
-  getContainerStyle() {
-    const {animateLayout, style, modifiers} = this.props;
-    const {margins, paddings} = modifiers;
-    const shadowStyle = this.getShadowStyle();
-    const backgroundColorStyle = this.getBackgroundColor();
-    const outlineStyle = this.getOutlineStyle();
-    const containerSizeStyle = this.getContainerSizeStyle();
-    const borderRadiusStyle = this.getBorderRadiusStyle();
-    const animationDirectionStyle = this.getAnimationDirectionStyle();
-    return [
-      this.styles.container,
-      animateLayout && animationDirectionStyle,
-      containerSizeStyle,
-      this.isLink && this.styles.innerContainerLink,
-      shadowStyle,
-      margins,
-      paddings,
-      {backgroundColor: backgroundColorStyle},
-      borderRadiusStyle,
-      outlineStyle,
-      style
-    ];
   }
 
   renderIcon() {
