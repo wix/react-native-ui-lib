@@ -204,7 +204,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getOutlineStyle() {
     const {outline, outlineColor, outlineWidth, disabled} = this.props;
-    
+
     let outlineStyle;
     if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
@@ -234,7 +234,7 @@ class Button extends PureComponent<Props, ButtonState> {
   getShadowStyle() {
     const backgroundColor = this.getBackgroundColor();
     const {enableShadow} = this.props;
-    
+
     if (enableShadow) {
       return [this.styles.shadowStyle, {shadowColor: backgroundColor}];
     }
