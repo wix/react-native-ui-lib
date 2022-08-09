@@ -1,4 +1,5 @@
 import React from 'react';
+//@ts-ignore
 import {PointPropType} from 'deprecated-react-native-prop-types';
 import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, Animated} from 'react-native';
 import {PageControlProps} from '../pageControl';
