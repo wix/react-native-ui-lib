@@ -1,6 +1,6 @@
-import {StyleProp, TextInput, TextInputProps, TextStyle, ViewStyle} from 'react-native';
-import formValidators from './validators';
-import {
+import type {StyleProp, TextInput, TextInputProps, TextStyle, ViewStyle} from 'react-native';
+import type formValidators from './validators';
+import type {
   MarginModifiers,
   PaddingModifiers,
   TypographyModifiers,
@@ -8,8 +8,8 @@ import {
   BaseComponentInjectedProps,
   ForwardRefInjectedProps
 } from '../../commons/new';
-import {TextProps} from '../../components/text';
-import {PropsWithChildren, ReactElement} from 'react';
+import type {TextProps} from '../../components/text';
+import type {PropsWithChildren, ReactElement} from 'react';
 
 export type ColorType =
   | string

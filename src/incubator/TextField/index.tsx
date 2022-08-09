@@ -22,7 +22,7 @@ import FloatingPlaceholder from './FloatingPlaceholder';
 import CharCounter from './CharCounter';
 
 interface StaticMembers {
-  validationMessagePositions: typeof ValidationMessagePosition;
+  validationMessagePositions: ValidationMessagePosition;
 }
 
 /**
@@ -88,7 +88,6 @@ const TextField = (props: InternalTextFieldProps) => {
 
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
-  const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
 
   return (
     <FieldContext.Provider value={context}>
@@ -108,7 +107,7 @@ const TextField = (props: InternalTextFieldProps) => {
             validate={others.validate}
             validationMessage={others.validationMessage}
             validationMessageStyle={validationMessageStyle}
-            retainSpace={retainTopMessageSpace}
+            retainSpace={!floatingPlaceholder && isEmpty(trim(label))}
             testID={`${props.testID}.validationMessage`}
           />
         )}

@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
 import {getRelevantValidationMessage} from './Presenter';
-import {ValidationMessageProps} from './types';
+import type {ValidationMessageProps} from './types';
 
 const ValidationMessage = ({
   validationMessage,
@@ -21,12 +21,11 @@ const ValidationMessage = ({
     return null;
   }
 
-  const relevantValidationMessage = getRelevantValidationMessage(validationMessage, context.failingValidatorIndex);
   const showValidationMessage = !context.isValid || (!validate && !!validationMessage);
 
   return (
     <Text testID={testID} $textDangerLight style={style}>
-      {showValidationMessage ? relevantValidationMessage : ''}
+      {showValidationMessage ? getRelevantValidationMessage(validationMessage, context.failingValidatorIndex) : ''}
     </Text>
   );
 };
