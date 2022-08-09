@@ -1,5 +1,6 @@
 import React from 'react';
-import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType, Animated} from 'react-native';
+import {PointPropType} from 'deprecated-react-native-prop-types';
+import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, Animated} from 'react-native';
 import {PageControlProps} from '../pageControl';
 
 export enum PageControlPosition {
