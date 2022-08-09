@@ -3,7 +3,7 @@ import memoize from 'memoize-one';
 import React, {PureComponent} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
-import {Constants, asBaseComponent} from '../../commons/new';
+import {Constants} from '../../commons/new';
 import View from '../view';
 import Carousel from '../carousel';
 import ScrollBar from '../scrollBar';
@@ -381,7 +381,7 @@ class ColorPalette extends PureComponent<Props, State> {
   }
 }
 
-export default asBaseComponent<Props>(ColorPalette);
+export default ColorPalette;
 
 const styles = StyleSheet.create({
   paletteContainer: {
