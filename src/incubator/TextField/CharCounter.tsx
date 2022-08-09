@@ -8,14 +8,12 @@ import {CharCounterProps} from './types';
 const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) => {
   const {value} = useContext(FieldContext);
 
-  const textStyle = useMemo(() => [styles.container, charCounterStyle], [charCounterStyle]);
-
   if (_.isUndefined(maxLength)) {
     return null;
   }
 
   return (
-    <Text $textNeutral style={textStyle} testID={testID}>
+    <Text $textNeutral style={[styles.container, charCounterStyle]} testID={testID}>
       {`${_.size(value)}/${maxLength}`}
     </Text>
   );
