@@ -65,7 +65,7 @@ Icon.displayName = 'Icon';
 Icon.defaultProps = {
   assetGroup: 'icons'
 };
-export default asBaseComponent<IconProps, typeof Icon>(Icon);
+export default asBaseComponent<IconProps, typeof Icon>(Icon, {modifiersOptions: {margins: true}});
 
 const styles = StyleSheet.create({
   rtlFlipped: {
