@@ -8,7 +8,7 @@ import View from '../view';
 import Carousel from '../carousel';
 import ScrollBar from '../scrollBar';
 import PageControl from '../pageControl';
-import ColorSwatch, {SWATCH_SIZE} from '../colorSwatch';
+import ColorSwatch, {SWATCH_SIZE, SWATCH_MARGIN} from '../colorSwatch';
 
 interface Props {
   /**
@@ -115,6 +115,19 @@ class ColorPalette extends PureComponent<Props, State> {
     _.times(this.props.colors.length, i => {
       this.itemsRefs.current[i] = React.createRef();
     });
+    setTimeout(() => {
+      this.scrollToSelected();
+    }, 100);
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.colors !== prevProps.colors) {
+      const newIndex = this.itemsRefs.current.length;
+      this.itemsRefs.current[newIndex] = React.createRef();
+      setTimeout(() => {
+        this.scrollToSelected();
+      }, 100);
+    }
   }
 
   componentWillUnmount() {
@@ -214,13 +227,15 @@ class ColorPalette extends PureComponent<Props, State> {
     const {scrollable, currentPage} = this.state;
 
     if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs.current) {
-      const childRef: any = this.itemsRefs.current[this.selectedColorIndex].current;
+      const childRef: any = this.itemsRefs.current[this.selectedColorIndex - 1]?.current;
 
       if (childRef) {
         const childLayout = childRef.getLayout();
-        if (childLayout.x + childLayout.width > this.containerWidth) {
+        const leftMargins = this.getHorizontalMargins(this.selectedColorIndex).marginLeft;
+        const childX = childLayout.x + childLayout.width + SWATCH_MARGIN + leftMargins + SWATCH_SIZE;
+        if (childX > this.containerWidth) {
           this.scrollBar?.current?.scrollTo({
-            x: childLayout.x + childLayout.width + HORIZONTAL_PADDING - this.containerWidth,
+            x: childX + HORIZONTAL_PADDING - this.containerWidth,
             y: 0,
             animated: false
           });
@@ -244,12 +259,6 @@ class ColorPalette extends PureComponent<Props, State> {
 
   onValueChange = (value: string, options: object) => {
     this.props.onValueChange?.(value, options);
-  };
-
-  onLayout = () => {
-    setTimeout(() => {
-      this.scrollToSelected();
-    }, 0);
   };
 
   getHorizontalMargins = (index: number) => {
@@ -311,7 +320,7 @@ class ColorPalette extends PureComponent<Props, State> {
     const {style, ...others} = props;
 
     return (
-      <View key={pageIndex} {...others} style={[styles.paletteContainer, contentStyle, style]} onLayout={this.onLayout}>
+      <View key={pageIndex} {...others} style={[styles.paletteContainer, contentStyle, style]}>
         {_.map(colors, (color, i) => {
           if (color === this.value) {
             this.selectedColorIndex = i;
