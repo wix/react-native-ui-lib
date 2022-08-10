@@ -1,23 +1,24 @@
-import _ from 'lodash';
-import React, {PureComponent, ReactElement} from 'react';
 import {
-  StyleSheet,
-  PanResponder,
+  AccessibilityActionEvent,
   AccessibilityInfo,
+  AccessibilityRole,
   Animated,
-  StyleProp,
-  ViewStyle,
-  PanResponderGestureState,
   GestureResponderEvent,
   LayoutChangeEvent,
-  AccessibilityActionEvent,
-  AccessibilityRole,
-  View as RNView
+  PanResponder,
+  PanResponderGestureState,
+  View as RNView,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
 } from 'react-native';
-import {Constants} from '../../commons/new';
-import {Colors} from '../../style';
-import View from '../view';
+import React, {PureComponent, ReactElement} from 'react';
 import Thumb, {ThumbProps} from './Thumb';
+
+import {Colors} from '../../style';
+import {Constants} from '../../commons/new';
+import View from '../view';
+import _ from 'lodash';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const TRACK_SIZE = 6;
@@ -26,7 +27,6 @@ const SHADOW_RADIUS = 4;
 const DEFAULT_COLOR = Colors.$backgroundDisabled;
 const ACTIVE_COLOR = Colors.$backgroundPrimaryHeavy;
 const INACTIVE_COLOR = Colors.$backgroundNeutralMedium;
-const MIN_RANGE_GAP = 4;
 
 export type SliderOnValueChange = (value: number) => void;
 export type SliderOnRangeChange = (values: {min: number, max: number}) => void;
@@ -161,7 +161,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
   private lastMinValue = this.minInitialValue;
 
   private _thumbStyles: ThumbStyle = {};
-  private _minThumbStyles: ThumbStyle = {left: this.minInitialValue};
+  private _minThumbStyles: ThumbStyle = {left: 0};
 
   private initialThumbSize: Measurements = {width: THUMB_SIZE, height: THUMB_SIZE};
   private containerSize: Measurements | undefined;
@@ -341,7 +341,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
         
         if (useRange) {
           const minThumbPosition = this._minThumbStyles?.left as number;
-          if (left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP) {
+          if (left >= minThumbPosition) {
             this._thumbStyles.left = left;
             
             const width = left - minThumbPosition;
@@ -371,7 +371,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
       
       const maxThumbPosition = this._thumbStyles?.left as number;
-      if (left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP) {
+      if (left <= maxThumbPosition) {
         this._minThumbStyles.left = left;
         
         this._minTrackStyles.width = maxThumbPosition - x;
@@ -678,7 +678,9 @@ export default class Slider extends PureComponent<SliderProps, State> {
       >
         {this.renderTrack()}
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
-        {useRange && this.renderMinThumb()}
+        <View style={[!this.isDefaultThumbActive() ? {zIndex: 1}: {zIndex: 0}, {top: '-50%'}]}>
+          {useRange && this.renderMinThumb()}
+        </View>
         {this.renderThumb()}
       </View>
     );
