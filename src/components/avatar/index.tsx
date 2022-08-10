@@ -189,7 +189,7 @@ class Avatar extends PureComponent<AvatarProps> {
     return this.props.source || this.props.imageSource;
   }
 
-  getContainerStyle(): StyleProp<ViewStyle> {
+  getContainerStyle(): StyleProp<ImageStyle> {
     const {size} = this.props;
 
     return {
@@ -291,7 +291,6 @@ class Avatar extends PureComponent<AvatarProps> {
     if (hasImage) {
       return (
         <ImageContainer
-          animate={animate}
           style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
           source={this.source}
           onLoadStart={onImageLoadStart}

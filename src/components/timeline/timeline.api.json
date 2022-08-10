@@ -4,7 +4,7 @@
   "description": "A timeline item to render as part of a timeline list",
   "extends": ["View"],
   "extendsLink": ["https://reactnative.dev/docs/view"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/src/components/timeline/index.tsx",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TimelineScreen.tsx",
   "images": [],
   "props": [
     {"name": "backgroundColor", "type": "string", "description": "Background color for the item"},

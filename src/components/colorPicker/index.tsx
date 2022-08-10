@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
@@ -136,7 +135,7 @@ class ColorPicker extends PureComponent<Props> {
   };
 }
 
-export default asBaseComponent<Props>(ColorPicker);
+export default ColorPicker;
 
 
 const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;

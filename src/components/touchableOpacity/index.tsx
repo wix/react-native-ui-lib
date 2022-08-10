@@ -78,23 +78,19 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 
   onPressIn = (...args: any) => {
-    this.setState({active: true});
-    if (this.props?.customValue) {
-      this.props.onPressIn?.(this.props.customValue);
-    } else {
-      //@ts-expect-error
-      this.props.onPressIn?.(...args);
+    if (this.props.activeBackgroundColor) {
+      this.setState({active: true});
     }
+    //@ts-expect-error
+    this.props.onPressIn?.(...args);
   };
 
   onPressOut = (...args: any) => {
-    this.setState({active: false});
-    if (this.props?.customValue) {
-      this.props.onPressOut?.(this.props.customValue);
-    } else {
-      //@ts-expect-error
-      this.props.onPressOut?.(...args);
+    if (this.props.activeBackgroundColor) {
+      this.setState({active: false});
     }
+    //@ts-expect-error
+    this.props.onPressOut?.(...args);
   };
 
   get backgroundColorStyle() {
@@ -157,7 +153,8 @@ const modifiersOptions = {
   paddings: true,
   margins: true,
   alignments: true,
-  flex: true
+  flex: true,
+  backgroundColor: true
 };
 
 export default asBaseComponent<TouchableOpacityProps>(forwardRef(TouchableOpacity), {modifiersOptions});

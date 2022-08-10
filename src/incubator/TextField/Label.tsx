@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import Text from '../../components/text';
@@ -20,12 +20,16 @@ const Label = ({
 
   const forceHidingLabel = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
+  const style = useMemo(() => {
+    return [styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder];
+  }, [labelStyle, floatingPlaceholder]);
+
   if ((label || floatingPlaceholder) && !forceHidingLabel) {
     return (
       <Text
         testID={testID}
         color={getColorByState(labelColor, context)}
-        style={[styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder]}
+        style={style}
         {...labelProps}
       >
         {label}
