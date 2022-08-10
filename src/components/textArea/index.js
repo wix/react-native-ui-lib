@@ -1,4 +1,5 @@
 import React from 'react';
+import {TextInputPropTypes} from 'deprecated-react-native-prop-types';
 import {View, TextInput as RNTextInput, StyleSheet} from 'react-native';
 import BaseInput from '../baseInput';
 
@@ -14,7 +15,7 @@ export default class TextArea extends BaseInput {
   static displayName = 'TextArea';
 
   static propTypes = {
-    ...RNTextInput.propTypes,
+    ...TextInputPropTypes,
     ...BaseInput.propTypes
   };
 

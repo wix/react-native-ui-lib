@@ -8,7 +8,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
+import {ImagePropTypes, TextInputPropTypes} from 'deprecated-react-native-prop-types';
+import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
 import memoize from 'memoize-one';
 import {Constants} from '../../commons/new';
 import {Colors, Typography, Spacings} from '../../style';
@@ -57,7 +58,7 @@ export default class TextField extends BaseInput {
   static displayName = 'TextField';
 
   static propTypes = {
-    ...RNTextInput.propTypes,
+    ...TextInputPropTypes,
     ...BaseInput.propTypes,
     /**
      * should placeholder have floating behavior
@@ -174,7 +175,7 @@ export default class TextField extends BaseInput {
      * Props for the right button {iconSource, onPress, style}
      */
     rightButtonProps: PropTypes.shape({
-      iconSource: RNImage.propTypes.source,
+      iconSource: ImagePropTypes.source,
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
