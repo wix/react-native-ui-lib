@@ -334,7 +334,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
     if (this.isDefaultThumbActive()) {
       if (this.thumb.current) {
         const {useRange} = this.props;
-        const {trackSize, thumbSize} = this.state;
+        const {trackSize} = this.state;
         const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
         const _x = this.shouldForceLTR ? trackSize.width - x : x; // adjust for RTL
         const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
@@ -363,7 +363,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   moveMinTo(x: number) {
-    const {trackSize, thumbSize} = this.state;
+    const {trackSize} = this.state;
 
     if (this.minThumb.current) {
       const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
@@ -678,7 +678,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       >
         {this.renderTrack()}
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
-        <View style={[!this.isDefaultThumbActive() ? {zIndex: 1}: {zIndex: 0}, {top: '-50%'}]}>
+        <View style={[!this.isDefaultThumbActive() ? {zIndex: 1} : {zIndex: 0}, {top: '-50%'}]}>
           {useRange && this.renderMinThumb()}
         </View>
         {this.renderThumb()}
