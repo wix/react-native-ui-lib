@@ -78,6 +78,12 @@ export type ImageProps = RNImageProps &
      * An imageId that can be used in sourceTransformer logic
      */
     imageId?: string;
+    /**
+     * Use a container for the Image, this can solve issues on
+     * Android when animation needs to be performed on the same
+     * view; i.e. animation related crashes on Android.
+     */
+    useBackgroundContainer?: boolean;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
@@ -176,7 +182,7 @@ class Image extends PureComponent<Props, State> {
     return <SvgImage data={source} {...others}/>;
   };
 
-  renderErrorImage = () => {
+  renderImageWithContainer = () => {
     const {style, cover, modifiers} = this.props;
     const {margins} = modifiers;
 
@@ -241,8 +247,9 @@ class Image extends PureComponent<Props, State> {
 
   renderRegularImage() {
     const {error} = this.state;
-    if (error) {
-      return this.renderErrorImage();
+    const {useBackgroundContainer} = this.props;
+    if (error || useBackgroundContainer) {
+      return this.renderImageWithContainer();
     } else {
       return this.renderImage(false);
     }
