@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
 import {BorderRadiuses, Colors} from '../../style';
-import {Constants, asBaseComponent} from '../../commons/new';
+import {Constants} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
@@ -190,7 +190,7 @@ class ColorSwatch extends PureComponent<Props> {
   }
 }
 
-export default asBaseComponent<Props>(ColorSwatch);
+export default ColorSwatch;
 
 function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({
