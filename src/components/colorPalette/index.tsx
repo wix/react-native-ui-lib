@@ -115,18 +115,14 @@ class ColorPalette extends PureComponent<Props, State> {
     _.times(this.props.colors.length, i => {
       this.itemsRefs.current[i] = React.createRef();
     });
-    setTimeout(() => {
-      this.scrollToSelected();
-    }, 100);
+    this.scrollToSelected();
   }
 
   componentDidUpdate(prevProps: Props) {
     if (this.props.colors !== prevProps.colors) {
       const newIndex = this.itemsRefs.current.length;
       this.itemsRefs.current[newIndex] = React.createRef();
-      setTimeout(() => {
-        this.scrollToSelected();
-      }, 100);
+      this.scrollToSelected();
     }
   }
 
@@ -223,10 +219,12 @@ class ColorPalette extends PureComponent<Props, State> {
     return (margin - 0.001) / 2;
   }
 
-  scrollToSelected() {
+  scrollToSelected = () => setTimeout(() => {
     const {scrollable, currentPage} = this.state;
 
     if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs.current) {
+      // The this.selectedColorIndex layout doesn't update on time
+      // so we use this.selectedColorIndex - 1 and add an offset of 1 Swatch
       const childRef: any = this.itemsRefs.current[this.selectedColorIndex - 1]?.current;
 
       if (childRef) {
@@ -244,7 +242,7 @@ class ColorPalette extends PureComponent<Props, State> {
         this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
       }
     }
-  }
+  }, 100)
 
   onContentSizeChange = (contentWidth: number) => {
     this.setState({
