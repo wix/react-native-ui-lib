@@ -25,7 +25,6 @@ const Input = ({
   const placeholder = !context.isFocused ? props.placeholder : hint || props.placeholder;
   const inputColor = getColorByState(color, context);
   const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
-
   const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
 
   return (
@@ -45,7 +44,7 @@ const Input = ({
 
 const styles = StyleSheet.create({
   input: {
-    flexGrow: 1,
+    // flexGrow: 1,
     textAlign: Constants.isRTL ? 'right' : 'left',
     // Setting paddingTop/Bottom separately fix height issues on iOS with multiline
     paddingTop: 0,
