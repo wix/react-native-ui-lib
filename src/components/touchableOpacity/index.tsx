@@ -147,7 +147,6 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 
   onLongPress = () => {
-    console.log(`onLongPress: ${this.props.onLongPress}`);
     this.props.onLongPress?.(this.props);
   };
 }

@@ -18,12 +18,14 @@ import {
   TabController,
   Constants,
   Fader,
-  Chip
+  Chip,
+  Dividers
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
 const settingsIcon = require('../assets/icons/settings.png');
 const chevronIcon = require('../assets/icons/chevronRight.png');
+const FADER_SIZE = 50;
 
 class MainScreen extends Component {
   static propTypes = {
@@ -69,20 +71,20 @@ class MainScreen extends Component {
   sectionListRef = React.createRef();
   scrollViewRef = React.createRef();
 
-  onPressFlag = false;
-  onUserScroll = false;
+  hasPressItem = false;
+  hasUserScrolled = false;
 
   componentDidUpdate(prevState) {
     const {selectedSection} = this.state;
     if (prevState.selectedSection !== selectedSection) {
-      if (this.onPressFlag) {
+      if (this.hasPressItem) {
         this.scrollToSection(selectedSection);
         this.scrollChipsSection(selectedSection);
       }
-      if (this.onUserScroll) {
+      if (this.hasUserScrolled) {
         this.scrollChipsSection(selectedSection);
       }
-      this.onPressFlag = false;
+      this.hasPressItem = false;
     }
   }
 
@@ -99,7 +101,6 @@ class MainScreen extends Component {
     const data = this.getMenuData();
 
     if (buttonId === 'uilib.settingsButton') {
-      console.log(`2nd call to pushScreen: ${this.settingsScreenName}`);
       this.pushScreen({
         name: this.settingsScreenName,
         passProps: {
@@ -121,13 +122,14 @@ class MainScreen extends Component {
   };
 
   scrollChipsSection = index => {
-    const {selectedSection} = this.state;
+    const {selectedSection, filterText} = this.state;
     const offset = index < selectedSection ? 60 * index : 85 * index;
-    this?.scrollViewRef?.current.scrollTo({x: offset, animated: true});
+    if (!filterText) {
+      this?.scrollViewRef?.current.scrollTo({x: offset, animated: true});
+    }
   };
 
   pushScreen = options => {
-    console.log(`options: ${options}`);
     Navigation.push(this.props.componentId, {
       component: {
         name: options.name || options.screen,
@@ -149,13 +151,11 @@ class MainScreen extends Component {
   };
 
   setDefaultScreen = ({customValue: item}) => {
-    console.log(`Default Screen:`, item);
     AsyncStorage.setItem('uilib.defaultScreen', item.screen);
     this.openScreen({customValue: item});
   };
 
   openScreen = ({customValue: row}) => {
-    console.log(`row: `, row);
     this.closeSearchBox();
 
     setTimeout(() => {
@@ -202,6 +202,25 @@ class MainScreen extends Component {
     });
   };
 
+  setHasUserScrolled = () => {
+    this.hasUserScrolled = true;
+  };
+
+  removeHasUserScrolled = () => {
+    this.hasUserScrolled = false;
+  };
+
+  onEndReached = () => {
+    const {chipsLabels} = this.state;
+    this.removeHasUserScrolled;
+    this.scrollChipsSection(chipsLabels.length - 1);
+    this.setState({
+      selectedSection: chipsLabels.length - 1,
+      faderStart: true,
+      faderEnd: false
+    });
+  };
+
   /** Renders */
   renderSearch = () => {
     const {filterText} = this.state;
@@ -233,18 +252,18 @@ class MainScreen extends Component {
 
   onPress = ({customValue: index}) => {
     const {chipsLabels} = this.state;
-    this.onPressFlag = true;
-    this.onUserScroll = false;
+    this.hasPressItem = true;
+    this.hasUserScrolled = false;
     this.setState({
       selectedSection: index,
-      faderStart: index != 0,
+      faderStart: index !== 0,
       faderEnd: index !== chipsLabels.length - 1
     });
   };
 
   onCheckViewableItems = ({viewableItems}) => {
     const {chipsLabels, selectedSection} = this.state;
-    if (this.onPressFlag === false && this.onUserScroll === true) {
+    if (!this.hasPressItem && this.hasUserScrolled) {
       const title = viewableItems[0].section.title;
       const sectionIndex = _.findIndex(chipsLabels, c => {
         return c === title;
@@ -286,14 +305,6 @@ class MainScreen extends Component {
     );
   };
 
-  itemSeparator = () => {
-    return <View style={styles.itemSeparatorContainer}/>;
-  };
-
-  sectionSeparator = () => {
-    return <View style={styles.sectionSeparatorContainer}/>;
-  };
-
   renderItem = ({item}) => {
     const {renderItem} = this.props;
 
@@ -308,12 +319,14 @@ class MainScreen extends Component {
           row
           spread
           paddingH-s5
-          paddingV-s2
+          paddingV-s4
+          // marginH-10
           onPress={this.openScreen}
           customValue={item}
           onLongPress={this.setDefaultScreen}
           activeBackgroundColor={Colors.$backgroundPrimaryHeavy}
           activeOpacity={1}
+          style={Dividers.d10}
         >
           <Text style={[item.deprecate && styles.entryTextDeprecated]} grey10 text80>
             {item.title}
@@ -359,22 +372,24 @@ class MainScreen extends Component {
 
         {showResults && this.renderSearchResults(filteredNavigationData)}
         {showSectionList && (
-          <View>
+          <>
             <View style={styles.chipsSeparatorContainer}/>
-            <ScrollView
-              decelerationRate="fast"
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              ref={this.scrollViewRef}
-            >
-              {chipsLabels.map((label, index) => {
-                return this.renderChip(label, index);
-              })}
-            </ScrollView>
-            <Fader size={35} visible={this.state.faderStart} position={Fader.position.START}/>
-            <Fader size={35} visible={this.state.faderEnd} position={Fader.position.END}/>
+            <View>
+              <ScrollView
+                decelerationRate="fast"
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                ref={this.scrollViewRef}
+              >
+                {chipsLabels.map((label, index) => {
+                  return this.renderChip(label, index);
+                })}
+              </ScrollView>
+              <Fader size={FADER_SIZE} visible={this.state.faderStart} position={Fader.position.START}/>
+              <Fader size={FADER_SIZE} visible={this.state.faderEnd} position={Fader.position.END}/>
+            </View>
             <View style={styles.chipsSeparatorContainer}/>
-          </View>
+          </>
         )}
 
         {showSectionList && (
@@ -384,33 +399,15 @@ class MainScreen extends Component {
             keyExtractor={(item, index) => item + index}
             renderItem={this.renderItem}
             renderSectionHeader={this.renderSectionHeader}
-            ItemSeparatorComponent={this.itemSeparator}
             onViewableItemsChanged={this.onCheckViewableItems}
             viewabilityConfig={{
-              itemVisiblePercentThreshold: 60 //means if 50% of the item is visible
+              itemVisiblePercentThreshold: 60
             }}
-            onScrollBeginDrag={() => {
-              this.onUserScroll = true;
-            }}
-            onScrollEndDrag={() => {
-              this.onUserScroll = false;
-            }}
-            onMomentumScrollBegin={() => {
-              this.onUserScroll = true;
-            }}
-            onMomentumScrollEnd={() => {
-              this.onUserScroll = true;
-            }}
-            onEndReached={() => {
-              const {chipsLabels} = this.state;
-              this.onUserScroll = false;
-              this.scrollChipsSection(chipsLabels.length - 1);
-              this.setState({
-                selectedSection: chipsLabels.length - 1,
-                faderStart: true,
-                faderEnd: false
-              });
-            }}
+            onScrollBeginDrag={this.setHasUserScrolled}
+            onScrollEndDrag={this.removeHasUserScrolled}
+            onMomentumScrollBegin={this.setHasUserScrolled}
+            onMomentumScrollEnd={this.removeHasUserScrolled}
+            onEndReached={this.onEndReached}
           />
         )}
 
@@ -448,10 +445,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.grey60,
     marginHorizontal: 20,
     marginVertical: 7
-  },
-  sectionSeparatorContainer: {
-    height: 5,
-    backgroundColor: Colors.grey60
   },
   chipContainer: {
     height: 20
