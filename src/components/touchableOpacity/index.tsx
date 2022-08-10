@@ -1,6 +1,10 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
+import {
+  TouchableOpacity as RNTouchableOpacity,
+  TouchableOpacityProps as RNTouchableOpacityProps,
+  GestureResponderEvent
+} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -11,7 +15,9 @@ import {
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 import {ViewProps} from '../view';
 
-export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>, ContainerModifiers {
+export interface TouchableOpacityProps
+  extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut'>,
+    ContainerModifiers {
   /**
    * background color for TouchableOpacity
    */
@@ -41,7 +47,9 @@ export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'st
    */
   customValue?: any;
   style?: ViewProps['style'];
-  onPress?: (props?: TouchableOpacityProps | any) => void;
+  onPress?: (props?: TouchableOpacityProps) => void;
+  onPressIn?: (props?: TouchableOpacityProps | ((event: GestureResponderEvent) => void)) => void;
+  onPressOut?: (props?: TouchableOpacityProps | ((event: GestureResponderEvent) => void)) => void;
 }
 
 type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;
@@ -81,16 +89,22 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
     if (this.props.activeBackgroundColor) {
       this.setState({active: true});
     }
-    //@ts-expect-error
-    this.props.onPressIn?.(...args);
+    if (this.props?.customValue) {
+      this.props.onPressIn?.(this.props);
+    } else {
+      this.props.onPressIn?.(...args);
+    }
   };
 
   onPressOut = (...args: any) => {
     if (this.props.activeBackgroundColor) {
-      this.setState({active: false});
+      this.setState({active: true});
     }
-    //@ts-expect-error
-    this.props.onPressOut?.(...args);
+    if (this.props?.customValue) {
+      this.props.onPressOut?.(this.props);
+    } else {
+      this.props.onPressOut?.(...args);
+    }
   };
 
   get backgroundColorStyle() {
