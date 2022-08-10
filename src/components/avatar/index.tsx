@@ -390,7 +390,7 @@ class Avatar extends PureComponent<AvatarProps> {
         {this.renderImage()}
         {this.renderBadge()}
         {hasCustomRibbon && this.renderCustomRibbon()}
-        {!hasCustomRibbon && hasRibbonLabel && this.renderRibbon()}
+        {hasRibbonLabel && this.renderRibbon()}
         {children}
       </Container>
     );
