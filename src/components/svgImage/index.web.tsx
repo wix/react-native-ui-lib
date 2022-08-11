@@ -1,9 +1,9 @@
 import React from 'react';
 import {isSvg, isSvgUri} from '../../utils/imageUtils';
-import {SvgPackage} from '../../optionalDependencies';
+// import {SvgPackage} from '../../optionalDependencies';
 
-const SvgXml = SvgPackage?.SvgXml;
-const SvgCssUri = SvgPackage?.SvgCssUri;
+// const SvgXml = SvgPackage?.SvgXml;
+// const SvgCssUri = SvgPackage?.SvgCssUri;
 // const SvgProps = SvgPackage?.SvgProps; TODO: not sure how (or if) we can use their props
 
 export interface SvgImageProps {
@@ -19,16 +19,18 @@ function SvgImage(props: SvgImageProps) {
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   const {data, tintColor, ...others} = props;
 
-  if (!SvgXml) {
-    // eslint-disable-next-line max-len
-    console.error(`RNUILib Image "svg" prop requires installing "react-native-svg" and "react-native-svg-transformer" dependencies`);
-    return null;
-  }
+  // if (!SvgXml) {
+  //   // eslint-disable-next-line max-len
+  //   console.error(`RNUILib Image "svg" prop requires installing "react-native-svg" and "react-native-svg-transformer" dependencies`);
+  //   return null;
+  // }
 
   if (isSvgUri(data)) {
-    return <SvgCssUri {...others} uri={data.uri}/>;
-  } else if (typeof data === 'string') {
-    return <SvgXml xml={data} {...others}/>;
+    return <img src={data.uri}/>;
+    // return <SvgCssUri {...others} uri={data.uri}/>;
+  // }
+  //  else if (typeof data === 'string') {
+  //   return <SvgXml xml={data} {...others}/>;
   } else if (data) {
     const File = data; // Must be with capital letter
     return <File {...others}/>;
