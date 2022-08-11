@@ -15,8 +15,6 @@ import {
   TouchableOpacity,
   Icon,
   Button,
-  TabController,
-  Constants,
   Fader,
   Chip,
   Dividers
@@ -271,10 +269,10 @@ class MainScreen extends Component {
         return c === title;
       });
 
-      if (sectionIndex != -1 && sectionIndex != selectedSection) {
+      if (sectionIndex !== -1 && sectionIndex !== selectedSection) {
         this.setState({
           selectedSection: sectionIndex,
-          faderStart: sectionIndex != 0,
+          faderStart: sectionIndex !== 0,
           faderEnd: sectionIndex !== chipsLabels.length - 1
         });
       }
@@ -322,7 +320,6 @@ class MainScreen extends Component {
           spread
           paddingH-s5
           paddingV-s4
-          // marginH-10
           onPress={this.openScreen}
           customValue={item}
           onLongPress={this.setDefaultScreen}
@@ -361,7 +358,7 @@ class MainScreen extends Component {
 
   render() {
     const {containerStyle} = this.props;
-    const {filteredNavigationData, filterText, selectedSection} = this.state;
+    const {filteredNavigationData, filterText} = this.state;
     const showNoResults = _.isEmpty(filteredNavigationData) && !!filterText;
     const showResults = !_.isEmpty(filteredNavigationData) && !!filterText;
     const showSectionList = !filterText;
