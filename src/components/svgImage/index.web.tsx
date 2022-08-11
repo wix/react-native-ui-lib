@@ -32,8 +32,7 @@ function SvgImage(props: SvgImageProps) {
   //  else if (typeof data === 'string') {
   //   return <SvgXml xml={data} {...others}/>;
   } else if (data) {
-    const File = data; // Must be with capital letter
-    return <File {...others}/>;
+    return <img src={data.uri}/>;
   }
 
   return null;
