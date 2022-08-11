@@ -138,7 +138,6 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
       <RNTouchableOpacity
         {...this.getAccessibilityInfo()}
         {...others}
-        onLongPress={this.onLongPress}
         onPress={this.onPress}
         onPressIn={this.onPressIn}
         onPressOut={this.onPressOut}
