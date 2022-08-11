@@ -260,18 +260,19 @@ class Avatar extends PureComponent<AvatarProps> {
   }
 
   renderRibbon() {
-    const {ribbonLabel, ribbonStyle, ribbonLabelStyle, customRibbon} = this.props;
-    if (ribbonLabel) {
-      return customRibbon ? (
-        <View style={this.getRibbonStyle()}>{customRibbon}</View>
-      ) : (
-        <View style={[this.getRibbonStyle(), this.styles.ribbon, ribbonStyle]}>
-          <Text numberOfLines={1} text100 $textDefaultLight style={ribbonLabelStyle}>
-            {ribbonLabel}
-          </Text>
-        </View>
-      );
-    }
+    const {ribbonLabel, ribbonStyle, ribbonLabelStyle} = this.props;
+    return (
+      <View style={[this.getRibbonStyle(), this.styles.ribbon, ribbonStyle]}>
+        <Text numberOfLines={1} text100 $textDefaultLight style={ribbonLabelStyle}>
+          {ribbonLabel}
+        </Text>
+      </View>
+    );
+  }
+
+  renderCustomRibbon() {
+    const {customRibbon} = this.props;
+    return <View style={this.getRibbonStyle()}>{customRibbon}</View>;
   }
 
   renderImage() {
@@ -349,13 +350,17 @@ class Avatar extends PureComponent<AvatarProps> {
       size,
       testID,
       //@ts-ignore
-      forwardedRef
+      forwardedRef,
+      customRibbon,
+      ribbonLabel
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const hasImage = !_.isUndefined(this.source);
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
     const text = this.text;
+    const hasCustomRibbon = !_.isUndefined(customRibbon);
+    const hasRibbonLabel = !_.isUndefined(ribbonLabel);
 
     return (
       <Container
@@ -384,7 +389,8 @@ class Avatar extends PureComponent<AvatarProps> {
         </View>
         {this.renderImage()}
         {this.renderBadge()}
-        {this.renderRibbon()}
+        {hasCustomRibbon && this.renderCustomRibbon()}
+        {hasRibbonLabel && this.renderRibbon()}
         {children}
       </Container>
     );
