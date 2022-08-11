@@ -131,7 +131,6 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
       return <IncubatorTouchableOpacity {...this.props}/>;
     }
 
-    // console.log(`Touchable Opacity`)
 
     return (
       // @ts-ignore
