@@ -1,23 +1,24 @@
-import _ from 'lodash';
-import React, {PureComponent, ReactElement} from 'react';
 import {
-  StyleSheet,
-  PanResponder,
+  AccessibilityActionEvent,
   AccessibilityInfo,
+  AccessibilityRole,
   Animated,
-  StyleProp,
-  ViewStyle,
-  PanResponderGestureState,
   GestureResponderEvent,
   LayoutChangeEvent,
-  AccessibilityActionEvent,
-  AccessibilityRole,
-  View as RNView
+  PanResponder,
+  PanResponderGestureState,
+  View as RNView,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
 } from 'react-native';
-import {Constants} from '../../commons/new';
-import {Colors} from '../../style';
-import View from '../view';
+import React, {PureComponent, ReactElement} from 'react';
 import Thumb, {ThumbProps} from './Thumb';
+
+import {Colors} from '../../style';
+import {Constants} from '../../commons/new';
+import View from '../view';
+import _ from 'lodash';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 
 const TRACK_SIZE = 6;
@@ -294,6 +295,19 @@ export default class Slider extends PureComponent<SliderProps, State> {
     } else {
       this._x_min = x;
     }
+  }
+  reset() {
+    this.lastValue = this.initialValue;
+    this.lastMinValue = this.minInitialValue;
+    this.lastDx = 0;
+
+    this.setActiveThumb(this.thumb);
+    this.set_x(this.getXForValue(this.initialValue));
+    this.update(0);
+
+    this.setActiveThumb(this.minThumb);
+    this.set_x(this.getXForValue(this.minInitialValue));
+    this.update(0);
   }
 
   update(dx: number) {
