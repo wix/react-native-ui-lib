@@ -243,7 +243,9 @@ class MainScreen extends Component {
           filterText ? (
             <Button link marginR-5 iconSource={Assets.icons.demo.close} $iconDefault onPress={this.clearSearch}/>
           ) : (
-            <Icon marginR-10 tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
+            <View>
+              <Icon tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
+            </View>
           )
         }
       />
@@ -372,24 +374,27 @@ class MainScreen extends Component {
 
         {showResults && this.renderSearchResults(filteredNavigationData)}
         {showSectionList && (
-          <>
-            <View style={styles.chipsSeparatorContainer}/>
-            <View>
-              <ScrollView
-                decelerationRate="fast"
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                ref={this.scrollViewRef}
-              >
-                {chipsLabels.map((label, index) => {
-                  return this.renderChip(label, index);
-                })}
-              </ScrollView>
-              <Fader size={FADER_SIZE} visible={this.state.faderStart} position={Fader.position.START}/>
-              <Fader size={FADER_SIZE} visible={this.state.faderEnd} position={Fader.position.END}/>
-            </View>
-            <View style={styles.chipsSeparatorContainer}/>
-          </>
+          <View
+            style={{
+              borderBottomColor: Colors.grey60,
+              borderBottomWidth: 1,
+              borderTopColor: Colors.grey60,
+              borderTopWidth: 1
+            }}
+          >
+            <ScrollView
+              decelerationRate="fast"
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              ref={this.scrollViewRef}
+            >
+              {chipsLabels.map((label, index) => {
+                return this.renderChip(label, index);
+              })}
+            </ScrollView>
+            <Fader size={FADER_SIZE} visible={this.state.faderStart} position={Fader.position.START}/>
+            <Fader size={FADER_SIZE} visible={this.state.faderEnd} position={Fader.position.END}/>
+          </View>
         )}
 
         {showSectionList && (
@@ -434,17 +439,6 @@ const styles = StyleSheet.create({
   searchField: {
     padding: Spacings.s3,
     borderRadius: 8
-  },
-  chipsSeparatorContainer: {
-    height: 1,
-    marginVertical: 3,
-    backgroundColor: Colors.grey60
-  },
-  itemSeparatorContainer: {
-    height: 1,
-    backgroundColor: Colors.grey60,
-    marginHorizontal: 20,
-    marginVertical: 7
   },
   chipContainer: {
     height: 20
