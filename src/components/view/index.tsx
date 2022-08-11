@@ -1,7 +1,6 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
-import Reanimated from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers {
@@ -92,6 +91,7 @@ function View(props: ViewProps, ref: any) {
     const container = useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
 
     if (reanimated) {
+      const {default: Reanimated}: typeof import('react-native-reanimated') = require('react-native-reanimated');
       return Reanimated.createAnimatedComponent(container);
     } else if (animated) {
       return Animated.createAnimatedComponent(container);
