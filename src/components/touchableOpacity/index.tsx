@@ -95,7 +95,7 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
 
   onPressOut = (...args: any) => {
     if (this.props.activeBackgroundColor) {
-      this.setState({active: true});
+      this.setState({active: false});
     }
     if (this.props?.customValue) {
       this.props.onPressOut?.(this.props);
