@@ -1,10 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {
-  TouchableOpacity as RNTouchableOpacity,
-  TouchableOpacityProps as RNTouchableOpacityProps,
-  GestureResponderEvent
-} from 'react-native';
+import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -16,7 +12,7 @@ import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 import {ViewProps} from '../view';
 
 export interface TouchableOpacityProps
-  extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut'>,
+  extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'>,
     ContainerModifiers {
   /**
    * background color for TouchableOpacity
@@ -47,9 +43,10 @@ export interface TouchableOpacityProps
    */
   customValue?: any;
   style?: ViewProps['style'];
-  onPress?: (props?: TouchableOpacityProps) => void;
-  onPressIn?: (props?: TouchableOpacityProps | ((event: GestureResponderEvent) => void)) => void;
-  onPressOut?: (props?: TouchableOpacityProps | ((event: GestureResponderEvent) => void)) => void;
+  onPress?: (props?: TouchableOpacityProps | any) => void;
+  onPressIn?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressIn'];
+  onPressOut?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressOut'];
+  onLongPress?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onLongPress'];
 }
 
 type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;
@@ -142,6 +139,7 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
         onPress={this.onPress}
         onPressIn={this.onPressIn}
         onPressOut={this.onPressOut}
+        onLongPress={this.onLongPress}
         style={[
           this.backgroundColorStyle,
           borderRadius && {borderRadius},
@@ -160,6 +158,10 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   onPress() {
     this.props.onPress?.(this.props);
   }
+
+  onLongPress = () => {
+    this.props.onLongPress?.(this.props);
+  };
 }
 
 const modifiersOptions = {
