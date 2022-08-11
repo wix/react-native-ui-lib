@@ -295,6 +295,19 @@ export default class Slider extends PureComponent<SliderProps, State> {
       this._x_min = x;
     }
   }
+  reset() {
+    this.lastValue = this.initialValue;
+    this.lastMinValue = this.minInitialValue;
+    this.lastDx = 0;
+
+    this.setActiveThumb(this.thumb);
+    this.set_x(this.getXForValue(this.initialValue));
+    this.update(0);
+
+    this.setActiveThumb(this.minThumb);
+    this.set_x(this.getXForValue(this.minInitialValue));
+    this.update(0);
+  }
 
   update(dx: number) {
     // calc x in range (instead of: this._x += dx)
