@@ -1,5 +1,12 @@
 import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {ActivityIndicator, StyleSheet, findNodeHandle, AccessibilityInfo, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  findNodeHandle,
+  AccessibilityInfo,
+  ViewStyle,
+  LayoutChangeEvent
+} from 'react-native';
 import _ from 'lodash';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
@@ -112,13 +119,15 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     return [positionStyle, translateStyle, {zIndex, elevation}];
   }, [positionStyle, translateStyle, zIndex, elevation]);
 
-  const onLayout = useCallback((event: LayoutChangeEvent) => {
-    const height = event.nativeEvent.layout.height;
-    if (height !== toastHeight) {
-      setToastHeight(height);
-    }
-  },
-  [toastHeight]);
+  const onLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      const height = event.nativeEvent.layout.height;
+      if (height !== toastHeight) {
+        setToastHeight(height);
+      }
+    },
+    [toastHeight]
+  );
 
   const renderRightElement = () => {
     // NOTE: order does matter
@@ -169,8 +178,12 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const renderIcon = () => {
+    if (!icon) {
+      return null;
+    }
+
     return (
-      <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor}/>
+      <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor} />
     );
   };
 
