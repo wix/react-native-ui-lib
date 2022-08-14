@@ -44,7 +44,7 @@ const Input = ({
 
 const styles = StyleSheet.create({
   input: {
-    // flexGrow: 1,
+    flexGrow: 1,
     textAlign: Constants.isRTL ? 'right' : 'left',
     // Setting paddingTop/Bottom separately fix height issues on iOS with multiline
     paddingTop: 0,

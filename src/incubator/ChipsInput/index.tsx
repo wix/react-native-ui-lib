@@ -142,6 +142,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
       ref={fieldRef}
       leadingAccessory={chipList}
       blurOnSubmit={false}
+      style={{flexGrow: undefined}}
       {...others}
       onChangeText={onChangeText}
       onSubmitEditing={addChip}
