@@ -27,6 +27,15 @@ const FloatingPlaceholder = ({
   const animation = useRef(new Animated.Value(Number(context.isFocused))).current;
   const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
+  useEffect(() => {
+    const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;
+    Animated.timing(animation, {
+      toValue: Number(toValue),
+      duration: 200,
+      useNativeDriver: true
+    }).start();
+  }, [floatOnFocus, context.isFocused, context.hasValue]);
+
   const animatedStyle = useMemo(() => {
     return {
       transform: [
@@ -46,14 +55,8 @@ const FloatingPlaceholder = ({
     };
   }, [placeholderOffset, extraOffset]);
 
-  useEffect(() => {
-    const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;
-    Animated.timing(animation, {
-      toValue: Number(toValue),
-      duration: 200,
-      useNativeDriver: true
-    }).start();
-  }, [floatOnFocus, context.isFocused, context.hasValue]);
+  const style = useMemo(() => [styles.placeholder, floatingPlaceholderStyle, animatedStyle],
+    [floatingPlaceholderStyle, animatedStyle]);
 
   const onPlaceholderLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
@@ -70,7 +73,7 @@ const FloatingPlaceholder = ({
       <Text
         animated
         color={getColorByState(floatingPlaceholderColor, context)}
-        style={[styles.placeholder, floatingPlaceholderStyle, animatedStyle]}
+        style={style}
         onLayout={onPlaceholderLayout}
         testID={testID}
       >

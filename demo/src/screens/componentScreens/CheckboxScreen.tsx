@@ -14,16 +14,34 @@ export default class CheckboxScreen extends Component {
 
   render() {
     return (
-      <View useSafeArea flex>
-        <Text text40 $textDefault margin-20>
+      <View flex padding-page>
+        <Text text40 $textDefault marginB-20>
           Checkbox
         </Text>
-        
-        <Checkbox
-          value={this.state.value1}
-          onValueChange={value1 => this.setState({value1})}
-          style={styles.checkbox}
-        />
+
+        <Text marginB-s4>Customizable UI</Text>
+        <View row marginB-s5 centerV>
+          <Checkbox value={this.state.value1} onValueChange={value1 => this.setState({value1})}/>
+          <Checkbox
+            value={this.state.value2}
+            onValueChange={value2 => this.setState({value2})}
+            borderRadius={2}
+            size={30}
+            color={Colors.purple30}
+            selectedIcon={Assets.icons.x}
+            marginL-s5
+          />
+
+          <Checkbox
+            value={this.state.value3}
+            onValueChange={value3 => this.setState({value3})}
+            borderRadius={5}
+            size={18}
+            color={Colors.grey10}
+            iconColor={Colors.green10}
+            marginL-s5
+          />
+        </View>
         <Checkbox
           value={this.state.value6}
           label={'With label'}
@@ -31,27 +49,10 @@ export default class CheckboxScreen extends Component {
           onValueChange={value6 => this.setState({value6})}
           containerStyle={styles.checkbox}
         />
-        <Checkbox
-          value={this.state.value2}
-          onValueChange={value2 => this.setState({value2})}
-          borderRadius={2}
-          size={30}
-          color={Colors.purple30}
-          selectedIcon={Assets.icons.x}
-          style={styles.checkbox}
-        />
-        <Checkbox
-          value={this.state.value3}
-          onValueChange={value3 => this.setState({value3})}
-          borderRadius={5}
-          size={18}
-          color={Colors.grey10}
-          iconColor={Colors.green10}
-          style={styles.checkbox}
-        />
-        <View row margin-20 style={styles.row}>
+
+        <View row style={styles.row}>
           <Text $textDefault marginR-10>
-            Disabled:
+            Disabled States
           </Text>
           <Checkbox
             disabled
@@ -73,7 +74,7 @@ export default class CheckboxScreen extends Component {
 
 const styles = StyleSheet.create({
   checkbox: {
-    margin: 20
+    marginBottom: 20
   },
   row: {
     alignItems: 'center'

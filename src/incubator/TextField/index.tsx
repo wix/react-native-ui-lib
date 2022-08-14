@@ -84,6 +84,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const {margins, paddings, typography, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
+  const _floatingPlaceholderStyle = useMemo(() => [typographyStyle, floatingPlaceholderStyle], [typographyStyle, floatingPlaceholderStyle]);
 
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
@@ -118,7 +119,7 @@ const TextField = (props: InternalTextFieldProps) => {
             {floatingPlaceholder && (
               <FloatingPlaceholder
                 placeholder={placeholder}
-                floatingPlaceholderStyle={[typographyStyle, floatingPlaceholderStyle]}
+                floatingPlaceholderStyle={_floatingPlaceholderStyle}
                 floatingPlaceholderColor={floatingPlaceholderColor}
                 floatOnFocus={floatOnFocus}
                 validationMessagePosition={validationMessagePosition}
