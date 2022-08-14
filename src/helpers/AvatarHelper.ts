@@ -2,11 +2,13 @@ import _ from 'lodash';
 import URL from 'url-parse';
 import Colors from '../style/colors';
 
-export function hashStringToNumber(str: string) {
+export function hashStringToNumber(str?: string) {
   let hash = 5381;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) + hash + char; /* hash * 33 + c */ // eslint-disable-line
+  if (str) {
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = (hash << 5) + hash + char; /* hash * 33 + c */ // eslint-disable-line
+    }
   }
   return hash;
 }
