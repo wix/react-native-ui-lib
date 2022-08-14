@@ -33,7 +33,7 @@ function SvgImage(props: SvgImageProps) {
   //  else if (typeof data === 'string') {
   //   return <SvgXml xml={data} {...others}/>;
   } else if (data) {
-    return <img src={data.uri}/>;
+    return <img src={data}/>;
   }
 
   return null;
