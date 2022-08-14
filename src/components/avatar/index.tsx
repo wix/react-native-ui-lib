@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PropsWithChildren, useEffect, useMemo} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo, forwardRef} from 'react';
 import {
   StyleSheet,
   ImageSourcePropType,
@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import {LogService} from '../../services';
 import {Colors, BorderRadiuses} from '../../style';
-import {ForwardRefInjectedProps} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import Badge, {BadgeProps} from '../badge';
 import View from '../view';
@@ -22,7 +21,7 @@ import Image, {ImageProps} from '../image';
 // @ts-ignore
 import AnimatedImage from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
-import {useThemeProps} from 'hooks';
+import {useThemeProps} from '../../hooks';
 
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
@@ -155,27 +154,31 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
     testID?: string;
   }>;
 
+interface Statics {
+  badgePosition: typeof BadgePosition;
+}
+
 /**
  * @description: Avatar component for displaying user profile images
  * @extends: TouchableOpacity, Image
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */
-const Avatar = (props: AvatarProps & ForwardRefInjectedProps) => {
+const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.ForwardedRef<any>) => {
   const themeProps = useThemeProps(props, 'Avatar');
   const {
     imageSource,
     source,
-    size,
-    labelColor,
+    size = 50,
+    labelColor = Colors.$textDefault,
     badgeProps = {},
-    badgePosition,
+    badgePosition = BadgePosition.TOP_RIGHT,
     testID,
     ribbonLabel,
     customRibbon,
     ribbonStyle,
     ribbonLabelStyle,
-    animate,
+    animate = false,
     imageStyle,
     onImageLoadStart,
     onImageLoadEnd,
@@ -188,7 +191,6 @@ const Avatar = (props: AvatarProps & ForwardRefInjectedProps) => {
     autoColorsConfig,
     containerStyle,
     onPress,
-    forwardedRef,
     children
   } = themeProps;
   const {size: _badgeSize, borderWidth = 0} = badgeProps;
@@ -313,12 +315,7 @@ const Avatar = (props: AvatarProps & ForwardRefInjectedProps) => {
   const badge = () => {
     if (!_.isEmpty(badgeProps)) {
       return (
-        <Badge
-          testID={`${testID}.onlineBadge`}
-          {...badgeProps}
-          size={badgeSize}
-          containerStyle={_badgePosition}
-        />
+        <Badge testID={`${testID}.onlineBadge`} {...badgeProps} size={badgeSize} containerStyle={_badgePosition}/>
       );
     }
   };
@@ -346,7 +343,7 @@ const Avatar = (props: AvatarProps & ForwardRefInjectedProps) => {
   return (
     <Container
       style={_containerStyle}
-      ref={forwardedRef}
+      ref={ref}
       testID={testID}
       onPress={onPress}
       accessible={!_.isUndefined(onPress)}
@@ -368,7 +365,7 @@ const Avatar = (props: AvatarProps & ForwardRefInjectedProps) => {
       {children}
     </Container>
   );
-};
+});
 
 const styles = StyleSheet.create({
   initialsContainer: {
@@ -390,13 +387,8 @@ const styles = StyleSheet.create({
   }
 });
 
-Avatar.defaultProps = {
-  animate: false,
-  size: 50,
-  labelColor: Colors.$textDefault,
-  badgePosition: BadgePosition.TOP_RIGHT
-};
+// @ts-expect-error
 Avatar.badgePosition = BadgePosition;
 export {Avatar}; // For tests
 
-export default Avatar;
+export default Avatar as typeof Avatar & Statics;
