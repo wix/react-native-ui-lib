@@ -193,7 +193,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     onPress,
     children
   } = themeProps;
-  const {size: _badgeSize, borderWidth = 0} = badgeProps;
+  const {size: _badgeSize, borderWidth: badgeBorderWidth = 0} = badgeProps;
   const badgeSize = _badgeSize || DEFAULT_BADGE_SIZE;
 
   useEffect(() => {
@@ -217,7 +217,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     };
   }, [size]);
 
-  const initials = useMemo(() => {
+  const initialsStyle = useMemo(() => {
     return {
       color: labelColor,
       backgroundColor: 'transparent',
@@ -225,7 +225,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     };
   }, [labelColor]);
 
-  const _ribbonStyle: StyleProp<ViewStyle> = useMemo(() => {
+  const _baseRibbonStyle: StyleProp<ViewStyle> = useMemo(() => {
     return {
       position: 'absolute',
       top: '10%',
@@ -234,14 +234,18 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     };
   }, [size]);
 
+  const _ribbonStyle: StyleProp<ViewStyle> = useMemo(() => {
+    return [_baseRibbonStyle, styles.ribbon, ribbonStyle];
+  }, [_baseRibbonStyle, ribbonStyle]);
+
   const _badgePosition: StyleProp<ViewStyle> = useMemo(() => {
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - (badgeSize + borderWidth * 2) / 2;
+    const shift = Math.sqrt(y ** 2 / 2) - (badgeSize + badgeBorderWidth * 2) / 2;
     const badgeLocation = _.split(_.toLower(badgePosition), '_', 2);
     return {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift};
-  }, [size, borderWidth, badgeSize, badgePosition]);
+  }, [size, badgeBorderWidth, badgeSize, badgePosition]);
 
   const text = useMemo(() => {
     let text = label;
@@ -276,8 +280,8 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   const textStyle = useMemo(() => {
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
-    return [{fontSize}, initials, {color: labelColor}];
-  }, [size, initials, labelColor]);
+    return [{fontSize}, initialsStyle, {color: labelColor}];
+  }, [size, initialsStyle, labelColor]);
 
   const textContainerStyle = useMemo(() => {
     const hasImage = !_.isUndefined(_source);
@@ -296,7 +300,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     return [_baseContainerStyle, StyleSheet.absoluteFillObject, imageStyle];
   }, [_baseContainerStyle, imageStyle]);
 
-  const image = () => {
+  const renderImage = () => {
     const hasImage = !_.isUndefined(_source);
 
     if (hasImage) {
@@ -316,7 +320,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     }
   };
 
-  const badge = () => {
+  const renderBadge = () => {
     if (!_.isEmpty(badgeProps)) {
       return (
         <Badge testID={`${testID}.onlineBadge`} {...badgeProps} size={badgeSize} containerStyle={_badgePosition}/>
@@ -324,10 +328,10 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     }
   };
 
-  const ribbon = () => {
+  const renderRibbon = () => {
     if (ribbonLabel) {
       return (
-        <View style={[_ribbonStyle, styles.ribbon, ribbonStyle]}>
+        <View style={_ribbonStyle}>
           <Text numberOfLines={1} text100 $textDefaultLight style={ribbonLabelStyle}>
             {ribbonLabel}
           </Text>
@@ -336,9 +340,9 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     }
   };
 
-  const _customRibbon = () => {
+  const renderCustomRibbon = () => {
     if (customRibbon) {
-      return <View style={_ribbonStyle}>{customRibbon}</View>;
+      return <View style={_baseRibbonStyle}>{customRibbon}</View>;
     }
   };
 
@@ -362,10 +366,10 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
           </Text>
         )}
       </View>
-      {image()}
-      {badge()}
-      {_customRibbon()}
-      {ribbon()}
+      {renderImage()}
+      {renderBadge()}
+      {renderCustomRibbon()}
+      {renderRibbon()}
       {children}
     </Container>
   );
