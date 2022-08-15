@@ -292,6 +292,10 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     return extractAccessibilityProps(props);
   }, [props]);
 
+  const _imageStyle = useMemo(() => {
+    return [_baseContainerStyle, StyleSheet.absoluteFillObject, imageStyle];
+  }, [_baseContainerStyle, imageStyle]);
+
   const image = () => {
     const hasImage = !_.isUndefined(_source);
 
@@ -299,7 +303,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
       const ImageContainer = animate ? AnimatedImage : Image;
       return (
         <ImageContainer
-          style={[_baseContainerStyle, StyleSheet.absoluteFillObject, imageStyle]}
+          style={_imageStyle}
           source={_source}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
