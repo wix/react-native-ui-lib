@@ -333,8 +333,6 @@ export default class Slider extends PureComponent<SliderProps, State> {
   moveTo(x: number) {
     if (this.isDefaultThumbActive()) {
       if (this.thumb.current) {
-        const currThumb = this.thumb.current;
-        console.log('this.thumb.current: ', this.thumb.current, currThumb);
         const {useRange} = this.props;
         const {trackSize, thumbSize} = this.state;
         const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
@@ -356,8 +354,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
           this._minTrackStyles.width = Math.min(trackSize.width, x);
         }
         
-        console.log('this.thumb.current2: ', this.thumb.current, currThumb);
-        currThumb.setNativeProps(this._thumbStyles);
+        this.thumb.current.setNativeProps(this._thumbStyles);
         this.minTrack.current?.setNativeProps(this._minTrackStyles);
       }
     } else {
