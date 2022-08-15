@@ -25,7 +25,6 @@ const Input = ({
   const placeholder = !context.isFocused ? props.placeholder : hint || props.placeholder;
   const inputColor = getColorByState(color, context);
   const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
-
   const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
 
   return (
