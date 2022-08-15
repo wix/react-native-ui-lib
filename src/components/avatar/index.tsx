@@ -280,13 +280,13 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   }, [size, initials, labelColor]);
 
   const textContainerStyle = useMemo(() => {
-    const hasImage = !_.isUndefined(source);
+    const hasImage = !_.isUndefined(_source);
     return [
       styles.initialsContainer,
       {backgroundColor: _backgroundColor},
       hasImage && styles.initialsContainerWithInset
     ];
-  }, [source, _backgroundColor]);
+  }, [_source, _backgroundColor]);
 
   const accessibilityProps = useMemo(() => {
     return extractAccessibilityProps(props);
