@@ -200,8 +200,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     if (imageSource) {
       LogService.warn('uilib: imageSource prop is deprecated, use source instead.');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [imageSource]);
 
   const _source = useMemo(() => {
     return source || imageSource;
