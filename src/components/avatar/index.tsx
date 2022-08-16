@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PropsWithChildren, PureComponent} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo, forwardRef} from 'react';
 import {
   StyleSheet,
   ImageSourcePropType,
@@ -11,10 +11,8 @@ import {
   TextStyle,
   AccessibilityProps
 } from 'react-native';
-import memoize from 'memoize-one';
 import {LogService} from '../../services';
 import {Colors, BorderRadiuses} from '../../style';
-import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import Badge, {BadgeProps} from '../badge';
 import View from '../view';
@@ -23,6 +21,7 @@ import Image, {ImageProps} from '../image';
 // @ts-ignore
 import AnimatedImage from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
+import {useThemeProps} from '../../hooks';
 
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
@@ -155,43 +154,59 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
     testID?: string;
   }>;
 
+interface Statics {
+  badgePosition: typeof BadgePosition;
+}
+
 /**
  * @description: Avatar component for displaying user profile images
  * @extends: TouchableOpacity, Image
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */
-class Avatar extends PureComponent<AvatarProps> {
-  static displayName = 'Avatar';
+const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.ForwardedRef<any>) => {
+  const themeProps = useThemeProps(props, 'Avatar');
+  const {
+    imageSource,
+    source,
+    size = 50,
+    labelColor = Colors.$textDefault,
+    badgeProps = {},
+    badgePosition = BadgePosition.TOP_RIGHT,
+    testID,
+    ribbonLabel,
+    customRibbon,
+    ribbonStyle,
+    ribbonLabelStyle,
+    animate = false,
+    imageStyle,
+    onImageLoadStart,
+    onImageLoadEnd,
+    onImageLoadError,
+    imageProps,
+    label,
+    name,
+    backgroundColor,
+    useAutoColors,
+    autoColorsConfig,
+    containerStyle,
+    onPress,
+    children
+  } = themeProps;
+  const {size: _badgeSize, borderWidth: badgeBorderWidth = 0} = badgeProps;
+  const badgeSize = _badgeSize || DEFAULT_BADGE_SIZE;
 
-  styles: ReturnType<typeof createStyles>;
-
-  constructor(props: AvatarProps) {
-    super(props);
-
-    this.styles = createStyles(props);
-
-    if (props.imageSource) {
+  useEffect(() => {
+    if (imageSource) {
       LogService.warn('uilib: imageSource prop is deprecated, use source instead.');
     }
-  }
+  }, [imageSource]);
 
-  static defaultProps = {
-    animate: false,
-    size: 50,
-    labelColor: Colors.$textDefault,
-    badgePosition: BadgePosition.TOP_RIGHT
-  };
+  const _source = useMemo(() => {
+    return source || imageSource;
+  }, [source, imageSource]);
 
-  static badgePosition = BadgePosition;
-
-  get source() {
-    return this.props.source || this.props.imageSource;
-  }
-
-  getContainerStyle(): StyleProp<ImageStyle> {
-    const {size} = this.props;
-
+  const _baseContainerStyle: StyleProp<ImageStyle> = useMemo(() => {
     return {
       width: size,
       height: size,
@@ -199,132 +214,48 @@ class Avatar extends PureComponent<AvatarProps> {
       justifyContent: 'center',
       borderRadius: BorderRadiuses.br100
     };
-  }
+  }, [size]);
 
-  getInitialsContainer(): StyleProp<ViewStyle> {
+  const initialsStyle = useMemo(() => {
     return {
-      ...StyleSheet.absoluteFillObject,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: BorderRadiuses.br100
+      color: labelColor,
+      backgroundColor: 'transparent',
+      lineHeight: undefined
     };
-  }
+  }, [labelColor]);
 
-  getRibbonStyle(): StyleProp<ViewStyle> {
-    const {size} = this.props;
-
+  const _baseRibbonStyle: StyleProp<ViewStyle> = useMemo(() => {
     return {
       position: 'absolute',
       top: '10%',
       left: size / 1.7,
       borderRadius: size / 2
     };
-  }
+  }, [size]);
 
-  getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', 0);
+  const _ribbonStyle: StyleProp<ViewStyle> = useMemo(() => {
+    return [_baseRibbonStyle, styles.ribbon, ribbonStyle];
+  }, [_baseRibbonStyle, ribbonStyle]);
 
-  getBadgeColor() {
-    return _.get(this.props, 'badgeProps.backgroundColor');
-  }
-
-  getBadgeSize = () => {
-    return this.props?.badgeProps?.size || DEFAULT_BADGE_SIZE;
-  };
-
-  getBadgePosition = (): object => {
-    const {size, badgePosition} = this.props;
+  const _badgePosition: StyleProp<ViewStyle> = useMemo(() => {
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - (this.getBadgeSize() + this.getBadgeBorderWidth() * 2) / 2;
+    const shift = Math.sqrt(y ** 2 / 2) - (badgeSize + badgeBorderWidth * 2) / 2;
     const badgeLocation = _.split(_.toLower(badgePosition), '_', 2);
-    const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift};
+    return {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift};
+  }, [size, badgeBorderWidth, badgeSize, badgePosition]);
 
-    return badgeAlignment;
-  };
-
-  renderBadge() {
-    const {testID, badgeProps} = this.props;
-
-    if (badgeProps || this.getBadgeColor()) {
-      return (
-        <Badge
-          backgroundColor={this.getBadgeColor()}
-          size={this.getBadgeSize()}
-          testID={`${testID}.onlineBadge`}
-          {...badgeProps}
-          containerStyle={this.getBadgePosition()}
-        />
-      );
-    }
-  }
-
-  renderRibbon() {
-    const {ribbonLabel, ribbonStyle, ribbonLabelStyle} = this.props;
-    return (
-      <View style={[this.getRibbonStyle(), this.styles.ribbon, ribbonStyle]}>
-        <Text numberOfLines={1} text100 $textDefaultLight style={ribbonLabelStyle}>
-          {ribbonLabel}
-        </Text>
-      </View>
-    );
-  }
-
-  renderCustomRibbon() {
-    const {customRibbon} = this.props;
-    return <View style={this.getRibbonStyle()}>{customRibbon}</View>;
-  }
-
-  renderImage() {
-    const {
-      animate,
-      // @ts-ignore
-      onImageLoadStart,
-      onImageLoadEnd,
-      onImageLoadError,
-      testID,
-      imageProps,
-      imageStyle
-    } = this.props;
-    const hasImage = !_.isUndefined(this.source);
-    const ImageContainer = animate ? AnimatedImage : Image;
-
-    if (hasImage) {
-      return (
-        <ImageContainer
-          style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
-          source={this.source}
-          onLoadStart={onImageLoadStart}
-          onLoadEnd={onImageLoadEnd}
-          onError={onImageLoadError}
-          testID={`${testID}.image`}
-          containerStyle={this.getContainerStyle()}
-          {...imageProps}
-        />
-      );
-    }
-  }
-
-  getText = memoize((label, name) => {
+  const text = useMemo(() => {
     let text = label;
     if (_.isNil(label) && !_.isNil(name)) {
       text = AvatarHelper.getInitials(name);
     }
 
     return text;
-  });
+  }, [label, name]);
 
-  get text() {
-    const {label, name} = this.props;
-    return this.getText(label, name);
-  }
-
-  getBackgroundColor = memoize((text, avatarColors, hashFunction, defaultColor) => {
-    return AvatarHelper.getBackgroundColor(text, avatarColors, hashFunction, defaultColor);
-  });
-
-  get backgroundColor() {
-    const {backgroundColor, useAutoColors, autoColorsConfig, name} = this.props;
+  const _backgroundColor = useMemo(() => {
     if (backgroundColor) {
       return backgroundColor;
     }
@@ -335,92 +266,136 @@ class Avatar extends PureComponent<AvatarProps> {
       defaultColor = Colors.$backgroundNeutralLight
     } = autoColorsConfig || {};
     if (useAutoColors) {
-      return this.getBackgroundColor(name, avatarColors, hashFunction, defaultColor);
+      return AvatarHelper.getBackgroundColor(name, avatarColors, hashFunction, defaultColor);
     } else {
       return defaultColor;
     }
-  }
+  }, [backgroundColor, autoColorsConfig, useAutoColors, name]);
 
-  render() {
-    const {
-      labelColor: color,
-      onPress,
-      containerStyle,
-      children,
-      size,
-      testID,
-      //@ts-ignore
-      forwardedRef,
-      customRibbon,
-      ribbonLabel
-    } = this.props;
-    const Container = onPress ? TouchableOpacity : View;
-    const hasImage = !_.isUndefined(this.source);
+  const _containerStyle: StyleProp<ViewStyle> = useMemo(() => {
+    return [_baseContainerStyle, containerStyle];
+  }, [_baseContainerStyle, containerStyle]);
+
+  const textStyle = useMemo(() => {
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
-    const text = this.text;
-    const hasCustomRibbon = !_.isUndefined(customRibbon);
-    const hasRibbonLabel = !_.isUndefined(ribbonLabel);
+    return [{fontSize}, initialsStyle, {color: labelColor}];
+  }, [size, initialsStyle, labelColor]);
 
-    return (
-      <Container
-        style={[this.getContainerStyle(), containerStyle]}
-        ref={forwardedRef}
-        testID={testID}
-        onPress={onPress}
-        accessible={!_.isUndefined(onPress)}
-        accessibilityLabel={'Avatar'}
-        accessibilityRole={onPress ? 'button' : 'image'}
-        {...extractAccessibilityProps(this.props)}
-      >
-        <View
-          testID={`${testID}.container`}
-          style={[
-            this.getInitialsContainer(),
-            {backgroundColor: this.backgroundColor},
-            hasImage && this.styles.initialsContainerWithInset
-          ]}
-        >
-          {!_.isUndefined(text) && (
-            <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]} testID={`${testID}.label`}>
-              {text}
-            </Text>
-          )}
-        </View>
-        {this.renderImage()}
-        {this.renderBadge()}
-        {hasCustomRibbon && this.renderCustomRibbon()}
-        {hasRibbonLabel && this.renderRibbon()}
-        {children}
-      </Container>
-    );
-  }
-}
+  const textContainerStyle = useMemo(() => {
+    const hasImage = !_.isUndefined(_source);
+    return [
+      styles.initialsContainer,
+      {backgroundColor: _backgroundColor},
+      hasImage && styles.initialsContainerWithInset
+    ];
+  }, [_source, _backgroundColor]);
 
-function createStyles(props: AvatarProps) {
-  const {labelColor} = props;
-  const styles = StyleSheet.create({
-    initialsContainerWithInset: {
-      top: 1,
-      right: 1,
-      bottom: 1,
-      left: 1
-    },
-    initials: {
-      color: labelColor,
-      backgroundColor: 'transparent',
-      lineHeight: undefined
-    },
-    ribbon: {
-      backgroundColor: Colors.$backgroundPrimaryHeavy,
-      paddingHorizontal: 6,
-      paddingVertical: 3
+  const accessibilityProps = useMemo(() => {
+    return extractAccessibilityProps(props);
+  }, [props]);
+
+  const _imageStyle = useMemo(() => {
+    return [_baseContainerStyle, StyleSheet.absoluteFillObject, imageStyle];
+  }, [_baseContainerStyle, imageStyle]);
+
+  const renderImage = () => {
+    const hasImage = !_.isUndefined(_source);
+
+    if (hasImage) {
+      const ImageContainer = animate ? AnimatedImage : Image;
+      return (
+        <ImageContainer
+          style={_imageStyle}
+          source={_source}
+          onLoadStart={onImageLoadStart}
+          onLoadEnd={onImageLoadEnd}
+          onError={onImageLoadError}
+          testID={`${testID}.image`}
+          containerStyle={_baseContainerStyle}
+          {...imageProps}
+        />
+      );
     }
-  });
+  };
 
-  return styles;
-}
+  const renderBadge = () => {
+    if (!_.isEmpty(badgeProps)) {
+      return (
+        <Badge testID={`${testID}.onlineBadge`} {...badgeProps} size={badgeSize} containerStyle={_badgePosition}/>
+      );
+    }
+  };
 
+  const renderRibbon = () => {
+    if (ribbonLabel) {
+      return (
+        <View style={_ribbonStyle}>
+          <Text numberOfLines={1} text100 $textDefaultLight style={ribbonLabelStyle}>
+            {ribbonLabel}
+          </Text>
+        </View>
+      );
+    }
+  };
+
+  const renderCustomRibbon = () => {
+    if (customRibbon) {
+      return <View style={_baseRibbonStyle}>{customRibbon}</View>;
+    }
+  };
+
+  const Container = onPress ? TouchableOpacity : View;
+
+  return (
+    <Container
+      style={_containerStyle}
+      ref={ref}
+      testID={testID}
+      onPress={onPress}
+      accessible={!_.isUndefined(onPress)}
+      accessibilityLabel={'Avatar'}
+      accessibilityRole={onPress ? 'button' : 'image'}
+      {...accessibilityProps}
+    >
+      <View testID={`${testID}.container`} style={textContainerStyle}>
+        {!_.isUndefined(text) && (
+          <Text numberOfLines={1} style={textStyle} testID={`${testID}.label`}>
+            {text}
+          </Text>
+        )}
+      </View>
+      {renderImage()}
+      {renderBadge()}
+      {renderCustomRibbon()}
+      {renderRibbon()}
+      {children}
+    </Container>
+  );
+});
+
+const styles = StyleSheet.create({
+  initialsContainer: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: BorderRadiuses.br100
+  },
+  initialsContainerWithInset: {
+    top: 1,
+    right: 1,
+    bottom: 1,
+    left: 1
+  },
+  ribbon: {
+    backgroundColor: Colors.$backgroundPrimaryHeavy,
+    paddingHorizontal: 6,
+    paddingVertical: 3
+  }
+});
+
+// @ts-expect-error
+Avatar.badgePosition = BadgePosition;
 export {Avatar}; // For tests
 
-export default asBaseComponent<AvatarProps, typeof Avatar>(forwardRef(Avatar));
+export default Avatar as typeof Avatar & Statics;
