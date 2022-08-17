@@ -32,14 +32,14 @@ const usePresenter = (numOfColumns: number, itemSpacing: number) => {
       const newColumn = newOrder % numOfColumns;
 
       const translation = {
-        x: (newColumn - oldColumn) * ((itemLayout.value?.width ?? 0) + itemSpacing),
+        x: (Constants.isRTL ? -1 : 1) * (newColumn - oldColumn) * ((itemLayout.value?.width ?? 0) + itemSpacing),
         y: (newRow - oldRow) * ((itemLayout.value?.height ?? 0) + itemSpacing)
       };
       return translation;
     },
     getOrderByPosition: (positionX: number, positionY: number) => {
       'worklet';
-      const col = Math.round(positionX / itemSize);
+      const col = (Constants.isRTL ? -1 : 1) * Math.round(positionX / itemSize);
       const row = Math.round(positionY / itemSize);
       return row * numOfColumns + col;
     },
