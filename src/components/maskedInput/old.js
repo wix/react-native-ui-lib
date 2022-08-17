@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
+import {StyleSheet, Keyboard} from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import BaseInput from '../baseInput';
 import TextField from '../textField';
 import View from '../view';

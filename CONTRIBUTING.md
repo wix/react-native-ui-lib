@@ -8,7 +8,7 @@ When contributing to this repository, please first discuss the change you wish t
 ## Pull Request Process
 
 1. First make sure the environment is working and synced with master. For installation details go [here](https://github.com/wix/react-native-ui-lib/blob/master/markdowns/getting-started/setup.md#demo-app)
-2. Before submitting a PR we suggest running `npm run prepush` command that verifies our lint, TS and tests were not broken.
+2. Before submitting a PR we suggest running `npm run pre-push` command that verifies our lint, TS and tests were not broken.
 3. Please use our PR prefixes accordingly. `fix` for bugfix, `feat` for feature, `infra` for infrastructure changes and `docs` for documentation related changes (e.g `fix/ButtonStyle`, `feat/Avatar_colorProp`)
 4. Please don't change our PR template.
   - In the Description section add everything that can help the reviewer and the reviewing process, like a description of the issue and the way you decided to go about it, screenshots or gifs, etc.

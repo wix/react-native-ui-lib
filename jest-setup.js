@@ -10,6 +10,9 @@ jest.mock('@react-native-community/netinfo', () => {});
 jest.mock('react-native-reanimated', () => {
   const reactNativeReanimated = require('react-native-reanimated/mock');
   reactNativeReanimated.interpolateColor = jest.fn(v => v); // TODO: See this https://github.com/software-mansion/react-native-reanimated/issues/2749
+  reactNativeReanimated.FadeIn = {
+    duration: jest.fn()
+  };
   return reactNativeReanimated;
 });
 global.__reanimatedWorkletInit = jest.fn();

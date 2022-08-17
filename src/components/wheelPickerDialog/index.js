@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, Text as RNText} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import {TextPropTypes} from 'deprecated-react-native-prop-types';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
 import View from '../view';
 import Text from '../text';
 import {WheelPicker} from '../../nativeComponents';
-
+import {PickerPackage, CommunityPickerPackage} from '../../../src/optionalDependencies';
 
 export default class WheelPickerDialog extends Component {
   static displayName = 'IGNORE';
@@ -31,11 +32,11 @@ export default class WheelPickerDialog extends Component {
     /**
     * select label style
     */
-    selectLabelStyle: RNText.propTypes.style,
+    selectLabelStyle: TextPropTypes.style,
     /**
     * cancel label style
     */
-    cancelLabelStyle: RNText.propTypes.style,
+    cancelLabelStyle: TextPropTypes.style,
     /**
      * onCancel callback invoked when 'Cancel' button is pressed
      */
@@ -50,10 +51,22 @@ export default class WheelPickerDialog extends Component {
     onValueChange: PropTypes.func
   }
 
-  state = {
-    initialSelectedValue: this.props.selectedValue,
-    currentValue: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      initialSelectedValue: props.selectedValue,
+      currentValue: false
+    };
+
+    if (!PickerPackage) {
+      if (CommunityPickerPackage) {
+        // eslint-disable-next-line max-len
+        console.warn(`RNUILib Picker will soon migrate to use "@react-native-picker/picker" package instead of '@react-native-community/picker'`);
+      } else {
+        console.error(`RNUILib Picker requires installing "@react-native-picker/picker" dependency`);
+      }
+    }
+  }
 
   onValueChange = (value, index) => {
     if (this.props.onValueChange) {

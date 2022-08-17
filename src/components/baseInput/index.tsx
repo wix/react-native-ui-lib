@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import 'react';
-import {ViewPropTypes, TextInput as RNTextInput} from 'react-native';
+import {ViewPropTypes, TextInputPropTypes} from 'deprecated-react-native-prop-types';
 import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import Validators from './Validators';
@@ -19,7 +19,7 @@ export default class BaseInput extends BaseComponent {
   static displayName = 'BaseInput';
 
   static propTypes = {
-    ...RNTextInput.propTypes,
+    ...TextInputPropTypes,
     // ...BaseComponent.propTypes,
     /**
      * text color
