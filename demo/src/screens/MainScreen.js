@@ -69,6 +69,8 @@ class MainScreen extends Component {
   sectionListRef = React.createRef();
   scrollViewRef = React.createRef();
 
+  viewabilityConfig = {itemVisiblePercentThreshold: 60};
+
   hasPressItem = false;
   hasUserScrolled = false;
 
@@ -238,13 +240,16 @@ class MainScreen extends Component {
         floatingPlaceholder={false}
         text70
         leadingAccessory={
-          filterText ? (
-            <Button link marginR-5 iconSource={Assets.icons.demo.close} $iconDefault onPress={this.clearSearch}/>
-          ) : (
+          !filterText ? (
             <View>
               <Icon tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
             </View>
-          )
+          ) : undefined
+        }
+        trailingAccessory={
+          filterText ? (
+            <Button link marginR-5 iconSource={Assets.icons.demo.close} $iconDefault onPress={this.clearSearch}/>
+          ) : undefined
         }
       />
     );
@@ -296,13 +301,7 @@ class MainScreen extends Component {
   }
 
   renderSectionHeader = ({section}) => {
-    return (
-      <View backgroundColor={'white'}>
-        <Text back marginV-20 marginH-20 text60M>
-          {section.title}
-        </Text>
-      </View>
-    );
+    return <SectionHeader section={section}/>;
   };
 
   renderItem = ({item}) => {
@@ -313,26 +312,7 @@ class MainScreen extends Component {
     }
 
     if (item.screen) {
-      return (
-        <TouchableOpacity
-          centerV
-          row
-          spread
-          paddingH-s5
-          paddingV-s4
-          onPress={this.openScreen}
-          customValue={item}
-          onLongPress={this.setDefaultScreen}
-          activeBackgroundColor={Colors.$backgroundPrimaryHeavy}
-          activeOpacity={1}
-          style={Dividers.d10}
-        >
-          <Text style={[item.deprecate && styles.entryTextDeprecated]} grey10 text80>
-            {item.title}
-          </Text>
-          <Icon source={chevronIcon} style={{tintColor: Colors.grey10}} supportRTL/>
-        </TouchableOpacity>
-      );
+      return <SectionItem item={item} onPress={this.openScreen} onLongPress={this.setDefaultScreen}/>;
     } else {
       return (
         <View paddingH-s5 marginV-s1 height={20} bg-grey80>
@@ -349,7 +329,7 @@ class MainScreen extends Component {
       <FlatList
         keyboardShouldPersistTaps="always"
         data={flatData}
-        contentContainerStyle={{paddingTop: 20}}
+        contentContainerStyle={styles.searchResultsContainer}
         keyExtractor={(_item, index) => index.toString()}
         renderItem={this.renderItem}
       />
@@ -371,14 +351,7 @@ class MainScreen extends Component {
 
         {showResults && this.renderSearchResults(filteredNavigationData)}
         {showSectionList && (
-          <View
-            style={{
-              borderBottomColor: Colors.grey60,
-              borderBottomWidth: 1,
-              borderTopColor: Colors.grey60,
-              borderTopWidth: 1
-            }}
-          >
+          <View style={styles.scrollViewContainer}>
             <ScrollView
               decelerationRate="fast"
               horizontal
@@ -402,9 +375,7 @@ class MainScreen extends Component {
             renderItem={this.renderItem}
             renderSectionHeader={this.renderSectionHeader}
             onViewableItemsChanged={this.onCheckViewableItems}
-            viewabilityConfig={{
-              itemVisiblePercentThreshold: 60
-            }}
+            viewabilityConfig={this.viewabilityConfig}
             onScrollBeginDrag={this.setHasUserScrolled}
             onScrollEndDrag={this.removeHasUserScrolled}
             onMomentumScrollBegin={this.setHasUserScrolled}
@@ -424,6 +395,41 @@ class MainScreen extends Component {
     );
   }
 }
+
+const SectionItem = React.memo(props => {
+  const {item, onPress, onLongPress} = props;
+  return (
+    <TouchableOpacity
+      centerV
+      row
+      spread
+      paddingH-s5
+      paddingV-s4
+      onPress={onPress}
+      customValue={item}
+      onLongPress={onLongPress}
+      activeBackgroundColor={Colors.$backgroundPrimaryLight}
+      activeOpacity={1}
+      style={Dividers.d10}
+    >
+      <Text style={[item.deprecate && styles.entryTextDeprecated]} grey10 text80>
+        {item.title}
+      </Text>
+      <Icon source={chevronIcon} style={{tintColor: Colors.grey10}} supportRTL/>
+    </TouchableOpacity>
+  );
+});
+
+const SectionHeader = React.memo(props => {
+  const {section} = props;
+  return (
+    <View backgroundColor={'white'}>
+      <Text back marginV-20 marginH-20 text60M>
+        {section.title}
+      </Text>
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   entryTextDeprecated: {
@@ -446,7 +452,14 @@ const styles = StyleSheet.create({
   },
   selectedChip: {
     color: Colors.blue30
-  }
+  },
+  scrollViewContainer: {
+    borderBottomColor: Colors.grey60,
+    borderBottomWidth: 1,
+    borderTopColor: Colors.grey60,
+    borderTopWidth: 1
+  },
+  searchResultsContainer: {paddingTop: 20}
 });
 
 export default gestureHandlerRootHOC(MainScreen);
