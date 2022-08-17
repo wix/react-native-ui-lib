@@ -142,6 +142,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
       ref={fieldRef}
       leadingAccessory={chipList}
       blurOnSubmit={false}
+      style={styles.input}
       {...others}
       onChangeText={onChangeText}
       onSubmitEditing={addChip}
@@ -155,6 +156,9 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
 const styles = StyleSheet.create({
   fieldStyle: {
     flexWrap: 'wrap'
+  },
+  input: {
+    flexGrow: undefined
   }
 });
 // @ts-expect-error
