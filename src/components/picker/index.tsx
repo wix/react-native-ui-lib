@@ -8,12 +8,11 @@ import _ from 'lodash';
 import React, {useMemo, useState, useRef, PropsWithChildren, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {Typography} from 'style';
+import {useThemeProps} from 'hooks';
 import {
   Constants,
-  asBaseComponent,
   forwardRef,
-  ForwardRefInjectedProps,
-  BaseComponentInjectedProps
+  ForwardRefInjectedProps
 } from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 // @ts-expect-error
@@ -50,7 +49,9 @@ const DIALOG_PROPS = {
   height: 250
 };
 
-const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps & BaseComponentInjectedProps) => {
+const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps /*  & BaseComponentInjectedProps */
+) => {
+  const themeProps = useThemeProps(props, 'Picker');
   const {
     mode,
     fieldType = PickerFieldTypes.form,
@@ -72,7 +73,6 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     onSearchChange,
     renderCustomModal,
     forwardedRef,
-    modifiers,
     enableModalBlur,
     topBarProps,
     pickerModalProps,
@@ -87,12 +87,11 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     migrate,
     migrateTextField,
     ...others
-  } = props;
+  } = themeProps;
   const {preset} = others;
-  const {paddings, margins, positionStyle} = modifiers;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items] = useState(Picker.extractPickerItems(props));
+  const [items] = useState(Picker.extractPickerItems(themeProps));
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
@@ -120,7 +119,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
     items,
     getItemLabel,
     getLabel,
-    placeholder: props.placeholder
+    placeholder: themeProps.placeholder
   });
 
   const onSelectedItemLayout = useCallback((event: LayoutChangeEvent) => {
@@ -170,7 +169,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         preset: preset || null,
         containerStyle: {flexDirection: 'row'},
         labelStyle: Typography.text70,
-        trailingAccessory: props.trailingAccessory ?? <Icon marginL-s1 source={dropdown}/>
+        trailingAccessory: themeProps.trailingAccessory ?? <Icon marginL-s1 source={dropdown}/>
       };
     } else if (fieldType === PickerFieldTypes.settings) {
       return {
@@ -178,7 +177,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         label: undefined
       };
     }
-  }, [fieldType, preset, props.trailingAccessory]);
+  }, [fieldType, preset, themeProps.trailingAccessory]);
 
   const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({visible, toggleExpandable}) => {
     if (renderCustomModal) {
@@ -260,7 +259,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
   };
 
   if (useNativePicker) {
-    return <NativePicker {...props}/>;
+    return <NativePicker {...themeProps}/>;
   }
 
   return (
@@ -275,10 +274,9 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
         onPress={onPress}
         testID={testID}
         {...customPickerProps}
-        disabled={props.editable === false}
+        disabled={themeProps.editable === false}
       >
         {renderPicker ? (
-          // @ts-expect-error TS throws a weird error, might be an issue with TS
           renderPicker(value, label)
         ) : (
           <TextFieldMigrator
@@ -289,7 +287,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps 
             {...others}
             {...propsByFieldType}
             testID={`${testID}.input`}
-            containerStyle={[paddings, margins, positionStyle, containerStyle, propsByFieldType?.containerStyle]}
+            containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
             labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
             {...accessibilityInfo}
             importantForAccessibility={'no-hide-descendants'}
@@ -326,4 +324,4 @@ Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
 
 export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
 export {Picker}; // For tests
-export default asBaseComponent<PickerProps, typeof Picker>(forwardRef(Picker));
+export default forwardRef(Picker);
