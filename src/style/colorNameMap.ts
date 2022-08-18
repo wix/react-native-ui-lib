@@ -1,5 +1,6 @@
 // adopted from: ntc js (Name that Color JavaScript)
 // http://chir.ag/projects/ntc
+// TODO: change array to object to improve performance
 
 const colorNameMap = [
   ['000000', 'Black'],

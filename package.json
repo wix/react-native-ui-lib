@@ -38,6 +38,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "color": "^3.1.0",
     "commons-validator-js": "^1.0.237",
+    "deprecated-react-native-prop-types": "^2.3.0",
     "hoist-non-react-statics": "^3.0.0",
     "lodash": "^4.17.21",
     "memoize-one": "^5.0.5",
@@ -57,6 +58,11 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.12.5",
+    "@formatjs/intl-datetimeformat": "^6.0.3",
+    "@formatjs/intl-getcanonicallocales": "^2.0.2",
+    "@formatjs/intl-locale": "^3.0.3",
+    "@formatjs/intl-numberformat": "^8.0.4",
+    "@formatjs/intl-pluralrules": "^5.0.3",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/blur": "^3.4.1",
     "@react-native-community/datetimepicker": "^3.4.6",
@@ -129,7 +135,9 @@
     "setupFiles": [
       "./jest-setup.js"
     ],
-    "testMatch": ["**/*.spec.(js|tsx)"],
+    "testMatch": [
+      "**/*.spec.(js|tsx)"
+    ],
     "moduleNameMapper": {
       "^react-native-reanimated$": "<rootDir>/node_modules/react-native-reanimated/src/Animated.js"
     }

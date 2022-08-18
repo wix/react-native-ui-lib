@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text as RNText} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {TextPropTypes} from 'deprecated-react-native-prop-types';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -17,11 +18,11 @@ class PickerDialog extends Component {
     /**
      * select label style
      */
-    selectLabelStyle: RNText.propTypes.style,
+    selectLabelStyle: TextPropTypes.style,
     /**
      * cancel label style
      */
-    cancelLabelStyle: RNText.propTypes.style
+    cancelLabelStyle: TextPropTypes.style
   };
 
   state = {};
@@ -59,8 +60,7 @@ class PickerDialog extends Component {
     );
   }
 
-
-  render() {  
+  render() {
     const {panDirection, visible, pickerModalProps} = this.props;
     return (
       <Dialog {...pickerModalProps} visible={visible} height="50%" width="77%" panDirection={panDirection}>

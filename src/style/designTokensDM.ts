@@ -2,7 +2,7 @@ import {colorsPalette} from './colorsPalette';
 
 export default {
   // BACKGROUND
-  $backgroundDefault: colorsPalette.dmBlack,
+  $backgroundDefault: colorsPalette.dark,
   $backgroundElevated: colorsPalette.grey1,
   $backgroundNeutralHeavy: colorsPalette.grey50,
   $backgroundNeutralIdle: colorsPalette.grey30,
@@ -18,7 +18,7 @@ export default {
   $backgroundSuccessHeavy: colorsPalette.green40,
   $backgroundSuccessLight: colorsPalette.green1,
   $backgroundWarningHeavy: colorsPalette.yellow40,
-  $backgroundWarningLight: colorsPalette.yellow5,
+  $backgroundWarningLight: colorsPalette.yellow1,
   $backgroundMajorLight: colorsPalette.orange1,
   $backgroundMajorHeavy: colorsPalette.orange40,
   $backgroundDangerHeavy: colorsPalette.red40,
@@ -60,7 +60,7 @@ export default {
   $iconDisabled: colorsPalette.grey20,
 
   // OUTLINE
-  $outlineDefault: colorsPalette.grey10,
+  $outlineDefault: colorsPalette.grey5,
   $outlineDisabled: colorsPalette.grey20,
   $outlineDisabledHeavy: colorsPalette.grey40,
   $outlinePrimary: colorsPalette.violet50,

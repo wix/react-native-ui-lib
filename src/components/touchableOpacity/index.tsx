@@ -11,7 +11,9 @@ import {
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 import {ViewProps} from '../view';
 
-export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>, ContainerModifiers {
+export interface TouchableOpacityProps
+  extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'>,
+    ContainerModifiers {
   /**
    * background color for TouchableOpacity
    */
@@ -42,6 +44,9 @@ export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'st
   customValue?: any;
   style?: ViewProps['style'];
   onPress?: (props?: TouchableOpacityProps | any) => void;
+  onPressIn?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressIn'];
+  onPressOut?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressOut'];
+  onLongPress?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onLongPress'];
 }
 
 type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;
@@ -78,15 +83,25 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 
   onPressIn = (...args: any) => {
-    this.setState({active: true});
-    //@ts-expect-error
-    this.props.onPressIn?.(...args);
+    if (this.props.activeBackgroundColor) {
+      this.setState({active: true});
+    }
+    if (this.props?.customValue) {
+      this.props.onPressIn?.(this.props);
+    } else {
+      this.props.onPressIn?.(...args);
+    }
   };
 
   onPressOut = (...args: any) => {
-    this.setState({active: false});
-    //@ts-expect-error
-    this.props.onPressOut?.(...args);
+    if (this.props.activeBackgroundColor) {
+      this.setState({active: false});
+    }
+    if (this.props?.customValue) {
+      this.props.onPressOut?.(this.props);
+    } else {
+      this.props.onPressOut?.(...args);
+    }
   };
 
   get backgroundColorStyle() {
@@ -124,6 +139,7 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
         onPress={this.onPress}
         onPressIn={this.onPressIn}
         onPressOut={this.onPressOut}
+        onLongPress={this.onLongPress}
         style={[
           this.backgroundColorStyle,
           borderRadius && {borderRadius},
@@ -142,6 +158,10 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   onPress() {
     this.props.onPress?.(this.props);
   }
+
+  onLongPress = () => {
+    this.props.onLongPress?.(this.props);
+  };
 }
 
 const modifiersOptions = {
@@ -149,7 +169,8 @@ const modifiersOptions = {
   paddings: true,
   margins: true,
   alignments: true,
-  flex: true
+  flex: true,
+  backgroundColor: true
 };
 
 export default asBaseComponent<TouchableOpacityProps>(forwardRef(TouchableOpacity), {modifiersOptions});

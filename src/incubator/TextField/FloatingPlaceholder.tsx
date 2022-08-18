@@ -1,5 +1,6 @@
-import React, {useContext, useEffect, useRef, useCallback, useState, useMemo} from 'react';
+import React, {useContext, useRef, useCallback, useState, useMemo} from 'react';
 import {Animated, LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
+import {useDidUpdate} from 'hooks';
 import {FloatingPlaceholderProps, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
@@ -24,8 +25,17 @@ const FloatingPlaceholder = ({
     top: 0,
     left: 0
   });
-  const animation = useRef(new Animated.Value(Number(context.isFocused))).current;
+  const animation = useRef(new Animated.Value(Number((floatOnFocus && context.isFocused) || context.hasValue))).current;
   const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
+
+  useDidUpdate(() => {
+    const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;
+    Animated.timing(animation, {
+      toValue: Number(toValue),
+      duration: 200,
+      useNativeDriver: true
+    }).start();
+  }, [floatOnFocus, context.isFocused, context.hasValue]);
 
   const animatedStyle = useMemo(() => {
     return {
@@ -46,14 +56,8 @@ const FloatingPlaceholder = ({
     };
   }, [placeholderOffset, extraOffset]);
 
-  useEffect(() => {
-    const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;
-    Animated.timing(animation, {
-      toValue: Number(toValue),
-      duration: 200,
-      useNativeDriver: true
-    }).start();
-  }, [floatOnFocus, context.isFocused, context.hasValue]);
+  const style = useMemo(() => [styles.placeholder, floatingPlaceholderStyle, animatedStyle],
+    [floatingPlaceholderStyle, animatedStyle]);
 
   const onPlaceholderLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
@@ -70,7 +74,7 @@ const FloatingPlaceholder = ({
       <Text
         animated
         color={getColorByState(floatingPlaceholderColor, context)}
-        style={[styles.placeholder, floatingPlaceholderStyle, animatedStyle]}
+        style={style}
         onLayout={onPlaceholderLayout}
         testID={testID}
       >

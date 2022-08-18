@@ -1,7 +1,7 @@
 import React from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
-import {Scheme} from '../style';
+import {Scheme, ThemeManager} from '../style';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
 
@@ -76,6 +76,10 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
   BaseComponent.displayName = WrappedComponent.displayName;
   BaseComponent.propTypes = WrappedComponent.propTypes;
   BaseComponent.defaultProps = WrappedComponent.defaultProps;
+  const ThemeContext = ThemeManager.getThemeContext();
+  if (ThemeContext) {
+    BaseComponent.contextType = ThemeContext;
+  }
 
   return forwardRef(BaseComponent) as any;
 }

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
@@ -15,6 +15,8 @@ const ValidationMessage = ({
 }: ValidationMessageProps) => {
   const context = useContext(FieldContext);
 
+  const style = useMemo(() => [styles.validationMessage, validationMessageStyle], [validationMessageStyle]);
+
   if (!enableErrors || (!retainSpace && context.isValid)) {
     return null;
   }
@@ -23,7 +25,7 @@ const ValidationMessage = ({
   const showValidationMessage = !context.isValid || (!validate && !!validationMessage);
 
   return (
-    <Text testID={testID} $textDangerLight style={[styles.validationMessage, validationMessageStyle]}>
+    <Text testID={testID} $textDangerLight style={style}>
       {showValidationMessage ? relevantValidationMessage : ''}
     </Text>
   );

@@ -6,10 +6,11 @@ import {
   Image as RNImage,
   ImageProps as RNImageProps,
   ImageBackground,
-  ImageSourcePropType,
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
+// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
+import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 import {
   Constants,
   asBaseComponent,
@@ -28,7 +29,7 @@ export type ImageProps = RNImageProps &
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
-    sourceTransformer?: (props: any) => ImageSourcePropType;
+    sourceTransformer?: (props: any) => ImagePropTypes.source;
     /**
      * if provided image source will be driven from asset name
      */
@@ -73,18 +74,24 @@ export type ImageProps = RNImageProps &
     /**
      * Default image source in case of an error
      */
-    errorSource?: ImageSourcePropType;
+    errorSource?: ImagePropTypes.source;
     /**
      * An imageId that can be used in sourceTransformer logic
      */
     imageId?: string;
+    /**
+     * Use a container for the Image, this can solve issues on
+     * Android when animation needs to be performed on the same
+     * view; i.e. animation related crashes on Android.
+     */
+    useBackgroundContainer?: boolean;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
 type State = {
   error: boolean;
-  prevSource: ImageSourcePropType;
+  prevSource: ImagePropTypes.source;
 };
 
 /**
@@ -105,7 +112,7 @@ class Image extends PureComponent<Props, State> {
   public static overlayTypes = Overlay.overlayTypes;
   public static overlayIntensityType = Overlay.intensityTypes;
 
-  sourceTransformer?: (props: any) => ImageSourcePropType;
+  sourceTransformer?: (props: any) => ImagePropTypes.source;
 
   constructor(props: Props) {
     super(props);
@@ -143,7 +150,7 @@ class Image extends PureComponent<Props, State> {
     return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
-  getVerifiedSource(source?: ImageSourcePropType) {
+  getVerifiedSource(source?: ImagePropTypes.source) {
     if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       // @ts-ignore
       return {...source, uri: undefined};
@@ -176,7 +183,7 @@ class Image extends PureComponent<Props, State> {
     return <SvgImage data={source} {...others}/>;
   };
 
-  renderErrorImage = () => {
+  renderImageWithContainer = () => {
     const {style, cover, modifiers} = this.props;
     const {margins} = modifiers;
 
@@ -206,7 +213,6 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
-    const resizeMode = useImageInsideContainer ? 'contain' : undefined;
 
     return (
       // @ts-ignore
@@ -218,10 +224,10 @@ class Image extends PureComponent<Props, State> {
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
           !useImageInsideContainer && margins,
+          useImageInsideContainer && styles.containImage,
           style,
           useImageInsideContainer && styles.shrink
         ]}
-        resizeMode={resizeMode}
         accessible={false}
         accessibilityRole={'image'}
         {...others}
@@ -242,8 +248,9 @@ class Image extends PureComponent<Props, State> {
 
   renderRegularImage() {
     const {error} = this.state;
-    if (error) {
-      return this.renderErrorImage();
+    const {useBackgroundContainer} = this.props;
+    if (error || useBackgroundContainer) {
+      return this.renderImageWithContainer();
     } else {
       return this.renderImage(false);
     }
@@ -276,6 +283,9 @@ const styles = StyleSheet.create({
   },
   shrink: {
     flexShrink: 1
+  },
+  containImage: {
+    resizeMode: 'contain'
   }
 });
 
