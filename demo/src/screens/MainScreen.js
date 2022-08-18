@@ -2,7 +2,8 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import PropTypes from 'prop-types';
-import {StyleSheet, FlatList, ViewPropTypes, SectionList, ScrollView} from 'react-native';
+import {StyleSheet, FlatList, SectionList, ScrollView} from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import {Navigation} from 'react-native-navigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {
