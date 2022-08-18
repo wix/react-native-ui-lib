@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, Text as RNText} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import {TextPropTypes} from 'deprecated-react-native-prop-types';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
 import View from '../view';
@@ -31,11 +32,11 @@ export default class WheelPickerDialog extends Component {
     /**
     * select label style
     */
-    selectLabelStyle: RNText.propTypes.style,
+    selectLabelStyle: TextPropTypes.style,
     /**
     * cancel label style
     */
-    cancelLabelStyle: RNText.propTypes.style,
+    cancelLabelStyle: TextPropTypes.style,
     /**
      * onCancel callback invoked when 'Cancel' button is pressed
      */

@@ -38,6 +38,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "color": "^3.1.0",
     "commons-validator-js": "^1.0.237",
+    "deprecated-react-native-prop-types": "^2.3.0",
     "hoist-non-react-statics": "^3.0.0",
     "lodash": "^4.17.21",
     "memoize-one": "^5.0.5",
@@ -134,7 +135,9 @@
     "setupFiles": [
       "./jest-setup.js"
     ],
-    "testMatch": ["**/*.spec.(js|tsx)"],
+    "testMatch": [
+      "**/*.spec.(js|tsx)"
+    ],
     "moduleNameMapper": {
       "^react-native-reanimated$": "<rootDir>/node_modules/react-native-reanimated/src/Animated.js"
     }
