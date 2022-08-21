@@ -316,7 +316,7 @@ class MainScreen extends Component {
       return <SectionItem item={item} onPress={this.openScreen} onLongPress={this.setDefaultScreen}/>;
     } else {
       return (
-        <View paddingH-s5 marginV-s1 height={20} bg-grey80>
+        <View paddingH-s5 marginV-s1 height={20} bg-$backgroundNeutralLight>
           <Text text80M>{item.title}</Text>
         </View>
       );
@@ -387,7 +387,7 @@ class MainScreen extends Component {
 
         {showNoResults && (
           <View padding-20>
-            <Text grey40 text50>
+            <Text $textNeutralLight text50>
               Sorry, nothing was found. Try Button or something..
             </Text>
           </View>
@@ -413,10 +413,10 @@ const SectionItem = React.memo(props => {
       activeOpacity={1}
       style={Dividers.d10}
     >
-      <Text style={[item.deprecate && styles.entryTextDeprecated]} grey10 text80>
+      <Text style={[item.deprecate && styles.entryTextDeprecated]} text80>
         {item.title}
       </Text>
-      <Icon source={chevronIcon} style={{tintColor: Colors.grey10}} supportRTL/>
+      <Icon source={chevronIcon} style={{tintColor: Colors.$iconDefault}} supportRTL/>
     </TouchableOpacity>
   );
 });
@@ -424,8 +424,8 @@ const SectionItem = React.memo(props => {
 const SectionHeader = React.memo(props => {
   const {section} = props;
   return (
-    <View backgroundColor={'white'}>
-      <Text back marginV-20 marginH-20 text60M>
+    <View bg-$backgroundDefault>
+      <Text marginV-20 marginH-20 text60M>
         {section.title}
       </Text>
     </View>
@@ -449,15 +449,15 @@ const styles = StyleSheet.create({
   },
   selectedChipContainer: {
     height: 20,
-    borderColor: Colors.blue30
+    borderColor: Colors.$textPrimary
   },
   selectedChip: {
-    color: Colors.blue30
+    color: Colors.$textPrimary
   },
   scrollViewContainer: {
-    borderBottomColor: Colors.grey60,
+    borderBottomColor: Colors.$outlineDefault,
     borderBottomWidth: 1,
-    borderTopColor: Colors.grey60,
+    borderTopColor: Colors.$outlineDefault,
     borderTopWidth: 1
   },
   searchResultsContainer: {paddingTop: 20}
