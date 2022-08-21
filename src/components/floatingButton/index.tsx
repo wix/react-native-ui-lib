@@ -86,21 +86,28 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   getAnimatedStyle = () => {
     return {
       opacity: this.visibleAnimated,
-      transform: [{translateY: this.visibleAnimated.interpolate({
-        inputRange: [0, 1],
-        outputRange: [Constants.screenHeight / 2, 0]
-      })}]
+      transform: [
+        {
+          translateY: this.visibleAnimated.interpolate({
+            inputRange: [0, 1],
+            outputRange: [Constants.screenHeight / 2, 0]
+          })
+        }
+      ]
     };
-  }
+  };
 
   renderButton() {
     const {bottomMargin, button, secondaryButton, testID} = this.props;
-    const bottom = secondaryButton ? Spacings.s4 : bottomMargin || Spacings.s8;
+    const bottom = secondaryButton ? Spacings.s7 : bottomMargin || Spacings.s8;
+    const left = secondaryButton ? Spacings.s4 : undefined;
+    const right = secondaryButton ? 20 : undefined;
 
     return (
       <Button
         size={Button.sizes.large}
-        style={[styles.shadow, {marginTop: 16, marginBottom: bottom}]}
+        flex={!!secondaryButton}
+        style={[styles.shadow, {marginTop: Spacings.s4, marginBottom: bottom, marginLeft: left, marginRight: right}]}
         testID={`${testID}.button`}
         {...button}
       />
@@ -123,15 +130,16 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   };
 
   renderSecondaryButton() {
-    const {secondaryButton, bottomMargin, testID} = this.props;
+    const {secondaryButton, testID} = this.props;
 
     return (
       <Button
-        link
+        outline
+        flex
         size={Button.sizes.large}
         testID={`${testID}.secondaryButton`}
         {...secondaryButton}
-        style={{marginBottom: bottomMargin || Spacings.s7}}
+        style={[styles.shadow, {marginTop: Spacings.s4, marginBottom: Spacings.s7, marginLeft: 20}]}
         enableShadow={false}
       />
     );
@@ -140,7 +148,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   render() {
     const {withoutAnimation, secondaryButton, visible, testID} = this.props;
     // NOTE: keep this.firstLoad as true as long as the visibility changed to true
-    this.firstLoad && !visible ? this.firstLoad = true : this.firstLoad = false;
+    this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
 
     // NOTE: On first load, don't show if it should not be visible
     if (this.firstLoad === true && !this.initialVisibility) {
@@ -152,14 +160,16 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
     return (
       <View
+        row
+        center
         pointerEvents="box-none"
         animated
         style={[styles.container, this.getAnimatedStyle()]}
         testID={testID}
       >
         {this.renderOverlay()}
-        {this.renderButton()}
         {secondaryButton && this.renderSecondaryButton()}
+        {this.renderButton()}
       </View>
     );
   }
