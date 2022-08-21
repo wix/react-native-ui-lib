@@ -172,6 +172,7 @@ class MainScreen extends Component {
 
   clearSearch = () => {
     this.updateSearch('');
+    this.input?.clear();
   };
 
   filterExplorerScreens = () => {
@@ -241,11 +242,9 @@ class MainScreen extends Component {
         floatingPlaceholder={false}
         text70
         leadingAccessory={
-          !filterText ? (
-            <View>
-              <Icon tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
-            </View>
-          ) : undefined
+          <View>
+            <Icon tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
+          </View>
         }
         trailingAccessory={
           filterText ? (
