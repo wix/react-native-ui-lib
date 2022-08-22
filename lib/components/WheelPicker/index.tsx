@@ -10,14 +10,6 @@ import {Typography, Colors} from '../../../src/style';
 import {PickerPackage, CommunityPickerPackage} from '../../../src/optionalDependencies';
 const Picker = PickerPackage?.Picker || CommunityPickerPackage?.Picker || (() => null);
 
-if (!PickerPackage) {
-  if (CommunityPickerPackage) {
-    console.warn(`RNUILib Picker will soon migrate to use "@react-native-picker/picker" package instead of '@react-native-community/picker'`);
-  } else {
-    console.error(`RNUILib Picker requires installing "@react-native-picker/picker" dependency`);
-  }
-}
-
 const WheelPickerNative = requireNativeComponent('WheelPicker');
 
 export type WheelPickerProps = {

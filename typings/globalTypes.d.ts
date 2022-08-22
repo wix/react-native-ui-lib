@@ -14,3 +14,7 @@ declare module 'react-native-measureme';
 interface Extendable {
   [key: string]: any;
 }
+
+interface ThemeComponent {
+  useCustomTheme?: boolean;
+}

@@ -6,7 +6,6 @@ exports[`Button backgroundColor should return backgroundColor according to modif
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -42,7 +41,7 @@ exports[`Button backgroundColor should return backgroundColor according to modif
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -59,8 +58,8 @@ exports[`Button backgroundColor should return backgroundColor according to modif
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -78,7 +77,6 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -114,7 +112,7 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -131,8 +129,8 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -150,7 +148,6 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -186,7 +183,7 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -203,8 +200,8 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -227,7 +224,6 @@ exports[`Button backgroundColor should return theme disabled color if button is 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -263,7 +259,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -280,8 +276,8 @@ exports[`Button backgroundColor should return theme disabled color if button is 
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -299,7 +295,6 @@ exports[`Button backgroundColor should return undefined if this button is link 1
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -335,7 +330,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -352,8 +347,8 @@ exports[`Button backgroundColor should return undefined if this button is link 1
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -371,7 +366,6 @@ exports[`Button backgroundColor should return undefined if this button is outlin
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -409,7 +403,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -426,8 +420,8 @@ exports[`Button backgroundColor should return undefined if this button is outlin
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -445,7 +439,6 @@ exports[`Button border radius should return 0 border radius when border radius p
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -481,7 +474,7 @@ exports[`Button border radius should return 0 border radius when border radius p
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -498,8 +491,8 @@ exports[`Button border radius should return 0 border radius when border radius p
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -517,7 +510,6 @@ exports[`Button border radius should return 0 border radius when button is full 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -553,7 +545,7 @@ exports[`Button border radius should return 0 border radius when button is full 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -570,8 +562,8 @@ exports[`Button border radius should return 0 border radius when button is full 
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -589,7 +581,6 @@ exports[`Button border radius should return given border radius when use plain n
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -625,7 +616,7 @@ exports[`Button border radius should return given border radius when use plain n
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -642,8 +633,8 @@ exports[`Button border radius should return given border radius when use plain n
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -661,7 +652,6 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -697,7 +687,7 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -720,7 +710,7 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -738,7 +728,6 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -774,7 +763,7 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -797,7 +786,7 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -815,7 +804,6 @@ exports[`Button container size should have no padding of button is a link nor mi
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -851,7 +839,7 @@ exports[`Button container size should have no padding of button is a link nor mi
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -874,7 +862,7 @@ exports[`Button container size should have no padding of button is a link nor mi
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -892,7 +880,6 @@ exports[`Button container size should have no padding of button is an icon butto
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -928,7 +915,8 @@ exports[`Button container size should have no padding of button is an icon butto
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
+        false,
         Array [
           Object {
             "marginRight": 8,
@@ -954,7 +942,7 @@ exports[`Button container size should have no padding of button is an icon butto
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -977,7 +965,7 @@ exports[`Button container size should have no padding of button is an icon butto
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -995,7 +983,6 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1033,7 +1020,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1050,8 +1037,8 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -1069,7 +1056,6 @@ exports[`Button container size should return style for large button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1105,7 +1091,7 @@ exports[`Button container size should return style for large button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1122,8 +1108,8 @@ exports[`Button container size should return style for large button 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -1141,7 +1127,6 @@ exports[`Button container size should return style for large button 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1179,7 +1164,7 @@ exports[`Button container size should return style for large button 2`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1196,8 +1181,8 @@ exports[`Button container size should return style for large button 2`] = `
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -1215,7 +1200,6 @@ exports[`Button container size should return style for medium button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1251,7 +1235,7 @@ exports[`Button container size should return style for medium button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1274,7 +1258,7 @@ exports[`Button container size should return style for medium button 1`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -1292,7 +1276,6 @@ exports[`Button container size should return style for medium button 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1330,7 +1313,7 @@ exports[`Button container size should return style for medium button 2`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1353,7 +1336,7 @@ exports[`Button container size should return style for medium button 2`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -1371,7 +1354,6 @@ exports[`Button container size should return style for round button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1407,7 +1389,7 @@ exports[`Button container size should return style for round button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1424,8 +1406,8 @@ exports[`Button container size should return style for round button 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -1443,7 +1425,6 @@ exports[`Button container size should return style for small button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1479,7 +1460,7 @@ exports[`Button container size should return style for small button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1502,7 +1483,7 @@ exports[`Button container size should return style for small button 1`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -1520,7 +1501,6 @@ exports[`Button container size should return style for small button 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1558,7 +1538,7 @@ exports[`Button container size should return style for small button 2`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1581,7 +1561,7 @@ exports[`Button container size should return style for small button 2`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -1599,7 +1579,6 @@ exports[`Button container size should return style for xSmall button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1635,7 +1614,7 @@ exports[`Button container size should return style for xSmall button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1658,7 +1637,7 @@ exports[`Button container size should return style for xSmall button 1`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -1676,7 +1655,6 @@ exports[`Button container size should return style for xSmall button 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1714,7 +1692,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1737,7 +1715,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -1755,7 +1733,6 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1810,8 +1787,8 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -1829,7 +1806,6 @@ exports[`Button icon should apply color on icon 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1865,7 +1841,8 @@ exports[`Button icon should apply color on icon 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
+        false,
         Array [
           Object {
             "tintColor": "green",
@@ -1886,7 +1863,6 @@ exports[`Button icon should apply color on icon 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1922,7 +1898,8 @@ exports[`Button icon should apply color on icon 2`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
+        false,
         Array [
           Object {
             "tintColor": "#FC3D2F",
@@ -1943,7 +1920,6 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1979,7 +1955,8 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
+        false,
         Array [
           Object {
             "tintColor": "#FFFFFF",
@@ -2003,7 +1980,6 @@ exports[`Button icon should return icon style according to different variations 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2041,7 +2017,8 @@ exports[`Button icon should return icon style according to different variations 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
+        false,
         Array [
           Object {
             "tintColor": "#5A48F5",
@@ -2062,7 +2039,6 @@ exports[`Button icon should return icon style according to different variations 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2098,7 +2074,8 @@ exports[`Button icon should return icon style according to different variations 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
+        false,
         Array [
           Object {
             "tintColor": "#5A48F5",
@@ -2124,7 +2101,6 @@ exports[`Button icon should return icon style according to different variations 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2160,7 +2136,8 @@ exports[`Button icon should return icon style according to different variations 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
+        false,
         Array [
           Object {
             "tintColor": "#FFFFFF",
@@ -2181,7 +2158,6 @@ exports[`Button icon should return the right spacing according to button size wh
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2217,7 +2193,7 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2234,8 +2210,8 @@ exports[`Button icon should return the right spacing according to button size wh
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -2253,7 +2229,6 @@ exports[`Button icon should return the right spacing according to button size wh
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2289,7 +2264,7 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2312,7 +2287,7 @@ exports[`Button icon should return the right spacing according to button size wh
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -2330,7 +2305,6 @@ exports[`Button icon should return the right spacing according to button size wh
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2366,7 +2340,7 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2389,7 +2363,7 @@ exports[`Button icon should return the right spacing according to button size wh
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -2407,7 +2381,6 @@ exports[`Button icon should return the right spacing according to button size wh
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2443,7 +2416,7 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2466,7 +2439,7 @@ exports[`Button icon should return the right spacing according to button size wh
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -2484,7 +2457,6 @@ exports[`Button label size should return style for large button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2520,7 +2492,7 @@ exports[`Button label size should return style for large button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2537,8 +2509,8 @@ exports[`Button label size should return style for large button 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -2556,7 +2528,6 @@ exports[`Button label size should return style for medium button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2592,7 +2563,7 @@ exports[`Button label size should return style for medium button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2615,7 +2586,7 @@ exports[`Button label size should return style for medium button 1`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -2633,7 +2604,6 @@ exports[`Button label size should return style for small button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2669,7 +2639,7 @@ exports[`Button label size should return style for small button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2692,7 +2662,7 @@ exports[`Button label size should return style for small button 1`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -2710,7 +2680,6 @@ exports[`Button label size should return style for xSmall button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2746,7 +2715,7 @@ exports[`Button label size should return style for xSmall button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2769,7 +2738,7 @@ exports[`Button label size should return style for xSmall button 1`] = `
             "fontWeight": "400",
             "lineHeight": 20,
           },
-          Object {},
+          undefined,
           undefined,
         ],
       ]
@@ -2787,7 +2756,6 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2823,7 +2791,7 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2840,8 +2808,8 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
           Object {
             "color": "#FFD54E",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -2859,7 +2827,6 @@ exports[`Button labelColor should return color according to color modifier 1`] =
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2895,7 +2862,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2912,8 +2879,8 @@ exports[`Button labelColor should return color according to color modifier 1`] =
           Object {
             "color": "#D52712",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -2931,7 +2898,6 @@ exports[`Button labelColor should return color according to color prop 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2967,7 +2933,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2984,8 +2950,8 @@ exports[`Button labelColor should return color according to color prop 1`] = `
           Object {
             "color": "green",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3008,7 +2974,6 @@ exports[`Button labelColor should return disabled text color according to theme 
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3044,7 +3009,7 @@ exports[`Button labelColor should return disabled text color according to theme 
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3061,8 +3026,8 @@ exports[`Button labelColor should return disabled text color according to theme 
           Object {
             "color": "#D2D6D8",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3080,7 +3045,6 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3116,7 +3080,7 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3133,8 +3097,8 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
           Object {
             "color": "#FDB893",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3152,7 +3116,6 @@ exports[`Button labelColor should return undefined color if this is an icon butt
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3188,7 +3151,8 @@ exports[`Button labelColor should return undefined color if this is an icon butt
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
+        false,
         Array [
           Object {
             "tintColor": "#FFFFFF",
@@ -3209,7 +3173,6 @@ exports[`Button link should render button as a link 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3245,7 +3208,7 @@ exports[`Button link should render button as a link 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3262,8 +3225,8 @@ exports[`Button link should render button as a link 1`] = `
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3281,7 +3244,6 @@ exports[`Button outline should render button with an outline 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3319,7 +3281,7 @@ exports[`Button outline should render button with an outline 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3336,8 +3298,8 @@ exports[`Button outline should render button with an outline 1`] = `
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3355,7 +3317,6 @@ exports[`Button outline should render button with an outlineColor 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3393,7 +3354,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3410,8 +3371,8 @@ exports[`Button outline should render button with an outlineColor 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3429,7 +3390,6 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3467,7 +3427,7 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3484,8 +3444,8 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
           Object {
             "color": "blue",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3503,7 +3463,6 @@ exports[`Button outline should return custom borderWidth according to outlineWid
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3541,7 +3500,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3558,8 +3517,8 @@ exports[`Button outline should return custom borderWidth according to outlineWid
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3582,7 +3541,6 @@ exports[`Button outline should return disabled color for outline if button is di
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3620,7 +3578,7 @@ exports[`Button outline should return disabled color for outline if button is di
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3637,8 +3595,8 @@ exports[`Button outline should return disabled color for outline if button is di
           Object {
             "color": "#D2D6D8",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3656,7 +3614,6 @@ exports[`Button outline should return undefined when link is true, even when out
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3692,7 +3649,7 @@ exports[`Button outline should return undefined when link is true, even when out
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3709,8 +3666,8 @@ exports[`Button outline should return undefined when link is true, even when out
           Object {
             "color": "#5A48F5",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]
@@ -3728,7 +3685,6 @@ exports[`Button should render default button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3764,7 +3720,7 @@ exports[`Button should render default button 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3781,8 +3737,8 @@ exports[`Button should render default button 1`] = `
           Object {
             "color": "#FFFFFF",
           },
-          Object {},
-          Object {},
+          undefined,
+          undefined,
           undefined,
         ],
       ]

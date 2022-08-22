@@ -1,6 +1,6 @@
 {
   "name": "TabController.TabBarItem",
-  "category": "layoutsAndTemplates",
+  "category": "navigation",
   "description": "TabController's TabBarItem component",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx",
   "images": [],

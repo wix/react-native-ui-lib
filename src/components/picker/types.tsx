@@ -151,6 +151,10 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     useNativePicker?: boolean;
     /**
+     * Use wheel picker instead of a list picker
+     */
+    useWheelPicker?: boolean;
+    /**
      * Callback for rendering a custom native picker inside the dialog (relevant to native picker only)
      */
     renderNativePicker?: () => React.ReactElement;
@@ -258,7 +262,10 @@ export type PickerItemsListProps = Pick<
   | 'onSearchChange'
   | 'renderCustomSearch'
   | 'useSafeArea'
+  | 'useWheelPicker'
   | 'testID'
->;
+> & {
+  items?: {value: any; label: any}[];
+};
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;

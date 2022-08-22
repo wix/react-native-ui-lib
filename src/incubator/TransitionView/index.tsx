@@ -1,17 +1,20 @@
-import React, {PropsWithChildren, useCallback, useImperativeHandle} from 'react';
+import React, {PropsWithChildren, useCallback, useImperativeHandle, useMemo} from 'react';
 import {View as RNView, LayoutChangeEvent} from 'react-native';
-import Animated from 'react-native-reanimated';
 import View, {ViewProps} from '../../components/view';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import useHiddenLocation from '../hooks/useHiddenLocation';
-import {TransitionViewAnimationType} from './useAnimationEndNotifier';
-import {TransitionViewDirection, TransitionViewDirectionEnum} from './useAnimatedTranslator';
-import useAnimatedTransition, {AnimatedTransitionProps} from './useAnimatedTransition';
-const AnimatedView = Animated.createAnimatedComponent(View);
+import useAnimatedTransition, {
+  AnimatedTransitionProps,
+  TransitionViewAnimationType,
+  TransitionViewDirection,
+  TransitionViewDirectionEnum
+} from './useAnimatedTransition';
+import {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 export {TransitionViewDirection, TransitionViewDirectionEnum, TransitionViewAnimationType};
 
-// TODO: might need to create a file for types and create a fake component for docs
-export interface TransitionViewProps extends AnimatedTransitionProps, ViewProps {
+export interface TransitionViewProps
+  extends Omit<AnimatedTransitionProps, 'hiddenLocation' | 'onInitPosition'>,
+    ViewProps {
   ref?: any;
 }
 
@@ -33,9 +36,19 @@ const TransitionView = (props: Props) => {
     ...others
   } = props;
   const containerRef = React.createRef<RNView>();
+  const opacity = useSharedValue<number>(Number(!enterFrom));
   const {onLayout: hiddenLocationOnLayout, hiddenLocation} = useHiddenLocation({containerRef});
-  const {exit, animatedStyle} = useAnimatedTransition({
+
+  const onInitPosition = useCallback(() => {
+    if (opacity.value === 0) {
+      opacity.value = withTiming(1, {duration: 0});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const {animateOut, translation} = useAnimatedTransition({
     hiddenLocation,
+    onInitPosition,
     enterFrom,
     exitTo,
     onAnimationStart,
@@ -44,9 +57,9 @@ const TransitionView = (props: Props) => {
 
   useImperativeHandle(forwardedRef,
     () => ({
-      animateOut: exit // TODO: should this be renamed as well?
+      animateOut
     }),
-    [exit]);
+    [animateOut]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     hiddenLocationOnLayout(event);
@@ -54,7 +67,19 @@ const TransitionView = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <AnimatedView {...others} onLayout={onLayout} style={[propsStyle, animatedStyle]} ref={containerRef}/>;
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateX: translation.x.value}, {translateY: translation.y.value}],
+      // TODO: do we want to take the component's opacity here? - I think combining opacities is buggy
+      opacity: opacity.value
+    };
+  }, []);
+
+  const style = useMemo(() => {
+    return [propsStyle, animatedStyle];
+  }, [propsStyle, animatedStyle]);
+
+  return <View reanimated {...others} onLayout={onLayout} style={style} ref={containerRef}/>;
 };
 
 TransitionView.displayName = 'TransitionView';

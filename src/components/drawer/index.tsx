@@ -298,7 +298,7 @@ class Drawer extends PureComponent<DrawerProps> {
     if (items) {
       return (
         // @ts-ignore
-        <View animated row style={{transform: [{translateX: this.leftActionX}]}}>
+        <View animated renderDelay={100} row style={{transform: [{translateX: this.leftActionX}]}}>
           {_.map(items, (item, index: number) => {
             return this.renderAction({
               item,
@@ -331,7 +331,6 @@ class Drawer extends PureComponent<DrawerProps> {
     });
 
     return (
-      // @ts-expect-error related to missing children type started on react 18
       <RectButton
         key={index}
         testID={item.testID}

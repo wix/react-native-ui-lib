@@ -9,6 +9,7 @@ import {
   BackHandler,
   LayoutChangeEvent
 } from 'react-native';
+import {LogService} from '../../../../src/services';
 import KeyboardTrackingView, {KeyboardTrackingViewProps} from '../KeyboardTracking/KeyboardTrackingView';
 import CustomKeyboardView from './CustomKeyboardView';
 import KeyboardUtils from './utils/KeyboardUtils';
@@ -98,6 +99,12 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
 
     this.registerForKeyboardResignedEvent();
     this.registerAndroidBackHandler();
+
+    if (props.iOSScrollBehavior) {
+      LogService.warn(`The 'Keyboard.KeyboardAccessoryView' component's prop 'iOSScrollBehavior' is deprecated. 
+        Please use 'scrollBehavior' prop instead and pass it 'Keyboard.KeyboardAccessoryView.scrollBehaviors' 
+        ('Keyboard.KeyboardAccessoryView.iosScrollBehaviors' enum is deprecated).`);
+    }
   }
 
   componentWillUnmount() {

@@ -1,6 +1,6 @@
 {
   "name": "GridList",
-  "category": "layoutsAndTemplates",
+  "category": "lists",
   "description": "An auto-generated grid list that calculate item size according to given props",
   "extends": ["FlatList"],
   "extendsLink": ["https://reactnative.dev/docs/flatlist"],
@@ -27,6 +27,11 @@
       "name": "keepItemSize",
       "type": "boolean",
       "description": "whether to keep the items initial size when orientation changes, in which case the apt number of columns will be calculated automatically."
+    },
+    {
+      "name": "contentContainerStyle",
+      "type": "ScrollView[contentContainerStyle]",
+      "description": "Custom content container style"
     }
   ],
   "snippet": [

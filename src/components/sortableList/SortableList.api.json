@@ -1,6 +1,6 @@
 {
   "name": "SortableList",
-  "category": "basic",
+  "category": "lists",
   "description": "A sortable list component",
   "extends": ["FlatList"],
   "extendsLink": ["https://reactnative.dev/docs/flatlist"],

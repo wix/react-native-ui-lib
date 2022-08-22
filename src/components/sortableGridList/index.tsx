@@ -16,9 +16,9 @@ function generateItemsOrder(data: SortableGridListProps['data']) {
 }
 
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
-  const {renderItem, onOrderChange, contentContainerStyle, ...others} = props;
+  const {renderItem, onOrderChange, ...others} = props;
 
-  const {itemContainerStyle, numberOfColumns} = useGridLayout(props);
+  const {itemContainerStyle, numberOfColumns, listContentStyle} = useGridLayout(props);
   const {numColumns = DEFAULT_NUM_COLUMNS, itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
   const itemsOrder = useSharedValue<ItemsOrder>(generateItemsOrder(data));
 
@@ -63,7 +63,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
 
   return (
     <GestureHandlerRootView>
-      <ScrollView contentContainerStyle={[styles.listContent, contentContainerStyle]}>
+      <ScrollView contentContainerStyle={[styles.listContent, listContentStyle]}>
         {data?.map((item, index) => _renderItem({item, index} as ListRenderItemInfo<ItemProps<T>>))}
       </ScrollView>
     </GestureHandlerRootView>

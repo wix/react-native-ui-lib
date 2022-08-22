@@ -2,10 +2,12 @@ export {default as useCombinedRefs} from './useCombinedRefs';
 export {default as useToggleValue} from './useToggleValue';
 export {default as useDidUpdate} from './useDidUpdate';
 export {default as useMeasure} from './useMeasure';
+export {default as useModifiers} from './useModifiers';
 export {default as useOrientation} from './useOrientation';
 export {default as useScrollEnabler} from './useScrollEnabler';
 export {default as useScrollReached} from './useScrollReached';
 export {default as useScrollToItem} from './useScrollToItem';
 export {default as useScrollTo} from './useScrollTo';
+export {default as useThemeProps} from './useThemeProps';
 export * from './useScrollTo';
 

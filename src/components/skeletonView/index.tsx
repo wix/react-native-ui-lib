@@ -1,18 +1,11 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} from 'react-native';
+import memoize from 'memoize-one';
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
-import {
-  Constants,
-  asBaseComponent,
-  BaseComponentInjectedProps,
-  AlignmentModifiers,
-  PaddingModifiers,
-  MarginModifiers
-} from '../../commons/new';
-import {extractAccessibilityProps} from '../../commons/modifiers';
+import {Constants, AlignmentModifiers, PaddingModifiers, MarginModifiers} from '../../commons/new';
 
 const LinearGradient = LinearGradientPackage?.default;
 
@@ -174,10 +167,8 @@ interface SkeletonState {
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true
  * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
  */
-
-type InternalSkeletonViewProps = SkeletonViewProps & BaseComponentInjectedProps;
-
-class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
+class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
+  static displayName = 'SkeletonView';
   static defaultProps = {
     size: Size.SMALL,
     // listProps: {size: Size.SMALL}, TODO: once size is deprecated remove it and add this
@@ -189,8 +180,24 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   static contentTypes: typeof ContentType = ContentType;
 
   fadeInAnimation?: Animated.CompositeAnimation;
+  contentAccessibilityProps?: AccessibilityProps;
+  listItemAccessibilityProps?: AccessibilityProps;
 
-  constructor(props: InternalSkeletonViewProps) {
+  setAccessibilityProps(template?: Template) {
+    const isListItem = template === Template.LIST_ITEM;
+    const accessibilityProps = {
+      accessible: true,
+      accessibilityLabel: isListItem ? 'Loading list item' : 'Loading content'
+    };
+
+    if (isListItem) {
+      this.listItemAccessibilityProps = accessibilityProps;
+    } else {
+      this.contentAccessibilityProps = accessibilityProps;
+    }
+  }
+
+  constructor(props: SkeletonViewProps) {
     super(props);
 
     this.state = {
@@ -202,9 +209,11 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
       console.error(`RNUILib SkeletonView's requires installing "react-native-linear-gradient" dependency`);
     } else if (_.isUndefined(createShimmerPlaceholder)) {
       console.error(`RNUILib SkeletonView's requires installing "react-native-shimmer-placeholder" dependency`);
-    } else {
+    } else if (ShimmerPlaceholder === undefined) {
       ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
     }
+
+    this.setAccessibilityProps(props.template);
   }
 
   componentDidMount() {
@@ -213,7 +222,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     }
   }
 
-  componentDidUpdate(prevProps: InternalSkeletonViewProps) {
+  componentDidUpdate(prevProps: SkeletonViewProps) {
     if (this.props.showContent && !prevProps.showContent) {
       this.fadeInAnimation?.stop();
       this.fade(false, this.showChildren);
@@ -234,14 +243,6 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
 
   showChildren = () => {
     this.setState({isAnimating: false});
-  };
-
-  getAccessibilityProps = (accessibilityLabel: any) => {
-    return {
-      accessible: true,
-      accessibilityLabel,
-      ...extractAccessibilityProps(this.props)
-    };
   };
 
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
@@ -337,11 +338,15 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     );
   };
 
+  getListItemStyle = memoize(style => {
+    return [styles.listItem, style];
+  });
+
   renderListItemTemplate = () => {
     const {style, ...others} = this.props;
 
     return (
-      <View style={[styles.listItem, style]} {...this.getAccessibilityProps('Loading list item')} {...others}>
+      <View style={this.getListItemStyle(style)} {...this.listItemAccessibilityProps} {...others}>
         {this.renderListItemLeftContent()}
         {this.renderListItemContentStrips()}
       </View>
@@ -350,7 +355,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
 
   renderTextContentTemplate = () => {
     return (
-      <View {...this.getAccessibilityProps('Loading content')} {...this.props}>
+      <View {...this.contentAccessibilityProps} {...this.props}>
         {this.renderStrip(true, 235, 0)}
         {this.renderStrip(true, 260, 12)}
         {this.renderStrip(true, 190, 12)}
@@ -376,7 +381,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
     const data = showContent && _.isFunction(renderContent) ? renderContent(this.props) : children;
 
     return (
-      <View style={style} {...this.getAccessibilityProps('Loading content')} {...others}>
+      <View style={style} {...this.contentAccessibilityProps} {...others}>
         <ShimmerPlaceholder {...this.getDefaultSkeletonProps()} {...others}>
           {showContent && data}
         </ShimmerPlaceholder>
@@ -480,7 +485,6 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
             const key = timesKey ? `${timesKey}-${index}` : `${index}`;
             return (
               <SkeletonView
-                modifiers={{}}
                 {...passedProps}
                 key={key}
                 testID={`${testID}-${index}`}
@@ -498,7 +502,7 @@ class SkeletonView extends Component<InternalSkeletonViewProps, SkeletonState> {
   }
 }
 
-export default asBaseComponent<SkeletonViewProps, typeof SkeletonView>(SkeletonView);
+export default SkeletonView;
 
 const styles = StyleSheet.create({
   listItem: {

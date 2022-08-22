@@ -8,6 +8,7 @@ import GoldStarSvg from '@site/static/img/goldStar.svg';
 
 export default () => {
   const {siteConfig} = useDocusaurusContext();
+  const {expoSnackLink, docsMainEntry} = siteConfig.customFields;
 
   return (
     <div className={styles.main}>
@@ -22,11 +23,11 @@ export default () => {
         </div>
 
         <div className={styles.buttons}>
-          <Link to="docs/getting-started/setup">
+          <Link to={`docs/${docsMainEntry}`}>
             <button className={'button dark'}>View Docs</button>
           </Link>
 
-          <a href={siteConfig.customFields.expoSnackLink} target="_blank" rel="noopener noreferrer">
+          <a href={expoSnackLink} target="_blank" rel="noopener noreferrer">
             <button className={'button'}>Expo-Snack Demo</button>
           </a>
         </div>

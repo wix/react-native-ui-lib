@@ -14,9 +14,17 @@ const ruleTester = new RuleTester();
 const ruleOptions = [{deprecations: deprecationsJson}];
 const invalidExample =
   `import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>`;
+const validKeyboardExample =
+  `import {Keyboard} from 'module-with-deprecations'; const test = <Keyboard.KeyboardAccessoryView scrollBehavior={Keyboard.KeyboardAccessoryView.scrollBehaviors.NONE}/>`;
+const invalidKeyboardExample =
+  `import {Keyboard} from 'module-with-deprecations'; const test = <Keyboard.KeyboardAccessoryView iOSScrollBehavior={Keyboard.KeyboardAccessoryView.iosScrollBehaviors.NONE}/>`;
 
 ruleTester.run('component-prop-deprecation', rule, {
   valid: [
+    {
+      options: ruleOptions,
+      code: validKeyboardExample
+    },
     {
       options: ruleOptions,
       code: `const Avatar = require('another-module').Avatar;
@@ -115,6 +123,13 @@ ruleTester.run('component-prop-deprecation', rule, {
     }
   ],
   invalid: [
+    {
+      options: ruleOptions,
+      code: invalidKeyboardExample,
+      errors: [{
+        message: `The 'Keyboard.KeyboardAccessoryView' component's prop 'iOSScrollBehavior' is deprecated. 'iOSScrollBehavior' prop is deprecated. Please use 'scrollBehavior' prop instead and pass it 'Keyboard.KeyboardAccessoryView.scrollBehaviors' ('Keyboard.KeyboardAccessoryView.iosScrollBehaviors' enum is deprecated).`
+      }]
+    },
     {
       options: ruleOptions,
       code: invalidExample,

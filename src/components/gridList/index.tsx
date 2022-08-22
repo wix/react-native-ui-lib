@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {FlatList} from 'react-native';
 import useGridLayout from './useGridLayout';
 import View from '../view';
@@ -17,18 +17,15 @@ function GridList<T = any>(props: GridListProps<T>) {
     ...others
   } = props;
 
-  const {itemContainerStyle, numberOfColumns} = useGridLayout({
+  const {itemContainerStyle, numberOfColumns, listContentStyle} = useGridLayout({
     numColumns,
     itemSpacing,
     maxItemWidth,
     listPadding,
     keepItemSize,
-    containerWidth
+    containerWidth,
+    contentContainerStyle
   });
-
-  const listContentStyle = useMemo(() => {
-    return [{paddingHorizontal: listPadding}, contentContainerStyle];
-  }, [listPadding, contentContainerStyle]);
 
   const _renderItem = useCallback((...args: any[]) => {
     // @ts-expect-error

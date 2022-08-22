@@ -55,20 +55,20 @@ export default class ColorSwatchScreen extends Component {
     const {color, color1, color2, selected} = this.state;
 
     return (
-      <ScrollView style={{backgroundColor: Colors.$backgroundNeutralLight}}>
+      <ScrollView>
         <View flex center useSafeArea>
-          <Text margin-5 text60 grey10>
+          <Text margin-5 text60>
             Single ColorSwatch
           </Text>
           <View row>
             <ColorSwatch selected={selected} onPress={this.onPress}/>
             <View>
-              <ColorSwatch selected color={Colors.$backgroundMajor}/>
+              <ColorSwatch selected color={Colors.$backgroundMajorLight}/>
               <Text>Disabled</Text>
             </View>
           </View>
 
-          <Text marginT-20 text60 grey10>
+          <Text marginT-20 text60>
             ColorPalette
           </Text>
           <Text marginB-10 text70 style={{color}}>
@@ -76,12 +76,12 @@ export default class ColorSwatchScreen extends Component {
           </Text>
           <ColorPalette value={color} onValueChange={this.onValueChange} colors={this.colors}/>
 
-          <Text margin-10 text60 grey10>
+          <Text margin-10 text60>
             Scrollable
           </Text>
           <ColorPalette value={color1} onValueChange={this.onValueChange1} colors={this.mainColors}/>
 
-          <Text margin-10 text60 grey10>
+          <Text margin-10 text60>
             Pagination
           </Text>
           <ColorPalette

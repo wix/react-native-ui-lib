@@ -1,12 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
-import {runOnJS} from 'react-native-reanimated';
+import {runOnJS, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
 import {HiddenLocation} from '../hooks/useHiddenLocation';
-import useAnimatedTranslator, {TransitionViewDirection, TransitionViewDirectionEnum} from './useAnimatedTranslator';
+import {PanningDirections, PanningDirectionsEnum} from '../panView';
 import useAnimationEndNotifier, {
   AnimationNotifierEndProps,
   TransitionViewAnimationType
 } from './useAnimationEndNotifier';
+const TransitionViewDirectionEnum = PanningDirectionsEnum;
+type TransitionViewDirection = PanningDirections;
+export {TransitionViewAnimationType, TransitionViewDirectionEnum, TransitionViewDirection};
+
+const DEFAULT_ANIMATION_VELOCITY = 300;
+const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 100, mass: 0.4};
 
 export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
   /**
@@ -21,16 +27,16 @@ export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
    * If this is given there will be an exit animation to this direction.
    */
   exitTo?: TransitionViewDirection;
+  hiddenLocation: HiddenLocation;
+  onInitPosition: () => void;
 }
 
-type Props = AnimatedTransitionProps & {
-  hiddenLocation: HiddenLocation;
-};
+export default function useAnimatedTransition(props: AnimatedTransitionProps) {
+  const {hiddenLocation, onInitPosition, enterFrom, exitTo, onAnimationStart, onAnimationEnd} = props;
 
-export default function useAnimatedTransition(props: Props) {
-  const {hiddenLocation, enterFrom, exitTo, onAnimationStart, onAnimationEnd} = props;
-
-  const {init, animate, animatedStyle} = useAnimatedTranslator({initialVisibility: !enterFrom});
+  // Has to start at {0, 0} with {opacity: 0} so layout can be measured
+  const translationX = useSharedValue<number>(0);
+  const translationY = useSharedValue<number>(0);
   const {onEnterAnimationEnd, onExitAnimationEnd} = useAnimationEndNotifier({onAnimationEnd});
 
   const getLocation = (direction?: TransitionViewDirection) => {
@@ -48,34 +54,64 @@ export default function useAnimatedTransition(props: Props) {
     };
   };
 
+  const initPosition = useCallback((to: {x: number; y: number},
+    animationDirection: TransitionViewDirection,
+    callback: (isFinished?: boolean) => void) => {
+    'worklet';
+    // @ts-expect-error
+    if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
+      translationX.value = withTiming(to.x, {duration: 0}, callback);
+      // @ts-expect-error
+    } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(animationDirection)) {
+      translationY.value = withTiming(to.y, {duration: 0}, callback);
+    }
+
+    onInitPosition();
+  },
+  [onInitPosition]);
+
   useEffect(() => {
     if (!hiddenLocation.isDefault && enterFrom) {
       const location = getLocation(enterFrom);
-      init(location, enterFrom, enter);
+      initPosition(location, enterFrom, animateIn);
     }
   }, [hiddenLocation.isDefault]);
 
-  const enter = useCallback(() => {
+  const translateTo = useCallback((to: {x: number; y: number},
+    animationDirection: TransitionViewDirection,
+    callback: (isFinished?: boolean) => void) => {
+    'worklet';
+    // @ts-expect-error
+    if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
+      translationX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
+      // @ts-expect-error
+    } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(animationDirection)) {
+      translationY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
+    }
+  },
+  []);
+
+  const animateIn = useCallback(() => {
     'worklet';
     if (enterFrom) {
       if (onAnimationStart) {
         runOnJS(onAnimationStart)('enter');
       }
 
-      animate({x: 0, y: 0}, enterFrom, onEnterAnimationEnd);
+      translateTo({x: 0, y: 0}, enterFrom, onEnterAnimationEnd);
     }
   }, [onEnterAnimationEnd]);
 
-  const exit = useCallback(() => {
+  const animateOut = useCallback(() => {
     'worklet';
     if (exitTo) {
       if (onAnimationStart) {
         runOnJS(onAnimationStart)('exit');
       }
 
-      animate(getLocation(exitTo), exitTo, onExitAnimationEnd);
+      translateTo(getLocation(exitTo), exitTo, onExitAnimationEnd);
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd]);
 
-  return {exit, animatedStyle};
+  return {animateIn, animateOut, translation: {x: translationX, y: translationY}};
 }

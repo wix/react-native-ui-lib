@@ -1,6 +1,6 @@
 {
   "name": "SortableGridList",
-  "category": "layoutsAndTemplates",
+  "category": "lists",
   "description": "An sortable grid list (based on GridList component)",
   "note": "This component supports square items only",
   "extends": ["layoutsAndTemplates/GridList"],

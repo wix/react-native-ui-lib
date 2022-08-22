@@ -1,6 +1,6 @@
 {
   "name": "Icon",
-  "category": "basic",
+  "category": "media",
   "description": "Icon component",
   "extends": ["Image"],
   "extendsLink": ["https://reactnative.dev/docs/image"],

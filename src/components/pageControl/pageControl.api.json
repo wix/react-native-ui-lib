@@ -1,6 +1,6 @@
 {
   "name": "PageControl",
-  "category": "basic",
+  "category": "navigation",
   "description": "Page indicator, typically used in paged scroll-views",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PageControlScreen.tsx",
   "images": ["https://user-images.githubusercontent.com/1780255/107114259-2e278d00-686d-11eb-866c-59f3d410d6c3.gif"],

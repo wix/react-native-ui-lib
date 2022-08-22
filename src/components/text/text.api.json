@@ -1,6 +1,6 @@
 {
   "name": "Text",
-  "category": "basic",
+  "category": "infra",
   "description": "A wrapper for Text component with extra functionality like modifiers support",
   "extends": ["Text"],
   "extendsLink": ["https://reactnative.dev/docs/text"],

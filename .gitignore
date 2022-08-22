@@ -67,8 +67,10 @@ yarn.lock
 package-lock.json
 docs/**/*.md
 
-# CocoaPods
+# Ruby / CocoaPods
 /ios/Pods/
+/vendor/bundle/
 /ios/Podfile.lock
 expoDemo/ios/Pods
 
+.reassure 

@@ -1,6 +1,6 @@
 {
   "name": "ActionBar",
-  "category": "basic",
+  "category": "controls",
   "description": "Quick actions bar, each action support Button component props",
   "extends": ["basic/View"],
   "modifiers": ["margin", "padding"],

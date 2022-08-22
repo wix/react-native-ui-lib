@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
 import {BorderRadiuses, Colors} from '../../style';
-import {Constants, asBaseComponent} from '../../commons/new';
+import {Constants} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
@@ -111,7 +111,7 @@ class ColorSwatch extends PureComponent<Props> {
       if (Colors.isTransparent(color)) {
         return Colors.$iconDefault;
       }
-      return Colors.isDark(color) ? Colors.$iconDefaultLight : Colors.$iconDefault;
+      return Colors.isDark(color) ? Colors.white : Colors.grey10;
     }
   }
 
@@ -137,6 +137,7 @@ class ColorSwatch extends PureComponent<Props> {
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
+    const accessibilityInfo = Constants.accessibility.isScreenReaderEnabled && this.getAccessibilityInfo();
 
     return (
       <Container
@@ -148,7 +149,7 @@ class ColorSwatch extends PureComponent<Props> {
         onPress={this.onPress}
         style={[this.styles.container, style]}
         onLayout={this.onLayout}
-        {...this.getAccessibilityInfo()}
+        {...accessibilityInfo}
       >
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
@@ -189,7 +190,7 @@ class ColorSwatch extends PureComponent<Props> {
   }
 }
 
-export default asBaseComponent<Props>(ColorSwatch);
+export default ColorSwatch;
 
 function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({

@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
-import {Assets, TabController, Colors, View, Text, Button, TabControllerItemProps} from 'react-native-ui-lib';
+import {
+  Assets,
+  TabController,
+  Colors,
+  View,
+  Text,
+  Button,
+  TabControllerItemProps,
+  TabControllerImperativeMethods
+} from 'react-native-ui-lib';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import _ from 'lodash';
 
@@ -35,6 +44,7 @@ class TabControllerScreen extends Component<{}, State> {
 
     this.state.items = this.generateTabItems();
   }
+  tabController = React.createRef<TabControllerImperativeMethods>();
 
   generateTabItems = (fewItems = this.state.fewItems): TabControllerItemProps[] => {
     const items: TabControllerItemProps[] = _.flow(tabs => _.take(tabs, fewItems ? 3 : TABS.length),
@@ -72,6 +82,10 @@ class TabControllerScreen extends Component<{}, State> {
       this.slow();
     }, 10);
   }
+
+  setTab = () => {
+    this.tabController.current?.setTab(2);
+  };
 
   onAddItem = () => {
     const {items} = this.state;
@@ -153,6 +167,7 @@ class TabControllerScreen extends Component<{}, State> {
       <View flex bg-$backgroundDefault>
         <TabController
           key={key}
+          ref={this.tabController}
           asCarousel={asCarousel}
           // selectedIndex={selectedIndex}
           initialIndex={initialIndex}
@@ -174,11 +189,9 @@ class TabControllerScreen extends Component<{}, State> {
             // iconColor={'green'}
             // selectedIconColor={'blue'}
             enableShadow
-            activeBackgroundColor={Colors.$backgroundPrimaryLight}
+            activeBackgroundColor={Colors.$backgroundPrimaryMedium}
             centerSelected={centerSelected}
-          >
-            {/* {this.renderTabItems()} */}
-          </TabController.TabBar>
+          />
           {this.renderTabPages()}
         </TabController>
         <View absB left margin-20 marginB-100 style={{zIndex: 1}}>
@@ -203,8 +216,10 @@ class TabControllerScreen extends Component<{}, State> {
             bg-green30={centerSelected}
             label={`centerSelected : ${centerSelected ? 'ON' : 'OFF'}`}
             size={Button.sizes.small}
+            marginB-12
             onPress={this.toggleCenterSelected}
           />
+          <Button label="setTab (Imperative)" bg-green10 onPress={this.setTab} size={Button.sizes.small}/>
         </View>
       </View>
     );

@@ -1,10 +1,8 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
-// @ts-ignore need to migrate to commonsNew
-import {modifiers} from 'commons';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
@@ -13,8 +11,6 @@ import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props, D
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
-
-const {extractColorValue, extractTypographyValue} = modifiers;
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
@@ -77,16 +73,15 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getBackgroundColor() {
-    const {backgroundColor: themeBackgroundColor, modifiers} = this.props;
-    const {disabled, outline, disabledBackgroundColor, backgroundColor: propsBackgroundColor} = this.props;
-    const {backgroundColor: stateBackgroundColor} = modifiers;
+    const {disabled, outline, disabledBackgroundColor, backgroundColor, modifiers} = this.props;
+    const {backgroundColor: modifiersBackgroundColor} = modifiers;
 
     if (!outline && !this.isLink) {
       if (disabled) {
         return disabledBackgroundColor || Colors.$backgroundDisabled;
       }
 
-      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.$backgroundPrimaryHeavy;
+      return backgroundColor || modifiersBackgroundColor || Colors.$backgroundPrimaryHeavy;
     }
     return 'transparent';
   }
@@ -100,7 +95,8 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getLabelColor() {
-    const {linkColor, outline, outlineColor, disabled, color: propsColor, backgroundColor} = this.props;
+    const {linkColor, outline, outlineColor, disabled, color: propsColor, backgroundColor, modifiers} = this.props;
+    const {color: modifiersColor} = modifiers;
     const isLink = this.isLink;
 
     let color: string | undefined = Colors.$textDefaultLight;
@@ -116,27 +112,34 @@ class Button extends PureComponent<Props, ButtonState> {
       return Colors.$textDisabled;
     }
 
-    color = propsColor || extractColorValue(this.props) || color;
+    color = propsColor || modifiersColor || color;
     return color;
   }
 
   getLabelSizeStyle() {
     const size = this.props.size || DEFAULT_SIZE;
 
-    const LABEL_STYLE_BY_SIZE: Dictionary<object> = {};
-    LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = {...Typography.text80};
-    LABEL_STYLE_BY_SIZE[Button.sizes.small] = {...Typography.text80};
-    LABEL_STYLE_BY_SIZE[Button.sizes.medium] = {...Typography.text80};
-    LABEL_STYLE_BY_SIZE[Button.sizes.large] = {};
+    const LABEL_STYLE_BY_SIZE: Dictionary<TextStyle | undefined> = {};
+    LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = Typography.text80;
+    LABEL_STYLE_BY_SIZE[Button.sizes.small] = Typography.text80;
+    LABEL_STYLE_BY_SIZE[Button.sizes.medium] = Typography.text80;
+    LABEL_STYLE_BY_SIZE[Button.sizes.large] = undefined;
 
     const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
     return labelSizeStyle;
   }
 
   getContainerSizeStyle() {
-    const {outline, avoidMinWidth, avoidInnerPadding, round} = this.props;
-    const size = this.props.size || DEFAULT_SIZE;
-    const outlineWidth = this.props.outlineWidth || 1;
+    const {
+      outline,
+      avoidMinWidth,
+      avoidInnerPadding,
+      round,
+      size: propsSize,
+      outlineWidth: propsOutlineWidth
+    } = this.props;
+    const size = propsSize || DEFAULT_SIZE;
+    const outlineWidth = propsOutlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE: Dictionary<any> = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
@@ -217,14 +220,14 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getBorderRadiusStyle() {
-    const {fullWidth, borderRadius: borderRadiusFromProps, modifiers} = this.props;
+    const {fullWidth, borderRadius: propsBorderRadius, modifiers} = this.props;
+    const {borderRadius: modifiersBorderRadius} = modifiers;
 
-    if (this.isLink || fullWidth || borderRadiusFromProps === 0) {
+    if (this.isLink || fullWidth || propsBorderRadius === 0) {
       return {borderRadius: 0};
     }
 
-    const {borderRadius: borderRadiusFromState} = modifiers;
-    const borderRadius = borderRadiusFromProps || borderRadiusFromState || BorderRadiuses.br100;
+    const borderRadius = propsBorderRadius || modifiersBorderRadius || BorderRadiuses.br100;
     return {borderRadius};
   }
 
@@ -238,8 +241,8 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getIconStyle() {
-    const {disabled, iconStyle: propsIconStyle, iconOnRight} = this.props;
-    const size = this.props.size || DEFAULT_SIZE;
+    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize} = this.props;
+    const size = propsSize || DEFAULT_SIZE;
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
     };
@@ -294,15 +297,15 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   renderLabel() {
-    const {label, labelStyle, labelProps, hyperlink, testID} = this.props;
-    const typography = extractTypographyValue(this.props);
+    const {label, labelStyle, labelProps, hyperlink, testID, modifiers} = this.props;
     const color = this.getLabelColor();
     const labelSizeStyle = this.getLabelSizeStyle();
+    const {typography} = modifiers;
 
     if (label) {
       return (
         <Text
-          style={[this.styles.text, !!color && {color}, labelSizeStyle, {...typography}, labelStyle]}
+          style={[this.styles.text, !!color && {color}, labelSizeStyle, typography, labelStyle]}
           underline={hyperlink}
           numberOfLines={1}
           testID={`${testID}.label`}
@@ -389,4 +392,13 @@ function createStyles() {
 
 export {Button}; // For tests
 
-export default asBaseComponent<ButtonProps, typeof Button>(forwardRef<Props>(Button));
+const modifiersOptions = {
+  paddings: true,
+  margins: true,
+  borderRadius: true,
+  backgroundColor: true,
+  typography: true,
+  color: true
+};
+
+export default asBaseComponent<ButtonProps, typeof Button>(forwardRef<Props>(Button), {modifiersOptions});

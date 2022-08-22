@@ -1,6 +1,6 @@
 {
   "name": "Slider",
-  "category": "form",
+  "category": "controls",
   "description": "A Slider component",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true"],

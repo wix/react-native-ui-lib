@@ -1,7 +1,7 @@
 import React from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
-import {Scheme} from '../style';
+import {Scheme, ThemeManager} from '../style';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
 
@@ -12,12 +12,16 @@ export interface BaseComponentInjectedProps {
   modifiers: ReturnType<typeof Modifiers.generateModifiersStyle>;
 }
 
-// TODO: find a proper way to inject this type in the private repo
-type ThemeComponent = {
-  useCustomTheme?: boolean;
-};
+export interface AsBaseComponentOptions {
+  ignoreModifiers?: boolean;
+  ignoreTheme?: boolean;
+  modifiersOptions?: Modifiers.ModifiersOptions;
+}
 
-function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS & ThemeComponent> & STATICS {
+const EMPTY_MODIFIERS = {};
+
+function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>,
+  options: AsBaseComponentOptions = {}): React.ComponentClass<PROPS & ThemeComponent> & STATICS {
   class BaseComponent extends UIComponent {
     static displayName: string | undefined;
     static propTypes: any;
@@ -52,8 +56,10 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     }
 
     render() {
-      const themeProps = BaseComponent.getThemeProps(this.props, this.context);
-      const modifiers = Modifiers.generateModifiersStyle(undefined, themeProps);
+      const themeProps = options.ignoreTheme ? this.props : BaseComponent.getThemeProps(this.props, this.context);
+      const modifiers = options.ignoreModifiers
+        ? EMPTY_MODIFIERS
+        : Modifiers.generateModifiersStyle(options.modifiersOptions, themeProps);
       // TODO: omit original modifiers props (left, right, flex, etc..)
       // Because they throws an error when being passed to RNView on Android
       const {forwardedRef, ...others} = themeProps;
@@ -70,6 +76,10 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
   BaseComponent.displayName = WrappedComponent.displayName;
   BaseComponent.propTypes = WrappedComponent.propTypes;
   BaseComponent.defaultProps = WrappedComponent.defaultProps;
+  const ThemeContext = ThemeManager.getThemeContext();
+  if (ThemeContext) {
+    BaseComponent.contextType = ThemeContext;
+  }
 
   return forwardRef(BaseComponent) as any;
 }

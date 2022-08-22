@@ -57,7 +57,7 @@ export interface LabelProps {
   /**
    * Custom style for the field label
    */
-  labelStyle?: TextStyle;
+  labelStyle?: StyleProp<TextStyle>;
   /**
    * Pass extra props to the label Text element
    */

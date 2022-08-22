@@ -1,6 +1,6 @@
 {
   "name": "View",
-  "category": "basic",
+  "category": "infra",
   "description": "An enhanced View component",
   "extends": ["View"],
   "extendsLink": ["https://reactnative.dev/docs/view"],

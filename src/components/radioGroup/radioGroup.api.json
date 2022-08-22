@@ -1,6 +1,6 @@
 {
   "name": "RadioGroup",
-  "category": "form",
+  "category": "controls",
   "description": "Wrap a group of Radio Buttons to automatically control their selection",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/RadioButtonScreen.js",
   "images": [

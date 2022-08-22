@@ -1,11 +1,11 @@
 {
   "name": "Stepper",
-  "category": "Form",
+  "category": "form",
   "description": "A stepper component",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.tsx",
   "images": [],
   "props": [
-    {"name": "value", "type": "number", "description": "Initial value of the Stepper"},
+    {"name": "value", "type": "number", "description": "Stepper value"},
     {"name": "minValue", "type": "number", "description": "Minimum value"},
     {"name": "maxValue", "type": "number", "description": "Maximum value"},
     {

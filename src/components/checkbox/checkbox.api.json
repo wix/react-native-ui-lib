@@ -1,6 +1,6 @@
 {
   "name": "Checkbox",
-  "category": "form",
+  "category": "controls",
   "description": "Checkbox component for toggling boolean value related to some context",
   "extends": ["basic/TouchableOpacity"],
   "modifiers": ["margin", "background"],

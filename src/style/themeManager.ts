@@ -1,8 +1,9 @@
 import _ from 'lodash';
+import type {Context} from 'react';
 import Colors from './colors';
 
-
 export class ThemeManager {
+  private themeContext?: Context<any>;
 
   theme = {
     primaryColor: Colors.primary,
@@ -19,6 +20,14 @@ export class ThemeManager {
 
   forcedTheme = {
     components: {} as Extendable
+  };
+
+  setThemeContext(context: Context<any>) {
+    this.themeContext = context;
+  }
+
+  getThemeContext() {
+    return this.themeContext;
   }
 
   getTheme() {

@@ -1,6 +1,6 @@
 {
   "name": "ListItem.Part",
-  "category": "basic",
+  "category": "lists",
   "description": "A sub ListItem component for layout-ing inside a ListItem",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.tsx",
   "images": ["https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif"],

@@ -520,7 +520,6 @@ export default class Swipeable extends Component<Props, State> {
           {right}
           <TapGestureHandler onHandlerStateChange={this._onTapHandlerStateChange}>
             <Animated.View
-              testID={testID}
               style={[
                 {transform: [{translateX: this.getTransX()}]},
                 childrenContainerStyle

@@ -1,6 +1,6 @@
 {
   "name": "Card",
-  "category": "basic",
+  "category": "layout",
   "description": "Customizable card component that handles press events",
   "extends": ["basic/TouchableOpacity"],
   "modifiers": ["margin", "padding"],

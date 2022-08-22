@@ -31,7 +31,6 @@ describe('Slider', () => {
   it('Should be disabled', async () => {
     const testId = 'slider-comp';
     const driver = await sliderDriver(testId, {disabled: false});
-    console.log('TEST: ', await driver.getPropsByTestId(testId));
 
     expect(await driver.isDisabled()).toBe(false);
   });

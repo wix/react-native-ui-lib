@@ -50,12 +50,11 @@ export {Incubator, Hooks, Modifiers};
 /* ===== Components ===== */
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as ActionSheet} from './components/actionSheet';
-// @ts-expect-error
 export {default as AnimatedImage} from './components/animatedImage';
 // @ts-expect-error
 export {default as AnimatedScanner} from './components/animatedScanner';
 export {default as Avatar, AvatarProps} from './components/avatar';
-export {AvatarHelper} from './helpers';
+export {AvatarHelper, Profiler} from './helpers';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as BaseInput} from './components/baseInput';
 export {default as Button, ButtonProps, ButtonSize, ButtonAnimationDirection} from './components/button';
@@ -141,7 +140,7 @@ export {default as StackAggregator, StackAggregatorProps} from './components/sta
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as Stepper, StepperProps} from './components/stepper';
 export {default as Switch, SwitchProps} from './components/switch';
-export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
+export {default as TabController, TabControllerProps, TabControllerItemProps, TabControllerImperativeMethods} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/tabBar'; //TODO: remove on V7
 export {default as Timeline, TimelineProps, TimelinePointProps, TimelineLineProps, TimelineStateTypes, TimelinePointTypes, TimelineLineTypes} from './components/timeline';
 export {default as Text, TextProps} from './components/text';

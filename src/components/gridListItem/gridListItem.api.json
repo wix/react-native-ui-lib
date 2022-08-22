@@ -1,6 +1,6 @@
 {
   "name": "GridListItem",
-  "category": "layoutsAndTemplates",
+  "category": "lists",
   "description": "A single grid view/list item component",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx",
   "props": [

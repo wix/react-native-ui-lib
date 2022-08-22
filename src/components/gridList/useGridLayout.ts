@@ -14,7 +14,8 @@ const useGridLayout = (props: GridListBaseProps) => {
     maxItemWidth,
     listPadding = 0,
     keepItemSize,
-    containerWidth
+    containerWidth,
+    contentContainerStyle
   } = props;
 
   const {orientation} = useOrientation();
@@ -43,7 +44,11 @@ const useGridLayout = (props: GridListBaseProps) => {
     return {width: itemWidth /* + itemSpacing */, marginRight: itemSpacing, marginBottom: itemSpacing};
   }, [itemWidth, itemSpacing]);
 
-  return {itemContainerStyle, numberOfColumns};
+  const listContentStyle = useMemo(() => {
+    return [{paddingHorizontal: listPadding}, contentContainerStyle];
+  }, [listPadding, contentContainerStyle]);
+
+  return {itemContainerStyle, numberOfColumns, listContentStyle};
 };
 
 export default useGridLayout;
