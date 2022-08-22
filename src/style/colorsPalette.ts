@@ -17,7 +17,7 @@ const colorsPalette = {
   blue20: '#0F59E6',
   blue30: '#116DFF',
   blue40: '#3582FF',
-  blue50: '#60A1FF',
+  blue50: '#81B4FF',
   blue60: '#97C7FF',
   blue70: '#C4DFFF',
   blue80: '#E9F3FF',
