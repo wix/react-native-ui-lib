@@ -76,13 +76,20 @@ type ActionSheetProps = {
    */
   renderAction?: (option: ButtonProps, index: number, onOptionPress: ActionSheetOnOptionPress) => JSX.Element;
   /**
-   * Called once the modal has been dismissed (iOS only, modal only)
+   * Called once the modal has been dismissed completely
    */
   onModalDismissed?: DialogProps['onDialogDismissed'];
   /**
    * Whether or not to handle SafeArea
    */
   useSafeArea?: boolean;
+  /**
+   * Additional props to send to the Dialog
+   */
+  dialogProps?: Omit<
+    DialogProps,
+    'useSafeArea' | 'testID' | 'containerStyle' | 'visible' | 'onDismiss' | 'onDialogDismissed'
+  >;
   /**
    * testID for e2e tests
    */
@@ -207,7 +214,8 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea} = this.props;
+    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps} =
+      this.props;
 
     if (Constants.isIOS && useNativeIOS) {
       return null;
@@ -215,16 +223,17 @@ class ActionSheet extends Component<ActionSheetProps> {
 
     return (
       <Dialog
-        useSafeArea={useSafeArea}
-        testID={testID}
         bottom
         centerH
         width="100%"
+        panDirection={PanningProvider.Directions.DOWN}
+        {...dialogProps}
+        useSafeArea={useSafeArea}
+        testID={testID}
         containerStyle={[styles.dialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
         onDialogDismissed={onModalDismissed}
-        panDirection={PanningProvider.Directions.DOWN}
       >
         {this.renderSheet()}
       </Dialog>
