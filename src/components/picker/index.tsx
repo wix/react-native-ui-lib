@@ -9,11 +9,7 @@ import React, {useMemo, useState, useRef, PropsWithChildren, useCallback} from '
 import {LayoutChangeEvent} from 'react-native';
 import {Typography} from 'style';
 import {useThemeProps} from 'hooks';
-import {
-  Constants,
-  forwardRef,
-  ForwardRefInjectedProps
-} from '../../commons/new';
+import {Constants, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 // @ts-expect-error
 import {TextField} from '../inputs';
@@ -49,8 +45,7 @@ const DIALOG_PROPS = {
   height: 250
 };
 
-const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps /*  & BaseComponentInjectedProps */
-) => {
+const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps) => {
   const themeProps = useThemeProps(props, 'Picker');
   const {
     mode,
