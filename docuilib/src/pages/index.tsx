@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 // import clsx from 'clsx';
 // import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 // import HomepageFeatures from '../components/HomepageFeatures';
@@ -15,16 +16,17 @@ export default function Home(): JSX.Element {
   // const {siteConfig} = useDocusaurusContext();
   return (
     <>
-      <StandWithUkraine />
+      <StandWithUkraine/>
       <Layout
         /* title={`Hello from ${siteConfig.title}`} */ description="Description will go into a meta tag in <head />"
       >
         <main>
-          <MainSection />
-          <ComponentsSection />
-          <FeaturesSection />
-          <CodeSection />
-          <LibrariesSection />
+          {/* Note: BrowserOnly allows using `localStorage` in MainSection, otherwise docusaurus build fail */}
+          <BrowserOnly>{() => <MainSection/>}</BrowserOnly>
+          <ComponentsSection/>
+          <FeaturesSection/>
+          <CodeSection/>
+          <LibrariesSection/>
         </main>
       </Layout>
     </>
