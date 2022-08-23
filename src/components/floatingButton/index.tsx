@@ -6,6 +6,10 @@ import View from '../view';
 import Button, {ButtonProps} from '../button';
 import Image from '../image';
 
+export enum FloatingButtonLayouts {
+  VERTICAL = 'Vertical',
+  HORIZONTAL = 'Horizontal'
+}
 export interface FloatingButtonProps {
   /**
    * Whether the button is visible
@@ -42,6 +46,10 @@ export interface FloatingButtonProps {
    * <TestID>.secondaryButton - the floatingButton secondaryButton
    */
   testID?: string;
+  /**
+   * Button layout direction: vertical or horizontal
+   */
+  buttonLayouts?: FloatingButtonLayouts;
 }
 
 const gradientImage = () => require('./gradient.png');
@@ -54,9 +62,11 @@ const gradientImage = () => require('./gradient.png');
  */
 class FloatingButton extends PureComponent<FloatingButtonProps> {
   static displayName = 'FloatingButton';
+  static floatingButtonLayouts = FloatingButtonLayouts;
 
   static defaultProps = {
-    duration: 300
+    duration: 300,
+    buttonLayouts: FloatingButtonLayouts.VERTICAL
   };
 
   initialVisibility?: boolean;
@@ -98,16 +108,18 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   };
 
   renderButton() {
-    const {bottomMargin, button, secondaryButton, testID} = this.props;
-    const bottom = secondaryButton ? Spacings.s7 : bottomMargin || Spacings.s8;
-    const left = secondaryButton ? Spacings.s4 : undefined;
-    const right = secondaryButton ? 20 : undefined;
+    const {bottomMargin, button, secondaryButton, testID, buttonLayouts} = this.props;
+
+    const bottom =
+      secondaryButton && buttonLayouts === FloatingButtonLayouts.VERTICAL ? Spacings.s4 : bottomMargin || Spacings.s8;
+    const left = secondaryButton && buttonLayouts === FloatingButtonLayouts.HORIZONTAL ? Spacings.s4 : undefined;
+    const right = secondaryButton && buttonLayouts === FloatingButtonLayouts.HORIZONTAL ? 20 : undefined;
 
     return (
       <Button
         size={Button.sizes.large}
-        flex={!!secondaryButton}
-        style={[styles.shadow, {marginTop: Spacings.s4, marginBottom: bottom, marginLeft: left, marginRight: right}]}
+        flex={!!(secondaryButton && buttonLayouts === FloatingButtonLayouts.HORIZONTAL)}
+        style={[styles.shadow, {marginTop: 16, marginBottom: bottom, marginLeft: left, marginRight: right}]}
         testID={`${testID}.button`}
         {...button}
       />
@@ -130,23 +142,35 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   };
 
   renderSecondaryButton() {
-    const {secondaryButton, testID} = this.props;
+    const {secondaryButton, bottomMargin, testID, buttonLayouts} = this.props;
+    if (buttonLayouts === FloatingButtonLayouts.HORIZONTAL) {
+      return (
+        <Button
+          outline
+          flex
+          size={Button.sizes.large}
+          testID={`${testID}.secondaryButton`}
+          {...secondaryButton}
+          style={[styles.shadow, {marginTop: Spacings.s4, marginBottom: Spacings.s7, marginLeft: 20}]}
+          enableShadow={false}
+        />
+      );
+    }
 
     return (
       <Button
-        outline
-        flex
+        link
         size={Button.sizes.large}
         testID={`${testID}.secondaryButton`}
         {...secondaryButton}
-        style={[styles.shadow, {marginTop: Spacings.s4, marginBottom: Spacings.s7, marginLeft: 20}]}
+        style={{marginBottom: bottomMargin || Spacings.s7}}
         enableShadow={false}
       />
     );
   }
 
   render() {
-    const {withoutAnimation, secondaryButton, visible, testID} = this.props;
+    const {withoutAnimation, secondaryButton, visible, testID, buttonLayouts} = this.props;
     // NOTE: keep this.firstLoad as true as long as the visibility changed to true
     this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
 
@@ -160,16 +184,17 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
     return (
       <View
-        row
-        center
+        row={!!(buttonLayouts === FloatingButtonLayouts.HORIZONTAL && secondaryButton)}
+        center={!!(buttonLayouts === FloatingButtonLayouts.HORIZONTAL && secondaryButton)}
         pointerEvents="box-none"
         animated
         style={[styles.container, this.getAnimatedStyle()]}
         testID={testID}
       >
         {this.renderOverlay()}
-        {secondaryButton && this.renderSecondaryButton()}
+        {buttonLayouts === FloatingButtonLayouts.HORIZONTAL && secondaryButton && this.renderSecondaryButton()}
         {this.renderButton()}
+        {buttonLayouts === FloatingButtonLayouts.VERTICAL && secondaryButton && this.renderSecondaryButton()}
       </View>
     );
   }
@@ -196,4 +221,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent<FloatingButtonProps>(FloatingButton);
+export default asBaseComponent<FloatingButtonProps, typeof FloatingButton>(FloatingButton);
