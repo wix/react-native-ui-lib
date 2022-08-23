@@ -243,7 +243,7 @@ class MainScreen extends Component {
         text70
         leadingAccessory={
           <View>
-            <Icon tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
+            <Icon marginR-s2 tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
           </View>
         }
         trailingAccessory={
