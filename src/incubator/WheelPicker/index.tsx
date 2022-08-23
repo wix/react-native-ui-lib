@@ -265,6 +265,7 @@ const WheelPicker = ({
         <View flexG>
           <AnimatedFlatList
             testID={`${testID}.list`}
+			listKey={`WheelPickerFlatList-${testID}`}
             height={height}
             data={items}
             // @ts-ignore reanimated2
