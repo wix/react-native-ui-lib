@@ -2,17 +2,26 @@
 import React, {PropsWithChildren, useMemo, useEffect, useState, useCallback} from 'react';
 import _ from 'lodash';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
-import {useOrientation} from '../../hooks';
-import {Constants, asBaseComponent} from '../../commons/new';
+import {useOrientation, useThemeProps} from '../../hooks';
+import {Constants} from '../../commons/new';
 import {LogService} from '../../services';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
-export {TabControllerItemProps};
+import useImperativeTabControllerHandle, {TabControllerImperativeMethods} from './useImperativeTabControllerHandle';
+export {TabControllerItemProps, TabControllerImperativeMethods};
 
 // TODO: should migrate selectedIndex to initialIndex (and make this prop uncontrolled)
+
+interface TabControllerStatics {
+  TabBar: typeof TabBar;
+  TabBarItem: typeof TabBarItem;
+  TabPage: typeof TabPage;
+  PageCarousel: typeof PageCarousel;
+}
+
 export interface TabControllerProps {
   /**
    * The list of tab bar items
@@ -56,16 +65,18 @@ const getScreenWidth = (useSafeArea: boolean) => {
  * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-function TabController({
-  initialIndex = 0,
-  selectedIndex,
-  asCarousel = false,
-  items,
-  onChangeIndex = _.noop,
-  carouselPageWidth,
-  useSafeArea = false,
-  children
-}: PropsWithChildren<TabControllerProps>) {
+const TabController = React.forwardRef((props: PropsWithChildren<TabControllerProps>, ref: React.Ref<any>) => {
+  const themeProps = useThemeProps(props, 'TabController');
+  const {
+    initialIndex = 0,
+    selectedIndex,
+    asCarousel = false,
+    items,
+    onChangeIndex = _.noop,
+    carouselPageWidth,
+    useSafeArea = false,
+    children
+  } = themeProps;
   const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth(useSafeArea));
 
   if (items?.length < 2) {
@@ -87,12 +98,12 @@ function TabController({
   }, [items]);
 
   /* backwards compatibility for `selectedIndex` prop. this line eventually should be removed */
-  initialIndex = selectedIndex || initialIndex;
+  const _initialIndex = selectedIndex || initialIndex;
 
   /* currentPage - static page index */
-  const currentPage = useSharedValue(initialIndex);
+  const currentPage = useSharedValue(_initialIndex);
   /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
-  const targetPage = useSharedValue(initialIndex);
+  const targetPage = useSharedValue(_initialIndex);
   // const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
 
   const setCurrentIndex = useCallback((index: number) => {
@@ -107,8 +118,8 @@ function TabController({
   }, [selectedIndex]);
 
   useEffect(() => {
-    setCurrentIndex(initialIndex);
-  }, [initialIndex]);
+    setCurrentIndex(_initialIndex);
+  }, [_initialIndex]);
 
   useAnimatedReaction(() => {
     return currentPage.value;
@@ -120,10 +131,12 @@ function TabController({
     }
   });
 
+  useImperativeTabControllerHandle(ref, setCurrentIndex);
+
   const context = useMemo(() => {
     return {
       /* Pass Props */
-      initialIndex,
+      initialIndex: _initialIndex,
       asCarousel,
       pageWidth,
       /* Items */
@@ -139,13 +152,18 @@ function TabController({
       onChangeIndex,
       setCurrentIndex
     };
-  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
+  }, [_initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
-}
+});
 
+// @ts-expect-error
 TabController.TabBar = TabBar;
+// @ts-expect-error
 TabController.TabBarItem = TabBarItem;
+// @ts-expect-error
 TabController.TabPage = TabPage;
+// @ts-expect-error
 TabController.PageCarousel = PageCarousel;
-export default asBaseComponent<TabControllerProps, typeof TabController>(TabController);
+
+export default TabController as typeof TabController & TabControllerStatics;

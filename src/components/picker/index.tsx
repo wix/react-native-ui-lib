@@ -311,6 +311,7 @@ Picker.defaultProps = {
   ...TextField.defaultProps,
   mode: PickerModes.SINGLE
 };
+Picker.displayName = 'Picker';
 Picker.modes = PickerModes;
 Picker.fieldTypes = PickerFieldTypes;
 Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
