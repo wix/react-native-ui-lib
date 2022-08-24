@@ -143,6 +143,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
   renderSecondaryButton() {
     const {secondaryButton, bottomMargin, testID, buttonLayouts} = this.props;
+    const bgColor = secondaryButton?.backgroundColor || Colors.$backgroundDefault;
     if (buttonLayouts === FloatingButtonLayouts.HORIZONTAL) {
       return (
         <Button
@@ -151,7 +152,10 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
           size={Button.sizes.large}
           testID={`${testID}.secondaryButton`}
           {...secondaryButton}
-          style={[styles.shadow, {marginTop: Spacings.s4, marginBottom: Spacings.s7, marginLeft: 20}]}
+          style={[
+            styles.shadow,
+            {marginTop: Spacings.s4, marginBottom: Spacings.s7, marginLeft: 20, backgroundColor: bgColor}
+          ]}
           enableShadow={false}
         />
       );
