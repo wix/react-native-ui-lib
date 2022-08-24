@@ -35,51 +35,42 @@ const SortableListItem = (props: Props) => {
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const id: string = data[index].id;
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
+  const currIndex = useSharedValue(initialIndex.value);
   const translateY = useSharedValue<number>(0);
 
   const isDragging = useSharedValue(false);
   const tempTranslateY = useSharedValue<number>(0);
   const tempItemsOrder = useSharedValue<string[]>(itemsOrder.value);
-  const dataManuallyChanged = useSharedValue<boolean>(false);
 
   useDidUpdate(() => {
-    dataManuallyChanged.value = true;
-    initialIndex.value = map(data, 'id').indexOf(id);
+    const newItemIndex = map(data, 'id').indexOf(id);
+
+    initialIndex.value = newItemIndex;
+    currIndex.value = newItemIndex;
+
+    translateY.value = 0;
   }, [data]);
 
-  useAnimatedReaction(() => itemsOrder.value,
-    (currItemsOrder, prevItemsOrder) => {
-      // Note: Unfortunately itemsOrder sharedValue is being initialized on each render
-      // Therefore I added this extra check here that compares current and previous values
-      // See open issue: https://github.com/software-mansion/react-native-reanimated/issues/3224
-      if (prevItemsOrder === null || currItemsOrder.join(',') === prevItemsOrder.join(',')) {
+  useAnimatedReaction(() => getItemIndexById(itemsOrder.value, id),
+    (newIndex, prevIndex) => {
+      if (prevIndex === null || newIndex === prevIndex) {
         return;
-      } else {
-        const newIndex = getItemIndexById(currItemsOrder, id);
-        const oldIndex = getItemIndexById(prevItemsOrder, id);
-
-        /* In case the order of the item has returned back to its initial index we reset its position */
-        if (newIndex === initialIndex.value) {
-          /* Reset without an animation when the change is due to manual data change */
-          if (dataManuallyChanged.value) {
-            translateY.value = 0;
-            dataManuallyChanged.value = false;
-            /* Reset with an animation when the change id due to user reordering */
-          } else {
-            translateY.value = withTiming(0, animationConfig);
-          }
-          /* Handle an order change, animate item to its new position  */
-        } else if (newIndex !== oldIndex) {
-          const translation = getTranslationByIndexChange(newIndex, oldIndex, itemHeight.value);
-          translateY.value = withTiming(translateY.value + translation, animationConfig);
-        }
       }
-    });
+
+      currIndex.value = newIndex;
+      if (!isDragging.value) {
+        const translation = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
+
+        translateY.value = withTiming(translation, animationConfig);
+      }
+    },
+    []);
 
   const dragOnLongPressGesture = Gesture.Pan()
     .activateAfterLongPress(250)
     .onStart(() => {
       isDragging.value = true;
+      translateY.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
       tempTranslateY.value = translateY.value;
       tempItemsOrder.value = itemsOrder.value;
     })
@@ -92,10 +83,15 @@ const SortableListItem = (props: Props) => {
       translateY.value = tempTranslateY.value + event.translationY;
 
       // Swapping items
-      const newIndex = getIndexByPosition(translateY.value, itemHeight.value) + initialIndex.value;
+      let newIndex = getIndexByPosition(translateY.value, itemHeight.value) + initialIndex.value;
       const oldIndex = getItemIndexById(itemsOrder.value, id);
 
       if (newIndex !== oldIndex) {
+        // Sometimes getIndexByPosition will give an index that is off by one because of rounding error (floor\ceil does not help)
+        if (Math.abs(newIndex - oldIndex) > 1) {
+          newIndex = Math.sign(newIndex - oldIndex) + oldIndex;
+        }
+
         const itemIdToSwap = getIdByItemIndex(itemsOrder.value, newIndex);
 
         if (itemIdToSwap !== undefined) {
