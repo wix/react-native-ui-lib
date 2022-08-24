@@ -6,7 +6,7 @@ import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import SortableListContext, {SortableListContextType} from './SortableListContext';
 import SortableListItem from './SortableListItem';
-import {useDidUpdate} from 'hooks';
+import {useDidUpdate, useThemeProps} from 'hooks';
 
 interface ItemWithId {
   id: string;
@@ -35,7 +35,8 @@ function generateItemsOrder<ItemT extends ItemWithId>(data: SortableListProps<It
 }
 
 const SortableList = <ItemT extends ItemWithId>(props: SortableListProps<ItemT>) => {
-  const {data, onOrderChange, enableHaptic, scale, ...others} = props;
+  const themeProps = useThemeProps(props, 'SortableList');
+  const {data, onOrderChange, enableHaptic, scale, ...others} = themeProps;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
   const itemHeight = useSharedValue<number>(52);
