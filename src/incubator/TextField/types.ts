@@ -139,6 +139,10 @@ export interface InputProps
    * Custom formatter for the input value (used only when input if not focused)
    */
   formatter?: (value?: string) => string | undefined;
+  /**
+   * Use react-native-gesture-handler instead of react-native for the base TextInput
+   */
+  gestureHandler?: boolean;
 }
 
 export type TextFieldProps = MarginModifiers &
