@@ -31,7 +31,15 @@ const animationConfig = {
 const SortableListItem = (props: Props) => {
   const {children, index} = props;
 
-  const {data, itemHeight, onItemLayout, itemsOrder, onChange, enableHaptic} = useContext(SortableListContext);
+  const {
+    data,
+    itemHeight,
+    onItemLayout,
+    itemsOrder,
+    onChange,
+    enableHaptic,
+    scale: propsScale = 1
+  } = useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const id: string = data[index].id;
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
@@ -120,7 +128,7 @@ const SortableListItem = (props: Props) => {
     });
 
   const draggedAnimatedStyle = useAnimatedStyle(() => {
-    const scaleY = withSpring(isDragging.value ? 1.1 : 1);
+    const scale = withSpring(isDragging.value ? propsScale : 1);
     const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
     const opacity = isDragging.value ? 0.95 : 1;
     const shadow = isDragging.value
@@ -136,7 +144,7 @@ const SortableListItem = (props: Props) => {
     return {
       backgroundColor: Colors.$backgroundDefault, // required for elevation to work in Android
       zIndex,
-      transform: [{translateY: translateY.value}, {scaleY}],
+      transform: [{translateY: translateY.value}, {scale}],
       opacity,
       ...shadow
     };
