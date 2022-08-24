@@ -28,7 +28,8 @@ const SortableListScreen = () => {
     } else {
       setSelectedItems(selectedItems.concat(item));
     }
-  }, [selectedItems, setSelectedItems]);
+  },
+  [selectedItems, setSelectedItems]);
 
   const addItem = useCallback(() => {
     if (removedItems.length > 0) {
@@ -74,14 +75,21 @@ const SortableListScreen = () => {
         </View>
       </TouchableOpacity>
     );
-  }, [selectedItems, toggleItemSelection]);
+  },
+  [selectedItems, toggleItemSelection]);
 
   return (
     <View flex bg-$backgroundDefault>
       {renderHeader('Sortable List', {'margin-10': true})}
       <View row center marginB-s2>
         <Button label="Add Item" size={Button.sizes.xSmall} disabled={removedItems.length === 0} onPress={addItem}/>
-        <Button label="Remove Items" size={Button.sizes.xSmall} disabled={selectedItems.length === 0} marginL-s3 onPress={removeSelectedItems}/>
+        <Button
+          label="Remove Items"
+          size={Button.sizes.xSmall}
+          disabled={selectedItems.length === 0}
+          marginL-s3
+          onPress={removeSelectedItems}
+        />
       </View>
       <View flex useSafeArea>
         <SortableList data={items} renderItem={renderItem} keyExtractor={keyExtractor} onOrderChange={onOrderChange}/>
