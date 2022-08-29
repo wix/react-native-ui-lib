@@ -85,6 +85,14 @@ export type ImageProps = RNImageProps &
      * view; i.e. animation related crashes on Android.
      */
     useBackgroundContainer?: boolean;
+    /**
+     * The image width
+     */
+    width?: string | number;
+    /**
+     * The image height
+     */
+    height?: string | number;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
@@ -184,11 +192,11 @@ class Image extends PureComponent<Props, State> {
   };
 
   renderImageWithContainer = () => {
-    const {style, cover, modifiers} = this.props;
+    const {style, cover, modifiers, width, height} = this.props;
     const {margins} = modifiers;
 
     return (
-      <View style={[margins, style, styles.errorImageContainer, cover && styles.coverImage]}>
+      <View style={[{width, height}, margins, style, styles.errorImageContainer, cover && styles.coverImage]}>
         {this.renderImage(true)}
       </View>
     );
