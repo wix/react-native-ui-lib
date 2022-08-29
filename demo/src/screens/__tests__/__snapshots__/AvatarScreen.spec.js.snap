@@ -1254,9 +1254,9 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Object {},
-              Object {},
-              Object {},
+              undefined,
+              undefined,
+              undefined,
               Object {
                 "alignItems": "center",
                 "borderRadius": 999,
@@ -1288,21 +1288,26 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 false,
                 Array [
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "borderRadius": 999,
+                      "height": 60,
+                      "justifyContent": "center",
+                      "width": 60,
+                    },
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    undefined,
+                  ],
                   Object {
-                    "alignItems": "center",
-                    "borderRadius": 999,
-                    "height": 60,
-                    "justifyContent": "center",
-                    "width": 60,
+                    "opacity": 0,
                   },
-                  Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  },
-                  undefined,
                 ],
                 false,
               ]
