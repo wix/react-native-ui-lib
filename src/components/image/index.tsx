@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 // @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
 import {ImagePropTypes} from 'deprecated-react-native-prop-types';
-import type {SvgProps} from 'react-native-svg';
 import {
   Constants,
   asBaseComponent,
@@ -25,7 +24,7 @@ import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
 
-export type ImageProps = RNImageProps & Pick<SvgProps, 'width' | 'height'> &
+export type ImageProps = RNImageProps &
   MarginModifiers & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
@@ -86,6 +85,14 @@ export type ImageProps = RNImageProps & Pick<SvgProps, 'width' | 'height'> &
      * view; i.e. animation related crashes on Android.
      */
     useBackgroundContainer?: boolean;
+    /**
+     * The image width
+     */
+    width?: string | number;
+    /**
+     * The image height
+     */
+    height?: string | number;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
