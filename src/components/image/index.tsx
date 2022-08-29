@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 // @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
 import {ImagePropTypes} from 'deprecated-react-native-prop-types';
+import type {SvgProps} from 'react-native-svg';
 import {
   Constants,
   asBaseComponent,
@@ -24,7 +25,7 @@ import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
 
-export type ImageProps = RNImageProps &
+export type ImageProps = RNImageProps & Pick<SvgProps, 'width' | 'height'> &
   MarginModifiers & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
