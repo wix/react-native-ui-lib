@@ -8,8 +8,18 @@ import Text from '../../components/text';
 import {DialogHeaderProps} from './types';
 
 const DialogHeader = (props: DialogHeaderProps = {}) => {
-  const {text = {}, renderContent, showKnob = true, showDivider = true, ...others} = props;
-  const {title, titleStyle, titleProps, subtitle, subtitleStyle, subtitleProps} = text;
+  const {
+    title,
+    titleStyle,
+    titleProps,
+    subtitle,
+    subtitleStyle,
+    subtitleProps,
+    renderContent,
+    showKnob = true,
+    showDivider = true,
+    ...others
+  } = props;
 
   const knob = useMemo(() => {
     if (showKnob) {
@@ -41,7 +51,7 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
 
     return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [renderContent, text]);
+  }, [renderContent, title, titleStyle, titleProps, subtitle, subtitleStyle, subtitleProps]);
 
   const divider = useMemo(() => {
     if (showDivider) {

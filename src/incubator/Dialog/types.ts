@@ -9,7 +9,7 @@ type DialogDirections = PanningDirections;
 const DialogDirectionsEnum = PanningDirectionsEnum;
 export {DialogDirections, DialogDirectionsEnum};
 
-export interface DialogTextProps {
+export interface DialogHeaderProps extends ViewProps {
   /**
    * Title
    */
@@ -34,13 +34,6 @@ export interface DialogTextProps {
    * Subtitle extra props
    */
   subtitleProps?: TextProps;
-}
-
-export interface DialogHeaderProps extends ViewProps {
-  /**
-   * The dialog's default content (Dialog.Text)
-   */
-  text?: DialogTextProps;
   /**
    * Replace the header's default content (Dialog.Text)
    */
@@ -61,7 +54,7 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    */
   visible?: boolean;
   /**
-   * The Dialog's header
+   * The Dialog's header (title, subtitle etc)
    */
   headerProps?: DialogHeaderProps;
   /**

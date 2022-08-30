@@ -146,7 +146,7 @@ const Dialog = (props: DialogProps) => {
   const renderDialog = () => {
     return (
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View reanimated style={style} onLayout={onLayout} ref={containerRef}>
+        <View reanimated style={style} onLayout={onLayout} ref={containerRef} testID={testID}>
           <DialogHeader {...headerProps}/>
           {children}
         </View>

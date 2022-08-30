@@ -34,7 +34,7 @@ const colors: Item[] = [
 export default class IncubatorDialogScreen extends Component {
   state = {visible: false};
   modalProps: ModalProps = {supportedOrientations: ['portrait', 'landscape']};
-  headerProps: Incubator.DialogHeaderProps = {text: {title: 'Title (swipe here)'}};
+  headerProps: Incubator.DialogHeaderProps = {title: 'Title (swipe here)'};
 
   renderVerticalItem = ({item}: {item: Item}) => {
     return (
@@ -66,7 +66,9 @@ export default class IncubatorDialogScreen extends Component {
     return (
       <View bg-$backgroundNeutralLight flex padding-20>
         <Card height={100} center padding-20>
-          <Text $textDefault text50>IncubatorDialogScreen</Text>
+          <Text $textDefault text50>
+            IncubatorDialogScreen
+          </Text>
         </Card>
         <View flex center>
           <Button marginV-s5 label="Open Dialog" onPress={this.openDialog}/>
