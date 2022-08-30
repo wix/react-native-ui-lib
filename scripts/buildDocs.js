@@ -14,9 +14,11 @@ const components = apiFiles.map(filePath => {
   return api;
 });
 
-if (!fs.existsSync(COMPONENTS_DOCS_DIR)) {
-  fs.mkdirSync(COMPONENTS_DOCS_DIR);
+if (fs.existsSync(COMPONENTS_DOCS_DIR)) {
+  childProcess.execSync(`rm -rf ${COMPONENTS_DOCS_DIR}`);
 }
+
+fs.mkdirSync(COMPONENTS_DOCS_DIR);
 
 const compoundComponents = components.filter(c => c.name.includes('.'));
 const parentComponents = _.flow(components => _.map(components, c => c.name.split('.')[0]), _.uniq)(compoundComponents);
@@ -44,7 +46,17 @@ components.forEach(component => {
 
   /* General */
   content += `${component.description}  \n`;
-  content += `[(code example)](${component.example})\n`;
+  if (typeof component.example === 'string') {
+    content += `[(code example)](${component.example})\n`;
+  } else if (Array.isArray(component.example)) {
+    content += '(code examples: ';
+    component.example.forEach((example, index) => {
+      const slashIndex = example.lastIndexOf('/');
+      const dotIndex = example.lastIndexOf('.');
+      content += `${index > 0 ? ', ' : ''}[${example.slice(slashIndex + 1, dotIndex)}](${example})`;
+    });
+    content += ')\n';
+  }
 
   if (component.extends) {
     let extendsText = component.extends?.join(', ');
