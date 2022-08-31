@@ -91,7 +91,9 @@ export const navigationData = {
       {title: 'Contacts List', tags: 'list contacts', screen: 'unicorn.lists.ContactsListScreen'},
       {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
       {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
-      {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'}
+      {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'},
+      {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
+      {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'}
     ]
   },
   LayoutsAndTemplates: {
@@ -121,8 +123,6 @@ export const navigationData = {
         screen: 'unicorn.components.FaderScreen'
       },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'},
-      {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
-      {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'},
       {title: 'GridView', tags: 'grid view', screen: 'unicorn.components.GridViewScreen'}
     ]
   },

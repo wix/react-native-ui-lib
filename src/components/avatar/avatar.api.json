@@ -6,7 +6,7 @@
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_1.png?raw=true",
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Avatar/Avarat_2.png?raw=true"
   ],
-  "extends": ["basic/TouchableOpacity", "basic/Image"],
+  "extends": ["basic/TouchableOpacity", "media/Image"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx",
   "props": [
     {

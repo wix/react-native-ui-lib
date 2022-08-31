@@ -3,7 +3,7 @@ const childProcess = require('child_process');
 const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
-const VALID_CATEGORIES = ['foundation', 'assets', 'navigation', 'layout', 'controls', 'status', 'media', 'lists', 'form', 'dateTime', 'overlays', 'charts', 'incubator', 'infra'];
+const VALID_CATEGORIES = ['foundation', 'basic', 'assets', 'navigation', 'layout', 'controls', 'status', 'media', 'lists', 'form', 'dateTime', 'overlays', 'charts', 'incubator', 'infra'];
 
 const result = childProcess.execSync('find ./src ./lib/components -name "*api.json"');
 const apiFiles = result.toString().trim().split('\n');
