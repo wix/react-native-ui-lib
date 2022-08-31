@@ -43,7 +43,8 @@ export const navigationData = {
         screen: 'unicorn.components.SharedTransitionScreen'
       },
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
-      {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'}
+      {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
+      {title: 'Marquee', tags: 'marquee', screen: 'unicorn.components.MarqueeScreen'}
     ]
   },
   Form: {
