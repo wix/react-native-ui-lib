@@ -36,11 +36,7 @@ export {
   WheelPickerAlign,
   PanViewProps,
   PanViewDirections,
-  PanViewDismissThreshold,
-  TransitionViewProps,
-  TransitionViewDirection,
-  TransitionViewDirectionEnum,
-  TransitionViewAnimationType
+  PanViewDismissThreshold
 } from './incubator';
 import * as Hooks from './hooks';
 import * as Modifiers from './commons/modifiers';
