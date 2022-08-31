@@ -7,19 +7,33 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorDialogScreen.tsx",
   "props": [
     {"name": "visible", "type": "boolean", "description": "The visibility of the dialog"},
-    {"name": "onDismiss", "type": "(props?: ImperativeDialogProps) => void", "description": "Callback that is called after the dialog's dismiss (after the animation has ended)."},
+    {"name": "headerProps", "type": "DialogHeaderProps", "description": "The Dialog's header (title, subtitle etc)"},
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "The Dialog`s container style (it is set to {position: 'absolute'})"
+    },
+    {
+      "name": "onDismiss",
+      "type": "(props?: DialogProps) => void",
+      "description": "Callback that is called after the dialog's dismiss (after the animation has ended)."
+    },
     {
       "name": "direction",
       "type": "up | down | left | right",
-      "description": "The direction from which and to which the dialog is animating \\ panning (default bottom).",
+      "description": "The direction from which and to which the dialog is animating \\ panning (default down).",
       "default": "down"
     },
     {"name": "ignoreBackgroundPress", "type": "boolean", "description": "Whether or not to ignore background press."},
     {"name": "modalProps", "type": "ModalProps", "description": "Pass props to the dialog modal"},
-    {"name": "testID", "type": "string", "description": "Used as a testing identifier"}
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "Used to locate this view in end-to-end tests\nThe container has the unchanged id.\nCurrently supported inner IDs:\n<TestID>.modal - the Modal's id.\n<TestID>.overlayFadingBackground - the fading background id."
+    }
   ],
   "snippet": [
-    "<Dialog", 
+    "<Dialog",
     "  visible={this.state.visible$1}",
     "  onDismiss={() => console.log('dismissed')$2}",
     "  panDirection={PanningProvider.Directions.DOWN$3}",

@@ -188,12 +188,7 @@ export const navigationData = {
         tags: 'wheel picker spinner experimental',
         screen: 'unicorn.incubator.WheelPickerScreen'
       },
-      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'},
-      {
-        title: 'Transition View',
-        tags: 'transition animation enter exit',
-        screen: 'unicorn.incubator.TransitionViewScreen'
-      }
+      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
     ]
   },
   Inspirations: {
