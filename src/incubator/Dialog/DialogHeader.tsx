@@ -4,11 +4,22 @@ import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import {Spacings, Colors, BorderRadiuses, Dividers} from 'style';
 import View from '../../components/view';
-import HeaderContent from './HeaderContent';
+import Text from '../../components/text';
 import {DialogHeaderProps} from './types';
 
 const DialogHeader = (props: DialogHeaderProps = {}) => {
-  const {text = {}, renderContent, showKnob = true, showDivider = true, ...others} = props;
+  const {
+    title,
+    titleStyle,
+    titleProps,
+    subtitle,
+    subtitleStyle,
+    subtitleProps,
+    renderContent,
+    showKnob = true,
+    showDivider = true,
+    ...others
+  } = props;
 
   const knob = useMemo(() => {
     if (showKnob) {
@@ -21,9 +32,26 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
       return renderContent(props);
     }
 
-    return <HeaderContent text={text}/>;
+    if (!isEmpty(title) || !isEmpty(subtitle)) {
+      return (
+        <View marginH-s5 marginV-s1>
+          {title && (
+            <Text $textDefault {...titleProps} marginB-s3 style={titleStyle}>
+              {title}
+            </Text>
+          )}
+          {subtitle && (
+            <Text $textDefault {...subtitleProps} marginB-s3 style={subtitleStyle}>
+              {subtitle}
+            </Text>
+          )}
+        </View>
+      );
+    }
+
+    return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [renderContent, text]);
+  }, [renderContent, title, titleStyle, titleProps, subtitle, subtitleStyle, subtitleProps]);
 
   const divider = useMemo(() => {
     if (showDivider) {
