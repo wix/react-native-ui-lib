@@ -11,7 +11,7 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import usePanGesture from '../panView/usePanGesture';
-import useAnimatedTransition, {TransitionViewAnimationType} from '../TransitionView/useAnimatedTransition';
+import useAnimatedTransition, {TransitionViewAnimationType} from './useAnimatedTransition';
 import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};

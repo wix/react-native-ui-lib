@@ -4,7 +4,7 @@ import {useSharedValue, withTiming, useAnimatedStyle} from 'react-native-reanima
 import {Colors} from 'style';
 import View from '../../components/view';
 import {ModalProps} from '../../components/modal';
-import {TransitionViewAnimationType} from '../TransitionView';
+import {TransitionViewAnimationType} from './useAnimatedTransition';
 import {DialogProps} from './types';
 
 const DEFAULT_OVERLAY_BACKGROUND_COLORS = Colors.rgba(Colors.grey20, 0.65);
