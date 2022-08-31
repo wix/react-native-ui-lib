@@ -42,39 +42,40 @@ function getDefaultNavigationStyle() {
     statusBar: {
       visible: true,
       style: 'light',
-      backgroundColor: Colors.primary // for Android
+      backgroundColor: Colors.$backgroundPrimaryHeavy // for Android
     },
     layout: {
-      backgroundColor: Colors.white,
-      orientation: ['portrait', 'landscape']
+      backgroundColor: Colors.$backgroundDefault,
+      orientation: ['portrait', 'landscape'],
+      componentBackgroundColor: Colors.$backgroundDefault
     },
     topBar: {
       visible: true,
       noBorder: true, // for iOS
       elevation: 0, // for Android
       background: {
-        color: Colors.primary
+        color: Colors.$backgroundPrimaryHeavy
       },
       title: {
-        color: Colors.white,
+        color: Colors.$textDefaultLight,
         fontSize: Typography.text60H.fontSize,
         fontFamily: Typography.text65H.fontFamily
       },
       subtitle: {
-        color: Colors.white,
+        color: Colors.$textDefaultLight,
         fontSize: Typography.text80T.fontSize,
         fontFamily: Typography.text80.fontFamily
       },
       backButton: {
         // visible: true,
-        color: Colors.white,
+        color: Colors.$iconDefaultLight,
         showTitle: Constants.isIOS ? false : undefined,
         testID: 'pop'
       },
-      leftButtonColor: Colors.white,
-      leftButtonDisabledColor: Colors.rgba(Colors.white, 0.6),
-      rightButtonColor: Colors.white,
-      rightButtonDisabledColor: Colors.rgba(Colors.white, 0.6)
+      leftButtonColor: Colors.$iconDefaultLight,
+      leftButtonDisabledColor: Colors.$iconDisabled,
+      rightButtonColor: Colors.$iconDefaultLight,
+      rightButtonDisabledColor: Colors.$iconDisabled
     }
   };
 }
