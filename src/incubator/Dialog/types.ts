@@ -9,46 +9,7 @@ type DialogDirections = PanningDirections;
 const DialogDirectionsEnum = PanningDirectionsEnum;
 export {DialogDirections, DialogDirectionsEnum};
 
-export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
-  /**
-   * The initial visibility of the dialog.
-   */
-  initialVisibility?: boolean;
-  /**
-   * Callback that is called after the dialog's dismiss (after the animation has ended).
-   */
-  onDismiss?: (props?: ImperativeDialogProps) => void;
-  /**
-   * The direction from which and to which the dialog is animating \ panning (default down).
-   */
-  direction?: DialogDirections;
-  /**
-   * Whether or not to ignore background press.
-   */
-  ignoreBackgroundPress?: boolean;
-  /**
-   * Additional props for the modal.
-   */
-  modalProps?: ModalProps;
-  /**
-   * Used to locate this view in end-to-end tests
-   * The container has the unchanged id.
-   * Currently supported inner IDs:
-   * TODO: add missing <TestID>(s?)
-   * <TestID>.modal - the Modal's id.
-   * <TestID>.overlayFadingBackground - the fading background id.
-   */
-  testID?: string;
-}
-
-export type ImperativeDialogProps = PropsWithChildren<_DialogProps>;
-
-export interface ImperativeDialogMethods {
-  open: () => void;
-  close: () => void;
-}
-
-export interface DialogTextProps {
+export interface DialogHeaderProps extends ViewProps {
   /**
    * Title
    */
@@ -73,13 +34,6 @@ export interface DialogTextProps {
    * Subtitle extra props
    */
   subtitleProps?: TextProps;
-}
-
-export interface DialogHeaderProps extends ViewProps {
-  /**
-   * The dialog's default content (Dialog.Text)
-   */
-  text?: DialogTextProps;
   /**
    * Replace the header's default content (Dialog.Text)
    */
@@ -94,17 +48,44 @@ export interface DialogHeaderProps extends ViewProps {
   showDivider?: boolean;
 }
 
-export interface DialogProps extends Omit<ImperativeDialogProps, 'initialVisibility'> {
+export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
   /**
    * The visibility of the dialog.
    */
   visible?: boolean;
   /**
-   * The Dialog's header
+   * The Dialog's header (title, subtitle etc)
    */
   headerProps?: DialogHeaderProps;
   /**
    * The Dialog`s container style (it is set to {position: 'absolute'})
    */
   containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Callback that is called after the dialog's dismiss (after the animation has ended).
+   */
+  onDismiss?: (props?: _DialogProps) => void;
+  /**
+   * The direction from which and to which the dialog is animating \ panning (default down).
+   */
+  direction?: DialogDirections;
+  /**
+   * Whether or not to ignore background press.
+   */
+  ignoreBackgroundPress?: boolean;
+  /**
+   * Additional props for the modal.
+   */
+  modalProps?: ModalProps;
+  /**
+   * Used to locate this view in end-to-end tests
+   * The container has the unchanged id.
+   * Currently supported inner IDs:
+   * TODO: add missing <TestID>(s?)
+   * <TestID>.modal - the Modal's id.
+   * <TestID>.overlayFadingBackground - the fading background id.
+   */
+  testID?: string;
 }
+
+export type DialogProps = PropsWithChildren<_DialogProps>;

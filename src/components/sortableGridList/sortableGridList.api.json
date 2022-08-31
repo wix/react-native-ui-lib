@@ -3,7 +3,7 @@
   "category": "lists",
   "description": "An sortable grid list (based on GridList component)",
   "note": "This component supports square items only",
-  "extends": ["layoutsAndTemplates/GridList"],
+  "extends": ["lists/GridList"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableGridListScreen.tsx",
   "props": [
     {"name": "data", "type": "any[] & {id: string}", "description": "Data of items with an id prop as unique identifier"},
