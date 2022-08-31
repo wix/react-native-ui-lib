@@ -18,7 +18,7 @@ const Input = ({
   color = DEFAULT_INPUT_COLOR,
   forwardedRef,
   formatter,
-  gestureHandler,
+  useGestureHandlerInput,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
   const inputRef = useImperativeInputHandle(forwardedRef, {onChangeText: props.onChangeText});
@@ -29,7 +29,7 @@ const Input = ({
   const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
 
   const TextInput = useMemo(() => {
-    if (gestureHandler) {
+    if (useGestureHandlerInput) {
       const {
         TextInput: GestureTextInput
       }: typeof import('react-native-gesture-handler') = require('react-native-gesture-handler');
@@ -37,7 +37,7 @@ const Input = ({
     } else {
       return RNTextInput;
     }
-  }, [gestureHandler]);
+  }, [useGestureHandlerInput]);
 
   return (
     <TextInput

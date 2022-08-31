@@ -142,7 +142,7 @@ export interface InputProps
   /**
    * Use react-native-gesture-handler instead of react-native for the base TextInput
    */
-  gestureHandler?: boolean;
+   useGestureHandlerInput?: boolean;
 }
 
 export type TextFieldProps = MarginModifiers &

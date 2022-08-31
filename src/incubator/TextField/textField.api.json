@@ -89,7 +89,7 @@
       "description": "Custom formatter for the input value (used only when input if not focused)"
     },
     {
-      "name": "gestureHandler",
+      "name": "useGestureHandlerInput",
       "type": "boolean",
       "description": "Use react-native-gesture-handler instead of react-native for the base TextInput"
     }
