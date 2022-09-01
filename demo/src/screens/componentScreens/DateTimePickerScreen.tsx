@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {DateTimePicker, DateTimePickerProps, View, Text, TouchableOpacity} from 'react-native-ui-lib'; // eslint-disable-line
+import {DateTimePicker, DateTimePickerProps, View, Text} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DateTimePickerScreen extends Component {
   getCustomInputValue = (value?: string) => {
@@ -27,16 +27,17 @@ export default class DateTimePickerScreen extends Component {
         <View padding-page>
           <Text text40>Date Time Picker</Text>
           <DateTimePicker
-            // @ts-expect-error
+            migrateTextField
             containerStyle={{marginVertical: 20}}
-            title={'Date'}
+            label={'Date'}
             placeholder={'Select a date'}
             // dateFormat={'MMM D, YYYY'}
             // value={new Date('October 13, 2014')}
           />
           <DateTimePicker
+            migrateTextField
             mode={'time'}
-            title={'Time'}
+            label={'Time'}
             placeholder={'Select time'}
             // timeFormat={'h:mm A'}
             // value={new Date('2015-03-25T12:00:00-06:30')}
@@ -46,15 +47,17 @@ export default class DateTimePickerScreen extends Component {
             Disabled
           </Text>
           <DateTimePicker
+            migrateTextField
             containerStyle={{marginBottom: 20}}
             editable={false}
-            title={'Date'}
+            label={'Date'}
             placeholder={'Select a date'}
           />
           <DateTimePicker
+            migrateTextField
             editable={false}
             mode={'time'}
-            title={'Time'}
+            label={'Time'}
             placeholder={'Select time'}
             value={new Date('2015-03-25T12:00:00-06:30')}
           />
@@ -62,8 +65,9 @@ export default class DateTimePickerScreen extends Component {
             Custom Input
           </Text>
           <DateTimePicker
+            migrateTextField
             containerStyle={{marginVertical: 20}}
-            title={'Date'}
+            label={'Date'}
             placeholder={'Select a date'}
             renderInput={this.renderCustomInput}
             dateFormat={'MMM D, YYYY'}
