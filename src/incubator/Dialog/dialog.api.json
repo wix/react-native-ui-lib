@@ -29,7 +29,7 @@
     {
       "name": "testID",
       "type": "string",
-      "description": "Used to locate this view in end-to-end tests\nThe container has the unchanged id.\nCurrently supported inner IDs:\n<TestID>.modal - the Modal's id.\n<TestID>.overlayFadingBackground - the fading background id."
+      "description": "Used to locate this view in end-to-end tests.  \nThe container has the original id.  \nSupported inner elements IDs:  \n`${TestID}.modal` - the Modal's id.  \n`${TestID}.overlayFadingBackground` - the fading background id."
     }
   ],
   "snippet": [
