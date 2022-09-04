@@ -146,6 +146,12 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     }
   }, []);
 
+  useEffect(() => {
+    if (!moment && (dateFormat || timeFormat)) {
+      console.error(`RNUILib DateTimePicker component with date/time format requires installing "moment" dependency`);
+    }
+  }, [dateFormat, timeFormat]);
+
   useDidUpdate(() => {
     setValue(propsValue);
   }, [propsValue]);
@@ -172,29 +178,17 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     if (value) {
       switch (mode) {
         case MODES.DATE:
-          if (dateFormatter) {
-            return dateFormatter(value);
-          }
-          if (!dateFormat) {
-            return value.toLocaleDateString();
-          }
-          if (!moment) {
-            console.error(`RNUILib DateTimePicker component with dateFormat requires installing "moment" dependency`);
-            return value.toLocaleDateString();
-          }
-          return moment(value).format(dateFormat);
+          return dateFormatter
+            ? dateFormatter(value)
+            : dateFormat && moment
+              ? moment(value).format(dateFormat)
+              : value.toLocaleDateString();
         case MODES.TIME:
-          if (timeFormatter) {
-            return timeFormatter(value);
-          }
-          if (!timeFormat) {
-            return value.toLocaleTimeString();
-          }
-          if (!moment) {
-            console.error(`RNUILib DateTimePicker component with timeFormat requires installing "moment" dependency`);
-            return value.toLocaleTimeString();
-          }
-          return moment(value).format(timeFormat);
+          return timeFormatter
+            ? timeFormatter(value)
+            : timeFormat && moment
+              ? moment(value).format(timeFormat)
+              : value.toLocaleTimeString();
       }
     }
   };
