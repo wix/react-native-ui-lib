@@ -231,8 +231,8 @@ class Card extends PureComponent<PropTypes, State> {
         {!selectionOptions.hideIndicator && (
           <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
             <Icon
-              style={this.styles.selectedIcon}
               source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)}
+              tintColor={_.get(selectionOptions, 'iconColor', DEFAULT_SELECTION_PROPS.iconColor)}
             />
           </View>
         )}
@@ -333,9 +333,6 @@ function createStyles({width, height, borderRadius, selectionOptions}: CardProps
       backgroundColor: selectionOptionsWithDefaults.color,
       alignItems: 'center',
       justifyContent: 'center'
-    },
-    selectedIcon: {
-      tintColor: selectionOptionsWithDefaults.iconColor
     }
   });
 }
