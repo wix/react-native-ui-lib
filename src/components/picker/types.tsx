@@ -182,6 +182,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      * Component test id
      */
     testID?: string;
+    children?: ReactNode | undefined
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
