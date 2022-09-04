@@ -5,11 +5,11 @@
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
-import React, {useMemo, useState, useRef, PropsWithChildren, useCallback} from 'react';
+import React, {useMemo, useState, useRef, useCallback} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {Typography} from 'style';
 import {useThemeProps} from 'hooks';
-import {Constants, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import {Constants} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 // @ts-expect-error
 import {TextField} from '../inputs';
@@ -27,6 +27,7 @@ import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
 import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+import {extractPickerItems} from './PickerPresenter';
 import {
   PickerProps,
   PickerItemProps,
@@ -45,7 +46,14 @@ const DIALOG_PROPS = {
   height: 250
 };
 
-const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps) => {
+type PickerStatics = {
+  Item: typeof PickerItem;
+  modes: typeof PickerModes;
+  fieldTypes: typeof PickerFieldTypes;
+  extractPickerItems: typeof extractPickerItems;
+};
+
+const Picker = React.forwardRef((props: PickerProps, ref) => {
   const themeProps = useThemeProps(props, 'Picker');
   const {
     mode,
@@ -67,7 +75,6 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps)
     onShow,
     onSearchChange,
     renderCustomModal,
-    forwardedRef,
     enableModalBlur,
     topBarProps,
     pickerModalProps,
@@ -86,13 +93,13 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps)
   const {preset} = others;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items] = useState(Picker.extractPickerItems(themeProps));
+  const [items] = useState(extractPickerItems(themeProps));
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
   usePickerMigrationWarnings({value, mode});
 
-  const pickerRef = useImperativePickerHandle(forwardedRef, pickerExpandable);
+  const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
   const {
     filteredChildren,
     setSearchValue,
@@ -126,9 +133,9 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps)
     const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? value?.value : value;
     return {
       migrate,
-      value: mode === Picker.modes.MULTI ? multiDraftValue : pickerValue,
-      onPress: mode === Picker.modes.MULTI ? toggleItemSelection : onDoneSelecting,
-      isMultiMode: mode === Picker.modes.MULTI,
+      value: mode === PickerModes.MULTI ? multiDraftValue : pickerValue,
+      onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
+      isMultiMode: mode === PickerModes.MULTI,
       getItemValue,
       getItemLabel,
       onSelectedLayout: onSelectedItemLayout,
@@ -199,7 +206,7 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps)
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
+          onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -297,27 +304,22 @@ const Picker = (props: PropsWithChildren<PickerProps> & ForwardRefInjectedProps)
       </ExpandableOverlay>
     </PickerContext.Provider>
   );
-};
+});
 
+// @ts-expect-error
 Picker.Item = PickerItem;
 Picker.defaultProps = {
   ...TextField.defaultProps,
   mode: PickerModes.SINGLE
 };
 Picker.displayName = 'Picker';
+// @ts-expect-error
 Picker.modes = PickerModes;
+// @ts-expect-error
 Picker.fieldTypes = PickerFieldTypes;
-Picker.extractPickerItems = (props: PropsWithChildren<PickerProps>) => {
-  const {children} = props;
-  const items = React.Children.map(children, child => ({
-    // @ts-expect-error handle use PickerItemProps once exist
-    value: child?.props.value,
-    // @ts-expect-error handle use PickerItemProps once exist
-    label: child?.props.label
-  }));
-  return items ?? [];
-};
+// @ts-expect-error
+Picker.extractPickerItems = extractPickerItems;
 
 export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
 export {Picker}; // For tests
-export default forwardRef(Picker);
+export default Picker as typeof Picker & PickerStatics;
