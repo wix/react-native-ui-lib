@@ -51,7 +51,9 @@ export interface PanGestureProps {
   hiddenLocation: HiddenLocation;
 }
 
-const SPRING_BACK_ANIMATION_CONFIG = {velocity: 300, damping: 20, stiffness: 300, mass: 0.8};
+const DEFAULT_ANIMATION_VELOCITY = 300;
+export const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 100, mass: 0.4};
+const SPRING_BACK_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 20, stiffness: 300, mass: 0.8};
 
 const usePanGesture = (props: PanGestureProps) => {
   const {
@@ -103,6 +105,13 @@ const usePanGesture = (props: PanGestureProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animateToOrigin]);
 
+  const reset = useCallback(() => {
+    'worklet';
+    translationX.value = withSpring(0, DEFAULT_ANIMATION_CONFIG);
+    translationY.value = withSpring(0, DEFAULT_ANIMATION_CONFIG);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [animateToOrigin]);
+
   const onGestureEvent = useAnimatedGestureHandler({
     onStart: (_event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
       context.initialTranslation = {x: translationX.value, y: translationY.value};
@@ -136,7 +145,7 @@ const usePanGesture = (props: PanGestureProps) => {
   },
   [directions, dismissible, setTranslation, returnToOrigin]);
 
-  return {translation: {x: translationX, y: translationY}, panGestureEvent: onGestureEvent};
+  return {translation: {x: translationX, y: translationY}, panGestureEvent: onGestureEvent, reset};
 };
 
 export default usePanGesture;

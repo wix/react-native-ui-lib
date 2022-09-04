@@ -99,7 +99,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
     const keyCode = event?.nativeEvent?.key;
     const pressedBackspace = keyCode === Constants.backspaceKey;
 
-    if (pressedBackspace && !fieldValue.current) {
+    if (pressedBackspace && !fieldValue.current && chips.length > 0) {
       if (isUndefined(markedForRemoval) || markedForRemoval !== chips.length - 1) {
         setMarkedForRemoval(chips.length - 1);
       } else {
