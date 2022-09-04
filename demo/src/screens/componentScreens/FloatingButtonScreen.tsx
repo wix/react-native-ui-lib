@@ -76,7 +76,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
               }
               : undefined
           }
-          buttonLayouts={showVertical ? FloatingButtonLayouts.VERTICAL : FloatingButtonLayouts.HORIZONTAL}
+          buttonLayout={showVertical ? FloatingButtonLayouts.VERTICAL : FloatingButtonLayouts.HORIZONTAL}
           // bottomMargin={80}
           // hideBackgroundOverlay
           // withoutAnimation
