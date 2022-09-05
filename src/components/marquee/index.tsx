@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {LayoutChangeEvent, LayoutRectangle, StyleSheet} from 'react-native';
 import {useSharedValue, useAnimatedStyle, withTiming, withRepeat, Easing} from 'react-native-reanimated';
