@@ -212,7 +212,7 @@ class Card extends PureComponent<PropTypes, State> {
   renderSelection() {
     const {selectionOptions = {}, selected} = this.props;
     const {animatedSelected} = this.state;
-    const selectionColor = _.get(selectionOptions, 'color', DEFAULT_SELECTION_PROPS.color);
+    const selectionColor = selectionOptions?.color || DEFAULT_SELECTION_PROPS.color;
 
     if (_.isUndefined(selected)) {
       return null;
@@ -231,8 +231,8 @@ class Card extends PureComponent<PropTypes, State> {
         {!selectionOptions.hideIndicator && (
           <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
             <Icon
-              source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)}
-              tintColor={_.get(selectionOptions, 'iconColor', DEFAULT_SELECTION_PROPS.iconColor)}
+              source={selectionOptions?.icon || DEFAULT_SELECTION_PROPS.icon}
+              tintColor={selectionOptions?.iconColor || DEFAULT_SELECTION_PROPS.iconColor}
             />
           </View>
         )}
