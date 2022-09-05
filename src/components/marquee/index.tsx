@@ -1,29 +1,34 @@
-import React, {useEffect, useMemo} from 'react';
-import Animated, {useSharedValue, useAnimatedStyle, withTiming, withRepeat} from 'react-native-reanimated';
+import _ from 'lodash';
+import React, {useEffect, useState} from 'react';
+import {LayoutChangeEvent, LayoutRectangle, StyleSheet} from 'react-native';
+import {useSharedValue, useAnimatedStyle, withTiming, withRepeat, Easing} from 'react-native-reanimated';
 import {asBaseComponent, forwardRef} from '../../commons/new';
-import {View} from 'react-native-ui-lib';
+import View from '../view';
+import Text from '../text';
 import {MarqueeProps, MarqueeDirections} from './types';
-import {useMeasure} from '../../hooks';
+
+const DEFAULT_DURATION = 3000;
+const DEFAULT_DURATION_PER_WORD = 250;
 
 function Marquee(props: MarqueeProps) {
-  const {direction = MarqueeDirections.RIGHT, duration = 3000, numberOfReps = -1, children} = props;
+  const {label, labelStyle, direction = MarqueeDirections.LEFT, duration, numberOfReps = -1, containerStyle} = props;
 
-  const offset = useSharedValue(undefined);
+  const calcDuration = () => {
+    const numOfWords = label.split(' ').length;
+    return DEFAULT_DURATION + DEFAULT_DURATION_PER_WORD * numOfWords;
+  };
 
-  const {ref: childrenRef, measurements: childrenMeasurements} = useMeasure();
-  const {ref: containerRef, measurements: containerMeasurements} = useMeasure();
+  const isHorizontal = direction === MarqueeDirections.LEFT || direction === MarqueeDirections.RIGHT;
+  const fixedDuration = isHorizontal ? duration || calcDuration() : duration || DEFAULT_DURATION;
+
+  const [viewLayout, setViewLayout] = useState<LayoutRectangle | undefined>(undefined);
+  const [textLayout, setTextLayout] = useState<LayoutRectangle | undefined>(undefined);
+
+  const offset = useSharedValue<number | undefined>(undefined);
 
   let initialOffset = 0;
   let axisX = false;
   let axisY = false;
-
-  const childrenClone = useMemo(() => {
-    if (children) {
-      return React.cloneElement(children, {
-        ref: childrenRef
-      });
-    }
-  }, [children]);
 
   if (direction === MarqueeDirections.RIGHT || direction === MarqueeDirections.LEFT) {
     axisX = true;
@@ -31,16 +36,29 @@ function Marquee(props: MarqueeProps) {
     axisY = true;
   }
 
+  const onLayoutView = (event: LayoutChangeEvent) => {
+    setViewLayout(event.nativeEvent.layout);
+  };
+
+  const onLayoutText = (event: LayoutChangeEvent) => {
+    setTextLayout(event.nativeEvent.layout);
+  };
+
   const startAnimation = (fromValue: number, toValue: number, backToValue: number) => {
     initialOffset = fromValue;
     offset.value = initialOffset;
 
-    offset.value = withRepeat(withTiming(toValue, {duration}), numberOfReps, false, finished => {
-      if (finished) {
-        offset.value = initialOffset;
-        offset.value = withTiming(backToValue, {duration: 1500});
-      }
-    });
+    offset.value = withRepeat(withTiming(toValue, {duration: fixedDuration, easing: Easing.linear}),
+      numberOfReps,
+      false,
+      finished => {
+        if (finished) {
+          offset.value = initialOffset;
+          offset.value = withTiming(backToValue, {
+            duration: 2000
+          });
+        }
+      });
   };
 
   const translateStyle = useAnimatedStyle(() => {
@@ -53,33 +71,37 @@ function Marquee(props: MarqueeProps) {
   });
 
   useEffect(() => {
-    if (childrenMeasurements && containerMeasurements) {
-      if (direction === MarqueeDirections.RIGHT) {
-        startAnimation(-childrenMeasurements.width, containerMeasurements.width, 0);
-        return;
-      }
-      if (direction === MarqueeDirections.LEFT) {
-        startAnimation(containerMeasurements.width,
-          -childrenMeasurements.width,
-          containerMeasurements.width - childrenMeasurements.width);
-        return;
-      }
-      if (direction === MarqueeDirections.UP) {
-        startAnimation(containerMeasurements.height,
-          -childrenMeasurements.height,
-          containerMeasurements.height - childrenMeasurements.height);
-        return;
-      }
-      if (direction === MarqueeDirections.DOWN) {
-        startAnimation(-childrenMeasurements.height, containerMeasurements.height, 0);
-        return;
+    if (viewLayout && textLayout) {
+      switch (direction) {
+        case MarqueeDirections.RIGHT:
+          startAnimation(-textLayout.width, viewLayout.width, 0);
+          break;
+        case MarqueeDirections.LEFT:
+          startAnimation(viewLayout?.width, -textLayout.width, viewLayout.width - textLayout.width);
+          break;
+        case MarqueeDirections.UP:
+          startAnimation(viewLayout.height, -textLayout.height, viewLayout.height - textLayout.height);
+          break;
+        case MarqueeDirections.DOWN:
+          startAnimation(-textLayout.height, viewLayout.height, 0);
+          break;
       }
     }
-  }, [childrenMeasurements, containerMeasurements]);
+  }, [viewLayout, textLayout]);
 
   return (
-    <View flex={axisY} ref={containerRef} style={{overflow: 'hidden'}}>
-      <Animated.View style={[translateStyle]}>{childrenClone}</Animated.View>
+    <View style={[styles.container, containerStyle]} onLayout={onLayoutView}>
+      <View
+        reanimated
+        style={[{position: 'absolute', width: textLayout?.width ? textLayout?.width : '400%'}, translateStyle]}
+      >
+        <Text style={[styles.text, labelStyle]} numberOfLines={1} onLayout={onLayoutText}>
+          {label}
+        </Text>
+      </View>
+      <Text style={[styles.text, labelStyle, {color: 'transparent'}]} numberOfLines={1}>
+        {label}
+      </Text>
     </View>
   );
 }
@@ -87,3 +109,8 @@ function Marquee(props: MarqueeProps) {
 export {MarqueeProps, MarqueeDirections};
 
 export default asBaseComponent<MarqueeProps>(forwardRef(Marquee));
+
+const styles = StyleSheet.create({
+  container: {overflow: 'hidden'},
+  text: {alignSelf: 'center'}
+});
