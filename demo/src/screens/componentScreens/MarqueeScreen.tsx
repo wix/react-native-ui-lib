@@ -51,7 +51,9 @@ export default class MarqueeScreen extends Component<{}, State> {
           Marquee: {directionVertical ? MarqueeDirections.UP : MarqueeDirections.DOWN}
         </Text>
         <Marquee
-          label={'Hey there, this is the new Marquee!'}
+          label={
+            'Hey there, this is the new Marquee! Hey there, this is the new Marquee! Hey there, this is the new Marquee! Hey there, this is the new Marquee!'
+          }
           labelStyle={styles.label}
           key={`${directionVertical}-${duration}-${numOfReps}`}
           direction={directionVertical ? MarqueeDirections.UP : MarqueeDirections.DOWN}

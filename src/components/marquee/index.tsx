@@ -92,9 +92,12 @@ function Marquee(props: MarqueeProps) {
     <View style={[styles.container, containerStyle]} onLayout={onLayoutView}>
       <View
         reanimated
-        style={[{position: 'absolute', width: textLayout?.width ? textLayout?.width : '400%'}, translateStyle]}
+        style={[
+          {position: 'absolute', width: !isHorizontal || textLayout?.width ? textLayout?.width : '400%'},
+          translateStyle
+        ]}
       >
-        <Text style={[styles.text, labelStyle]} numberOfLines={1} onLayout={onLayoutText}>
+        <Text style={[styles.text, labelStyle]} onLayout={onLayoutText}>
           {label}
         </Text>
       </View>
