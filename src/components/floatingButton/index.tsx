@@ -107,20 +107,27 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     };
   };
 
+  get isSecondaryHorizontal() {
+    const {secondaryButton, buttonLayout} = this.props;
+    return secondaryButton && buttonLayout === FloatingButtonLayouts.HORIZONTAL;
+  }
+
+  get isSecondaryVertical() {
+    const {secondaryButton, buttonLayout} = this.props;
+    return secondaryButton && buttonLayout === FloatingButtonLayouts.VERTICAL;
+  }
+
   renderButton() {
-    const {bottomMargin, button, secondaryButton, testID, buttonLayout} = this.props;
+    const {bottomMargin, button, testID} = this.props;
 
-    const secondaryHorizontal = secondaryButton && buttonLayout === FloatingButtonLayouts.HORIZONTAL;
-    const secondaryVertical = secondaryButton && buttonLayout === FloatingButtonLayouts.VERTICAL;
-
-    const bottom = secondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8;
-    const left = secondaryHorizontal ? Spacings.s4 : undefined;
-    const right = secondaryHorizontal ? 20 : undefined;
+    const bottom = this.isSecondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8;
+    const left = this.isSecondaryHorizontal ? Spacings.s4 : undefined;
+    const right = this.isSecondaryHorizontal ? 20 : undefined;
 
     return (
       <Button
         size={Button.sizes.large}
-        flex={!!secondaryHorizontal}
+        flex={!!this.isSecondaryHorizontal}
         style={[styles.shadow, {marginTop: 16, marginBottom: bottom, marginLeft: left, marginRight: right}]}
         testID={`${testID}.button`}
         {...button}
@@ -147,9 +154,8 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     const {secondaryButton, bottomMargin, testID, buttonLayout} = this.props;
 
     const bgColor = secondaryButton?.backgroundColor || Colors.$backgroundDefault;
-    const secondaryHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL;
 
-    if (secondaryHorizontal) {
+    if (buttonLayout === FloatingButtonLayouts.HORIZONTAL) {
       return (
         <Button
           outline
@@ -176,9 +182,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   render() {
-    const {withoutAnimation, secondaryButton, visible, testID, buttonLayout} = this.props;
-    const secondaryHorizontal = secondaryButton && buttonLayout === FloatingButtonLayouts.HORIZONTAL;
-    const secondaryVertical = secondaryButton && buttonLayout === FloatingButtonLayouts.VERTICAL;
+    const {withoutAnimation, visible, testID} = this.props;
     // NOTE: keep this.firstLoad as true as long as the visibility changed to true
     this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
 
@@ -192,17 +196,17 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
     return (
       <View
-        row={!!secondaryHorizontal}
-        center={!!secondaryHorizontal}
+        row={!!this.isSecondaryHorizontal}
+        center={!!this.isSecondaryHorizontal}
         pointerEvents="box-none"
         animated
         style={[styles.container, this.getAnimatedStyle()]}
         testID={testID}
       >
         {this.renderOverlay()}
-        {secondaryHorizontal && this.renderSecondaryButton()}
+        {this.isSecondaryHorizontal && this.renderSecondaryButton()}
         {this.renderButton()}
-        {secondaryVertical && this.renderSecondaryButton()}
+        {this.isSecondaryVertical && this.renderSecondaryButton()}
       </View>
     );
   }
