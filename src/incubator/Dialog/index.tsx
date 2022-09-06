@@ -19,7 +19,7 @@ import useFadeView from './useFadeView';
 
 const Dialog = (props: DialogProps) => {
   const {
-    visible: propsVisibility,
+    visible: propsVisibility = false,
     headerProps,
     containerStyle,
     onDismiss,
