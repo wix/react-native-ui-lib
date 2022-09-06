@@ -21,7 +21,7 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
     y = 0,
     width = Constants.screenWidth,
     height = Constants.windowHeight,
-    wasMeasured = true
+    wasMeasured = false
   }): HiddenLocation => {
     return {
       up: -y - height,
@@ -36,9 +36,9 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
-    if (containerRef.current && hiddenLocation.wasMeasured) {
+    if (containerRef.current && !hiddenLocation.wasMeasured) {
       containerRef.current.measureInWindow((x: number, y: number) => {
-        setHiddenLocation(getHiddenLocation({x, y, width, height, wasMeasured: false}));
+        setHiddenLocation(getHiddenLocation({x, y, width, height, wasMeasured: true}));
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
