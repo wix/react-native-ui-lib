@@ -125,7 +125,7 @@ const WheelPicker = ({
   const prevInitialValue = useRef(initialValue);
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
-  const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
+  const keyExtractor = useCallback((item: ItemProps, index: number) => item.key ?? `${item}.${index}`, []);
 
   useEffect(() => {
     // This effect making sure to reset index if initialValue has changed

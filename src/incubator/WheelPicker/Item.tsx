@@ -13,6 +13,7 @@ const AnimatedText = Animated.createAnimatedComponent(Text);
 export interface ItemProps {
   label: string;
   value: string | number;
+  key?: string;
   align?: WheelPickerAlign;
 }
 
@@ -33,6 +34,7 @@ interface InternalProps extends ItemProps {
 
 const WheelPickerItem = memo(({
   index,
+  key,
   label,
   fakeLabel,
   fakeLabelStyle,
@@ -67,7 +69,7 @@ const WheelPickerItem = memo(({
     <AnimatedTouchableOpacity
       activeOpacity={1}
       style={containerStyle}
-      key={index}
+      key={key ?? index}
       centerV
       centerH={align ? align === WheelPickerAlign.CENTER : centerH}
       right={align ? align === WheelPickerAlign.RIGHT : !centerH}
