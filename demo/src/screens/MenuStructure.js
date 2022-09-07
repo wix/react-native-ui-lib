@@ -25,7 +25,6 @@ export const navigationData = {
       {title: 'View', tags: 'view modifiers', screen: 'unicorn.components.ViewScreen'},
       {title: 'Image', tags: 'image cover overlay', screen: 'unicorn.components.ImageScreen'},
       {title: 'Button', tags: 'button cta', screen: 'unicorn.components.ButtonsScreen'},
-      {title: ''},
       {title: 'Action Bar', tags: 'action bar floating bottom', screen: 'unicorn.components.ActionBarScreen'},
       {title: 'Avatars', tags: 'avatar contact', screen: 'unicorn.components.AvatarsScreen'},
       {title: 'Badges', tags: 'badge', screen: 'unicorn.components.BadgesScreen'},
@@ -57,8 +56,16 @@ export const navigationData = {
       {title: 'Picker', tags: 'picker form', screen: 'unicorn.components.PickerScreen'},
       {title: 'DateTimePicker', tags: 'date time picker form', screen: 'unicorn.components.DateTimePickerScreen'},
       {title: 'RadioButton', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
-      {title: 'SectionsWheelPicker', tags: 'sections wheel picker form', screen: 'unicorn.components.SectionsWheelPickerScreen'},
-      {title: 'SegmentedControl', tags: 'segmented control switch toggle', screen: 'unicorn.components.SegmentedControlScreen'},
+      {
+        title: 'SectionsWheelPicker',
+        tags: 'sections wheel picker form',
+        screen: 'unicorn.components.SectionsWheelPickerScreen'
+      },
+      {
+        title: 'SegmentedControl',
+        tags: 'segmented control switch toggle',
+        screen: 'unicorn.components.SegmentedControlScreen'
+      },
       {title: 'Stepper', tags: 'stepper form', screen: 'unicorn.components.StepperScreen'},
       {title: 'Slider', tags: 'slider', screen: 'unicorn.components.SliderScreen'},
       {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
@@ -84,7 +91,9 @@ export const navigationData = {
       {title: 'Contacts List', tags: 'list contacts', screen: 'unicorn.lists.ContactsListScreen'},
       {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
       {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
-      {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'}
+      {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'},
+      {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
+      {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'}
     ]
   },
   LayoutsAndTemplates: {
@@ -114,8 +123,6 @@ export const navigationData = {
         screen: 'unicorn.components.FaderScreen'
       },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'},
-      {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
-      {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'},
       {title: 'GridView', tags: 'grid view', screen: 'unicorn.components.GridViewScreen'}
     ]
   },
@@ -139,7 +146,11 @@ export const navigationData = {
         tags: 'KeyboardTracking',
         screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'
       },
-      {title: 'KeyboardAccessoryView', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardAccessoryViewScreen'}
+      {
+        title: 'KeyboardAccessoryView',
+        tags: 'KeyboardInput',
+        screen: 'unicorn.nativeComponents.KeyboardAccessoryViewScreen'
+      }
     ]
   },
   AnimationsAndGestures: {
@@ -147,7 +158,11 @@ export const navigationData = {
     screens: [
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
       {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
-      {title: 'ProgressiveImage', tags: 'progressive image cover overlay', screen: 'unicorn.components.ProgressiveImageScreen'},
+      {
+        title: 'ProgressiveImage',
+        tags: 'progressive image cover overlay',
+        screen: 'unicorn.components.ProgressiveImageScreen'
+      },
       {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
       {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
       {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
@@ -162,10 +177,17 @@ export const navigationData = {
       {title: 'Dialog (New)', tags: 'dialog modal popup alert', screen: 'unicorn.incubator.IncubatorDialogScreen'},
       {title: 'TextField (New)', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
       {title: 'Toast (New)', tags: 'toast', screen: 'unicorn.components.IncubatorToastScreen'},
-      {title: 'ExpandableOverlay', tags: 'text field expandable input picker', screen: 'unicorn.components.IncubatorExpandableOverlayScreen'},
-      {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'},
-      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'},
-      {title: 'Transition View', tags: 'transition animation enter exit', screen: 'unicorn.incubator.TransitionViewScreen'}
+      {
+        title: 'ExpandableOverlay',
+        tags: 'text field expandable input picker',
+        screen: 'unicorn.components.IncubatorExpandableOverlayScreen'
+      },
+      {
+        title: 'WheelPicker (Incubator)',
+        tags: 'wheel picker spinner experimental',
+        screen: 'unicorn.incubator.WheelPickerScreen'
+      },
+      {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
     ]
   },
   Inspirations: {

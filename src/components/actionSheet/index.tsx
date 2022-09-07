@@ -12,7 +12,6 @@ import Image from '../image';
 import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
 
-
 const VERTICAL_PADDING = 8;
 type ActionSheetOnOptionPress = (index: number) => void;
 
@@ -75,19 +74,22 @@ type ActionSheetProps = {
    * Render custom action
    * Note: you will need to call onOptionPress so the option's onPress will be called
    */
-  renderAction?: (
-    option: ButtonProps,
-    index: number,
-    onOptionPress: ActionSheetOnOptionPress
-  ) => JSX.Element;
+  renderAction?: (option: ButtonProps, index: number, onOptionPress: ActionSheetOnOptionPress) => JSX.Element;
   /**
-   * Called once the modal has been dismissed (iOS only, modal only)
+   * Called once the modal has been dismissed completely
    */
   onModalDismissed?: DialogProps['onDialogDismissed'];
   /**
    * Whether or not to handle SafeArea
    */
   useSafeArea?: boolean;
+  /**
+   * Additional props to send to the Dialog
+   */
+  dialogProps?: Omit<
+    DialogProps,
+    'useSafeArea' | 'testID' | 'containerStyle' | 'visible' | 'onDismiss' | 'onDialogDismissed'
+  >;
   /**
    * testID for e2e tests
    */
@@ -124,16 +126,14 @@ class ActionSheet extends Component<ActionSheetProps> {
         cancelBtnIndex = optionsArray.length - 1;
       }
 
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          title,
-          message,
-          options: optionsArray.map(option => option?.label || ''),
-          cancelButtonIndex: cancelBtnIndex,
-          destructiveButtonIndex
-        },
-        this.onOptionPress
-      );
+      ActionSheetIOS.showActionSheetWithOptions({
+        title,
+        message,
+        options: optionsArray.map(option => option?.label || ''),
+        cancelButtonIndex: cancelBtnIndex,
+        destructiveButtonIndex
+      },
+      this.onOptionPress);
     }
   }
 
@@ -146,7 +146,7 @@ class ActionSheet extends Component<ActionSheetProps> {
     // @ts-ignore
     let source = option.icon;
     if (!source) {
-      source = _.isFunction(option.iconSource) ? option.iconSource() : option.iconSource as ImageProps['source'];
+      source = _.isFunction(option.iconSource) ? option.iconSource() : (option.iconSource as ImageProps['source']);
     }
     return source && this.renderIcon(source);
   };
@@ -214,7 +214,7 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea} =
+    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps} =
       this.props;
 
     if (Constants.isIOS && useNativeIOS) {
@@ -223,16 +223,17 @@ class ActionSheet extends Component<ActionSheetProps> {
 
     return (
       <Dialog
-        useSafeArea={useSafeArea}
-        testID={testID}
         bottom
         centerH
         width="100%"
+        panDirection={PanningProvider.Directions.DOWN}
+        {...dialogProps}
+        useSafeArea={useSafeArea}
+        testID={testID}
         containerStyle={[styles.dialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
         onDialogDismissed={onModalDismissed}
-        panDirection={PanningProvider.Directions.DOWN}
       >
         {this.renderSheet()}
       </Dialog>

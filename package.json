@@ -68,6 +68,7 @@
     "@react-native-community/datetimepicker": "^3.4.6",
     "@react-native-community/netinfo": "^5.6.2",
     "@react-native-picker/picker": "^2.3.0",
+    "@shopify/flash-list": "^1.2.1",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/react-native": "^7.2.0",
     "@types/hoist-non-react-statics": "^3.3.1",

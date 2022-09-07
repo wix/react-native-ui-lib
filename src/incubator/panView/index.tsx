@@ -1,6 +1,7 @@
 import {isEmpty} from 'lodash';
 import React from 'react';
 import {StyleProp, View as RNView, ViewStyle} from 'react-native';
+import {useAnimatedStyle} from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../../components/view';
@@ -11,10 +12,18 @@ import usePanGesture, {
   PanViewDirections,
   PanViewDirectionsEnum,
   PanViewDismissThreshold,
-  DEFAULT_DIRECTIONS
+  DEFAULT_DIRECTIONS,
+  DEFAULT_ANIMATION_CONFIG
 } from './usePanGesture';
-import {useAnimatedStyle} from 'react-native-reanimated';
-export {PanningDirections, PanningDirectionsEnum, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold};
+export {
+  PanningDirections,
+  PanningDirectionsEnum,
+  PanViewDirections,
+  PanViewDirectionsEnum,
+  PanViewDismissThreshold,
+  DEFAULT_DIRECTIONS,
+  DEFAULT_ANIMATION_CONFIG
+};
 
 export interface PanViewProps extends Omit<PanGestureProps, 'hiddenLocation'>, ViewProps {
   /**

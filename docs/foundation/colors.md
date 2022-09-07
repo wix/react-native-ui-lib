@@ -57,7 +57,12 @@ Colors.loadSchemes({
   </Text>      
 </View>
 ```
-
+  
+**Note:** for dark mode support please add the following `require` in your app, in an initial place, before importing `react-native-ui-lib` at the first time.
+```
+require('react-native-ui-lib/config').setConfig({appScheme: 'default'});
+```
+  
 ### rgba
 usage:
 ```js
