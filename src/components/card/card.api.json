@@ -26,8 +26,8 @@
       "description": "Whether the card should have shadow or not",
       "default": "true"
     },
-    {"name": "elevation", "type": "number", "description": "Elevation value (Android only)"},
-    {"name": "enableBlur", "type": "boolean", "description": "Enable blur effect (iOS only)"},
+    {"name": "elevation", "type": "number", "description": "Elevation value", "note": "Android only"},
+    {"name": "enableBlur", "type": "boolean", "description": "Enable blur effect", "note": "iOS only"},
     {
       "name": "blurOptions",
       "type": "object",
