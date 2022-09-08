@@ -63,7 +63,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           {Constants.isRTL && renderBooleanOption.call(this, 'Force LTR', 'forceLTR')}
 
           <Text $textDefault text70BO marginB-10>
-            Default slider
+            Default Slider
           </Text>
           <View row centerV style={this.getReverseStyle()}>
             <Icon assetName={'search'} style={styles.image}/>
@@ -124,7 +124,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           />
 
           <Text $textDefault text70BO marginV-15>
-            Range slider
+            Range Slider
           </Text>
           <View row spread style={this.getReverseStyle()}>
             <Text bodySmall $textNeutral>
@@ -142,6 +142,29 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             maximumValue={100}
             step={1}
             disableRTL={forceLTR}
+          />
+
+          <Text $textDefault text70BO marginV-15>
+            Range w/ initial values
+          </Text>
+          <View row spread style={this.getReverseStyle()}>
+            <Text bodySmall $textNeutral>
+              min. {sliderMinValue}%
+            </Text>
+            <Text bodySmall $textNeutral>
+              max. {sliderMaxValue}%
+            </Text>
+          </View>
+          <Slider
+            useRange
+            onRangeChange={this.onSliderRangeChange}
+            value={INITIAL_VALUE}
+            minimumValue={0}
+            maximumValue={100}
+            step={1}
+            disableRTL={forceLTR}
+            initialMinimumValue={20}
+            initialMaximumValue={80}
           />
 
           <Text $textDefault text70BO marginT-15>
