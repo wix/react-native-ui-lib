@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Text, Icon, Slider, GradientSlider, ColorSliderGroup, Constants} from 'react-native-ui-lib';
+import {Constants, Colors, View, Text, Button, Icon, Slider, GradientSlider, ColorSliderGroup} from 'react-native-ui-lib';
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 interface SliderScreenProps {
@@ -28,6 +28,12 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     sliderMaxValue: 100,
     forceLTR: false
   };
+
+  slider = React.createRef();
+
+  resetSlider = () => {
+    this.slider.current?.reset();
+  }
 
   onSliderRangeChange = (values: {min: number, max: number}) => {
     const {min, max} = values;
@@ -62,12 +68,17 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
 
           {Constants.isRTL && renderBooleanOption.call(this, 'Force LTR', 'forceLTR')}
 
-          <Text $textDefault text70BO marginB-10>
-            Default Slider
-          </Text>
+          <View row spread centerV marginB-10>
+            <Text $textDefault text70BO>
+              Default slider
+            </Text>
+            <Button link label="Reset" onPress={this.resetSlider}/>
+          </View>
+          
           <View row centerV style={this.getReverseStyle()}>
             <Icon assetName={'search'} style={styles.image}/>
             <Slider
+              ref={this.slider}
               onValueChange={this.onSliderValueChange}
               value={INITIAL_VALUE}
               minimumValue={0}

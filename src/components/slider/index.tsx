@@ -205,6 +205,20 @@ export default class Slider extends PureComponent<SliderProps, State> {
     });
   }
 
+  reset() { // NOTE: used with ref
+    this.lastValue = this.initialValue;
+    this.lastMinValue = this.minInitialValue;
+    this.lastDx = 0;
+
+    this.setActiveThumb(this.thumb);
+    this.set_x(this.getXForValue(this.initialValue));
+    this.update(0);
+
+    this.setActiveThumb(this.minThumb);
+    this.set_x(this.getXForValue(this.minInitialValue));
+    this.update(0);
+  }
+
   getInitialValue() {
     const {useRange, initialMaximumValue, value, maximumValue} = this.props;
     return useRange ? initialMaximumValue || maximumValue : value;
