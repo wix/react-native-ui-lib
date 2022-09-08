@@ -16,7 +16,7 @@ export interface ThumbProps extends ViewProps {
   /**
    * The thumb style
    */
-  thumbStyle?: StyleProp<ViewStyle>;
+  thumbStyle?: ViewStyle;
   /**
    * The active (during press) thumb style
    */
