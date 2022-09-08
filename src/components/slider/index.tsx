@@ -37,22 +37,22 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    */
   value?: number;
   /**
-   * Initial minimum value (when using range slider)
+   * Track minimum value
+   */
+  minimumValue?: number;
+  /**
+   * Track maximum value
+   */
+  maximumValue?: number;
+  /**
+   * Initial minimum value (when useRange is true)
    */
   initialMinimumValue?: number;
-   /**
-    * Initial maximum value (when using range slider)
-    */
+  /**
+   * Initial maximum value (when useRange is true)
+   */
   initialMaximumValue?: number;
-    /**
-    * Track minimum value
-    */
-  minimumValue?: number;
-   /**
-    * Track maximum value
-    */
-  maximumValue?: number;
-   /**
+  /**
    * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
    */
   step?: number;
