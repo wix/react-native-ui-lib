@@ -1,0 +1,42 @@
+{
+  "name": "Dialog.Header",
+  "category": "incubator",
+  "description": "Component for displaying the header of a popup dialog",
+  "props": [
+    {"name": "title", "type": "string", "description": "Title"},
+    {"name": "titleStyle", "type": "StyleProp<TextStyle>", "description": "Title text style"},
+    {"name": "titleProps", "type": "TextProps", "description": "Title extra props"},
+    {"name": "subtitle", "type": "string", "description": "Subtitle"},
+    {"name": "subtitleStyle", "type": "StyleProp<TextStyle>", "description": "Subtitle text style"},
+    {"name": "subtitleProps", "type": "TextProps", "description": "Subtitle extra props"},
+    {
+      "name": "renderContent",
+      "type": "(props: DialogHeaderProps) => React.ReactElement",
+      "description": "Replace the header's default content (Dialog.Text)"
+    },
+    {"name": "showKnob", "type": "boolean", "description": "Show the header's knob (default is true)"},
+    {"name": "showDivider", "type": "boolean", "description": "Show the header's divider (default is true)"},
+    {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
+    {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
+    {
+      "name": "innerContainerStyle",
+      "type": "ViewProps['style']",
+      "description": "Style for the leading + content + trailing components (without the bottomAccessory)"
+    },
+    {
+      "name": "onPress",
+      "type": "() => void",
+      "description": "onPress callback for the inner content"
+    },
+    {
+      "name": "bottomAccessory",
+      "type": "ReactElement",
+      "description": "Pass to render a bottom element below the input"
+    },
+    {
+      "name": "outerContainerStyle",
+      "type": "ViewProps['style']",
+      "description": "Style for the whole header's container"
+    }
+  ]
+}

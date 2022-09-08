@@ -1,4 +1,4 @@
-import {PropsWithChildren} from 'react';
+import {PropsWithChildren, ReactElement} from 'react';
 import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {ModalProps} from '../../components/modal';
@@ -46,6 +46,30 @@ export interface DialogHeaderProps extends ViewProps {
    * Show the header's divider (default is true)
    */
   showDivider?: boolean;
+  /**
+   * Pass to render a leading element
+   */
+  leadingAccessory?: ReactElement;
+  /**
+   * Pass to render a trailing element
+   */
+  trailingAccessory?: ReactElement;
+  /**
+   * Style for the leading + content + trailing components (without the bottomAccessory)
+   */
+  innerContainerStyle?: ViewProps['style']; // TODO: or upperContentContainerStyle
+  /**
+   * onPress callback for the inner content
+   */
+  onPress?: () => void;
+  /**
+   * Pass to render a bottom element below the input
+   */
+  bottomAccessory?: ReactElement;
+  /**
+   * Style for the whole header's container
+   */
+  outerContainerStyle?: ViewProps['style']; // TODO: or containerStyle
 }
 
 export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
@@ -62,9 +86,18 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
+   * The dialog width.
+   */
+  width?: string | number;
+  /**
+   * The dialog height.
+   */
+  height?: string | number;
+
+  /**
    * Callback that is called after the dialog's dismiss (after the animation has ended).
    */
-  onDismiss?: (props?: _DialogProps) => void;
+  onDismiss?: () => void;
   /**
    * The direction from which and to which the dialog is animating \ panning (default down).
    */
