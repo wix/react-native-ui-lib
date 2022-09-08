@@ -21,6 +21,12 @@
       "description": "If true the Slider will display a second thumb for the min value"
     },
     {
+      "name": "useGap",
+      "type": "boolean",
+      "description": "If true the min and max thumbs will not overlap",
+      "default": "true"
+    },
+    {
       "name": "minimumTrackTintColor",
       "type": "string",
       "description": "The color used for the track from minimum value to current value"

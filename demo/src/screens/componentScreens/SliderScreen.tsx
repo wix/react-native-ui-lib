@@ -156,7 +156,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           />
 
           <Text $textDefault text70BO marginV-15>
-            Range w/ initial values
+            Range w/ initial values and no default gap
           </Text>
           <View row spread style={this.getReverseStyle()}>
             <Text bodySmall $textNeutral>
@@ -168,6 +168,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           </View>
           <Slider
             useRange
+            useGap={false}
             onRangeChange={this.onSliderRangeChange}
             value={INITIAL_VALUE}
             minimumValue={0}

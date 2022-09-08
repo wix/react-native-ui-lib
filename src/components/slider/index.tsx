@@ -96,7 +96,11 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    * If true the Slider will display a second thumb for the min value
    */
   useRange?: boolean;
-   /**
+  /**
+   * If true the min and max thumbs will not overlap
+   */
+  useGap?: boolean;
+  /**
    * Callback for onRangeChange. Returns values object with the min and max values
    */
   onRangeChange?: SliderOnRangeChange;
@@ -137,10 +141,9 @@ const defaultProps = {
   value: 0,
   minimumValue: 0,
   maximumValue: 1,
-  // initialMinimumValue: 0,
-  // initialMaximumValue: 1,
   step: 0,
-  thumbHitSlop: {top: 10, bottom: 10, left: 24, right: 24}
+  thumbHitSlop: {top: 10, bottom: 10, left: 24, right: 24},
+  useGap: true
 };
 
 /**
@@ -368,15 +371,17 @@ export default class Slider extends PureComponent<SliderProps, State> {
   moveTo(x: number) {
     if (this.isDefaultThumbActive()) {
       if (this.thumb.current) {
-        const {useRange} = this.props;
+        const {useRange, useGap} = this.props;
         const {trackSize, thumbSize} = this.state;
+
         const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
         const _x = this.shouldForceLTR ? trackSize.width - x : x; // adjust for RTL
         const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
         
         if (useRange) {
           const minThumbPosition = this._minThumbStyles?.left as number;
-          if (left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP) {
+          if (useGap && left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP 
+            || !useGap && left >= minThumbPosition) {
             this._thumbStyles.left = left;
             
             const width = left - minThumbPosition;
@@ -398,6 +403,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   moveMinTo(x: number) {
+    const {useGap} = this.props;
     const {trackSize, thumbSize} = this.state;
 
     if (this.minThumb.current) {
@@ -406,7 +412,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
       const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
       
       const maxThumbPosition = this._thumbStyles?.left as number;
-      if (left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP) {
+      if (useGap && left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP 
+        || !useGap && left <= maxThumbPosition) {
         this._minThumbStyles.left = left;
         
         this._minTrackStyles.width = maxThumbPosition - x;
@@ -700,8 +707,22 @@ export default class Slider extends PureComponent<SliderProps, State> {
     );
   }
 
+  renderRangeThumb() {
+    const {useRange, useGap} = this.props;
+    if (useRange) {
+      if (useGap) {
+        return this.renderMinThumb();
+      }
+      return (
+        <View style={{zIndex: this.isDefaultThumbActive() ? 0 : 1, top: '-50%'}}>
+          {this.renderMinThumb()}
+        </View>
+      );
+    }
+  }
+
   render() {
-    const {containerStyle, testID, useRange} = this.props;
+    const {containerStyle, testID} = this.props;
     
     return (
       <View
@@ -713,7 +734,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       >
         {this.renderTrack()}
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
-        {useRange && this.renderMinThumb()}
+        {this.renderRangeThumb()}
         {this.renderThumb()}
       </View>
     );
