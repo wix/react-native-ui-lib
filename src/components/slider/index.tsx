@@ -81,6 +81,10 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    */
   onSeekEnd?: () => void;
   /**
+   * Callback that notifies when the reset function was invoked 
+   */
+  onReset?: () => void;
+  /**
    * The container style
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -220,6 +224,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
     this.setActiveThumb(this.minThumb);
     this.set_x(this.getXForValue(this.minInitialValue));
     this.update(0);
+
+    this.props.onReset?.();
   }
 
   getInitialValue() {

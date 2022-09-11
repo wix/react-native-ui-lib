@@ -54,6 +54,11 @@
       "type": "() => void",
       "description": "Callback that notifies about slider seeking is finished"
     },
+    {
+      "name": "onReset",
+      "type": "() => void",
+      "description": "Callback that notifies when the reset function was invoked"
+    },
     {"name": "containerStyle", "type": "ViewStyle", "description": "The container style"},
     {"name": "trackStyle", "type": "ViewStyle", "description": "The track style"},
     {"name": "thumbStyle", "type": "ViewStyle", "description": "The thumb style"},
