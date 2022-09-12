@@ -124,7 +124,7 @@ const Dialog = (props: DialogProps) => {
   }, [propsVisibility]);
 
   const alignmentStyle = useMemo(() => {
-    return {flex: 1, ...extractAlignmentsValues(props)};
+    return {flex: 1, alignItems: 'center', ...extractAlignmentsValues(props)};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
