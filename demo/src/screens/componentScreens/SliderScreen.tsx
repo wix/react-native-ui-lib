@@ -298,13 +298,13 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           </View>
           {Constants.isRTL && renderBooleanOption.call(this, 'Force LTR', 'forceLTR')}
 
-          {/* {this.renderDefaultSliderExample()}
+          {this.renderDefaultSliderExample()}
           {this.renderNegativeSliderExample()}
-          {this.renderDisabledSliderExample()} */}
+          {this.renderDisabledSliderExample()}
           {this.renderRangeSliderExample()}
-          {/* {this.renderRangeSliderWithValuesExample()}
+          {this.renderRangeSliderWithValuesExample()}
           {this.renderGradientSlidersExample()}
-          {this.renderColorSliderGroupExample()} */}
+          {this.renderColorSliderGroupExample()}
         </View>
       </ScrollView>
     );
