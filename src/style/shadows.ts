@@ -2,55 +2,57 @@ import {ShadowStyleIOS} from 'react-native';
 import _ from 'lodash';
 import Colors from './colors';
 
-type Shadow = {top?: ShadowStyleIOS, bottom?: ShadowStyleIOS} & ShadowStyleIOS;
+type Shadow = {top?: ShadowStyleIOS; bottom?: ShadowStyleIOS} & ShadowStyleIOS;
+
+const isDark = Colors.getScheme() === 'dark';
 
 const Shadows = {
   sh10: {
     top: {
-      shadowColor: Colors.grey40,
+      shadowColor: isDark ? 'transparent' : Colors.grey40,
       shadowOpacity: 0.18,
       shadowRadius: 5,
       shadowOffset: {height: -1, width: 0},
-      elevation: 2
+      elevation: isDark ? 0 : 2
     },
     bottom: {
-      shadowColor: Colors.grey40,
+      shadowColor: isDark ? 'transparent' : Colors.grey40,
       shadowOpacity: 0.18,
       shadowRadius: 5,
       shadowOffset: {height: 1, width: 0},
-      elevation: 2
+      elevation: isDark ? 0 : 2
     }
   },
   sh20: {
     top: {
-      shadowColor: Colors.grey30,
+      shadowColor: isDark ? 'transparent' : Colors.grey30,
       shadowOpacity: 0.2,
       shadowRadius: 10,
       shadowOffset: {height: -2, width: 0},
-      elevation: 3
+      elevation: isDark ? 0 : 3
     },
     bottom: {
-      shadowColor: Colors.grey30,
+      shadowColor: isDark ? 'transparent' : Colors.grey30,
       shadowOpacity: 0.2,
       shadowRadius: 10,
       shadowOffset: {height: 2, width: 0},
-      elevation: 3
+      elevation: isDark ? 0 : 3
     }
   },
   sh30: {
     top: {
-      shadowColor: Colors.grey30,
+      shadowColor: isDark ? 'transparent' : Colors.grey30,
       shadowOpacity: 0.2,
       shadowRadius: 12,
       shadowOffset: {height: -5, width: 0},
-      elevation: 4
+      elevation: isDark ? 0 : 4
     },
     bottom: {
-      shadowColor: Colors.grey30,
+      shadowColor: isDark ? 'transparent' : Colors.grey30,
       shadowOpacity: 0.2,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0},
-      elevation: 4
+      elevation: isDark ? 0 : 4
     }
   },
   /* Old Presets */
