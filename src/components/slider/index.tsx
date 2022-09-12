@@ -186,10 +186,13 @@ export default class Slider extends PureComponent<SliderProps, State> {
   private thumbSize: Measurements | undefined;
   private dimensionsChangeListener: any;
 
+  private didMount: boolean;
+
   constructor(props: SliderProps) {
     super(props);
 
     this.activeThumbRef = this.thumb;
+    this.didMount = false;
 
     this.state = {
       containerSize: {width: 0, height: 0},
@@ -280,6 +283,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
       if (useRange && initialMinimumValue) {
         this.moveMinTo(this._x_min);
       }
+
+      this.didMount = true;
     }
   }
 
@@ -393,7 +398,9 @@ export default class Slider extends PureComponent<SliderProps, State> {
             const width = left - minThumbPosition;
             this._minTrackStyles.width = width;
             
-            this.updateValue(x);
+            if (this.didMount) {
+              this.updateValue(x);
+            }
           }
         } else {
           this._thumbStyles.left = left;
@@ -427,8 +434,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
         
         this.minThumb.current?.setNativeProps(this._minThumbStyles);
         this.minTrack.current?.setNativeProps(this._minTrackStyles);
-
-        this.updateValue(x);
+        
+        if (this.didMount) {
+          this.updateValue(x);
+        }
       }
     }
   }
