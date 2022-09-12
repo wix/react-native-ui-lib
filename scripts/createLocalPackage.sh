@@ -4,7 +4,7 @@
 FILES_TO_CLEAN=$(git clean -n)
 if [ ! -z "$FILES_TO_CLEAN" ]
 then
-    echo "Please note that a byproduct is deleting ALL untracked files from your folder:"
+    echo "Please note that a byproduct is deleting ALL untracked files from your folder, these files will be deleted:"
     echo "${FILES_TO_CLEAN}"
     select yn in "Yes" "No"; do
         case $yn in
@@ -14,9 +14,26 @@ then
     done
 fi
 
+PACKAGE_JSON=$(git diff package.json)
+if [ ! -z "$PACKAGE_JSON" ]
+then
+    echo "Your changes to pacakge.json will be erased, continue?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) break;;
+            No ) exit;;
+        esac
+    done
+fi
+
+# Delete previous tar
+rm -f react-native-ui-lib.tgz
 # Build javascript files
 npm run build
 # Package into a tar
 npm pack
 # Clean ALL untracked files
 git clean -f
+git checkout package.json
+# Rename tar
+mv react-native-ui-lib-5.0.0.tgz react-native-ui-lib.tgz
