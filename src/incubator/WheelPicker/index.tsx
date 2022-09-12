@@ -1,8 +1,9 @@
 // TODO: Support style customization
 import {isFunction, isUndefined} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
-import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent, StyleSheet, ListRenderItemInfo, FlatListProps} from 'react-native';
+import {TextStyle, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, StyleSheet, ListRenderItemInfo, FlatListProps} from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
+import {FlatList} from 'react-native-gesture-handler';
 import {Colors, Spacings} from 'style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
