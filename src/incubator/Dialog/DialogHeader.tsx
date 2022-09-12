@@ -84,7 +84,7 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
 
   const containerStyle = useMemo(() => [style, outerContainerStyle], [style, outerContainerStyle]);
 
-  if (!isEmpty(props)) {
+  if (knob || content || bottomAccessory || divider) {
     return (
       <View {...others} style={containerStyle}>
         {knob}
