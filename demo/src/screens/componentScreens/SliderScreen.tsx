@@ -19,6 +19,9 @@ interface SliderScreenState {
 }
 
 const INITIAL_VALUE = 20;
+const RANGE_INITIAL_MIN = 0;
+const RANGE_INITIAL_MAX = 100;
+
 const COLOR = Colors.blue30;
 
 export default class SliderScreen extends Component<SliderScreenProps, SliderScreenState> {
@@ -26,17 +29,21 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     alpha: 1,
     color: COLOR,
     sliderValue: INITIAL_VALUE,
-    sliderMinValue: 0,
-    sliderMaxValue: 100,
+    sliderMinValue: RANGE_INITIAL_MIN,
+    sliderMaxValue: RANGE_INITIAL_MAX,
     sliderMinValue2: 25,
     sliderMaxValue2: 80,
     forceLTR: false
   };
 
   slider = React.createRef();
+  rangeSlider = React.createRef();
+  gradientSlider = React.createRef();
 
   resetSlider = () => {
     this.slider.current?.reset();
+    this.rangeSlider.current?.reset();
+    this.gradientSlider.current?.reset();
   }
 
   onSliderRangeChange = (values: {min: number, max: number}) => {
@@ -53,6 +60,14 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     this.setState({sliderValue: value});
   };
 
+  onSliderReset = () => {
+    this.setState({sliderValue: INITIAL_VALUE});
+  }
+
+  onRangeSliderReset = () => {
+    this.setState({sliderMinValue: RANGE_INITIAL_MIN, sliderMaxValue: RANGE_INITIAL_MAX});
+  }
+
   onGradientValueChange = (value: string, alpha: number) => {
     this.setState({color: value, alpha});
   };
@@ -65,23 +80,18 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     return Constants.isRTL && this.state.forceLTR && styles.ltr;
   }
 
-
   renderDefaultSliderExample() {
     const {sliderValue, forceLTR} = this.state;
 
     return (
       <Fragment>
-        <View row spread centerV marginB-10>
-          <Text $textDefault text70BO>
-            Default slider
-          </Text>
-          <Button link label="Reset" onPress={this.resetSlider}/>
-        </View>
+        <Text $textDefault text70BO>
+          Default slider
+        </Text>
         
         <View row centerV style={this.getReverseStyle()}>
           <Icon assetName={'search'} style={styles.image}/>
           <Slider
-            ref={this.slider}
             onValueChange={this.onSliderValueChange}
             value={INITIAL_VALUE}
             minimumValue={0}
@@ -89,6 +99,8 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             step={1}
             containerStyle={styles.sliderContainer}
             disableRTL={forceLTR}
+            ref={this.slider}
+            onReset={this.onSliderReset}
           />
           <Text bodySmall $textNeutral style={styles.text} numberOfLines={1}>
             ${sliderValue}
@@ -176,6 +188,8 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           maximumValue={100}
           step={1}
           disableRTL={forceLTR}
+          ref={this.rangeSlider}
+          onReset={this.onRangeSliderReset}
         />
       </Fragment>
     );
@@ -229,6 +243,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             color={color}
             containerStyle={styles.gradientSliderContainer}
             onValueChange={this.onGradientValueChange}
+            ref={this.gradientSlider}
           />
           <View style={styles.box}>
             <View style={{flex: 1, backgroundColor: color, opacity: alpha}}/>
@@ -275,19 +290,21 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <View flex padding-20>
-          <Text text40 $textDefault marginB-20>
-            Sliders
-          </Text>
-
+          <View row spread centerV marginB-10>
+            <Text text40 $textDefault marginB-20>
+              Sliders
+            </Text>
+            <Button link label="Reset" onPress={this.resetSlider}/>
+          </View>
           {Constants.isRTL && renderBooleanOption.call(this, 'Force LTR', 'forceLTR')}
 
-          {this.renderDefaultSliderExample()}
+          {/* {this.renderDefaultSliderExample()}
           {this.renderNegativeSliderExample()}
-          {this.renderDisabledSliderExample()}
+          {this.renderDisabledSliderExample()} */}
           {this.renderRangeSliderExample()}
-          {this.renderRangeSliderWithValuesExample()}
+          {/* {this.renderRangeSliderWithValuesExample()}
           {this.renderGradientSlidersExample()}
-          {this.renderColorSliderGroupExample()}
+          {this.renderColorSliderGroupExample()} */}
         </View>
       </ScrollView>
     );

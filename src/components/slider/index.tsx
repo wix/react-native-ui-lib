@@ -222,11 +222,13 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
     this.setActiveThumb(this.thumb);
     this.set_x(this.getXForValue(this.initialValue));
-    this.update(0);
+    this.moveTo(this._x);
 
-    this.setActiveThumb(this.minThumb);
-    this.set_x(this.getXForValue(this.minInitialValue));
-    this.update(0);
+    if (this.props.useRange) {
+      this.setActiveThumb(this.minThumb);
+      this.set_x(this.getXForValue(this.minInitialValue));
+      this.moveMinTo(this._x_min);
+    }
 
     this.props.onReset?.();
   }
