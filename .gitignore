@@ -2,10 +2,6 @@
 #
 .DS_Store
 
-# Do not track local package
-react-native-ui-lib-5.0.0.tgz
-react-native-ui-lib.tgz
-
 # Xcode
 #
 build/

@@ -27,13 +27,13 @@ then
 fi
 
 # Delete previous tar
-rm -f react-native-ui-lib.tgz
+rm -f ~/Downloads/react-native-ui-lib.tgz
 # Build javascript files
 npm run build
 # Package into a tar
 npm pack
+# Rename tar and move to Downloads
+mv react-native-ui-lib-5.0.0.tgz ~/Downloads/react-native-ui-lib.tgz
 # Clean ALL untracked files
 git clean -f
 git checkout package.json
-# Rename tar
-mv react-native-ui-lib-5.0.0.tgz react-native-ui-lib.tgz
