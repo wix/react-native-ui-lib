@@ -99,10 +99,11 @@ class TopBar extends Component<ModalTopBarProps> {
     includeStatusBar: Constants.isIOS
   };
 
-  renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps}: topBarButtonProp) {
+  renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps}: topBarButtonProp, key: string) {
     if (onPress && (label || icon)) {
       return (
         <Button
+          key={key}
           link
           onPress={onPress}
           label={label}
@@ -126,7 +127,8 @@ class TopBar extends Component<ModalTopBarProps> {
       icon: doneIcon,
       accessibilityLabel: 'Done',
       buttonProps: doneButtonProps
-    });
+    },
+    'done');
   }
 
   renderCancel() {
@@ -137,24 +139,25 @@ class TopBar extends Component<ModalTopBarProps> {
       icon: cancelIcon,
       accessibilityLabel: 'Cancel',
       buttonProps: cancelButtonProps
-    });
+    },
+    'cancel');
   }
 
   renderLeftButtons = () => {
     const {leftButtons} = this.props;
     if (_.isArray(leftButtons)) {
-      return _.map(leftButtons, button => this.renderTopBarButton(button));
+      return _.map(leftButtons, (button, index) => this.renderTopBarButton(button, `left-${index}`));
     } else {
-      return leftButtons && this.renderTopBarButton(leftButtons);
+      return leftButtons && this.renderTopBarButton(leftButtons, 'left');
     }
   };
 
   renderRightButtons = () => {
     const {rightButtons} = this.props;
     if (_.isArray(rightButtons)) {
-      return _.map(rightButtons, button => this.renderTopBarButton(button));
+      return _.map(rightButtons, (button, index) => this.renderTopBarButton(button, `right-${index}`));
     } else {
-      return rightButtons && this.renderTopBarButton(rightButtons);
+      return rightButtons && this.renderTopBarButton(rightButtons, 'right');
     }
   };
 
