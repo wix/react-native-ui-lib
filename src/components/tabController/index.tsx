@@ -22,7 +22,7 @@ interface TabControllerStatics {
   PageCarousel: typeof PageCarousel;
 }
 
-export interface TabControllerProps {
+export interface TabControllerProps extends ThemeComponent {
   /**
    * The list of tab bar items
    */
