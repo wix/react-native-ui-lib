@@ -282,7 +282,7 @@ function createStyles(props: BadgeProps) {
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: (!props.icon || props.customElement) ? Colors.$backgroundPrimaryHeavy : undefined,
+      backgroundColor: (!props.icon || props.customElement) ? Colors.$backgroundGeneralHeavy : undefined,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'

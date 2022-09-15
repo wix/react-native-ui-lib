@@ -281,7 +281,6 @@ export default class PickerScreen extends Component {
 
           <Picker
             migrate
-            // @ts-expect-error
             ref={this.picker}
             migrateTextField
             label="Language"
