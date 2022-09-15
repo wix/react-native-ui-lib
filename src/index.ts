@@ -70,7 +70,7 @@ export {default as Drawer, DrawerProps, DrawerItemProps} from './components/draw
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
-export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
+export {default as FloatingButton, FloatingButtonProps, FloatingButtonLayouts} from './components/floatingButton';
 export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
 export {default as GridListItem, GridListItemProps} from './components/gridListItem';
 export {default as GridList, GridListProps} from './components/gridList';
@@ -136,9 +136,22 @@ export {default as StackAggregator, StackAggregatorProps} from './components/sta
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as Stepper, StepperProps} from './components/stepper';
 export {default as Switch, SwitchProps} from './components/switch';
-export {default as TabController, TabControllerProps, TabControllerItemProps, TabControllerImperativeMethods} from './components/tabController';
+export {
+  default as TabController,
+  TabControllerProps,
+  TabControllerItemProps,
+  TabControllerImperativeMethods
+} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/tabBar'; //TODO: remove on V7
-export {default as Timeline, TimelineProps, TimelinePointProps, TimelineLineProps, TimelineStateTypes, TimelinePointTypes, TimelineLineTypes} from './components/timeline';
+export {
+  default as Timeline,
+  TimelineProps,
+  TimelinePointProps,
+  TimelineLineProps,
+  TimelineStateTypes,
+  TimelinePointTypes,
+  TimelineLineTypes
+} from './components/timeline';
 export {default as Text, TextProps} from './components/text';
 // @ts-expect-error
 export {default as TextArea} from './components/textArea';
