@@ -1,9 +1,10 @@
 // TODO: consider unify this component functionality with our Image component
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, ImageLoadEventData} from 'react-native';
-import Animated, {FadeIn} from 'react-native-reanimated';
+import Animated, {useSharedValue, useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import View from '../../components/view';
 import Image, {ImageProps} from '../../components/image';
+import {useDidUpdate} from '../../hooks';
 
 const UIAnimatedImage = Animated.createAnimatedComponent<ImageProps>(Image);
 
@@ -39,24 +40,37 @@ const AnimatedImage = (props: AnimatedImageProps) => {
     testID,
     ...others
   } = props;
+
   const [isLoading, setIsLoading] = useState(true);
+  const opacity = useSharedValue(0);
+
+  useDidUpdate(() => {
+    if (!loader) {
+      opacity.value = 1;
+    }
+  }, [loader]);
 
   const onLoad = useCallback((event: NativeSyntheticEvent<ImageLoadEventData>) => {
     setIsLoading(false);
     propsOnLoad?.(event);
+    // did not start the animation already
+    if (opacity.value === 0) {
+      opacity.value = withTiming(1, {duration: animationDuration});
+    }
   },
-  [setIsLoading, propsOnLoad]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [setIsLoading, propsOnLoad, animationDuration]);
+
+  const fadeInStyle = useAnimatedStyle(() => {
+    return {opacity: opacity.value};
+  });
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const _style = useMemo(() => [style, fadeInStyle], [style]);
 
   return (
-    <View reanimated style={containerStyle}>
-      <UIAnimatedImage
-        entering={FadeIn.duration(animationDuration)}
-        {...others}
-        style={style}
-        source={source}
-        onLoad={onLoad}
-        testID={testID}
-      />
+    <View style={containerStyle}>
+      <UIAnimatedImage {...others} style={_style} source={source} onLoad={onLoad} testID={testID}/>
       {isLoading && loader && <View style={styles.loader}>{loader}</View>}
     </View>
   );

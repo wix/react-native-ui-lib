@@ -10,7 +10,13 @@ import {isEmpty, trim, omit} from 'lodash';
 import {asBaseComponent, forwardRef} from '../../commons/new';
 import View from '../../components/view';
 import {useMeasure} from '../../hooks';
-import {TextFieldProps, InternalTextFieldProps, ValidationMessagePosition, FieldContextType, TextFieldMethods} from './types';
+import {
+  TextFieldProps,
+  InternalTextFieldProps,
+  ValidationMessagePosition,
+  FieldContextType,
+  TextFieldMethods
+} from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
 import ValidationMessage from './ValidationMessage';
@@ -81,10 +87,11 @@ const TextField = (props: InternalTextFieldProps) => {
     }
   }, [leadingAccessory]);
 
-  const {margins, paddings, typography, color} = modifiers;
+  const {margins, paddings, typography, positionStyle, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
-  const _floatingPlaceholderStyle = useMemo(() => [typographyStyle, floatingPlaceholderStyle], [typographyStyle, floatingPlaceholderStyle]);
+  const _floatingPlaceholderStyle = useMemo(() => [typographyStyle, floatingPlaceholderStyle],
+    [typographyStyle, floatingPlaceholderStyle]);
 
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
@@ -92,7 +99,7 @@ const TextField = (props: InternalTextFieldProps) => {
 
   return (
     <FieldContext.Provider value={context}>
-      <View style={[margins, containerStyle]}>
+      <View style={[margins, positionStyle, containerStyle]}>
         <Label
           label={label}
           labelColor={labelColor}
@@ -172,4 +179,12 @@ TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
 export {TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers, TextFieldMethods};
-export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any));
+export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any), {
+  modifiersOptions: {
+    margins: true,
+    paddings: true,
+    typography: true,
+    position: true,
+    color: true
+  }
+});

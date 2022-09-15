@@ -6,10 +6,11 @@ import {
   Image as RNImage,
   ImageProps as RNImageProps,
   ImageBackground,
-  ImageSourcePropType,
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
+// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
+import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 import {
   Constants,
   asBaseComponent,
@@ -28,7 +29,7 @@ export type ImageProps = RNImageProps &
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
-    sourceTransformer?: (props: any) => ImageSourcePropType;
+    sourceTransformer?: (props: any) => ImagePropTypes.source;
     /**
      * if provided image source will be driven from asset name
      */
@@ -73,7 +74,7 @@ export type ImageProps = RNImageProps &
     /**
      * Default image source in case of an error
      */
-    errorSource?: ImageSourcePropType;
+    errorSource?: ImagePropTypes.source;
     /**
      * An imageId that can be used in sourceTransformer logic
      */
@@ -84,13 +85,21 @@ export type ImageProps = RNImageProps &
      * view; i.e. animation related crashes on Android.
      */
     useBackgroundContainer?: boolean;
+    /**
+     * The image width
+     */
+    width?: string | number;
+    /**
+     * The image height
+     */
+    height?: string | number;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
 type State = {
   error: boolean;
-  prevSource: ImageSourcePropType;
+  prevSource: ImagePropTypes.source;
 };
 
 /**
@@ -111,7 +120,7 @@ class Image extends PureComponent<Props, State> {
   public static overlayTypes = Overlay.overlayTypes;
   public static overlayIntensityType = Overlay.intensityTypes;
 
-  sourceTransformer?: (props: any) => ImageSourcePropType;
+  sourceTransformer?: (props: any) => ImagePropTypes.source;
 
   constructor(props: Props) {
     super(props);
@@ -149,7 +158,7 @@ class Image extends PureComponent<Props, State> {
     return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
-  getVerifiedSource(source?: ImageSourcePropType) {
+  getVerifiedSource(source?: ImagePropTypes.source) {
     if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       // @ts-ignore
       return {...source, uri: undefined};
@@ -183,11 +192,11 @@ class Image extends PureComponent<Props, State> {
   };
 
   renderImageWithContainer = () => {
-    const {style, cover, modifiers} = this.props;
+    const {style, cover, modifiers, width, height} = this.props;
     const {margins} = modifiers;
 
     return (
-      <View style={[margins, style, styles.errorImageContainer, cover && styles.coverImage]}>
+      <View style={[{width, height}, margins, style, styles.errorImageContainer, cover && styles.coverImage]}>
         {this.renderImage(true)}
       </View>
     );

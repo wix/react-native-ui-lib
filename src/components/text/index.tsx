@@ -8,7 +8,8 @@ import {
   ForwardRefInjectedProps,
   MarginModifiers,
   TypographyModifiers,
-  ColorsModifiers
+  ColorsModifiers,
+  FlexModifiers
 } from '../../commons/new';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
@@ -16,7 +17,8 @@ import {TextUtils} from 'utils';
 export type TextProps = RNTextProps &
   TypographyModifiers &
   ColorsModifiers &
-  MarginModifiers & {
+  MarginModifiers &
+  FlexModifiers & {
     /**
      * color of the text
      */

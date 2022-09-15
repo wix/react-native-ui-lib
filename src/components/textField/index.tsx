@@ -8,8 +8,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ImagePropTypes, TextInputPropTypes} from 'deprecated-react-native-prop-types';
 import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
+import {TextInputPropTypes, ImagePropTypes} from 'deprecated-react-native-prop-types';
 import memoize from 'memoize-one';
 import {Constants} from '../../commons/new';
 import {Colors, Typography, Spacings} from '../../style';
@@ -184,7 +184,7 @@ export default class TextField extends BaseInput {
     /**
      * Pass to render a leading icon to the TextInput value. Accepts Image props (doesn't work with floatingPlaceholder)
      */
-    leadingIcon: PropTypes.shape(Image.propTypes)
+    leadingIcon: PropTypes.shape(ImagePropTypes)
   };
 
   static defaultProps = {

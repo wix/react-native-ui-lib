@@ -6,7 +6,7 @@ import {PanningDirectionsEnum} from '../panView';
 type HiddenLocationRecord = Record<PanningDirectionsEnum, number>;
 
 export interface HiddenLocation extends HiddenLocationRecord {
-  isDefault: boolean;
+  wasMeasured: boolean;
 }
 
 export interface HiddenLocationProps<T extends View> {
@@ -21,14 +21,14 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
     y = 0,
     width = Constants.screenWidth,
     height = Constants.windowHeight,
-    isDefault = true
+    wasMeasured = true
   }): HiddenLocation => {
     return {
       up: -y - height,
       down: Constants.windowHeight - y,
       left: -width - x,
       right: Constants.screenWidth - x,
-      isDefault
+      wasMeasured
     };
   };
 
@@ -36,13 +36,14 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
-    if (containerRef.current) {
+    if (containerRef.current && hiddenLocation.wasMeasured) {
       containerRef.current.measureInWindow((x: number, y: number) => {
-        setHiddenLocation(getHiddenLocation({x, y, width, height, isDefault: false}));
+        setHiddenLocation(getHiddenLocation({x, y, width, height, wasMeasured: false}));
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  },
+  [containerRef]);
 
   return {onLayout, hiddenLocation};
 }

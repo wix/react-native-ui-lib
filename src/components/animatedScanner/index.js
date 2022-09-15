@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import {StyleSheet, Animated} from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';

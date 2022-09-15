@@ -1,15 +1,14 @@
 import _ from 'lodash';
 import memoize from 'memoize-one';
 import React, {PureComponent} from 'react';
-import {StyleSheet, UIManager, findNodeHandle, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {Constants} from '../../commons/new';
 import View from '../view';
 import Carousel from '../carousel';
 import ScrollBar from '../scrollBar';
 import PageControl from '../pageControl';
-import ColorSwatch, {SWATCH_SIZE} from '../colorSwatch';
-
+import ColorSwatch, {SWATCH_SIZE, SWATCH_MARGIN} from '../colorSwatch';
 
 interface Props {
   /**
@@ -58,10 +57,10 @@ interface Props {
 export type ColorPaletteProps = Props;
 
 interface State {
-  currentPage: number,
-  scrollable: boolean,
-  orientation?: string,
-  contentWidth?: number
+  currentPage: number;
+  scrollable: boolean;
+  orientation?: string;
+  contentWidth?: number;
 }
 
 const VERTICAL_PADDING = 16;
@@ -100,7 +99,7 @@ class ColorPalette extends PureComponent<Props, State> {
 
   carousel: React.RefObject<typeof Carousel> = React.createRef();
   scrollBar: React.RefObject<any> = React.createRef();
-  itemsRefs?: React.RefObject<typeof ColorSwatch>[] = undefined;
+  itemsRefs?: any = React.createRef();
   selectedColorIndex?: number = undefined;
   selectedPage?: number = undefined;
   currentColorsCount?: number = undefined;
@@ -113,6 +112,18 @@ class ColorPalette extends PureComponent<Props, State> {
 
   componentDidMount() {
     this.dimensionsChangeListener = Constants.addDimensionsEventListener(this.onOrientationChanged);
+    _.times(this.props.colors.length, i => {
+      this.itemsRefs.current[i] = React.createRef();
+    });
+    this.scrollToSelected();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.colors !== prevProps.colors) {
+      const newIndex = this.itemsRefs.current.length;
+      this.itemsRefs.current[newIndex] = React.createRef();
+      this.scrollToSelected();
+    }
   }
 
   componentWillUnmount() {
@@ -127,7 +138,7 @@ class ColorPalette extends PureComponent<Props, State> {
   };
 
   initLocalVariables() {
-    this.itemsRefs = undefined;
+    this.itemsRefs.current = [];
     this.selectedColorIndex = undefined;
     this.selectedPage = undefined;
     this.currentColorsCount = this.colors.length;
@@ -208,38 +219,36 @@ class ColorPalette extends PureComponent<Props, State> {
     return (margin - 0.001) / 2;
   }
 
-  scrollToSelected() {
+  scrollToSelected = () => setTimeout(() => {
     const {scrollable, currentPage} = this.state;
 
-    if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs) {
-      const childRef = this.itemsRefs[this.selectedColorIndex];
+    if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs.current) {
+      // The this.selectedColorIndex layout doesn't update on time
+      // so we use this.selectedColorIndex - 1 and add an offset of 1 Swatch
+      const childRef: any = this.itemsRefs.current[this.selectedColorIndex - 1]?.current;
 
       if (childRef) {
-        const handle = findNodeHandle(childRef.current);
-        if (handle) {
-          //@ts-ignore
-          UIManager.measureLayoutRelativeToParent(handle, e => {
-            console.warn(e);
-          },
-          (x: number, _y: number, w: number, _h: number) => {
-            if (x + w > this.containerWidth) {
-              this.scrollBar?.current?.scrollTo({
-                x: x + w + HORIZONTAL_PADDING - this.containerWidth,
-                y: 0,
-                animated: false
-              });
-            }
+        const childLayout = childRef.getLayout();
+        const leftMargins = this.getHorizontalMargins(this.selectedColorIndex).marginLeft;
+        const childX = childLayout.x + childLayout.width + SWATCH_MARGIN + leftMargins + SWATCH_SIZE;
+        if (childX > this.containerWidth) {
+          this.scrollBar?.current?.scrollTo({
+            x: childX + HORIZONTAL_PADDING - this.containerWidth,
+            y: 0,
+            animated: false
           });
         }
+      } else if (this.usePagination) {
+        this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
       }
-    } else if (this.usePagination) {
-      this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
     }
-  }
+  }, 100)
 
   onContentSizeChange = (contentWidth: number) => {
     this.setState({
-      scrollable: contentWidth > this.containerWidth, contentWidth});
+      scrollable: contentWidth > this.containerWidth,
+      contentWidth
+    });
   };
 
   onChangePage = (index: number) => {
@@ -248,12 +257,6 @@ class ColorPalette extends PureComponent<Props, State> {
 
   onValueChange = (value: string, options: object) => {
     this.props.onValueChange?.(value, options);
-  };
-
-  onLayout = () => {
-    setTimeout(() => {
-      this.scrollToSelected();
-    }, 0);
   };
 
   getHorizontalMargins = (index: number) => {
@@ -292,12 +295,6 @@ class ColorPalette extends PureComponent<Props, State> {
     }
   };
 
-  addRefByIndex = (index: number, ref?: any) => {
-    if (this.itemsRefs && ref) {
-      this.itemsRefs[index] = ref;
-    }
-  }
-
   renderColorSwatch(color: string, index: number) {
     const {animatedIndex, testID} = this.props;
 
@@ -311,7 +308,7 @@ class ColorPalette extends PureComponent<Props, State> {
         selected={this.value === color}
         animated={index === animatedIndex}
         onPress={this.onValueChange}
-        ref={r => this.addRefByIndex(index, r)}
+        ref={this.itemsRefs.current[index]}
         testID={`${testID}-${color}`}
       />
     );
@@ -319,10 +316,9 @@ class ColorPalette extends PureComponent<Props, State> {
 
   renderPalette(props: Props, contentStyle: StyleProp<ViewStyle>, colors: string[], pageIndex: number) {
     const {style, ...others} = props;
-    this.itemsRefs = [];
 
     return (
-      <View key={pageIndex} {...others} style={[styles.paletteContainer, contentStyle, style]} onLayout={this.onLayout}>
+      <View key={pageIndex} {...others} style={[styles.paletteContainer, contentStyle, style]}>
         {_.map(colors, (color, i) => {
           if (color === this.value) {
             this.selectedColorIndex = i;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {TextPropTypes} from 'deprecated-react-native-prop-types';
 import {StyleSheet, TouchableOpacity} from 'react-native';
+import {TextPropTypes} from 'deprecated-react-native-prop-types';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
 import View from '../view';
