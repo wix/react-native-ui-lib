@@ -27,6 +27,7 @@
     "xcode": "xed ios",
     "build:dev": "tsc --p tsconfig.dev.json",
     "build": "node scripts/build.js",
+    "build:local": "./scripts/createLocalPackage.sh",
     "pre-push": "npm run build:dev && npm run test",
     "docs:deploy": "./scripts/deployDocs.sh",
     "docs:build": "node scripts/buildDocs.js",

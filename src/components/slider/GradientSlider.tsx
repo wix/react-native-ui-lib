@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {HueGradient, LightnessGradient, SaturationGradient, Gradient} from 'react-native-color';
 import {Colors} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import Slider, {SliderProps} from './index';
 import {SliderContextProps} from './context/SliderContext';
 import asSliderGroupChild from './context/asSliderGroupChild';
@@ -18,7 +18,7 @@ export enum GradientSliderTypes {
   SATURATION = 'saturation'
 }
 
-export type GradientSliderProps = SliderProps & {
+export type GradientSliderProps = Omit<SliderProps, 'onValueChange'> & {
   /**
    * The gradient color
    */
@@ -57,6 +57,8 @@ type GradientSliderComponentProps = {
 } & GradientSliderProps &
   typeof defaultProps;
 
+type Props = GradientSliderComponentProps & ForwardRefInjectedProps;
+
 interface GradientSliderState {
   color: tinycolor.ColorFormats.HSLA;
   initialColor: tinycolor.ColorFormats.HSLA;
@@ -74,14 +76,14 @@ const defaultProps = {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/GradientSlider/GradientSlider.gif?raw=true
  */
-class GradientSlider extends Component<GradientSliderComponentProps, GradientSliderState> {
+class GradientSlider extends Component<Props, GradientSliderState> {
   static displayName = 'GradientSlider';
 
   static defaultProps = defaultProps;
 
   static types = GradientSliderTypes;
 
-  constructor(props: GradientSliderComponentProps) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -91,7 +93,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
     };
   }
 
-  static getDerivedStateFromProps(nextProps: GradientSliderComponentProps, prevState: GradientSliderState) {
+  static getDerivedStateFromProps(nextProps: Props, prevState: GradientSliderState) {
     if (prevState.prevColor !== nextProps.color) {
       return {
         color: Colors.getHSL(nextProps.color),
@@ -99,6 +101,12 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
       };
     }
     return null;
+  }
+
+  slider = React.createRef();
+
+  reset = () => {
+    this.updateColor(this.state.initialColor);
   }
 
   getColor() {
@@ -175,7 +183,7 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
   };
 
   render() {
-    const {type, containerStyle, disabled, accessible, ...others} = this.props;
+    const {type, containerStyle, disabled, accessible, forwardedRef, ...others} = this.props;
     const initialColor = this.state.initialColor;
     const color = this.getColor();
     const thumbTintColor = Colors.getHexString(color);
@@ -210,6 +218,8 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
     return (
       <Slider
         {...others}
+        ref={forwardedRef}
+        onReset={this.reset}
         renderTrack={renderTrack}
         step={step}
         maximumValue={maximumValue}
@@ -225,4 +235,4 @@ class GradientSlider extends Component<GradientSliderComponentProps, GradientSli
   }
 }
 
-export default asBaseComponent<GradientSliderComponentProps, typeof GradientSlider>(asSliderGroupChild(GradientSlider));
+export default asBaseComponent<GradientSliderComponentProps, typeof GradientSlider>(forwardRef(asSliderGroupChild(GradientSlider)));
