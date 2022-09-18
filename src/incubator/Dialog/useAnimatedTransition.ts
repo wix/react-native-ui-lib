@@ -68,7 +68,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   [onInitPosition]);
 
   useEffect(() => {
-    if (!hiddenLocation.wasMeasured && enterFrom) {
+    if (hiddenLocation.wasMeasured && enterFrom) {
       const location = getLocation(enterFrom);
       initPosition(location, enterFrom, animateIn);
     }
