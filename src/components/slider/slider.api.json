@@ -6,8 +6,10 @@
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true"],
   "props": [
     {"name": "value", "type": "number", "description": "Initial value"},
-    {"name": "minimumValue", "type": "number", "description": "Minimum value"},
-    {"name": "maximumValue", "type": "number", "description": "Maximum value"},
+    {"name": "minimumValue", "type": "number", "description": "Track minimum value"},
+    {"name": "maximumValue", "type": "number", "description": "Track maximum value"},
+    {"name": "initialMinimumValue", "type": "number", "description": "Initial minimum value", "note": "Only when `useRange` is true"},
+    {"name": "initialMaximumValue", "type": "number", "description": "Initial maximum value", "note": "Only when `useRange` is true"},
     {
       "name": "step",
       "type": "number",
@@ -17,6 +19,12 @@
       "name": "useRange",
       "type": "boolean",
       "description": "If true the Slider will display a second thumb for the min value"
+    },
+    {
+      "name": "useGap",
+      "type": "boolean",
+      "description": "If true the min and max thumbs will not overlap",
+      "default": "true"
     },
     {
       "name": "minimumTrackTintColor",
@@ -45,6 +53,11 @@
       "name": "onSeekEnd",
       "type": "() => void",
       "description": "Callback that notifies about slider seeking is finished"
+    },
+    {
+      "name": "onReset",
+      "type": "() => void",
+      "description": "Callback that notifies when the reset function was invoked"
     },
     {"name": "containerStyle", "type": "ViewStyle", "description": "The container style"},
     {"name": "trackStyle", "type": "ViewStyle", "description": "The track style"},

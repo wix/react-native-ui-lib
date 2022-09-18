@@ -675,7 +675,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   Object {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#5A48F5",
+                    "backgroundColor": "#116DFF",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -900,7 +900,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   Object {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#5A48F5",
+                    "backgroundColor": "#116DFF",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1125,7 +1125,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   Object {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#5A48F5",
+                    "backgroundColor": "#116DFF",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1531,7 +1531,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   Object {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#5A48F5",
+                    "backgroundColor": "#116DFF",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -2734,7 +2734,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   Object {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#5A48F5",
+                    "backgroundColor": "#116DFF",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",

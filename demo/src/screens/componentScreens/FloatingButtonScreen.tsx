@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Alert, ScrollView} from 'react-native';
-import {Colors, Text, FloatingButton} from 'react-native-ui-lib';
+import {Colors, Text, FloatingButton, FloatingButtonLayouts} from 'react-native-ui-lib';
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 interface State {
   showButton: boolean;
   showSecondary: boolean;
+  showVertical: boolean;
 }
 
 export default class FloatingButtonScreen extends Component<{}, State> {
   state = {
     showButton: true,
-    showSecondary: true
+    showSecondary: true,
+    showVertical: true
   };
 
   notNow = () => {
@@ -25,7 +27,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
   };
 
   render() {
-    const {showSecondary} = this.state;
+    const {showSecondary, showVertical} = this.state;
     return (
       <View style={styles.container}>
         <Text text60 center $textDefault marginB-s4>
@@ -33,6 +35,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
         </Text>
         {renderBooleanOption.call(this, 'Show Floating Button', 'showButton')}
         {renderBooleanOption.call(this, 'Show Secondary Button', 'showSecondary')}
+        {renderBooleanOption.call(this, 'Button Layout Vertical', 'showVertical')}
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View paddingT-20>
@@ -69,11 +72,11 @@ export default class FloatingButtonScreen extends Component<{}, State> {
             showSecondary
               ? {
                 label: 'Not now',
-                onPress: this.notNow,
-                color: Colors.$textDangerLight
+                onPress: this.notNow
               }
               : undefined
           }
+          buttonLayout={showVertical ? FloatingButtonLayouts.VERTICAL : FloatingButtonLayouts.HORIZONTAL}
           // bottomMargin={80}
           // hideBackgroundOverlay
           // withoutAnimation
