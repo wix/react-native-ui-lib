@@ -21,10 +21,9 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     showDivider = true,
     leadingAccessory,
     trailingAccessory,
-    innerContainerStyle,
+    contentContainerStyle,
     onPress,
     bottomAccessory,
-    outerContainerStyle,
     style,
     ...others
   } = props;
@@ -65,7 +64,7 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
   const content = useMemo(() => {
     if (headerContent || leadingAccessory || trailingAccessory) {
       return (
-        <View marginH-s5 marginV-s1 style={innerContainerStyle} row spread>
+        <View marginH-s5 marginV-s1 style={contentContainerStyle} row spread>
           {leadingAccessory}
           {headerContent}
           {trailingAccessory}
@@ -74,7 +73,7 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     }
 
     return null;
-  }, [headerContent, leadingAccessory, trailingAccessory, innerContainerStyle]);
+  }, [headerContent, leadingAccessory, trailingAccessory, contentContainerStyle]);
 
   const divider = useMemo(() => {
     if (showDivider) {
@@ -82,11 +81,9 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     }
   }, [showDivider]);
 
-  const containerStyle = useMemo(() => [style, outerContainerStyle], [style, outerContainerStyle]);
-
   if (knob || content || bottomAccessory || divider) {
     return (
-      <View {...others} style={containerStyle}>
+      <View {...others} style={style}>
         {knob}
         {content}
         {bottomAccessory}

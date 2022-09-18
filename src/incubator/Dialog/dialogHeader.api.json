@@ -14,12 +14,12 @@
       "type": "(props: DialogHeaderProps) => React.ReactElement",
       "description": "Replace the header's default content (Dialog.Text)"
     },
-    {"name": "showKnob", "type": "boolean", "description": "Show the header's knob (default is true)"},
-    {"name": "showDivider", "type": "boolean", "description": "Show the header's divider (default is true)"},
+    {"name": "showKnob", "type": "boolean", "description": "Show the header's knob", "default": "true"},
+    {"name": "showDivider", "type": "boolean", "description": "Show the header's divider", "default": "true"},
     {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
     {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
     {
-      "name": "innerContainerStyle",
+      "name": "contentContainerStyle",
       "type": "ViewProps['style']",
       "description": "Style for the leading + content + trailing components (without the bottomAccessory)"
     },
@@ -32,11 +32,6 @@
       "name": "bottomAccessory",
       "type": "ReactElement",
       "description": "Pass to render a bottom element below the input"
-    },
-    {
-      "name": "outerContainerStyle",
-      "type": "ViewProps['style']",
-      "description": "Style for the whole header's container"
     }
   ]
 }

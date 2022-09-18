@@ -82,6 +82,7 @@ type ActionSheetProps = {
    */
   renderAction?: (option: ButtonProps, index: number, onOptionPress: ActionSheetOnOptionPress) => JSX.Element;
   /**
+   * @deprecated
    * Called once the modal has been dismissed completely
    */
   onModalDismissed?: DialogProps['onDialogDismissed'];
