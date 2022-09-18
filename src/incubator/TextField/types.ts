@@ -211,7 +211,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Container style of the whole component
      */
-    containerStyle?: ViewStyle;
+    containerStyle?: StyleProp<ViewStyle>;
     /**
      * Predefined preset to use for styling the field
      */
