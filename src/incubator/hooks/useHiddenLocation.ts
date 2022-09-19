@@ -1,5 +1,5 @@
-import {RefObject, useCallback, useState} from 'react';
-import {View, LayoutChangeEvent} from 'react-native';
+import {RefObject, useCallback, useState, useEffect, useRef} from 'react';
+import {View, LayoutChangeEvent, LayoutRectangle} from 'react-native';
 import {Constants} from '../../commons/new';
 import {PanningDirectionsEnum} from '../panView';
 
@@ -15,6 +15,7 @@ export interface HiddenLocationProps<T extends View> {
 
 export default function useHiddenLocation<T extends View>(props: HiddenLocationProps<T>) {
   const {containerRef} = props;
+  const size = useRef<Pick<LayoutRectangle, 'width' | 'height'>>();
 
   const getHiddenLocation = ({
     x = 0,
@@ -34,16 +35,30 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
 
   const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
 
-  const onLayout = useCallback((event: LayoutChangeEvent) => {
-    const {width, height} = event.nativeEvent.layout;
-    if (containerRef.current && !hiddenLocation.wasMeasured) {
-      containerRef.current.measureInWindow((x: number, y: number) => {
-        setHiddenLocation(getHiddenLocation({x, y, width, height, wasMeasured: true}));
+  const measure = useCallback(() => {
+    if (!hiddenLocation.wasMeasured && containerRef.current) {
+      containerRef.current.measureInWindow((x, y) => {
+        if (!hiddenLocation.wasMeasured && size.current) {
+          setHiddenLocation(getHiddenLocation({
+            x,
+            y,
+            width: size.current.width,
+            height: size.current.height,
+            wasMeasured: true
+          }));
+        }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },
-  [containerRef]);
+  }, [hiddenLocation?.wasMeasured, setHiddenLocation, containerRef, size]);
+
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    const {width, height} = event.nativeEvent.layout;
+    size.current = {width, height};
+  }, []);
+
+  useEffect(() => {
+    measure();
+  }, [measure]);
 
   return {onLayout, hiddenLocation};
 }
