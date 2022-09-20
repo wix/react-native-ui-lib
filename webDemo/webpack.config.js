@@ -18,7 +18,6 @@ const baseProjectSource = [
   path.resolve(appDirectory, 'node_modules/react-native-svg'),
   path.resolve(appDirectory, 'node_modules/react-native-svg-transformer'),
   path.resolve(appDirectory, 'node_modules/@react-native-picker/picker'),
-  path.resolve(appDirectory, 'node_modules/@react-native-community/blur'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/picker'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/netinfo'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/datetimepicker'),
@@ -75,8 +74,7 @@ module.exports =
   resolve: {
     // This will only alias the exact import "react-native"
     alias: {
-      'react-native$': 'react-native-web',
-      '@react-native-community/blur': path.resolve(appDirectory, './src/blur')
+      'react-native$': 'react-native-web'
     },
     // If you're working on a multi-platform React Native app, web-specific
     // module implementations should be written in files using the extension
