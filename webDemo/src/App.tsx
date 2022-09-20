@@ -20,13 +20,13 @@ import Drawer from 'react-native-ui-lib/Drawer';
 
 import {Colors, Spacings, Typography, Assets, Text} from 'react-native-ui-lib';
 
-import Picker from './webComps/Picker';
-import RadioGroup from './webComps/RadioButtonGroup';
-import Timeline from './webComps/Timeline';
-import StackAggregator from './webComps/StackAggregator';
-import {Image, ProgressiveImage} from './webComps/Image';
-import List from './webComps/List';
-import CarouselWrapper from './webComps/Carousel';
+import Picker from './examples/Picker';
+import RadioGroup from './examples/RadioButtonGroup';
+import Timeline from './examples/Timeline';
+import StackAggregator from './examples/StackAggregator';
+import {Image, ProgressiveImage} from './examples/Image';
+import List from './examples/List';
+import CarouselWrapper from './examples/Carousel';
 interface ItemToRender {
   title: string,
   FC: React.FC
