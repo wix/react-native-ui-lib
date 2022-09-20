@@ -46,7 +46,7 @@ export interface WizardStepProps {
   /**
    * Icon to replace the (default) index
    */
-  icon?: ImageProps;
+  icon?: ImageProps['source'];
   /**
    * Additional styles for the index's label (when icon is not provided)
    */
