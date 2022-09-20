@@ -11,8 +11,8 @@
     "url": "git+https://github.com/wix/react-native-ui-lib.git"
   },
   "scripts": {
-    "build:app": "webpack --config ./webpack.config.js",
-    "start:app": "webpack-dev-server --config ./webpack.config.js"
+    "build": "webpack --config ./webpack.config.js",
+    "start": "webpack-dev-server --config ./webpack.config.js"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^3.4.6",
