@@ -2,7 +2,7 @@
 import {useEffect, useCallback} from 'react';
 import {runOnJS, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
 import {HiddenLocation} from '../hooks/useHiddenLocation';
-import {PanningDirections, PanningDirectionsEnum} from '../panView';
+import {PanningDirections, PanningDirectionsEnum, DEFAULT_ANIMATION_CONFIG} from '../panView';
 import useAnimationEndNotifier, {
   AnimationNotifierEndProps,
   TransitionViewAnimationType
@@ -10,9 +10,6 @@ import useAnimationEndNotifier, {
 const TransitionViewDirectionEnum = PanningDirectionsEnum;
 type TransitionViewDirection = PanningDirections;
 export {TransitionViewAnimationType, TransitionViewDirectionEnum, TransitionViewDirection};
-
-const DEFAULT_ANIMATION_VELOCITY = 300;
-const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 100, mass: 0.4};
 
 export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
   /**
@@ -71,11 +68,11 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   [onInitPosition]);
 
   useEffect(() => {
-    if (!hiddenLocation.isDefault && enterFrom) {
+    if (hiddenLocation.wasMeasured && enterFrom) {
       const location = getLocation(enterFrom);
       initPosition(location, enterFrom, animateIn);
     }
-  }, [hiddenLocation.isDefault]);
+  }, [hiddenLocation.wasMeasured]);
 
   const translateTo = useCallback((to: {x: number; y: number},
     animationDirection: TransitionViewDirection,

@@ -2,25 +2,24 @@
 import React, {useCallback} from 'react';
 import {useSharedValue, withTiming, useAnimatedStyle} from 'react-native-reanimated';
 import {Colors} from 'style';
-import View from '../../../components/view';
-import {ModalProps} from '../../../components/modal';
-import {TransitionViewAnimationType} from '../../TransitionView';
-import {ImperativeDialogProps} from '../types';
+import View from '../../components/view';
+import {ModalProps} from '../../components/modal';
+import {TransitionViewAnimationType} from './useAnimatedTransition';
+import {DialogProps} from './types';
 
 const DEFAULT_OVERLAY_BACKGROUND_COLORS = Colors.rgba(Colors.grey20, 0.65);
 
 export type AnimationType = TransitionViewAnimationType;
 
-export type FadeViewProps = Pick<ImperativeDialogProps, 'initialVisibility' | 'testID'> &
-  Pick<ModalProps, 'overlayBackgroundColor'>;
+export type FadeViewProps = Pick<DialogProps, 'visible' | 'testID'> & Pick<ModalProps, 'overlayBackgroundColor'>;
 
 export interface FadeViewMethods {
   hideNow: () => void;
 }
 
 const useFadeView = (props: FadeViewProps) => {
-  const {initialVisibility, overlayBackgroundColor = DEFAULT_OVERLAY_BACKGROUND_COLORS, testID} = props;
-  const fadeOpacity = useSharedValue<number>(Number(initialVisibility));
+  const {visible, overlayBackgroundColor = DEFAULT_OVERLAY_BACKGROUND_COLORS, testID} = props;
+  const fadeOpacity = useSharedValue<number>(Number(visible));
 
   const hideNow = useCallback(() => {
     fadeOpacity.value = 0;

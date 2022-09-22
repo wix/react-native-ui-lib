@@ -87,11 +87,16 @@
       "name": "formatter",
       "type": "(value) => string | undefined",
       "description": "Custom formatter for the input value (used only when input if not focused)"
+    },
+    {
+      "name": "useGestureHandlerInput",
+      "type": "boolean",
+      "description": "Use react-native-gesture-handler instead of react-native for the base TextInput"
     }
   ],
   "snippet": [
     "<TextField",
-    "  placeholder={'Placeholder$1}",
+    "  placeholder={'Placeholder'$1}",
     "  floatingPlaceholder",
     "  onChangeText={() => console.log('changed')$2}",
     "  enableErrors",

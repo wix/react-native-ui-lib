@@ -1,10 +1,12 @@
 example/
 docs/
+docuilib/
+eslint-rules/
 extensions/
 node_modules/
 .npmignore
 .watchmanconfig
-
+src/**/__tests__/*.*
 
 #################
 # from .gitignore:
@@ -232,6 +234,7 @@ ios/
 android/
 demo/
 expoDemo/
+webDemo/
 uilib-docs/
 markdowns/
 .babelrc

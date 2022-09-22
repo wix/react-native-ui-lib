@@ -14,5 +14,6 @@ export {
   PaddingModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  BackgroundColorModifier
+  BackgroundColorModifier,
+  FlexModifiers
 } from './modifiers';

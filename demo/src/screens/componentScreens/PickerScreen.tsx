@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {
   View,
   Colors,
   Icon,
-  Dialog,
+  Incubator,
   Text,
   Picker,
   Avatar,
@@ -14,7 +14,6 @@ import {
   Typography,
   PickerProps,
   PickerMethods,
-  DialogProps,
   Button
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
@@ -61,20 +60,11 @@ export default class PickerScreen extends Component {
     contact: 0
   };
 
-  dialogHeader: DialogProps['renderPannableHeader'] = props => {
-    const {title} = props;
-    return (
-      <Text margin-15 text60 $textDefault>
-        {title}
-      </Text>
-    );
-  };
-
   renderDialog: PickerProps['renderCustomModal'] = modalProps => {
     const {visible, children, toggleModal, onDone} = modalProps;
 
     return (
-      <Dialog
+      <Incubator.Dialog
         visible={visible}
         onDismiss={() => {
           onDone();
@@ -85,12 +75,11 @@ export default class PickerScreen extends Component {
         bottom
         useSafeArea
         containerStyle={{backgroundColor: Colors.$backgroundDefault}}
-        renderPannableHeader={this.dialogHeader}
-        panDirection={PanningProvider.Directions.DOWN}
-        pannableHeaderProps={{title: 'Custom modal'}}
+        direction={PanningProvider.Directions.DOWN}
+        headerProps={{title: 'Custom modal'}}
       >
         <ScrollView>{children}</ScrollView>
-      </Dialog>
+      </Incubator.Dialog>
     );
   };
 
@@ -281,7 +270,6 @@ export default class PickerScreen extends Component {
 
           <Picker
             migrate
-            // @ts-expect-error
             ref={this.picker}
             migrateTextField
             label="Language"

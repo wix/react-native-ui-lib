@@ -71,7 +71,7 @@ packages.forEach((package) => {
     });
     content += '};\n';
     typings += '}';
-    typings = `import ${typings} from './generatedTypes';\nexport ${typings};\n`;
+    typings = `import ${typings} from './src';\nexport ${typings};\n`;
   }
 
   fs.writeFileSync(package.filename, content);
@@ -92,7 +92,7 @@ fs.readdir(path, (err, files) => {
           `module.exports = require('${path}/${file}').default;\n`);
         const componentName = _.upperFirst(file);
         fs.writeFileSync(`${file}.d.ts`,
-          `import {${componentName}} from './generatedTypes';\nexport default ${componentName};\n`);
+          `import {${componentName}} from './src';\nexport default ${componentName};\n`);
       });
   }
 });

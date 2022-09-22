@@ -1,5 +1,6 @@
-import React, {useContext, useEffect, useRef, useCallback, useState, useMemo} from 'react';
+import React, {useContext, useRef, useCallback, useState, useMemo} from 'react';
 import {Animated, LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
+import {useDidUpdate} from 'hooks';
 import {FloatingPlaceholderProps, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
@@ -24,10 +25,10 @@ const FloatingPlaceholder = ({
     top: 0,
     left: 0
   });
-  const animation = useRef(new Animated.Value(Number(context.isFocused))).current;
+  const animation = useRef(new Animated.Value(Number((floatOnFocus && context.isFocused) || context.hasValue))).current;
   const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
-  useEffect(() => {
+  useDidUpdate(() => {
     const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;
     Animated.timing(animation, {
       toValue: Number(toValue),

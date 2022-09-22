@@ -39,7 +39,8 @@ class WithScrollReachedScreen extends Component<WithScrollReachedProps> {
             {_.times(3, this.renderItem)}
           </ScrollView>
           {!this.props.scrollReachedProps.isScrollAtEnd && (
-            <Image style={styles.fadeOutImage} source={fadeImage} />
+            // @ts-expect-error
+            <Image style={styles.fadeOutImage} source={fadeImage} pointerEvents="none"/>
           )}
         </View>
       </View>

@@ -27,6 +27,7 @@
     "xcode": "xed ios",
     "build:dev": "tsc --p tsconfig.dev.json",
     "build": "node scripts/build.js",
+    "build:local": "./scripts/createLocalPackage.sh",
     "pre-push": "npm run build:dev && npm run test",
     "docs:deploy": "./scripts/deployDocs.sh",
     "docs:build": "node scripts/buildDocs.js",
@@ -38,6 +39,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "color": "^3.1.0",
     "commons-validator-js": "^1.0.237",
+    "deprecated-react-native-prop-types": "^2.3.0",
     "hoist-non-react-statics": "^3.0.0",
     "lodash": "^4.17.21",
     "memoize-one": "^5.0.5",
@@ -57,18 +59,25 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.12.5",
+    "@formatjs/intl-datetimeformat": "^6.0.3",
+    "@formatjs/intl-getcanonicallocales": "^2.0.2",
+    "@formatjs/intl-locale": "^3.0.3",
+    "@formatjs/intl-numberformat": "^8.0.4",
+    "@formatjs/intl-pluralrules": "^5.0.3",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/blur": "^3.4.1",
     "@react-native-community/datetimepicker": "^3.4.6",
     "@react-native-community/netinfo": "^5.6.2",
     "@react-native-picker/picker": "^2.3.0",
+    "@shopify/flash-list": "^1.2.1",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/react-native": "^7.2.0",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
-    "@types/react-native": "0.66.4",
+    "@types/react": "^17.0.50",
+    "@types/react-native": "0.68.5",
     "@types/tinycolor2": "^1.4.2",
     "@types/url-parse": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "4.25.0",
@@ -129,7 +138,9 @@
     "setupFiles": [
       "./jest-setup.js"
     ],
-    "testMatch": ["**/*.spec.(js|tsx)"],
+    "testMatch": [
+      "**/*.spec.(js|tsx)"
+    ],
     "moduleNameMapper": {
       "^react-native-reanimated$": "<rootDir>/node_modules/react-native-reanimated/src/Animated.js"
     }

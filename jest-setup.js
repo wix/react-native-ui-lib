@@ -10,10 +10,17 @@ jest.mock('@react-native-community/netinfo', () => {});
 jest.mock('react-native-reanimated', () => {
   const reactNativeReanimated = require('react-native-reanimated/mock');
   reactNativeReanimated.interpolateColor = jest.fn(v => v); // TODO: See this https://github.com/software-mansion/react-native-reanimated/issues/2749
+  reactNativeReanimated.FadeIn = {
+    duration: jest.fn()
+  };
   return reactNativeReanimated;
 });
 global.__reanimatedWorkletInit = jest.fn();
-jest.mock('react-native-gesture-handler', () => {});
+jest.mock('react-native-gesture-handler',
+  () => ({
+    FlatList: require('react-native').FlatList
+  }),
+  {virtual: true});
 jest.mock('@react-native-picker/picker', () => ({Picker: {Item: {}}}));
 jest.mock('react-native', () => {
   const reactNative = jest.requireActual('react-native');

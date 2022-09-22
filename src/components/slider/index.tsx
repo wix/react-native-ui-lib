@@ -37,13 +37,21 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    */
   value?: number;
   /**
-   * Minimum value
+   * Track minimum value
    */
   minimumValue?: number;
   /**
-   * Maximum value
+   * Track maximum value
    */
   maximumValue?: number;
+  /**
+   * Initial minimum value (when useRange is true)
+   */
+  initialMinimumValue?: number;
+  /**
+   * Initial maximum value (when useRange is true)
+   */
+  initialMaximumValue?: number;
   /**
    * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
    */
@@ -73,6 +81,10 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    */
   onSeekEnd?: () => void;
   /**
+   * Callback that notifies when the reset function was invoked 
+   */
+  onReset?: () => void;
+  /**
    * The container style
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -88,7 +100,11 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    * If true the Slider will display a second thumb for the min value
    */
   useRange?: boolean;
-   /**
+  /**
+   * If true the min and max thumbs will not overlap
+   */
+  useGap?: boolean;
+  /**
    * Callback for onRangeChange. Returns values object with the min and max values
    */
   onRangeChange?: SliderOnRangeChange;
@@ -130,7 +146,8 @@ const defaultProps = {
   minimumValue: 0,
   maximumValue: 1,
   step: 0,
-  thumbHitSlop: {top: 10, bottom: 10, left: 24, right: 24}
+  thumbHitSlop: {top: 10, bottom: 10, left: 24, right: 24},
+  useGap: true
 };
 
 /**
@@ -155,8 +172,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
   private _x_min = 0;
   private lastDx = 0;
 
-  private initialValue = this.getRoundedValue(this.props.useRange ? this.props.maximumValue : this.props.value);
-  private minInitialValue = this.getRoundedValue(this.props.minimumValue);
+  private initialValue = this.getRoundedValue(this.getInitialValue());
+  private minInitialValue = this.getRoundedValue(this.props.initialMinimumValue || this.props.minimumValue);
   private lastValue = this.initialValue;
   private lastMinValue = this.minInitialValue;
 
@@ -169,10 +186,13 @@ export default class Slider extends PureComponent<SliderProps, State> {
   private thumbSize: Measurements | undefined;
   private dimensionsChangeListener: any;
 
+  private didMount: boolean;
+
   constructor(props: SliderProps) {
     super(props);
 
     this.activeThumbRef = this.thumb;
+    this.didMount = false;
 
     this.state = {
       containerSize: {width: 0, height: 0},
@@ -193,6 +213,29 @@ export default class Slider extends PureComponent<SliderProps, State> {
       onPanResponderEnd: () => true,
       onPanResponderTerminationRequest: () => false
     });
+  }
+
+  reset() { // NOTE: used with ref
+    this.lastValue = this.initialValue;
+    this.lastMinValue = this.minInitialValue;
+    this.lastDx = 0;
+
+    this.setActiveThumb(this.thumb);
+    this.set_x(this.getXForValue(this.initialValue));
+    this.moveTo(this._x);
+
+    if (this.props.useRange) {
+      this.setActiveThumb(this.minThumb);
+      this.set_x(this.getXForValue(this.minInitialValue));
+      this.moveMinTo(this._x_min);
+    }
+
+    this.props.onReset?.();
+  }
+
+  getInitialValue() {
+    const {useRange, initialMaximumValue, value, maximumValue} = this.props;
+    return useRange ? initialMaximumValue || maximumValue : value;
   }
 
   checkProps(props: SliderProps) {
@@ -221,8 +264,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   componentDidUpdate(prevProps: SliderProps, prevState: State) {
-    if (!this.props.useRange && prevProps.value !== this.props.value) {
-      this.initialValue = this.getRoundedValue(this.props.value);
+    const {useRange, value, initialMinimumValue} = this.props;
+    
+    if (!useRange && prevProps.value !== value) {
+      this.initialValue = this.getRoundedValue(value);
       
       // set position for new value
       this._x = this.getXForValue(this.initialValue);
@@ -236,6 +281,12 @@ export default class Slider extends PureComponent<SliderProps, State> {
       this._x = this.getXForValue(this.initialValue);
       this._x_min = this.getXForValue(this.minInitialValue);
       this.moveTo(this._x);
+
+      if (useRange && initialMinimumValue) {
+        this.moveMinTo(this._x_min);
+      }
+
+      this.didMount = true;
     }
   }
 
@@ -333,28 +384,32 @@ export default class Slider extends PureComponent<SliderProps, State> {
   moveTo(x: number) {
     if (this.isDefaultThumbActive()) {
       if (this.thumb.current) {
-        const {useRange} = this.props;
+        const {useRange, useGap} = this.props;
         const {trackSize, thumbSize} = this.state;
+
         const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
         const _x = this.shouldForceLTR ? trackSize.width - x : x; // adjust for RTL
         const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
         
         if (useRange) {
           const minThumbPosition = this._minThumbStyles?.left as number;
-          if (left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP) {
+          if (useGap && left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP 
+            || !useGap && left >= minThumbPosition) {
             this._thumbStyles.left = left;
             
             const width = left - minThumbPosition;
             this._minTrackStyles.width = width;
             
-            this.updateValue(x);
+            if (this.didMount) {
+              this.updateValue(x);
+            }
           }
         } else {
           this._thumbStyles.left = left;
           this._minTrackStyles.width = Math.min(trackSize.width, x);
         }
         
-        this.thumb.current?.setNativeProps(this._thumbStyles);
+        this.thumb.current.setNativeProps(this._thumbStyles);
         this.minTrack.current?.setNativeProps(this._minTrackStyles);
       }
     } else {
@@ -363,6 +418,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   moveMinTo(x: number) {
+    const {useGap} = this.props;
     const {trackSize, thumbSize} = this.state;
 
     if (this.minThumb.current) {
@@ -371,7 +427,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
       const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
       
       const maxThumbPosition = this._thumbStyles?.left as number;
-      if (left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP) {
+      if (useGap && left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP 
+        || !useGap && left <= maxThumbPosition) {
         this._minThumbStyles.left = left;
         
         this._minTrackStyles.width = maxThumbPosition - x;
@@ -379,8 +436,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
         
         this.minThumb.current?.setNativeProps(this._minThumbStyles);
         this.minTrack.current?.setNativeProps(this._minTrackStyles);
-
-        this.updateValue(x);
+        
+        if (this.didMount) {
+          this.updateValue(x);
+        }
       }
     }
   }
@@ -665,8 +724,22 @@ export default class Slider extends PureComponent<SliderProps, State> {
     );
   }
 
+  renderRangeThumb() {
+    const {useRange, useGap} = this.props;
+    if (useRange) {
+      if (useGap) {
+        return this.renderMinThumb();
+      }
+      return (
+        <View style={{zIndex: this.isDefaultThumbActive() ? 0 : 1, top: '-50%'}}>
+          {this.renderMinThumb()}
+        </View>
+      );
+    }
+  }
+
   render() {
-    const {containerStyle, testID, useRange} = this.props;
+    const {containerStyle, testID} = this.props;
     
     return (
       <View
@@ -678,7 +751,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       >
         {this.renderTrack()}
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
-        {useRange && this.renderMinThumb()}
+        {this.renderRangeThumb()}
         {this.renderThumb()}
       </View>
     );

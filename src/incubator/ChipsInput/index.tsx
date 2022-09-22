@@ -99,7 +99,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
     const keyCode = event?.nativeEvent?.key;
     const pressedBackspace = keyCode === Constants.backspaceKey;
 
-    if (pressedBackspace && !fieldValue.current) {
+    if (pressedBackspace && !fieldValue.current && chips.length > 0) {
       if (isUndefined(markedForRemoval) || markedForRemoval !== chips.length - 1) {
         setMarkedForRemoval(chips.length - 1);
       } else {
@@ -142,6 +142,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
       ref={fieldRef}
       leadingAccessory={chipList}
       blurOnSubmit={false}
+      style={styles.input}
       {...others}
       onChangeText={onChangeText}
       onSubmitEditing={addChip}
@@ -155,6 +156,9 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
 const styles = StyleSheet.create({
   fieldStyle: {
     flexWrap: 'wrap'
+  },
+  input: {
+    flexGrow: undefined
   }
 });
 // @ts-expect-error

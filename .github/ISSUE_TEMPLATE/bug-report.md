@@ -74,8 +74,8 @@ Fill in your RNUILib and React Native versions below.
 List other libraries if relevant.
 -->
 
-- React Native:
-- React Native UI Lib:
+- React Native version:
+- React Native UI Lib version:
 
 ### Affected platforms
 

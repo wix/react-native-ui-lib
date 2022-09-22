@@ -4,11 +4,29 @@ import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import {Spacings, Colors, BorderRadiuses, Dividers} from 'style';
 import View from '../../components/view';
-import HeaderContent from './HeaderContent';
+import TouchableOpacity from '../../components/touchableOpacity';
+import Text from '../../components/text';
 import {DialogHeaderProps} from './types';
 
 const DialogHeader = (props: DialogHeaderProps = {}) => {
-  const {text = {}, renderContent, showKnob = true, showDivider = true, ...others} = props;
+  const {
+    title,
+    titleStyle,
+    titleProps,
+    subtitle,
+    subtitleStyle,
+    subtitleProps,
+    renderContent,
+    showKnob = true,
+    showDivider = true,
+    leadingAccessory,
+    trailingAccessory,
+    contentContainerStyle,
+    onPress,
+    bottomAccessory,
+    style,
+    ...others
+  } = props;
 
   const knob = useMemo(() => {
     if (showKnob) {
@@ -21,9 +39,41 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
       return renderContent(props);
     }
 
-    return <HeaderContent text={text}/>;
+    const Container = onPress ? TouchableOpacity : View;
+    if (!isEmpty(title) || !isEmpty(subtitle)) {
+      return (
+        <Container onPress={onPress} center flex>
+          {title && (
+            <Text $textDefault {...titleProps} marginB-s3 style={titleStyle}>
+              {title}
+            </Text>
+          )}
+          {subtitle && (
+            <Text $textDefault {...subtitleProps} marginB-s3 style={subtitleStyle}>
+              {subtitle}
+            </Text>
+          )}
+        </Container>
+      );
+    }
+
+    return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [renderContent, text]);
+  }, [renderContent, title, titleStyle, titleProps, subtitle, subtitleStyle, subtitleProps]);
+
+  const content = useMemo(() => {
+    if (headerContent || leadingAccessory || trailingAccessory) {
+      return (
+        <View marginH-s5 marginV-s1 style={contentContainerStyle} row spread>
+          {leadingAccessory}
+          {headerContent}
+          {trailingAccessory}
+        </View>
+      );
+    }
+
+    return null;
+  }, [headerContent, leadingAccessory, trailingAccessory, contentContainerStyle]);
 
   const divider = useMemo(() => {
     if (showDivider) {
@@ -31,11 +81,12 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     }
   }, [showDivider]);
 
-  if (!isEmpty(props)) {
+  if (knob || content || bottomAccessory || divider) {
     return (
-      <View {...others}>
+      <View {...others} style={style}>
         {knob}
-        {headerContent}
+        {content}
+        {bottomAccessory}
         {divider}
       </View>
     );
@@ -43,6 +94,8 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
 
   return null;
 };
+
+DialogHeader.displayName = 'Incubator.Dialog.Header';
 
 export default asBaseComponent<DialogHeaderProps>(DialogHeader);
 

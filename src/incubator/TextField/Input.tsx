@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {TextInput, StyleSheet, Platform} from 'react-native';
+import React, {useContext, useMemo} from 'react';
+import {TextInput as RNTextInput, StyleSheet, Platform} from 'react-native';
 import {Constants, ForwardRefInjectedProps} from '../../commons/new';
 import {InputProps, ColorType} from './types';
 import {getColorByState} from './Presenter';
@@ -18,6 +18,7 @@ const Input = ({
   color = DEFAULT_INPUT_COLOR,
   forwardedRef,
   formatter,
+  useGestureHandlerInput,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
   const inputRef = useImperativeInputHandle(forwardedRef, {onChangeText: props.onChangeText});
@@ -25,8 +26,18 @@ const Input = ({
   const placeholder = !context.isFocused ? props.placeholder : hint || props.placeholder;
   const inputColor = getColorByState(color, context);
   const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
-
   const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
+
+  const TextInput = useMemo(() => {
+    if (useGestureHandlerInput) {
+      const {
+        TextInput: GestureTextInput
+      }: typeof import('react-native-gesture-handler') = require('react-native-gesture-handler');
+      return GestureTextInput;
+    } else {
+      return RNTextInput;
+    }
+  }, [useGestureHandlerInput]);
 
   return (
     <TextInput

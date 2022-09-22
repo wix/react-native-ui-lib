@@ -1,5 +1,7 @@
 import React from 'react';
-import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType, Animated} from 'react-native';
+import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, Animated} from 'react-native';
+// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
+import {PointPropType} from 'deprecated-react-native-prop-types';
 import {PageControlProps} from '../pageControl';
 
 export enum PageControlPosition {
@@ -91,7 +93,7 @@ export interface CarouselProps extends ScrollViewProps {
    */
   horizontal?: boolean | null;
   /**
-   * Pass to attach to ScrollView's Animated.event in order to animated elements base on 
+   * Pass to attach to ScrollView's Animated.event in order to animated elements base on
    * Carousel scroll offset (pass new Animated.ValueXY())
    */
   animatedScrollOffset?: Animated.ValueXY;

@@ -6,31 +6,19 @@ import {useDidUpdate} from 'hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
-import TextField from '../textField';
+import TextField from '../textField/TextFieldMigrator';
 import {DialogProps} from '../dialog';
 import View from '../view';
 import Button from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
+import type {TextFieldProps} from '../../incubator/TextField';
 
 const MODES = {
   DATE: 'date',
   TIME: 'time'
 };
 
-/*eslint-disable*/
-/**
- * @description: Date and Time Picker Component that wraps RNDateTimePicker for date and time modes.
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DateTimePickerScreen.tsx
- * @important: DateTimePicker uses a native library. You MUST add and link the native library to both iOS and Android projects.
- * @extends: TextField, react-native-community/datetimepicker
- * @extendsLink: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker
- * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_iOS.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_Android.gif?raw=true
- */
-/*eslint-enable*/
-
-export interface DateTimePickerProps {
-  // TODO: extend TextField props
-  // ...TextField.propTypes,
+export type DateTimePickerProps = Omit<TextFieldProps, 'value' | 'onChange'> & {
   /**
    * The type of picker to display ('date' or 'time')
    */
@@ -107,10 +95,25 @@ export interface DateTimePickerProps {
    * The component testID
    */
   testID?: string;
+  /**
+   * Should migrate to the new TextField implementation
+   */
+  migrateTextField?: boolean;
 }
 
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
 
+
+/*eslint-disable*/
+/**
+ * @description: Date and Time Picker Component that wraps RNDateTimePicker for date and time modes.
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DateTimePickerScreen.tsx
+ * @important: DateTimePicker uses a native library. You MUST add and link the native library to both iOS and Android projects.
+ * @extends: TextField, react-native-community/datetimepicker
+ * @extendsLink: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker
+ * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_iOS.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_Android.gif?raw=true
+ */
+/*eslint-enable*/
 function DateTimePicker(props: DateTimePickerPropsInternal) {
   const {
     value: propsValue,
@@ -127,13 +130,14 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     is24Hour,
     minuteInterval,
     timeZoneOffsetInMinutes,
-    themeVariant,
+    themeVariant = Colors.getScheme(),
     onChange,
     dialogProps,
     headerStyle,
     // @ts-expect-error
     useCustomTheme,
     testID,
+    migrateTextField,
     ...others
   } = props;
 
@@ -295,9 +299,9 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         {renderInput ? (
           renderInput({...props, value: getStringValue()})
         ) : (
-          /* @ts-expect-error */
           <TextField
             {...others}
+            migrate={migrateTextField}
             testID={testID}
             editable={editable}
             // @ts-expect-error should be remove after completing TextField migration
