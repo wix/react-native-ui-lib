@@ -130,7 +130,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     is24Hour,
     minuteInterval,
     timeZoneOffsetInMinutes,
-    themeVariant,
+    themeVariant = Colors.getScheme(),
     onChange,
     dialogProps,
     headerStyle,
