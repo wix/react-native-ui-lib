@@ -119,15 +119,13 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     return [positionStyle, translateStyle, {zIndex, elevation}];
   }, [positionStyle, translateStyle, zIndex, elevation]);
 
-  const onLayout = useCallback(
-    (event: LayoutChangeEvent) => {
-      const height = event.nativeEvent.layout.height;
-      if (height !== toastHeight) {
-        setToastHeight(height);
-      }
-    },
-    [toastHeight]
-  );
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    const height = event.nativeEvent.layout.height;
+    if (height !== toastHeight) {
+      setToastHeight(height);
+    }
+  },
+  [toastHeight]);
 
   const renderRightElement = () => {
     // NOTE: order does matter
@@ -183,7 +181,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     }
 
     return (
-      <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor} />
+      <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor}/>
     );
   };
 
