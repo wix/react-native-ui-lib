@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useCallback, useState} from 'react';
-import {View, Text, Incubator, Colors, Typography, Button, Dialog} from 'react-native-ui-lib';
+import {View, Text, Incubator, Colors, Typography, Button} from 'react-native-ui-lib';
 
 const monthItems = _.map([
   'January',
@@ -88,9 +88,15 @@ export default () => {
       <View center marginT-40>
         <Text h3 marginB-20>Days</Text>
         <Button size="small" label={'Pick Days'} onPress={onPickDaysPress}/>
-        <Dialog width={'90%'} height={260} bottom visible={showDialog} onDismiss={onDialogDismissed}>
+        <Incubator.Dialog
+          width={'90%'}
+          bottom
+          visible={showDialog}
+          onDismiss={onDialogDismissed}
+          headerProps={{showKnob: false, showDivider: false}}
+        >
           <Incubator.WheelPicker initialValue={5} label={'Days'} items={dayItems}/>
-        </Dialog>
+        </Incubator.Dialog>
       </View>
     </View>
   );
