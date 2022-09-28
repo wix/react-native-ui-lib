@@ -1,4 +1,4 @@
-import React from 'react';
+import 'react';
 
 console.log('keyboard is not supported on web');
 const CustomKeyboardView = () => {

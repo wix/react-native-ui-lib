@@ -1,4 +1,4 @@
-import React from 'react';
+import 'react';
 
 console.log('KeyboardTrackingView not supported on web');
 const KeyboardTrackingView = () => {
