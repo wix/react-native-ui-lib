@@ -40,7 +40,7 @@ export default class TextFieldScreen extends Component {
     const {textFieldValueDraft} = this.state;
     return (
       <>
-        <View bg-white br20 padding-s4>
+        <View br20 padding-s4>
           <Incubator.TextField
             autoFocus
             preset={null}
@@ -68,7 +68,7 @@ export default class TextFieldScreen extends Component {
 
   renderPickerContent = () => {
     return (
-      <View bg-white br20 padding-s3 paddingB-60>
+      <View bg-$backgroundDefault br20 padding-s3 paddingB-60>
         {_.map(COLOR_OPTIONS, (_color, key) => {
           return (
             <TouchableOpacity key={key} customValue={key} onPress={this.onPickItem}>
