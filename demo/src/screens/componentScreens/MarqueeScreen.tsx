@@ -1,16 +1,10 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Marquee, MarqueeDirections, Spacings} from 'react-native-ui-lib';
+import {Marquee, MarqueeDirections, Text, View, Spacings} from 'react-native-ui-lib';
 import {renderBooleanOption, renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
-interface State {
-  duration: number;
-  directionHorizontal: boolean;
-  directionVertical: boolean;
-  numOfReps: number;
-}
-export default class MarqueeScreen extends Component<{}, State> {
+export default class MarqueeScreen extends Component<{}> {
   state = {
     duration: 5000,
     directionHorizontal: true,
@@ -18,7 +12,7 @@ export default class MarqueeScreen extends Component<{}, State> {
     numOfReps: -1
   };
 
-  HorizontalSection = () => {
+  renderHorizontalSection = () => {
     const {directionHorizontal, numOfReps, duration} = this.state;
     return (
       <View marginV-s3 center>
@@ -40,7 +34,7 @@ export default class MarqueeScreen extends Component<{}, State> {
     );
   };
 
-  VerticalSection = () => {
+  renderVerticalSection = () => {
     const {directionVertical, numOfReps, duration} = this.state;
     return (
       <View marginV-s3 center>
@@ -88,8 +82,8 @@ export default class MarqueeScreen extends Component<{}, State> {
             {renderBooleanOption.call(this, 'Direction Vertical:  Bottom To Up/Up To Bottom', 'directionVertical')}
           </View>
         </View>
-        {this.HorizontalSection()}
-        {this.VerticalSection()}
+        {this.renderHorizontalSection()}
+        {this.renderVerticalSection()}
       </View>
     );
   }

@@ -86,6 +86,7 @@ export {default as KeyboardAwareFlatList} from './components/KeyboardAwareScroll
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 export {default as MaskedInput, MaskedInputProps} from './components/maskedInput';
+export {default as Marquee, MarqueeDirections, MarqueeProps} from './components/marquee';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
@@ -170,8 +171,6 @@ export {
 } from './components/wizard';
 // @ts-expect-error
 export {default as WheelPickerDialog} from './components/wheelPickerDialog';
-
-export {default as Marquee, MarqueeProps, MarqueeDirections} from './components/marquee';
 
 /* ===== TestKit ===== */
 // export {default as TextTestKit} from './components/text/Text.driver';

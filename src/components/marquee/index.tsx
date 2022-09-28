@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {LayoutChangeEvent, LayoutRectangle, StyleSheet} from 'react-native';
 import {useSharedValue, useAnimatedStyle, withTiming, withRepeat, Easing} from 'react-native-reanimated';
-import {asBaseComponent, forwardRef} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
-import {MarqueeProps, MarqueeDirections} from './types';
+import {MarqueeDirections, MarqueeProps} from './types';
 
 const DEFAULT_DURATION = 3000;
 const DEFAULT_DURATION_PER_WORD = 250;
@@ -18,7 +17,7 @@ function Marquee(props: MarqueeProps) {
   };
 
   const isHorizontal = direction === MarqueeDirections.LEFT || direction === MarqueeDirections.RIGHT;
-  const fixedDuration = isHorizontal ? duration || calcDuration() : duration || DEFAULT_DURATION;
+  const fixedDuration = duration || (isHorizontal ? calcDuration() : DEFAULT_DURATION);
 
   const [viewLayout, setViewLayout] = useState<LayoutRectangle | undefined>(undefined);
   const [textLayout, setTextLayout] = useState<LayoutRectangle | undefined>(undefined);
@@ -29,19 +28,19 @@ function Marquee(props: MarqueeProps) {
   let axisX = false;
   let axisY = false;
 
-  if (direction === MarqueeDirections.RIGHT || direction === MarqueeDirections.LEFT) {
+  if ([MarqueeDirections.RIGHT, MarqueeDirections.LEFT].includes(direction)) {
     axisX = true;
   } else {
     axisY = true;
   }
 
-  const onLayoutView = (event: LayoutChangeEvent) => {
+  const onLayoutView = useCallback((event: LayoutChangeEvent) => {
     setViewLayout(event.nativeEvent.layout);
-  };
+  }, []);
 
-  const onLayoutText = (event: LayoutChangeEvent) => {
+  const onLayoutText = useCallback((event: LayoutChangeEvent) => {
     setTextLayout(event.nativeEvent.layout);
-  };
+  }, []);
 
   const startAnimation = (fromValue: number, toValue: number, backToValue: number) => {
     initialOffset = fromValue;
@@ -53,21 +52,10 @@ function Marquee(props: MarqueeProps) {
       finished => {
         if (finished) {
           offset.value = initialOffset;
-          offset.value = withTiming(backToValue, {
-            duration: 2000
-          });
+          offset.value = withTiming(backToValue, {duration: fixedDuration, easing: Easing.linear});
         }
       });
   };
-
-  const translateStyle = useAnimatedStyle(() => {
-    if (offset.value) {
-      return {
-        transform: [{translateX: axisX ? offset.value : 0}, {translateY: axisY ? offset.value : 0}]
-      };
-    }
-    return {};
-  });
 
   useEffect(() => {
     if (viewLayout && textLayout) {
@@ -88,20 +76,25 @@ function Marquee(props: MarqueeProps) {
     }
   }, [viewLayout, textLayout]);
 
+  const translateStyle = useAnimatedStyle(() => {
+    if (offset.value) {
+      return {
+        transform: [{translateX: axisX ? offset.value : 0}, {translateY: axisY ? offset.value : 0}],
+        position: 'absolute',
+        width: !isHorizontal || textLayout?.width ? textLayout?.width : '400%'
+      };
+    }
+    return {position: 'absolute', width: !isHorizontal || textLayout?.width ? textLayout?.width : '400%'};
+  });
+
   return (
     <View style={[styles.container, containerStyle]} onLayout={onLayoutView}>
-      <View
-        reanimated
-        style={[
-          {position: 'absolute', width: !isHorizontal || textLayout?.width ? textLayout?.width : '400%'},
-          translateStyle
-        ]}
-      >
+      <View reanimated style={[translateStyle]}>
         <Text style={[styles.text, labelStyle]} onLayout={onLayoutText}>
           {label}
         </Text>
       </View>
-      <Text style={[styles.text, labelStyle, {color: 'transparent'}]} numberOfLines={1}>
+      <Text style={[styles.text, labelStyle, styles.hiddenText]} numberOfLines={1}>
         {label}
       </Text>
     </View>
@@ -110,9 +103,10 @@ function Marquee(props: MarqueeProps) {
 
 export {MarqueeProps, MarqueeDirections};
 
-export default asBaseComponent<MarqueeProps>(forwardRef(Marquee));
+export default Marquee;
 
 const styles = StyleSheet.create({
   container: {overflow: 'hidden'},
-  text: {alignSelf: 'center'}
+  text: {alignSelf: 'center'},
+  hiddenText: {color: 'transparent'}
 });
