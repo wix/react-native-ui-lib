@@ -17,11 +17,18 @@ import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} 
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 import useFadeView from './useFadeView';
 
+export interface DialogStatics {
+  directions: typeof DialogDirectionsEnum;
+  Header: typeof DialogHeader;
+}
+
 const Dialog = (props: DialogProps) => {
   const {
-    visible: propsVisibility,
+    visible: propsVisibility = false,
     headerProps,
     containerStyle,
+    width,
+    height,
     onDismiss,
     direction = DialogDirectionsEnum.DOWN,
     ignoreBackgroundPress,
@@ -117,7 +124,7 @@ const Dialog = (props: DialogProps) => {
   }, [propsVisibility]);
 
   const alignmentStyle = useMemo(() => {
-    return {flex: 1, ...extractAlignmentsValues(props)};
+    return {flex: 1, alignItems: 'center', ...extractAlignmentsValues(props)};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -139,9 +146,15 @@ const Dialog = (props: DialogProps) => {
   }, []);
 
   const style = useMemo(() => {
-    return [styles.defaultDialogStyle, containerStyle, transitionStyle];
+    return [
+      styles.defaultDialogStyle,
+      containerStyle,
+      transitionStyle,
+      width ? {width} : undefined,
+      height ? {height} : undefined
+    ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [containerStyle]);
+  }, [containerStyle, width, height]);
 
   const renderDialog = () => {
     return (
@@ -178,7 +191,7 @@ Dialog.displayName = 'Incubator.Dialog';
 Dialog.directions = DialogDirectionsEnum;
 Dialog.Header = DialogHeader;
 
-export default asBaseComponent<DialogProps>(Dialog);
+export default asBaseComponent<DialogProps, DialogStatics>(Dialog);
 
 const styles = StyleSheet.create({
   defaultDialogStyle: {

@@ -202,3 +202,7 @@ export const navigationData = {
     ]
   }
 };
+
+if (__DEV__) {
+  navigationData.Foundation.screens.unshift({title: 'Playground', screen: 'unicorn.PlaygroundScreen'});
+}

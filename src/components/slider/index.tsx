@@ -409,7 +409,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
           this._minTrackStyles.width = Math.min(trackSize.width, x);
         }
         
-        this.thumb.current?.setNativeProps(this._thumbStyles);
+        this.thumb.current.setNativeProps(this._thumbStyles);
         this.minTrack.current?.setNativeProps(this._minTrackStyles);
       }
     } else {

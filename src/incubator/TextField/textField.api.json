@@ -96,7 +96,7 @@
   ],
   "snippet": [
     "<TextField",
-    "  placeholder={'Placeholder$1}",
+    "  placeholder={'Placeholder'$1}",
     "  floatingPlaceholder",
     "  onChangeText={() => console.log('changed')$2}",
     "  enableErrors",
