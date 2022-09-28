@@ -123,4 +123,62 @@ describe('style/Colors', () => {
       expect(palette).toEqual(['#661A66', '#8F248F', '#B82EB7', '#D148D1', '#DB71DB', '#E699E6', '#F0C2F0', '#FFE5FF']);
     });
   });
+
+  describe('generateTokens(...)', () => {
+    it('should generate design tokens from dark color for light theme', () => {
+      const chosenColor = '#860D86';
+      expect(uut.isDark(chosenColor)).toEqual(true);
+      expect(uut.generateTokens(chosenColor, 'light')).toEqual({
+        $backgroundPrimaryHeavy: chosenColor,
+        $backgroundPrimaryLight: '#FFFAFF',
+        $backgroundPrimaryMedium: '#FACCFA',
+        $iconPrimary: chosenColor,
+        $iconPrimaryLight: '#F16FF1',
+        $outlinePrimary: chosenColor,
+        $textPrimary: chosenColor
+      });
+    });
+
+    it('should generate design tokens from light color for light theme', () => {
+      const chosenColor = '#E9BEE7';
+      expect(uut.isDark(chosenColor)).toEqual(false);
+      expect(uut.generateTokens(chosenColor, 'light')).toEqual({
+        $backgroundPrimaryHeavy: '#A4379F',
+        $backgroundPrimaryLight: '#F6E4F5',
+        $backgroundPrimaryMedium: '#E9BEE7',
+        $iconPrimary: '#A4379F',
+        $iconPrimaryLight: '#CF72CB',
+        $outlinePrimary: '#A4379F',
+        $textPrimary: '#A4379F'
+      });
+    });
+
+    it('should generate design tokens from dark color for dark theme', () => {
+      const chosenColor = '#860D86';
+      expect(uut.isDark(chosenColor)).toEqual(true);
+      expect(uut.generateTokens(chosenColor, 'dark')).toEqual({
+        $backgroundPrimaryHeavy: '#F69DF6',
+        $backgroundPrimaryLight: '#860D86',
+        $backgroundPrimaryMedium: '#B512B5',
+        $iconPrimary: '#F69DF6',
+        $iconPrimaryLight: '#ED40ED',
+        $outlinePrimary: '#F69DF6',
+        $textPrimary: '#F69DF6'
+      });
+    });
+
+    it('should generate design tokens from light color for dark theme', () => {
+      const chosenColor = '#E9BEE7';
+      expect(uut.isDark(chosenColor)).toEqual(false);
+      expect(uut.generateTokens(chosenColor, 'dark')).toEqual({
+        $backgroundPrimaryHeavy: chosenColor,
+        $backgroundPrimaryLight: '#581E55',
+        $backgroundPrimaryMedium: '#7E2B7A',
+        $iconPrimary: chosenColor,
+        $iconPrimaryLight: '#C24CBD',
+        $outlinePrimary: chosenColor,
+        $textPrimary: chosenColor
+      });
+    });
+  });
 });
