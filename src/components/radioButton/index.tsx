@@ -244,9 +244,10 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
 
   renderButton() {
     const {opacityAnimationValue, scaleAnimationValue} = this.state;
+    const {testID} = this.props;
 
     return (
-      <View style={this.getRadioButtonOutlineStyle()}>
+      <View style={this.getRadioButtonOutlineStyle()} testID={`${testID}.button`}>
         <Animated.View
           style={[
             this.getRadioButtonInnerStyle(),
