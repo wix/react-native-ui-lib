@@ -12,18 +12,22 @@ export type NumberInputProps = React.PropsWithRef<
     ThemeComponent
 > & {
   /**
+   * Callback that is called when the number value has changed (undefined in both if the user has deleted the number).
+   */
+  onChange: (newValue?: number, formattedNumber?: string) => void;
+  /**
    * A valid number (in en locale, i.e. only digits and a decimal point).
    */
   initialValue?: number;
+  /**
+   * Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.
+   */
+  fractionDigits?: number;
   /**
    * The locale to show the number (default 'en')
    * IMPORTANT: this might not work, depending on your intl\RN version\hermes configuration
    */
   // locale?: string;
-  /**
-   * Callback that is called when the number value has changed (undefined in both if the user has deleted the number).
-   */
-  onChange: (newValue?: number, formattedNumber?: string) => void;
   /**
    * A leading text
    */
@@ -84,12 +88,15 @@ function formatNumber(value: number, locale: string) {
   return value.toLocaleString(locale);
 }
 
-function deriveData(localeOptions: LocaleOptions, input?: number, endsWithDecimalSeparator = false): Data | undefined {
+function deriveData(localeOptions: LocaleOptions,
+  fractionDigits: number,
+  input?: number,
+  endsWithDecimalSeparator = false): Data | undefined {
   if (input === undefined) {
     return;
   }
 
-  const value = Number(input.toFixed(2));
+  const value = Number(input.toFixed(fractionDigits));
   let formattedNumber = formatNumber(value, localeOptions.locale);
   if (endsWithDecimalSeparator) {
     formattedNumber += localeOptions.decimalSeparator;
@@ -111,9 +118,13 @@ function removeLastChar(str: string) {
   return str.substring(0, str.length - 1);
 }
 
-function processNewInput(newInput: string, localeOptions: LocaleOptions, currentData?: Data) {
+function processNewInput(newInput: string, fractionDigits: number, localeOptions: LocaleOptions, currentData?: Data) {
   let newNumber;
   const _isLastCharDecimalSeparator = isLastCharDecimalSeparator(newInput, localeOptions);
+  if (_isLastCharDecimalSeparator && fractionDigits === 0) {
+    return null;
+  }
+
   if (_isLastCharDecimalSeparator) {
     newNumber = Number(removeLastChar(newInput));
   } else {
@@ -125,7 +136,7 @@ function processNewInput(newInput: string, localeOptions: LocaleOptions, current
 
   const endsWithDecimalSeparator =
     newNumber.toString().length !== newInput.length || (newInput.length === 1 && _isLastCharDecimalSeparator);
-  const newData = deriveData(localeOptions, newNumber, endsWithDecimalSeparator);
+  const newData = deriveData(localeOptions, fractionDigits, newNumber, endsWithDecimalSeparator);
   if (newData === undefined || newData?.maxLength === currentData?.maxLength) {
     return null;
   }
@@ -133,13 +144,13 @@ function processNewInput(newInput: string, localeOptions: LocaleOptions, current
   return newData;
 }
 
-function processBackspace(localeOptions: LocaleOptions, currentData?: Data): ProcessResult {
+function processBackspace(fractionDigits: number, localeOptions: LocaleOptions, currentData?: Data): ProcessResult {
   if (!currentData) {
     return null;
   }
 
   if (currentData.endsWithDecimalSeparator) {
-    const newData = deriveData(localeOptions, currentData.value, false);
+    const newData = deriveData(localeOptions, fractionDigits, currentData.value, false);
     return newData;
   }
 
@@ -149,21 +160,24 @@ function processBackspace(localeOptions: LocaleOptions, currentData?: Data): Pro
     if (newInput.length === 0) {
       return undefined;
     } else {
-      return processNewInput(newInput, localeOptions, currentData);
+      return processNewInput(newInput, fractionDigits, localeOptions, currentData);
     }
   } else {
     return null; // will probably not get here
   }
 }
 
-function processKey(key: string, localeOptions: LocaleOptions, currentData?: Data): ProcessResult {
+function processKey(key: string,
+  fractionDigits: number,
+  localeOptions: LocaleOptions,
+  currentData?: Data): ProcessResult {
   let newData;
   if (key === Constants.backspaceKey) {
-    newData = processBackspace(localeOptions, currentData);
+    newData = processBackspace(fractionDigits, localeOptions, currentData);
   } else {
     const decimalSeparator = currentData?.endsWithDecimalSeparator ? '.' : ''; // this is not a bug, using '.' (en) because Number() only works with en locale
     const newInput = currentData ? `${currentData.value}${decimalSeparator}${key}` : key;
-    newData = processNewInput(newInput, localeOptions, currentData);
+    newData = processNewInput(newInput, fractionDigits, localeOptions, currentData);
   }
 
   return newData;
@@ -171,10 +185,11 @@ function processKey(key: string, localeOptions: LocaleOptions, currentData?: Dat
 
 function NumberInput(props: NumberInputProps, ref: any) {
   const {
+    onChange,
     initialValue,
+    fractionDigits = 2,
     // @ts-expect-error
     locale = 'en',
-    onChange,
     style,
     leadingText,
     leadingTextTypography,
@@ -185,7 +200,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
     ...others
   } = props;
   const [localeOptions, setLocaleOptions] = useState<LocaleOptions>(generateLocaleOptions(locale));
-  const [data, setData] = useState<Data | undefined>(deriveData(localeOptions, initialValue, false));
+  const [data, setData] = useState<Data | undefined>(deriveData(localeOptions, fractionDigits, initialValue, false));
 
   useDidUpdate(() => {
     setLocaleOptions(generateLocaleOptions(locale));
@@ -237,7 +252,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
 
   const onKeyPress = useCallback((e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     const {key} = e.nativeEvent;
-    const newData = processKey(key, localeOptions, data);
+    const newData = processKey(key, fractionDigits, localeOptions, data);
     if (newData === null) {
       return;
     } else if (newData === undefined) {
@@ -248,7 +263,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
       onChange(newData.value, newData.formattedNumber);
     }
   },
-  [data, localeOptions, onChange]);
+  [data, fractionDigits, localeOptions, onChange]);
 
   return (
     <TextField

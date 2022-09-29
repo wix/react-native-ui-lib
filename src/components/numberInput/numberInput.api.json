@@ -7,14 +7,20 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/NumberInputScreen.tsx",
   "props": [
     {
+      "name": "onChange",
+      "type": "(newValue?: number, formattedNumber?: string) => void",
+      "description": "Callback that is called when the number value has changed (undefined in both if the user has deleted the number)."
+    },
+    {
       "name": "initialValue",
       "type": "number",
       "description": "A valid number (in en locale, i.e. only digits and a decimal point)."
     },
     {
-      "name": "onChange",
-      "type": "(newValue?: number, formattedNumber?: string) => void",
-      "description": "Callback that is called when the number value has changed (undefined in both if the user has deleted the number)."
+      "name": "fractionDigits",
+      "type": "number",
+      "description": "Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.",
+      "default": "2"
     },
     {"name": "leadingText", "type": "string", "description": "A leading text"},
     {"name": "leadingTextTypography", "type": "string", "description": "The typography of the leading text"},
