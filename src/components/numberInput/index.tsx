@@ -148,7 +148,7 @@ function processKey(key: string, currentData?: Data, locale?: string): ProcessRe
   if (key === Constants.backspaceKey) {
     newData = processBackspace(currentData, locale);
   } else {
-    const decimalSeparator = currentData?.endsWithDecimalSeparator ? getDecimalSeparator('en') : ''; // this is not a bug, using en because Number() only works with en locale
+    const decimalSeparator = currentData?.endsWithDecimalSeparator ? '.' : ''; // this is not a bug, using '.' (en) because Number() only works with en locale
     const newInput = currentData ? `${currentData.value}${decimalSeparator}${key}` : key;
     newData = processNewInput(newInput, currentData, locale);
   }
