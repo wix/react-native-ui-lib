@@ -1,6 +1,7 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState} from 'react';
 import {NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
+import {useDidUpdate} from 'hooks';
 import {Constants} from '../../commons/new';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
 import {Typography} from '../../style';
@@ -62,24 +63,36 @@ interface Data {
  */
 type ProcessResult = Data | undefined | null;
 
-function formatNumber(value: number, locale = 'en') {
-  return value.toLocaleString(locale);
+interface LocaleOptions {
+  locale: string;
+  decimalSeparator: string;
 }
 
-function getDecimalSeparator(locale = 'en') {
+function getDecimalSeparator(locale: string) {
   const formattedNumber = formatNumber(1.1, locale);
   return formattedNumber.replace(/1/g, '');
 }
 
-function deriveData(input?: number, locale = 'en', endsWithDecimalSeparator = false): Data | undefined {
+function generateLocaleOptions(locale: string) {
+  return {
+    locale,
+    decimalSeparator: getDecimalSeparator(locale)
+  };
+}
+
+function formatNumber(value: number, locale: string) {
+  return value.toLocaleString(locale);
+}
+
+function deriveData(localeOptions: LocaleOptions, input?: number, endsWithDecimalSeparator = false): Data | undefined {
   if (input === undefined) {
     return;
   }
 
   const value = Number(input.toFixed(2));
-  let formattedNumber = formatNumber(value, locale);
+  let formattedNumber = formatNumber(value, localeOptions.locale);
   if (endsWithDecimalSeparator) {
-    formattedNumber += getDecimalSeparator(locale);
+    formattedNumber += localeOptions.decimalSeparator;
   }
 
   return {
@@ -90,17 +103,17 @@ function deriveData(input?: number, locale = 'en', endsWithDecimalSeparator = fa
   };
 }
 
-function isLastCharDecimalSeparator(str: string, locale?: string) {
-  return str.length > 0 && str.charAt(str.length - 1) === getDecimalSeparator(locale);
+function isLastCharDecimalSeparator(str: string, localeOptions: LocaleOptions) {
+  return str.length > 0 && str.charAt(str.length - 1) === localeOptions.decimalSeparator;
 }
 
 function removeLastChar(str: string) {
   return str.substring(0, str.length - 1);
 }
 
-function processNewInput(newInput: string, currentData?: Data, locale?: string) {
+function processNewInput(newInput: string, localeOptions: LocaleOptions, currentData?: Data) {
   let newNumber;
-  const _isLastCharDecimalSeparator = isLastCharDecimalSeparator(newInput, locale);
+  const _isLastCharDecimalSeparator = isLastCharDecimalSeparator(newInput, localeOptions);
   if (_isLastCharDecimalSeparator) {
     newNumber = Number(removeLastChar(newInput));
   } else {
@@ -112,7 +125,7 @@ function processNewInput(newInput: string, currentData?: Data, locale?: string) 
 
   const endsWithDecimalSeparator =
     newNumber.toString().length !== newInput.length || (newInput.length === 1 && _isLastCharDecimalSeparator);
-  const newData = deriveData(newNumber, locale, endsWithDecimalSeparator);
+  const newData = deriveData(localeOptions, newNumber, endsWithDecimalSeparator);
   if (newData === undefined || newData?.maxLength === currentData?.maxLength) {
     return null;
   }
@@ -120,13 +133,13 @@ function processNewInput(newInput: string, currentData?: Data, locale?: string) 
   return newData;
 }
 
-function processBackspace(currentData?: Data, locale?: string): ProcessResult {
+function processBackspace(localeOptions: LocaleOptions, currentData?: Data): ProcessResult {
   if (!currentData) {
     return null;
   }
 
   if (currentData.endsWithDecimalSeparator) {
-    const newData = deriveData(currentData.value, locale, false);
+    const newData = deriveData(localeOptions, currentData.value, false);
     return newData;
   }
 
@@ -136,21 +149,21 @@ function processBackspace(currentData?: Data, locale?: string): ProcessResult {
     if (newInput.length === 0) {
       return undefined;
     } else {
-      return processNewInput(newInput, currentData, locale);
+      return processNewInput(newInput, localeOptions, currentData);
     }
   } else {
     return null; // will probably not get here
   }
 }
 
-function processKey(key: string, currentData?: Data, locale?: string): ProcessResult {
+function processKey(key: string, localeOptions: LocaleOptions, currentData?: Data): ProcessResult {
   let newData;
   if (key === Constants.backspaceKey) {
-    newData = processBackspace(currentData, locale);
+    newData = processBackspace(localeOptions, currentData);
   } else {
     const decimalSeparator = currentData?.endsWithDecimalSeparator ? '.' : ''; // this is not a bug, using '.' (en) because Number() only works with en locale
     const newInput = currentData ? `${currentData.value}${decimalSeparator}${key}` : key;
-    newData = processNewInput(newInput, currentData, locale);
+    newData = processNewInput(newInput, localeOptions, currentData);
   }
 
   return newData;
@@ -159,7 +172,7 @@ function processKey(key: string, currentData?: Data, locale?: string): ProcessRe
 function NumberInput(props: NumberInputProps, ref: any) {
   const {
     initialValue,
-    locale,
+    locale = 'en',
     onChange,
     style,
     leadingText,
@@ -170,7 +183,12 @@ function NumberInput(props: NumberInputProps, ref: any) {
     marginRight,
     ...others
   } = props;
-  const [data, setData] = useState<Data | undefined>(deriveData(initialValue, locale, false));
+  const [localeOptions, setLocaleOptions] = useState<LocaleOptions>(generateLocaleOptions(locale));
+  const [data, setData] = useState<Data | undefined>(deriveData(localeOptions, initialValue, false));
+
+  useDidUpdate(() => {
+    setLocaleOptions(generateLocaleOptions(locale));
+  }, [locale]);
 
   const hasText = useMemo(() => {
     // Render both leading and trailing accessories so the text is centered AND the margin between the text and the accessories is correct
@@ -218,7 +236,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
 
   const onKeyPress = useCallback((e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     const {key} = e.nativeEvent;
-    const newData = processKey(key, data, locale);
+    const newData = processKey(key, localeOptions, data);
     if (newData === null) {
       return;
     } else if (newData === undefined) {
@@ -229,7 +247,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
       onChange(newData.value, newData.formattedNumber);
     }
   },
-  [data, locale, onChange]);
+  [data, localeOptions, onChange]);
 
   return (
     <TextField

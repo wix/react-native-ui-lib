@@ -7,7 +7,7 @@ describe('NumberInput', () => {
     });
 
     it('should return one decimal point and not two', () => {
-      expect(_forTests.deriveData(12.1)).toEqual({
+      expect(_forTests.deriveData({locale: 'en', decimalSeparator: '.'}, 12.1)).toEqual({
         value: 12.1,
         endsWithDecimalSeparator: false,
         formattedNumber: '12.1',
@@ -16,7 +16,7 @@ describe('NumberInput', () => {
     });
 
     it('should return string that ends with a dot', () => {
-      expect(_forTests.deriveData(12, 'en', true)).toEqual({
+      expect(_forTests.deriveData({locale: 'en', decimalSeparator: '.'}, 12, true)).toEqual({
         value: 12,
         endsWithDecimalSeparator: true,
         formattedNumber: '12.',
@@ -25,11 +25,40 @@ describe('NumberInput', () => {
     });
 
     it('should return string that ends without a dot', () => {
-      expect(_forTests.deriveData(12, 'en', false)).toEqual({
+      expect(_forTests.deriveData({locale: 'en', decimalSeparator: '.'}, 12, false)).toEqual({
         value: 12,
         endsWithDecimalSeparator: false,
         formattedNumber: '12',
         maxLength: 2
+      });
+    });
+
+    describe('de', () => {
+      it('should return one decimal point and not two', () => {
+        expect(_forTests.deriveData({locale: 'de', decimalSeparator: ','}, 12.1)).toEqual({
+          value: 12.1,
+          endsWithDecimalSeparator: false,
+          formattedNumber: '12,1',
+          maxLength: 4
+        });
+      });
+
+      it('should return string that ends with a dot', () => {
+        expect(_forTests.deriveData({locale: 'de', decimalSeparator: ','}, 12, true)).toEqual({
+          value: 12,
+          endsWithDecimalSeparator: true,
+          formattedNumber: '12,',
+          maxLength: 3
+        });
+      });
+
+      it('should return string that ends without a dot', () => {
+        expect(_forTests.deriveData({locale: 'de', decimalSeparator: ','}, 12, false)).toEqual({
+          value: 12,
+          endsWithDecimalSeparator: false,
+          formattedNumber: '12',
+          maxLength: 2
+        });
       });
     });
   });
@@ -37,7 +66,7 @@ describe('NumberInput', () => {
   describe('processKey', () => {
     describe('en', () => {
       it('first digit', () => {
-        expect(_forTests.processKey('1')).toEqual({
+        expect(_forTests.processKey('1', {locale: 'en', decimalSeparator: '.'})).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '1',
           maxLength: 1,
@@ -46,12 +75,14 @@ describe('NumberInput', () => {
       });
 
       it('second digit', () => {
-        expect(_forTests.processKey('2', {
-          endsWithDecimalSeparator: false,
-          formattedNumber: '1',
-          maxLength: 1,
-          value: 1
-        })).toEqual({
+        expect(_forTests.processKey('2',
+          {locale: 'en', decimalSeparator: '.'},
+          {
+            endsWithDecimalSeparator: false,
+            formattedNumber: '1',
+            maxLength: 1,
+            value: 1
+          })).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '12',
           maxLength: 2,
@@ -60,12 +91,14 @@ describe('NumberInput', () => {
       });
 
       it('decimal separator', () => {
-        expect(_forTests.processKey('.', {
-          endsWithDecimalSeparator: false,
-          formattedNumber: '12',
-          maxLength: 2,
-          value: 12
-        })).toEqual({
+        expect(_forTests.processKey('.',
+          {locale: 'en', decimalSeparator: '.'},
+          {
+            endsWithDecimalSeparator: false,
+            formattedNumber: '12',
+            maxLength: 2,
+            value: 12
+          })).toEqual({
           endsWithDecimalSeparator: true,
           formattedNumber: '12.',
           maxLength: 3,
@@ -74,12 +107,14 @@ describe('NumberInput', () => {
       });
 
       it('digit after decimal separator', () => {
-        expect(_forTests.processKey('3', {
-          endsWithDecimalSeparator: true,
-          formattedNumber: '12.',
-          maxLength: 3,
-          value: 12
-        })).toEqual({
+        expect(_forTests.processKey('3',
+          {locale: 'en', decimalSeparator: '.'},
+          {
+            endsWithDecimalSeparator: true,
+            formattedNumber: '12.',
+            maxLength: 3,
+            value: 12
+          })).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '12.3',
           maxLength: 4,
@@ -88,21 +123,25 @@ describe('NumberInput', () => {
       });
 
       it('3rd digit return null', () => {
-        expect(_forTests.processKey('5', {
-          endsWithDecimalSeparator: false,
-          formattedNumber: '12.34',
-          maxLength: 5,
-          value: 12.34
-        })).toEqual(null);
+        expect(_forTests.processKey('5',
+          {locale: 'en', decimalSeparator: '.'},
+          {
+            endsWithDecimalSeparator: false,
+            formattedNumber: '12.34',
+            maxLength: 5,
+            value: 12.34
+          })).toEqual(null);
       });
 
       it('thousand separator', () => {
-        expect(_forTests.processKey('4', {
-          endsWithDecimalSeparator: false,
-          formattedNumber: '123',
-          maxLength: 3,
-          value: 123
-        })).toEqual({
+        expect(_forTests.processKey('4',
+          {locale: 'en', decimalSeparator: '.'},
+          {
+            endsWithDecimalSeparator: false,
+            formattedNumber: '123',
+            maxLength: 3,
+            value: 123
+          })).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '1,234',
           maxLength: 5,
@@ -111,16 +150,18 @@ describe('NumberInput', () => {
       });
 
       it('character', () => {
-        expect(_forTests.processKey('a', {
-          endsWithDecimalSeparator: false,
-          formattedNumber: '1',
-          maxLength: 1,
-          value: 1
-        })).toEqual(null);
+        expect(_forTests.processKey('a',
+          {locale: 'en', decimalSeparator: '.'},
+          {
+            endsWithDecimalSeparator: false,
+            formattedNumber: '1',
+            maxLength: 1,
+            value: 1
+          })).toEqual(null);
       });
 
       it('decimal separator first', () => {
-        expect(_forTests.processKey('.', undefined)).toEqual({
+        expect(_forTests.processKey('.', {locale: 'en', decimalSeparator: '.'}, undefined)).toEqual({
           endsWithDecimalSeparator: true,
           formattedNumber: '0.',
           maxLength: 2,
@@ -130,25 +171,29 @@ describe('NumberInput', () => {
 
       describe('backspace', () => {
         it('no data', () => {
-          expect(_forTests.processKey('Backspace')).toEqual(null);
+          expect(_forTests.processKey('Backspace', {locale: 'en', decimalSeparator: '.'})).toEqual(null);
         });
 
         it('1 digit', () => {
-          expect(_forTests.processKey('Backspace', {
-            endsWithDecimalSeparator: false,
-            formattedNumber: '1',
-            maxLength: 1,
-            value: 1
-          })).toEqual(undefined);
+          expect(_forTests.processKey('Backspace',
+            {locale: 'en', decimalSeparator: '.'},
+            {
+              endsWithDecimalSeparator: false,
+              formattedNumber: '1',
+              maxLength: 1,
+              value: 1
+            })).toEqual(undefined);
         });
 
         it('2 digits', () => {
-          expect(_forTests.processKey('Backspace', {
-            endsWithDecimalSeparator: false,
-            formattedNumber: '12',
-            maxLength: 2,
-            value: 12
-          })).toEqual({
+          expect(_forTests.processKey('Backspace',
+            {locale: 'en', decimalSeparator: '.'},
+            {
+              endsWithDecimalSeparator: false,
+              formattedNumber: '12',
+              maxLength: 2,
+              value: 12
+            })).toEqual({
             endsWithDecimalSeparator: false,
             formattedNumber: '1',
             maxLength: 1,
@@ -157,12 +202,14 @@ describe('NumberInput', () => {
         });
 
         it('decimal separator', () => {
-          expect(_forTests.processKey('Backspace', {
-            endsWithDecimalSeparator: true,
-            formattedNumber: '12.',
-            maxLength: 3,
-            value: 12
-          })).toEqual({
+          expect(_forTests.processKey('Backspace',
+            {locale: 'en', decimalSeparator: '.'},
+            {
+              endsWithDecimalSeparator: true,
+              formattedNumber: '12.',
+              maxLength: 3,
+              value: 12
+            })).toEqual({
             endsWithDecimalSeparator: false,
             formattedNumber: '12',
             maxLength: 2,
@@ -171,12 +218,14 @@ describe('NumberInput', () => {
         });
 
         it('number after decimal separator', () => {
-          expect(_forTests.processKey('Backspace', {
-            endsWithDecimalSeparator: false,
-            formattedNumber: '12.3',
-            maxLength: 4,
-            value: 12.3
-          })).toEqual({
+          expect(_forTests.processKey('Backspace',
+            {locale: 'en', decimalSeparator: '.'},
+            {
+              endsWithDecimalSeparator: false,
+              formattedNumber: '12.3',
+              maxLength: 4,
+              value: 12.3
+            })).toEqual({
             endsWithDecimalSeparator: true,
             formattedNumber: '12.',
             maxLength: 3,
@@ -185,12 +234,14 @@ describe('NumberInput', () => {
         });
 
         it('thousand separator', () => {
-          expect(_forTests.processKey('Backspace', {
-            endsWithDecimalSeparator: false,
-            formattedNumber: '1,234',
-            maxLength: 5,
-            value: 1234
-          })).toEqual({
+          expect(_forTests.processKey('Backspace',
+            {locale: 'en', decimalSeparator: '.'},
+            {
+              endsWithDecimalSeparator: false,
+              formattedNumber: '1,234',
+              maxLength: 5,
+              value: 1234
+            })).toEqual({
             endsWithDecimalSeparator: false,
             formattedNumber: '123',
             maxLength: 3,
@@ -202,7 +253,7 @@ describe('NumberInput', () => {
 
     describe('de', () => {
       it('first digit', () => {
-        expect(_forTests.processKey('1', undefined, 'de')).toEqual({
+        expect(_forTests.processKey('1', {locale: 'de', decimalSeparator: ','}, undefined)).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '1',
           maxLength: 1,
@@ -212,13 +263,13 @@ describe('NumberInput', () => {
 
       it('second digit', () => {
         expect(_forTests.processKey('2',
+          {locale: 'de', decimalSeparator: ','},
           {
             endsWithDecimalSeparator: false,
             formattedNumber: '1',
             maxLength: 1,
             value: 1
-          },
-          'de')).toEqual({
+          })).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '12',
           maxLength: 2,
@@ -228,13 +279,13 @@ describe('NumberInput', () => {
 
       it('decimal separator', () => {
         expect(_forTests.processKey(',',
+          {locale: 'de', decimalSeparator: ','},
           {
             endsWithDecimalSeparator: false,
             formattedNumber: '12',
             maxLength: 2,
             value: 12
-          },
-          'de')).toEqual({
+          })).toEqual({
           endsWithDecimalSeparator: true,
           formattedNumber: '12,',
           maxLength: 3,
@@ -244,13 +295,13 @@ describe('NumberInput', () => {
 
       it('digit after decimal separator', () => {
         expect(_forTests.processKey('3',
+          {locale: 'de', decimalSeparator: ','},
           {
             endsWithDecimalSeparator: true,
             formattedNumber: '12,',
             maxLength: 3,
             value: 12
-          },
-          'de')).toEqual({
+          })).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '12,3',
           maxLength: 4,
@@ -260,24 +311,24 @@ describe('NumberInput', () => {
 
       it('3rd digit return null', () => {
         expect(_forTests.processKey('5',
+          {locale: 'de', decimalSeparator: ','},
           {
             endsWithDecimalSeparator: false,
             formattedNumber: '12,34',
             maxLength: 5,
             value: 12.34
-          },
-          'de')).toEqual(null);
+          })).toEqual(null);
       });
 
       it('thousand separator', () => {
         expect(_forTests.processKey('4',
+          {locale: 'de', decimalSeparator: ','},
           {
             endsWithDecimalSeparator: false,
             formattedNumber: '123',
             maxLength: 3,
             value: 123
-          },
-          'de')).toEqual({
+          })).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '1.234',
           maxLength: 5,
@@ -287,17 +338,17 @@ describe('NumberInput', () => {
 
       it('character', () => {
         expect(_forTests.processKey('a',
+          {locale: 'de', decimalSeparator: ','},
           {
             endsWithDecimalSeparator: false,
             formattedNumber: '1',
             maxLength: 1,
             value: 1
-          },
-          'de')).toEqual(null);
+          })).toEqual(null);
       });
 
       it('decimal separator first', () => {
-        expect(_forTests.processKey(',', undefined, 'de')).toEqual({
+        expect(_forTests.processKey(',', {locale: 'de', decimalSeparator: ','}, undefined)).toEqual({
           endsWithDecimalSeparator: true,
           formattedNumber: '0,',
           maxLength: 2,
@@ -307,29 +358,29 @@ describe('NumberInput', () => {
 
       describe('backspace', () => {
         it('no data', () => {
-          expect(_forTests.processKey('Backspace')).toEqual(null);
+          expect(_forTests.processKey('Backspace', {locale: 'de', decimalSeparator: ','})).toEqual(null);
         });
 
         it('1 digit', () => {
           expect(_forTests.processKey('Backspace',
+            {locale: 'de', decimalSeparator: ','},
             {
               endsWithDecimalSeparator: false,
               formattedNumber: '1',
               maxLength: 1,
               value: 1
-            },
-            'de')).toEqual(undefined);
+            })).toEqual(undefined);
         });
 
         it('2 digits', () => {
           expect(_forTests.processKey('Backspace',
+            {locale: 'de', decimalSeparator: ','},
             {
               endsWithDecimalSeparator: false,
               formattedNumber: '12',
               maxLength: 2,
               value: 12
-            },
-            'de')).toEqual({
+            })).toEqual({
             endsWithDecimalSeparator: false,
             formattedNumber: '1',
             maxLength: 1,
@@ -339,13 +390,13 @@ describe('NumberInput', () => {
 
         it('decimal separator', () => {
           expect(_forTests.processKey('Backspace',
+            {locale: 'de', decimalSeparator: ','},
             {
               endsWithDecimalSeparator: true,
               formattedNumber: '12,',
               maxLength: 3,
               value: 12
-            },
-            'de')).toEqual({
+            })).toEqual({
             endsWithDecimalSeparator: false,
             formattedNumber: '12',
             maxLength: 2,
@@ -355,13 +406,13 @@ describe('NumberInput', () => {
 
         it('number after decimal separator', () => {
           expect(_forTests.processKey('Backspace',
+            {locale: 'de', decimalSeparator: ','},
             {
               endsWithDecimalSeparator: false,
               formattedNumber: '12,3',
               maxLength: 4,
               value: 12.3
-            },
-            'de')).toEqual({
+            })).toEqual({
             endsWithDecimalSeparator: true,
             formattedNumber: '12,',
             maxLength: 3,
@@ -371,13 +422,13 @@ describe('NumberInput', () => {
 
         it('thousand separator', () => {
           expect(_forTests.processKey('Backspace',
+            {locale: 'de', decimalSeparator: ','},
             {
               endsWithDecimalSeparator: false,
               formattedNumber: '1.234',
               maxLength: 5,
               value: 1234
-            },
-            'de')).toEqual({
+            })).toEqual({
             endsWithDecimalSeparator: false,
             formattedNumber: '123',
             maxLength: 3,
