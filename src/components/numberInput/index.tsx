@@ -19,7 +19,7 @@ export type NumberInputProps = React.PropsWithRef<
    * The locale to show the number (default 'en')
    * IMPORTANT: this might not work, depending on your intl\RN version\hermes configuration
    */
-  locale?: string;
+  // locale?: string;
   /**
    * Callback that is called when the number value has changed (undefined in both if the user has deleted the number).
    */
@@ -172,6 +172,7 @@ function processKey(key: string, localeOptions: LocaleOptions, currentData?: Dat
 function NumberInput(props: NumberInputProps, ref: any) {
   const {
     initialValue,
+    // @ts-expect-error
     locale = 'en',
     onChange,
     style,

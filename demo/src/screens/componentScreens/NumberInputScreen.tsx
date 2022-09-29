@@ -29,7 +29,6 @@ export default class NumberInputScreen extends Component<{}, State> {
           </Text>
           <NumberInput
             // initialValue={1506}
-            // locale={'de'}
             onChange={this.onChange}
             placeholder={'Price'}
             trailingText={'$'}
