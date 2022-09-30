@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useCallback, useMemo} from 'react';
+import React, {PropsWithChildren, useMemo} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import Reanimated, {
   useAnimatedGestureHandler,
@@ -89,14 +89,6 @@ function TouchableOpacity(props: Props) {
     return props.backgroundColor || modifiers.backgroundColor || Colors.transparent;
   }, [props.backgroundColor, modifiers.backgroundColor]);
 
-  const onPress = useCallback(() => {
-    props.onPress?.(props);
-  }, [props.onPress, props.customValue]);
-
-  const onLongPress = useCallback(() => {
-    props.onLongPress?.(props);
-  }, [props.onLongPress, props.customValue]);
-
   const toggleActive = (value: number) => {
     'worklet';
     isActive.value = withTiming(value, {duration: 200});
@@ -108,7 +100,9 @@ function TouchableOpacity(props: Props) {
     },
     onEnd: () => {
       toggleActive(0);
-      runOnJS(onPress)();
+      if (props.onPress) {
+        runOnJS<any, void>(props.onPress)();
+      }
     },
     onFail: () => {
       if (!isLongPressed.value) {
@@ -121,7 +115,9 @@ function TouchableOpacity(props: Props) {
     onActive: () => {
       if (!isLongPressed.value) {
         isLongPressed.value = true;
-        runOnJS(onLongPress)();
+        if (props.onLongPress) {
+          runOnJS<any, void>(props.onLongPress)();
+        }
       }
     },
     onFinish: () => {
