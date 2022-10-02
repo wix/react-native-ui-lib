@@ -2,20 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Keyboard as RNKeyboard} from 'react-native';
 import {Text, Spacings, NumberInput, View, Typography} from 'react-native-ui-lib';
 
-interface State {
-  defaultText: boolean;
-  initialValue?: number;
-  autoCapitalize: boolean;
-  addLabel: boolean;
-}
-
-export default class NumberInputScreen extends Component<{}, State> {
-  state = {
-    defaultText: false,
-    autoCapitalize: false,
-    addLabel: false
-  };
-
+export default class NumberInputScreen extends Component {
   onChange = (newValue?: number, formattedNumber?: string) => {
     console.log('NumberInputScreen', 'onChange', 'newValue =', newValue, 'formattedNumber =', formattedNumber);
   };
