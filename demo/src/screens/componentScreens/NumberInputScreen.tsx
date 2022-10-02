@@ -31,8 +31,8 @@ export default class NumberInputScreen extends Component<{}, State> {
             // initialValue={1506}
             onChange={this.onChange}
             placeholder={'Price'}
-            trailingText={'$'}
-            trailingTextTypography={'text50M'}
+            leadingText={'$'}
+            leadingTextTypography={'text50M'}
             style={styles.mainText}
             containerStyle={styles.containerStyle}
             label={'Enter Price'}
