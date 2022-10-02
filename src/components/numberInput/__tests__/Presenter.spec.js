@@ -1,13 +1,13 @@
-import {_forTests} from '../index';
+import {deriveData, processKey} from '../Presenter';
 
 describe('NumberInput', () => {
   describe('deriveData', () => {
     it('should return undefined for undefined', () => {
-      expect(_forTests.deriveData(undefined)).toEqual(undefined);
+      expect(deriveData(undefined)).toEqual(undefined);
     });
 
     it('should return one decimal point and not two', () => {
-      expect(_forTests.deriveData({locale: 'en', decimalSeparator: '.'}, 2, 12.1)).toEqual({
+      expect(deriveData({locale: 'en', decimalSeparator: '.'}, 2, 12.1)).toEqual({
         value: 12.1,
         endsWithDecimalSeparator: false,
         formattedNumber: '12.1',
@@ -16,7 +16,7 @@ describe('NumberInput', () => {
     });
 
     it('should return string that ends with a dot', () => {
-      expect(_forTests.deriveData({locale: 'en', decimalSeparator: '.'}, 2, 12, true)).toEqual({
+      expect(deriveData({locale: 'en', decimalSeparator: '.'}, 2, 12, true)).toEqual({
         value: 12,
         endsWithDecimalSeparator: true,
         formattedNumber: '12.',
@@ -25,7 +25,7 @@ describe('NumberInput', () => {
     });
 
     it('should return string that ends without a dot', () => {
-      expect(_forTests.deriveData({locale: 'en', decimalSeparator: '.'}, 2, 12, false)).toEqual({
+      expect(deriveData({locale: 'en', decimalSeparator: '.'}, 2, 12, false)).toEqual({
         value: 12,
         endsWithDecimalSeparator: false,
         formattedNumber: '12',
@@ -35,7 +35,7 @@ describe('NumberInput', () => {
 
     describe('de', () => {
       it('should return one decimal point and not two', () => {
-        expect(_forTests.deriveData({locale: 'de', decimalSeparator: ','}, 2, 12.1)).toEqual({
+        expect(deriveData({locale: 'de', decimalSeparator: ','}, 2, 12.1)).toEqual({
           value: 12.1,
           endsWithDecimalSeparator: false,
           formattedNumber: '12,1',
@@ -44,7 +44,7 @@ describe('NumberInput', () => {
       });
 
       it('should return string that ends with a dot', () => {
-        expect(_forTests.deriveData({locale: 'de', decimalSeparator: ','}, 2, 12, true)).toEqual({
+        expect(deriveData({locale: 'de', decimalSeparator: ','}, 2, 12, true)).toEqual({
           value: 12,
           endsWithDecimalSeparator: true,
           formattedNumber: '12,',
@@ -53,7 +53,7 @@ describe('NumberInput', () => {
       });
 
       it('should return string that ends without a dot', () => {
-        expect(_forTests.deriveData({locale: 'de', decimalSeparator: ','}, 2, 12, false)).toEqual({
+        expect(deriveData({locale: 'de', decimalSeparator: ','}, 2, 12, false)).toEqual({
           value: 12,
           endsWithDecimalSeparator: false,
           formattedNumber: '12',
@@ -66,7 +66,7 @@ describe('NumberInput', () => {
   describe('processKey', () => {
     describe('en', () => {
       it('first digit', () => {
-        expect(_forTests.processKey('1', 2, {locale: 'en', decimalSeparator: '.'})).toEqual({
+        expect(processKey('1', 2, {locale: 'en', decimalSeparator: '.'})).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '1',
           maxLength: 1,
@@ -75,7 +75,7 @@ describe('NumberInput', () => {
       });
 
       it('second digit', () => {
-        expect(_forTests.processKey('2',
+        expect(processKey('2',
           2,
           {locale: 'en', decimalSeparator: '.'},
           {
@@ -92,7 +92,7 @@ describe('NumberInput', () => {
       });
 
       it('decimal separator', () => {
-        expect(_forTests.processKey('.',
+        expect(processKey('.',
           2,
           {locale: 'en', decimalSeparator: '.'},
           {
@@ -109,7 +109,7 @@ describe('NumberInput', () => {
       });
 
       it('digit after decimal separator', () => {
-        expect(_forTests.processKey('3',
+        expect(processKey('3',
           2,
           {locale: 'en', decimalSeparator: '.'},
           {
@@ -126,7 +126,7 @@ describe('NumberInput', () => {
       });
 
       it('3rd digit after decimal separator', () => {
-        expect(_forTests.processKey('5',
+        expect(processKey('5',
           2,
           {locale: 'en', decimalSeparator: '.'},
           {
@@ -138,7 +138,7 @@ describe('NumberInput', () => {
       });
 
       it('thousand separator', () => {
-        expect(_forTests.processKey('4',
+        expect(processKey('4',
           2,
           {locale: 'en', decimalSeparator: '.'},
           {
@@ -155,7 +155,7 @@ describe('NumberInput', () => {
       });
 
       it('character', () => {
-        expect(_forTests.processKey('a',
+        expect(processKey('a',
           2,
           {locale: 'en', decimalSeparator: '.'},
           {
@@ -167,7 +167,7 @@ describe('NumberInput', () => {
       });
 
       it('decimal separator first', () => {
-        expect(_forTests.processKey('.', 2, {locale: 'en', decimalSeparator: '.'}, undefined)).toEqual({
+        expect(processKey('.', 2, {locale: 'en', decimalSeparator: '.'}, undefined)).toEqual({
           endsWithDecimalSeparator: true,
           formattedNumber: '0.',
           maxLength: 2,
@@ -177,11 +177,11 @@ describe('NumberInput', () => {
 
       describe('change fractionDigits', () => {
         it('fractionDigits=0 decimal separator first', () => {
-          expect(_forTests.processKey('.', 0, {locale: 'en', decimalSeparator: '.'}, undefined)).toEqual(null);
+          expect(processKey('.', 0, {locale: 'en', decimalSeparator: '.'}, undefined)).toEqual(null);
         });
 
         it('fractionDigits=0 after a few digits', () => {
-          expect(_forTests.processKey('.',
+          expect(processKey('.',
             0,
             {locale: 'en', decimalSeparator: '.'},
             {
@@ -193,7 +193,7 @@ describe('NumberInput', () => {
         });
 
         it('fractionDigits=3 3rd digit after decimal separator', () => {
-          expect(_forTests.processKey('5',
+          expect(processKey('5',
             3,
             {locale: 'en', decimalSeparator: '.'},
             {
@@ -210,7 +210,7 @@ describe('NumberInput', () => {
         });
 
         it('fractionDigits=3 4th digit after decimal separator', () => {
-          expect(_forTests.processKey('6',
+          expect(processKey('6',
             3,
             {locale: 'en', decimalSeparator: '.'},
             {
@@ -224,11 +224,11 @@ describe('NumberInput', () => {
 
       describe('backspace', () => {
         it('no data', () => {
-          expect(_forTests.processKey('Backspace', 2, {locale: 'en', decimalSeparator: '.'})).toEqual(null);
+          expect(processKey('Backspace', 2, {locale: 'en', decimalSeparator: '.'})).toEqual(null);
         });
 
         it('1 digit', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'en', decimalSeparator: '.'},
             {
@@ -240,7 +240,7 @@ describe('NumberInput', () => {
         });
 
         it('2 digits', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'en', decimalSeparator: '.'},
             {
@@ -257,7 +257,7 @@ describe('NumberInput', () => {
         });
 
         it('decimal separator', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'en', decimalSeparator: '.'},
             {
@@ -274,7 +274,7 @@ describe('NumberInput', () => {
         });
 
         it('number after decimal separator', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'en', decimalSeparator: '.'},
             {
@@ -291,7 +291,7 @@ describe('NumberInput', () => {
         });
 
         it('thousand separator', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'en', decimalSeparator: '.'},
             {
@@ -311,7 +311,7 @@ describe('NumberInput', () => {
 
     describe('de', () => {
       it('first digit', () => {
-        expect(_forTests.processKey('1', 2, {locale: 'de', decimalSeparator: ','}, undefined)).toEqual({
+        expect(processKey('1', 2, {locale: 'de', decimalSeparator: ','}, undefined)).toEqual({
           endsWithDecimalSeparator: false,
           formattedNumber: '1',
           maxLength: 1,
@@ -320,7 +320,7 @@ describe('NumberInput', () => {
       });
 
       it('second digit', () => {
-        expect(_forTests.processKey('2',
+        expect(processKey('2',
           2,
           {locale: 'de', decimalSeparator: ','},
           {
@@ -337,7 +337,7 @@ describe('NumberInput', () => {
       });
 
       it('decimal separator', () => {
-        expect(_forTests.processKey(',',
+        expect(processKey(',',
           2,
           {locale: 'de', decimalSeparator: ','},
           {
@@ -354,7 +354,7 @@ describe('NumberInput', () => {
       });
 
       it('digit after decimal separator', () => {
-        expect(_forTests.processKey('3',
+        expect(processKey('3',
           2,
           {locale: 'de', decimalSeparator: ','},
           {
@@ -371,7 +371,7 @@ describe('NumberInput', () => {
       });
 
       it('3rd digit after decimal separator', () => {
-        expect(_forTests.processKey('5',
+        expect(processKey('5',
           2,
           {locale: 'de', decimalSeparator: ','},
           {
@@ -383,7 +383,7 @@ describe('NumberInput', () => {
       });
 
       it('thousand separator', () => {
-        expect(_forTests.processKey('4',
+        expect(processKey('4',
           2,
           {locale: 'de', decimalSeparator: ','},
           {
@@ -400,7 +400,7 @@ describe('NumberInput', () => {
       });
 
       it('character', () => {
-        expect(_forTests.processKey('a',
+        expect(processKey('a',
           2,
           {locale: 'de', decimalSeparator: ','},
           {
@@ -412,7 +412,7 @@ describe('NumberInput', () => {
       });
 
       it('decimal separator first', () => {
-        expect(_forTests.processKey(',', 2, {locale: 'de', decimalSeparator: ','}, undefined)).toEqual({
+        expect(processKey(',', 2, {locale: 'de', decimalSeparator: ','}, undefined)).toEqual({
           endsWithDecimalSeparator: true,
           formattedNumber: '0,',
           maxLength: 2,
@@ -422,11 +422,11 @@ describe('NumberInput', () => {
 
       describe('change fractionDigits', () => {
         it('fractionDigits=0 decimal separator first', () => {
-          expect(_forTests.processKey(',', 0, {locale: 'de', decimalSeparator: ','}, undefined)).toEqual(null);
+          expect(processKey(',', 0, {locale: 'de', decimalSeparator: ','}, undefined)).toEqual(null);
         });
 
         it('fractionDigits=0 after a few digits', () => {
-          expect(_forTests.processKey(',',
+          expect(processKey(',',
             0,
             {locale: 'de', decimalSeparator: ','},
             {
@@ -438,7 +438,7 @@ describe('NumberInput', () => {
         });
 
         it('fractionDigits=3 3rd digit after decimal separator', () => {
-          expect(_forTests.processKey('5',
+          expect(processKey('5',
             3,
             {locale: 'de', decimalSeparator: ','},
             {
@@ -455,7 +455,7 @@ describe('NumberInput', () => {
         });
 
         it('fractionDigits=3 4th digit after decimal separator', () => {
-          expect(_forTests.processKey('6',
+          expect(processKey('6',
             3,
             {locale: 'de', decimalSeparator: ','},
             {
@@ -469,11 +469,11 @@ describe('NumberInput', () => {
 
       describe('backspace', () => {
         it('no data', () => {
-          expect(_forTests.processKey('Backspace', 2, {locale: 'de', decimalSeparator: ','})).toEqual(null);
+          expect(processKey('Backspace', 2, {locale: 'de', decimalSeparator: ','})).toEqual(null);
         });
 
         it('1 digit', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'de', decimalSeparator: ','},
             {
@@ -485,7 +485,7 @@ describe('NumberInput', () => {
         });
 
         it('2 digits', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'de', decimalSeparator: ','},
             {
@@ -502,7 +502,7 @@ describe('NumberInput', () => {
         });
 
         it('decimal separator', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'de', decimalSeparator: ','},
             {
@@ -519,7 +519,7 @@ describe('NumberInput', () => {
         });
 
         it('number after decimal separator', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'de', decimalSeparator: ','},
             {
@@ -536,7 +536,7 @@ describe('NumberInput', () => {
         });
 
         it('thousand separator', () => {
-          expect(_forTests.processKey('Backspace',
+          expect(processKey('Backspace',
             2,
             {locale: 'de', decimalSeparator: ','},
             {
