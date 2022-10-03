@@ -27,7 +27,7 @@ declare class Colors {
     getColorName(color: string): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
-    generateTokens(color: string, mode: 'light' | 'dark'): DesignTokens;
+    generateDesignTokens(color: string, mode: 'light' | 'dark'): DesignTokens;
     isDark(color: string): boolean;
     isValidHex(string: string): boolean;
     getHexString(color: string): string;

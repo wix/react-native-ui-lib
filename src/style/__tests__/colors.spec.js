@@ -124,11 +124,11 @@ describe('style/Colors', () => {
     });
   });
 
-  describe('generateTokens(...)', () => {
+  describe('generateDesignTokens(...)', () => {
     it('should generate design tokens from dark color for light theme', () => {
       const chosenColor = '#860D86';
       expect(uut.isDark(chosenColor)).toEqual(true);
-      expect(uut.generateTokens(chosenColor, 'light')).toEqual({
+      expect(uut.generateDesignTokens(chosenColor, 'light')).toEqual({
         $backgroundPrimaryHeavy: chosenColor,
         $backgroundPrimaryLight: '#FFFAFF',
         $backgroundPrimaryMedium: '#FACCFA',
@@ -142,7 +142,7 @@ describe('style/Colors', () => {
     it('should generate design tokens from light color for light theme', () => {
       const chosenColor = '#E9BEE7';
       expect(uut.isDark(chosenColor)).toEqual(false);
-      expect(uut.generateTokens(chosenColor, 'light')).toEqual({
+      expect(uut.generateDesignTokens(chosenColor, 'light')).toEqual({
         $backgroundPrimaryHeavy: '#A4379F',
         $backgroundPrimaryLight: '#F6E4F5',
         $backgroundPrimaryMedium: '#E9BEE7',
@@ -156,7 +156,7 @@ describe('style/Colors', () => {
     it('should generate design tokens from dark color for dark theme', () => {
       const chosenColor = '#860D86';
       expect(uut.isDark(chosenColor)).toEqual(true);
-      expect(uut.generateTokens(chosenColor, 'dark')).toEqual({
+      expect(uut.generateDesignTokens(chosenColor, 'dark')).toEqual({
         $backgroundPrimaryHeavy: '#F69DF6',
         $backgroundPrimaryLight: '#860D86',
         $backgroundPrimaryMedium: '#B512B5',
@@ -170,7 +170,7 @@ describe('style/Colors', () => {
     it('should generate design tokens from light color for dark theme', () => {
       const chosenColor = '#E9BEE7';
       expect(uut.isDark(chosenColor)).toEqual(false);
-      expect(uut.generateTokens(chosenColor, 'dark')).toEqual({
+      expect(uut.generateDesignTokens(chosenColor, 'dark')).toEqual({
         $backgroundPrimaryHeavy: chosenColor,
         $backgroundPrimaryLight: '#581E55',
         $backgroundPrimaryMedium: '#7E2B7A',

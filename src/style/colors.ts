@@ -207,7 +207,7 @@ export class Colors {
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
-  generateTokens(color: string, mode: 'light' | 'dark') {
+  generateDesignTokens(color: string, mode: 'light' | 'dark' = 'light') {
     return mode === 'light' ? this.generateLightModeTokens(color) : this.generateDarkModeTokens(color);
   }
 
