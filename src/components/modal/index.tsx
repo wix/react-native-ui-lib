@@ -14,6 +14,7 @@ import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
+import {Colors} from 'style';
 
 const BlurView = BlurViewPackage?.BlurView;
 
@@ -78,7 +79,12 @@ class Modal extends Component<ModalProps> {
   }
 
   renderTouchableOverlay() {
-    const {testID, overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
+    const {
+      testID,
+      overlayBackgroundColor = Colors.$backgroundDefault,
+      onBackgroundPress,
+      accessibilityLabel = 'Dismiss'
+    } = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
       const isScreenReaderEnabled = Constants.accessibility.isScreenReaderEnabled;
       const accessibilityProps = isScreenReaderEnabled
