@@ -24,11 +24,11 @@ const ValidationMessage = ({
   const relevantValidationMessage = getRelevantValidationMessage(validationMessage, context.failingValidatorIndex);
   const showValidationMessage = !context.isValid || (!validate && !!validationMessage);
 
-  return (
+  return showValidationMessage ? (
     <Text testID={testID} $textDangerLight style={style}>
-      {showValidationMessage ? relevantValidationMessage : ''}
+      {relevantValidationMessage}
     </Text>
-  );
+  ) : <></>;
 };
 
 const styles = StyleSheet.create({
