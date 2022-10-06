@@ -131,6 +131,15 @@ export class Colors {
     return ColorName.name(color)[1];
   }
 
+  getSystemColorByHex(colorsOptions: string[], colorValue: string) {
+    const color = colorStringValue(colorValue);
+    for (const [key, value] of Object.entries(this)) {
+      if (value === color && colorsOptions.includes(key.split(/[0-9]/)[0])) {
+        return key;
+      }
+    }
+  }
+
   getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number) {
     if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
