@@ -3,7 +3,7 @@ import {LayoutAnimation, StyleSheet} from 'react-native';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import {useDidUpdate} from 'hooks';
-import {Dividers, Spacings} from 'react-native-ui-lib';
+import {Dividers} from 'react-native-ui-lib';
 
 export type ExpandableSectionProps = {
   /**
