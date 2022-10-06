@@ -63,7 +63,7 @@ function ExpandableSection(props: ExpandableSectionProps) {
   }, [expanded]);
 
   const renderSeparator = () => {
-    return <View style={styles.separator}/>;
+    return <View marginL-s10 style={styles.separator}/>;
   };
 
   return (
@@ -84,8 +84,5 @@ const styles = StyleSheet.create({
   container: {
     overflow: 'hidden'
   },
-  separator: {
-    ...Dividers.d10,
-    marginLeft: Spacings.s10
-  }
+  separator: Dividers.d10
 });
