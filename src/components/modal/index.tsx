@@ -81,7 +81,7 @@ class Modal extends Component<ModalProps> {
   renderTouchableOverlay() {
     const {
       testID,
-      overlayBackgroundColor = Colors.$backgroundDefault,
+      overlayBackgroundColor,
       onBackgroundPress,
       accessibilityLabel = 'Dismiss'
     } = this.props;
