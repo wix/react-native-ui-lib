@@ -14,7 +14,6 @@ import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
-import {Colors} from 'style';
 
 const BlurView = BlurViewPackage?.BlurView;
 
