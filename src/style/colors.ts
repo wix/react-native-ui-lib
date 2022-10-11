@@ -133,10 +133,10 @@ export class Colors {
 
   getSystemColorByHex(colorsOptions: string[], colorValue: string) {
     const color = colorStringValue(colorValue);
-    for (const [key, value] of Object.entries(this)) {
-      if (value === color && colorsOptions.includes(key.split(/[0-9]/)[0])) {
-        return key;
-      }
+    const isColorFound = (c: string) => c.toString() === color;
+    const system_color = _.findKey(this, isColorFound);
+    if (system_color) {
+      return colorsOptions.includes(system_color.split(/[0-9]/)[0]) && system_color;
     }
   }
 
