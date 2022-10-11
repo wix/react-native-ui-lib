@@ -40,7 +40,6 @@ const Dialog = (props: DialogProps) => {
   const {overlayBackgroundColor, ...otherModalProps} = modalProps;
   const initialVisibility = useRef(propsVisibility);
   const [visible, setVisible] = useState(propsVisibility);
-  const containerRef = React.createRef<RNView>();
   const opacity = useSharedValue<number>(Number(propsVisibility));
 
   const directions = useMemo((): DialogDirections[] => {
@@ -67,7 +66,7 @@ const Dialog = (props: DialogProps) => {
   },
   [onDismiss, setVisible]);
 
-  const {onLayout, hiddenLocation} = useHiddenLocation({containerRef});
+  const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
 
   const {
     translation: panTranslation,
@@ -159,7 +158,7 @@ const Dialog = (props: DialogProps) => {
   const renderDialog = () => {
     return (
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View reanimated style={style} onLayout={onLayout} ref={containerRef} testID={testID}>
+        <View reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
           <DialogHeader {...headerProps}/>
           {children}
         </View>

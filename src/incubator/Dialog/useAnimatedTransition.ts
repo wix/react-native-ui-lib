@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
 import {runOnJS, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
-import {HiddenLocation} from '../hooks/useHiddenLocation';
+import type {HiddenLocation} from '../hooks/useHiddenLocation';
 import {PanningDirections, PanningDirectionsEnum, DEFAULT_ANIMATION_CONFIG} from '../panView';
 import useAnimationEndNotifier, {
   AnimationNotifierEndProps,
