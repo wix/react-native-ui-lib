@@ -49,8 +49,7 @@ const PanView = (props: Props) => {
     ...others
   } = props;
 
-  const containerRef = React.createRef<RNView>();
-  const {onLayout, hiddenLocation} = useHiddenLocation({containerRef});
+  const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
   const {translation, panGestureEvent} = usePanGesture({
     directions,
     dismissible,
@@ -68,7 +67,7 @@ const PanView = (props: Props) => {
   }, []);
 
   return (
-    <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
+    <View ref={setRef} style={containerStyle} onLayout={onLayout}>
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
         <View reanimated style={animatedStyle}>
           <View {...others}>{children}</View>
