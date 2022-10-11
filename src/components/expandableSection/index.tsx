@@ -3,6 +3,7 @@ import {LayoutAnimation, StyleSheet} from 'react-native';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import {useDidUpdate} from 'hooks';
+import {Dividers} from 'react-native-ui-lib';
 
 export type ExpandableSectionProps = {
   /**
@@ -25,6 +26,10 @@ export type ExpandableSectionProps = {
    * action for when pressing the header of the expandableSection
    */
   onPress?: () => void;
+  /**
+   * should use separator when section is expanded
+   */
+  useSeparator?: boolean;
 };
 
 /**
@@ -34,7 +39,7 @@ export type ExpandableSectionProps = {
  */
 
 function ExpandableSection(props: ExpandableSectionProps) {
-  const {expanded, sectionHeader, children, top} = props;
+  const {expanded, sectionHeader, children, top, useSeparator} = props;
 
   /**
    * TODO: move to reanimated LayoutAnimation after updating to version 2.3.0
@@ -57,6 +62,10 @@ function ExpandableSection(props: ExpandableSectionProps) {
     return {expanded};
   }, [expanded]);
 
+  const renderSeparator = () => {
+    return <View marginL-s10 style={styles.separator}/>;
+  };
+
   return (
     <View style={styles.container}>
       {top && expanded && children}
@@ -64,6 +73,7 @@ function ExpandableSection(props: ExpandableSectionProps) {
         {sectionHeader}
       </TouchableOpacity>
       {!top && expanded && children}
+      {expanded && useSeparator && renderSeparator()}
     </View>
   );
 }
@@ -73,5 +83,6 @@ export default ExpandableSection;
 const styles = StyleSheet.create({
   container: {
     overflow: 'hidden'
-  }
+  },
+  separator: Dividers.d10
 });
