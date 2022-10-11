@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
-import {runOnJS, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
+import {runOnJS, useSharedValue, withSpring, withTiming, withDelay} from 'react-native-reanimated';
 import type {HiddenLocation} from '../hooks/useHiddenLocation';
 import {PanningDirections, PanningDirectionsEnum, DEFAULT_ANIMATION_CONFIG} from '../panView';
 import useAnimationEndNotifier, {
@@ -10,6 +10,11 @@ import useAnimationEndNotifier, {
 const TransitionViewDirectionEnum = PanningDirectionsEnum;
 type TransitionViewDirection = PanningDirections;
 export {TransitionViewAnimationType, TransitionViewDirectionEnum, TransitionViewDirection};
+
+interface Delay {
+  enter?: number;
+  exit?: number;
+}
 
 export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
   /**
@@ -24,12 +29,16 @@ export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
    * If this is given there will be an exit animation to this direction.
    */
   exitTo?: TransitionViewDirection;
+  /**
+   * Delay the enter \ exit animation.
+   */
+  delay?: Delay;
   hiddenLocation: HiddenLocation;
   onInitPosition: () => void;
 }
 
 export default function useAnimatedTransition(props: AnimatedTransitionProps) {
-  const {hiddenLocation, onInitPosition, enterFrom, exitTo, onAnimationStart, onAnimationEnd} = props;
+  const {hiddenLocation, onInitPosition, enterFrom, exitTo, onAnimationStart, onAnimationEnd, delay} = props;
 
   // Has to start at {0, 0} with {opacity: 0} so layout can be measured
   const translationX = useSharedValue<number>(0);
@@ -76,14 +85,15 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
 
   const translateTo = useCallback((to: {x: number; y: number},
     animationDirection: TransitionViewDirection,
-    callback: (isFinished?: boolean) => void) => {
+    callback: (isFinished?: boolean) => void,
+    delay = 0) => {
     'worklet';
     // @ts-expect-error
     if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
-      translationX.value = withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback);
+      translationX.value = withDelay(delay, withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback));
       // @ts-expect-error
     } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(animationDirection)) {
-      translationY.value = withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback);
+      translationY.value = withDelay(delay, withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback));
     }
   },
   []);
@@ -95,9 +105,9 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
         runOnJS(onAnimationStart)('enter');
       }
 
-      translateTo({x: 0, y: 0}, enterFrom, onEnterAnimationEnd);
+      translateTo({x: 0, y: 0}, enterFrom, onEnterAnimationEnd, delay?.enter);
     }
-  }, [onEnterAnimationEnd]);
+  }, [onEnterAnimationEnd, delay?.enter]);
 
   const animateOut = useCallback(() => {
     'worklet';
@@ -106,9 +116,9 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
         runOnJS(onAnimationStart)('exit');
       }
 
-      translateTo(getLocation(exitTo), exitTo, onExitAnimationEnd);
+      translateTo(getLocation(exitTo), exitTo, onExitAnimationEnd, delay?.exit);
     }
-  }, [hiddenLocation, exitTo, onExitAnimationEnd]);
+  }, [hiddenLocation, exitTo, onExitAnimationEnd, delay?.exit]);
 
   return {animateIn, animateOut, translation: {x: translationX, y: translationY}};
 }

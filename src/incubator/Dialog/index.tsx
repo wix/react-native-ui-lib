@@ -11,11 +11,13 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import usePanGesture from '../panView/usePanGesture';
-import useAnimatedTransition, {TransitionViewAnimationType} from './useAnimatedTransition';
+import useAnimatedTransition, {AnimatedTransitionProps, TransitionViewAnimationType} from './useAnimatedTransition';
 import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 import useFadeView from './useFadeView';
+
+const TRANSITION_ANIMATION_DELAY: AnimatedTransitionProps['delay'] = {enter: 100};
 
 export interface DialogStatics {
   directions: typeof DialogDirectionsEnum;
@@ -97,7 +99,8 @@ const Dialog = (props: DialogProps) => {
     enterFrom: direction,
     exitTo: direction,
     onAnimationStart: fade,
-    onAnimationEnd: onTransitionAnimationEnd
+    onAnimationEnd: onTransitionAnimationEnd,
+    delay: TRANSITION_ANIMATION_DELAY
   });
 
   const open = useCallback(() => {
