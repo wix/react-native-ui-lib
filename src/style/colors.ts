@@ -131,13 +131,13 @@ export class Colors {
     return ColorName.name(color)[1];
   }
 
-  getSystemColorByHex(colorsOptions: string[], colorValue: string) {
+  getSystemColorByHex(colorValue: string, validColors?: string[]) {
     const color = colorStringValue(colorValue);
-    const isColorFound = (c: string) => c.toString() === color;
-    const system_color = _.findKey(this, isColorFound);
-    if (system_color) {
-      return colorsOptions.includes(system_color.split(/[0-9]/)[0]) && system_color;
+    const system_color = _.findKey(this, c => c.toString() === color);
+    if (validColors && system_color) {
+      return validColors?.includes(system_color.split(/[0-9]/)[0]) && system_color;
     }
+    return system_color;
   }
 
   getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number) {
