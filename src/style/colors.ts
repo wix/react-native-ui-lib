@@ -135,7 +135,7 @@ export class Colors {
     const color = colorStringValue(colorValue);
     const system_color = _.findKey(this, c => c.toString() === color);
     if (validColors && system_color) {
-      return validColors?.includes(system_color.split(/[0-9]/)[0]) && system_color;
+      return validColors?.includes(system_color.split(/[0-9]/)[0]) ? system_color : undefined;
     }
     return system_color;
   }
