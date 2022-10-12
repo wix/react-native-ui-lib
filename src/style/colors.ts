@@ -48,11 +48,10 @@ export class Colors {
    * @param color - palette color
    */
   loadDesignTokens(color: string) {
-    Scheme.loadSchemes({
+    this.loadSchemes({
       light: this.generateLightModeTokens(color),
       dark: this.generateDarkModeTokens(color)
     });
-    Object.assign(this, Scheme.getScheme());
   }
 
   /**
