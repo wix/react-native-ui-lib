@@ -44,6 +44,18 @@ export class Colors {
   }
 
   /**
+   * Load light and dark schemes based on generated design tokens
+   * @param color - palette color
+   */
+  loadDesignTokens(color: string) {
+    Scheme.loadSchemes({
+      light: this.generateLightModeTokens(color),
+      dark: this.generateDarkModeTokens(color)
+    });
+    Object.assign(this, Scheme.getScheme());
+  }
+
+  /**
    * Get app's current color scheme
    */
   getScheme(): 'light' | 'dark' {
