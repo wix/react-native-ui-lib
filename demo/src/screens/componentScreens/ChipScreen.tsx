@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import {Chip, Colors, Spacings, Text, Typography, View, Dialog, WheelPickerDialog, Image} from 'react-native-ui-lib';
+import {Chip, Colors, Spacings, Text, Typography, View, Incubator, WheelPickerDialog, Image} from 'react-native-ui-lib';
 
 const avatarImage = {
   uri: 'https://randomuser.me/api/portraits/women/24.jpg'
@@ -72,9 +72,9 @@ export default class ChipScreen extends Component {
     const {showDialog} = this.state;
 
     return (
-      <Dialog visible={showDialog} useSafeArea bottom onDismiss={this.closeDialog}>
+      <Incubator.Dialog visible={showDialog} useSafeArea bottom onDismiss={this.closeDialog}>
         {this.renderContent()}
-      </Dialog>
+      </Incubator.Dialog>
     );
   };
 
@@ -90,7 +90,7 @@ export default class ChipScreen extends Component {
   render() {
     return (
       <View style={{padding: 20}}>
-        {this.state.showDialog && this.renderPickerDialog()}
+        {this.renderPickerDialog()}
         <Text marginB-20 text40 $textDefault>
           Chip
         </Text>

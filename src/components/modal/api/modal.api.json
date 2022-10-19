@@ -10,7 +10,8 @@
     {
       "name": "enableModalBlur",
       "type": "boolean",
-      "description": "Blurs the modal background when transparent (iOS only)"
+      "description": "Blurs the modal background when transparent",
+      "note": "iOS only"
     },
     {
       "name": "blurView",
@@ -32,7 +33,8 @@
     {
       "name": "useGestureHandlerRootView",
       "type": "boolean",
-      "description": "Should add a GestureHandlerRootView (Android only)"
+      "description": "Should add a GestureHandlerRootView",
+      "note": "Android only"
     }
   ],
   "snippet": [

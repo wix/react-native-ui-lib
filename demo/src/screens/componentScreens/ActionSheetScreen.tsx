@@ -64,6 +64,7 @@ export default class ActionSheetScreen extends Component {
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           useNativeIOS={false}
+          migrateDialog
           options={[
             {label: 'option 1', onPress: () => this.pickOption('option 1')},
             {label: 'option 2', onPress: () => this.pickOption('option 2')},
@@ -79,6 +80,7 @@ export default class ActionSheetScreen extends Component {
           message={'Message of action sheet'}
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
+          migrateDialog
           options={[
             {label: 'option 1', onPress: () => this.pickOption('option 1'), iconSource: collectionsIcon},
             {label: 'option 2', onPress: () => this.pickOption('option 2'), iconSource: shareIcon},

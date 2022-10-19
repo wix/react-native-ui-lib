@@ -11,11 +11,17 @@ import Image from '../image';
 //@ts-ignore
 import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
+import {Dialog as IncubatorDialog, DialogProps as IncubatorDialogProps} from '../../incubator';
+import {LogService} from '../../services';
 
 const VERTICAL_PADDING = 8;
 type ActionSheetOnOptionPress = (index: number) => void;
 
 type ActionSheetProps = {
+  /**
+   * Migrate to the Incubator.Dialog component
+   */
+  migrateDialog?: boolean;
   /**
    * Whether to show the action sheet or not
    */
@@ -76,6 +82,7 @@ type ActionSheetProps = {
    */
   renderAction?: (option: ButtonProps, index: number, onOptionPress: ActionSheetOnOptionPress) => JSX.Element;
   /**
+   * @deprecated
    * Called once the modal has been dismissed completely
    */
   onModalDismissed?: DialogProps['onDialogDismissed'];
@@ -89,7 +96,7 @@ type ActionSheetProps = {
   dialogProps?: Omit<
     DialogProps,
     'useSafeArea' | 'testID' | 'containerStyle' | 'visible' | 'onDismiss' | 'onDialogDismissed'
-  >;
+  > | IncubatorDialogProps;
   /**
    * testID for e2e tests
    */
@@ -213,7 +220,7 @@ class ActionSheet extends Component<ActionSheetProps> {
     );
   }
 
-  render() {
+  renderOldDialog() {
     const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps} =
       this.props;
 
@@ -239,6 +246,41 @@ class ActionSheet extends Component<ActionSheetProps> {
       </Dialog>
     );
   }
+
+  renderNewDialog() {
+    const {visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps} = this.props;
+
+    if (onModalDismissed) {
+      LogService.deprecationWarn({component: 'ActionSheet', oldProp: 'onModalDismissed', newProp: 'onDismiss'});
+    }
+
+    return (
+      // @ts-expect-error height might be null here
+      <IncubatorDialog
+        bottom
+        centerH
+        width="100%"
+        direction={PanningProvider.Directions.DOWN}
+        {...dialogProps}
+        useSafeArea={useSafeArea}
+        testID={testID}
+        containerStyle={[styles.incubatorDialog, dialogStyle]}
+        visible={visible}
+        onDismiss={onDismiss}
+      >
+        {this.renderSheet()}
+      </IncubatorDialog>
+    );
+  }
+
+  render() {
+    const {migrateDialog} = this.props;
+    if (migrateDialog) {
+      return this.renderNewDialog();
+    } else {
+      return this.renderOldDialog();
+    }
+  }
 }
 
 export default asBaseComponent<ActionSheetProps>(ActionSheet);
@@ -249,6 +291,10 @@ const styles = StyleSheet.create({
   },
   dialog: {
     backgroundColor: Colors.white
+  },
+  incubatorDialog: {
+    backgroundColor: Colors.white,
+    marginBottom: 0
   },
   listWithTitle: {
     paddingBottom: VERTICAL_PADDING

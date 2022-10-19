@@ -2,6 +2,7 @@ import React from 'react';
 import {View, TextInput as RNTextInput, StyleSheet} from 'react-native';
 import {TextInputPropTypes} from 'deprecated-react-native-prop-types';
 import BaseInput from '../baseInput';
+import {Colors} from '../../style';
 
 /**
  * @description: a wrapper for Text Field component to create enclosed text area
@@ -30,6 +31,8 @@ export default class TextArea extends BaseInput {
     return (
       <View style={this.styles.container}>
         <RNTextInput
+          placeholderTextColor={Colors.$textNeutral}
+          color={Colors.$textDefault}
           {...this.props}
           value={value}
           multiline

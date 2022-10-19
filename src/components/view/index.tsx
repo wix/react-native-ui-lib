@@ -73,10 +73,18 @@ function View(props: ViewProps, ref: any) {
     animated,
     reanimated,
     children,
+    backgroundColor: backgroundColorProps,
     ...others
   } = themeProps;
-  const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle, positionStyle} = useModifiers(themeProps,
-    modifiersOptions);
+  const {
+    backgroundColor: backgroundColorModifiers,
+    borderRadius,
+    paddings,
+    margins,
+    alignments,
+    flexStyle,
+    positionStyle
+  } = useModifiers(themeProps, modifiersOptions);
   const [ready, setReady] = useState(!renderDelay);
 
   useEffect(() => {
@@ -101,6 +109,7 @@ function View(props: ViewProps, ref: any) {
   }, [useSafeArea, animated, reanimated]);
 
   const _style = useMemo(() => {
+    const backgroundColor = backgroundColorProps || backgroundColorModifiers;
     return [
       backgroundColor && {
         backgroundColor
@@ -115,7 +124,17 @@ function View(props: ViewProps, ref: any) {
       alignments,
       style
     ];
-  }, [backgroundColor, borderRadius, flexStyle, positionStyle, paddings, margins, alignments, style]);
+  }, [
+    backgroundColorProps,
+    backgroundColorModifiers,
+    borderRadius,
+    flexStyle,
+    positionStyle,
+    paddings,
+    margins,
+    alignments,
+    style
+  ]);
 
   if (!ready) {
     return null;

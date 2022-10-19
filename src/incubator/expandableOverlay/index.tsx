@@ -4,6 +4,7 @@ import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchabl
 import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../components/dialog';
+import {Colors} from 'style';
 
 export interface ExpandableOverlayMethods {
   openExpandable: () => void;
@@ -88,7 +89,13 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const renderModal = () => {
     return (
-      <Modal testID={`${testID}.overlay`} {...modalProps} visible={visible} onDismiss={closeExpandable}>
+      <Modal
+        testID={`${testID}.overlay`}
+        overlayBackgroundColor={Colors.$backgroundDefault}
+        {...modalProps}
+        visible={visible}
+        onDismiss={closeExpandable}
+      >
         {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
         {expandableContent}
       </Modal>

@@ -1,5 +1,5 @@
-import {RefObject, useCallback, useState} from 'react';
-import {View, LayoutChangeEvent} from 'react-native';
+import {useCallback, useRef, useState, RefCallback} from 'react';
+import {View} from 'react-native';
 import {Constants} from '../../commons/new';
 import {PanningDirectionsEnum} from '../panView';
 
@@ -9,19 +9,13 @@ export interface HiddenLocation extends HiddenLocationRecord {
   wasMeasured: boolean;
 }
 
-export interface HiddenLocationProps<T extends View> {
-  containerRef: RefObject<T>;
-}
-
-export default function useHiddenLocation<T extends View>(props: HiddenLocationProps<T>) {
-  const {containerRef} = props;
-
+export default function useHiddenLocation<T extends View>() {
   const getHiddenLocation = ({
     x = 0,
     y = 0,
     width = Constants.screenWidth,
     height = Constants.windowHeight,
-    wasMeasured = true
+    wasMeasured = false
   }): HiddenLocation => {
     return {
       up: -y - height,
@@ -33,17 +27,37 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
   };
 
   const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
+  const ref = useRef<T>();
+  const wasMeasured = useRef(false);
 
-  const onLayout = useCallback((event: LayoutChangeEvent) => {
-    const {width, height} = event.nativeEvent.layout;
-    if (containerRef.current && hiddenLocation.wasMeasured) {
-      containerRef.current.measureInWindow((x: number, y: number) => {
-        setHiddenLocation(getHiddenLocation({x, y, width, height, wasMeasured: false}));
+  const measure = useCallback(() => {
+    if (!wasMeasured.current) {
+      ref.current?.measureInWindow((x, y, width, height) => {
+        if (!wasMeasured.current && width > 0 && height > 0) {
+          wasMeasured.current = true;
+          setHiddenLocation(getHiddenLocation({
+            x,
+            y,
+            width,
+            height,
+            wasMeasured: true
+          }));
+        }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },
-  [containerRef]);
+  }, []);
 
-  return {onLayout, hiddenLocation};
+  const setRef: RefCallback<T> = useCallback((node: T) => {
+    if (node) {
+      ref.current = node;
+      measure();
+    }
+  },
+  [measure]);
+
+  const onLayout = useCallback(() => {
+    measure();
+  }, [measure]);
+
+  return {setRef, onLayout, hiddenLocation};
 }

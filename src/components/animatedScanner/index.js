@@ -7,7 +7,6 @@ import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 
-
 // TODO: add finisher animation (check icon animation or something)
 /**
  * @description: Scanner component for progress indication

@@ -11,17 +11,26 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import usePanGesture from '../panView/usePanGesture';
-import useAnimatedTransition, {TransitionViewAnimationType} from './useAnimatedTransition';
+import useAnimatedTransition, {AnimatedTransitionProps, TransitionViewAnimationType} from './useAnimatedTransition';
 import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 import useFadeView from './useFadeView';
 
+const TRANSITION_ANIMATION_DELAY: AnimatedTransitionProps['delay'] = {enter: 100};
+
+export interface DialogStatics {
+  directions: typeof DialogDirectionsEnum;
+  Header: typeof DialogHeader;
+}
+
 const Dialog = (props: DialogProps) => {
   const {
-    visible: propsVisibility,
+    visible: propsVisibility = false,
     headerProps,
     containerStyle,
+    width,
+    height,
     onDismiss,
     direction = DialogDirectionsEnum.DOWN,
     ignoreBackgroundPress,
@@ -33,7 +42,6 @@ const Dialog = (props: DialogProps) => {
   const {overlayBackgroundColor, ...otherModalProps} = modalProps;
   const initialVisibility = useRef(propsVisibility);
   const [visible, setVisible] = useState(propsVisibility);
-  const containerRef = React.createRef<RNView>();
   const opacity = useSharedValue<number>(Number(propsVisibility));
 
   const directions = useMemo((): DialogDirections[] => {
@@ -60,7 +68,7 @@ const Dialog = (props: DialogProps) => {
   },
   [onDismiss, setVisible]);
 
-  const {onLayout, hiddenLocation} = useHiddenLocation({containerRef});
+  const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
 
   const {
     translation: panTranslation,
@@ -91,7 +99,8 @@ const Dialog = (props: DialogProps) => {
     enterFrom: direction,
     exitTo: direction,
     onAnimationStart: fade,
-    onAnimationEnd: onTransitionAnimationEnd
+    onAnimationEnd: onTransitionAnimationEnd,
+    delay: TRANSITION_ANIMATION_DELAY
   });
 
   const open = useCallback(() => {
@@ -117,7 +126,7 @@ const Dialog = (props: DialogProps) => {
   }, [propsVisibility]);
 
   const alignmentStyle = useMemo(() => {
-    return {flex: 1, ...extractAlignmentsValues(props)};
+    return {flex: 1, alignItems: 'center', ...extractAlignmentsValues(props)};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -139,14 +148,20 @@ const Dialog = (props: DialogProps) => {
   }, []);
 
   const style = useMemo(() => {
-    return [styles.defaultDialogStyle, containerStyle, transitionStyle];
+    return [
+      styles.defaultDialogStyle,
+      containerStyle,
+      transitionStyle,
+      width ? {width} : undefined,
+      height ? {height} : undefined
+    ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [containerStyle]);
+  }, [containerStyle, width, height]);
 
   const renderDialog = () => {
     return (
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View reanimated style={style} onLayout={onLayout} ref={containerRef} testID={testID}>
+        <View reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
           <DialogHeader {...headerProps}/>
           {children}
         </View>
@@ -178,7 +193,7 @@ Dialog.displayName = 'Incubator.Dialog';
 Dialog.directions = DialogDirectionsEnum;
 Dialog.Header = DialogHeader;
 
-export default asBaseComponent<DialogProps>(Dialog);
+export default asBaseComponent<DialogProps, DialogStatics>(Dialog);
 
 const styles = StyleSheet.create({
   defaultDialogStyle: {
