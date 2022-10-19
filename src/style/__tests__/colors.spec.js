@@ -81,7 +81,7 @@ describe('style/Colors', () => {
       expect(uut.getColorTint('#000000', 60)).toEqual('#808080');
     });
 
-    it('should handle color that does not exist in uilib', () => {
+    it('should handle color that does not exist in `uilib`', () => {
       expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#8D7006'); //
       expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#BE9609'); //
       expect(uut.getColorTint('#F1BE0B', 30)).toEqual('#F1BE0B'); //
@@ -179,6 +179,15 @@ describe('style/Colors', () => {
         $outlinePrimary: chosenColor,
         $textPrimary: chosenColor
       });
+    });
+  });
+
+  describe('isDesignToken(...)', () => {
+    it('should return true if the color passed is design token', () => {
+      expect(uut.isDesignToken({semantic: ['$textDefault'], toString: () => {}})).toEqual(true);
+      expect(uut.isDesignToken({resource_paths: ['@color/textNeutral'], toString: () => {}})).toEqual(true);
+      expect(uut.isDesignToken({test: 'fail', toString: () => {}})).toEqual(false);
+      expect(uut.isDesignToken(uut.red10)).toEqual(false);
     });
   });
 });

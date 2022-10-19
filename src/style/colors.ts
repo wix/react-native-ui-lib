@@ -10,7 +10,7 @@ import DesignTokensDM from './designTokensDM';
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
 
-export type DesignToken = {semantic?: string; resource_paths?: string; toString: Function};
+export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
 
 export class Colors {
   [key: string]: any;
@@ -294,7 +294,7 @@ export class Colors {
     return _.toLower(colorA) === _.toLower(colorB);
   }
   isDesignToken(color?: DesignToken) {
-    return !!color?.semantic || !!color?.resource_paths;
+    return !!(color?.semantic || color?.resource_paths);
   }
 }
 
