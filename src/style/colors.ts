@@ -10,6 +10,8 @@ import DesignTokensDM from './designTokensDM';
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
 
+export type DesignToken = {semantic?: string; resource_paths?: string; toString: Function};
+
 export class Colors {
   [key: string]: any;
   private shouldSupportDarkMode = false;
@@ -276,6 +278,7 @@ export class Colors {
   isValidHex(string: string) {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(string);
   }
+
   getHexString(color: tinycolor.ColorInput) {
     return tinycolor(color).toHexString();
   }
@@ -289,6 +292,9 @@ export class Colors {
     const colorA = colorStringValue(colorAValue);
     const colorB = colorStringValue(colorBValue);
     return _.toLower(colorA) === _.toLower(colorB);
+  }
+  isDesignToken(color?: DesignToken) {
+    return !!color?.semantic || !!color?.resource_paths;
   }
 }
 
