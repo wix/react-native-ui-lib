@@ -1,5 +1,12 @@
 import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {ActivityIndicator, StyleSheet, findNodeHandle, AccessibilityInfo, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  findNodeHandle,
+  AccessibilityInfo,
+  ViewStyle,
+  LayoutChangeEvent
+} from 'react-native';
 import _ from 'lodash';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
@@ -23,7 +30,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     icon,
     iconColor,
     preset,
-    zIndex,
+    zIndex = Constants.isAndroid ? 100 : undefined,
     elevation,
     style,
     containerStyle,
