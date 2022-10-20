@@ -1,15 +1,14 @@
 import _ from 'lodash';
 import React, {useCallback, useState, useRef} from 'react';
 import {StyleSheet} from 'react-native';
-import {SortableList, View, TouchableOpacity, Text, Icon, Assets, Colors, Button} from 'react-native-ui-lib';
+import {SortableList, SortableListItemProps, View, TouchableOpacity, Text, Icon, Assets, Colors, Button} from 'react-native-ui-lib';
 import {renderHeader} from '../ExampleScreenPresenter';
 
-interface Item {
+interface Item extends SortableListItemProps {
   originalIndex: number;
-  id: string;
 }
 
-const data = _.times(30, index => {
+const data: Item[] = _.times(30, index => {
   return {
     originalIndex: index,
     id: `${index}`

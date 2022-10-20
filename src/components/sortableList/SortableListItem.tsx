@@ -17,11 +17,11 @@ import {useDidUpdate} from 'hooks';
 import SortableListContext from './SortableListContext';
 import usePresenter from './usePresenter';
 import {HapticService, HapticType} from '../../services';
-export interface SortableListItemProps {
+export interface InternalSortableListItemProps {
   index: number;
 }
 
-type Props = PropsWithChildren<SortableListItemProps>;
+type Props = PropsWithChildren<InternalSortableListItemProps>;
 
 const animationConfig = {
   easing: Easing.inOut(Easing.ease),
