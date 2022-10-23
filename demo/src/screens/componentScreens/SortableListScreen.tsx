@@ -1,17 +1,33 @@
 import _ from 'lodash';
 import React, {useCallback, useState, useRef} from 'react';
 import {StyleSheet} from 'react-native';
-import {SortableList, SortableListItemProps, View, TouchableOpacity, Text, Icon, Assets, Colors, Button} from 'react-native-ui-lib';
+import {
+  SortableList,
+  SortableListItemProps,
+  View,
+  TouchableOpacity,
+  Text,
+  Icon,
+  Assets,
+  Colors,
+  Button
+} from 'react-native-ui-lib';
 import {renderHeader} from '../ExampleScreenPresenter';
 
 interface Item extends SortableListItemProps {
-  originalIndex: number;
+  text: string;
 }
 
 const data: Item[] = _.times(30, index => {
+  let text = `${index}`;
+  if (index === 3) {
+    text = 'I do not move';
+  }
+
   return {
-    originalIndex: index,
-    id: `${index}`
+    text,
+    id: `${index}`,
+    inert: index === 3
   };
 });
 
@@ -68,7 +84,7 @@ const SortableListScreen = () => {
         <View flex row spread centerV>
           <Icon source={Assets.icons.demo.drag} tintColor={Colors.$iconDisabled}/>
           <Text center $textDefault>
-            {item.originalIndex}
+            {item.text}
           </Text>
           <Icon source={Assets.icons.demo.chevronRight} tintColor={Colors.$iconDefault}/>
         </View>

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {map, mapKeys} from 'lodash';
+import {map, mapKeys, filter, reduce} from 'lodash';
 import React, {useMemo, useCallback} from 'react';
 import {FlatList, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
@@ -14,11 +14,16 @@ function generateItemsOrder<ItemT extends SortableListItemProps>(data: SortableL
   return map(data, item => item.id);
 }
 
+function generateInertIds<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {
+  return reduce(filter(data, 'inert'), (item, cur) => ({...item, [cur.id]: true}), {});
+}
+
 const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
   const themeProps = useThemeProps(props, 'SortableList');
   const {data, onOrderChange, enableHaptic, scale, ...others} = themeProps;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
+  const inertIds = useSharedValue<Dictionary<boolean>>(generateInertIds(data));
   const itemHeight = useSharedValue<number>(52);
 
   useDidUpdate(() => {
@@ -47,6 +52,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     return {
       data,
       itemsOrder,
+      inertIds,
       onChange,
       itemHeight,
       onItemLayout,
