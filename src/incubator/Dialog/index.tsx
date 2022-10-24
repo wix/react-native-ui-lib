@@ -63,9 +63,11 @@ const Dialog = (props: DialogProps) => {
   const onTransitionAnimationEnd = useCallback((type: TransitionViewAnimationType) => {
     if (type === 'exit') {
       setVisible(false);
+      opacity.value = withTiming(0, {duration: 0});
       onDismiss?.();
     }
   },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   [onDismiss, setVisible]);
 
   const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
