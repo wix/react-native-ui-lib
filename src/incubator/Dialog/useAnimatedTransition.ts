@@ -60,26 +60,23 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
     };
   };
 
-  const initPosition = useCallback((to: {x: number; y: number},
-    animationDirection: TransitionViewDirection,
-    callback: (isFinished?: boolean) => void) => {
+  const initPosition = useCallback(() => {
     'worklet';
+    const to = getLocation(enterFrom);
     // @ts-expect-error
-    if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
-      translationX.value = withTiming(to.x, {duration: 0}, callback);
+    if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(enterFrom)) {
+      translationX.value = withTiming(to.x, {duration: 0}, animateIn);
       // @ts-expect-error
-    } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(animationDirection)) {
-      translationY.value = withTiming(to.y, {duration: 0}, callback);
+    } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(enterFrom)) {
+      translationY.value = withTiming(to.y, {duration: 0}, animateIn);
     }
 
     onInitPosition();
-  },
-  [onInitPosition]);
+  }, [onInitPosition]);
 
   useEffect(() => {
     if (hiddenLocation.wasMeasured && enterFrom) {
-      const location = getLocation(enterFrom);
-      initPosition(location, enterFrom, animateIn);
+      initPosition();
     }
   }, [hiddenLocation]);
 
