@@ -81,7 +81,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
       const location = getLocation(enterFrom);
       initPosition(location, enterFrom, animateIn);
     }
-  }, [hiddenLocation.wasMeasured]);
+  }, [hiddenLocation]);
 
   const translateTo = useCallback((to: {x: number; y: number},
     animationDirection: TransitionViewDirection,
