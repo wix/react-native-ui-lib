@@ -1,5 +1,6 @@
+import {isEqual} from 'lodash';
 import {useCallback, useRef, useState, RefCallback} from 'react';
-import {View} from 'react-native';
+import {View, LayoutChangeEvent, LayoutRectangle} from 'react-native';
 import {Constants} from '../../commons/new';
 import {PanningDirectionsEnum} from '../panView';
 
@@ -28,22 +29,20 @@ export default function useHiddenLocation<T extends View>() {
 
   const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
   const ref = useRef<T>();
+  const layoutData = useRef<LayoutRectangle>();
   const wasMeasured = useRef(false);
 
   const measure = useCallback(() => {
-    if (!wasMeasured.current) {
-      ref.current?.measureInWindow((x, y, width, height) => {
-        if (!wasMeasured.current && width > 0 && height > 0) {
-          wasMeasured.current = true;
-          setHiddenLocation(getHiddenLocation({
-            x,
-            y,
-            width,
-            height,
-            wasMeasured: true
-          }));
-        }
-      });
+    if (ref.current && layoutData.current && layoutData.current.width > 0 && layoutData.current.height > 0) {
+      wasMeasured.current = true;
+      const {x, y, width, height} = layoutData.current;
+      setHiddenLocation(getHiddenLocation({
+        x,
+        y,
+        width,
+        height,
+        wasMeasured: true
+      }));
     }
   }, []);
 
@@ -55,9 +54,13 @@ export default function useHiddenLocation<T extends View>() {
   },
   [measure]);
 
-  const onLayout = useCallback(() => {
-    measure();
-  }, [measure]);
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    if (!isEqual(layoutData.current, event.nativeEvent.layout)) {
+      layoutData.current = event.nativeEvent.layout;
+      measure();
+    }
+  },
+  [measure]);
 
   return {setRef, onLayout, hiddenLocation};
 }
