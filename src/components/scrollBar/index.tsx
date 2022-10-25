@@ -82,7 +82,7 @@ class ScrollBar extends Component<Props, State> {
   static defaultProps = {
     gradientWidth: GRADIENT_WIDTH,
     gradientMargins: 0,
-    gradientColor: Colors.white,
+    gradientColor: Colors.$backgroundDefault,
     focusIndex: 0
   };
 
