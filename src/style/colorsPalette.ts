@@ -99,7 +99,7 @@ const colorsPalette = {
   // WHITE,
   white: '#FFFFFF',
   black: '#000000',
-  dark: '#07090B',
+  dark: '#0E1216',
   transparent: 'transparent'
 };
 
