@@ -49,10 +49,10 @@ export class Colors {
    * Load light and dark schemes based on generated design tokens
    * @param color - palette color
    */
-  loadDesignTokens(color: string) {
+  loadDesignTokens({primaryColor}: {primaryColor: string}) {
     this.loadSchemes({
-      light: this.generateLightModeTokens(color),
-      dark: this.generateDarkModeTokens(color)
+      light: this.generateDesignTokens({primaryColor}),
+      dark: this.generateDesignTokens({primaryColor, dark: true})
     });
   }
 
@@ -220,38 +220,19 @@ export class Colors {
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
-  generateDesignTokens(color: string, mode: 'light' | 'dark' = 'light') {
-    return mode === 'light' ? this.generateLightModeTokens(color) : this.generateDarkModeTokens(color);
-  }
-
-  private generateLightModeTokens(color: string) {
-    const colorPalette: string[] = this.generatePalette(color);
+  private generateDesignTokens({primaryColor, dark}: {primaryColor: string; dark?: boolean}) {
+    const colorPalette: string[] = dark
+      ? _.reverse(this.generatePalette(primaryColor))
+      : this.generatePalette(primaryColor);
     const color30 = colorPalette[2];
     const color50 = colorPalette[4];
     const color70 = colorPalette[6];
     const color80 = colorPalette[7];
 
-    const mainColor = this.isDark(color) ? color : color30;
-
-    return {
-      $backgroundPrimaryHeavy: mainColor,
-      $backgroundPrimaryLight: color80,
-      $backgroundPrimaryMedium: color70,
-      $iconPrimary: mainColor,
-      $iconPrimaryLight: color50,
-      $textPrimary: mainColor,
-      $outlinePrimary: mainColor
-    };
-  }
-
-  private generateDarkModeTokens(color: string) {
-    const colorPalette: string[] = _.reverse(this.generatePalette(color));
-    const color30 = colorPalette[2];
-    const color50 = colorPalette[4];
-    const color70 = colorPalette[6];
-    const color80 = colorPalette[7];
-
-    const mainColor = this.isDark(color) ? color30 : color;
+    let mainColor = this.isDark(primaryColor) ? primaryColor : color30;
+    if (dark) {
+      mainColor = this.isDark(primaryColor) ? color30 : primaryColor;
+    }
 
     return {
       $backgroundPrimaryHeavy: mainColor,
