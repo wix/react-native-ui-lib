@@ -1,6 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
-import {runOnJS, useSharedValue, withSpring, withTiming, withDelay} from 'react-native-reanimated';
+import {
+  runOnJS,
+  useSharedValue,
+  withSpring,
+  withTiming,
+  withDelay,
+  WithTimingConfig,
+  WithSpringConfig
+} from 'react-native-reanimated';
 import type {HiddenLocation} from '../hooks/useHiddenLocation';
 import {PanningDirections, PanningDirectionsEnum, DEFAULT_ANIMATION_CONFIG} from '../panView';
 import useAnimationEndNotifier, {
@@ -10,6 +18,9 @@ import useAnimationEndNotifier, {
 const TransitionViewDirectionEnum = PanningDirectionsEnum;
 type TransitionViewDirection = PanningDirections;
 export {TransitionViewAnimationType, TransitionViewDirectionEnum, TransitionViewDirection};
+
+const ENTER_ANIMATION_CONFIG = DEFAULT_ANIMATION_CONFIG;
+const EXIT_ANIMATION_CONFIG = {duration: 300};
 
 interface Delay {
   enter?: number;
@@ -81,16 +92,18 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   }, [hiddenLocation]);
 
   const translateTo = useCallback((to: {x: number; y: number},
+    animation: typeof withTiming | typeof withSpring,
+    animationConfig: WithTimingConfig | WithSpringConfig,
     animationDirection: TransitionViewDirection,
     callback: (isFinished?: boolean) => void,
     delay = 0) => {
     'worklet';
     // @ts-expect-error
     if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
-      translationX.value = withDelay(delay, withSpring(to.x, DEFAULT_ANIMATION_CONFIG, callback));
+      translationX.value = withDelay(delay, animation(to.x, animationConfig, callback));
       // @ts-expect-error
     } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(animationDirection)) {
-      translationY.value = withDelay(delay, withSpring(to.y, DEFAULT_ANIMATION_CONFIG, callback));
+      translationY.value = withDelay(delay, animation(to.y, animationConfig, callback));
     }
   },
   []);
@@ -102,7 +115,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
         runOnJS(onAnimationStart)('enter');
       }
 
-      translateTo({x: 0, y: 0}, enterFrom, onEnterAnimationEnd, delay?.enter);
+      translateTo({x: 0, y: 0}, withSpring, ENTER_ANIMATION_CONFIG, enterFrom, onEnterAnimationEnd, delay?.enter);
     }
   }, [onEnterAnimationEnd, delay?.enter]);
 
@@ -113,7 +126,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
         runOnJS(onAnimationStart)('exit');
       }
 
-      translateTo(getLocation(exitTo), exitTo, onExitAnimationEnd, delay?.exit);
+      translateTo(getLocation(exitTo), withTiming, EXIT_ANIMATION_CONFIG, exitTo, onExitAnimationEnd, delay?.exit);
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd, delay?.exit]);
 
