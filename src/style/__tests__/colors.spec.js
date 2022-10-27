@@ -128,7 +128,7 @@ describe('style/Colors', () => {
     it('should generate design tokens from dark color for light theme', () => {
       const primaryColor = '#860D86';
       expect(uut.isDark(primaryColor)).toEqual(true);
-      expect(uut.generateDesignTokens({primaryColor})).toEqual({
+      expect(uut.generateDesignTokens(primaryColor)).toEqual({
         $backgroundPrimaryHeavy: primaryColor,
         $backgroundPrimaryLight: '#FFFAFF',
         $backgroundPrimaryMedium: '#FACCFA',
@@ -142,7 +142,7 @@ describe('style/Colors', () => {
     it('should generate design tokens from light color for light theme', () => {
       const primaryColor = '#E9BEE7';
       expect(uut.isDark(primaryColor)).toEqual(false);
-      expect(uut.generateDesignTokens({primaryColor})).toEqual({
+      expect(uut.generateDesignTokens(primaryColor)).toEqual({
         $backgroundPrimaryHeavy: '#A4379F',
         $backgroundPrimaryLight: '#F6E4F5',
         $backgroundPrimaryMedium: '#E9BEE7',
@@ -156,7 +156,7 @@ describe('style/Colors', () => {
     it('should generate design tokens from dark color for dark theme', () => {
       const primaryColor = '#860D86';
       expect(uut.isDark(primaryColor)).toEqual(true);
-      expect(uut.generateDesignTokens({primaryColor, dark: true})).toEqual({
+      expect(uut.generateDesignTokens(primaryColor, true)).toEqual({
         $backgroundPrimaryHeavy: '#F69DF6',
         $backgroundPrimaryLight: '#860D86',
         $backgroundPrimaryMedium: '#B512B5',
@@ -170,7 +170,7 @@ describe('style/Colors', () => {
     it('should generate design tokens from light color for dark theme', () => {
       const primaryColor = '#E9BEE7';
       expect(uut.isDark(primaryColor)).toEqual(false);
-      expect(uut.generateDesignTokens({primaryColor, dark: true})).toEqual({
+      expect(uut.generateDesignTokens(primaryColor, true)).toEqual({
         $backgroundPrimaryHeavy: primaryColor,
         $backgroundPrimaryLight: '#581E55',
         $backgroundPrimaryMedium: '#7E2B7A',

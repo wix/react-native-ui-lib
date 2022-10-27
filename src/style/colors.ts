@@ -11,6 +11,7 @@ import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
 
 export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
+export type TokensOptions = {primaryColor: string};
 
 export class Colors {
   [key: string]: any;
@@ -49,10 +50,10 @@ export class Colors {
    * Load light and dark schemes based on generated design tokens
    * @param color - palette color
    */
-  loadDesignTokens({primaryColor}: {primaryColor: string}) {
+  loadDesignTokens(options: TokensOptions) {
     this.loadSchemes({
-      light: this.generateDesignTokens({primaryColor}),
-      dark: this.generateDesignTokens({primaryColor, dark: true})
+      light: this.generateDesignTokens(options.primaryColor),
+      dark: this.generateDesignTokens(options.primaryColor, true)
     });
   }
 
@@ -220,7 +221,7 @@ export class Colors {
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
-  private generateDesignTokens({primaryColor, dark}: {primaryColor: string; dark?: boolean}) {
+  private generateDesignTokens(primaryColor: string, dark?: boolean) {
     const colorPalette: string[] = dark
       ? _.reverse(this.generatePalette(primaryColor))
       : this.generatePalette(primaryColor);
@@ -229,10 +230,7 @@ export class Colors {
     const color70 = colorPalette[6];
     const color80 = colorPalette[7];
 
-    let mainColor = this.isDark(primaryColor) ? primaryColor : color30;
-    if (dark) {
-      mainColor = this.isDark(primaryColor) ? color30 : primaryColor;
-    }
+    const mainColor = this.isDark(primaryColor) === !!dark ? color30 : primaryColor;
 
     return {
       $backgroundPrimaryHeavy: mainColor,
