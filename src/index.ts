@@ -64,6 +64,7 @@ export {default as ColorPalette, ColorPaletteProps} from './components/colorPale
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as ColorSwatch, ColorSwatchProps} from './components/colorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
+export {default as Dash, DashProps} from './components/dash';
 export {default as DateTimePicker, DateTimePickerProps} from './components/dateTimePicker';
 export {default as Dialog, DialogProps, DialogDirections, DialogDirectionsEnum} from './components/dialog';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';

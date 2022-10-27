@@ -2,9 +2,16 @@ import React, {useState, useCallback, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
 import View from '../view';
 import {Colors} from '../../style';
-import {Layout} from './types';
 
-interface DashProps extends ViewProps {
+//TODO: move to some global types (shared with Timeline component)
+export type Layout = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+export interface DashProps extends ViewProps {
   vertical?: boolean;
   dashGap: number;
   dashLength: number;
