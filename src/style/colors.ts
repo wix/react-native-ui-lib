@@ -11,6 +11,7 @@ import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
 
 export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
+export type TokensOptions = {primaryColor: string};
 
 export class Colors {
   [key: string]: any;
@@ -49,10 +50,10 @@ export class Colors {
    * Load light and dark schemes based on generated design tokens
    * @param color - palette color
    */
-  loadDesignTokens(color: string) {
+  loadDesignTokens(options: TokensOptions) {
     this.loadSchemes({
-      light: this.generateLightModeTokens(color),
-      dark: this.generateDarkModeTokens(color)
+      light: this.generateDesignTokens(options.primaryColor),
+      dark: this.generateDesignTokens(options.primaryColor, true)
     });
   }
 
@@ -220,39 +221,21 @@ export class Colors {
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
-  generateDesignTokens(color: string, mode: 'light' | 'dark' = 'light') {
-    return mode === 'light' ? this.generateLightModeTokens(color) : this.generateDarkModeTokens(color);
-  }
-
-  private generateLightModeTokens(color: string) {
-    const colorPalette: string[] = this.generatePalette(color);
+  private generateDesignTokens(primaryColor: string, dark?: boolean) {
+    let colorPalette: string[] = this.generatePalette(primaryColor);
+    if (dark) {
+      colorPalette = _.reverse(colorPalette);
+    }
     const color30 = colorPalette[2];
     const color50 = colorPalette[4];
     const color70 = colorPalette[6];
     const color80 = colorPalette[7];
 
-    const mainColor = this.isDark(color) ? color : color30;
-
-    return {
-      $backgroundPrimaryHeavy: mainColor,
-      $backgroundPrimaryLight: color80,
-      $backgroundPrimaryMedium: color70,
-      $iconPrimary: mainColor,
-      $iconPrimaryLight: color50,
-      $textPrimary: mainColor,
-      $outlinePrimary: mainColor
-    };
-  }
-
-  private generateDarkModeTokens(color: string) {
-    const colorPalette: string[] = _.reverse(this.generatePalette(color));
-    const color30 = colorPalette[2];
-    const color50 = colorPalette[4];
-    const color70 = colorPalette[6];
-    const color80 = colorPalette[7];
-
-    const mainColor = this.isDark(color) ? color30 : color;
-
+    const isPrimaryColorDark = this.isDark(primaryColor);
+    let mainColor = isPrimaryColorDark ? primaryColor : color30;
+    if (dark) {
+      mainColor = isPrimaryColorDark ? color30 : primaryColor;
+    }
     return {
       $backgroundPrimaryHeavy: mainColor,
       $backgroundPrimaryLight: color80,
