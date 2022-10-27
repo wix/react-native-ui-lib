@@ -222,16 +222,20 @@ export class Colors {
   });
 
   private generateDesignTokens(primaryColor: string, dark?: boolean) {
-    const colorPalette: string[] = dark
-      ? _.reverse(this.generatePalette(primaryColor))
-      : this.generatePalette(primaryColor);
+    let colorPalette: string[] = this.generatePalette(primaryColor);
+    if (dark) {
+      colorPalette = _.reverse(colorPalette);
+    }
     const color30 = colorPalette[2];
     const color50 = colorPalette[4];
     const color70 = colorPalette[6];
     const color80 = colorPalette[7];
 
-    const mainColor = this.isDark(primaryColor) === !!dark ? color30 : primaryColor;
-
+    const isPrimaryColorDark = this.isDark(primaryColor);
+    let mainColor = isPrimaryColorDark ? primaryColor : color30;
+    if (dark) {
+      mainColor = isPrimaryColorDark ? color30 : primaryColor;
+    }
     return {
       $backgroundPrimaryHeavy: mainColor,
       $backgroundPrimaryLight: color80,
