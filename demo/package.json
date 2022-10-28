@@ -1,6 +1,6 @@
 {
   "name": "unicorn-demo-app",
-  "version": "1.1.15",
+  "version": "1.1.16",
   "main": "src/index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "license": "MIT",
@@ -20,8 +20,8 @@
     "shell-utils": "^1.0.10"
   },
   "peerDependencies": {
-    "react": "^17.0.1",
-    "react-native": "^0.64.3",
+    "react": "^18.0.0",
+    "react-native": "^0.69.1",
     "react-native-ui-lib": "*",
     "semver": "^5.5.0"
   }
