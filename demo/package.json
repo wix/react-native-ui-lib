@@ -20,8 +20,8 @@
     "shell-utils": "^1.0.10"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-native": "^0.51.0",
+    "react": "^17.0.1",
+    "react-native": "^0.64.3",
     "react-native-ui-lib": "*",
     "semver": "^5.5.0"
   }
