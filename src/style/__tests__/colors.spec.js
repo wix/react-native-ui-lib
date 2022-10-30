@@ -126,23 +126,23 @@ describe('style/Colors', () => {
 
   describe('generateDesignTokens(...)', () => {
     it('should generate design tokens from dark color for light theme', () => {
-      const chosenColor = '#860D86';
-      expect(uut.isDark(chosenColor)).toEqual(true);
-      expect(uut.generateDesignTokens(chosenColor, 'light')).toEqual({
-        $backgroundPrimaryHeavy: chosenColor,
+      const primaryColor = '#860D86';
+      expect(uut.isDark(primaryColor)).toEqual(true);
+      expect(uut.generateDesignTokens(primaryColor)).toEqual({
+        $backgroundPrimaryHeavy: primaryColor,
         $backgroundPrimaryLight: '#FFFAFF',
         $backgroundPrimaryMedium: '#FACCFA',
-        $iconPrimary: chosenColor,
+        $iconPrimary: primaryColor,
         $iconPrimaryLight: '#F16FF1',
-        $outlinePrimary: chosenColor,
-        $textPrimary: chosenColor
+        $outlinePrimary: primaryColor,
+        $textPrimary: primaryColor
       });
     });
 
     it('should generate design tokens from light color for light theme', () => {
-      const chosenColor = '#E9BEE7';
-      expect(uut.isDark(chosenColor)).toEqual(false);
-      expect(uut.generateDesignTokens(chosenColor, 'light')).toEqual({
+      const primaryColor = '#E9BEE7';
+      expect(uut.isDark(primaryColor)).toEqual(false);
+      expect(uut.generateDesignTokens(primaryColor)).toEqual({
         $backgroundPrimaryHeavy: '#A4379F',
         $backgroundPrimaryLight: '#F6E4F5',
         $backgroundPrimaryMedium: '#E9BEE7',
@@ -154,9 +154,9 @@ describe('style/Colors', () => {
     });
 
     it('should generate design tokens from dark color for dark theme', () => {
-      const chosenColor = '#860D86';
-      expect(uut.isDark(chosenColor)).toEqual(true);
-      expect(uut.generateDesignTokens(chosenColor, 'dark')).toEqual({
+      const primaryColor = '#860D86';
+      expect(uut.isDark(primaryColor)).toEqual(true);
+      expect(uut.generateDesignTokens(primaryColor, true)).toEqual({
         $backgroundPrimaryHeavy: '#F69DF6',
         $backgroundPrimaryLight: '#860D86',
         $backgroundPrimaryMedium: '#B512B5',
@@ -168,16 +168,16 @@ describe('style/Colors', () => {
     });
 
     it('should generate design tokens from light color for dark theme', () => {
-      const chosenColor = '#E9BEE7';
-      expect(uut.isDark(chosenColor)).toEqual(false);
-      expect(uut.generateDesignTokens(chosenColor, 'dark')).toEqual({
-        $backgroundPrimaryHeavy: chosenColor,
+      const primaryColor = '#E9BEE7';
+      expect(uut.isDark(primaryColor)).toEqual(false);
+      expect(uut.generateDesignTokens(primaryColor, true)).toEqual({
+        $backgroundPrimaryHeavy: primaryColor,
         $backgroundPrimaryLight: '#581E55',
         $backgroundPrimaryMedium: '#7E2B7A',
-        $iconPrimary: chosenColor,
+        $iconPrimary: primaryColor,
         $iconPrimaryLight: '#C24CBD',
-        $outlinePrimary: chosenColor,
-        $textPrimary: chosenColor
+        $outlinePrimary: primaryColor,
+        $textPrimary: primaryColor
       });
     });
   });

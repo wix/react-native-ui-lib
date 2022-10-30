@@ -9,11 +9,6 @@
     {"name": "subtitle", "type": "string", "description": "Subtitle"},
     {"name": "subtitleStyle", "type": "StyleProp<TextStyle>", "description": "Subtitle text style"},
     {"name": "subtitleProps", "type": "TextProps", "description": "Subtitle extra props"},
-    {
-      "name": "renderContent",
-      "type": "(props: DialogHeaderProps) => React.ReactElement",
-      "description": "Replace the header's default content (Dialog.Text)"
-    },
     {"name": "showKnob", "type": "boolean", "description": "Show the header's knob", "default": "true"},
     {"name": "showDivider", "type": "boolean", "description": "Show the header's divider", "default": "true"},
     {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
