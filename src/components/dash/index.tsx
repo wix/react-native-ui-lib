@@ -51,8 +51,8 @@ const Dash = (props: DashProps) => {
   }, [containerStyle, vertical, thickness, length]);
 
   const renderDash = () => {
-    const length = (vertical ? measurements?.height : measurements?.width) || 0;
-    const n = Math.ceil(length / (gap + length));
+    const _length = (vertical ? measurements?.height : measurements?.width) || 0;
+    const n = Math.ceil(_length / (gap + length));
     const dash = [];
     
     for (let i = 0; i < n; i++) {
