@@ -36,14 +36,14 @@ const SortableListItem = (props: Props) => {
     itemHeight,
     onItemLayout,
     itemsOrder,
-    inertIds,
+    lockedIds,
     onChange,
     enableHaptic,
     scale: propsScale = 1
   } = useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const id: string = data[index].id;
-  const inert: boolean = data[index].inert;
+  const locked: boolean = data[index].locked;
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
   const translateY = useSharedValue<number>(0);
@@ -78,7 +78,7 @@ const SortableListItem = (props: Props) => {
 
   const dragOnLongPressGesture = Gesture.Pan()
     .activateAfterLongPress(250)
-    .enabled(!inert)
+    .enabled(!locked)
     .onStart(() => {
       isDragging.value = true;
       translateY.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
@@ -105,7 +105,7 @@ const SortableListItem = (props: Props) => {
 
         let itemIdToSwap = getIdByItemIndex(itemsOrder.value, newIndex);
 
-        while (inertIds.value[itemIdToSwap]) {
+        while (lockedIds.value[itemIdToSwap]) {
           newIndex = Math.sign(newIndex - oldIndex) + newIndex;
           itemIdToSwap = getIdByItemIndex(itemsOrder.value, newIndex);
         }

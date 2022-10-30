@@ -14,8 +14,8 @@ function generateItemsOrder<ItemT extends SortableListItemProps>(data: SortableL
   return map(data, item => item.id);
 }
 
-function generateInertIds<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {
-  return reduce(filter(data, 'inert'), (item, cur) => ({...item, [cur.id]: true}), {});
+function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {
+  return reduce(filter(data, 'locked'), (item, cur) => ({...item, [cur.id]: true}), {});
 }
 
 const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
@@ -23,7 +23,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
   const {data, onOrderChange, enableHaptic, scale, ...others} = themeProps;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
-  const inertIds = useSharedValue<Dictionary<boolean>>(generateInertIds(data));
+  const lockedIds = useSharedValue<Dictionary<boolean>>(generateLockedIds(data));
   const itemHeight = useSharedValue<number>(52);
 
   useDidUpdate(() => {
@@ -52,7 +52,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     return {
       data,
       itemsOrder,
-      inertIds,
+      lockedIds,
       onChange,
       itemHeight,
       onItemLayout,

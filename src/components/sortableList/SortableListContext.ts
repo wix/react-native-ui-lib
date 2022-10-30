@@ -6,7 +6,7 @@ import {Data, SortableListItemProps} from './types';
 export interface SortableListContextType<ItemT extends SortableListItemProps> {
   data: Data<ItemT>;
   itemsOrder: SharedValue<string[]>;
-  inertIds: SharedValue<Dictionary<boolean>>;
+  lockedIds: SharedValue<Dictionary<boolean>>;
   onChange: () => void;
   itemHeight: SharedValue<number>;
   onItemLayout: ViewProps['onLayout'];

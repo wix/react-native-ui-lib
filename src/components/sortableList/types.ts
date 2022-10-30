@@ -3,7 +3,7 @@ import {SortableListContextType} from './SortableListContext';
 
 export interface SortableListItemProps {
   id: string;
-  inert?: boolean;
+  locked?: boolean;
 }
 
 // Internal
