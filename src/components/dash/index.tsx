@@ -13,16 +13,16 @@ export type Layout = {
 
 export interface DashProps extends ViewProps {
   vertical?: boolean;
-  gap: number;
-  length: number;
-  thickness: number;
-  color?: string;
+  dashGap: number;
+  dashLength: number;
+  dashThickness: number;
+  dashColor?: string;
+  dashStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
 }
 
 const Dash = (props: DashProps) => {
-  const {containerStyle, vertical, gap, length, thickness, color, style} = props;
+  const {style, vertical, dashGap, dashLength, dashThickness, dashColor, dashStyle} = props;
   const [measurements, setMeasurements] = useState<Layout | undefined>();
 
   const onDashLayout = useCallback((event: LayoutChangeEvent) => {
@@ -30,33 +30,33 @@ const Dash = (props: DashProps) => {
     setMeasurements({x, y, width, height});
   }, []);
 
-  const dashStyle = useMemo(() => {
-    const _style = {
-      width: vertical ? thickness : length,
-      height: vertical ? length : thickness,
-      marginRight: vertical ? 0 : gap,
-      marginBottom: vertical ? gap : 0,
-      backgroundColor: color
+  const _dashStyle = useMemo(() => {
+    const style = {
+      width: vertical ? dashThickness : dashLength,
+      height: vertical ? dashLength : dashThickness,
+      marginRight: vertical ? 0 : dashGap,
+      marginBottom: vertical ? dashGap : 0,
+      backgroundColor: dashColor
     };
-    return [style, _style];
-  }, [vertical, length, thickness, gap, color, style]);
+    return [dashStyle, style];
+  }, [vertical, dashLength, dashThickness, dashGap, dashColor, dashStyle]);
 
   const lineStyle = useMemo(() => {
     const directionStyle = vertical ? styles.column : styles.row;
     const sizeStyle = {
-      width: vertical ? thickness : length,
-      height: vertical ? length : thickness
+      width: vertical ? dashThickness : dashLength,
+      height: vertical ? dashLength : dashThickness
     };
-    return [directionStyle, sizeStyle, containerStyle];
-  }, [containerStyle, vertical, thickness, length]);
+    return [directionStyle, sizeStyle, style];
+  }, [style, vertical, dashThickness, dashLength]);
 
   const renderDash = () => {
     const length = (vertical ? measurements?.height : measurements?.width) || 0;
-    const n = Math.ceil(length / (gap + length));
+    const n = Math.ceil(length / (dashGap + dashLength));
     const dash = [];
     
     for (let i = 0; i < n; i++) {
-      dash.push(<View key={i} style={dashStyle}/>);
+      dash.push(<View key={i} style={_dashStyle}/>);
     }
 
     return dash;
@@ -71,10 +71,10 @@ const Dash = (props: DashProps) => {
 
 export default Dash;
 Dash.defaultProps = {
-  gap: 6,
-  length: 6,
-  thickness: 2,
-  color: Colors.black
+  dashGap: 6,
+  dashLength: 6,
+  dashThickness: 2,
+  dashColor: Colors.black
 };
 
 const styles = StyleSheet.create({
