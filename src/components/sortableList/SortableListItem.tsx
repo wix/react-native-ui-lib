@@ -105,11 +105,14 @@ const SortableListItem = (props: Props) => {
 
         let itemIdToSwap = getIdByItemIndex(itemsOrder.value, newIndex);
 
+        // Skip locked item(s)
         while (lockedIds.value[itemIdToSwap]) {
-          newIndex = Math.sign(newIndex - oldIndex) + newIndex;
+          const skipDirection = Math.sign(newIndex - oldIndex);
+          newIndex = skipDirection + newIndex;
           itemIdToSwap = getIdByItemIndex(itemsOrder.value, newIndex);
         }
 
+        // Swap items
         if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
           newItemsOrder[newIndex] = id;
