@@ -31,7 +31,7 @@ const Line = React.memo((props: LinePropsInternal) => {
 
   const renderLine = () => {
     if (type === LineTypes.DASHED) {
-      return <Dash vertical dashColor={color} style={dashedLineStyle}/>;
+      return <Dash vertical color={color} containerStyle={dashedLineStyle}/>;
     }
     return <View style={solidLineStyle}/>;
   };
