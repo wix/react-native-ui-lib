@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
 import View from '../view';
-import Dash from './Dash';
+import Dash from '../dash';
 import {LineProps, LineTypes} from './types';
 
 const LINE_WIDTH = 2;

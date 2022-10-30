@@ -2,19 +2,27 @@ import React, {useState, useCallback, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
 import View from '../view';
 import {Colors} from '../../style';
-import {Layout} from './types';
 
-interface DashProps extends ViewProps {
+//TODO: move to some global types (shared with Timeline component)
+export type Layout = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+export interface DashProps extends ViewProps {
   vertical?: boolean;
   dashGap: number;
   dashLength: number;
   dashThickness: number;
   dashColor?: string;
+  dashStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
 }
 
 const Dash = (props: DashProps) => {
-  const {style, vertical, dashGap, dashLength, dashThickness, dashColor} = props;
+  const {style, vertical, dashGap, dashLength, dashThickness, dashColor, dashStyle} = props;
   const [measurements, setMeasurements] = useState<Layout | undefined>();
 
   const onDashLayout = useCallback((event: LayoutChangeEvent) => {
@@ -22,15 +30,16 @@ const Dash = (props: DashProps) => {
     setMeasurements({x, y, width, height});
   }, []);
 
-  const dashStyle = useMemo(() => {
-    return {
+  const _dashStyle = useMemo(() => {
+    const style = {
       width: vertical ? dashThickness : dashLength,
       height: vertical ? dashLength : dashThickness,
       marginRight: vertical ? 0 : dashGap,
       marginBottom: vertical ? dashGap : 0,
       backgroundColor: dashColor
     };
-  }, [vertical, dashLength, dashThickness, dashGap, dashColor]);
+    return [dashStyle, style];
+  }, [vertical, dashLength, dashThickness, dashGap, dashColor, dashStyle]);
 
   const lineStyle = useMemo(() => {
     const directionStyle = vertical ? styles.column : styles.row;
@@ -47,7 +56,7 @@ const Dash = (props: DashProps) => {
     const dash = [];
     
     for (let i = 0; i < n; i++) {
-      dash.push(<View key={i} style={dashStyle}/>);
+      dash.push(<View key={i} style={_dashStyle}/>);
     }
 
     return dash;
