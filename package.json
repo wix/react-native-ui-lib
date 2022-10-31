@@ -49,6 +49,7 @@
     "react-native-redash": "^12.0.3",
     "react-native-text-size": "4.0.0-rc.1",
     "semver": "^5.5.0",
+    "tinycolor": "0.0.1",
     "url-parse": "^1.2.0"
   },
   "devDependencies": {
