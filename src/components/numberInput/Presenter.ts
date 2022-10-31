@@ -95,6 +95,10 @@ function processBackspace(fractionDigits: number, localeOptions: LocaleOptions, 
     return null;
   }
 
+  if (currentData?.value === Infinity) {
+    return undefined;
+  }
+
   if (currentData.endsWithDecimalSeparator) {
     const newData = deriveData(localeOptions, fractionDigits, currentData.value, false);
     return newData;
