@@ -139,6 +139,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
   return (
     <TextField
       {...others}
+      contextMenuHidden
       value={data?.formattedNumber}
       onKeyPress={onKeyPress}
       maxLength={data?.maxLength ?? 0}
