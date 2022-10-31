@@ -15,7 +15,9 @@ function generateItemsOrder<ItemT extends SortableListItemProps>(data: SortableL
 }
 
 function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {
-  return reduce(filter(data, 'locked'), (item, cur) => ({...item, [cur.id]: true}), {});
+  return reduce(filter(data, item => item.locked),
+    (item, cur) => ({...item, [(cur as ItemT).id]: true}),
+    {});
 }
 
 const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
