@@ -28,7 +28,7 @@ function Marquee(props: MarqueeProps) {
   let axisX = false;
   let axisY = false;
 
-  if ([MarqueeDirections.RIGHT, MarqueeDirections.LEFT].includes(direction)) {
+  if (isHorizontal) {
     axisX = true;
   } else {
     axisY = true;
