@@ -17,11 +17,11 @@ import {useDidUpdate} from 'hooks';
 import SortableListContext from './SortableListContext';
 import usePresenter from './usePresenter';
 import {HapticService, HapticType} from '../../services';
-export interface SortableListItemProps {
+export interface InternalSortableListItemProps {
   index: number;
 }
 
-type Props = PropsWithChildren<SortableListItemProps>;
+type Props = PropsWithChildren<InternalSortableListItemProps>;
 
 const animationConfig = {
   easing: Easing.inOut(Easing.ease),
@@ -36,12 +36,14 @@ const SortableListItem = (props: Props) => {
     itemHeight,
     onItemLayout,
     itemsOrder,
+    lockedIds,
     onChange,
     enableHaptic,
     scale: propsScale = 1
   } = useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const id: string = data[index].id;
+  const locked: boolean = data[index].locked;
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
   const translateY = useSharedValue<number>(0);
@@ -76,6 +78,7 @@ const SortableListItem = (props: Props) => {
 
   const dragOnLongPressGesture = Gesture.Pan()
     .activateAfterLongPress(250)
+    .enabled(!locked)
     .onStart(() => {
       isDragging.value = true;
       translateY.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
@@ -100,8 +103,16 @@ const SortableListItem = (props: Props) => {
           newIndex = Math.sign(newIndex - oldIndex) + oldIndex;
         }
 
-        const itemIdToSwap = getIdByItemIndex(itemsOrder.value, newIndex);
+        let itemIdToSwap = getIdByItemIndex(itemsOrder.value, newIndex);
 
+        // Skip locked item(s)
+        while (lockedIds.value[itemIdToSwap]) {
+          const skipDirection = Math.sign(newIndex - oldIndex);
+          newIndex = skipDirection + newIndex;
+          itemIdToSwap = getIdByItemIndex(itemsOrder.value, newIndex);
+        }
+
+        // Swap items
         if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
           newItemsOrder[newIndex] = id;

@@ -65,6 +65,9 @@ export default {
   get FloatingButton() {
     return require('./floatingButton').default;
   },
+  get Gradient() {
+    return require('./gradient').default;
+  },
   get Hint() {
     return require('./hint').default;
   },

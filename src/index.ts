@@ -72,6 +72,7 @@ export {default as ExpandableSection, ExpandableSectionProps} from './components
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps, FloatingButtonLayouts} from './components/floatingButton';
+export {default as Gradient, GradientProps, GradientTypes} from './components/gradient';
 export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
 export {default as GridListItem, GridListItemProps} from './components/gridListItem';
 export {default as GridList, GridListProps} from './components/gridList';
@@ -87,8 +88,9 @@ export {default as KeyboardAwareFlatList} from './components/KeyboardAwareScroll
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 export {default as MaskedInput, MaskedInputProps} from './components/maskedInput';
-export {default as NumberInput, NumberInputProps} from './components/numberInput';
+export {default as Marquee, MarqueeDirections, MarqueeProps} from './components/marquee';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
+export {default as NumberInput, NumberInputProps} from './components/numberInput';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {
@@ -133,7 +135,7 @@ export {default as SharedTransition} from './components/sharedTransition';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {default as Slider, SliderProps} from './components/slider';
 export {default as SortableGridList, SortableGridListProps} from './components/sortableGridList';
-export {default as SortableList, SortableListProps} from './components/sortableList';
+export {default as SortableList, SortableListProps, SortableListItemProps} from './components/sortableList';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
 export {default as Stepper, StepperProps} from './components/stepper';

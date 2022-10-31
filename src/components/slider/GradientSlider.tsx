@@ -2,12 +2,12 @@ import _ from 'lodash';
 import tinycolor from 'tinycolor2';
 import React, {Component} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
-import {HueGradient, LightnessGradient, SaturationGradient, Gradient} from 'react-native-color';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import Slider, {SliderProps} from './index';
 import {SliderContextProps} from './context/SliderContext';
 import asSliderGroupChild from './context/asSliderGroupChild';
+import Gradient from '../gradient';
 
 type SliderOnValueChange = (value: string, alfa: number) => void;
 
@@ -122,29 +122,30 @@ class GradientSlider extends Component<Props, GradientSliderState> {
   };
 
   renderDefaultGradient = () => {
+    const color = this.getColor();
     const {gradientSteps} = this.props;
 
-    return <Gradient gradientSteps={gradientSteps} maximumValue={1} getStepColor={this.getStepColor}/>;
+    return <Gradient color={color} numberOfSteps={gradientSteps}/>;
   };
 
   renderHueGradient = () => {
     const {gradientSteps} = this.props;
 
-    return <HueGradient gradientSteps={gradientSteps}/>;
+    return <Gradient type={Gradient.types.HUE} numberOfSteps={gradientSteps}/>;
   };
 
   renderLightnessGradient = () => {
     const color = this.getColor();
     const {gradientSteps} = this.props;
 
-    return <LightnessGradient color={color} gradientSteps={gradientSteps}/>;
+    return <Gradient type={Gradient.types.LIGHTNESS} color={color} numberOfSteps={gradientSteps}/>;
   };
 
   renderSaturationGradient = () => {
     const color = this.getColor();
     const {gradientSteps} = this.props;
 
-    return <SaturationGradient color={color} gradientSteps={gradientSteps}/>;
+    return <Gradient type={Gradient.types.SATURATION} color={color} numberOfSteps={gradientSteps}/>;
   };
 
   onValueChange = (value: string, alpha: number) => {

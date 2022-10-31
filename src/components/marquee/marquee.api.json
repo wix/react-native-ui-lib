@@ -1,0 +1,30 @@
+{
+  "name": "Marquee",
+  "category": "media",
+  "description": "Marquee component for sliding text",
+  "extends": [""],
+  "example": "",
+  "props": [
+    {"name": "label", "type": "string", "description": "Marquee label"},
+    {"name": "labelStyle", "type": "TextProps['style']", "description": "Marquee label style"},
+    {"name": "direction", "type": "MarqueeDirections", "description": "Marquee direction", "default": "LEFT"},
+    {"name": "duration", "type": "number", "description": "Marquee animation duration", "default": "3 secondes"},
+    {
+      "name": "numberOfReps",
+      "type": "number",
+      "description": "Marquee animation number of repetitions",
+      "default": "infinite"
+    },
+    {"name": "containerStyle", "type": "ViewProps['style']", "description": "Custom container style"}
+  ],
+  "snippet": [
+    "<Marquee",
+    "key={`${directionHorizontal}-${duration}-${numOfReps}`}",
+    "label={'Hey there, this is the new Marquee component from UILIB!'}",
+    "direction={directionHorizontal ? MarqueeDirections.LEFT : MarqueeDirections.RIGHT}",
+    "duration={duration}",
+    "numberOfReps={numOfReps}",
+    "containerStyle={[styles.containerHorizontal, styles.horizontal]}",
+    "/>"
+  ]
+}
