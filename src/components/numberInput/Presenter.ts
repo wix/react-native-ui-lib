@@ -87,6 +87,11 @@ function processNewInput(newInput: string, fractionDigits: number, localeOptions
     return null;
   }
 
+  // Handle input of second decimal separator
+  if (newData.formattedNumber.split(localeOptions.decimalSeparator).length > 2) {
+    return null;
+  }
+
   return newData;
 }
 
