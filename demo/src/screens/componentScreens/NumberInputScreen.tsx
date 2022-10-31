@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Keyboard as RNKeyboard} from 'react-native';
-import {Text, Spacings, NumberInput, View, Typography} from 'react-native-ui-lib';
+import {Text, Spacings, NumberInput, View, Typography, Constants} from 'react-native-ui-lib';
 
 export default class NumberInputScreen extends Component {
   onChange = (newValue?: number, formattedNumber?: string) => {
@@ -19,7 +19,7 @@ export default class NumberInputScreen extends Component {
             onChange={this.onChange}
             placeholder={'Price'}
             leadingText={'$'}
-            leadingTextTypography={'text50M'}
+            leadingTextStyle={styles.leadingText}
             style={styles.mainText}
             containerStyle={styles.containerStyle}
             label={'Enter Price'}
@@ -45,9 +45,13 @@ const styles = StyleSheet.create({
   },
   mainText: {
     height: 36,
-    marginBottom: Spacings.s2,
+    marginVertical: Spacings.s1,
     textAlign: 'center',
     ...Typography.text30M
+  },
+  leadingText: {
+    marginTop: Constants.isIOS ? Spacings.s2 : 0,
+    ...Typography.text50M
   },
   label: {
     textAlign: 'center',

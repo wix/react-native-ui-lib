@@ -1,9 +1,8 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState} from 'react';
-import {NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
+import {NativeSyntheticEvent, StyleProp, TextInputKeyPressEventData, ViewStyle} from 'react-native';
 import {useDidUpdate} from 'hooks';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
-import {Typography} from '../../style';
 import Text, {TextProps} from '../text';
 import {processKey, deriveData, generateLocaleOptions, LocaleOptions, Data} from './Presenter';
 
@@ -33,17 +32,17 @@ export type NumberInputProps = React.PropsWithRef<
    */
   leadingText?: string;
   /**
-   * The typography of the leading text
+   * The style of the leading text
    */
-  leadingTextTypography?: string;
+  leadingTextStyle?: StyleProp<ViewStyle>;
   /**
    * A trailing text
    */
   trailingText?: string;
   /**
-   * The typography of the trailing text
+   * The style of the trailing text
    */
-  trailingTextTypography?: string;
+  trailingTextStyle?: StyleProp<ViewStyle>;
   /**
    * The margin to the left of the input
    */
@@ -63,10 +62,10 @@ function NumberInput(props: NumberInputProps, ref: any) {
     locale = 'en',
     style,
     leadingText,
-    leadingTextTypography,
+    leadingTextStyle,
     marginLeft,
     trailingText,
-    trailingTextTypography,
+    trailingTextStyle,
     marginRight,
     ...others
   } = props;
@@ -83,12 +82,8 @@ function NumberInput(props: NumberInputProps, ref: any) {
   }, [leadingText, trailingText]);
 
   const leadingAccessoryStyle: TextProps['style'] = useMemo(() => {
-    return [
-      {textAlign: 'right'},
-      leadingTextTypography ? Typography[leadingTextTypography] : undefined,
-      marginLeft ? {marginLeft} : undefined
-    ];
-  }, [leadingTextTypography, marginLeft]);
+    return [{textAlign: 'right'}, leadingTextStyle, marginLeft ? {marginLeft} : undefined];
+  }, [leadingTextStyle, marginLeft]);
 
   const leadingAccessory = useMemo(() => {
     if (hasText) {
@@ -101,11 +96,8 @@ function NumberInput(props: NumberInputProps, ref: any) {
   }, [hasText, leadingText, leadingAccessoryStyle]);
 
   const trailingAccessoryStyle: TextProps['style'] = useMemo(() => {
-    return [
-      trailingTextTypography ? Typography[trailingTextTypography] : undefined,
-      marginRight ? {marginRight} : undefined
-    ];
-  }, [trailingTextTypography, marginRight]);
+    return [trailingTextStyle, marginRight ? {marginRight} : undefined];
+  }, [trailingTextStyle, marginRight]);
 
   const trailingAccessory = useMemo(() => {
     if (hasText) {
