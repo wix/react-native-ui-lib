@@ -1,44 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {map, mapKeys} from 'lodash';
+import {map, mapKeys, filter, reduce} from 'lodash';
 import React, {useMemo, useCallback} from 'react';
-import {FlatList, FlatListProps, LayoutChangeEvent} from 'react-native';
+import {FlatList, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import SortableListContext, {SortableListContextType} from './SortableListContext';
+import SortableListContext from './SortableListContext';
 import SortableListItem from './SortableListItem';
 import {useDidUpdate, useThemeProps} from 'hooks';
+import {SortableListProps, SortableListItemProps} from './types';
+export {SortableListProps, SortableListItemProps};
 
-interface ItemWithId {
-  id: string;
-}
-
-export interface SortableListProps<ItemT extends ItemWithId>
-  extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'>,
-    Pick<SortableListContextType, 'scale'> {
-  /**
-   * The data of the list, do not update the data.
-   */
-  data: FlatListProps<ItemT>['data'];
-  /**
-   * A callback to get the new order (or swapped items).
-   */
-  onOrderChange: (data: ItemT[] /* TODO: add more data? */) => void;
-  /**
-   * Whether to enable the haptic feedback
-   * (please note that react-native-haptic-feedback does not support the specific haptic type on Android starting on an unknown version, you can use 1.8.2 for it to work properly)
-   */
-  enableHaptic?: boolean;
-}
-
-function generateItemsOrder<ItemT extends ItemWithId>(data: SortableListProps<ItemT>['data']) {
+function generateItemsOrder<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {
   return map(data, item => item.id);
 }
 
-const SortableList = <ItemT extends ItemWithId>(props: SortableListProps<ItemT>) => {
+function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {
+  return reduce(filter(data, item => item.locked),
+    (item, cur) => ({...item, [(cur as ItemT).id]: true}),
+    {});
+}
+
+const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
   const themeProps = useThemeProps(props, 'SortableList');
   const {data, onOrderChange, enableHaptic, scale, ...others} = themeProps;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
+  const lockedIds = useSharedValue<Dictionary<boolean>>(generateLockedIds(data));
   const itemHeight = useSharedValue<number>(52);
 
   useDidUpdate(() => {
@@ -67,6 +54,7 @@ const SortableList = <ItemT extends ItemWithId>(props: SortableListProps<ItemT>)
     return {
       data,
       itemsOrder,
+      lockedIds,
       onChange,
       itemHeight,
       onItemLayout,
