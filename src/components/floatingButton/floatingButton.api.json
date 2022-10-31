@@ -23,7 +23,7 @@
       "name": "testID",
       "type": "string",
       "description": "The test id for e2e tests",
-      "note": "<TestID> - the floatingButton container\n<TestID>.button - the floatingButton main button\n<TestID>.secondaryButton - the floatingButton secondaryButton"
+      "note": "Use `testID.button` for the main button or `testID.secondaryButton` for the secondary"
     }
   ],
   "snippet": [

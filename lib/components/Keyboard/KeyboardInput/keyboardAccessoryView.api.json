@@ -15,8 +15,9 @@
     {
       "name": "kbInputRef",
       "type": "any",
-      "description": "The reference to the actual text input (or the keyboard may not reset when instructed to, etc.).\niOS only.",
-      "required": true
+      "description": "The reference to the actual text input (or the keyboard may not reset when instructed to, etc.).",
+      "required": true,
+      "note": "iOS only"
     },
     {
       "name": "kbComponent",

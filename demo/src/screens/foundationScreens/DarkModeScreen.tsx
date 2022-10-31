@@ -19,8 +19,8 @@ class DarkModeScreen extends Component {
   };
 
   changeSchemeType = (index: number) => {
-    this.setState({selectedSchemeType: SCHEME_TYPES[index].value});
     Colors.setScheme(SCHEME_TYPES[index].value);
+    this.setState({selectedSchemeType: SCHEME_TYPES[index].value});
   };
 
   render() {

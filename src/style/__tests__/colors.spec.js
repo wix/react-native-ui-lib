@@ -81,7 +81,7 @@ describe('style/Colors', () => {
       expect(uut.getColorTint('#000000', 60)).toEqual('#808080');
     });
 
-    it('should handle color that does not exist in uilib', () => {
+    it('should handle color that does not exist in `uilib`', () => {
       expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#8D7006'); //
       expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#BE9609'); //
       expect(uut.getColorTint('#F1BE0B', 30)).toEqual('#F1BE0B'); //
@@ -121,6 +121,73 @@ describe('style/Colors', () => {
     it('should generateColorPalette with adjusted saturation', () => {
       const palette = uut.generateColorPalette('#FFE5FF');
       expect(palette).toEqual(['#661A66', '#8F248F', '#B82EB7', '#D148D1', '#DB71DB', '#E699E6', '#F0C2F0', '#FFE5FF']);
+    });
+  });
+
+  describe('generateDesignTokens(...)', () => {
+    it('should generate design tokens from dark color for light theme', () => {
+      const primaryColor = '#860D86';
+      expect(uut.isDark(primaryColor)).toEqual(true);
+      expect(uut.generateDesignTokens(primaryColor)).toEqual({
+        $backgroundPrimaryHeavy: primaryColor,
+        $backgroundPrimaryLight: '#FFFAFF',
+        $backgroundPrimaryMedium: '#FACCFA',
+        $iconPrimary: primaryColor,
+        $iconPrimaryLight: '#F16FF1',
+        $outlinePrimary: primaryColor,
+        $textPrimary: primaryColor
+      });
+    });
+
+    it('should generate design tokens from light color for light theme', () => {
+      const primaryColor = '#E9BEE7';
+      expect(uut.isDark(primaryColor)).toEqual(false);
+      expect(uut.generateDesignTokens(primaryColor)).toEqual({
+        $backgroundPrimaryHeavy: '#A4379F',
+        $backgroundPrimaryLight: '#F6E4F5',
+        $backgroundPrimaryMedium: '#E9BEE7',
+        $iconPrimary: '#A4379F',
+        $iconPrimaryLight: '#CF72CB',
+        $outlinePrimary: '#A4379F',
+        $textPrimary: '#A4379F'
+      });
+    });
+
+    it('should generate design tokens from dark color for dark theme', () => {
+      const primaryColor = '#860D86';
+      expect(uut.isDark(primaryColor)).toEqual(true);
+      expect(uut.generateDesignTokens(primaryColor, true)).toEqual({
+        $backgroundPrimaryHeavy: '#F69DF6',
+        $backgroundPrimaryLight: '#860D86',
+        $backgroundPrimaryMedium: '#B512B5',
+        $iconPrimary: '#F69DF6',
+        $iconPrimaryLight: '#ED40ED',
+        $outlinePrimary: '#F69DF6',
+        $textPrimary: '#F69DF6'
+      });
+    });
+
+    it('should generate design tokens from light color for dark theme', () => {
+      const primaryColor = '#E9BEE7';
+      expect(uut.isDark(primaryColor)).toEqual(false);
+      expect(uut.generateDesignTokens(primaryColor, true)).toEqual({
+        $backgroundPrimaryHeavy: primaryColor,
+        $backgroundPrimaryLight: '#581E55',
+        $backgroundPrimaryMedium: '#7E2B7A',
+        $iconPrimary: primaryColor,
+        $iconPrimaryLight: '#C24CBD',
+        $outlinePrimary: primaryColor,
+        $textPrimary: primaryColor
+      });
+    });
+  });
+
+  describe('isDesignToken(...)', () => {
+    it('should return true if the color passed is design token', () => {
+      expect(uut.isDesignToken({semantic: ['$textDefault'], toString: () => {}})).toEqual(true);
+      expect(uut.isDesignToken({resource_paths: ['@color/textNeutral'], toString: () => {}})).toEqual(true);
+      expect(uut.isDesignToken({test: 'fail', toString: () => {}})).toEqual(false);
+      expect(uut.isDesignToken(uut.red10)).toEqual(false);
     });
   });
 });

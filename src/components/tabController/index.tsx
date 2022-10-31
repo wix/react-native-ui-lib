@@ -51,6 +51,7 @@ export interface TabControllerProps extends ThemeComponent {
    * Send if a SafeView is used in the context of the TabController.
    */
   useSafeArea?: boolean;
+  children?: React.ReactNode;
 }
 
 const getScreenWidth = (useSafeArea: boolean) => {

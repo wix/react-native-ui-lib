@@ -56,7 +56,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           // If Algolia did not provide you any appId, use 'BH4D9OD16A'
           appId: 'BWQFOHCCF3',
           // Public API key: it is safe to commit it
-          apiKey: '1a60a72123558930af25a58c42d0fae3',
+          apiKey: '96b00d78d5ec180ae266abefc79efc5d',
           indexName: 'react-native-ui-lib',
           // Optional: see doc section below
           contextualSearch: true

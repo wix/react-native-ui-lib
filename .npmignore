@@ -234,6 +234,7 @@ ios/
 android/
 demo/
 expoDemo/
+webDemo/
 uilib-docs/
 markdowns/
 .babelrc

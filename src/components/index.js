@@ -44,6 +44,9 @@ export default {
   get ConnectionStatusBar() {
     return require('./connectionStatusBar').default;
   },
+  get Dash() {
+    return require('./dash').default;
+  },
   get Dialog() {
     return require('./dialog').default;
   },

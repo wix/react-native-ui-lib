@@ -2,29 +2,33 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import {StyleSheet, I18nManager} from 'react-native';
-import {Colors, View, Text, Picker, Toast, Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, Text, Picker, Incubator, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
 const none = {label: '[None]', value: ''};
-const playgroundScreen = {label: 'Playground', value: 'unicorn.PlaygroundScreen'};
 
 class SettingsScreen extends Component {
   constructor(props) {
     super(props);
 
     const data = props.navigationData || navigationData;
-    const playground = props.playground || playgroundScreen;
+    const playground = props.playground;
+
+    const screens = [
+      none,
+      ..._.flow(_.values,
+        screens => _.map(screens, 'screens'),
+        _.flatten,
+        screens => _.map(screens, screen => ({label: screen.title, value: screen.screen})))(data)
+    ];
+
+    if (playground) {
+      screens.splice(1, 0, playground);
+    }
 
     this.state = {
       showRefreshMessage: false,
-      screens: [
-        none,
-        playground,
-        ..._.flow(_.values,
-          screens => _.map(screens, 'screens'),
-          _.flatten,
-          screens => _.map(screens, screen => ({label: screen.title, value: screen.screen})))(data)
-      ]
+      screens
     };
   }
 
@@ -107,7 +111,10 @@ class SettingsScreen extends Component {
         <Text text30 grey10>
           Settings
         </Text>
-        <Toast visible={showRefreshMessage} position="bottom" message="Refresh the app!"/>
+        <Incubator.Toast
+          visible={showRefreshMessage}
+          message={`Default screen set to: ${defaultScreen?.label}. Please refresh the app.`}
+        />
       </View>
     );
   }

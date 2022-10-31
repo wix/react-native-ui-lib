@@ -11,11 +11,13 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import usePanGesture from '../panView/usePanGesture';
-import useAnimatedTransition, {TransitionViewAnimationType} from './useAnimatedTransition';
+import useAnimatedTransition, {AnimatedTransitionProps, TransitionViewAnimationType} from './useAnimatedTransition';
 import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 import useFadeView from './useFadeView';
+
+const TRANSITION_ANIMATION_DELAY: AnimatedTransitionProps['delay'] = {enter: 100};
 
 export interface DialogStatics {
   directions: typeof DialogDirectionsEnum;
@@ -40,7 +42,6 @@ const Dialog = (props: DialogProps) => {
   const {overlayBackgroundColor, ...otherModalProps} = modalProps;
   const initialVisibility = useRef(propsVisibility);
   const [visible, setVisible] = useState(propsVisibility);
-  const containerRef = React.createRef<RNView>();
   const opacity = useSharedValue<number>(Number(propsVisibility));
 
   const directions = useMemo((): DialogDirections[] => {
@@ -62,12 +63,14 @@ const Dialog = (props: DialogProps) => {
   const onTransitionAnimationEnd = useCallback((type: TransitionViewAnimationType) => {
     if (type === 'exit') {
       setVisible(false);
+      opacity.value = withTiming(0, {duration: 0});
       onDismiss?.();
     }
   },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   [onDismiss, setVisible]);
 
-  const {onLayout, hiddenLocation} = useHiddenLocation({containerRef});
+  const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
 
   const {
     translation: panTranslation,
@@ -98,7 +101,8 @@ const Dialog = (props: DialogProps) => {
     enterFrom: direction,
     exitTo: direction,
     onAnimationStart: fade,
-    onAnimationEnd: onTransitionAnimationEnd
+    onAnimationEnd: onTransitionAnimationEnd,
+    delay: TRANSITION_ANIMATION_DELAY
   });
 
   const open = useCallback(() => {
@@ -159,7 +163,7 @@ const Dialog = (props: DialogProps) => {
   const renderDialog = () => {
     return (
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View reanimated style={style} onLayout={onLayout} ref={containerRef} testID={testID}>
+        <View reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
           <DialogHeader {...headerProps}/>
           {children}
         </View>

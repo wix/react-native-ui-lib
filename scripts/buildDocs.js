@@ -82,6 +82,12 @@ components.forEach(component => {
     content += `:::\n`;
   }
 
+  if (component.note) {
+    content += `:::note\n`;
+    content += `${component.note}\n`;
+    content += `:::\n`;
+  }
+
   /* Images */
   content +=
     `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
@@ -102,7 +108,10 @@ components.forEach(component => {
   /* Props */
   content += `## API\n`;
   _.sortBy(component.props, p => p.name)?.forEach(prop => {
-    content += `### ${prop.name}\n`;
+    content += `### ${prop.name} \n`;
+    if (prop.note) {
+      content +=  `#### ${prop.note} \n`;
+    }
     content += `${prop.description}  \n`;
     // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
     content += `\`${prop.type} \` \n\n`;

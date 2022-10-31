@@ -27,56 +27,56 @@
     {
       "name": "revealKeyboardInteractive",
       "type": "boolean",
-      "description": "Show the keyboard on a negative scroll\niOS only.",
+      "description": "Show the keyboard on a negative scroll.",
       "note": "iOS only",
       "default": "false"
     },
     {
       "name": "manageScrollView",
       "type": "boolean",
-      "description": "Set to false to turn off inset management and manage it yourself\niOS only.",
+      "description": "Set to false to turn off inset management and manage it yourself.",
       "note": "iOS only",
       "default": "true"
     },
     {
       "name": "requiresSameParentToManageScrollView",
       "type": "boolean",
-      "description": "Set to true manageScrollView is set to true and still does not work,\nit means that the ScrollView found is the wrong one and you'll have\nto have the KeyboardAccessoryView and the ScrollView as siblings\nand set this to true\niOS only.",
+      "description": "Set to true manageScrollView is set to true and still does not work,\nit means that the ScrollView found is the wrong one and you'll have\nto have the KeyboardAccessoryView and the ScrollView as siblings\nand set this to true.",
       "note": "iOS only",
       "default": "false"
     },
     {
       "name": "allowHitsOutsideBounds",
       "type": "boolean",
-      "description": "Allow hitting sub-views that are placed beyond the view bounds\niOS only.",
+      "description": "Allow hitting sub-views that are placed beyond the view bounds.",
       "note": "iOS only",
       "default": "false"
     },
     {
       "name": "addBottomView",
       "type": "boolean",
-      "description": "Add a view beneath the KeyboardAccessoryView\niOS only.",
+      "description": "Add a view beneath the KeyboardAccessoryView.",
       "note": "iOS only",
       "default": "false"
     },
     {
       "name": "bottomViewColor", 
       "type": "string", 
-      "description": "The bottom view's color\niOS only.",       
+      "description": "The bottom view's color.",       
       "note": "iOS only",
       "default": "white"
     },
     {
       "name": "useSafeArea",
       "type": "boolean",
-      "description": "Whether or not to handle SafeArea\niOS only.",
+      "description": "Whether or not to handle SafeArea.",
       "note": "iOS only",
       "default": "true"
     },
     {
       "name": "usesBottomTabs",
       "type": "boolean",
-      "description": "Whether or not to include bottom tab bar inset\niOS only.",
+      "description": "Whether or not to include bottom tab bar inset.",
       "note": "iOS only",
       "default": "false"
     },

@@ -35,10 +35,6 @@ export interface DialogHeaderProps extends ViewProps {
    */
   subtitleProps?: TextProps;
   /**
-   * Replace the header's default content (Dialog.Text)
-   */
-  renderContent?: (props: DialogHeaderProps) => React.ReactElement;
-  /**
    * Show the header's knob (default is true)
    */
   showKnob?: boolean;
