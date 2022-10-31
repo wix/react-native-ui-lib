@@ -72,6 +72,7 @@ export {default as ExpandableSection, ExpandableSectionProps} from './components
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps, FloatingButtonLayouts} from './components/floatingButton';
+export {default as Gradient, GradientProps, GradientTypes} from './components/gradient';
 export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
 export {default as GridListItem, GridListItemProps} from './components/gridListItem';
 export {default as GridList, GridListProps} from './components/gridList';
