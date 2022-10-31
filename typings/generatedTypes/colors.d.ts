@@ -27,6 +27,7 @@ declare class Colors {
     getColorName(color: string): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
+    generateDesignTokens(color: string, mode: 'light' | 'dark'): DesignTokens;
     isDark(color: string): boolean;
     isValidHex(string: string): boolean;
     getHexString(color: string): string;
@@ -34,6 +35,17 @@ declare class Colors {
     isTransparent(color: string): boolean;
     areEqual(colorA: string, colorB: string): boolean;
 }
+
+interface DesignTokens {
+    $backgroundPrimaryHeavy: string;
+    $backgroundPrimaryLight: string;
+    $backgroundPrimaryMedium: string;
+    $iconPrimary: string;
+    $iconPrimaryLight: string;
+    $textPrimary: string;
+    $outlinePrimarystring: string;
+}
+
 declare const colorObject: Colors & {
     grey10: string;
     grey20: string;

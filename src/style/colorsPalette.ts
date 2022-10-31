@@ -1,7 +1,7 @@
 const colorsPalette = {
   // GREYS
-  grey1: '#0E1216',
-  grey5: '#1B242B',
+  grey1: '#13191E',
+  grey5: '#1E2830',
   grey10: '#20303C',
   grey20: '#4D5963',
   grey30: '#6E7881',
@@ -11,8 +11,8 @@ const colorsPalette = {
   grey70: '#F0F2F5',
   grey80: '#F8f9FA',
   // BLUES
-  blue1: '#061F4E',
-  blue5: '#0B3689',
+  blue1: '#092E76',
+  blue5: '#0C3E9D',
   blue10: '#0F4DC4',
   blue20: '#0F59E6',
   blue30: '#116DFF',
@@ -31,8 +31,8 @@ const colorsPalette = {
   cyan70: '#D8F4F4',
   cyan80: '#EBF9F9',
   // GREENS
-  green1: '#00281E',
-  green5: '#00503B',
+  green1: '#004030',
+  green5: '#006047',
   green10: '#008563',
   green20: '#009872',
   green30: '#00A87E',
@@ -42,8 +42,8 @@ const colorsPalette = {
   green70: '#CFF2E9',
   green80: '#E3F7F2',
   // YELLOWS
-  yellow1: '#543500',
-  yellow5: '#946000',
+  yellow1: '#6A4300',
+  yellow5: '#9C6600',
   yellow10: '#E89900',
   yellow20: '#F7AE00',
   yellow30: '#FFC50D',
@@ -53,8 +53,8 @@ const colorsPalette = {
   yellow70: '#FFF4D3',
   yellow80: '#FFF9E4',
   // ORANGE,
-  orange1: '#481F00',
-  orange5: '#792E00',
+  orange1: '#762D00',
+  orange5: '#9E3900',
   orange10: '#CD4700',
   orange20: '#E95504',
   orange30: '#FB6413',
@@ -64,8 +64,8 @@ const colorsPalette = {
   orange70: '#FFE5D7',
   orange80: '#FFF1EA',
   // REDS
-  red1: '#380D0E',
-  red5: '#73170F',
+  red1: '#5F140F',
+  red5: '#9E1E11',
   red10: '#D52712',
   red20: '#E93222',
   red30: '#FC3D2F',
@@ -99,7 +99,7 @@ const colorsPalette = {
   // WHITE,
   white: '#FFFFFF',
   black: '#000000',
-  dark: '#07090B',
+  dark: '#0E1216',
   transparent: 'transparent'
 };
 

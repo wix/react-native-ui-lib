@@ -16,7 +16,6 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     subtitle,
     subtitleStyle,
     subtitleProps,
-    renderContent,
     showKnob = true,
     showDivider = true,
     leadingAccessory,
@@ -35,10 +34,6 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
   }, [showKnob]);
 
   const headerContent = useMemo(() => {
-    if (renderContent) {
-      return renderContent(props);
-    }
-
     const Container = onPress ? TouchableOpacity : View;
     if (!isEmpty(title) || !isEmpty(subtitle)) {
       return (
@@ -58,8 +53,7 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     }
 
     return null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [renderContent, title, titleStyle, titleProps, subtitle, subtitleStyle, subtitleProps]);
+  }, [title, titleStyle, titleProps, subtitle, subtitleStyle, subtitleProps, onPress]);
 
   const content = useMemo(() => {
     if (headerContent || leadingAccessory || trailingAccessory) {

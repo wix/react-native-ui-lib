@@ -11,7 +11,7 @@
     {"name": "messageStyle", "type": "StyleProp<TextStyle>", "description": "Toast message style"},
     {"name": "centerMessage", "type": "boolean", "description": "Should message be centered in the toast"},
     {"name": "zIndex", "type": "number", "description": "Custom zIndex for toast"},
-    {"name": "elevation", "type": "number", "description": "Custom elevation (Android only)"},
+    {"name": "elevation", "type": "number", "description": "Custom elevation", "note": "Android only"},
     {
       "name": "action",
       "type": "ButtonProps",

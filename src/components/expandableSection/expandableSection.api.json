@@ -11,7 +11,12 @@
     {"name": "children", "type": "React.ReactNode", "description": "The expandable's children"},
     {"name": "expanded", "type": "boolean", "description": "Should the ExpandableSection be expanded"},
     {"name": "top", "type": "boolean", "description": "Should it open above the 'sectionHeader'"},
-    {"name": "onPress", "type": "() => void", "description": "Called when pressing the header of the ExpandableSection"}
+    {
+      "name": "onPress",
+      "type": "() => void",
+      "description": "Called when pressing the header of the ExpandableSection"
+    },
+    {"name": "useSeparator", "type": "boolean", "description": "should use separator when section is expanded"}
   ],
   "snippet": [
     "<ExpandableSection",
