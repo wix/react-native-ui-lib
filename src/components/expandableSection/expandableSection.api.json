@@ -15,8 +15,7 @@
       "name": "onPress",
       "type": "() => void",
       "description": "Called when pressing the header of the ExpandableSection"
-    },
-    {"name": "useSeparator", "type": "boolean", "description": "should use separator when section is expanded"}
+    }
   ],
   "snippet": [
     "<ExpandableSection",
