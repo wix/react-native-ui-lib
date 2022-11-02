@@ -1,4 +1,5 @@
 import uut from '../colors';
+const SYSTEM_COLORS = ['grey', 'white', 'black'];
 
 describe('style/Colors', () => {
   it('should add alpha to hex color value', () => {
@@ -188,6 +189,31 @@ describe('style/Colors', () => {
       expect(uut.isDesignToken({resource_paths: ['@color/textNeutral'], toString: () => {}})).toEqual(true);
       expect(uut.isDesignToken({test: 'fail', toString: () => {}})).toEqual(false);
       expect(uut.isDesignToken(uut.red10)).toEqual(false);
+    });
+  });
+
+  describe('getSystemColorByHex', () => {
+    it('should return the system color, if the color is included in the validColors array', () => {
+      expect(uut.getSystemColorByHex('#FFFFFF', SYSTEM_COLORS)).toEqual('white');
+      expect(uut.getSystemColorByHex('#000000', SYSTEM_COLORS)).toEqual('black');
+      expect(uut.getSystemColorByHex('#116DFF', [...SYSTEM_COLORS, 'blue'])).toEqual('blue30');
+      expect(uut.getSystemColorByHex('#FB6413', [...SYSTEM_COLORS, 'orange'])).toEqual('orange30');
+    });
+
+    it('should return undefined if the color is not included in validColors', () => {
+      expect(uut.getSystemColorByHex('#116DFF', SYSTEM_COLORS)).toEqual(undefined);
+      expect(uut.getSystemColorByHex('#00A87E', SYSTEM_COLORS)).toEqual(undefined);
+    });
+
+    it('without validColors array the function will return the first system color name match the color', () => {
+      expect(uut.getSystemColorByHex('#116DFF')).toEqual('blue30');
+      expect(uut.getSystemColorByHex('#00A87E')).toEqual('green30');
+    });
+
+    it('should return undefined for color that does not exist in our colors palette.', () => {
+      expect(uut.getSystemColorByHex('#5A48F5')).toEqual('violet30');
+      expect(uut.getSystemColorByHex('#5A48F5', SYSTEM_COLORS)).toEqual(undefined);
+      expect(uut.getSystemColorByHex('#5A48F5', ['primary'])).toEqual('primary');
     });
   });
 });
