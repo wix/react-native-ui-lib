@@ -44,6 +44,9 @@ export default {
   get ConnectionStatusBar() {
     return require('./connectionStatusBar').default;
   },
+  get Dash() {
+    return require('./dash').default;
+  },
   get Dialog() {
     return require('./dialog').default;
   },
@@ -61,6 +64,9 @@ export default {
   },
   get FloatingButton() {
     return require('./floatingButton').default;
+  },
+  get Gradient() {
+    return require('./gradient').default;
   },
   get Hint() {
     return require('./hint').default;

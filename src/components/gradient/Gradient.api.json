@@ -1,0 +1,26 @@
+{
+  "name": "Gradient",
+  "category": "overlays",
+  "description": "Gradient Component",
+  "images": [],
+  "props": [
+    {
+      "name": "color",
+      "type": "string",
+      "description": "The color of the gradient",
+      "default": "Colors.white"
+    },
+    {
+      "name": "type",
+      "type": "GradientTypes",
+      "description": "hue | lightness | saturation"
+    },
+    {
+      "name": "numberOfSteps",
+      "type": "number",
+      "description": "The number of steps"
+    },
+    {"name": "style", "type": "ViewStyle", "description": "Additional style to the component"}
+  ],
+  "snippet": ["<Gradient color={$1} numberOfSteps={$2}/>"]
+}

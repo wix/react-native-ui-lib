@@ -9,6 +9,8 @@ export function getColorByState(color?: ColorType, context?: FieldContextType) {
   let finalColor: string | undefined;
   if (_.isString(color)) {
     finalColor = color;
+  } else if (Colors.isDesignToken(color)) {
+    finalColor = color?.toString();
   } else if (_.isPlainObject(color)) {
     if (context?.disabled) {
       finalColor = color?.disabled;
@@ -20,7 +22,6 @@ export function getColorByState(color?: ColorType, context?: FieldContextType) {
 
     finalColor = finalColor || color?.default || Colors.$textDefault;
   }
-
   return finalColor;
 }
 

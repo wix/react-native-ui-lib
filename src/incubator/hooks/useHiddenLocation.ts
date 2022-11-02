@@ -1,5 +1,6 @@
-import {RefObject, useCallback, useState} from 'react';
-import {View, LayoutChangeEvent} from 'react-native';
+import {isEqual} from 'lodash';
+import {useCallback, useRef, useState, RefCallback} from 'react';
+import {View, LayoutChangeEvent, LayoutRectangle} from 'react-native';
 import {Constants} from '../../commons/new';
 import {PanningDirectionsEnum} from '../panView';
 
@@ -9,13 +10,7 @@ export interface HiddenLocation extends HiddenLocationRecord {
   wasMeasured: boolean;
 }
 
-export interface HiddenLocationProps<T extends View> {
-  containerRef: RefObject<T>;
-}
-
-export default function useHiddenLocation<T extends View>(props: HiddenLocationProps<T>) {
-  const {containerRef} = props;
-
+export default function useHiddenLocation<T extends View>() {
   const getHiddenLocation = ({
     x = 0,
     y = 0,
@@ -33,17 +28,39 @@ export default function useHiddenLocation<T extends View>(props: HiddenLocationP
   };
 
   const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
+  const ref = useRef<T>();
+  const layoutData = useRef<LayoutRectangle>();
+  const wasMeasured = useRef(false);
+
+  const measure = useCallback(() => {
+    if (ref.current && layoutData.current && layoutData.current.width > 0 && layoutData.current.height > 0) {
+      wasMeasured.current = true;
+      const {x, y, width, height} = layoutData.current;
+      setHiddenLocation(getHiddenLocation({
+        x,
+        y,
+        width,
+        height,
+        wasMeasured: true
+      }));
+    }
+  }, []);
+
+  const setRef: RefCallback<T> = useCallback((node: T) => {
+    if (node) {
+      ref.current = node;
+      measure();
+    }
+  },
+  [measure]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
-    const {width, height} = event.nativeEvent.layout;
-    if (containerRef.current && !hiddenLocation.wasMeasured) {
-      containerRef.current.measureInWindow((x: number, y: number) => {
-        setHiddenLocation(getHiddenLocation({x, y, width, height, wasMeasured: true}));
-      });
+    if (!isEqual(layoutData.current, event.nativeEvent.layout)) {
+      layoutData.current = event.nativeEvent.layout;
+      measure();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   },
-  [containerRef]);
+  [measure]);
 
-  return {onLayout, hiddenLocation};
+  return {setRef, onLayout, hiddenLocation};
 }

@@ -10,6 +10,9 @@ import DesignTokensDM from './designTokensDM';
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
 
+export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
+export type TokensOptions = {primaryColor: string};
+
 export class Colors {
   [key: string]: any;
   private shouldSupportDarkMode = false;
@@ -41,6 +44,17 @@ export class Colors {
   loadSchemes(schemes: Schemes) {
     Scheme.loadSchemes(schemes);
     Object.assign(this, Scheme.getScheme());
+  }
+
+  /**
+   * Load light and dark schemes based on generated design tokens
+   * @param color - palette color
+   */
+  loadDesignTokens(options: TokensOptions) {
+    this.loadSchemes({
+      light: this.generateDesignTokens(options.primaryColor),
+      dark: this.generateDesignTokens(options.primaryColor, true)
+    });
   }
 
   /**
@@ -190,7 +204,7 @@ export class Colors {
     return colorsPalette[tintLevel - 1];
   }
 
-  generateColorPalette = _.memoize(color => {
+  private generatePalette = _.memoize((color: string): string[] => {
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
     const lightColorsThreshold = this.shouldGenerateDarkerPalette(color) ? 5 : 0;
@@ -216,9 +230,39 @@ export class Colors {
 
     const sliced = tints.slice(0, 8);
     const adjusted = adjustSaturation(sliced, color);
-    const palette = adjusted || sliced;
+    return adjusted || sliced;
+  });
+
+  generateColorPalette = _.memoize((color: string): string[] => {
+    const palette = this.generatePalette(color);
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
+
+  private generateDesignTokens(primaryColor: string, dark?: boolean) {
+    let colorPalette: string[] = this.generatePalette(primaryColor);
+    if (dark) {
+      colorPalette = _.reverse(colorPalette);
+    }
+    const color30 = colorPalette[2];
+    const color50 = colorPalette[4];
+    const color70 = colorPalette[6];
+    const color80 = colorPalette[7];
+
+    const isPrimaryColorDark = this.isDark(primaryColor);
+    let mainColor = isPrimaryColorDark ? primaryColor : color30;
+    if (dark) {
+      mainColor = isPrimaryColorDark ? color30 : primaryColor;
+    }
+    return {
+      $backgroundPrimaryHeavy: mainColor,
+      $backgroundPrimaryLight: color80,
+      $backgroundPrimaryMedium: color70,
+      $iconPrimary: mainColor,
+      $iconPrimaryLight: color50,
+      $textPrimary: mainColor,
+      $outlinePrimary: mainColor
+    };
+  }
 
   private shouldGenerateDarkerPalette(color: string) {
     const hsl = Color(color).hsl();
@@ -234,6 +278,7 @@ export class Colors {
   isValidHex(string: string) {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(string);
   }
+
   getHexString(color: tinycolor.ColorInput) {
     return tinycolor(color).toHexString();
   }
@@ -247,6 +292,9 @@ export class Colors {
     const colorA = colorStringValue(colorAValue);
     const colorB = colorStringValue(colorBValue);
     return _.toLower(colorA) === _.toLower(colorB);
+  }
+  isDesignToken(color?: DesignToken) {
+    return !!(color?.semantic || color?.resource_paths);
   }
 }
 

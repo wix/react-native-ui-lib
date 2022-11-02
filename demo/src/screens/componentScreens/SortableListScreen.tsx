@@ -1,18 +1,33 @@
 import _ from 'lodash';
 import React, {useCallback, useState, useRef} from 'react';
 import {StyleSheet} from 'react-native';
-import {SortableList, View, TouchableOpacity, Text, Icon, Assets, Colors, Button} from 'react-native-ui-lib';
+import {
+  SortableList,
+  SortableListItemProps,
+  View,
+  TouchableOpacity,
+  Text,
+  Icon,
+  Assets,
+  Colors,
+  Button
+} from 'react-native-ui-lib';
 import {renderHeader} from '../ExampleScreenPresenter';
 
-interface Item {
-  originalIndex: number;
-  id: string;
+interface Item extends SortableListItemProps {
+  text: string;
 }
 
-const data = _.times(30, index => {
+const data: Item[] = _.times(30, index => {
+  let text = `${index}`;
+  if (index === 3) {
+    text = 'Locked item';
+  }
+
   return {
-    originalIndex: index,
-    id: `${index}`
+    text,
+    id: `${index}`,
+    locked: index === 3
   };
 });
 
@@ -57,23 +72,26 @@ const SortableListScreen = () => {
 
   const renderItem = useCallback(({item, index: _index}: {item: Item; index: number}) => {
     const isSelected = selectedItems.includes(item);
+    const {locked} = item;
+    const Container = locked ? View : TouchableOpacity;
     return (
-      <TouchableOpacity
+      <Container
         style={[styles.itemContainer, isSelected && styles.selectedItemContainer]}
         onPress={() => toggleItemSelection(item)}
         // overriding the BG color to anything other than white will cause Android's elevation to fail
         // backgroundColor={Colors.red30}
         centerV
+        centerH={locked}
         paddingH-page
       >
         <View flex row spread centerV>
-          <Icon source={Assets.icons.demo.drag} tintColor={Colors.$iconDisabled}/>
-          <Text center $textDefault>
-            {item.originalIndex}
+          {!locked && <Icon source={Assets.icons.demo.drag} tintColor={Colors.$iconDisabled}/>}
+          <Text center $textDefault={!locked} $textNeutralLight={locked}>
+            {item.text}
           </Text>
-          <Icon source={Assets.icons.demo.chevronRight} tintColor={Colors.$iconDefault}/>
+          {!locked && <Icon source={Assets.icons.demo.chevronRight} tintColor={Colors.$iconDefault}/>}
         </View>
-      </TouchableOpacity>
+      </Container>
     );
   },
   [selectedItems, toggleItemSelection]);
