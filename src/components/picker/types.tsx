@@ -94,7 +94,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
     renderItem?: (
       value: PickerValue,
       itemProps: PickerItemProps & {isSelected: boolean; isItemDisabled: boolean},
-      label: string | undefined
+      label?: string
     ) => React.ReactElement;
     /**
      * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
