@@ -11,7 +11,7 @@ import Image from '../image';
 import Text from '../text';
 import {getItemLabel, isItemSelected} from './PickerPresenter';
 import PickerContext from './PickerContext';
-import {PickerItemProps} from './types';
+import {PickerItemProps, PickerSingleValue} from './types';
 
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options
@@ -64,7 +64,7 @@ const PickerItem = (props: PickerItemProps) => {
     if (migrate) {
       context.onPress(value);
     } else {
-      context.onPress(typeof value === 'object' || context.isMultiMode ? value : {value, label: itemLabel});
+      context.onPress(typeof value === 'object' || context.isMultiMode ? value : ({value, label: itemLabel}) as PickerSingleValue);
     }
   }, [migrate, value, context.onPress]);
 
