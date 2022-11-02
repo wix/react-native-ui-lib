@@ -45,6 +45,6 @@ export function getItemLabel(label: string, value: PickerValue, getItemLabel: Pi
   return label;
 }
 
-export function shouldFilterOut(searchValue: string, itemLabel: string) {
+export function shouldFilterOut(searchValue: string, itemLabel?: string) {
   return !_.includes(_.lowerCase(itemLabel), _.lowerCase(searchValue));
 }

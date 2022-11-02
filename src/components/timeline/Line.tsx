@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
 import View from '../view';
-import Dash from './Dash';
+import Dash from '../dash';
 import {LineProps, LineTypes} from './types';
 
 const LINE_WIDTH = 2;
@@ -31,7 +31,7 @@ const Line = React.memo((props: LinePropsInternal) => {
 
   const renderLine = () => {
     if (type === LineTypes.DASHED) {
-      return <Dash vertical dashColor={color} style={dashedLineStyle}/>;
+      return <Dash vertical color={color} containerStyle={dashedLineStyle}/>;
     }
     return <View style={solidLineStyle}/>;
   };

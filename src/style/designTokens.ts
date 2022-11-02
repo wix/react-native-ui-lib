@@ -4,6 +4,7 @@ export default {
   // BACKGROUND
   $backgroundDefault: colorsPalette.white,
   $backgroundElevated: colorsPalette.white,
+  $backgroundElevatedLight: colorsPalette.white,
   $backgroundNeutralHeavy: colorsPalette.grey20,
   $backgroundNeutralIdle: colorsPalette.grey40,
   $backgroundNeutralMedium: colorsPalette.grey60,
