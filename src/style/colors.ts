@@ -133,11 +133,19 @@ export class Colors {
 
   getSystemColorByHex(colorValue: string, validColors?: string[]) {
     const color = colorStringValue(colorValue);
-    const system_color = _.findKey(this, c => c.toString() === color);
-    if (validColors && system_color) {
-      return validColors?.includes(system_color.split(/[0-9]/)[0]) ? system_color : undefined;
+    const results: string[] = [];
+
+    for (const [key, value] of Object.entries(this)) {
+      if (value.toString() === color) {
+        if (validColors?.includes(key.split(/[0-9]/)[0])) {
+          return key;
+        } else {
+          results.push(key);
+        }
+      }
     }
-    return system_color;
+
+    return validColors ? undefined : results[0];
   }
 
   getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number) {

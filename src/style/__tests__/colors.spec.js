@@ -135,7 +135,7 @@ describe('style/Colors', () => {
 
     it('should return undefined if the color is not included in validColors', () => {
       expect(uut.getSystemColorByHex('#116DFF', SYSTEM_COLORS)).toEqual(undefined);
-      expect(uut.getSystemColorByHex('#00A87E', SYSTEM_COLORS)).toEqual(undefined);
+      expect(uut.getSystemColorByHex('#00A87E', SYSTEM_COLORS)).toEqual(undefined); 
     });
 
     it('without validColors array the function will return the first system color name match the color', () => {
@@ -144,8 +144,9 @@ describe('style/Colors', () => {
     });
 
     it('should return undefined for color that does not exist in our colors palette.', () => {
-      expect(uut.getSystemColorByHex('#cbdcf7')).toEqual(undefined);
-      expect(uut.getSystemColorByHex('#a894a5')).toEqual(undefined);
+      expect(uut.getSystemColorByHex('#5A48F5')).toEqual('violet30');
+      expect(uut.getSystemColorByHex('#5A48F5', SYSTEM_COLORS)).toEqual(undefined);
+      expect(uut.getSystemColorByHex('#5A48F5', ['primary'])).toEqual('primary');
     });
   });
 });
