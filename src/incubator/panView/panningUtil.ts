@@ -37,47 +37,49 @@ export interface TranslationOptions {
   currentTranslation: Frame;
 }
 
-export function getTranslationDirectionClamp(translation: Frame, options: TranslationOptions) {
-  'worklet';
-  let result = translation;
-  if (options.directionLock) {
-    if (options.currentTranslation.x !== 0) {
-      result = {x: translation.x, y: 0};
-    } else if (options.currentTranslation.y !== 0) {
-      result = {x: 0, y: translation.y};
-    } else if (Math.abs(translation.x) > Math.abs(translation.y)) {
-      result = {x: translation.x, y: 0};
-    } else {
-      result = {x: 0, y: translation.y};
-    }
-  }
+// function getTranslationDirectionClamp(translation: Frame, options: TranslationOptions) {
+//   'worklet';
+//   let result = translation;
+//   if (options.directionLock) {
+//     if (options.currentTranslation.x !== 0) {
+//       result = {x: translation.x, y: 0};
+//     } else if (options.currentTranslation.y !== 0) {
+//       result = {x: 0, y: translation.y};
+//     } else if (Math.abs(translation.x) > Math.abs(translation.y)) {
+//       result = {x: translation.x, y: 0};
+//     } else {
+//       result = {x: 0, y: translation.y};
+//     }
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
-export function getTranslation(event: PanGestureHandlerEventPayload,
+export function getTranslation(/* event: PanGestureHandlerEventPayload,
   initialTranslation: Frame,
   directions: PanningDirections[],
-  options: TranslationOptions): Frame {
+  options: TranslationOptions */): Frame {
   'worklet';
-  const result = {x: 0, y: 0};
-  if (directions?.includes(PanningDirectionsEnum.LEFT) && directions?.includes(PanningDirectionsEnum.RIGHT)) {
-    result.x = initialTranslation.x + event.translationX;
-  } else if (directions?.includes(PanningDirectionsEnum.LEFT)) {
-    result.x = Math.min(0, initialTranslation.x + event.translationX);
-  } else if (directions?.includes(PanningDirectionsEnum.RIGHT)) {
-    result.x = Math.max(0, initialTranslation.x + event.translationX);
-  }
+  return {x: 0, y: 0};
 
-  if (directions?.includes(PanningDirectionsEnum.UP) && directions?.includes(PanningDirectionsEnum.DOWN)) {
-    result.y = initialTranslation.y + event.translationY;
-  } else if (directions?.includes(PanningDirectionsEnum.UP)) {
-    result.y = Math.min(0, initialTranslation.y + event.translationY);
-  } else if (directions?.includes(PanningDirectionsEnum.DOWN)) {
-    result.y = Math.max(0, initialTranslation.y + event.translationY);
-  }
+  // const result = {x: 0, y: 0};
+  // if (directions?.includes(PanningDirectionsEnum.LEFT) && directions?.includes(PanningDirectionsEnum.RIGHT)) {
+  //   result.x = initialTranslation.x + event.translationX;
+  // } else if (directions?.includes(PanningDirectionsEnum.LEFT)) {
+  //   result.x = Math.min(0, initialTranslation.x + event.translationX);
+  // } else if (directions?.includes(PanningDirectionsEnum.RIGHT)) {
+  //   result.x = Math.max(0, initialTranslation.x + event.translationX);
+  // }
 
-  return getTranslationDirectionClamp(result, options);
+  // if (directions?.includes(PanningDirectionsEnum.UP) && directions?.includes(PanningDirectionsEnum.DOWN)) {
+  //   result.y = initialTranslation.y + event.translationY;
+  // } else if (directions?.includes(PanningDirectionsEnum.UP)) {
+  //   result.y = Math.min(0, initialTranslation.y + event.translationY);
+  // } else if (directions?.includes(PanningDirectionsEnum.DOWN)) {
+  //   result.y = Math.max(0, initialTranslation.y + event.translationY);
+  // }
+
+  // return getTranslationDirectionClamp(result, options);
 }
 
 export const DEFAULT_THRESHOLD: Required<PanningDismissThreshold> = {

@@ -80,6 +80,7 @@ const usePanGesture = (props: PanGestureProps) => {
 
   const setTranslation = (event: PanGestureHandlerEventPayload, initialTranslation: Frame) => {
     'worklet';
+    // @ts-ignore
     const result = getTranslation(event, initialTranslation, directions, getTranslationOptions());
 
     translationX.value = result.x;
