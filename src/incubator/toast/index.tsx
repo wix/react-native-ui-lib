@@ -278,5 +278,6 @@ const styles = StyleSheet.create({
 });
 
 Toast.presets = ToastPresets;
+Toast.displayName = 'Incubator.Toast';
 export {ToastProps, ToastPresets};
 export default asBaseComponent<ToastProps, typeof Toast>(Toast);
