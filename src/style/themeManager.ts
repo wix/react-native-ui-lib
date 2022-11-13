@@ -12,7 +12,7 @@ interface Theme {
     titleColor: string,
     subtitleColor: string,
     dividerColor: string,
-    components: {}
+    components: Extendable
 }
 
 export class ThemeManager {
