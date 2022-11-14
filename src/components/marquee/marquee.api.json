@@ -2,7 +2,6 @@
   "name": "Marquee",
   "category": "media",
   "description": "Marquee component for sliding text",
-  "extends": [""],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MarqueeScreen.tsx",
   "props": [
     {"name": "label", "type": "string", "description": "Marquee label"},
