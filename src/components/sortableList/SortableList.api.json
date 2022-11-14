@@ -7,14 +7,14 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableListScreen.tsx",
   "props": [
     {
-      "name": "data",
+      "name": "initialData",
       "type": "ItemT[] (ItemT extends {id: string})",
-      "description": "The data of the list, with an id prop as unique identifier.",
+      "description": "The initial data of the list, with an id prop as unique identifier.",
       "required": true
     },
     {
       "name": "onOrderChange",
-      "type": "(data: ItemT[]) => void",
+      "type": "(newData: ItemT[]) => void",
       "description": "A callback to get the new order (or swapped items).",
       "required": true
     },

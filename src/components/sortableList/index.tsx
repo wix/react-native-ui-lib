@@ -22,7 +22,8 @@ function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableLi
 
 const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
   const themeProps = useThemeProps(props, 'SortableList');
-  const {data, onOrderChange, enableHaptic, scale, ...others} = themeProps;
+  const {initialData, data: deprecatedData, onOrderChange, enableHaptic, scale, ...others} = themeProps;
+  const data = initialData ?? deprecatedData;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
   const lockedIds = useSharedValue<Dictionary<boolean>>(generateLockedIds(data));

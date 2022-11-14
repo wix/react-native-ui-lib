@@ -6,7 +6,7 @@
   "extends": ["lists/GridList"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableGridListScreen.tsx",
   "props": [
-    {"name": "data", "type": "any[] & {id: string}", "description": "Data of items with an id prop as unique identifier"},
+    {"name": "initialData", "type": "any[] & {id: string}", "description": "Initial data of items with an id prop as unique identifier"},
     {"name": "renderItem", "type": "FlatListProps['renderItem']", "description": "Custom render item callback"},
     {
       "name": "onOrderChange",

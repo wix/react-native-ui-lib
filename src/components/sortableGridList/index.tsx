@@ -19,7 +19,13 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   const {renderItem, onOrderChange, ...others} = props;
 
   const {itemContainerStyle, numberOfColumns, listContentStyle} = useGridLayout(props);
-  const {numColumns = DEFAULT_NUM_COLUMNS, itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
+  const {
+    numColumns = DEFAULT_NUM_COLUMNS,
+    itemSpacing = DEFAULT_ITEM_SPACINGS,
+    initialData,
+    data: deprecatedData
+  } = others;
+  const data = initialData ?? deprecatedData;
   const itemsOrder = useSharedValue<ItemsOrder>(generateItemsOrder(data));
 
   useDidUpdate(() => {

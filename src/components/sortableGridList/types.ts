@@ -8,7 +8,8 @@ export type ItemsOrder = string[];
 export type ItemProps<T> = T & {id: string};
 
 export interface SortableGridListProps<T = any> extends GridListBaseProps, ScrollViewProps {
-  data: FlatListProps<ItemProps<T>>['data'];
+  initialData?: FlatListProps<ItemProps<T>>['data'];
+  data?: FlatListProps<ItemProps<T>>['data'];
   renderItem: FlatListProps<ItemProps<T>>['renderItem'];
   onOrderChange?: (newData: ItemProps<T>[], newOrder: ItemsOrder) => void;
   extraData?: any;

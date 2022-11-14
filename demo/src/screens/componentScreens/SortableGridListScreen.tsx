@@ -100,7 +100,7 @@ class SortableGridListScreen extends Component {
         </View>
         <View flex>
           <SortableGridList
-            data={items}
+            initialData={items}
             renderItem={this.renderItem}
             // numColumns={2}
             maxItemWidth={140}

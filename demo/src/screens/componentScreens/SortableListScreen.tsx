@@ -111,7 +111,7 @@ const SortableListScreen = () => {
       </View>
       <View flex useSafeArea>
         <SortableList
-          data={items}
+          initialData={items}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
           onOrderChange={onOrderChange}

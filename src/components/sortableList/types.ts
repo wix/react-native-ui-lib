@@ -13,9 +13,13 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
   extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'>,
     Pick<SortableListContextType<ItemT>, 'scale'> {
   /**
+   * The initial data of the list, do not update the data.
+   */
+  initialData?: Data<ItemT>;
+  /**
    * The data of the list, do not update the data.
    */
-  data: Data<ItemT>;
+  data?: Data<ItemT>;
   /**
    * A callback to get the new order (or swapped items).
    */
