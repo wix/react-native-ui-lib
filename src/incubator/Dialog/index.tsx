@@ -1,6 +1,7 @@
 import {isEmpty} from 'lodash';
 import React, {useRef, useMemo, useCallback, useState, useImperativeHandle, forwardRef, ForwardedRef} from 'react';
 import {StyleSheet, View as RNView} from 'react-native';
+import hoistStatics from 'hoist-non-react-statics';
 import {useAnimatedStyle, useDerivedValue, useSharedValue, withTiming} from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from 'style';
@@ -203,7 +204,9 @@ Dialog.displayName = 'Incubator.Dialog';
 Dialog.directions = DialogDirectionsEnum;
 Dialog.Header = DialogHeader;
 
-export default asBaseComponent<DialogProps, DialogStatics>(forwardRef<DialogImperativeMethods, DialogProps>(Dialog));
+const _Dialog = forwardRef<DialogImperativeMethods, DialogProps>(Dialog);
+hoistStatics(_Dialog, Dialog);
+export default asBaseComponent<DialogProps, DialogStatics>(_Dialog);
 
 const styles = StyleSheet.create({
   defaultDialogStyle: {
