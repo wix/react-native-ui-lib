@@ -20,7 +20,7 @@ const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) =>
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     textAlign: 'right'
   }
 });

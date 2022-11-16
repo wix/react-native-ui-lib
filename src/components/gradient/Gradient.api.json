@@ -1,6 +1,6 @@
 {
   "name": "Gradient",
-  "category": "overlays",
+  "category": "infra",
   "description": "Gradient Component",
   "images": [],
   "props": [
