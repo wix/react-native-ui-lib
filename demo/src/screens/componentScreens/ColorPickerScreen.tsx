@@ -2,14 +2,15 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {Colors, View, Text, ColorPicker, ColorPalette, ColorName} from 'react-native-ui-lib';
-
+import {renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 interface Props {}
 interface State {
-  color: string,
-  textColor: string,
-  customColors: string[],
-  paletteChange: boolean
+  color: string;
+  textColor: string;
+  customColors: string[];
+  paletteChange: boolean;
+  backgroundColor: string;
 }
 
 const INITIAL_COLOR = Colors.$backgroundPrimaryHeavy;
@@ -24,37 +25,37 @@ const colors = [
   '#8B1079', '#A0138E', '#B13DAC', '#C164BD', '#D08BCD', '#E0B1DE', '#EFD8EE', '#F7EBF7'
 ];
 
-
 export default class ColorPickerScreen extends Component<Props, State> {
   state: State = {
     color: INITIAL_COLOR,
     textColor: Colors.$textDefaultLight,
     customColors: [],
-    paletteChange: false
+    paletteChange: false,
+    backgroundColor: Colors.$backgroundDefault
   };
 
   onDismiss = () => {
     console.log(`screen onDismiss`);
-  }
+  };
 
   onSubmit = (color: string, textColor: string) => {
     const {customColors} = this.state;
     customColors.push(color);
     this.setState({color, textColor, customColors: _.clone(customColors), paletteChange: false});
-  }
+  };
 
   onValueChange = (value: string, options: object) => {
     this.setState({color: value, textColor: options ? _.get(options, 'tintColor') : undefined, paletteChange: false});
-  }
+  };
 
   onPaletteValueChange = (value: string, options: object) => {
     this.setState({color: value, textColor: options ? _.get(options, 'tintColor') : undefined, paletteChange: true});
-  }
+  };
 
   render() {
-    const {color, textColor, customColors, paletteChange} = this.state;
-    const paletteValue = paletteChange ? (color || INITIAL_COLOR) : undefined;
-    const pickerValue = !paletteChange ? (color || INITIAL_COLOR) : undefined;
+    const {color, textColor, customColors, paletteChange, backgroundColor} = this.state;
+    const paletteValue = paletteChange ? color || INITIAL_COLOR : undefined;
+    const pickerValue = !paletteChange ? color || INITIAL_COLOR : undefined;
 
     const mappedColor = ColorName.name(color);
     const nearestColor = mappedColor[0];
@@ -67,18 +68,30 @@ export default class ColorPickerScreen extends Component<Props, State> {
           <Text text60 margin-10 style={{color}}>
             Selected Color: {color}
           </Text>
-          <View center marginB-10 style={{height: 50, width: 200, backgroundColor: color}} >
+          <View center marginB-10 style={{height: 50, width: 200, backgroundColor: color}}>
             <Text text60 style={{color: textColor}}>
               {color}
             </Text>
           </View>
         </View>
         <View bg-$backgroundDefault>
+          <View marginH-20>
+            {renderMultipleSegmentOptions.call(this, 'backgroundColor:', 'backgroundColor', [
+              {label: 'Default', value: Colors.$backgroundDefault},
+              {label: 'Primary', value: Colors.$backgroundPrimaryHeavy},
+              {label: 'Success', value: Colors.$backgroundSuccessHeavy}
+            ])}
+          </View>
           <Text text60 marginL-20 marginB-4 marginT-24>
             Theme Color
           </Text>
           <Text marginL-20>Choose a color for your place’s theme.</Text>
-          <ColorPalette value={paletteValue} onValueChange={this.onPaletteValueChange} colors={colors}/>
+          <ColorPalette
+            value={paletteValue}
+            onValueChange={this.onPaletteValueChange}
+            colors={colors}
+            backgroundColor={backgroundColor}
+          />
           <Text marginL-20 marginT-16>
             Custom Colors
           </Text>
@@ -90,6 +103,7 @@ export default class ColorPickerScreen extends Component<Props, State> {
             onValueChange={this.onValueChange}
             value={pickerValue}
             // animatedIndex={0}
+            backgroundColor={backgroundColor}
           />
         </View>
 

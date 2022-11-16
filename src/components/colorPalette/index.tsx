@@ -85,7 +85,8 @@ class ColorPalette extends PureComponent<Props, State> {
   static defaultProps = {
     numberOfRows: DEFAULT_NUMBER_OF_ROWS,
     usePagination: true,
-    loop: true
+    loop: true,
+    backgroundColor: Colors.$backgroundDefault
   };
 
   constructor(props: Props) {
@@ -342,13 +343,13 @@ class ColorPalette extends PureComponent<Props, State> {
     return (
       <ScrollBar
         ref={this.scrollBar}
-        style={[containerStyle, styles.scrollContainer, {backgroundColor}]}
+        style={[containerStyle, {backgroundColor}]}
         scrollEnabled={scrollable}
         onContentSizeChange={this.onContentSizeChange}
         height={SCROLLABLE_HEIGHT}
         containerProps={{width: !scrollable ? contentWidth : undefined}}
         gradientHeight={SCROLLABLE_HEIGHT - 12}
-        gradientColor={backgroundColor || Colors.$backgroundDefault}
+        gradientColor={backgroundColor}
       >
         {this.renderPalette(others, styles.scrollContent, this.colors, 0)}
       </ScrollBar>
@@ -356,12 +357,12 @@ class ColorPalette extends PureComponent<Props, State> {
   }
 
   renderPaginationContent() {
-    const {containerStyle, loop, ...others} = this.props;
+    const {containerStyle, loop, backgroundColor, ...others} = this.props;
     const {currentPage} = this.state;
     const colorGroups = _.chunk(this.colors, this.itemsPerPage);
 
     return (
-      <View center style={[containerStyle, styles.paginationContainer]}>
+      <View center style={[containerStyle, styles.paginationContainer, {backgroundColor}]}>
         <Carousel loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
           {_.map(colorGroups, (colorsPerPage, index) => {
             return this.renderPalette(others, {...styles.page, width: this.containerWidth}, colorsPerPage, index);
@@ -380,7 +381,12 @@ class ColorPalette extends PureComponent<Props, State> {
   }
 
   render() {
-    return this.usePagination ? this.renderPaginationContent() : this.renderScrollableContent();
+    const {backgroundColor} = this.props;
+    return (
+      <View flex style={{backgroundColor}}>
+        {this.usePagination ? this.renderPaginationContent() : this.renderScrollableContent()}
+      </View>
+    );
   }
 }
 
@@ -395,11 +401,7 @@ const styles = StyleSheet.create({
   },
   paginationContainer: {
     flex: 1,
-    backgroundColor: Colors.$backgroundDefault,
     paddingBottom: VERTICAL_PADDING
-  },
-  scrollContainer: {
-    backgroundColor: Colors.$backgroundDefault
   },
   page: {
     flexWrap: 'wrap'

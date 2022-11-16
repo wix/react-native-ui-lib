@@ -66,7 +66,8 @@ class ColorPicker extends PureComponent<Props> {
   static displayName = 'ColorPicker';
 
   static defaultProps = {
-    accessibilityLabels: ACCESSIBILITY_LABELS
+    accessibilityLabels: ACCESSIBILITY_LABELS,
+    backgroundColor: Colors.$backgroundDefault
   };
 
   state = {
@@ -92,7 +93,6 @@ class ColorPicker extends PureComponent<Props> {
   render() {
     const {initialColor, colors, value, testID, accessibilityLabels, backgroundColor} = this.props;
     const {show} = this.state;
-    const bgColor = backgroundColor;
     return (
       <View row testID={testID}>
         <ColorPalette
@@ -105,7 +105,7 @@ class ColorPicker extends PureComponent<Props> {
           testID={`${testID}-palette`}
           backgroundColor={backgroundColor}
         />
-        <View style={[styles.buttonContainer, {backgroundColor: bgColor}]}>
+        <View style={[styles.buttonContainer, {backgroundColor}]}>
           <Button
             color={Colors.$textDefault}
             outlineColor={Colors.$textDefault}
@@ -157,8 +157,7 @@ const styles = StyleSheet.create({
     marginBottom: SWATCH_MARGIN,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    paddingTop: 1,
-    backgroundColor: Colors.$backgroundDefault
+    paddingTop: 1
   },
   button: {
     width: SWATCH_SIZE,
