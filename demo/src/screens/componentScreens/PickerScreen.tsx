@@ -126,8 +126,8 @@ export default class PickerScreen extends Component {
           <Picker
             title="Wheel Picker"
             placeholder="Pick a Language"
-            // useNativePicker
-            useWheelPicker
+            useNativePicker
+            // useWheelPicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             rightIconSource={dropdown}

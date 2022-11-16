@@ -145,6 +145,23 @@ export class Colors {
     return ColorName.name(color)[1];
   }
 
+  getSystemColorByHex(colorValue: string, validColors?: string[]) {
+    const color = colorStringValue(colorValue);
+    const results: string[] = [];
+
+    for (const [key, value] of Object.entries(this)) {
+      if (value.toString() === color) {
+        if (validColors?.includes(key.split(/[0-9]/)[0])) {
+          return key;
+        } else {
+          results.push(key);
+        }
+      }
+    }
+
+    return validColors ? undefined : results[0];
+  }
+
   getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number) {
     if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');

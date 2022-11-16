@@ -7,4 +7,4 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './TouchableOpa
 export {default as WheelPicker, WheelPickerProps, WheelPickerItemProps} from './WheelPicker';
 export {WheelPickerAlign} from './WheelPicker/types';
 export {default as PanView, PanViewProps, PanViewDirections, PanViewDismissThreshold} from './panView';
-export {default as Dialog, DialogProps, DialogHeaderProps, DialogStatics} from './Dialog';
+export {default as Dialog, DialogProps, DialogHeaderProps, DialogStatics, DialogImperativeMethods} from './Dialog';
