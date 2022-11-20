@@ -1,7 +1,7 @@
 import {isEmpty} from 'lodash';
 
 export type NumberInputResult =
-  | {type: 'valid'; number: number; formattedNumber: string}
+  | {type: 'valid'; userInput: string; number: number; formattedNumber: string}
   | {type: 'empty'}
   | {type: 'error'; userInput: string};
 
@@ -59,7 +59,7 @@ export function parseInput(text: string, options: Options): NumberInputResult {
   number = Number(number.toFixed(options.fractionDigits));
   const formattedNumber = formatNumber(number, options);
 
-  return {type: 'valid', number, formattedNumber};
+  return {type: 'valid', userInput: text, number, formattedNumber};
 }
 
 export function getInitialResult(options: Options, initialValue?: number): NumberInputResult {

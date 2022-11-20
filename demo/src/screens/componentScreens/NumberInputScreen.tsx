@@ -1,60 +1,66 @@
-import React, {Component} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Keyboard as RNKeyboard} from 'react-native';
 import {Text, Spacings, NumberInput, NumberInputResult, View, Typography, Constants, Button} from 'react-native-ui-lib';
 
-export default class NumberInputScreen extends Component {
-  state = {
-    initialNumber: 100
-  };
+const NumberInputScreen = () => {
+  const currentData = useRef<NumberInputResult>();
+  // const [initialNumber, setInitialNumber] = useState<number>(100);
+  const [text, setText] = useState<string>('');
 
-  onChangeNumber = (result: NumberInputResult) => {
-    switch (result.type) {
-      case 'valid':
-        console.log('NumberInputScreen',
-          'onChangeNumber',
-          'newValue =',
-          result.number,
-          'formattedNumber =',
-          result.formattedNumber);
-        break;
-      case 'empty':
-        console.log('Miki', 'empty');
-        break;
-      case 'error':
-        console.log('Miki', 'error', result.userInput);
-        break;
+  const onChangeNumber = useCallback((result: NumberInputResult) => {
+    currentData.current = result;
+  }, []);
+
+  const processInput = useCallback(() => {
+    let newText = '';
+    if (currentData.current) {
+      switch (currentData.current.type) {
+        case 'valid':
+          newText = currentData.current.formattedNumber;
+          break;
+        case 'empty':
+          newText = 'Empty';
+          break;
+        case 'error':
+          newText = `Error: value '${currentData.current.userInput}' is invalid`;
+          break;
+      }
     }
-  };
 
-  render() {
-    return (
-      <TouchableWithoutFeedback onPress={RNKeyboard.dismiss}>
-        <View flex>
-          <Text headingXL margin-20>
-            Number Input
-          </Text>
-          <NumberInput
-            // initialNumber={this.state.initialNumber}
-            onChangeNumber={this.onChangeNumber}
-            placeholder={'Price'}
-            leadingText={'$'}
-            leadingTextStyle={styles.leadingText}
-            style={styles.mainText}
-            containerStyle={styles.containerStyle}
-            label={'Enter Price'}
-            labelStyle={styles.label}
-            validate={'required'}
-            validationMessage={['Please enter a price']}
-            validationMessageStyle={styles.validationMessage}
-            marginLeft={Spacings.s4}
-            marginRight={Spacings.s4}
-          />
-          <Button label={'bla'} onPress={() => this.setState({initialNumber: this.state.initialNumber + 1})}/>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-}
+    setText(newText);
+  }, []);
+
+  return (
+    <TouchableWithoutFeedback onPress={RNKeyboard.dismiss}>
+      <View flex center>
+        <Text headingXL margin-20>
+          Number Input
+        </Text>
+        <NumberInput
+          // initialNumber={initialNumber}
+          onChangeNumber={onChangeNumber}
+          placeholder={'Price'}
+          leadingText={'$'}
+          leadingTextStyle={styles.leadingText}
+          style={styles.mainText}
+          containerStyle={styles.containerStyle}
+          label={'Enter Price'}
+          labelStyle={styles.label}
+          validate={'required'}
+          validationMessage={['Please enter a price']}
+          validationMessageStyle={styles.validationMessage}
+          marginLeft={Spacings.s4}
+          marginRight={Spacings.s4}
+          onBlur={processInput}
+        />
+        <Button label={'Process'} onPress={processInput}/>
+        <Text marginT-s5>{text}</Text>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
+export default NumberInputScreen;
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -79,6 +85,7 @@ const styles = StyleSheet.create({
     ...Typography.bodySmallMedium
   },
   validationMessage: {
+    flexGrow: 1,
     textAlign: 'center',
     ...Typography.bodySmallMedium
   }

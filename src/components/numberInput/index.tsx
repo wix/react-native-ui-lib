@@ -1,10 +1,10 @@
 import {isEmpty} from 'lodash';
-import React, {useMemo, useCallback, useState, useRef, useEffect} from 'react';
-import {NativeSyntheticEvent, StyleProp, TextInputKeyPressEventData, ViewStyle} from 'react-native';
+import React, {useMemo, useCallback, useState, useEffect} from 'react';
+import {StyleProp, ViewStyle, NativeSyntheticEvent, TextInputFocusEventData} from 'react-native';
 import {useDidUpdate} from 'hooks';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
 import Text, {TextProps} from '../text';
-import {getInitialResult, parseInput, generateOptions, Options, NumberInputResult, EMPTY} from './Presenter';
+import {getInitialResult, parseInput, generateOptions, Options, NumberInputResult} from './Presenter';
 
 export {NumberInputResult};
 
@@ -69,11 +69,13 @@ function NumberInput(props: NumberInputProps, ref: any) {
     trailingTextStyle,
     marginRight,
     onChangeText,
+    onBlur,
+    onFocus,
     ...others
   } = props;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
-  const userInput = useRef<string>();
   const [data, setData] = useState<NumberInputResult>();
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   useDidUpdate(() => {
     setOptions(generateOptions(locale, fractionDigits));
@@ -131,19 +133,40 @@ function NumberInput(props: NumberInputProps, ref: any) {
   }, [style, leadingAccessory, marginLeft, trailingAccessory, marginRight]);
 
   const _onChangeText = useCallback((text: string) => {
-    userInput.current = text;
+    const newData = parseInput(text, options);
+    onChangeNumber(newData);
+    setData(newData);
     onChangeText?.(text);
   },
-  [onChangeText]);
+  [onChangeNumber, options, onChangeText]);
+
+  const _onBlur = useCallback((e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    setIsFocused(false);
+    onBlur?.(e);
+  },
+  [onBlur]);
+
+  const _onFocus = useCallback((e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    setIsFocused(true);
+    onFocus?.(e);
+  },
+  [onFocus]);
+
+  const value = useMemo(() => {
+    if (!isFocused && data?.type === 'valid') {
+      return data.formattedNumber;
+    }
+
+    return data?.type === 'valid' || data?.type === 'error' ? data.userInput : '';
+  }, [isFocused, data]);
 
   return (
     <TextField
       {...others}
-      contextMenuHidden
-      //   value={data?.formattedNumber}
-      //   onKeyPress={onKeyPress}
-      //   maxLength={data?.maxLength ?? 0}
+      value={value}
       onChangeText={_onChangeText}
+      onBlur={_onBlur}
+      onFocus={_onFocus}
       ref={ref}
       floatingPlaceholder={false}
       leadingAccessory={leadingAccessory}
