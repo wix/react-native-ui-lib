@@ -7,12 +7,13 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/NumberInputScreen.tsx",
   "props": [
     {
-      "name": "onChange",
-      "type": "(newValue?: number, formattedNumber?: string) => void",
-      "description": "Callback that is called when the number value has changed (undefined in both if the user has deleted the number)."
+      "name": "onChangeNumber",
+      "type": "(result: NumberInputResult) => void",
+      "description": "Callback that is called when the number value has changed.",
+      "required": true
     },
     {
-      "name": "initialValue",
+      "name": "initialNumber",
       "type": "number",
       "description": "A valid number (in en locale, i.e. only digits and a decimal point)."
     },
@@ -23,9 +24,9 @@
       "default": "2"
     },
     {"name": "leadingText", "type": "string", "description": "A leading text"},
-    {"name": "leadingTextTypography", "type": "string", "description": "The typography of the leading text"},
+    {"name": "leadingTextStyle", "type": "StyleProp<ViewStyle>", "description": "The style of the leading text"},
     {"name": "trailingText", "type": "string", "description": "A trailing text"},
-    {"name": "trailingTextTypography", "type": "string", "description": "The typography of the trailing text"},
+    {"name": "trailingTextStyle", "type": "StyleProp<ViewStyle>", "description": "The style of the trailing text"},
     {"name": "marginLeft", "type": "number", "description": "The margin to the left of the input"},
     {"name": "marginRight", "type": "number", "description": "The margin to the right of the input"}
   ],
