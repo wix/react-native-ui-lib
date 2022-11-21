@@ -281,8 +281,24 @@ export default class TextFieldScreen extends Component {
             label="PIN"
             placeholder="XXXX"
             labelStyle={{alignSelf: 'center'}}
-            containerStyle={{alignSelf: 'center'}}
+            fieldStyle={{alignSelf: 'center'}}
+            style={{flexGrow: 0}}
+            trailingAccessory={<Text>😀</Text>}
           />
+
+          <Text h3 blue50 marginV-s4>
+            Centered with long text
+          </Text>
+
+          <TextField
+            label="PIN"
+            placeholder="An enhanced customizable TextField with validation support"
+            labelStyle={{alignSelf: 'center'}}
+            fieldStyle={{alignSelf: 'center'}}
+            style={{flexGrow: 0}}
+            trailingAccessory={<Text>😀</Text>}
+          />
+
         </View>
         <KeyboardAwareInsetsView/>
       </ScrollView>
