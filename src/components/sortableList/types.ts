@@ -4,6 +4,7 @@ import {SortableListContextType} from './SortableListContext';
 export interface SortableListItemProps {
   id: string;
   locked?: boolean;
+  separator?: boolean;
 }
 
 // Internal

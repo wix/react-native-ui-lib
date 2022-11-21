@@ -44,6 +44,7 @@ const SortableListItem = (props: Props) => {
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const id: string = data[index].id;
   const locked: boolean = data[index].locked;
+  const separator: boolean = data[index].separator;
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
   const translateY = useSharedValue<number>(0);
@@ -78,7 +79,7 @@ const SortableListItem = (props: Props) => {
 
   const dragOnLongPressGesture = Gesture.Pan()
     .activateAfterLongPress(250)
-    .enabled(!locked)
+    .enabled(!locked && !separator)
     .onStart(() => {
       isDragging.value = true;
       translateY.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
