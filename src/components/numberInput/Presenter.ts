@@ -50,7 +50,8 @@ export function parseInput(text: string, options: Options): NumberInputResult {
     return EMPTY;
   }
 
-  const cleanInput: string = text.replaceAll(options.localeOptions.thousandSeparator, '');
+  let cleanInput: string = text.replaceAll(options.localeOptions.thousandSeparator, '');
+  cleanInput = cleanInput.replaceAll(options.localeOptions.decimalSeparator, '.');
   let number = Number(cleanInput);
   if (isNaN(number)) {
     return {type: 'error', userInput: text};
