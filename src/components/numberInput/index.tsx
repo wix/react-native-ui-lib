@@ -1,6 +1,6 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useEffect} from 'react';
-import {StyleProp, ViewStyle, NativeSyntheticEvent, TextInputFocusEventData} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, TextInputFocusEventData} from 'react-native';
 import {useDidUpdate} from 'hooks';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
 import Text, {TextProps} from '../text';
@@ -106,11 +106,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
 
   const leadingAccessory = useMemo(() => {
     if (hasText) {
-      return (
-        <Text flexG style={leadingAccessoryStyle}>
-          {leadingText}
-        </Text>
-      );
+      return <Text style={[styles.accessory, leadingAccessoryStyle]}>{leadingText}</Text>;
     }
   }, [hasText, leadingText, leadingAccessoryStyle]);
 
@@ -120,11 +116,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
 
   const trailingAccessory = useMemo(() => {
     if (hasText) {
-      return (
-        <Text flexG style={trailingAccessoryStyle}>
-          {trailingText}
-        </Text>
-      );
+      return <Text style={[styles.accessory, trailingAccessoryStyle]}>{trailingText}</Text>;
     }
   }, [hasText, trailingText, trailingAccessoryStyle]);
 
@@ -179,3 +171,9 @@ function NumberInput(props: NumberInputProps, ref: any) {
 }
 
 export default React.forwardRef<TextFieldProps, NumberInputProps>(NumberInput);
+
+const styles = StyleSheet.create({
+  accessory: {
+    flexGrow: 999 // This handles a case where the validation message is long
+  }
+});

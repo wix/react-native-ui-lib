@@ -2,7 +2,7 @@ import React, {useState, useCallback, useRef} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Keyboard as RNKeyboard} from 'react-native';
 import {Text, Spacings, NumberInput, NumberInputResult, View, Typography, Constants, Button} from 'react-native-ui-lib';
 
-const NumberInputScreen = () => {
+const NumberInputProcessButtonScreen = () => {
   const currentData = useRef<NumberInputResult>();
   // const [initialNumber, setInitialNumber] = useState<number>(100);
   const [text, setText] = useState<string>('');
@@ -32,35 +32,38 @@ const NumberInputScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={RNKeyboard.dismiss}>
-      <View flex center>
-        <Text headingXL margin-20>
+      <View flex centerH>
+        <Text text40 margin-s10>
           Number Input
         </Text>
-        <NumberInput
-          // initialNumber={initialNumber}
-          onChangeNumber={onChangeNumber}
-          placeholder={'Price'}
-          leadingText={'$'}
-          leadingTextStyle={styles.leadingText}
-          style={styles.mainText}
-          containerStyle={styles.containerStyle}
-          label={'Enter Price'}
-          labelStyle={styles.label}
-          validate={'required'}
-          validationMessage={['Please enter a price']}
-          validationMessageStyle={styles.validationMessage}
-          marginLeft={Spacings.s4}
-          marginRight={Spacings.s4}
-          onBlur={processInput}
-        />
-        <Button label={'Process'} onPress={processInput}/>
-        <Text marginT-s5>{text}</Text>
+
+        <View flex center>
+          <NumberInput
+            // initialNumber={initialNumber}
+            onChangeNumber={onChangeNumber}
+            placeholder={'Price'}
+            leadingText={'$'}
+            leadingTextStyle={styles.leadingText}
+            style={styles.mainText}
+            containerStyle={styles.containerStyle}
+            label={'Enter Price'}
+            labelStyle={styles.label}
+            validate={'required'}
+            validationMessage={'Please enter a price'}
+            validationMessageStyle={styles.validationMessage}
+            marginLeft={Spacings.s4}
+            marginRight={Spacings.s4}
+            onBlur={processInput}
+          />
+          <Button label={'Process'} onPress={processInput}/>
+          <Text marginT-s5>{text}</Text>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
-export default NumberInputScreen;
+export default NumberInputProcessButtonScreen;
 
 const styles = StyleSheet.create({
   containerStyle: {
