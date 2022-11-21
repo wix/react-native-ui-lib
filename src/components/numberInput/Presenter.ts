@@ -68,5 +68,5 @@ export function getInitialResult(options: Options, initialValue?: number): Numbe
     return EMPTY;
   }
 
-  return parseInput(initialValue.toString(), options);
+  return parseInput(formatNumber(initialValue, options), options);
 }
