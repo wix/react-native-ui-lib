@@ -381,12 +381,7 @@ class ColorPalette extends PureComponent<Props, State> {
   }
 
   render() {
-    const {backgroundColor} = this.props;
-    return (
-      <View flex style={{backgroundColor}}>
-        {this.usePagination ? this.renderPaginationContent() : this.renderScrollableContent()}
-      </View>
-    );
+    return this.usePagination ? this.renderPaginationContent() : this.renderScrollableContent();
   }
 }
 
