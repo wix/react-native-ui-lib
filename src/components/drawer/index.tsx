@@ -10,7 +10,7 @@ import View from '../view';
 import Swipeable, {SwipeableProps} from './Swipeable';
 import {LogService} from '../../services';
 
-const DEFAULT_BG = Colors.primary;
+const DEFAULT_BG = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_BOUNCINESS = 0;
 
 interface DrawerItemProps {

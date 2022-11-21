@@ -19,7 +19,7 @@ import Image from '../image';
 import Badge, {BadgeProps} from '../badge';
 
 const INDICATOR_HEIGHT = 2;
-const INDICATOR_BG_COLOR = Colors.primary;
+const INDICATOR_BG_COLOR = Colors.$backgroundPrimaryHeavy;
 const HORIZONTAL_PADDING = Constants.isTablet ? Spacings.s7 : Spacings.s5;
 
 export interface TabBarItemProps {
@@ -262,11 +262,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: HORIZONTAL_PADDING
   },
   label: {
-    color: Colors.primary,
+    color: Colors.$textPrimary,
     ...Typography.text80
   },
   selectedLabel: {
-    color: Colors.primary,
+    color: Colors.$textPrimary,
     ...Typography.text80,
     fontWeight: 'bold'
   },
