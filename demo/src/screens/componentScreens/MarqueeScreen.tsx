@@ -1,6 +1,5 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import {Marquee, MarqueeDirections, Text, View, Spacings} from 'react-native-ui-lib';
 import {renderBooleanOption, renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
@@ -62,28 +61,32 @@ export default class MarqueeScreen extends Component<{}> {
   render() {
     return (
       <View flex padding-page>
-        <Text h1 center margin-20 $textDefault>
-          Marquee
-        </Text>
-        <View>
-          {renderMultipleSegmentOptions.call(this, 'Duration (optional)', 'duration', [
-            {label: '3000', value: 3000},
-            {label: '5000', value: 5000},
-            {label: '10000', value: 10000}
-          ])}
-          {renderMultipleSegmentOptions.call(this, 'Number Of Reps', 'numOfReps', [
-            {label: 'Infinite', value: -1},
-            {label: '1', value: 1},
-            {label: '3', value: 3},
-            {label: '5', value: 5}
-          ])}
-          <View marginV-s2>
-            {renderBooleanOption.call(this, 'Direction Horizontal: Left To Right/Right To Left', 'directionHorizontal')}
-            {renderBooleanOption.call(this, 'Direction Vertical:  Bottom To Up/Up To Bottom', 'directionVertical')}
+        <ScrollView>
+          <Text h1 center margin-20 $textDefault>
+            Marquee
+          </Text>
+          <View>
+            {renderMultipleSegmentOptions.call(this, 'Duration (optional)', 'duration', [
+              {label: '3000', value: 3000},
+              {label: '5000', value: 5000},
+              {label: '10000', value: 10000}
+            ])}
+            {renderMultipleSegmentOptions.call(this, 'Number Of Reps', 'numOfReps', [
+              {label: 'Infinite', value: -1},
+              {label: '1', value: 1},
+              {label: '3', value: 3},
+              {label: '5', value: 5}
+            ])}
+            <View marginV-s2>
+              {renderBooleanOption.call(this,
+                'Direction Horizontal: Left To Right/Right To Left',
+                'directionHorizontal')}
+              {renderBooleanOption.call(this, 'Direction Vertical:  Bottom To Up/Up To Bottom', 'directionVertical')}
+            </View>
           </View>
-        </View>
-        {this.renderHorizontalSection()}
-        {this.renderVerticalSection()}
+          {this.renderHorizontalSection()}
+          {this.renderVerticalSection()}
+        </ScrollView>
       </View>
     );
   }
