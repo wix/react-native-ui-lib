@@ -60,34 +60,30 @@ export default class MarqueeScreen extends Component<{}> {
 
   render() {
     return (
-      <View flex padding-page>
-        <ScrollView>
-          <Text h1 center margin-20 $textDefault>
-            Marquee
-          </Text>
-          <View>
-            {renderMultipleSegmentOptions.call(this, 'Duration (optional)', 'duration', [
-              {label: '3000', value: 3000},
-              {label: '5000', value: 5000},
-              {label: '10000', value: 10000}
-            ])}
-            {renderMultipleSegmentOptions.call(this, 'Number Of Reps', 'numOfReps', [
-              {label: 'Infinite', value: -1},
-              {label: '1', value: 1},
-              {label: '3', value: 3},
-              {label: '5', value: 5}
-            ])}
-            <View marginV-s2>
-              {renderBooleanOption.call(this,
-                'Direction Horizontal: Left To Right/Right To Left',
-                'directionHorizontal')}
-              {renderBooleanOption.call(this, 'Direction Vertical:  Bottom To Up/Up To Bottom', 'directionVertical')}
-            </View>
+      <ScrollView style={{flex: 1, padding: 20}}>
+        <Text h1 center margin-20 $textDefault>
+          Marquee
+        </Text>
+        <View>
+          {renderMultipleSegmentOptions.call(this, 'Duration (optional)', 'duration', [
+            {label: '3000', value: 3000},
+            {label: '5000', value: 5000},
+            {label: '10000', value: 10000}
+          ])}
+          {renderMultipleSegmentOptions.call(this, 'Number Of Reps', 'numOfReps', [
+            {label: 'Infinite', value: -1},
+            {label: '1', value: 1},
+            {label: '3', value: 3},
+            {label: '5', value: 5}
+          ])}
+          <View marginV-s2>
+            {renderBooleanOption.call(this, 'Direction Horizontal: Left To Right/Right To Left', 'directionHorizontal')}
+            {renderBooleanOption.call(this, 'Direction Vertical:  Bottom To Up/Up To Bottom', 'directionVertical')}
           </View>
-          {this.renderHorizontalSection()}
-          {this.renderVerticalSection()}
-        </ScrollView>
-      </View>
+        </View>
+        {this.renderHorizontalSection()}
+        {this.renderVerticalSection()}
+      </ScrollView>
     );
   }
 }
