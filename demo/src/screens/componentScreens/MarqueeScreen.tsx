@@ -60,7 +60,7 @@ export default class MarqueeScreen extends Component<{}> {
 
   render() {
     return (
-      <ScrollView style={{flex: 1, padding: 20}}>
+      <ScrollView style={styles.container}>
         <Text h1 center margin-20 $textDefault>
           Marquee
         </Text>
@@ -89,6 +89,10 @@ export default class MarqueeScreen extends Component<{}> {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20
+  },
   containerHorizontal: {
     borderWidth: 1,
     borderColor: 'black',
