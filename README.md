@@ -125,3 +125,17 @@ class MyScreen extends Component {
   }
 }
 ```
+
+## Demo App
+
+1. Clone the project `git clone git@github.com:wix/react-native-ui-lib.git`
+    
+2. `cd react-native-ui-lib`
+
+3. Install dependencies `npm install`
+
+4. (for iOS) `cd ios && pod install`
+
+5. Start the packager `npm start`
+
+6. Build the app `npm run ios` or `npm run android` (or from Xcode or Android Studio).
