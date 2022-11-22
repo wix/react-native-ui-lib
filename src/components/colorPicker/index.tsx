@@ -94,7 +94,7 @@ class ColorPicker extends PureComponent<Props> {
     const {initialColor, colors, value, testID, accessibilityLabels, backgroundColor} = this.props;
     const {show} = this.state;
     return (
-      <View row testID={testID}>
+      <View row testID={testID} style={{backgroundColor}}>
         <ColorPalette
           value={value}
           colors={colors}
