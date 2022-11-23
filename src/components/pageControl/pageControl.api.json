@@ -26,7 +26,7 @@
       "name": "color",
       "type": "string",
       "description": "Color of the selected page dot and, if inactiveColor not passed, the border of the not selected pages",
-      "default": "Colors.primary"
+      "default": "Colors.$iconPrimary"
     },
     {
       "name": "inactiveColor",

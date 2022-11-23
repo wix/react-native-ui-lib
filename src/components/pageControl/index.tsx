@@ -8,7 +8,7 @@ import View from '../view';
 
 const MAX_SHOWN_PAGES = 7;
 const NUM_LARGE_INDICATORS = 3;
-const DEFAULT_INDICATOR_COLOR = Colors.primary;
+const DEFAULT_INDICATOR_COLOR = Colors.$iconPrimary;
 
 function getColorStyle(isCurrentPage: boolean, color?: string, inactiveColor?: string) {
   const activeColor = color || DEFAULT_INDICATOR_COLOR;
