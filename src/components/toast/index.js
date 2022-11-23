@@ -249,7 +249,7 @@ export default class Toast extends PureBaseComponent {
     }
 
     if (action) {
-      const actionBg = backgroundColor || Colors.rgba(Colors.primary, 0);
+      const actionBg = backgroundColor || Colors.rgba(Colors.$backgroundPrimaryHeavy, 0);
 
       return (
         <Button
@@ -315,7 +315,7 @@ export default class Toast extends PureBaseComponent {
       return null;
     }
 
-    const bg = backgroundColor || Colors.primary;
+    const bg = backgroundColor || Colors.$backgroundPrimaryHeavy;
     const isTop = position === 'top';
     const positionMultiplier = isTop ? -1 : 1;
     const translateY = this.toastAnim.interpolate({

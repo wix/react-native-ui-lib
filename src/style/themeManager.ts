@@ -19,11 +19,11 @@ export class ThemeManager {
   private themeContext?: Context<any>;
 
   theme: Theme = {
-    primaryColor: Colors.primary,
+    primaryColor: Colors.$backgroundPrimaryHeavy,
     CTA: {
       textColor: Colors.white,
       disabledColor: Colors.grey60,
-      backgroundColor: Colors.primary
+      backgroundColor: Colors.$backgroundPrimaryHeavy
     },
     titleColor: Colors.grey10,
     subtitleColor: Colors.grey40,

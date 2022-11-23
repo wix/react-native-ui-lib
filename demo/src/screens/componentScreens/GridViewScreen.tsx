@@ -153,7 +153,7 @@ class GridViewScreen extends Component {
             items={contacts}
             // viewWidth={300}
             numColumns={6}
-            lastItemOverlayColor={Colors.rgba(Colors.primary, 0.6)}
+            lastItemOverlayColor={Colors.rgba(Colors.$backgroundPrimaryHeavy, 0.6)}
             lastItemLabel={7}
           />
 
@@ -163,7 +163,7 @@ class GridViewScreen extends Component {
           <GridView
             items={products}
             numColumns={4}
-            lastItemOverlayColor={Colors.rgba(Colors.primary, 0.6)}
+            lastItemOverlayColor={Colors.rgba(Colors.$backgroundPrimaryHeavy, 0.6)}
             lastItemLabel={42}
             keepItemSize
           />

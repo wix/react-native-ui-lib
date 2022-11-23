@@ -34,7 +34,7 @@ describe('Hint Screen component test', () => {
   });
 
   it('Test Hint component background color', async () => {
-    const expectedColor = Colors.primary;
+    const expectedColor = Colors.$backgroundPrimaryHeavy;
     const component = <HintTestComponent showHint/>;
 
     const driver = new HintDriver({component, testID: 'Hint'});
