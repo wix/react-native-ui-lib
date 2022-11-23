@@ -123,12 +123,14 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     const bottom = this.isSecondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8;
     const left = this.isSecondaryHorizontal ? Spacings.s4 : undefined;
     const right = this.isSecondaryHorizontal ? 20 : undefined;
+    const shadowStyle = !button?.outline && !button?.link && styles.shadow;
+    const marginStyle = {marginTop: 16, marginBottom: bottom, marginLeft: left, marginRight: right};
 
     return (
       <Button
         size={Button.sizes.large}
         flex={!!this.isSecondaryHorizontal}
-        style={[styles.shadow, {marginTop: 16, marginBottom: bottom, marginLeft: left, marginRight: right}]}
+        style={[shadowStyle, marginStyle]}
         testID={`${testID}.button`}
         {...button}
       />
