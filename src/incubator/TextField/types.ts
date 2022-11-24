@@ -86,6 +86,7 @@ export interface FloatingPlaceholderProps {
   floatOnFocus?: boolean;
   validationMessagePosition?: ValidationMessagePosition;
   extraOffset?: number;
+  defaultValue?: TextInputProps['defaultValue'];
   testID: string;
 }
 
@@ -142,7 +143,7 @@ export interface InputProps
   /**
    * Use react-native-gesture-handler instead of react-native for the base TextInput
    */
-   useGestureHandlerInput?: boolean;
+  useGestureHandlerInput?: boolean;
 }
 
 export type TextFieldProps = MarginModifiers &

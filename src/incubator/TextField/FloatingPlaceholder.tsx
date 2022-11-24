@@ -1,3 +1,4 @@
+import {isEmpty} from 'lodash';
 import React, {useContext, useRef, useCallback, useState, useMemo} from 'react';
 import {Animated, LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
 import {useDidUpdate} from 'hooks';
@@ -18,6 +19,7 @@ const FloatingPlaceholder = ({
   floatOnFocus,
   validationMessagePosition,
   extraOffset = 0,
+  defaultValue,
   testID
 }: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
@@ -25,17 +27,21 @@ const FloatingPlaceholder = ({
     top: 0,
     left: 0
   });
-  const animation = useRef(new Animated.Value(Number((floatOnFocus && context.isFocused) || context.hasValue))).current;
+
+  const shouldFloat = useMemo(() => {
+    return (floatOnFocus && context.isFocused) || context.hasValue || !isEmpty(defaultValue);
+  }, [floatOnFocus, context.isFocused, context.hasValue, defaultValue]);
+
+  const animation = useRef(new Animated.Value(Number(shouldFloat))).current;
   const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
   useDidUpdate(() => {
-    const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;
     Animated.timing(animation, {
-      toValue: Number(toValue),
+      toValue: Number(shouldFloat),
       duration: 200,
       useNativeDriver: true
     }).start();
-  }, [floatOnFocus, context.isFocused, context.hasValue]);
+  }, [shouldFloat]);
 
   const animatedStyle = useMemo(() => {
     return {
