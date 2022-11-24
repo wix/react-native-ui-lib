@@ -572,7 +572,7 @@ const styles = StyleSheet.create({
   tag: {
     borderWidth: 0,
     paddingVertical: 5,
-    backgroundColor: Colors.primary
+    backgroundColor: Colors.$backgroundPrimaryHeavy
   },
   invalidTag: {
     borderWidth: 1,
