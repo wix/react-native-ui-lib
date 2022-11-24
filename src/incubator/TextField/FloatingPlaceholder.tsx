@@ -28,7 +28,7 @@ const FloatingPlaceholder = ({
     left: 0
   });
 
-  const useDefaultValue = !isEmpty(defaultValue) && context.value === undefined; // To consider a user that has deleted the defaultValue (and then the placeholder should un-float)
+  const useDefaultValue = !isEmpty(defaultValue) && context.value === undefined; // To consider a user that has deleted the defaultValue (and then the placeholder should un-float when losing focus)
   const shouldFloat = (floatOnFocus && context.isFocused) || context.hasValue || useDefaultValue;
   const animation = useRef(new Animated.Value(Number(shouldFloat))).current;
   const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
