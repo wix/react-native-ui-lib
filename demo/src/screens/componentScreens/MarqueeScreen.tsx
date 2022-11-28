@@ -1,6 +1,5 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import {Marquee, MarqueeDirections, Text, View, Spacings} from 'react-native-ui-lib';
 import {renderBooleanOption, renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
@@ -61,7 +60,7 @@ export default class MarqueeScreen extends Component<{}> {
 
   render() {
     return (
-      <View flex padding-page>
+      <ScrollView style={styles.container}>
         <Text h1 center margin-20 $textDefault>
           Marquee
         </Text>
@@ -84,12 +83,16 @@ export default class MarqueeScreen extends Component<{}> {
         </View>
         {this.renderHorizontalSection()}
         {this.renderVerticalSection()}
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20
+  },
   containerHorizontal: {
     borderWidth: 1,
     borderColor: 'black',

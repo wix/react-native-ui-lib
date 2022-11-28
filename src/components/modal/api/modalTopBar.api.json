@@ -11,7 +11,7 @@
       "name": "doneButtonProps",
       "type": "ButtonProps",
       "description": "Done action props",
-      "default": "{color: Colors.primary}"
+      "default": "{color: Colors.$textPrimary}"
     },
     {"name": "doneLabel", "type": "string", "description": "Done action label", "default": "Save"},
     {"name": "doneIcon", "type": "ImageSource", "description": "Done action icon"},
@@ -20,7 +20,7 @@
       "name": "cancelButtonProps",
       "type": "ButtonProps",
       "description": "Cancel action props",
-      "default": "{color: Colors.primary}"
+      "default": "{color: Colors.$textPrimary}"
     },
     {"name": "cancelLabel", "type": "string", "description": "Cancel action label"},
     {

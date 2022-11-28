@@ -12,6 +12,7 @@ import Scheme, {Schemes, SchemeType} from './scheme';
 
 export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
 export type TokensOptions = {primaryColor: string};
+export type GetColorTintOptions = {avoidReverseOnDark?: boolean};
 
 export class Colors {
   [key: string]: any;
@@ -162,7 +163,7 @@ export class Colors {
     return validColors ? undefined : results[0];
   }
 
-  getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number) {
+  getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number, options: GetColorTintOptions = {}) {
     if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return colorValue;
@@ -179,10 +180,9 @@ export class Colors {
     if (colorKey) {
       const colorKeys = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
       const keyIndex = _.indexOf(colorKeys, Number(tintKey));
-      const key =
-        this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark'
-          ? colorKeys[colorKeys.length - 1 - keyIndex]
-          : tintKey;
+      const shouldReverseOnDark =
+        !options?.avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark';
+      const key = shouldReverseOnDark ? colorKeys[colorKeys.length - 1 - keyIndex] : tintKey;
       const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
       const requiredColor = this[requiredColorKey];
 
