@@ -29,12 +29,12 @@ const COLOR_BY_STATE = {
 };
 const UNDERLINE_COLOR_BY_STATE = {
   default: Colors.grey50,
-  focus: Colors.primary,
+  focus: Colors.$outlinePrimary,
   error: Colors.red30
 };
 const PLACEHOLDER_COLOR_BY_STATE = {
   default: Colors.grey30,
-  focus: Colors.primary
+  focus: Colors.$textPrimary
 };
 const CHAR_COUNTER_COLOR_BY_STATE = {
   default: Colors.grey30,
@@ -656,7 +656,7 @@ export default class TextField extends BaseInput {
             pointerEvents="none"
             source={iconSource}
             resizeMode={'contain'}
-            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.primary}]}
+            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.$iconPrimary}]}
           />
         </TouchableOpacity>
       );

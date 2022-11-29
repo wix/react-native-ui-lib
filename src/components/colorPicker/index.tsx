@@ -8,7 +8,6 @@ import ColorPalette from '../colorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
 
-
 interface Props extends ColorPickerDialogProps {
   /**
    * Array of colors for the picker's color palette (hex values)
@@ -36,13 +35,17 @@ interface Props extends ColorPickerDialogProps {
    * }
    */
   accessibilityLabels?: {
-    addButton?: string,
-    dismissButton?: string,
-    doneButton?: string,
-    input?: string
+    addButton?: string;
+    dismissButton?: string;
+    doneButton?: string;
+    input?: string;
   };
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  /**
+   * Give the ColorPicker a background color
+   */
+  backgroundColor?: string;
 }
 export type ColorPickerProps = Props;
 
@@ -63,7 +66,8 @@ class ColorPicker extends PureComponent<Props> {
   static displayName = 'ColorPicker';
 
   static defaultProps = {
-    accessibilityLabels: ACCESSIBILITY_LABELS
+    accessibilityLabels: ACCESSIBILITY_LABELS,
+    backgroundColor: Colors.$backgroundDefault
   };
 
   state = {
@@ -84,14 +88,13 @@ class ColorPicker extends PureComponent<Props> {
 
   hideDialog = () => {
     this.setState({show: false});
-  }
+  };
 
   render() {
-    const {initialColor, colors, value, testID, accessibilityLabels} = this.props;
+    const {initialColor, colors, value, testID, accessibilityLabels, backgroundColor} = this.props;
     const {show} = this.state;
-
     return (
-      <View row testID={testID}>
+      <View row testID={testID} style={{backgroundColor}}>
         <ColorPalette
           value={value}
           colors={colors}
@@ -100,8 +103,9 @@ class ColorPicker extends PureComponent<Props> {
           animatedIndex={this.animatedIndex}
           onValueChange={this.onValueChange}
           testID={`${testID}-palette`}
+          backgroundColor={backgroundColor}
         />
-        <View style={styles.buttonContainer}>
+        <View style={[styles.buttonContainer, {backgroundColor}]}>
           <Button
             color={Colors.$textDefault}
             outlineColor={Colors.$textDefault}
@@ -137,7 +141,6 @@ class ColorPicker extends PureComponent<Props> {
 
 export default ColorPicker;
 
-
 const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;
 const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;
 
@@ -154,8 +157,7 @@ const styles = StyleSheet.create({
     marginBottom: SWATCH_MARGIN,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    paddingTop: 1,
-    backgroundColor: Colors.$backgroundDefault
+    paddingTop: 1
   },
   button: {
     width: SWATCH_SIZE,

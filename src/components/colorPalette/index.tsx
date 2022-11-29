@@ -53,6 +53,10 @@ interface Props {
   onValueChange?: (value: string, options: object) => void;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  /**
+   * Give the ColorPalette a background color
+   */
+  backgroundColor?: string;
 }
 export type ColorPaletteProps = Props;
 
@@ -81,7 +85,8 @@ class ColorPalette extends PureComponent<Props, State> {
   static defaultProps = {
     numberOfRows: DEFAULT_NUMBER_OF_ROWS,
     usePagination: true,
-    loop: true
+    loop: true,
+    backgroundColor: Colors.$backgroundDefault
   };
 
   constructor(props: Props) {
@@ -219,30 +224,31 @@ class ColorPalette extends PureComponent<Props, State> {
     return (margin - 0.001) / 2;
   }
 
-  scrollToSelected = () => setTimeout(() => {
-    const {scrollable, currentPage} = this.state;
+  scrollToSelected = () =>
+    setTimeout(() => {
+      const {scrollable, currentPage} = this.state;
 
-    if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs.current) {
-      // The this.selectedColorIndex layout doesn't update on time
-      // so we use this.selectedColorIndex - 1 and add an offset of 1 Swatch
-      const childRef: any = this.itemsRefs.current[this.selectedColorIndex - 1]?.current;
+      if (scrollable && this.selectedColorIndex !== undefined && this.itemsRefs.current) {
+        // The this.selectedColorIndex layout doesn't update on time
+        // so we use this.selectedColorIndex - 1 and add an offset of 1 Swatch
+        const childRef: any = this.itemsRefs.current[this.selectedColorIndex - 1]?.current;
 
-      if (childRef) {
-        const childLayout = childRef.getLayout();
-        const leftMargins = this.getHorizontalMargins(this.selectedColorIndex).marginLeft;
-        const childX = childLayout.x + childLayout.width + SWATCH_MARGIN + leftMargins + SWATCH_SIZE;
-        if (childX > this.containerWidth) {
-          this.scrollBar?.current?.scrollTo({
-            x: childX + HORIZONTAL_PADDING - this.containerWidth,
-            y: 0,
-            animated: false
-          });
+        if (childRef) {
+          const childLayout = childRef.getLayout();
+          const leftMargins = this.getHorizontalMargins(this.selectedColorIndex).marginLeft;
+          const childX = childLayout.x + childLayout.width + SWATCH_MARGIN + leftMargins + SWATCH_SIZE;
+          if (childX > this.containerWidth) {
+            this.scrollBar?.current?.scrollTo({
+              x: childX + HORIZONTAL_PADDING - this.containerWidth,
+              y: 0,
+              animated: false
+            });
+          }
+        } else if (this.usePagination) {
+          this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
         }
-      } else if (this.usePagination) {
-        this.carousel?.current?.goToPage(this.selectedPage || currentPage, false);
       }
-    }
-  }, 100)
+    }, 100);
 
   onContentSizeChange = (contentWidth: number) => {
     this.setState({
@@ -331,19 +337,19 @@ class ColorPalette extends PureComponent<Props, State> {
   }
 
   renderScrollableContent() {
-    const {containerStyle, ...others} = this.props;
+    const {containerStyle, backgroundColor, ...others} = this.props;
     const {scrollable, contentWidth} = this.state;
 
     return (
       <ScrollBar
         ref={this.scrollBar}
-        style={[containerStyle, styles.scrollContainer]}
+        style={[containerStyle, {backgroundColor}]}
         scrollEnabled={scrollable}
         onContentSizeChange={this.onContentSizeChange}
         height={SCROLLABLE_HEIGHT}
         containerProps={{width: !scrollable ? contentWidth : undefined}}
         gradientHeight={SCROLLABLE_HEIGHT - 12}
-        gradientColor={Colors.$backgroundDefault}
+        gradientColor={backgroundColor}
       >
         {this.renderPalette(others, styles.scrollContent, this.colors, 0)}
       </ScrollBar>
@@ -351,12 +357,12 @@ class ColorPalette extends PureComponent<Props, State> {
   }
 
   renderPaginationContent() {
-    const {containerStyle, loop, ...others} = this.props;
+    const {containerStyle, loop, backgroundColor, ...others} = this.props;
     const {currentPage} = this.state;
     const colorGroups = _.chunk(this.colors, this.itemsPerPage);
 
     return (
-      <View center style={[containerStyle, styles.paginationContainer]}>
+      <View center style={[containerStyle, styles.paginationContainer, {backgroundColor}]}>
         <Carousel loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
           {_.map(colorGroups, (colorsPerPage, index) => {
             return this.renderPalette(others, {...styles.page, width: this.containerWidth}, colorsPerPage, index);
@@ -390,11 +396,7 @@ const styles = StyleSheet.create({
   },
   paginationContainer: {
     flex: 1,
-    backgroundColor: Colors.$backgroundDefault,
     paddingBottom: VERTICAL_PADDING
-  },
-  scrollContainer: {
-    backgroundColor: Colors.$backgroundDefault
   },
   page: {
     flexWrap: 'wrap'
