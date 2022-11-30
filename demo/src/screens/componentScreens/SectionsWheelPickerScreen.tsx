@@ -161,7 +161,7 @@ const SectionsWheelPickerScreen = () => {
           Pick a duration
         </Text>
       </View>
-      <SectionsWheelPicker disableRTL={shouldDisableRTL} sections={sectionsToPresent}/>
+      <SectionsWheelPicker disableRTL={disableRTL} sections={sectionsToPresent}/>
       <Button marginH-150 marginT-40 label={'Save'} onPress={onSavePress}/>
       <Button marginH-150 marginT-15 label={'Reset'} onPress={onResetPress}/>
     </View>

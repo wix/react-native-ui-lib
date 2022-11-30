@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import {WheelPicker, WheelPickerProps} from '../../incubator';
 
@@ -58,7 +58,7 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
     _.map(sections, (section, index) => {
       return (
         <WheelPicker
-          disableRTL={disableRTL}
+          disableRTL={disableRTL && Constants.isRTL}
           key={index}
           testID={`${testID}.${index}`}
           {...wheelPickerProps}
@@ -68,7 +68,7 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
     });
 
   return (
-    <View row centerH style={disableRTL && styles.disableRTL} testID={testID}>
+    <View row centerH style={disableRTL && Constants.isRTL && styles.disableRTL} testID={testID}>
       {renderSections()}
     </View>
   );
