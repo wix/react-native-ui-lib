@@ -50,7 +50,7 @@ class WheelPicker extends Component<WheelPickerProps> {
 
   static defaultProps = {
     labelStyle: {fontSize: Typography.text70?.fontSize, fontFamily: Typography.text70?.fontFamily},
-    color: Colors.primary
+    color: Colors.$textPrimary
   };
 
   static Item: typeof WheelPickerItem;

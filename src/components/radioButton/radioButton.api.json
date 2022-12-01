@@ -22,7 +22,7 @@
     },
     {"name": "onPress", "type": "(selected: boolean) => void", "description": "Invoked when pressing the button"},
     {"name": "disabled", "type": "boolean", "description": "Whether the radio button should be disabled"},
-    {"name": "color", "type": "string", "description": "The color of the radio button", "default": "Colors.primary"},
+    {"name": "color", "type": "string", "description": "The color of the radio button", "default": "Colors.$backgroundPrimaryHeavy"},
     {
       "name": "size",
       "type": "number",

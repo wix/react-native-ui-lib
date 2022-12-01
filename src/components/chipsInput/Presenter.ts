@@ -8,7 +8,7 @@ export const hasInvalidChip = (chips: Array<ChipsInputChipProps>) => {
 export const getValidationBasedColor = (chips: Array<ChipsInputChipProps>, defaultChip?: ChipsInputChipProps) => {
   const dismissColor = defaultChip?.dismissColor || Colors.red30;
   
-  return hasInvalidChip(chips) ? dismissColor : Colors.primary;
+  return hasInvalidChip(chips) ? dismissColor : Colors.$backgroundPrimaryHeavy;
 };
 
 export const getCounterTextColor = (stateChips: Array<ChipsInputChipProps>, props: ChipsInputProps) => {

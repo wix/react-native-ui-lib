@@ -28,7 +28,7 @@ class LoaderScreen extends Component<LoaderScreenProps> {
             <ActivityIndicator
               size={'large'}
               animating
-              color={loaderColor || (Constants.isIOS ? Colors.grey60 : Colors.primary)}
+              color={loaderColor || (Constants.isIOS ? Colors.grey60 : Colors.$iconPrimary)}
               {...others}
             />
           )}

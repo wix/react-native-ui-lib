@@ -238,7 +238,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
 
 const styles = StyleSheet.create({
   toastContent: {
-    backgroundColor: Colors.$backgroundElevated,
+    backgroundColor: Colors.$backgroundElevatedLight,
     minHeight: 48,
     flexDirection: 'row',
     alignSelf: 'center',
