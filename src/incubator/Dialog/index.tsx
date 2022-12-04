@@ -2,7 +2,7 @@ import {isEmpty} from 'lodash';
 import React, {useRef, useMemo, useCallback, useState, useImperativeHandle, forwardRef, ForwardedRef} from 'react';
 import {StyleSheet, View as RNView} from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
-import {useAnimatedStyle, useDerivedValue, useSharedValue, withTiming} from 'react-native-reanimated';
+import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from 'style';
 import {asBaseComponent} from '../../commons/new';
@@ -47,7 +47,6 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const {overlayBackgroundColor, ...otherModalProps} = modalProps;
   const initialVisibility = useRef(propsVisibility);
   const [visible, setVisible] = useState(propsVisibility);
-  const opacity = useSharedValue<number>(Number(propsVisibility));
 
   const directions = useMemo((): DialogDirections[] => {
     return [direction];
@@ -68,7 +67,6 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const onTransitionAnimationEnd = useCallback((type: TransitionViewAnimationType) => {
     if (type === 'exit') {
       setVisible(false);
-      opacity.value = withTiming(0, {duration: 0});
       onDismiss?.();
     }
   },
@@ -89,20 +87,13 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     hiddenLocation
   });
 
-  const onInitPosition = useCallback(() => {
-    if (opacity.value === 0) {
-      opacity.value = withTiming(1, {duration: 0});
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const {
     animateIn,
     animateOut,
-    translation: transitionTranslation
+    translation: transitionTranslation,
+    isMounted
   } = useAnimatedTransition({
     hiddenLocation,
-    onInitPosition,
     enterFrom: direction,
     exitTo: direction,
     onAnimationStart: fade,
@@ -149,7 +140,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     return {
       transform: [{translateX: translation.value.x}, {translateY: translation.value.y}],
       // TODO: do we want to take the component's opacity here? - I think combining opacities is buggy
-      opacity: opacity.value
+      opacity: isMounted.value ? 1 : 0
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
