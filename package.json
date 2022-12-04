@@ -140,9 +140,6 @@
     ],
     "testMatch": [
       "**/*.spec.(js|tsx)"
-    ],
-    "moduleNameMapper": {
-      "^react-native-reanimated$": "<rootDir>/node_modules/react-native-reanimated/src/Animated.js"
-    }
+    ]
   }
 }
