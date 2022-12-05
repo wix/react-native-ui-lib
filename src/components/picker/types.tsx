@@ -101,7 +101,13 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
     /**
-     * Custom picker props (when using renderPicker, will apply on the button wrapper)
+     * Pass to control expandable behavior, see ExpandableOverlay props
+     */
+    expandableOverlayProps?: ExpandableOverlayProps;
+    /**
+     * @deprecated
+     * Custom picker props (when using renderPicker, will apply on the button wrapper).
+     * This props is deprecated, please pass expandableOverlayProps instead
      */
     customPickerProps?: ExpandableOverlayProps;
     /**

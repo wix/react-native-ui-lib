@@ -67,6 +67,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     useWheelPicker,
     renderPicker,
     customPickerProps,
+    expandableOverlayProps,
     containerStyle,
     labelStyle,
     testID,
@@ -276,6 +277,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         onPress={onPress}
         testID={testID}
         {...customPickerProps}
+        {...expandableOverlayProps}
         disabled={themeProps.editable === false}
       >
         {renderPicker ? (
