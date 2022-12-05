@@ -277,12 +277,7 @@ export default class TextFieldScreen extends Component {
             Centered
           </Text>
 
-          <TextField
-            label="PIN"
-            placeholder="XXXX"
-            labelStyle={{alignSelf: 'center'}}
-            containerStyle={{alignSelf: 'center'}}
-          />
+          <TextField label="PIN" placeholder="XXXX" centered/>
         </View>
         <KeyboardAwareInsetsView/>
       </ScrollView>
