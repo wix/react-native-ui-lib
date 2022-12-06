@@ -1,6 +1,6 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useEffect} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, TextInputFocusEventData} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useDidUpdate} from 'hooks';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
 import Text, {TextProps} from '../text';
@@ -62,6 +62,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
     // @ts-expect-error
     locale = 'en',
     style,
+    containerStyle,
     leadingText,
     leadingTextStyle,
     marginLeft,
@@ -69,13 +70,10 @@ function NumberInput(props: NumberInputProps, ref: any) {
     trailingTextStyle,
     marginRight,
     onChangeText,
-    onBlur,
-    onFocus,
     ...others
   } = props;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
   const [data, setData] = useState<NumberInputResult>();
-  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   useDidUpdate(() => {
     setOptions(generateOptions(locale, fractionDigits));
@@ -124,6 +122,10 @@ function NumberInput(props: NumberInputProps, ref: any) {
     return [style, leadingAccessory ? undefined : {marginLeft}, trailingAccessory ? undefined : {marginRight}];
   }, [style, leadingAccessory, marginLeft, trailingAccessory, marginRight]);
 
+  const _containerStyle = useMemo(() => {
+    return [styles.containerStyle, containerStyle];
+  }, [containerStyle]);
+
   const _onChangeText = useCallback((text: string) => {
     const newData = parseInput(text, options);
     onChangeNumber(newData);
@@ -132,38 +134,26 @@ function NumberInput(props: NumberInputProps, ref: any) {
   },
   [onChangeNumber, options, onChangeText]);
 
-  const _onBlur = useCallback((e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setIsFocused(false);
-    onBlur?.(e);
-  },
-  [onBlur]);
-
-  const _onFocus = useCallback((e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setIsFocused(true);
-    onFocus?.(e);
-  },
-  [onFocus]);
-
   const value = useMemo(() => {
-    if (!isFocused && data?.type === 'valid') {
-      return data.formattedNumber;
-    }
-
     return data?.type === 'valid' || data?.type === 'error' ? data.userInput : '';
-  }, [isFocused, data]);
+  }, [data]);
+
+  const formatter = useCallback(() => {
+    return data?.type === 'valid' ? data.formattedNumber : data?.type === 'error' ? data.userInput : '';
+  }, [data]);
 
   return (
     <TextField
       {...others}
       value={value}
       onChangeText={_onChangeText}
-      onBlur={_onBlur}
-      onFocus={_onFocus}
+      formatter={formatter}
       ref={ref}
       floatingPlaceholder={false}
       leadingAccessory={leadingAccessory}
       trailingAccessory={trailingAccessory}
       style={_style}
+      containerStyle={_containerStyle}
       validationMessagePosition={TextField.validationMessagePositions.BOTTOM}
       keyboardType={'numeric'}
     />
@@ -173,6 +163,9 @@ function NumberInput(props: NumberInputProps, ref: any) {
 export default React.forwardRef<TextFieldProps, NumberInputProps>(NumberInput);
 
 const styles = StyleSheet.create({
+  containerStyle: {
+    overflow: 'hidden'
+  },
   accessory: {
     flexGrow: 999 // This handles a case where the validation message is long
   }

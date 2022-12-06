@@ -79,11 +79,12 @@ const NumberInputErrorOnChangeScreen = () => {
             labelStyle={styles.label}
             validate={validate}
             validationMessage={validationMessage}
-            validationMessageStyle={styles.validationMessage}
+            validationMessageStyle={Typography.text80M}
             marginLeft={Spacings.s4}
             marginRight={Spacings.s4}
             onBlur={processInput}
             validateOnChange
+            centered
           />
           <Text marginT-s5>{text}</Text>
         </View>
@@ -96,7 +97,6 @@ export default NumberInputErrorOnChangeScreen;
 
 const styles = StyleSheet.create({
   containerStyle: {
-    alignSelf: 'center',
     marginBottom: 30,
     marginLeft: Spacings.s5,
     marginRight: Spacings.s5
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
   mainText: {
     height: 36,
     marginVertical: Spacings.s1,
-    textAlign: 'center',
     ...Typography.text30M
   },
   leadingText: {
@@ -112,13 +111,7 @@ const styles = StyleSheet.create({
     ...Typography.text50M
   },
   label: {
-    textAlign: 'center',
     marginBottom: Spacings.s1,
-    ...Typography.bodySmallMedium
-  },
-  validationMessage: {
-    flexGrow: 1,
-    textAlign: 'center',
-    ...Typography.bodySmallMedium
+    ...Typography.text80M
   }
 });

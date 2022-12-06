@@ -50,10 +50,11 @@ const NumberInputProcessButtonScreen = () => {
             labelStyle={styles.label}
             validate={'required'}
             validationMessage={'Please enter a price'}
-            validationMessageStyle={styles.validationMessage}
+            validationMessageStyle={Typography.text80M}
             marginLeft={Spacings.s4}
             marginRight={Spacings.s4}
             onBlur={processInput}
+            centered
           />
           <Button label={'Process'} onPress={processInput}/>
           <Text marginT-s5>{text}</Text>
@@ -67,7 +68,6 @@ export default NumberInputProcessButtonScreen;
 
 const styles = StyleSheet.create({
   containerStyle: {
-    alignSelf: 'center',
     marginBottom: 30,
     marginLeft: Spacings.s5,
     marginRight: Spacings.s5
@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
   mainText: {
     height: 36,
     marginVertical: Spacings.s1,
-    textAlign: 'center',
     ...Typography.text30M
   },
   leadingText: {
@@ -83,13 +82,7 @@ const styles = StyleSheet.create({
     ...Typography.text50M
   },
   label: {
-    textAlign: 'center',
     marginBottom: Spacings.s1,
-    ...Typography.bodySmallMedium
-  },
-  validationMessage: {
-    flexGrow: 1,
-    textAlign: 'center',
-    ...Typography.bodySmallMedium
+    ...Typography.text80M
   }
 });

@@ -16,7 +16,7 @@ class NumberInputScreen extends Component {
 
   renderPages() {
     return (
-      <View flex>
+      <View flex marginH-s5>
         {_.map(SCREENS, (item, index) => {
           const Screen = item.screen;
           return (
