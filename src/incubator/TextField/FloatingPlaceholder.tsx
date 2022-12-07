@@ -1,9 +1,8 @@
-import {isEmpty} from 'lodash';
 import React, {useContext, useRef, useCallback, useState, useMemo} from 'react';
 import {Animated, LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
 import {useDidUpdate} from 'hooks';
 import {FloatingPlaceholderProps, ValidationMessagePosition} from './types';
-import {getColorByState} from './Presenter';
+import {getColorByState, shouldPlaceholderFloat} from './Presenter';
 import {Colors} from '../../style';
 import {Constants} from '../../commons/new';
 import View from '../../components/view';
@@ -12,24 +11,22 @@ import FieldContext from './FieldContext';
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
-const FloatingPlaceholder = ({
-  placeholder,
-  floatingPlaceholderColor = Colors.$textNeutralLight,
-  floatingPlaceholderStyle,
-  floatOnFocus,
-  validationMessagePosition,
-  extraOffset = 0,
-  defaultValue,
-  testID
-}: FloatingPlaceholderProps) => {
+const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
+  const {
+    placeholder,
+    floatingPlaceholderColor = Colors.$textNeutralLight,
+    floatingPlaceholderStyle,
+    validationMessagePosition,
+    extraOffset = 0,
+    testID
+  } = props;
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
     top: 0,
     left: 0
   });
 
-  const useDefaultValue = !isEmpty(defaultValue) && context.value === undefined; // To consider a user that has deleted the defaultValue (and then the placeholder should un-float when losing focus)
-  const shouldFloat = (floatOnFocus && context.isFocused) || context.hasValue || useDefaultValue;
+  const shouldFloat = shouldPlaceholderFloat(props, context.isFocused, context.hasValue, context.value);
   const animation = useRef(new Animated.Value(Number(shouldFloat))).current;
   const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
