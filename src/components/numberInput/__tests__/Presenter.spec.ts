@@ -119,7 +119,7 @@ describe('NumberInput', () => {
         });
       });
 
-      it('character', () => {
+      it('non-digit character', () => {
         expect(parseInput('1a', EN_OPTIONS)).toEqual({type: 'error', userInput: '1a'});
       });
 
@@ -173,6 +173,44 @@ describe('NumberInput', () => {
             userInput: '12.3454',
             formattedNumber: '12.345',
             number: 12.345
+          });
+        });
+      });
+
+      describe('zero handling', () => {
+        it('zero: 0', () => {
+          expect(parseInput('0', EN_OPTIONS)).toEqual({
+            type: 'valid',
+            userInput: '0',
+            formattedNumber: '0',
+            number: 0
+          });
+        });
+
+        it('two zeroes: 00', () => {
+          expect(parseInput('00', EN_OPTIONS)).toEqual({
+            type: 'valid',
+            userInput: '00',
+            formattedNumber: '0',
+            number: 0
+          });
+        });
+
+        it('James Bond', () => {
+          expect(parseInput('007', EN_OPTIONS)).toEqual({
+            type: 'valid',
+            userInput: '007',
+            formattedNumber: '7',
+            number: 7
+          });
+        });
+
+        it('zero prefix and fraction: 0123.456', () => {
+          expect(parseInput('0123.456', EN_OPTIONS)).toEqual({
+            type: 'valid',
+            userInput: '0123.456',
+            formattedNumber: '123.46',
+            number: 123.46
           });
         });
       });
@@ -233,7 +271,7 @@ describe('NumberInput', () => {
         });
       });
 
-      it('character', () => {
+      it('non-digit character', () => {
         expect(parseInput('1a', DE_OPTIONS)).toEqual({type: 'error', userInput: '1a'});
       });
 

@@ -4,7 +4,6 @@ import {Text, Spacings, NumberInput, NumberInputResult, View, Typography, Consta
 
 const NumberInputProcessButtonScreen = () => {
   const currentData = useRef<NumberInputResult>();
-  // const [initialNumber, setInitialNumber] = useState<number>(100);
   const [text, setText] = useState<string>('');
 
   const onChangeNumber = useCallback((result: NumberInputResult) => {
@@ -39,7 +38,7 @@ const NumberInputProcessButtonScreen = () => {
 
         <View flex center>
           <NumberInput
-            // initialNumber={initialNumber}
+            // initialNumber={100}
             onChangeNumber={onChangeNumber}
             placeholder={'Price'}
             leadingText={'$'}

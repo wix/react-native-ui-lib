@@ -9,7 +9,7 @@ import {getInitialResult, parseInput, generateOptions, Options, NumberInputResul
 export {NumberInputResult};
 
 export type NumberInputProps = React.PropsWithRef<
-  Omit<TextFieldProps, 'leadingAccessory' | 'trailingAccessory' | 'value'> & ThemeComponent
+  Omit<TextFieldProps, 'leadingAccessory' | 'trailingAccessory' | 'value' | 'onChangeText'> & ThemeComponent
 > & {
   /**
    * Callback that is called when the number value has changed (undefined in both if the user has deleted the number).
@@ -69,7 +69,6 @@ function NumberInput(props: NumberInputProps, ref: any) {
     trailingText,
     trailingTextStyle,
     marginRight,
-    onChangeText,
     ...others
   } = props;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
@@ -87,11 +86,23 @@ function NumberInput(props: NumberInputProps, ref: any) {
 
   useEffect(() => {
     handleInitialValueChange();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialNumber]);
+
+  const processInput = useCallback((text: string) => {
+    const newData = parseInput(text, options);
+    onChangeNumber(newData);
+    setData(newData);
+  },
+  [onChangeNumber, options]);
 
   useDidUpdate(() => {
-    handleInitialValueChange();
-  }, [initialNumber]);
+    if (data?.type === 'valid') {
+      // 1. This will not work properly for changing locale
+      // 2. This will not work properly for changing fractionDigits with only an initialNumber
+      processInput(data.userInput);
+    }
+  }, [options]);
 
   const hasText = useMemo(() => {
     // Render both leading and trailing accessories so the text is centered AND the margin between the text and the accessories is correct
@@ -127,12 +138,9 @@ function NumberInput(props: NumberInputProps, ref: any) {
   }, [containerStyle]);
 
   const _onChangeText = useCallback((text: string) => {
-    const newData = parseInput(text, options);
-    onChangeNumber(newData);
-    setData(newData);
-    onChangeText?.(text);
+    processInput(text);
   },
-  [onChangeNumber, options, onChangeText]);
+  [processInput]);
 
   const value = useMemo(() => {
     return data?.type === 'valid' || data?.type === 'error' ? data.userInput : '';

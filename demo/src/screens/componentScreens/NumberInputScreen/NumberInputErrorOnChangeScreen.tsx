@@ -14,7 +14,6 @@ import {
 const NumberInputErrorOnChangeScreen = () => {
   const currentData = useRef<NumberInputResult>();
   const minimum = useRef<number>(5000);
-  // const [initialNumber, setInitialNumber] = useState<number>(100);
   const [text, setText] = useState<string>('');
 
   const onChangeNumber = useCallback((result: NumberInputResult) => {
@@ -68,7 +67,7 @@ const NumberInputErrorOnChangeScreen = () => {
 
         <View flex center>
           <NumberInput
-            // initialNumber={initialNumber}
+            // initialNumber={100}
             onChangeNumber={onChangeNumber}
             placeholder={'Price'}
             leadingText={'$'}
