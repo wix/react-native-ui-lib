@@ -217,6 +217,10 @@ export type TextFieldProps = MarginModifiers &
      * Predefined preset to use for styling the field
      */
     preset?: 'default' | null | string;
+    /**
+     * Whether to center the TextField - container and label
+     */
+    centered?: boolean;
   };
 
 export type InternalTextFieldProps = PropsWithChildren<

@@ -6,6 +6,7 @@
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
 import React, {useMemo} from 'react';
+import {StyleSheet} from 'react-native';
 import {isEmpty, trim, omit} from 'lodash';
 import {asBaseComponent, forwardRef} from '../../commons/new';
 import View from '../../components/view';
@@ -70,6 +71,7 @@ const TextField = (props: InternalTextFieldProps) => {
     // Input
     placeholder,
     children,
+    centered = false,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
@@ -96,14 +98,16 @@ const TextField = (props: InternalTextFieldProps) => {
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
   const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
+  const centeredContainerStyle = centered && styles.centeredContainer;
+  const centeredLabelStyle = centered && styles.centeredLabel;
 
   return (
     <FieldContext.Provider value={context}>
-      <View style={[margins, positionStyle, containerStyle]}>
+      <View style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <Label
           label={label}
           labelColor={labelColor}
-          labelStyle={labelStyle}
+          labelStyle={[labelStyle, centeredLabelStyle]}
           labelProps={labelProps}
           floatingPlaceholder={floatingPlaceholder}
           validationMessagePosition={validationMessagePosition}
@@ -122,7 +126,7 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          <View flexG /* flex row */>
+          <View flex={!centered} flexG={centered} /* flex row */>
             {floatingPlaceholder && (
               <FloatingPlaceholder
                 defaultValue={others.defaultValue}
@@ -187,5 +191,14 @@ export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextFie
     typography: true,
     position: true,
     color: true
+  }
+});
+
+const styles = StyleSheet.create({
+  centeredContainer: {
+    alignSelf: 'center'
+  },
+  centeredLabel: {
+    textAlign: 'center'
   }
 });
