@@ -48,7 +48,6 @@ exports[`Button backgroundColor should return backgroundColor according to modif
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -119,7 +118,6 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -190,7 +188,6 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -266,7 +263,6 @@ exports[`Button backgroundColor should return theme disabled color if button is 
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -337,7 +333,6 @@ exports[`Button backgroundColor should return undefined if this button is link 1
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -410,7 +405,6 @@ exports[`Button backgroundColor should return undefined if this button is outlin
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -481,7 +475,6 @@ exports[`Button border radius should return 0 border radius when border radius p
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -552,7 +545,6 @@ exports[`Button border radius should return 0 border radius when button is full 
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -623,7 +615,6 @@ exports[`Button border radius should return given border radius when use plain n
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -694,7 +685,6 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -770,7 +760,6 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -846,7 +835,6 @@ exports[`Button container size should have no padding of button is a link nor mi
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -949,7 +937,6 @@ exports[`Button container size should have no padding of button is an icon butto
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1027,7 +1014,6 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1098,7 +1084,6 @@ exports[`Button container size should return style for large button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1171,7 +1156,6 @@ exports[`Button container size should return style for large button 2`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1242,7 +1226,6 @@ exports[`Button container size should return style for medium button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1320,7 +1303,6 @@ exports[`Button container size should return style for medium button 2`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1396,7 +1378,6 @@ exports[`Button container size should return style for round button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1467,7 +1448,6 @@ exports[`Button container size should return style for small button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1545,7 +1525,6 @@ exports[`Button container size should return style for small button 2`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1621,7 +1600,6 @@ exports[`Button container size should return style for xSmall button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1699,7 +1677,6 @@ exports[`Button container size should return style for xSmall button 2`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -1777,7 +1754,6 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2200,7 +2176,6 @@ exports[`Button icon should return the right spacing according to button size wh
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2271,7 +2246,6 @@ exports[`Button icon should return the right spacing according to button size wh
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2347,7 +2321,6 @@ exports[`Button icon should return the right spacing according to button size wh
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2423,7 +2396,6 @@ exports[`Button icon should return the right spacing according to button size wh
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2499,7 +2471,6 @@ exports[`Button label size should return style for large button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2570,7 +2541,6 @@ exports[`Button label size should return style for medium button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2646,7 +2616,6 @@ exports[`Button label size should return style for small button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2722,7 +2691,6 @@ exports[`Button label size should return style for xSmall button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2798,7 +2766,6 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2869,7 +2836,6 @@ exports[`Button labelColor should return color according to color modifier 1`] =
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -2940,7 +2906,6 @@ exports[`Button labelColor should return color according to color prop 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3016,7 +2981,6 @@ exports[`Button labelColor should return disabled text color according to theme 
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3087,7 +3051,6 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3215,7 +3178,6 @@ exports[`Button link should render button as a link 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3288,7 +3250,6 @@ exports[`Button outline should render button with an outline 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3361,7 +3322,6 @@ exports[`Button outline should render button with an outlineColor 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3434,7 +3394,6 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3507,7 +3466,6 @@ exports[`Button outline should return custom borderWidth according to outlineWid
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3585,7 +3543,6 @@ exports[`Button outline should return disabled color for outline if button is di
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3656,7 +3613,6 @@ exports[`Button outline should return undefined when link is true, even when out
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
@@ -3727,7 +3683,6 @@ exports[`Button should render default button 1`] = `
         Array [
           Object {
             "backgroundColor": "transparent",
-            "flex": 0,
             "flexDirection": "row",
             "fontFamily": "System",
             "fontSize": 16,
