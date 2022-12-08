@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useRef, useMemo} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Keyboard as RNKeyboard} from 'react-native';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {
   Text,
   Spacings,
@@ -11,7 +12,7 @@ import {
   Incubator
 } from 'react-native-ui-lib';
 
-const NumberInputErrorOnChangeScreen = () => {
+const NumberInputScreen = () => {
   const currentData = useRef<NumberInputResult>();
   const minimum = useRef<number>(5000);
   const [text, setText] = useState<string>('');
@@ -92,7 +93,7 @@ const NumberInputErrorOnChangeScreen = () => {
   );
 };
 
-export default NumberInputErrorOnChangeScreen;
+export default gestureHandlerRootHOC(NumberInputScreen);
 
 const styles = StyleSheet.create({
   containerStyle: {
