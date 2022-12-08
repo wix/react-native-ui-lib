@@ -35,6 +35,46 @@ export function renderHeader(title: string, others?: TextProps) {
   );
 }
 
+// eslint-disable-next-line max-params
+export function renderBooleanOptionForFunction(title: string,
+  key: string,
+  state: boolean,
+  setState: React.Dispatch<React.SetStateAction<boolean>>,
+  {spread}: BooleanGroupOptions = {spread: true}) {
+  return (
+    <View row centerV spread={spread} marginB-s4 key={key}>
+      <Text $textDefault flex={spread} marginR-s4={!spread}>
+        {title}
+      </Text>
+      <Switch useCustomTheme key={key} testID={key} value={state} onValueChange={value => setState(value)}/>
+    </View>
+  );
+}
+
+// eslint-disable-next-line max-params
+export function renderMultipleSegmentOptionsForFunction(title: string,
+  key: string,
+  state: string,
+  setState: React.Dispatch<React.SetStateAction<any /** no suitable solution for enum */>>,
+  options: (SegmentedControlItemProps & {value: string})[]) {
+  const index = _.findIndex(options, {value: state});
+
+  return (
+    <View row centerV spread marginB-s4 key={key}>
+      {!!title && (
+        <Text $textDefault marginR-s2>
+          {title}
+        </Text>
+      )}
+      <SegmentedControl
+        initialIndex={index}
+        segments={options}
+        onChangeIndex={index => setState(options[index].value)}
+      />
+    </View>
+  );
+}
+
 export function renderBooleanOption(title: string,
   key: string,
   {spread, afterValueChanged}: BooleanGroupOptions = {spread: true}) {
