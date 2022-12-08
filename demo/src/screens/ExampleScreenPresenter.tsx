@@ -35,12 +35,16 @@ export function renderHeader(title: string, others?: TextProps) {
   );
 }
 
-export function renderBooleanOption(title: string, key: string, {spread, afterValueChanged}: BooleanGroupOptions = {spread: true}) {
+export function renderBooleanOption(title: string,
+  key: string,
+  {spread, afterValueChanged}: BooleanGroupOptions = {spread: true}) {
   // @ts-ignore
   const value = this.state[key];
   return (
     <View row centerV spread={spread} marginB-s4 key={key}>
-      <Text $textDefault flex={spread} marginR-s4={!spread}>{title}</Text>
+      <Text $textDefault flex={spread} marginR-s4={!spread}>
+        {title}
+      </Text>
       <Switch
         useCustomTheme
         key={key}
@@ -130,7 +134,9 @@ export function renderColorOption(title: string,
   const value = this.state[key];
   return (
     <View marginV-s2>
-      <Text text70M $textDefault>{title}</Text>
+      <Text text70M $textDefault>
+        {title}
+      </Text>
       <ColorPalette
         value={value}
         colors={colors}
@@ -171,14 +177,20 @@ export function renderSliderOption(title: string,
   );
 }
 
-export function renderMultipleSegmentOptions(title: string, key: string, options: (SegmentedControlItemProps & {value: any})[]) {
+export function renderMultipleSegmentOptions(title: string,
+  key: string,
+  options: (SegmentedControlItemProps & {value: any})[]) {
   // @ts-ignore
   const value = this.state[key];
   const index = _.findIndex(options, {value});
 
   return (
     <View row centerV spread marginB-s4 key={key}>
-      {!!title && <Text $textDefault marginR-s2>{title}</Text>}
+      {!!title && (
+        <Text $textDefault marginR-s2>
+          {title}
+        </Text>
+      )}
       <SegmentedControl
         initialIndex={index}
         segments={options}
