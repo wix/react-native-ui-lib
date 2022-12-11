@@ -11,7 +11,7 @@ import {
   Constants,
   Incubator
 } from 'react-native-ui-lib';
-import {renderBooleanOptionForFunction, renderMultipleSegmentOptionsForFunction} from '../ExampleScreenPresenter';
+import {renderBooleanOption, renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 enum ExampleTypeEnum {
   PRICE = 'price',
@@ -164,12 +164,15 @@ const NumberInputScreen = () => {
         <Text text40 margin-s10>
           Number Input
         </Text>
-        {renderBooleanOptionForFunction('Show label', 'showLabel', showLabel, setShowLabel, {spread: false})}
-        {renderMultipleSegmentOptionsForFunction('', 'exampleType', exampleType, setExampleType, [
-          {label: 'Price', value: ExampleTypeEnum.PRICE},
-          {label: 'Percentage', value: ExampleTypeEnum.PERCENTAGE},
-          {label: 'Number', value: ExampleTypeEnum.ANY_NUMBER}
-        ])}
+        {renderBooleanOption('Show label', 'showLabel', {spread: false, state: showLabel, setState: setShowLabel})}
+        {renderMultipleSegmentOptions('',
+          'exampleType',
+          [
+            {label: 'Price', value: ExampleTypeEnum.PRICE},
+            {label: 'Percentage', value: ExampleTypeEnum.PERCENTAGE},
+            {label: 'Number', value: ExampleTypeEnum.ANY_NUMBER}
+          ],
+          {state: exampleType, setState: setExampleType})}
 
         <View flex center>
           <NumberInput

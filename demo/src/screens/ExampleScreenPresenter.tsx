@@ -25,6 +25,13 @@ interface RadioGroupOptions {
 interface BooleanGroupOptions {
   spread?: boolean;
   afterValueChanged?: () => void;
+  state?: boolean;
+  setState?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface SegmentsExtraOptions {
+  state?: string;
+  setState?: React.Dispatch<React.SetStateAction<any /** no suitable solution for enum */>>;
 }
 
 export function renderHeader(title: string, others?: TextProps) {
@@ -35,51 +42,11 @@ export function renderHeader(title: string, others?: TextProps) {
   );
 }
 
-// eslint-disable-next-line max-params
-export function renderBooleanOptionForFunction(title: string,
-  key: string,
-  state: boolean,
-  setState: React.Dispatch<React.SetStateAction<boolean>>,
-  {spread}: BooleanGroupOptions = {spread: true}) {
-  return (
-    <View row centerV spread={spread} marginB-s4 key={key}>
-      <Text $textDefault flex={spread} marginR-s4={!spread}>
-        {title}
-      </Text>
-      <Switch useCustomTheme key={key} testID={key} value={state} onValueChange={value => setState(value)}/>
-    </View>
-  );
-}
-
-// eslint-disable-next-line max-params
-export function renderMultipleSegmentOptionsForFunction(title: string,
-  key: string,
-  state: string,
-  setState: React.Dispatch<React.SetStateAction<any /** no suitable solution for enum */>>,
-  options: (SegmentedControlItemProps & {value: string})[]) {
-  const index = _.findIndex(options, {value: state});
-
-  return (
-    <View row centerV spread marginB-s4 key={key}>
-      {!!title && (
-        <Text $textDefault marginR-s2>
-          {title}
-        </Text>
-      )}
-      <SegmentedControl
-        initialIndex={index}
-        segments={options}
-        onChangeIndex={index => setState(options[index].value)}
-      />
-    </View>
-  );
-}
-
 export function renderBooleanOption(title: string,
   key: string,
-  {spread, afterValueChanged}: BooleanGroupOptions = {spread: true}) {
+  {spread, afterValueChanged, state, setState}: BooleanGroupOptions = {spread: true}) {
   // @ts-ignore
-  const value = this.state[key];
+  const value = state ?? this.state[key];
   return (
     <View row centerV spread={spread} marginB-s4 key={key}>
       <Text $textDefault flex={spread} marginR-s4={!spread}>
@@ -90,8 +57,14 @@ export function renderBooleanOption(title: string,
         key={key}
         testID={key}
         value={value}
-        // @ts-ignore
-        onValueChange={value => this.setState({[key]: value}, afterValueChanged)}
+        onValueChange={value => {
+          if (setState) {
+            setState(value);
+          } else {
+            // @ts-ignore
+            this.setState({[key]: value}, afterValueChanged);
+          }
+        }}
       />
     </View>
   );
@@ -219,9 +192,10 @@ export function renderSliderOption(title: string,
 
 export function renderMultipleSegmentOptions(title: string,
   key: string,
-  options: (SegmentedControlItemProps & {value: any})[]) {
+  options: (SegmentedControlItemProps & {value: any})[],
+  {state, setState}: SegmentsExtraOptions = {}) {
   // @ts-ignore
-  const value = this.state[key];
+  const value = state ?? this.state[key];
   const index = _.findIndex(options, {value});
 
   return (
@@ -235,7 +209,15 @@ export function renderMultipleSegmentOptions(title: string,
         initialIndex={index}
         segments={options}
         // @ts-ignore
-        onChangeIndex={index => this.setState({[key]: options[index].value})}
+        onChangeIndex={index => {
+          const value = options[index].value;
+          if (setState) {
+            setState(value);
+          } else {
+            // @ts-ignore
+            this.setState({[key]: value});
+          }
+        }}
       />
     </View>
   );
