@@ -127,7 +127,7 @@ const TextField = (props: InternalTextFieldProps) => {
             testID={`${props.testID}.validationMessage`}
           />
         )}
-        <View style={[paddings, fieldStyle]} row centerV>
+        <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
           <View flex={!centered} flexG={centered} /* flex row */>

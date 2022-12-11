@@ -181,16 +181,18 @@ const NumberInputScreen = () => {
             fractionDigits={fractionDigits}
             onChangeNumber={onChangeNumber}
             leadingText={leadingText}
-            leadingTextStyle={styles.infoText}
+            leadingTextStyle={leadingText && [styles.infoText, {marginLeft: Spacings.s4}]}
             trailingText={trailingText}
-            trailingTextStyle={styles.infoText}
-            style={styles.mainText}
+            trailingTextStyle={trailingText && [styles.infoText, {marginRight: Spacings.s4}]}
+            style={[
+              styles.mainText,
+              !leadingText && {marginLeft: Spacings.s4},
+              !trailingText && {marginRight: Spacings.s4}
+            ]}
             containerStyle={styles.containerStyle}
             validate={validate}
             validationMessage={validationMessage}
             validationMessageStyle={Typography.text80M}
-            marginLeft={Spacings.s4}
-            marginRight={Spacings.s4}
             validateOnChange
             centered
           />

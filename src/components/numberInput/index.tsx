@@ -1,4 +1,3 @@
-import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useDidUpdate} from 'hooks';
@@ -44,14 +43,6 @@ export type NumberInputProps = React.PropsWithRef<
    * The style of the trailing text
    */
   trailingTextStyle?: StyleProp<ViewStyle>;
-  /**
-   * The margin to the left of the input
-   */
-  marginLeft?: number;
-  /**
-   * The margin to the right of the input
-   */
-  marginRight?: number;
 };
 
 function NumberInput(props: NumberInputProps, ref: any) {
@@ -61,14 +52,11 @@ function NumberInput(props: NumberInputProps, ref: any) {
     fractionDigits = 2,
     // @ts-expect-error
     locale = 'en',
-    style,
     containerStyle,
     leadingText,
     leadingTextStyle,
-    marginLeft,
     trailingText,
     trailingTextStyle,
-    marginRight,
     ...others
   } = props;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
@@ -104,34 +92,21 @@ function NumberInput(props: NumberInputProps, ref: any) {
     }
   }, [options]);
 
-  const hasText = useMemo(() => {
-    // Render both leading and trailing accessories so the text is centered AND the margin between the text and the accessories is correct
-    return !isEmpty(leadingText) || !isEmpty(trailingText);
-  }, [leadingText, trailingText]);
-
   const leadingAccessoryStyle: TextProps['style'] = useMemo(() => {
-    return [{textAlign: 'right'}, leadingTextStyle, marginLeft ? {marginLeft} : undefined];
-  }, [leadingTextStyle, marginLeft]);
+    return [{textAlign: 'right'}, leadingTextStyle];
+  }, [leadingTextStyle]);
 
   const leadingAccessory = useMemo(() => {
-    if (hasText) {
-      return <Text style={[styles.accessory, leadingAccessoryStyle]}>{leadingText}</Text>;
+    if (leadingText) {
+      return <Text style={[leadingAccessoryStyle]}>{leadingText}</Text>;
     }
-  }, [hasText, leadingText, leadingAccessoryStyle]);
-
-  const trailingAccessoryStyle: TextProps['style'] = useMemo(() => {
-    return [trailingTextStyle, marginRight ? {marginRight} : undefined];
-  }, [trailingTextStyle, marginRight]);
+  }, [leadingText, leadingAccessoryStyle]);
 
   const trailingAccessory = useMemo(() => {
-    if (hasText) {
-      return <Text style={[styles.accessory, trailingAccessoryStyle]}>{trailingText}</Text>;
+    if (trailingText) {
+      return <Text style={[trailingTextStyle]}>{trailingText}</Text>;
     }
-  }, [hasText, trailingText, trailingAccessoryStyle]);
-
-  const _style = useMemo(() => {
-    return [style, leadingAccessory ? undefined : {marginLeft}, trailingAccessory ? undefined : {marginRight}];
-  }, [style, leadingAccessory, marginLeft, trailingAccessory, marginRight]);
+  }, [trailingText, trailingTextStyle]);
 
   const _containerStyle = useMemo(() => {
     return [styles.containerStyle, containerStyle];
@@ -160,7 +135,6 @@ function NumberInput(props: NumberInputProps, ref: any) {
       floatingPlaceholder={false}
       leadingAccessory={leadingAccessory}
       trailingAccessory={trailingAccessory}
-      style={_style}
       containerStyle={_containerStyle}
       validationMessagePosition={TextField.validationMessagePositions.BOTTOM}
       keyboardType={'numeric'}
