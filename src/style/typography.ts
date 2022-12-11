@@ -45,7 +45,7 @@ export class Typography {
   async measureTextSize(text: string,
     typography: MeasureTextTypography = TypographyPresets.text70!,
     containerWidth = Constants.screenWidth) {
-    const rnTextSize = require('wix-react-native-text-size').default;
+    const rnTextSize = require('react-native-text-size').default;
     if (text) {
       const size = await rnTextSize.measure({
         text, // text to measure, can include symbols
