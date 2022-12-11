@@ -1,8 +1,9 @@
+import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useDidUpdate} from 'hooks';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
-import Text, {TextProps} from '../text';
+import Text from '../text';
 import {getInitialData, parseInput, generateOptions, Options, NumberInputData} from './Presenter';
 
 export {NumberInputData};
@@ -57,6 +58,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
     leadingTextStyle,
     trailingText,
     trailingTextStyle,
+    placeholder,
     ...others
   } = props;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
@@ -91,20 +93,14 @@ function NumberInput(props: NumberInputProps, ref: any) {
       processInput(data.userInput);
     }
   }, [options]);
-
-  const leadingAccessoryStyle: TextProps['style'] = useMemo(() => {
-    return [{textAlign: 'right'}, leadingTextStyle];
-  }, [leadingTextStyle]);
-
   const leadingAccessory = useMemo(() => {
     if (leadingText) {
-      return <Text style={[leadingAccessoryStyle]}>{leadingText}</Text>;
+      return <Text style={leadingTextStyle}>{leadingText}</Text>;
     }
-  }, [leadingText, leadingAccessoryStyle]);
-
+  }, [leadingText, leadingTextStyle]);
   const trailingAccessory = useMemo(() => {
     if (trailingText) {
-      return <Text style={[trailingTextStyle]}>{trailingText}</Text>;
+      return <Text style={trailingTextStyle}>{trailingText}</Text>;
     }
   }, [trailingText, trailingTextStyle]);
 
@@ -125,9 +121,15 @@ function NumberInput(props: NumberInputProps, ref: any) {
     return data?.type === 'valid' ? data.formattedNumber : data?.type === 'error' ? data.userInput : '';
   }, [data]);
 
+  // Fixing RN bug in Android (placeholder + trailingText) - https://github.com/facebook/react-native/issues/35611
+  const _placeholder = useMemo(() => {
+    return isEmpty(value) ? placeholder : undefined;
+  }, [placeholder, value]);
+
   return (
     <TextField
       {...others}
+      placeholder={_placeholder}
       value={value}
       onChangeText={_onChangeText}
       formatter={formatter}
@@ -147,8 +149,5 @@ export default React.forwardRef<TextFieldProps, NumberInputProps>(NumberInput);
 const styles = StyleSheet.create({
   containerStyle: {
     overflow: 'hidden'
-  },
-  accessory: {
-    flexGrow: 999 // This handles a case where the validation message is long
   }
 });
