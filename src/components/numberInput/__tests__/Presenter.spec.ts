@@ -1,4 +1,4 @@
-import {getInitialResult, parseInput, EMPTY, Options} from '../Presenter';
+import {getInitialData, parseInput, EMPTY, Options} from '../Presenter';
 
 const EN_OPTIONS: Options = {
   localeOptions: {
@@ -21,11 +21,11 @@ const DE_OPTIONS: Options = {
 describe('NumberInput', () => {
   describe('getInitialData', () => {
     it('should return undefined for undefined', () => {
-      expect(getInitialResult(EN_OPTIONS, undefined)).toEqual(EMPTY);
+      expect(getInitialData(EN_OPTIONS, undefined)).toEqual(EMPTY);
     });
 
     it('should return one decimal point and not two', () => {
-      expect(getInitialResult(EN_OPTIONS, 12.1)).toEqual({
+      expect(getInitialData(EN_OPTIONS, 12.1)).toEqual({
         type: 'valid',
         userInput: '12.1',
         formattedNumber: '12.1',
@@ -34,7 +34,7 @@ describe('NumberInput', () => {
     });
 
     it('should return string that ends without a dot', () => {
-      expect(getInitialResult(EN_OPTIONS, 12)).toEqual({
+      expect(getInitialData(EN_OPTIONS, 12)).toEqual({
         type: 'valid',
         userInput: '12',
         formattedNumber: '12',
@@ -44,7 +44,7 @@ describe('NumberInput', () => {
 
     describe('de', () => {
       it('should return one decimal point and not two', () => {
-        expect(getInitialResult(DE_OPTIONS, 12.1)).toEqual({
+        expect(getInitialData(DE_OPTIONS, 12.1)).toEqual({
           type: 'valid',
           userInput: '12,1',
           formattedNumber: '12,1',
@@ -53,7 +53,7 @@ describe('NumberInput', () => {
       });
 
       it('should return string that ends without a dot', () => {
-        expect(getInitialResult(DE_OPTIONS, 12)).toEqual({
+        expect(getInitialData(DE_OPTIONS, 12)).toEqual({
           type: 'valid',
           userInput: '12',
           formattedNumber: '12',
