@@ -4,9 +4,9 @@ import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useDidUpdate} from 'hooks';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
 import Text, {TextProps} from '../text';
-import {getInitialResult, parseInput, generateOptions, Options, NumberInputResult} from './Presenter';
+import {getInitialData, parseInput, generateOptions, Options, NumberInputData} from './Presenter';
 
-export {NumberInputResult};
+export {NumberInputData};
 
 export type NumberInputProps = React.PropsWithRef<
   Omit<TextFieldProps, 'leadingAccessory' | 'trailingAccessory' | 'value' | 'onChangeText'> & ThemeComponent
@@ -14,7 +14,7 @@ export type NumberInputProps = React.PropsWithRef<
   /**
    * Callback that is called when the number value has changed (undefined in both if the user has deleted the number).
    */
-  onChangeNumber: (result: NumberInputResult) => void;
+  onChangeNumber: (data: NumberInputData) => void;
   /**
    * A valid number (in en locale, i.e. only digits and a decimal point).
    */
@@ -72,14 +72,14 @@ function NumberInput(props: NumberInputProps, ref: any) {
     ...others
   } = props;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
-  const [data, setData] = useState<NumberInputResult>();
+  const [data, setData] = useState<NumberInputData>();
 
   useDidUpdate(() => {
     setOptions(generateOptions(locale, fractionDigits));
   }, [locale, fractionDigits]);
 
   const handleInitialValueChange = () => {
-    const newData = getInitialResult(options, initialNumber);
+    const newData = getInitialData(options, initialNumber);
     onChangeNumber(newData);
     setData(newData);
   };

@@ -1,11 +1,11 @@
 import {isEmpty} from 'lodash';
 
-export type NumberInputResult =
+export type NumberInputData =
   | {type: 'valid'; userInput: string; number: number; formattedNumber: string}
   | {type: 'empty'}
   | {type: 'error'; userInput: string};
 
-export const EMPTY: NumberInputResult = {type: 'empty'};
+export const EMPTY: NumberInputData = {type: 'empty'};
 
 export interface LocaleOptions {
   locale: string;
@@ -45,7 +45,7 @@ export function generateOptions(locale: string, fractionDigits: number): Options
   return {localeOptions: generateLocaleOptions(locale), fractionDigits};
 }
 
-export function parseInput(text: string, options: Options): NumberInputResult {
+export function parseInput(text: string, options: Options): NumberInputData {
   if (isEmpty(text)) {
     return EMPTY;
   }
@@ -63,7 +63,7 @@ export function parseInput(text: string, options: Options): NumberInputResult {
   return {type: 'valid', userInput: text, number, formattedNumber};
 }
 
-export function getInitialResult(options: Options, initialValue?: number): NumberInputResult {
+export function getInitialData(options: Options, initialValue?: number): NumberInputData {
   if (initialValue === undefined) {
     return EMPTY;
   }

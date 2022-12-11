@@ -8,7 +8,7 @@
   "props": [
     {
       "name": "onChangeNumber",
-      "type": "(result: NumberInputResult) => void",
+      "type": "(data: NumberInputData) => void",
       "description": "Callback that is called when the number value has changed.",
       "required": true
     },

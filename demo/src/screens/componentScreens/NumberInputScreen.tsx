@@ -5,7 +5,7 @@ import {
   Text,
   Spacings,
   NumberInput,
-  NumberInputResult,
+  NumberInputData,
   View,
   Typography,
   Constants,
@@ -29,7 +29,7 @@ const DISCOUNT_PERCENTAGE = {min: 1, max: 80};
 const DISCOUNT_PERCENTAGE_VALIDATION_MESSAGE = `Make sure your number is between ${DISCOUNT_PERCENTAGE.min} and ${DISCOUNT_PERCENTAGE.max}`;
 
 const NumberInputScreen = () => {
-  const currentData = useRef<NumberInputResult>();
+  const currentData = useRef<NumberInputData>();
   const [text, setText] = useState<string>('');
   const [showLabel, setShowLabel] = useState<boolean>(true);
   const [exampleType, setExampleType] = useState<ExampleType>('price');
@@ -53,8 +53,8 @@ const NumberInputScreen = () => {
     setText(newText);
   }, []);
 
-  const onChangeNumber = useCallback((result: NumberInputResult) => {
-    currentData.current = result;
+  const onChangeNumber = useCallback((data: NumberInputData) => {
+    currentData.current = data;
     processInput();
   },
   [processInput]);
