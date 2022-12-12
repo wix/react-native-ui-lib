@@ -274,8 +274,8 @@ const WheelPicker = ({
   }, [alignmentStyle]);
 
   const labelInnerContainerStyle = useMemo(() => {
-    return [styles.label, Constants.isRTL && disableRTL ? {left: 0} : {right: 0}];
-  }, [disableRTL]);
+    return [styles.label, shouldDisableRTL ? {left: 0} : {right: 0}];
+  }, [shouldDisableRTL]);
 
   const labelContainer = useMemo(() => {
     return (

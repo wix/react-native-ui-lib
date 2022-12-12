@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
@@ -54,11 +54,15 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
     textStyle
   };
 
+  const shouldDisableRTL = useMemo(() => {
+    return Constants.isRTL && disableRTL;
+  }, [disableRTL]);
+
   const renderSections = () =>
     _.map(sections, (section, index) => {
       return (
         <WheelPicker
-          disableRTL={disableRTL && Constants.isRTL}
+          disableRTL={shouldDisableRTL}
           key={index}
           testID={`${testID}.${index}`}
           {...wheelPickerProps}
@@ -68,7 +72,7 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
     });
 
   return (
-    <View row centerH style={disableRTL && Constants.isRTL && styles.disableRTL} testID={testID}>
+    <View row centerH style={shouldDisableRTL && styles.disableRTL} testID={testID}>
       {renderSections()}
     </View>
   );
