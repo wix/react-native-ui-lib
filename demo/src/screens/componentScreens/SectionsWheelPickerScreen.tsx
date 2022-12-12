@@ -29,10 +29,6 @@ const SectionsWheelPickerScreen = () => {
     return Constants.isRTL && disableRTL;
   }, [disableRTL]);
 
-  const shouldTranslateLabel = useMemo(() => {
-    return Constants.isRTL && !shouldDisableRTL;
-  }, [shouldDisableRTL]);
-
   const getItems = useCallback(values => {
     return _.map(values, item => ({label: '' + item, value: item}));
   }, []);
@@ -84,7 +80,7 @@ const SectionsWheelPickerScreen = () => {
         items: getItems(DAYS),
         onChange: onDaysChange,
         initialValue: selectedDays,
-        label: shouldTranslateLabel ? 'ימים' : 'Days',
+        label: Constants.isRTL ? 'ימים' : 'Days',
         align:
           numOfSections === 1
             ? WheelPicker.alignments.CENTER
@@ -100,7 +96,7 @@ const SectionsWheelPickerScreen = () => {
         items: getItems(HOURS),
         onChange: onHoursChange,
         initialValue: selectedHours,
-        label: shouldTranslateLabel ? 'שעות' : 'Hrs',
+        label: Constants.isRTL ? 'שעות' : 'Hrs',
         align:
           numOfSections === 2
             ? shouldDisableRTL
@@ -113,7 +109,7 @@ const SectionsWheelPickerScreen = () => {
         items: getItems(MINUTES),
         onChange: onMinutesChange,
         initialValue: selectedMinutes,
-        label: shouldTranslateLabel ? 'דקות' : 'Mins',
+        label: Constants.isRTL ? 'דקות' : 'Mins',
         align: shouldDisableRTL ? WheelPicker.alignments.RIGHT : WheelPicker.alignments.LEFT,
         style: {flex: 1, flexDirection: shouldDisableRTL ? 'row-reverse' : 'row'}
       }
@@ -128,8 +124,7 @@ const SectionsWheelPickerScreen = () => {
     onHoursChange,
     onMinutesChange,
     numOfSections,
-    shouldDisableRTL,
-    shouldTranslateLabel
+    shouldDisableRTL
   ]);
 
   const sectionsToPresent = useMemo(() => _.slice(sections, 0, numOfSections), [numOfSections, sections]);
