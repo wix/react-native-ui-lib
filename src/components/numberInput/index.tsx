@@ -138,7 +138,6 @@ function NumberInput(props: NumberInputProps, ref: any) {
       leadingAccessory={leadingAccessory}
       trailingAccessory={trailingAccessory}
       containerStyle={_containerStyle}
-      validationMessagePosition={TextField.validationMessagePositions.BOTTOM}
       keyboardType={'numeric'}
     />
   );
