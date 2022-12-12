@@ -66,7 +66,7 @@ const WheelPickerItem = memo(({
   }, [itemHeight, disableRTL]);
 
   const textWithLabelPaddingStyle = useMemo(() => {
-    return disableRTL ? {paddingRight: Spacings.s5} : {paddingLeft: Spacings.s5};
+    return disableRTL ? {marginRight: Spacings.s5} : {marginLeft: Spacings.s5};
   }, [disableRTL]);
 
   return (
