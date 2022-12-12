@@ -69,6 +69,10 @@ const WheelPickerItem = memo(({
     return disableRTL ? {marginRight: Spacings.s5} : {marginLeft: Spacings.s5};
   }, [disableRTL]);
 
+  const textStyle = useMemo(() => {
+    return [animatedColorStyle, style, fakeLabel ? textWithLabelPaddingStyle : styles.textPadding];
+  }, [style, fakeLabel, animatedColorStyle, textWithLabelPaddingStyle]);
+
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
@@ -88,16 +92,12 @@ const WheelPickerItem = memo(({
         text60R
         testID={`${testID}.text`}
         numberOfLines={1}
-        style={[animatedColorStyle, style, fakeLabel ? textWithLabelPaddingStyle : styles.textPadding]}
+        style={textStyle}
       >
         {label}
       </AnimatedText>
       {fakeLabel && (
         <Text
-          marginL-s2={!disableRTL}
-          marginR-s5={!disableRTL}
-          marginR-s2={disableRTL}
-          marginL-s5={disableRTL}
           text80M
           $textDefaultLight
           {...fakeLabelProps}

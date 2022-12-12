@@ -196,6 +196,19 @@ const WheelPicker = ({
   },
   [itemHeight]);
 
+  const labelMargins = useMemo(() => {
+    return {
+      'marginL-s2': !shouldDisableRTL,
+      'marginR-s5': !shouldDisableRTL,
+      'marginR-s2': !!shouldDisableRTL,
+      'marginL-s5': !!shouldDisableRTL
+    };
+  }, [shouldDisableRTL]);
+
+  const fakeLabelProps = useMemo(() => {
+    return {...labelMargins, ...labelProps};
+  }, [labelMargins, labelProps]);
+
   const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps>) => {
     return (
       <Item
@@ -209,14 +222,26 @@ const WheelPicker = ({
         disableRTL={shouldDisableRTL}
         fakeLabel={label}
         fakeLabelStyle={labelStyle}
-        fakeLabelProps={labelProps}
+        fakeLabelProps={fakeLabelProps}
         centerH={!label}
         onSelect={selectItem}
         testID={`${testID}.item_${index}`}
       />
     );
   },
-  [itemHeight, shouldDisableRTL]);
+  [
+    itemHeight,
+    shouldDisableRTL,
+    fakeLabelProps,
+    offset,
+    testID,
+    labelStyle,
+    label,
+    activeTextColor,
+    inactiveTextColor,
+    textStyle,
+    selectItem
+  ]);
 
   const getItemLayout = useCallback((_data: any, index: number) => {
     return {length: itemHeight, offset: itemHeight * index, index};
@@ -257,26 +282,17 @@ const WheelPicker = ({
       // @ts-expect-error
       <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
         <View style={labelInnerContainerStyle} centerV pointerEvents="none">
-          <Text
-            marginL-s2={!shouldDisableRTL}
-            marginR-s5={!shouldDisableRTL}
-            marginR-s2={shouldDisableRTL}
-            marginL-s5={shouldDisableRTL}
-            text80M
-            {...labelProps}
-            color={activeTextColor}
-            style={labelStyle}
-          >
+          <Text {...labelMargins} text80M {...labelProps} color={activeTextColor} style={labelStyle}>
             {label}
           </Text>
         </View>
       </View>
     );
   }, [
+    labelMargins,
     flatListWidth,
     labelContainerStyle,
     labelInnerContainerStyle,
-    shouldDisableRTL,
     label,
     labelProps,
     activeTextColor,
