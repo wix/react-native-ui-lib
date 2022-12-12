@@ -53,7 +53,7 @@ export interface DialogHeaderProps extends ViewProps {
   /**
    * Style for the leading + content + trailing components (without the bottomAccessory)
    */
-   contentContainerStyle?: ViewProps['style'];
+  contentContainerStyle?: ViewProps['style'];
   /**
    * onPress callback for the inner content
    */
