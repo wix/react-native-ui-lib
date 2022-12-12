@@ -12,7 +12,7 @@ import {
   Switch
 } from 'react-native-ui-lib';
 
-const {WheelPicker} = Incubator;
+const {WheelPicker, Dialog} = Incubator;
 
 const DAYS = _.times(10, i => i);
 const HOURS = _.times(24, i => i);
@@ -24,6 +24,7 @@ const SectionsWheelPickerScreen = () => {
   const [selectedDays, setSelectedDays] = useState(0);
   const [selectedHours, setSelectedHours] = useState(0);
   const [selectedMinutes, setSelectedMinutes] = useState(0);
+  const [showTimeDialog, setShowTimeDialog] = useState(false);
 
   const shouldDisableRTL = useMemo(() => {
     return Constants.isRTL && disableRTL;
@@ -129,12 +130,36 @@ const SectionsWheelPickerScreen = () => {
 
   const sectionsToPresent = useMemo(() => _.slice(sections, 0, numOfSections), [numOfSections, sections]);
 
+  const timeSections = useMemo(() => {
+    return [
+      {
+        items: getItems(_.times(24, i => i + 1))
+      },
+      {
+        items: getItems(_.times(12, i => {
+          if (i < 2) {
+            return `0${i * 5}`;
+          }
+          return i * 5;
+        }))
+      }
+    ];
+  }, [getItems]);
+
   const onChangeIndex = useCallback((index: number) => {
     return setNumOfSections(index + 1);
   }, []);
 
   const updateDisableRTLValue = useCallback((value: boolean) => {
     setDisableRTL(value);
+  }, []);
+
+  const onPickTimePress = useCallback(() => {
+    setShowTimeDialog(true);
+  }, []);
+
+  const onDialogDismissed = useCallback(() => {
+    setShowTimeDialog(false);
   }, []);
 
   return (
@@ -157,8 +182,25 @@ const SectionsWheelPickerScreen = () => {
         </Text>
       </View>
       <SectionsWheelPicker disableRTL={disableRTL} sections={sectionsToPresent}/>
-      <Button marginH-150 marginT-40 label={'Save'} onPress={onSavePress}/>
-      <Button marginH-150 marginT-15 label={'Reset'} onPress={onResetPress}/>
+      <View center spread marginT-15 row>
+        <Button marginR-40 label={'Save'} onPress={onSavePress}/>
+        <Button label={'Reset'} onPress={onResetPress}/>
+      </View>
+      <View marginH-40 center>
+        <Button marginT-40 label={'Pick a Time*'} onPress={onPickTimePress}/>
+        <Text center marginT-10>
+          *This time picker illustrates the usage of the disableRTL prop
+        </Text>
+      </View>
+      <Dialog
+        width={'90%'}
+        bottom
+        onDismiss={onDialogDismissed}
+        headerProps={{showKnob: false, showDivider: false}}
+        visible={showTimeDialog}
+      >
+        <SectionsWheelPicker disableRTL={disableRTL} sections={timeSections}/>
+      </Dialog>
     </View>
   );
 };
