@@ -62,7 +62,7 @@ const WheelPickerItem = memo(({
   }, [itemHeight]);
 
   const containerStyle = useMemo(() => {
-    return [{height: itemHeight}, styles.container, disableRTL && styles.flipOnRTL];
+    return [{height: itemHeight}, styles.container, disableRTL && styles.disableRTL];
   }, [itemHeight, disableRTL]);
 
   const textWithLabelPaddingStyle = useMemo(() => {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   textPadding: {
     paddingHorizontal: Spacings.s5
   },
-  flipOnRTL: {
+  disableRTL: {
     flexDirection: 'row-reverse'
   }
 });
