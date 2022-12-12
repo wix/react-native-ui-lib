@@ -139,7 +139,7 @@
       "./jest-setup.js"
     ],
     "testMatch": [
-      "**/*.spec.(js|tsx)"
+      "**/*.spec.(js|ts|tsx)"
     ]
   }
 }

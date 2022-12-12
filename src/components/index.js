@@ -98,6 +98,9 @@ export default {
   get Modal() {
     return require('./modal').default;
   },
+  get NumberInput() {
+    return require('./numberInput').default;
+  },
   get ListItem() {
     return require('./listItem').default;
   },

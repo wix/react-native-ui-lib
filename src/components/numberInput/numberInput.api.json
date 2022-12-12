@@ -1,0 +1,32 @@
+{
+  "name": "NumberInput",
+  "category": "form",
+  "description": "Number Input to create an input with a formatted number",
+  "note": "This requires RN67 to work on Android.",
+  "extends": ["incubator/TextField"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/NumberInputScreen.tsx",
+  "props": [
+    {
+      "name": "onChangeNumber",
+      "type": "(data: NumberInputData) => void",
+      "description": "Callback that is called when the number value has changed.",
+      "required": true
+    },
+    {
+      "name": "initialNumber",
+      "type": "number",
+      "description": "A valid number (in en locale, i.e. only digits and a decimal point)."
+    },
+    {
+      "name": "fractionDigits",
+      "type": "number",
+      "description": "Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.",
+      "default": "2"
+    },
+    {"name": "leadingText", "type": "string", "description": "A leading text"},
+    {"name": "leadingTextStyle", "type": "StyleProp<ViewStyle>", "description": "The style of the leading text"},
+    {"name": "trailingText", "type": "string", "description": "A trailing text"},
+    {"name": "trailingTextStyle", "type": "StyleProp<ViewStyle>", "description": "The style of the trailing text"}
+  ],
+  "snippet": ["<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'} />"]
+}

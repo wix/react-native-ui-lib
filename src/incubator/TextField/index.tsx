@@ -99,7 +99,11 @@ const TextField = (props: InternalTextFieldProps) => {
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
   const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
   const centeredContainerStyle = centered && styles.centeredContainer;
-  const centeredLabelStyle = centered && styles.centeredLabel;
+  const _labelStyle = useMemo(() => (centered ? [labelStyle, styles.centeredLabel] : labelStyle),
+    [labelStyle, centered]);
+  const _validationMessageStyle = useMemo(() => {
+    return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
+  }, [validationMessageStyle, centered]);
 
   return (
     <FieldContext.Provider value={context}>
@@ -107,7 +111,7 @@ const TextField = (props: InternalTextFieldProps) => {
         <Label
           label={label}
           labelColor={labelColor}
-          labelStyle={[labelStyle, centeredLabelStyle]}
+          labelStyle={_labelStyle}
           labelProps={labelProps}
           floatingPlaceholder={floatingPlaceholder}
           validationMessagePosition={validationMessagePosition}
@@ -118,12 +122,12 @@ const TextField = (props: InternalTextFieldProps) => {
             enableErrors={enableErrors}
             validate={others.validate}
             validationMessage={others.validationMessage}
-            validationMessageStyle={validationMessageStyle}
+            validationMessageStyle={_validationMessageStyle}
             retainSpace={retainTopMessageSpace}
             testID={`${props.testID}.validationMessage`}
           />
         )}
-        <View style={[paddings, fieldStyle]} row centerV>
+        <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
           <View flex={!centered} flexG={centered} /* flex row */>
@@ -160,7 +164,7 @@ const TextField = (props: InternalTextFieldProps) => {
               enableErrors={enableErrors}
               validate={others.validate}
               validationMessage={others.validationMessage}
-              validationMessageStyle={validationMessageStyle}
+              validationMessageStyle={_validationMessageStyle}
               retainSpace
               testID={`${props.testID}.validationMessage`}
             />
@@ -198,6 +202,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   centeredLabel: {
+    textAlign: 'center'
+  },
+  centeredValidationMessage: {
+    flexGrow: 1,
     textAlign: 'center'
   }
 });

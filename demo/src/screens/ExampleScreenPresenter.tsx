@@ -25,6 +25,13 @@ interface RadioGroupOptions {
 interface BooleanGroupOptions {
   spread?: boolean;
   afterValueChanged?: () => void;
+  state?: boolean;
+  setState?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface SegmentsExtraOptions {
+  state?: string;
+  setState?: React.Dispatch<React.SetStateAction<any /** no suitable solution for enum */>>;
 }
 
 export function renderHeader(title: string, others?: TextProps) {
@@ -35,19 +42,29 @@ export function renderHeader(title: string, others?: TextProps) {
   );
 }
 
-export function renderBooleanOption(title: string, key: string, {spread, afterValueChanged}: BooleanGroupOptions = {spread: true}) {
+export function renderBooleanOption(title: string,
+  key: string,
+  {spread, afterValueChanged, state, setState}: BooleanGroupOptions = {spread: true}) {
   // @ts-ignore
-  const value = this.state[key];
+  const value = state ?? this.state[key];
   return (
     <View row centerV spread={spread} marginB-s4 key={key}>
-      <Text $textDefault flex={spread} marginR-s4={!spread}>{title}</Text>
+      <Text $textDefault flex={spread} marginR-s4={!spread}>
+        {title}
+      </Text>
       <Switch
         useCustomTheme
         key={key}
         testID={key}
         value={value}
-        // @ts-ignore
-        onValueChange={value => this.setState({[key]: value}, afterValueChanged)}
+        onValueChange={value => {
+          if (setState) {
+            setState(value);
+          } else {
+            // @ts-ignore
+            this.setState({[key]: value}, afterValueChanged);
+          }
+        }}
       />
     </View>
   );
@@ -130,7 +147,9 @@ export function renderColorOption(title: string,
   const value = this.state[key];
   return (
     <View marginV-s2>
-      <Text text70M $textDefault>{title}</Text>
+      <Text text70M $textDefault>
+        {title}
+      </Text>
       <ColorPalette
         value={value}
         colors={colors}
@@ -171,19 +190,34 @@ export function renderSliderOption(title: string,
   );
 }
 
-export function renderMultipleSegmentOptions(title: string, key: string, options: (SegmentedControlItemProps & {value: any})[]) {
+export function renderMultipleSegmentOptions(title: string,
+  key: string,
+  options: (SegmentedControlItemProps & {value: any})[],
+  {state, setState}: SegmentsExtraOptions = {}) {
   // @ts-ignore
-  const value = this.state[key];
+  const value = state ?? this.state[key];
   const index = _.findIndex(options, {value});
 
   return (
     <View row centerV spread marginB-s4 key={key}>
-      {!!title && <Text $textDefault marginR-s2>{title}</Text>}
+      {!!title && (
+        <Text $textDefault marginR-s2>
+          {title}
+        </Text>
+      )}
       <SegmentedControl
         initialIndex={index}
         segments={options}
         // @ts-ignore
-        onChangeIndex={index => this.setState({[key]: options[index].value})}
+        onChangeIndex={index => {
+          const value = options[index].value;
+          if (setState) {
+            setState(value);
+          } else {
+            // @ts-ignore
+            this.setState({[key]: value});
+          }
+        }}
       />
     </View>
   );

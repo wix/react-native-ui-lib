@@ -27,3 +27,10 @@ jest.mock('react-native', () => {
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
   return reactNative;
 });
+
+if (typeof String.prototype.replaceAll === 'undefined') {
+  // eslint-disable-next-line no-extend-native
+  String.prototype.replaceAll = function (match, replace) {
+    return this.split(match).join(replace);
+  };
+}
