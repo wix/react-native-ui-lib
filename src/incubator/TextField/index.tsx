@@ -130,7 +130,7 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          <View flex={!centered} flexG={centered} /* flex row */>
+          {children || <View flex={!centered} flexG={centered} /* flex row */>
             {floatingPlaceholder && (
               <FloatingPlaceholder
                 placeholder={placeholder}
@@ -142,19 +142,17 @@ const TextField = (props: InternalTextFieldProps) => {
                 testID={`${props.testID}.floatingPlaceholder`}
               />
             )}
-            {children || (
-              <Input
-                placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
-                {...others}
-                style={[typographyStyle, colorStyle, others.style]}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onChangeText={onChangeText}
-                placeholder={placeholder}
-                hint={hint}
-              />
-            )}
-          </View>
+            <Input
+              placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
+              {...others}
+              style={[typographyStyle, colorStyle, others.style]}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              onChangeText={onChangeText}
+              placeholder={placeholder}
+              hint={hint}
+            />
+          </View>}
           {trailingAccessory}
           {/* </View> */}
         </View>
