@@ -133,6 +133,7 @@ const TextField = (props: InternalTextFieldProps) => {
           {children || <View flex={!centered} flexG={centered} /* flex row */>
             {floatingPlaceholder && (
               <FloatingPlaceholder
+                defaultValue={others.defaultValue}
                 placeholder={placeholder}
                 floatingPlaceholderStyle={_floatingPlaceholderStyle}
                 floatingPlaceholderColor={floatingPlaceholderColor}

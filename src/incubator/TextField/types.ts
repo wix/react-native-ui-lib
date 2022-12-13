@@ -86,6 +86,7 @@ export interface FloatingPlaceholderProps {
   floatOnFocus?: boolean;
   validationMessagePosition?: ValidationMessagePosition;
   extraOffset?: number;
+  defaultValue?: TextInputProps['defaultValue'];
   testID: string;
 }
 
