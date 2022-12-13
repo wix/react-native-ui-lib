@@ -14,6 +14,11 @@
     "description": "SectionsWheelPicker component for presenting set of WheelPickers",
     "body": ["<SectionsWheelPicker sections={$1}/>"]
   },
+  "Gradient": {
+    "prefix": "gradient",
+    "description": "Gradient Component",
+    "body": ["<Gradient color={$1} numberOfSteps={$2}/>"]
+  },
   "Hint": {
     "prefix": "hint",
     "description": "Hint component for displaying a tooltip over wrapped component",
@@ -94,6 +99,18 @@
       "</Card>"
     ]
   },
+  "SortableList": {
+    "prefix": "sortableList",
+    "description": "A sortable list component",
+    "body": [
+      "<SortableList",
+      "data={data$1}",
+      "onOrderChange={onOrderChange$2}",
+      "renderItem={renderItem$3}",
+      "keyExtractor={keyExtractor$4}",
+      "/>"
+    ]
+  },
   "RadioButton": {
     "prefix": "radioButton",
     "description": "A Radio Button component, should be wrapped with a RadioGroup",
@@ -134,6 +151,19 @@
       "  return this.renderItem(item, index);",
       " ))}",
       "</Picker>"
+    ]
+  },
+  "SortableGridList": {
+    "prefix": "sortableGridList",
+    "description": "An sortable grid list (based on GridList component)",
+    "body": [
+      "<SortableGridList>",
+      " data={items$1}",
+      " maxItemWidth={140$2}",
+      " itemSpacing={Spacings.s3$3}",
+      " listPadding={Spacings.s5}",
+      " onOrderChange={$4}",
+      "/>"
     ]
   },
   "FloatingButton": {
@@ -202,7 +232,7 @@
     "description": "An enhanced customizable TextField with validation support",
     "body": [
       "<TextField",
-      "  placeholder={'Placeholder$1}",
+      "  placeholder={'Placeholder'$1}",
       "  floatingPlaceholder",
       "  onChangeText={() => console.log('changed')$2}",
       "  enableErrors",
@@ -246,6 +276,20 @@
       "<ProgressiveImage",
       " source={{uri: $1, cache: 'reload'}}",
       " thumbnailSource={{uri: $2, cache: 'reload'}}",
+      "/>"
+    ]
+  },
+  "Marquee": {
+    "prefix": "marquee",
+    "description": "Marquee component for sliding text",
+    "body": [
+      "<Marquee",
+      "key={`${directionHorizontal}-${duration}-${numOfReps}`}",
+      "label={'Hey there, this is the new Marquee component from UILIB!'}",
+      "direction={directionHorizontal ? MarqueeDirections.LEFT : MarqueeDirections.RIGHT}",
+      "duration={duration}",
+      "numberOfReps={numOfReps}",
+      "containerStyle={[styles.containerHorizontal, styles.horizontal]}",
       "/>"
     ]
   },
@@ -299,6 +343,19 @@
       "</Dialog>"
     ]
   },
+  "GridList": {
+    "prefix": "gridList",
+    "description": "An auto-generated grid list that calculate item size according to given props",
+    "body": [
+      "<GridList>",
+      " data={items$1}",
+      " maxItemWidth={140$2}",
+      " numColumns={2$3}",
+      " itemSpacing={Spacings.s3$4}",
+      " listPadding={Spacings.s5}",
+      "/>"
+    ]
+  },
   "GridView": {
     "prefix": "gridView",
     "description": "An auto-generated grid view that calculate item size according to given props",
@@ -307,6 +364,7 @@
       " items={[{title: 'item 1', onPress: () => console.log('item 1 pressed')}, {title: 'item 2', onPress: () => console.log('item 2 pressed')}, ]$1}",
       " numColumns={2$2}",
       " lastItemLabel={'+'$3}",
+      " lastItemOverlayColor={'Colors.rgba(Colors.blue30)'$4}",
       "/>"
     ]
   },
@@ -396,6 +454,7 @@
     "description": "Component that shows a full screen with an activity indicator",
     "body": ["<LoaderScreen message={'Message goes here'$1} color={Colors.grey40$2}/>"]
   },
+  "Dash": {"prefix": "dash", "description": "Dashed line Component", "body": ["<Dash vertical={$1} style={$2}/>"]},
   "ActionBar": {
     "prefix": "actionBar",
     "description": "Quick actions bar, each action support Button component props",
@@ -408,6 +467,11 @@
       "  ]}",
       "/>"
     ]
+  },
+  "NumberInput": {
+    "prefix": "numberInput",
+    "description": "Number Input to create an input with a formatted number",
+    "body": ["<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'} />"]
   },
   "Text": {
     "prefix": "text",
@@ -485,6 +549,29 @@
       "/>"
     ]
   },
+  "Timeline": {
+    "prefix": "timeline",
+    "description": "A timeline item to render as part of a timeline list",
+    "body": [
+      "<Timeline ",
+      "renderContent={$1}",
+      "state={Timeline.states.NEXT$2}/>",
+      "topLine={{",
+      "state: Timeline.states.ERROR",
+      "}$3}",
+      "bottomLine={{",
+      "type: Timeline.lineTypes.DASHED,",
+      "color: Colors.orange40",
+      "}$4}",
+      "point={{",
+      "type: Timeline.pointTypes.OUTLINE,",
+      "color: Colors.orange40,",
+      "icon: Assets.icons.demo.camera,",
+      "targetContainerRef: targetContainer,",
+      "alignmentTargetRef: target",
+      "}$5}"
+    ]
+  },
   "TabController.TabPage": {
     "prefix": "tabController.TabPage",
     "description": "TabController's TabPage component",
@@ -529,6 +616,11 @@
     "prefix": "badge",
     "description": "Round colored badge, typically used to show a number",
     "body": ["<Badge label={'999'$1} size={16$2}/>"]
+  },
+  "Dialog.Header": {
+    "prefix": "dialog.Header",
+    "description": "Component for displaying the header of a popup dialog",
+    "body": ["<Dialog.Header title={$1} subtitle={$2} trailingAccessory={$3}/>"]
   },
   "WheelPicker": {
     "prefix": "wheelPicker",
