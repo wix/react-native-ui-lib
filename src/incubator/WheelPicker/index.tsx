@@ -1,7 +1,15 @@
 // TODO: Support style customization
 import {isFunction, isUndefined} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
-import {TextStyle, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, StyleSheet, ListRenderItemInfo, FlatListProps} from 'react-native';
+import {
+  TextStyle,
+  ViewStyle,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  StyleSheet,
+  ListRenderItemInfo,
+  FlatListProps
+} from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {FlatList} from 'react-native-gesture-handler';
 import {Colors, Spacings} from 'style';
@@ -74,6 +82,7 @@ export interface WheelPickerProps {
    * Align the content to center, right ot left (default: center)
    */
   align?: WheelPickerAlign;
+  disableRTL?: boolean;
   /**
    * Extra style for the separators
    */
@@ -97,6 +106,7 @@ const WheelPicker = ({
   labelProps,
   onChange,
   align = WheelPickerAlign.CENTER,
+  disableRTL,
   style,
   children,
   initialValue = 0,
@@ -109,6 +119,9 @@ const WheelPicker = ({
   const scrollHandler = useAnimatedScrollHandler(e => {
     offset.value = e.contentOffset.y;
   });
+  const shouldDisableRTL = useMemo(() => {
+    return Constants.isRTL && disableRTL;
+  }, [disableRTL]);
 
   const {
     height,
@@ -183,6 +196,19 @@ const WheelPicker = ({
   },
   [itemHeight]);
 
+  const labelMargins = useMemo(() => {
+    return {
+      'marginL-s2': !shouldDisableRTL,
+      'marginR-s5': !shouldDisableRTL,
+      'marginR-s2': !!shouldDisableRTL,
+      'marginL-s5': !!shouldDisableRTL
+    };
+  }, [shouldDisableRTL]);
+
+  const fakeLabelProps = useMemo(() => {
+    return {...labelMargins, ...labelProps};
+  }, [labelMargins, labelProps]);
+
   const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps>) => {
     return (
       <Item
@@ -193,16 +219,29 @@ const WheelPicker = ({
         inactiveColor={inactiveTextColor}
         style={textStyle}
         {...item}
+        disableRTL={shouldDisableRTL}
         fakeLabel={label}
         fakeLabelStyle={labelStyle}
-        fakeLabelProps={labelProps}
+        fakeLabelProps={fakeLabelProps}
         centerH={!label}
         onSelect={selectItem}
         testID={`${testID}.item_${index}`}
       />
     );
   },
-  [itemHeight]);
+  [
+    itemHeight,
+    shouldDisableRTL,
+    fakeLabelProps,
+    offset,
+    testID,
+    labelStyle,
+    label,
+    activeTextColor,
+    inactiveTextColor,
+    textStyle,
+    selectItem
+  ]);
 
   const getItemLayout = useCallback((_data: any, index: number) => {
     return {length: itemHeight, offset: itemHeight * index, index};
@@ -234,18 +273,31 @@ const WheelPicker = ({
     return [{position: 'absolute', top: 0, bottom: 0}, alignmentStyle];
   }, [alignmentStyle]);
 
+  const labelInnerContainerStyle = useMemo(() => {
+    return [styles.label, shouldDisableRTL ? {left: 0} : {right: 0}];
+  }, [shouldDisableRTL]);
+
   const labelContainer = useMemo(() => {
     return (
       // @ts-expect-error
       <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
-        <View style={styles.label} centerV pointerEvents="none">
-          <Text marginL-s2 marginR-s5 text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+        <View style={labelInnerContainerStyle} centerV pointerEvents="none">
+          <Text {...labelMargins} text80M {...labelProps} color={activeTextColor} style={labelStyle}>
             {label}
           </Text>
         </View>
       </View>
     );
-  }, [flatListWidth, labelContainerStyle, label, labelProps, activeTextColor, labelStyle]);
+  }, [
+    labelMargins,
+    flatListWidth,
+    labelContainerStyle,
+    labelInnerContainerStyle,
+    label,
+    labelProps,
+    activeTextColor,
+    labelStyle
+  ]);
 
   const fader = useMemo(() => (position: FaderPosition) => {
     return <Fader visible position={position} size={60} {...faderProps}/>;
@@ -313,7 +365,6 @@ const styles = StyleSheet.create({
   },
   label: {
     position: 'absolute',
-    right: 0,
     top: 0,
     bottom: 0
   }
