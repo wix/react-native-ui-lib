@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useState, useCallback, useMemo} from 'react';
-import {Alert} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 import {
   Text,
   View,
@@ -9,10 +9,11 @@ import {
   Button,
   Incubator,
   Constants,
-  Switch
+  Switch,
+  Colors
 } from 'react-native-ui-lib';
 
-const {WheelPicker, Dialog} = Incubator;
+const {WheelPicker} = Incubator;
 
 const DAYS = _.times(10, i => i);
 const HOURS = _.times(24, i => i);
@@ -24,7 +25,6 @@ const SectionsWheelPickerScreen = () => {
   const [selectedDays, setSelectedDays] = useState(0);
   const [selectedHours, setSelectedHours] = useState(0);
   const [selectedMinutes, setSelectedMinutes] = useState(0);
-  const [showTimeDialog, setShowTimeDialog] = useState(false);
 
   const shouldDisableRTL = useMemo(() => {
     return Constants.isRTL && disableRTL;
@@ -154,55 +154,45 @@ const SectionsWheelPickerScreen = () => {
     setDisableRTL(value);
   }, []);
 
-  const onPickTimePress = useCallback(() => {
-    setShowTimeDialog(true);
-  }, []);
-
-  const onDialogDismissed = useCallback(() => {
-    setShowTimeDialog(false);
-  }, []);
-
   return (
     <View>
       <Text text40 marginL-10 marginT-20>
         Sections Wheel Picker
       </Text>
-      <View centerH marginT-40>
+      <View row center style={styles.bottomDivider}>
+        <Text margin-s5> Disable RTL</Text>
+        <Switch value={shouldDisableRTL} onValueChange={updateDisableRTLValue}/>
+      </View>
+      <View centerH marginT-20>
+        <Text text60 marginB-20>
+          Pick a duration
+        </Text>
         <SegmentedControl
           segments={[{label: '1 section'}, {label: '2 sections'}, {label: '3 sections'}]}
           onChangeIndex={onChangeIndex}
           throttleTime={400}
         />
-        <View row center>
-          <Text margin-s5> Disable RTL</Text>
-          <Switch value={disableRTL} onValueChange={updateDisableRTLValue}/>
-        </View>
-        <Text text50 marginV-20>
-          Pick a duration
+      </View>
+      <SectionsWheelPicker numberOfVisibleRows={4} disableRTL={disableRTL} sections={sectionsToPresent}/>
+      <View paddingB-20 center spread row style={styles.bottomDivider}>
+        <Button marginR-40 link label={'Save'} onPress={onSavePress}/>
+        <Button label={'Reset'} link onPress={onResetPress}/>
+      </View>
+      <View>
+        <Text center text60 marginV-20>
+          Pick a time
         </Text>
-      </View>
-      <SectionsWheelPicker disableRTL={disableRTL} sections={sectionsToPresent}/>
-      <View center spread marginT-15 row>
-        <Button marginR-40 label={'Save'} onPress={onSavePress}/>
-        <Button label={'Reset'} onPress={onResetPress}/>
-      </View>
-      <View marginH-40 center>
-        <Button marginT-40 label={'Pick a Time*'} onPress={onPickTimePress}/>
-        <Text center marginT-10>
-          *This time picker illustrates the usage of the disableRTL prop
-        </Text>
-      </View>
-      <Dialog
-        width={'90%'}
-        bottom
-        onDismiss={onDialogDismissed}
-        headerProps={{showKnob: false, showDivider: false}}
-        visible={showTimeDialog}
-      >
         <SectionsWheelPicker disableRTL={disableRTL} sections={timeSections}/>
-      </Dialog>
+      </View>
     </View>
   );
 };
 
 export default SectionsWheelPickerScreen;
+
+const styles = StyleSheet.create({
+  bottomDivider: {
+    borderBottomColor: Colors.$outlineDefault,
+    borderBottomWidth: 4
+  }
+});
