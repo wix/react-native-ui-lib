@@ -279,6 +279,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         disabled={themeProps.editable === false}
       >
         {renderPicker ? (
+          // @ts-expect-error - hopefully will be solved after the picker migration ends
           renderPicker(value, label)
         ) : (
           <TextFieldMigrator

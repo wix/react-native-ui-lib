@@ -5,7 +5,7 @@ import {ThemeManager} from 'style';
 
 const EmptyContext = createContext({});
 
-const useThemeProps = (props: any, componentName: string) => {
+const useThemeProps = <T extends object>(props: T, componentName: string) => {
   // Note: This adds a dependency on current color scheme and update theme props accordingly
   useColorScheme();
   const themeContext = ThemeManager.getThemeContext();
