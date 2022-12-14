@@ -38,7 +38,7 @@
     }
   ],
   "snippet": [
-    "<Modal visible={this.state.visible$1} onBackgroundPress={() => console.log('background pressed')$3}>",
+    "<Modal visible={isVisible$1} onBackgroundPress={() => console.log('background pressed')$3}>",
     " <Text text60>Content</Text>$4",
     "</Modal>"
   ]

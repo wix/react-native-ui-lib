@@ -16,6 +16,6 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"}
   ],
   "snippet": [
-    "<AnimatedImage source={{uri: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg$1}}/>"
+    "<AnimatedImage source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'$1}}/>"
   ]
 }

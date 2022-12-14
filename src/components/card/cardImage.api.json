@@ -14,6 +14,6 @@
     }
   ],
   "snippet": [
-    "<Card.Image source={{uri: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg$1}} height={115$2}/>"
+    "<Card.Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'$1}} height={115$2}/>"
   ]
 }
