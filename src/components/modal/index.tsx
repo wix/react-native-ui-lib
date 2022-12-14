@@ -148,7 +148,7 @@ class Modal extends Component<ModalProps> {
       : {};
 
     return (
-      <RNModal visible={Boolean(visible)} {...others}>
+      <RNModal visible={Boolean(visible)} {...others} transparent={Platform.OS === 'web'}>
         <GestureContainer {...gestureContainerProps}>
           <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
             {this.renderContainer()}
