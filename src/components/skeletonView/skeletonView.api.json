@@ -55,10 +55,10 @@
   ],
   "snippet": [
     "<SkeletonView",
-    " template={SkeletonView.templates.LIST_ITEM$1}",
-    " showContent={this.state.available$2}",
-    " renderContent={<ListItem><Text grey10 text60 marginL-10>The item</Text></ListItem>$3}",
-    " times={10$4}",
+    "  template={SkeletonView.templates.LIST_ITEM$1}",
+    "  showContent={isAvailable$2}",
+    "  renderContent={<ListItem><Text grey10 text60 marginL-10>The item</Text></ListItem>$3}",
+    "  times={10$4}",
     "/>"
   ]
 }

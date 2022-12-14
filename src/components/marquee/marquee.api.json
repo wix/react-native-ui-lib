@@ -18,12 +18,12 @@
   ],
   "snippet": [
     "<Marquee",
-    "key={`${directionHorizontal}-${duration}-${numOfReps}`}",
-    "label={'Hey there, this is the new Marquee component from UILIB!'}",
-    "direction={directionHorizontal ? MarqueeDirections.LEFT : MarqueeDirections.RIGHT}",
-    "duration={duration}",
-    "numberOfReps={numOfReps}",
-    "containerStyle={[styles.containerHorizontal, styles.horizontal]}",
+    "  key={`${index}`$1}",
+    "  label={'Hey there'$2}",
+    "  direction={directionHorizontal ? MarqueeDirections.LEFT : MarqueeDirections.RIGHT$3}",
+    "  duration={duration$4}",
+    "  numberOfReps={numOfReps$5}",
+    "  containerStyle={styles.containerStyle$6}",
     "/>"
   ]
 }

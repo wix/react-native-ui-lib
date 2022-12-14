@@ -20,6 +20,6 @@
     {"name": "testID", "type": "string", "description": "The component test id"}
   ],
   "snippet": [
-    "<TabController.TabPage key={$1} lazy={$2} index={$3}>"
+    "<TabController.TabPage key={'key1'$1} lazy$2 index={index$3}>"
   ]
 }

@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import React from 'react';
-import {TextStyle} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
+import React, {useMemo} from 'react';
+import {TextStyle, StyleSheet} from 'react-native';
+import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import {WheelPicker, WheelPickerProps} from '../../incubator';
 
@@ -32,6 +32,7 @@ export type SectionsWheelPickerProps = {
    * Row text style
    */
   textStyle?: TextStyle;
+  disableRTL?: boolean;
   testID?: string;
 };
 
@@ -42,7 +43,8 @@ export type SectionsWheelPickerProps = {
  */
 
 const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
-  const {sections, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, testID} = props;
+  const {sections, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, disableRTL, testID} =
+    props;
 
   const wheelPickerProps = {
     itemHeight,
@@ -52,13 +54,25 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
     textStyle
   };
 
+  const shouldDisableRTL = useMemo(() => {
+    return Constants.isRTL && disableRTL;
+  }, [disableRTL]);
+
   const renderSections = () =>
     _.map(sections, (section, index) => {
-      return <WheelPicker key={index} testID={`${testID}.${index}`} {...wheelPickerProps} {...section}/>;
+      return (
+        <WheelPicker
+          disableRTL={shouldDisableRTL}
+          key={index}
+          testID={`${testID}.${index}`}
+          {...wheelPickerProps}
+          {...section}
+        />
+      );
     });
 
   return (
-    <View row centerH testID={testID}>
+    <View row centerH style={shouldDisableRTL && styles.disableRTL} testID={testID}>
       {renderSections()}
     </View>
   );
@@ -67,3 +81,9 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
 SectionsWheelPicker.displayName = 'SectionsWheelPicker';
 
 export default asBaseComponent<SectionsWheelPickerProps>(SectionsWheelPicker);
+
+const styles = StyleSheet.create({
+  disableRTL: {
+    flexDirection: 'row-reverse'
+  }
+});

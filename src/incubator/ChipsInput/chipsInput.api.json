@@ -22,8 +22,8 @@
   ],
   "snippet": [
     "<ChipsInput",
-    " placeholder={'Placeholder'$1}",
-    " chips={[{label: 'Falcon 9'}, {label: 'Enterprise'}, {label: 'Challenger', borderRadius: 0}]$2}",
+    "  placeholder={'Placeholder'$1}",
+    "  chips={[{label: 'Falcon 9'}, {label: 'Enterprise'}, {label: 'Challenger', borderRadius: 0}]$2}",
     "/>"
   ]
 }
