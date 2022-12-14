@@ -28,5 +28,8 @@
       "type": "ReactElement",
       "description": "Pass to render a bottom element below the input"
     }
+  ],
+  "snippet": [
+    "<Dialog.Header title={$1} subtitle={$2} trailingAccessory={$3}/>"
   ]
 }

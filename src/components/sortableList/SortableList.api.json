@@ -10,6 +10,7 @@
       "name": "data",
       "type": "ItemT[] (ItemT extends {id: string})",
       "description": "The data of the list, with an id prop as unique identifier.",
+      "note": "Do not update 'data' in 'onOrderChange' (i.e. for each order change); only update it when you change the items (i.g. adding and removing an item).",
       "required": true
     },
     {

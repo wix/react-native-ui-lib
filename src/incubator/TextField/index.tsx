@@ -6,6 +6,7 @@
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
 import React, {useMemo} from 'react';
+import {StyleSheet} from 'react-native';
 import {isEmpty, trim, omit} from 'lodash';
 import {asBaseComponent, forwardRef} from '../../commons/new';
 import View from '../../components/view';
@@ -70,6 +71,7 @@ const TextField = (props: InternalTextFieldProps) => {
     // Input
     placeholder,
     children,
+    centered = false,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
@@ -96,14 +98,20 @@ const TextField = (props: InternalTextFieldProps) => {
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
   const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
+  const centeredContainerStyle = centered && styles.centeredContainer;
+  const _labelStyle = useMemo(() => (centered ? [labelStyle, styles.centeredLabel] : labelStyle),
+    [labelStyle, centered]);
+  const _validationMessageStyle = useMemo(() => {
+    return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
+  }, [validationMessageStyle, centered]);
 
   return (
     <FieldContext.Provider value={context}>
-      <View style={[margins, positionStyle, containerStyle]}>
+      <View style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <Label
           label={label}
           labelColor={labelColor}
-          labelStyle={labelStyle}
+          labelStyle={_labelStyle}
           labelProps={labelProps}
           floatingPlaceholder={floatingPlaceholder}
           validationMessagePosition={validationMessagePosition}
@@ -114,17 +122,18 @@ const TextField = (props: InternalTextFieldProps) => {
             enableErrors={enableErrors}
             validate={others.validate}
             validationMessage={others.validationMessage}
-            validationMessageStyle={validationMessageStyle}
+            validationMessageStyle={_validationMessageStyle}
             retainSpace={retainTopMessageSpace}
             testID={`${props.testID}.validationMessage`}
           />
         )}
-        <View style={[paddings, fieldStyle]} row centerV>
+        <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          <View flexG /* flex row */>
+          {children || <View flex={!centered} flexG={centered} /* flex row */>
             {floatingPlaceholder && (
               <FloatingPlaceholder
+                defaultValue={others.defaultValue}
                 placeholder={placeholder}
                 floatingPlaceholderStyle={_floatingPlaceholderStyle}
                 floatingPlaceholderColor={floatingPlaceholderColor}
@@ -134,19 +143,17 @@ const TextField = (props: InternalTextFieldProps) => {
                 testID={`${props.testID}.floatingPlaceholder`}
               />
             )}
-            {children || (
-              <Input
-                placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
-                {...others}
-                style={[typographyStyle, colorStyle, others.style]}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onChangeText={onChangeText}
-                placeholder={placeholder}
-                hint={hint}
-              />
-            )}
-          </View>
+            <Input
+              placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
+              {...others}
+              style={[typographyStyle, colorStyle, others.style]}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              onChangeText={onChangeText}
+              placeholder={placeholder}
+              hint={hint}
+            />
+          </View>}
           {trailingAccessory}
           {/* </View> */}
         </View>
@@ -156,7 +163,7 @@ const TextField = (props: InternalTextFieldProps) => {
               enableErrors={enableErrors}
               validate={others.validate}
               validationMessage={others.validationMessage}
-              validationMessageStyle={validationMessageStyle}
+              validationMessageStyle={_validationMessageStyle}
               retainSpace
               testID={`${props.testID}.validationMessage`}
             />
@@ -186,5 +193,18 @@ export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextFie
     typography: true,
     position: true,
     color: true
+  }
+});
+
+const styles = StyleSheet.create({
+  centeredContainer: {
+    alignSelf: 'center'
+  },
+  centeredLabel: {
+    textAlign: 'center'
+  },
+  centeredValidationMessage: {
+    flexGrow: 1,
+    textAlign: 'center'
   }
 });
