@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Constants } from 'react-native-ui-lib';
 import Picker from 'react-native-ui-lib/Picker';
 import {Colors} from 'react-native-ui-lib/style';
 
@@ -26,6 +27,7 @@ const PickerWrapper = () => {
       searchPlaceholder={'Search a language'}
       searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
       migrateTextField
+      pickerModalProps={{style: {width: 400, height: 400}}}
     >
       {options.map(option => (
         <Picker.Item key={option.value} value={option} label={''} disabled={option.disabled}/>

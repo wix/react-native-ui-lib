@@ -21,7 +21,8 @@ const baseProjectSource = [
   path.resolve(appDirectory, 'node_modules/@react-native-community/picker'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/netinfo'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/datetimepicker'),
-  path.resolve(appDirectory, 'node_modules/react-native-ui-lib')
+  path.resolve(appDirectory, 'node_modules/react-native-ui-lib'),
+  path.resolve(appDirectory, 'node_modules/react-native-color')
 ];
 
 const useBabelForRN = {
