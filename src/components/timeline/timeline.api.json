@@ -55,6 +55,7 @@
     "    icon: Assets.icons.demo.camera,",
     "    targetContainerRef: targetContainer,",
     "    alignmentTargetRef: target",
-    "  }$5}"
+    "  }$5}",
+    "/>"
     ]
 }
