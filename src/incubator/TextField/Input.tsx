@@ -58,8 +58,7 @@ const styles = StyleSheet.create({
   input: {
     flexGrow: 1,
     textAlign: Constants.isRTL ? 'right' : 'left',
-    // The next line is required to remove the default outline of react-native-web
-    outlineWidth: 0,
+    outlineWidth: Constants.isWeb ? 0 : undefined,
     // Setting paddingTop/Bottom separately fix height issues on iOS with multiline
     paddingTop: 0,
     paddingBottom: 0,
