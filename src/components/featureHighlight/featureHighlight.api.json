@@ -70,10 +70,10 @@
   ],
   "snippet": [
     "<FeatureHighlight",
-    " visible={this.state.visible$1}",
+    " visible={isVisible$1}",
     " title={'Title'$2}",
     " message={'Message goes here'$3}",
-    " getTarget={targets[this.state.currentTarget]$4}",
+    " getTarget={targets[currentTarget]$4}",
     " confirmButtonProps={{label: 'Got It', onPress: () => console.log('confirmed')}$5}",
     " onBackgroundPress={() => console.log('background pressed')$6}",
     "/>"

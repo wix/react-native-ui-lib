@@ -46,6 +46,6 @@
     {"name": "useBackgroundContainer", "type": "boolean", "description": "Use a container for the Image, this can solve issues on Android when animation needs to be performed on the same view; i.e. animation related crashes on Android."}
   ],
   "snippet": [
-    "<Image source={{uri: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg}}/>"
+    "<Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'}$1}/>"
   ]
 }

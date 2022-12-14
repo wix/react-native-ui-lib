@@ -26,11 +26,11 @@
   ],
   "snippet": [
     "<SortableGridList>",
-    " data={items$1}",
-    " maxItemWidth={140$2}",
-    " itemSpacing={Spacings.s3$3}",
-    " listPadding={Spacings.s5}",
-    " onOrderChange={$4}",
+    "  data={items$1}",
+    "  maxItemWidth={140$2}",
+    "  itemSpacing={Spacings.s3$3}",
+    "  listPadding={Spacings.s5}",
+    "  onOrderChange={onOrderChange$4}",
     "/>"
   ]
 }

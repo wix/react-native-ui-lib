@@ -9,9 +9,9 @@
   "images": [],
   "snippet": [
     "<TabController.PageCarousel>",
-    " {_.map(items, (item, key) => {",
-    "  return ($1);",
-    " })}",
+    "  {_.map(items, (item, key) => {",
+    "   return ($1);",
+    "  })}",
     "</TabController.PageCarousel>"
   ]
 }

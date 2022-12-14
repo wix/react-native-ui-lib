@@ -36,5 +36,7 @@
     {"name": "style", "type": "ViewStyle", "description": "Additional style to the dashes"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "The container style"}
   ],
-  "snippet": ["<Dash vertical={$1} style={$2}/>"]
+  "snippet": [
+    "<Dash vertical$1 style={styles.dash$2}/>"
+  ]
 }

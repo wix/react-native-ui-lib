@@ -79,7 +79,7 @@
     " options={[",
     "  {label: '$5', onPress: $6},",
     "  {label: '$7', onPress: $8},",
-    "  {label: 'Cancel', onPress: () => console.log('cancel')$9}",
+    "  {label: 'Cancel'$9, onPress: () => console.log('cancel')$10}",
     " ]}",
     "/>"
   ]
