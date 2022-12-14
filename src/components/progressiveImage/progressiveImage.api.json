@@ -13,8 +13,8 @@
   ],
   "snippet": [
     "<ProgressiveImage",
-    " source={{uri: $1, cache: 'reload'}}",
-    " thumbnailSource={{uri: $2, cache: 'reload'}}",
+    "  source={{uri: $1, cache: 'reload'}}",
+    "  thumbnailSource={{uri: $2, cache: 'reload'}}",
     "/>"
   ]
 }

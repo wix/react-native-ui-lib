@@ -22,5 +22,7 @@
     },
     {"name": "style", "type": "ViewStyle", "description": "Additional style to the component"}
   ],
-  "snippet": ["<Gradient color={$1} numberOfSteps={$2}/>"]
+  "snippet": [
+    "<Gradient color={Colors.green30$1} numberOfSteps={4$2}/>"
+  ]
 }

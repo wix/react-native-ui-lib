@@ -28,5 +28,7 @@
     {"name": "trailingText", "type": "string", "description": "A trailing text"},
     {"name": "trailingTextStyle", "type": "StyleProp<ViewStyle>", "description": "The style of the trailing text"}
   ],
-  "snippet": ["<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'} />"]
+  "snippet": [
+    "<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'}/>"
+  ]
 }

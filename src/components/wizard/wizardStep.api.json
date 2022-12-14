@@ -27,6 +27,6 @@
     {"name": "accessibilityInfo", "type": "string", "description": "Extra text to be read in accessibility mode"}
   ],
   "snippet": [
-    "<Wizard.Step state={$1} label={$2}/>"
+    "<Wizard.Step state={Wizard.States.ENABLED$1} label={'Label'$2}/>"
   ]
 }

@@ -29,9 +29,9 @@
     "<StackAggregator",
     " onItemPress={() => console.log('pressed')$1}",
     ">",
-    " {_.map(items, (item, index) => {",
-    "  return this.renderItem(item, index);",
-    " })}",
+    "  {_.map(items, (item, index) => {",
+    "    return renderItem(item, index);",
+    "  })$2}",
     "</StackAggregator>"
   ]
 }
