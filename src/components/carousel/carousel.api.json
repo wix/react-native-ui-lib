@@ -94,7 +94,7 @@
     }
   ],
   "snippet": [
-    "<Carousel onChangePage={onChangePage$1}>",
+    "<Carousel onChangePage={() => console.log('page changed')$1}>",
     " {_.map(items, item => (",
     "  return renderItem(item, index);",
     " ))$2}",
