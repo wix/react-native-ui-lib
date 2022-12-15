@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback} from 'react';
 import {useSharedValue, withTiming, useAnimatedStyle} from 'react-native-reanimated';
-import {Colors} from 'style';
+import {Colors} from '../../style';
 import View from '../../components/view';
 import {ModalProps} from '../../components/modal';
 import {TransitionViewAnimationType} from './useAnimatedTransition';
