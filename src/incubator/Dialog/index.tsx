@@ -34,6 +34,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     visible: propsVisibility = false,
     headerProps,
     containerStyle,
+    containerProps,
     width,
     height,
     onDismiss,
@@ -163,7 +164,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const renderDialog = () => {
     return (
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View pointerEvents={'box-none'} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
+        <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
           {headerProps && <DialogHeader {...headerProps}/>}
           {children}
         </View>
