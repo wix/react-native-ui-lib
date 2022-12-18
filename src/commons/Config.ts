@@ -1,4 +1,5 @@
 import {SchemeType} from '../style';
+import {AsyncStoragePackage} from 'optionalDeps';
 interface ConfigOptions {
   /**
    * Should use platform colors for design tokens
@@ -18,10 +19,18 @@ class Config {
     this.setConfig({});
   }
 
-  public setConfig(options: ConfigOptions) {
+  public async setConfig(options: ConfigOptions) {
     const {usePlatformColors = false, appScheme = 'light'} = options;
     this.usePlatformColors = usePlatformColors;
-    this.appScheme = appScheme;
+    this.appScheme = await AsyncStoragePackage.getItem('appScheme') || appScheme;
+  }
+
+  public async setLocalScheme(scheme: SchemeType) { 
+    if (AsyncStoragePackage) {
+      await AsyncStoragePackage.setItem('appScheme', scheme);
+    } else {
+      console.error('RNUILib requires installing "@react-native-community/async-storage" dependency to use setLocalScheme');
+    }
   }
 }
 
