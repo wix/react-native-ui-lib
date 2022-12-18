@@ -29,7 +29,7 @@
       "name": "fieldType",
       "type": "PickerFieldTypes",
       "description": "Pass for different field type UI (form, filter or settings)",
-      "default": "Picker.modes.FORM"
+      "default": "Picker.fieldTypes.FORM"
     },
     {"name": "selectionLimit", "type": "number", "description": "Limit the number of selected items"},
     {"name": "enableModalBlur", "type": "boolean", "description": "Adds blur effect to picker modal", "note": "iOS only"},
