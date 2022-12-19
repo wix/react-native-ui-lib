@@ -208,6 +208,8 @@ class Image extends PureComponent<Props, State> {
     const {
       tintColor,
       style,
+      width, 
+      height,
       supportRTL,
       cover,
       aspectRatio,
@@ -233,6 +235,7 @@ class Image extends PureComponent<Props, State> {
           aspectRatio && {aspectRatio},
           !useImageInsideContainer && margins,
           useImageInsideContainer && styles.containImage,
+          !cover && {width, height},
           style,
           useImageInsideContainer && styles.shrink
         ]}
