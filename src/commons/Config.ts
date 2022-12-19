@@ -31,7 +31,7 @@ class Config {
     const {usePlatformColors = false, appScheme = 'light', useLocalScheme = false} = options;
     this.usePlatformColors = usePlatformColors;
     if (isAsyncStorageInstalled && useLocalScheme) {
-      this.appScheme = await AsyncStoragePackage.getItem?.('rnuilib.appScheme') || appScheme;
+      this.appScheme = await this.getLocalScheme?.() || appScheme;
     } else {
       this.appScheme = appScheme;
     }
@@ -42,6 +42,14 @@ class Config {
       await AsyncStoragePackage.setItem?.('rnuilib.appScheme', scheme);
     } else {
       console.error('RNUILib requires installing "@react-native-community/async-storage" dependency to use setLocalScheme');
+    }
+  }
+
+  public async getLocalScheme() {
+    if (isAsyncStorageInstalled) {
+      return AsyncStoragePackage.getItem?.('rnuilib.appScheme');
+    } else {
+      console.error('RNUILib requires installing "@react-native-community/async-storage" dependency to use getLocalScheme');
     }
   }
 }
