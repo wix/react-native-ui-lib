@@ -814,7 +814,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 50,
             }
           }
-          height={50}
           onError={[Function]}
           source={
             Object {
@@ -830,6 +829,10 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
+              Object {
+                "height": 50,
+                "width": 50,
+              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -851,7 +854,6 @@ exports[`AvatarScreen renders screen 1`] = `
             ]
           }
           testID="undefined.image"
-          width={50}
         />
         <View
           accessibilityLabel="badge"
@@ -1039,7 +1041,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 40,
             }
           }
-          height={40}
           onError={[Function]}
           source={
             Object {
@@ -1055,6 +1056,10 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
+              Object {
+                "height": 40,
+                "width": 40,
+              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -1076,7 +1081,6 @@ exports[`AvatarScreen renders screen 1`] = `
             ]
           }
           testID="undefined.image"
-          width={40}
         />
         <View
           accessibilityLabel="badge"
@@ -1275,7 +1279,6 @@ exports[`AvatarScreen renders screen 1`] = `
             accessibilityRole="image"
             accessible={false}
             assetGroup="icons"
-            height={60}
             onError={[Function]}
             onLoad={[Function]}
             source={
@@ -1292,6 +1295,10 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 false,
+                Object {
+                  "height": 60,
+                  "width": 60,
+                },
                 Array [
                   Array [
                     Object {
@@ -1318,7 +1325,6 @@ exports[`AvatarScreen renders screen 1`] = `
               ]
             }
             testID="undefined.image"
-            width={60}
           />
         </View>
       </View>
@@ -1445,7 +1451,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 70,
             }
           }
-          height={70}
           onError={[Function]}
           source={
             Object {
@@ -1461,6 +1466,10 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
+              Object {
+                "height": 70,
+                "width": 70,
+              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -1482,7 +1491,6 @@ exports[`AvatarScreen renders screen 1`] = `
             ]
           }
           testID="undefined.image"
-          width={70}
         />
         <View
           accessibilityLabel="badge"
@@ -1670,7 +1678,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 60,
             }
           }
-          height={60}
           onError={[Function]}
           source={
             Object {
@@ -1686,6 +1693,10 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
+              Object {
+                "height": 60,
+                "width": 60,
+              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -1707,7 +1718,6 @@ exports[`AvatarScreen renders screen 1`] = `
             ]
           }
           testID="undefined.image"
-          width={60}
         />
         <View
           accessibilityLabel="badge"
@@ -1803,6 +1813,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   undefined,
                   undefined,
                   false,
+                  undefined,
                   Object {
                     "backgroundColor": "#FFC50D",
                     "flex": 1,
@@ -1937,7 +1948,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 48,
             }
           }
-          height={48}
           onError={[Function]}
           source={
             Object {
@@ -1953,6 +1963,10 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
+              Object {
+                "height": 48,
+                "width": 48,
+              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -1974,7 +1988,6 @@ exports[`AvatarScreen renders screen 1`] = `
             ]
           }
           testID="undefined.image"
-          width={48}
         />
       </View>
     </View>
@@ -2137,7 +2150,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 50,
             }
           }
-          height={50}
           onError={[Function]}
           onLoadEnd={[Function]}
           onLoadStart={[Function]}
@@ -2155,6 +2167,10 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
+              Object {
+                "height": 50,
+                "width": 50,
+              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -2176,7 +2192,6 @@ exports[`AvatarScreen renders screen 1`] = `
             ]
           }
           testID="undefined.image"
-          width={50}
         />
       </View>
     </View>
@@ -2339,7 +2354,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 50,
             }
           }
-          height={50}
           onError={[Function]}
           onLoadEnd={[Function]}
           onLoadStart={[Function]}
@@ -2357,6 +2371,10 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
+              Object {
+                "height": 50,
+                "width": 50,
+              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -2378,7 +2396,6 @@ exports[`AvatarScreen renders screen 1`] = `
             ]
           }
           testID="undefined.image"
-          width={50}
         />
       </View>
     </View>
@@ -2504,7 +2521,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 50,
             }
           }
-          height={50}
           onError={[Function]}
           source={
             Object {
@@ -2520,6 +2536,10 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
+              Object {
+                "height": 50,
+                "width": 50,
+              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -2541,7 +2561,6 @@ exports[`AvatarScreen renders screen 1`] = `
             ]
           }
           testID="undefined.image"
-          width={50}
         />
       </View>
     </View>
