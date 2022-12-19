@@ -1,9 +1,10 @@
 module.exports = {
   dependency: {
     platforms: {
-      ios: {
-        podspecPath: './lib/ReactNativeUiLib.podspec'
-      },
+      // TODO: Once we upgrade to RN69 we should try using podspecPath again, for now I moved ReactNativeUiLib.podspec file to the root - it seems to work
+      // ios: {
+      //   podspecPath: './lib/ReactNativeUiLib.podspec'
+      // },
       android: {
         sourceDir: './lib/android/',
         packageImportPath: `import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
