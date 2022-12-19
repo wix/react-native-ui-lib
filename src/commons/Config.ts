@@ -47,7 +47,7 @@ class Config {
 
   public async getLocalScheme() {
     if (isAsyncStorageInstalled) {
-      return AsyncStoragePackage.getItem?.('rnuilib.appScheme');
+      return await AsyncStoragePackage.getItem?.('rnuilib.appScheme');
     } else {
       console.error('RNUILib requires installing "@react-native-community/async-storage" dependency to use getLocalScheme');
     }
