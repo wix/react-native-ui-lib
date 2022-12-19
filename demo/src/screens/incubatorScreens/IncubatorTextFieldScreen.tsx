@@ -274,10 +274,18 @@ export default class TextFieldScreen extends Component {
           />
 
           <Text h3 blue50 marginV-s4>
-            Centered
+            Custom Alignments
           </Text>
 
+          <Text marginB-s1>Centered</Text>
           <TextField label="PIN" placeholder="XXXX" centered/>
+
+          <Text marginB-s1>Inline</Text>
+          <View row>
+            <TextField placeholder="hours" inline/>
+            <Text> : </Text>
+            <TextField placeholder="minutes" inline/>
+          </View>
         </View>
         <KeyboardAwareInsetsView/>
       </ScrollView>

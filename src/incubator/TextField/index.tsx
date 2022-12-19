@@ -72,6 +72,7 @@ const TextField = (props: InternalTextFieldProps) => {
     placeholder,
     children,
     centered = false,
+    inline = false,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
@@ -130,7 +131,8 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          {children || <View flex={!centered} flexG={centered} /* flex row */>
+          {/* Note: We should avoid flexing this when the input is inlined or centered*/}
+          {children || <View flex={!centered && !inline}>
             {floatingPlaceholder && (
               <FloatingPlaceholder
                 defaultValue={others.defaultValue}
