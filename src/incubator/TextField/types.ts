@@ -221,6 +221,10 @@ export type TextFieldProps = MarginModifiers &
      * Whether to center the TextField - container and label
      */
     centered?: boolean;
+    /**
+     * Set an alignment fit for inline behavior (when rendered inside a row container)
+     */
+    inline?: boolean;
   };
 
 export type InternalTextFieldProps = PropsWithChildren<
