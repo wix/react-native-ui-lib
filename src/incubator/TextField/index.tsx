@@ -8,8 +8,9 @@
 import React, {useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {isEmpty, trim, omit} from 'lodash';
-import {asBaseComponent, forwardRef} from '../../commons/new';
+import {asBaseComponent, Constants, forwardRef} from '../../commons/new';
 import View from '../../components/view';
+import Text from '../../components/text';
 import {useMeasure} from '../../hooks';
 import {
   TextFieldProps,
@@ -72,6 +73,7 @@ const TextField = (props: InternalTextFieldProps) => {
     placeholder,
     children,
     centered = false,
+    inline = false,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
@@ -130,30 +132,39 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          {children || <View flex={!centered} flexG={centered} /* flex row */>
-            {floatingPlaceholder && (
-              <FloatingPlaceholder
-                defaultValue={others.defaultValue}
+          {/* Note: We should avoid flexing this when the input is inlined or centered*/}
+          {children || (
+            <View flex={!centered && !inline}>
+              {/* Note: Render dummy placeholder for Android center issues */}
+              {Constants.isAndroid && (centered || inline) && (
+                <Text marginR-s1 style={styles.dummyPlaceholder}>
+                  {placeholder}
+                </Text>
+              )}
+              {floatingPlaceholder && (
+                <FloatingPlaceholder
+                  defaultValue={others.defaultValue}
+                  placeholder={placeholder}
+                  floatingPlaceholderStyle={_floatingPlaceholderStyle}
+                  floatingPlaceholderColor={floatingPlaceholderColor}
+                  floatOnFocus={floatOnFocus}
+                  validationMessagePosition={validationMessagePosition}
+                  extraOffset={leadingAccessoryMeasurements?.width}
+                  testID={`${props.testID}.floatingPlaceholder`}
+                />
+              )}
+              <Input
+                placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
+                {...others}
+                style={[typographyStyle, colorStyle, others.style]}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onChangeText={onChangeText}
                 placeholder={placeholder}
-                floatingPlaceholderStyle={_floatingPlaceholderStyle}
-                floatingPlaceholderColor={floatingPlaceholderColor}
-                floatOnFocus={floatOnFocus}
-                validationMessagePosition={validationMessagePosition}
-                extraOffset={leadingAccessoryMeasurements?.width}
-                testID={`${props.testID}.floatingPlaceholder`}
+                hint={hint}
               />
-            )}
-            <Input
-              placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
-              {...others}
-              style={[typographyStyle, colorStyle, others.style]}
-              onFocus={onFocus}
-              onBlur={onBlur}
-              onChangeText={onChangeText}
-              placeholder={placeholder}
-              hint={hint}
-            />
-          </View>}
+            </View>
+          )}
           {trailingAccessory}
           {/* </View> */}
         </View>
@@ -206,5 +217,8 @@ const styles = StyleSheet.create({
   centeredValidationMessage: {
     flexGrow: 1,
     textAlign: 'center'
+  },
+  dummyPlaceholder: {
+    height: 0
   }
 });
