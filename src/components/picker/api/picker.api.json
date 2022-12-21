@@ -29,7 +29,7 @@
       "name": "fieldType",
       "type": "PickerFieldTypes",
       "description": "Pass for different field type UI (form, filter or settings)",
-      "default": "Picker.modes.FORM"
+      "default": "Picker.fieldTypes.FORM"
     },
     {"name": "selectionLimit", "type": "number", "description": "Limit the number of selected items"},
     {"name": "enableModalBlur", "type": "boolean", "description": "Adds blur effect to picker modal", "note": "iOS only"},
@@ -106,13 +106,13 @@
   ],
   "snippet": [
     "<Picker",
-    " value={this.state.value$1}",
-    " placeholder={'Placeholder'$2}",
-    " onChange={() => console.log('changed')$3}",
+    "  value={currentValue$1}",
+    "  placeholder={'Placeholder'$2}",
+    "  onChange={() => console.log('changed')$3}",
     ">",
-    " {_.map(items, item => (",
-    "  return this.renderItem(item, index);",
-    " ))}",
+    "  {_.map(items, item => (",
+    "   return renderItem(item, index);",
+    "  ))$4}",
     "</Picker>"
   ]
 }

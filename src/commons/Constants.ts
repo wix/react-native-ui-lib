@@ -8,6 +8,7 @@ export enum orientations {
 
 const isAndroid: boolean = Platform.OS === 'android';
 const isIOS: boolean = Platform.OS === 'ios';
+const isWeb: boolean = Platform.OS === 'web';
 let isTablet: boolean;
 let statusBarHeight: number;
 let screenHeight: number = Dimensions.get('screen').height;
@@ -68,6 +69,7 @@ const constants = {
   orientations,
   isAndroid,
   isIOS,
+  isWeb,
   getAndroidVersion: () => {
     return isAndroid ? parseInt(Platform.Version as string, 10) : undefined;
   },

@@ -12,6 +12,7 @@
 const componentsCategories = {
   // foundation: 'Foundation',
   // assets: 'Assets',
+  basic: 'Basic',
   navigation: 'Navigation',
   layout: 'Layout',
   controls: 'Controls',

@@ -19,7 +19,7 @@
   ],
   "snippet": [
     "<ExpandableSection",
-    " top={true$1}",
+    " top$1",
     " expanded={false$2}",
     " sectionHeader={<Text grey10 text60>The section header</Text>$3}",
     " onPress={() => console.log('pressed')$4}",

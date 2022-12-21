@@ -51,7 +51,7 @@
     {"name": "style", "type": "ViewStyle", "description": "Additional styling"}
   ],
   "snippet": [
-    "<Hint visible={visible$1} message={'Message goes here'$2} color={Colors.red30$3} onBackgroundPress={() => setVisible(false)$4}>",
+    "<Hint visible={isVisible$1} message={'Message goes here'$2} color={Colors.red30$3} onBackgroundPress={() => setVisible(false)$4}>",
     "  <Text>Text to hint</Text>",
     "</Hint>"
   ]
