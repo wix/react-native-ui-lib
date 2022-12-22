@@ -19,7 +19,7 @@ export default function useFieldState({
   const [failingValidatorIndex, setFailingValidatorIndex] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (!props.value && props.defaultValue !== value) {
+    if (!props.value && props.defaultValue && props.defaultValue !== value) {
       setValue(props.defaultValue);
 
       if (validateOnChange) {
