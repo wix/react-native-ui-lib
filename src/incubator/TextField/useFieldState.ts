@@ -13,10 +13,23 @@ export default function useFieldState({
   onChangeValidity,
   ...props
 }: FieldStateProps) {
-  const [value, setValue] = useState(props.value);
+  const [value, setValue] = useState(props.value ?? props.defaultValue);
   const [isFocused, setIsFocused] = useState(false);
   const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
   const [failingValidatorIndex, setFailingValidatorIndex] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (!props.value && props.defaultValue !== value) {
+      setValue(props.defaultValue);
+
+      if (validateOnChange) {
+        validateField(props.defaultValue);
+      }
+    }
+
+    /* On purpose listen only to props.defaultValue change */
+    /* eslint-disable-next-line react-hooks/exhaustive-deps*/
+  }, [props.defaultValue, validateOnChange]);
 
   useEffect(() => {
     if (validateOnStart) {
