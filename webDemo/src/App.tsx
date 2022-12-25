@@ -152,16 +152,28 @@ const itemsToRender: ItemToRender[] = [
   },
   {
     title: 'TextField',
-    FC: () => (
-      <TextField
-        text70
-        migrate
-        containerStyle={{marginBottom: 10}}
-        placeholder="type here..."
-        onChangeText={(text: string) => {
-          console.log(text);
-        }}
-      />)
+    FC: () => {
+      const [defaultValue, setDefaultValue] = useState('Default value');
+      const updateDefaultValue = () => {
+        setDefaultValue(`${defaultValue}1`);
+      };
+
+      return (
+        <>
+          <Button label="update default value" onPress={updateDefaultValue}/>
+          <TextField
+            text70
+            migrate
+            defaultValue={defaultValue}
+            containerStyle={{marginBottom: 10}}
+            placeholder="type here..."
+            onChangeText={(text: string) => {
+              console.log(text);
+            }}
+          />
+        </>
+      );
+    }
   },
   {
     title: 'Switch',
@@ -169,7 +181,7 @@ const itemsToRender: ItemToRender[] = [
       const [switchValue, setSwitchValue] = useState(true);
       return (
         <Switch
-          
+
           value={switchValue}
           onValueChange={setSwitchValue}
           style={{marginBottom: 20}}

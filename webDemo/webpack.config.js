@@ -45,7 +45,7 @@ const imageLoaderConfiguration = {
       esModule: false
     }
   }
-}; 
+};
 
 const babelLoaderAppConfiguration = {
   test: /\.(js|jsx|ts|tsx)$/,
@@ -53,7 +53,7 @@ const babelLoaderAppConfiguration = {
   use: useBabelForRN
 };
 
-module.exports = 
+module.exports =
 {
   entry: {
     app: path.resolve(appDirectory, './src/index.ts')
@@ -83,7 +83,7 @@ module.exports =
   devServer: {
     contentBase: path.resolve(appDirectory, './dist'),
     compress: true,
-    port: 9002
+    port: 9001
   },
   plugins: [
     new CleanWebpackPlugin({
