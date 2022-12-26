@@ -39,6 +39,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "color": "^3.1.0",
     "commons-validator-js": "^1.0.237",
+    "date-fns": "^2.29.3",
     "deprecated-react-native-prop-types": "^2.3.0",
     "hoist-non-react-statics": "^3.0.0",
     "lodash": "^4.17.21",
