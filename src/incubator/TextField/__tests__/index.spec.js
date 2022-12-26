@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {fireEvent, render} from '@testing-library/react-native';
 import TextField from '../index';
+import {Constants} from '../../../commons/new';
 
 const defaultProps = {
   testID: 'field',
@@ -29,7 +30,7 @@ describe('TextField', () => {
 
       const input = renderTree.getByTestId('field');
       renderTree.getByPlaceholderText(defaultProps.placeholder);
-      
+
       fireEvent(input, 'focus');
       renderTree.getByPlaceholderText(defaultProps.placeholder);
     });
@@ -81,6 +82,35 @@ describe('TextField', () => {
       fireEvent.changeText(input, 'mail@mail.com');
       const validationMessageElement = renderTree.queryByText(props.validationMessage);
       expect(validationMessageElement).toBe(null);
+    });
+  });
+
+  describe('defaultValue', () => {
+    const props = {
+      ...defaultProps,
+      defaultValue: 'someDefaultValue',
+      value: 'someValue'
+    };
+
+    it('value should equal defaultValue on first render when value not given', () => {
+      const renderTree = render(<TestCase {...props} value={undefined}/>);
+
+      renderTree.getByDisplayValue('someDefaultValue');
+    });
+
+    it('value should equal value on first render when given', () => {
+      const renderTree = render(<TestCase {...props} defaultValue={undefined}/>);
+
+      renderTree.getByDisplayValue('someValue');
+    });
+
+    it('on web should reset defaultValue when prop changed after first render', () => {
+      Constants.isWeb = true;
+
+      const renderTree = render(<TestCase {...props} value={undefined}/>);
+
+      renderTree.rerender(<TestCase {...props} value={undefined} defaultValue={'someUpdatedDefaultValue'}/>);
+      renderTree.getByDisplayValue('someUpdatedDefaultValue');
     });
   });
 });

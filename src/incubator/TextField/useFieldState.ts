@@ -3,6 +3,7 @@ import _ from 'lodash';
 import * as Presenter from './Presenter';
 import {useDidUpdate} from 'hooks';
 import {FieldStateProps} from './types';
+import {Constants} from '../../commons/new';
 
 export default function useFieldState({
   validate,
@@ -19,7 +20,7 @@ export default function useFieldState({
   const [failingValidatorIndex, setFailingValidatorIndex] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (!props.value && props.defaultValue && props.defaultValue !== value) {
+    if (Constants.isWeb && !props.value && props.defaultValue && props.defaultValue !== value) {
       setValue(props.defaultValue);
 
       if (validateOnChange) {
