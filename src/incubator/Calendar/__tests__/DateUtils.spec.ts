@@ -13,5 +13,11 @@ describe('Calendar/DateUtils', () => {
 
   describe('getDaysOfWeekNumber', () => {});
 
-  describe('getDayOfDate', () => {});
+  describe('getDayOfDate', () => {
+    it('should return the day number from the date timestamp', () => {
+
+      const day = DateUtils.getDayOfDate(new Date('2022-12-26').getTime());
+      expect(day).toBe(26);
+    });
+  });
 });
