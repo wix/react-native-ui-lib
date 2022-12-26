@@ -109,6 +109,9 @@ const TextField = (props: InternalTextFieldProps) => {
   const inputStyle = useMemo(() => {
     return [typographyStyle, colorStyle, others.style, centered && styles.centeredInput];
   }, [typographyStyle, colorStyle, others.style, centered]);
+  const dummyPlaceholderStyle = useMemo(() => {
+    return [inputStyle, styles.dummyPlaceholder];
+  }, [inputStyle]);
 
   return (
     <FieldContext.Provider value={context}>
@@ -140,7 +143,7 @@ const TextField = (props: InternalTextFieldProps) => {
             <View flex={!centered && !inline}>
               {/* Note: Render dummy placeholder for Android center issues */}
               {Constants.isAndroid && (centered || inline) && (
-                <Text marginR-s1 style={styles.dummyPlaceholder}>
+                <Text marginR-s1 style={dummyPlaceholderStyle}>
                   {placeholder}
                 </Text>
               )}
