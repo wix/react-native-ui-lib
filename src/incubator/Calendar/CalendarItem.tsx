@@ -6,8 +6,8 @@ import View from '../../components/view';
 function CalendarItem() {
   return (
     <View>
-      <Header/>
-      <Month month={11} year={2022}/>;
+      <Header month={11} year={2022}/>
+      <Month month={11} year={2022}/>
     </View>
   );
 }
