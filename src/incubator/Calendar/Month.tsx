@@ -15,7 +15,7 @@ function Month(props: MonthProps) {
   return (
     <View>
       {weekNumbers.map(weekNumber => {
-        return <Week weekNumber={weekNumber} year={year}/>;
+        return <Week key={weekNumber} weekNumber={weekNumber} year={year}/>;
       })}
     </View>
   );
