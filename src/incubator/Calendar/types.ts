@@ -20,4 +20,9 @@ export interface CalendarItemProps {
   year: number;
 }
 
+export interface HeaderProps {
+  month?: number;
+  year: number;
+}
+
 export interface CalendarProps {}
