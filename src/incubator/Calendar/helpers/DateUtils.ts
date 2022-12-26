@@ -1,5 +1,18 @@
+import getWeek from 'date-fns/getWeek';
+
 export function getWeekNumbersOfMonth(year: number, month: number) {
-  return [3, 4, 5, 6];
+  const firstDayOfMonth = new Date(year, month, 1);
+
+  const weekNumbers = [];
+
+  while (firstDayOfMonth.getMonth() === month) {
+    // Push the week number for the current day to the array
+    weekNumbers.push(getWeek(firstDayOfMonth));
+    // Increment the date by one day
+    firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 7);
+  }
+
+  return weekNumbers;
 }
 
 export function getDaysOfWeekNumber(year: number, weekNumber: number) {
