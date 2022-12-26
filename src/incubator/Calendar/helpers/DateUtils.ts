@@ -3,7 +3,7 @@ export function getWeekNumbersOfMonth(year: number, month: number) {
 }
 
 export function getDaysOfWeekNumber(year: number, weekNumber: number) {
-  return [1, 2, 3, 4, 5, 6, 7];
+  return [1672056000, 1672142400, 1672228800, 1672315200, 1672401600, 1672488000, 1672574400];
 }
 
 export function getDayOfDate(date: number) {
