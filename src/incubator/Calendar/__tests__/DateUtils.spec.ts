@@ -11,7 +11,12 @@ describe('Calendar/DateUtils', () => {
     });
   });
 
-  describe('getDaysOfWeekNumber', () => {});
+  describe('getDaysOfWeekNumber', () => {
+    it('should return array of 7 items', () => {
+      const daysInWeek = DateUtils.getDaysOfWeekNumber(2022, 11);
+      expect(daysInWeek.length).toBe(7);
+    });
+  });
 
   describe('getDayOfDate', () => {
     it('should return the day number from the date timestamp', () => {
