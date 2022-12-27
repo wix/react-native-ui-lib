@@ -2,7 +2,7 @@ module.exports = {
   dependency: {
     platforms: {
       ios: {
-        project: './lib/ios/'
+        podspecPath: './lib/ReactNativeUiLib.podspec'
       },
       android: {
         sourceDir: './lib/android/',

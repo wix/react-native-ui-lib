@@ -13,13 +13,15 @@ const components = apis.map(filePath => {
 const output = {};
 if (components) {
   components.forEach(component => {
-    const object = {};
-    const name = component.name;
-    object.prefix = name.charAt(0).toLowerCase() + name.slice(1);
-    object.description = component.description;
-    object.body = component.snippet;
+    if (component.snippet) {
+      const object = {};
+      const name = component.name;
+      object.prefix = name.charAt(0).toLowerCase() + name.slice(1);
+      object.description = component.description;
+      object.body = component.snippet;
 
-    output[component.name] = object;
+      output[component.name] = object;
+    }
   });
 
   /* eslint-disable */

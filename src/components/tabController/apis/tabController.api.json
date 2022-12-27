@@ -24,12 +24,12 @@
   ],
   "snippet": [
     "<TabController items={[{label: 'First'}, {label: 'Second'}, {label: 'Third'}]$1}>",
-    " <TabController.TabBar enableShadows/>",
-    " <View flex>",
-    "   <TabController.TabPage index={0}>{renderFirstPage()}</TabController.TabPage>",
-    "   <TabController.TabPage index={1} lazy>{renderSecondPage()}</TabController.TabPage>",
-    "   <TabController.TabPage index={2} lazy>{renderThirdPage()}</TabController.TabPage>",
-    " </View>",
+    "  <TabController.TabBar enableShadows$2/>",
+    "  <View flex>",
+    "    <TabController.TabPage index={0}>{renderFirstPage()}</TabController.TabPage>",
+    "    <TabController.TabPage index={1} lazy>{renderSecondPage()}</TabController.TabPage>",
+    "    <TabController.TabPage index={2} lazy>{renderThirdPage()}</TabController.TabPage>",
+    "  </View>",
     "</TabController>"
   ]
 }

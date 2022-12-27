@@ -50,11 +50,11 @@
   ],
   "snippet": [
     "<Dialog", 
-    " visible={this.state.visible$1}",
+    " visible={isVisible$1}",
     " onDismiss={() => console.log('dismissed')$2}",
     " panDirection={PanningProvider.Directions.DOWN$3}",
     ">",
-    " {<Text text60>Content</Text>}$4",
+    " <Text text60>Content</Text>$4",
     "</Dialog>"
   ]
 }

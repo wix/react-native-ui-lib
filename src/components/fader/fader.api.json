@@ -21,6 +21,6 @@
     }
   ],
   "snippet": [
-    "<Fader visible={this.state.visible$1} position={Fader.position.BOTTOM$2}/>"
+    "<Fader visible={isVisible$1} position={Fader.position.BOTTOM$2}/>"
   ]
 }

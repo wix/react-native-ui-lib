@@ -40,7 +40,7 @@
     " maxItemWidth={140$2}",
     " numColumns={2$3}",
     " itemSpacing={Spacings.s3$4}",
-    " listPadding={Spacings.s5}",
+    " listPadding={Spacings.s5$5}",
     "/>"
   ]
 }

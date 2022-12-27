@@ -22,7 +22,7 @@ export interface DashProps extends ViewProps {
 }
 
 const Dash = (props: DashProps) => {
-  const {containerStyle, vertical, gap, length, thickness, color, style} = props;
+  const {containerStyle, vertical, gap, length, thickness, color, style, testID} = props;
   const [measurements, setMeasurements] = useState<Layout | undefined>();
 
   const onDashLayout = useCallback((event: LayoutChangeEvent) => {
@@ -63,7 +63,7 @@ const Dash = (props: DashProps) => {
   };
 
   return (
-    <View onLayout={onDashLayout} style={lineStyle}>
+    <View onLayout={onDashLayout} style={lineStyle} testID={testID}>
       {renderDash()}
     </View>
   );

@@ -30,6 +30,6 @@
     }
   ],
   "snippet": [
-    "<Dialog.Header title={$1} subtitle={$2} trailingAccessory={$3}/>"
+    "<Dialog.Header title={'Title'$1} subtitle={'Subtitle'$2} trailingAccessory={renderAccessory$3}/>"
   ]
 }
