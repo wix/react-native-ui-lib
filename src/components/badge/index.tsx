@@ -229,6 +229,7 @@ class Badge extends PureComponent<BadgeProps> {
         <Image
           source={icon!}
           resizeMode="contain"
+          tintColor={Colors.$iconDefaultLight}
           //@ts-ignore
           borderColor={borderColor}
           {...iconProps}
