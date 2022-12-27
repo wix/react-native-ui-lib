@@ -71,7 +71,7 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
   }, []);
 
   return (
-    <View absF style={hidePlaceholder && styles.hidden}>
+    <View absF style={hidePlaceholder && styles.hidden} pointerEvents={'none'}>
       <Text
         animated
         color={getColorByState(floatingPlaceholderColor, context)}

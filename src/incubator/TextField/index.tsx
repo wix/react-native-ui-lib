@@ -105,6 +105,9 @@ const TextField = (props: InternalTextFieldProps) => {
   const _validationMessageStyle = useMemo(() => {
     return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
   }, [validationMessageStyle, centered]);
+  const inputStyle = useMemo(() => {
+    return [typographyStyle, colorStyle, others.style, centered && styles.centeredInput];
+  }, [typographyStyle, colorStyle, others.style, centered]);
 
   return (
     <FieldContext.Provider value={context}>
@@ -158,7 +161,7 @@ const TextField = (props: InternalTextFieldProps) => {
               <Input
                 placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
                 {...others}
-                style={[typographyStyle, colorStyle, others.style]}
+                style={inputStyle}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChangeText}
@@ -214,6 +217,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   centeredLabel: {
+    textAlign: 'center'
+  },
+  centeredInput: {
     textAlign: 'center'
   },
   centeredValidationMessage: {

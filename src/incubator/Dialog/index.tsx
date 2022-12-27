@@ -4,9 +4,9 @@ import {StyleSheet, View as RNView} from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
 import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
-import {Spacings, Colors, BorderRadiuses} from 'style';
+import {Spacings, Colors, BorderRadiuses} from '../../style';
 import {asBaseComponent} from '../../commons/new';
-import {useDidUpdate} from 'hooks';
+import {useDidUpdate} from '../../hooks';
 import View from '../../components/view';
 import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
@@ -34,6 +34,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     visible: propsVisibility = false,
     headerProps,
     containerStyle,
+    containerProps,
     width,
     height,
     onDismiss,
@@ -163,7 +164,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const renderDialog = () => {
     return (
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View pointerEvents={'box-none'} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
+        <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
           {headerProps && <DialogHeader {...headerProps}/>}
           {children}
         </View>

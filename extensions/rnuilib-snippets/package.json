@@ -10,12 +10,14 @@
         "url": "https://github.com/wix/react-native-ui-lib"
     },
     "icon": "assets/icon.png",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "engines": {
         "vscode": "^1.64.0"
     },
     "keywords": [
         "react-native",
+        "ui",
+        "components",
         "snippets",
         "javascript",
         "typescript"

@@ -26,6 +26,6 @@
     {"name": "testID", "type": "string", "description": "The component test id"}
   ],
   "snippet": [
-    "<TabController.TabBar activeBackgroundColor={$1}/>"
+    "<TabController.TabBar activeBackgroundColor={Colors.blue30$1}/>"
   ]
 }

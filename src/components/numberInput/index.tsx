@@ -1,7 +1,7 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useDidUpdate} from 'hooks';
+import {useDidUpdate, useThemeProps} from 'hooks';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
 import Text from '../text';
 import {getInitialData, parseInput, generateOptions, Options, NumberInputData} from './Presenter';
@@ -47,6 +47,7 @@ export type NumberInputProps = React.PropsWithRef<
 };
 
 function NumberInput(props: NumberInputProps, ref: any) {
+  const themeProps = useThemeProps(props, 'NumberInput');
   const {
     onChangeNumber,
     initialNumber,
@@ -60,7 +61,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
     trailingTextStyle,
     placeholder,
     ...others
-  } = props;
+  } = themeProps;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
   const [data, setData] = useState<NumberInputData>();
 
