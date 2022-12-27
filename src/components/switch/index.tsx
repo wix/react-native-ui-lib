@@ -177,7 +177,7 @@ function createStyles({
   onColor = Colors.$backgroundPrimaryHeavy,
   offColor = Colors.$backgroundNeutralIdle,
   disabledColor = Colors.$backgroundDisabled,
-  thumbColor = Colors.white,
+  thumbColor = Colors.$iconDefaultLight,
   thumbSize = DEFAULT_THUMB_SIZE
 }: SwitchProps) {
   return StyleSheet.create({
