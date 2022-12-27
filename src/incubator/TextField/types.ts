@@ -222,6 +222,7 @@ export type TextFieldProps = MarginModifiers &
      */
     centered?: boolean;
     /**
+     * @deprecated
      * Set an alignment fit for inline behavior (when rendered inside a row container)
      */
     inline?: boolean;

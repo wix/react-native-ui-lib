@@ -282,9 +282,9 @@ export default class TextFieldScreen extends Component {
 
           <Text marginB-s1>Inline</Text>
           <View row>
-            <TextField placeholder="hours" inline/>
+            <TextField placeholder="hours"/>
             <Text marginT-s1> : </Text>
-            <TextField placeholder="minutes" inline/>
+            <TextField placeholder="minutes"/>
           </View>
         </View>
         <KeyboardAwareInsetsView/>
