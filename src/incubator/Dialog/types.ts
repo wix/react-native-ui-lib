@@ -78,6 +78,10 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
+   * Extra props for the container
+   */
+  containerProps?: Omit<ViewProps, 'reanimated' | 'animated' | 'style' | 'onLayout' | 'ref' | 'testID'>;
+  /**
    * The dialog width.
    */
   width?: string | number;
