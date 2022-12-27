@@ -93,16 +93,22 @@ function NumberInput(props: NumberInputProps, ref: any) {
       processInput(data.userInput);
     }
   }, [options]);
+
+  const hasText = useMemo(() => {
+    // Render (none or) both leading and trailing accessories together for flexness (especially when validation message is long)
+    return !isEmpty(leadingText) || !isEmpty(trailingText);
+  }, [leadingText, trailingText]);
+
   const leadingAccessory = useMemo(() => {
-    if (leadingText) {
-      return <Text style={leadingTextStyle}>{leadingText}</Text>;
+    if (hasText) {
+      return <Text style={[styles.accessory, {textAlign: 'right'}, leadingTextStyle]}>{leadingText}</Text>;
     }
-  }, [leadingText, leadingTextStyle]);
+  }, [hasText, leadingText, leadingTextStyle]);
   const trailingAccessory = useMemo(() => {
-    if (trailingText) {
-      return <Text style={trailingTextStyle}>{trailingText}</Text>;
+    if (hasText) {
+      return <Text style={[styles.accessory, trailingTextStyle]}>{trailingText}</Text>;
     }
-  }, [trailingText, trailingTextStyle]);
+  }, [hasText, trailingText, trailingTextStyle]);
 
   const _containerStyle = useMemo(() => {
     return [styles.containerStyle, containerStyle];
@@ -148,5 +154,8 @@ export default React.forwardRef<TextFieldProps, NumberInputProps>(NumberInput);
 const styles = StyleSheet.create({
   containerStyle: {
     overflow: 'hidden'
+  },
+  accessory: {
+    flexGrow: 999
   }
 });

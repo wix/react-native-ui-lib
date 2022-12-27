@@ -94,11 +94,6 @@
       "description": "Whether to center the TextField - container and label"
     },
     {
-      "name": "inline",
-      "type": "boolean",
-      "description": "Set an alignment for inline behavior (when rendered inside a row container)"
-    },
-    {
       "name": "useGestureHandlerInput",
       "type": "boolean",
       "description": "Use react-native-gesture-handler instead of react-native for the base TextInput"

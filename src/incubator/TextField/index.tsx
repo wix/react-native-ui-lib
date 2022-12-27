@@ -72,8 +72,7 @@ const TextField = (props: InternalTextFieldProps) => {
     // Input
     placeholder,
     children,
-    centered = false,
-    inline = false,
+    centered,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
@@ -132,11 +131,14 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          {/* Note: We should avoid flexing this when the input is inlined or centered*/}
+
+          {/* Note: We're passing flexG to the View to support properly inline behavior - so the input will be rendered correctly in a row container.
+            Known Issue: This slightly push the trailing accessory when entering a long text
+          */}
           {children || (
-            <View flex={!centered && !inline}>
+            <View flexG>
               {/* Note: Render dummy placeholder for Android center issues */}
-              {Constants.isAndroid && (centered || inline) && (
+              {Constants.isAndroid && centered && (
                 <Text marginR-s1 style={styles.dummyPlaceholder}>
                   {placeholder}
                 </Text>
