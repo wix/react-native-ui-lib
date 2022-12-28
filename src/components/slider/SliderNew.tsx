@@ -92,35 +92,31 @@ const SliderNew = (props: SliderProps) => {
   const onTrackPress = useCallback((event) => {
     let locationX = event.nativeEvent.locationX;
     if (shouldBounceToStep) {
-      const x = locationX;
-      const stepInterpolated = 
-        interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value - thumbCenter]);
-      const newX = Math.round(x / stepInterpolated) * stepInterpolated;
-      locationX = newX;
+      locationX = getStepComputedX(locationX);
     }
     if (useRange) {
       if (locationX === offset.value.x) {
-        console.warn('-1');
-        activeThumb.value = ThumbType.GREEN;
-        updateGreen(locationX);
-      } else if (locationX === offsetGreen.value.x) {
-        console.warn('0');
-        activeThumb.value = ThumbType.BLUE;
-        updateBlue(locationX);
-      } else if (locationX > offsetGreen.value.x) {
         console.warn('1');
         activeThumb.value = ThumbType.GREEN;
         updateGreen(locationX);
-      } else if (locationX < offset.value.x) {
+      } else if (locationX === offsetGreen.value.x) {
         console.warn('2');
+        activeThumb.value = ThumbType.BLUE;
+        updateBlue(locationX);
+      } else if (locationX > offsetGreen.value.x) {
+        console.warn('3');
+        activeThumb.value = ThumbType.GREEN;
+        updateGreen(locationX);
+      } else if (locationX < offset.value.x) {
+        console.warn('4');
         activeThumb.value = ThumbType.BLUE;
         updateBlue(locationX);
       } else if (locationX > offset.value.x && locationX < offsetGreen.value.x) {
         if (activeThumb.value === ThumbType.BLUE) {
-          console.warn('3');
+          console.warn('5');
           updateBlue(locationX);
         } else {
-          console.warn('4');
+          console.warn('6');
           updateGreen(locationX);
         }
       }
@@ -265,10 +261,9 @@ const SliderNew = (props: SliderProps) => {
 
   const getStepComputedX = (x: number) => {
     'worklet';
-    return x;
-    // const stepInterpolated = 
-    //   interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value - thumbCenter]);
-    // return Math.round(x / stepInterpolated) * stepInterpolated;
+    const stepInterpolated = 
+      interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value - thumbCenter]);
+    return Math.round(x / stepInterpolated) * stepInterpolated;
   };
 
   const trackAnimatedStyles = useAnimatedStyle(() => {
