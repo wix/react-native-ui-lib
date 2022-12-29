@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {StyleSheet, ScrollView, ActivityIndicator, Animated} from 'react-native';
 
-import TextField from 'react-native-ui-lib/TextField';
+// import TextField from 'react-native-ui-lib/TextField';
 import View from 'react-native-ui-lib/View';
 import Button from 'react-native-ui-lib/Button';
 import Switch from 'react-native-ui-lib/Switch';
@@ -18,7 +18,14 @@ import AnimatedImage from 'react-native-ui-lib/AnimatedImage';
 import Avatar from 'react-native-ui-lib/Avatar';
 import Drawer from 'react-native-ui-lib/Drawer';
 
-import {Colors, Spacings, Typography, Assets, Text} from 'react-native-ui-lib';
+import {
+  Colors,
+  Spacings,
+  Typography,
+  Assets,
+  Text,
+  Incubator,
+} from 'react-native-ui-lib';
 
 import Picker from './examples/Picker';
 import RadioGroup from './examples/RadioButtonGroup';
@@ -153,7 +160,7 @@ const itemsToRender: ItemToRender[] = [
   {
     title: 'TextField',
     FC: () => {
-      const [defaultValue, setDefaultValue] = useState('Default value');
+      const [defaultValue, setDefaultValue] = useState('I am Default value');
       const updateDefaultValue = () => {
         setDefaultValue(`${defaultValue}1`);
       };
@@ -161,7 +168,7 @@ const itemsToRender: ItemToRender[] = [
       return (
         <>
           <Button label="update default value" onPress={updateDefaultValue}/>
-          <TextField
+          <Incubator.TextField
             text70
             migrate
             defaultValue={defaultValue}

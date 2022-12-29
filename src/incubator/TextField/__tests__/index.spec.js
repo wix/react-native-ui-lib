@@ -104,8 +104,12 @@ describe('TextField', () => {
       renderTree.getByDisplayValue('someValue');
     });
 
-    it('on web should reset defaultValue when prop changed after first render', () => {
-      Constants.isWeb = true;
+    it.each`
+    platform    | isWeb
+    ${'web'}    | ${true}
+    ${'native'} | ${false}
+    `('on $platform should reset defaultValue when prop changed after first render', (args) => {
+      Constants.isWeb = args.isWeb;
 
       const renderTree = render(<TestCase {...props} value={undefined}/>);
 
