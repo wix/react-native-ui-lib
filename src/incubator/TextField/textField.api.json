@@ -89,6 +89,11 @@
       "description": "Custom formatter for the input value (used only when input if not focused)"
     },
     {
+      "name": "centered",
+      "type": "boolean",
+      "description": "Whether to center the TextField - container and label"
+    },
+    {
       "name": "useGestureHandlerInput",
       "type": "boolean",
       "description": "Use react-native-gesture-handler instead of react-native for the base TextInput"
