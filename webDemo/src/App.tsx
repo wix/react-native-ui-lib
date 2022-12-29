@@ -24,7 +24,7 @@ import {
   Typography,
   Assets,
   Text,
-  Incubator,
+  Incubator
 } from 'react-native-ui-lib';
 
 import Picker from './examples/Picker';
