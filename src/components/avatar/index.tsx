@@ -301,9 +301,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   }, [_baseContainerStyle, imageStyle]);
 
   const renderImage = () => {
-    const hasImage = !_.isUndefined(_source);
-
-    if (hasImage) {
+    if (_source !== undefined) {
       // Looks like reanimated does not support SVG
       const ImageContainer = animate && !isSvg(_source) ? AnimatedImage : Image;
       return (

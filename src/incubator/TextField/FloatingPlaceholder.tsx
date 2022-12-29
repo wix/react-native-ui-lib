@@ -2,7 +2,7 @@ import React, {useContext, useRef, useCallback, useState, useMemo} from 'react';
 import {Animated, LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
 import {useDidUpdate} from 'hooks';
 import {FloatingPlaceholderProps, ValidationMessagePosition} from './types';
-import {getColorByState} from './Presenter';
+import {getColorByState, shouldPlaceholderFloat} from './Presenter';
 import {Colors} from '../../style';
 import {Constants} from '../../commons/new';
 import View from '../../components/view';
@@ -11,31 +11,32 @@ import FieldContext from './FieldContext';
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
-const FloatingPlaceholder = ({
-  placeholder,
-  floatingPlaceholderColor = Colors.$textNeutralLight,
-  floatingPlaceholderStyle,
-  floatOnFocus,
-  validationMessagePosition,
-  extraOffset = 0,
-  testID
-}: FloatingPlaceholderProps) => {
+const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
+  const {
+    placeholder,
+    floatingPlaceholderColor = Colors.$textNeutralLight,
+    floatingPlaceholderStyle,
+    validationMessagePosition,
+    extraOffset = 0,
+    testID
+  } = props;
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
     top: 0,
     left: 0
   });
-  const animation = useRef(new Animated.Value(Number((floatOnFocus && context.isFocused) || context.hasValue))).current;
+
+  const shouldFloat = shouldPlaceholderFloat(props, context.isFocused, context.hasValue, context.value);
+  const animation = useRef(new Animated.Value(Number(shouldFloat))).current;
   const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
   useDidUpdate(() => {
-    const toValue = floatOnFocus ? context.isFocused || context.hasValue : context.hasValue;
     Animated.timing(animation, {
-      toValue: Number(toValue),
+      toValue: Number(shouldFloat),
       duration: 200,
       useNativeDriver: true
     }).start();
-  }, [floatOnFocus, context.isFocused, context.hasValue]);
+  }, [shouldFloat]);
 
   const animatedStyle = useMemo(() => {
     return {
@@ -70,7 +71,7 @@ const FloatingPlaceholder = ({
   }, []);
 
   return (
-    <View absF style={hidePlaceholder && styles.hidden}>
+    <View absF style={hidePlaceholder && styles.hidden} pointerEvents={'none'}>
       <Text
         animated
         color={getColorByState(floatingPlaceholderColor, context)}

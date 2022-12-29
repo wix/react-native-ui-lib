@@ -14,6 +14,7 @@ export interface ItemProps {
   label: string;
   value: string | number;
   align?: WheelPickerAlign;
+  disableRTL?: boolean;
 }
 
 interface InternalProps extends ItemProps {
@@ -45,7 +46,8 @@ const WheelPickerItem = memo(({
   style,
   testID,
   centerH = true,
-  align
+  align,
+  disableRTL
 }: InternalProps) => {
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
@@ -60,8 +62,16 @@ const WheelPickerItem = memo(({
   }, [itemHeight]);
 
   const containerStyle = useMemo(() => {
-    return [{height: itemHeight}, styles.container];
-  }, [itemHeight]);
+    return [{height: itemHeight}, styles.container, disableRTL && styles.disableRTL];
+  }, [itemHeight, disableRTL]);
+
+  const textWithLabelPaddingStyle = useMemo(() => {
+    return disableRTL ? {marginRight: Spacings.s5} : {marginLeft: Spacings.s5};
+  }, [disableRTL]);
+
+  const textStyle = useMemo(() => {
+    return [animatedColorStyle, style, fakeLabel ? textWithLabelPaddingStyle : styles.textPadding];
+  }, [style, fakeLabel, animatedColorStyle, textWithLabelPaddingStyle]);
 
   return (
     <AnimatedTouchableOpacity
@@ -82,12 +92,17 @@ const WheelPickerItem = memo(({
         text60R
         testID={`${testID}.text`}
         numberOfLines={1}
-        style={[animatedColorStyle, style, fakeLabel ? styles.textWithLabelPadding : styles.textPadding]}
+        style={textStyle}
       >
         {label}
       </AnimatedText>
       {fakeLabel && (
-        <Text marginL-s2 marginR-s5 text80M $textDefaultLight {...fakeLabelProps} style={fakeLabelStyle}>
+        <Text
+          text80M
+          $textDefaultLight
+          {...fakeLabelProps}
+          style={fakeLabelStyle}
+        >
           {fakeLabel}
         </Text>
       )}
@@ -105,7 +120,7 @@ const styles = StyleSheet.create({
   textPadding: {
     paddingHorizontal: Spacings.s5
   },
-  textWithLabelPadding: {
-    paddingLeft: Spacings.s5
+  disableRTL: {
+    flexDirection: 'row-reverse'
   }
 });

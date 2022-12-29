@@ -86,6 +86,7 @@ export interface FloatingPlaceholderProps {
   floatOnFocus?: boolean;
   validationMessagePosition?: ValidationMessagePosition;
   extraOffset?: number;
+  defaultValue?: TextInputProps['defaultValue'];
   testID: string;
 }
 
@@ -101,7 +102,7 @@ export interface ValidationMessageProps {
   /**
    * Custom style for the validation message
    */
-  validationMessageStyle?: TextStyle;
+  validationMessageStyle?: StyleProp<TextStyle>;
   retainSpace?: boolean;
   validate?: FieldStateProps['validate'];
   testID?: string;
@@ -142,7 +143,7 @@ export interface InputProps
   /**
    * Use react-native-gesture-handler instead of react-native for the base TextInput
    */
-   useGestureHandlerInput?: boolean;
+  useGestureHandlerInput?: boolean;
 }
 
 export type TextFieldProps = MarginModifiers &
@@ -211,7 +212,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Container style of the whole component
      */
-    containerStyle?: ViewStyle;
+    containerStyle?: StyleProp<ViewStyle>;
     /**
      * Predefined preset to use for styling the field
      */
@@ -220,6 +221,11 @@ export type TextFieldProps = MarginModifiers &
      * Whether to center the TextField - container and label
      */
     centered?: boolean;
+    /**
+     * @deprecated
+     * Set an alignment fit for inline behavior (when rendered inside a row container)
+     */
+    inline?: boolean;
   };
 
 export type InternalTextFieldProps = PropsWithChildren<

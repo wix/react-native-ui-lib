@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {Colors} from './../../style';
-import {ColorType, Validator, FieldContextType} from './types';
+import {ColorType, Validator, FieldContextType, FloatingPlaceholderProps} from './types';
 // TODO: Fix this import after moving all TextField types to a single file after we move to the new docs
 import {TextFieldProps} from './index';
 import formValidators from './validators';
@@ -74,4 +74,12 @@ export function shouldHidePlaceholder({floatingPlaceholder, hint, floatOnFocus}:
   } else {
     return false;
   }
+}
+
+export function shouldPlaceholderFloat({defaultValue, floatOnFocus}: FloatingPlaceholderProps,
+  isFocused: boolean,
+  hasValue: boolean,
+  value?: string) {
+  const useDefaultValue = !_.isEmpty(defaultValue) && value === undefined; // To consider a user that has deleted the defaultValue (and then the placeholder should un-float when losing focus)
+  return (floatOnFocus && isFocused) || hasValue || useDefaultValue;
 }

@@ -248,7 +248,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       );
     } else if (fieldType === PickerFieldTypes.settings) {
       return (
-        <View row spread>
+        <View flex row spread>
           <Text text70 style={labelStyle}>
             {others.label}
           </Text>
@@ -279,6 +279,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         disabled={themeProps.editable === false}
       >
         {renderPicker ? (
+          // @ts-expect-error - hopefully will be solved after the picker migration ends
           renderPicker(value, label)
         ) : (
           <TextFieldMigrator

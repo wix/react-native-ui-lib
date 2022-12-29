@@ -27,7 +27,7 @@
   ],
   "snippet": [
     "<GridView",
-    " items={[{title: 'item 1', onPress: () => console.log('item 1 pressed')}, {title: 'item 2', onPress: () => console.log('item 2 pressed')}, ]$1}",
+    " items={[{title: 'item 1', onPress: () => console.log('item 1 pressed')}, {title: 'item 2', onPress: () => console.log('item 2 pressed')}]$1}",
     " numColumns={2$2}",
     " lastItemLabel={'+'$3}",
     " lastItemOverlayColor={'Colors.rgba(Colors.blue30)'$4}",

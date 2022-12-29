@@ -10,5 +10,8 @@ module.exports = {
   },
   get MaskedInput() {
     return require('../maskedInput').default;
+  },
+  get NumberInput() {
+    return require('../numberInput').default;
   }
 };

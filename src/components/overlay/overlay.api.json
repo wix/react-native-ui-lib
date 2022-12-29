@@ -26,7 +26,7 @@
   ],
   "snippet": [
     "<Image",
-    " source={{uri: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg}$1}",
+    " source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'}$1}",
     " overlayType={Image.overlayTypes.BOTTOM$2}",
     "/>"
   ]

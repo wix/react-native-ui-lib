@@ -1796,7 +1796,9 @@ exports[`AvatarScreen renders screen 1`] = `
               }
               style={
                 Array [
-                  undefined,
+                  Object {
+                    "tintColor": "#FFFFFF",
+                  },
                   undefined,
                   undefined,
                   undefined,

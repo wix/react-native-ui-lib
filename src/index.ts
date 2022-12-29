@@ -90,6 +90,7 @@ export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScr
 export {default as MaskedInput, MaskedInputProps} from './components/maskedInput';
 export {default as Marquee, MarqueeDirections, MarqueeProps} from './components/marquee';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
+export {default as NumberInput, NumberInputProps, NumberInputData} from './components/numberInput';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {

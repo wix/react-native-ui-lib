@@ -33,10 +33,10 @@
   ],
   "snippet": [
     "<SortableList",
-    "data={data$1}",
-    "onOrderChange={onOrderChange$2}",
-    "renderItem={renderItem$3}",
-    "keyExtractor={keyExtractor$4}",
+    "  data={data$1}",
+    "  onOrderChange={onOrderChange$2}",
+    "  renderItem={renderItem$3}",
+    "  keyExtractor={keyExtractor$4}",
     "/>"
   ]
 }

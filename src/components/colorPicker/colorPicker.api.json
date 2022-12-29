@@ -38,7 +38,7 @@
     "<ColorPicker",
     " colors={[Colors.green10, Colors.green20, Colors.green30, Colors.green40, Colors.green50, Colors.green60, Colors.green70]$1}",
     " initialColor={Colors.green10$2}",
-    " value={this.state.color$3}",
+    " value={currentColor$3}",
     " onDismiss={() => console.log('dismissed')$4}",
     " onSubmit={() => console.log('submit')$5}",
     " onValueChange={() => console.log('value changed')$6}",

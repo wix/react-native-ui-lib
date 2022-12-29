@@ -383,7 +383,6 @@ function createStyles() {
     },
     text: {
       backgroundColor: 'transparent',
-      flex: 0,
       flexDirection: 'row',
       ...Typography.text70
     }

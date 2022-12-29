@@ -62,6 +62,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
         : Modifiers.generateModifiersStyle(options.modifiersOptions, themeProps);
       // TODO: omit original modifiers props (left, right, flex, etc..)
       // Because they throws an error when being passed to RNView on Android
+      // @ts-expect-error
       const {forwardedRef, ...others} = themeProps;
       return (
         (this.state.error && UIComponent.defaultProps?.renderError) || (

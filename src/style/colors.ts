@@ -13,6 +13,7 @@ import Scheme, {Schemes, SchemeType} from './scheme';
 export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
 export type TokensOptions = {primaryColor: string};
 export type GetColorTintOptions = {avoidReverseOnDark?: boolean};
+export type GetColorByHexOptions = {validColors?: string[]};
 
 export class Colors {
   [key: string]: any;
@@ -146,9 +147,10 @@ export class Colors {
     return ColorName.name(color)[1];
   }
 
-  getSystemColorByHex(colorValue: string, validColors?: string[]) {
+  getSystemColorByHex(colorValue: string, options: GetColorByHexOptions = {}) {
     const color = colorStringValue(colorValue);
     const results: string[] = [];
+    const validColors = options?.validColors;
 
     for (const [key, value] of Object.entries(this)) {
       if (value.toString() === color) {

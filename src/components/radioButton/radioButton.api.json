@@ -49,5 +49,7 @@
     {"name": "contentOnLeft", "type": "boolean", "description": "Should the content be rendered left to the button"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styling for the container"}
   ],
-  "snippet": ["<RadioButton value={null$1} label={'Default'$2}/>"]
+  "snippet": [
+    "<RadioButton value={null$1} label={'Default'$2}/>"
+  ]
 }
