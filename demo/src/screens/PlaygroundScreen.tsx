@@ -18,7 +18,7 @@ const PlaygroundScreen = () => {
   };
 
   const onValueChange = (value: number) => {
-    console.warn('onValueChange: ', value);
+    // console.warn('onValueChange: ', value);
     setSliderValue(value);
   };
 
@@ -74,7 +74,7 @@ const PlaygroundScreen = () => {
           maximumValue={100}
           initialMinimumValue={25}
           initialMaximumValue={75}
-          step={1}
+          // step={10}
           // disableRTL={forceLTR}
           ref={rangeSlider}
           useGap

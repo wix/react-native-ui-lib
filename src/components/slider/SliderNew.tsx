@@ -11,9 +11,17 @@ import {
   interpolate
 } from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import {Colors, Spacings} from '../../style';
 import {SliderProps} from '.';
 
 type Props = SliderProps & ForwardRefInjectedProps;
+
+enum ThumbType {
+  BLUE = 'blue',
+  GREEN = 'green'
+}
+const trackHeight = 6;
+const thumbSize = 24;
 
 const SliderNew = (props: Props) => {
   // Missing props, ui, custom layout calcs, orientation change, RTL, Accessibility
@@ -32,11 +40,7 @@ const SliderNew = (props: Props) => {
     onSeekEnd,
     useGap
   } = props;
-  
-  enum ThumbType {
-    BLUE = 'blue',
-    GREEN = 'green'
-  }
+
 
   useImperativeHandle(forwardedRef, () => ({
     reset: () => reset()
@@ -48,9 +52,8 @@ const SliderNew = (props: Props) => {
     props.onReset?.();
   };
 
-  const thumbSize = 20;
   const thumbCenter = thumbSize / 2;
-  const rangeGap = useRange && useGap ? 8 + thumbSize : 0;
+  const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize : 0;
 
   const trackWidth = useSharedValue(0);
   const activeTrackWidth = useSharedValue(0);
@@ -158,7 +161,7 @@ const SliderNew = (props: Props) => {
       transform: [
         {translateX: offset.value.x},
         {translateY: offset.value.y},
-        {scale: withSpring(isPressed.value ? 1.2 : 1)}
+        {scale: withSpring(isPressed.value ? 1.3 : 1)}
       ],
       backgroundColor: isPressed.value ? 'lightblue' : 'blue'
     };
@@ -169,7 +172,7 @@ const SliderNew = (props: Props) => {
       transform: [
         {translateX: offsetGreen.value.x},
         {translateY: offsetGreen.value.y},
-        {scale: withSpring(isPressedGreen.value ? 1.2 : 1)}
+        {scale: withSpring(isPressedGreen.value ? 1.3 : 1)}
       ],
       backgroundColor: isPressedGreen.value ? 'lightgreen' : 'green'
     };
@@ -185,7 +188,7 @@ const SliderNew = (props: Props) => {
       y: 0
     };
 
-    activeTrackWidth.value = useRange ? startGreen.value.x - x : x;
+    activeTrackWidth.value = Math.abs(useRange ? startGreen.value.x - x : x);
     onChange(useRange ? {min: x, max: startGreen.value.x} : x);
   };
 
@@ -237,7 +240,8 @@ const SliderNew = (props: Props) => {
         const stepInterpolated = 
           interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value - thumbCenter]);
         const newX = Math.round(x / stepInterpolated) * stepInterpolated;
-        runOnJS(updateBlue)(newX);
+        console.warn('gesture: ', stepInterpolated, newX/* , getStepComputedX(x) */); // worklet error
+        runOnJS(updateBlue)(newX === 0 ? -thumbCenter : newX);
       }
     });
 
@@ -273,7 +277,7 @@ const SliderNew = (props: Props) => {
         const stepInterpolated = 
           interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value - thumbCenter]);
         const newX = Math.round(x / stepInterpolated) * stepInterpolated;
-        // console.warn('gesture: ', newX, getStepComputedX(x)); // worklet error
+        // console.warn('gestureGreen: ', newX, getStepComputedX(x)); // worklet error
         runOnJS(updateGreen)(newX);
       }
     });
@@ -351,24 +355,26 @@ const styles = StyleSheet.create({
   container: {
   },
   bgTrack: {
-    height: 6,
-    backgroundColor: 'grey'
+    backgroundColor: Colors.$backgroundDisabled,
+    height: trackHeight,
+    borderRadius: trackHeight / 2
   },
   track: {
     ...StyleSheet.absoluteFillObject,
-    height: 6,
-    backgroundColor: 'pink'
+    backgroundColor: Colors.$backgroundPrimaryHeavy,
+    height: trackHeight,
+    // borderRadius: trackHeight / 2
   },
   touchArea: {
     ...StyleSheet.absoluteFillObject,
-    top: -7,
-    height: 20,
-    backgroundColor: 'transparent'
+    top: -(thumbSize - trackHeight) / 2,
+    height: thumbSize,
+    backgroundColor: Colors.transparent
   },
   thumb: {
     position: 'absolute',
-    width: 20,
-    height: 20,
-    top: -7
+    width: thumbSize,
+    height: thumbSize,
+    top: -(thumbSize - trackHeight) / 2
   }
 });
