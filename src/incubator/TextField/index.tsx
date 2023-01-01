@@ -167,6 +167,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 onChangeText={onChangeText}
                 placeholder={placeholder}
                 hint={hint}
+                value={fieldState.value}
               />
             </View>
           )}
