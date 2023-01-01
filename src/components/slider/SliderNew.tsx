@@ -1,4 +1,5 @@
-import React, {useCallback} from 'react';
+import isNumber from 'lodash/isNumber';
+import React, {useImperativeHandle, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../view';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
@@ -9,12 +10,15 @@ import {
   runOnJS,
   interpolate
 } from 'react-native-reanimated';
+import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {SliderProps} from '.';
 
-const SliderNew = (props: SliderProps) => {
+type Props = SliderProps & ForwardRefInjectedProps;
+
+const SliderNew = (props: Props) => {
   // Missing props, ui, custom layout calcs, orientation change, RTL, Accessibility
-  
   const {
+    forwardedRef,
     useRange,
     onValueChange,
     onRangeChange,
@@ -30,6 +34,17 @@ const SliderNew = (props: SliderProps) => {
     BLUE = 'blue',
     GREEN = 'green'
   }
+
+  useImperativeHandle(forwardedRef, () => ({
+    reset: () => reset()
+  }));
+
+  const reset = () => {
+    activeThumb.value = ThumbType.BLUE;
+    setPositions(trackWidth.value);
+    props.onReset?.();
+  };
+
   const thumbSize = 20;
   const thumbCenter = thumbSize / 2;
 
@@ -40,11 +55,11 @@ const SliderNew = (props: SliderProps) => {
   const shouldBounceToStep = step > 0;
 
   const onChange = (value: number | {min: number, max: number}) => {
-    if (useRange) {
+    if (useRange && !isNumber(value)) {
       const min = value.min;
       const max = value.max;
       onRangeChange?.({min: getValueForX(min), max: getValueForX(max)});
-    } else {
+    } else if (isNumber(value)) {
       const val = getValueForX(value);
       onValueChange?.(val);
     }
@@ -73,21 +88,24 @@ const SliderNew = (props: SliderProps) => {
   const onTrackLayout = useCallback((event) => {
     const width = event.nativeEvent.layout.width;
     trackWidth.value = width;
+    setPositions(width);
+  }, []);
 
+  const setPositions = (trackWidth: number) => {
     if (useRange) {
-      const bluePosition = getXForValue(initialMinimumValue, width);
-      const greenPosition = getXForValue(initialMaximumValue, width);
-      activeTrackWidth.value = width - bluePosition - greenPosition;
+      const bluePosition = getXForValue(initialMinimumValue, trackWidth);
+      const greenPosition = getXForValue(initialMaximumValue, trackWidth);
+      activeTrackWidth.value = trackWidth - bluePosition - greenPosition;
       updateBlue(bluePosition);
       updateGreen(greenPosition);
     } else {
       startGreen.value = {
-        x: width,
+        x: trackWidth,
         y: 0
       };
-      updateBlue(getXForValue(value, width));
+      updateBlue(getXForValue(value, trackWidth));
     }
-  }, []);
+  };
 
   const onTrackPress = useCallback((event) => {
     let locationX = event.nativeEvent.locationX;
@@ -160,13 +178,12 @@ const SliderNew = (props: SliderProps) => {
   });
 
   const updateBlue = (x: number) => {
-    const newX = x - (useRange ? 0 : thumbCenter);
     offset.value = {
-      x: newX,
+      x,
       y: 0
     };
     start.value = {
-      x: newX,
+      x,
       y: 0
     };
 
@@ -325,7 +342,8 @@ const SliderNew = (props: SliderProps) => {
   );
 };
 
-export default SliderNew;
+// @ts-expect-error
+export default forwardRef<SliderProps, Statics>(SliderNew);
 
 const styles = StyleSheet.create({
   container: {
