@@ -77,6 +77,7 @@ const PlaygroundScreen = () => {
           step={1}
           // disableRTL={forceLTR}
           ref={rangeSlider}
+          useGap
         />
       </View>
     </View>

@@ -27,7 +27,10 @@ const SliderNew = (props: Props) => {
     value = minimumValue,
     initialMinimumValue = minimumValue,
     initialMaximumValue = maximumValue,
-    step = 0
+    step = 0,
+    onSeekStart,
+    onSeekEnd,
+    useGap
   } = props;
   
   enum ThumbType {
@@ -47,6 +50,7 @@ const SliderNew = (props: Props) => {
 
   const thumbSize = 20;
   const thumbCenter = thumbSize / 2;
+  const rangeGap = useRange && useGap ? 8 + thumbSize : 0;
 
   const trackWidth = useSharedValue(0);
   const activeTrackWidth = useSharedValue(0);
@@ -114,27 +118,21 @@ const SliderNew = (props: Props) => {
     }
     if (useRange) {
       if (locationX === offset.value.x) {
-        console.warn('1');
         activeThumb.value = ThumbType.GREEN;
         updateGreen(locationX);
       } else if (locationX === offsetGreen.value.x) {
-        console.warn('2');
         activeThumb.value = ThumbType.BLUE;
         updateBlue(locationX);
       } else if (locationX > offsetGreen.value.x) {
-        console.warn('3');
         activeThumb.value = ThumbType.GREEN;
         updateGreen(locationX);
       } else if (locationX < offset.value.x) {
-        console.warn('4');
         activeThumb.value = ThumbType.BLUE;
         updateBlue(locationX);
       } else if (locationX > offset.value.x && locationX < offsetGreen.value.x) {
         if (activeThumb.value === ThumbType.BLUE) {
-          console.warn('5');
           updateBlue(locationX);
         } else {
-          console.warn('6');
           updateGreen(locationX);
         }
       }
@@ -211,8 +209,9 @@ const SliderNew = (props: Props) => {
       activeThumb.value = ThumbType.BLUE;
     })
     .onUpdate((e) => {
+      onSeekStart?.();
       let newX = start.value.x + e.translationX;
-      if (newX < startGreen.value.x && newX > -thumbCenter) {
+      if (newX < startGreen.value.x - rangeGap && newX > -thumbCenter) {
         newX = Math.min(newX, trackWidth.value - thumbCenter);
         offset.value = {
           x: newX,
@@ -224,6 +223,7 @@ const SliderNew = (props: Props) => {
       }
     })
     .onEnd(() => {
+      onSeekEnd?.();
       start.value = {
         x: offset.value.x,
         y: 0
@@ -247,8 +247,9 @@ const SliderNew = (props: Props) => {
       activeThumb.value = ThumbType.GREEN;
     })
     .onUpdate((e) => {
+      onSeekStart?.();
       const newX = startGreen.value.x + e.translationX;
-      if (newX > start.value.x && newX < trackWidth.value - thumbCenter + 1) {
+      if (newX > start.value.x + rangeGap && newX < trackWidth.value - thumbCenter + 1) {
         offsetGreen.value = {
           x: newX,
           y: 0
@@ -258,6 +259,7 @@ const SliderNew = (props: Props) => {
       }
     })
     .onEnd(() => {
+      onSeekEnd?.();
       startGreen.value = {
         x: offsetGreen.value.x,
         y: 0
