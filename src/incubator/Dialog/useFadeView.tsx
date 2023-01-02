@@ -13,15 +13,11 @@ export type AnimationType = TransitionViewAnimationType;
 
 export type FadeViewProps = Pick<DialogProps, 'visible' | 'testID'> & Pick<ModalProps, 'overlayBackgroundColor'>;
 
-export interface FadeViewMethods {
-  hideNow: () => void;
-}
-
 const useFadeView = (props: FadeViewProps) => {
   const {visible, overlayBackgroundColor = DEFAULT_OVERLAY_BACKGROUND_COLORS, testID} = props;
   const fadeOpacity = useSharedValue<0 | 1>(visible ? 1 : 0);
 
-  const hideNow = useCallback(() => {
+  const reset = useCallback(() => {
     fadeOpacity.value = 0;
   }, []);
 
@@ -42,7 +38,7 @@ const useFadeView = (props: FadeViewProps) => {
 
   const FadeView = <View testID={testID} absF reanimated style={fadeStyle} pointerEvents="none"/>;
 
-  return {FadeView, hideNow, fade};
+  return {FadeView, reset, fade};
 };
 
 export default useFadeView;

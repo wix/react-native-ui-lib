@@ -12,8 +12,7 @@ import usePanGesture, {
   PanViewDirections,
   PanViewDirectionsEnum,
   PanViewDismissThreshold,
-  DEFAULT_DIRECTIONS,
-  DEFAULT_ANIMATION_CONFIG
+  DEFAULT_DIRECTIONS
 } from './usePanGesture';
 export {
   PanningDirections,
@@ -21,9 +20,9 @@ export {
   PanViewDirections,
   PanViewDirectionsEnum,
   PanViewDismissThreshold,
-  DEFAULT_DIRECTIONS,
-  DEFAULT_ANIMATION_CONFIG
+  DEFAULT_DIRECTIONS
 };
+import {getAnimation} from '../AnimationUtils';
 
 export interface PanViewProps extends Omit<PanGestureProps, 'hiddenLocation'>, ViewProps {
   /**
@@ -50,7 +49,7 @@ const PanView = (props: Props) => {
   } = props;
 
   const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
-  const {translation, panGestureEvent} = usePanGesture({
+  const {animationDetails, panGestureEvent} = usePanGesture({
     directions,
     dismissible,
     animateToOrigin,
@@ -61,10 +60,20 @@ const PanView = (props: Props) => {
   });
 
   const animatedStyle = useAnimatedStyle(() => {
+    const animation = getAnimation(animationDetails);
+    const transform = [];
+    if (animation.x) {
+      transform.push({translateX: animation.x});
+    }
+
+    if (animation.y) {
+      transform.push({translateY: animation.y});
+    }
+
     return {
-      transform: [{translateX: translation.x.value}, {translateY: translation.y.value}]
+      transform
     };
-  }, []);
+  });
 
   return (
     <View ref={setRef} style={containerStyle} onLayout={onLayout}>

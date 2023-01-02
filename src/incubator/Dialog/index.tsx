@@ -2,7 +2,7 @@ import {isEmpty} from 'lodash';
 import React, {useRef, useMemo, useCallback, useState, useImperativeHandle, forwardRef, ForwardedRef} from 'react';
 import {StyleSheet, View as RNView} from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
-import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
+import {useAnimatedStyle} from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -17,6 +17,7 @@ import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 import useFadeView from './useFadeView';
+import {getAnimation} from '../AnimationUtils';
 
 const TRANSITION_ANIMATION_DELAY: AnimatedTransitionProps['delay'] = {enter: 100};
 
@@ -53,46 +54,48 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     return [direction];
   }, [direction]);
 
-  const {FadeView, hideNow, fade} = useFadeView({
+  const {
+    FadeView,
+    reset: resetFade,
+    fade
+  } = useFadeView({
     visible: initialVisibility.current,
     testID: `${testID}.overlayFadingBackground`,
     overlayBackgroundColor
   });
 
-  const onPanViewDismiss = useCallback(() => {
-    hideNow();
+  const _onDismiss = useCallback(() => {
     setVisible(false);
     onDismiss?.();
-  }, [hideNow, onDismiss, setVisible]);
+  }, [onDismiss]);
 
   const onTransitionAnimationEnd = useCallback((type: TransitionViewAnimationType) => {
     if (type === 'exit') {
-      setVisible(false);
-      onDismiss?.();
+      _onDismiss();
     }
   },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [onDismiss, setVisible]);
+  [_onDismiss]);
 
   const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
 
   const {
-    translation: panTranslation,
+    animationDetails: panAnimationDetails,
     panGestureEvent,
-    reset
+    reset: resetPan
   } = usePanGesture({
     directions,
     dismissible: true,
     animateToOrigin: true,
-    onDismiss: onPanViewDismiss,
+    onDismiss: _onDismiss,
     hiddenLocation
   });
 
   const {
     animateIn,
     animateOut,
-    translation: transitionTranslation,
-    isMounted
+    animationDetails: transitionAnimationDetails,
+    isMounted,
+    reset: resetTransition
   } = useAnimatedTransition({
     hiddenLocation,
     enterFrom: direction,
@@ -105,10 +108,9 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const open = useCallback(() => {
     if (!visible) {
       animateIn();
-      reset();
       setVisible(true);
     }
-  }, [visible, setVisible, animateIn, reset]);
+  }, [visible, setVisible, animateIn]);
 
   const close = useCallback(() => {
     if (visible) {
@@ -124,22 +126,36 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     }
   }, [propsVisibility]);
 
+  useDidUpdate(() => {
+    if (!visible) {
+      resetFade();
+      resetPan();
+      resetTransition();
+    }
+  }, [visible]);
+
   const alignmentStyle = useMemo(() => {
     return {flex: 1, alignItems: 'center', ...extractAlignmentsValues(props)};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const translation = useDerivedValue(() => {
-    // It seems to work without this derived value, but I think this is more correct
-    return {
-      x: panTranslation.x.value + transitionTranslation.x.value,
-      y: panTranslation.y.value + transitionTranslation.y.value
-    };
-  });
-
   const transitionStyle = useAnimatedStyle(() => {
+    const transitionAnimation = getAnimation(transitionAnimationDetails);
+    const panAnimation = getAnimation(panAnimationDetails);
+    const animation =
+      panAnimationDetails.value.to.x === 0 && panAnimationDetails.value.to.y === 0 ? transitionAnimation : panAnimation;
+
+    const transform = [];
+    if (animation.x) {
+      transform.push({translateX: animation.x});
+    }
+
+    if (animation.y) {
+      transform.push({translateY: animation.y});
+    }
+
     return {
-      transform: [{translateX: translation.value.x}, {translateY: translation.value.y}],
+      transform,
       // TODO: do we want to take the component's opacity here? - I think combining opacities is buggy
       opacity: isMounted.value ? 1 : 0
     };

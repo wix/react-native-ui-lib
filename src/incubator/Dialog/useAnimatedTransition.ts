@@ -1,15 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
-import {
-  useSharedValue,
-  withSpring,
-  withTiming,
-  withDelay,
-  WithTimingConfig,
-  WithSpringConfig
-} from 'react-native-reanimated';
+import {useSharedValue} from 'react-native-reanimated';
 import type {HiddenLocation} from '../hooks/useHiddenLocation';
-import {PanningDirections, PanningDirectionsEnum, DEFAULT_ANIMATION_CONFIG} from '../panView';
+import {PanningDirections, PanningDirectionsEnum} from '../panView';
 import useAnimationEndNotifier, {
   AnimationNotifierEndProps,
   TransitionViewAnimationType
@@ -17,8 +10,8 @@ import useAnimationEndNotifier, {
 const TransitionViewDirectionEnum = PanningDirectionsEnum;
 type TransitionViewDirection = PanningDirections;
 export {TransitionViewAnimationType, TransitionViewDirectionEnum, TransitionViewDirection};
+import {AnimationDetails, AnimationType, AnimationConfig, ENTER_ANIMATION_CONFIG} from '../AnimationUtils';
 
-const ENTER_ANIMATION_CONFIG = DEFAULT_ANIMATION_CONFIG;
 const EXIT_ANIMATION_CONFIG = {duration: 300};
 
 interface Delay {
@@ -49,12 +42,6 @@ export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
 export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   const {hiddenLocation, enterFrom, exitTo, onAnimationStart, onAnimationEnd, delay} = props;
 
-  // Has to start at {0, 0} with {opacity: 0} so layout can be measured
-  const translationX = useSharedValue<number>(0);
-  const translationY = useSharedValue<number>(0);
-  const {onEnterAnimationEnd, onExitAnimationEnd} = useAnimationEndNotifier({onAnimationEnd});
-  const isMounted = useSharedValue(false);
-
   const getLocation = (direction?: TransitionViewDirection) => {
     return {
       x:
@@ -70,41 +57,46 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
     };
   };
 
-  const onHiddenLocationUpdated = useCallback(() => {
-    'worklet';
-    const to = getLocation(enterFrom);
-    // @ts-expect-error
-    if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(enterFrom)) {
-      translationX.value = withTiming(to.x, {duration: 0}, animateIn);
-      // @ts-expect-error
-    } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(enterFrom)) {
-      translationY.value = withTiming(to.y, {duration: 0}, animateIn);
-    }
-
-    if (!isMounted.value) {
-      isMounted.value = true;
-    }
-  }, []);
+  const animationDetails = useSharedValue<AnimationDetails>({to: getLocation(enterFrom)});
+  const {onEnterAnimationEnd, onExitAnimationEnd} = useAnimationEndNotifier({onAnimationEnd});
+  const isMounted = useSharedValue(false);
 
   useEffect(() => {
     if (hiddenLocation.wasMeasured && enterFrom) {
-      onHiddenLocationUpdated();
+      if (!isMounted.value) {
+        isMounted.value = true;
+      }
     }
   }, [hiddenLocation]);
 
   const translateTo = useCallback((to: {x: number; y: number},
-    animation: typeof withTiming | typeof withSpring,
-    animationConfig: WithTimingConfig | WithSpringConfig,
+    animationType: AnimationType,
+    animationConfig: AnimationConfig,
     animationDirection: TransitionViewDirection,
-    callback: (isFinished?: boolean) => void,
+    animationCallback: (isFinished?: boolean) => void,
+    // eslint-disable-next-line max-params
     delay = 0) => {
     'worklet';
     // @ts-expect-error
     if ([TransitionViewDirectionEnum.LEFT, TransitionViewDirectionEnum.RIGHT].includes(animationDirection)) {
-      translationX.value = withDelay(delay, animation(to.x, animationConfig, callback));
+      animationDetails.value = {
+        to: {x: to.x, y: 0},
+        prev: {x: animationDetails.value.to.x, y: 0},
+        animationType,
+        animationConfig,
+        animationCallback,
+        delay
+      };
       // @ts-expect-error
     } else if ([TransitionViewDirectionEnum.UP, TransitionViewDirectionEnum.DOWN].includes(animationDirection)) {
-      translationY.value = withDelay(delay, animation(to.y, animationConfig, callback));
+      animationDetails.value = {
+        to: {x: 0, y: to.y},
+        prev: {x: 0, y: animationDetails.value.to.y},
+        animationType,
+        animationConfig,
+        animationCallback,
+        delay
+      };
     }
   },
   []);
@@ -113,7 +105,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
     'worklet';
     if (enterFrom) {
       onAnimationStart?.('enter');
-      translateTo({x: 0, y: 0}, withSpring, ENTER_ANIMATION_CONFIG, enterFrom, onEnterAnimationEnd, delay?.enter);
+      translateTo({x: 0, y: 0}, 'withSpring', ENTER_ANIMATION_CONFIG, enterFrom, onEnterAnimationEnd, delay?.enter);
     }
   }, [onEnterAnimationEnd, delay?.enter]);
 
@@ -121,9 +113,14 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
     'worklet';
     if (exitTo) {
       onAnimationStart?.('exit');
-      translateTo(getLocation(exitTo), withTiming, EXIT_ANIMATION_CONFIG, exitTo, onExitAnimationEnd, delay?.exit);
+      translateTo(getLocation(exitTo), 'withTiming', EXIT_ANIMATION_CONFIG, exitTo, onExitAnimationEnd, delay?.exit);
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd, delay?.exit]);
 
-  return {animateIn, animateOut, translation: {x: translationX, y: translationY}, isMounted};
+  const reset = useCallback(() => {
+    animationDetails.value = {to: getLocation(exitTo)};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return {animateIn, animateOut, animationDetails, isMounted, reset};
 }
