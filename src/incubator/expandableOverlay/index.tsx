@@ -50,10 +50,6 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
      * Disabled opening expandable overlay
      */
     disabled?: boolean;
-    /**
-     * Wrapper ref for web implementation
-     */
-    parentRef?: React.Ref<HTMLDivElement>;
   }>;
 
 const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
@@ -70,7 +66,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     onPress,
     customValue,
     testID,
-    parentRef,
     ...others
   } = props;
   const [visible, setExpandableVisible] = useState(false);
@@ -101,7 +96,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         visible={visible}
         onDismiss={closeExpandable}
         /* @ts-ignore */
-        parentRef={parentRef}
       >
         {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
         {expandableContent}

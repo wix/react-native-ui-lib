@@ -185,10 +185,6 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     testID?: string;
     children?: ReactNode | undefined;
-    /**
-     * Wrapper ref for web implementation
-     */
-    parentRef?: React.Ref<HTMLDivElement>;
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {

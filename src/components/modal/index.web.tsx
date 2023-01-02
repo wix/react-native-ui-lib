@@ -49,9 +49,9 @@ export interface ModalProps extends RNModalProps {
    */
   keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
   /**
-   * Wrapper ref for web implementation
+   * Wrapper id for web implementation
    */
-  parentRef?: React.Ref<HTMLDivElement>;
+  wrapperId?: string;
 }
 
 /**
@@ -65,6 +65,10 @@ class Modal extends Component<ModalProps> {
   static displayName = 'Modal';
   static TopBar: typeof TopBar;
 
+  static defaultProps = {
+    wrapperId: 'emulator-root'
+  };
+
   constructor(props: ModalProps) {
     super(props);
 
@@ -73,11 +77,18 @@ class Modal extends Component<ModalProps> {
     }
   }
 
+  createWrapperAndAppendToBody(wrapperId: string) {
+    const wrapperElement = document.createElement('div');
+    wrapperElement.setAttribute('id', wrapperId);
+    document.body.appendChild(wrapperElement);
+    return wrapperElement;
+  }
+
   renderModalWeb() {
     const {visible} = this.props;
     if (visible) {
       return (
-        <View absF nativeID={'modal-root'} bg-red30>
+        <View absF nativeID={'modal-root'}>
           {this.props.children}
         </View>
       );
@@ -85,27 +96,14 @@ class Modal extends Component<ModalProps> {
   }
 
   render() {
-    const {parentRef} = this.props;
-    /* @ts-ignore */
-    if (parentRef?.current) {
-      /* @ts-ignore */
-      return createPortal(this.renderModalWeb(), parentRef.current);
+    const {wrapperId} = Modal.defaultProps;
+    let wrapper = document.getElementById(wrapperId);
+    if (!wrapper) {
+      wrapper = this.createWrapperAndAppendToBody(wrapperId);
     }
+    return createPortal(this.renderModalWeb(), wrapper);
   }
 }
-
-// const styles = StyleSheet.create({
-//   touchableOverlay: {
-//     ...StyleSheet.absoluteFillObject
-//   },
-//   fill: {
-//     flex: 1
-//   },
-//   accessibleOverlayView: {
-//     height: 50,
-//     width: '100%'
-//   }
-// });
 
 Modal.TopBar = TopBar;
 
