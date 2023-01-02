@@ -48,7 +48,8 @@ export interface PickerSearchStyle {
 
 // TODO: need to extend TextField props (and not just TextInputProps)
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
-  Omit<NewTextFieldProps, 'value' | 'onChange'> & ThemeComponent & {
+  Omit<NewTextFieldProps, 'value' | 'onChange'> &
+  ThemeComponent & {
     /* ...TextField.propTypes, */
     /**
      * Temporary prop required for migration to Picker's new API
@@ -183,7 +184,11 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      * Component test id
      */
     testID?: string;
-    children?: ReactNode | undefined
+    children?: ReactNode | undefined;
+    /**
+     * Wrapper ref for web implementation
+     */
+    parentRef?: React.Ref<HTMLDivElement>;
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {

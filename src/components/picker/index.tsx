@@ -88,6 +88,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     useSafeArea,
     migrate,
     migrateTextField,
+    parentRef,
     ...others
   } = themeProps;
   const {preset} = others;
@@ -277,6 +278,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         testID={testID}
         {...customPickerProps}
         disabled={themeProps.editable === false}
+        parentRef={parentRef}
       >
         {renderPicker ? (
           // @ts-expect-error - hopefully will be solved after the picker migration ends
