@@ -95,7 +95,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         {...modalProps}
         visible={visible}
         onDismiss={closeExpandable}
-        /* @ts-ignore */
       >
         {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
         {expandableContent}
