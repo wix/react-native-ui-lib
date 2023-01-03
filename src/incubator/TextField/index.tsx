@@ -223,7 +223,6 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   centeredValidationMessage: {
-    flexGrow: 1,
     textAlign: 'center'
   },
   dummyPlaceholder: {
