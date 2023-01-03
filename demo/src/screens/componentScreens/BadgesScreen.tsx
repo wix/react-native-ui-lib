@@ -21,18 +21,18 @@ export default class BadgesScreen extends Component {
 
   customElement1 = (
     <View row>
-      <Image source={bell}/>
-      <Image source={bell}/>
+      <Image tintColor={Colors.$iconDefaultLight} source={bell}/>
+      <Image tintColor={Colors.$iconDefaultLight} source={bell}/>
     </View>
   );
 
   customElement2 = (
     <View row>
-      <Image source={bell}/>
-      <Text white text90>
+      <Image tintColor={Colors.$iconSuccessLight} source={bell}/>
+      <Text $textSuccessLight text90>
         37
       </Text>
-      <Image source={bell}/>
+      <Image tintColor={Colors.$iconSuccessLight} source={bell}/>
     </View>
   );
 
@@ -152,7 +152,7 @@ export default class BadgesScreen extends Component {
           </Text>
           <View row spread marginH-50>
             <Badge marginR-10 label={'17'} customElement={this.customElement1}/>
-            <Badge marginR-10 customElement={this.customElement2} backgroundColor={Colors.$backgroundNeutralHeavy}/>
+            <Badge marginR-10 customElement={this.customElement2} backgroundColor={Colors.$backgroundDisabled}/>
           </View>
         </ScrollView>
       </View>

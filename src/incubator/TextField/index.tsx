@@ -8,8 +8,9 @@
 import React, {useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {isEmpty, trim, omit} from 'lodash';
-import {asBaseComponent, forwardRef} from '../../commons/new';
+import {asBaseComponent, Constants, forwardRef} from '../../commons/new';
 import View from '../../components/view';
+import Text from '../../components/text';
 import {useMeasure} from '../../hooks';
 import {
   TextFieldProps,
@@ -71,7 +72,7 @@ const TextField = (props: InternalTextFieldProps) => {
     // Input
     placeholder,
     children,
-    centered = false,
+    centered,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
@@ -104,6 +105,9 @@ const TextField = (props: InternalTextFieldProps) => {
   const _validationMessageStyle = useMemo(() => {
     return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
   }, [validationMessageStyle, centered]);
+  const inputStyle = useMemo(() => {
+    return [typographyStyle, colorStyle, others.style, centered && styles.centeredInput];
+  }, [typographyStyle, colorStyle, others.style, centered]);
 
   return (
     <FieldContext.Provider value={context}>
@@ -130,30 +134,43 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          {children || <View flex={!centered} flexG={centered} /* flex row */>
-            {floatingPlaceholder && (
-              <FloatingPlaceholder
-                defaultValue={others.defaultValue}
+
+          {/* Note: We're passing flexG to the View to support properly inline behavior - so the input will be rendered correctly in a row container.
+            Known Issue: This slightly push the trailing accessory when entering a long text
+          */}
+          {children || (
+            <View flexG>
+              {/* Note: Render dummy placeholder for Android center issues */}
+              {Constants.isAndroid && centered && (
+                <Text marginR-s1 style={styles.dummyPlaceholder}>
+                  {placeholder}
+                </Text>
+              )}
+              {floatingPlaceholder && (
+                <FloatingPlaceholder
+                  defaultValue={others.defaultValue}
+                  placeholder={placeholder}
+                  floatingPlaceholderStyle={_floatingPlaceholderStyle}
+                  floatingPlaceholderColor={floatingPlaceholderColor}
+                  floatOnFocus={floatOnFocus}
+                  validationMessagePosition={validationMessagePosition}
+                  extraOffset={leadingAccessoryMeasurements?.width}
+                  testID={`${props.testID}.floatingPlaceholder`}
+                />
+              )}
+              <Input
+                placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
+                {...others}
+                style={inputStyle}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onChangeText={onChangeText}
                 placeholder={placeholder}
-                floatingPlaceholderStyle={_floatingPlaceholderStyle}
-                floatingPlaceholderColor={floatingPlaceholderColor}
-                floatOnFocus={floatOnFocus}
-                validationMessagePosition={validationMessagePosition}
-                extraOffset={leadingAccessoryMeasurements?.width}
-                testID={`${props.testID}.floatingPlaceholder`}
+                hint={hint}
+                value={fieldState.value}
               />
-            )}
-            <Input
-              placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
-              {...others}
-              style={[typographyStyle, colorStyle, others.style]}
-              onFocus={onFocus}
-              onBlur={onBlur}
-              onChangeText={onChangeText}
-              placeholder={placeholder}
-              hint={hint}
-            />
-          </View>}
+            </View>
+          )}
           {trailingAccessory}
           {/* </View> */}
         </View>
@@ -203,8 +220,13 @@ const styles = StyleSheet.create({
   centeredLabel: {
     textAlign: 'center'
   },
-  centeredValidationMessage: {
-    flexGrow: 1,
+  centeredInput: {
     textAlign: 'center'
+  },
+  centeredValidationMessage: {
+    textAlign: 'center'
+  },
+  dummyPlaceholder: {
+    height: 0
   }
 });
