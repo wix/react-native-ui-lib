@@ -21,6 +21,7 @@ const baseProjectSource = [
   path.resolve(appDirectory, 'node_modules/@react-native-community/picker'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/netinfo'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/datetimepicker'),
+  path.resolve(appDirectory, 'node_modules/react-native-color'),
   path.resolve(appDirectory, 'node_modules/react-native-ui-lib')
 ];
 
@@ -45,7 +46,7 @@ const imageLoaderConfiguration = {
       esModule: false
     }
   }
-}; 
+};
 
 const babelLoaderAppConfiguration = {
   test: /\.(js|jsx|ts|tsx)$/,
@@ -53,7 +54,7 @@ const babelLoaderAppConfiguration = {
   use: useBabelForRN
 };
 
-module.exports = 
+module.exports =
 {
   entry: {
     app: path.resolve(appDirectory, './src/index.ts')
@@ -83,7 +84,7 @@ module.exports =
   devServer: {
     contentBase: path.resolve(appDirectory, './dist'),
     compress: true,
-    port: 9002
+    port: 9001
   },
   plugins: [
     new CleanWebpackPlugin({

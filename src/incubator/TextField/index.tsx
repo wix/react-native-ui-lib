@@ -167,6 +167,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 onChangeText={onChangeText}
                 placeholder={placeholder}
                 hint={hint}
+                value={fieldState.value}
               />
             </View>
           )}
@@ -223,7 +224,6 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   centeredValidationMessage: {
-    flexGrow: 1,
     textAlign: 'center'
   },
   dummyPlaceholder: {
