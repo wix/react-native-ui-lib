@@ -1,4 +1,5 @@
-import React, {PropsWithChildren, useMemo} from 'react';
+import React, {PropsWithChildren, useCallback, useMemo} from 'react';
+import {useSharedValue} from 'react-native-reanimated';
 import View from '../../components/view';
 import CalendarItem from './CalendarItem';
 import {CalendarProps, FirstDayOfWeek} from './types';
@@ -6,10 +7,17 @@ import CalendarContext from './CalendarContext';
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {children, firstDayOfWeek = FirstDayOfWeek.Monday} = props;
+  const current = useSharedValue<number>(Date.now());
+
+  const setDate = useCallback((date: number) => {
+    current.value = date;
+  }, []);
 
   const contextValue = useMemo(() => {
     return {
-      firstDayOfWeek
+      firstDayOfWeek,
+      date: current,
+      setDate
     };
   }, []);
 
