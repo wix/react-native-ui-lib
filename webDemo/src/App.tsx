@@ -17,6 +17,7 @@ import ProgressBar from 'react-native-ui-lib/ProgressBar';
 import AnimatedImage from 'react-native-ui-lib/AnimatedImage';
 import Avatar from 'react-native-ui-lib/Avatar';
 import Drawer from 'react-native-ui-lib/Drawer';
+import ActionSheet from 'react-native-ui-lib/ActionSheet';
 
 import {
   Colors,
@@ -304,6 +305,37 @@ const itemsToRender: ItemToRender[] = [
   {
     title: 'Picker',
     FC: Picker
+  },
+  {
+    title: 'ActionSheet',
+    FC: () => {
+      const [showCustom, setShowCustom] = useState(false);
+      return (
+        <View>
+          <Button
+            label={'Open ActionSheet'}
+            size={Button.sizes.medium}
+            onPress={() => {
+              setShowCustom(true);
+            }}
+          />
+          <ActionSheet
+            title={'Title'}
+            message={'Message of action sheet'}
+            destructiveButtonIndex={0}
+            useNativeIOS={false}
+            migrateDialog
+            options={[
+              {label: 'option 1', onPress: () => alert('Option 1 selected!')},
+              {label: 'option 2', onPress: () => alert('Option 3 selected!')},
+              {label: 'option 3', onPress: () => alert('Option 3 selected!')}
+            ]}
+            visible={showCustom}
+            onDismiss={() => setShowCustom(false)}
+          />
+        </View>
+      );
+    }
   },
   {
     title: 'Date',

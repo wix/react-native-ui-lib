@@ -80,7 +80,7 @@ class Modal extends Component<ModalProps> {
   renderTouchableOverlay() {
     const {testID, overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
-      const isScreenReaderEnabled = Constants.accessibility.isScreenReaderEnabled;
+      const isScreenReaderEnabled = Constants.isWeb ? false : Constants.accessibility.isScreenReaderEnabled;
       const accessibilityProps = isScreenReaderEnabled
         ? {accessible: true, accessibilityLabel, accessibilityRole: 'button'}
         : undefined;
