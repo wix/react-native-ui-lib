@@ -1,4 +1,8 @@
-export type FirstDayOfWeek = 'Saturday' | 'Sunday' | 'Monday';
+export enum FirstDayOfWeek {
+  Sunday = 0,
+  Monday = 1,
+  Saturday = 6
+}
 
 export interface CalendarContextProps {
   firstDayOfWeek: FirstDayOfWeek;
@@ -29,4 +33,6 @@ export interface HeaderProps {
   year: number;
 }
 
-export interface CalendarProps {}
+export interface CalendarProps {
+  firstDayOfWeek?: `${FirstDayOfWeek}` & FirstDayOfWeek;
+}

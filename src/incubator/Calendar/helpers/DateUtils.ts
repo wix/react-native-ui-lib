@@ -20,21 +20,7 @@ export function getWeekNumbersOfMonth(year: number, month: number) {
 }
 
 function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
-  let firstDay;
-  switch (firstDayOfWeek) {
-    case 'Saturday':
-      firstDay = 6;
-      break;
-    case 'Sunday':
-      firstDay = 0;
-      break;
-    case 'Monday':
-    default:
-      firstDay = 1;
-      break;
-  }
-
-  let result = new Date(date.valueOf() - DAY_TO_MILLIS * ((date.getDay() - firstDay) % 7));
+  let result = new Date(date.valueOf() - DAY_TO_MILLIS * ((date.getDay() - firstDayOfWeek) % 7));
   const dayInMonth = result.getDate();
   if (dayInMonth >= 7 && dayInMonth < 14) {
     result = new Date(result.valueOf() - WEEK_TO_MILLIS);
