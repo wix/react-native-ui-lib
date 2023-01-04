@@ -4,6 +4,7 @@ import View from '../../components/view';
 import CalendarItem from './CalendarItem';
 import {CalendarProps, FirstDayOfWeek} from './types';
 import CalendarContext from './CalendarContext';
+import Agenda from './Agenda';
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.Monday} = props;
@@ -25,12 +26,12 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     <CalendarContext.Provider value={contextValue}>
       <View>
         <CalendarItem year={2020} month={0}/>
-        <CalendarItem year={2022} month={0}/>
-        <CalendarItem year={2023} month={0}/>
       </View>
       {children}
     </CalendarContext.Provider>
   );
 }
+
+Calendar.Agenda = Agenda;
 
 export default Calendar;

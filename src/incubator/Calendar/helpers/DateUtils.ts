@@ -1,7 +1,8 @@
 import getWeek from 'date-fns/getWeek';
 import {FirstDayOfWeek} from '../types';
 
-const DAY_TO_MILLIS = 24 * 60 * 60 * 1000;
+export const HOUR_TO_MILLIS = 60 * 60 * 1000;
+const DAY_TO_MILLIS = 24 * HOUR_TO_MILLIS;
 const WEEK_TO_MILLIS = 7 * DAY_TO_MILLIS;
 
 export function getWeekNumbersOfMonth(year: number, month: number) {
