@@ -17,6 +17,7 @@ import ProgressBar from 'react-native-ui-lib/ProgressBar';
 import AnimatedImage from 'react-native-ui-lib/AnimatedImage';
 import Avatar from 'react-native-ui-lib/Avatar';
 import Drawer from 'react-native-ui-lib/Drawer';
+import Modal from 'react-native-ui-lib/Modal';
 
 import {
   Colors,
@@ -34,6 +35,11 @@ import StackAggregator from './examples/StackAggregator';
 import {Image, ProgressiveImage} from './examples/Image';
 import List from './examples/List';
 import CarouselWrapper from './examples/Carousel';
+
+Modal.defaultProps = {
+  ...Modal.defaultProps,
+  portalContainerId: 'emulator-root'
+};
 interface ItemToRender {
   title: string,
   FC: React.FC

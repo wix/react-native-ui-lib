@@ -1,62 +1,14 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import {ModalProps} from './types';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {
-  StyleSheet,
-  Modal as RNModal,
-  ModalProps as RNModalProps,
-  TouchableWithoutFeedback,
-  GestureResponderEvent,
-  KeyboardAvoidingView,
-  KeyboardAvoidingViewProps
-} from 'react-native';
+import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
-import TopBar, {ModalTopBarProps} from './TopBar';
+import TopBar from './TopBar';
 import View from '../../components/view';
 
 const BlurView = BlurViewPackage?.BlurView;
-
-export {ModalTopBarProps};
-export interface ModalProps extends RNModalProps {
-  /**
-   * Blurs the modal background when transparent (iOS only)
-   */
-  enableModalBlur?: boolean;
-  /**
-   * A custom view to use as a BlueView instead of the default one
-   */
-  blurView?: JSX.Element;
-  /**
-   * allow dismissing a modal when clicking on its background
-   */
-  onBackgroundPress?: (event: GestureResponderEvent) => void;
-  /**
-   * the background color of the overlay
-   */
-  overlayBackgroundColor?: string;
-  /**
-   * The modal's end-to-end test identifier
-   */
-  testID?: string;
-  /**
-   * Overrides the text that's read by the screen reader when the user interacts with the element. By default, the
-   * label is constructed by traversing all the children and accumulating all the Text nodes separated by space.
-   */
-  accessibilityLabel?: string;
-  /**
-   * Should add a GestureHandlerRootView (Android only)
-   */
-  useGestureHandlerRootView?: boolean;
-  /**
-   * Should add a KeyboardAvoidingView (iOS only)
-   */
-  useKeyboardAvoidingView?: boolean;
-  /**
-   * Send additional props to the KeyboardAvoidingView (iOS only)
-   */
-  keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
-}
 
 /**
  * @description: Component that present content on top of the invoking screen

@@ -35,6 +35,12 @@
       "type": "boolean",
       "description": "Should add a GestureHandlerRootView",
       "note": "Android only"
+    },
+    {
+      "name": "portalContainerId",
+      "type": "string",
+      "description": "The modal's container identifier for web implementation, the container id will be the parent element/div for the modal's to render in.",
+      "note": "Web only"
     }
   ],
   "snippet": [
