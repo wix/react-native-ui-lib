@@ -44,7 +44,7 @@ function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
 }
 
 function getFirstDayInTheYear(year: number, firstDayOfWeek: FirstDayOfWeek) {
-  // Using Jan 4th as the marker for the first week of the year (https://en.wikipedia.org/wiki/ISO_week_date)
+  // Note: Using Jan 4th as the marker for the first week of the year (https://en.wikipedia.org/wiki/ISO_week_date)
   // Must add Date.UTC or the local timezone might be added which can affect the date (one day before)
   const dayInFirstWeekOfYear = new Date(Date.UTC(year, 0, 4));
   return getFirstDayInTheWeek(dayInFirstWeekOfYear, firstDayOfWeek);

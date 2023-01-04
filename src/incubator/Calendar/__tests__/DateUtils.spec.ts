@@ -42,7 +42,7 @@ describe('Calendar/DateUtils', () => {
     });
 
     describe('2021', () => {
-      it('2021 Saturday should be Saturday Jan 2nd', () => {
+      it('2021 When Saturday is first day of the week - should return Saturday Jan 2nd', () => {
         const firstDayInTheYear = DateUtils._forTesting.getFirstDayInTheYear(2021, 'Saturday');
         expect(firstDayInTheYear.getDate()).toBe(2);
         expect(firstDayInTheYear.getMonth()).toBe(0);
