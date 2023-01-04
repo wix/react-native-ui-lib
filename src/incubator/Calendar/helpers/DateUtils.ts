@@ -53,4 +53,16 @@ export function getDayOfDate(date: number) {
   return new Date(date).getDate();
 }
 
+/* Worklets */
+export function getDateObject(date: number) {
+  'worklet';
+  const d = new Date(date);
+
+  return {
+    day: d.getDate(),
+    month: d.getMonth(),
+    year: d.getFullYear()
+  };
+}
+
 export const _forTesting = {getFirstDayInTheYear};
