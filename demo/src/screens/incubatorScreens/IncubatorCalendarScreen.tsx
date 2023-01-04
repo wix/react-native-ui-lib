@@ -8,9 +8,13 @@ export default class CalendarScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View flex>
         <Text>Calendar Screen</Text>
-        <Incubator.Calendar/>
+        <Incubator.Calendar>
+          <View marginT-s10 flex>
+            <Incubator.Calendar.Agenda/>
+          </View>
+        </Incubator.Calendar>
       </View>
     );
   }
