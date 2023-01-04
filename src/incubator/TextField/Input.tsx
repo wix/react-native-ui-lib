@@ -41,7 +41,7 @@ const Input = ({
 
   return (
     <TextInput
-      style={[styles.input, !!inputColor && {color: inputColor}, style]}
+      style={[styles.input, !!inputColor && {color: inputColor}, style, Constants.isWeb && styles.webStyle]}
       {...props}
       value={value}
       placeholder={placeholder}
@@ -68,6 +68,10 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center'
       }
     })
+  },
+  webStyle: {
+    // @ts-expect-error
+    outlineWidth: 0
   }
 });
 

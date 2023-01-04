@@ -62,10 +62,10 @@
   ],
   "snippet": [
     "<Toast",
-    "  visible={this.state.visible$1}",
+    "  visible={isVisible$1}",
     "  position={'top'$2}",
     "  autoDismiss={5000$2}",
-    "  onDismiss={() => console.log('dismissed')$3}",
+    "  onDismiss={onDismiss$3}",
     ">"
   ]
 }

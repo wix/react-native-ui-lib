@@ -53,7 +53,7 @@ export interface DialogHeaderProps extends ViewProps {
   /**
    * Style for the leading + content + trailing components (without the bottomAccessory)
    */
-   contentContainerStyle?: ViewProps['style'];
+  contentContainerStyle?: ViewProps['style'];
   /**
    * onPress callback for the inner content
    */
@@ -77,6 +77,10 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    * The Dialog`s container style (it is set to {position: 'absolute'})
    */
   containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Extra props for the container
+   */
+  containerProps?: Omit<ViewProps, 'reanimated' | 'animated' | 'style' | 'onLayout' | 'ref' | 'testID'>;
   /**
    * The dialog width.
    */

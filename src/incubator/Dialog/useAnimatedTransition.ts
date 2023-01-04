@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
 import {
-  runOnJS,
   useSharedValue,
   withSpring,
   withTiming,
@@ -45,16 +44,16 @@ export interface AnimatedTransitionProps extends AnimationNotifierEndProps {
    */
   delay?: Delay;
   hiddenLocation: HiddenLocation;
-  onInitPosition: () => void;
 }
 
 export default function useAnimatedTransition(props: AnimatedTransitionProps) {
-  const {hiddenLocation, onInitPosition, enterFrom, exitTo, onAnimationStart, onAnimationEnd, delay} = props;
+  const {hiddenLocation, enterFrom, exitTo, onAnimationStart, onAnimationEnd, delay} = props;
 
   // Has to start at {0, 0} with {opacity: 0} so layout can be measured
   const translationX = useSharedValue<number>(0);
   const translationY = useSharedValue<number>(0);
   const {onEnterAnimationEnd, onExitAnimationEnd} = useAnimationEndNotifier({onAnimationEnd});
+  const isMounted = useSharedValue(false);
 
   const getLocation = (direction?: TransitionViewDirection) => {
     return {
@@ -71,7 +70,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
     };
   };
 
-  const initPosition = useCallback(() => {
+  const onHiddenLocationUpdated = useCallback(() => {
     'worklet';
     const to = getLocation(enterFrom);
     // @ts-expect-error
@@ -82,12 +81,14 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
       translationY.value = withTiming(to.y, {duration: 0}, animateIn);
     }
 
-    onInitPosition();
-  }, [onInitPosition]);
+    if (!isMounted.value) {
+      isMounted.value = true;
+    }
+  }, []);
 
   useEffect(() => {
     if (hiddenLocation.wasMeasured && enterFrom) {
-      initPosition();
+      onHiddenLocationUpdated();
     }
   }, [hiddenLocation]);
 
@@ -111,10 +112,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   const animateIn = useCallback(() => {
     'worklet';
     if (enterFrom) {
-      if (onAnimationStart) {
-        runOnJS(onAnimationStart)('enter');
-      }
-
+      onAnimationStart?.('enter');
       translateTo({x: 0, y: 0}, withSpring, ENTER_ANIMATION_CONFIG, enterFrom, onEnterAnimationEnd, delay?.enter);
     }
   }, [onEnterAnimationEnd, delay?.enter]);
@@ -122,13 +120,10 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   const animateOut = useCallback(() => {
     'worklet';
     if (exitTo) {
-      if (onAnimationStart) {
-        runOnJS(onAnimationStart)('exit');
-      }
-
+      onAnimationStart?.('exit');
       translateTo(getLocation(exitTo), withTiming, EXIT_ANIMATION_CONFIG, exitTo, onExitAnimationEnd, delay?.exit);
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd, delay?.exit]);
 
-  return {animateIn, animateOut, translation: {x: translationX, y: translationY}};
+  return {animateIn, animateOut, translation: {x: translationX, y: translationY}, isMounted};
 }

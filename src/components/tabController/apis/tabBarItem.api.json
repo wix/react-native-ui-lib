@@ -13,7 +13,7 @@
       "name": "selectedLabelColor",
       "type": "string",
       "description": "The selected label color",
-      "default": "Colors.primary"
+      "default": "Colors.$textPrimary"
     },
     {"name": "icon", "type": "number", "description": "Icon of the tab"},
     {"name": "iconColor", "type": "string", "description": "Icon tint color"},
@@ -39,5 +39,7 @@
     {"name": "style", "type": "ViewStyle", "description": "Pass custom style"},
     {"name": "testID", "type": "string", "description": "Used as a testing identifier"}
   ],
-  "snippet": ["<TabBarItem label={$1}/>"]
+  "snippet": [
+    "<TabBarItem label={'Item'$1}/>"
+  ]
 }

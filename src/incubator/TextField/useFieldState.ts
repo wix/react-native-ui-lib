@@ -3,6 +3,7 @@ import _ from 'lodash';
 import * as Presenter from './Presenter';
 import {useDidUpdate} from 'hooks';
 import {FieldStateProps} from './types';
+import {Constants} from '../../commons/new';
 
 export default function useFieldState({
   validate,
@@ -13,10 +14,23 @@ export default function useFieldState({
   onChangeValidity,
   ...props
 }: FieldStateProps) {
-  const [value, setValue] = useState(props.value);
+  const [value, setValue] = useState(props.value ?? props.defaultValue);
   const [isFocused, setIsFocused] = useState(false);
   const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
   const [failingValidatorIndex, setFailingValidatorIndex] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (Constants.isWeb && !props.value && props.defaultValue && props.defaultValue !== value) {
+      setValue(props.defaultValue);
+
+      if (validateOnChange) {
+        validateField(props.defaultValue);
+      }
+    }
+
+    /* On purpose listen only to props.defaultValue change */
+    /* eslint-disable-next-line react-hooks/exhaustive-deps*/
+  }, [props.defaultValue, validateOnChange]);
 
   useEffect(() => {
     if (validateOnStart) {

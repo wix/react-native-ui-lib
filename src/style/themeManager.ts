@@ -2,15 +2,28 @@ import _ from 'lodash';
 import type {Context} from 'react';
 import Colors from './colors';
 
+interface Theme {
+  primaryColor: string,
+    CTA: {
+      textColor: string,
+      disabledColor: string,
+      backgroundColor: string
+    },
+    titleColor: string,
+    subtitleColor: string,
+    dividerColor: string,
+    components: Extendable
+}
+
 export class ThemeManager {
   private themeContext?: Context<any>;
 
-  theme = {
-    primaryColor: Colors.primary,
+  theme: Theme = {
+    primaryColor: Colors.$backgroundPrimaryHeavy,
     CTA: {
       textColor: Colors.white,
       disabledColor: Colors.grey60,
-      backgroundColor: Colors.primary
+      backgroundColor: Colors.$backgroundPrimaryHeavy
     },
     titleColor: Colors.grey10,
     subtitleColor: Colors.grey40,

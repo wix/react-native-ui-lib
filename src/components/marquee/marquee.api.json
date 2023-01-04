@@ -2,8 +2,7 @@
   "name": "Marquee",
   "category": "media",
   "description": "Marquee component for sliding text",
-  "extends": [""],
-  "example": "",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MarqueeScreen.tsx",
   "props": [
     {"name": "label", "type": "string", "description": "Marquee label"},
     {"name": "labelStyle", "type": "TextProps['style']", "description": "Marquee label style"},
@@ -19,12 +18,12 @@
   ],
   "snippet": [
     "<Marquee",
-    "key={`${directionHorizontal}-${duration}-${numOfReps}`}",
-    "label={'Hey there, this is the new Marquee component from UILIB!'}",
-    "direction={directionHorizontal ? MarqueeDirections.LEFT : MarqueeDirections.RIGHT}",
-    "duration={duration}",
-    "numberOfReps={numOfReps}",
-    "containerStyle={[styles.containerHorizontal, styles.horizontal]}",
+    "  key={`${index}`$1}",
+    "  label={'Hey there'$2}",
+    "  direction={directionHorizontal ? MarqueeDirections.LEFT : MarqueeDirections.RIGHT$3}",
+    "  duration={duration$4}",
+    "  numberOfReps={numOfReps$5}",
+    "  containerStyle={styles.containerStyle$6}",
     "/>"
   ]
 }

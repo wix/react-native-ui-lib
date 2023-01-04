@@ -147,6 +147,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
     /**
+     * @deprecated pass useWheelPicker prop instead
      * Allow to use the native picker solution (different style for iOS and Android)
      */
     useNativePicker?: boolean;

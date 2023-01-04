@@ -25,9 +25,9 @@
   ],
   "snippet": [
     "<Wizard activeIndex={0$1} onActiveIndexChanged={() => console.log('changed')$2}>",
-    " {_.map(items, item => (",
-    "  return this.renderItem(item, index);",
-    " ))}",
+    "  {_.map(items, item => (",
+    "   return renderItem(item, index);",
+    "  ))$3}",
     "</Wizard>"
   ]
 }

@@ -27,5 +27,7 @@
     {"name": "testID", "type": "string", "description": "The component test id"},
     {"name": "faderProps", "type": "FaderProps", "description": "Custom props for fader."}
   ],
-  "snippet": ["<SectionsWheelPicker sections={$1}/>"]
+  "snippet": [
+    "<SectionsWheelPicker sections={sections$1}/>"
+  ]
 }

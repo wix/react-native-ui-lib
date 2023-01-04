@@ -74,7 +74,7 @@ function createStyles(isRemoteImage: boolean) {
       marginTop: 12
     },
     ctaLabel: {
-      color: Colors.primary,
+      color: Colors.$textPrimary,
       ...Typography.text70
     }
   });

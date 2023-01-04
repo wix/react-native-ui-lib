@@ -1,11 +1,12 @@
 import {isEmpty} from 'lodash';
-import React, {useRef, useMemo, useCallback, useState} from 'react';
+import React, {useRef, useMemo, useCallback, useState, useImperativeHandle, forwardRef, ForwardedRef} from 'react';
 import {StyleSheet, View as RNView} from 'react-native';
-import {useAnimatedStyle, useDerivedValue, useSharedValue, withTiming} from 'react-native-reanimated';
+import hoistStatics from 'hoist-non-react-statics';
+import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
-import {Spacings, Colors, BorderRadiuses} from 'style';
+import {Spacings, Colors, BorderRadiuses} from '../../style';
 import {asBaseComponent} from '../../commons/new';
-import {useDidUpdate} from 'hooks';
+import {useDidUpdate} from '../../hooks';
 import View from '../../components/view';
 import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
@@ -24,11 +25,16 @@ export interface DialogStatics {
   Header: typeof DialogHeader;
 }
 
-const Dialog = (props: DialogProps) => {
+export interface DialogImperativeMethods {
+  dismiss: () => void;
+}
+
+const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) => {
   const {
     visible: propsVisibility = false,
     headerProps,
     containerStyle,
+    containerProps,
     width,
     height,
     onDismiss,
@@ -42,7 +48,6 @@ const Dialog = (props: DialogProps) => {
   const {overlayBackgroundColor, ...otherModalProps} = modalProps;
   const initialVisibility = useRef(propsVisibility);
   const [visible, setVisible] = useState(propsVisibility);
-  const opacity = useSharedValue<number>(Number(propsVisibility));
 
   const directions = useMemo((): DialogDirections[] => {
     return [direction];
@@ -63,7 +68,6 @@ const Dialog = (props: DialogProps) => {
   const onTransitionAnimationEnd = useCallback((type: TransitionViewAnimationType) => {
     if (type === 'exit') {
       setVisible(false);
-      opacity.value = withTiming(0, {duration: 0});
       onDismiss?.();
     }
   },
@@ -84,20 +88,13 @@ const Dialog = (props: DialogProps) => {
     hiddenLocation
   });
 
-  const onInitPosition = useCallback(() => {
-    if (opacity.value === 0) {
-      opacity.value = withTiming(1, {duration: 0});
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const {
     animateIn,
     animateOut,
-    translation: transitionTranslation
+    translation: transitionTranslation,
+    isMounted
   } = useAnimatedTransition({
     hiddenLocation,
-    onInitPosition,
     enterFrom: direction,
     exitTo: direction,
     onAnimationStart: fade,
@@ -144,7 +141,7 @@ const Dialog = (props: DialogProps) => {
     return {
       transform: [{translateX: translation.value.x}, {translateY: translation.value.y}],
       // TODO: do we want to take the component's opacity here? - I think combining opacities is buggy
-      opacity: opacity.value
+      opacity: isMounted.value ? 1 : 0
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -160,10 +157,14 @@ const Dialog = (props: DialogProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerStyle, width, height]);
 
+  useImperativeHandle(ref, () => ({
+    dismiss: animateOut
+  }));
+
   const renderDialog = () => {
     return (
       <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View pointerEvents={'box-none'} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
+        <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
           {headerProps && <DialogHeader {...headerProps}/>}
           {children}
         </View>
@@ -195,7 +196,9 @@ Dialog.displayName = 'Incubator.Dialog';
 Dialog.directions = DialogDirectionsEnum;
 Dialog.Header = DialogHeader;
 
-export default asBaseComponent<DialogProps, DialogStatics>(Dialog);
+const _Dialog = forwardRef<DialogImperativeMethods, DialogProps>(Dialog);
+hoistStatics(_Dialog, Dialog);
+export default asBaseComponent<DialogProps, DialogStatics>(_Dialog);
 
 const styles = StyleSheet.create({
   defaultDialogStyle: {
