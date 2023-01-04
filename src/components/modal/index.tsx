@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ModalProps} from './types';
+import {ModalProps, ModalTopBarProps} from './types';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TopBar from './TopBar';
 import View from '../../components/view';
-
+export {ModalProps, ModalTopBarProps};
 const BlurView = BlurViewPackage?.BlurView;
 
 /**

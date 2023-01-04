@@ -36,9 +36,9 @@ class Modal extends Component<ModalProps> {
 
   render() {
     const {portalContainerId} = this.props;
-    let wrapper = document.getElementById(portalContainerId);
+    let wrapper = document.getElementById(portalContainerId!);
     if (!wrapper) {
-      wrapper = this.createWrapperAndAppendToBody(portalContainerId);
+      wrapper = this.createWrapperAndAppendToBody(portalContainerId!);
     }
     return createPortal(this.renderWebModal(), wrapper);
   }
