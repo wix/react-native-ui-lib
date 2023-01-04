@@ -102,7 +102,7 @@ const SliderNew = (props: Props) => {
     if (useRange) {
       const bluePosition = getXForValue(initialMinimumValue, trackWidth);
       const greenPosition = getXForValue(initialMaximumValue, trackWidth);
-      activeTrackWidth.value = trackWidth - bluePosition - greenPosition;
+      activeTrackWidth.value = trackWidth - bluePosition - greenPosition + thumbCenter;
       updateBlue(bluePosition);
       updateGreen(greenPosition);
     } else {
@@ -115,7 +115,8 @@ const SliderNew = (props: Props) => {
   };
 
   const onTrackPress = useCallback((event) => {
-    let locationX = event.nativeEvent.locationX;
+    let locationX = Math.min(event.nativeEvent.locationX, trackWidth.value - thumbCenter);
+    console.warn(locationX);
     if (shouldBounceToStep) {
       locationX = getStepComputedX(locationX);
     }
@@ -187,8 +188,7 @@ const SliderNew = (props: Props) => {
       x,
       y: 0
     };
-
-    activeTrackWidth.value = Math.abs(useRange ? startGreen.value.x - x : x);
+    activeTrackWidth.value = Math.abs(useRange ? startGreen.value.x - x : x) + (x > thumbCenter ? thumbCenter : 0);
     onChange(useRange ? {min: x, max: startGreen.value.x} : x);
   };
 
@@ -202,7 +202,7 @@ const SliderNew = (props: Props) => {
       x: newX,
       y: 0
     };
-    activeTrackWidth.value = x - start.value.x;
+    activeTrackWidth.value = x - start.value.x + thumbCenter;
     onChange({min: start.value.x, max: x});
   };
 
@@ -221,7 +221,7 @@ const SliderNew = (props: Props) => {
           y: 0
         };
         newX = Math.max(0, newX);
-        activeTrackWidth.value = useRange ? startGreen.value.x - offset.value.x : newX;
+        activeTrackWidth.value = (useRange ? startGreen.value.x - offset.value.x : newX) + thumbCenter;
         runOnJS(onChange)(useRange ? {min: newX, max: startGreen.value.x} : newX);
       }
     })
@@ -258,7 +258,7 @@ const SliderNew = (props: Props) => {
           x: newX,
           y: 0
         };
-        activeTrackWidth.value = offsetGreen.value.x - start.value.x;
+        activeTrackWidth.value = offsetGreen.value.x - start.value.x + thumbCenter;
         runOnJS(onChange)(useRange ? {min: start.value.x, max: newX} : newX);
       }
     })
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: Colors.$backgroundPrimaryHeavy,
     height: trackHeight,
-    // borderRadius: trackHeight / 2
+    borderRadius: trackHeight / 2
   },
   touchArea: {
     ...StyleSheet.absoluteFillObject,
