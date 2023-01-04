@@ -33,8 +33,7 @@ export interface CalendarItemProps {
 }
 
 export interface HeaderProps {
-  month?: number;
-  year: number;
+  
 }
 
 export interface CalendarProps {

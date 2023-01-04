@@ -124,4 +124,63 @@ describe('Calendar/DateUtils', () => {
       expect(day).toBe(26);
     });
   });
+
+  describe.only('addMonths', () => {
+    it('should return the date timestamp for the next (1) months in the next (1) years', () => {
+      const date = new Date(DateUtils.addMonths(new Date('2022-12-26').getTime(), 1));
+      expect(date.getDate()).toBe(26);
+      expect(date.getMonth()).toBe(0);
+      expect(date.getFullYear()).toBe(2023);
+    });
+
+    it('should return the date timestamp for the next (5) months in the same year', () => {
+      const date = new Date(DateUtils.addMonths(new Date('2023-01-26').getTime(), 5));
+      expect(date.getDate()).toBe(26);
+      expect(date.getMonth()).toBe(5);
+      expect(date.getFullYear()).toBe(2023);
+    });
+
+    it('should return the date timestamp for the next (13) months in the next (2) years', () => {
+      const date = new Date(DateUtils.addMonths(new Date('2022-12-26').getTime(), 13));
+      expect(date.getDate()).toBe(26);
+      expect(date.getMonth()).toBe(0);
+      expect(date.getFullYear()).toBe(2024);
+    });
+
+    it('should return the date timestamp for the next (24) months in the next (2) years', () => {
+      const date = new Date(DateUtils.addMonths(new Date('2022-12-26').getTime(), 24));
+      expect(date.getDate()).toBe(26);
+      expect(date.getMonth()).toBe(11);
+      expect(date.getFullYear()).toBe(2024);
+    });
+
+    // subtract
+    it('should return the date timestamp for the previous (-1) months in the previous (1) years', () => {
+      const date = new Date(DateUtils.addMonths(new Date('2023-01-26').getTime(), -1));
+      expect(date.getDate()).toBe(26);
+      expect(date.getMonth()).toBe(11);
+      expect(date.getFullYear()).toBe(2022);
+    });
+
+    it('should return the date timestamp for the previous (-5) months in the same year', () => {
+      const date = new Date(DateUtils.addMonths(new Date('2022-12-26').getTime(), -5));
+      expect(date.getDate()).toBe(26);
+      expect(date.getMonth()).toBe(6);
+      expect(date.getFullYear()).toBe(2022);
+    });
+
+    it('should return the date timestamp for the previous (-13) months in the previous (2) years', () => {
+      const date = new Date(DateUtils.addMonths(new Date('2022-12-26').getTime(), -13));
+      expect(date.getDate()).toBe(26);
+      expect(date.getMonth()).toBe(10);
+      expect(date.getFullYear()).toBe(2021);
+    });
+
+    it('should return the date timestamp for the previous (-24) months in the previous (2) years', () => {
+      const date = new Date(DateUtils.addMonths(new Date('2022-12-26').getTime(), -24));
+      expect(date.getDate()).toBe(26);
+      expect(date.getMonth()).toBe(11);
+      expect(date.getFullYear()).toBe(2020);
+    });
+  });
 });

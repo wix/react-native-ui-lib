@@ -9,7 +9,7 @@ function CalendarItem(props: CalendarItemProps) {
   if (month !== undefined) {
     return (
       <View>
-        <Header month={month} year={year}/>
+        <Header/>
         <Month month={month} year={year}/>
       </View>
     );
