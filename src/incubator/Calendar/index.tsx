@@ -6,8 +6,8 @@ import {CalendarProps, FirstDayOfWeek} from './types';
 import CalendarContext from './CalendarContext';
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
-  const {children, firstDayOfWeek = FirstDayOfWeek.Monday} = props;
-  const current = useSharedValue<number>(Date.now());
+  const {children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.Monday} = props;
+  const current = useSharedValue<number>(initialDate);
 
   const setDate = useCallback((date: number) => {
     current.value = date;
