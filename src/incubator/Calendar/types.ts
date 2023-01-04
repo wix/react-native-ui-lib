@@ -1,4 +1,8 @@
-export interface CalendarContext {}
+export type FirstDayOfWeek = 'Saturday' | 'Sunday' | 'Monday';
+
+export interface CalendarContextProps {
+  firstDayOfWeek: FirstDayOfWeek;
+}
 
 export interface DayProps {
   date: number | null;
