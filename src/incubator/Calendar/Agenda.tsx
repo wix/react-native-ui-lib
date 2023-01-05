@@ -2,8 +2,7 @@ import React, {useCallback} from 'react';
 import {FlashList} from '@shopify/flash-list';
 import View from '../../components/view';
 import Text from '../..//components/text';
-// TODO: Change to MS
-import {HOUR_TO_MILLIS} from './helpers/DateUtils';
+import {HOUR_TO_MS} from './helpers/DateUtils';
 import {BorderRadiuses} from 'style';
 
 // TODO: move to types
@@ -95,7 +94,7 @@ function Agenda(props: AgendaProps) {
         marginV-1
         marginH-10
         paddingH-10
-        height={(50 * (item.end - item.start)) / HOUR_TO_MILLIS}
+        height={(50 * (item.end - item.start)) / HOUR_TO_MS}
         style={{borderWidth: 1, borderRadius: BorderRadiuses.br20, justifyContent: 'center'}}
       >
         <Text style={{}}>

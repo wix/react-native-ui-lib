@@ -1,9 +1,9 @@
 import getWeek from 'date-fns/getWeek';
 import {FirstDayOfWeek, FirstDayOfWeekEnum} from '../types';
 
-export const HOUR_TO_MILLIS = 60 * 60 * 1000;
-const DAY_TO_MILLIS = 24 * HOUR_TO_MILLIS;
-const WEEK_TO_MILLIS = 7 * DAY_TO_MILLIS;
+export const HOUR_TO_MS = 60 * 60 * 1000;
+const DAY_TO_MS = 24 * HOUR_TO_MS;
+const WEEK_TO_MS = 7 * DAY_TO_MS;
 
 export function getWeekNumbersOfMonth(year: number, month: number) {
   const firstDayOfMonth = new Date(year, month, 1);
@@ -22,10 +22,10 @@ export function getWeekNumbersOfMonth(year: number, month: number) {
 
 function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
   let result = new Date(date.valueOf() -
-      DAY_TO_MILLIS * ((date.getDay() - FirstDayOfWeekEnum[firstDayOfWeek as keyof typeof FirstDayOfWeekEnum]) % 7));
+      DAY_TO_MS * ((date.getDay() - FirstDayOfWeekEnum[firstDayOfWeek as keyof typeof FirstDayOfWeekEnum]) % 7));
   const dayInMonth = result.getDate();
   if (dayInMonth >= 7 && dayInMonth < 14) {
-    result = new Date(result.valueOf() - WEEK_TO_MILLIS);
+    result = new Date(result.valueOf() - WEEK_TO_MS);
   }
 
   return result;
@@ -42,10 +42,10 @@ export function getDaysOfWeekNumber(year: number, weekNumber: number, firstDayOf
   const result = new Array(7).fill(null);
   const firstDayOfYear = getFirstDayInTheYear(year, firstDayOfWeek);
 
-  const firstDayInRelevantWeek = firstDayOfYear.valueOf() + (weekNumber - 1) * WEEK_TO_MILLIS;
+  const firstDayInRelevantWeek = firstDayOfYear.valueOf() + (weekNumber - 1) * WEEK_TO_MS;
 
   for (let day = 0; day <= 6; ++day) {
-    result[day] = new Date(firstDayInRelevantWeek + DAY_TO_MILLIS * day);
+    result[day] = new Date(firstDayInRelevantWeek + DAY_TO_MS * day);
   }
 
   return result;
