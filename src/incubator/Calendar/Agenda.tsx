@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import {FlashList} from '@shopify/flash-list';
 import View from '../../components/view';
 import Text from '../..//components/text';
+// TODO: Change to MS
 import {HOUR_TO_MILLIS} from './helpers/DateUtils';
 import {BorderRadiuses} from 'style';
 
@@ -18,6 +19,8 @@ interface Event {
   end: number;
 }
 
+// TODO: Move mock file next to the example screen
+// TODO: Create a util that create events and add lots of them
 const DATA: Event[] = [
   {
     id: '1',
@@ -114,3 +117,7 @@ function Agenda(props: AgendaProps) {
 }
 
 export default Agenda;
+
+// TODO: Calendar events data should be like this
+// [{} , {} ,{}] => group by startDate => rebuild array for Flashlist (with sections items)
+

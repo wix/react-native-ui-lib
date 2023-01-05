@@ -71,7 +71,9 @@ export function addMonths(date: number, count: number) {
   if (count === 0) {
     return date;
   }
-
+  
+  // TODO: use set/getMonth to update date months
+  
   const dateObject = getDateObject(date);
   const day = dateObject.day;
   let month = dateObject.month;
