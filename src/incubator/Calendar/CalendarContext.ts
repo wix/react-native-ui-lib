@@ -1,8 +1,8 @@
 import {createContext} from 'react';
-import {CalendarContextProps, FirstDayOfWeek} from './types';
+import {CalendarContextProps} from './types';
 
 const CalendarContext = createContext<CalendarContextProps>({
-  firstDayOfWeek: FirstDayOfWeek.Monday
+  firstDayOfWeek: 'Monday'
 });
 
 export default CalendarContext;

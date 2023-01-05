@@ -1,5 +1,5 @@
 import getWeek from 'date-fns/getWeek';
-import {FirstDayOfWeek} from '../types';
+import {FirstDayOfWeek, FirstDayOfWeekEnum} from '../types';
 
 export const HOUR_TO_MILLIS = 60 * 60 * 1000;
 const DAY_TO_MILLIS = 24 * HOUR_TO_MILLIS;
@@ -21,7 +21,8 @@ export function getWeekNumbersOfMonth(year: number, month: number) {
 }
 
 function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
-  let result = new Date(date.valueOf() - DAY_TO_MILLIS * ((date.getDay() - firstDayOfWeek) % 7));
+  let result = new Date(date.valueOf() -
+      DAY_TO_MILLIS * ((date.getDay() - FirstDayOfWeekEnum[firstDayOfWeek as keyof typeof FirstDayOfWeekEnum]) % 7));
   const dayInMonth = result.getDate();
   if (dayInMonth >= 7 && dayInMonth < 14) {
     result = new Date(result.valueOf() - WEEK_TO_MILLIS);
@@ -71,15 +72,15 @@ export function addMonths(date: number, count: number) {
   if (count === 0) {
     return date;
   }
-  
+
   // TODO: use set/getMonth to update date months
-  
+
   const dateObject = getDateObject(date);
   const day = dateObject.day;
   let month = dateObject.month;
   let year = dateObject.year;
 
-  const monthsCount = month + count % 12;
+  const monthsCount = month + (count % 12);
   const yearCount = count / 12;
 
   if (monthsCount < 0 || monthsCount > 12) {

@@ -1,10 +1,14 @@
 import {SharedValue} from 'react-native-reanimated';
 
-export enum FirstDayOfWeek {
+export enum FirstDayOfWeekEnum {
   Sunday = 0,
   Monday = 1,
   Saturday = 6
 }
+
+export type FirstDayOfWeekUnion = 'Sunday' | 'Monday' | 'Saturday';
+
+export type FirstDayOfWeek = FirstDayOfWeekEnum | FirstDayOfWeekUnion;
 
 export interface CalendarContextProps {
   firstDayOfWeek: FirstDayOfWeek;
