@@ -7,6 +7,7 @@ import {
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
   withTiming
 } from 'react-native-reanimated';
 import {
@@ -93,7 +94,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
 
   const open = useCallback(() => {
     'worklet';
-    visibility.value = withTiming(1);
+    visibility.value = withSpring(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
