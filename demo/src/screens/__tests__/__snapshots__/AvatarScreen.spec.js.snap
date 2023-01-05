@@ -632,6 +632,11 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityLabel="badge"
           accessibilityRole="text"
           accessible={false}
+          iconProps={
+            Object {
+              "tintColor": null,
+            }
+          }
           modifiers={Object {}}
           size={10}
           style={
@@ -857,6 +862,11 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityLabel="badge"
           accessibilityRole="text"
           accessible={false}
+          iconProps={
+            Object {
+              "tintColor": null,
+            }
+          }
           modifiers={Object {}}
           size={10}
           style={
@@ -1082,6 +1092,11 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityLabel="badge"
           accessibilityRole="text"
           accessible={false}
+          iconProps={
+            Object {
+              "tintColor": null,
+            }
+          }
           modifiers={Object {}}
           size={10}
           style={
@@ -1488,6 +1503,11 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityLabel="badge"
           accessibilityRole="text"
           accessible={false}
+          iconProps={
+            Object {
+              "tintColor": null,
+            }
+          }
           modifiers={Object {}}
           size={14}
           style={
@@ -1719,6 +1739,11 @@ exports[`AvatarScreen renders screen 1`] = `
               "testUri": "../../../demo/src/assets/icons/star.png",
             }
           }
+          iconProps={
+            Object {
+              "tintColor": null,
+            }
+          }
           iconStyle={
             Object {
               "backgroundColor": "#FFC50D",
@@ -1796,7 +1821,7 @@ exports[`AvatarScreen renders screen 1`] = `
               }
               style={
                 Array [
-                  undefined,
+                  null,
                   undefined,
                   undefined,
                   undefined,
@@ -2691,6 +2716,11 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityRole="text"
           accessible={true}
           borderColor="#FFFFFF"
+          iconProps={
+            Object {
+              "tintColor": null,
+            }
+          }
           label="+2"
           modifiers={Object {}}
           size={24}

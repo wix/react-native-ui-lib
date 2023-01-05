@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useCallback} from 'react';
 import {
-  runOnJS,
   useSharedValue,
   withSpring,
   withTiming,
@@ -113,10 +112,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   const animateIn = useCallback(() => {
     'worklet';
     if (enterFrom) {
-      if (onAnimationStart) {
-        runOnJS(onAnimationStart)('enter');
-      }
-
+      onAnimationStart?.('enter');
       translateTo({x: 0, y: 0}, withSpring, ENTER_ANIMATION_CONFIG, enterFrom, onEnterAnimationEnd, delay?.enter);
     }
   }, [onEnterAnimationEnd, delay?.enter]);
@@ -124,10 +120,7 @@ export default function useAnimatedTransition(props: AnimatedTransitionProps) {
   const animateOut = useCallback(() => {
     'worklet';
     if (exitTo) {
-      if (onAnimationStart) {
-        runOnJS(onAnimationStart)('exit');
-      }
-
+      onAnimationStart?.('exit');
       translateTo(getLocation(exitTo), withTiming, EXIT_ANIMATION_CONFIG, exitTo, onExitAnimationEnd, delay?.exit);
     }
   }, [hiddenLocation, exitTo, onExitAnimationEnd, delay?.exit]);
