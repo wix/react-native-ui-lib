@@ -31,6 +31,7 @@
     "pre-push": "npm run build:dev && npm run test",
     "docs:deploy": "./scripts/deployDocs.sh",
     "docs:build": "node scripts/buildDocs.js",
+    "calendar:createMocks": "node scripts/createCalendarMockData.js",
     "snippets:build": "node scripts/generateSnippets.js",
     "demo": "./scripts/demo.sh",
     "release": "node ./scripts/release.js"

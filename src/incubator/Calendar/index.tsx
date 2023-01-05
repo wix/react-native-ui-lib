@@ -7,7 +7,7 @@ import CalendarContext from './CalendarContext';
 import Agenda from './Agenda';
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
-  const {children, initialDate = Date.now(), firstDayOfWeek = 'Monday'} = props;
+  const {data, children, initialDate = Date.now(), firstDayOfWeek = 'Monday'} = props;
   const current = useSharedValue<number>(initialDate);
 
   const setDate = useCallback((date: number) => {
@@ -16,6 +16,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
 
   const contextValue = useMemo(() => {
     return {
+      data,
       firstDayOfWeek,
       date: current,
       setDate

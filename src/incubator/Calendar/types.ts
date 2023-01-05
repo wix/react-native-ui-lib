@@ -10,10 +10,19 @@ export type FirstDayOfWeekUnion = 'Sunday' | 'Monday' | 'Saturday';
 
 export type FirstDayOfWeek = FirstDayOfWeekEnum | FirstDayOfWeekUnion;
 
+interface Event {
+  id: string;
+  start: number;
+  end: number;
+}
+
+type Data = Event[];
+
 export interface CalendarContextProps {
   firstDayOfWeek: FirstDayOfWeek;
   date: SharedValue<number>;
   setDate: (date: number) => void;
+  data: Data;
 }
 
 export interface DayProps {
@@ -36,11 +45,16 @@ export interface CalendarItemProps {
   year: number;
 }
 
-export interface HeaderProps {
-  
-}
+export interface HeaderProps {}
 
 export interface CalendarProps {
+  data: Data;
   initialDate?: number;
   firstDayOfWeek?: `${FirstDayOfWeek}` & FirstDayOfWeek;
+}
+
+export interface AgendaProps {
+  // Type: list(events)/timeline
+  // layout:
+  // scrollTo(date)
 }
