@@ -28,4 +28,4 @@ for (let year = 2010; year <= 2030; ++year) {
   }
 }
 
-fs.writeFileSync('demo/src/screens/incubatorScreens/IncubatorCalendarScreen/MockData.json', JSON.stringify({data}));
+fs.writeFileSync('demo/src/screens/incubatorScreens/IncubatorCalendarScreen/MockData.ts', `export const data = ${JSON.stringify(data)};`);

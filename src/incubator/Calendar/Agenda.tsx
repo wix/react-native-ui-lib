@@ -5,7 +5,7 @@ import Text from '../..//components/text';
 import {HOUR_TO_MS} from './helpers/DateUtils';
 import {BorderRadiuses} from 'style';
 import CalendarContext from './CalendarContext';
-import {AgendaProps} from './types';
+import {Event, AgendaProps} from './types';
 
 function Agenda(props: AgendaProps) {
   const {data} = useContext(CalendarContext);
