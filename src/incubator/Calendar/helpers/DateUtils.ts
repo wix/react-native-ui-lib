@@ -72,25 +72,8 @@ export function addMonths(date: number, count: number) {
   if (count === 0) {
     return date;
   }
-
-  // TODO: use set/getMonth to update date months
-
-  const dateObject = getDateObject(date);
-  const day = dateObject.day;
-  let month = dateObject.month;
-  let year = dateObject.year;
-
-  const monthsCount = month + (count % 12);
-  const yearCount = count / 12;
-
-  if (monthsCount < 0 || monthsCount > 12) {
-    month += count % 12;
-    year += count < 0 ? Math.ceil(yearCount) : Math.floor(yearCount);
-  } else {
-    month += count;
-  }
-
-  return new Date(Date.UTC(year, month, day)).getTime();
+  const month = getDateObject(date).month;
+  return new Date(date).setMonth(month + count);
 }
 
 export const _forTesting = {getFirstDayInTheYear};
