@@ -1,41 +1,50 @@
 import React from 'react';
 import {isSvg, isSvgUri} from '../../utils/imageUtils';
-// import {SvgPackage} from '../../optionalDependencies';
 
-// const SvgXml = SvgPackage?.SvgXml;
-// const SvgCssUri = SvgPackage?.SvgCssUri;
-// const SvgProps = SvgPackage?.SvgProps; TODO: not sure how (or if) we can use their props
-
+const asCss = (styleObj: object) => {
+  return JSON.stringify(styleObj)
+    .replace(/"/g, '') // remove all quotes
+    .replace(/,/g, ';') // replace commas to semicolon
+    .replace(/\}/g, ';}') // replace closing bracket
+    .replace(/marginRight/g, 'margin-right')
+    .replace(/marginLeft/g, 'margin-left')
+    .replace(/marginTop/g, 'margin-top')
+    .replace(/marginBottom/g, 'margin-bottom')
+    .replace(/tintColor/g, 'fill');
+  
+};
 export interface SvgImageProps {
   /**
    * the asset tint
    */
   tintColor?: string | null;
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
+  style?: object[];
 }
 
 function SvgImage(props: SvgImageProps) {
-  // tintColor crashes Android, so we're removing this until we properly support it.
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  // const {data, tintColor, ...others} = props;
-  const {data} = props;
+  const {
+    data,
+    style,
+    ...other
+  } = props;
 
-  // if (!SvgXml) {
-  //   // eslint-disable-next-line max-len
-  //   console.error(`RNUILib Image "svg" prop requires installing "react-native-svg" and "react-native-svg-transformer" dependencies`);
-  //   return null;
-  // }
-
+  const styleObj = Object.assign({}, ...(style || []));
+    
   if (isSvgUri(data)) {
-    return <img src={data.uri}/>;
-    // return <SvgCssUri {...others} uri={data.uri}/>;
-  // }
-  //  else if (typeof data === 'string') {
-  //   return <SvgXml xml={data} {...others}/>;
+    return <img {...other} src={data.uri} style={styleObj}/>;
   } else if (data) {
-    return <img src={data}/>;
-  }
+    const svgStyle = asCss(styleObj);
+    const svgStyleTag = `<style> svg ${svgStyle} </style>`;
 
+    return (
+      <div
+        {...other}
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
+      />
+    );
+  }
   return null;
 }
 

@@ -1,4 +1,6 @@
+import {Constants} from '../../../src/commons/new';
 import {ButtonSize} from './ButtonTypes';
+
 
 export const PADDINGS = {
   XSMALL: 3,
@@ -22,3 +24,8 @@ export const MIN_WIDTH = {
 };
 
 export const DEFAULT_SIZE = ButtonSize.large;
+
+export const IconSourceMargin = {
+  LARGE: Constants.isWeb ? '8px' : 8,
+  SMALL: Constants.isWeb ? '4px' : 4
+};
