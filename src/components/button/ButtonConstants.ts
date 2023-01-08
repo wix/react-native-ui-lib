@@ -25,7 +25,7 @@ export const MIN_WIDTH = {
 
 export const DEFAULT_SIZE = ButtonSize.large;
 
-export const IconSourceMargin = {
+export const ICON_SOURCE_MARGIN = {
   LARGE: Constants.isWeb ? '8px' : 8,
   SMALL: Constants.isWeb ? '4px' : 4
 };
