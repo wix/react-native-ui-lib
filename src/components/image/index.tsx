@@ -223,7 +223,6 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
-    const sizeProps = width || height;
 
     return (
       // @ts-ignore
@@ -231,12 +230,12 @@ class Image extends PureComponent<Props, State> {
         style={[
           tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
+          {width, height},
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
           !useImageInsideContainer && margins,
           useImageInsideContainer && styles.containImage,
-          !cover && sizeProps && {width, height},
           style,
           useImageInsideContainer && styles.shrink
         ]}
