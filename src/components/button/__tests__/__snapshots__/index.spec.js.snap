@@ -900,12 +900,15 @@ exports[`Button container size should have no padding of button is an icon butto
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
         undefined,
         false,
-        undefined,
         Array [
           Object {
             "marginRight": 8,
@@ -1815,12 +1818,15 @@ exports[`Button icon should apply color on icon 1`] = `
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
         undefined,
         false,
-        undefined,
         Array [
           Object {
             "tintColor": "green",
@@ -1873,12 +1879,15 @@ exports[`Button icon should apply color on icon 2`] = `
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
         undefined,
         false,
-        undefined,
         Array [
           Object {
             "tintColor": "#FC3D2F",
@@ -1931,12 +1940,15 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
         undefined,
         false,
-        undefined,
         Array [
           Object {
             "tintColor": "#FFFFFF",
@@ -1994,12 +2006,15 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
         undefined,
         false,
-        undefined,
         Array [
           Object {
             "tintColor": "#5A48F5",
@@ -2052,12 +2067,15 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
         undefined,
         false,
-        undefined,
         Array [
           Object {
             "tintColor": "#5A48F5",
@@ -2115,12 +2133,15 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
         undefined,
         false,
-        undefined,
         Array [
           Object {
             "tintColor": "#FFFFFF",
@@ -3118,12 +3139,15 @@ exports[`Button labelColor should return undefined color if this is an icon butt
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
         undefined,
         false,
-        undefined,
         Array [
           Object {
             "tintColor": "#FFFFFF",
