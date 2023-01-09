@@ -46,7 +46,7 @@ export interface HeaderProps {}
 
 export interface WeekDaysNamesProps {
   textStyle?: StyleProp<TextStyle>;
-  format?: `${DayNamesFormat}` & DayNamesFormat; // NOTE: template literals usage depends on ts min version ^4.3.2
+  format?: /* `${DayNamesFormat}` &  */DayNamesFormat; // NOTE: template literals usage depends on ts min version ^4.3.2
 }
 
 export enum DayNamesFormat {
@@ -58,7 +58,7 @@ export enum DayNamesFormat {
 export interface CalendarProps {
   data: Data;
   initialDate?: number;
-  firstDayOfWeek?: `${FirstDayOfWeek}` & FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
+  firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
 }
 
 export interface AgendaProps {

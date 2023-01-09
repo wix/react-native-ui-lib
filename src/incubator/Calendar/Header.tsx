@@ -4,7 +4,7 @@ import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
-import {HeaderProps} from './types';
+import {HeaderProps, DayNamesFormat} from './types';
 import CalendarContext from './CalendarContext';
 import {getDateObject, addMonths} from './helpers/DateUtils';
 import WeekDaysNames from './WeekDaysNames';
@@ -60,7 +60,7 @@ const Header = (props: HeaderProps) => {
   return (
     <View style={styles.container}>
       {renderNavigation()}
-      <WeekDaysNames/>
+      <WeekDaysNames format={DayNamesFormat.LONG_ABBREVIATION}/>
     </View>
   );
 };
