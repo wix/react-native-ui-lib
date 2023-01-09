@@ -829,15 +829,15 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "height": 50,
+                "width": 50,
+              },
               undefined,
               undefined,
               undefined,
               undefined,
               false,
-              Object {
-                "height": 50,
-                "width": 50,
-              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -1061,15 +1061,15 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "height": 40,
+                "width": 40,
+              },
               undefined,
               undefined,
               undefined,
               undefined,
               false,
-              Object {
-                "height": 40,
-                "width": 40,
-              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -1305,15 +1305,15 @@ exports[`AvatarScreen renders screen 1`] = `
               Array [
                 undefined,
                 undefined,
+                Object {
+                  "height": 60,
+                  "width": 60,
+                },
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 false,
-                Object {
-                  "height": 60,
-                  "width": 60,
-                },
                 Array [
                   Array [
                     Object {
@@ -1476,15 +1476,15 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "height": 70,
+                "width": 70,
+              },
               undefined,
               undefined,
               undefined,
               undefined,
               false,
-              Object {
-                "height": 70,
-                "width": 70,
-              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -1708,15 +1708,15 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "height": 60,
+                "width": 60,
+              },
               undefined,
               undefined,
               undefined,
               undefined,
               false,
-              Object {
-                "height": 60,
-                "width": 60,
-              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -1833,12 +1833,15 @@ exports[`AvatarScreen renders screen 1`] = `
                 Array [
                   null,
                   undefined,
+                  Object {
+                    "height": undefined,
+                    "width": undefined,
+                  },
                   undefined,
                   undefined,
                   undefined,
                   undefined,
                   false,
-                  undefined,
                   Object {
                     "backgroundColor": "#FFC50D",
                     "flex": 1,
@@ -1983,15 +1986,15 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "height": 48,
+                "width": 48,
+              },
               undefined,
               undefined,
               undefined,
               undefined,
               false,
-              Object {
-                "height": 48,
-                "width": 48,
-              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -2187,15 +2190,15 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "height": 50,
+                "width": 50,
+              },
               undefined,
               undefined,
               undefined,
               undefined,
               false,
-              Object {
-                "height": 50,
-                "width": 50,
-              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -2391,15 +2394,15 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "height": 50,
+                "width": 50,
+              },
               undefined,
               undefined,
               undefined,
               undefined,
               false,
-              Object {
-                "height": 50,
-                "width": 50,
-              },
               Array [
                 Object {
                   "alignItems": "center",
@@ -2556,15 +2559,15 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "height": 50,
+                "width": 50,
+              },
               undefined,
               undefined,
               undefined,
               undefined,
               false,
-              Object {
-                "height": 50,
-                "width": 50,
-              },
               Array [
                 Object {
                   "alignItems": "center",
