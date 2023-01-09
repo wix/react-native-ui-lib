@@ -1,5 +1,5 @@
 import * as DateUtils from '../helpers/DateUtils';
-import {FirstDayOfWeek} from '../types';
+import {FirstDayOfWeek, DayNamesFormat} from '../types';
 
 describe('Calendar/DateUtils', () => {
   describe('getWeekNumbersOfMonth', () => {
@@ -200,12 +200,12 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return the week days names for long abbreviation format', () => {
-      const weekDaysNames = DateUtils.getWeekDayNames(FirstDayOfWeek.Sunday, 1);
+      const weekDaysNames = DateUtils.getWeekDayNames(FirstDayOfWeek.Sunday, DayNamesFormat.LONG_ABBREVIATION);
       expect(weekDaysNames[0]).toBe('Sun');
     });
 
     it('should return the week days names for first day = Sunday', () => {
-      const weekDaysNames = DateUtils.getWeekDayNames(FirstDayOfWeek.Sunday, 2);
+      const weekDaysNames = DateUtils.getWeekDayNames(FirstDayOfWeek.Sunday, DayNamesFormat.SHORT_ABBREVIATION);
       expect(weekDaysNames[0]).toBe('S');
     });
   });
