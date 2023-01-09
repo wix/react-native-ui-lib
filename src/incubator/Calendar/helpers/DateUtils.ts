@@ -76,4 +76,26 @@ export function addMonths(date: number, count: number) {
   return new Date(date).setMonth(month + count);
 }
 
+function getWeekDaysNames(format?: DayNamesFormat) {
+  //TODO: localize
+  switch (format) {
+    case 1:
+      return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    case 2:
+      return ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    default:
+      return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  }
+}
+
+export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) { //TODO: consider 'options' param
+  'worklet';
+  let weekDaysNames = getWeekDaysNames(format);
+  const dayShift = firstDayOfWeek % 7;
+  if (dayShift) {
+    weekDaysNames = weekDaysNames.slice(dayShift).concat(weekDaysNames.slice(0, dayShift));
+  }
+  return weekDaysNames;
+}
+
 export const _forTesting = {getFirstDayInTheYear};

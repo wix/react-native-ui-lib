@@ -7,6 +7,7 @@ import Text from '../../components/text';
 import {HeaderProps} from './types';
 import CalendarContext from './CalendarContext';
 import {getDateObject, addMonths} from './helpers/DateUtils';
+import WeekDaysNames from './WeekDaysNames';
 
 const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
 
@@ -59,6 +60,7 @@ const Header = (props: HeaderProps) => {
   return (
     <View style={styles.container}>
       {renderNavigation()}
+      <WeekDaysNames/>
     </View>
   );
 };

@@ -44,6 +44,17 @@ export interface CalendarItemProps {
 
 export interface HeaderProps {}
 
+export interface WeekDaysNamesProps {
+  textStyle?: StyleProp<TextStyle>;
+  format?: `${DayNamesFormat}` & DayNamesFormat;
+}
+
+export enum DayNamesFormat {
+  DEFAULT = 0,
+  LONG_ABBREVIATION = 1,
+  SHORT_ABBREVIATION = 2,
+}
+
 export interface CalendarProps {
   data: Data;
   initialDate?: number;
