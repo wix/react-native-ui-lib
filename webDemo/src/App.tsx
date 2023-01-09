@@ -173,7 +173,14 @@ const itemsToRender: ItemToRender[] = [
             migrate
             defaultValue={defaultValue}
             containerStyle={{marginBottom: 10}}
-            placeholder="type here..."
+            placeholder="Enter your email..."
+            validationMessage={['Email is required', 'Email is invalid']}
+            validationMessagePosition={'top'}
+            enableErrors
+            validate={['required', 'email']}
+            validateOnStart={false}
+            validateOnChange
+            validateOnBlur={false}
             onChangeText={(text: string) => {
               console.log(text);
             }}

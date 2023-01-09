@@ -33,7 +33,8 @@
     "docs:build": "node scripts/buildDocs.js",
     "snippets:build": "node scripts/generateSnippets.js",
     "demo": "./scripts/demo.sh",
-    "release": "node ./scripts/release.js"
+    "release": "node ./scripts/release.js",
+    "start:web": "npm --prefix webDemo run start"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",

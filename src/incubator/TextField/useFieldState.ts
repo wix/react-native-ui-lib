@@ -23,14 +23,14 @@ export default function useFieldState({
     if (Constants.isWeb && !props.value && props.defaultValue && props.defaultValue !== value) {
       setValue(props.defaultValue);
 
-      if (validateOnChange) {
+      if (validateOnStart) {
         validateField(props.defaultValue);
       }
     }
 
     /* On purpose listen only to props.defaultValue change */
     /* eslint-disable-next-line react-hooks/exhaustive-deps*/
-  }, [props.defaultValue, validateOnChange]);
+  }, [props.defaultValue, validateOnStart]);
 
   useEffect(() => {
     if (validateOnStart) {
@@ -42,7 +42,7 @@ export default function useFieldState({
     if (props.value !== value) {
       setValue(props.value);
 
-      if (validateOnChange) {
+      if (validateOnChange && (!Constants.isWeb || value !== props.defaultValue)) {
         validateField(props.value);
       }
     }
