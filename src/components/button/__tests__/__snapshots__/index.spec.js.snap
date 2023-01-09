@@ -900,6 +900,10 @@ exports[`Button container size should have no padding of button is an icon butto
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
@@ -1814,6 +1818,10 @@ exports[`Button icon should apply color on icon 1`] = `
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
@@ -1871,6 +1879,10 @@ exports[`Button icon should apply color on icon 2`] = `
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
@@ -1928,6 +1940,10 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
@@ -1990,6 +2006,10 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
@@ -2047,6 +2067,10 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
@@ -2109,6 +2133,10 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
@@ -3111,6 +3139,10 @@ exports[`Button labelColor should return undefined color if this is an icon butt
       Array [
         undefined,
         undefined,
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
         undefined,
         undefined,
         undefined,
