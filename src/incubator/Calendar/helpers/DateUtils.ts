@@ -1,5 +1,5 @@
 import getWeek from 'date-fns/getWeek';
-import {FirstDayOfWeek, FirstDayOfWeekEnum} from '../types';
+import {FirstDayOfWeek, DayNamesFormat} from '../types';
 
 export const HOUR_TO_MS = 60 * 60 * 1000;
 const DAY_TO_MS = 24 * HOUR_TO_MS;
@@ -22,7 +22,7 @@ export function getWeekNumbersOfMonth(year: number, month: number) {
 
 function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
   let result = new Date(date.valueOf() -
-      DAY_TO_MS * ((date.getDay() - FirstDayOfWeekEnum[firstDayOfWeek as keyof typeof FirstDayOfWeekEnum]) % 7));
+      DAY_TO_MS * ((date.getDay() - firstDayOfWeek) % 7));
   const dayInMonth = result.getDate();
   if (dayInMonth >= 7 && dayInMonth < 14) {
     result = new Date(result.valueOf() - WEEK_TO_MS);

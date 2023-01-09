@@ -1,14 +1,11 @@
+import {StyleProp, TextStyle} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
-export enum FirstDayOfWeekEnum {
+export enum FirstDayOfWeek {
   Sunday = 0,
   Monday = 1,
   Saturday = 6
 }
-
-export type FirstDayOfWeekUnion = 'Sunday' | 'Monday' | 'Saturday';
-
-export type FirstDayOfWeek = FirstDayOfWeekEnum | FirstDayOfWeekUnion;
 
 interface Event {
   id: string;
