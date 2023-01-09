@@ -191,21 +191,21 @@ describe('Calendar/DateUtils', () => {
       expect(weekDaysNames[0]).toBe('Sunday');
     });
     it('should return the week days names for first day = Monday', () => {
-      const weekDaysNames = DateUtils.getWeekDayNames(1);
+      const weekDaysNames = DateUtils.getWeekDayNames(FirstDayOfWeek.Monday);
       expect(weekDaysNames[0]).toBe('Monday');
     });
     it('should return the week days names for first day = Saturday', () => {
-      const weekDaysNames = DateUtils.getWeekDayNames(6);
+      const weekDaysNames = DateUtils.getWeekDayNames(FirstDayOfWeek.Saturday);
       expect(weekDaysNames[0]).toBe('Saturday');
     });
 
     it('should return the week days names for long abbreviation format', () => {
-      const weekDaysNames = DateUtils.getWeekDayNames(0, 1);
+      const weekDaysNames = DateUtils.getWeekDayNames(FirstDayOfWeek.Sunday, 1);
       expect(weekDaysNames[0]).toBe('Sun');
     });
 
     it('should return the week days names for first day = Sunday', () => {
-      const weekDaysNames = DateUtils.getWeekDayNames(0, 2);
+      const weekDaysNames = DateUtils.getWeekDayNames(FirstDayOfWeek.Sunday, 2);
       expect(weekDaysNames[0]).toBe('S');
     });
   });
