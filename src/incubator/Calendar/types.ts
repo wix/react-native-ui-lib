@@ -17,7 +17,7 @@ type Data = Event[];
 
 export interface CalendarContextProps {
   firstDayOfWeek: FirstDayOfWeek;
-  date: SharedValue<number>;
+  selectedDate: SharedValue<number>;
   setDate: (date: number) => void;
   data: Data;
 }

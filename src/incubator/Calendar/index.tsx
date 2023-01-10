@@ -20,7 +20,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     return {
       data,
       firstDayOfWeek,
-      date: current,
+      selectedDate: current,
       setDate
     };
   }, []);
