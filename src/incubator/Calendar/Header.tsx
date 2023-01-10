@@ -12,18 +12,18 @@ import WeekDaysNames from './WeekDaysNames';
 const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
 
 const Header = (props: HeaderProps) => {
-  const {date, setDate} = useContext(CalendarContext);
+  const {selectedDate, setDate} = useContext(CalendarContext);
   
   const onLeftArrowPress = useCallback(() => {
-    setDate(addMonths(date.value, -1));
-  }, [date.value, setDate]);
+    setDate(addMonths(selectedDate.value, -1));
+  }, [selectedDate.value, setDate]);
 
   const onRightArrowPress = useCallback(() => {
-    setDate(addMonths(date.value, 1));
-  }, [date.value, setDate]);
+    setDate(addMonths(selectedDate.value, 1));
+  }, [selectedDate.value, setDate]);
 
   const animatedProps = useAnimatedProps(() => {
-    const dateObject = getDateObject(date.value);
+    const dateObject = getDateObject(selectedDate.value);
     const dateString = `${dateObject.month + 1}-${dateObject.year}`;
     return {
       text: dateString
