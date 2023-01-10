@@ -42,7 +42,7 @@ export default function useFieldState({
     if (props.value !== value) {
       setValue(props.value);
 
-      if (validateOnChange && (!Constants.isWeb || value !== props.defaultValue)) {
+      if (validateOnChange && value !== props.defaultValue) {
         validateField(props.value);
       }
     }
