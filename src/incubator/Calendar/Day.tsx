@@ -1,6 +1,5 @@
 import isNull from 'lodash/isNull';
 import React, {useContext, useCallback} from 'react';
-import {useSharedValue} from 'react-native-reanimated';
 // import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
@@ -12,18 +11,17 @@ import CalendarContext from './CalendarContext';
 const Day = (props: DayProps) => {
   const {date, onPress} = props;
   const {setDate} = useContext(CalendarContext);
-  const _date = useSharedValue(!isNull(date) ? new Date(date).getTime() : date);
 
   const _onPress = useCallback(() => {
-    if (!isNull(_date.value)) {
-      console.warn('onPress: ', _date.value);
-      setDate(_date.value);
-      onPress?.(_date.value);
+    if (date !== null) {
+      console.warn('onPress: ', date);
+      setDate(date);
+      onPress?.(date);
     }
-  }, [setDate, onPress, _date.value]);
+  }, [setDate, onPress, date]);
   
   const renderDay = () => {
-    const day = !isNull(_date.value) ? getDayOfDate(_date.value) : '';
+    const day = !isNull(date) ? getDayOfDate(date) : '';
     return <Text>{day}</Text>;
   };
 

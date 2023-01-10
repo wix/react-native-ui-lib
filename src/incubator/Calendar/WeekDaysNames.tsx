@@ -8,7 +8,7 @@ import Text from '../../components/text';
 
 const WeekDaysNames = (props: WeekDaysNamesProps) => { //TODO: memoize
   const {textStyle, format} = props;
-  const {firstDayOfWeek} = useContext(CalendarContext); //TODO: move FDW type to number
+  const {firstDayOfWeek} = useContext(CalendarContext);
 
   const dayNames = getWeekDayNames(firstDayOfWeek, format);
 

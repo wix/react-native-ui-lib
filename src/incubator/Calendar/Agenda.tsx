@@ -43,5 +43,3 @@ function Agenda(props: AgendaProps) {
 
 export default Agenda;
 
-// TODO: Calendar events data should be like this
-// [{} , {} ,{}] => group by startDate => rebuild array for Flashlist (with sections items)

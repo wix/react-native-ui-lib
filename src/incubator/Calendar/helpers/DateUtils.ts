@@ -45,7 +45,7 @@ export function getDaysOfWeekNumber(year: number, weekNumber: number, firstDayOf
   const firstDayInRelevantWeek = firstDayOfYear.valueOf() + (weekNumber - 1) * WEEK_TO_MS;
 
   for (let day = 0; day <= 6; ++day) {
-    result[day] = new Date(firstDayInRelevantWeek + DAY_TO_MS * day);
+    result[day] = new Date(firstDayInRelevantWeek + DAY_TO_MS * day).getTime();
   }
 
   return result;
