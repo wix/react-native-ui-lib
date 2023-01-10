@@ -43,23 +43,26 @@ export interface CalendarItemProps {
   year: number;
 }
 
-export interface HeaderProps {}
+export interface HeaderProps {
+  year?: number;
+  month?: number;
+}
 
 export interface WeekDaysNamesProps {
   textStyle?: StyleProp<TextStyle>;
-  format?: /* `${DayNamesFormat}` &  */DayNamesFormat; // NOTE: template literals usage depends on ts min version ^4.3.2
+  format?: /* `${DayNamesFormat}` &  */ DayNamesFormat; // NOTE: template literals usage depends on ts min version ^4.3.2
 }
 
 export enum DayNamesFormat {
   DEFAULT = 0,
   LONG_ABBREVIATION = 1,
-  SHORT_ABBREVIATION = 2,
+  SHORT_ABBREVIATION = 2
 }
 
 export interface CalendarProps {
   data: Data;
   initialDate?: number;
-  firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
+  firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */ FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
 }
 
 export interface AgendaProps {

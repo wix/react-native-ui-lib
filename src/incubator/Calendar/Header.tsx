@@ -12,8 +12,10 @@ import WeekDaysNames from './WeekDaysNames';
 const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
 
 const Header = (props: HeaderProps) => {
+  const {month, year} = props;
   const {selectedDate, setDate} = useContext(CalendarContext);
-  
+  const isStaticHeader = month === undefined && year === undefined;
+
   const onLeftArrowPress = useCallback(() => {
     setDate(addMonths(selectedDate.value, -1));
   }, [selectedDate.value, setDate]);
@@ -24,16 +26,14 @@ const Header = (props: HeaderProps) => {
 
   const animatedProps = useAnimatedProps(() => {
     const dateObject = getDateObject(selectedDate.value);
-    const dateString = `${dateObject.month + 1}-${dateObject.year}`;
+    const dateString = isStaticHeader ? `${dateObject.month + 1}-${dateObject.year}` : `${(month ?? 0) + 1}-${year}`;
     return {
       text: dateString
     };
   });
 
   const renderTitle = () => {
-    return (
-      <AnimatedTextInput {...{animatedProps}} editable={false}/>
-    );
+    return <AnimatedTextInput {...{animatedProps}} editable={false}/>;
   };
 
   const renderArrow = (label: string, onPress: () => void) => {
@@ -65,7 +65,5 @@ const Header = (props: HeaderProps) => {
 export default Header;
 
 const styles = StyleSheet.create({
-  container: {
-    
-  }
+  container: {}
 });
