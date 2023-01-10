@@ -1,5 +1,5 @@
 import React from 'react';
-import {isSvg, isSvgUri} from '../../utils/imageUtils';
+import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
 const asCss = (styleObj: object) => {
   return JSON.stringify(styleObj)
@@ -31,8 +31,11 @@ function SvgImage(props: SvgImageProps) {
 
   const styleObj = Object.assign({}, ...(style || []));
     
+  
   if (isSvgUri(data)) {
     return <img {...other} src={data.uri} style={styleObj}/>;
+  } else if (isBase64ImageContent(data)) {
+    return <img {...other} src={data} style={styleObj}/>;
   } else if (data) {
     const svgStyle = asCss(styleObj);
     const svgStyleTag = `<style> svg ${svgStyle} </style>`;
