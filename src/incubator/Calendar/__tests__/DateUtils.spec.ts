@@ -209,4 +209,14 @@ describe('Calendar/DateUtils', () => {
       expect(weekDaysNames[0]).toBe('S');
     });
   });
+
+  describe('isSameDay', () => {
+    it('should return true for same dates', () => {
+      expect(DateUtils.isSameDay(new Date().getTime(), Date.now())).toBe(true);
+    });
+
+    it('should return false for different dates', () => {
+      expect(DateUtils.isSameDay(new Date('2022-12-26').getTime(), new Date('2022-12-27').getTime())).toBe(false);
+    });
+  });
 });

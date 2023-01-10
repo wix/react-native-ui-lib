@@ -98,4 +98,19 @@ export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) { /
   return weekDaysNames;
 }
 
+export function isSameDay(d1: number, d2: number) {
+  'worklet';
+  const a = getDateObject(d1);
+  const b = getDateObject(d2);
+  if (a.year === b.year) {
+    if (a.month === b.month) {
+      if (a.day === b.day) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+
 export const _forTesting = {getFirstDayInTheYear}; // exporting private functions for testing only
