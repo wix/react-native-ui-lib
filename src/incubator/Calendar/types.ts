@@ -7,7 +7,7 @@ export enum FirstDayOfWeek {
   Saturday = 6
 }
 
-interface Event {
+export interface Event {
   id: string;
   start: number;
   end: number;

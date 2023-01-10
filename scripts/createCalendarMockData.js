@@ -19,7 +19,7 @@ for (let year = 2010; year <= 2030; ++year) {
   for (let month = 0; month <= 11; ++month) {
     for (let day = 1; day <= 31; day += Math.random() > 0.5 ? 2 : 1) {
       for (let hour = 9; day <= 19; day += Math.random() > 0.5 ? 3 : 2) {
-        const start = new Date(year, month, day, hour, 0).valueOf();
+        const start = new Date(year, month, day, hour, 0).getTime();
         const end = start + HOUR_TO_MS * (Math.random() > 0.5 ? 0.5 : 1);
         const id = generateId();
         data.push({id, start, end});
