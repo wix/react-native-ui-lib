@@ -21,11 +21,10 @@ export function getWeekNumbersOfMonth(year: number, month: number) {
 }
 
 function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
-  let result = new Date(date.valueOf() -
-      DAY_TO_MS * ((date.getDay() - firstDayOfWeek) % 7));
+  let result = new Date(date.getTime() - DAY_TO_MS * ((date.getDay() - firstDayOfWeek) % 7));
   const dayInMonth = result.getDate();
   if (dayInMonth >= 7 && dayInMonth < 14) {
-    result = new Date(result.valueOf() - WEEK_TO_MS);
+    result = new Date(result.getTime() - WEEK_TO_MS);
   }
 
   return result;
@@ -42,7 +41,7 @@ export function getDaysOfWeekNumber(year: number, weekNumber: number, firstDayOf
   const result = new Array(7).fill(null);
   const firstDayOfYear = getFirstDayInTheYear(year, firstDayOfWeek);
 
-  const firstDayInRelevantWeek = firstDayOfYear.valueOf() + (weekNumber - 1) * WEEK_TO_MS;
+  const firstDayInRelevantWeek = firstDayOfYear.getTime() + (weekNumber - 1) * WEEK_TO_MS;
 
   for (let day = 0; day <= 6; ++day) {
     result[day] = new Date(firstDayInRelevantWeek + DAY_TO_MS * day).getTime();
