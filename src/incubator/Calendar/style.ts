@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 
+//TODO: inject theme and use it in the relevant attributes
 export const styles = StyleSheet.create({
   dayContainer: {
     borderWidth: 1,
