@@ -98,4 +98,4 @@ export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) { /
   return weekDaysNames;
 }
 
-export const _forTesting = {getFirstDayInTheYear};
+export const _forTesting = {getFirstDayInTheYear}; // exporting private functions for testing only

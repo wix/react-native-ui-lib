@@ -1,35 +1,37 @@
 import isNull from 'lodash/isNull';
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import View from '../../components/view';
+import React, {useContext, useCallback} from 'react';
+import {useSharedValue} from 'react-native-reanimated';
+// import View from '../../components/view';
+import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
 import {DayProps} from './types';
+import {styles} from './style';
 import {getDayOfDate} from './helpers/DateUtils';
+import CalendarContext from './CalendarContext';
 
 const Day = (props: DayProps) => {
-  const {date} = props;
+  const {date, onPress} = props;
+  const {setDate} = useContext(CalendarContext);
+  const _date = useSharedValue(!isNull(date) ? new Date(date).getTime() : date);
+
+  const _onPress = useCallback(() => {
+    if (!isNull(_date.value)) {
+      console.warn('onPress: ', _date.value);
+      setDate(_date.value);
+      onPress?.(_date.value);
+    }
+  }, [setDate, onPress, _date.value]);
   
   const renderDay = () => {
-    if (isNull(date)) {
-      return;
-    }
-    const day = getDayOfDate(date);
+    const day = !isNull(_date.value) ? getDayOfDate(_date.value) : '';
     return <Text>{day}</Text>;
   };
 
   return (
-    <View center style={styles.container}>
+    <TouchableOpacity center style={styles.dayContainer} onPress={_onPress}>
       {renderDay()}
-    </View>
+    </TouchableOpacity>
   );
 };
 
 export default Day;
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    width: 32,
-    height: 32
-  }
-});

@@ -5,10 +5,12 @@ import CalendarItem from './CalendarItem';
 import {CalendarProps, FirstDayOfWeek} from './types';
 import CalendarContext from './CalendarContext';
 import Agenda from './Agenda';
+import {getDateObject} from './helpers/DateUtils';
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.Monday} = props;
   const current = useSharedValue<number>(initialDate);
+  const dateObject = getDateObject(initialDate);
 
   const setDate = useCallback((date: number) => {
     current.value = date;
@@ -26,7 +28,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   return (
     <CalendarContext.Provider value={contextValue}>
       <View>
-        <CalendarItem year={2020} month={0}/>
+        <CalendarItem year={dateObject.year} month={dateObject.month}/>
       </View>
       {children}
     </CalendarContext.Provider>

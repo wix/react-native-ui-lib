@@ -24,6 +24,7 @@ export interface CalendarContextProps {
 
 export interface DayProps {
   date: number | null;
+  onPress?: (date: number) => void;
 }
 
 export interface WeekProps {

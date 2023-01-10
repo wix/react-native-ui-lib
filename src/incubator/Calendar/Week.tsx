@@ -4,6 +4,7 @@ import View from '../../components/view';
 import Text from '../../components/text';
 import Day from './Day';
 import {WeekProps} from './types';
+import {styles} from './style';
 import {getDaysOfWeekNumber} from './helpers/DateUtils';
 import CalendarContext from './CalendarContext';
 
@@ -18,7 +19,7 @@ const Week = (props: WeekProps) => {
 
   return (
     <View row>
-      <Text>{weekNumber}</Text>
+      <Text style={styles.weekNumber}>{weekNumber}</Text>
       {_.map(days, day => (
         <Day date={day}/>
       ))}
