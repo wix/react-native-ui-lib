@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, {useContext, useMemo} from 'react';
+import {StyleSheet} from 'react-native';
 import View from '../../components/view';
 import Text from '../../components/text';
 import Day from './Day';
 import {WeekProps} from './types';
-import {styles} from './style';
 import {getDaysOfWeekNumber} from './helpers/DateUtils';
 import CalendarContext from './CalendarContext';
 
@@ -28,3 +28,11 @@ const Week = (props: WeekProps) => {
 };
 
 export default Week;
+
+const styles = StyleSheet.create({
+  weekNumber: {
+    borderWidth: 1,
+    width: 24,
+    color: 'grey'
+  }
+});
