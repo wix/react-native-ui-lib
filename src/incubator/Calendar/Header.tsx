@@ -13,7 +13,6 @@ const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
 
 const Header = (props: HeaderProps) => {
   const {date, setDate} = useContext(CalendarContext);
-  console.warn(date.value);
   
   const onLeftArrowPress = useCallback(() => {
     setDate(addMonths(date.value, -1));
@@ -25,8 +24,6 @@ const Header = (props: HeaderProps) => {
 
   const animatedProps = useAnimatedProps(() => {
     const dateObject = getDateObject(date.value);
-    console.warn(dateObject);
-
     const dateString = `${dateObject.month + 1}-${dateObject.year}`;
     return {
       text: dateString
