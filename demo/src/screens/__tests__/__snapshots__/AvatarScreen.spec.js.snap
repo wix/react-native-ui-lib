@@ -829,7 +829,12 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
-              50,
+              Object {
+                "width": 50,
+              },
+              Object {
+                "height": 50,
+              },
               undefined,
               undefined,
               undefined,
@@ -1058,7 +1063,12 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
-              40,
+              Object {
+                "width": 40,
+              },
+              Object {
+                "height": 40,
+              },
               undefined,
               undefined,
               undefined,
@@ -1299,7 +1309,12 @@ exports[`AvatarScreen renders screen 1`] = `
               Array [
                 undefined,
                 undefined,
-                60,
+                Object {
+                  "width": 60,
+                },
+                Object {
+                  "height": 60,
+                },
                 undefined,
                 undefined,
                 undefined,
@@ -1467,7 +1482,12 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
-              70,
+              Object {
+                "width": 70,
+              },
+              Object {
+                "height": 70,
+              },
               undefined,
               undefined,
               undefined,
@@ -1696,7 +1716,12 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
-              60,
+              Object {
+                "width": 60,
+              },
+              Object {
+                "height": 60,
+              },
               undefined,
               undefined,
               undefined,
@@ -1817,6 +1842,7 @@ exports[`AvatarScreen renders screen 1`] = `
               style={
                 Array [
                   null,
+                  undefined,
                   undefined,
                   undefined,
                   undefined,
@@ -1968,7 +1994,12 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
-              48,
+              Object {
+                "width": 48,
+              },
+              Object {
+                "height": 48,
+              },
               undefined,
               undefined,
               undefined,
@@ -2169,7 +2200,12 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
-              50,
+              Object {
+                "width": 50,
+              },
+              Object {
+                "height": 50,
+              },
               undefined,
               undefined,
               undefined,
@@ -2370,7 +2406,12 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
-              50,
+              Object {
+                "width": 50,
+              },
+              Object {
+                "height": 50,
+              },
               undefined,
               undefined,
               undefined,
@@ -2532,7 +2573,12 @@ exports[`AvatarScreen renders screen 1`] = `
             Array [
               undefined,
               undefined,
-              50,
+              Object {
+                "width": 50,
+              },
+              Object {
+                "height": 50,
+              },
               undefined,
               undefined,
               undefined,
