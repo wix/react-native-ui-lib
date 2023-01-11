@@ -1,17 +1,19 @@
 import React, {useContext, useCallback, useRef} from 'react';
 import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
-import {FlashList} from '@shopify/flash-list';
+import {FlashList, ViewToken} from '@shopify/flash-list';
 import View from '../../components/view';
 import Text from '../..//components/text';
 import {HOUR_TO_MS} from './helpers/DateUtils';
 import {BorderRadiuses} from 'style';
 import CalendarContext from './CalendarContext';
 import {InternalEvent, Event, DateSectionHeader, AgendaProps} from './types';
+import {Constants} from 'react-native-ui-lib';
 
 function Agenda(props: AgendaProps) {
-  const {data, selectedDate} = useContext(CalendarContext);
+  const {data, selectedDate, setDate} = useContext(CalendarContext);
   const flashList = useRef<FlashList<InternalEvent>>(null);
-  const closestDate = useSharedValue<number | null>(null);
+  const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
+  const scrolledByUser = useSharedValue<boolean>(true);
 
   const keyExtractor = useCallback((item: InternalEvent) => {
     return item.type === 'Event' ? item.id : item.header;
@@ -67,7 +69,7 @@ function Agenda(props: AgendaProps) {
       const item = data[index];
       if (item.type === 'Header') {
         if (item.date >= selected) {
-          return {date: item.date, index};
+          return {dateSectionHeader: item, index};
         }
       }
     }
@@ -79,8 +81,9 @@ function Agenda(props: AgendaProps) {
   const scrollToIndex = useCallback((index: number, isInitial: boolean) => {
     if (isInitial) {
       setTimeout(() => {
-        flashList.current?.scrollToIndex({index, animated: true});
-      }, 500); // TODO: Might need longer timeout (or a configuration for this)
+        flashList.current?.scrollToIndex({index, animated: false});
+      },
+      Constants.isIOS ? 500 : 1000); // TODO: Find a better solution (compare where we got to?)
     } else {
       flashList.current?.scrollToIndex({index, animated: true});
     }
@@ -90,16 +93,41 @@ function Agenda(props: AgendaProps) {
     return selectedDate.value;
   },
   (selected, previous) => {
-    if (selected !== previous && selected !== closestDate.value) {
+    if (selected !== previous && selected !== closestSectionHeader.value?.date) {
       const result = findClosestDateAfter(selected);
       if (result !== null) {
-        const {date, index} = result;
-        closestDate.value = date;
+        const {dateSectionHeader, index} = result;
+        closestSectionHeader.value = dateSectionHeader;
+        scrolledByUser.value = false;
         runOnJS(scrollToIndex)(index, !previous);
       }
     }
   },
   [findClosestDateAfter]);
+
+  const onViewableItemsChanged = useCallback(({viewableItems}: {viewableItems: ViewToken[]}) => {
+    if (scrolledByUser.value) {
+      const result = viewableItems.find(item => item.item.type === 'Header');
+      if (result) {
+        const {item}: {item: DateSectionHeader} = result;
+        if (closestSectionHeader.value?.date !== item.date) {
+          closestSectionHeader.value = item;
+          setDate(item.date);
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onMomentumScrollBegin = useCallback(() => {
+    scrolledByUser.value = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onScrollBeginDrag = useCallback(() => {
+    scrolledByUser.value = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <FlashList
@@ -108,6 +136,9 @@ function Agenda(props: AgendaProps) {
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       getItemType={getItemType}
+      onViewableItemsChanged={onViewableItemsChanged}
+      onMomentumScrollBegin={onMomentumScrollBegin}
+      onScrollBeginDrag={onScrollBeginDrag}
     />
   );
 }
