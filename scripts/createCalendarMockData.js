@@ -18,14 +18,18 @@ const data = [];
 for (let year = 2010; year <= 2030; ++year) {
   for (let month = 0; month <= 11; ++month) {
     for (let day = 1; day <= 31; day += Math.random() > 0.5 ? 2 : 1) {
-      for (let hour = 9; day <= 19; day += Math.random() > 0.5 ? 3 : 2) {
-        const start = new Date(year, month, day, hour, 0).getTime();
-        const end = start + HOUR_TO_MS * (Math.random() > 0.5 ? 0.5 : 1);
-        const id = generateId();
-        data.push({id, start, end});
+      for (let hour = 9; hour <= 19; hour += Math.random() > 0.5 ? 4 : 3) {
+        const startDate = new Date(year, month, day, hour, 0);
+        if (startDate.getDay() >= 2 && startDate.getDay() <= 5) {
+          const start = startDate.getTime();
+          const end = start + HOUR_TO_MS * (Math.random() > 0.5 ? 0.5 : 1);
+          const id = generateId();
+          data.push({id, start, end});
+        }
       }
     }
   }
 }
 
-fs.writeFileSync('demo/src/screens/incubatorScreens/IncubatorCalendarScreen/MockData.ts', `export const data = ${JSON.stringify(data)};`);
+fs.writeFileSync('demo/src/screens/incubatorScreens/IncubatorCalendarScreen/MockData.ts',
+  `export const data = ${JSON.stringify(data)};`);
