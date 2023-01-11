@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
-import {WeekDaysNamesProps} from './types';
-import {getWeekDayNames} from './helpers/DateUtils';
-import CalendarContext from './CalendarContext';
 import View from '../../components/view';
 import Text from '../../components/text';
+import {getWeekDayNames} from './helpers/DateUtils';
+import {WeekDaysNamesProps} from './types';
+import CalendarContext from './CalendarContext';
 
 
 const WeekDaysNames = (props: WeekDaysNamesProps) => { //TODO: memoize

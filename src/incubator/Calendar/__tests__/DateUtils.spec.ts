@@ -211,12 +211,30 @@ describe('Calendar/DateUtils', () => {
   });
 
   describe('isSameDay', () => {
-    it('should return true for same dates', () => {
+    it('should return true for same dates using Date objects', () => {
       expect(DateUtils.isSameDay(new Date().getTime(), Date.now())).toBe(true);
     });
 
-    it('should return false for different dates', () => {
+    it('should return true for same dates using timestamps', () => {
+      expect(DateUtils.isSameDay(1673442316000, 1673463916000)).toBe(true);
+    });
+
+    it('should return false for different dates using Date objects', () => {
       expect(DateUtils.isSameDay(new Date('2022-12-26').getTime(), new Date('2022-12-27').getTime())).toBe(false);
+    });
+
+    it('should return false for same dates using timestamps', () => {
+      expect(DateUtils.isSameDay(1673442316000, 1674327916)).toBe(false);
+    });
+  });
+
+  describe('getMonthForIndex', () => {
+    it('should return January for index 0 ', () => {
+      expect(DateUtils.getMonthForIndex(0)).toBe('January');
+    });
+
+    it('should return December for index 11 ', () => {
+      expect(DateUtils.getMonthForIndex(11)).toBe('December');
     });
   });
 });

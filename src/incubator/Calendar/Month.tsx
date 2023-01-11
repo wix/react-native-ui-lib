@@ -1,9 +1,8 @@
 import React, {useMemo} from 'react';
-import {MonthProps} from './types';
-import Week from './Week';
-
 import View from '../../components/view';
 import {getWeekNumbersOfMonth} from './helpers/DateUtils';
+import {MonthProps} from './types';
+import Week from './Week';
 
 function Month(props: MonthProps) {
   const {year, month} = props;

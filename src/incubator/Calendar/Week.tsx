@@ -3,10 +3,10 @@ import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../../components/view';
 import Text from '../../components/text';
-import Day from './Day';
-import {WeekProps} from './types';
 import {getDaysOfWeekNumber} from './helpers/DateUtils';
+import {WeekProps} from './types';
 import CalendarContext from './CalendarContext';
+import Day from './Day';
 
 const Week = (props: WeekProps) => {
   const {weekNumber, year} = props;

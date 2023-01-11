@@ -1,13 +1,13 @@
 import React, {useContext, useCallback, useRef} from 'react';
 import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
 import {FlashList, ViewToken} from '@shopify/flash-list';
-import View from '../../components/view';
-import Text from '../..//components/text';
-import {HOUR_TO_MS} from './helpers/DateUtils';
+import {Constants} from '../../commons/new';
 import {BorderRadiuses} from 'style';
-import CalendarContext from './CalendarContext';
+import View from '../../components/view';
+import Text from '../../components/text';
+import {HOUR_TO_MS} from './helpers/DateUtils';
 import {InternalEvent, Event, DateSectionHeader, AgendaProps} from './types';
-import {Constants} from 'react-native-ui-lib';
+import CalendarContext from './CalendarContext';
 
 function Agenda(props: AgendaProps) {
   const {data, selectedDate, setDate} = useContext(CalendarContext);

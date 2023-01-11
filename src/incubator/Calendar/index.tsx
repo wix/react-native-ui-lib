@@ -1,11 +1,11 @@
 import React, {PropsWithChildren, useCallback, useMemo} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
-import CalendarItem from './CalendarItem';
+import {FlashList} from '@shopify/flash-list';
+import {addHeaders} from './helpers/DataProcessor';
 import {CalendarProps, FirstDayOfWeek} from './types';
 import CalendarContext from './CalendarContext';
+import CalendarItem from './CalendarItem';
 import Agenda from './Agenda';
-import {addHeaders} from './helpers/DataProcessor';
-import {FlashList} from '@shopify/flash-list';
 
 // TODO: Move this logic elsewhere
 // This is temporary just so we'll have enough items to play with

@@ -2,7 +2,7 @@ import isNull from 'lodash/isNull';
 import React, {useContext, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useSharedValue, useAnimatedStyle, useAnimatedReaction} from 'react-native-reanimated';
-import {Colors} from '../../style';
+import {Colors} from 'style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
