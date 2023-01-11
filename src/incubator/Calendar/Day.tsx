@@ -2,10 +2,12 @@ import isNull from 'lodash/isNull';
 import React, {useContext, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useSharedValue, useAnimatedStyle, useAnimatedReaction} from 'react-native-reanimated';
+import {Colors} from '../../style';
+import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
-import {DayProps} from './types';
 import {getDayOfDate, isSameDay} from './helpers/DateUtils';
+import {DayProps} from './types';
 import CalendarContext from './CalendarContext';
 
 
@@ -20,8 +22,14 @@ const Day = (props: DayProps) => {
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      backgroundColor: isSelected.value ? 'blue' : 'white',
-      color: isSelected.value ? 'white' : 'blue'
+      backgroundColor: isSelected.value ? Colors.$backgroundPrimaryHeavy : Colors.transparent,
+      color: isSelected.value ? Colors.$textDefaultLight : Colors.$backgroundPrimaryHeavy
+    };
+  });
+
+  const animatedTextStyles = useAnimatedStyle(() => {
+    return {
+      color: isSelected.value ? Colors.$textDefaultLight : Colors.$backgroundPrimaryHeavy
     };
   });
 
@@ -41,8 +49,12 @@ const Day = (props: DayProps) => {
   
   const renderDay = () => {
     const day = !isNull(date) ? getDayOfDate(date) : '';
-    return <AnimatedText style={animatedStyles}>{day}</AnimatedText>;
-
+    return (
+      <View center>
+        <View reanimated style={[styles.selection, animatedStyles]}/>
+        <AnimatedText style={animatedTextStyles}>{day}</AnimatedText>
+      </View>
+    );
   };
 
   return (
@@ -59,5 +71,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 32,
     height: 32
+  },
+  selection: {
+    position: 'absolute',
+    width: 24,
+    height: 24,
+    borderRadius: 12
   }
 });

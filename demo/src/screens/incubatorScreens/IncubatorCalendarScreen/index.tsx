@@ -12,9 +12,7 @@ export default class CalendarScreen extends Component {
       <View flex>
         <Text h1 marginB-20>Calendar Screen</Text>
         <Incubator.Calendar data={data}>
-          <View marginT-s10 flex>
-            <Incubator.Calendar.Agenda/>
-          </View>
+          <Incubator.Calendar.Agenda/>
         </Incubator.Calendar>
       </View>
     );

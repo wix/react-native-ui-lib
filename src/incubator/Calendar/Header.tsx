@@ -1,12 +1,13 @@
 import React, {useContext, useCallback} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
 import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
+import {Colors} from '../../style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
+import {getDateObject, addMonths, getMonthForIndex} from './helpers/DateUtils';
 import {HeaderProps, DayNamesFormat} from './types';
 import CalendarContext from './CalendarContext';
-import {getDateObject, addMonths} from './helpers/DateUtils';
 import WeekDaysNames from './WeekDaysNames';
 
 const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
@@ -26,14 +27,21 @@ const Header = (props: HeaderProps) => {
 
   const animatedProps = useAnimatedProps(() => {
     const dateObject = getDateObject(selectedDate.value);
-    const dateString = isStaticHeader ? `${dateObject.month + 1}-${dateObject.year}` : `${(month ?? 0) + 1}-${year}`;
+    const monthString = getMonthForIndex(isStaticHeader ? dateObject.month : month!);
+    const dateString = isStaticHeader ? monthString + ` ${dateObject.year}` : monthString + ` ${year}`;
     return {
       text: dateString
     };
   });
 
   const renderTitle = () => {
-    return <AnimatedTextInput {...{animatedProps}} editable={false}/>;
+    return (
+      <AnimatedTextInput 
+        {...{animatedProps}}
+        editable={false}
+        style={styles.title}
+      />
+    );
   };
 
   const renderArrow = (label: string, onPress: () => void) => {
@@ -65,5 +73,11 @@ const Header = (props: HeaderProps) => {
 export default Header;
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {
+    
+  },
+  title: {
+    color: Colors.$textDefault,
+    paddingVertical: 0 // for Android inner paddings
+  }
 });
