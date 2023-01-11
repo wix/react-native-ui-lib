@@ -121,7 +121,9 @@ class ImageScreen extends Component<{}, State> {
         cover={cover}
         overlayType={overlayType !== 'none' ? overlayType : undefined}
         overlayIntensity={overlayIntensity}
-        style={!cover && {width: DEFAULT_SIZE, height: DEFAULT_SIZE}}
+        // style={!cover && {width: DEFAULT_SIZE, height: DEFAULT_SIZE}}
+        width={!cover ? DEFAULT_SIZE : undefined}
+        height={!cover ? DEFAULT_SIZE : undefined}
         customOverlayContent={this.renderOverlayContent()}
         {...{[`margin-${margin}`]: true}}
       />

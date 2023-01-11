@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
+    "start:web": "npm --prefix webDemo run start",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "iPad": "react-native run-ios --simulator='iPad Pro (9.7 inch)'",

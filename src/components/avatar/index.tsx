@@ -336,7 +336,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   };
 
   const renderRibbon = () => {
-    if (ribbonLabel) {
+    if (!customRibbon && ribbonLabel) {
       return (
         <View style={_ribbonStyle}>
           <Text numberOfLines={1} text100 $textDefaultLight style={ribbonLabelStyle}>
