@@ -13,13 +13,22 @@ export interface Event {
   end: number;
 }
 
-type Data = Event[];
+export type Data = Event[];
+
+export type DateSectionHeader = {
+  header: string;
+  date: number;
+};
+
+export type InternalEvent = (Event & {type: 'Event'}) | (DateSectionHeader & {type: 'Header'});
+
+export type InternalData = InternalEvent[];
 
 export interface CalendarContextProps {
   firstDayOfWeek: FirstDayOfWeek;
   selectedDate: SharedValue<number>;
   setDate: (date: number) => void;
-  data: Data;
+  data: InternalData;
 }
 
 export interface DayProps {
