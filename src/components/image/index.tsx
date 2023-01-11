@@ -230,7 +230,7 @@ class Image extends PureComponent<Props, State> {
         style={[
           tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
-          {width, height},
+          width || height && {width, height},
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
