@@ -121,7 +121,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items,
     getItemLabel,
     getLabel,
-    placeholder: themeProps.placeholder
+    placeholder: themeProps.placeholder,
+    accessibilityLabel: themeProps.accessibilityLabel,
+    accessibilityHint: themeProps.accessibilityHint
   });
 
   const onSelectedItemLayout = useCallback((event: LayoutChangeEvent) => {
