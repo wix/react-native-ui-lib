@@ -1,19 +1,6 @@
 import React from 'react';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
-
-const asCss = (styleObj: object) => {
-  return JSON.stringify(styleObj)
-    .replace(/"/g, '') // remove all quotes
-    .replace(/,/g, ';') // replace commas to semicolon
-    .replace(/\}/g, ';}') // replace closing bracket
-    .replace(/marginRight/g, 'margin-right')
-    .replace(/marginLeft/g, 'margin-left')
-    .replace(/marginTop/g, 'margin-top')
-    .replace(/marginBottom/g, 'margin-bottom')
-    .replace(/tintColor/g, 'fill');
-  
-};
 export interface SvgImageProps {
   /**
    * the asset tint
@@ -42,7 +29,6 @@ function SvgImage(props: SvgImageProps) {
     if (JsCssPackage) {
       const {postcss, cssjs} = JsCssPackage;
       const svgStyleCss = postcss(styleObj, {parser: cssjs}).sync();
-      // const svgStyle = asCss(styleObj);
       const svgStyleTag = `<style> svg ${svgStyleCss} </style>`;
   
       return (
