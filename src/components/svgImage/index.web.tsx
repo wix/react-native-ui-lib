@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
 export interface SvgImageProps {
@@ -18,8 +18,16 @@ function SvgImage(props: SvgImageProps) {
   } = props;
 
   const styleObj = Object.assign({}, ...(style || []));
-    
+
   
+  const [svgStyleCss, setsvgStyleCss] = useState<string>('{}');
+
+  const createStyleSvgCss = async (JsCssPackage: {postcss: any, cssjs:any}) => {
+    const {postcss, cssjs} = JsCssPackage;
+    postcss().process(styleObj, {parser: cssjs})
+      .then((style: {css: any}) => setsvgStyleCss(style.css));
+  };
+
   if (isSvgUri(data)) {
     return <img {...other} src={data.uri} style={styleObj}/>;
   } else if (isBase64ImageContent(data)) {
@@ -27,8 +35,10 @@ function SvgImage(props: SvgImageProps) {
   } else if (data) {
     const JsCssPackage = require('../../optionalDependencies').JsCssPackage;
     if (JsCssPackage) {
-      const {postcss, cssjs} = JsCssPackage;
-      const svgStyleCss = postcss([cssjs]).process(styleObj).css;
+      if (!svgStyleCss) {
+        createStyleSvgCss(JsCssPackage);
+        return null;
+      }
       const svgStyleTag = `<style> svg ${svgStyleCss} </style>`;
   
       return (
