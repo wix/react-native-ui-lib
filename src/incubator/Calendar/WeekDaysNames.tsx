@@ -7,7 +7,7 @@ import CalendarContext from './CalendarContext';
 
 
 const WeekDaysNames = (props: WeekDaysNamesProps) => { //TODO: memoize
-  const {textStyle, format} = props;
+  const {containerStyle, textStyle, format} = props;
   const {firstDayOfWeek} = useContext(CalendarContext);
 
   const dayNames = getWeekDayNames(firstDayOfWeek, format);
@@ -16,7 +16,7 @@ const WeekDaysNames = (props: WeekDaysNamesProps) => { //TODO: memoize
     return dayNames.map((name: string, index: number) => (
       <Text
         key={index}
-        margin-5
+        $textNeutral
         style={textStyle}
         numberOfLines={1}
         allowFontScaling={false}
@@ -28,7 +28,7 @@ const WeekDaysNames = (props: WeekDaysNamesProps) => { //TODO: memoize
   };
   
   return (
-    <View row spread>
+    <View row spread style={containerStyle}>
       {renderWeekDaysNames()}
     </View>
   );

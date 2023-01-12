@@ -26,7 +26,7 @@ export default CalendarItem;
 const styles = StyleSheet.create({
   container: {
     width: Constants.screenWidth,
-    height: 230,
+    height: 250,
     backgroundColor: Colors.grey60
   }
 });

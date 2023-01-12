@@ -1,4 +1,4 @@
-import {StyleProp, TextStyle} from 'react-native';
+import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
 export enum FirstDayOfWeek {
@@ -58,6 +58,7 @@ export interface HeaderProps {
 }
 
 export interface WeekDaysNamesProps {
+  containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   format?: /* `${DayNamesFormat}` &  */ DayNamesFormat; // NOTE: template literals usage depends on ts min version ^4.3.2
 }

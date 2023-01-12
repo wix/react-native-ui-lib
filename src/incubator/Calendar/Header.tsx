@@ -1,7 +1,7 @@
 import React, {useContext, useCallback} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
 import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
-import {Colors} from 'style';
+import {Colors, Typography} from 'style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
@@ -65,7 +65,7 @@ const Header = (props: HeaderProps) => {
   return (
     <View style={styles.container}>
       {renderNavigation()}
-      <WeekDaysNames format={DayNamesFormat.LONG_ABBREVIATION}/>
+      <WeekDaysNames format={DayNamesFormat.LONG_ABBREVIATION} containerStyle={styles.weekDaysNames}/>
     </View>
   );
 };
@@ -74,10 +74,14 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    
+    margin: 10
   },
   title: {
     color: Colors.$textDefault,
-    paddingVertical: 0 // for Android inner paddings
+    paddingVertical: 0, // for Android inner paddings
+    ...Typography.text60
+  },
+  weekDaysNames: {
+    marginTop: 10
   }
 });
