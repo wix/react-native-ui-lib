@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
 export interface SvgImageProps {
