@@ -28,7 +28,7 @@ function SvgImage(props: SvgImageProps) {
     setProssJsStyleCalled(true);
     const {postcss, cssjs} = JsCssPackage;
     postcss().process(styleObj, {parser: cssjs})
-      .then((style: {css: any}) => setsvgStyleCss(style.css));
+      .then((style: {css: any}) => setsvgStyleCss(`{${style.css}}`));
   };
 
   if (isSvgUri(data)) {
