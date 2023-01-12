@@ -58,7 +58,7 @@ const Day = (props: DayProps) => {
   };
 
   return (
-    <TouchableOpacity center style={styles.dayContainer} onPress={_onPress} activeOpacity={1}>
+    <TouchableOpacity flex center style={styles.dayContainer} onPress={_onPress} activeOpacity={1}>
       {renderDay()}
     </TouchableOpacity>
   );
