@@ -28,7 +28,7 @@ function SvgImage(props: SvgImageProps) {
     const JsCssPackage = require('../../optionalDependencies').JsCssPackage;
     if (JsCssPackage) {
       const {postcss, cssjs} = JsCssPackage;
-      const svgStyleCss = postcss(styleObj, {parser: cssjs}).sync();
+      const svgStyleCss = postcss().process(styleObj, {parser: cssjs}).sync();
       const svgStyleTag = `<style> svg ${svgStyleCss} </style>`;
   
       return (
