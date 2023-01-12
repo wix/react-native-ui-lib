@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     ...Typography.text60
   },
   weekDaysNames: {
-    marginTop: 10,
+    marginVertical: 10,
     marginHorizontal: 10
   }
 });
