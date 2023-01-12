@@ -10,7 +10,7 @@ import Image from '../image';
 import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
-import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE, ICON_SOURCE_MARGIN} from './ButtonConstants';
+import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
@@ -246,8 +246,7 @@ class Button extends PureComponent<Props, ButtonState> {
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
     };
-    const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) 
-      ? ICON_SOURCE_MARGIN.LARGE : ICON_SOURCE_MARGIN.SMALL;
+    const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
 
     if (!this.isIconButton) {
       if (iconOnRight) {

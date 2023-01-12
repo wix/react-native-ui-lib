@@ -1,4 +1,3 @@
-import {Constants} from '../../../src/commons/new';
 import {ButtonSize} from './ButtonTypes';
 
 
@@ -24,8 +23,3 @@ export const MIN_WIDTH = {
 };
 
 export const DEFAULT_SIZE = ButtonSize.large;
-
-export const ICON_SOURCE_MARGIN = {
-  LARGE: Constants.isWeb ? '8px' : 8,
-  SMALL: Constants.isWeb ? '4px' : 4
-};

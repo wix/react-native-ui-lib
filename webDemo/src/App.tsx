@@ -117,8 +117,8 @@ const itemsToRender: ItemToRender[] = [
         size={Button.sizes.large}
         iconSource={svgData}
         iconStyle={{
-          width: '24px',
-          height: '24px'
+          width: 24,
+          height: 24
         }}
       />
     )
