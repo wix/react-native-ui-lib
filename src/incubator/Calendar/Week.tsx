@@ -8,6 +8,9 @@ import {WeekProps} from './types';
 import CalendarContext from './CalendarContext';
 import Day from './Day';
 
+
+const WEEK_NUMBER_WIDTH = 18;
+
 const Week = (props: WeekProps) => {
   const {weekNumber, year} = props;
 
@@ -37,7 +40,7 @@ export default Week;
 
 const styles = StyleSheet.create({
   weekNumber: {
-    width: 18,
+    width: WEEK_NUMBER_WIDTH,
     alignSelf: 'center'
   }
 });

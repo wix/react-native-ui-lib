@@ -11,6 +11,7 @@ import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
 
 const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
+const WEEK_NUMBER_WIDTH = 18;
 
 const Header = (props: HeaderProps) => {
   const {month, year} = props;
@@ -69,7 +70,7 @@ const Header = (props: HeaderProps) => {
         format={DayNamesFormat.LONG_ABBREVIATION}
         containerStyle={[
           styles.weekDaysNames,
-          showWeeksNumbers && {paddingLeft: 18}
+          showWeeksNumbers && {marginLeft: WEEK_NUMBER_WIDTH}
         ]}
       />
     </View>
