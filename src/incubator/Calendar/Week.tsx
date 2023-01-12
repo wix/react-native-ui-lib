@@ -11,15 +11,21 @@ import Day from './Day';
 const Week = (props: WeekProps) => {
   const {weekNumber, year} = props;
 
-  const {firstDayOfWeek} = useContext(CalendarContext);
+  const {firstDayOfWeek, showWeeksNumbers} = useContext(CalendarContext);
 
   const days = useMemo(() => {
     return getDaysOfWeekNumber(year, weekNumber, firstDayOfWeek);
   }, [year, weekNumber, firstDayOfWeek]);
 
+  const renderWeekNumbers = () => {
+    if (showWeeksNumbers) {
+      return <Text center $textNeutral style={styles.weekNumber}>{weekNumber}</Text>;
+    }
+  };
+
   return (
     <View row>
-      <Text style={styles.weekNumber}>{weekNumber}</Text>
+      {renderWeekNumbers()}
       {_.map(days, day => (
         <Day date={day}/>
       ))}
@@ -31,8 +37,7 @@ export default Week;
 
 const styles = StyleSheet.create({
   weekNumber: {
-    borderWidth: 1,
-    width: 24,
-    color: 'grey'
+    width: 18,
+    alignSelf: 'center'
   }
 });

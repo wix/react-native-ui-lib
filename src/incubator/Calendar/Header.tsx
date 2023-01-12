@@ -14,7 +14,7 @@ const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
 
 const Header = (props: HeaderProps) => {
   const {month, year} = props;
-  const {selectedDate, setDate} = useContext(CalendarContext);
+  const {selectedDate, setDate, showWeeksNumbers} = useContext(CalendarContext);
   const isStaticHeader = month === undefined && year === undefined;
 
   const onLeftArrowPress = useCallback(() => {
@@ -54,7 +54,7 @@ const Header = (props: HeaderProps) => {
 
   const renderNavigation = () => {
     return (
-      <View row spread>
+      <View row spread style={styles.navigation}>
         {renderArrow('<<', onLeftArrowPress)}
         {renderTitle()}
         {renderArrow('>>', onRightArrowPress)}
@@ -65,7 +65,13 @@ const Header = (props: HeaderProps) => {
   return (
     <View style={styles.container}>
       {renderNavigation()}
-      <WeekDaysNames format={DayNamesFormat.LONG_ABBREVIATION} containerStyle={styles.weekDaysNames}/>
+      <WeekDaysNames 
+        format={DayNamesFormat.LONG_ABBREVIATION}
+        containerStyle={[
+          styles.weekDaysNames,
+          showWeeksNumbers && {paddingLeft: 18}
+        ]}
+      />
     </View>
   );
 };
@@ -74,7 +80,9 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10
+  },
+  navigation: {
+    marginHorizontal: 10
   },
   title: {
     color: Colors.$textDefault,
@@ -82,6 +90,7 @@ const styles = StyleSheet.create({
     ...Typography.text60
   },
   weekDaysNames: {
-    marginTop: 10
+    marginTop: 10,
+    marginHorizontal: 10
   }
 });

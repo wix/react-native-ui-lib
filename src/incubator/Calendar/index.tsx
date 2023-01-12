@@ -40,7 +40,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       data: processedData,
       firstDayOfWeek,
       selectedDate: current,
-      setDate
+      setDate,
+      showWeeksNumbers: true
     };
   }, []);
 
