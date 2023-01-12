@@ -1,6 +1,7 @@
 import React from 'react';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
+
 const asCss = (styleObj: object) => {
   return JSON.stringify(styleObj)
     .replace(/"/g, '') // remove all quotes
@@ -37,16 +38,22 @@ function SvgImage(props: SvgImageProps) {
   } else if (isBase64ImageContent(data)) {
     return <img {...other} src={data} style={styleObj}/>;
   } else if (data) {
-    const svgStyle = asCss(styleObj);
-    const svgStyleTag = `<style> svg ${svgStyle} </style>`;
-
-    return (
-      <div
-        {...other}
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
-      />
-    );
+    const JsCssPackage = require('../../optionalDependencies').JsCssPackage;
+    if (JsCssPackage) {
+      const {postcss, cssjs} = JsCssPackage;
+      const svgStyleCss = postcss(styleObj, {parser: cssjs}).sync();
+      // const svgStyle = asCss(styleObj);
+      const svgStyleTag = `<style> svg ${svgStyleCss} </style>`;
+  
+      return (
+        <div
+          {...other}
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
+        />
+      );
+    }
+    
   }
   return null;
 }
