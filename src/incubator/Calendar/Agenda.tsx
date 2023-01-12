@@ -94,17 +94,20 @@ function Agenda(props: AgendaProps) {
   },
   (selected, previous) => {
     if (selected !== previous && selected !== closestSectionHeader.value?.date) {
+      // TODO: move to isSameDay
       const result = findClosestDateAfter(selected);
       if (result !== null) {
         const {dateSectionHeader, index} = result;
         closestSectionHeader.value = dateSectionHeader;
         scrolledByUser.value = false;
+        // TODO: Can the animation be improved (not in JS)?
         runOnJS(scrollToIndex)(index, !previous);
       }
     }
   },
   [findClosestDateAfter]);
 
+  // TODO: look at https://docs.swmansion.com/react-native-reanimated/docs/api/hooks/useAnimatedScrollHandler
   const onViewableItemsChanged = useCallback(({viewableItems}: {viewableItems: ViewToken[]}) => {
     if (scrolledByUser.value) {
       const result = viewableItems.find(item => item.item.type === 'Header');

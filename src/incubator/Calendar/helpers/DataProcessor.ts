@@ -5,6 +5,7 @@ function eventComparator(a: Event, b: Event) {
 }
 
 // TODO: do it properly with a format \ locale
+// TODO: what can the user do beforehand
 function getHeaderText(date: number) {
   const _date = new Date(date);
   const dd = String(_date.getDate()).padStart(2, '0');
@@ -14,6 +15,7 @@ function getHeaderText(date: number) {
   return `${dd}/${mm}/${yyyy}`;
 }
 
+// TODO: move this to processData
 export function addHeaders(data: Data): InternalData {
   const sortedData = data.sort(eventComparator);
   const result: InternalData = [];
