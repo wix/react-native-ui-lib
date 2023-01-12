@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
+const EMPTY_STYLE = '{}';
 export interface SvgImageProps {
   /**
    * the asset tint
@@ -20,9 +21,11 @@ function SvgImage(props: SvgImageProps) {
   const styleObj = Object.assign({}, ...(style || []));
 
   
-  const [svgStyleCss, setsvgStyleCss] = useState<string>('{}');
+  const [svgStyleCss, setsvgStyleCss] = useState<string>(EMPTY_STYLE);
+  const [prossJsStyleCalled, setProssJsStyleCalled] = useState(false);
 
   const createStyleSvgCss = async (JsCssPackage: {postcss: any, cssjs:any}) => {
+    setProssJsStyleCalled(true);
     const {postcss, cssjs} = JsCssPackage;
     postcss().process(styleObj, {parser: cssjs})
       .then((style: {css: any}) => setsvgStyleCss(style.css));
@@ -35,7 +38,7 @@ function SvgImage(props: SvgImageProps) {
   } else if (data) {
     const JsCssPackage = require('../../optionalDependencies').JsCssPackage;
     if (JsCssPackage) {
-      if (!svgStyleCss) {
+      if (!prossJsStyleCalled) {
         createStyleSvgCss(JsCssPackage);
         return null;
       }
