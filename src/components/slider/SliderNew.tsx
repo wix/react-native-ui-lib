@@ -193,13 +193,12 @@ const SliderNew = (props: Props) => {
   };
 
   const updateGreen = (x : number) => {
-    const newX = x;
     offsetGreen.value = {
-      x: newX,
+      x,
       y: 0
     };
     startGreen.value = {
-      x: newX,
+      x,
       y: 0
     };
     activeTrackWidth.value = x - start.value.x + thumbCenter;
