@@ -21,14 +21,14 @@ function SvgImage(props: SvgImageProps) {
   const styleObj = Object.assign({}, ...(style || []));
 
   
-  const [svgStyleCss, setsvgStyleCss] = useState<string>(EMPTY_STYLE);
-  const [prossJsStyleCalled, setProssJsStyleCalled] = useState(false);
+  const [svgStyleCss, setSvgStyleCss] = useState<string>(EMPTY_STYLE);
+  const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
 
   const createStyleSvgCss = async (JsCssPackage: {postcss: any, cssjs:any}) => {
-    setProssJsStyleCalled(true);
+    setPostCssStyleCalled(true);
     const {postcss, cssjs} = JsCssPackage;
     postcss().process(styleObj, {parser: cssjs})
-      .then((style: {css: any}) => setsvgStyleCss(`{${style.css}}`));
+      .then((style: {css: any}) => setSvgStyleCss(`{${style.css}}`));
   };
 
   if (isSvgUri(data)) {
@@ -36,10 +36,10 @@ function SvgImage(props: SvgImageProps) {
   } else if (isBase64ImageContent(data)) {
     return <img {...other} src={data} style={styleObj}/>;
   } else if (data) {
-    const JsCssPackage = require('../../optionalDependencies').JsCssPackage;
-    if (JsCssPackage) {
-      if (!prossJsStyleCalled) {
-        createStyleSvgCss(JsCssPackage);
+    const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
+    if (PostCssPackage) {
+      if (!postCssStyleCalled) {
+        createStyleSvgCss(PostCssPackage);
         return null;
       }
       const svgStyleTag = `<style> svg ${svgStyleCss} </style>`;
