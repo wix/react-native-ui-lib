@@ -24,7 +24,7 @@ const trackHeight = 6;
 const thumbSize = 24;
 
 const SliderNew = (props: Props) => {
-  // Missing props, ui, custom layout calcs, orientation change, RTL, Accessibility
+  // Missing props, ui, custom layout calcs, orientation change, RTL + disable RTL, Accessibility
   const {
     forwardedRef,
     useRange,
@@ -41,7 +41,6 @@ const SliderNew = (props: Props) => {
     useGap
   } = props;
 
-
   useImperativeHandle(forwardedRef, () => ({
     reset: () => reset()
   }));
@@ -54,23 +53,10 @@ const SliderNew = (props: Props) => {
 
   const thumbCenter = thumbSize / 2;
   const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize : 0;
-
   const trackWidth = useSharedValue(0);
   const activeTrackWidth = useSharedValue(0);
-
   const stepXValue = useSharedValue(step);
   const shouldBounceToStep = step > 0;
-
-  const onChange = (value: number | {min: number, max: number}) => {
-    if (useRange && !isNumber(value)) {
-      const min = value.min;
-      const max = value.max;
-      onRangeChange?.({min: getValueForX(min), max: getValueForX(max)});
-    } else if (isNumber(value)) {
-      const val = getValueForX(value);
-      onValueChange?.(val);
-    }
-  };
 
   const getXForValue = (value: number, trackWidth: number) => {
     const range = maximumValue - minimumValue;
@@ -92,17 +78,13 @@ const SliderNew = (props: Props) => {
     }
   };
 
-  const onTrackLayout = useCallback((event) => {
-    const width = event.nativeEvent.layout.width;
-    trackWidth.value = width;
-    setPositions(width);
-  }, []);
-
   const setPositions = (trackWidth: number) => {
     if (useRange) {
       const bluePosition = getXForValue(initialMinimumValue, trackWidth);
       const greenPosition = getXForValue(initialMaximumValue, trackWidth);
+      
       activeTrackWidth.value = trackWidth - bluePosition - greenPosition + thumbCenter;
+      
       updateBlue(bluePosition);
       updateGreen(greenPosition);
     } else {
@@ -114,12 +96,32 @@ const SliderNew = (props: Props) => {
     }
   };
 
+  /** events */
+
+  const onChange = (value: number | {min: number, max: number}) => {
+    if (useRange && !isNumber(value)) {
+      const min = value.min;
+      const max = value.max;
+      onRangeChange?.({min: getValueForX(min), max: getValueForX(max)});
+    } else if (isNumber(value)) {
+      const val = getValueForX(value);
+      onValueChange?.(val);
+    }
+  };
+
+  const onTrackLayout = useCallback((event) => {
+    const width = event.nativeEvent.layout.width;
+    trackWidth.value = width;
+    setPositions(width);
+  }, []);
+
   const onTrackPress = useCallback((event) => {
     let locationX = Math.min(event.nativeEvent.locationX, trackWidth.value - thumbCenter);
-    console.warn(locationX);
+    
     if (shouldBounceToStep) {
       locationX = getStepComputedX(locationX);
     }
+
     if (useRange) {
       if (locationX === offset.value.x) {
         activeThumb.value = ThumbType.GREEN;
@@ -188,7 +190,9 @@ const SliderNew = (props: Props) => {
       x,
       y: 0
     };
+
     activeTrackWidth.value = Math.abs(useRange ? startGreen.value.x - x : x) + (x > thumbCenter ? thumbCenter : 0);
+    
     onChange(useRange ? {min: x, max: startGreen.value.x} : x);
   };
 
@@ -201,31 +205,35 @@ const SliderNew = (props: Props) => {
       x,
       y: 0
     };
+    
     activeTrackWidth.value = x - start.value.x + thumbCenter;
+    
     onChange({min: start.value.x, max: x});
   };
 
-  const gesture = Gesture.Pan()
+  const gestureBlue = Gesture.Pan()
     .onBegin(() => {
       isPressed.value = true;
       activeThumb.value = ThumbType.BLUE;
     })
     .onUpdate((e) => {
       onSeekStart?.();
-      let newX = start.value.x + e.translationX;
+
+      const newX = start.value.x + e.translationX;
       if (newX < startGreen.value.x - rangeGap && newX > -thumbCenter) {
-        newX = Math.min(newX, trackWidth.value - thumbCenter);
         offset.value = {
           x: newX,
           y: 0
         };
-        newX = Math.max(0, newX);
+        
         activeTrackWidth.value = (useRange ? startGreen.value.x - offset.value.x : newX) + thumbCenter;
+        
         runOnJS(onChange)(useRange ? {min: newX, max: startGreen.value.x} : newX);
       }
     })
     .onEnd(() => {
       onSeekEnd?.();
+
       start.value = {
         x: offset.value.x,
         y: 0
@@ -238,8 +246,7 @@ const SliderNew = (props: Props) => {
         const x = offset.value.x;
         const stepInterpolated = 
           interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value - thumbCenter]);
-        const newX = Math.round(x / stepInterpolated) * stepInterpolated;
-        console.warn('gesture: ', stepInterpolated, newX/* , getStepComputedX(x) */); // worklet error
+        const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
         runOnJS(updateBlue)(newX === 0 ? -thumbCenter : newX);
       }
     });
@@ -251,18 +258,22 @@ const SliderNew = (props: Props) => {
     })
     .onUpdate((e) => {
       onSeekStart?.();
+
       const newX = startGreen.value.x + e.translationX;
       if (newX > start.value.x + rangeGap && newX < trackWidth.value - thumbCenter + 1) {
         offsetGreen.value = {
           x: newX,
           y: 0
         };
+
         activeTrackWidth.value = offsetGreen.value.x - start.value.x + thumbCenter;
+        
         runOnJS(onChange)(useRange ? {min: start.value.x, max: newX} : newX);
       }
     })
     .onEnd(() => {
       onSeekEnd?.();
+
       startGreen.value = {
         x: offsetGreen.value.x,
         y: 0
@@ -275,8 +286,7 @@ const SliderNew = (props: Props) => {
         const x = offsetGreen.value.x;
         const stepInterpolated = 
           interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value - thumbCenter]);
-        const newX = Math.round(x / stepInterpolated) * stepInterpolated;
-        // console.warn('gestureGreen: ', newX, getStepComputedX(x)); // worklet error
+        const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
         runOnJS(updateGreen)(newX);
       }
     });
@@ -292,13 +302,14 @@ const SliderNew = (props: Props) => {
     if (useRange) {
       return {
         transform: [
-          {translateX: offset.value.x},
-          {translateY: offset.value.y}
+          {translateX: offset.value.x}
         ],
         width: activeTrackWidth.value
       };
     } else {
-      return {width: activeTrackWidth.value};
+      return {
+        width: activeTrackWidth.value
+      };
     }
   });
 
@@ -318,7 +329,7 @@ const SliderNew = (props: Props) => {
 
   const renderBlueThumb = () => {
     return (
-      <GestureDetector gesture={gesture}>
+      <GestureDetector gesture={gestureBlue}>
         <View
           reanimated
           style={[
