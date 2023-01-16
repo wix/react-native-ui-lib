@@ -24,9 +24,9 @@ function SvgImage(props: SvgImageProps) {
   const [svgStyleCss, setSvgStyleCss] = useState<string>(EMPTY_STYLE);
   const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
 
-  const createStyleSvgCss = async (JsCssPackage: {postcss: any, cssjs:any}) => {
+  const createStyleSvgCss = async (PostCssPackage: {postcss: any, cssjs:any}) => {
     setPostCssStyleCalled(true);
-    const {postcss, cssjs} = JsCssPackage;
+    const {postcss, cssjs} = PostCssPackage;
     postcss().process(styleObj, {parser: cssjs})
       .then((style: {css: any}) => setSvgStyleCss(`{${style.css}}`));
   };

@@ -1,13 +1,13 @@
-let JsCssPackage: {postcss: any, cssjs: any} | undefined;
+let PostCssPackage: {postcss: any, cssjs: any} | undefined;
 try {
   const postcss = require('postcss');
   const cssjs = require('postcss-js');
   
 
-  JsCssPackage = {
+  PostCssPackage = {
     postcss,
     cssjs
   };
 } catch (error) {}
 
-export default JsCssPackage;
+export default PostCssPackage;
