@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import {View, Text, Slider, SliderNew, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
-const VALUE = 50;
+const VALUE = 20;
 const MIN = 0;
 const MAX = 100;
 const PlaygroundScreen = () => {
@@ -22,10 +22,10 @@ const PlaygroundScreen = () => {
     setSliderValue(value);
   };
 
-  const onRangeChange = ({min, max}) => {
+  const onRangeChange = (value: {min: number, max: number}) => {
     // console.warn('onRangeChange: ', min, max);
-    setSliderMaxValue(max);
-    setSliderMinValue(min);
+    setSliderMaxValue(value.max);
+    setSliderMinValue(value.min);
   };
 
   const renderValuesBox = (min: number, max?: number) => {
@@ -65,7 +65,7 @@ const PlaygroundScreen = () => {
           ref={slider}
         />
       </View>
-      <View marginT-40>
+      <View margin-40>
         {renderValuesBox(sliderMinValue, sliderMaxValue)}
         <SliderNew
           useRange
