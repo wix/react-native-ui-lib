@@ -70,6 +70,7 @@ export const navigationData = {
       },
       {title: 'Stepper', tags: 'stepper form', screen: 'unicorn.components.StepperScreen'},
       {title: 'Slider', tags: 'slider', screen: 'unicorn.components.SliderScreen'},
+      {title: 'Slider (Incubator)', tags: 'slider', screen: 'unicorn.components.IncubatorSliderScreen'},
       {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
       {title: 'ChipsInput', tags: 'chips tags input form', screen: 'unicorn.components.ChipsInputScreen'},
       {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'}
