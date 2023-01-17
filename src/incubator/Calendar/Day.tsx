@@ -19,17 +19,21 @@ const Day = (props: DayProps) => {
 
   const shouldMarkSelected = !isNull(date) ? isSameDay(selectedDate.value, date) : false;
   const isSelected = useSharedValue(shouldMarkSelected);
+  const isToday = !isNull(date) ? isSameDay(Date.now(), date) : false;
 
+  const backgroundColor = isToday ? Colors.$backgroundSuccessHeavy : Colors.transparent;
+  const textColor = isToday ? Colors.$textDefaultLight : Colors.$backgroundPrimaryHeavy;
+  
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      backgroundColor: isSelected.value ? Colors.$backgroundPrimaryHeavy : Colors.transparent,
-      color: isSelected.value ? Colors.$textDefaultLight : Colors.$backgroundPrimaryHeavy
+      backgroundColor: isSelected.value ? Colors.$backgroundPrimaryHeavy : backgroundColor,
+      color: isSelected.value ? Colors.$textDefaultLight : textColor
     };
   });
 
   const animatedTextStyles = useAnimatedStyle(() => {
     return {
-      color: isSelected.value ? Colors.$textDefaultLight : Colors.$backgroundPrimaryHeavy
+      color: isSelected.value ? Colors.$textDefaultLight : textColor
     };
   });
 
