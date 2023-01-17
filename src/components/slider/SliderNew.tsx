@@ -122,7 +122,7 @@ const SliderNew = (props: Props) => {
       locationX = getStepComputedX(locationX);
     }
     if (useRange) {
-      if (locationX === offset.value.x) {
+      if (locationX === offsetBlue.value.x) {
         activeThumb.value = ThumbType.GREEN;
         updateGreen(locationX);
       } else if (locationX === offsetGreen.value.x) {
@@ -131,10 +131,10 @@ const SliderNew = (props: Props) => {
       } else if (locationX > offsetGreen.value.x) {
         activeThumb.value = ThumbType.GREEN;
         updateGreen(locationX);
-      } else if (locationX < offset.value.x) {
+      } else if (locationX < offsetBlue.value.x) {
         activeThumb.value = ThumbType.BLUE;
         updateBlue(locationX);
-      } else if (locationX > offset.value.x && locationX < offsetGreen.value.x) {
+      } else if (locationX > offsetBlue.value.x && locationX < offsetGreen.value.x) {
         if (activeThumb.value === ThumbType.BLUE) {
           updateBlue(locationX);
         } else {
@@ -150,9 +150,9 @@ const SliderNew = (props: Props) => {
 
   const activeThumb = useSharedValue(ThumbType.BLUE);
 
-  const isPressed = useSharedValue(false);
-  const offset = useSharedValue({x: 0, y: 0});
-  const start = useSharedValue({x: 0, y: 0});
+  const isPressedBlue = useSharedValue(false);
+  const offsetBlue = useSharedValue({x: 0, y: 0});
+  const startBlue = useSharedValue({x: 0, y: 0});
 
   const isPressedGreen = useSharedValue(false);
   const offsetGreen = useSharedValue({x: 0, y: 0});
@@ -161,10 +161,10 @@ const SliderNew = (props: Props) => {
   const animatedStylesBlue = useAnimatedStyle(() => {
     return {
       transform: [
-        {translateX: offset.value.x - thumbCenter},
-        {scale: withSpring(isPressed.value ? 1.3 : 1)}
+        {translateX: offsetBlue.value.x - thumbCenter},
+        {scale: withSpring(isPressedBlue.value ? 1.3 : 1)}
       ],
-      backgroundColor: isPressed.value ? 'lightblue' : 'blue'
+      backgroundColor: isPressedBlue.value ? 'lightblue' : 'blue'
     };
   });
 
@@ -179,11 +179,11 @@ const SliderNew = (props: Props) => {
   });
 
   const updateBlue = (x: number) => {
-    offset.value = {
+    offsetBlue.value = {
       x,
       y: 0
     };
-    start.value = {
+    startBlue.value = {
       x,
       y: 0
     };
@@ -203,28 +203,27 @@ const SliderNew = (props: Props) => {
       y: 0
     };
     
-    activeTrackWidth.value = x - start.value.x;
+    activeTrackWidth.value = x - startBlue.value.x;
     
-    onChange({min: start.value.x, max: x});
+    onChange({min: startBlue.value.x, max: x});
   };
 
   const gestureBlue = Gesture.Pan()
     .onBegin(() => {
-      isPressed.value = true;
+      isPressedBlue.value = true;
       activeThumb.value = ThumbType.BLUE;
     })
     .onUpdate((e) => {
       onSeekStart?.();
 
-      let newX = start.value.x + e.translationX;
+      let newX = startBlue.value.x + e.translationX;
       if (newX < 0) { // bottom edge
         newX = 0;
       } else if (!useRange && newX > trackWidth.value) { // top edge
         newX = trackWidth.value;
       }
       if (newX <= startGreen.value.x - rangeGap && newX >= 0) { // range
-        // console.warn('gestureBlue: ', newX, startGreen.value.x - rangeGap);
-        offset.value = {
+        offsetBlue.value = {
           x: newX,
           y: 0
         };
@@ -237,16 +236,16 @@ const SliderNew = (props: Props) => {
     .onEnd(() => {
       onSeekEnd?.();
 
-      start.value = {
-        x: offset.value.x,
+      startBlue.value = {
+        x: offsetBlue.value.x,
         y: 0
       };
     })
     .onFinalize(() => {
-      isPressed.value = false;
+      isPressedBlue.value = false;
 
       if (shouldBounceToStep) {
-        const x = offset.value.x;
+        const x = offsetBlue.value.x;
         const stepInterpolated = 
           interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value]);
         const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
@@ -266,16 +265,15 @@ const SliderNew = (props: Props) => {
       if (newX > trackWidth.value) { // top edge
         newX = trackWidth.value;
       }
-      if (newX >= start.value.x + rangeGap && newX <= trackWidth.value) { // range
-        // console.warn('gestureGreen: ', newX, start.value.x + rangeGap, trackWidth.value);
+      if (newX >= startBlue.value.x + rangeGap && newX <= trackWidth.value) { // range
         offsetGreen.value = {
           x: newX,
           y: 0
         };
 
-        activeTrackWidth.value = offsetGreen.value.x - start.value.x;
+        activeTrackWidth.value = offsetGreen.value.x - startBlue.value.x;
         
-        runOnJS(onChange)(useRange ? {min: start.value.x, max: newX} : newX);
+        runOnJS(onChange)(useRange ? {min: startBlue.value.x, max: newX} : newX);
       }
     })
     .onEnd(() => {
@@ -309,7 +307,7 @@ const SliderNew = (props: Props) => {
     if (useRange) {
       return {
         transform: [
-          {translateX: offset.value.x}
+          {translateX: offsetBlue.value.x}
         ],
         width: activeTrackWidth.value
       };
@@ -386,7 +384,8 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     top: -(thumbSize - trackHeight) / 2,
     height: thumbSize,
-    backgroundColor: Colors.transparent
+    backgroundColor: Colors.transparent,
+    borderWidth: 1
   },
   thumb: {
     position: 'absolute',
