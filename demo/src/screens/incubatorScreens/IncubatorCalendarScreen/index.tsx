@@ -1,7 +1,5 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import {View, Text, Incubator} from 'react-native-ui-lib';
+import {View, Incubator} from 'react-native-ui-lib';
 import {data} from './MockData';
 
 export default class CalendarScreen extends Component {
@@ -17,5 +15,3 @@ export default class CalendarScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({});
