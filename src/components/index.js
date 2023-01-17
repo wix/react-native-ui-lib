@@ -165,9 +165,6 @@ export default {
   get Slider() {
     return require('./slider').default;
   },
-  get SliderNew() {
-    return require('./slider/SliderNew').default;
-  },
   get SortableList() {
     return require('./sortableList').default;
   },

@@ -8,3 +8,4 @@ export {default as WheelPicker, WheelPickerProps, WheelPickerItemProps} from './
 export {WheelPickerAlign} from './WheelPicker/types';
 export {default as PanView, PanViewProps, PanViewDirections, PanViewDismissThreshold} from './panView';
 export {default as Dialog, DialogProps, DialogHeaderProps, DialogStatics, DialogImperativeMethods} from './Dialog';
+export {default as Slider} from './Slider';

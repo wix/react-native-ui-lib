@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Slider, SliderNew, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Button, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 
 const VALUE = 20;
 const NEGATIVE_VALUE = -30;
@@ -11,9 +11,9 @@ const PlaygroundScreen = () => {
   const [negativeSliderValue, setNegativeSliderValue] = useState(NEGATIVE_VALUE);
   const [sliderMinValue, setSliderMinValue] = useState(MIN);
   const [sliderMaxValue, setSliderMaxValue] = useState(MAX);
-  const slider = useRef<typeof SliderNew>();
-  const negativeSlider = useRef<typeof SliderNew>();
-  const rangeSlider = useRef<typeof SliderNew>();
+  const slider = useRef<typeof Incubator.Slider>();
+  const negativeSlider = useRef<typeof Incubator.Slider>();
+  const rangeSlider = useRef<typeof Incubator.Slider>();
 
   const resetSlider = () => {
     slider.current?.reset();
@@ -64,7 +64,7 @@ const PlaygroundScreen = () => {
       <View marginT-40>
         <Text marginB-10>Default Slider range 20 to 100</Text>
         {renderValuesBox(sliderValue)}
-        <SliderNew
+        <Incubator.Slider
           ref={slider}
           onValueChange={onValueChange}
           value={VALUE}
@@ -78,7 +78,7 @@ const PlaygroundScreen = () => {
       <View marginT-40>
         <Text marginB-10>Default Slider range 0 to -100</Text>
         {renderValuesBox(negativeSliderValue)}
-        <SliderNew
+        <Incubator.Slider
           ref={negativeSlider}
           onValueChange={onNegativeValueChange}
           value={NEGATIVE_VALUE}
@@ -92,7 +92,7 @@ const PlaygroundScreen = () => {
       <View margin-40>
         <Text marginB-10>Range Slider range 0 to 100</Text>
         {renderValuesBox(sliderMinValue, sliderMaxValue)}
-        <SliderNew
+        <Incubator.Slider
           ref={rangeSlider}
           useRange
           useGap

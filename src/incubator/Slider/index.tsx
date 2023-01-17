@@ -1,7 +1,7 @@
 import isNumber from 'lodash/isNumber';
 import React, {useImperativeHandle, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import View from '../view';
+import View from '../../components/view';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {
   useSharedValue,
@@ -12,7 +12,7 @@ import {
 } from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {Colors, Spacings} from '../../style';
-import {SliderProps} from '.';
+import {SliderProps} from '../../components/slider';
 
 type Props = SliderProps & ForwardRefInjectedProps;
 
@@ -24,7 +24,7 @@ const trackHeight = 6;
 const thumbSize = 24;
 const innerThumbPadding = 12;
 
-const SliderNew = (props: Props) => {
+const Slider = (props: Props) => {
   // negative values, Missing props, ui, custom layout calcs, orientation change, RTL + disable RTL, Accessibility
   const {
     forwardedRef,
@@ -80,6 +80,7 @@ const SliderNew = (props: Props) => {
   };
 
   const setPositions = (trackWidth: number) => {
+    validateValues();
     if (useRange) {
       const bluePosition = getXForValue(initialMinimumValue, trackWidth);
       const greenPosition = getXForValue(initialMaximumValue, trackWidth);
@@ -95,6 +96,25 @@ const SliderNew = (props: Props) => {
       };
       updateBlue(getXForValue(value, trackWidth));
     }
+  };
+
+  const validateValues = () => {
+    if (minimumValue > maximumValue || useRange && initialMinimumValue > initialMaximumValue) {
+      console.error('Your passed values are invalid. Please check if minimum values are not higher than maximum values');
+    }
+    if (value && !inRange(value, minimumValue, maximumValue)) {
+      console.error('Your passed value is invalid. Please check that it is in range of the minimum and maximum values');
+    }
+    if (useRange) {
+      if (!inRange(initialMinimumValue, minimumValue, maximumValue) 
+        || !inRange(initialMaximumValue, minimumValue, maximumValue)) {
+        console.error('Your passed values are invalid. Please check that they are in range of the minimum and maximum values');
+      }
+    }
+  };
+
+  const inRange = (value: number, min: number, max: number) => {
+    return value >= min && value <= max;
   };
 
   /** events */
@@ -383,7 +403,7 @@ const SliderNew = (props: Props) => {
 };
 
 // @ts-expect-error
-export default forwardRef<SliderProps, Statics>(SliderNew);
+export default forwardRef<SliderProps, Statics>(Slider);
 
 const styles = StyleSheet.create({
   container: {
