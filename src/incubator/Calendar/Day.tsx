@@ -7,7 +7,7 @@ import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
 import {getDayOfDate, isSameDay} from './helpers/DateUtils';
-import {DayProps} from './types';
+import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 
@@ -46,7 +46,7 @@ const Day = (props: DayProps) => {
   const _onPress = useCallback(() => {
     if (date !== null) {
       isSelected.value = true;
-      setDate(date);
+      setDate(date, UpdateSource.DAY_SELECT);
       onPress?.(date);
     }
   }, [date, setDate, onPress]);

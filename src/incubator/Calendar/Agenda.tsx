@@ -6,7 +6,7 @@ import {BorderRadiuses} from 'style';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {HOUR_TO_MS} from './helpers/DateUtils';
-import {InternalEvent, Event, DateSectionHeader, AgendaProps} from './types';
+import {InternalEvent, Event, DateSectionHeader, AgendaProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 function Agenda(props: AgendaProps) {
@@ -115,7 +115,7 @@ function Agenda(props: AgendaProps) {
         const {item}: {item: DateSectionHeader} = result;
         if (closestSectionHeader.value?.date !== item.date) {
           closestSectionHeader.value = item;
-          setDate(item.date);
+          setDate(item.date, UpdateSource.AGENDA_SCROLL);
         }
       }
     }

@@ -6,7 +6,7 @@ import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
 import {getDateObject, addMonths, getMonthForIndex} from './helpers/DateUtils';
-import {HeaderProps, DayNamesFormat} from './types';
+import {HeaderProps, DayNamesFormat, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
 
@@ -19,11 +19,11 @@ const Header = (props: HeaderProps) => {
   const isStaticHeader = month === undefined && year === undefined;
 
   const onLeftArrowPress = useCallback(() => {
-    setDate(addMonths(selectedDate.value, -1));
+    setDate(addMonths(selectedDate.value, -1), UpdateSource.MONTH_ARROW_SKIP);
   }, [selectedDate.value, setDate]);
 
   const onRightArrowPress = useCallback(() => {
-    setDate(addMonths(selectedDate.value, 1));
+    setDate(addMonths(selectedDate.value, 1), UpdateSource.MONTH_ARROW_SKIP);
   }, [selectedDate.value, setDate]);
 
   const animatedProps = useAnimatedProps(() => {
