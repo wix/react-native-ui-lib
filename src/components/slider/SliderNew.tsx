@@ -122,6 +122,7 @@ const SliderNew = (props: Props) => {
     if (shouldBounceToStep) {
       locationX = getStepComputedX(locationX);
     }
+
     if (useRange) {
       if (locationX === offsetBlue.value.x) {
         activeThumb.value = ThumbType.GREEN;
@@ -247,8 +248,13 @@ const SliderNew = (props: Props) => {
 
       if (shouldBounceToStep) {
         const x = offsetBlue.value.x;
+        
+        const outputRange = [0, trackWidth.value];
+        const inputRange = 
+          minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
         const stepInterpolated = 
-          interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value]);
+          interpolate(stepXValue.value, inputRange, outputRange);
+        
         const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
         runOnJS(updateBlue)(newX);
       }
@@ -290,17 +296,25 @@ const SliderNew = (props: Props) => {
 
       if (shouldBounceToStep) {
         const x = offsetGreen.value.x;
+        
+        const outputRange = [0, trackWidth.value];
+        const inputRange = 
+          minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
         const stepInterpolated = 
-          interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value]);
+          interpolate(stepXValue.value, inputRange, outputRange);
+
         const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
+        
         runOnJS(updateGreen)(newX);
       }
     });
 
   const getStepComputedX = (x: number) => {
     'worklet';
-    const stepInterpolated = 
-      interpolate(stepXValue.value, [minimumValue, maximumValue], [0, trackWidth.value]);
+    const outputRange = [0, trackWidth.value];
+    const inputRange = 
+      minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
+    const stepInterpolated = Math.abs(interpolate(stepXValue.value, inputRange, outputRange));
     return Math.round(x / stepInterpolated) * stepInterpolated;
   };
 
