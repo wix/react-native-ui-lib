@@ -2,7 +2,7 @@ import React, {PropsWithChildren, useCallback, useMemo} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {FlashList} from '@shopify/flash-list';
 import {addHeaders} from './helpers/DataProcessor';
-import {CalendarProps, FirstDayOfWeek} from './types';
+import {CalendarContextProps, CalendarProps, FirstDayOfWeek, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
 import Agenda from './Agenda';
@@ -29,13 +29,15 @@ const MONTH_ITEMS = generateMonthItems();
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.MONDAY} = props;
   const current = useSharedValue<number>(initialDate);
+  const lastUpdateSource = useSharedValue<UpdateSource | undefined>(undefined);
   const processedData = useMemo(() => addHeaders(data), [data]);
 
-  const setDate = useCallback((date: number) => {
+  const setDate = useCallback<CalendarContextProps['setDate']>((date: number, updateSource: UpdateSource) => {
     current.value = date;
+    lastUpdateSource.value = updateSource;
   }, []);
 
-  const contextValue = useMemo(() => {
+  const contextValue = useMemo<CalendarContextProps>(() => {
     return {
       data: processedData,
       firstDayOfWeek,
