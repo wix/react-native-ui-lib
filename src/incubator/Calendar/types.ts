@@ -9,10 +9,10 @@ export enum FirstDayOfWeek {
 
 export enum UpdateSource {
   DAY_SELECT,
-  MONTH_ARROW_SKIP,
-  MONTH_SCROLL_SKIP,
-  WEEK_ARROW_SKIP,
-  WEEK_SCROLL_SKIP,
+  MONTH_ARROW,
+  MONTH_SCROLL,
+  WEEK_ARROW,
+  WEEK_SCROLL,
   AGENDA_SCROLL,
   TODAY_PRESS,
   PROP_UPDATE
@@ -41,6 +41,7 @@ export interface CalendarContextProps {
   setDate: (date: number, updateSource: UpdateSource) => void;
   data: InternalData;
   showWeeksNumbers: boolean;
+  updateSource?: UpdateSource;
 }
 
 export interface DayProps {

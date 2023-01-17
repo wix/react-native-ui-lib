@@ -43,7 +43,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       firstDayOfWeek,
       selectedDate: current,
       setDate,
-      showWeeksNumbers: true
+      showWeeksNumbers: true,
+      updateSource: lastUpdateSource.value
     };
   }, []);
 

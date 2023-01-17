@@ -19,11 +19,11 @@ const Header = (props: HeaderProps) => {
   const isStaticHeader = month === undefined && year === undefined;
 
   const onLeftArrowPress = useCallback(() => {
-    setDate(addMonths(selectedDate.value, -1), UpdateSource.MONTH_ARROW_SKIP);
+    setDate(addMonths(selectedDate.value, -1), UpdateSource.MONTH_ARROW);
   }, [selectedDate.value, setDate]);
 
   const onRightArrowPress = useCallback(() => {
-    setDate(addMonths(selectedDate.value, 1), UpdateSource.MONTH_ARROW_SKIP);
+    setDate(addMonths(selectedDate.value, 1), UpdateSource.MONTH_ARROW);
   }, [selectedDate.value, setDate]);
 
   const animatedProps = useAnimatedProps(() => {

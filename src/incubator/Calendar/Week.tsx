@@ -30,7 +30,7 @@ const Week = (props: WeekProps) => {
     <View row>
       {renderWeekNumbers()}
       {_.map(days, day => (
-        <Day date={day}/>
+        <Day date={day} key={day}/>
       ))}
     </View>
   );
