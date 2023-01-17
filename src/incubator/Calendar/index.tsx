@@ -55,6 +55,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     <CalendarContext.Provider value={contextValue}>
       {/* <View> */}
       <FlashList
+        estimatedItemSize={353}
         data={MONTH_ITEMS}
         // initialScrollIndex={Math.floor(MONTH_ITEMS.length / 2)}
         renderItem={renderCalendarItem}

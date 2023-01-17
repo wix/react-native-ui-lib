@@ -135,6 +135,7 @@ function Agenda(props: AgendaProps) {
   return (
     <FlashList
       ref={flashList}
+      estimatedItemSize={89}
       data={data}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
