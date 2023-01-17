@@ -3,13 +3,16 @@ import {StyleSheet} from 'react-native';
 import {View, Text, Slider, SliderNew, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
 const VALUE = 20;
+const NEGATIVE_VALUE = -30;
 const MIN = 0;
 const MAX = 100;
 const PlaygroundScreen = () => {
   const [sliderValue, setSliderValue] = useState(VALUE);
+  const [negativeSliderValue, setNegativeSliderValue] = useState(NEGATIVE_VALUE);
   const [sliderMinValue, setSliderMinValue] = useState(MIN);
   const [sliderMaxValue, setSliderMaxValue] = useState(MAX);
   const slider = useRef<typeof SliderNew>();
+  const negativeSlider = useRef<typeof SliderNew>();
   const rangeSlider = useRef<typeof SliderNew>();
 
   const resetSlider = () => {
@@ -22,6 +25,11 @@ const PlaygroundScreen = () => {
     setSliderValue(value);
   };
 
+  const onNegativeValueChange = (value: number) => {
+    // console.warn('onValueChange: ', value);
+    setNegativeSliderValue(value);
+  };
+
   const onRangeChange = (value: {min: number, max: number}) => {
     // console.warn('onRangeChange: ', min, max);
     setSliderMaxValue(value.max);
@@ -29,7 +37,7 @@ const PlaygroundScreen = () => {
   };
 
   const renderValuesBox = (min: number, max?: number) => {
-    if (max) {
+    if (max !== undefined) {
       return (
         <View row spread marginB-20>
           <Text bodySmall $textNeutral>min. {min}</Text>
@@ -54,30 +62,47 @@ const PlaygroundScreen = () => {
       </Text>
       
       <View marginT-40>
+        <Text marginB-10>Default Slider range 20 to 100</Text>
         {renderValuesBox(sliderValue)}
         <SliderNew
+          ref={slider}
           onValueChange={onValueChange}
           value={VALUE}
-          minimumValue={0}
+          minimumValue={20}
           maximumValue={100}
           step={10}
           // disableRTL={forceLTR}
-          ref={slider}
         />
       </View>
+
+      <View marginT-40>
+        <Text marginB-10>Default Slider range 0 to -100</Text>
+        {renderValuesBox(negativeSliderValue)}
+        <SliderNew
+          ref={negativeSlider}
+          onValueChange={onNegativeValueChange}
+          value={NEGATIVE_VALUE}
+          minimumValue={-100}
+          maximumValue={0}
+          step={10}
+          // disableRTL={forceLTR}
+        />
+      </View>
+
       <View margin-40>
+        <Text marginB-10>Range Slider range 0 to 100</Text>
         {renderValuesBox(sliderMinValue, sliderMaxValue)}
         <SliderNew
-          useRange
-          onRangeChange={onRangeChange}
-          minimumValue={0}
-          maximumValue={100}
-          initialMinimumValue={25}
-          initialMaximumValue={75}
-          // step={10}
-          // disableRTL={forceLTR}
           ref={rangeSlider}
+          useRange
           useGap
+          onRangeChange={onRangeChange}
+          minimumValue={MIN}
+          maximumValue={MAX}
+          initialMinimumValue={30}
+          initialMaximumValue={70}
+          // step={1}
+          // disableRTL={forceLTR}
         />
       </View>
     </View>
