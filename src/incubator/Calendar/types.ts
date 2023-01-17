@@ -41,7 +41,7 @@ export interface CalendarContextProps {
   setDate: (date: number, updateSource: UpdateSource) => void;
   data: InternalData;
   showWeeksNumbers: boolean;
-  updateSource?: SharedValue<UpdateSource>;
+  updateSource?: SharedValue<UpdateSource | undefined>;
 }
 
 export interface DayProps {
