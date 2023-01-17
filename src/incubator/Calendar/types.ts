@@ -2,9 +2,20 @@ import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
 export enum FirstDayOfWeek {
-  Sunday = 0,
-  Monday = 1,
-  Saturday = 6
+  SUNDAY = 0,
+  MONDAY = 1,
+  SATURDAY = 6
+}
+
+export enum UpdateSource {
+  DAY_SELECT,
+  MONTH_ARROW_SKIP,
+  MONTH_SCROLL_SKIP,
+  WEEK_ARROW_SKIP,
+  WEEK_SCROLL_SKIP,
+  AGENDA_SCROLL,
+  TODAY_PRESS,
+  PROP_UPDATE
 }
 
 export interface Event {
@@ -27,7 +38,7 @@ export type InternalData = InternalEvent[];
 export interface CalendarContextProps {
   firstDayOfWeek: FirstDayOfWeek;
   selectedDate: SharedValue<number>;
-  setDate: (date: number) => void;
+  setDate: (date: number, updateSource: UpdateSource) => void;
   data: InternalData;
   showWeeksNumbers: boolean;
 }

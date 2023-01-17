@@ -27,7 +27,7 @@ function generateMonthItems() {
 const MONTH_ITEMS = generateMonthItems();
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
-  const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.Monday} = props;
+  const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.MONDAY} = props;
   const current = useSharedValue<number>(initialDate);
   const processedData = useMemo(() => addHeaders(data), [data]);
 

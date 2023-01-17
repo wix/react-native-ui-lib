@@ -10,7 +10,6 @@ export default class CalendarScreen extends Component {
   render() {
     return (
       <View flex>
-        <Text h1 marginB-20>Calendar Screen</Text>
         <Incubator.Calendar data={data}>
           <Incubator.Calendar.Agenda/>
         </Incubator.Calendar>
