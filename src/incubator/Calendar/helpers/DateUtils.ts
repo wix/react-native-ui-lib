@@ -118,5 +118,18 @@ export function isSameDay(d1: number, d2: number) {
   return false;
 }
 
+export function isSameMonth(d1: number, d2: number) {
+  'worklet';
+  const a = getDateObject(d1);
+  const b = getDateObject(d2);
+  
+  if (a.year === b.year) {
+    if (a.month === b.month) {
+      return true;
+    }
+  }
+  return false;
+}
+
 
 export const _forTesting = {getFirstDayInTheYear}; // exporting private functions for testing only

@@ -223,8 +223,34 @@ describe('Calendar/DateUtils', () => {
       expect(DateUtils.isSameDay(new Date('2022-12-26').getTime(), new Date('2022-12-27').getTime())).toBe(false);
     });
 
-    it('should return false for same dates using timestamps', () => {
+    it('should return false for different dates using timestamps', () => {
       expect(DateUtils.isSameDay(1673442316000, 1674327916)).toBe(false);
+    });
+  });
+
+  describe('isSameMonth', () => {
+    it('should return true for same months using Date objects', () => {
+      expect(DateUtils.isSameMonth(new Date().getTime(), Date.now())).toBe(true);
+    });
+
+    it('should return true for same months using timestamps', () => {
+      expect(DateUtils.isSameMonth(1673950085000, 1674122885000)).toBe(true);
+    });
+
+    it('should return false for different months using Date objects', () => {
+      expect(DateUtils.isSameMonth(new Date('2023-12-27').getTime(), new Date('2023-11-27').getTime())).toBe(false);
+    });
+
+    it('should return false for different years using Date objects', () => {
+      expect(DateUtils.isSameMonth(new Date('2023-12-27').getTime(), new Date('2022-12-27').getTime())).toBe(false);
+    });
+
+    it('should return false for different months using timestamps', () => {
+      expect(DateUtils.isSameMonth(1673949947000, 1676628347000)).toBe(false);
+    });
+
+    it('should return true for different years using timestamps', () => {
+      expect(DateUtils.isSameMonth(1673949947000, 1705485947000)).toBe(false);
     });
   });
 
