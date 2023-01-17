@@ -24,7 +24,7 @@ const trackHeight = 6;
 const thumbSize = 24;
 
 const SliderNew = (props: Props) => {
-  // Missing props, ui, custom layout calcs, orientation change, RTL + disable RTL, Accessibility
+  // negative values, Missing props, ui, custom layout calcs, orientation change, RTL + disable RTL, Accessibility
   const {
     forwardedRef,
     useRange,
@@ -61,14 +61,14 @@ const SliderNew = (props: Props) => {
   const getXForValue = (value: number, trackWidth: number) => {
     const range = maximumValue - minimumValue;
     const relativeValue = minimumValue - value;
-    const v = minimumValue < 0 ? Math.abs(relativeValue) : value - minimumValue; // for negatives
+    const v = minimumValue < 0 ? Math.abs(relativeValue) : value - minimumValue; // for negative values
     const ratio = v / range;
-    const x = ratio * (trackWidth - thumbCenter);
+    const x = ratio * trackWidth;
     return x;
   };
 
   const getValueForX = (x: number) => {
-    const ratio = x / (trackWidth.value - thumbCenter);
+    const ratio = x / trackWidth.value;
     const range = maximumValue - minimumValue;
 
     if (shouldBounceToStep) {
@@ -217,13 +217,14 @@ const SliderNew = (props: Props) => {
       onSeekStart?.();
 
       const newX = start.value.x + e.translationX;
-      if (newX < startGreen.value.x - rangeGap && newX > 0) {
+      if (newX <= startGreen.value.x - rangeGap && newX >= 0) {
+        console.warn('gestureBlue: ', newX);
         offset.value = {
           x: newX,
           y: 0
         };
         
-        activeTrackWidth.value = (useRange ? startGreen.value.x - offset.value.x : newX);
+        activeTrackWidth.value = (useRange ? startGreen.value.x - newX : newX);
         
         runOnJS(onChange)(useRange ? {min: newX, max: startGreen.value.x} : newX);
       }
@@ -257,7 +258,8 @@ const SliderNew = (props: Props) => {
       onSeekStart?.();
 
       const newX = startGreen.value.x + e.translationX;
-      if (newX > start.value.x + rangeGap && newX < trackWidth.value) {
+      console.warn('gestureGreen: ', newX);
+      if (newX >= start.value.x + rangeGap && newX <= trackWidth.value) {
         offsetGreen.value = {
           x: newX,
           y: 0
@@ -301,11 +303,11 @@ const SliderNew = (props: Props) => {
         transform: [
           {translateX: offset.value.x}
         ],
-        width: activeTrackWidth.value + thumbCenter
+        width: activeTrackWidth.value
       };
     } else {
       return {
-        width: activeTrackWidth.value + thumbCenter
+        width: activeTrackWidth.value
       };
     }
   });
