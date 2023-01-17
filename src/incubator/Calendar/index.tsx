@@ -44,7 +44,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       selectedDate: current,
       setDate,
       showWeeksNumbers: true,
-      updateSource: lastUpdateSource.value
+      updateSource: lastUpdateSource
     };
   }, []);
 
