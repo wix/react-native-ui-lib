@@ -22,6 +22,7 @@ enum ThumbType {
 }
 const trackHeight = 6;
 const thumbSize = 24;
+const innerThumbPadding = 12;
 
 const SliderNew = (props: Props) => {
   // negative values, Missing props, ui, custom layout calcs, orientation change, RTL + disable RTL, Accessibility
@@ -327,7 +328,9 @@ const SliderNew = (props: Props) => {
             styles.thumb,
             animatedStylesGreen
           ]}
-        />
+        >
+          <View style={styles.innerThumb}/>
+        </View>
       </GestureDetector>
     );
   };
@@ -341,7 +344,9 @@ const SliderNew = (props: Props) => {
             styles.thumb,
             animatedStylesBlue
           ]}
-        />
+        >
+          <View style={styles.innerThumb}/>
+        </View>
       </GestureDetector>
     );
   };
@@ -384,13 +389,22 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     top: -(thumbSize - trackHeight) / 2,
     height: thumbSize,
-    backgroundColor: Colors.transparent,
-    borderWidth: 1
+    backgroundColor: Colors.transparent
   },
   thumb: {
     position: 'absolute',
     width: thumbSize,
     height: thumbSize,
-    top: -(thumbSize - trackHeight) / 2
+    top: -(thumbSize - trackHeight) / 2,
+    borderRadius: thumbSize / 2
+  },
+  innerThumb: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: innerThumbPadding / 2,
+    width: thumbSize - innerThumbPadding,
+    height: thumbSize - innerThumbPadding,
+    borderRadius: (thumbSize - 4) / 2,
+    backgroundColor: Colors.white
   }
 });
