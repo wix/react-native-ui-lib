@@ -6,10 +6,10 @@ import {BorderRadiuses} from 'style';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {HOUR_TO_MS} from './helpers/DateUtils';
-import {InternalEvent, Event, DateSectionHeader, AgendaProps, UpdateSource} from './types';
+import {InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
-function Agenda(props: AgendaProps) {
+function Agenda() {
   const {data, selectedDate, setDate} = useContext(CalendarContext);
   const flashList = useRef<FlashList<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
@@ -51,7 +51,7 @@ function Agenda(props: AgendaProps) {
     );
   }, []);
 
-  const renderItem = useCallback(({item, index}: {item: InternalEvent; index: number}) => {
+  const renderItem = useCallback(({item}: {item: InternalEvent; index: number}) => {
     switch (item.type) {
       case 'Event':
         return renderEvent(item);

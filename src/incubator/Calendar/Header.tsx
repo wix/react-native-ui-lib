@@ -36,13 +36,8 @@ const Header = (props: HeaderProps) => {
   });
 
   const renderTitle = () => {
-    return (
-      <AnimatedTextInput 
-        {...{animatedProps}}
-        editable={false}
-        style={styles.title}
-      />
-    );
+    // @ts-expect-error
+    return <AnimatedTextInput {...{animatedProps}} editable={false} style={styles.title}/>;
   };
 
   const renderArrow = (label: string, onPress: () => void) => {
@@ -66,12 +61,9 @@ const Header = (props: HeaderProps) => {
   return (
     <View style={styles.container}>
       {renderNavigation()}
-      <WeekDaysNames 
+      <WeekDaysNames
         format={DayNamesFormat.LONG_ABBREVIATION}
-        containerStyle={[
-          styles.weekDaysNames,
-          showWeeksNumbers && {marginLeft: WEEK_NUMBER_WIDTH}
-        ]}
+        containerStyle={[styles.weekDaysNames, showWeeksNumbers && {marginLeft: WEEK_NUMBER_WIDTH}]}
       />
     </View>
   );
@@ -80,8 +72,7 @@ const Header = (props: HeaderProps) => {
 export default Header;
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
   navigation: {
     marginHorizontal: 10
   },
