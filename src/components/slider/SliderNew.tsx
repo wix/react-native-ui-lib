@@ -216,9 +216,14 @@ const SliderNew = (props: Props) => {
     .onUpdate((e) => {
       onSeekStart?.();
 
-      const newX = start.value.x + e.translationX;
-      if (newX <= startGreen.value.x - rangeGap && newX >= 0) {
-        console.warn('gestureBlue: ', newX);
+      let newX = start.value.x + e.translationX;
+      if (newX < 0) { // bottom edge
+        newX = 0;
+      } else if (!useRange && newX > trackWidth.value) { // top edge
+        newX = trackWidth.value;
+      }
+      if (newX <= startGreen.value.x - rangeGap && newX >= 0) { // range
+        // console.warn('gestureBlue: ', newX, startGreen.value.x - rangeGap);
         offset.value = {
           x: newX,
           y: 0
@@ -257,9 +262,12 @@ const SliderNew = (props: Props) => {
     .onUpdate((e) => {
       onSeekStart?.();
 
-      const newX = startGreen.value.x + e.translationX;
-      console.warn('gestureGreen: ', newX);
-      if (newX >= start.value.x + rangeGap && newX <= trackWidth.value) {
+      let newX = startGreen.value.x + e.translationX;
+      if (newX > trackWidth.value) { // top edge
+        newX = trackWidth.value;
+      }
+      if (newX >= start.value.x + rangeGap && newX <= trackWidth.value) { // range
+        // console.warn('gestureGreen: ', newX, start.value.x + rangeGap, trackWidth.value);
         offsetGreen.value = {
           x: newX,
           y: 0
