@@ -104,7 +104,7 @@ const Slider = (props: Props) => {
     if (minimumValue > maximumValue || useRange && initialMinimumValue > initialMaximumValue) {
       console.error('Your passed values are invalid. Please check if minimum values are not higher than maximum values');
     }
-    if (value && !inRange(value, minimumValue, maximumValue)) {
+    if (value !== undefined && !inRange(value, minimumValue, maximumValue)) {
       console.error('Your passed value is invalid. Please check that it is in range of the minimum and maximum values');
     }
     if (useRange) {
@@ -243,7 +243,6 @@ const Slider = (props: Props) => {
       onSeekStart?.();
 
       let newX = startBlue.value.x + e.translationX * rtlFix;
-      // let newX = startBlue.value.x - e.translationX;
       if (newX < 0) { // bottom edge
         newX = 0;
       } else if (!useRange && newX > trackWidth.value) { // top edge
