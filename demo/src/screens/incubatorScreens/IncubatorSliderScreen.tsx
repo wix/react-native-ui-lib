@@ -8,16 +8,20 @@ const MIN = 0;
 const MAX = 100;
 
 const IncubatorSliderScreen = () => {
-  const [sliderValue, setSliderValue] = useState(VALUE);
+  const [sliderValue, setSliderValue] = useState(0);
+  const [stepSliderValue, setStepSliderValue] = useState(VALUE);
   const [negativeSliderValue, setNegativeSliderValue] = useState(NEGATIVE_VALUE);
   const [sliderMinValue, setSliderMinValue] = useState(MIN);
   const [sliderMaxValue, setSliderMaxValue] = useState(MAX);
+  
   const slider = useRef<typeof Incubator.Slider>();
+  const stepSlider = useRef<typeof Incubator.Slider>();
   const negativeSlider = useRef<typeof Incubator.Slider>();
   const rangeSlider = useRef<typeof Incubator.Slider>();
 
-  const resetSlider = () => {
+  const resetSliders = () => {
     slider.current?.reset();
+    stepSlider.current?.reset();
     rangeSlider.current?.reset();
     negativeSlider.current?.reset();
   };
@@ -25,6 +29,11 @@ const IncubatorSliderScreen = () => {
   const onValueChange = (value: number) => {
     // console.warn('onValueChange: ', value);
     setSliderValue(value);
+  };
+
+  const onStepValueChange = (value: number) => {
+    // console.warn('onStepValueChange: ', value);
+    setStepSliderValue(value);
   };
 
   const onNegativeValueChange = (value: number) => {
@@ -58,20 +67,30 @@ const IncubatorSliderScreen = () => {
   return (
     <View bg-grey80 flex padding-20>
       <Text h1>Slider</Text>
-      <Button link label="Reset" onPress={resetSlider}/>
+      <Button link label="Reset" onPress={resetSliders}/>
 
       <Text $textDefault text70BO marginV-15>
         Reanimated Slider
       </Text>
-      
+
       <View marginT-40>
-        <Text marginB-10>Default Slider range 20 to 100 step 10</Text>
+        <Text marginB-10>Default Slider values 0 to 1</Text>
         {renderValuesBox(sliderValue)}
         <Incubator.Slider
           ref={slider}
           onValueChange={onValueChange}
-          value={VALUE}
-          minimumValue={20}
+          // disableRTL={forceLTR}
+        />
+      </View>
+      
+      <View marginT-40>
+        <Text marginB-10>Default Slider values 0 to 100 step 10</Text>
+        {renderValuesBox(stepSliderValue)}
+        <Incubator.Slider
+          ref={stepSlider}
+          onValueChange={onStepValueChange}
+          value={20}
+          minimumValue={0}
           maximumValue={100}
           step={10}
           // disableRTL={forceLTR}
@@ -79,21 +98,21 @@ const IncubatorSliderScreen = () => {
       </View>
 
       <View marginT-40>
-        <Text marginB-10>Default Slider range 0 to -100 step 10</Text>
+        <Text marginB-10>Default Slider values -20 to -100</Text>
         {renderValuesBox(negativeSliderValue)}
         <Incubator.Slider
           ref={negativeSlider}
           onValueChange={onNegativeValueChange}
-          value={NEGATIVE_VALUE}
+          value={-30}
           minimumValue={-100}
-          maximumValue={0}
-          step={10}
+          maximumValue={-20}
+          // step={10}
           // disableRTL={forceLTR}
         />
       </View>
 
       <View margin-40>
-        <Text marginB-10>Range Slider range 0 to 100</Text>
+        <Text marginB-10>Range Slider values 0 to 100</Text>
         {renderValuesBox(sliderMinValue, sliderMaxValue)}
         <Incubator.Slider
           ref={rangeSlider}
