@@ -39,7 +39,8 @@ const Slider = (props: Props) => {
     step = 0,
     onSeekStart,
     onSeekEnd,
-    useGap
+    useGap,
+    disableRTL
   } = props;
 
   useImperativeHandle(forwardedRef, () => ({
@@ -80,6 +81,7 @@ const Slider = (props: Props) => {
   };
 
   const rtlFix = Constants.isRTL ? -1 : 1;
+  const shouldDisableRTL = Constants.isRTL && disableRTL;
 
   const setPositions = (trackWidth: number) => {
     validateValues();
@@ -96,6 +98,7 @@ const Slider = (props: Props) => {
         x: trackWidth,
         y: 0
       };
+      
       updateBlue(getXForValue(value, trackWidth));
     }
   };
@@ -123,8 +126,8 @@ const Slider = (props: Props) => {
 
   const onChange = (value: number | {min: number, max: number}) => {
     if (useRange && !isNumber(value)) {
-      const min = value.min;
-      const max = value.max;
+      const min = shouldDisableRTL ? value.max : value.min;
+      const max = shouldDisableRTL ? value.min : value.max;
       onRangeChange?.({min: getValueForX(min), max: getValueForX(max)});
     } else if (isNumber(value)) {
       const val = getValueForX(value);
@@ -242,7 +245,7 @@ const Slider = (props: Props) => {
     .onUpdate((e) => {
       onSeekStart?.();
 
-      let newX = startBlue.value.x + e.translationX * rtlFix;
+      let newX = startBlue.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
       if (newX < 0) { // bottom edge
         newX = 0;
       } else if (!useRange && newX > trackWidth.value) { // top edge
@@ -292,7 +295,7 @@ const Slider = (props: Props) => {
     .onUpdate((e) => {
       onSeekStart?.();
 
-      let newX = startGreen.value.x + e.translationX * rtlFix;
+      let newX = startGreen.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
       if (newX > trackWidth.value) { // top edge
         newX = trackWidth.value;
       }
@@ -390,7 +393,7 @@ const Slider = (props: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={shouldDisableRTL && styles.disableRTL}>
       <View style={styles.bgTrack} onLayout={onTrackLayout}/>
       <View
         reanimated 
@@ -410,8 +413,8 @@ const Slider = (props: Props) => {
 export default forwardRef<SliderProps, Statics>(Slider);
 
 const styles = StyleSheet.create({
-  container: {
-    // transform: [{scaleX: -1}]
+  disableRTL: {
+    transform: [{scaleX: -1}]
   },
   bgTrack: {
     backgroundColor: Colors.$backgroundDisabled,
