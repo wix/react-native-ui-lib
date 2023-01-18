@@ -1,7 +1,6 @@
 import isNumber from 'lodash/isNumber';
 import React, {useImperativeHandle, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import View from '../../components/view';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {
   useSharedValue,
@@ -10,8 +9,9 @@ import {
   runOnJS,
   interpolate
 } from 'react-native-reanimated';
-import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {Colors, Spacings} from '../../style';
+import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
 
 type Props = SliderProps & ForwardRefInjectedProps;
@@ -78,6 +78,8 @@ const Slider = (props: Props) => {
       return Math.max(minimumValue, Math.min(maximumValue, ratio * range + minimumValue));
     }
   };
+
+  const rtlFix = Constants.isRTL ? -1 : 1;
 
   const setPositions = (trackWidth: number) => {
     validateValues();
@@ -183,7 +185,7 @@ const Slider = (props: Props) => {
   const animatedStylesBlue = useAnimatedStyle(() => {
     return {
       transform: [
-        {translateX: offsetBlue.value.x - thumbCenter},
+        {translateX: (offsetBlue.value.x - thumbCenter) * rtlFix},
         {scale: withSpring(isPressedBlue.value ? 1.3 : 1)}
       ],
       backgroundColor: isPressedBlue.value ? 'lightblue' : 'blue'
@@ -193,7 +195,7 @@ const Slider = (props: Props) => {
   const animatedStylesGreen = useAnimatedStyle(() => {
     return {
       transform: [
-        {translateX: offsetGreen.value.x - thumbCenter},
+        {translateX: (offsetGreen.value.x - thumbCenter) * rtlFix},
         {scale: withSpring(isPressedGreen.value ? 1.3 : 1)}
       ],
       backgroundColor: isPressedGreen.value ? 'lightgreen' : 'green'
@@ -238,7 +240,8 @@ const Slider = (props: Props) => {
     .onUpdate((e) => {
       onSeekStart?.();
 
-      let newX = startBlue.value.x + e.translationX;
+      let newX = startBlue.value.x + e.translationX * rtlFix;
+      // let newX = startBlue.value.x - e.translationX;
       if (newX < 0) { // bottom edge
         newX = 0;
       } else if (!useRange && newX > trackWidth.value) { // top edge
@@ -288,7 +291,7 @@ const Slider = (props: Props) => {
     .onUpdate((e) => {
       onSeekStart?.();
 
-      let newX = startGreen.value.x + e.translationX;
+      let newX = startGreen.value.x + e.translationX * rtlFix;
       if (newX > trackWidth.value) { // top edge
         newX = trackWidth.value;
       }
@@ -342,7 +345,7 @@ const Slider = (props: Props) => {
     if (useRange) {
       return {
         transform: [
-          {translateX: offsetBlue.value.x}
+          {translateX: offsetBlue.value.x * rtlFix}
         ],
         width: activeTrackWidth.value
       };
@@ -407,6 +410,7 @@ export default forwardRef<SliderProps, Statics>(Slider);
 
 const styles = StyleSheet.create({
   container: {
+    // transform: [{scaleX: -1}]
   },
   bgTrack: {
     backgroundColor: Colors.$backgroundDisabled,
