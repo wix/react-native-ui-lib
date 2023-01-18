@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import {Constants, View, Text, Button, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 
@@ -68,7 +68,7 @@ const IncubatorSliderScreen = () => {
   };
 
   return (
-    <View bg-grey80 flex padding-20>
+    <View flex>
       <View row spread>
         <Text h1>Slider</Text>
         <Button link label="Reset Sliders" onPress={resetSliders}/>
@@ -78,17 +78,18 @@ const IncubatorSliderScreen = () => {
       </View>
 
       <View marginT-20>
-        <Text marginB-10 text70BL>Default Slider values 0 to 1</Text>
+        <Text margin-10 text70BL>Default Slider values 0 to 1</Text>
         {renderValuesBox(sliderValue)}
         <Incubator.Slider
           ref={slider}
           onValueChange={onValueChange}
+          containerStyle={styles.container}
           disableRTL={disableRTL}
         />
       </View>
       
       <View marginT-40>
-        <Text marginB-10 text70BL>Values 0 to 100 initial 20 with step 10</Text>
+        <Text margin-10 text70BL>Values 0 to 100 initial 20 with step 10</Text>
         {renderValuesBox(stepSliderValue)}
         <Incubator.Slider
           ref={stepSlider}
@@ -97,12 +98,14 @@ const IncubatorSliderScreen = () => {
           minimumValue={0}
           maximumValue={100}
           step={10}
+          containerStyle={styles.container}
+          trackStyle={styles.track}
           disableRTL={disableRTL}
         />
       </View>
 
       <View marginT-40>
-        <Text marginB-10 text70BL>Negative values -20 to -100 initial -30</Text>
+        <Text margin-10 text70BL>Negative values -20 to -100 initial -30</Text>
         {renderValuesBox(negativeSliderValue)}
         <Incubator.Slider
           ref={negativeSlider}
@@ -111,25 +114,28 @@ const IncubatorSliderScreen = () => {
           minimumValue={-100}
           maximumValue={-20}
           // step={10}
+          containerStyle={styles.container}
           disableRTL={disableRTL}
         />
       </View>
 
       <View marginT-40>
-        <Text marginB-10 text70BL>Range Slider values 0 to 100</Text>
-        {renderValuesBox(sliderMinValue, sliderMaxValue)}
-        <Incubator.Slider
-          ref={rangeSlider}
-          useRange
-          useGap
-          onRangeChange={onRangeChange}
-          minimumValue={MIN}
-          maximumValue={MAX}
-          initialMinimumValue={10}
-          initialMaximumValue={70}
-          // step={1}
-          disableRTL={disableRTL}
-        />
+        <Text margin-10 text70BL>Range Slider values 0 to 100</Text>
+        <View marginH-20>
+          {renderValuesBox(sliderMinValue, sliderMaxValue)}
+          <Incubator.Slider
+            ref={rangeSlider}
+            useRange
+            useGap
+            onRangeChange={onRangeChange}
+            minimumValue={MIN}
+            maximumValue={MAX}
+            initialMinimumValue={10}
+            initialMaximumValue={70}
+            // step={1}
+            disableRTL={disableRTL}
+          />
+        </View>
       </View>
     </View>
   );
@@ -139,5 +145,9 @@ export default IncubatorSliderScreen;
 
 const styles = StyleSheet.create({
   container: {
+    marginHorizontal: 20
+  },
+  track: {
+    borderRadius: 0
   }
 });

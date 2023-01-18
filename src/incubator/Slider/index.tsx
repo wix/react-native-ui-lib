@@ -40,7 +40,9 @@ const Slider = (props: Props) => {
     onSeekStart,
     onSeekEnd,
     useGap,
-    disableRTL
+    disableRTL,
+    containerStyle,
+    trackStyle
   } = props;
 
   useImperativeHandle(forwardedRef, () => ({
@@ -393,12 +395,14 @@ const Slider = (props: Props) => {
   };
 
   return (
-    <View style={shouldDisableRTL && styles.disableRTL}>
-      <View style={styles.bgTrack} onLayout={onTrackLayout}/>
+    <View style={[containerStyle, shouldDisableRTL && styles.disableRTL]}>
+      <View style={[styles.track, trackStyle, styles.bgTrack]} onLayout={onTrackLayout}/>
       <View
         reanimated 
         style={[
           styles.track,
+          trackStyle,
+          styles.activeTrack,
           trackAnimatedStyles
         ]}
       />
@@ -416,16 +420,16 @@ const styles = StyleSheet.create({
   disableRTL: {
     transform: [{scaleX: -1}]
   },
-  bgTrack: {
-    backgroundColor: Colors.$backgroundDisabled,
+  track: {
     height: trackHeight,
     borderRadius: trackHeight / 2
   },
-  track: {
+  bgTrack: {
+    backgroundColor: Colors.$backgroundDisabled
+  },
+  activeTrack: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: Colors.$backgroundPrimaryHeavy,
-    height: trackHeight,
-    borderRadius: trackHeight / 2
+    backgroundColor: Colors.$backgroundPrimaryHeavy
   },
   touchArea: {
     ...StyleSheet.absoluteFillObject,
