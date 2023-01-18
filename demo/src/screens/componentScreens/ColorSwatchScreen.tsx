@@ -63,7 +63,11 @@ export default class ColorSwatchScreen extends Component {
           <View row>
             <ColorSwatch selected={selected} onPress={this.onPress}/>
             <View>
-              <ColorSwatch selected color={Colors.$backgroundMajorLight}/>
+              <ColorSwatch unavilable color={Colors.$backgroundMajorLight}/>
+              <Text>Disabled</Text>
+            </View>
+            <View>
+              <ColorSwatch unavilable color={Colors.yellow10}/>
               <Text>Disabled</Text>
             </View>
           </View>

@@ -22,6 +22,10 @@ interface Props {
    */
   selected?: boolean;
   /**
+   *
+   */
+  unavilable?: boolean;
+  /**
    * Is first render should be animated
    */
   animated?: boolean;
@@ -132,8 +136,10 @@ class ColorSwatch extends PureComponent<Props> {
     this.layout = event.nativeEvent.layout;
   };
 
+  diagonalLine = () => <View flex bg-black style={{width: 2, transform: [{rotate: '45deg'}]}}/>;
+
   renderContent() {
-    const {style, color, onPress, ...others} = this.props;
+    const {style, color, onPress, unavilable, ...others} = this.props;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
@@ -154,14 +160,18 @@ class ColorSwatch extends PureComponent<Props> {
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
         )}
-        <Animated.Image
-          source={Assets.icons.check}
-          style={{
-            tintColor,
-            opacity: isSelected,
-            transform: [{scaleX: isSelected}, {scaleY: isSelected}]
-          }}
-        />
+        {unavilable ? (
+          <View style={[this.styles.box, {backgroundColor: tintColor}]}/>
+        ) : (
+          <Animated.Image
+            source={Assets.icons.check}
+            style={{
+              tintColor,
+              opacity: isSelected,
+              transform: [{scaleX: isSelected}, {scaleY: isSelected}]
+            }}
+          />
+        )}
       </Container>
     );
   }
@@ -210,6 +220,12 @@ function createStyles({color = Colors.grey30}) {
       borderWidth: 1,
       borderRadius: BorderRadiuses.br100,
       borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
+    },
+    box: {
+      height: '100%',
+      width: 3,
+      transform: [{rotate: '45deg'}],
+      opacity: 0.7
     }
   });
 }
