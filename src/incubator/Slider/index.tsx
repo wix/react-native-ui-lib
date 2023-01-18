@@ -140,7 +140,9 @@ const Slider = (props: Props) => {
 
   const onTrackPress = useCallback((event) => {
     let locationX = Math.min(event.nativeEvent.locationX, trackWidth.value);
-    
+    if (Constants.isRTL) {
+      locationX = trackWidth.value - locationX;
+    }
     if (shouldBounceToStep) {
       locationX = getStepComputedX(locationX);
     }
