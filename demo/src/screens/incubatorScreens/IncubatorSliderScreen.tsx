@@ -19,6 +19,7 @@ const IncubatorSliderScreen = () => {
   const resetSlider = () => {
     slider.current?.reset();
     rangeSlider.current?.reset();
+    negativeSlider.current?.reset();
   };
 
   const onValueChange = (value: number) => {
@@ -64,7 +65,7 @@ const IncubatorSliderScreen = () => {
       </Text>
       
       <View marginT-40>
-        <Text marginB-10>Default Slider range 20 to 100</Text>
+        <Text marginB-10>Default Slider range 20 to 100 step 10</Text>
         {renderValuesBox(sliderValue)}
         <Incubator.Slider
           ref={slider}
@@ -78,7 +79,7 @@ const IncubatorSliderScreen = () => {
       </View>
 
       <View marginT-40>
-        <Text marginB-10>Default Slider range 0 to -100</Text>
+        <Text marginB-10>Default Slider range 0 to -100 step 10</Text>
         {renderValuesBox(negativeSliderValue)}
         <Incubator.Slider
           ref={negativeSlider}
