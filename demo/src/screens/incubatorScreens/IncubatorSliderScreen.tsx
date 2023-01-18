@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, View, Text, Button, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Colors, View, Text, Button, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 const VALUE = 20;
@@ -68,16 +68,16 @@ const IncubatorSliderScreen = () => {
   };
 
   return (
-    <View flex>
-      <View row spread>
+    <ScrollView>
+      <View row spread margin-20>
         <Text h1>Slider</Text>
         <Button link label="Reset Sliders" onPress={resetSliders}/>
       </View>
-      <View marginT-20>
+      <View marginL-20>
         {Constants.isRTL && renderBooleanOption('Disable RTL', 'disableRTL', {spread: false, state: disableRTL, setState: setDisableRTL})}
       </View>
 
-      <View marginT-20>
+      <View>
         <Text margin-10 text70BL>Default Slider values 0 to 1</Text>
         {renderValuesBox(sliderValue)}
         <Incubator.Slider
@@ -100,6 +100,8 @@ const IncubatorSliderScreen = () => {
           step={10}
           containerStyle={styles.container}
           trackStyle={styles.track}
+          minimumTrackTintColor={Colors.red30}
+          maximumTrackTintColor={Colors.grey30}
           disableRTL={disableRTL}
         />
       </View>
@@ -137,7 +139,7 @@ const IncubatorSliderScreen = () => {
           />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

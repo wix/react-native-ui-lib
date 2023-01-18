@@ -25,7 +25,7 @@ const thumbSize = 24;
 const innerThumbPadding = 12;
 
 const Slider = (props: Props) => {
-  // negative values, Missing props, ui, custom layout calcs, orientation change, RTL + disable RTL, Accessibility
+  // Missing props, custom layout calcs, orientation change, Accessibility
   const {
     forwardedRef,
     useRange,
@@ -42,7 +42,9 @@ const Slider = (props: Props) => {
     useGap,
     disableRTL,
     containerStyle,
-    trackStyle
+    trackStyle,
+    minimumTrackTintColor,
+    maximumTrackTintColor
   } = props;
 
   useImperativeHandle(forwardedRef, () => ({
@@ -396,13 +398,21 @@ const Slider = (props: Props) => {
 
   return (
     <View style={[containerStyle, shouldDisableRTL && styles.disableRTL]}>
-      <View style={[styles.track, trackStyle, styles.bgTrack]} onLayout={onTrackLayout}/>
+      <View 
+        style={[
+          styles.track,
+          trackStyle,
+          {backgroundColor: maximumTrackTintColor || Colors.$backgroundDisabled}
+        ]} 
+        onLayout={onTrackLayout}
+      />
       <View
         reanimated 
         style={[
           styles.track,
           trackStyle,
           styles.activeTrack,
+          {backgroundColor: minimumTrackTintColor || Colors.$backgroundPrimaryHeavy},
           trackAnimatedStyles
         ]}
       />
@@ -424,12 +434,8 @@ const styles = StyleSheet.create({
     height: trackHeight,
     borderRadius: trackHeight / 2
   },
-  bgTrack: {
-    backgroundColor: Colors.$backgroundDisabled
-  },
   activeTrack: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: Colors.$backgroundPrimaryHeavy
+    ...StyleSheet.absoluteFillObject
   },
   touchArea: {
     ...StyleSheet.absoluteFillObject,
