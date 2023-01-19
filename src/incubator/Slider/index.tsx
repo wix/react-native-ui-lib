@@ -84,14 +84,17 @@ const Slider = (props: Props) => {
   };
 
   const getValueForX = (x: number) => {
-    const ratio = x / trackWidth.value;
-    const range = maximumValue - minimumValue;
-
-    if (shouldBounceToStep) {
-      return Math.max(minimumValue, Math.min(maximumValue, minimumValue + Math.round((ratio * range) / step) * step));
-    } else {
-      return Math.max(minimumValue, Math.min(maximumValue, ratio * range + minimumValue));
+    if (trackWidth.value) {
+      const ratio = x / trackWidth.value;
+      const range = maximumValue - minimumValue;
+  
+      if (shouldBounceToStep) {
+        return Math.max(minimumValue, Math.min(maximumValue, minimumValue + Math.round((ratio * range) / step) * step));
+      } else {
+        return Math.max(minimumValue, Math.min(maximumValue, ratio * range + minimumValue));
+      }
     }
+    return 0;
   };
 
   const rtlFix = Constants.isRTL ? -1 : 1;
@@ -99,7 +102,7 @@ const Slider = (props: Props) => {
 
   const setPositions = (trackWidth: number) => {
     validateValues();
-    
+
     if (useRange) {
       const bluePosition = getXForValue(initialMinimumValue, trackWidth);
       const greenPosition = getXForValue(initialMaximumValue, trackWidth);
