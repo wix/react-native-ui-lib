@@ -26,12 +26,13 @@ const thumbSize = 24;
 const innerThumbPadding = 12;
 
 const Slider = (props: Props) => {
-  // custom style props + custom layout calcs
+  // custom style props + custom layout calcs, migrate GradientSlider to use it
   const {
     forwardedRef,
     useRange,
     onValueChange,
     onRangeChange,
+    onReset,
     minimumValue = 0,
     maximumValue = 1,
     value = minimumValue,
@@ -64,7 +65,7 @@ const Slider = (props: Props) => {
   const reset = () => {
     activeThumb.value = ThumbType.BLUE;
     setPositions(trackWidth.value);
-    props.onReset?.();
+    onReset?.();
   };
 
   const thumbCenter = thumbSize / 2;
