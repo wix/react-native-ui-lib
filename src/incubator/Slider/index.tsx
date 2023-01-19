@@ -1,4 +1,5 @@
 import isNumber from 'lodash/isNumber';
+import isFunction from 'lodash/isFunction';
 import React, {useImperativeHandle, useCallback, useMemo} from 'react';
 import {StyleSheet, AccessibilityRole} from 'react-native';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
@@ -26,7 +27,7 @@ const thumbSize = 24;
 const innerThumbPadding = 12;
 
 const Slider = (props: Props) => {
-  // custom style props + custom layout calcs, migrate GradientSlider to use it
+  // custom style props, migrate GradientSlider to use it
   const {
     forwardedRef,
     useRange,
@@ -47,7 +48,7 @@ const Slider = (props: Props) => {
     trackStyle,
     minimumTrackTintColor,
     maximumTrackTintColor,
-    // renderTrack,
+    renderTrack,
     // thumbStyle,
     // activeThumbStyle,
     thumbTintColor,
@@ -67,6 +68,26 @@ const Slider = (props: Props) => {
     setPositions(trackWidth.value);
     onReset?.();
   };
+
+  const accessibilityProps = useMemo(() => {
+    if (accessible) {
+      return {
+        accessibilityLabel: 'Slider',
+        accessible: true,
+        accessibilityRole: 'adjustable' as AccessibilityRole,
+        accessibilityStates: disabled ? ['disabled'] : [],
+        accessibilityActions: [
+          {name: 'increment', label: 'increment'},
+          {name: 'decrement', label: 'decrement'}
+        ],
+        ...extractAccessibilityProps(props)
+      };
+    }
+  }, [accessible, disabled, props]);
+
+  const rtlFix = Constants.isRTL ? -1 : 1;
+  const shouldDisableRTL = Constants.isRTL && disableRTL;
+  const shouldRenderCustomTrack = isFunction(renderTrack);
 
   const thumbCenter = thumbSize / 2;
   const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize : 0;
@@ -97,9 +118,6 @@ const Slider = (props: Props) => {
     }
     return 0;
   };
-
-  const rtlFix = Constants.isRTL ? -1 : 1;
-  const shouldDisableRTL = Constants.isRTL && disableRTL;
 
   const setPositions = (trackWidth: number) => {
     validateValues();
@@ -397,6 +415,8 @@ const Slider = (props: Props) => {
     }
   });
 
+  /** renders */
+
   const renderInnerThumb = () => {
     return (
       <View 
@@ -444,28 +464,19 @@ const Slider = (props: Props) => {
     );
   };
 
-  const accessibilityProps = useMemo(() => {
-    if (accessible) {
-      return {
-        accessibilityLabel: 'Slider',
-        accessible: true,
-        accessibilityRole: 'adjustable' as AccessibilityRole,
-        accessibilityStates: disabled ? ['disabled'] : [],
-        accessibilityActions: [
-          {name: 'increment', label: 'increment'},
-          {name: 'decrement', label: 'decrement'}
-        ],
-        ...extractAccessibilityProps(props)
-      };
-    }
-  }, [accessible, disabled, props]);
+  const renderCustomTrack = () => {
+    return (
+      <View
+        style={[styles.track, trackStyle, {backgroundColor: maximumTrackTintColor}]}
+        onLayout={onTrackLayout}
+      >
+        {renderTrack?.()}
+      </View>
+    );
+  };
 
-  return (
-    <View 
-      style={[containerStyle, shouldDisableRTL && styles.disableRTL]} 
-      testID={testID}
-      {...accessibilityProps}
-    >
+  const renderBackgroundTrack = () => {
+    return (
       <View 
         style={[
           styles.track,
@@ -477,6 +488,11 @@ const Slider = (props: Props) => {
         ]} 
         onLayout={onTrackLayout}
       />
+    );
+  };
+
+  const renderActiveTrack = () => {
+    return (
       <View
         reanimated 
         style={[
@@ -490,6 +506,17 @@ const Slider = (props: Props) => {
           trackAnimatedStyles
         ]}
       />
+    );
+  };
+
+  return (
+    <View 
+      style={[containerStyle, shouldDisableRTL && styles.disableRTL]} 
+      testID={testID}
+      {...accessibilityProps}
+    >
+      {shouldRenderCustomTrack ? renderCustomTrack() : renderBackgroundTrack()}
+      {!shouldRenderCustomTrack && renderActiveTrack()}
       <View style={styles.touchArea} onTouchEnd={onTrackPress}/>
       {renderBlueThumb()}
       {useRange && renderGreenThumb()}

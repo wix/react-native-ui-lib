@@ -30,7 +30,7 @@ const IncubatorSliderScreen = () => {
   };
 
   const onValueChange = (value: number) => {
-    console.warn('onValueChange: ', value);
+    // console.warn('onValueChange: ', value);
     setSliderValue(value);
   };
 
