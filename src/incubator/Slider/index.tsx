@@ -19,8 +19,8 @@ import {SliderProps} from '../../components/slider';
 type Props = SliderProps & ForwardRefInjectedProps;
 
 enum ThumbType {
-  BLUE = 'blue',
-  GREEN = 'green'
+  DEFAULT = 'default',
+  RANGE = 'range'
 }
 const trackHeight = 6;
 const thumbSize = 24;
@@ -64,7 +64,7 @@ const Slider = (props: Props) => {
   }));
 
   const reset = () => {
-    activeThumb.value = ThumbType.BLUE;
+    activeThumb.value = ThumbType.DEFAULT;
     setPositions(trackWidth.value);
     onReset?.();
   };
@@ -123,20 +123,20 @@ const Slider = (props: Props) => {
     validateValues();
 
     if (useRange) {
-      const bluePosition = getXForValue(initialMinimumValue, trackWidth);
-      const greenPosition = getXForValue(initialMaximumValue, trackWidth);
+      const defaultThumbPosition = getXForValue(initialMinimumValue, trackWidth);
+      const rangeThumbPosition = getXForValue(initialMaximumValue, trackWidth);
       
-      activeTrackWidth.value = trackWidth - bluePosition - greenPosition;
+      activeTrackWidth.value = trackWidth - defaultThumbPosition - rangeThumbPosition;
       
-      updateBlue(bluePosition);
-      updateGreen(greenPosition);
+      updateDefaultThumb(defaultThumbPosition);
+      updateRangeThumb(rangeThumbPosition);
     } else {
-      startGreen.value = {
+      rangeThumbStart.value = {
         x: trackWidth,
         y: 0
       };
       
-      updateBlue(getXForValue(value, trackWidth));
+      updateDefaultThumb(getXForValue(value, trackWidth));
     }
   };
 
@@ -192,98 +192,98 @@ const Slider = (props: Props) => {
     }
 
     if (useRange) {
-      if (locationX === offsetBlue.value.x) {
-        activeThumb.value = ThumbType.GREEN;
-        updateGreen(locationX);
-      } else if (locationX === offsetGreen.value.x) {
-        activeThumb.value = ThumbType.BLUE;
-        updateBlue(locationX);
-      } else if (locationX > offsetGreen.value.x) {
-        activeThumb.value = ThumbType.GREEN;
-        updateGreen(locationX);
-      } else if (locationX < offsetBlue.value.x) {
-        activeThumb.value = ThumbType.BLUE;
-        updateBlue(locationX);
-      } else if (locationX > offsetBlue.value.x && locationX < offsetGreen.value.x) {
-        if (activeThumb.value === ThumbType.BLUE) {
-          updateBlue(locationX);
+      if (locationX === defaultThumbOffset.value.x) {
+        activeThumb.value = ThumbType.RANGE;
+        updateRangeThumb(locationX);
+      } else if (locationX === rangeThumbOffset.value.x) {
+        activeThumb.value = ThumbType.DEFAULT;
+        updateDefaultThumb(locationX);
+      } else if (locationX > rangeThumbOffset.value.x) {
+        activeThumb.value = ThumbType.RANGE;
+        updateRangeThumb(locationX);
+      } else if (locationX < defaultThumbOffset.value.x) {
+        activeThumb.value = ThumbType.DEFAULT;
+        updateDefaultThumb(locationX);
+      } else if (locationX > defaultThumbOffset.value.x && locationX < rangeThumbOffset.value.x) {
+        if (activeThumb.value === ThumbType.DEFAULT) {
+          updateDefaultThumb(locationX);
         } else {
-          updateGreen(locationX);
+          updateRangeThumb(locationX);
         }
       }
     } else {
-      updateBlue(locationX);
+      updateDefaultThumb(locationX);
     }
   }, []);
 
   /** gestures and animations */
 
-  const activeThumb = useSharedValue(ThumbType.BLUE);
+  const activeThumb = useSharedValue(ThumbType.DEFAULT);
 
-  const isPressedBlue = useSharedValue(false);
-  const offsetBlue = useSharedValue({x: 0, y: 0});
-  const startBlue = useSharedValue({x: 0, y: 0});
+  const isPressedDefault = useSharedValue(false);
+  const defaultThumbOffset = useSharedValue({x: 0, y: 0});
+  const defaultThumbStart = useSharedValue({x: 0, y: 0});
 
-  const isPressedGreen = useSharedValue(false);
-  const offsetGreen = useSharedValue({x: 0, y: 0});
-  const startGreen = useSharedValue({x: 0, y: 0});
+  const isPressedRange = useSharedValue(false);
+  const rangeThumbOffset = useSharedValue({x: 0, y: 0});
+  const rangeThumbStart = useSharedValue({x: 0, y: 0});
 
-  const animatedStylesBlue = useAnimatedStyle(() => {
+  const defaultThumbAnimatedStyles = useAnimatedStyle(() => {
     return {
       transform: [
-        {translateX: (offsetBlue.value.x - thumbCenter) * rtlFix},
-        {scale: withSpring(!disableActiveStyling && isPressedBlue.value ? 1.3 : 1)}
+        {translateX: (defaultThumbOffset.value.x - thumbCenter) * rtlFix},
+        {scale: withSpring(!disableActiveStyling && isPressedDefault.value ? 1.3 : 1)}
       ]
     };
   });
 
-  const animatedStylesGreen = useAnimatedStyle(() => {
+  const rangeThumbAnimatedStyles = useAnimatedStyle(() => {
     return {
       transform: [
-        {translateX: (offsetGreen.value.x - thumbCenter) * rtlFix},
-        {scale: withSpring(!disableActiveStyling && isPressedGreen.value ? 1.3 : 1)}
+        {translateX: (rangeThumbOffset.value.x - thumbCenter) * rtlFix},
+        {scale: withSpring(!disableActiveStyling && isPressedRange.value ? 1.3 : 1)}
       ]
     };
   });
 
-  const updateBlue = (x: number) => {
-    offsetBlue.value = {
+  const updateDefaultThumb = (x: number) => {
+    defaultThumbOffset.value = {
       x,
       y: 0
     };
-    startBlue.value = {
+    defaultThumbStart.value = {
       x,
       y: 0
     };
 
-    activeTrackWidth.value = Math.abs(useRange ? startGreen.value.x - x : x);
+    activeTrackWidth.value = Math.abs(useRange ? rangeThumbStart.value.x - x : x);
     
-    onChange(useRange ? {min: x, max: startGreen.value.x} : x);
+    onChange(useRange ? {min: x, max: rangeThumbStart.value.x} : x);
   };
 
-  const updateGreen = (x : number) => {
-    offsetGreen.value = {
+  const updateRangeThumb = (x : number) => {
+    rangeThumbOffset.value = {
       x,
       y: 0
     };
-    startGreen.value = {
+    rangeThumbStart.value = {
       x,
       y: 0
     };
     
-    activeTrackWidth.value = x - startBlue.value.x;
+    activeTrackWidth.value = x - defaultThumbStart.value.x;
     
-    onChange({min: startBlue.value.x, max: x});
+    onChange({min: defaultThumbStart.value.x, max: x});
   };
 
-  const gestureBlue = Gesture.Pan()
+  const defaultThumbGesture = Gesture.Pan()
     .onBegin(() => {
       if (disabled) {
         return;
       }
 
-      isPressedBlue.value = true;
-      activeThumb.value = ThumbType.BLUE;
+      isPressedDefault.value = true;
+      activeThumb.value = ThumbType.DEFAULT;
     })
     .onUpdate((e) => {
       if (disabled) {
@@ -292,36 +292,36 @@ const Slider = (props: Props) => {
 
       onSeekStart?.();
 
-      let newX = startBlue.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
+      let newX = defaultThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
       if (newX < 0) { // bottom edge
         newX = 0;
       } else if (!useRange && newX > trackWidth.value) { // top edge
         newX = trackWidth.value;
       }
-      if (newX <= startGreen.value.x - rangeGap && newX >= 0) { // range
-        offsetBlue.value = {
+      if (newX <= rangeThumbStart.value.x - rangeGap && newX >= 0) { // range
+        defaultThumbOffset.value = {
           x: newX,
           y: 0
         };
         
-        activeTrackWidth.value = (useRange ? startGreen.value.x - newX : newX);
+        activeTrackWidth.value = (useRange ? rangeThumbStart.value.x - newX : newX);
         
-        runOnJS(onChange)(useRange ? {min: newX, max: startGreen.value.x} : newX);
+        runOnJS(onChange)(useRange ? {min: newX, max: rangeThumbStart.value.x} : newX);
       }
     })
     .onEnd(() => {
       onSeekEnd?.();
 
-      startBlue.value = {
-        x: offsetBlue.value.x,
+      defaultThumbStart.value = {
+        x: defaultThumbOffset.value.x,
         y: 0
       };
     })
     .onFinalize(() => {
-      isPressedBlue.value = false;
+      isPressedDefault.value = false;
 
       if (shouldBounceToStep) {
-        const x = offsetBlue.value.x;
+        const x = defaultThumbOffset.value.x;
         
         const outputRange = [0, trackWidth.value];
         const inputRange = 
@@ -330,18 +330,18 @@ const Slider = (props: Props) => {
           interpolate(stepXValue.value, inputRange, outputRange);
         
         const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
-        runOnJS(updateBlue)(newX);
+        runOnJS(updateDefaultThumb)(newX);
       }
     });
 
-  const gestureGreen = Gesture.Pan()
+  const rangeThumbGesture = Gesture.Pan()
     .onBegin(() => {
       if (disabled) {
         return;
       }
 
-      isPressedGreen.value = true;
-      activeThumb.value = ThumbType.GREEN;
+      isPressedRange.value = true;
+      activeThumb.value = ThumbType.RANGE;
     })
     .onUpdate((e) => {
       if (disabled) {
@@ -350,34 +350,34 @@ const Slider = (props: Props) => {
 
       onSeekStart?.();
 
-      let newX = startGreen.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
+      let newX = rangeThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
       if (newX > trackWidth.value) { // top edge
         newX = trackWidth.value;
       }
-      if (newX >= startBlue.value.x + rangeGap && newX <= trackWidth.value) { // range
-        offsetGreen.value = {
+      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackWidth.value) { // range
+        rangeThumbOffset.value = {
           x: newX,
           y: 0
         };
 
-        activeTrackWidth.value = offsetGreen.value.x - startBlue.value.x;
+        activeTrackWidth.value = rangeThumbOffset.value.x - defaultThumbStart.value.x;
         
-        runOnJS(onChange)(useRange ? {min: startBlue.value.x, max: newX} : newX);
+        runOnJS(onChange)(useRange ? {min: defaultThumbStart.value.x, max: newX} : newX);
       }
     })
     .onEnd(() => {
       onSeekEnd?.();
 
-      startGreen.value = {
-        x: offsetGreen.value.x,
+      rangeThumbStart.value = {
+        x: rangeThumbOffset.value.x,
         y: 0
       };
     })
     .onFinalize(() => {
-      isPressedGreen.value = false;
+      isPressedRange.value = false;
 
       if (shouldBounceToStep) {
-        const x = offsetGreen.value.x;
+        const x = rangeThumbOffset.value.x;
         
         const outputRange = [0, trackWidth.value];
         const inputRange = 
@@ -387,7 +387,7 @@ const Slider = (props: Props) => {
 
         const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
         
-        runOnJS(updateGreen)(newX);
+        runOnJS(updateRangeThumb)(newX);
       }
     });
 
@@ -404,7 +404,7 @@ const Slider = (props: Props) => {
     if (useRange) {
       return {
         transform: [
-          {translateX: offsetBlue.value.x * rtlFix}
+          {translateX: defaultThumbOffset.value.x * rtlFix}
         ],
         width: activeTrackWidth.value
       };
@@ -428,15 +428,15 @@ const Slider = (props: Props) => {
     );
   };
 
-  const renderGreenThumb = () => {
+  const renderRangeThumb = () => {
     return (
-      <GestureDetector gesture={gestureGreen}>
+      <GestureDetector gesture={rangeThumbGesture}>
         <View 
           reanimated
           style={[
             styles.thumb,
             styles.thumbShadow,
-            animatedStylesGreen
+            rangeThumbAnimatedStyles
           ]}
           hitSlop={thumbHitSlop}
         >
@@ -446,15 +446,15 @@ const Slider = (props: Props) => {
     );
   };
 
-  const renderBlueThumb = () => {
+  const renderDefaultThumb = () => {
     return (
-      <GestureDetector gesture={gestureBlue}>
+      <GestureDetector gesture={defaultThumbGesture}>
         <View
           reanimated
           style={[
             styles.thumb,
             styles.thumbShadow,
-            animatedStylesBlue
+            defaultThumbAnimatedStyles
           ]}
           hitSlop={thumbHitSlop}
         >
@@ -518,8 +518,8 @@ const Slider = (props: Props) => {
       {shouldRenderCustomTrack ? renderCustomTrack() : renderBackgroundTrack()}
       {!shouldRenderCustomTrack && renderActiveTrack()}
       <View style={styles.touchArea} onTouchEnd={onTrackPress}/>
-      {renderBlueThumb()}
-      {useRange && renderGreenThumb()}
+      {renderDefaultThumb()}
+      {useRange && renderRangeThumb()}
     </View>
   );
 };
