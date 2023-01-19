@@ -163,6 +163,7 @@ const TextField = (props: InternalTextFieldProps) => {
               )}
               <Input
                 placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
+                value={fieldState.value}
                 {...others}
                 style={inputStyle}
                 onFocus={onFocus}
@@ -170,7 +171,6 @@ const TextField = (props: InternalTextFieldProps) => {
                 onChangeText={onChangeText}
                 placeholder={placeholder}
                 hint={hint}
-                value={fieldState.value}
               />
             </View>
           )}
