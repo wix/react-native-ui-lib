@@ -519,7 +519,7 @@ const styles = StyleSheet.create({
     height: thumbSize,
     top: -(thumbSize - trackHeight) / 2,
     borderRadius: thumbSize / 2,
-    backgroundColor: Colors.$backgroundElevated
+    backgroundColor: Colors.$backgroundElevatedLight
   },
   innerThumb: {
     position: 'absolute',
