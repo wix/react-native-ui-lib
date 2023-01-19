@@ -68,7 +68,7 @@ const IncubatorSliderScreen = () => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View row spread margin-20>
         <Text h1>Slider</Text>
         <Button link label="Reset Sliders" onPress={resetSliders}/>
@@ -87,9 +87,19 @@ const IncubatorSliderScreen = () => {
           disableRTL={disableRTL}
         />
       </View>
+
+      <View marginT-40>
+        <Text margin-10 text70BL>Disabled Slider</Text>
+        <Incubator.Slider
+          value={0.4}
+          containerStyle={styles.container}
+          disableRTL={disableRTL}
+          disabled
+        />
+      </View>
       
       <View marginT-40>
-        <Text margin-10 text70BL>Values 0 to 100 initial 20 with step 10</Text>
+        <Text margin-10 text70BL>Custom Slider</Text>
         {renderValuesBox(stepSliderValue)}
         <Incubator.Slider
           ref={stepSlider}
@@ -100,9 +110,11 @@ const IncubatorSliderScreen = () => {
           step={10}
           containerStyle={styles.container}
           trackStyle={styles.track}
-          minimumTrackTintColor={Colors.red30}
-          maximumTrackTintColor={Colors.grey30}
+          minimumTrackTintColor={Colors.blue30}
+          maximumTrackTintColor={Colors.blue70}
+          thumbTintColor={Colors.orange30}
           disableRTL={disableRTL}
+          disableActiveStyling
         />
       </View>
 

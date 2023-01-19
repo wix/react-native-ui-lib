@@ -1,6 +1,6 @@
 import isNumber from 'lodash/isNumber';
-import React, {useImperativeHandle, useCallback} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useImperativeHandle, useCallback, useMemo} from 'react';
+import {StyleSheet, AccessibilityRole} from 'react-native';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {
   useSharedValue,
@@ -10,6 +10,7 @@ import {
   interpolate
 } from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
+import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
@@ -25,7 +26,7 @@ const thumbSize = 24;
 const innerThumbPadding = 12;
 
 const Slider = (props: Props) => {
-  // Missing props, custom layout calcs, orientation change, Accessibility
+  // custom style props + custom layout calcs
   const {
     forwardedRef,
     useRange,
@@ -44,7 +45,16 @@ const Slider = (props: Props) => {
     containerStyle,
     trackStyle,
     minimumTrackTintColor,
-    maximumTrackTintColor
+    maximumTrackTintColor,
+    // renderTrack,
+    // thumbStyle,
+    // activeThumbStyle,
+    thumbTintColor,
+    thumbHitSlop,
+    disableActiveStyling,
+    disabled,
+    accessible,
+    testID
   } = props;
 
   useImperativeHandle(forwardedRef, () => ({
@@ -89,6 +99,7 @@ const Slider = (props: Props) => {
 
   const setPositions = (trackWidth: number) => {
     validateValues();
+    
     if (useRange) {
       const bluePosition = getXForValue(initialMinimumValue, trackWidth);
       const greenPosition = getXForValue(initialMaximumValue, trackWidth);
@@ -146,6 +157,10 @@ const Slider = (props: Props) => {
   }, []);
 
   const onTrackPress = useCallback((event) => {
+    if (disabled) {
+      return;
+    }
+
     let locationX = Math.min(event.nativeEvent.locationX, trackWidth.value);
     if (Constants.isRTL) {
       locationX = trackWidth.value - locationX;
@@ -195,9 +210,8 @@ const Slider = (props: Props) => {
     return {
       transform: [
         {translateX: (offsetBlue.value.x - thumbCenter) * rtlFix},
-        {scale: withSpring(isPressedBlue.value ? 1.3 : 1)}
-      ],
-      backgroundColor: isPressedBlue.value ? 'lightblue' : 'blue'
+        {scale: withSpring(!disableActiveStyling && isPressedBlue.value ? 1.3 : 1)}
+      ]
     };
   });
 
@@ -205,9 +219,8 @@ const Slider = (props: Props) => {
     return {
       transform: [
         {translateX: (offsetGreen.value.x - thumbCenter) * rtlFix},
-        {scale: withSpring(isPressedGreen.value ? 1.3 : 1)}
-      ],
-      backgroundColor: isPressedGreen.value ? 'lightgreen' : 'green'
+        {scale: withSpring(!disableActiveStyling && isPressedGreen.value ? 1.3 : 1)}
+      ]
     };
   });
 
@@ -243,10 +256,18 @@ const Slider = (props: Props) => {
 
   const gestureBlue = Gesture.Pan()
     .onBegin(() => {
+      if (disabled) {
+        return;
+      }
+
       isPressedBlue.value = true;
       activeThumb.value = ThumbType.BLUE;
     })
     .onUpdate((e) => {
+      if (disabled) {
+        return;
+      }
+
       onSeekStart?.();
 
       let newX = startBlue.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
@@ -293,10 +314,18 @@ const Slider = (props: Props) => {
 
   const gestureGreen = Gesture.Pan()
     .onBegin(() => {
+      if (disabled) {
+        return;
+      }
+
       isPressedGreen.value = true;
       activeThumb.value = ThumbType.GREEN;
     })
     .onUpdate((e) => {
+      if (disabled) {
+        return;
+      }
+
       onSeekStart?.();
 
       let newX = startGreen.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
@@ -364,6 +393,17 @@ const Slider = (props: Props) => {
     }
   });
 
+  const renderInnerThumb = () => {
+    return (
+      <View 
+        style={[
+          styles.innerThumb,
+          {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy}
+        ]}
+      />
+    );
+  };
+
   const renderGreenThumb = () => {
     return (
       <GestureDetector gesture={gestureGreen}>
@@ -371,10 +411,12 @@ const Slider = (props: Props) => {
           reanimated
           style={[
             styles.thumb,
+            styles.thumbShadow,
             animatedStylesGreen
           ]}
+          hitSlop={thumbHitSlop}
         >
-          <View style={styles.innerThumb}/>
+          {renderInnerThumb()}
         </View>
       </GestureDetector>
     );
@@ -387,22 +429,47 @@ const Slider = (props: Props) => {
           reanimated
           style={[
             styles.thumb,
+            styles.thumbShadow,
             animatedStylesBlue
           ]}
+          hitSlop={thumbHitSlop}
         >
-          <View style={styles.innerThumb}/>
+          {renderInnerThumb()}
         </View>
       </GestureDetector>
     );
   };
 
+  const accessibilityProps = useMemo(() => {
+    if (accessible) {
+      return {
+        accessibilityLabel: 'Slider',
+        accessible: true,
+        accessibilityRole: 'adjustable' as AccessibilityRole,
+        accessibilityStates: disabled ? ['disabled'] : [],
+        accessibilityActions: [
+          {name: 'increment', label: 'increment'},
+          {name: 'decrement', label: 'decrement'}
+        ],
+        ...extractAccessibilityProps(props)
+      };
+    }
+  }, [accessible, disabled, props]);
+
   return (
-    <View style={[containerStyle, shouldDisableRTL && styles.disableRTL]}>
+    <View 
+      style={[containerStyle, shouldDisableRTL && styles.disableRTL]} 
+      testID={testID}
+      {...accessibilityProps}
+    >
       <View 
         style={[
           styles.track,
           trackStyle,
-          {backgroundColor: maximumTrackTintColor || Colors.$backgroundDisabled}
+          {
+            backgroundColor: 
+              disabled ? Colors.$backgroundNeutralMedium : maximumTrackTintColor || Colors.$backgroundDisabled
+          }
         ]} 
         onLayout={onTrackLayout}
       />
@@ -412,7 +479,10 @@ const Slider = (props: Props) => {
           styles.track,
           trackStyle,
           styles.activeTrack,
-          {backgroundColor: minimumTrackTintColor || Colors.$backgroundPrimaryHeavy},
+          {
+            backgroundColor: 
+              disabled ? Colors.$backgroundDisabled : minimumTrackTintColor || Colors.$backgroundPrimaryHeavy
+          },
           trackAnimatedStyles
         ]}
       />
@@ -448,7 +518,8 @@ const styles = StyleSheet.create({
     width: thumbSize,
     height: thumbSize,
     top: -(thumbSize - trackHeight) / 2,
-    borderRadius: thumbSize / 2
+    borderRadius: thumbSize / 2,
+    backgroundColor: Colors.$backgroundElevated
   },
   innerThumb: {
     position: 'absolute',
@@ -456,7 +527,13 @@ const styles = StyleSheet.create({
     top: innerThumbPadding / 2,
     width: thumbSize - innerThumbPadding,
     height: thumbSize - innerThumbPadding,
-    borderRadius: (thumbSize - 4) / 2,
-    backgroundColor: Colors.white
+    borderRadius: (thumbSize - 4) / 2
+  },
+  thumbShadow: {
+    shadowColor: Colors.rgba(Colors.black, 0.3),
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 0.9,
+    shadowRadius: 4,
+    elevation: 2
   }
 });
