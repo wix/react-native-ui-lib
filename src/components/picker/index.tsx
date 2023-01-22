@@ -88,6 +88,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     useSafeArea,
     migrate,
     migrateTextField,
+    accessibilityLabel,
+    accessibilityHint,
     ...others
   } = themeProps;
   const {preset} = others;
@@ -121,9 +123,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items,
     getItemLabel,
     getLabel,
-    placeholder: themeProps.placeholder,
-    accessibilityLabel: themeProps.accessibilityLabel,
-    accessibilityHint: themeProps.accessibilityHint
+    accessibilityLabel,
+    accessibilityHint,
+    placeholder: themeProps.placeholder
   });
 
   const onSelectedItemLayout = useCallback((event: LayoutChangeEvent) => {
