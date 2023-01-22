@@ -88,6 +88,7 @@ const IncubatorSliderScreen = () => {
           onValueChange={onValueChange}
           containerStyle={styles.container}
           disableRTL={disableRTL}
+          step={0.1}
         />
       </View>
 
@@ -110,13 +111,13 @@ const IncubatorSliderScreen = () => {
           value={20}
           minimumValue={0}
           maximumValue={100}
-          step={10}
           containerStyle={styles.container}
           trackStyle={styles.customTrack}
           minimumTrackTintColor={Colors.grey30}
           maximumTrackTintColor={Colors.grey70}
           // thumbTintColor={Colors.orange30}
           thumbStyle={styles.customThumb}
+          activeThumbStyle={styles.customActiveThumb}
           disableRTL={disableRTL}
           // disableActiveStyling
         />
@@ -150,7 +151,7 @@ const IncubatorSliderScreen = () => {
             maximumValue={MAX}
             initialMinimumValue={10}
             initialMaximumValue={70}
-            // step={1}
+            step={1}
             disableRTL={disableRTL}
           />
         </View>
@@ -170,9 +171,15 @@ const styles = StyleSheet.create({
     height: 3
   },
   customThumb: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: Colors.black
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: Colors.black,
+    borderColor: Colors.black
+  },
+  customActiveThumb: {
+    backgroundColor: Colors.red30,
+    borderWidth: 2,
+    borderColor: Colors.red70
   }
 });

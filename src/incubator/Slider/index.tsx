@@ -1,7 +1,7 @@
 import isNumber from 'lodash/isNumber';
 import isFunction from 'lodash/isFunction';
 import React, {useImperativeHandle, useCallback, useMemo} from 'react';
-import {StyleSheet, AccessibilityRole} from 'react-native';
+import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {
   useSharedValue,
@@ -24,10 +24,9 @@ enum ThumbType {
 }
 const TRACK_HEIGHT = 6;
 const THUMB_SIZE = 24;
-const innerThumbPadding = 12;
 
+// TODO: migrate GradientSlider to use it
 const Slider = (props: Props) => {
-  // custom style props, migrate GradientSlider to use it
   const {
     forwardedRef,
     useRange,
@@ -50,7 +49,7 @@ const Slider = (props: Props) => {
     maximumTrackTintColor,
     renderTrack,
     thumbStyle,
-    // activeThumbStyle,
+    activeThumbStyle,
     thumbTintColor,
     thumbHitSlop,
     disableActiveStyling,
@@ -88,13 +87,24 @@ const Slider = (props: Props) => {
   const rtlFix = Constants.isRTL ? -1 : 1;
   const shouldDisableRTL = Constants.isRTL && disableRTL;
   const shouldRenderCustomTrack = isFunction(renderTrack);
+  const shouldBounceToStep = step > 0;
+  const stepXValue = useSharedValue(step);
 
   const trackSize = useSharedValue({width: 0, height: TRACK_HEIGHT});
   const activeTrackWidth = useSharedValue(0);
-  const stepXValue = useSharedValue(step);
-  const shouldBounceToStep = step > 0;
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
   const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize.value.width : 0;
+  
+  const defaultThumbStyle: StyleProp<ViewStyle> = [
+    styles.thumb,
+    {
+      backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy
+    }
+  ];
+  const _thumbStyle = 
+    useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(thumbStyle || defaultThumbStyle))));
+  const _activeThumbStyle = 
+    useSharedValue(activeThumbStyle ? JSON.parse(JSON.stringify(StyleSheet.flatten(activeThumbStyle))) : undefined);
 
   const getXForValue = (value: number, trackWidth: number) => {
     const range = maximumValue - minimumValue;
@@ -236,22 +246,28 @@ const Slider = (props: Props) => {
   const rangeThumbStart = useSharedValue({x: 0, y: 0});
 
   const defaultThumbAnimatedStyles = useAnimatedStyle(() => {
+    const activeStyle = 
+      isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
     return {
       transform: [
         {translateX: (defaultThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
         {scale: withSpring(!disableActiveStyling && isPressedDefault.value ? 1.3 : 1)}
       ],
-      top: -(thumbSize.value.height - trackSize.value.height) / 2
+      top: -(thumbSize.value.height - trackSize.value.height) / 2,
+      ...activeStyle
     };
   });
 
   const rangeThumbAnimatedStyles = useAnimatedStyle(() => {
+    const activeStyle = 
+      isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
     return {
       transform: [
         {translateX: (rangeThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
         {scale: withSpring(!disableActiveStyling && isPressedRange.value ? 1.3 : 1)}
       ],
-      top: -(thumbSize.value.height - trackSize.value.height) / 2
+      top: -(thumbSize.value.height - trackSize.value.height) / 2,
+      ...activeStyle
     };
   });
 
@@ -426,19 +442,6 @@ const Slider = (props: Props) => {
 
   /** renders */
 
-  const renderInnerThumb = () => {
-    if (!thumbStyle) {
-      return (
-        <View 
-          style={[
-            styles.innerThumb,
-            {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy}
-          ]}
-        />
-      );
-    }
-  };
-
   const renderRangeThumb = () => {
     return (
       <GestureDetector gesture={rangeThumbGesture}>
@@ -447,13 +450,10 @@ const Slider = (props: Props) => {
           style={[
             styles.thumbPosition,
             styles.thumbShadow,
-            thumbStyle || styles.thumb,
             rangeThumbAnimatedStyles
           ]}
           hitSlop={thumbHitSlop}
-        >
-          {renderInnerThumb()}
-        </View>
+        />
       </GestureDetector>
     );
   };
@@ -466,14 +466,11 @@ const Slider = (props: Props) => {
           style={[
             styles.thumbPosition,
             styles.thumbShadow,
-            thumbStyle || styles.thumb,
             defaultThumbAnimatedStyles
           ]}
           hitSlop={thumbHitSlop}
           onLayout={onThumbLayout}
-        >
-          {renderInnerThumb()}
-        </View>
+        />
       </GestureDetector>
     );
   };
@@ -562,7 +559,8 @@ const styles = StyleSheet.create({
     width: THUMB_SIZE,
     height: THUMB_SIZE,
     borderRadius: THUMB_SIZE / 2,
-    backgroundColor: Colors.$backgroundElevatedLight
+    borderWidth: 6,
+    borderColor: Colors.$backgroundElevatedLight
   },
   thumbPosition: {
     position: 'absolute'
@@ -573,13 +571,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 4,
     elevation: 2
-  },
-  innerThumb: {
-    position: 'absolute',
-    alignSelf: 'center',
-    top: innerThumbPadding / 2,
-    width: THUMB_SIZE - innerThumbPadding,
-    height: THUMB_SIZE - innerThumbPadding,
-    borderRadius: (THUMB_SIZE - 4) / 2
   }
 });
