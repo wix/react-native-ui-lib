@@ -65,7 +65,7 @@ const Slider = (props: Props) => {
 
   const reset = () => {
     activeThumb.value = ThumbType.DEFAULT;
-    setPositions(trackWidth.value);
+    setPositions(trackSize.value.width);
     onReset?.();
   };
 
@@ -91,7 +91,7 @@ const Slider = (props: Props) => {
 
   const thumbCenter = thumbSize / 2;
   const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize : 0;
-  const trackWidth = useSharedValue(0);
+  const trackSize = useSharedValue({width: 0, height: 0});
   const activeTrackWidth = useSharedValue(0);
   const stepXValue = useSharedValue(step);
   const shouldBounceToStep = step > 0;
@@ -106,8 +106,8 @@ const Slider = (props: Props) => {
   };
 
   const getValueForX = (x: number) => {
-    if (trackWidth.value) {
-      const ratio = x / trackWidth.value;
+    if (trackSize.value.width) {
+      const ratio = x / trackSize.value.width;
       const range = maximumValue - minimumValue;
   
       if (shouldBounceToStep) {
@@ -174,7 +174,8 @@ const Slider = (props: Props) => {
 
   const onTrackLayout = useCallback((event) => {
     const width = event.nativeEvent.layout.width;
-    trackWidth.value = width;
+    const height = event.nativeEvent.layout.height;
+    trackSize.value = {width, height};
     setPositions(width);
   }, []);
 
@@ -183,9 +184,9 @@ const Slider = (props: Props) => {
       return;
     }
 
-    let locationX = Math.min(event.nativeEvent.locationX, trackWidth.value);
+    let locationX = Math.min(event.nativeEvent.locationX, trackSize.value.width);
     if (Constants.isRTL) {
-      locationX = trackWidth.value - locationX;
+      locationX = trackSize.value.width - locationX;
     }
     if (shouldBounceToStep) {
       locationX = getStepComputedX(locationX);
@@ -295,8 +296,8 @@ const Slider = (props: Props) => {
       let newX = defaultThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
       if (newX < 0) { // bottom edge
         newX = 0;
-      } else if (!useRange && newX > trackWidth.value) { // top edge
-        newX = trackWidth.value;
+      } else if (!useRange && newX > trackSize.value.width) { // top edge
+        newX = trackSize.value.width;
       }
       if (newX <= rangeThumbStart.value.x - rangeGap && newX >= 0) { // range
         defaultThumbOffset.value = {
@@ -323,7 +324,7 @@ const Slider = (props: Props) => {
       if (shouldBounceToStep) {
         const x = defaultThumbOffset.value.x;
         
-        const outputRange = [0, trackWidth.value];
+        const outputRange = [0, trackSize.value.width];
         const inputRange = 
           minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
         const stepInterpolated = 
@@ -351,10 +352,10 @@ const Slider = (props: Props) => {
       onSeekStart?.();
 
       let newX = rangeThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX > trackWidth.value) { // top edge
-        newX = trackWidth.value;
+      if (newX > trackSize.value.width) { // top edge
+        newX = trackSize.value.width;
       }
-      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackWidth.value) { // range
+      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackSize.value.width) { // range
         rangeThumbOffset.value = {
           x: newX,
           y: 0
@@ -379,7 +380,7 @@ const Slider = (props: Props) => {
       if (shouldBounceToStep) {
         const x = rangeThumbOffset.value.x;
         
-        const outputRange = [0, trackWidth.value];
+        const outputRange = [0, trackSize.value.width];
         const inputRange = 
           minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
         const stepInterpolated = 
@@ -393,7 +394,7 @@ const Slider = (props: Props) => {
 
   const getStepComputedX = (x: number) => {
     'worklet';
-    const outputRange = [0, trackWidth.value];
+    const outputRange = [0, trackSize.value.width];
     const inputRange = 
       minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
     const stepInterpolated = Math.abs(interpolate(stepXValue.value, inputRange, outputRange));
