@@ -1,41 +1,59 @@
-import React from 'react';
-import {isSvg, isSvgUri} from '../../utils/imageUtils';
-// import {SvgPackage} from '../../optionalDependencies';
+import React, {useState} from 'react';
+import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
-// const SvgXml = SvgPackage?.SvgXml;
-// const SvgCssUri = SvgPackage?.SvgCssUri;
-// const SvgProps = SvgPackage?.SvgProps; TODO: not sure how (or if) we can use their props
-
+const EMPTY_STYLE = '{}';
 export interface SvgImageProps {
   /**
    * the asset tint
    */
   tintColor?: string | null;
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
+  style?: object[];
 }
 
 function SvgImage(props: SvgImageProps) {
-  // tintColor crashes Android, so we're removing this until we properly support it.
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  // const {data, tintColor, ...others} = props;
-  const {data} = props;
+  const {
+    data,
+    style,
+    ...other
+  } = props;
 
-  // if (!SvgXml) {
-  //   // eslint-disable-next-line max-len
-  //   console.error(`RNUILib Image "svg" prop requires installing "react-native-svg" and "react-native-svg-transformer" dependencies`);
-  //   return null;
-  // }
+  const styleObj = Object.assign({}, ...(style || []));
+
+  
+  const [svgStyleCss, setSvgStyleCss] = useState<string>(EMPTY_STYLE);
+  const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
+
+  const createStyleSvgCss = async (PostCssPackage: {postcss: any, cssjs:any}) => {
+    setPostCssStyleCalled(true);
+    const {postcss, cssjs} = PostCssPackage;
+    postcss().process(styleObj, {parser: cssjs})
+      .then((style: {css: any}) => setSvgStyleCss(`{${style.css}}`));
+  };
 
   if (isSvgUri(data)) {
-    return <img src={data.uri}/>;
-    // return <SvgCssUri {...others} uri={data.uri}/>;
-  // }
-  //  else if (typeof data === 'string') {
-  //   return <SvgXml xml={data} {...others}/>;
+    return <img {...other} src={data.uri} style={styleObj}/>;
+  } else if (isBase64ImageContent(data)) {
+    return <img {...other} src={data} style={styleObj}/>;
   } else if (data) {
-    return <img src={data}/>;
+    const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
+    if (PostCssPackage) {
+      if (!postCssStyleCalled) {
+        createStyleSvgCss(PostCssPackage);
+        return null;
+      }
+      const svgStyleTag = `<style> svg ${svgStyleCss} </style>`;
+  
+      return (
+        <div
+          {...other}
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
+        />
+      );
+    }
+    
   }
-
   return null;
 }
 
