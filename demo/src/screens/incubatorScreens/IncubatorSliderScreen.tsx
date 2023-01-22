@@ -112,12 +112,13 @@ const IncubatorSliderScreen = () => {
           maximumValue={100}
           step={10}
           containerStyle={styles.container}
-          trackStyle={styles.track}
-          minimumTrackTintColor={Colors.blue30}
-          maximumTrackTintColor={Colors.blue70}
-          thumbTintColor={Colors.orange30}
+          trackStyle={styles.customTrack}
+          minimumTrackTintColor={Colors.grey30}
+          maximumTrackTintColor={Colors.grey70}
+          // thumbTintColor={Colors.orange30}
+          thumbStyle={styles.customThumb}
           disableRTL={disableRTL}
-          disableActiveStyling
+          // disableActiveStyling
         />
       </View>
 
@@ -164,7 +165,14 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20
   },
-  track: {
-    borderRadius: 0
+  customTrack: {
+    borderRadius: 1.5,
+    height: 3
+  },
+  customThumb: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: Colors.black
   }
 });

@@ -22,8 +22,8 @@ enum ThumbType {
   DEFAULT = 'default',
   RANGE = 'range'
 }
-const trackHeight = 6;
-const thumbSize = 24;
+const TRACK_HEIGHT = 6;
+const THUMB_SIZE = 24;
 const innerThumbPadding = 12;
 
 const Slider = (props: Props) => {
@@ -49,7 +49,7 @@ const Slider = (props: Props) => {
     minimumTrackTintColor,
     maximumTrackTintColor,
     renderTrack,
-    // thumbStyle,
+    thumbStyle,
     // activeThumbStyle,
     thumbTintColor,
     thumbHitSlop,
@@ -89,12 +89,12 @@ const Slider = (props: Props) => {
   const shouldDisableRTL = Constants.isRTL && disableRTL;
   const shouldRenderCustomTrack = isFunction(renderTrack);
 
-  const thumbCenter = thumbSize / 2;
-  const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize : 0;
-  const trackSize = useSharedValue({width: 0, height: 0});
+  const trackSize = useSharedValue({width: 0, height: TRACK_HEIGHT});
   const activeTrackWidth = useSharedValue(0);
   const stepXValue = useSharedValue(step);
   const shouldBounceToStep = step > 0;
+  const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
+  const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize.value.width : 0;
 
   const getXForValue = (value: number, trackWidth: number) => {
     const range = maximumValue - minimumValue;
@@ -172,6 +172,12 @@ const Slider = (props: Props) => {
     }
   };
 
+  const onThumbLayout = useCallback((event) => {
+    const width = event.nativeEvent.layout.width;
+    const height = event.nativeEvent.layout.height;
+    thumbSize.value = {width, height};
+  }, []);
+
   const onTrackLayout = useCallback((event) => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
@@ -232,18 +238,20 @@ const Slider = (props: Props) => {
   const defaultThumbAnimatedStyles = useAnimatedStyle(() => {
     return {
       transform: [
-        {translateX: (defaultThumbOffset.value.x - thumbCenter) * rtlFix},
+        {translateX: (defaultThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
         {scale: withSpring(!disableActiveStyling && isPressedDefault.value ? 1.3 : 1)}
-      ]
+      ],
+      top: -(thumbSize.value.height - trackSize.value.height) / 2
     };
   });
 
   const rangeThumbAnimatedStyles = useAnimatedStyle(() => {
     return {
       transform: [
-        {translateX: (rangeThumbOffset.value.x - thumbCenter) * rtlFix},
+        {translateX: (rangeThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
         {scale: withSpring(!disableActiveStyling && isPressedRange.value ? 1.3 : 1)}
-      ]
+      ],
+      top: -(thumbSize.value.height - trackSize.value.height) / 2
     };
   });
 
@@ -419,14 +427,16 @@ const Slider = (props: Props) => {
   /** renders */
 
   const renderInnerThumb = () => {
-    return (
-      <View 
-        style={[
-          styles.innerThumb,
-          {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy}
-        ]}
-      />
-    );
+    if (!thumbStyle) {
+      return (
+        <View 
+          style={[
+            styles.innerThumb,
+            {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy}
+          ]}
+        />
+      );
+    }
   };
 
   const renderRangeThumb = () => {
@@ -435,8 +445,9 @@ const Slider = (props: Props) => {
         <View 
           reanimated
           style={[
-            styles.thumb,
+            styles.thumbPosition,
             styles.thumbShadow,
+            thumbStyle || styles.thumb,
             rangeThumbAnimatedStyles
           ]}
           hitSlop={thumbHitSlop}
@@ -453,11 +464,13 @@ const Slider = (props: Props) => {
         <View
           reanimated
           style={[
-            styles.thumb,
+            styles.thumbPosition,
             styles.thumbShadow,
+            thumbStyle || styles.thumb,
             defaultThumbAnimatedStyles
           ]}
           hitSlop={thumbHitSlop}
+          onLayout={onThumbLayout}
         >
           {renderInnerThumb()}
         </View>
@@ -533,33 +546,26 @@ const styles = StyleSheet.create({
     transform: [{scaleX: -1}]
   },
   track: {
-    height: trackHeight,
-    borderRadius: trackHeight / 2
+    height: TRACK_HEIGHT,
+    borderRadius: TRACK_HEIGHT / 2
   },
   activeTrack: {
     ...StyleSheet.absoluteFillObject
   },
   touchArea: {
     ...StyleSheet.absoluteFillObject,
-    top: -(thumbSize - trackHeight) / 2,
-    height: thumbSize,
+    top: -(THUMB_SIZE - TRACK_HEIGHT) / 2,
+    height: THUMB_SIZE,
     backgroundColor: Colors.transparent
   },
   thumb: {
-    position: 'absolute',
-    width: thumbSize,
-    height: thumbSize,
-    top: -(thumbSize - trackHeight) / 2,
-    borderRadius: thumbSize / 2,
+    width: THUMB_SIZE,
+    height: THUMB_SIZE,
+    borderRadius: THUMB_SIZE / 2,
     backgroundColor: Colors.$backgroundElevatedLight
   },
-  innerThumb: {
-    position: 'absolute',
-    alignSelf: 'center',
-    top: innerThumbPadding / 2,
-    width: thumbSize - innerThumbPadding,
-    height: thumbSize - innerThumbPadding,
-    borderRadius: (thumbSize - 4) / 2
+  thumbPosition: {
+    position: 'absolute'
   },
   thumbShadow: {
     shadowColor: Colors.rgba(Colors.black, 0.3),
@@ -567,5 +573,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 4,
     elevation: 2
+  },
+  innerThumb: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: innerThumbPadding / 2,
+    width: THUMB_SIZE - innerThumbPadding,
+    height: THUMB_SIZE - innerThumbPadding,
+    borderRadius: (THUMB_SIZE - 4) / 2
   }
 });
