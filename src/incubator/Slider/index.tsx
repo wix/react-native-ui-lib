@@ -3,13 +3,7 @@ import isFunction from 'lodash/isFunction';
 import React, {useImperativeHandle, useCallback, useMemo} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
-import {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  runOnJS,
-  interpolate
-} from 'react-native-reanimated';
+import {useSharedValue, useAnimatedStyle, withSpring, runOnJS, interpolate} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
@@ -94,17 +88,17 @@ const Slider = (props: Props) => {
   const activeTrackWidth = useSharedValue(0);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
   const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize.value.width : 0;
-  
+
   const defaultThumbStyle: StyleProp<ViewStyle> = [
     styles.thumb,
     {
       backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy
     }
   ];
-  const _thumbStyle = 
-    useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(thumbStyle || defaultThumbStyle))));
-  const _activeThumbStyle = 
-    useSharedValue(activeThumbStyle ? JSON.parse(JSON.stringify(StyleSheet.flatten(activeThumbStyle))) : undefined);
+  const _thumbStyle = useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(thumbStyle || defaultThumbStyle))));
+  const _activeThumbStyle = useSharedValue(
+    activeThumbStyle ? JSON.parse(JSON.stringify(StyleSheet.flatten(activeThumbStyle))) : undefined
+  );
 
   const getXForValue = (value: number, trackWidth: number) => {
     const range = maximumValue - minimumValue;
@@ -119,7 +113,7 @@ const Slider = (props: Props) => {
     if (trackSize.value.width) {
       const ratio = x / trackSize.value.width;
       const range = maximumValue - minimumValue;
-  
+
       if (shouldBounceToStep) {
         return Math.max(minimumValue, Math.min(maximumValue, minimumValue + Math.round((ratio * range) / step) * step));
       } else {
@@ -135,9 +129,9 @@ const Slider = (props: Props) => {
     if (useRange) {
       const defaultThumbPosition = getXForValue(initialMinimumValue, trackWidth);
       const rangeThumbPosition = getXForValue(initialMaximumValue, trackWidth);
-      
+
       activeTrackWidth.value = trackWidth - defaultThumbPosition - rangeThumbPosition;
-      
+
       updateDefaultThumb(defaultThumbPosition);
       updateRangeThumb(rangeThumbPosition);
     } else {
@@ -145,22 +139,28 @@ const Slider = (props: Props) => {
         x: trackWidth,
         y: 0
       };
-      
+
       updateDefaultThumb(getXForValue(value, trackWidth));
     }
   };
 
   const validateValues = () => {
-    if (minimumValue > maximumValue || useRange && initialMinimumValue > initialMaximumValue) {
-      console.error('Your passed values are invalid. Please check if minimum values are not higher than maximum values');
+    if (minimumValue > maximumValue || (useRange && initialMinimumValue > initialMaximumValue)) {
+      console.error(
+        'Your passed values are invalid. Please check if minimum values are not higher than maximum values'
+      );
     }
     if (value !== undefined && !inRange(value, minimumValue, maximumValue)) {
       console.error('Your passed value is invalid. Please check that it is in range of the minimum and maximum values');
     }
     if (useRange) {
-      if (!inRange(initialMinimumValue, minimumValue, maximumValue) 
-        || !inRange(initialMaximumValue, minimumValue, maximumValue)) {
-        console.error('Your passed values are invalid. Please check that they are in range of the minimum and maximum values');
+      if (
+        !inRange(initialMinimumValue, minimumValue, maximumValue) ||
+        !inRange(initialMaximumValue, minimumValue, maximumValue)
+      ) {
+        console.error(
+          'Your passed values are invalid. Please check that they are in range of the minimum and maximum values'
+        );
       }
     }
   };
@@ -171,7 +171,7 @@ const Slider = (props: Props) => {
 
   /** events */
 
-  const onChange = (value: number | {min: number, max: number}) => {
+  const onChange = (value: number | {min: number; max: number}) => {
     if (useRange && !isNumber(value)) {
       const min = shouldDisableRTL ? value.max : value.min;
       const max = shouldDisableRTL ? value.min : value.max;
@@ -182,20 +182,20 @@ const Slider = (props: Props) => {
     }
   };
 
-  const onThumbLayout = useCallback((event) => {
+  const onThumbLayout = useCallback(event => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
     thumbSize.value = {width, height};
   }, []);
 
-  const onTrackLayout = useCallback((event) => {
+  const onTrackLayout = useCallback(event => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
     trackSize.value = {width, height};
     setPositions(width);
   }, []);
 
-  const onTrackPress = useCallback((event) => {
+  const onTrackPress = useCallback(event => {
     if (disabled) {
       return;
     }
@@ -246,8 +246,7 @@ const Slider = (props: Props) => {
   const rangeThumbStart = useSharedValue({x: 0, y: 0});
 
   const defaultThumbAnimatedStyles = useAnimatedStyle(() => {
-    const activeStyle = 
-      isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
+    const activeStyle = isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
     return {
       transform: [
         {translateX: (defaultThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
@@ -259,8 +258,7 @@ const Slider = (props: Props) => {
   });
 
   const rangeThumbAnimatedStyles = useAnimatedStyle(() => {
-    const activeStyle = 
-      isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
+    const activeStyle = isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
     return {
       transform: [
         {translateX: (rangeThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
@@ -282,11 +280,11 @@ const Slider = (props: Props) => {
     };
 
     activeTrackWidth.value = Math.abs(useRange ? rangeThumbStart.value.x - x : x);
-    
+
     onChange(useRange ? {min: x, max: rangeThumbStart.value.x} : x);
   };
 
-  const updateRangeThumb = (x : number) => {
+  const updateRangeThumb = (x: number) => {
     rangeThumbOffset.value = {
       x,
       y: 0
@@ -295,9 +293,9 @@ const Slider = (props: Props) => {
       x,
       y: 0
     };
-    
+
     activeTrackWidth.value = x - defaultThumbStart.value.x;
-    
+
     onChange({min: defaultThumbStart.value.x, max: x});
   };
 
@@ -310,7 +308,7 @@ const Slider = (props: Props) => {
       isPressedDefault.value = true;
       activeThumb.value = ThumbType.DEFAULT;
     })
-    .onUpdate((e) => {
+    .onUpdate(e => {
       if (disabled) {
         return;
       }
@@ -318,19 +316,22 @@ const Slider = (props: Props) => {
       onSeekStart?.();
 
       let newX = defaultThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX < 0) { // bottom edge
+      if (newX < 0) {
+        // bottom edge
         newX = 0;
-      } else if (!useRange && newX > trackSize.value.width) { // top edge
+      } else if (!useRange && newX > trackSize.value.width) {
+        // top edge
         newX = trackSize.value.width;
       }
-      if (newX <= rangeThumbStart.value.x - rangeGap && newX >= 0) { // range
+      if (newX <= rangeThumbStart.value.x - rangeGap && newX >= 0) {
+        // range
         defaultThumbOffset.value = {
           x: newX,
           y: 0
         };
-        
-        activeTrackWidth.value = (useRange ? rangeThumbStart.value.x - newX : newX);
-        
+
+        activeTrackWidth.value = useRange ? rangeThumbStart.value.x - newX : newX;
+
         runOnJS(onChange)(useRange ? {min: newX, max: rangeThumbStart.value.x} : newX);
       }
     })
@@ -347,13 +348,12 @@ const Slider = (props: Props) => {
 
       if (shouldBounceToStep) {
         const x = defaultThumbOffset.value.x;
-        
+
         const outputRange = [0, trackSize.value.width];
-        const inputRange = 
+        const inputRange =
           minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
-        const stepInterpolated = 
-          interpolate(stepXValue.value, inputRange, outputRange);
-        
+        const stepInterpolated = interpolate(stepXValue.value, inputRange, outputRange);
+
         const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
         runOnJS(updateDefaultThumb)(newX);
       }
@@ -368,7 +368,7 @@ const Slider = (props: Props) => {
       isPressedRange.value = true;
       activeThumb.value = ThumbType.RANGE;
     })
-    .onUpdate((e) => {
+    .onUpdate(e => {
       if (disabled) {
         return;
       }
@@ -376,17 +376,19 @@ const Slider = (props: Props) => {
       onSeekStart?.();
 
       let newX = rangeThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX > trackSize.value.width) { // top edge
+      if (newX > trackSize.value.width) {
+        // top edge
         newX = trackSize.value.width;
       }
-      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackSize.value.width) { // range
+      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackSize.value.width) {
+        // range
         rangeThumbOffset.value = {
           x: newX,
           y: 0
         };
 
         activeTrackWidth.value = rangeThumbOffset.value.x - defaultThumbStart.value.x;
-        
+
         runOnJS(onChange)(useRange ? {min: defaultThumbStart.value.x, max: newX} : newX);
       }
     })
@@ -403,15 +405,14 @@ const Slider = (props: Props) => {
 
       if (shouldBounceToStep) {
         const x = rangeThumbOffset.value.x;
-        
+
         const outputRange = [0, trackSize.value.width];
-        const inputRange = 
+        const inputRange =
           minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
-        const stepInterpolated = 
-          interpolate(stepXValue.value, inputRange, outputRange);
+        const stepInterpolated = interpolate(stepXValue.value, inputRange, outputRange);
 
         const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
-        
+
         runOnJS(updateRangeThumb)(newX);
       }
     });
@@ -419,7 +420,7 @@ const Slider = (props: Props) => {
   const getStepComputedX = (x: number) => {
     'worklet';
     const outputRange = [0, trackSize.value.width];
-    const inputRange = 
+    const inputRange =
       minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
     const stepInterpolated = Math.abs(interpolate(stepXValue.value, inputRange, outputRange));
     return Math.round(x / stepInterpolated) * stepInterpolated;
@@ -428,9 +429,7 @@ const Slider = (props: Props) => {
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
       return {
-        transform: [
-          {translateX: defaultThumbOffset.value.x * rtlFix}
-        ],
+        transform: [{translateX: defaultThumbOffset.value.x * rtlFix}],
         width: activeTrackWidth.value
       };
     } else {
@@ -445,13 +444,9 @@ const Slider = (props: Props) => {
   const renderRangeThumb = () => {
     return (
       <GestureDetector gesture={rangeThumbGesture}>
-        <View 
+        <View
           reanimated
-          style={[
-            styles.thumbPosition,
-            styles.thumbShadow,
-            rangeThumbAnimatedStyles
-          ]}
+          style={[styles.thumbPosition, styles.thumbShadow, rangeThumbAnimatedStyles]}
           hitSlop={thumbHitSlop}
         />
       </GestureDetector>
@@ -463,11 +458,7 @@ const Slider = (props: Props) => {
       <GestureDetector gesture={defaultThumbGesture}>
         <View
           reanimated
-          style={[
-            styles.thumbPosition,
-            styles.thumbShadow,
-            defaultThumbAnimatedStyles
-          ]}
+          style={[styles.thumbPosition, styles.thumbShadow, defaultThumbAnimatedStyles]}
           hitSlop={thumbHitSlop}
           onLayout={onThumbLayout}
         />
@@ -477,10 +468,7 @@ const Slider = (props: Props) => {
 
   const renderCustomTrack = () => {
     return (
-      <View
-        style={[styles.track, trackStyle, {backgroundColor: maximumTrackTintColor}]}
-        onLayout={onTrackLayout}
-      >
+      <View style={[styles.track, trackStyle, {backgroundColor: maximumTrackTintColor}]} onLayout={onTrackLayout}>
         {renderTrack?.()}
       </View>
     );
@@ -488,15 +476,16 @@ const Slider = (props: Props) => {
 
   const renderBackgroundTrack = () => {
     return (
-      <View 
+      <View
         style={[
           styles.track,
           trackStyle,
           {
-            backgroundColor: 
-              disabled ? Colors.$backgroundNeutralMedium : maximumTrackTintColor || Colors.$backgroundDisabled
+            backgroundColor: disabled
+              ? Colors.$backgroundNeutralMedium
+              : maximumTrackTintColor || Colors.$backgroundDisabled
           }
-        ]} 
+        ]}
         onLayout={onTrackLayout}
       />
     );
@@ -505,14 +494,15 @@ const Slider = (props: Props) => {
   const renderActiveTrack = () => {
     return (
       <View
-        reanimated 
+        reanimated
         style={[
           styles.track,
           trackStyle,
           styles.activeTrack,
           {
-            backgroundColor: 
-              disabled ? Colors.$backgroundDisabled : minimumTrackTintColor || Colors.$backgroundPrimaryHeavy
+            backgroundColor: disabled
+              ? Colors.$backgroundDisabled
+              : minimumTrackTintColor || Colors.$backgroundPrimaryHeavy
           },
           trackAnimatedStyles
         ]}
@@ -521,11 +511,7 @@ const Slider = (props: Props) => {
   };
 
   return (
-    <View 
-      style={[containerStyle, shouldDisableRTL && styles.disableRTL]} 
-      testID={testID}
-      {...accessibilityProps}
-    >
+    <View style={[containerStyle, shouldDisableRTL && styles.disableRTL]} testID={testID} {...accessibilityProps}>
       {shouldRenderCustomTrack ? renderCustomTrack() : renderBackgroundTrack()}
       {!shouldRenderCustomTrack && renderActiveTrack()}
       <View style={styles.touchArea} onTouchEnd={onTrackPress}/>
