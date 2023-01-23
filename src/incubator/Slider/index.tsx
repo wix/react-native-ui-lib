@@ -18,6 +18,8 @@ enum ThumbType {
 }
 const TRACK_HEIGHT = 6;
 const THUMB_SIZE = 24;
+const THUMB_BORDER_WIDTH = 6;
+const SHADOW_RADIUS = 4;
 
 // TODO: migrate GradientSlider to use it
 const Slider = (props: Props) => {
@@ -252,7 +254,6 @@ const Slider = (props: Props) => {
         {translateX: (defaultThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
         {scale: withSpring(!disableActiveStyling && isPressedDefault.value ? 1.3 : 1)}
       ],
-      top: -(thumbSize.value.height - trackSize.value.height) / 2,
       ...activeStyle
     };
   });
@@ -264,7 +265,6 @@ const Slider = (props: Props) => {
         {translateX: (rangeThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
         {scale: withSpring(!disableActiveStyling && isPressedRange.value ? 1.3 : 1)}
       ],
-      top: -(thumbSize.value.height - trackSize.value.height) / 2,
       ...activeStyle
     };
   });
@@ -498,7 +498,15 @@ const Slider = (props: Props) => {
   };
 
   return (
-    <View style={[containerStyle, shouldDisableRTL && styles.disableRTL]} testID={testID} {...accessibilityProps}>
+    <View
+      style={[
+        styles.container,
+        containerStyle,
+        shouldDisableRTL && styles.disableRTL
+      ]}
+      testID={testID}
+      {...accessibilityProps}
+    >
       {shouldRenderCustomTrack ? renderCustomTrack() : renderBackgroundTrack()}
       {!shouldRenderCustomTrack && renderActiveTrack()}
       <View style={styles.touchArea} onTouchEnd={onTrackPress}/>
@@ -512,6 +520,10 @@ const Slider = (props: Props) => {
 export default forwardRef<SliderProps, Statics>(Slider);
 
 const styles = StyleSheet.create({
+  container: {
+    height: THUMB_SIZE + SHADOW_RADIUS,
+    justifyContent: 'center'
+  },
   disableRTL: {
     transform: [{scaleX: -1}]
   },
@@ -520,19 +532,19 @@ const styles = StyleSheet.create({
     borderRadius: TRACK_HEIGHT / 2
   },
   activeTrack: {
-    ...StyleSheet.absoluteFillObject
+    position: 'absolute',
+    left: 0,
+    right: 0
   },
   touchArea: {
     ...StyleSheet.absoluteFillObject,
-    top: -(THUMB_SIZE - TRACK_HEIGHT) / 2,
-    height: THUMB_SIZE,
     backgroundColor: Colors.transparent
   },
   thumb: {
     width: THUMB_SIZE,
     height: THUMB_SIZE,
     borderRadius: THUMB_SIZE / 2,
-    borderWidth: 6,
+    borderWidth: THUMB_BORDER_WIDTH,
     borderColor: Colors.$backgroundElevatedLight
   },
   thumbPosition: {
@@ -542,7 +554,7 @@ const styles = StyleSheet.create({
     shadowColor: Colors.rgba(Colors.black, 0.3),
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 0.9,
-    shadowRadius: 4,
+    shadowRadius: SHADOW_RADIUS,
     elevation: 2
   }
 });
