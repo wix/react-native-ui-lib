@@ -5,6 +5,7 @@
   "extends": ["FlatList"],
   "extendsLink": ["https://reactnative.dev/docs/flatlist"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableListScreen.tsx",
+  "note": "We've seen a case where not all items are rendered on some Android devices, this appears to be a bug with `FlatList` that is using `CellRendererComponent`, our current workaround is for you to add `initialNumToRender={data.length}`.",
   "props": [
     {
       "name": "data",
