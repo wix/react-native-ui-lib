@@ -51,6 +51,10 @@ export default class ColorSwatchScreen extends Component {
     this.setState({color2: value});
   };
 
+  unavilableOnPress = () => {
+    console.log(`Pressed on unavilable color swatch!`);
+  };
+
   render() {
     const {color, color1, color2, selected} = this.state;
 
@@ -61,14 +65,16 @@ export default class ColorSwatchScreen extends Component {
             Single ColorSwatch
           </Text>
           <View row>
-            <ColorSwatch selected={selected} onPress={this.onPress}/>
-            <View>
-              <ColorSwatch unavilable color={Colors.$backgroundMajorLight}/>
+            <View marginH-5>
+              <ColorSwatch selected={selected} onPress={this.onPress}/>
+            </View>
+            <View marginH-5>
+              <ColorSwatch color={Colors.$backgroundMajorLight}/>
               <Text>Disabled</Text>
             </View>
-            <View>
-              <ColorSwatch unavilable color={Colors.yellow10}/>
-              <Text>Disabled</Text>
+            <View marginH-5>
+              <ColorSwatch unavilable onPress={this.unavilableOnPress} color={Colors.yellow10}/>
+              <Text>Unavilable</Text>
             </View>
           </View>
 

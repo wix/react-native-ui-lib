@@ -36,6 +36,7 @@ interface Props {
   index?: number;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  size?: number;
 }
 export type ColorSwatchProps = Props;
 
@@ -139,7 +140,7 @@ class ColorSwatch extends PureComponent<Props> {
   diagonalLine = () => <View flex bg-black style={{width: 2, transform: [{rotate: '45deg'}]}}/>;
 
   renderContent() {
-    const {style, color, onPress, unavilable, ...others} = this.props;
+    const {style, color, onPress, unavilable, size = DEFAULT_SIZE, ...others} = this.props;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
@@ -153,7 +154,7 @@ class ColorSwatch extends PureComponent<Props> {
         throttleTime={0}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         onPress={this.onPress}
-        style={[this.styles.container, style]}
+        style={[this.styles.container, {width: size, height: size, borderRadius: size / 2}, style]}
         onLayout={this.onLayout}
         {...accessibilityInfo}
       >
@@ -206,12 +207,9 @@ function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({
     container: {
       backgroundColor: color,
-      width: DEFAULT_SIZE,
-      height: DEFAULT_SIZE,
-      borderRadius: DEFAULT_SIZE / 2,
-      margin: SWATCH_MARGIN,
       borderWidth: color === 'transparent' ? undefined : 1,
-      borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
+      borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2),
+      margin: SWATCH_MARGIN
     },
     transparentImage: {
       ...StyleSheet.absoluteFillObject,
