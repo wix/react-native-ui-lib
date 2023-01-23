@@ -58,7 +58,7 @@ const Slider = (props: Props) => {
 
   const reset = () => {
     activeThumb.value = ThumbType.DEFAULT;
-    setPositions(trackSize.value.width);
+    setInitialPositions(trackSize.value.width);
     onReset?.();
   };
 
@@ -123,7 +123,7 @@ const Slider = (props: Props) => {
     return 0;
   };
 
-  const setPositions = (trackWidth: number) => {
+  const setInitialPositions = (trackWidth: number) => {
     validateValues();
 
     if (useRange) {
@@ -192,7 +192,7 @@ const Slider = (props: Props) => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
     trackSize.value = {width, height};
-    setPositions(width);
+    setInitialPositions(width);
   }, []);
 
   const onTrackPress = useCallback(event => {
