@@ -270,6 +270,7 @@ const Slider = (props: Props) => {
   });
 
   const updateDefaultThumb = (x: number) => {
+    'worklet';
     defaultThumbOffset.value = {
       x,
       y: 0
@@ -281,10 +282,11 @@ const Slider = (props: Props) => {
 
     activeTrackWidth.value = Math.abs(useRange ? rangeThumbStart.value.x - x : x);
 
-    onChange(useRange ? {min: x, max: rangeThumbStart.value.x} : x);
+    runOnJS(onChange)(useRange ? {min: x, max: rangeThumbStart.value.x} : x);
   };
 
   const updateRangeThumb = (x: number) => {
+    'worklet';
     rangeThumbOffset.value = {
       x,
       y: 0
@@ -296,7 +298,7 @@ const Slider = (props: Props) => {
 
     activeTrackWidth.value = x - defaultThumbStart.value.x;
 
-    onChange({min: defaultThumbStart.value.x, max: x});
+    runOnJS(onChange)({min: defaultThumbStart.value.x, max: x});
   };
 
   const defaultThumbGesture = Gesture.Pan()
@@ -308,15 +310,12 @@ const Slider = (props: Props) => {
       onSeekStart?.();
 
       let newX = defaultThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX < 0) {
-        // bottom edge
+      if (newX < 0) { // bottom edge
         newX = 0;
-      } else if (!useRange && newX > trackSize.value.width) {
-        // top edge
+      } else if (!useRange && newX > trackSize.value.width) { // top edge
         newX = trackSize.value.width;
       }
-      if (newX <= rangeThumbStart.value.x - rangeGap && newX >= 0) {
-        // range
+      if (newX <= rangeThumbStart.value.x - rangeGap && newX >= 0) { // range
         defaultThumbOffset.value = {
           x: newX,
           y: 0
@@ -340,14 +339,12 @@ const Slider = (props: Props) => {
 
       if (shouldBounceToStep) {
         const x = defaultThumbOffset.value.x;
-
         const outputRange = [0, trackSize.value.width];
         const inputRange =
           minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
         const stepInterpolated = interpolate(stepXValue.value, inputRange, outputRange);
-
-        const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
-        runOnJS(updateDefaultThumb)(newX);
+        const newX = Math.round(x / stepInterpolated) * stepInterpolated;
+        updateDefaultThumb(newX); // getStepComputedX(x) - worklet error
       }
     });
   defaultThumbGesture.enabled(!disabled);
@@ -361,12 +358,10 @@ const Slider = (props: Props) => {
       onSeekStart?.();
 
       let newX = rangeThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX > trackSize.value.width) {
-        // top edge
+      if (newX > trackSize.value.width) { // top edge
         newX = trackSize.value.width;
       }
-      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackSize.value.width) {
-        // range
+      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackSize.value.width) { // range
         rangeThumbOffset.value = {
           x: newX,
           y: 0
@@ -390,15 +385,12 @@ const Slider = (props: Props) => {
 
       if (shouldBounceToStep) {
         const x = rangeThumbOffset.value.x;
-
         const outputRange = [0, trackSize.value.width];
-        const inputRange =
+        const inputRange = 
           minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
         const stepInterpolated = interpolate(stepXValue.value, inputRange, outputRange);
-
-        const newX = Math.round(x / stepInterpolated) * stepInterpolated; // getStepComputedX(x) - worklet error
-
-        runOnJS(updateRangeThumb)(newX);
+        const newX = Math.round(x / stepInterpolated) * stepInterpolated;
+        updateRangeThumb(newX); // getStepComputedX(x) - worklet error
       }
     });
   rangeThumbGesture.enabled(!disabled);
