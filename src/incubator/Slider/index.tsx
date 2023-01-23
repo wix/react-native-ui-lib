@@ -301,18 +301,10 @@ const Slider = (props: Props) => {
 
   const defaultThumbGesture = Gesture.Pan()
     .onBegin(() => {
-      if (disabled) {
-        return;
-      }
-
       isPressedDefault.value = true;
       activeThumb.value = ThumbType.DEFAULT;
     })
     .onUpdate(e => {
-      if (disabled) {
-        return;
-      }
-
       onSeekStart?.();
 
       let newX = defaultThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
@@ -358,21 +350,14 @@ const Slider = (props: Props) => {
         runOnJS(updateDefaultThumb)(newX);
       }
     });
+  defaultThumbGesture.enabled(!disabled);
 
   const rangeThumbGesture = Gesture.Pan()
     .onBegin(() => {
-      if (disabled) {
-        return;
-      }
-
       isPressedRange.value = true;
       activeThumb.value = ThumbType.RANGE;
     })
     .onUpdate(e => {
-      if (disabled) {
-        return;
-      }
-
       onSeekStart?.();
 
       let newX = rangeThumbStart.value.x + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
@@ -416,6 +401,8 @@ const Slider = (props: Props) => {
         runOnJS(updateRangeThumb)(newX);
       }
     });
+  rangeThumbGesture.enabled(!disabled);
+
 
   const getStepComputedX = (x: number) => {
     'worklet';
