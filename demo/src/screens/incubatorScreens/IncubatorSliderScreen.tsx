@@ -92,7 +92,7 @@ const IncubatorSliderScreen = () => {
         />
       </View>
 
-      <View marginT-40>
+      <View marginT-20>
         <Text margin-10 text70BL $textDefault>Disabled Slider</Text>
         <Incubator.Slider
           value={0.4}
@@ -102,7 +102,7 @@ const IncubatorSliderScreen = () => {
         />
       </View>
       
-      <View marginT-40>
+      <View marginT-20 marginH-40>
         <Text margin-10 text70BL $textDefault>Custom Slider</Text>
         {renderValuesBox(stepSliderValue)}
         <Incubator.Slider
@@ -123,7 +123,7 @@ const IncubatorSliderScreen = () => {
         />
       </View>
 
-      <View marginT-40>
+      <View marginT-20>
         <Text margin-10 text70BL $textDefault>Negative values -20 to -100 initial -30</Text>
         {renderValuesBox(negativeSliderValue)}
         <Incubator.Slider
@@ -138,7 +138,7 @@ const IncubatorSliderScreen = () => {
         />
       </View>
 
-      <View marginT-40>
+      <View marginT-20>
         <Text margin-10 text70BL $textDefault>Range Slider values 0 to 100</Text>
         <View marginH-20>
           {renderValuesBox(sliderMinValue, sliderMaxValue)}

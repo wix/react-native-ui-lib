@@ -21,7 +21,6 @@ const THUMB_SIZE = 24;
 const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
 
-// TODO: migrate GradientSlider to use it
 const Slider = (props: Props) => {
   const {
     forwardedRef,
@@ -247,6 +246,19 @@ const Slider = (props: Props) => {
   const rangeThumbOffset = useSharedValue({x: 0, y: 0});
   const rangeThumbStart = useSharedValue({x: 0, y: 0});
 
+  const trackAnimatedStyles = useAnimatedStyle(() => {
+    if (useRange) {
+      return {
+        transform: [{translateX: defaultThumbOffset.value.x * rtlFix}],
+        width: activeTrackWidth.value
+      };
+    } else {
+      return {
+        width: activeTrackWidth.value
+      };
+    }
+  });
+  
   const defaultThumbAnimatedStyles = useAnimatedStyle(() => {
     const activeStyle = isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
     return {
@@ -395,7 +407,6 @@ const Slider = (props: Props) => {
     });
   rangeThumbGesture.enabled(!disabled);
 
-
   const getStepComputedX = (x: number) => {
     'worklet';
     const outputRange = [0, trackSize.value.width];
@@ -404,19 +415,6 @@ const Slider = (props: Props) => {
     const stepInterpolated = Math.abs(interpolate(stepXValue.value, inputRange, outputRange));
     return Math.round(x / stepInterpolated) * stepInterpolated;
   };
-
-  const trackAnimatedStyles = useAnimatedStyle(() => {
-    if (useRange) {
-      return {
-        transform: [{translateX: defaultThumbOffset.value.x * rtlFix}],
-        width: activeTrackWidth.value
-      };
-    } else {
-      return {
-        width: activeTrackWidth.value
-      };
-    }
-  });
 
   /** renders */
 
