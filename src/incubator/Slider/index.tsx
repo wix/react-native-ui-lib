@@ -1,14 +1,15 @@
 import isNumber from 'lodash/isNumber';
-import isFunction from 'lodash/isFunction';
 import React, {useImperativeHandle, useCallback, useMemo} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
-import {GestureDetector, Gesture} from 'react-native-gesture-handler';
+import {Gesture} from 'react-native-gesture-handler';
 import {useSharedValue, useAnimatedStyle, withSpring, runOnJS, interpolate} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
+import Thumb from './Thumb';
+import Track from './Track';
 
 type Props = SliderProps & ForwardRefInjectedProps;
 
@@ -81,25 +82,14 @@ const Slider = (props: Props) => {
 
   const rtlFix = Constants.isRTL ? -1 : 1;
   const shouldDisableRTL = Constants.isRTL && disableRTL;
-  const shouldRenderCustomTrack = isFunction(renderTrack);
   const shouldBounceToStep = step > 0;
   const stepXValue = useSharedValue(step);
-
   const trackSize = useSharedValue({width: 0, height: TRACK_HEIGHT});
   const activeTrackWidth = useSharedValue(0);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
   const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize.value.width : 0;
 
-  const defaultThumbStyle: StyleProp<ViewStyle> = [
-    styles.thumb,
-    {
-      backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy
-    }
-  ];
-  const _thumbStyle = useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(thumbStyle || defaultThumbStyle))));
-  const _activeThumbStyle = useSharedValue(
-    activeThumbStyle ? JSON.parse(JSON.stringify(StyleSheet.flatten(activeThumbStyle))) : undefined
-  );
+  /** actions */
 
   const getXForValue = (value: number, trackWidth: number) => {
     const range = maximumValue - minimumValue;
@@ -109,7 +99,7 @@ const Slider = (props: Props) => {
     const x = ratio * trackWidth;
     return x;
   };
-
+  
   const getValueForX = (x: number) => {
     if (trackSize.value.width) {
       const ratio = x / trackSize.value.width;
@@ -245,6 +235,14 @@ const Slider = (props: Props) => {
   const isPressedRange = useSharedValue(false);
   const rangeThumbOffset = useSharedValue({x: 0, y: 0});
   const rangeThumbStart = useSharedValue({x: 0, y: 0});
+
+  const defaultThumbStyle: StyleProp<ViewStyle> = [
+    styles.thumb,
+    {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy}
+  ];
+  const _thumbStyle = useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(thumbStyle || defaultThumbStyle))));
+  const _activeThumbStyle = 
+    useSharedValue(activeThumbStyle ? JSON.parse(JSON.stringify(StyleSheet.flatten(activeThumbStyle))) : undefined);
 
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
@@ -420,69 +418,37 @@ const Slider = (props: Props) => {
 
   const renderRangeThumb = () => {
     return (
-      <GestureDetector gesture={rangeThumbGesture}>
-        <View
-          reanimated
-          style={[styles.thumbPosition, styles.thumbShadow, rangeThumbAnimatedStyles]}
-          hitSlop={thumbHitSlop}
-        />
-      </GestureDetector>
+      <Thumb
+        gesture={rangeThumbGesture}
+        animatedStyle={rangeThumbAnimatedStyles}
+        hitSlop={thumbHitSlop}
+        onLayout={onThumbLayout}
+      />
     );
   };
 
   const renderDefaultThumb = () => {
     return (
-      <GestureDetector gesture={defaultThumbGesture}>
-        <View
-          reanimated
-          style={[styles.thumbPosition, styles.thumbShadow, defaultThumbAnimatedStyles]}
-          hitSlop={thumbHitSlop}
-          onLayout={onThumbLayout}
-        />
-      </GestureDetector>
-    );
-  };
-
-  const renderCustomTrack = () => {
-    return (
-      <View style={[styles.track, trackStyle, {backgroundColor: maximumTrackTintColor}]} onLayout={onTrackLayout}>
-        {renderTrack?.()}
-      </View>
-    );
-  };
-
-  const renderBackgroundTrack = () => {
-    return (
-      <View
-        style={[
-          styles.track,
-          trackStyle,
-          {
-            backgroundColor: disabled
-              ? Colors.$backgroundNeutralMedium
-              : maximumTrackTintColor || Colors.$backgroundDisabled
-          }
-        ]}
-        onLayout={onTrackLayout}
+      <Thumb
+        gesture={defaultThumbGesture}
+        animatedStyle={defaultThumbAnimatedStyles}
+        hitSlop={thumbHitSlop}
+        onLayout={onThumbLayout}
       />
     );
   };
 
-  const renderActiveTrack = () => {
+  const _renderTrack = () => {
     return (
-      <View
-        reanimated
-        style={[
-          styles.track,
-          trackStyle,
-          styles.activeTrack,
-          {
-            backgroundColor: disabled
-              ? Colors.$backgroundDisabled
-              : minimumTrackTintColor || Colors.$backgroundPrimaryHeavy
-          },
-          trackAnimatedStyles
-        ]}
+      <Track
+        renderTrack={renderTrack}
+        onLayout={onTrackLayout}
+        onPress={onTrackPress}
+        animatedStyle={trackAnimatedStyles}
+        disabled={disabled}
+        maximumTrackTintColor={maximumTrackTintColor}
+        minimumTrackTintColor={minimumTrackTintColor}
+        trackStyle={trackStyle}
       />
     );
   };
@@ -497,9 +463,7 @@ const Slider = (props: Props) => {
       testID={testID}
       {...accessibilityProps}
     >
-      {shouldRenderCustomTrack ? renderCustomTrack() : renderBackgroundTrack()}
-      {!shouldRenderCustomTrack && renderActiveTrack()}
-      <View style={styles.touchArea} onTouchEnd={onTrackPress}/>
+      {_renderTrack()}
       {renderDefaultThumb()}
       {useRange && renderRangeThumb()}
     </View>
@@ -517,34 +481,11 @@ const styles = StyleSheet.create({
   disableRTL: {
     transform: [{scaleX: -1}]
   },
-  track: {
-    height: TRACK_HEIGHT,
-    borderRadius: TRACK_HEIGHT / 2
-  },
-  activeTrack: {
-    position: 'absolute',
-    left: 0,
-    right: 0
-  },
-  touchArea: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: Colors.transparent
-  },
   thumb: {
     width: THUMB_SIZE,
     height: THUMB_SIZE,
     borderRadius: THUMB_SIZE / 2,
     borderWidth: THUMB_BORDER_WIDTH,
     borderColor: Colors.$backgroundElevatedLight
-  },
-  thumbPosition: {
-    position: 'absolute'
-  },
-  thumbShadow: {
-    shadowColor: Colors.rgba(Colors.black, 0.3),
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 0.9,
-    shadowRadius: SHADOW_RADIUS,
-    elevation: 2
   }
 });
