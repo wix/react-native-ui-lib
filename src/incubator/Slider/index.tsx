@@ -90,6 +90,14 @@ const Slider = (props: Props) => {
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
   const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize.value.width : 0;
 
+  const getStepInterpolated = () => {
+    'worklet';
+    const outputRange = [0, trackSize.value.width];
+    const inputRange = minimumValue < 0 ? 
+      [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
+    return interpolate(stepXValue.value, inputRange, outputRange);
+  };
+
   const setInitialPositions = (trackWidth: number) => {
     validateValues(props);
 
@@ -144,7 +152,8 @@ const Slider = (props: Props) => {
       locationX = trackSize.value.width - locationX;
     }
     if (shouldBounceToStep) {
-      locationX = getStepComputedX(locationX);
+      const interpolated = Math.abs(getStepInterpolated());
+      locationX = Math.round(locationX / interpolated) * interpolated;
     }
     if (useRange) {
       if (locationX === defaultThumbOffset.value.x) {
@@ -266,13 +275,9 @@ const Slider = (props: Props) => {
     .onFinalize(() => {
       isPressedDefault.value = false;
       if (shouldBounceToStep) {
-        const x = defaultThumbOffset.value.x;
-        const outputRange = [0, trackSize.value.width];
-        const inputRange =
-          minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
-        const stepInterpolated = interpolate(stepXValue.value, inputRange, outputRange);
-        const newX = Math.round(x / stepInterpolated) * stepInterpolated;
-        updateDefaultThumb(newX); // getStepComputedX(x) - worklet error
+        const interpolated = getStepInterpolated();
+        const newX = Math.round(defaultThumbOffset.value.x / interpolated) * interpolated;
+        updateDefaultThumb(newX);
       }
     });
   defaultThumbGesture.enabled(!disabled);
@@ -301,25 +306,12 @@ const Slider = (props: Props) => {
     .onFinalize(() => {
       isPressedRange.value = false;
       if (shouldBounceToStep) {
-        const x = rangeThumbOffset.value.x;
-        const outputRange = [0, trackSize.value.width];
-        const inputRange = 
-          minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
-        const stepInterpolated = interpolate(stepXValue.value, inputRange, outputRange);
-        const newX = Math.round(x / stepInterpolated) * stepInterpolated;
-        updateRangeThumb(newX); // getStepComputedX(x) - worklet error
+        const interpolated = getStepInterpolated();
+        const newX = Math.round(rangeThumbOffset.value.x / interpolated) * interpolated;
+        updateRangeThumb(newX);
       }
     });
   rangeThumbGesture.enabled(!disabled);
-
-  const getStepComputedX = (x: number) => {
-    'worklet';
-    const outputRange = [0, trackSize.value.width];
-    const inputRange =
-      minimumValue < 0 ? [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
-    const stepInterpolated = Math.abs(interpolate(stepXValue.value, inputRange, outputRange));
-    return Math.round(x / stepInterpolated) * stepInterpolated;
-  };
 
   /** renders */
 
