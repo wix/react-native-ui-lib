@@ -17,6 +17,7 @@ import {
   PanGestureHandlerEventPayload
 } from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from '../../style';
+import {useDidUpdate} from '../../hooks';
 import {asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
 import Modal from '../../components/modal';
@@ -108,7 +109,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, wasMeasured]);
 
-  useEffect(() => {
+  useDidUpdate(() => {
     if (wasMeasured) {
       if (modalVisibility) {
         open();
