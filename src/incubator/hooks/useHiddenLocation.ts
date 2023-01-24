@@ -10,13 +10,16 @@ export interface HiddenLocation extends HiddenLocationRecord {
   wasMeasured: boolean;
 }
 
+// Adding this for headless tests that are not triggering onLayout
+const wasMeasuredDefaultValue = global?.describe !== undefined ?? false;
+
 export default function useHiddenLocation<T extends View>() {
   const getHiddenLocation = ({
     x = 0,
     y = 0,
     width = Constants.screenWidth,
     height = Constants.windowHeight,
-    wasMeasured = false
+    wasMeasured = wasMeasuredDefaultValue
   }): HiddenLocation => {
     return {
       up: -y - height,
@@ -30,7 +33,7 @@ export default function useHiddenLocation<T extends View>() {
   const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
   const ref = useRef<T>();
   const layoutData = useRef<LayoutRectangle>();
-  const wasMeasured = useRef(false);
+  const wasMeasured = useRef(wasMeasuredDefaultValue);
 
   const measure = useCallback(() => {
     if (ref.current && layoutData.current && layoutData.current.width > 0 && layoutData.current.height > 0) {
