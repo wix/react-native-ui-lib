@@ -9,6 +9,7 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import {TextProps} from '../../components/text';
+import {RecorderTag} from 'services';
 import {PropsWithChildren, ReactElement} from 'react';
 
 export type ColorType =
@@ -144,6 +145,10 @@ export interface InputProps
    * Use react-native-gesture-handler instead of react-native for the base TextInput
    */
   useGestureHandlerInput?: boolean;
+  /**
+   * Recorder tag
+   */
+  recorderTag?: RecorderTag;
 }
 
 export type TextFieldProps = MarginModifiers &

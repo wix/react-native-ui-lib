@@ -11,6 +11,7 @@ import {
   ColorsModifiers,
   FlexModifiers
 } from '../../commons/new';
+import {RecorderTag} from 'services';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
 
@@ -47,6 +48,10 @@ export type TextProps = RNTextProps &
      * Use Animated.Text as a container
      */
     animated?: boolean;
+    /**
+     * Recorder tag
+     */
+    recorderTag?: RecorderTag;
     textAlign?: string;
     style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
   };
@@ -64,6 +69,10 @@ type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPro
  */
 class Text extends PureComponent<PropsTypes> {
   static displayName = 'Text';
+  static defaultProps = {
+    recorderTag: 'unmask'
+  };
+
   private TextContainer: React.ClassType<any, any, any> = this.props.animated
     ? Animated.createAnimatedComponent(RNText)
     : RNText;
@@ -103,7 +112,7 @@ class Text extends PureComponent<PropsTypes> {
   }
 
   render() {
-    const {modifiers, style, center, uppercase, underline, children, forwardedRef, ...others} = this.props;
+    const {modifiers, style, center, uppercase, underline, children, forwardedRef, recorderTag, ...others} = this.props;
     const color = this.props.color || modifiers.color;
     const {margins, typography, backgroundColor, flexStyle} = modifiers;
     const textStyle = [
@@ -122,7 +131,7 @@ class Text extends PureComponent<PropsTypes> {
     const TextContainer = this.TextContainer;
 
     return (
-      <TextContainer {...others} style={textStyle} ref={forwardedRef}>
+      <TextContainer fsTagName={recorderTag} {...others} style={textStyle} ref={forwardedRef}>
         {this.renderText(children)}
       </TextContainer>
     );

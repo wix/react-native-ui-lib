@@ -2,6 +2,7 @@ import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
 import {Constants, ContainerModifiers} from '../../commons/new';
+import {RecorderTag} from 'services';
 
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers {
   /**
@@ -36,6 +37,10 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, C
    * Set background color
    */
   backgroundColor?: string;
+  /**
+   * Recorder tag
+   */
+  recorderTag?: RecorderTag;
   style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
 
@@ -74,6 +79,7 @@ function View(props: ViewProps, ref: any) {
     reanimated,
     children,
     backgroundColor: backgroundColorProps,
+    recorderTag,
     ...others
   } = themeProps;
   const {
@@ -145,6 +151,7 @@ function View(props: ViewProps, ref: any) {
       accessibilityElementsHidden={inaccessible}
       importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
       {...others}
+      fsTagName={recorderTag}
       style={_style}
       ref={ref}
     >
@@ -153,4 +160,7 @@ function View(props: ViewProps, ref: any) {
   );
 }
 
+View.defaultProps = {
+  recorderTag: 'unmask'
+};
 export default React.forwardRef<RNView, ViewProps>(View);

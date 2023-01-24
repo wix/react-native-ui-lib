@@ -8,6 +8,7 @@ import {
   ForwardRefInjectedProps,
   ContainerModifiers
 } from '../../commons/new';
+import {RecorderTag} from 'services';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 import {ViewProps} from '../view';
 
@@ -42,6 +43,10 @@ export interface TouchableOpacityProps
    * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
    */
   customValue?: any;
+  /**
+   * Recorder tag
+   */
+  recorderTag?: RecorderTag;
   style?: ViewProps['style'];
   onPress?: (props?: TouchableOpacityProps | any) => void;
   onPressIn?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressIn'];
@@ -61,6 +66,9 @@ type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpa
  */
 class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   static displayName = 'TouchableOpacity';
+  static defaultProps = {
+    recorderTag: 'unmask'
+  };
 
   constructor(props: Props) {
     super(props);
@@ -123,17 +131,18 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 
   render() {
-    const {useNative, activeScale, style, modifiers, forwardedRef, ...others} = this.props;
+    const {useNative, activeScale, style, modifiers, forwardedRef, recorderTag, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     if (useNative || !_.isUndefined(activeScale)) {
       // @ts-ignore
-      return <IncubatorTouchableOpacity {...this.props}/>;
+      return <IncubatorTouchableOpacity fsTagName={recorderTag} {...this.props}/>;
     }
 
     return (
       // @ts-ignore
       <RNTouchableOpacity
+        fsTagName={recorderTag}
         {...this.getAccessibilityInfo()}
         {...others}
         onPress={this.onPress}

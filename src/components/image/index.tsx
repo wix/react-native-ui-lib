@@ -18,6 +18,7 @@ import {
   BaseComponentInjectedProps,
   MarginModifiers
 } from '../../commons/new';
+import {RecorderTag} from 'services';
 import {getAsset, isSvg} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
@@ -93,6 +94,10 @@ export type ImageProps = RNImageProps &
      * The image height
      */
     height?: string | number;
+    /**
+     * Recorder tag
+     */
+    recorderTag?: RecorderTag;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
@@ -114,7 +119,8 @@ class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
 
   static defaultProps = {
-    assetGroup: 'icons'
+    assetGroup: 'icons',
+    recorderTag: 'mask'
   };
 
   public static overlayTypes = Overlay.overlayTypes;
@@ -187,8 +193,8 @@ class Image extends PureComponent<Props, State> {
   };
 
   renderSvg = () => {
-    const {source, ...others} = this.props;
-    return <SvgImage data={source} {...others}/>;
+    const {source, recorderTag, ...others} = this.props;
+    return <SvgImage data={source} fsTagName={recorderTag} {...others}/>;
   };
 
   renderImageWithContainer = () => {
@@ -218,6 +224,7 @@ class Image extends PureComponent<Props, State> {
       overlayColor,
       customOverlayContent,
       modifiers,
+      recorderTag,
       ...others
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
@@ -243,6 +250,7 @@ class Image extends PureComponent<Props, State> {
         accessible={false}
         accessibilityRole={'image'}
         {...others}
+        fsTagName={recorderTag}
         onError={this.onError}
         source={source}
       >

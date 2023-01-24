@@ -22,6 +22,7 @@
     },
     {"name": "renderDelay", "type": "number", "description": "Experimental: Pass time in ms to delay render"},
     {"name": "backgroundColor", "type": "string", "description": "Set background color"},
+    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag", "default": "'unmask'"},
     {"name": "style", "type": "ViewStyle", "description": "Custom style"}
   ]
 }

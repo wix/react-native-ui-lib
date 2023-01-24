@@ -19,6 +19,7 @@ const Input = ({
   forwardedRef,
   formatter,
   useGestureHandlerInput,
+  recorderTag,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
   const inputRef = useImperativeInputHandle(forwardedRef, {onChangeText: props.onChangeText});
@@ -41,6 +42,7 @@ const Input = ({
 
   return (
     <TextInput
+      fsTagName={recorderTag}
       style={[styles.input, !!inputColor && {color: inputColor}, style, Constants.isWeb && styles.webStyle]}
       {...props}
       value={value}
@@ -76,4 +78,8 @@ const styles = StyleSheet.create({
 });
 
 Input.displayName = 'Incubator.TextField';
+Input.defaultProps = {
+  recorderTag: 'mask'
+};
+
 export default Input;
