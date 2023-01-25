@@ -2,6 +2,7 @@ import findIndex from 'lodash/findIndex';
 import React, {PropsWithChildren, useCallback, useMemo, useRef} from 'react';
 import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import {FlashList} from '@shopify/flash-list';
+import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
 import {isSameMonth, getDateObject} from './helpers/DateUtils';
@@ -12,12 +13,17 @@ import Agenda from './Agenda';
 
 // TODO: Move this logic elsewhere to pre-generate on install?
 const MONTH_ITEMS = generateMonthItems(5);
-
+const getIndex = (date: number) => {
+  const dateObject = getDateObject(date);
+  return findIndex(MONTH_ITEMS, (item) => item.year === dateObject.year && item.month === dateObject.month);
+};
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.MONDAY} = props;
+  
   const flashListRef = useRef();
-
+  const calendarWidth = Constants.screenWidth;
   const current = useSharedValue<number>(initialDate);
+  const initialMonthIndex = useRef(getIndex(current.value));
   const lastUpdateSource = useSharedValue<UpdateSource | undefined>(undefined);
   const processedData = useMemo(() => addHeaders(data), [data]);
 
@@ -37,21 +43,16 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     };
   }, []);
 
-  const getIndex = (date: number) => {
-    const dateObject = getDateObject(date);
-    return findIndex(MONTH_ITEMS, (item) => item.year === dateObject.year && item.month === dateObject.month);
-  };
-
   const scrollToIndex = useCallback((date: number) => {
     flashListRef.current?.scrollToIndex({index: getIndex(date), animated: false});
+    // flashListRef.current?.scrollToOffset({animated: false, offset: getIndex(date) * calendarWidth});
   }, []);
 
   useAnimatedReaction(() => {
     return current.value;
   }, (selected, previous) => {
     if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
-      // TODO: !previous || for first load - replace with 'initialScrollIndex' and change to previous &&
-      if (!previous || !isSameMonth(selected, previous)) {
+      if (previous && !isSameMonth(selected, previous)) {
         runOnJS(scrollToIndex)(selected);
       }
     }
@@ -65,9 +66,10 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     <CalendarContext.Provider value={contextValue}>
       <FlashList
         ref={flashListRef}
-        estimatedItemSize={353}
+        estimatedItemSize={calendarWidth}
         data={MONTH_ITEMS}
-        // initialScrollIndex={Math.floor(MONTH_ITEMS.length / 2)}
+        initialScrollIndex={initialMonthIndex.current}
+        estimatedFirstItemOffset={0}
         renderItem={renderCalendarItem}
         horizontal
         pagingEnabled
