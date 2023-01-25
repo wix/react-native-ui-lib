@@ -1,11 +1,11 @@
 import findIndex from 'lodash/findIndex';
 import React, {PropsWithChildren, useCallback, useMemo, useRef} from 'react';
 import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
-import {FlashList} from '@shopify/flash-list';
+import {FlashList, ViewToken} from '@shopify/flash-list';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
-import {isSameMonth, getDateObject} from './helpers/DateUtils';
+import {isSameMonth} from './helpers/DateUtils';
 import {CalendarContextProps, CalendarProps, FirstDayOfWeek, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
@@ -14,9 +14,9 @@ import Agenda from './Agenda';
 // TODO: Move this logic elsewhere to pre-generate on install?
 const MONTH_ITEMS = generateMonthItems(5);
 const getIndex = (date: number) => {
-  const dateObject = getDateObject(date);
-  return findIndex(MONTH_ITEMS, (item) => item.year === dateObject.year && item.month === dateObject.month);
+  return findIndex(MONTH_ITEMS, (item) => isSameMonth(item, date));
 };
+
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.MONDAY} = props;
   
@@ -26,6 +26,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   const initialMonthIndex = useRef(getIndex(current.value));
   const lastUpdateSource = useSharedValue<UpdateSource>(UpdateSource.INIT);
   const processedData = useMemo(() => addHeaders(data), [data]);
+  const scrolledByUser = useSharedValue<boolean>(false);
 
   const setDate = useCallback<CalendarContextProps['setDate']>((date: number, updateSource: UpdateSource) => {
     current.value = date;
@@ -58,6 +59,24 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     }
   }, []);
 
+  const onViewableItemsChanged = useCallback(({viewableItems}) => {
+    if (scrolledByUser.value) {
+      const item = viewableItems?.[0]?.item;
+      if (item && !isSameMonth(item, current.value)) {
+        const newDate = new Date(Date.UTC(item.year, item.month, 1)).getTime();
+        setDate(newDate, UpdateSource.MONTH_SCROLL);
+      }
+    }
+  }, []);
+
+  const onMomentumScrollBegin = useCallback(() => {
+    scrolledByUser.value = true;
+  }, []);
+
+  const onScrollBeginDrag = useCallback(() => {
+    scrolledByUser.value = true;
+  }, []);
+
   const renderCalendarItem = useCallback(({item}) => {
     return <CalendarItem year={item.year} month={item.month}/>;
   }, []);
@@ -74,6 +93,9 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
+        onViewableItemsChanged={onViewableItemsChanged}
+        onMomentumScrollBegin={onMomentumScrollBegin}
+        onScrollBeginDrag={onScrollBeginDrag}
       />
       {children}
     </CalendarContext.Provider>
