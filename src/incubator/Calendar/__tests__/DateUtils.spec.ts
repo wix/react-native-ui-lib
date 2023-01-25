@@ -252,6 +252,26 @@ describe('Calendar/DateUtils', () => {
     it('should return true for different years using timestamps', () => {
       expect(DateUtils.isSameMonth(1673949947000, 1705485947000)).toBe(false);
     });
+
+    it('should return false for same month in MonthProps date format', () => {
+      expect(DateUtils.isSameMonth({month: 11, year: 2026}, {month: 10, year: 2026})).toBe(false);
+    });
+
+    it('should return false for same month in MonthProps date format', () => {
+      expect(DateUtils.isSameMonth({month: 10, year: 2023}, {month: 10, year: 2026})).toBe(false);
+    });
+
+    it('should return true for same month in MonthProps date format', () => {
+      expect(DateUtils.isSameMonth({month: 10, year: 2026}, {month: 10, year: 2026})).toBe(true);
+    });
+
+    it('should return true for same month in different date format', () => {
+      expect(DateUtils.isSameMonth({month: 0, year: 2022}, new Date('2022-01-27').getTime())).toBe(true);
+    });
+
+    it('should return true for same month in different date format', () => {
+      expect(DateUtils.isSameMonth(new Date('2026-11-27').getTime(), {month: 10, year: 2026})).toBe(true);
+    });
   });
 
   describe('getMonthForIndex', () => {

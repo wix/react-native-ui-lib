@@ -1,5 +1,6 @@
+import isNumber from 'lodash/isNumber';
 import getWeek from 'date-fns/getWeek';
-import {FirstDayOfWeek, DayNamesFormat} from '../types';
+import {FirstDayOfWeek, DayNamesFormat, MonthProps} from '../types';
 
 export const HOUR_TO_MS = 60 * 60 * 1000;
 const DAY_TO_MS = 24 * HOUR_TO_MS;
@@ -118,10 +119,10 @@ export function isSameDay(d1: number, d2: number) {
   return false;
 }
 
-export function isSameMonth(d1: number, d2: number) {
+export function isSameMonth(d1: number | MonthProps, d2: number | MonthProps) {
   'worklet';
-  const a = getDateObject(d1);
-  const b = getDateObject(d2);
+  const a = isNumber(d1) ? getDateObject(d1) : d1;
+  const b = isNumber(d2) ? getDateObject(d2) : d2;
   
   if (a.year === b.year) {
     if (a.month === b.month) {
@@ -130,6 +131,5 @@ export function isSameMonth(d1: number, d2: number) {
   }
   return false;
 }
-
 
 export const _forTesting = {getFirstDayInTheYear}; // exporting private functions for testing only
