@@ -248,8 +248,8 @@ class Image extends PureComponent<Props, State> {
         ]}
         accessible={false}
         accessibilityRole={'image'}
-        {...others}
         fsTagName={recorderTag}
+        {...others}
         onError={this.onError}
         source={source}
       >

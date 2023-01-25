@@ -78,5 +78,4 @@ const styles = StyleSheet.create({
 });
 
 Input.displayName = 'Incubator.TextField';
-
 export default Input;

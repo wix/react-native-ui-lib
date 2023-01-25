@@ -150,8 +150,8 @@ function View(props: ViewProps, ref: any) {
     <ViewContainer
       accessibilityElementsHidden={inaccessible}
       importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
-      {...others}
       fsTagName={recorderTag}
+      {...others}
       style={_style}
       ref={ref}
     >
