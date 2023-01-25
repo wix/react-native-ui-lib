@@ -11,13 +11,21 @@ export function getXForValue(value: number, trackWidth: number, props: SliderPro
   return x;
 }
 
+function countDecimals(value: number) {
+  if (Math.floor(value.valueOf()) === value.valueOf()) {
+    return 0;
+  }
+  return value.toString().split('.')[1].length || 0; 
+}
+
 export function getValueForX(x: number, trackWidth: number, props: SliderProps) {
   const {minimumValue = 0, maximumValue = 1, step = 0} = props;
 
   if (trackWidth) {
     const ratio = x / trackWidth;
     const range = maximumValue - minimumValue;
-    const val = step > 0 ? Math.round((ratio * range) / step) * step : ratio * range;
+    const decimals = countDecimals(step);
+    const val = step > 0 ? Number((Math.round((ratio * range) / step) * step).toFixed(decimals)) : ratio * range;
     return Math.max(minimumValue, Math.min(maximumValue, minimumValue + val));
   }
   return 0;
