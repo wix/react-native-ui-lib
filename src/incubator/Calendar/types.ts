@@ -8,6 +8,7 @@ export enum FirstDayOfWeek {
 }
 
 export enum UpdateSource {
+  INIT,
   DAY_SELECT,
   MONTH_ARROW,
   MONTH_SCROLL,

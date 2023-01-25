@@ -1,7 +1,6 @@
 import React, {useContext, useCallback, useRef} from 'react';
 import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
 import {FlashList, ViewToken} from '@shopify/flash-list';
-import {Constants} from '../../commons/new';
 import {BorderRadiuses} from 'style';
 import View from '../../components/view';
 import Text from '../../components/text';
@@ -13,7 +12,7 @@ function Agenda() {
   const {data, selectedDate, setDate, updateSource} = useContext(CalendarContext);
   const flashList = useRef<FlashList<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
-  const scrolledByUser = useSharedValue<boolean>(true);
+  const scrolledByUser = useSharedValue<boolean>(false);
 
   const keyExtractor = useCallback((item: InternalEvent) => {
     return item.type === 'Event' ? item.id : item.header;
@@ -82,8 +81,7 @@ function Agenda() {
     if (isInitial) {
       setTimeout(() => {
         flashList.current?.scrollToIndex({index, animated: false});
-      },
-      Constants.isIOS ? 500 : 1000); // TODO: Find a better solution (compare where we got to?)
+      }, 2000); // TODO: Find a better solution (compare where we got to?)
     } else {
       flashList.current?.scrollToIndex({index, animated: true});
     }
@@ -96,8 +94,7 @@ function Agenda() {
     if (updateSource?.value !== UpdateSource.AGENDA_SCROLL) {
       if (
         selected !== previous &&
-          closestSectionHeader.value?.date &&
-          !isSameDay(selected, closestSectionHeader.value?.date)
+          (closestSectionHeader.value?.date === undefined || !isSameDay(selected, closestSectionHeader.value?.date))
       ) {
         const result = findClosestDateAfter(selected);
         if (result !== null) {
@@ -148,6 +145,7 @@ function Agenda() {
       onViewableItemsChanged={onViewableItemsChanged}
       onMomentumScrollBegin={onMomentumScrollBegin}
       onScrollBeginDrag={onScrollBeginDrag}
+      // initialScrollIndex - unfortunately we cannot use this because we need the timeout above
     />
   );
 }

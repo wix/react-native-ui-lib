@@ -24,7 +24,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   const calendarWidth = Constants.screenWidth;
   const current = useSharedValue<number>(initialDate);
   const initialMonthIndex = useRef(getIndex(current.value));
-  const lastUpdateSource = useSharedValue<UpdateSource | undefined>(undefined);
+  const lastUpdateSource = useSharedValue<UpdateSource>(UpdateSource.INIT);
   const processedData = useMemo(() => addHeaders(data), [data]);
 
   const setDate = useCallback<CalendarContextProps['setDate']>((date: number, updateSource: UpdateSource) => {
