@@ -78,8 +78,5 @@ const styles = StyleSheet.create({
 });
 
 Input.displayName = 'Incubator.TextField';
-Input.defaultProps = {
-  recorderTag: 'mask'
-};
 
 export default Input;

@@ -27,7 +27,7 @@
       "description": "Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback"
     },
     {"name": "style", "type": "ViewStyle", "description": "Custom style"},
-    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag", "default": "'unmask'"},
+    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
     {"name": "onPress", "type": "(props) => void", "description": "On press callback"}
   ],
   "snippet": [

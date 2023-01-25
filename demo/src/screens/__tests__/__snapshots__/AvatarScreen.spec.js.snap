@@ -31,7 +31,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -138,7 +137,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -251,7 +249,6 @@ exports[`AvatarScreen renders screen 1`] = `
         >
           <Text
             $textDefaultLight={true}
-            fsTagName="unmask"
             numberOfLines={1}
             style={
               Array [
@@ -306,7 +303,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -391,7 +387,6 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
-            fsTagName="unmask"
             numberOfLines={1}
             style={
               Array [
@@ -459,7 +454,6 @@ exports[`AvatarScreen renders screen 1`] = `
         >
           <Text
             $textDefaultLight={true}
-            fsTagName="unmask"
             numberOfLines={1}
             style={
               Array [
@@ -514,7 +508,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -599,7 +592,6 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
-            fsTagName="unmask"
             numberOfLines={1}
             style={
               Array [
@@ -726,7 +718,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -828,7 +819,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 50,
             }
           }
-          fsTagName="mask"
           onError={[Function]}
           source={
             Object {
@@ -962,7 +952,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -1064,7 +1053,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 40,
             }
           }
-          fsTagName="mask"
           onError={[Function]}
           source={
             Object {
@@ -1198,7 +1186,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -1311,7 +1298,6 @@ exports[`AvatarScreen renders screen 1`] = `
             accessibilityRole="image"
             accessible={false}
             assetGroup="icons"
-            fsTagName="mask"
             onError={[Function]}
             onLoad={[Function]}
             source={
@@ -1385,7 +1371,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -1487,7 +1472,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 70,
             }
           }
-          fsTagName="mask"
           onError={[Function]}
           source={
             Object {
@@ -1621,7 +1605,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -1723,7 +1706,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 60,
             }
           }
-          fsTagName="mask"
           onError={[Function]}
           source={
             Object {
@@ -1850,7 +1832,6 @@ exports[`AvatarScreen renders screen 1`] = `
               accessible={false}
               assetGroup="icons"
               borderColor="#FFFFFF"
-              fsTagName="mask"
               onError={[Function]}
               resizeMode="contain"
               source={
@@ -1902,7 +1883,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -2004,7 +1984,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 48,
             }
           }
-          fsTagName="mask"
           onError={[Function]}
           source={
             Object {
@@ -2071,7 +2050,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -2161,7 +2139,6 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
-            fsTagName="unmask"
             numberOfLines={1}
             style={
               Array [
@@ -2211,7 +2188,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 50,
             }
           }
-          fsTagName="mask"
           onError={[Function]}
           onLoadEnd={[Function]}
           onLoadStart={[Function]}
@@ -2280,7 +2256,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -2370,7 +2345,6 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
-            fsTagName="unmask"
             numberOfLines={1}
             style={
               Array [
@@ -2420,7 +2394,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 50,
             }
           }
-          fsTagName="mask"
           onError={[Function]}
           onLoadEnd={[Function]}
           onLoadStart={[Function]}
@@ -2489,7 +2462,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -2591,7 +2563,6 @@ exports[`AvatarScreen renders screen 1`] = `
               "width": 50,
             }
           }
-          fsTagName="mask"
           onError={[Function]}
           source={
             Object {
@@ -2658,7 +2629,6 @@ exports[`AvatarScreen renders screen 1`] = `
     >
       <Text
         $textDefault={true}
-        fsTagName="unmask"
         style={
           Array [
             Object {
@@ -2743,7 +2713,6 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
-            fsTagName="unmask"
             numberOfLines={1}
             style={
               Array [

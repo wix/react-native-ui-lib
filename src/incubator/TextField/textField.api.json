@@ -98,7 +98,7 @@
       "type": "boolean",
       "description": "Use react-native-gesture-handler instead of react-native for the base TextInput"
     },
-    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag", "default": "'mask'"}
+    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
   ],
   "snippet": [
     "<TextField",

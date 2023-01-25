@@ -69,8 +69,7 @@ const Icon = (props: Props) => {
 
 Icon.displayName = 'Icon';
 Icon.defaultProps = {
-  assetGroup: 'icons',
-  recorderTag: 'unmask'
+  assetGroup: 'icons'
 };
 export default asBaseComponent<IconProps, typeof Icon>(Icon, {modifiersOptions: {margins: true}});
 

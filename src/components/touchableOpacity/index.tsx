@@ -66,9 +66,6 @@ type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpa
  */
 class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   static displayName = 'TouchableOpacity';
-  static defaultProps = {
-    recorderTag: 'unmask'
-  };
 
   constructor(props: Props) {
     super(props);

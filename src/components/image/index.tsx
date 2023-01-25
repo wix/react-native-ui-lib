@@ -119,8 +119,7 @@ class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
 
   static defaultProps = {
-    assetGroup: 'icons',
-    recorderTag: 'mask'
+    assetGroup: 'icons'
   };
 
   public static overlayTypes = Overlay.overlayTypes;

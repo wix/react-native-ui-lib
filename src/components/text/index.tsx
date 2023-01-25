@@ -69,9 +69,6 @@ type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPro
  */
 class Text extends PureComponent<PropsTypes> {
   static displayName = 'Text';
-  static defaultProps = {
-    recorderTag: 'unmask'
-  };
 
   private TextContainer: React.ClassType<any, any, any> = this.props.animated
     ? Animated.createAnimatedComponent(RNText)

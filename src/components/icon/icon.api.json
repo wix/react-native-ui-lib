@@ -12,7 +12,7 @@
     {"name": "tintColor", "type": "string", "description": "The icon tint"},
     {"name": "size", "type": "number", "description": "The icon size"},
     {"name": "supportRTL", "type": "boolean", "description": "whether the image should flip horizontally on RTL locals"},
-    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag", "default": "'unmask'"}
+    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
   ],
   "snippet": [
     "<Icon source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/icons/delete.png'}$1} size={24$2} tintColor={Colors.grey40$3}/>"

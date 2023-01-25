@@ -160,7 +160,4 @@ function View(props: ViewProps, ref: any) {
   );
 }
 
-View.defaultProps = {
-  recorderTag: 'unmask'
-};
 export default React.forwardRef<RNView, ViewProps>(View);
