@@ -24,8 +24,11 @@ export function getValueForX(x: number, trackWidth: number, props: SliderProps) 
   if (trackWidth) {
     const ratio = x / trackWidth;
     const range = maximumValue - minimumValue;
-    const decimals = countDecimals(step);
-    const val = step > 0 ? Number((Math.round((ratio * range) / step) * step).toFixed(decimals)) : ratio * range;
+    let val = ratio * range;
+    if (step > 0) {
+      const decimals = countDecimals(step);
+      val = Number((Math.round((ratio * range) / step) * step).toFixed(decimals));
+    }
     return Math.max(minimumValue, Math.min(maximumValue, minimumValue + val));
   }
   return 0;
@@ -34,17 +37,16 @@ export function getValueForX(x: number, trackWidth: number, props: SliderProps) 
 export function validateValues(props: SliderProps) {
   const {useRange, value, minimumValue, maximumValue, initialMinimumValue, initialMaximumValue} = props;
   if (minimumValue > maximumValue || 
-    (useRange && initialMinimumValue && initialMaximumValue && initialMinimumValue > initialMaximumValue)) {
+    useRange && initialMinimumValue && initialMaximumValue && initialMinimumValue > initialMaximumValue) {
     console.error('Your passed values are invalid. Please check if minimum values are not higher than maximum values');
   }
   if (value !== undefined && minimumValue && maximumValue && !inRange(value, minimumValue, maximumValue)) {
-    console.error(`Your passed value (${value}) is invalid. Please check that it is in range of the minimum (${minimumValue}) and maximum (${maximumValue}) values`);
+    console.error(`Your passed value (${value}) is invalid. 
+      Please check that it is in range of the minimum (${minimumValue}) and maximum (${maximumValue}) values`);
   }
   if (useRange && initialMinimumValue && initialMaximumValue) {
-    if (
-      !inRange(initialMinimumValue, minimumValue, maximumValue) ||
-      !inRange(initialMaximumValue, minimumValue, maximumValue)
-    ) {
+    if (!inRange(initialMinimumValue, minimumValue, maximumValue) ||
+      !inRange(initialMaximumValue, minimumValue, maximumValue)) {
       console.error('Your passed values are invalid. Please check that they are in range of the minimum and maximum values');
     }
   }
