@@ -5,12 +5,12 @@ import {Constants} from '../../commons/new';
 import {BorderRadiuses} from 'style';
 import View from '../../components/view';
 import Text from '../../components/text';
-import {HOUR_TO_MS} from './helpers/DateUtils';
+import {isSameDay, HOUR_TO_MS} from './helpers/DateUtils';
 import {InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 function Agenda() {
-  const {data, selectedDate, setDate} = useContext(CalendarContext);
+  const {data, selectedDate, setDate, updateSource} = useContext(CalendarContext);
   const flashList = useRef<FlashList<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
   const scrolledByUser = useSharedValue<boolean>(true);
@@ -93,15 +93,20 @@ function Agenda() {
     return selectedDate.value;
   },
   (selected, previous) => {
-    if (selected !== previous && selected !== closestSectionHeader.value?.date) {
-      // TODO: move to isSameDay
-      const result = findClosestDateAfter(selected);
-      if (result !== null) {
-        const {dateSectionHeader, index} = result;
-        closestSectionHeader.value = dateSectionHeader;
-        scrolledByUser.value = false;
-        // TODO: Can the animation be improved (not in JS)?
-        runOnJS(scrollToIndex)(index, !previous);
+    if (updateSource?.value !== UpdateSource.AGENDA_SCROLL) {
+      if (
+        selected !== previous &&
+          closestSectionHeader.value?.date &&
+          !isSameDay(selected, closestSectionHeader.value?.date)
+      ) {
+        const result = findClosestDateAfter(selected);
+        if (result !== null) {
+          const {dateSectionHeader, index} = result;
+          closestSectionHeader.value = dateSectionHeader;
+          scrolledByUser.value = false;
+          // TODO: Can the animation be improved (not in JS)?
+          runOnJS(scrollToIndex)(index, !previous);
+        }
       }
     }
   },
