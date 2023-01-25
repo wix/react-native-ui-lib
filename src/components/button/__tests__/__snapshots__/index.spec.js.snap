@@ -29,6 +29,7 @@ exports[`Button backgroundColor should return backgroundColor according to modif
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -99,6 +100,7 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -169,6 +171,7 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -244,6 +247,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -314,6 +318,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -386,6 +391,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -456,6 +462,7 @@ exports[`Button border radius should return 0 border radius when border radius p
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -526,6 +533,7 @@ exports[`Button border radius should return 0 border radius when button is full 
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -596,6 +604,7 @@ exports[`Button border radius should return given border radius when use plain n
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -666,6 +675,7 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -741,6 +751,7 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -816,6 +827,7 @@ exports[`Button container size should have no padding of button is a link nor mi
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -894,6 +906,7 @@ exports[`Button container size should have no padding of button is an icon butto
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    fsTagName="mask"
     onError={[Function]}
     source={14}
     style={
@@ -920,6 +933,7 @@ exports[`Button container size should have no padding of button is an icon butto
     testID="undefined.icon"
   />
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -997,6 +1011,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1067,6 +1082,7 @@ exports[`Button container size should return style for large button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1139,6 +1155,7 @@ exports[`Button container size should return style for large button 2`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1209,6 +1226,7 @@ exports[`Button container size should return style for medium button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1286,6 +1304,7 @@ exports[`Button container size should return style for medium button 2`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1361,6 +1380,7 @@ exports[`Button container size should return style for round button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1431,6 +1451,7 @@ exports[`Button container size should return style for small button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1508,6 +1529,7 @@ exports[`Button container size should return style for small button 2`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1583,6 +1605,7 @@ exports[`Button container size should return style for xSmall button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1660,6 +1683,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1735,6 +1759,7 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -1810,6 +1835,7 @@ exports[`Button icon should apply color on icon 1`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    fsTagName="mask"
     onError={[Function]}
     source={12}
     style={
@@ -1869,6 +1895,7 @@ exports[`Button icon should apply color on icon 2`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    fsTagName="mask"
     onError={[Function]}
     source={12}
     style={
@@ -1928,6 +1955,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    fsTagName="mask"
     onError={[Function]}
     source={12}
     style={
@@ -1992,6 +2020,7 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    fsTagName="mask"
     onError={[Function]}
     source={12}
     style={
@@ -2051,6 +2080,7 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    fsTagName="mask"
     onError={[Function]}
     source={12}
     style={
@@ -2115,6 +2145,7 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    fsTagName="mask"
     onError={[Function]}
     source={12}
     style={
@@ -2171,6 +2202,7 @@ exports[`Button icon should return the right spacing according to button size wh
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2241,6 +2273,7 @@ exports[`Button icon should return the right spacing according to button size wh
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2316,6 +2349,7 @@ exports[`Button icon should return the right spacing according to button size wh
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2391,6 +2425,7 @@ exports[`Button icon should return the right spacing according to button size wh
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2466,6 +2501,7 @@ exports[`Button label size should return style for large button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2536,6 +2572,7 @@ exports[`Button label size should return style for medium button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2611,6 +2648,7 @@ exports[`Button label size should return style for small button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2686,6 +2724,7 @@ exports[`Button label size should return style for xSmall button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2761,6 +2800,7 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2831,6 +2871,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2901,6 +2942,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -2976,6 +3018,7 @@ exports[`Button labelColor should return disabled text color according to theme 
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3046,6 +3089,7 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3119,6 +3163,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    fsTagName="mask"
     onError={[Function]}
     source={12}
     style={
@@ -3175,6 +3220,7 @@ exports[`Button link should render button as a link 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3247,6 +3293,7 @@ exports[`Button outline should render button with an outline 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3319,6 +3366,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3391,6 +3439,7 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3463,6 +3512,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3540,6 +3590,7 @@ exports[`Button outline should return disabled color for outline if button is di
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3610,6 +3661,7 @@ exports[`Button outline should return undefined when link is true, even when out
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
@@ -3680,6 +3732,7 @@ exports[`Button should render default button 1`] = `
   }
 >
   <Text
+    fsTagName="unmask"
     numberOfLines={1}
     style={
       Array [
