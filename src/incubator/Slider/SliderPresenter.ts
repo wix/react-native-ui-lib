@@ -17,12 +17,8 @@ export function getValueForX(x: number, trackWidth: number, props: SliderProps) 
   if (trackWidth) {
     const ratio = x / trackWidth;
     const range = maximumValue - minimumValue;
-
-    if (step > 0) {
-      return Math.max(minimumValue, Math.min(maximumValue, minimumValue + Math.round((ratio * range) / step) * step));
-    } else {
-      return Math.max(minimumValue, Math.min(maximumValue, ratio * range + minimumValue));
-    }
+    const val = step > 0 ? Math.round((ratio * range) / step) * step : ratio * range;
+    return Math.max(minimumValue, Math.min(maximumValue, minimumValue + val));
   }
   return 0;
 }
