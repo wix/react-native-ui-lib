@@ -45,6 +45,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   }, []);
 
   const scrollToIndex = useCallback((date: number) => {
+    scrolledByUser.value = false;
     flashListRef.current?.scrollToIndex({index: getIndex(date), animated: false});
     // flashListRef.current?.scrollToOffset({animated: false, offset: getIndex(date) * calendarWidth});
   }, []);
