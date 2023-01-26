@@ -38,6 +38,24 @@ interface ItemToRender {
   title: string,
   FC: React.FC
 }
+const svgData = `<?xml version="1.0" encoding="UTF-8"?>
+<svg data-bbox="2 2 28 28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="800" width="800" data-type="ugc">
+    <g>
+        <defs>
+            <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(.893 0 0 .893 -64.139 -782.556)" y2="878.134" x2="105.452" y1="910.226" x1="73.714" id="1c6ca7ff-eba0-4dd0-82e3-63fdfa256791">
+                <stop stop-color="#0296d8" offset="0"/>
+                <stop stop-color="#8371d9" offset="1"/>
+            </linearGradient>
+            <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(.893 0 0 .893 -64.139 -782.556)" y2="875.745" x2="102.279" y1="905.226" x1="69.813" id="85cd62d4-a6c1-4ded-b1ca-e6c438f49e1b">
+                <stop stop-color="#cb55c0" offset="0"/>
+                <stop stop-color="#f28e0e" offset="1"/>
+            </linearGradient>
+        </defs>
+        <path d="M2 2v28h28v-.047l-6.95-7-6.95-7.007 6.95-7.012L29.938 2Z" fill="url(#1c6ca7ff-eba0-4dd0-82e3-63fdfa256791)"/>
+        <path d="M16.318 2 2 16.318V30h.124l14.008-14.008-.031-.031L23.05 8.95 29.938 2Z" fill="url(#85cd62d4-a6c1-4ded-b1ca-e6c438f49e1b)"/>
+    </g>
+</svg>
+`;
 
 const itemsToRender: ItemToRender[] = [
   {
@@ -87,6 +105,20 @@ const itemsToRender: ItemToRender[] = [
         iconOnRight
         onPress={() => {
           console.log('button pressed');
+        }}
+      />
+    )
+  },
+  {
+    title: 'Button with Svg as <svg> data tag',
+    FC: () => (
+      <Button
+        label={'Svg tag'}
+        size={Button.sizes.large}
+        iconSource={svgData}
+        iconStyle={{
+          width: 24,
+          height: 24
         }}
       />
     )

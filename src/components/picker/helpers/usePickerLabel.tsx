@@ -2,12 +2,16 @@ import {useCallback, useMemo} from 'react';
 import _ from 'lodash';
 import {PickerProps, PickerValue} from '../types';
 
-interface UsePickerLabelProps extends Pick<PickerProps, 'value' | 'getLabel' | 'getItemLabel' | 'placeholder'> {
+interface UsePickerLabelProps
+  extends Pick<
+    PickerProps,
+    'value' | 'getLabel' | 'getItemLabel' | 'placeholder' | 'accessibilityLabel' | 'accessibilityHint'
+  > {
   items: {value: string | number; label: string}[] | null | undefined;
 }
 
 const usePickerLabel = (props: UsePickerLabelProps) => {
-  const {value, items, getLabel, getItemLabel, placeholder} = props;
+  const {value, items, getLabel, getItemLabel, placeholder, accessibilityLabel, accessibilityHint} = props;
 
   const getLabelsFromArray = useCallback((value: PickerValue) => {
     const itemsByValue = _.keyBy(items, 'value');
@@ -41,10 +45,12 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
   const accessibilityInfo = useMemo(() => {
     const label = _getLabel(value);
     return {
-      accessibilityLabel: label ? `${placeholder}. selected. ${label}` : `Select ${placeholder}`,
-      accessibilityHint: label ? 'Double tap to edit' : `Goes to ${placeholder}. Suggestions will be provided`
+      accessibilityLabel:
+        accessibilityLabel ?? (label ? `${placeholder}. selected. ${label}` : `Select ${placeholder}`),
+      accessibilityHint:
+        accessibilityHint ?? (label ? 'Double tap to edit' : `Goes to ${placeholder}. Suggestions will be provided`)
     };
-  }, [value]);
+  }, [value, accessibilityLabel, accessibilityHint]);
 
   return {
     getLabelsFromArray,
