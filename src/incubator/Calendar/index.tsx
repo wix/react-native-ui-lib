@@ -31,6 +31,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   const setDate = useCallback<CalendarContextProps['setDate']>((date: number, updateSource: UpdateSource) => {
     current.value = date;
     lastUpdateSource.value = updateSource;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const contextValue = useMemo<CalendarContextProps>(() => {
@@ -48,7 +49,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     scrolledByUser.value = false;
     // @ts-expect-error
     flashListRef.current?.scrollToIndex({index: getIndex(date), animated: false});
-    // flashListRef.current?.scrollToOffset({animated: false, offset: getIndex(date) * calendarWidth});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useAnimatedReaction(() => {
@@ -60,8 +61,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
         runOnJS(scrollToIndex)(selected);
       }
     }
-  },
-  []);
+  }, []);
 
   const onViewableItemsChanged = useCallback(({viewableItems}) => {
     if (scrolledByUser.value) {
@@ -75,10 +75,12 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
 
   const onMomentumScrollBegin = useCallback(() => {
     scrolledByUser.value = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onScrollBeginDrag = useCallback(() => {
     scrolledByUser.value = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderCalendarItem = useCallback(({item}) => {
