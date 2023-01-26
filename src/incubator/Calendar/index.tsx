@@ -1,6 +1,7 @@
 import findIndex from 'lodash/findIndex';
 import React, {PropsWithChildren, useCallback, useMemo, useRef} from 'react';
 import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
+import {FlashList} from '@shopify/flash-list';
 import {FlashList, ViewToken} from '@shopify/flash-list';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
@@ -14,12 +15,12 @@ import Agenda from './Agenda';
 // TODO: Move this logic elsewhere to pre-generate on install?
 const MONTH_ITEMS = generateMonthItems(5);
 const getIndex = (date: number) => {
-  return findIndex(MONTH_ITEMS, (item) => isSameMonth(item, date));
+  return findIndex(MONTH_ITEMS, item => isSameMonth(item, date));
 };
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.MONDAY} = props;
-  
+
   const flashListRef = useRef();
   const calendarWidth = Constants.screenWidth;
   const current = useSharedValue<number>(initialDate);
@@ -45,20 +46,22 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   }, []);
 
   const scrollToIndex = useCallback((date: number) => {
-    scrolledByUser.value = false;
+    // @ts-expect-error
     flashListRef.current?.scrollToIndex({index: getIndex(date), animated: false});
     // flashListRef.current?.scrollToOffset({animated: false, offset: getIndex(date) * calendarWidth});
   }, []);
 
   useAnimatedReaction(() => {
     return current.value;
-  }, (selected, previous) => {
+  },
+  (selected, previous) => {
     if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
       if (previous && !isSameMonth(selected, previous)) {
         runOnJS(scrollToIndex)(selected);
       }
     }
-  }, []);
+  },
+  []);
 
   const onViewableItemsChanged = useCallback(({viewableItems}) => {
     if (scrolledByUser.value) {
@@ -85,6 +88,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   return (
     <CalendarContext.Provider value={contextValue}>
       <FlashList
+        // @ts-expect-error
         ref={flashListRef}
         estimatedItemSize={calendarWidth}
         data={MONTH_ITEMS}

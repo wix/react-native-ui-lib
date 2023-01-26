@@ -89,8 +89,8 @@ export interface CalendarProps {
   firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */ FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
 }
 
-export interface AgendaProps {
-  // Type: list(events)/timeline
-  // layout:
-  // scrollTo(date)
-}
+// export interface AgendaProps {
+//   // Type: list(events)/timeline
+//   // layout:
+//   // scrollTo(date)
+// }
