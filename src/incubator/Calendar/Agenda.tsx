@@ -8,6 +8,7 @@ import {isSameDay, HOUR_TO_MS} from './helpers/DateUtils';
 import {InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
+// TODO: Fix initial scrolling
 function Agenda() {
   const {data, selectedDate, setDate, updateSource} = useContext(CalendarContext);
   const flashList = useRef<FlashList<InternalEvent>>(null);
@@ -137,6 +138,7 @@ function Agenda() {
   return (
     <FlashList
       ref={flashList}
+      // TODO: Set fixed height for items and check if initialIndex works
       estimatedItemSize={89}
       data={data}
       keyExtractor={keyExtractor}

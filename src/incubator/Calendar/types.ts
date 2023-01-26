@@ -1,6 +1,18 @@
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
+export interface DateObject {
+  month: number;
+  year: number;
+  day: number;
+}
+
+export interface DateObjectWithOptionalDay {
+  month: number;
+  year: number;
+  day?: number;
+}
+
 export enum FirstDayOfWeek {
   SUNDAY = 0,
   MONDAY = 1,

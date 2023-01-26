@@ -67,6 +67,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     if (scrolledByUser.value) {
       const item = viewableItems?.[0]?.item;
       if (item && !isSameMonth(item, current.value)) {
+        // TODO: Move to Date.UTC to a util - getNormalizedDate
         const newDate = new Date(Date.UTC(item.year, item.month, 1)).getTime();
         setDate(newDate, UpdateSource.MONTH_SCROLL);
       }
@@ -100,6 +101,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
+        // TODO: Consider moving this shared logic with Agenda to a hook
         onViewableItemsChanged={onViewableItemsChanged}
         onMomentumScrollBegin={onMomentumScrollBegin}
         onScrollBeginDrag={onScrollBeginDrag}

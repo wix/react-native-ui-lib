@@ -1,6 +1,6 @@
 import getWeek from 'date-fns/getWeek';
 import _ from 'lodash';
-import {FirstDayOfWeek, DayNamesFormat, MonthProps} from '../types';
+import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay} from '../types';
 
 export const HOUR_TO_MS = 60 * 60 * 1000;
 const DAY_TO_MS = 24 * HOUR_TO_MS;
@@ -46,6 +46,7 @@ function getFirstDayInTheYear(year: number, firstDayOfWeek: FirstDayOfWeek) {
   return getFirstDayInTheWeek(dayInFirstWeekOfYear, firstDayOfWeek);
 }
 
+// TODO: Fix to use Default behavior for week number
 export function getDaysOfWeekNumber(year: number, weekNumber: number, firstDayOfWeek: FirstDayOfWeek) {
   const result = new Array(7).fill(null);
   const firstDayOfYear = getFirstDayInTheYear(year, firstDayOfWeek);
@@ -143,11 +144,11 @@ export function isSameDay(d1: number, d2: number) {
   return false;
 }
 
-export function isSameMonth(d1: number | MonthProps, d2: number | MonthProps) {
+export function isSameMonth(d1: number | DateObjectWithOptionalDay, d2: number | DateObjectWithOptionalDay) {
   'worklet';
   const a = typeof d1 === 'number' ? getDateObject(d1) : d1;
   const b = typeof d2 === 'number' ? getDateObject(d2) : d2;
-  
+
   if (a.year === b.year) {
     if (a.month === b.month) {
       return true;
