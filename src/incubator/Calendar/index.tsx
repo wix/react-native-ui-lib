@@ -2,7 +2,6 @@ import findIndex from 'lodash/findIndex';
 import React, {PropsWithChildren, useCallback, useMemo, useRef} from 'react';
 import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import {FlashList} from '@shopify/flash-list';
-import {FlashList, ViewToken} from '@shopify/flash-list';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
