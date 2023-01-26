@@ -5,23 +5,33 @@ export const HOUR_TO_MS = 60 * 60 * 1000;
 const DAY_TO_MS = 24 * HOUR_TO_MS;
 const WEEK_TO_MS = 7 * DAY_TO_MS;
 
-export function getWeekNumbersOfMonth(year: number, month: number) {
-  const firstDayOfMonth = new Date(year, month, 1);
-  const weekNumbers = [];
-
-  while (firstDayOfMonth.getMonth() === month) {
-    // Push the week number for the current day to the array
-    weekNumbers.push(getWeek(firstDayOfMonth));
-    // Increment the date by one day
-    firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 7);
+export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
+  if (month < 0 || month > 11) {
+    throw new Error('getWeekNumbersOfMonth util received an invalid month');
   }
+
+  const firstDayOfMonth = new Date(Date.UTC(year, month, 1));
+  const firstWeekNumber = getWeek(firstDayOfMonth, {weekStartsOn: firstDayOfWeek});
+  const numberOfWeeks = getNumberOfWeeksInMonth(year, month, firstDayOfWeek);
+  const weekNumbers: number[] = [];
+  _.times(numberOfWeeks, i => weekNumbers.push(i + firstWeekNumber));
+
   return weekNumbers;
+}
+
+function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
+  const numberOfDaysInMonth = new Date(year, month + 1, 0).getDate();
+  const dayOfTheWeek = new Date(year, month, 1).getDay();
+  // Modify day in the week based on the first day of the week
+  const fixedDayOfTheWeek = (7 - (firstDayOfWeek - dayOfTheWeek)) % 7;
+  const numberOfWeeks = Math.ceil((numberOfDaysInMonth + fixedDayOfTheWeek) / 7);
+  return numberOfWeeks;
 }
 
 function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
   let result = new Date(date.getTime() - DAY_TO_MS * ((date.getDay() - firstDayOfWeek) % 7));
   const dayInMonth = result.getDate();
-  
+
   if (dayInMonth >= 7 && dayInMonth < 14) {
     result = new Date(result.getTime() - WEEK_TO_MS);
   }
@@ -74,7 +84,20 @@ export function addMonths(date: number, count: number) {
 
 export function getMonthForIndex(index: number) {
   'worklet';
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
   if (index >= 0 && index < 12) {
     return months[index];
   }
@@ -92,11 +115,12 @@ function getWeekDaysNames(format?: DayNamesFormat) {
   }
 }
 
-export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) { //TODO: consider 'options' param
+export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) {
+  //TODO: consider 'options' param
   'worklet';
   let weekDaysNames = getWeekDaysNames(format);
   const dayShift = firstDayOfWeek % 7;
-  
+
   if (dayShift) {
     weekDaysNames = weekDaysNames.slice(dayShift).concat(weekDaysNames.slice(0, dayShift));
   }
@@ -107,7 +131,7 @@ export function isSameDay(d1: number, d2: number) {
   'worklet';
   const a = getDateObject(d1);
   const b = getDateObject(d2);
-  
+
   if (a.year === b.year) {
     if (a.month === b.month) {
       if (a.day === b.day) {

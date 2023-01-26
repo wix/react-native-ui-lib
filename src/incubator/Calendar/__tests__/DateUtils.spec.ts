@@ -3,18 +3,41 @@ import {FirstDayOfWeek, DayNamesFormat} from '../types';
 
 describe('Calendar/DateUtils', () => {
   describe('getWeekNumbersOfMonth', () => {
-    it('should return array of 4-6 items', () => {
-      let weekNumbers = DateUtils.getWeekNumbersOfMonth(2022, 11);
-      expect(weekNumbers.length).toBeGreaterThan(3);
-      expect(weekNumbers.length).toBeLessThan(7);
+    it('should return week numbers of first month in a year', () => {
+      let weekNumbers = DateUtils.getWeekNumbersOfMonth(2023, 0, FirstDayOfWeek.MONDAY);
+      expect(weekNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+      weekNumbers = DateUtils.getWeekNumbersOfMonth(2023, 0, FirstDayOfWeek.SUNDAY);
+      expect(weekNumbers).toEqual([1, 2, 3, 4, 5]);
 
-      weekNumbers = DateUtils.getWeekNumbersOfMonth(2022, 0);
-      expect(weekNumbers.length).toBeGreaterThan(3);
-      expect(weekNumbers.length).toBeLessThan(7);
+      weekNumbers = DateUtils.getWeekNumbersOfMonth(2022, 0, FirstDayOfWeek.MONDAY);
+      expect(weekNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+      weekNumbers = DateUtils.getWeekNumbersOfMonth(2022, 0, FirstDayOfWeek.SUNDAY);
+      expect(weekNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+
+      weekNumbers = DateUtils.getWeekNumbersOfMonth(2018, 0, FirstDayOfWeek.MONDAY);
+      expect(weekNumbers).toEqual([1, 2, 3, 4, 5]);
+      weekNumbers = DateUtils.getWeekNumbersOfMonth(2018, 0, FirstDayOfWeek.SUNDAY);
+      expect(weekNumbers).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    it('should return week numbers of last month in a year', () => {
+      let weekNumbers = DateUtils.getWeekNumbersOfMonth(2022, 11, FirstDayOfWeek.MONDAY);
+      expect(weekNumbers).toEqual([49, 50, 51, 52, 53]);
+
+      weekNumbers = DateUtils.getWeekNumbersOfMonth(2018, 11, FirstDayOfWeek.MONDAY);
+      expect(weekNumbers).toEqual([48, 49, 50, 51, 52, 53]);
+    });
+
+    it('should return week numbers of a month with 6 weeks', () => {
+      let weekNumbers = DateUtils.getWeekNumbersOfMonth(2018, 3, FirstDayOfWeek.MONDAY);
+      expect(weekNumbers).toEqual([13, 14, 15, 16, 17, 18]);
+
+      weekNumbers = DateUtils.getWeekNumbersOfMonth(2018, 8, FirstDayOfWeek.SUNDAY);
+      expect(weekNumbers).toEqual([35, 36, 37, 38, 39, 40]);
     });
 
     it('should throw error when passing invalid month', () => {
-      expect(() => DateUtils.getWeekNumbersOfMonth(2022, 12)).toThrowError('getWeekNumbersOfMonth got invalid month');
+      expect(() => DateUtils.getWeekNumbersOfMonth(2022, 12, FirstDayOfWeek.MONDAY)).toThrowError('getWeekNumbersOfMonth util received an invalid month');
     });
   });
 
@@ -116,6 +139,35 @@ describe('Calendar/DateUtils', () => {
     it('should return array of 7 items', () => {
       const daysInWeek = DateUtils.getDaysOfWeekNumber(2022, 11, FirstDayOfWeek.MONDAY);
       expect(daysInWeek.length).toBe(7);
+    });
+
+    it('should return the right days at the first week of year - FirstDayOfWeek.SUNDAY', () => {
+      const daysInWeek = DateUtils.getDaysOfWeekNumber(2023, 1, FirstDayOfWeek.SUNDAY);
+      const firstDay = new Date(daysInWeek[0]);
+      const lastDay = new Date(daysInWeek[6]);
+
+      expect(firstDay.getDate()).toBe(1);
+      expect(firstDay.getMonth()).toBe(0);
+      expect(firstDay.getFullYear()).toBe(2023);
+
+      expect(lastDay.getDate()).toBe(7);
+      expect(lastDay.getMonth()).toBe(0);
+      expect(lastDay.getFullYear()).toBe(2023);
+    });
+
+    // TODO: We need to fix this test
+    it('should return the right days at the first week of year - FirstDayOfWeek.MONDAY', () => {
+      const daysInWeek = DateUtils.getDaysOfWeekNumber(2023, 1, FirstDayOfWeek.MONDAY);
+      const firstDay = new Date(daysInWeek[0]);
+      const lastDay = new Date(daysInWeek[6]);
+
+      expect(firstDay.getDate()).toBe(26);
+      expect(firstDay.getMonth()).toBe(12);
+      expect(firstDay.getFullYear()).toBe(2023 - 1);
+
+      expect(lastDay.getDate()).toBe(1);
+      expect(lastDay.getMonth()).toBe(12);
+      expect(lastDay.getFullYear()).toBe(2023 - 1);
     });
   });
 
