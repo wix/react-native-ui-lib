@@ -33,15 +33,14 @@ function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
   let result = new Date(date.getTime() - DAY_TO_MS * ((date.getDay() - firstDayOfWeek) % 7));
   const dayInMonth = result.getDate();
 
-  if (dayInMonth >= 7 && dayInMonth < 14) {
+  if (dayInMonth > 1 && dayInMonth <= 7) {
     result = new Date(result.getTime() - WEEK_TO_MS);
   }
   return result;
 }
 
 function getFirstDayInTheYear(year: number, firstDayOfWeek: FirstDayOfWeek) {
-  // Note: Using Jan 4th as the marker for the first week of the year (https://en.wikipedia.org/wiki/ISO_week_date)
-  const dayInFirstWeekOfYear = getNormalizedDate({year, month: 0, day: 4});
+  const dayInFirstWeekOfYear = getNormalizedDate({year, month: 0, day: 1});
   return getFirstDayInTheWeek(dayInFirstWeekOfYear, firstDayOfWeek);
 }
 
