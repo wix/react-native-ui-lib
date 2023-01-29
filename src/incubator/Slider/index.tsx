@@ -1,7 +1,7 @@
 import isNumber from 'lodash/isNumber';
 import React, {useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
-import {Gesture} from 'react-native-gesture-handler';
+import {Gesture, PanGesture} from 'react-native-gesture-handler';
 import {useSharedValue, useAnimatedStyle, withSpring, runOnJS, interpolate} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -25,6 +25,7 @@ const TRACK_HEIGHT = 6;
 const THUMB_SIZE = 24;
 const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
+const GAP = Spacings.s2;
 
 const Slider = (props: Props) => {
   const {
@@ -86,13 +87,14 @@ const Slider = (props: Props) => {
 
   const rtlFix = Constants.isRTL ? -1 : 1;
   const shouldDisableRTL = Constants.isRTL && disableRTL;
+  
   const shouldBounceToStep = step > 0;
   const stepXValue = useSharedValue(step);
 
   const trackSize = useSharedValue({width: 0, height: TRACK_HEIGHT});
   const activeTrackWidth = useSharedValue(0);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
-  const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize.value.width : 0;
+  const rangeGap = useRange && useGap ? GAP + thumbSize.value.width : 0;
 
   const activeThumb = useSharedValue(ThumbType.DEFAULT);
   const isPressedDefault = useSharedValue(false);
@@ -327,22 +329,11 @@ const Slider = (props: Props) => {
 
   /** renders */
 
-  const renderRangeThumb = () => {
+  const renderThumb = (style: any, gesture: PanGesture) => {
     return (
       <Thumb
-        gesture={rangeThumbGesture}
-        animatedStyle={rangeThumbAnimatedStyles}
-        hitSlop={thumbHitSlop}
-        onLayout={onThumbLayout}
-      />
-    );
-  };
-
-  const renderDefaultThumb = () => {
-    return (
-      <Thumb
-        gesture={defaultThumbGesture}
-        animatedStyle={defaultThumbAnimatedStyles}
+        gesture={gesture}
+        animatedStyle={style}
         hitSlop={thumbHitSlop}
         onLayout={onThumbLayout}
       />
@@ -375,8 +366,8 @@ const Slider = (props: Props) => {
       {...accessibilityProps}
     >
       {_renderTrack()}
-      {renderDefaultThumb()}
-      {useRange && renderRangeThumb()}
+      {renderThumb(defaultThumbAnimatedStyles, defaultThumbGesture)}
+      {useRange && renderThumb(rangeThumbAnimatedStyles, rangeThumbGesture)}
     </View>
   );
 };
