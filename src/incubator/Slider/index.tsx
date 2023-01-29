@@ -225,7 +225,7 @@ const Slider = (props: Props) => {
   });
 
   const rangeThumbAnimatedStyles = useAnimatedStyle(() => {
-    const activeStyle = isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
+    const activeStyle = isPressedRange.value ? _activeThumbStyle.value : _thumbStyle.value;
     return {
       transform: [
         {translateX: (rangeThumbOffset.value.x - thumbSize.value.width / 2) * rtlFix},
