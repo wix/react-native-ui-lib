@@ -116,7 +116,7 @@ const IncubatorSliderScreen = () => {
           minimumTrackTintColor={Colors.grey30}
           maximumTrackTintColor={Colors.grey70}
           // thumbTintColor={Colors.orange30}
-          // thumbStyle={styles.customThumb}
+          thumbStyle={styles.customThumb}
           activeThumbStyle={styles.customActiveThumb}
           disableRTL={disableRTL}
           // disableActiveStyling

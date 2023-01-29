@@ -269,9 +269,9 @@ const Slider = (props: Props) => {
     .onUpdate(e => {
       onSeekStart?.();
       let newX = defaultThumbStart.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX < 0) { // bottom edge
+      if (newX < 0) { // adjust start edge
         newX = 0;
-      } else if (!useRange && newX > trackSize.value.width) { // top edge
+      } else if (!useRange && newX > trackSize.value.width) { // adjust end edge
         newX = trackSize.value.width;
       }
       if (newX <= rangeThumbStart.value - rangeGap && newX >= 0) {
@@ -302,7 +302,7 @@ const Slider = (props: Props) => {
     .onUpdate(e => {
       onSeekStart?.();
       let newX = rangeThumbStart.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX > trackSize.value.width) { // top edge
+      if (newX > trackSize.value.width) { // adjust end edge
         newX = trackSize.value.width;
       }
       if (newX >= defaultThumbStart.value + rangeGap && newX <= trackSize.value.width) {
