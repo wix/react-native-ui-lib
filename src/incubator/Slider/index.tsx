@@ -1,5 +1,5 @@
 import isNumber from 'lodash/isNumber';
-import React, {useImperativeHandle, useCallback, useMemo} from 'react';
+import React, {useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
 import {Gesture} from 'react-native-gesture-handler';
 import {useSharedValue, useAnimatedStyle, withSpring, runOnJS, interpolate} from 'react-native-reanimated';
@@ -50,7 +50,7 @@ const Slider = (props: Props) => {
     renderTrack,
     thumbStyle,
     activeThumbStyle,
-    thumbTintColor,
+    thumbTintColor = Colors.$backgroundPrimaryHeavy,
     thumbHitSlop,
     disableActiveStyling,
     disabled,
@@ -88,6 +88,7 @@ const Slider = (props: Props) => {
   const shouldDisableRTL = Constants.isRTL && disableRTL;
   const shouldBounceToStep = step > 0;
   const stepXValue = useSharedValue(step);
+
   const trackSize = useSharedValue({width: 0, height: TRACK_HEIGHT});
   const activeTrackWidth = useSharedValue(0);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
@@ -191,14 +192,21 @@ const Slider = (props: Props) => {
     }
   }, []);
 
-  /** gestures and animations */
-
-  const defaultThumbStyle: StyleProp<ViewStyle> = [
+  /** styles & animations */
+  
+  const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     styles.thumb,
-    {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy}
-  ];
+    {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
+  ], [disabled, thumbTintColor]);
+
+  useEffect(() => {
+    if (!thumbStyle) {
+      _thumbStyle.value = unpackStyle(defaultThumbStyle);
+    }
+  }, [defaultThumbStyle, thumbStyle]);
+
   const _thumbStyle = useSharedValue(unpackStyle(thumbStyle || defaultThumbStyle));
-  const _activeThumbStyle = useSharedValue(activeThumbStyle ? unpackStyle(activeThumbStyle) : undefined);
+  const _activeThumbStyle = useSharedValue(unpackStyle(activeThumbStyle));
 
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
@@ -235,6 +243,8 @@ const Slider = (props: Props) => {
     };
   });
 
+  /** gestures */
+
   const updateDefaultThumb = (offset: number) => {
     'worklet';
     defaultThumbOffset.value = {x: offset, y: 0};
@@ -264,7 +274,7 @@ const Slider = (props: Props) => {
       } else if (!useRange && newX > trackSize.value.width) { // top edge
         newX = trackSize.value.width;
       }
-      if (newX <= rangeThumbStart.value.x - rangeGap && newX >= 0) { // range
+      if (newX <= rangeThumbStart.value.x - rangeGap && newX >= 0) {
         defaultThumbOffset.value = {x: newX, y: 0};
         activeTrackWidth.value = useRange ? rangeThumbStart.value.x - newX : newX;
         runOnJS(onChange)(useRange ? {min: newX, max: rangeThumbStart.value.x} : newX);
@@ -295,7 +305,7 @@ const Slider = (props: Props) => {
       if (newX > trackSize.value.width) { // top edge
         newX = trackSize.value.width;
       }
-      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackSize.value.width) { // range
+      if (newX >= defaultThumbStart.value.x + rangeGap && newX <= trackSize.value.width) {
         rangeThumbOffset.value = {x: newX, y: 0};
         activeTrackWidth.value = rangeThumbOffset.value.x - defaultThumbStart.value.x;
         runOnJS(onChange)(useRange ? {min: defaultThumbStart.value.x, max: newX} : newX);
