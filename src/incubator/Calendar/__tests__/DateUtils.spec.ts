@@ -178,6 +178,15 @@ describe('Calendar/DateUtils', () => {
     });
   });
 
+  describe('getNormalizedDate', () => {
+    it('should return the day number from the date timestamp', () => {
+      const date = DateUtils.getNormalizedDate({year: 2023, month: 0, day: 1});
+      expect(date.getFullYear()).toBe(2023);
+      expect(date.getDate()).toBe(1);
+      expect(date.getMonth()).toBe(0);
+    });
+  });
+
   describe('addMonths', () => {
     it('should return the date timestamp for the next (1) months in the next (1) years', () => {
       const date = new Date(DateUtils.addMonths(new Date('2022-12-26').getTime(), 1));

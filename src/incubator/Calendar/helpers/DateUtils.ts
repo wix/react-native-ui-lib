@@ -1,6 +1,6 @@
 import getWeek from 'date-fns/getWeek';
 import _ from 'lodash';
-import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay} from '../types';
+import {FirstDayOfWeek, DayNamesFormat, DateObject, DateObjectWithOptionalDay} from '../types';
 
 export const HOUR_TO_MS = 60 * 60 * 1000;
 const DAY_TO_MS = 24 * HOUR_TO_MS;
@@ -11,7 +11,7 @@ export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWee
     throw new Error('getWeekNumbersOfMonth util received an invalid month');
   }
 
-  const firstDayOfMonth = new Date(Date.UTC(year, month, 1));
+  const firstDayOfMonth = getNormalizedDate({year, month, day: 1});
   const firstWeekNumber = getWeek(firstDayOfMonth, {weekStartsOn: firstDayOfWeek});
   const numberOfWeeks = getNumberOfWeeksInMonth(year, month, firstDayOfWeek);
   const weekNumbers: number[] = [];
@@ -41,8 +41,7 @@ function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
 
 function getFirstDayInTheYear(year: number, firstDayOfWeek: FirstDayOfWeek) {
   // Note: Using Jan 4th as the marker for the first week of the year (https://en.wikipedia.org/wiki/ISO_week_date)
-  // Must add Date.UTC or the local timezone might be added which can affect the date (one day before)
-  const dayInFirstWeekOfYear = new Date(Date.UTC(year, 0, 4));
+  const dayInFirstWeekOfYear = getNormalizedDate({year, month: 0, day: 4});
   return getFirstDayInTheWeek(dayInFirstWeekOfYear, firstDayOfWeek);
 }
 
@@ -60,6 +59,11 @@ export function getDaysOfWeekNumber(year: number, weekNumber: number, firstDayOf
 
 export function getDayOfDate(date: number) {
   return new Date(date).getDate();
+}
+
+export function getNormalizedDate(date: DateObject) {
+  // Must add Date.UTC or the local timezone might be added which can affect the date (one day before)
+  return new Date(Date.UTC(date.year, date.month, date.day));
 }
 
 /* Worklets */
