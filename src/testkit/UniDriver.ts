@@ -6,10 +6,11 @@ export interface UniDriver {
   at(index: number): Promise<UniDriver>;
   instance(): Promise<any>;
   getInstanceProps(): Promise<any>;
-  press(): Promise<any>;
+  press(): void;
   typeText(text: string): Promise<void>;
   scrollX(deltaX: number): Promise<void>;
   scrollY(deltaY: number): Promise<void>;
+  layout({height, width, x, y}: {height: number, width: number, x: number, y: number}): void;
 }
 
 export type UniDriverClass = {new (...args: any[]): UniDriver;};

@@ -33,7 +33,18 @@ export class ComponentDriver {
     this.uniDriver = ComponentDriver.uniDrivers[componentHashcode];
   }
 
-  exists = async (): Promise<boolean> => !!(await this.getElement());
+  exists = async (): Promise<boolean> => {
+    try {
+      const element = await this.getElement();
+      if (element) {
+        return Promise.resolve(true);
+      } else {
+        return Promise.resolve(false);
+      }
+    } catch {
+      return Promise.resolve(false);
+    }
+  }
 
   getElement = () => {
     return this.getByTestId(this.testID);
@@ -43,6 +54,12 @@ export class ComponentDriver {
     return this.uniDriver
       .selectorByTestId(this.testID)
       .then((driver) => driver.press());
+  };
+
+  layout = ({height, width, x, y}: {height: number, width: number, x: number, y: number}) => {
+    this.uniDriver
+      .selectorByTestId(this.testID)
+      .then((driver) => driver.layout({height, width, x, y}));
   };
 
   protected getByTestId = (testID: string) => {

@@ -33,10 +33,12 @@ export class TestingLibraryDriver implements UniDriver {
     if (!this.renderAPI) {
       throw new SelectorChainingException();
     }
-    const instances = await this.renderAPI
-      .findAllByTestId(testId)
-      .catch(() => []);
-    return new TestingLibraryDriver(instances);
+    const instances = await this.renderAPI.queryAllByTestId(testId);
+    if (instances) {
+      return Promise.resolve(new TestingLibraryDriver(instances));
+    } else {
+      return Promise.reject(new NoSelectorException());
+    }
   };
 
   selectorByText = async (text: string): Promise<UniDriver> => {
@@ -74,13 +76,13 @@ export class TestingLibraryDriver implements UniDriver {
     return _.get(instance, 'props');
   }
 
-  press = async (): Promise<void> => {
+  press = () => {
     if (!this.reactTestInstances) {
       throw new NoSelectorException();
     }
     this.validateExplicitInstance();
     this.validateSingleInstance();
-    await act(() => fireEvent.press(this.reactTestInstances[0]));
+    act(() => fireEvent.press(this.reactTestInstances[0]));
   };
 
   typeText = async (text: string): Promise<void> => {
@@ -128,5 +130,14 @@ export class TestingLibraryDriver implements UniDriver {
     if (this.reactTestInstances.length === 0) {
       throw new SelectorNotFoundException();
     }
+  };
+
+  layout = ({height, width, x, y}: {height: number; width: number; x: number; y: number}) => {
+    if (!this.reactTestInstances) {
+      throw new NoSelectorException();
+    }
+    this.validateExplicitInstance();
+    this.validateSingleInstance();
+    fireEvent(this.reactTestInstances[0], 'layout', {nativeEvent: {layout: {height, width, x, y}}});
   };
 }
