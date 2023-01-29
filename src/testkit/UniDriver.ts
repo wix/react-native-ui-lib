@@ -7,7 +7,7 @@ export interface UniDriver {
   instance(): Promise<any>;
   getInstanceProps(): Promise<any>;
   press(): void;
-  typeText(text: string): Promise<void>;
+  typeText(text: string): void;
   scrollX(deltaX: number): Promise<void>;
   scrollY(deltaY: number): Promise<void>;
   layout({height, width, x, y}: {height: number, width: number, x: number, y: number}): void;

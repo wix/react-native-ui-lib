@@ -85,14 +85,14 @@ export class TestingLibraryDriver implements UniDriver {
     act(() => fireEvent.press(this.reactTestInstances[0]));
   };
 
-  typeText = async (text: string): Promise<void> => {
+  typeText = (text: string): void => {
     console.log('this.reactTestInstances: ', this.reactTestInstances);
     if (!this.reactTestInstances) {
       throw new NoSelectorException();
     }
     this.validateExplicitInstance();
     this.validateSingleInstance();
-    await act(() => fireEvent.changeText(this.reactTestInstances[0], text));
+    fireEvent.changeText(this.reactTestInstances[0], text);
   };
 
   scrollX = (deltaX: number) => this.scroll({x: deltaX});
