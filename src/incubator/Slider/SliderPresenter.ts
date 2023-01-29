@@ -1,3 +1,4 @@
+import {StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import {SliderProps} from '../../components/slider';
 
 export function getXForValue(value: number, trackWidth: number, props: SliderProps) {
@@ -54,4 +55,8 @@ export function validateValues(props: SliderProps) {
 
 function inRange(value: number, min: number, max: number) {
   return value >= min && value <= max;
+}
+
+export function unpackStyle(style: StyleProp<ViewStyle>) {
+  return JSON.parse(JSON.stringify(StyleSheet.flatten(style)));
 }

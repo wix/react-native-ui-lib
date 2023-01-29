@@ -8,7 +8,7 @@ import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
-import {validateValues, getXForValue, getValueForX} from './SliderPresenter';
+import {validateValues, getXForValue, getValueForX, unpackStyle} from './SliderPresenter';
 import Thumb from './Thumb';
 import Track from './Track';
 
@@ -92,6 +92,14 @@ const Slider = (props: Props) => {
   const activeTrackWidth = useSharedValue(0);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
   const rangeGap = useRange && useGap ? Spacings.s2 + thumbSize.value.width : 0;
+
+  const activeThumb = useSharedValue(ThumbType.DEFAULT);
+  const isPressedDefault = useSharedValue(false);
+  const defaultThumbOffset = useSharedValue({x: 0, y: 0});
+  const defaultThumbStart = useSharedValue({x: 0, y: 0});
+  const isPressedRange = useSharedValue(false);
+  const rangeThumbOffset = useSharedValue({x: 0, y: 0});
+  const rangeThumbStart = useSharedValue({x: 0, y: 0});
 
   const getStepInterpolated = () => {
     'worklet';
@@ -185,21 +193,12 @@ const Slider = (props: Props) => {
 
   /** gestures and animations */
 
-  const activeThumb = useSharedValue(ThumbType.DEFAULT);
-  const isPressedDefault = useSharedValue(false);
-  const defaultThumbOffset = useSharedValue({x: 0, y: 0});
-  const defaultThumbStart = useSharedValue({x: 0, y: 0});
-  const isPressedRange = useSharedValue(false);
-  const rangeThumbOffset = useSharedValue({x: 0, y: 0});
-  const rangeThumbStart = useSharedValue({x: 0, y: 0});
-
   const defaultThumbStyle: StyleProp<ViewStyle> = [
     styles.thumb,
     {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor || Colors.$backgroundPrimaryHeavy}
   ];
-  const _thumbStyle = useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(thumbStyle || defaultThumbStyle))));
-  const _activeThumbStyle = 
-    useSharedValue(activeThumbStyle ? JSON.parse(JSON.stringify(StyleSheet.flatten(activeThumbStyle))) : undefined);
+  const _thumbStyle = useSharedValue(unpackStyle(thumbStyle || defaultThumbStyle));
+  const _activeThumbStyle = useSharedValue(activeThumbStyle ? unpackStyle(activeThumbStyle) : undefined);
 
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
@@ -236,20 +235,20 @@ const Slider = (props: Props) => {
     };
   });
 
-  const updateDefaultThumb = (x: number) => {
+  const updateDefaultThumb = (offset: number) => {
     'worklet';
-    defaultThumbOffset.value = {x, y: 0};
-    defaultThumbStart.value = {x, y: 0};
-    activeTrackWidth.value = Math.abs(useRange ? rangeThumbStart.value.x - x : x);
-    runOnJS(onChange)(useRange ? {min: x, max: rangeThumbStart.value.x} : x);
+    defaultThumbOffset.value = {x: offset, y: 0};
+    defaultThumbStart.value = {x: offset, y: 0};
+    activeTrackWidth.value = Math.abs(useRange ? rangeThumbStart.value.x - offset : offset);
+    runOnJS(onChange)(useRange ? {min: offset, max: rangeThumbStart.value.x} : offset);
   };
 
-  const updateRangeThumb = (x: number) => {
+  const updateRangeThumb = (offset: number) => {
     'worklet';
-    rangeThumbOffset.value = {x, y: 0};
-    rangeThumbStart.value = {x, y: 0};
-    activeTrackWidth.value = x - defaultThumbStart.value.x;
-    runOnJS(onChange)({min: defaultThumbStart.value.x, max: x});
+    rangeThumbOffset.value = {x: offset, y: 0};
+    rangeThumbStart.value = {x: offset, y: 0};
+    activeTrackWidth.value = offset - defaultThumbStart.value.x;
+    runOnJS(onChange)({min: defaultThumbStart.value.x, max: offset});
   };
 
   const defaultThumbGesture = Gesture.Pan()
