@@ -4,17 +4,20 @@ import {GestureDetector} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
 import View from '../../components/view';
 
-const THUMB_SIZE = 24;
-const THUMB_BORDER_WIDTH = 6;
+// const THUMB_SIZE = 24;
+// const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
 
 export interface Props extends ViewProps {
   animatedStyle?: any;
+  style?: ViewProps['style'];
+  activeStyle?: ViewProps['style'];
   gesture?: any;
+  disabled?: boolean;
 }
 
 const Thumb = (props: Props) => {
-  const {hitSlop, onLayout, animatedStyle, gesture} = props;
+  const {hitSlop, onLayout, animatedStyle, gesture, disabled, style, activeStyle} = props;
 
   return (
     <GestureDetector gesture={gesture}>
@@ -31,13 +34,13 @@ const Thumb = (props: Props) => {
 export default Thumb;
 
 const styles = StyleSheet.create({
-  thumb: {
-    width: THUMB_SIZE,
-    height: THUMB_SIZE,
-    borderRadius: THUMB_SIZE / 2,
-    borderWidth: THUMB_BORDER_WIDTH,
-    borderColor: Colors.$backgroundElevatedLight
-  },
+  // thumb: {
+  //   width: THUMB_SIZE,
+  //   height: THUMB_SIZE,
+  //   borderRadius: THUMB_SIZE / 2,
+  //   borderWidth: THUMB_BORDER_WIDTH,
+  //   borderColor: Colors.$backgroundElevatedLight
+  // },
   thumbPosition: {
     position: 'absolute'
   },
