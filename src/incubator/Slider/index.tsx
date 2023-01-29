@@ -13,6 +13,9 @@ import Thumb from './Thumb';
 import Track from './Track';
 
 type Props = SliderProps & ForwardRefInjectedProps;
+interface Statics {
+  reset: () => void;
+}
 
 enum ThumbType {
   DEFAULT = 'default',
