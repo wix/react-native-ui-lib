@@ -32,22 +32,18 @@ const IncubatorSliderScreen = () => {
   };
 
   const onValueChange = (value: number) => {
-    console.warn('onValueChange: ', value);
     setSliderValue(value);
   };
 
   const onCustomValueChange = (value: number) => {
-    console.warn('onCustomValueChange: ', value);
     setCustomSliderValue(value);
   };
 
   const onNegativeValueChange = (value: number) => {
-    console.warn('onNegativeValueChange: ', value);
     setNegativeSliderValue(value);
   };
 
   const onRangeChange = (value: {min: number, max: number}) => {
-    console.warn('onRangeChange: ', value.min, value.max);
     setSliderMaxValue(value.max);
     setSliderMinValue(value.min);
   };
