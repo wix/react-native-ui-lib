@@ -1,4 +1,3 @@
-import isNumber from 'lodash/isNumber';
 import React, {useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
 import {Gesture, PanGesture} from 'react-native-gesture-handler';
@@ -257,7 +256,7 @@ const Slider = (props: Props) => {
     defaultThumbOffset.value = offset;
     defaultThumbStart.value = offset;
     activeTrackWidth.value = Math.abs(useRange ? rangeThumbStart.value - offset : offset);
-    runOnJS(onChange)(useRange ? {min: offset, max: rangeThumbStart.value} : offset);
+    onChange(useRange ? {min: offset, max: rangeThumbStart.value} : offset);
   };
 
   const updateRangeThumb = (offset: number) => {
@@ -265,7 +264,7 @@ const Slider = (props: Props) => {
     rangeThumbOffset.value = offset;
     rangeThumbStart.value = offset;
     activeTrackWidth.value = offset - defaultThumbStart.value;
-    runOnJS(onChange)({min: defaultThumbStart.value, max: offset});
+    onChange({min: defaultThumbStart.value, max: offset});
   };
 
   const defaultThumbGesture = Gesture.Pan()
@@ -284,7 +283,7 @@ const Slider = (props: Props) => {
       if (newX <= rangeThumbStart.value - rangeGap && newX >= 0) {
         defaultThumbOffset.value = newX;
         activeTrackWidth.value = useRange ? rangeThumbStart.value - newX : newX;
-        runOnJS(onChange)(useRange ? {min: newX, max: rangeThumbStart.value} : newX);
+        onChange(useRange ? {min: newX, max: rangeThumbStart.value} : newX);
       }
     })
     .onEnd(() => {
@@ -315,7 +314,7 @@ const Slider = (props: Props) => {
       if (newX >= defaultThumbStart.value + rangeGap && newX <= trackSize.value.width) {
         rangeThumbOffset.value = newX;
         activeTrackWidth.value = rangeThumbOffset.value - defaultThumbStart.value;
-        runOnJS(onChange)(useRange ? {min: defaultThumbStart.value, max: newX} : newX);
+        onChange(useRange ? {min: defaultThumbStart.value, max: newX} : newX);
       }
     })
     .onEnd(() => {

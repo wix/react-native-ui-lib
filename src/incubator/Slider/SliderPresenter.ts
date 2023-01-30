@@ -13,24 +13,24 @@ export function getXForValue(value: number, trackWidth: number, props: SliderPro
 }
 
 function countDecimals(value: number) {
+  'worklet';
   if (Math.floor(value.valueOf()) === value.valueOf()) {
     return 0;
   }
   return value.toString().split('.')[1].length || 0; 
 }
 
-export function getValueForX(x: number, trackWidth: number, props: SliderProps) {
-  const {minimumValue = 0, maximumValue = 1, step = 0} = props;
-
+export function getValueForX(x: number, trackWidth: number, minimum = 0, maximum = 1, step = 0) {
+  'worklet';
   if (trackWidth) {
     const ratio = x / trackWidth;
-    const range = maximumValue - minimumValue;
+    const range = maximum - minimum;
     let val = ratio * range;
     if (step > 0) {
       const decimals = countDecimals(step);
       val = Number((Math.round((ratio * range) / step) * step).toFixed(decimals));
     }
-    return Math.max(minimumValue, Math.min(maximumValue, minimumValue + val));
+    return Math.max(minimum, Math.min(maximum, minimum + val));
   }
   return 0;
 }
