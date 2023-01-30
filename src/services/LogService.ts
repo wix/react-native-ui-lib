@@ -2,13 +2,13 @@ interface BILogger {
   log: (event: any) => void;
 }
 class LogService {
-  biLogger: BILogger | undefined;
+  private biLogger: BILogger | undefined;
 
   injectBILogger = (biLogger: BILogger) => {
     this.biLogger = biLogger;
   };
 
-  biLog = (event: any) => {
+  logBI = (event: any) => {
     this.biLogger?.log(event);
   }
 
