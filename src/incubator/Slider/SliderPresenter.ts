@@ -1,9 +1,7 @@
 import {StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import {SliderProps} from '../../components/slider';
 
-export function getOffsetForValue(value: number, span: number, props: SliderProps) {
-  const {minimumValue = 0, maximumValue = 1} = props;
-
+export function getOffsetForValue(value: number, span: number, minimumValue = 0, maximumValue = 1) {
   const range = maximumValue - minimumValue;
   const relativeValue = minimumValue - value;
   const v = minimumValue < 0 ? Math.abs(relativeValue) : value - minimumValue; // for negative values
@@ -35,6 +33,10 @@ export function getValueForOffset(offset: number, span: number, minimum = 0, max
   return 0;
 }
 
+function inRange(value: number, min: number, max: number) {
+  return value >= min && value <= max;
+}
+
 export function validateValues(props: SliderProps) {
   const {useRange, value, minimumValue, maximumValue, initialMinimumValue, initialMaximumValue} = props;
   if (minimumValue > maximumValue || 
@@ -51,10 +53,6 @@ export function validateValues(props: SliderProps) {
       console.error('Your passed values are invalid. Please check that they are in range of the minimum and maximum values');
     }
   }
-}
-
-function inRange(value: number, min: number, max: number) {
-  return value >= min && value <= max;
 }
 
 export function unpackStyle(style?: StyleProp<ViewStyle>) {

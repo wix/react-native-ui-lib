@@ -8,27 +8,27 @@ describe('Slider:Presenter', () => {
 
   describe('getOffsetForValue', () => {
     it('should return 0 for 0', () => {
-      expect(uut.getOffsetForValue(0, trackWidth, {})).toEqual(0);
+      expect(uut.getOffsetForValue(0, trackWidth)).toEqual(0);
     });
 
     it('should return 350 for 1', () => {
-      expect(uut.getOffsetForValue(1, trackWidth, {})).toEqual(350);
+      expect(uut.getOffsetForValue(1, trackWidth)).toEqual(350);
     });
 
     it('should return 175 for 0.5', () => {
-      expect(uut.getOffsetForValue(0.5, trackWidth, {})).toEqual(175);
+      expect(uut.getOffsetForValue(0.5, trackWidth)).toEqual(175);
     });
 
     it('should return 175 for 50, when minimumValue = 0 and maximumValue = 100', () => {
-      expect(uut.getOffsetForValue(50, trackWidth, {minimumValue: minimum, maximumValue: maximum})).toEqual(175);
+      expect(uut.getOffsetForValue(50, trackWidth, minimum, maximum)).toEqual(175);
     });
 
     it('should return 175 for 60, when minimumValue = 20 and maximumValue = 100', () => {
-      expect(uut.getOffsetForValue(60, trackWidth, {minimumValue: 20, maximumValue: maximum})).toEqual(175);
+      expect(uut.getOffsetForValue(60, trackWidth, 20, maximum)).toEqual(175);
     });
 
     it('should return 175 for 60, when minimumValue = 0 and maximumValue = 80', () => {
-      expect(uut.getOffsetForValue(40, trackWidth, {minimumValue: minimum, maximumValue: 80})).toEqual(175);
+      expect(uut.getOffsetForValue(40, trackWidth, minimum, 80)).toEqual(175);
     });
   });
 

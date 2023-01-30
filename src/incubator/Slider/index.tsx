@@ -127,8 +127,9 @@ const Slider = (props: Props) => {
   const setInitialPositions = (trackWidth: number) => {
     validateValues(props);
 
-    const defaultThumbPosition = getOffsetForValue(useRange ? initialMinimumValue : value, trackWidth, props);
-    const rangeThumbPosition = getOffsetForValue(initialMaximumValue, trackWidth, props);
+    const defaultThumbPosition = 
+      getOffsetForValue(useRange ? initialMinimumValue : value, trackWidth, minimumValue, maximumValue);
+    const rangeThumbPosition = getOffsetForValue(initialMaximumValue, trackWidth, minimumValue, maximumValue);
     defaultThumbOffset.value = defaultThumbPosition;
     defaultThumbStart.value = defaultThumbPosition;
     rangeThumbOffset.value = rangeThumbPosition;
