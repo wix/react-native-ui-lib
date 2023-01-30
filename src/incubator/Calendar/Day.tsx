@@ -6,7 +6,7 @@ import {Colors} from 'style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
-import {getDayOfDate, isSameDay} from './helpers/DateUtils';
+import {getDayOfDate, isSameDay, isToday} from './helpers/DateUtils';
 import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
@@ -19,10 +19,9 @@ const Day = (props: DayProps) => {
 
   const shouldMarkSelected = !isNull(date) ? isSameDay(selectedDate.value, date) : false;
   const isSelected = useSharedValue(shouldMarkSelected);
-  const isToday = !isNull(date) ? isSameDay(Date.now(), date) : false;
 
-  const backgroundColor = isToday ? Colors.$backgroundSuccessHeavy : Colors.transparent;
-  const textColor = isToday ? Colors.$textDefaultLight : Colors.$backgroundPrimaryHeavy;
+  const backgroundColor = isToday(date) ? Colors.$backgroundSuccessHeavy : Colors.transparent;
+  const textColor = isToday(date) ? Colors.$textDefaultLight : Colors.$backgroundPrimaryHeavy;
   
   const animatedStyles = useAnimatedStyle(() => {
     return {

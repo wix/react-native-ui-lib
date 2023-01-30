@@ -132,6 +132,30 @@ export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) {
   return weekDaysNames;
 }
 
+export function isToday(date: number | null) {
+  return date !== null && date !== undefined ? isSameDay(Date.now(), date) : false;
+}
+
+export function isPastDate(date: number) {
+  const today = new Date();
+  const d = new Date(date);
+
+  if (today.getFullYear() > d.getFullYear()) {
+    return true;
+  }
+  if (today.getFullYear() === d.getFullYear()) {
+    if (today.getMonth() > d.getMonth()) {
+      return true;
+    }
+    if (today.getMonth() === d.getMonth()) {
+      if (today.getDate() > d.getDate()) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 export function isSameDay(d1: number, d2: number) {
   'worklet';
   const a = getDateObject(d1);
