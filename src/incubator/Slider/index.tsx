@@ -58,16 +58,6 @@ const Slider = (props: Props) => {
     testID
   } = props;
 
-  useImperativeHandle(forwardedRef, () => ({
-    reset: () => reset()
-  }));
-
-  const reset = () => {
-    activeThumb.value = ThumbType.DEFAULT;
-    setInitialPositions(trackSize.value.width);
-    onReset?.();
-  };
-
   const accessibilityProps = useMemo(() => {
     if (accessible) {
       return {
@@ -102,6 +92,29 @@ const Slider = (props: Props) => {
   const isPressedRange = useSharedValue(false);
   const rangeThumbOffset = useSharedValue(0);
   const rangeThumbStart = useSharedValue(0);
+
+  const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
+    styles.thumb,
+    {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
+  ], [disabled, thumbTintColor]);
+  const _thumbStyle = useSharedValue(unpackStyle(thumbStyle || defaultThumbStyle));
+  const _activeThumbStyle = useSharedValue(unpackStyle(activeThumbStyle));
+
+  useEffect(() => {
+    if (!thumbStyle) {
+      _thumbStyle.value = unpackStyle(defaultThumbStyle);
+    }
+  }, [defaultThumbStyle, thumbStyle]);
+
+  useImperativeHandle(forwardedRef, () => ({
+    reset: () => reset()
+  }));
+
+  const reset = () => {
+    activeThumb.value = ThumbType.DEFAULT;
+    setInitialPositions(trackSize.value.width);
+    onReset?.();
+  };
 
   const getStepInterpolated = () => {
     'worklet';
@@ -199,20 +212,6 @@ const Slider = (props: Props) => {
   }, []);
 
   /** styles & animations */
-  
-  const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
-    styles.thumb,
-    {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
-  ], [disabled, thumbTintColor]);
-
-  useEffect(() => {
-    if (!thumbStyle) {
-      _thumbStyle.value = unpackStyle(defaultThumbStyle);
-    }
-  }, [defaultThumbStyle, thumbStyle]);
-
-  const _thumbStyle = useSharedValue(unpackStyle(thumbStyle || defaultThumbStyle));
-  const _activeThumbStyle = useSharedValue(unpackStyle(activeThumbStyle));
 
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
