@@ -115,31 +115,36 @@ const Slider = (props: Props) => {
   const setInitialPositions = (trackWidth: number) => {
     validateValues(props);
 
-    if (useRange) {
-      const defaultThumbPosition = getXForValue(initialMinimumValue, trackWidth, props);
-      const rangeThumbPosition = getXForValue(initialMaximumValue, trackWidth, props);
-      activeTrackWidth.value = trackWidth - defaultThumbPosition - rangeThumbPosition;
-      updateDefaultThumb(defaultThumbPosition);
-      updateRangeThumb(rangeThumbPosition);
-    } else {
-      rangeThumbStart.value = trackWidth;
-      updateDefaultThumb(getXForValue(value, trackWidth, props));
-    }
+    const defaultThumbPosition = getXForValue(useRange ? initialMinimumValue : value, trackWidth, props);
+    const rangeThumbPosition = getXForValue(initialMaximumValue, trackWidth, props);
+    defaultThumbOffset.value = defaultThumbPosition;
+    defaultThumbStart.value = defaultThumbPosition;
+    rangeThumbOffset.value = rangeThumbPosition;
+    rangeThumbStart.value = useRange ? rangeThumbPosition : trackWidth;
+    activeTrackWidth.value = Math.abs(useRange ? rangeThumbPosition - defaultThumbPosition : defaultThumbPosition);
   };
 
   /** events */
 
-  const onChange = (value: number | {min: number; max: number}) => {
-    if (useRange && !isNumber(value)) {
-      const min = shouldDisableRTL ? value.max : value.min;
-      const max = shouldDisableRTL ? value.min : value.max;
-      onRangeChange?.({
-        min: getValueForX(min, trackSize.value.width, props),
-        max: getValueForX(max, trackSize.value.width, props)
-      });
-    } else if (isNumber(value)) {
-      const val = getValueForX(value, trackSize.value.width, props);
-      onValueChange?.(val);
+  const onChange = (offset: number | {min: number; max: number}) => {
+    'worklet';
+    if (offset !== undefined && trackSize.value.width > 0) {
+      if (useRange && typeof offset !== 'number') {
+        if (onRangeChange) {
+          const min = shouldDisableRTL ? offset.max : offset.min;
+          const max = shouldDisableRTL ? offset.min : offset.max;
+          const minValue = getValueForX(min, trackSize.value.width, minimumValue, maximumValue, step);
+          const maxValue = getValueForX(max, trackSize.value.width, minimumValue, maximumValue, step);
+          if (minValue !== initialMinimumValue || maxValue !== initialMaximumValue) {
+            runOnJS(onRangeChange)({min: minValue, max: maxValue});
+          }
+        }
+      } else if (typeof offset === 'number') {
+        if (onValueChange) {
+          const val = getValueForX(offset, trackSize.value.width, minimumValue, maximumValue, step);
+          runOnJS(onValueChange)(val);
+        }
+      }
     }
   };
 
