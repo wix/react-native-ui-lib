@@ -7,45 +7,47 @@ const VALUE = 20;
 const NEGATIVE_VALUE = -30;
 const MIN = 0;
 const MAX = 100;
+const INITIAL_MIN = 10;
+const INITIAL_MAX = 70;
 
 const IncubatorSliderScreen = () => {
   const [disableRTL, setDisableRTL] = useState<boolean>(false);
 
   const [sliderValue, setSliderValue] = useState(0);
-  const [stepSliderValue, setStepSliderValue] = useState(VALUE);
+  const [customSliderValue, setCustomSliderValue] = useState(VALUE);
   const [negativeSliderValue, setNegativeSliderValue] = useState(NEGATIVE_VALUE);
-  const [sliderMinValue, setSliderMinValue] = useState(MIN);
-  const [sliderMaxValue, setSliderMaxValue] = useState(MAX);
+  const [sliderMinValue, setSliderMinValue] = useState(INITIAL_MIN);
+  const [sliderMaxValue, setSliderMaxValue] = useState(INITIAL_MAX);
   
   const slider = useRef<typeof Incubator.Slider>();
-  const stepSlider = useRef<typeof Incubator.Slider>();
+  const customSlider = useRef<typeof Incubator.Slider>();
   const negativeSlider = useRef<typeof Incubator.Slider>();
   const rangeSlider = useRef<typeof Incubator.Slider>();
 
   const resetSliders = () => {
     slider.current?.reset();
-    stepSlider.current?.reset();
+    customSlider.current?.reset();
     rangeSlider.current?.reset();
     negativeSlider.current?.reset();
   };
 
   const onValueChange = (value: number) => {
-    // console.warn('onValueChange: ', value);
+    console.warn('onValueChange: ', value);
     setSliderValue(value);
   };
 
-  const onStepValueChange = (value: number) => {
-    // console.warn('onStepValueChange: ', value);
-    setStepSliderValue(value);
+  const onCustomValueChange = (value: number) => {
+    console.warn('onCustomValueChange: ', value);
+    setCustomSliderValue(value);
   };
 
   const onNegativeValueChange = (value: number) => {
-    // console.warn('onValueChange: ', value);
+    console.warn('onNegativeValueChange: ', value);
     setNegativeSliderValue(value);
   };
 
   const onRangeChange = (value: {min: number, max: number}) => {
-    // console.warn('onRangeChange: ', min, max);
+    console.warn('onRangeChange: ', value.min, value.max);
     setSliderMaxValue(value.max);
     setSliderMinValue(value.min);
   };
@@ -67,19 +69,8 @@ const IncubatorSliderScreen = () => {
     }
   };
 
-  return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={{backgroundColor: Colors.$backgroundDefault}}
-    >
-      <View row spread margin-20>
-        <Text h1 $textDefault>Slider</Text>
-        <Button link label="Reset Sliders" onPress={resetSliders}/>
-      </View>
-      <View marginL-20>
-        {Constants.isRTL && renderBooleanOption('Disable RTL', 'disableRTL', {spread: false, state: disableRTL, setState: setDisableRTL})}
-      </View>
-
+  const renderDefaultSliderExample = () => {
+    return (
       <View>
         <Text margin-10 text70BL $textDefault>Default Slider values 0 to 1</Text>
         {renderValuesBox(sliderValue)}
@@ -91,7 +82,11 @@ const IncubatorSliderScreen = () => {
           step={0.1}
         />
       </View>
+    );
+  };
 
+  const renderDisabledSliderExample = () => {
+    return (
       <View marginT-20>
         <Text margin-10 text70BL $textDefault>Disabled Slider</Text>
         <Incubator.Slider
@@ -101,13 +96,17 @@ const IncubatorSliderScreen = () => {
           disabled
         />
       </View>
-      
+    );
+  };
+
+  const renderCustomSliderExample = () => {
+    return (
       <View marginT-20 marginH-40>
         <Text margin-10 text70BL $textDefault>Custom Slider</Text>
-        {renderValuesBox(stepSliderValue)}
+        {renderValuesBox(customSliderValue)}
         <Incubator.Slider
-          ref={stepSlider}
-          onValueChange={onStepValueChange}
+          ref={customSlider}
+          onValueChange={onCustomValueChange}
           value={20}
           minimumValue={0}
           maximumValue={100}
@@ -122,7 +121,11 @@ const IncubatorSliderScreen = () => {
           // disableActiveStyling
         />
       </View>
+    );
+  };
 
+  const renderNegativeSliderExample = () => {
+    return (
       <View marginT-20>
         <Text margin-10 text70BL $textDefault>Negative values -20 to -100 initial -30</Text>
         {renderValuesBox(negativeSliderValue)}
@@ -137,7 +140,11 @@ const IncubatorSliderScreen = () => {
           disableRTL={disableRTL}
         />
       </View>
+    );
+  };
 
+  const renderRangeSliderExample = () => {
+    return (
       <View marginT-20>
         <Text margin-10 text70BL $textDefault>Range Slider values 0 to 100</Text>
         <View marginH-20>
@@ -149,13 +156,33 @@ const IncubatorSliderScreen = () => {
             onRangeChange={onRangeChange}
             minimumValue={MIN}
             maximumValue={MAX}
-            initialMinimumValue={10}
-            initialMaximumValue={70}
+            initialMinimumValue={INITIAL_MIN}
+            initialMaximumValue={INITIAL_MAX}
             step={1}
             disableRTL={disableRTL}
           />
         </View>
       </View>
+    );
+  };
+
+  return (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{backgroundColor: Colors.$backgroundDefault}}
+    >
+      <View row spread margin-20>
+        <Text h1 $textDefault>Slider</Text>
+        <Button link label="Reset Sliders" onPress={resetSliders}/>
+      </View>
+      <View marginL-20>
+        {Constants.isRTL && renderBooleanOption('Disable RTL', 'disableRTL', {spread: false, state: disableRTL, setState: setDisableRTL})}
+      </View>
+      {renderDefaultSliderExample()}
+      {renderDisabledSliderExample()}
+      {renderCustomSliderExample()}
+      {renderNegativeSliderExample()}
+      {renderRangeSliderExample()}
     </ScrollView>
   );
 };
