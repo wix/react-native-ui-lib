@@ -1,14 +1,14 @@
 import {StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import {SliderProps} from '../../components/slider';
 
-export function getXForValue(value: number, trackWidth: number, props: SliderProps) {
+export function getOffsetForValue(value: number, span: number, props: SliderProps) {
   const {minimumValue = 0, maximumValue = 1} = props;
 
   const range = maximumValue - minimumValue;
   const relativeValue = minimumValue - value;
   const v = minimumValue < 0 ? Math.abs(relativeValue) : value - minimumValue; // for negative values
   const ratio = v / range;
-  const x = ratio * trackWidth;
+  const x = ratio * span;
   return x;
 }
 
@@ -20,10 +20,10 @@ function countDecimals(value: number) {
   return value.toString().split('.')[1].length || 0; 
 }
 
-export function getValueForX(x: number, trackWidth: number, minimum = 0, maximum = 1, step = 0) {
+export function getValueForOffset(offset: number, span: number, minimum = 0, maximum = 1, step = 0) {
   'worklet';
-  if (trackWidth) {
-    const ratio = x / trackWidth;
+  if (span) {
+    const ratio = offset / span;
     const range = maximum - minimum;
     let val = ratio * range;
     if (step > 0) {

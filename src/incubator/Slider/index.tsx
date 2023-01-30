@@ -7,7 +7,7 @@ import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
-import {validateValues, getXForValue, getValueForX, unpackStyle} from './SliderPresenter';
+import {validateValues, getOffsetForValue, getValueForOffset, unpackStyle} from './SliderPresenter';
 import Thumb from './Thumb';
 import Track from './Track';
 
@@ -127,8 +127,8 @@ const Slider = (props: Props) => {
   const setInitialPositions = (trackWidth: number) => {
     validateValues(props);
 
-    const defaultThumbPosition = getXForValue(useRange ? initialMinimumValue : value, trackWidth, props);
-    const rangeThumbPosition = getXForValue(initialMaximumValue, trackWidth, props);
+    const defaultThumbPosition = getOffsetForValue(useRange ? initialMinimumValue : value, trackWidth, props);
+    const rangeThumbPosition = getOffsetForValue(initialMaximumValue, trackWidth, props);
     defaultThumbOffset.value = defaultThumbPosition;
     defaultThumbStart.value = defaultThumbPosition;
     rangeThumbOffset.value = rangeThumbPosition;
@@ -145,15 +145,15 @@ const Slider = (props: Props) => {
         if (onRangeChange) {
           const min = shouldDisableRTL ? offset.max : offset.min;
           const max = shouldDisableRTL ? offset.min : offset.max;
-          const minValue = getValueForX(min, trackSize.value.width, minimumValue, maximumValue, step);
-          const maxValue = getValueForX(max, trackSize.value.width, minimumValue, maximumValue, step);
+          const minValue = getValueForOffset(min, trackSize.value.width, minimumValue, maximumValue, step);
+          const maxValue = getValueForOffset(max, trackSize.value.width, minimumValue, maximumValue, step);
           if (minValue !== initialMinimumValue || maxValue !== initialMaximumValue) {
             runOnJS(onRangeChange)({min: minValue, max: maxValue});
           }
         }
       } else if (typeof offset === 'number') {
         if (onValueChange) {
-          const val = getValueForX(offset, trackSize.value.width, minimumValue, maximumValue, step);
+          const val = getValueForOffset(offset, trackSize.value.width, minimumValue, maximumValue, step);
           runOnJS(onValueChange)(val);
         }
       }
