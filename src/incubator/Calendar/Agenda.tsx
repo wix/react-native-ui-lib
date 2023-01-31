@@ -4,7 +4,7 @@ import {FlashList, ViewToken} from '@shopify/flash-list';
 import {BorderRadiuses} from 'style';
 import View from '../../components/view';
 import Text from '../../components/text';
-import {isSameDay, HOUR_TO_MS} from './helpers/DateUtils';
+import {isSameDay, isSameMonth} from './helpers/DateUtils';
 import {InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
@@ -25,7 +25,7 @@ function Agenda() {
         marginV-1
         marginH-10
         paddingH-10
-        height={(50 * (item.end - item.start)) / HOUR_TO_MS}
+        height={50}
         style={{borderWidth: 1, borderRadius: BorderRadiuses.br20, justifyContent: 'center'}}
       >
         <Text style={{}}>
@@ -45,7 +45,14 @@ function Agenda() {
 
   const renderHeader = useCallback((item: DateSectionHeader) => {
     return (
-      <View margin-5 marginT-15>
+      <View
+        marginB-1
+        paddingB-4
+        marginH-10
+        paddingH-10
+        height={50}
+        bottom
+      >
         <Text>{item.header}</Text>
       </View>
     );
@@ -78,14 +85,8 @@ function Agenda() {
   },
   [data]);
 
-  const scrollToIndex = useCallback((index: number, isInitial: boolean) => {
-    if (isInitial) {
-      setTimeout(() => {
-        flashList.current?.scrollToIndex({index, animated: false});
-      }, 2000); // TODO: Find a better solution (compare where we got to?)
-    } else {
-      flashList.current?.scrollToIndex({index, animated: true});
-    }
+  const scrollToIndex = useCallback((index: number, animated: boolean) => {
+    flashList.current?.scrollToIndex({index, animated});
   }, []);
 
   useAnimatedReaction(() => {
@@ -103,7 +104,10 @@ function Agenda() {
           closestSectionHeader.value = dateSectionHeader;
           scrolledByUser.value = false;
           // TODO: Can the animation be improved (not in JS)?
-          runOnJS(scrollToIndex)(index, !previous);
+          if (previous) {
+            const _isSameMonth = isSameMonth(selected, previous);
+            runOnJS(scrollToIndex)(index, _isSameMonth);
+          }
         }
       }
     }
@@ -138,8 +142,7 @@ function Agenda() {
   return (
     <FlashList
       ref={flashList}
-      // TODO: Set fixed height for items and check if initialIndex works
-      estimatedItemSize={89}
+      estimatedItemSize={52}
       data={data}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
@@ -147,7 +150,7 @@ function Agenda() {
       onViewableItemsChanged={onViewableItemsChanged}
       onMomentumScrollBegin={onMomentumScrollBegin}
       onScrollBeginDrag={onScrollBeginDrag}
-      // initialScrollIndex - unfortunately we cannot use this because we need the timeout above
+      initialScrollIndex={findClosestDateAfter(selectedDate.value)?.index ?? 0}
     />
   );
 }
