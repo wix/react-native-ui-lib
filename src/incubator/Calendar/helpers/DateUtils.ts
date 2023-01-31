@@ -133,6 +133,7 @@ export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) {
 }
 
 export function isToday(date: number | null) {
+  'worklet';
   return date !== null && date !== undefined ? isSameDay(Date.now(), date) : false;
 }
 

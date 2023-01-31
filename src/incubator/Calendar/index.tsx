@@ -10,6 +10,7 @@ import {CalendarContextProps, CalendarProps, FirstDayOfWeek, UpdateSource} from 
 import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
 import Agenda from './Agenda';
+import TodayButton from './TodayButton';
 
 // TODO: Move this logic elsewhere to pre-generate on install?
 const MONTH_ITEMS = generateMonthItems(5);
@@ -106,6 +107,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
         onScrollBeginDrag={onScrollBeginDrag}
       />
       {children}
+      <TodayButton/>
     </CalendarContext.Provider>
   );
 }

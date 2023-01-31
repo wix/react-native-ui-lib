@@ -1,5 +1,6 @@
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
+import {ButtonProps} from '../../components/button';
 
 export interface DateObject {
   month: number;
@@ -81,6 +82,11 @@ export interface CalendarItemProps {
 export interface HeaderProps {
   year?: number;
   month?: number;
+}
+
+export interface TodayButtonProps {
+  containerStyle?: StyleProp<ViewStyle>;
+  buttonProps?: ButtonProps;
 }
 
 export interface WeekDaysNamesProps {
