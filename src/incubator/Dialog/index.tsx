@@ -217,6 +217,10 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     <View testID={`${testID}.overlayFadingBackground`} absF reanimated style={overlayStyle} pointerEvents="none"/>
   );
 
+  if (!modalVisibility) {
+    return null;
+  }
+
   return (
     <Modal
       transparent
