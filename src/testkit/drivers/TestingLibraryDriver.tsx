@@ -33,10 +33,12 @@ export class TestingLibraryDriver implements UniDriver {
     if (!this.renderAPI) {
       throw new SelectorChainingException();
     }
-    const instances = await this.renderAPI
-      .findAllByTestId(testId)
-      .catch(() => []);
-    return new TestingLibraryDriver(instances);
+    const instances = await this.renderAPI.queryAllByTestId(testId);
+    if (instances) {
+      return Promise.resolve(new TestingLibraryDriver(instances));
+    } else {
+      return Promise.reject(new NoSelectorException());
+    }
   };
 
   selectorByText = async (text: string): Promise<UniDriver> => {

@@ -10,13 +10,26 @@ export interface HiddenLocation extends HiddenLocationRecord {
   wasMeasured: boolean;
 }
 
+// Adding this for headless tests that are not triggering onLayout
+// Unfortunately Dialog._inTest only exist after Dialog was created,
+// so this cannot be done statically
+function getWasMeasuredDefaultValue() {
+  let wasMeasuredDefaultValue = false;
+  if (__DEV__) {
+    wasMeasuredDefaultValue = require('../Dialog').default._inTest ?? false;
+  }
+
+  return wasMeasuredDefaultValue;
+}
+
 export default function useHiddenLocation<T extends View>() {
+  const wasMeasuredDefaultValue = useRef(getWasMeasuredDefaultValue());
   const getHiddenLocation = ({
     x = 0,
     y = 0,
     width = Constants.screenWidth,
     height = Constants.windowHeight,
-    wasMeasured = false
+    wasMeasured = wasMeasuredDefaultValue.current
   }): HiddenLocation => {
     return {
       up: -y - height,
@@ -30,7 +43,7 @@ export default function useHiddenLocation<T extends View>() {
   const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
   const ref = useRef<T>();
   const layoutData = useRef<LayoutRectangle>();
-  const wasMeasured = useRef(false);
+  const wasMeasured = useRef(wasMeasuredDefaultValue.current);
 
   const measure = useCallback(() => {
     if (ref.current && layoutData.current && layoutData.current.width > 0 && layoutData.current.height > 0) {

@@ -17,9 +17,30 @@ jest.mock('react-native-reanimated', () => {
 });
 global.__reanimatedWorkletInit = jest.fn();
 jest.mock('react-native-gesture-handler',
-  () => ({
-    FlatList: require('react-native').FlatList
-  }),
+  () => {
+    jest.requireActual('react-native-gesture-handler/jestSetup');
+    const GestureHandler = jest.requireActual('react-native-gesture-handler');
+    GestureHandler.Gesture.Pan = () => {
+      const PanMock = {
+        _handlers: {}
+      };
+
+      const getDefaultMockedHandler = handlerName => handler => {
+        if (typeof handler === 'function') {
+          PanMock._handlers[handlerName] = handler;
+        }
+        return PanMock;
+      };
+
+      PanMock.onStart = getDefaultMockedHandler('onStart');
+      PanMock.onUpdate = getDefaultMockedHandler('onUpdate');
+      PanMock.onEnd = getDefaultMockedHandler('onEnd');
+      PanMock.prepare = jest.fn();
+      return PanMock;
+    };
+
+    return GestureHandler;
+  },
   {virtual: true});
 jest.mock('@react-native-picker/picker', () => ({Picker: {Item: {}}}));
 jest.mock('react-native', () => {
@@ -27,6 +48,8 @@ jest.mock('react-native', () => {
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
   return reactNative;
 });
+import Dialog from './src/incubator/Dialog';
+Dialog._inTest = true;
 
 if (typeof String.prototype.replaceAll === 'undefined') {
   // eslint-disable-next-line no-extend-native
