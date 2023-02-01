@@ -11,7 +11,7 @@ export interface HiddenLocation extends HiddenLocationRecord {
 }
 
 // Adding this for headless tests that are not triggering onLayout
-const wasMeasuredDefaultValue = global.__UI_LIB_TESTING__ ?? false;
+const wasMeasuredDefaultValue = global._UILIB_TESTING ?? false;
 
 export default function useHiddenLocation<T extends View>() {
   const getHiddenLocation = ({
