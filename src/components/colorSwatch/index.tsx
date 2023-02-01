@@ -36,6 +36,9 @@ interface Props {
   index?: number;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  /**
+   * Color swatch size
+   */
   size?: number;
 }
 export type ColorSwatchProps = Props;
