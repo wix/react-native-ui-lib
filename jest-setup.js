@@ -48,8 +48,11 @@ jest.mock('react-native', () => {
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
   return reactNative;
 });
-import Dialog from './src/incubator/Dialog';
-Dialog._inTest = true;
+jest.mock('./src/incubator/Dialog', () => {
+  const Dialog = jest.requireActual('./src/incubator/Dialog');
+  Dialog.default._inTest = true;
+  return Dialog;
+});
 
 if (typeof String.prototype.replaceAll === 'undefined') {
   // eslint-disable-next-line no-extend-native
