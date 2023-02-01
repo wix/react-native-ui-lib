@@ -31,7 +31,6 @@
       "description": "Accessibility labels as an object of strings",
       "default": "{\n addButton: 'add custom color using hex code',\n dismissButton: 'dismiss',\n doneButton: 'done',\n input: 'custom hex color code'\n}"
     },
-    {"name": "style", "type": "ViewStyle", "description": "Component's style"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
   ],
   "snippet": [

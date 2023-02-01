@@ -7,6 +7,7 @@ import Button from '../button';
 import ColorPalette from '../colorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
+import {LogService} from '../../services';
 
 interface Props extends ColorPickerDialogProps {
   /**
@@ -65,13 +66,21 @@ const ACCESSIBILITY_LABELS = {
 class ColorPicker extends PureComponent<Props> {
   static displayName = 'ColorPicker';
 
-  static defaultProps = {
-    accessibilityLabels: ACCESSIBILITY_LABELS,
-    backgroundColor: Colors.$backgroundDefault
-  };
+  constructor(props: Props) {
+    super(props);
+
+    if (props.style) {
+      LogService.warn('UILib ColorPicker style prop is deprecated.');
+    }
+  }
 
   state = {
     show: false
+  };
+
+  static defaultProps = {
+    accessibilityLabels: ACCESSIBILITY_LABELS,
+    backgroundColor: Colors.$backgroundDefault
   };
 
   get animatedIndex() {
