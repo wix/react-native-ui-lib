@@ -22,9 +22,9 @@ interface Props {
    */
   selected?: boolean;
   /**
-   *
+   * Is the initial state is unavailable
    */
-  unavilable?: boolean;
+  unavailable?: boolean;
   /**
    * Is first render should be animated
    */
@@ -140,7 +140,7 @@ class ColorSwatch extends PureComponent<Props> {
   diagonalLine = () => <View flex bg-black style={{width: 2, transform: [{rotate: '45deg'}]}}/>;
 
   renderContent() {
-    const {style, color, onPress, unavilable, size = DEFAULT_SIZE, ...others} = this.props;
+    const {style, color, onPress, unavailable, size = DEFAULT_SIZE, ...others} = this.props;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
@@ -161,8 +161,8 @@ class ColorSwatch extends PureComponent<Props> {
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
         )}
-        {unavilable ? (
-          <View style={[this.styles.box, {backgroundColor: tintColor}]}/>
+        {unavailable ? (
+          <View style={[this.styles.unavailable, {backgroundColor: tintColor}]}/>
         ) : (
           <Animated.Image
             source={Assets.icons.check}
@@ -219,7 +219,7 @@ function createStyles({color = Colors.grey30}) {
       borderRadius: BorderRadiuses.br100,
       borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
     },
-    box: {
+    unavailable: {
       height: '100%',
       width: 3,
       transform: [{rotate: '45deg'}],
