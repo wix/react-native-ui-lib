@@ -140,8 +140,6 @@ class ColorSwatch extends PureComponent<Props> {
     this.layout = event.nativeEvent.layout;
   };
 
-  diagonalLine = () => <View flex bg-black style={{width: 2, transform: [{rotate: '45deg'}]}}/>;
-
   renderContent() {
     const {style, color, onPress, unavailable, size = DEFAULT_SIZE, ...others} = this.props;
     const {isSelected} = this.state;
