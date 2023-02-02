@@ -51,6 +51,10 @@ export default class ColorSwatchScreen extends Component {
     this.setState({color2: value});
   };
 
+  unavailableOnPress = () => {
+    console.log(`Pressed on unavailable color swatch!`);
+  };
+
   render() {
     const {color, color1, color2, selected} = this.state;
 
@@ -61,10 +65,16 @@ export default class ColorSwatchScreen extends Component {
             Single ColorSwatch
           </Text>
           <View row>
-            <ColorSwatch selected={selected} onPress={this.onPress}/>
             <View>
-              <ColorSwatch selected color={Colors.$backgroundMajorLight}/>
-              <Text>Disabled</Text>
+              <ColorSwatch selected={selected} onPress={this.onPress}/>
+            </View>
+            <View>
+              <ColorSwatch color={Colors.$backgroundMajorLight}/>
+              <Text text90R>Disabled</Text>
+            </View>
+            <View>
+              <ColorSwatch unavailable onPress={this.unavailableOnPress} color={Colors.yellow10}/>
+              <Text text90R>Unavailable</Text>
             </View>
           </View>
 
