@@ -11,6 +11,7 @@ import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
 import Agenda from './Agenda';
 import TodayButton from './TodayButton';
+import Header from './Header';
 
 // TODO: Move this logic elsewhere to pre-generate on install?
 const MONTH_ITEMS = generateMonthItems(2);
@@ -19,7 +20,7 @@ const getIndex = (date: number) => {
 };
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
-  const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.MONDAY} = props;
+  const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.MONDAY, staticHeader = false} = props;
 
   const flashListRef = useRef();
   const calendarWidth = Constants.screenWidth;
@@ -42,7 +43,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       selectedDate: current,
       setDate,
       showWeeksNumbers: true,
-      updateSource: lastUpdateSource
+      updateSource: lastUpdateSource,
+      staticHeader
     };
   }, []);
 
@@ -90,6 +92,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
 
   return (
     <CalendarContext.Provider value={contextValue}>
+      {staticHeader && <Header/>}
       <FlashList
         // @ts-expect-error
         ref={flashListRef}

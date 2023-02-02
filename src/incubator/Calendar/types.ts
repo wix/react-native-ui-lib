@@ -56,6 +56,7 @@ export interface CalendarContextProps {
   data: InternalData;
   showWeeksNumbers: boolean;
   updateSource?: SharedValue<UpdateSource | undefined>;
+  staticHeader?: boolean;
 }
 
 export interface DayProps {
@@ -105,6 +106,7 @@ export interface CalendarProps {
   data: Data;
   initialDate?: number;
   firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */ FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
+  staticHeader?: boolean;
 }
 
 // export interface AgendaProps {

@@ -15,8 +15,7 @@ const WEEK_NUMBER_WIDTH = 18;
 
 const Header = (props: HeaderProps) => {
   const {month, year} = props;
-  const {selectedDate, setDate, showWeeksNumbers} = useContext(CalendarContext);
-  const isStaticHeader = month === undefined && year === undefined;
+  const {selectedDate, setDate, showWeeksNumbers, staticHeader} = useContext(CalendarContext);
 
   const onLeftArrowPress = useCallback(() => {
     setDate(addMonths(selectedDate.value, -1), UpdateSource.MONTH_ARROW);
@@ -28,8 +27,8 @@ const Header = (props: HeaderProps) => {
 
   const animatedProps = useAnimatedProps(() => {
     const dateObject = getDateObject(selectedDate.value);
-    const monthString = getMonthForIndex(isStaticHeader ? dateObject.month : month!);
-    const dateString = isStaticHeader ? monthString + ` ${dateObject.year}` : monthString + ` ${year}`;
+    const monthString = getMonthForIndex(staticHeader ? dateObject.month : month!);
+    const dateString = staticHeader ? monthString + ` ${dateObject.year}` : monthString + ` ${year}`;
     return {
       text: dateString
     };

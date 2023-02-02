@@ -71,7 +71,6 @@ export default Day;
 
 const styles = StyleSheet.create({
   dayContainer: {
-    borderWidth: 1,
     width: 32,
     height: 32
   },
