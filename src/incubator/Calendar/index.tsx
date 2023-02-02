@@ -13,7 +13,7 @@ import Agenda from './Agenda';
 import TodayButton from './TodayButton';
 
 // TODO: Move this logic elsewhere to pre-generate on install?
-const MONTH_ITEMS = generateMonthItems(5);
+const MONTH_ITEMS = generateMonthItems(2);
 const getIndex = (date: number) => {
   return findIndex(MONTH_ITEMS, item => isSameMonth(item, date));
 };

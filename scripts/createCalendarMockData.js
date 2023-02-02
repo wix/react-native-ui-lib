@@ -14,8 +14,7 @@ function generateId() {
 
 const data = [];
 
-// This is around 2000 events
-for (let year = 2018; year <= 2025; ++year) {
+for (let year = 2021; year <= 2023; ++year) {
   for (let month = 0; month <= 11; ++month) {
     for (let day = 1; day <= 31; day += Math.random() > 0.5 ? 2 : 1) {
       for (let hour = 9; hour <= 19; hour += Math.random() > 0.5 ? 4 : 3) {
@@ -30,6 +29,8 @@ for (let year = 2018; year <= 2025; ++year) {
     }
   }
 }
+
+console.log(`${data.length} events were created`);
 
 fs.writeFileSync('demo/src/screens/incubatorScreens/IncubatorCalendarScreen/MockData.ts',
   `// Note: to generate new data run calendar:createMocks and update createCalendarMockData script \n` +
