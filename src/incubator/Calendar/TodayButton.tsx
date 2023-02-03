@@ -1,25 +1,28 @@
 import React, {useContext, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import /* Animated,  */{useAnimatedStyle/* , useSharedValue */} from 'react-native-reanimated';
+import {/* Animated,  */ useAnimatedStyle /* , useSharedValue */} from 'react-native-reanimated';
 import {Colors} from '../../style';
 import View from '../../components/view';
 import Button from '../../components/button';
-import {isSameDay/*, isToday, isPastDate*/} from './helpers/DateUtils';
+import {isSameDay /*, isToday, isPastDate*/} from './helpers/DateUtils';
 import {TodayButtonProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 const UP_ICON = require('./assets/up.png');
 // const DOWN_ICON = require('./assets/down.png');
 
-const TodayButton = (props: TodayButtonProps) => { //TODO: memoize
+const TodayButton = (props: TodayButtonProps) => {
+  //TODO: memoize
   const {containerStyle, buttonProps} = props;
   const {selectedDate, setDate} = useContext(CalendarContext);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{
-        translateY: isSameDay(selectedDate.value, Date.now()) ? 100 : 0
-      }],
+      transform: [
+        {
+          translateY: isSameDay(selectedDate.value, Date.now()) ? 100 : 0
+        }
+      ]
     };
   });
 
@@ -32,7 +35,8 @@ const TodayButton = (props: TodayButtonProps) => { //TODO: memoize
   const onPress = useCallback(event => {
     setDate(Date.now(), UpdateSource.TODAY_PRESS);
     buttonProps?.onPress?.(event);
-  }, [buttonProps]);
+  },
+  [buttonProps]);
 
   return (
     <View reanimated style={[styles.container, containerStyle, animatedStyle]}>
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: 42,
-    left: 16,
+    left: 16
   },
   button: {
     backgroundColor: Colors.$backgroundDefault,
