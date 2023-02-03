@@ -324,13 +324,19 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   const renderBadge = () => {
     if (!_.isEmpty(badgeProps)) {
       return (
-        <Badge testID={`${testID}.onlineBadge`} {...badgeProps} size={badgeSize} containerStyle={_badgePosition}/>
+        <Badge
+          testID={`${testID}.onlineBadge`}
+          iconProps={{tintColor: null}}
+          {...badgeProps}
+          size={badgeSize}
+          containerStyle={_badgePosition}
+        />
       );
     }
   };
 
   const renderRibbon = () => {
-    if (ribbonLabel) {
+    if (!customRibbon && ribbonLabel) {
       return (
         <View style={_ribbonStyle}>
           <Text numberOfLines={1} text100 $textDefaultLight style={ribbonLabelStyle}>

@@ -269,7 +269,8 @@ const styles = StyleSheet.create({
     marginRight: Spacings.s3
   },
   action: {
-    backgroundColor: Colors.$backgroundNeutralLight,
+    borderLeftColor: Colors.$outlineDisabled,
+    borderLeftWidth: 1,
     borderTopRightRadius: BorderRadiuses.br40,
     borderBottomRightRadius: BorderRadiuses.br40,
     paddingHorizontal: Spacings.s3,

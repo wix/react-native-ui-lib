@@ -92,6 +92,10 @@ export interface WheelPickerProps {
    * Change the default (white) tint color of the fade view.
    */
   faderProps?: Omit<FaderProps, 'visible' | 'position'>;
+  /**
+   * Props to be sent to the FlatList
+   */
+  flatListProps?: Partial<FlatListProps<ItemProps>>;
 }
 
 const WheelPicker = ({
@@ -112,7 +116,8 @@ const WheelPicker = ({
   initialValue = 0,
   separatorsStyle,
   testID,
-  faderProps
+  faderProps,
+  flatListProps
 }: WheelPickerProps) => {
   const scrollView = useRef<Animated.ScrollView>();
   const offset = useSharedValue(0);
@@ -317,6 +322,7 @@ const WheelPicker = ({
       <View row centerH>
         <View flexG>
           <AnimatedFlatList
+            {...flatListProps}
             testID={`${testID}.list`}
             listKey={`${testID}.flatList`}
             height={height}
