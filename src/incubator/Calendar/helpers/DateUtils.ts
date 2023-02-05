@@ -29,12 +29,13 @@ function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: Fi
   return numberOfWeeks;
 }
 
-function getFirstDayInTheWeek(date: Date, firstDayOfWeek: FirstDayOfWeek) {
-  let result = new Date(date.getTime() - DAY_TO_MS * ((date.getDay() - firstDayOfWeek) % 7));
-  const dayInMonth = result.getDate();
+function getFirstDayInTheWeek(date: number, firstDayOfWeek: FirstDayOfWeek) {
+  const dayOfTheWeek = new Date(date).getDay();
+  let result = date - DAY_TO_MS * ((dayOfTheWeek - firstDayOfWeek) % 7);
+  const dayInMonth = getDateObject(result).day;
 
   if (dayInMonth > 1 && dayInMonth <= 7) {
-    result = new Date(result.getTime() - WEEK_TO_MS);
+    result -= WEEK_TO_MS;
   }
   return result;
 }
@@ -48,10 +49,10 @@ function getFirstDayInTheYear(year: number, firstDayOfWeek: FirstDayOfWeek) {
 export function getDaysOfWeekNumber(year: number, weekNumber: number, firstDayOfWeek: FirstDayOfWeek) {
   const result = new Array(7).fill(null);
   const firstDayOfYear = getFirstDayInTheYear(year, firstDayOfWeek);
-  const firstDayInRelevantWeek = firstDayOfYear.getTime() + (weekNumber - 1) * WEEK_TO_MS;
+  const firstDayInRelevantWeek = firstDayOfYear + (weekNumber - 1) * WEEK_TO_MS;
 
   for (let day = 0; day <= 6; ++day) {
-    result[day] = new Date(firstDayInRelevantWeek + DAY_TO_MS * day).getTime();
+    result[day] = firstDayInRelevantWeek + DAY_TO_MS * day;
   }
   return result;
 }
@@ -60,9 +61,19 @@ export function getDayOfDate(date: number) {
   return new Date(date).getDate();
 }
 
-export function getNormalizedDate(date: DateObject) {
+export function getDayOfTheWeek(date: number) {
+  return new Date(date).getDay();
+}
+
+export function getNormalizedDate(date: DateObject | number) {
+  let d;
+  if (typeof date === 'number') {
+    d = getDateObject(date);
+  } else {
+    d = date;
+  }
   // Must add Date.UTC or the local timezone might be added which can affect the date (one day before)
-  return new Date(Date.UTC(date.year, date.month, date.day));
+  return Date.UTC(d.year, d.month, d.day);
 }
 
 /* Worklets */

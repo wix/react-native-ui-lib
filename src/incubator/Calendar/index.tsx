@@ -77,7 +77,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     if (scrolledByUser.value) {
       const item = viewableItems?.[0]?.item;
       if (item && !isSameMonth(item, current.value)) {
-        const newDate = getNormalizedDate({year: item.year, month: item.month, day: 1}).getTime();
+        const newDate = getNormalizedDate({year: item.year, month: item.month, day: 1});
         setDate(newDate, UpdateSource.MONTH_SCROLL);
       }
     }
