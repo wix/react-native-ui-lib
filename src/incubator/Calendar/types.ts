@@ -57,6 +57,8 @@ export interface CalendarContextProps {
   showWeeksNumbers: boolean;
   updateSource?: SharedValue<UpdateSource | undefined>;
   staticHeader?: boolean;
+  setHeaderHeight?: (height: number) => void;
+  headerHeight: SharedValue<number>;
 }
 
 export interface DayProps {

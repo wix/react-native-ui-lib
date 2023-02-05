@@ -15,7 +15,7 @@ const WEEK_NUMBER_WIDTH = 18;
 
 const Header = (props: HeaderProps) => {
   const {month, year} = props;
-  const {selectedDate, setDate, showWeeksNumbers, staticHeader} = useContext(CalendarContext);
+  const {selectedDate, setDate, showWeeksNumbers, staticHeader, setHeaderHeight} = useContext(CalendarContext);
 
   const onLeftArrowPress = useCallback(() => {
     setDate(addMonths(selectedDate.value, -1), UpdateSource.MONTH_ARROW);
@@ -33,6 +33,10 @@ const Header = (props: HeaderProps) => {
       text: dateString
     };
   });
+
+  const onLayout = useCallback((event) => {
+    setHeaderHeight?.(event.nativeEvent.layout.height);
+  }, []);
 
   const renderTitle = () => {
     // @ts-expect-error
@@ -58,7 +62,7 @@ const Header = (props: HeaderProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayout}>
       {renderNavigation()}
       <WeekDaysNames
         format={DayNamesFormat.LONG_ABBREVIATION}

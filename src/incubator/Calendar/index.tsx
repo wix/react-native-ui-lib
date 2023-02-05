@@ -29,11 +29,16 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   const lastUpdateSource = useSharedValue<UpdateSource>(UpdateSource.INIT);
   const processedData = useMemo(() => addHeaders(data), [data]);
   const scrolledByUser = useSharedValue<boolean>(false);
+  const headerHeight = useSharedValue(0);
 
   const setDate = useCallback<CalendarContextProps['setDate']>((date: number, updateSource: UpdateSource) => {
     current.value = date;
     lastUpdateSource.value = updateSource;
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const setHeaderHeight = useCallback((height: number) => {
+    headerHeight.value = height;
   }, []);
 
   const contextValue = useMemo<CalendarContextProps>(() => {
@@ -44,7 +49,9 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       setDate,
       showWeeksNumbers: true,
       updateSource: lastUpdateSource,
-      staticHeader
+      staticHeader,
+      setHeaderHeight,
+      headerHeight
     };
   }, []);
 
