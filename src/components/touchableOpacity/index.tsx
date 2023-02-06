@@ -44,9 +44,9 @@ export interface TouchableOpacityProps
   customValue?: any;
   style?: ViewProps['style'];
   onPress?: (props?: TouchableOpacityProps | any) => void;
-  onPressIn?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressIn'];
-  onPressOut?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressOut'];
-  onLongPress?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onLongPress'];
+  onPressIn?: (props?: TouchableOpacityProps | any) => void | RNTouchableOpacityProps['onPressIn'];
+  onPressOut?: (props?: TouchableOpacityProps | any) => void | RNTouchableOpacityProps['onPressOut'];
+  onLongPress?: (props?: TouchableOpacityProps | any) => void | RNTouchableOpacityProps['onLongPress'];
 }
 
 type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;
