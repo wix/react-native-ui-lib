@@ -242,7 +242,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     return label ? (
       <View row centerV style={containerStyle}>
         {this.renderCheckbox()}
-        <Text style={[this.styles.checkboxLabel, labelStyle]} {...labelProps} onPress={this.onPress}>
+        <Text flexS style={[this.styles.checkboxLabel, labelStyle]} {...labelProps} onPress={this.onPress}>
           {label}
         </Text>
       </View>
@@ -275,7 +275,7 @@ function createStyles(props: CheckboxProps) {
       justifyContent: 'center'
     },
     checkboxLabel: {
-      marginHorizontal: Spacings.s3,
+      marginLeft: Spacings.s3,
       alignSelf: 'center',
       color: Colors.$textDefault
     }
