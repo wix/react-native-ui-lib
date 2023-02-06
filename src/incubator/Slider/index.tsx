@@ -1,13 +1,12 @@
 import React, {useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
-import {Gesture, PanGesture} from 'react-native-gesture-handler';
-import {useSharedValue, useAnimatedStyle, withSpring, runOnJS, interpolate} from 'react-native-reanimated';
+import {useSharedValue, useAnimatedStyle, runOnJS} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
-import {validateValues, getOffsetForValue, getValueForOffset, unpackStyle} from './SliderPresenter';
+import {validateValues, getOffsetForValue, getValueForOffset, unpackStyle, getStepInterpolated} from './SliderPresenter';
 import Thumb from './Thumb';
 import Track from './Track';
 
@@ -81,17 +80,14 @@ const Slider = (props: Props) => {
   const stepXValue = useSharedValue(step);
 
   const trackSize = useSharedValue({width: 0, height: TRACK_HEIGHT});
-  const activeTrackWidth = useSharedValue(0);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
   const rangeGap = useRange && useGap ? GAP + thumbSize.value.width : 0;
 
   const activeThumb = useSharedValue(ThumbType.DEFAULT);
-  const isPressedDefault = useSharedValue(false);
+  const start = useSharedValue(0);
+  const end = useSharedValue(0);
   const defaultThumbOffset = useSharedValue(0);
-  const defaultThumbStart = useSharedValue(0);
-  const isPressedRange = useSharedValue(false);
   const rangeThumbOffset = useSharedValue(0);
-  const rangeThumbStart = useSharedValue(0);
 
   const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     styles.thumb,
@@ -116,13 +112,13 @@ const Slider = (props: Props) => {
     onReset?.();
   };
 
-  const getStepInterpolated = () => {
-    'worklet';
-    const outputRange = [0, trackSize.value.width];
-    const inputRange = minimumValue < 0 ? 
-      [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
-    return interpolate(stepXValue.value, inputRange, outputRange);
-  };
+  // const getStepInterpolated = () => { // TODO: move to presenter
+  //   'worklet';
+  //   const outputRange = [0, trackSize.value.width];
+  //   const inputRange = minimumValue < 0 ? 
+  //     [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
+  //   return interpolate(stepXValue.value, inputRange, outputRange);
+  // };
 
   const setInitialPositions = (trackWidth: number) => {
     validateValues(props);
@@ -131,46 +127,36 @@ const Slider = (props: Props) => {
       getOffsetForValue(useRange ? initialMinimumValue : value, trackWidth, minimumValue, maximumValue);
     const rangeThumbPosition = getOffsetForValue(initialMaximumValue, trackWidth, minimumValue, maximumValue);
     defaultThumbOffset.value = defaultThumbPosition;
-    defaultThumbStart.value = defaultThumbPosition;
-    rangeThumbOffset.value = rangeThumbPosition;
-    rangeThumbStart.value = useRange ? rangeThumbPosition : trackWidth;
-    activeTrackWidth.value = Math.abs(useRange ? rangeThumbPosition - defaultThumbPosition : defaultThumbPosition);
+    rangeThumbOffset.value = useRange ? rangeThumbPosition : trackWidth;
   };
 
   /** events */
 
-  const onChange = (offset: number | {min: number; max: number}) => {
+  const onChange = () => {
     'worklet';
-    if (offset !== undefined && trackSize.value.width > 0) {
-      if (useRange && typeof offset !== 'number') {
+    if (trackSize.value.width > 0) {
+      if (useRange) {
         if (onRangeChange) {
-          const min = shouldDisableRTL ? offset.max : offset.min;
-          const max = shouldDisableRTL ? offset.min : offset.max;
+          const min = shouldDisableRTL ? rangeThumbOffset.value : defaultThumbOffset.value;
+          const max = shouldDisableRTL ? defaultThumbOffset.value : rangeThumbOffset.value;
           const minValue = getValueForOffset(min, trackSize.value.width, minimumValue, maximumValue, step);
           const maxValue = getValueForOffset(max, trackSize.value.width, minimumValue, maximumValue, step);
           if (minValue !== initialMinimumValue || maxValue !== initialMaximumValue) {
             runOnJS(onRangeChange)({min: minValue, max: maxValue});
           }
         }
-      } else if (typeof offset === 'number') {
-        if (onValueChange) {
-          const val = getValueForOffset(offset, trackSize.value.width, minimumValue, maximumValue, step);
-          runOnJS(onValueChange)(val);
-        }
+      } else if (onValueChange) {
+        const val = getValueForOffset(defaultThumbOffset.value, trackSize.value.width, minimumValue, maximumValue, step);
+        runOnJS(onValueChange)(val);
       }
     }
   };
-
-  const onThumbLayout = useCallback(event => {
-    const width = event.nativeEvent.layout.width;
-    const height = event.nativeEvent.layout.height;
-    thumbSize.value = {width, height};
-  }, []);
 
   const onTrackLayout = useCallback(event => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
     trackSize.value = {width, height};
+    end.value = width;
     setInitialPositions(width);
   }, []);
 
@@ -184,7 +170,7 @@ const Slider = (props: Props) => {
       locationX = trackSize.value.width - locationX;
     }
     if (shouldBounceToStep) {
-      const interpolated = Math.abs(getStepInterpolated());
+      const interpolated = Math.abs(getStepInterpolated(trackSize.value.width, minimumValue, maximumValue, stepXValue));
       locationX = Math.round(locationX / interpolated) * interpolated;
     }
     if (useRange) {
@@ -212,134 +198,52 @@ const Slider = (props: Props) => {
     }
   }, []);
 
-  /** styles & animations */
-
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
       return {
         transform: [{translateX: defaultThumbOffset.value * rtlFix}],
-        width: activeTrackWidth.value
+        width: rangeThumbOffset.value - defaultThumbOffset.value
       };
     } else {
       return {
-        width: activeTrackWidth.value
+        width: defaultThumbOffset.value
       };
     }
   });
   
-  const defaultThumbAnimatedStyles = useAnimatedStyle(() => {
-    const activeStyle = isPressedDefault.value ? _activeThumbStyle.value : _thumbStyle.value;
-    return {
-      transform: [
-        {translateX: (defaultThumbOffset.value - thumbSize.value.width / 2) * rtlFix},
-        {scale: withSpring(!disableActiveStyling && isPressedDefault.value ? 1.3 : 1)}
-      ],
-      ...activeStyle
-    };
-  });
-
-  const rangeThumbAnimatedStyles = useAnimatedStyle(() => {
-    const activeStyle = isPressedRange.value ? _activeThumbStyle.value : _thumbStyle.value;
-    return {
-      transform: [
-        {translateX: (rangeThumbOffset.value - thumbSize.value.width / 2) * rtlFix},
-        {scale: withSpring(!disableActiveStyling && isPressedRange.value ? 1.3 : 1)}
-      ],
-      ...activeStyle
-    };
-  });
-
-  /** gestures */
-
   const updateDefaultThumb = (offset: number) => {
-    'worklet';
     defaultThumbOffset.value = offset;
-    defaultThumbStart.value = offset;
-    activeTrackWidth.value = Math.abs(useRange ? rangeThumbStart.value - offset : offset);
-    onChange(useRange ? {min: offset, max: rangeThumbStart.value} : offset);
+    onChange();
   };
 
   const updateRangeThumb = (offset: number) => {
-    'worklet';
     rangeThumbOffset.value = offset;
-    rangeThumbStart.value = offset;
-    activeTrackWidth.value = offset - defaultThumbStart.value;
-    onChange({min: defaultThumbStart.value, max: offset});
+    onChange();
   };
-
-  const defaultThumbGesture = Gesture.Pan()
-    .onBegin(() => {
-      isPressedDefault.value = true;
-      activeThumb.value = ThumbType.DEFAULT;
-    })
-    .onUpdate(e => {
-      onSeekStart?.();
-      let newX = defaultThumbStart.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX < 0) { // adjust start edge
-        newX = 0;
-      } else if (!useRange && newX > trackSize.value.width) { // adjust end edge
-        newX = trackSize.value.width;
-      }
-      if (newX <= rangeThumbStart.value - rangeGap && newX >= 0) {
-        defaultThumbOffset.value = newX;
-        activeTrackWidth.value = useRange ? rangeThumbStart.value - newX : newX;
-        onChange(useRange ? {min: newX, max: rangeThumbStart.value} : newX);
-      }
-    })
-    .onEnd(() => {
-      onSeekEnd?.();
-      defaultThumbStart.value = defaultThumbOffset.value;
-    })
-    .onFinalize(() => {
-      isPressedDefault.value = false;
-      if (shouldBounceToStep) {
-        const interpolated = getStepInterpolated();
-        const newX = Math.round(defaultThumbOffset.value / interpolated) * interpolated;
-        updateDefaultThumb(newX);
-      }
-    });
-  defaultThumbGesture.enabled(!disabled);
-
-  const rangeThumbGesture = Gesture.Pan()
-    .onBegin(() => {
-      isPressedRange.value = true;
-      activeThumb.value = ThumbType.RANGE;
-    })
-    .onUpdate(e => {
-      onSeekStart?.();
-      let newX = rangeThumbStart.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX > trackSize.value.width) { // adjust end edge
-        newX = trackSize.value.width;
-      }
-      if (newX >= defaultThumbStart.value + rangeGap && newX <= trackSize.value.width) {
-        rangeThumbOffset.value = newX;
-        activeTrackWidth.value = rangeThumbOffset.value - defaultThumbStart.value;
-        onChange(useRange ? {min: defaultThumbStart.value, max: newX} : newX);
-      }
-    })
-    .onEnd(() => {
-      onSeekEnd?.();
-      rangeThumbStart.value = rangeThumbOffset.value;
-    })
-    .onFinalize(() => {
-      isPressedRange.value = false;
-      if (shouldBounceToStep) {
-        const interpolated = getStepInterpolated();
-        const newX = Math.round(rangeThumbOffset.value / interpolated) * interpolated;
-        updateRangeThumb(newX);
-      }
-    });
-  rangeThumbGesture.enabled(!disabled);
 
   /** renders */
 
-  const renderThumb = (style: any, gesture: PanGesture) => {
+  // const interpolate = useCallback(() => {
+  //   return getStepInterpolated(trackSize.value.width, minimumValue, maximumValue, stepXValue);
+  // }, [minimumValue, maximumValue]);
+
+  const renderThumb = (type: ThumbType) => {
     return (
       <Thumb
-        gesture={gesture}
-        animatedStyle={style}
+        start={type === ThumbType.DEFAULT ? start : defaultThumbOffset}
+        end={type === ThumbType.DEFAULT ? rangeThumbOffset : end}
+        offset={type === ThumbType.DEFAULT ? defaultThumbOffset : rangeThumbOffset}
+        rangeGap={rangeGap}
+        onChange={onChange}
+        onSeekStart={onSeekStart} 
+        onSeekEnd={onSeekEnd}
+        shouldDisableRTL={shouldDisableRTL}
+        disabled={disabled}
+        disableActiveStyling={disableActiveStyling}
+        defaultStyle={_thumbStyle}
+        activeStyle={_activeThumbStyle}
         hitSlop={thumbHitSlop}
-        onLayout={onThumbLayout}
+        // stepInterpolation={interpolate}
       />
     );
   };
@@ -370,8 +274,8 @@ const Slider = (props: Props) => {
       {...accessibilityProps}
     >
       {_renderTrack()}
-      {renderThumb(defaultThumbAnimatedStyles, defaultThumbGesture)}
-      {useRange && renderThumb(rangeThumbAnimatedStyles, rangeThumbGesture)}
+      {renderThumb(ThumbType.DEFAULT)}
+      {useRange && renderThumb(ThumbType.RANGE)}
     </View>
   );
 };

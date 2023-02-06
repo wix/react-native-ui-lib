@@ -1,4 +1,5 @@
 import {StyleProp, ViewStyle, StyleSheet} from 'react-native';
+import {SharedValue, interpolate} from 'react-native-reanimated';
 import {SliderProps} from '../../components/slider';
 
 export function getOffsetForValue(value: number, span: number, minimumValue = 0, maximumValue = 1) {
@@ -59,4 +60,12 @@ export function unpackStyle(style?: StyleProp<ViewStyle>) {
   if (style) {
     return JSON.parse(JSON.stringify(StyleSheet.flatten(style)));
   }
+}
+
+export function getStepInterpolated(trackWidth: number, minimumValue: number, maximumValue: number, stepXValue: SharedValue<number>) {
+  'worklet';
+  const outputRange = [0, trackWidth];
+  const inputRange = minimumValue < 0 ? 
+    [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
+  return interpolate(stepXValue.value, inputRange, outputRange);
 }

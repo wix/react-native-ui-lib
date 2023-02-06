@@ -75,7 +75,7 @@ const IncubatorSliderScreen = () => {
           onValueChange={onValueChange}
           containerStyle={styles.container}
           disableRTL={disableRTL}
-          step={0.1}
+          step={0.3}
         />
       </View>
     );
