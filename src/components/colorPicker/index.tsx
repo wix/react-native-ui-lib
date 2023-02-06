@@ -44,7 +44,7 @@ interface Props extends ColorPickerDialogProps {
   style?: StyleProp<ViewStyle>;
   testID?: string;
   /**
-   * Give the ColorPicker a background color
+   * The ColorPicker's/Component's background color
    */
   backgroundColor?: string;
 }
