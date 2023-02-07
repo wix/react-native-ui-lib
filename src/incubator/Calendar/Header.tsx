@@ -3,8 +3,7 @@ import {StyleSheet, TextInput} from 'react-native';
 import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import {Colors, Typography} from 'style';
 import View from '../../components/view';
-import TouchableOpacity from '../../components/touchableOpacity';
-import Text from '../../components/text';
+import Button from '../../components/button';
 import {getDateObject, addMonths, getMonthForIndex} from './helpers/DateUtils';
 import {HeaderProps, DayNamesFormat, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
@@ -12,6 +11,9 @@ import WeekDaysNames from './WeekDaysNames';
 
 const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
 const WEEK_NUMBER_WIDTH = 18;
+
+const ARROW_NEXT = require('./assets/arrowNext.png');
+const ARROW_BACK = require('./assets/arrowBack.png');
 
 const Header = (props: HeaderProps) => {
   const {month, year} = props;
@@ -43,20 +45,23 @@ const Header = (props: HeaderProps) => {
     return <AnimatedTextInput {...{animatedProps}} editable={false} style={styles.title}/>;
   };
 
-  const renderArrow = (label: string, onPress: () => void) => {
+  const renderArrow = (source: number, onPress: () => void) => {
     return (
-      <TouchableOpacity onPress={onPress}>
-        <Text>{label}</Text>
-      </TouchableOpacity>
+      <Button
+        link
+        size={Button.sizes.xSmall}
+        iconSource={source}
+        onPress={onPress}
+      />
     );
   };
 
   const renderNavigation = () => {
     return (
       <View row spread style={styles.navigation}>
-        {renderArrow('<<', onLeftArrowPress)}
+        {renderArrow(ARROW_BACK, onLeftArrowPress)}
         {renderTitle()}
-        {renderArrow('>>', onRightArrowPress)}
+        {renderArrow(ARROW_NEXT, onRightArrowPress)}
       </View>
     );
   };
