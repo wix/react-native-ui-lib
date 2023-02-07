@@ -10,7 +10,7 @@ import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
 
 const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
-const WEEK_NUMBER_WIDTH = 18;
+const WEEK_NUMBER_WIDTH = 30;
 
 const ARROW_NEXT = require('./assets/arrowNext.png');
 const ARROW_BACK = require('./assets/arrowBack.png');
@@ -82,7 +82,9 @@ export default Header;
 const styles = StyleSheet.create({
   container: {},
   navigation: {
-    marginHorizontal: 10
+    marginTop: 12,
+    marginBottom: 16,
+    marginHorizontal: 8
   },
   title: {
     color: Colors.$textDefault,
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     ...Typography.text60
   },
   weekDaysNames: {
-    marginVertical: 10,
-    marginHorizontal: 10
+    marginBottom: 8,
+    marginHorizontal: 16
   }
 });
