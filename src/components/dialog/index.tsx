@@ -71,8 +71,8 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
    * The props that will be passed to the pannable header
    */
   pannableHeaderProps?: any;
-  /** 
-   * Additional props for the modal. 
+  /**
+   * Additional props for the modal.
    */
   modalProps?: ModalProps;
   /**
@@ -213,7 +213,10 @@ class Dialog extends Component<DialogProps, DialogState> {
             containerStyle={this.styles.flexType}
             style={this.styles.flexType}
           >
-            <Container directions={[panDirection]} style={[this.styles.overflow, this.styles.flexType, containerStyle]}>
+            <Container
+              directions={[panDirection]}
+              style={[this.styles.overflow, !Constants.isWeb && this.styles.flexType, containerStyle]}
+            >
               {this.renderPannableHeader([panDirection])}
               {children}
             </Container>
