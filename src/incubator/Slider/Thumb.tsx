@@ -16,18 +16,19 @@ export interface Props extends ViewProps {
   disabled?: boolean;
   onSeekStart?: () => void;
   onSeekEnd?: () => void;
-  onChange?: () => void;
   disableRTL?: boolean;
   start: SharedValue<number>;
-  end: SharedValue<number>; 
-  offset: SharedValue<number>; 
+  end: SharedValue<number>;
+  offset: SharedValue<number>;
   shouldDisableRTL?: boolean;
   stepInterpolation?: () => number;
   rangeGap?: number;
+  shouldBounceToStep: boolean;
+  stepInterpolatedValue: SharedValue<number>;
 }
 
 const THUMB_SIZE = 24;
-const GAP = Spacings.s2;
+// const GAP = Spacings.s2;
 
 const Thumb = (props: Props) => {
   const {
@@ -38,13 +39,13 @@ const Thumb = (props: Props) => {
     hitSlop,
     onSeekStart,
     onSeekEnd,
-    onChange,
     start,
     end,
     offset,
     shouldDisableRTL,
     rangeGap,
-    stepInterpolation
+    shouldBounceToStep,
+    stepInterpolatedValue
   } = props;
 
   const rtlFix = Constants.isRTL ? -1 : 1;
@@ -61,27 +62,24 @@ const Thumb = (props: Props) => {
     .onUpdate(e => {
       onSeekStart?.();
       let newX = lastOffset.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      if (newX < 0) { // adjust start edge
+
+      if (newX < 0) {
+        // adjust start edge
         newX = start.value;
-      } else if (newX > end.value) { // adjust end edge
+      } else if (newX > end.value) {
+        // adjust end edge
         newX = end.value;
       }
-      // if (newX <= rangeThumbStart.value - rangeGap && newX >= 0) {
-        offset.value = newX;
-        onChange?.();
-      // }
+      offset.value = newX;
     })
     .onEnd(() => {
       onSeekEnd?.();
     })
     .onFinalize(() => {
       isPressedDefault.value = false;
-      // if (stepInterpolation) {
-      //   const interpolated = stepInterpolation();
-      //   const newX = Math.round(offset.value / interpolated) * interpolated;
-      //   offset.value = newX;
-      //   onChange?.();
-      // }
+      if (shouldBounceToStep) {
+        offset.value = Math.round(offset.value / stepInterpolatedValue.value) * stepInterpolatedValue.value;
+      }
     });
   gesture.enabled(!disabled);
 
@@ -101,7 +99,7 @@ const Thumb = (props: Props) => {
     const height = event.nativeEvent.layout.height;
     thumbSize.value = {width, height};
   }, []);
-  
+
   return (
     <GestureDetector gesture={gesture}>
       <View
@@ -113,8 +111,6 @@ const Thumb = (props: Props) => {
     </GestureDetector>
   );
 };
-
-export default Thumb;
 
 const styles = StyleSheet.create({
   thumbPosition: {
@@ -128,3 +124,5 @@ const styles = StyleSheet.create({
     elevation: 2
   }
 });
+
+export default Thumb;

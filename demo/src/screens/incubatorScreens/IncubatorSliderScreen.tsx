@@ -18,7 +18,7 @@ const IncubatorSliderScreen = () => {
   const [negativeSliderValue, setNegativeSliderValue] = useState(NEGATIVE_VALUE);
   const [sliderMinValue, setSliderMinValue] = useState(INITIAL_MIN);
   const [sliderMaxValue, setSliderMaxValue] = useState(INITIAL_MAX);
-  
+
   const slider = useRef<typeof Incubator.Slider>();
   const customSlider = useRef<typeof Incubator.Slider>();
   const negativeSlider = useRef<typeof Incubator.Slider>();
@@ -43,7 +43,7 @@ const IncubatorSliderScreen = () => {
     setNegativeSliderValue(value);
   };
 
-  const onRangeChange = (value: {min: number, max: number}) => {
+  const onRangeChange = (value: {min: number; max: number}) => {
     setSliderMaxValue(value.max);
     setSliderMinValue(value.min);
   };
@@ -52,14 +52,20 @@ const IncubatorSliderScreen = () => {
     if (max !== undefined) {
       return (
         <View row spread marginB-20>
-          <Text bodySmall $textNeutral>min. {min}</Text>
-          <Text bodySmall $textNeutral>max. {max}</Text>
+          <Text bodySmall $textNeutral>
+            min. {min}
+          </Text>
+          <Text bodySmall $textNeutral>
+            max. {max}
+          </Text>
         </View>
       );
     } else {
       return (
         <View center marginB-20>
-          <Text bodySmall $textNeutral>value: {min}</Text>
+          <Text bodySmall $textNeutral>
+            value: {min}
+          </Text>
         </View>
       );
     }
@@ -68,14 +74,18 @@ const IncubatorSliderScreen = () => {
   const renderDefaultSliderExample = () => {
     return (
       <View>
-        <Text margin-10 text70BL $textDefault>Default Slider values 0 to 1</Text>
+        <Text margin-10 text70BL $textDefault>
+          Default Slider values 0 to 1
+        </Text>
         {renderValuesBox(sliderValue)}
         <Incubator.Slider
           ref={slider}
           onValueChange={onValueChange}
           containerStyle={styles.container}
           disableRTL={disableRTL}
-          step={0.3}
+          // maximumValue={0}
+          // maximumValue={50}
+          step={0.1}
         />
       </View>
     );
@@ -84,13 +94,10 @@ const IncubatorSliderScreen = () => {
   const renderDisabledSliderExample = () => {
     return (
       <View marginT-20>
-        <Text margin-10 text70BL $textDefault>Disabled Slider</Text>
-        <Incubator.Slider
-          value={0.4}
-          containerStyle={styles.container}
-          disableRTL={disableRTL}
-          disabled
-        />
+        <Text margin-10 text70BL $textDefault>
+          Disabled Slider
+        </Text>
+        <Incubator.Slider value={0.4} containerStyle={styles.container} disableRTL={disableRTL} disabled/>
       </View>
     );
   };
@@ -98,7 +105,9 @@ const IncubatorSliderScreen = () => {
   const renderCustomSliderExample = () => {
     return (
       <View marginT-20 marginH-40>
-        <Text margin-10 text70BL $textDefault>Custom Slider</Text>
+        <Text margin-10 text70BL $textDefault>
+          Custom Slider
+        </Text>
         {renderValuesBox(customSliderValue)}
         <Incubator.Slider
           ref={customSlider}
@@ -123,7 +132,9 @@ const IncubatorSliderScreen = () => {
   const renderNegativeSliderExample = () => {
     return (
       <View marginT-20>
-        <Text margin-10 text70BL $textDefault>Negative values -20 to -100 initial -30</Text>
+        <Text margin-10 text70BL $textDefault>
+          Negative values -20 to -100 initial -30
+        </Text>
         {renderValuesBox(negativeSliderValue)}
         <Incubator.Slider
           ref={negativeSlider}
@@ -142,7 +153,9 @@ const IncubatorSliderScreen = () => {
   const renderRangeSliderExample = () => {
     return (
       <View marginT-20>
-        <Text margin-10 text70BL $textDefault>Range Slider values 0 to 100</Text>
+        <Text margin-10 text70BL $textDefault>
+          Range Slider values 0 to 100
+        </Text>
         <View marginH-20>
           {renderValuesBox(sliderMinValue, sliderMaxValue)}
           <Incubator.Slider
@@ -163,16 +176,16 @@ const IncubatorSliderScreen = () => {
   };
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={{backgroundColor: Colors.$backgroundDefault}}
-    >
+    <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: Colors.$backgroundDefault}}>
       <View row spread margin-20>
-        <Text h1 $textDefault>Slider</Text>
+        <Text h1 $textDefault>
+          Slider
+        </Text>
         <Button link label="Reset Sliders" onPress={resetSliders}/>
       </View>
       <View marginL-20>
-        {Constants.isRTL && renderBooleanOption('Disable RTL', 'disableRTL', {spread: false, state: disableRTL, setState: setDisableRTL})}
+        {Constants.isRTL &&
+          renderBooleanOption('Disable RTL', 'disableRTL', {spread: false, state: disableRTL, setState: setDisableRTL})}
       </View>
       {renderDefaultSliderExample()}
       {renderDisabledSliderExample()}
