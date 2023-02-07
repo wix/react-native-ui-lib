@@ -1,5 +1,5 @@
 import findIndex from 'lodash/findIndex';
-import React, {PropsWithChildren, useCallback, useMemo, useRef} from 'react';
+import React, {PropsWithChildren, useCallback, useMemo, useRef, useEffect} from 'react';
 import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import {FlashList} from '@shopify/flash-list';
 import {Constants} from '../../commons/new';
@@ -36,6 +36,10 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     lastUpdateSource.value = updateSource;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setDate(initialDate, UpdateSource.PROP_UPDATE);
+  }, [initialDate, setDate]);
 
   const setHeaderHeight = useCallback((height: number) => {
     headerHeight.value = height;
