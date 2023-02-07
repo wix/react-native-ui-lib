@@ -1,5 +1,5 @@
 const fs = require('fs');
-const HOUR_TO_MS = 60 * 60 * 1000;
+const HOUR_IN_MS = 60 * 60 * 1000;
 const ID_LENGTH = 10;
 
 function generateId() {
@@ -21,7 +21,7 @@ for (let year = 2021; year <= 2023; ++year) {
         const startDate = new Date(year, month, day, hour, 0);
         if (startDate.getDay() >= 2 && startDate.getDay() <= 5) {
           const start = startDate.getTime();
-          const end = start + HOUR_TO_MS * (Math.random() > 0.5 ? 0.5 : 1);
+          const end = start + HOUR_IN_MS * (Math.random() > 0.5 ? 0.5 : 1);
           const id = generateId();
           data.push({id, start, end});
         }

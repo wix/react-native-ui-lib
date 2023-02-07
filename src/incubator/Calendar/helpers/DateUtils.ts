@@ -1,17 +1,16 @@
-import getWeek from 'date-fns/getWeek';
 import _ from 'lodash';
-import {FirstDayOfWeek, DayNamesFormat, DateObject, DateObjectWithOptionalDay} from '../types';
+import getWeek from 'date-fns/getWeek';
+import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay} from '../types';
 
-export const HOUR_TO_MS = 60 * 60 * 1000;
-const DAY_TO_MS = 24 * HOUR_TO_MS;
-const WEEK_TO_MS = 7 * DAY_TO_MS;
+export const HOUR_IN_MS = 60 * 60 * 1000;
+const DAY_IN_MS = 24 * HOUR_IN_MS;
+const WEEK_IN_MS = 7 * DAY_IN_MS;
 
 export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
   if (month < 0 || month > 11) {
     throw new Error('getWeekNumbersOfMonth util received an invalid month');
   }
 
-  // const firstDayOfMonth = getNormalizedDate({year, month, day: 1});
   const firstDayOfMonth = new Date(year, month, 1);
   const firstWeekNumber = getWeek(firstDayOfMonth, {weekStartsOn: firstDayOfWeek});
   const numberOfWeeks = getNumberOfWeeksInMonth(year, month, firstDayOfWeek);
@@ -32,11 +31,11 @@ function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: Fi
 
 function getFirstDayInTheWeek(date: number, firstDayOfWeek: FirstDayOfWeek) {
   const dayOfTheWeek = new Date(date).getDay();
-  let result = date - DAY_TO_MS * ((dayOfTheWeek - firstDayOfWeek) % 7);
+  let result = date - DAY_IN_MS * ((dayOfTheWeek - firstDayOfWeek) % 7);
   const dayInMonth = getDateObject(result).day;
 
   if (dayInMonth > 1 && dayInMonth <= 7) {
-    result -= WEEK_TO_MS;
+    result -= WEEK_IN_MS;
   }
   return result;
 }
@@ -50,10 +49,10 @@ function getFirstDayInTheYear(year: number, firstDayOfWeek: FirstDayOfWeek) {
 export function getDaysOfWeekNumber(year: number, weekNumber: number, firstDayOfWeek: FirstDayOfWeek) {
   const result = new Array(7).fill(null);
   const firstDayOfYear = getFirstDayInTheYear(year, firstDayOfWeek);
-  const firstDayInRelevantWeek = firstDayOfYear + (weekNumber - 1) * WEEK_TO_MS;
+  const firstDayInRelevantWeek = firstDayOfYear + (weekNumber - 1) * WEEK_IN_MS;
 
   for (let day = 0; day <= 6; ++day) {
-    result[day] = firstDayInRelevantWeek + DAY_TO_MS * day;
+    result[day] = firstDayInRelevantWeek + DAY_IN_MS * day;
   }
   return result;
 }
@@ -66,8 +65,8 @@ export function getDayOfTheWeek(date: number) {
   return new Date(date).getDay();
 }
 
-
 /* Worklets */
+
 export function getDateObject(date: number) {
   'worklet';
   const d = new Date(date);
