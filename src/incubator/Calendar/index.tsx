@@ -5,7 +5,7 @@ import {FlashList} from '@shopify/flash-list';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
-import {isSameMonth, getNormalizedDate} from './helpers/DateUtils';
+import {isSameMonth} from './helpers/DateUtils';
 import {CalendarContextProps, CalendarProps, FirstDayOfWeek, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
@@ -77,8 +77,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     if (scrolledByUser.value) {
       const item = viewableItems?.[0]?.item;
       if (item && !isSameMonth(item, current.value)) {
-        const newDate = getNormalizedDate({year: item.year, month: item.month, day: 1});
-        setDate(newDate, UpdateSource.MONTH_SCROLL);
+        const newDate = new Date(item.year, item.month, 1);
+        setDate(newDate.getTime(), UpdateSource.MONTH_SCROLL);
       }
     }
   }, []);

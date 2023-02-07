@@ -189,43 +189,26 @@ describe('Calendar/DateUtils', () => {
 
   describe('getDayOfDate', () => {
     it('should return the day number from the date timestamp', () => {
-      const day = DateUtils.getDayOfDate(new Date('2022-12-26').getTime());
+      const day = DateUtils.getDayOfDate(new Date(2022, 11, 26).getTime());
       expect(day).toBe(26);
     });
   });
 
   describe('getDayOfTheWeek', () => {
     it('should return the day of week (Sunday = 0) from the date timestamp', () => {
-      const day = DateUtils.getDayOfTheWeek(new Date('2023-02-05').getTime());
+      const day = DateUtils.getDayOfTheWeek(new Date(2023, 1, 5).getTime());
       expect(day).toBe(0);
     });
     it('should return the day of week (Friday = 5) from the date timestamp', () => {
-      const day = DateUtils.getDayOfTheWeek(new Date('2023-02-03').getTime());
+      const day = DateUtils.getDayOfTheWeek(new Date(2023, 1, 3).getTime());
       expect(day).toBe(5);
     });
   });
 
-  describe('getNormalizedDate', () => {
-    it('should return the day number from the date object', () => {
-      const date = DateUtils.getNormalizedDate({year: 2023, month: 0, day: 1});
-      const dayObject = DateUtils.getDateObject(date);
-      expect(dayObject.year).toBe(2023);
-      expect(dayObject.month).toBe(0);
-      expect(dayObject.day).toBe(1);
-    });
-
-    it('should return the day number from the date timestamp', () => {
-      const date = DateUtils.getNormalizedDate(new Date('2023-01-01').getTime());
-      const dayObject = DateUtils.getDateObject(date);
-      expect(dayObject.year).toBe(2023);
-      expect(dayObject.month).toBe(0);
-      expect(dayObject.day).toBe(1);
-    });
-  });
 
   describe('addMonths', () => {
     it('should return the date timestamp for the next (1) months in the next (1) years', () => {
-      const date = DateUtils.addMonths(new Date('2022-12-26').getTime(), 1);
+      const date = DateUtils.addMonths(new Date(2022, 11, 26).getTime(), 1);
       const dayObject = DateUtils.getDateObject(date);
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(0);
@@ -233,7 +216,7 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return the date timestamp for the next (5) months in the same year', () => {
-      const date = DateUtils.addMonths(new Date('2023-01-26').getTime(), 5);
+      const date = DateUtils.addMonths(new Date(2023, 0, 26).getTime(), 5);
       const dayObject = DateUtils.getDateObject(date);
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(5);
@@ -241,7 +224,7 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return the date timestamp for the next (13) months in the next (2) years', () => {
-      const date = DateUtils.addMonths(new Date('2022-12-26').getTime(), 13);
+      const date = DateUtils.addMonths(new Date(2022, 11, 26).getTime(), 13);
       const dayObject = DateUtils.getDateObject(date);
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(0);
@@ -249,7 +232,7 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return the date timestamp for the next (24) months in the next (2) years', () => {
-      const date = DateUtils.addMonths(new Date('2022-12-26').getTime(), 24);
+      const date = DateUtils.addMonths(new Date(2022, 11, 26).getTime(), 24);
       const dayObject = DateUtils.getDateObject(date);
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(11);
@@ -258,7 +241,7 @@ describe('Calendar/DateUtils', () => {
 
     // subtract
     it('should return the date timestamp for the previous (-1) months in the previous (1) years', () => {
-      const date = DateUtils.addMonths(new Date('2023-01-26').getTime(), -1);
+      const date = DateUtils.addMonths(new Date(2023, 0, 26).getTime(), -1);
       const dayObject = DateUtils.getDateObject(date);
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(11);
@@ -266,7 +249,7 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return the date timestamp for the previous (-5) months in the same year', () => {
-      const date = DateUtils.addMonths(new Date('2022-12-26').getTime(), -5);
+      const date = DateUtils.addMonths(new Date(2022, 11, 26).getTime(), -5);
       const dayObject = DateUtils.getDateObject(date);
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(6);
@@ -274,7 +257,7 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return the date timestamp for the previous (-13) months in the previous (2) years', () => {
-      const date = DateUtils.addMonths(new Date('2022-12-26').getTime(), -13);
+      const date = DateUtils.addMonths(new Date(2022, 11, 26).getTime(), -13);
       const dayObject = DateUtils.getDateObject(date);
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(10);
@@ -282,7 +265,7 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return the date timestamp for the previous (-24) months in the previous (2) years', () => {
-      const date = DateUtils.addMonths(new Date('2022-12-26').getTime(), -24);
+      const date = DateUtils.addMonths(new Date(2022, 11, 26).getTime(), -24);
       const dayObject = DateUtils.getDateObject(date);
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(11);

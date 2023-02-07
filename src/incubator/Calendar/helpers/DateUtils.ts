@@ -11,7 +11,8 @@ export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWee
     throw new Error('getWeekNumbersOfMonth util received an invalid month');
   }
 
-  const firstDayOfMonth = getNormalizedDate({year, month, day: 1});
+  // const firstDayOfMonth = getNormalizedDate({year, month, day: 1});
+  const firstDayOfMonth = new Date(year, month, 1);
   const firstWeekNumber = getWeek(firstDayOfMonth, {weekStartsOn: firstDayOfWeek});
   const numberOfWeeks = getNumberOfWeeksInMonth(year, month, firstDayOfWeek);
   const weekNumbers: number[] = [];
@@ -41,8 +42,8 @@ function getFirstDayInTheWeek(date: number, firstDayOfWeek: FirstDayOfWeek) {
 }
 
 function getFirstDayInTheYear(year: number, firstDayOfWeek: FirstDayOfWeek) {
-  const dayInFirstWeekOfYear = getNormalizedDate({year, month: 0, day: 1});
-  return getFirstDayInTheWeek(dayInFirstWeekOfYear, firstDayOfWeek);
+  const dayInFirstWeekOfYear = new Date(year, 0, 1);
+  return getFirstDayInTheWeek(dayInFirstWeekOfYear.getTime(), firstDayOfWeek);
 }
 
 // TODO: Fix to use Default behavior for week number
@@ -65,16 +66,6 @@ export function getDayOfTheWeek(date: number) {
   return new Date(date).getDay();
 }
 
-export function getNormalizedDate(date: DateObject | number) {
-  let d;
-  if (typeof date === 'number') {
-    d = getDateObject(date);
-  } else {
-    d = date;
-  }
-  // Must add Date.UTC or the local timezone might be added which can affect the date (one day before)
-  return Date.UTC(d.year, d.month, d.day);
-}
 
 /* Worklets */
 export function getDateObject(date: number) {
