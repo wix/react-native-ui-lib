@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import getWeek from 'date-fns/getWeek';
-import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay} from '../types';
+import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay, DateObject} from '../types';
 
 export const HOUR_IN_MS = 60 * 60 * 1000;
 const DAY_IN_MS = 24 * HOUR_IN_MS;
@@ -76,6 +76,11 @@ export function getDateObject(date: number) {
     month: d.getMonth(),
     year: d.getFullYear()
   };
+}
+
+export function getTimestamp(date: DateObject) {
+  'worklet';
+  return new Date(date.year, date.month, date.day).getTime();
 }
 
 export function addMonths(date: number, count: number) {

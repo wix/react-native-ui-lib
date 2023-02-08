@@ -6,7 +6,7 @@ import {Colors} from 'style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
-import {getDayOfDate, isSameDay, isToday} from './helpers/DateUtils';
+import {getDayOfDate, isSameDay, isToday, isSameMonth} from './helpers/DateUtils';
 import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
@@ -19,20 +19,23 @@ const Day = (props: DayProps) => {
 
   const shouldMarkSelected = !isNull(date) ? isSameDay(selectedDate.value, date) : false;
   const isSelected = useSharedValue(shouldMarkSelected);
+  const isExtraDay = !isNull(date) ? !isSameMonth(selectedDate.value, date) : false;
 
-  const backgroundColor = isToday(date) ? Colors.$backgroundSuccessHeavy : Colors.transparent;
-  const textColor = isToday(date) ? Colors.$textDefaultLight : Colors.$backgroundPrimaryHeavy;
+  const backgroundColor = isToday(date) ? Colors.$backgroundPrimaryLight : Colors.transparent;
+  const extraDaysTextColor = Colors.$textDisabled;
+  const textColor = isExtraDay ? extraDaysTextColor : Colors.$backgroundPrimaryHeavy;
+  const selectedTextColor = Colors.$textDefaultLight;
   
   const animatedStyles = useAnimatedStyle(() => {
     return {
       backgroundColor: isSelected.value ? Colors.$backgroundPrimaryHeavy : backgroundColor,
-      color: isSelected.value ? Colors.$textDefaultLight : textColor
+      color: isSelected.value ? selectedTextColor : textColor
     };
   });
 
   const animatedTextStyles = useAnimatedStyle(() => {
     return {
-      color: isSelected.value ? Colors.$textDefaultLight : textColor
+      color: isSelected.value ? selectedTextColor : textColor
     };
   });
 
