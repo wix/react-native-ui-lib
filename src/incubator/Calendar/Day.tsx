@@ -15,10 +15,11 @@ const AnimatedText = Reanimated.createAnimatedComponent(Text);
 
 const Day = (props: DayProps) => {
   const {date, onPress} = props;
-  const {selectedDate, setDate} = useContext(CalendarContext);
+  const {selectedDate, setDate, showExtraDays} = useContext(CalendarContext);
 
   const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
-  const isDayOfCurrentMonth = useSharedValue(!isNull(date) ? isSameMonth(selectedDate.value, date) : false);
+  const isDayOfCurrentMonth = useSharedValue(!showExtraDays ? true : 
+    !isNull(date) ? isSameMonth(selectedDate.value, date) : false);
   const selectedTextColor = Colors.$textDefaultLight;
   const extraDaysTextColor = Colors.$textDisabled;
   const backgroundColor = isToday(date) ? Colors.$backgroundPrimaryLight : Colors.transparent;
@@ -27,9 +28,9 @@ const Day = (props: DayProps) => {
     return selectedDate.value;
   }, (selected) => {
     isSelected.value = isSameDay(selected, date!);
-    isDayOfCurrentMonth.value = isSameMonth(selectedDate.value, date!);
+    isDayOfCurrentMonth.value = !showExtraDays ? true : isSameMonth(selectedDate.value, date!);
   }, []);
-  
+
   const animatedSelectionStyles = useAnimatedStyle(() => {
     return {
       backgroundColor: isSelected.value ? Colors.$backgroundPrimaryHeavy : backgroundColor

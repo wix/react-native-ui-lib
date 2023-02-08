@@ -20,7 +20,14 @@ const getIndex = (date: number) => {
 };
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
-  const {data, children, initialDate = Date.now(), firstDayOfWeek = FirstDayOfWeek.MONDAY, staticHeader = false} = props;
+  const {
+    data,
+    children,
+    initialDate = Date.now(),
+    firstDayOfWeek = FirstDayOfWeek.MONDAY,
+    staticHeader = false,
+    showExtraDays = true //TODO: remove extra days when false
+  } = props;
 
   const flashListRef = useRef();
   const calendarWidth = Constants.screenWidth;
@@ -52,6 +59,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       selectedDate: current,
       setDate,
       showWeeksNumbers: true,
+      showExtraDays,
       updateSource: lastUpdateSource,
       staticHeader,
       setHeaderHeight,
