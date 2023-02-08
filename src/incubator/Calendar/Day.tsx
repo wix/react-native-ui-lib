@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import React, {useContext, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import Reanimated, {useSharedValue, useAnimatedStyle, useAnimatedReaction} from 'react-native-reanimated';
+import Reanimated, {useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {Colors} from 'style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
@@ -17,33 +17,31 @@ const Day = (props: DayProps) => {
   const {date, onPress} = props;
   const {selectedDate, setDate} = useContext(CalendarContext);
 
-  const shouldMarkSelected = !isNull(date) ? isSameDay(selectedDate.value, date) : false;
-  const isSelected = useSharedValue(shouldMarkSelected);
-  const isExtraDay = !isNull(date) ? !isSameMonth(selectedDate.value, date) : false;
-
-  const backgroundColor = isToday(date) ? Colors.$backgroundPrimaryLight : Colors.transparent;
-  const extraDaysTextColor = Colors.$textDisabled;
-  const textColor = isExtraDay ? extraDaysTextColor : Colors.$backgroundPrimaryHeavy;
+  const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
+  const isDayOfCurrentMonth = useSharedValue(!isNull(date) ? isSameMonth(selectedDate.value, date) : false);
   const selectedTextColor = Colors.$textDefaultLight;
+  const extraDaysTextColor = Colors.$textDisabled;
+  const backgroundColor = isToday(date) ? Colors.$backgroundPrimaryLight : Colors.transparent;
   
-  const animatedStyles = useAnimatedStyle(() => {
+  useAnimatedReaction(() => {
+    return selectedDate.value;
+  }, (selected) => {
+    isSelected.value = isSameDay(selected, date!);
+    isDayOfCurrentMonth.value = isSameMonth(selectedDate.value, date!);
+  }, []);
+  
+  const animatedSelectionStyles = useAnimatedStyle(() => {
     return {
-      backgroundColor: isSelected.value ? Colors.$backgroundPrimaryHeavy : backgroundColor,
-      color: isSelected.value ? selectedTextColor : textColor
+      backgroundColor: isSelected.value ? Colors.$backgroundPrimaryHeavy : backgroundColor
     };
   });
 
   const animatedTextStyles = useAnimatedStyle(() => {
     return {
-      color: isSelected.value ? selectedTextColor : textColor
+      color: withTiming(isSelected.value ? selectedTextColor : 
+        isDayOfCurrentMonth.value ? Colors.$backgroundPrimaryHeavy : extraDaysTextColor)
     };
   });
-
-  useAnimatedReaction(() => {
-    return selectedDate.value;
-  }, (selected) => {
-    isSelected.value = isSameDay(selected, date!);
-  }, []);
 
   const _onPress = useCallback(() => {
     if (date !== null) {
@@ -57,7 +55,7 @@ const Day = (props: DayProps) => {
     const day = !isNull(date) ? getDayOfDate(date) : '';
     return (
       <View center>
-        <View reanimated style={[styles.selection, animatedStyles]}/>
+        <View reanimated style={[styles.selection, animatedSelectionStyles]}/>
         <AnimatedText style={animatedTextStyles}>{day}</AnimatedText>
       </View>
     );
