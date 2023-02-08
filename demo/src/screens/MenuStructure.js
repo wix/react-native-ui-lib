@@ -174,6 +174,7 @@ export const navigationData = {
   Incubator: {
     title: 'Incubator (Experimental)',
     screens: [
+      {title: 'Calendar', tags: 'calendar', screen: 'unicorn.components.IncubatorCalendarScreen'},
       {title: 'ChipsInput (New)', tags: 'chips input', screen: 'unicorn.components.IncubatorChipsInputScreen'},
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: 'Dialog (New)', tags: 'dialog modal popup alert', screen: 'unicorn.incubator.IncubatorDialogScreen'},
