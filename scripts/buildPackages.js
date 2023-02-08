@@ -15,6 +15,10 @@ const packages = [
     content: `module.exports = require('./src/commons/Constants').default;\n`
   },
   {
+    filename: 'textField.js',
+    content: `module.exports = require('./src/components/textField/TextFieldMigrator').default;\n`
+  },
+  {
     filename: 'core.js',
     components: ['View', 'Text', 'Image', 'TouchableOpacity', 'Button'],
     styleComponents: [
