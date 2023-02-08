@@ -11,6 +11,10 @@ const packages = [
     content: `module.exports = require('./src/commons/Config').default;\n`
   },
   {
+    filename: 'constants.js',
+    content: `module.exports = require('./src/commons/Constants').default;\n`
+  },
+  {
     filename: 'core.js',
     components: ['View', 'Text', 'Image', 'TouchableOpacity', 'Button'],
     styleComponents: [
