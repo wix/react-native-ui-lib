@@ -14,7 +14,7 @@
     {
       "name": "labelColor",
       "type": "ColorType",
-      "description": "Field label color. Either a string or color by state map ({default, focus, error, disabled})"
+      "description": "Field label color. Either a string or color by state map ({default, focus, error, disabled, readonly})"
     },
     {"name": "labelStyle", "type": "TextStyle", "description": "Custom style for the field label"},
     {"name": "labelProps", "type": "TextProps", "description": "Pass extra props to the label Text element"},

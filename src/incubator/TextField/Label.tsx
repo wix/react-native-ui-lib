@@ -2,14 +2,19 @@ import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import Text from '../../components/text';
-import {LabelProps, ValidationMessagePosition} from './types';
+import {ColorType, LabelProps, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import FieldContext from './FieldContext';
 
 
+const DEFAULT_LABEL_COLOR: ColorType = {
+  default: Colors.$textDefault,
+  readonly: Colors.$textNeutral
+};
+
 const Label = ({
   label,
-  labelColor = Colors.$textDefault,
+  labelColor = DEFAULT_LABEL_COLOR,
   labelStyle,
   labelProps,
   validationMessagePosition,

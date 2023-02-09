@@ -31,7 +31,7 @@ export class TextFieldDriver extends ComponentDriver {
     if (await this.exists()) {
       return (await this.getElementProps()).accessibilityState.disabled;
     } else {
-      console.warn(`TextField component with testId:${this.testID}, is not found. So you can't get the content`);
+      console.warn(`TextField component with testId:${this.testID}, is not found. So you can't get the disabled state`);
       return null;
     }
   }

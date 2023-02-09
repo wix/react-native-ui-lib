@@ -8,6 +8,7 @@ const FieldContext = createContext<FieldContextType>({
   isValid: true,
   failingValidatorIndex: undefined,
   disabled: false,
+  readonly: false,
   validateField: _.noop,
   checkValidity: () => true
 });
