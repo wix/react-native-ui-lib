@@ -59,6 +59,7 @@ Animated.timing = (value, config) => ({
 Animated.parallel = () => ({
   start: () => {}
 });
+Animated.event = () => {};
 
 if (typeof String.prototype.replaceAll === 'undefined') {
   // eslint-disable-next-line no-extend-native
