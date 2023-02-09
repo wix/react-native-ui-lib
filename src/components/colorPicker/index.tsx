@@ -75,7 +75,7 @@ class ColorPicker extends PureComponent<Props> {
     super(props);
 
     if (props.style) {
-      LogService.warn(`UILib ColorPicker style prop is deprecated, please pass instead the 'backgroundColor' prop.`);
+      LogService.warn(`UILib ColorPicker's 'style' prop is deprecated. You can use the 'backgroundColor' prop instead`);
     }
   }
 

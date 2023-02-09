@@ -54,7 +54,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   testID?: string;
   /**
-   * Give the ColorPalette background color
+   * The ColorPalette's background color
    */
   backgroundColor?: string;
 }
