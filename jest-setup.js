@@ -1,4 +1,4 @@
-import {NativeModules, AccessibilityInfo} from 'react-native';
+import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
 global._UILIB_TESTING = true;
 
 NativeModules.StatusBarManager = {getHeight: jest.fn()};
@@ -48,6 +48,16 @@ jest.mock('react-native', () => {
   const reactNative = jest.requireActual('react-native');
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
   return reactNative;
+});
+
+Animated.timing = (value, config) => ({
+  start: callback => {
+    value.setValue(config.toValue);
+    callback?.();
+  }
+});
+Animated.parallel = () => ({
+  start: () => {}
 });
 
 if (typeof String.prototype.replaceAll === 'undefined') {
