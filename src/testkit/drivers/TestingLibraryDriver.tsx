@@ -76,13 +76,13 @@ export class TestingLibraryDriver implements UniDriver {
     return _.get(instance, 'props');
   }
 
-  press = async (): Promise<void> => {
+  press = (): void => {
     if (!this.reactTestInstances) {
       throw new NoSelectorException();
     }
     this.validateExplicitInstance();
     this.validateSingleInstance();
-    await act(() => fireEvent.press(this.reactTestInstances[0]));
+    fireEvent.press(this.reactTestInstances[0]);
   };
 
   typeText = async (text: string): Promise<void> => {
