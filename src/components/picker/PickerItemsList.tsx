@@ -87,7 +87,12 @@ const PickerItemsList = (props: PickerItemsListProps) => {
             {topBarProps.doneLabel ?? 'Select'}
           </Text>
         </View>
-        <WheelPicker initialValue={context.value as PickerSingleValue} items={items} onChange={setWheelPickerValue}/>
+        <WheelPicker
+          flatListProps={listProps}
+          initialValue={context.value as PickerSingleValue}
+          items={items}
+          onChange={setWheelPickerValue}
+        />
       </View>
     );
   };
