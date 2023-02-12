@@ -1,6 +1,10 @@
 import _ from 'lodash';
-import React, {BaseSyntheticEvent, PureComponent} from 'react';
-import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
+import React, {PureComponent} from 'react';
+import {
+  GestureResponderEvent,
+  TouchableOpacity as RNTouchableOpacity,
+  TouchableOpacityProps as RNTouchableOpacityProps
+} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -155,12 +159,12 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
     );
   }
 
-  onPress(event: BaseSyntheticEvent) {
-    this.props.onPress?.({...this.props, ...event});
+  onPress(event: GestureResponderEvent) {
+    this.props.onPress?.({...this.props, event});
   }
 
-  onLongPress = (event: BaseSyntheticEvent) => {
-    this.props.onLongPress?.({...this.props, ...event});
+  onLongPress = (event: GestureResponderEvent) => {
+    this.props.onLongPress?.({...this.props, event});
   };
 }
 
