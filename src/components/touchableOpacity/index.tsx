@@ -47,10 +47,16 @@ export interface TouchableOpacityProps
    */
   customValue?: any;
   style?: ViewProps['style'];
-  onPress?: (props?: TouchableOpacityProps & {event: GestureResponderEvent} | any) => void;
-  onPressIn?: (props?: TouchableOpacityProps | GestureResponderEvent | any) => void | RNTouchableOpacityProps['onPressIn'];
-  onPressOut?: (props?: TouchableOpacityProps | GestureResponderEvent | any) => void | RNTouchableOpacityProps['onPressOut'];
-  onLongPress?: (props?: TouchableOpacityProps & {event: GestureResponderEvent} | any) => void | RNTouchableOpacityProps['onLongPress'];
+  onPress?: (props?: (TouchableOpacityProps & {event: GestureResponderEvent}) | any) => void;
+  onPressIn?: (
+    props?: TouchableOpacityProps | GestureResponderEvent | any
+  ) => void | RNTouchableOpacityProps['onPressIn'];
+  onPressOut?: (
+    props?: TouchableOpacityProps | GestureResponderEvent | any
+  ) => void | RNTouchableOpacityProps['onPressOut'];
+  onLongPress?: (
+    props?: (TouchableOpacityProps & {event: GestureResponderEvent}) | any
+  ) => void | RNTouchableOpacityProps['onLongPress'];
 }
 
 type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;
