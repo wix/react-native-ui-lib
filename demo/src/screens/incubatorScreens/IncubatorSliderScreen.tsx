@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useCallback} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {Constants, Colors, View, Text, Button, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 import {renderBooleanOption} from '../ExampleScreenPresenter';
@@ -24,29 +24,29 @@ const IncubatorSliderScreen = () => {
   const negativeSlider = useRef<typeof Incubator.Slider>();
   const rangeSlider = useRef<typeof Incubator.Slider>();
 
-  const resetSliders = () => {
+  const resetSliders = useCallback(() => {
     slider.current?.reset();
     customSlider.current?.reset();
     rangeSlider.current?.reset();
     negativeSlider.current?.reset();
-  };
+  }, []);
 
-  const onValueChange = (value: number) => {
+  const onValueChange = useCallback((value: number) => {
     setSliderValue(value);
-  };
+  }, []);
 
-  const onCustomValueChange = (value: number) => {
+  const onCustomValueChange = useCallback((value: number) => {
     setCustomSliderValue(value);
-  };
+  }, []);
 
-  const onNegativeValueChange = (value: number) => {
+  const onNegativeValueChange = useCallback((value: number) => {
     setNegativeSliderValue(value);
-  };
+  }, []);
 
-  const onRangeChange = (value: {min: number; max: number}) => {
+  const onRangeChange = useCallback((value: {min: number; max: number}) => {
     setSliderMaxValue(value.max);
     setSliderMinValue(value.min);
-  };
+  }, []);
 
   const renderValuesBox = (min: number, max?: number) => {
     if (max !== undefined) {
