@@ -30,6 +30,7 @@ const Input = ({
   const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
   const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
   const disabled = props.editable === false || readonly;
+  const editable = (props.editable !== undefined || readonly) ? !disabled : undefined;
 
   const TextInput = useMemo(() => {
     if (useGestureHandlerInput) {
@@ -46,7 +47,7 @@ const Input = ({
     <TextInput
       style={[styles.input, !!inputColor && {color: inputColor}, style, Constants.isWeb && styles.webStyle]}
       {...props}
-      editable={!disabled}
+      editable={editable}
       value={value}
       placeholder={placeholder}
       placeholderTextColor={placeholderTextColor}
