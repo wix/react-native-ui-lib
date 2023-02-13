@@ -97,6 +97,11 @@
       "name": "useGestureHandlerInput",
       "type": "boolean",
       "description": "Use react-native-gesture-handler instead of react-native for the base TextInput"
+    },
+    {
+      "name": "readonly",
+      "type": "boolean",
+      "description": "A UI preset for read only state"
     }
   ],
   "snippet": [
