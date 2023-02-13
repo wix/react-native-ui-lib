@@ -68,6 +68,10 @@ export type SegmentedControlProps = {
    */
   iconOnRight?: boolean;
   /**
+   * Should segments fill parent's height
+   */
+  fillParentY?: boolean;
+  /**
    * Trailing throttle time of changing index in ms.
    */
   throttleTime?: number;
@@ -97,6 +101,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     inactiveColor = Colors.$textNeutralHeavy,
     outlineColor = activeColor,
     outlineWidth = BORDER_WIDTH,
+    fillParentY,
     throttleTime = 0,
     testID
   } = props;
@@ -164,6 +169,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           selectedIndex={animatedSelectedIndex}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
+          fillContainerY={fillParentY}
           {...segments?.[index]}
           testID={testID}
         />

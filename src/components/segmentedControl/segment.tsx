@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp} from 'react-native';
+import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -22,6 +22,14 @@ export type SegmentedControlItemProps = {
    * Should the icon be on right of the label
    */
   iconOnRight?: boolean;
+  /**
+   * Should segment fill container vertically
+   */
+  fillContainerY?: boolean;
+  /**
+   * Additional styling for the segment
+   */
+  style?: StyleProp<ViewStyle>;
 };
 
 export type SegmentProps = SegmentedControlItemProps & {
@@ -67,6 +75,8 @@ const Segment = React.memo((props: SegmentProps) => {
     inactiveColor,
     index,
     iconOnRight,
+    fillContainerY,
+    style,
     testID
   } = props;
 
@@ -80,7 +90,7 @@ const Segment = React.memo((props: SegmentProps) => {
     return {tintColor};
   });
 
-  const segmentStyle = useMemo(() => ({paddingHorizontal: Spacings.s3, paddingVertical: Spacings.s2}), []);
+  const segmentStyle = useMemo(() => [{paddingHorizontal: Spacings.s3, paddingVertical: Spacings.s2, ...(fillContainerY && {height: '100%'})}, style], [fillContainerY, style]);
 
   const renderIcon = useCallback(() => {
     return iconSource && <Reanimated.Image source={iconSource} style={[animatedIconStyle, iconStyle]}/>;
