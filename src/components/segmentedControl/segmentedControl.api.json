@@ -17,6 +17,7 @@
     {"name": "iconOnRight", "type": "boolean", "description": "Should the icon be on right of the label"},
     {"name": "throttleTime", "type": "number", "description": "Trailing throttle time of changing index in ms."},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"},
+    {"name": "fillParentY", "type": "boolean", "description": "Should segments fill parent's height"},
     {"name": "style", "type": "ViewStyle", "description": "Custom style to inner container"},
     {"name": "testID", "type": "string", "description": "Component test id"}
   ],
