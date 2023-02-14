@@ -12,6 +12,7 @@ import CalendarItem from './CalendarItem';
 import Agenda from './Agenda';
 import TodayButton from './TodayButton';
 import Header from './Header';
+import {useDidUpdate} from 'hooks';
 
 const {FlashList} = FlashListPackage;
 
@@ -46,7 +47,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
+  useDidUpdate(() => {
     setDate(initialDate, UpdateSource.PROP_UPDATE);
   }, [initialDate, setDate]);
 
