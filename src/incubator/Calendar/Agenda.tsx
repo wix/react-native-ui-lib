@@ -1,6 +1,7 @@
 import React, {useContext, useCallback, useRef} from 'react';
 import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
-import {FlashList, ViewToken} from '@shopify/flash-list';
+import {FlashListPackage} from 'optionalDeps';
+import type {FlashList as FlashListType, ViewToken} from '@shopify/flash-list';
 import {BorderRadiuses} from 'style';
 import View from '../../components/view';
 import Text from '../../components/text';
@@ -8,10 +9,12 @@ import {isSameDay, isSameMonth} from './helpers/DateUtils';
 import {InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
+const {FlashList} = FlashListPackage;
+
 // TODO: Fix initial scrolling
 function Agenda() {
   const {data, selectedDate, setDate, updateSource} = useContext(CalendarContext);
-  const flashList = useRef<FlashList<InternalEvent>>(null);
+  const flashList = useRef<FlashListType<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
   const scrolledByUser = useSharedValue<boolean>(false);
 

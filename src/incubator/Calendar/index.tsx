@@ -1,7 +1,7 @@
 import findIndex from 'lodash/findIndex';
 import React, {PropsWithChildren, useCallback, useMemo, useRef, useEffect} from 'react';
 import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
-import {FlashList} from '@shopify/flash-list';
+import {FlashListPackage} from 'optionalDeps';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
@@ -12,6 +12,8 @@ import CalendarItem from './CalendarItem';
 import Agenda from './Agenda';
 import TodayButton from './TodayButton';
 import Header from './Header';
+
+const {FlashList} = FlashListPackage;
 
 // TODO: Move this logic elsewhere to pre-generate on install?
 const MONTH_ITEMS = generateMonthItems(2);
@@ -113,7 +115,6 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     <CalendarContext.Provider value={contextValue}>
       {staticHeader && <Header/>}
       <FlashList
-        // @ts-expect-error
         ref={flashListRef}
         estimatedItemSize={calendarWidth}
         data={MONTH_ITEMS}
