@@ -139,9 +139,6 @@ module.exports = {
       get FeatureHighlightScreen() {
         return require('./screens/componentScreens/FeatureHighlightScreen').default;
       },
-      get WheelPickerDialogScreen() {
-        return require('./screens/componentScreens/WheelPickerDialogScreen').default;
-      },
       get SliderScreen() {
         return require('./screens/componentScreens/SliderScreen').default;
       },
