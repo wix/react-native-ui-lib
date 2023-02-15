@@ -146,7 +146,6 @@ export {
   TabControllerItemProps,
   TabControllerImperativeMethods
 } from './components/tabController';
-export {default as TabBar, TabBarProps} from './components/tabBar'; //TODO: remove on V7
 export {
   default as Timeline,
   TimelineProps,
