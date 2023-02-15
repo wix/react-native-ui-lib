@@ -17,8 +17,6 @@ const baseProjectSource = [
   path.resolve(appDirectory, 'node_modules/react-native-reanimated'),
   path.resolve(appDirectory, 'node_modules/react-native-svg'),
   path.resolve(appDirectory, 'node_modules/react-native-svg-transformer'),
-  path.resolve(appDirectory, 'node_modules/@react-native-picker/picker'),
-  path.resolve(appDirectory, 'node_modules/@react-native-community/picker'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/netinfo'),
   path.resolve(appDirectory, 'node_modules/@react-native-community/datetimepicker'),
   path.resolve(appDirectory, 'node_modules/react-native-color'),

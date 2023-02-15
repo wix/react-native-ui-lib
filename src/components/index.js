@@ -77,9 +77,6 @@ export default {
   get KeyboardAwareScrollView() {
     return require('./KeyboardAwareScrollView').KeyboardAwareScrollView;
   },
-  get KeyboardAwareListView() {
-    return require('./KeyboardAwareScrollView').KeyboardAwareListView;
-  },
   get KeyboardAwareFlatList() {
     return require('./KeyboardAwareScrollView').KeyboardAwareFlatList;
   },
@@ -191,9 +188,6 @@ export default {
   },
   get Wizard() {
     return require('./wizard').default;
-  },
-  get WheelPickerDialog() {
-    return require('./wheelPickerDialog').default;
   },
   get ScrollBar() {
     return require('./scrollBar').default;

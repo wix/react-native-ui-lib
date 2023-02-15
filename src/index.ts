@@ -172,8 +172,6 @@ export {
   WizardStepConfig,
   WizardStepsConfig
 } from './components/wizard';
-// @ts-expect-error
-export {default as WheelPickerDialog} from './components/wheelPickerDialog';
 
 /* ===== TestKit ===== */
 // export {default as TextTestKit} from './components/text/Text.driver';
@@ -190,7 +188,6 @@ export {default as WheelPickerDialog} from './components/wheelPickerDialog';
 //   // MaskedInput,
 //   // SharedTransition,
 //   // Toast,
-//   // WheelPickerDialog,
 //   // BaseComponent,
 //   // PureBaseComponent
 // } from '../typings';

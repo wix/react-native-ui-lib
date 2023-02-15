@@ -43,7 +43,6 @@ jest.mock('react-native-gesture-handler',
     return GestureHandler;
   },
   {virtual: true});
-jest.mock('@react-native-picker/picker', () => ({Picker: {Item: {}}}));
 jest.mock('react-native', () => {
   const reactNative = jest.requireActual('react-native');
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};

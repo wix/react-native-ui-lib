@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {LogService} from '../../../services';
 import {PickerProps, PickerModes} from '../types';
 
+// @ts-expect-error TODO: Remove this whole file when migration is completed
 type UsePickerMigrationWarnings = Pick<PickerProps, 'value' | 'mode' | 'useNativePicker'>;
 
 const usePickerMigrationWarnings = (props: UsePickerMigrationWarnings) => {

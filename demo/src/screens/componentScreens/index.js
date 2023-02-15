@@ -59,7 +59,6 @@ export function registerScreens(registrar) {
   registrar('unicorn.wrappers.TouchableOpacityScreen', () => require('./TouchableOpacityScreen').default);
   registrar('unicorn.components.TourScreen', () => require('./TourScreen').default);
   registrar('unicorn.components.ViewScreen', () => require('./ViewScreen').default);
-  registrar('unicorn.components.WheelPickerDialogScreen', () => require('./WheelPickerDialogScreen').default);
   registrar('unicorn.components.WizardScreen', () => require('./WizardScreen').default);
   // List Components
   registrar('unicorn.lists.BasicListScreen', () => require('./BasicListScreen').default);
