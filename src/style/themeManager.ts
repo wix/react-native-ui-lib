@@ -1,9 +1,7 @@
 import _ from 'lodash';
 import type {Context} from 'react';
-import Colors from './colors';
 
 interface Theme {
-  primaryColor: string;
   components: Extendable;
 }
 
@@ -11,7 +9,6 @@ export class ThemeManager {
   private themeContext?: Context<any>;
 
   theme: Theme = {
-    primaryColor: Colors.$backgroundPrimaryHeavy,
     components: {} as Extendable
   };
 
