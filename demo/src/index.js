@@ -57,6 +57,9 @@ module.exports = {
       get ExpandableSectionScreen() {
         return require('./screens/componentScreens/ExpandableSectionScreen').default;
       },
+      get ChipsInputScreen() {
+        return require('./screens/componentScreens/ChipsInputScreen').default;
+      },
       get HapticScreen() {
         return require('./screens/componentScreens/HapticScreen').default;
       },

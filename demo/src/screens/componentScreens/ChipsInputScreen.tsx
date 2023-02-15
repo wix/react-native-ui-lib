@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Card, TextField, Button, Colors, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Card, TextField, Button, Colors, ChipsInput} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
 export default class ChipsInputScreen extends Component {
@@ -14,7 +14,7 @@ export default class ChipsInputScreen extends Component {
         <Text h1 marginB-s4>
           ChipsInput
         </Text>
-        <Incubator.ChipsInput
+        <ChipsInput
           placeholder="Enter chips"
           defaultChipProps={{
             backgroundColor: Colors.$backgroundPrimaryHeavy,
@@ -47,7 +47,7 @@ export default class ChipsInputScreen extends Component {
           }}
         />
 
-        <Incubator.ChipsInput
+        <ChipsInput
           label="Max 3 chips"
           placeholder="Enter chips..."
           chips={this.state.chips2}
