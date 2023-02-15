@@ -28,6 +28,7 @@ export {BaseComponent, PureBaseComponent} from './commons';
 import * as Incubator from './incubator';
 export {
   TextFieldProps,
+  TextFieldMethods,
   FieldContextType,
   ToastProps,
   ToastPresets,
