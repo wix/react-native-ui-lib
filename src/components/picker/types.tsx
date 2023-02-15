@@ -21,7 +21,7 @@ export enum PickerFieldTypes {
 // TODO: Remove type
 // type PickerValueDeprecated = {value: string | number; label: string};
 
-export type PickerSingleValue = string | number/*  | PickerValueDeprecated */;
+export type PickerSingleValue = string | number;
 export type PickerMultiValue = PickerSingleValue[];
 export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
 
@@ -47,9 +47,8 @@ export interface PickerSearchStyle {
   selectionColor?: string;
 }
 
-// TODO: need to extend TextField props (and not just TextInputProps)
-export type PickerBaseProps = /* Omit<TextFieldProps, 'value' | 'onChange'> & */
-  Omit<NewTextFieldProps, 'value' | 'onChange'> & ThemeComponent & {
+export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
+  ThemeComponent & {
     /* ...TextField.propTypes, */
     /**
      * Temporary prop required for migration to Picker's new API
@@ -184,7 +183,7 @@ export type PickerBaseProps = /* Omit<TextFieldProps, 'value' | 'onChange'> & */
      * Component test id
      */
     testID?: string;
-    children?: ReactNode | undefined
+    children?: ReactNode | undefined;
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
