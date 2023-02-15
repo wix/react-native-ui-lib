@@ -136,7 +136,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     // @ts-expect-error
     useCustomTheme,
     testID,
-    migrateTextField,
+    migrateTextField = true,
     ...others
   } = props;
 
