@@ -14,8 +14,8 @@ const shadowsOverWhiteBkg = _.reduce(Shadows, (results, value, key) => {
   return results;
 }, {});
 
-const shadowsOverDarkBkg = _.reduce(Shadows, (results, value, key) => {
-  if (key.startsWith('dark')) {
+const shadowsOverGreyBkg = _.reduce(Shadows, (results, value, key) => {
+  if (key.startsWith('grey')) {
     results[key] = value;
   }
   return results;
@@ -60,7 +60,7 @@ export default class ShadowsScreen extends Component {
         <ScrollView>
           <View style={styles.container}>
             <View style={styles.subContainer}>
-              {this.renderShadows(shadowsOverDarkBkg)}
+              {this.renderShadows(shadowsOverGreyBkg)}
             </View>
             <View style={styles.subContainer}>
               {this.renderShadows(shadowsOverWhiteBkg)}
