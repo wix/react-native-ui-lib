@@ -8,7 +8,6 @@ import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors} from '../../style';
 import View from '../view';
 import Swipeable, {SwipeableProps} from './Swipeable';
-import {LogService} from '../../services';
 
 const DEFAULT_BG = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_BOUNCINESS = 0;
@@ -98,10 +97,6 @@ interface DrawerProps {
    * Callback for just before right item full swipe
    */
   onWillFullSwipeRight?: Function;
-  /**
-   * Haptic trigger function to use onToggleSwipeLeft
-   */
-  leftToggleHapticTrigger?: Function;
   /**
    * Whether to disable the haptic
    */
@@ -384,8 +379,7 @@ class Drawer extends PureComponent<DrawerProps> {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, onToggleSwipeLeft, leftToggleHapticTrigger, ...others} = this.props;
-    leftToggleHapticTrigger && LogService.deprecationWarn({component: 'Drawer', oldProp: 'leftToggleHapticTrigger'});
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
 
     return (
       <Swipeable
