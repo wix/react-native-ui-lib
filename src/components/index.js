@@ -192,9 +192,6 @@ export default {
   get Wizard() {
     return require('./wizard').default;
   },
-  get WheelPickerDialog() {
-    return require('./wheelPickerDialog').default;
-  },
   get ScrollBar() {
     return require('./scrollBar').default;
   }

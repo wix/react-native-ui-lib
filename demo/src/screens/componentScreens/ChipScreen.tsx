@@ -1,7 +1,6 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import {Chip, Colors, Spacings, Text, Typography, View, Incubator, WheelPickerDialog, Image} from 'react-native-ui-lib';
+import {Chip, Colors, Spacings, Text, Typography, View, Image} from 'react-native-ui-lib';
 
 const avatarImage = {
   uri: 'https://randomuser.me/api/portraits/women/24.jpg'
@@ -20,62 +19,7 @@ export default class ChipScreen extends Component {
   ];
 
   state = {
-    showDialog: false,
     selectedValue: this.colors[2].label
-  };
-
-  toggleDialog = (showDialog: boolean) => {
-    this.setState({showDialog});
-  };
-
-  openDialog = () => {
-    this.toggleDialog(true);
-  };
-
-  closeDialog = () => {
-    this.toggleDialog(false);
-  };
-
-  onSelect = (itemValue: string) => {
-    const values = _.filter(this.colors, {value: itemValue});
-    if (values.length > 0) {
-      this.setState({selectedValue: values[0].label});
-    }
-    this.closeDialog();
-  };
-
-  renderItem = ({item: color}) => {
-    return (
-      <Text text50 margin-20 color={color.value}>
-        {color.label}
-      </Text>
-    );
-  };
-
-  renderContent = () => {
-    const {selectedValue} = this.state;
-
-    return (
-      <WheelPickerDialog
-        items={this.colors}
-        selectedValue={selectedValue}
-        onSelect={this.onSelect}
-        onCancel={this.closeDialog}
-        wheelPickerProps={{
-          style: {width: 200}
-        }}
-      />
-    );
-  };
-
-  renderPickerDialog = () => {
-    const {showDialog} = this.state;
-
-    return (
-      <Incubator.Dialog visible={showDialog} useSafeArea bottom onDismiss={this.closeDialog}>
-        {this.renderContent()}
-      </Incubator.Dialog>
-    );
   };
 
   renderExample = (text: string, chip: JSX.Element) => {
@@ -90,7 +34,6 @@ export default class ChipScreen extends Component {
   render() {
     return (
       <View style={{padding: 20}}>
-        {this.renderPickerDialog()}
         <Text marginB-20 text40 $textDefault>
           Chip
         </Text>
@@ -120,12 +63,11 @@ export default class ChipScreen extends Component {
             iconStyle={{width: 24, height: 24}}
             iconProps={{tintColor: Colors.$iconDefault}}
           />)}
-        {this.renderExample('Right icon + onPress + dynamic label',
+        {this.renderExample('Right icon',
           <Chip
             label={this.state.selectedValue}
             rightIconSource={chevron}
             iconStyle={{margin: 8}}
-            onPress={this.openDialog}
           />)}
         {this.renderExample('Label + Avatar', <Chip label={'Chip'} avatarProps={{source: avatarImage, size: 20}}/>)}
         {this.renderExample('Label + Counter',
