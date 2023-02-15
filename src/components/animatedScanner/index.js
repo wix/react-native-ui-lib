@@ -49,7 +49,7 @@ export default class AnimatedScanner extends BaseComponent {
     /**
      * Used as a testing identifier
      */
-    testID: PropTypes.string,
+    testID: PropTypes.string
   };
 
   static defaultProps = {
