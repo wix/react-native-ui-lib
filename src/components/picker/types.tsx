@@ -3,7 +3,7 @@ import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
 // TODO: Replace with new TextField Props after migration to new TextField has completed
-import {TextFieldProps} from '../../../typings/components/Inputs';
+// import {TextFieldProps} from '../../../typings/components/Inputs';
 import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../../incubator/TextField';
 
 // Note: enum values are uppercase due to legacy
@@ -18,9 +18,10 @@ export enum PickerFieldTypes {
   settings = 'settings'
 }
 
-type PickerValueDeprecated = {value: string | number; label: string};
+// TODO: Remove type
+// type PickerValueDeprecated = {value: string | number; label: string};
 
-export type PickerSingleValue = string | number | PickerValueDeprecated;
+export type PickerSingleValue = string | number/*  | PickerValueDeprecated */;
 export type PickerMultiValue = PickerSingleValue[];
 export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
 
@@ -47,7 +48,7 @@ export interface PickerSearchStyle {
 }
 
 // TODO: need to extend TextField props (and not just TextInputProps)
-export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
+export type PickerBaseProps = /* Omit<TextFieldProps, 'value' | 'onChange'> & */
   Omit<NewTextFieldProps, 'value' | 'onChange'> & ThemeComponent & {
     /* ...TextField.propTypes, */
     /**
@@ -146,19 +147,19 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      * Render custom search input (only when passing showSearch)
      */
     renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
-    /**
-     * @deprecated pass useWheelPicker prop instead
-     * Allow to use the native picker solution (different style for iOS and Android)
-     */
-    useNativePicker?: boolean;
+    // /**
+    //  * @deprecated pass useWheelPicker prop instead
+    //  * Allow to use the native picker solution (different style for iOS and Android)
+    //  */
+    // useNativePicker?: boolean;
     /**
      * Use wheel picker instead of a list picker
      */
     useWheelPicker?: boolean;
-    /**
-     * Callback for rendering a custom native picker inside the dialog (relevant to native picker only)
-     */
-    renderNativePicker?: () => React.ReactElement;
+    // /**
+    //  * Callback for rendering a custom native picker inside the dialog (relevant to native picker only)
+    //  */
+    // renderNativePicker?: () => React.ReactElement;
     /**
      * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
      */
