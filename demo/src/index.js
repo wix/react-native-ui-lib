@@ -173,9 +173,6 @@ module.exports = {
       get SafeAreaSpacerViewScreen() {
         return require('./screens/nativeComponentScreens/SafeAreaSpacerViewScreen').default;
       },
-      get WheelPickerViewScreen() {
-        return require('./screens/nativeComponentScreens/WheelPickerViewScreen').default;
-      },
       // Full Screen components
       get EmptyStateScreen() {
         return require('./screens/componentScreens/EmptyStateScreen').default;

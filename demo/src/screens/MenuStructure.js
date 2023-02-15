@@ -141,7 +141,6 @@ export const navigationData = {
         tags: 'native overlay',
         screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'
       },
-      {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
       {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
       {
         title: 'KeyboardTracking (iOS)',
