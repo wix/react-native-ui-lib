@@ -143,9 +143,6 @@ export default {
   get TabController() {
     return require('./tabController').default;
   },
-  get TabBar() { //TODO: remove on V7
-    return require('./tabBar').default;
-  },
   get ChipsInput() {
     return require('./ChipsInput').default;
   },
