@@ -73,10 +73,6 @@ export type RadioButtonProps = RadioGroupContextProps &
      */
     iconOnRight?: boolean;
     /**
-     * @deprecated The content is on right by default, for content on left use 'contentOnLeft'
-     */
-    contentOnRight?: boolean;
-    /**
      * Should the content be rendered left to the button
      */
     contentOnLeft?: boolean;
@@ -131,17 +127,12 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     }
   }
 
-  get isContentOnLeft() {
-    const {contentOnLeft, contentOnRight} = this.props;
-    return contentOnLeft || contentOnRight;
-  }
-
   animate() {
     const {selected} = this.props;
     const {opacityAnimationValue, scaleAnimationValue} = this.state;
     const animationTime = 150;
     const animationDelay = 60;
-    
+
     if (selected) {
       Animated.parallel([
         Animated.timing(opacityAnimationValue, {
@@ -227,10 +218,17 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   renderLabel() {
-    const {label, labelStyle, testID} = this.props;
+    const {label, labelStyle, contentOnLeft, testID} = this.props;
     return (
       label && (
-        <Text flexS marginL-10={!this.isContentOnLeft} marginR-10={this.isContentOnLeft} $textDefault style={labelStyle} testID={`${testID}.label`}>
+        <Text
+          flexS
+          marginL-10={!contentOnLeft}
+          marginR-10={contentOnLeft}
+          $textDefault
+          style={labelStyle}
+          testID={`${testID}.label`}
+        >
           {label}
         </Text>
       )
@@ -260,7 +258,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   render() {
-    const {onPress, onValueChange, containerStyle, ...others} = this.props;
+    const {onPress, onValueChange, containerStyle, contentOnLeft, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
@@ -274,10 +272,10 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
       >
-        {!this.isContentOnLeft && this.renderButton()}
+        {!contentOnLeft && this.renderButton()}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
         {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
-        {this.isContentOnLeft && this.renderButton()}
+        {contentOnLeft && this.renderButton()}
       </Container>
     );
   }
