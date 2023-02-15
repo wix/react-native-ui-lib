@@ -185,9 +185,10 @@ export class Colors {
       const shouldReverseOnDark =
         !options?.avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark';
       const key = shouldReverseOnDark ? colorKeys[colorKeys.length - 1 - keyIndex] : tintKey;
+      
       const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
-      const requiredColor = this[requiredColorKey];
-
+      const requiredColorKey1 = `${colorKey.slice(0, -1)}${key}`;
+      const requiredColor = this[requiredColorKey] || this[requiredColorKey1];
       if (_.isUndefined(requiredColor)) {
         return this.getTintedColorForDynamicHex(color, tintKey);
       }

@@ -14,6 +14,7 @@ export default class TextFieldScreen extends Component {
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
     shouldDisable: false,
+    isReadonly: false,
     value: 'Initial Value',
     searching: false,
     preset: 'withUnderline'
@@ -50,7 +51,7 @@ export default class TextFieldScreen extends Component {
   }
 
   render() {
-    const {errorPosition, shouldDisable, price, preset} = this.state;
+    const {errorPosition, shouldDisable, isReadonly, price, preset} = this.state;
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-page>
@@ -182,11 +183,19 @@ export default class TextFieldScreen extends Component {
             <Text h3 blue50 marginV-s4>
               Colors By State
             </Text>
-            <Button
-              label={shouldDisable ? 'Enable' : 'Disable'}
-              onPress={() => this.setState({shouldDisable: !shouldDisable})}
-              size={Button.sizes.xSmall}
-            />
+            <View row>
+              <Button
+                label={isReadonly ? 'Enable' : 'Readonly'}
+                onPress={() => this.setState({isReadonly: !isReadonly})}
+                size={Button.sizes.xSmall}
+                marginR-s4
+              />
+              <Button
+                label={shouldDisable ? 'Enable' : 'Disable'}
+                onPress={() => this.setState({shouldDisable: !shouldDisable})}
+                size={Button.sizes.xSmall}
+              />
+            </View>
           </View>
 
           <TextField
@@ -195,7 +204,8 @@ export default class TextFieldScreen extends Component {
               default: Colors.$textDefault,
               focus: Colors.$textGeneral,
               error: Colors.$textDangerLight,
-              disabled: Colors.$textDisabled
+              disabled: Colors.$textDisabled,
+              readonly: Colors.$textNeutral
             }}
             placeholder="Enter valid email"
             validationMessage="Email is invalid"
@@ -203,6 +213,7 @@ export default class TextFieldScreen extends Component {
             validateOnChange
             fieldStyle={styles.withFrame}
             editable={!shouldDisable}
+            readonly={isReadonly}
           />
 
           <View row spread centerV>
@@ -224,6 +235,7 @@ export default class TextFieldScreen extends Component {
               preset === 'withUnderline' ? styles.withUnderline : styles.withFrame
             }
             editable={!shouldDisable}
+            readonly={isReadonly}
           />
 
           <Text h3 blue50 marginV-s4>
