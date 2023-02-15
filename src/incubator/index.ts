@@ -1,5 +1,5 @@
 // export {default as Calendar} from './Calendar';
-export {default as ChipsInput, ChipsInputProps, ChipsInputChangeReason, ChipsInputChipProps} from './ChipsInput';
+export {default as ChipsInput, ChipsInputProps, ChipsInputChangeReason, ChipsInputChipProps} from '../components/chipsInput';
 export {default as ExpandableOverlay} from './expandableOverlay';
 // @ts-ignore
 export {default as TextField, TextFieldProps, FieldContextType, TextFieldMethods} from './TextField';
