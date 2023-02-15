@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {NativeModules, StyleSheet, ViewStyle, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, findNodeHandle, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps} from 'react-native';
-import {Colors, BorderRadiuses, Typography, Spacings} from '../../style';
+import {Colors, BorderRadiuses, ThemeManager, Typography, Spacings} from '../../style';
 import Assets from '../../assets';
 import {LogService} from '../../services';
 import {Constants, asBaseComponent, BaseComponentInjectedProps, TypographyModifiers} from '../../commons/new';
@@ -550,7 +550,7 @@ const basicTagStyle = {
 const styles = StyleSheet.create({
   withUnderline: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.$outlineDisabled
+    borderColor: ThemeManager.dividerColor
   },
   tagsList: {
     minHeight: 38,
