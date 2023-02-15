@@ -71,7 +71,6 @@ export const navigationData = {
       {title: 'Stepper', tags: 'stepper form', screen: 'unicorn.components.StepperScreen'},
       {title: 'Slider', tags: 'slider', screen: 'unicorn.components.SliderScreen'},
       {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
-      {title: 'ChipsInput', tags: 'chips tags input form', screen: 'unicorn.components.ChipsInputScreen'},
       {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'}
     ]
   },
@@ -175,7 +174,7 @@ export const navigationData = {
     title: 'Incubator (Experimental)',
     screens: [
       {title: 'Calendar', tags: 'calendar', screen: 'unicorn.components.IncubatorCalendarScreen'},
-      {title: 'ChipsInput (New)', tags: 'chips input', screen: 'unicorn.components.IncubatorChipsInputScreen'},
+      {title: 'ChipsInput', tags: 'chips input', screen: 'unicorn.components.IncubatorChipsInputScreen'},
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: 'Dialog (New)', tags: 'dialog modal popup alert', screen: 'unicorn.incubator.IncubatorDialogScreen'},
       {title: 'TextField (New)', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},

@@ -13,7 +13,6 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.CarouselVerticalScreen', () => require('./CarouselVerticalScreen').default);
   registrar('unicorn.components.CheckboxScreen', () => require('./CheckboxScreen').default);
   registrar('unicorn.components.ChipScreen', () => require('./ChipScreen').default);
-  registrar('unicorn.components.ChipsInputScreen', () => require('./ChipsInputScreen').default);
   registrar('unicorn.components.ColorPickerScreen', () => require('./ColorPickerScreen').default);
   registrar('unicorn.components.ColorSwatchScreen', () => require('./ColorSwatchScreen').default);
   registrar('unicorn.components.ConnectionStatusBar', () => require('./ConnectionStatusBarScreen').default);
