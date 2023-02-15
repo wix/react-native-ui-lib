@@ -71,7 +71,12 @@ export const navigationData = {
       {title: 'Slider', tags: 'slider', screen: 'unicorn.components.SliderScreen'},
       {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
       {title: 'ChipsInput', tags: 'chips tags input form', screen: 'unicorn.components.ChipsInputScreen'},
-      {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'}
+      {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'},
+      {
+        title: 'WheelPicker',
+        tags: 'wheel picker spinner',
+        screen: 'unicorn.components.WheelPickerScreen'
+      }
     ]
   },
   Overlays: {
@@ -182,11 +187,6 @@ export const navigationData = {
         title: 'ExpandableOverlay',
         tags: 'text field expandable input picker',
         screen: 'unicorn.components.IncubatorExpandableOverlayScreen'
-      },
-      {
-        title: 'WheelPicker (Incubator)',
-        tags: 'wheel picker spinner experimental',
-        screen: 'unicorn.incubator.WheelPickerScreen'
       },
       {title: 'Pan View', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
     ]

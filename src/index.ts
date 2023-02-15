@@ -31,9 +31,6 @@ export {
   FieldContextType,
   ToastProps,
   ToastPresets,
-  WheelPickerProps,
-  WheelPickerItemProps,
-  WheelPickerAlign,
   PanViewProps,
   PanViewDirections,
   PanViewDismissThreshold
@@ -172,6 +169,12 @@ export {
   WizardStepConfig,
   WizardStepsConfig
 } from './components/wizard';
+export {
+  default as WheelPicker,
+  WheelPickerProps,
+  WheelPickerItemProps,
+  WheelPickerAlign
+} from './components/WheelPicker';
 
 /* ===== TestKit ===== */
 // export {default as TextTestKit} from './components/text/Text.driver';

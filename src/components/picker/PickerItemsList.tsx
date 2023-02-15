@@ -7,7 +7,7 @@ import Modal from '../modal';
 import View from '../view';
 import Text from '../text';
 import Icon from '../icon';
-import WheelPicker from '../../incubator/WheelPicker';
+import WheelPicker from '../WheelPicker';
 import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
 import PickerContext from './PickerContext';
 
