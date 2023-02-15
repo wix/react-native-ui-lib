@@ -139,9 +139,6 @@ module.exports = {
       get FeatureHighlightScreen() {
         return require('./screens/componentScreens/FeatureHighlightScreen').default;
       },
-      get WheelPickerDialogScreen() {
-        return require('./screens/componentScreens/WheelPickerDialogScreen').default;
-      },
       get SliderScreen() {
         return require('./screens/componentScreens/SliderScreen').default;
       },
@@ -172,9 +169,6 @@ module.exports = {
       },
       get SafeAreaSpacerViewScreen() {
         return require('./screens/nativeComponentScreens/SafeAreaSpacerViewScreen').default;
-      },
-      get WheelPickerViewScreen() {
-        return require('./screens/nativeComponentScreens/WheelPickerViewScreen').default;
       },
       // Full Screen components
       get EmptyStateScreen() {
