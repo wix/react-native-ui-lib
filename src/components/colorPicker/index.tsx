@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
@@ -7,7 +7,6 @@ import Button from '../button';
 import ColorPalette from '../colorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
-import {LogService} from '../../services';
 
 interface Props extends ColorPickerDialogProps {
   /**
@@ -41,7 +40,6 @@ interface Props extends ColorPickerDialogProps {
     doneButton?: string;
     input?: string;
   };
-  style?: StyleProp<ViewStyle>;
   testID?: string;
   /**
    * The ColorPicker's background color
@@ -70,14 +68,6 @@ class ColorPicker extends PureComponent<Props> {
     accessibilityLabels: ACCESSIBILITY_LABELS,
     backgroundColor: Colors.$backgroundDefault
   };
-
-  constructor(props: Props) {
-    super(props);
-
-    if (props.style) {
-      LogService.warn(`UILib ColorPicker's 'style' prop is deprecated. You can use the 'backgroundColor' prop instead`);
-    }
-  }
 
   state = {
     show: false
