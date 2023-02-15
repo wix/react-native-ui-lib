@@ -23,7 +23,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     icon,
     iconColor,
     preset,
-    zIndex,
+    zIndex = Constants.isAndroid ? 100 : undefined,
     elevation,
     style,
     containerStyle,
