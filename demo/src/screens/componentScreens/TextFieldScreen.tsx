@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {TextInput, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
-const {TextField} = Incubator;
+import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, TextField, TextFieldMethods} from 'react-native-ui-lib'; //eslint-disable-line
 const {KeyboardAwareInsetsView} = Keyboard;
 
 const priceFormatter = Intl.NumberFormat('en-US');
@@ -10,14 +9,15 @@ const priceFormatter = Intl.NumberFormat('en-US');
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
   input2 = React.createRef<TextInput>();
-  inputWithValidation = React.createRef<TextInput>();
+  inputWithValidation = React.createRef<TextFieldMethods>();
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
     shouldDisable: false,
     isReadonly: false,
     value: 'Initial Value',
     searching: false,
-    preset: 'withUnderline'
+    preset: 'withUnderline',
+    price: ''
   };
 
   componentDidMount() {
@@ -162,6 +162,7 @@ export default class TextFieldScreen extends Component {
 
           <View row top marginT-s4>
             <TextField
+              // @ts-expect-error
               ref={this.inputWithValidation}
               placeholder="Enter full name"
               validate="required"

@@ -175,7 +175,6 @@ export const navigationData = {
       {title: 'ChipsInput', tags: 'chips input', screen: 'unicorn.components.ChipsInputScreen'},
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: 'Dialog (New)', tags: 'dialog modal popup alert', screen: 'unicorn.incubator.IncubatorDialogScreen'},
-      {title: 'TextField (New)', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
       {title: 'Toast (New)', tags: 'toast', screen: 'unicorn.components.IncubatorToastScreen'},
       {
         title: 'ExpandableOverlay',

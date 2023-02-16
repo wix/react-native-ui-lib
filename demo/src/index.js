@@ -130,9 +130,9 @@ module.exports = {
         return require('./screens/componentScreens/TextScreen').default;
       },
       // TODO: fix Expo issues (navigation) before un-commenting
-      // get TextFieldScreen() {
-      //   return require('./screens/componentScreens/TextFieldScreen').default;
-      // },
+      get TextFieldScreen() {
+        return require('./screens/componentScreens/TextFieldScreen').default;
+      },
       get TourScreen() {
         return require('./screens/componentScreens/TourScreen').default;
       },
@@ -215,9 +215,6 @@ module.exports = {
         return require('./screens/componentScreens/ProgressBarScreen').default;
       },
       // Incubator
-      get IncubatorTextFieldScreen() {
-        return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
-      },
       get PanViewScreen() {
         return require('./screens/incubatorScreens/PanViewScreen').default;
       },
