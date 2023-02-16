@@ -20,6 +20,7 @@ import Item, {ItemProps} from './Item';
 import Text, {TextProps} from '../../components/text';
 import usePresenter from './usePresenter';
 import {WheelPickerAlign} from './types';
+export {WheelPickerAlign};
 
 const AnimatedFlatList = Animated.createAnimatedComponent<FlatListProps<ItemProps>>(FlatList);
 
@@ -358,7 +359,6 @@ const WheelPicker = ({
 };
 
 WheelPicker.alignments = WheelPickerAlign;
-WheelPicker.displayName = 'Incubator.WheelPicker';
 export default asBaseComponent<WheelPickerProps, typeof WheelPicker>(WheelPicker);
 export {ItemProps as WheelPickerItemProps};
 

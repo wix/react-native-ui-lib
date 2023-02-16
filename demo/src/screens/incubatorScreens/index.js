@@ -8,5 +8,4 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.IncubatorExpandableOverlayScreen', () => require('./IncubatorExpandableOverlayScreen').default);
   registrar('unicorn.components.IncubatorToastScreen', () => require('./IncubatorToastScreen').default);
   registrar('unicorn.incubator.PanViewScreen', () => require('./PanViewScreen').default);
-  registrar('unicorn.incubator.WheelPickerScreen', () => gestureHandlerRootHOC(require('./WheelPickerScreen').default));
 }

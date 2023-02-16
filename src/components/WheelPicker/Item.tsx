@@ -110,7 +110,6 @@ const WheelPickerItem = memo(({
   );
 });
 
-WheelPickerItem.displayName = 'Incubator.WheelPickerItem';
 export default asBaseComponent<InternalProps>(WheelPickerItem);
 
 const styles = StyleSheet.create({
