@@ -3,6 +3,55 @@ sidebar_position: 2
 sidebar_label: Colors
 title: "Colors"
 ---
+## Colors
+Our default library Colors object is using **System Colors** and **Design Tokens**.
+
+### System Colors
+The System Colors are all the colors we use in our design system. (red30, grey10 and so on).
+
+### Design Tokens
+Design Tokens are contextual colors based on the system colors.  
+The design token name structure is "$[property]-[semantic]-[weight]".  (e.g $backgroundPrimaryHeavy, $textSuccessLight)
+* **Property** - The property we use this token for. The properties are:  
+  * `background`
+  * `text`
+  * `icon`
+  * `outline`
+
+
+* **Semantic** - the meaning of the color, what is the message that we want to pass using this color. The semantics are:
+  * `neutral`
+  * `primary` - the primary color of the app, means, blue for Spaces app and green for Fit app.
+  * `general`
+  * `success`
+  * `warning`
+  * `danger`
+  * `disabled`
+  * `inverted`
+  * `default`
+
+
+* **Weight** - the weight of the color (optional). The weights are:
+  * `light`
+  * `medium`
+  * `heavy`
+
+So, for example, a valid token can be: `$backgroundPrimaryHeavy` or `$textSuccess`.
+A full list of our design tokens can be found here -  
+
+### Dark Mode Support
+By using design tokens, your getting dark mode support out of the box!
+Each token is mapped to a single system color in light mode and to a (usually different) single system color in dark mode.
+For example, `$textSuccess` is mapped to `green10` in light (deafult) mode, and to `green60` in dark mode.
+All the design tokens and their mapping in light mode can be found [here](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokens.ts), dark mode mapping can be found [here](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokensDM.ts).
+
+### Add Your Own Design Tokens
+Adding or overriding your own design tokens can be done by using the [loadSchemes](https://wix.github.io/react-native-ui-lib/docs/foundation/colors#loadschemes) method.
+To generate the design tokens, based on your app primary color and load them automatically into the `Colors` object, use:
+```javascript
+Colros.loadDesignTokens({primaryColor: <your primary color>});
+```
+This method will update all the `primary` tokens to be based on your app primary color, both in light and dark mode.
 
 ### loadColors
 Load a set of colors to be used in the app.  
@@ -30,6 +79,7 @@ import {View, Text, Colors} from 'react-native-ui-lib';
 ### loadSchemes
 Load a set of scheme colors to support dark/light mode.  
 This feature works hand in hand with our modifiers 
+This method also supports adding and overriding design tokens:
 
 ```js
 Colors.loadSchemes({
@@ -38,14 +88,18 @@ Colors.loadSchemes({
     textColor: Colors.grey10,
     moonOrSun: Colors.yellow30,
     mountainForeground: Colors.green30,
-    mountainBackground: Colors.green50
+    mountainBackground: Colors.green50,
+    $backgroundSuccess: Colors.green40,
+    $backgroundSuccessLight: Colors.green70 
   },
   dark: {
     screenBG: Colors.grey10,
     textColor: Colors.white,
     moonOrSun: Colors.grey80,
     mountainForeground: Colors.violet10,
-    mountainBackground: Colors.violet20
+    mountainBackground: Colors.violet20,
+    $backgroundSuccess: Colors.green40,
+    $backgroundSuccessLight: Colors.green20 
   }
 });
 ```

@@ -290,12 +290,14 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         ) : (
           <TextFieldMigrator
             migrate={migrateTextField}
-            customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
+            // customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
+            // @ts-expect-error
             ref={pickerRef}
             // {...textInputProps}
             {...others}
             {...propsByFieldType}
             testID={`${testID}.input`}
+            // @ts-expect-error
             containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
             labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
             {...accessibilityInfo}
@@ -303,7 +305,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
             value={label}
             selection={Constants.isAndroid ? {start: 0} : undefined}
             /* Note: Disable TextField expandable feature */
-            topBarProps={undefined}
+            // topBarProps={undefined}
           >
             {renderPickerInnerInput()}
           </TextFieldMigrator>

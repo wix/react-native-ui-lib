@@ -2,10 +2,12 @@ import React, {useEffect, forwardRef} from 'react';
 import {mapKeys} from 'lodash';
 import hoistStatics from 'hoist-non-react-statics';
 import OldTextField from './index';
-import NewTextField, {TextFieldStaticMembers} from '../../incubator/TextField';
+import NewTextField, {TextFieldStaticMembers, TextFieldProps} from '../../incubator/TextField';
 import {LogService} from '../../services';
 
-export interface TextFieldMigratorComponent extends React.ForwardRefExoticComponent<any>, TextFieldStaticMembers {}
+export interface TextFieldMigratorComponent
+  extends React.ForwardRefExoticComponent<TextFieldProps>,
+    TextFieldStaticMembers {}
 
 const propsMigrationMap: Dictionary<string> = {
   /* LABEL */
@@ -29,14 +31,12 @@ const specialMigrationMap: Dictionary<string> = {
 };
 
 const customMessageMap: Dictionary<string> = {
-  centered: `Pass textAlign to 'style' prop instead.`,
   error: `Use 'validationMessage' with 'validate' props`,
   expandable: 'This prop will not be supported anymore',
   renderExpandableInput: 'This prop will not be supported anymore',
   renderExpandable: 'This prop will not be supported anymore',
   onToggleExpandableModal: 'This prop will not be supported anymore',
-  topBarProps: 'This prop will not be supported anymore',
-  transformer: 'This prop will not be supported anymore'
+  topBarProps: 'This prop will not be supported anymore'
 };
 
 function migrateProps(props: any) {
@@ -55,7 +55,7 @@ function migrateProps(props: any) {
   return fixedProps;
 }
 
-const TextFieldMigrator = forwardRef(({migrate = false, customWarning, ...props}: any, ref) => {
+const TextFieldMigrator = forwardRef(({migrate = true, customWarning, ...props}: any, ref) => {
   useEffect(() => {
     if (!migrate) {
       LogService.warn(customWarning ??
