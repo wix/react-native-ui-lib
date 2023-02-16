@@ -538,7 +538,7 @@ class Hint extends Component<HintProps, HintState> {
 
       return (
         <View style={[styles.mockChildrenContainer, layout]}>
-          {React.cloneElement(children, {
+          {React.cloneElement<any>(children, {
             collapsable: false,
             key: 'mock',
             style: [children.props.style, styles.mockChildren]
@@ -552,7 +552,7 @@ class Hint extends Component<HintProps, HintState> {
     const {targetFrame} = this.props;
 
     if (!targetFrame && isValidElement(this.props.children)) {
-      return React.cloneElement(this.props.children, {
+      return React.cloneElement<any>(this.props.children, {
         key: 'clone',
         collapsable: false,
         onLayout: this.onTargetLayout,
