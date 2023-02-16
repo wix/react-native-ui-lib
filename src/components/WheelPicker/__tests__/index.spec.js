@@ -3,7 +3,7 @@ import React from 'react';
 import {render} from '@testing-library/react-native';
 import {fireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
 import {Colors} from 'style';
-import {WheelPicker} from '../../../incubator';
+import WheelPicker from '../index';
 
 
 const ITEM_HEIGHT = 50;
