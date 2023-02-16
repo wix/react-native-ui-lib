@@ -36,8 +36,7 @@ const customMessageMap: Dictionary<string> = {
   renderExpandableInput: 'This prop will not be supported anymore',
   renderExpandable: 'This prop will not be supported anymore',
   onToggleExpandableModal: 'This prop will not be supported anymore',
-  topBarProps: 'This prop will not be supported anymore',
-  transformer: 'This prop will not be supported anymore'
+  topBarProps: 'This prop will not be supported anymore'
 };
 
 function migrateProps(props: any) {
