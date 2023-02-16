@@ -45,8 +45,9 @@ Each token is mapped to a single system color in light mode and to a (usually di
 For example, `$textSuccess` is mapped to `green10` in light (deafult) mode, and to `green60` in dark mode.
 All the design tokens and their mapping in light mode can be found [here](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokens.ts), dark mode mapping can be found [here](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokensDM.ts).
 
-### Generate Your Own Design Tokens
-To generate the design tokens, based on your app primary color, use:
+### Add Your Own Design Tokens
+Adding or overriding your own design tokens can be done by using the [loadSchemes](https://wix.github.io/react-native-ui-lib/docs/foundation/colors#loadschemes) method.
+To generate the design tokens, based on your app primary color and load them automatically into the `Colors` object, use:
 ```javascript
 Colros.loadDesignTokens({primaryColor: <your primary color>});
 ```
@@ -78,6 +79,7 @@ import {View, Text, Colors} from 'react-native-ui-lib';
 ### loadSchemes
 Load a set of scheme colors to support dark/light mode.  
 This feature works hand in hand with our modifiers 
+This method also supports adding and overriding design tokens:
 
 ```js
 Colors.loadSchemes({
@@ -86,14 +88,18 @@ Colors.loadSchemes({
     textColor: Colors.grey10,
     moonOrSun: Colors.yellow30,
     mountainForeground: Colors.green30,
-    mountainBackground: Colors.green50
+    mountainBackground: Colors.green50,
+    $backgroundSuccess: Colors.green40 
+    $backgroundSuccessLight: Colors.green70 
   },
   dark: {
     screenBG: Colors.grey10,
     textColor: Colors.white,
     moonOrSun: Colors.grey80,
     mountainForeground: Colors.violet10,
-    mountainBackground: Colors.violet20
+    mountainBackground: Colors.violet20,
+    $backgroundSuccess: Colors.green40 
+    $backgroundSuccessLight: Colors.green20 
   }
 });
 ```
