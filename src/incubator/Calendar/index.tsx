@@ -16,6 +16,7 @@ import {useDidUpdate} from 'hooks';
 
 const {FlashList} = FlashListPackage;
 
+const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 200};
 // TODO: Move this logic elsewhere to pre-generate on install?
 const MONTH_ITEMS = generateMonthItems(2);
 const getIndex = (date: number) => {
@@ -127,6 +128,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
         showsHorizontalScrollIndicator={false}
         // TODO: Consider moving this shared logic with Agenda to a hook
         onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={VIEWABILITY_CONFIG}
         onMomentumScrollBegin={onMomentumScrollBegin}
         onScrollBeginDrag={onScrollBeginDrag}
       />
