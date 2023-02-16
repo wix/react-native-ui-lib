@@ -1,8 +1,8 @@
 {
   "name": "WheelPicker",
-  "category": "incubator",
+  "category": "form",
   "description": "A customizable WheelPicker component",
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/WheelPickerScreen.tsx",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WheelPickerScreen.tsx",
   "images": [],
   "props": [
     {"name": "initialValue", "type": "number | string", "description": "Initial value (uncontrolled)"},

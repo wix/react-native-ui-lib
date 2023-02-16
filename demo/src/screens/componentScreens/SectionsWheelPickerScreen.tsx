@@ -7,13 +7,12 @@ import {
   SectionsWheelPicker,
   SegmentedControl,
   Button,
-  Incubator,
+  WheelPicker,
+  WheelPickerProps,
   Constants,
   Switch,
   Colors
 } from 'react-native-ui-lib';
-
-const {WheelPicker} = Incubator;
 
 const DAYS = _.times(10, i => i);
 const HOURS = _.times(24, i => i);
@@ -75,7 +74,7 @@ const SectionsWheelPickerScreen = () => {
     setSelectedMinutes(0);
   }, []);
 
-  const sections: Incubator.WheelPickerProps[] = useMemo(() => {
+  const sections: WheelPickerProps[] = useMemo(() => {
     return [
       {
         items: getItems(DAYS),

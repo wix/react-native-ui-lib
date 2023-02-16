@@ -51,11 +51,11 @@ export default class PickerScreen extends Component {
     itemsCount: 1,
     // language: {value: 'java', label: 'Java'},
     language: undefined,
-    language2: options[2].value, // for migrated picker example
+    language2: options[2].value,
     languages: [],
     nativePickerValue: 'java',
     customModalValues: [],
-    filter: filters[0],
+    filter: filters[0].value,
     scheme: schemes[0].value,
     contact: 0
   };
@@ -102,10 +102,9 @@ export default class PickerScreen extends Component {
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // onSearchChange={value => console.warn('value', value)}
-            migrateTextField
           >
             {_.map(longOptions, option => (
-              <Picker.Item key={option.value} value={option} label={''} disabled={option.disabled}/>
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
 
@@ -116,33 +115,25 @@ export default class PickerScreen extends Component {
             mode={Picker.modes.MULTI}
             selectionLimit={3}
             trailingAccessory={dropdownIcon}
-            migrateTextField
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option} label={''} disabled={option.disabled}/>
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
 
           <Picker
-            title="Wheel Picker"
+            label="Wheel Picker"
             placeholder="Pick a Language"
-            useNativePicker
+            useWheelPicker
             // useWheelPicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
-            rightIconSource={dropdown}
+            trailingAccessory={<Icon source={dropdown}/>}
             // containerStyle={{marginTop: 20}}
             // renderPicker={() => {
             //   return (
             //     <View>
             //       <Text>Open Native Picker!</Text>
-            //     </View>
-            //   );
-            // }}
-            // renderNativePicker={props => {
-            //   return (
-            //     <View flex bg-red50>
-            //       <Text>CUSTOM NATIVE PICKER</Text>
             //     </View>
             //   );
             // }}
@@ -160,13 +151,12 @@ export default class PickerScreen extends Component {
             onChange={items => this.setState({customModalValues: items})}
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
-            migrateTextField
             renderCustomModal={this.renderDialog}
           >
             {_.map(options, option => (
               <Picker.Item
                 key={option.value}
-                value={option}
+                value={option.value}
                 label={option.label}
                 labelStyle={Typography.text65}
                 disabled={option.disabled}
@@ -196,19 +186,15 @@ export default class PickerScreen extends Component {
             }}
           >
             {_.map(filters, filter => (
-              <Picker.Item key={filter.value} value={filter} label={''}/>
+              <Picker.Item key={filter.value} value={filter.value} label={filter.label}/>
             ))}
           </Picker>
-
-          <Text text60 marginT-s5 $textDefault>
-            Migrated Pickers
-          </Text>
 
           <Text marginT-20 marginB-10 text70 $textDefault>
             Custom Picker Items:
           </Text>
           <Picker
-            migrate
+            ref={this.picker}
             value={this.state.contact}
             onChange={contact => {
               this.setState({contact});
@@ -268,27 +254,6 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Picker
-            migrate
-            ref={this.picker}
-            migrateTextField
-            label="Language"
-            placeholder="Favorite Language"
-            value={this.state.language2}
-            onChange={value => this.setState({language2: value})}
-            topBarProps={{title: 'Languages'}}
-            showSearch
-            searchPlaceholder={'Search a language'}
-            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
-            marginT-s4
-            enableErrors={false}
-            // mode={Picker.modes.MULTI}
-            // useNativePicker
-          >
-            {_.map(options, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-            ))}
-          </Picker>
           <Button
             label="Open Picker Manually"
             link
@@ -299,11 +264,11 @@ export default class PickerScreen extends Component {
           <Text text60 marginT-s5>
             Different Field Types
           </Text>
-          <Text text80 marginB-s5>(Form/Filter/Settings)</Text>
+          <Text text80 marginB-s5>
+            (Form/Filter/Settings)
+          </Text>
 
           <Picker
-            migrate
-            migrateTextField
             value={this.state.filter}
             onChange={value => this.setState({filter: value})}
             placeholder="Filter posts"
@@ -316,8 +281,6 @@ export default class PickerScreen extends Component {
           </Picker>
 
           <Picker
-            migrate
-            migrateTextField
             value={this.state.scheme}
             onChange={value => this.setState({scheme: value})}
             label="Color Scheme"
