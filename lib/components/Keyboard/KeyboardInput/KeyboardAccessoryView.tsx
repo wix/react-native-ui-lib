@@ -9,7 +9,6 @@ import {
   BackHandler,
   LayoutChangeEvent
 } from 'react-native';
-import {LogService} from '../../../../src/services';
 import KeyboardTrackingView, {KeyboardTrackingViewProps} from '../KeyboardTracking/KeyboardTrackingView';
 import CustomKeyboardView from './CustomKeyboardView';
 import KeyboardUtils from './utils/KeyboardUtils';
@@ -63,9 +62,6 @@ export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/KeyboardAccessoryView/KeyboardAccessoryView.gif?raw=true
  */
 class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
-  /**
-   * @deprecated Please use KeyboardAccessoryView.scrollBehaviors instead
-   */
   static scrollBehaviors = KeyboardTrackingView.scrollBehaviors;
 
   static defaultProps = {
