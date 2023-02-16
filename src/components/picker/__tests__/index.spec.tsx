@@ -14,14 +14,17 @@ const testID = 'picker';
 describe('Picker', () => {
   describe('getLabel', () => {
     it('should get label of a simple item', async () => {
-      const driver = new PickerDriver({component: <TestCase value={countries[2]}/>, testID});
+      const driver = new PickerDriver({component: <TestCase value={countries[2].value}/>, testID});
 
       expect(await driver.getByDisplayValue(countries[2].label)).toBeDefined();
       expect(await driver.getByDisplayValue(countries[3].label)).not.toBeDefined();
     });
 
     it('should get label out of an array of items', async () => {
-      const driver = new PickerDriver({component: <TestCase value={[countries[2], countries[4]]}/>, testID});
+      const driver = new PickerDriver({
+        component: <TestCase value={[countries[2].value, countries[4].value]}/>,
+        testID
+      });
 
       expect(await driver.getByDisplayValue(`${countries[2].label}, ${countries[4].label}`)).toBeDefined();
     });

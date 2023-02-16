@@ -212,9 +212,10 @@ describe('style/Colors', () => {
     });
 
     it('should return undefined for color that does not exist in our colors palette.', () => {
+      uut.anotherViolet = '#5A48F5';
       expect(uut.getSystemColorByHex('#5A48F5')).toEqual('violet30');
       expect(uut.getSystemColorByHex('#5A48F5', GetColorsByHexOptions)).toEqual(undefined);
-      expect(uut.getSystemColorByHex('#5A48F5', {validColors: [...SYSTEM_COLORS, 'primary']})).toEqual('primary');
+      expect(uut.getSystemColorByHex('#5A48F5', {validColors: [...SYSTEM_COLORS, 'anotherViolet']})).toEqual('anotherViolet');
     });
   });
 });

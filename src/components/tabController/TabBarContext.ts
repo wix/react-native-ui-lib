@@ -3,8 +3,6 @@ import Reanimated from 'react-native-reanimated';
 
 interface TabControllerContext {
   initialIndex?: number;
-  // DEPRECATED: use initialIndex instead
-  selectedIndex?: number;
   items?: any[];
   itemsCount: number;
   asCarousel?: boolean;

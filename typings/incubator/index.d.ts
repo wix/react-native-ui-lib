@@ -12,7 +12,7 @@ import {BadgeProps} from '../components/Badge';
 
 export namespace Incubator {
   export interface TabControllerProps {
-    selectedIndex?: number;
+    initialIndex?: number;
     onChangeIndex?: (index: number) => void;
     asCarousel?: boolean;
   }

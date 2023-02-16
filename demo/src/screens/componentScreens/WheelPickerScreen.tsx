@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useCallback, useState} from 'react';
-import {View, Text, Incubator, Colors, Typography, Button} from 'react-native-ui-lib';
+import {View, Text, Incubator, WheelPicker, WheelPickerAlign, Colors, Typography, Button} from 'react-native-ui-lib';
 
 const monthItems = _.map([
   'January',
@@ -16,7 +16,7 @@ const monthItems = _.map([
   'November',
   'December'
 ],
-item => ({label: item, value: item, align: Incubator.WheelPickerAlign.RIGHT}));
+item => ({label: item, value: item, align: WheelPickerAlign.RIGHT}));
 
 const yearItems = _.times(2050, i => i)
   .reverse()
@@ -51,7 +51,7 @@ export default () => {
       <View row center marginT-30>
         <View center>
           <Text h3>Months</Text>
-          <Incubator.WheelPicker
+          <WheelPicker
             initialValue={'February'}
             activeTextColor={Colors.$textPrimary}
             inactiveTextColor={Colors.$textNeutralHeavy}
@@ -63,7 +63,7 @@ export default () => {
 
         <View center>
           <Text h3>Years</Text>
-          <Incubator.WheelPicker
+          <WheelPicker
             numberOfVisibleRows={3} 
             initialValue={yearsValue} 
             items={yearItems}
@@ -80,14 +80,14 @@ export default () => {
           (by updating the initialValue prop)
         </Text>
         <View marginT-10 row>
-          <Button size="medium" label={'Previous'} marginR-20 onPress={() => updateYearsInitialValue(false)}/>
-          <Button size="medium" label={'Next'} onPress={() => updateYearsInitialValue(true)}/>
+          <Button size={Button.sizes.medium} label={'Previous'} marginR-20 onPress={() => updateYearsInitialValue(false)}/>
+          <Button size={Button.sizes.medium} label={'Next'} onPress={() => updateYearsInitialValue(true)}/>
         </View>
       </View>
 
       <View center marginT-40>
         <Text h3 marginB-20>Days</Text>
-        <Button size="small" label={'Pick Days'} onPress={onPickDaysPress}/>
+        <Button size={Button.sizes.small} label={'Pick Days'} onPress={onPickDaysPress}/>
         <Incubator.Dialog
           width={'90%'}
           bottom
@@ -95,7 +95,7 @@ export default () => {
           onDismiss={onDialogDismissed}
           headerProps={{showKnob: false, showDivider: false}}
         >
-          <Incubator.WheelPicker initialValue={5} label={'Days'} items={dayItems}/>
+          <WheelPicker initialValue={5} label={'Days'} items={dayItems}/>
         </Incubator.Dialog>
       </View>
     </View>
