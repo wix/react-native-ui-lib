@@ -19,6 +19,7 @@ export type ColorType =
       focus?: string;
       error?: string;
       disabled?: string;
+      readonly?: string;
     };
 
 export enum ValidationMessagePosition {
@@ -52,7 +53,7 @@ export interface LabelProps {
    */
   label?: string;
   /**
-   * Field label color. Either a string or color by state map ({default, focus, error, disabled})
+   * Field label color. Either a string or color by state map ({default, focus, error, disabled, readonly})
    */
   labelColor?: ColorType;
   /**
@@ -145,6 +146,10 @@ export interface InputProps
    * Use react-native-gesture-handler instead of react-native for the base TextInput
    */
   useGestureHandlerInput?: boolean;
+  /**
+   * A UI preset for read only state
+   */
+  readonly?: boolean;
   /**
    * Recorder tag
    */
@@ -244,6 +249,7 @@ export type FieldContextType = {
   isValid: boolean;
   failingValidatorIndex?: number;
   disabled: boolean;
+  readonly: boolean;
   validateField: () => void;
   checkValidity: () => boolean;
 };

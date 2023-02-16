@@ -1,13 +1,44 @@
-function warn(message: string) {
-  if (__DEV__) {
-    console.warn(message);
-  }
+interface BILogger {
+  log: (event: any) => void;
 }
+class LogService {
+  private biLogger: BILogger | undefined;
 
-function error(message: string) {
-  if (__DEV__) {
-    console.error(message);
+  injectBILogger = (biLogger: BILogger) => {
+    this.biLogger = biLogger;
+  };
+
+  logBI = (event: any) => {
+    this.biLogger?.log(event);
   }
+
+  warn = (message: string) => {
+    if (__DEV__) {
+      console.warn(message);
+    }
+  };
+
+  error = (message: string) => {
+    if (__DEV__) {
+      console.error(message);
+    }
+  };
+
+  deprecationWarn = ({component, oldProp, newProp}: {component: string; oldProp: string; newProp?: string}) => {
+    this.warn(getDeprecationMessage({component, oldProp, newProp}));
+  };
+
+  componentDeprecationWarn = ({oldComponent, newComponent}: {oldComponent: string; newComponent: string}) => {
+    this.warn(getComponentDeprecationMessage({oldComponent, newComponent}));
+  };
+
+  deprecationError = ({component, oldProp, newProp}: {component: string; oldProp: string; newProp?: string}) => {
+    this.error(getDeprecationMessage({component, oldProp, newProp}));
+  };
+
+  componentDeprecationError = ({oldComponent, newComponent}: {oldComponent: string; newComponent: string}) => {
+    this.error(getComponentDeprecationMessage({oldComponent, newComponent}));
+  };
 }
 
 function getDeprecationMessage({component, oldProp, newProp}: {component: string; oldProp: string; newProp?: string}) {
@@ -23,27 +54,4 @@ function getComponentDeprecationMessage({oldComponent, newComponent}: {oldCompon
   return message;
 }
 
-function deprecationWarn({component, oldProp, newProp}: {component: string; oldProp: string; newProp?: string}) {
-  warn(getDeprecationMessage({component, oldProp, newProp}));
-}
-
-function componentDeprecationWarn({oldComponent, newComponent}: {oldComponent: string; newComponent: string}) {
-  warn(getComponentDeprecationMessage({oldComponent, newComponent}));
-}
-
-function deprecationError({component, oldProp, newProp}: {component: string; oldProp: string; newProp?: string}) {
-  error(getDeprecationMessage({component, oldProp, newProp}));
-}
-
-function componentDeprecationError({oldComponent, newComponent}: {oldComponent: string; newComponent: string}) {
-  error(getComponentDeprecationMessage({oldComponent, newComponent}));
-}
-
-export default {
-  warn,
-  error,
-  deprecationWarn,
-  componentDeprecationWarn,
-  deprecationError,
-  componentDeprecationError
-};
+export default new LogService();

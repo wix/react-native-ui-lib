@@ -7,6 +7,7 @@ import Button from '../button';
 import ColorPalette from '../colorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
+import {LogService} from '../../services';
 
 interface Props extends ColorPickerDialogProps {
   /**
@@ -43,7 +44,7 @@ interface Props extends ColorPickerDialogProps {
   style?: StyleProp<ViewStyle>;
   testID?: string;
   /**
-   * Give the ColorPicker a background color
+   * The ColorPicker's background color
    */
   backgroundColor?: string;
 }
@@ -69,6 +70,14 @@ class ColorPicker extends PureComponent<Props> {
     accessibilityLabels: ACCESSIBILITY_LABELS,
     backgroundColor: Colors.$backgroundDefault
   };
+
+  constructor(props: Props) {
+    super(props);
+
+    if (props.style) {
+      LogService.warn(`UILib ColorPicker's 'style' prop is deprecated. You can use the 'backgroundColor' prop instead`);
+    }
+  }
 
   state = {
     show: false

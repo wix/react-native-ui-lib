@@ -45,7 +45,11 @@ export default class AnimatedScanner extends BaseComponent {
     /**
      * the container style
      */
-    containerStyle: ViewPropTypes.style
+    containerStyle: ViewPropTypes.style,
+    /**
+     * Used as a testing identifier
+     */
+    testID: PropTypes.string
   };
 
   static defaultProps = {
@@ -103,7 +107,7 @@ export default class AnimatedScanner extends BaseComponent {
   }
 
   render() {
-    const {opacity, backgroundColor, hideScannerLine, style, containerStyle} = this.props;
+    const {opacity, backgroundColor, hideScannerLine, style, containerStyle, testID} = this.props;
     const {isDone, animatedProgress} = this.state;
 
     return (
@@ -121,6 +125,7 @@ export default class AnimatedScanner extends BaseComponent {
               })
             }
           ]}
+          testID={testID}
         >
           {isDone && !hideScannerLine && <View style={this.styles.scanner}/>}
         </Animated.View>

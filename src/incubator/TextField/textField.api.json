@@ -14,7 +14,7 @@
     {
       "name": "labelColor",
       "type": "ColorType",
-      "description": "Field label color. Either a string or color by state map ({default, focus, error, disabled})"
+      "description": "Field label color. Either a string or color by state map ({default, focus, error, disabled, readonly})"
     },
     {"name": "labelStyle", "type": "TextStyle", "description": "Custom style for the field label"},
     {"name": "labelProps", "type": "TextProps", "description": "Pass extra props to the label Text element"},
@@ -97,6 +97,11 @@
       "name": "useGestureHandlerInput",
       "type": "boolean",
       "description": "Use react-native-gesture-handler instead of react-native for the base TextInput"
+    },
+    {
+      "name": "readonly",
+      "type": "boolean",
+      "description": "A UI preset for read only state"
     },
     {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
   ],
