@@ -31,7 +31,6 @@ const specialMigrationMap: Dictionary<string> = {
 };
 
 const customMessageMap: Dictionary<string> = {
-  centered: `Pass textAlign to 'style' prop instead.`,
   error: `Use 'validationMessage' with 'validate' props`,
   expandable: 'This prop will not be supported anymore',
   renderExpandableInput: 'This prop will not be supported anymore',
