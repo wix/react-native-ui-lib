@@ -225,7 +225,7 @@ export default function TabBarItem({
           />
         )}
         {!_.isEmpty(label) && (
-          <Reanimated.Text style={[styles.tabItemLabel, labelStyle, animatedLabelStyle, animatedLabelColorStyle]}>
+          <Reanimated.Text fsTagName={'unmask'} style={[styles.tabItemLabel, labelStyle, animatedLabelStyle, animatedLabelColorStyle]}>
             {uppercase ? _.toUpper(label) : label}
           </Reanimated.Text>
         )}

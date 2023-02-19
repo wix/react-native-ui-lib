@@ -103,6 +103,7 @@ class WizardStep extends Component<Props> {
             numberOfLines={1}
             style={[styles.label, {maxWidth}, labelStyle]}
             accessible={false}
+            recorderTag={'unmask'}
           >
             {label}
           </Text>

@@ -242,7 +242,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     return label ? (
       <View row centerV style={containerStyle}>
         {this.renderCheckbox()}
-        <Text flexS style={[this.styles.checkboxLabel, labelStyle]} {...labelProps} onPress={this.onPress}>
+        <Text flexS style={[this.styles.checkboxLabel, labelStyle]} recorderTag={'unmask'} {...labelProps} onPress={this.onPress}>
           {label}
         </Text>
       </View>

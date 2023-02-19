@@ -109,7 +109,7 @@ const Segment = React.memo((props: SegmentProps) => {
     >
       {!iconOnRight && renderIcon()}
       {label && (
-        <Reanimated.Text numberOfLines={1} style={[animatedTextStyle, Typography.text90]}>
+        <Reanimated.Text fsTagName={'unmasked'} numberOfLines={1} style={[animatedTextStyle, Typography.text90]}>
           {label}
         </Reanimated.Text>
       )}

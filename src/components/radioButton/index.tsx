@@ -230,7 +230,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     const {label, labelStyle, testID} = this.props;
     return (
       label && (
-        <Text flexS marginL-10={!this.isContentOnLeft} marginR-10={this.isContentOnLeft} $textDefault style={labelStyle} testID={`${testID}.label`}>
+        <Text recorderTag={'unmask'} flexS marginL-10={!this.isContentOnLeft} marginR-10={this.isContentOnLeft} $textDefault style={labelStyle} testID={`${testID}.label`}>
           {label}
         </Text>
       )

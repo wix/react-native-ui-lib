@@ -45,7 +45,7 @@ const Point = (props: PointPropsInternal) => {
     if (icon) {
       return <Icon source={icon} size={ICON_SIZE} tintColor={Colors.$iconDefaultLight}/>;
     } else if (label) {
-      return <Text $textDefaultLight subtextBold>{label}</Text>;
+      return <Text recorderTag={'unmask'} $textDefaultLight subtextBold>{label}</Text>;
     }
   };
 

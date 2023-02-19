@@ -84,7 +84,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
     return (
       <>
         {showLabels && labels && (
-          <Text $textNeutral text80 style={labelsStyle} accessible={accessible}>
+          <Text recorderTag={'unmask'} $textNeutral text80 style={labelsStyle} accessible={accessible}>
             {labels[type]}
           </Text>
         )}

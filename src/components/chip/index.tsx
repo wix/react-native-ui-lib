@@ -10,7 +10,7 @@ import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 import Icon, {IconProps} from '../icon';
-
+import {RecorderTag} from 'services';
 
 export type ChipProps = ViewProps & TouchableOpacityProps & {
   //GENERAL
@@ -127,6 +127,10 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    * Dismiss container style
    */
   dismissContainerStyle?: StyleProp<ImageStyle>;
+  /**
+   * Recorder tag
+   */
+  recorderTag?: RecorderTag;
 }
 
 const DEFAULT_SIZE = 26;
@@ -161,6 +165,7 @@ const Chip = ({
   resetSpacings,
   size = DEFAULT_SIZE,
   useSizeAsMinimum = true,
+  recorderTag,
   testID,
   ...others
 }: ChipProps) => {
@@ -232,6 +237,7 @@ const Chip = ({
         $textDefault
         style={[styles.label, getMargins('label'), labelStyle]}
         testID={`${testID}.label`}
+        recorderTag={recorderTag}
       >
         {!!label && label}
       </Text>
