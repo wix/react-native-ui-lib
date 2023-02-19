@@ -26,6 +26,8 @@ export enum ValidationMessagePosition {
   BOTTOM = 'bottom'
 }
 
+type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
+
 export type Validator = Function | keyof typeof formValidators;
 
 export interface FieldStateProps extends InputProps {
@@ -63,7 +65,7 @@ export interface LabelProps {
    * Pass extra props to the label Text element
    */
   labelProps?: TextProps;
-  validationMessagePosition?: ValidationMessagePosition;
+  validationMessagePosition?: ValidationMessagePositionType;
   floatingPlaceholder?: boolean;
   testID?: string;
 }
@@ -85,7 +87,7 @@ export interface FloatingPlaceholderProps {
    * Should placeholder float on focus or when start typing
    */
   floatOnFocus?: boolean;
-  validationMessagePosition?: ValidationMessagePosition;
+  validationMessagePosition?: ValidationMessagePositionType;
   extraOffset?: number;
   defaultValue?: TextInputProps['defaultValue'];
   testID: string;
@@ -205,7 +207,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * The position of the validation message (top/bottom)
      */
-    validationMessagePosition?: ValidationMessagePosition;
+    validationMessagePosition?: ValidationMessagePositionType;
     /**
      * Internal style for the field container
      */
