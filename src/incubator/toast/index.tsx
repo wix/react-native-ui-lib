@@ -23,7 +23,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     icon,
     iconColor,
     preset,
-    zIndex,
+    zIndex = Constants.isAndroid ? 100 : undefined,
     elevation,
     style,
     containerStyle,
@@ -57,7 +57,6 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   const playAccessibilityFeatures = () => {
     if (visible) {
       if (viewRef.current && action) {
-        // @ts-expect-error
         const reactTag = findNodeHandle(viewRef.current);
         AccessibilityInfo.setAccessibilityFocus(reactTag!);
       } else if (message) {
@@ -269,7 +268,8 @@ const styles = StyleSheet.create({
     marginRight: Spacings.s3
   },
   action: {
-    backgroundColor: Colors.$backgroundNeutralLight,
+    borderLeftColor: Colors.$outlineDisabled,
+    borderLeftWidth: 1,
     borderTopRightRadius: BorderRadiuses.br40,
     borderBottomRightRadius: BorderRadiuses.br40,
     paddingHorizontal: Spacings.s3,

@@ -22,6 +22,10 @@ interface Props {
    */
   selected?: boolean;
   /**
+   * Is the initial state is unavailable
+   */
+  unavailable?: boolean;
+  /**
    * Is first render should be animated
    */
   animated?: boolean;
@@ -32,6 +36,10 @@ interface Props {
   index?: number;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  /**
+   * Color swatch size
+   */
+  size?: number;
 }
 export type ColorSwatchProps = Props;
 
@@ -133,7 +141,7 @@ class ColorSwatch extends PureComponent<Props> {
   };
 
   renderContent() {
-    const {style, color, onPress, ...others} = this.props;
+    const {style, color, onPress, unavailable, size = DEFAULT_SIZE, ...others} = this.props;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
@@ -147,21 +155,25 @@ class ColorSwatch extends PureComponent<Props> {
         throttleTime={0}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         onPress={this.onPress}
-        style={[this.styles.container, style]}
+        style={[this.styles.container, {width: size, height: size, borderRadius: size / 2}, style]}
         onLayout={this.onLayout}
         {...accessibilityInfo}
       >
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
         )}
-        <Animated.Image
-          source={Assets.icons.check}
-          style={{
-            tintColor,
-            opacity: isSelected,
-            transform: [{scaleX: isSelected}, {scaleY: isSelected}]
-          }}
-        />
+        {unavailable ? (
+          <View style={[this.styles.unavailable, {backgroundColor: tintColor}]}/>
+        ) : (
+          <Animated.Image
+            source={Assets.icons.check}
+            style={{
+              tintColor,
+              opacity: isSelected,
+              transform: [{scaleX: isSelected}, {scaleY: isSelected}]
+            }}
+          />
+        )}
       </Container>
     );
   }
@@ -196,12 +208,9 @@ function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({
     container: {
       backgroundColor: color,
-      width: DEFAULT_SIZE,
-      height: DEFAULT_SIZE,
-      borderRadius: DEFAULT_SIZE / 2,
-      margin: SWATCH_MARGIN,
       borderWidth: color === 'transparent' ? undefined : 1,
-      borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
+      borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2),
+      margin: SWATCH_MARGIN
     },
     transparentImage: {
       ...StyleSheet.absoluteFillObject,
@@ -210,6 +219,12 @@ function createStyles({color = Colors.grey30}) {
       borderWidth: 1,
       borderRadius: BorderRadiuses.br100,
       borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
+    },
+    unavailable: {
+      height: '100%',
+      width: 3,
+      transform: [{rotate: '45deg'}],
+      opacity: 0.7
     }
   });
 }

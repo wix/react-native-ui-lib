@@ -1,6 +1,10 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
+import {
+  GestureResponderEvent,
+  TouchableOpacity as RNTouchableOpacity,
+  TouchableOpacityProps as RNTouchableOpacityProps
+} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -43,10 +47,16 @@ export interface TouchableOpacityProps
    */
   customValue?: any;
   style?: ViewProps['style'];
-  onPress?: (props?: TouchableOpacityProps | any) => void;
-  onPressIn?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressIn'];
-  onPressOut?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onPressOut'];
-  onLongPress?: (props?: TouchableOpacityProps) => void | RNTouchableOpacityProps['onLongPress'];
+  onPress?: (props?: (TouchableOpacityProps & {event: GestureResponderEvent}) | any) => void;
+  onPressIn?: (
+    props?: TouchableOpacityProps | GestureResponderEvent | any
+  ) => void | RNTouchableOpacityProps['onPressIn'];
+  onPressOut?: (
+    props?: TouchableOpacityProps | GestureResponderEvent | any
+  ) => void | RNTouchableOpacityProps['onPressOut'];
+  onLongPress?: (
+    props?: (TouchableOpacityProps & {event: GestureResponderEvent}) | any
+  ) => void | RNTouchableOpacityProps['onLongPress'];
 }
 
 type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;
@@ -155,12 +165,12 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
     );
   }
 
-  onPress() {
-    this.props.onPress?.(this.props);
+  onPress(event: GestureResponderEvent) {
+    this.props.onPress?.({...this.props, event});
   }
 
-  onLongPress = () => {
-    this.props.onLongPress?.(this.props);
+  onLongPress = (event: GestureResponderEvent) => {
+    this.props.onLongPress?.({...this.props, event});
   };
 }
 

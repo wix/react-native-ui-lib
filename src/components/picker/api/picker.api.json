@@ -82,19 +82,9 @@
       "description": "Render custom search input (only when passing showSearch)"
     },
     {
-      "name": "useNativePicker",
-      "type": "boolean",
-      "description": "Allow to use the native picker solution (different style for iOS and Android)"
-    },
-    {
       "name": "useWheelPicker",
       "type": "boolean",
       "description": "Use wheel picker instead of a list picker"
-    },
-    {
-      "name": "renderNativePicker",
-      "type": "(props) => void",
-      "description": "Callback for rendering a custom native picker inside the dialog (relevant to native picker only)"
     },
     {
       "name": "listProps",

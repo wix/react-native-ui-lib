@@ -23,6 +23,7 @@ const PickerWrapper = () => {
       onChange={setLanguage}
       topBarProps={{title: 'Languages'}}
       showSearch
+      fieldType={Picker.fieldTypes.filter}
       searchPlaceholder={'Search a language'}
       searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
       migrateTextField

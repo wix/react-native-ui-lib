@@ -1,24 +1,34 @@
-import {isEmpty} from 'lodash';
-import React, {useRef, useMemo, useCallback, useState, useImperativeHandle, forwardRef, ForwardedRef} from 'react';
+import React, {useMemo, useCallback, useImperativeHandle, forwardRef, ForwardedRef, useEffect, useState} from 'react';
 import {StyleSheet, View as RNView} from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
-import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import {
+  Extrapolation,
+  interpolate,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming
+} from 'react-native-reanimated';
+import {
+  Gesture,
+  GestureDetector,
+  GestureStateChangeEvent,
+  PanGestureHandlerEventPayload
+} from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from '../../style';
-import {asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
+import {asBaseComponent} from '../../commons/new';
 import View from '../../components/view';
 import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
-import usePanGesture from '../panView/usePanGesture';
-import useAnimatedTransition, {AnimatedTransitionProps, TransitionViewAnimationType} from './useAnimatedTransition';
 import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
-import useFadeView from './useFadeView';
 
-const TRANSITION_ANIMATION_DELAY: AnimatedTransitionProps['delay'] = {enter: 100};
+const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.grey20, 0.65);
+const THRESHOLD_VELOCITY = 750;
 
 export interface DialogStatics {
   directions: typeof DialogDirectionsEnum;
@@ -31,7 +41,7 @@ export interface DialogImperativeMethods {
 
 const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) => {
   const {
-    visible: propsVisibility = false,
+    visible = false,
     headerProps,
     containerStyle,
     containerProps,
@@ -45,132 +55,171 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     testID,
     children
   } = props;
-  const {overlayBackgroundColor, ...otherModalProps} = modalProps;
-  const initialVisibility = useRef(propsVisibility);
-  const [visible, setVisible] = useState(propsVisibility);
+  const {overlayBackgroundColor = DEFAULT_OVERLAY_BACKGROUND_COLOR, ...otherModalProps} = modalProps;
 
-  const directions = useMemo((): DialogDirections[] => {
-    return [direction];
+  const visibility = useSharedValue(0); // value between 0 (closed) and 1 (open)
+  const initialTranslation = useSharedValue(0);
+  const [modalVisibility, setModalVisibility] = useState(visible); // unfortunately this is needed when changing visibility by the user (clicking on an option etc)
+
+  const {setRef, onLayout, hiddenLocation: _hiddenLocation} = useHiddenLocation<RNView>();
+  const hiddenLocation = _hiddenLocation[direction];
+  const wasMeasured = _hiddenLocation.wasMeasured;
+
+  const isVertical = useMemo(() => {
+    'worklet';
+    return direction === DialogDirectionsEnum.DOWN || direction === DialogDirectionsEnum.UP;
   }, [direction]);
 
-  const {FadeView, hideNow, fade} = useFadeView({
-    visible: initialVisibility.current,
-    testID: `${testID}.overlayFadingBackground`,
-    overlayBackgroundColor
-  });
-
-  const onPanViewDismiss = useCallback(() => {
-    hideNow();
-    setVisible(false);
-    onDismiss?.();
-  }, [hideNow, onDismiss, setVisible]);
-
-  const onTransitionAnimationEnd = useCallback((type: TransitionViewAnimationType) => {
-    if (type === 'exit') {
-      setVisible(false);
-      onDismiss?.();
-    }
+  const getTranslationInterpolation = useCallback((value: number) => {
+    'worklet';
+    return interpolate(value, [0, 1], [hiddenLocation, 0], Extrapolation.CLAMP);
   },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [onDismiss, setVisible]);
+  [hiddenLocation]);
 
-  const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
+  const getTranslationReverseInterpolation = useCallback((value: number) => {
+    'worklet';
+    return interpolate(value, [hiddenLocation, 0], [0, 1]);
+  },
+  [hiddenLocation]);
 
-  const {
-    translation: panTranslation,
-    panGestureEvent,
-    reset
-  } = usePanGesture({
-    directions,
-    dismissible: true,
-    animateToOrigin: true,
-    onDismiss: onPanViewDismiss,
-    hiddenLocation
-  });
-
-  const {
-    animateIn,
-    animateOut,
-    translation: transitionTranslation,
-    isMounted
-  } = useAnimatedTransition({
-    hiddenLocation,
-    enterFrom: direction,
-    exitTo: direction,
-    onAnimationStart: fade,
-    onAnimationEnd: onTransitionAnimationEnd,
-    delay: TRANSITION_ANIMATION_DELAY
-  });
-
-  const open = useCallback(() => {
-    if (!visible) {
-      animateIn();
-      reset();
-      setVisible(true);
-    }
-  }, [visible, setVisible, animateIn, reset]);
+  const _onDismiss = useCallback(() => {
+    'worklet';
+    runOnJS(setModalVisibility)(false);
+  }, []);
 
   const close = useCallback(() => {
-    if (visible) {
-      animateOut();
-    }
-  }, [visible, animateOut]);
+    'worklet';
+    visibility.value = withTiming(0, undefined, _onDismiss);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_onDismiss]);
 
-  useDidUpdate(() => {
-    if (propsVisibility) {
-      open();
-    } else {
+  const open = useCallback(() => {
+    'worklet';
+    visibility.value = withSpring(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (visible) {
+      setModalVisibility(true);
+    } else if (wasMeasured && modalVisibility) {
+      // Close when sending visible = false
       close();
     }
-  }, [propsVisibility]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible, wasMeasured]);
+
+  useDidUpdate(() => {
+    if (wasMeasured) {
+      if (modalVisibility) {
+        open();
+      } else {
+        onDismiss?.();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modalVisibility, wasMeasured]);
 
   const alignmentStyle = useMemo(() => {
     return {flex: 1, alignItems: 'center', ...extractAlignmentsValues(props)};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const translation = useDerivedValue(() => {
-    // It seems to work without this derived value, but I think this is more correct
-    return {
-      x: panTranslation.x.value + transitionTranslation.x.value,
-      y: panTranslation.y.value + transitionTranslation.y.value
-    };
+  const animatedStyle = useAnimatedStyle(() => {
+    if (isVertical) {
+      return {
+        transform: [{translateY: getTranslationInterpolation(visibility.value)}]
+      };
+    } else {
+      return {
+        transform: [{translateX: getTranslationInterpolation(visibility.value)}]
+      };
+    }
   });
-
-  const transitionStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{translateX: translation.value.x}, {translateY: translation.value.y}],
-      // TODO: do we want to take the component's opacity here? - I think combining opacities is buggy
-      opacity: isMounted.value ? 1 : 0
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const style = useMemo(() => {
     return [
       styles.defaultDialogStyle,
       containerStyle,
-      transitionStyle,
+      animatedStyle,
       width ? {width} : undefined,
       height ? {height} : undefined
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerStyle, width, height]);
 
+  const shouldClose = (event: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => {
+    'worklet';
+    const wasPannedOverThreshold =
+      Math.abs(getTranslationInterpolation(visibility.value)) >= Math.abs(hiddenLocation / 3);
+
+    let velocity;
+    switch (direction) {
+      case DialogDirectionsEnum.DOWN:
+      default:
+        velocity = event.velocityY;
+        break;
+      case DialogDirectionsEnum.UP:
+        velocity = -event.velocityY;
+        break;
+      case DialogDirectionsEnum.LEFT:
+        velocity = -event.velocityX;
+        break;
+      case DialogDirectionsEnum.RIGHT:
+        velocity = event.velocityX;
+        break;
+    }
+
+    const wasFlung = velocity >= THRESHOLD_VELOCITY;
+
+    return wasPannedOverThreshold || wasFlung;
+  };
+
+  const panGesture = Gesture.Pan()
+    .onStart(event => {
+      initialTranslation.value =
+        getTranslationReverseInterpolation(isVertical ? event.translationY : event.translationX) - visibility.value;
+    })
+    .onUpdate(event => {
+      visibility.value =
+        getTranslationReverseInterpolation(isVertical ? event.translationY : event.translationX) -
+        initialTranslation.value;
+    })
+    .onEnd(event => {
+      if (shouldClose(event)) {
+        close();
+      } else {
+        open();
+      }
+    });
+
   useImperativeHandle(ref, () => ({
-    dismiss: animateOut
+    dismiss: close
   }));
 
-  const renderDialog = () => {
-    return (
-      <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
-          {headerProps && <DialogHeader {...headerProps}/>}
-          {children}
-        </View>
-      </PanGestureHandler>
-    );
-  };
+  const renderDialog = () => (
+    <GestureDetector gesture={panGesture}>
+      <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
+        {headerProps && <DialogHeader {...headerProps}/>}
+        {children}
+      </View>
+    </GestureDetector>
+  );
+
+  const overlayStyle = useAnimatedStyle(() => {
+    return {
+      opacity: visibility.value,
+      backgroundColor: overlayBackgroundColor
+    };
+  }, [overlayBackgroundColor]);
+
+  const renderOverlayView = () => (
+    <View testID={`${testID}.overlayFadingBackground`} absF reanimated style={overlayStyle} pointerEvents="none"/>
+  );
+
+  if (!modalVisibility) {
+    return null;
+  }
 
   return (
     <Modal
@@ -179,12 +228,12 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
       {...otherModalProps}
       testID={`${testID}.modal`}
       useGestureHandlerRootView
-      visible={visible}
+      visible={modalVisibility}
       onBackgroundPress={ignoreBackgroundPress ? undefined : close}
       onRequestClose={ignoreBackgroundPress ? undefined : close}
       onDismiss={undefined}
     >
-      {FadeView}
+      {renderOverlayView()}
       <View useSafeArea={useSafeArea} pointerEvents={'box-none'} style={alignmentStyle}>
         {renderDialog()}
       </View>

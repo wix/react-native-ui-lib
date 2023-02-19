@@ -7,7 +7,7 @@ import Modal from '../modal';
 import View from '../view';
 import Text from '../text';
 import Icon from '../icon';
-import WheelPicker from '../../incubator/WheelPicker';
+import WheelPicker from '../WheelPicker';
 import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
 import PickerContext from './PickerContext';
 
@@ -82,12 +82,17 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     return (
       <View>
         <View row spread padding-page>
-          <Text>{topBarProps.title}</Text>
-          <Text text70 primary accessibilityRole={'button'} onPress={() => context.onPress(wheelPickerValue)}>
-            {topBarProps.doneLabel ?? 'Select'}
+          <Text>{topBarProps?.title}</Text>
+          <Text text70 $textPrimary accessibilityRole={'button'} onPress={() => context.onPress(wheelPickerValue)}>
+            {topBarProps?.doneLabel ?? 'Select'}
           </Text>
         </View>
-        <WheelPicker initialValue={context.value as PickerSingleValue} items={items} onChange={setWheelPickerValue}/>
+        <WheelPicker
+          flatListProps={listProps}
+          initialValue={context.value as PickerSingleValue}
+          items={items}
+          onChange={setWheelPickerValue}
+        />
       </View>
     );
   };
