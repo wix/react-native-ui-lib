@@ -3,7 +3,7 @@
   "category": "form",
   "description": "Number Input to create an input with a formatted number",
   "note": "This requires RN67 to work on Android.",
-  "extends": ["incubator/TextField"],
+  "extends": ["form/TextField"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/NumberInputScreen.tsx",
   "props": [
     {
