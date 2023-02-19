@@ -63,7 +63,7 @@ const Thumb = (props: Props) => {
       onSeekStart?.();
       let newX = lastOffset.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
 
-      if (newX < 0) {
+      if (newX < start.value) {
         // adjust start edge
         newX = start.value;
       } else if (newX > end.value) {
