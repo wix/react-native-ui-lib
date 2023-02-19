@@ -17,7 +17,8 @@ const propsMigrationMap: Dictionary<string> = {
   titleStyle: 'labelStyle',
   /* CHAR COUNTER */
   showCharacterCounter: 'showCharCounter',
-  transformer: 'formatter'
+  transformer: 'formatter',
+  errorMessage: 'validationMessage'
 };
 
 const specialMigrationMap: Dictionary<string> = {
