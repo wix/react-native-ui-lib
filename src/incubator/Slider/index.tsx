@@ -32,7 +32,7 @@ const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
 const GAP = Spacings.s2;
 
-const Slider = (props: Props) => {
+const Slider = React.memo((props: Props) => {
   const {
     forwardedRef,
     useRange,
@@ -268,7 +268,7 @@ const Slider = (props: Props) => {
       {useRange && renderThumb(ThumbType.RANGE)}
     </View>
   );
-};
+});
 
 // @ts-expect-error
 export default forwardRef<SliderProps, Statics>(Slider);
