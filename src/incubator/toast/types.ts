@@ -1,6 +1,7 @@
 import {ReactElement} from 'react';
 import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {ButtonProps} from '../../components/button';
+import {TextProps} from '../../components/text';
 
 export enum ToastPresets {
   GENERAL = 'general',
@@ -26,6 +27,10 @@ export interface ToastProps {
    * Toast message style
    */
   messageStyle?: StyleProp<TextStyle>;
+  /**
+   * Toast message props
+   */
+  messageProps?: TextProps;
   /**
    * should message be centered in the toast
    */
