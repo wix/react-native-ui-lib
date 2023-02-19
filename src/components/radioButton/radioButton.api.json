@@ -40,12 +40,6 @@
       "description": "Should the icon be on the right side of the label",
       "default": "false"
     },
-    {
-      "name": "contentOnRight",
-      "type": "boolean",
-      "description": "Deprecated. The content is on right by default, for content on left use 'contentOnLeft'",
-      "deprecated": true
-    },
     {"name": "contentOnLeft", "type": "boolean", "description": "Should the content be rendered left to the button"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styling for the container"}
   ],

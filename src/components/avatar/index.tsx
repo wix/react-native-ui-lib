@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PropsWithChildren, useEffect, useMemo, forwardRef} from 'react';
+import React, {PropsWithChildren, useMemo, forwardRef} from 'react';
 import {
   StyleSheet,
   ImageSourcePropType,
@@ -11,7 +11,6 @@ import {
   TextStyle,
   AccessibilityProps
 } from 'react-native';
-import {LogService} from '../../services';
 import {Colors, BorderRadiuses} from '../../style';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import Badge, {BadgeProps} from '../badge';
@@ -74,10 +73,6 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
      * The image source (external or assets)
      */
     source?: ImageSourcePropType;
-    /**
-     * @deprecated use 'source' prop
-     */
-    imageSource?: ImageSourcePropType;
     /**
      * Image props object
      */
@@ -168,7 +163,6 @@ interface Statics {
 const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.ForwardedRef<any>) => {
   const themeProps = useThemeProps(props, 'Avatar');
   const {
-    imageSource,
     source,
     size = 50,
     labelColor = Colors.$textDefault,
@@ -196,16 +190,6 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   } = themeProps;
   const {size: _badgeSize, borderWidth: badgeBorderWidth = 0} = badgeProps;
   const badgeSize = _badgeSize || DEFAULT_BADGE_SIZE;
-
-  useEffect(() => {
-    if (imageSource) {
-      LogService.warn('uilib: imageSource prop is deprecated, use source instead.');
-    }
-  }, [imageSource]);
-
-  const _source = useMemo(() => {
-    return source || imageSource;
-  }, [source, imageSource]);
 
   const _baseContainerStyle: StyleProp<ImageStyle> = useMemo(() => {
     return {
@@ -284,13 +268,13 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   }, [size, initialsStyle, labelColor]);
 
   const textContainerStyle = useMemo(() => {
-    const hasImage = !_.isUndefined(_source);
+    const hasImage = !_.isUndefined(source);
     return [
       styles.initialsContainer,
       {backgroundColor: _backgroundColor},
       hasImage && styles.initialsContainerWithInset
     ];
-  }, [_source, _backgroundColor]);
+  }, [source, _backgroundColor]);
 
   const accessibilityProps = useMemo(() => {
     return extractAccessibilityProps(props);
@@ -301,13 +285,13 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   }, [_baseContainerStyle, imageStyle]);
 
   const renderImage = () => {
-    if (_source !== undefined) {
+    if (source !== undefined) {
       // Looks like reanimated does not support SVG
-      const ImageContainer = animate && !isSvg(_source) ? AnimatedImage : Image;
+      const ImageContainer = animate && !isSvg(source) ? AnimatedImage : Image;
       return (
         <ImageContainer
           style={_imageStyle}
-          source={_source}
+          source={source}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
