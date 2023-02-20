@@ -1,10 +1,10 @@
+import _ from 'lodash';
 import React, {useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction} from 'react-native-reanimated';
-import _ from 'lodash';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
-import {Colors, Spacings} from '../../style';
+import {Colors} from '../../style';
 import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
 import {
@@ -30,7 +30,6 @@ const TRACK_HEIGHT = 6;
 const THUMB_SIZE = 24;
 const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
-const GAP = Spacings.s2;
 
 const Slider = React.memo((props: Props) => {
   const {
@@ -47,7 +46,6 @@ const Slider = React.memo((props: Props) => {
     step = 0,
     onSeekStart,
     onSeekEnd,
-    useGap,
     disableRTL,
     containerStyle,
     trackStyle,
@@ -88,8 +86,6 @@ const Slider = React.memo((props: Props) => {
   const stepInterpolatedValue = useSharedValue(0);
 
   const trackSize = useSharedValue({width: 0, height: TRACK_HEIGHT});
-  const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
-  const rangeGap = useRange && useGap ? GAP + thumbSize.value.width : 0;
 
   const start = useSharedValue(0);
   const end = useSharedValue(0);
@@ -227,7 +223,6 @@ const Slider = React.memo((props: Props) => {
         start={type === ThumbType.DEFAULT ? start : defaultThumbOffset}
         end={type === ThumbType.DEFAULT ? rangeThumbOffset : end}
         offset={type === ThumbType.DEFAULT ? defaultThumbOffset : rangeThumbOffset}
-        rangeGap={rangeGap}
         onSeekStart={onSeekStart}
         onSeekEnd={onSeekEnd}
         shouldDisableRTL={shouldDisableRTL}

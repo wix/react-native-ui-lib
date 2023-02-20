@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {StyleSheet, ViewProps, ViewStyle} from 'react-native';
 import {SharedValue, useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
-import {Colors, Spacings} from '../../style';
+import {Colors} from '../../style';
 import View from '../../components/view';
 import {Constants} from '../../commons/new';
 
@@ -22,13 +22,11 @@ export interface Props extends ViewProps {
   offset: SharedValue<number>;
   shouldDisableRTL?: boolean;
   stepInterpolation?: () => number;
-  rangeGap?: number;
   shouldBounceToStep: boolean;
   stepInterpolatedValue: SharedValue<number>;
 }
 
 const THUMB_SIZE = 24;
-// const GAP = Spacings.s2;
 
 const Thumb = (props: Props) => {
   const {
@@ -43,7 +41,6 @@ const Thumb = (props: Props) => {
     end,
     offset,
     shouldDisableRTL,
-    rangeGap,
     shouldBounceToStep,
     stepInterpolatedValue
   } = props;
@@ -51,7 +48,6 @@ const Thumb = (props: Props) => {
   const rtlFix = Constants.isRTL ? -1 : 1;
   const isPressedDefault = useSharedValue(false);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
-  // const rangeGap = useRange && useGap ? GAP + thumbSize.value.width : 0;
   const lastOffset = useSharedValue(0);
 
   const gesture = Gesture.Pan()
