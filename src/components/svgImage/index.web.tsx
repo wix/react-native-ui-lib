@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Image from '../image';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
 const EMPTY_STYLE = '{}';
@@ -20,20 +21,24 @@ function SvgImage(props: SvgImageProps) {
 
   const styleObj = Object.assign({}, ...(style || []));
 
-  
   const [svgStyleCss, setSvgStyleCss] = useState<string>(EMPTY_STYLE);
   const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
 
-  const createStyleSvgCss = async (PostCssPackage: {postcss: any, cssjs:any}) => {
+  const createStyleSvgCss = async (PostCssPackage: {postcss: any; cssjs: any}) => {
     setPostCssStyleCalled(true);
     const {postcss, cssjs} = PostCssPackage;
-    postcss().process(styleObj, {parser: cssjs})
+    postcss()
+      .process(styleObj, {parser: cssjs})
       .then((style: {css: any}) => setSvgStyleCss(`{${style.css}}`));
   };
 
   if (isSvgUri(data)) {
     return <img {...other} src={data.uri} style={styleObj}/>;
   } else if (isBase64ImageContent(data)) {
+    if (other.tintColor) {
+      // @ts-ignore
+      return <Image source={{uri: data}} style={[style, {tintColor: other.tintColor}]} {...other}/>;
+    }
     return <img {...other} src={data} style={styleObj}/>;
   } else if (data) {
     const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
@@ -43,7 +48,7 @@ function SvgImage(props: SvgImageProps) {
         return null;
       }
       const svgStyleTag = `<style> svg ${svgStyleCss} </style>`;
-  
+
       return (
         <div
           {...other}
@@ -52,7 +57,6 @@ function SvgImage(props: SvgImageProps) {
         />
       );
     }
-    
   }
   return null;
 }

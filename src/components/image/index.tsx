@@ -232,8 +232,8 @@ class Image extends PureComponent<Props, State> {
         style={[
           tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
-          Constants.isWeb ? {width: width || DEFAULT_ICON_SIZE} : width && {width},
-          Constants.isWeb ? {height: height || DEFAULT_ICON_SIZE} : height && {height},
+          width && {width},
+          height && {height},
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
