@@ -111,7 +111,6 @@ type State = {
  * and also configure them (see `metro.config.js`)
  */
 
-const DEFAULT_ICON_SIZE = 16;
 class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
 
