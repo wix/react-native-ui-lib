@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
-import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction} from 'react-native-reanimated';
+import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors} from '../../style';
@@ -101,6 +101,7 @@ const Slider = React.memo((props: Props) => {
     if (!thumbStyle) {
       _thumbStyle.value = unpackStyle(defaultThumbStyle);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultThumbStyle, thumbStyle]);
 
   useImperativeHandle(forwardedRef, () => ({
@@ -205,8 +206,8 @@ const Slider = React.memo((props: Props) => {
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
       return {
-        transform: [{translateX: defaultThumbOffset.value * rtlFix}],
-        width: rangeThumbOffset.value - defaultThumbOffset.value
+        transform: [{translateX: withTiming(defaultThumbOffset.value * rtlFix, {duration: 10})}],
+        width: withTiming(rangeThumbOffset.value - defaultThumbOffset.value, {duration: 10})
       };
     } else {
       return {

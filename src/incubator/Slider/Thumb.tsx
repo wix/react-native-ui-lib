@@ -94,6 +94,7 @@ const Thumb = (props: Props) => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
     thumbSize.value = {width, height};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
