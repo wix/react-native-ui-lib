@@ -110,6 +110,8 @@ type State = {
  * `react-native-svg` and `react-native-svg-transformer`,
  * and also configure them (see `metro.config.js`)
  */
+
+const DEFAULT_ICON_SIZE = 16;
 class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
 
@@ -208,7 +210,7 @@ class Image extends PureComponent<Props, State> {
     const {
       tintColor,
       style,
-      width, 
+      width,
       height,
       supportRTL,
       cover,
@@ -230,8 +232,8 @@ class Image extends PureComponent<Props, State> {
         style={[
           tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
-          width && {width},
-          height && {height},
+          Constants.isWeb ? {width: width || DEFAULT_ICON_SIZE} : width && {width},
+          Constants.isWeb ? {height: height || DEFAULT_ICON_SIZE} : height && {height},
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
