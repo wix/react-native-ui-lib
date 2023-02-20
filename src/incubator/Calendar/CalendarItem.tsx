@@ -7,6 +7,7 @@ import CalendarContext from './CalendarContext';
 import Month from './Month';
 import Header from './Header';
 
+
 const CALENDAR_HEIGHT = 250;
 
 function CalendarItem(props: CalendarItemProps) {
@@ -21,6 +22,7 @@ function CalendarItem(props: CalendarItemProps) {
         height: CALENDAR_HEIGHT - (staticHeader ? headerHeight.value : 0)
       }
     ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [staticHeader]);
 
   if (month !== undefined) {

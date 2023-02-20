@@ -65,11 +65,13 @@ export interface CalendarContextProps {
 export interface DayProps {
   date: number | null;
   onPress?: (date: number) => void;
+  inactive?: boolean; // inactive look but still pressable
 }
 
 export interface WeekProps {
   weekNumber: number;
   year: number;
+  month: number;
 }
 
 export interface MonthProps {

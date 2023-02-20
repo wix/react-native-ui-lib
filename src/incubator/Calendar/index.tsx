@@ -1,5 +1,5 @@
 import findIndex from 'lodash/findIndex';
-import React, {PropsWithChildren, useCallback, useMemo, useRef, useEffect} from 'react';
+import React, {PropsWithChildren, useCallback, useMemo, useRef} from 'react';
 import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import {FlashListPackage} from 'optionalDeps';
 import {Constants} from '../../commons/new';

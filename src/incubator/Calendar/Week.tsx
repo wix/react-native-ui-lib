@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useMemo, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../../components/view';
 import Text from '../../components/text';
-import {getDaysOfWeekNumber} from './helpers/DateUtils';
+import {getDaysOfWeekNumber, getDateObject} from './helpers/DateUtils';
 import {WeekProps} from './types';
 import CalendarContext from './CalendarContext';
 import Day from './Day';
@@ -12,7 +12,7 @@ import Day from './Day';
 const WEEK_NUMBER_WIDTH = 18;
 
 const Week = (props: WeekProps) => {
-  const {weekNumber, year} = props;
+  const {weekNumber, year, month} = props;
 
   const {firstDayOfWeek, showWeeksNumbers} = useContext(CalendarContext);
 
@@ -26,11 +26,16 @@ const Week = (props: WeekProps) => {
     }
   };
 
+  const isExtraDay = useCallback((day: number) => {
+    const dayMonth = getDateObject(day).month;
+    return dayMonth !== month;
+  }, [month]);
+
   return (
     <View row>
       {renderWeekNumbers()}
       {_.map(days, day => (
-        <Day date={day} key={day}/>
+        <Day key={day} date={day} inactive={isExtraDay(day)}/>
       ))}
     </View>
   );
