@@ -2,7 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, {useMemo} from 'react';
 import {Image, ImageProps, StyleSheet} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
-import {getAsset, isSvg} from '../../utils/imageUtils';
+import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import SvgImage from '../svgImage';
 
 export type IconProps = ImageProps &
@@ -37,10 +37,15 @@ export type IconProps = ImageProps &
 
 type Props = IconProps & BaseComponentInjectedProps;
 
+const defaultWebIconSize = 16;
+
 const Icon = (props: Props) => {
   const {size, tintColor, style, supportRTL, source, assetGroup, assetName, modifiers, ...others} = props;
   const {margins} = modifiers;
-  const iconSize = size ? {width: size, height: size} : undefined;
+  const webIconSize = Constants.isWeb
+    ? {width: size || defaultWebIconSize, height: size || defaultWebIconSize}
+    : undefined;
+  const iconSize = size ? {width: size, height: size} : webIconSize;
   const shouldFlipRTL = supportRTL && Constants.isRTL;
 
   const iconSource = useMemo(() => {
@@ -49,6 +54,24 @@ const Icon = (props: Props) => {
     }
     return source;
   }, [source, assetGroup, assetName]);
+
+  if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
+    return (
+      <Image
+        {...others}
+        source={iconSource}
+        style={[
+          style,
+          margins,
+          iconSize,
+          shouldFlipRTL && styles.rtlFlipped,
+          !!tintColor && {
+            tintColor
+          }
+        ]}
+      />
+    );
+  }
 
   return isSvg(source) ? (
     <SvgImage data={source} {...props}/>
