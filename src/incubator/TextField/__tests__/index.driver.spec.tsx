@@ -16,6 +16,7 @@ interface TextFieldProps {
   validateOnChange?: boolean;
   enableErrors?: boolean;
   editable?: boolean;
+  readonly?: boolean;
   floatingPlaceholder?: boolean;
   showCharCounter?: boolean;
   maxLength?: number;
@@ -67,6 +68,22 @@ describe('TextField', () => {
 
     it('should render textField that is not editable', async () => {
       const component = <TestCase editable={false}/>;
+      const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
+
+      expect(await textFieldDriver.isDisabled()).toBe(true);
+    });
+  });
+
+  describe('readonly', () => {
+    it('should render textField that is not readonly', async () => {
+      const component = <TestCase/>;
+      const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
+
+      expect(await textFieldDriver.isDisabled()).toBe(false);
+    });
+
+    it('should be readonly', async () => {
+      const component = <TestCase readonly/>;
       const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
 
       expect(await textFieldDriver.isDisabled()).toBe(true);

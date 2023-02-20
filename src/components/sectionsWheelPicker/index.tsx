@@ -3,7 +3,7 @@ import React, {useMemo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
-import {WheelPicker, WheelPickerProps} from '../../incubator';
+import WheelPicker, {WheelPickerProps} from '../WheelPicker';
 
 export type SectionsWheelPickerProps = {
   /**

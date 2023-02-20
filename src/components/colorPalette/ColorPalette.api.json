@@ -38,7 +38,8 @@
     {"name": "containerWidth", "type": "number", "description": "The container margins"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
     {"name": "style", "type": "ViewStyle", "description": "Component's style"},
-    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+    {"name": "testID", "type": "string", "description": "The test id for e2e tests"},
+    {"name": "backgroundColor", "type": "string", "description": "The ColorPalette's background color"}
   ],
   "snippet": [
     "<ColorPalette",

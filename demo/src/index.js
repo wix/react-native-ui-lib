@@ -130,17 +130,14 @@ module.exports = {
         return require('./screens/componentScreens/TextScreen').default;
       },
       // TODO: fix Expo issues (navigation) before un-commenting
-      // get TextFieldScreen() {
-      //   return require('./screens/componentScreens/TextFieldScreen').default;
-      // },
+      get TextFieldScreen() {
+        return require('./screens/componentScreens/TextFieldScreen').default;
+      },
       get TourScreen() {
         return require('./screens/componentScreens/TourScreen').default;
       },
       get FeatureHighlightScreen() {
         return require('./screens/componentScreens/FeatureHighlightScreen').default;
-      },
-      get WheelPickerDialogScreen() {
-        return require('./screens/componentScreens/WheelPickerDialogScreen').default;
       },
       get SliderScreen() {
         return require('./screens/componentScreens/SliderScreen').default;
@@ -172,9 +169,6 @@ module.exports = {
       },
       get SafeAreaSpacerViewScreen() {
         return require('./screens/nativeComponentScreens/SafeAreaSpacerViewScreen').default;
-      },
-      get WheelPickerViewScreen() {
-        return require('./screens/nativeComponentScreens/WheelPickerViewScreen').default;
       },
       // Full Screen components
       get EmptyStateScreen() {
@@ -221,9 +215,6 @@ module.exports = {
         return require('./screens/componentScreens/ProgressBarScreen').default;
       },
       // Incubator
-      get IncubatorTextFieldScreen() {
-        return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
-      },
       get PanViewScreen() {
         return require('./screens/incubatorScreens/PanViewScreen').default;
       },

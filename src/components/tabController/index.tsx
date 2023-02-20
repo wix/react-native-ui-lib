@@ -1,10 +1,9 @@
 // TODO: support commented props
-import React, {PropsWithChildren, useMemo, useEffect, useState, useCallback} from 'react';
 import _ from 'lodash';
+import React, {PropsWithChildren, useMemo, useEffect, useState, useCallback} from 'react';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 import {useOrientation, useThemeProps} from '../../hooks';
 import {Constants} from '../../commons/new';
-import {LogService} from '../../services';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
@@ -12,8 +11,6 @@ import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 import useImperativeTabControllerHandle, {TabControllerImperativeMethods} from './useImperativeTabControllerHandle';
 export {TabControllerItemProps, TabControllerImperativeMethods};
-
-// TODO: should migrate selectedIndex to initialIndex (and make this prop uncontrolled)
 
 interface TabControllerStatics {
   TabBar: typeof TabBar;
@@ -31,10 +28,6 @@ export interface TabControllerProps extends ThemeComponent {
    * Initial selected index
    */
   initialIndex?: number;
-  /**
-   * DEPRECATED: use initialIndex instead
-   */
-  selectedIndex?: number;
   /**
    * callback for when index has change (will not be called on ignored items)
    */
@@ -70,7 +63,6 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
   const themeProps = useThemeProps(props, 'TabController');
   const {
     initialIndex = 0,
-    selectedIndex,
     asCarousel = false,
     items,
     onChangeIndex = _.noop,
@@ -98,14 +90,10 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
     return _.filter<TabControllerItemProps[]>(items, (item: TabControllerItemProps) => item.ignore);
   }, [items]);
 
-  /* backwards compatibility for `selectedIndex` prop. this line eventually should be removed */
-  const _initialIndex = selectedIndex || initialIndex;
-
   /* currentPage - static page index */
-  const currentPage = useSharedValue(_initialIndex);
+  const currentPage = useSharedValue(initialIndex);
   /* targetPage - transitioned page index (can be a fraction when transitioning between pages) */
-  const targetPage = useSharedValue(_initialIndex);
-  // const carouselOffset = useSharedValue(initialIndex * Math.round(pageWidth));
+  const targetPage = useSharedValue(initialIndex);
 
   const setCurrentIndex = useCallback((index: number) => {
     'worklet';
@@ -113,14 +101,8 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
   }, []);
 
   useEffect(() => {
-    if (!_.isUndefined(selectedIndex)) {
-      LogService.deprecationWarn({component: 'TabController', oldProp: 'selectedIndex', newProp: 'initialIndex'});
-    }
-  }, [selectedIndex]);
-
-  useEffect(() => {
-    setCurrentIndex(_initialIndex);
-  }, [_initialIndex]);
+    setCurrentIndex(initialIndex);
+  }, [initialIndex]);
 
   useAnimatedReaction(() => {
     return currentPage.value;
@@ -137,7 +119,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
   const context = useMemo(() => {
     return {
       /* Pass Props */
-      initialIndex: _initialIndex,
+      initialIndex,
       asCarousel,
       pageWidth,
       /* Items */
@@ -147,13 +129,12 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
       /* Animated Values */
       targetPage,
       currentPage,
-      // carouselOffset,
       containerWidth: screenWidth,
       /* Callbacks */
       onChangeIndex,
       setCurrentIndex
     };
-  }, [_initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
+  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 });

@@ -3,7 +3,7 @@
   "category": "form",
   "description": "Date and Time Picker Component that wraps RNDateTimePicker for date and time modes. See: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker",
   "note": "DateTimePicker uses a native library. You MUST add and link the native library to both iOS and Android projects",
-  "extends": ["incubator/TextField"],
+  "extends": ["form/TextField"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DateTimePickerScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_iOS.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_Android.gif?raw=true"

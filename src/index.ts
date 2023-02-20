@@ -28,12 +28,11 @@ export {BaseComponent, PureBaseComponent} from './commons';
 import * as Incubator from './incubator';
 export {
   TextFieldProps,
+  TextFieldMethods,
+  TextFieldValidationMessagePosition,
   FieldContextType,
   ToastProps,
   ToastPresets,
-  WheelPickerProps,
-  WheelPickerItemProps,
-  WheelPickerAlign,
   PanViewProps,
   PanViewDirections,
   PanViewDismissThreshold
@@ -146,7 +145,6 @@ export {
   TabControllerItemProps,
   TabControllerImperativeMethods
 } from './components/tabController';
-export {default as TabBar, TabBarProps} from './components/tabBar'; //TODO: remove on V7
 export {
   default as Timeline,
   TimelineProps,
@@ -172,8 +170,12 @@ export {
   WizardStepConfig,
   WizardStepsConfig
 } from './components/wizard';
-// @ts-expect-error
-export {default as WheelPickerDialog} from './components/wheelPickerDialog';
+export {
+  default as WheelPicker,
+  WheelPickerProps,
+  WheelPickerItemProps,
+  WheelPickerAlign
+} from './components/WheelPicker';
 
 /* ===== TestKit ===== */
 // export {default as TextTestKit} from './components/text/Text.driver';
@@ -190,7 +192,6 @@ export {default as WheelPickerDialog} from './components/wheelPickerDialog';
 //   // MaskedInput,
 //   // SharedTransition,
 //   // Toast,
-//   // WheelPickerDialog,
 //   // BaseComponent,
 //   // PureBaseComponent
 // } from '../typings';

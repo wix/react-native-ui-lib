@@ -18,7 +18,8 @@
     {"name": "backgroundColor", "type": "string", "description": "Background color"},
     {"name": "onBreakpoint", "type": "({progress, isDone}) => void", "description": "Breakpoint callback"},
     {"name": "hideScannerLine", "type": "boolean", "description": "Whether to hide the scanner line"},
-    {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"}
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
+    {"name": "testID", "type": "string", "description": "Used as a testing identifier"}
   ],
   "snippet": [
     "<AnimatedScanner progress={55$1} duration={1600$2}/>"

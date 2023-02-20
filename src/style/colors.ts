@@ -3,7 +3,7 @@ import _ from 'lodash';
 import Color from 'color';
 import {OpaqueColorValue} from 'react-native';
 import tinycolor from 'tinycolor2';
-import {colorsPalette, themeColors} from './colorsPalette';
+import {colorsPalette} from './colorsPalette';
 import DesignTokens from './designTokens';
 import DesignTokensDM from './designTokensDM';
 //@ts-ignore
@@ -20,7 +20,7 @@ export class Colors {
   private shouldSupportDarkMode = false;
 
   constructor() {
-    const colors = Object.assign(colorsPalette, themeColors);
+    const colors = Object.assign(colorsPalette);
     Object.assign(this, colors);
     this.loadSchemes({light: DesignTokens, dark: DesignTokensDM});
 
@@ -185,9 +185,10 @@ export class Colors {
       const shouldReverseOnDark =
         !options?.avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark';
       const key = shouldReverseOnDark ? colorKeys[colorKeys.length - 1 - keyIndex] : tintKey;
-      const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
-      const requiredColor = this[requiredColorKey];
 
+      const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
+      const requiredColorKey1 = `${colorKey.slice(0, -1)}${key}`;
+      const requiredColor = this[requiredColorKey] || this[requiredColorKey1];
       if (_.isUndefined(requiredColor)) {
         return this.getTintedColorForDynamicHex(color, tintKey);
       }
@@ -354,10 +355,7 @@ function threeDigitHexToSix(value: string) {
   return value.replace(/./g, '$&$&');
 }
 
-const TypedColors = Colors as ExtendTypeWith<
-  typeof Colors,
-  typeof colorsPalette & typeof themeColors & typeof DesignTokens
->;
+const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette & typeof DesignTokens>;
 const colorObject = new TypedColors();
 colorObject.loadColors(colorsPalette);
 export default colorObject;

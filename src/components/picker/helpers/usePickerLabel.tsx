@@ -36,9 +36,10 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
       return getLabelsFromArray(value);
     }
 
-    if (typeof value === 'object') {
-      return value?.label;
-    }
+    // TODO: Remove
+    // if (typeof value === 'object') {
+    //   return value?.label;
+    // }
 
     // otherwise, extract from picker items
     const selectedItem = _.find(items, {value});

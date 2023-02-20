@@ -6,15 +6,7 @@ import Image, {ImageProps} from '../image';
 import {Colors} from 'style';
 
 export enum FaderPosition {
-  /**
-   * @deprecated please use START instead
-   */
-  LEFT = 'LEFT',
   START = 'START',
-  /**
-   * @deprecated please use END instead
-   */
-  RIGHT = 'RIGHT',
   END = 'END',
   TOP = 'TOP',
   BOTTOM = 'BOTTOM'
@@ -57,13 +49,11 @@ function Fader(props: FaderProps) {
   const styles = useMemo(() => {
     let containerStyle, imageStyle, imageSource;
     switch (position) {
-      case FaderPosition.LEFT:
       case FaderPosition.START:
         containerStyle = {...staticStyles.containerLeft, width: size};
         imageStyle = {height: '100%', width: size};
         imageSource = require('./gradientLeft.png');
         break;
-      case FaderPosition.RIGHT:
       case FaderPosition.END:
         containerStyle = {...staticStyles.containerRight, width: size};
         imageStyle = {height: '100%', width: size};
