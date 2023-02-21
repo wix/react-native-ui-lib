@@ -4,7 +4,7 @@ import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native'
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
-import {Colors} from '../../style';
+import {Colors, Spacings} from '../../style';
 import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
 import {
@@ -30,6 +30,7 @@ const TRACK_HEIGHT = 6;
 const THUMB_SIZE = 24;
 const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
+const GAP = Spacings.s2;
 
 const Slider = React.memo((props: Props) => {
   const {
@@ -58,6 +59,7 @@ const Slider = React.memo((props: Props) => {
     thumbHitSlop,
     disableActiveStyling,
     disabled,
+    useGap,
     accessible,
     testID
   } = props;
@@ -78,6 +80,8 @@ const Slider = React.memo((props: Props) => {
     }
   }, [accessible, disabled, props]);
 
+  const rangeGap = useRange && useGap ? GAP + THUMB_SIZE : 0;
+
   const rtlFix = Constants.isRTL ? -1 : 1;
   const shouldDisableRTL = Constants.isRTL && disableRTL;
 
@@ -92,8 +96,9 @@ const Slider = React.memo((props: Props) => {
   const defaultThumbOffset = useSharedValue(0);
   const rangeThumbOffset = useSharedValue(0);
 
-  const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [styles.thumb, {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}],
-    [disabled, thumbTintColor]);
+  const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
+    styles.thumb, {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
+  ], [disabled, thumbTintColor]);
   const _thumbStyle = useSharedValue(unpackStyle(thumbStyle || defaultThumbStyle));
   const _activeThumbStyle = useSharedValue(unpackStyle(activeThumbStyle));
 
@@ -116,7 +121,8 @@ const Slider = React.memo((props: Props) => {
   const setInitialPositions = (trackWidth: number) => {
     validateValues(props);
 
-    const defaultThumbPosition = getOffsetForValue(useRange ? initialMinimumValue : value,
+    const defaultThumbPosition = getOffsetForValue(
+      useRange ? initialMinimumValue : value,
       trackWidth,
       minimumValue,
       maximumValue);
@@ -127,13 +133,11 @@ const Slider = React.memo((props: Props) => {
 
   const onValueChangeThrottled = useCallback(_.throttle(value => {
     onValueChange?.(value);
-  }, 100),
-  [onValueChange]);
+  }, 100), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
     onRangeChange?.({min, max});
-  }, 100),
-  [onRangeChange]);
+  }, 100), [onRangeChange]);
 
   useAnimatedReaction(() => {
     return Math.round(defaultThumbOffset.value);
@@ -194,11 +198,14 @@ const Slider = React.memo((props: Props) => {
     } else {
       const distanceFromDefaultThumb = Math.abs(defaultThumbOffset.value - locationX);
       const distanceFromRangeThumb = Math.abs(rangeThumbOffset.value - locationX);
+      const thumbsDistance = Math.abs(defaultThumbOffset.value - rangeThumbOffset.value);
 
-      if (distanceFromDefaultThumb < distanceFromRangeThumb) {
-        defaultThumbOffset.value = locationX;
-      } else {
-        rangeThumbOffset.value = locationX;
+      if (thumbsDistance > rangeGap) {
+        if (distanceFromDefaultThumb < distanceFromRangeThumb) {
+          defaultThumbOffset.value = locationX;
+        } else {
+          rangeThumbOffset.value = locationX;
+        }
       }
     }
   }, []);
@@ -224,6 +231,7 @@ const Slider = React.memo((props: Props) => {
         start={type === ThumbType.DEFAULT ? start : defaultThumbOffset}
         end={type === ThumbType.DEFAULT ? rangeThumbOffset : end}
         offset={type === ThumbType.DEFAULT ? defaultThumbOffset : rangeThumbOffset}
+        gap={rangeGap}
         onSeekStart={onSeekStart}
         onSeekEnd={onSeekEnd}
         shouldDisableRTL={shouldDisableRTL}

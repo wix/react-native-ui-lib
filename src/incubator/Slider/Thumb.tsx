@@ -6,8 +6,6 @@ import {Colors} from '../../style';
 import View from '../../components/view';
 import {Constants} from '../../commons/new';
 
-const SHADOW_RADIUS = 4;
-
 export interface Props extends ViewProps {
   defaultStyle?: SharedValue<ViewStyle>;
   activeStyle?: SharedValue<ViewStyle>;
@@ -24,8 +22,10 @@ export interface Props extends ViewProps {
   stepInterpolation?: () => number;
   shouldBounceToStep: boolean;
   stepInterpolatedValue: SharedValue<number>;
+  gap?: number;
 }
 
+const SHADOW_RADIUS = 4;
 const THUMB_SIZE = 24;
 
 const Thumb = (props: Props) => {
@@ -42,7 +42,8 @@ const Thumb = (props: Props) => {
     offset,
     shouldDisableRTL,
     shouldBounceToStep,
-    stepInterpolatedValue
+    stepInterpolatedValue,
+    gap = 0
   } = props;
 
   const rtlFix = Constants.isRTL ? -1 : 1;
@@ -66,7 +67,9 @@ const Thumb = (props: Props) => {
         // adjust end edge
         newX = end.value;
       }
-      offset.value = newX;
+      if (newX < end.value - gap && newX > start.value + gap) {
+        offset.value = newX;
+      }
     })
     .onEnd(() => {
       onSeekEnd?.();
