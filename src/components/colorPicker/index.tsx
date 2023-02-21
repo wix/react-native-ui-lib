@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
@@ -40,10 +40,9 @@ interface Props extends ColorPickerDialogProps {
     doneButton?: string;
     input?: string;
   };
-  style?: StyleProp<ViewStyle>;
   testID?: string;
   /**
-   * Give the ColorPicker a background color
+   * The ColorPicker's background color
    */
   backgroundColor?: string;
 }

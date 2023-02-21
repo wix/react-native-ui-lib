@@ -1,8 +1,7 @@
+import _ from 'lodash';
 import React, {useMemo, useContext, useState, useRef, ReactNode} from 'react';
 import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
-import _ from 'lodash';
-
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import {
@@ -171,7 +170,6 @@ const TabBar = (props: Props) => {
     currentPage,
     targetPage,
     initialIndex,
-    selectedIndex,
     containerWidth: contextContainerWidth
   } = context;
   const containerWidth: number = useMemo(() => {
@@ -196,7 +194,7 @@ const TabBar = (props: Props) => {
     // @ts-expect-error TODO: typing bug
     scrollViewRef: tabBar,
     itemsCount,
-    selectedIndex: selectedIndex || initialIndex,
+    selectedIndex: initialIndex,
     containerWidth,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });

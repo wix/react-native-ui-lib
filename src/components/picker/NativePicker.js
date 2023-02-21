@@ -1,3 +1,4 @@
+// TODO: Remove this sub component
 import _ from 'lodash';
 import React, {Component} from 'react';
 import TextField from '../textField';
@@ -64,10 +65,10 @@ class NativePicker extends Component {
 
   renderPicker = () => {
     const {selectedValue} = this.state;
-    const {children, renderNativePicker, pickerStyle, wheelPickerProps, testID} = this.props;
-    if (_.isFunction(renderNativePicker)) {
-      return renderNativePicker(this.props);
-    }
+    const {children, /* renderNativePicker, */ pickerStyle, wheelPickerProps, testID} = this.props;
+    // if (_.isFunction(renderNativePicker)) {
+    //   return renderNativePicker(this.props);
+    // }
     return (
       <WheelPicker
         style={pickerStyle}

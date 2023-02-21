@@ -27,7 +27,7 @@
       "description": "Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback"
     },
     {"name": "style", "type": "ViewStyle", "description": "Custom style"},
-    {"name": "onPress", "type": "(props) => void", "description": "On press callback"}
+    {"name": "onPress", "type": "(props?: TouchableOpacityProps & {event: GestureResponderEvent} | any) => void", "description": "On press callback"}
   ],
   "snippet": [
     "<TouchableOpacity onPress={() => console.log('pressed')$1}/>"

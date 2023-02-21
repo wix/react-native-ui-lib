@@ -72,16 +72,22 @@ const TextField = (props: InternalTextFieldProps) => {
     // Input
     placeholder,
     children,
-    centered = false,
-    inline = false,
+    centered,
+    readonly = false,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
   const {onFocus, onBlur, onChangeText, fieldState, validateField, checkValidity} = useFieldState(others);
 
   const context = useMemo(() => {
-    return {...fieldState, disabled: others.editable === false, validateField, checkValidity};
-  }, [fieldState, others.editable, validateField, checkValidity]);
+    return {
+      ...fieldState,
+      disabled: others.editable === false,
+      readonly,
+      validateField,
+      checkValidity
+    };
+  }, [fieldState, others.editable, readonly, validateField, checkValidity]);
 
   const leadingAccessoryClone = useMemo(() => {
     if (leadingAccessory) {
@@ -109,6 +115,9 @@ const TextField = (props: InternalTextFieldProps) => {
   const inputStyle = useMemo(() => {
     return [typographyStyle, colorStyle, others.style, centered && styles.centeredInput];
   }, [typographyStyle, colorStyle, others.style, centered]);
+  const dummyPlaceholderStyle = useMemo(() => {
+    return [inputStyle, styles.dummyPlaceholder];
+  }, [inputStyle]);
 
   return (
     <FieldContext.Provider value={context}>
@@ -135,12 +144,15 @@ const TextField = (props: InternalTextFieldProps) => {
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
-          {/* Note: We should avoid flexing this when the input is inlined or centered*/}
+
+          {/* Note: We're passing flexG to the View to support properly inline behavior - so the input will be rendered correctly in a row container.
+            Known Issue: This slightly push the trailing accessory when entering a long text
+          */}
           {children || (
-            <View flex={!centered && !inline}>
+            <View flexG>
               {/* Note: Render dummy placeholder for Android center issues */}
-              {Constants.isAndroid && (centered || inline) && (
-                <Text marginR-s1 style={styles.dummyPlaceholder}>
+              {Constants.isAndroid && centered && (
+                <Text marginR-s1 style={dummyPlaceholderStyle}>
                   {placeholder}
                 </Text>
               )}
@@ -158,7 +170,9 @@ const TextField = (props: InternalTextFieldProps) => {
               )}
               <Input
                 placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
+                value={fieldState.value}
                 {...others}
+                readonly={readonly}
                 style={inputStyle}
                 onFocus={onFocus}
                 onBlur={onBlur}
@@ -199,7 +213,13 @@ const TextField = (props: InternalTextFieldProps) => {
 TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
-export {TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers, TextFieldMethods};
+export {
+  TextFieldProps,
+  FieldContextType,
+  StaticMembers as TextFieldStaticMembers,
+  TextFieldMethods,
+  ValidationMessagePosition as TextFieldValidationMessagePosition
+};
 export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any), {
   modifiersOptions: {
     margins: true,
@@ -221,7 +241,6 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   centeredValidationMessage: {
-    flexGrow: 1,
     textAlign: 'center'
   },
   dummyPlaceholder: {
