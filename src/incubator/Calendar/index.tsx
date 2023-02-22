@@ -30,7 +30,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     initialDate = Date.now(),
     firstDayOfWeek = FirstDayOfWeek.MONDAY,
     staticHeader = false,
-    showExtraDays = true //TODO: remove extra days when false
+    showExtraDays = true
   } = props;
 
   const flashListRef = useRef();

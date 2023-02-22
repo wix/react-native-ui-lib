@@ -11,7 +11,7 @@ import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 
-const BACKGROUND_COLOR = Colors.transparent;
+const NO_COLOR = Colors.transparent;
 const TEXT_COLOR = Colors.$textPrimary;
 const TODAY_BACKGROUND_COLOR = Colors.$backgroundPrimaryLight;
 const SELECTED_BACKGROUND_COLOR = Colors.$backgroundPrimaryHeavy;
@@ -22,11 +22,12 @@ const AnimatedText = Reanimated.createAnimatedComponent(Text);
 
 const Day = (props: DayProps) => {
   const {date, onPress, inactive} = props;
-  const {selectedDate, setDate} = useContext(CalendarContext);
+  const {selectedDate, setDate, showExtraDays} = useContext(CalendarContext);
 
   const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
-  const backgroundColor = isToday(date) ? TODAY_BACKGROUND_COLOR : BACKGROUND_COLOR;
-  
+  const backgroundColor = isToday(date) ? TODAY_BACKGROUND_COLOR : NO_COLOR;
+  const isHidden = !showExtraDays && inactive;
+
   useAnimatedReaction(() => {
     return selectedDate.value;
   }, (selected) => {
@@ -41,12 +42,14 @@ const Day = (props: DayProps) => {
 
   const animatedTextStyles = useAnimatedStyle(() => {
     return {
-      color: withTiming(isSelected.value ? SELECTED_TEXT_COLOR : inactive ? INACTIVE_TEXT_COLOR : TEXT_COLOR)
+      color: withTiming(isSelected.value ? 
+        SELECTED_TEXT_COLOR : inactive ? 
+          showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR : TEXT_COLOR)
     };
   });
 
   const _onPress = useCallback(() => {
-    if (date !== null) {
+    if (date !== null && !isHidden) {
       isSelected.value = true;
       setDate(date, UpdateSource.DAY_SELECT);
       onPress?.(date);
