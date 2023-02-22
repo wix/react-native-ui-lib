@@ -1,6 +1,6 @@
 {
   "name": "TextField",
-  "category": "incubator",
+  "category": "form",
   "description": "An enhanced customizable TextField with validation support",
   "extends": ["TextInput"],
   "extendsLink": ["https://reactnative.dev/docs/textinput"],
