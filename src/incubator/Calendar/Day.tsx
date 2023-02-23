@@ -31,7 +31,7 @@ const Day = (props: DayProps) => {
   useAnimatedReaction(() => {
     return selectedDate.value;
   }, (selected) => {
-    isSelected.value = isSameDay(selected, date!);
+    isSelected.value = !inactive && isSameDay(selected, date!);
   }, []);
 
   const animatedSelectionStyles = useAnimatedStyle(() => {
