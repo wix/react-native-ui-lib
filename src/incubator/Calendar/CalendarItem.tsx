@@ -8,7 +8,7 @@ import Month from './Month';
 import Header from './Header';
 
 
-const CALENDAR_HEIGHT = 250;
+const CALENDAR_HEIGHT = 270;
 
 function CalendarItem(props: CalendarItemProps) {
   const {year, month} = props;
