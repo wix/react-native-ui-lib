@@ -37,7 +37,7 @@ export type IconProps = ImageProps &
 
 type Props = IconProps & BaseComponentInjectedProps;
 
-const defaultWebIconSize = 16;
+const defaultWebIconSize = 24;
 
 const Icon = (props: Props) => {
   const {size, tintColor, style, supportRTL, source, assetGroup, assetName, modifiers, ...others} = props;

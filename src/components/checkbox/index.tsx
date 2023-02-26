@@ -12,7 +12,7 @@ import {
 import {Colors, Spacings} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import Text, {TextProps} from '../text';
 import View from '../view';
@@ -101,6 +101,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     container: StyleProp<ViewStyle>;
     selectedIcon: StyleProp<ImageStyle>;
     checkboxLabel: StyleProp<TextStyle>;
+    selectedIconWeb: StyleProp<ImageStyle>;
   };
 
   animationStyle: {
@@ -203,7 +204,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   renderCheckbox() {
     const {selectedIcon, label, testID, style, containerStyle, ...others} = this.props;
-
+    console.log(`inside renderCheckbox`);
     return (
       //@ts-ignore
       <TouchableOpacity
@@ -225,6 +226,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
             <Animated.Image
               style={[
                 this.styles.selectedIcon,
+                Constants.isWeb && this.styles.selectedIconWeb,
                 {transform: this.animationStyle.transform},
                 {tintColor: this.getTintColor()}
               ]}
@@ -278,6 +280,10 @@ function createStyles(props: CheckboxProps) {
       marginLeft: Spacings.s3,
       alignSelf: 'center',
       color: Colors.$textDefault
+    },
+    selectedIconWeb: {
+      width: size,
+      height: size
     }
   });
 }
