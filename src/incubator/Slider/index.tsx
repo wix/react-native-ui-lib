@@ -214,7 +214,7 @@ const Slider = React.memo((props: Props) => {
     if (useRange) {
       return {
         transform: [{translateX: withTiming(defaultThumbOffset.value * rtlFix, {duration: 10})}],
-        width: withTiming(rangeThumbOffset.value - defaultThumbOffset.value, {duration: 10})
+        width: withTiming(Math.abs(rangeThumbOffset.value - defaultThumbOffset.value), {duration: 10})
       };
     } else {
       return {
