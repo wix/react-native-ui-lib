@@ -59,7 +59,7 @@ const Slider = React.memo((props: Props) => {
     thumbHitSlop,
     disableActiveStyling,
     disabled,
-    useGap,
+    useGap = true,
     accessible,
     testID
   } = props;
@@ -214,7 +214,7 @@ const Slider = React.memo((props: Props) => {
     if (useRange) {
       return {
         transform: [{translateX: withTiming(defaultThumbOffset.value * rtlFix, {duration: 10})}],
-        width: withTiming(rangeThumbOffset.value - defaultThumbOffset.value, {duration: 10})
+        width: withTiming(Math.abs(rangeThumbOffset.value - defaultThumbOffset.value), {duration: 10})
       };
     } else {
       return {
@@ -232,6 +232,7 @@ const Slider = React.memo((props: Props) => {
         end={type === ThumbType.DEFAULT ? rangeThumbOffset : end}
         offset={type === ThumbType.DEFAULT ? defaultThumbOffset : rangeThumbOffset}
         gap={rangeGap}
+        secondary={type !== ThumbType.DEFAULT}
         onSeekStart={onSeekStart}
         onSeekEnd={onSeekEnd}
         shouldDisableRTL={shouldDisableRTL}
