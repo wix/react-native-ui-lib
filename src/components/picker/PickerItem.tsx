@@ -25,6 +25,7 @@ const PickerItem = (props: PickerItemProps) => {
     disabled,
     selectedIcon = Assets.icons.check,
     selectedIconColor = Colors.$iconPrimary,
+    onPress,
     testID
   } = props;
   const context = useContext(PickerContext);
@@ -62,13 +63,14 @@ const PickerItem = (props: PickerItemProps) => {
   }, [isItemDisabled, labelStyle]);
 
   const _onPress = useCallback(() => {
+    onPress?.();
     if (migrate) {
       context.onPress(value);
     } else {
       // @ts-expect-error TODO: fix after removing migrate prop completely
       context.onPress(typeof value === 'object' || context.isMultiMode ? value : ({value, label: itemLabel}) as PickerSingleValue);
     }
-  }, [migrate, value, context.onPress]);
+  }, [migrate, value, context.onPress, onPress]);
 
   const onSelectedLayout = useCallback((...args: any[]) => {
     _.invoke(context, 'onSelectedLayout', ...args);
