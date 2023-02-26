@@ -161,7 +161,6 @@ const IncubatorSliderScreen = () => {
           <Incubator.Slider
             ref={rangeSlider}
             useRange
-            useGap
             onRangeChange={onRangeChange}
             minimumValue={MIN}
             maximumValue={MAX}

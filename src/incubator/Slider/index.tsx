@@ -59,7 +59,7 @@ const Slider = React.memo((props: Props) => {
     thumbHitSlop,
     disableActiveStyling,
     disabled,
-    useGap,
+    useGap = true,
     accessible,
     testID
   } = props;
