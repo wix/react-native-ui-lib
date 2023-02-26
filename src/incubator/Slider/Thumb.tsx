@@ -47,19 +47,19 @@ const Thumb = (props: Props) => {
   } = props;
 
   const rtlFix = Constants.isRTL ? -1 : 1;
-  const isPressedDefault = useSharedValue(false);
+  const isPressed = useSharedValue(false);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
   const lastOffset = useSharedValue(0);
 
   const gesture = Gesture.Pan()
     .onBegin(() => {
-      isPressedDefault.value = true;
+      isPressed.value = true;
       lastOffset.value = offset.value;
     })
     .onUpdate(e => {
       onSeekStart?.();
       let newX = lastOffset.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-
+      
       if (newX < start.value) {
         // adjust start edge
         newX = start.value;
@@ -75,7 +75,7 @@ const Thumb = (props: Props) => {
       onSeekEnd?.();
     })
     .onFinalize(() => {
-      isPressedDefault.value = false;
+      isPressed.value = false;
       if (shouldBounceToStep) {
         offset.value = Math.round(offset.value / stepInterpolatedValue.value) * stepInterpolatedValue.value;
       }
@@ -83,12 +83,12 @@ const Thumb = (props: Props) => {
   gesture.enabled(!disabled);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const customStyle = isPressedDefault.value ? activeStyle?.value : defaultStyle?.value;
+    const customStyle = isPressed.value ? activeStyle?.value : defaultStyle?.value;
     return {
       ...customStyle,
       transform: [
         {translateX: (offset.value - thumbSize.value.width / 2) * rtlFix},
-        {scale: withSpring(!disableActiveStyling && isPressedDefault.value ? 1.3 : 1)}
+        {scale: withSpring(!disableActiveStyling && isPressed.value ? 1.3 : 1)}
       ]
     };
   });
