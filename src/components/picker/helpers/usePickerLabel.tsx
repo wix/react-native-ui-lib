@@ -19,7 +19,6 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
     const selectedItems = _.flow(arr =>
       _.map(arr, item => (_.isPlainObject(item) ? getItemLabel?.(item) || item?.label : itemsByValue[item]?.label)),
     arr => _.join(arr, ', '))(value);
-    console.log(selectedItems);
     if (Constants.isWeb) {
       return selectedItems ? selectedItems : undefined;
     }

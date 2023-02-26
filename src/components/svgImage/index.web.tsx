@@ -3,7 +3,7 @@ import Image from '../image';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
 const EMPTY_STYLE = '{}';
-const DEFAULT_SIZE = 16;
+const DEFAULT_SIZE = 24;
 export interface SvgImageProps {
   /**
    * the asset tint

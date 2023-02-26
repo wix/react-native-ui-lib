@@ -204,7 +204,6 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   renderCheckbox() {
     const {selectedIcon, label, testID, style, containerStyle, ...others} = this.props;
-    console.log(`inside renderCheckbox`);
     return (
       //@ts-ignore
       <TouchableOpacity
