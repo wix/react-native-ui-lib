@@ -232,6 +232,7 @@ const Slider = React.memo((props: Props) => {
         end={type === ThumbType.DEFAULT ? rangeThumbOffset : end}
         offset={type === ThumbType.DEFAULT ? defaultThumbOffset : rangeThumbOffset}
         gap={rangeGap}
+        secondary={type !== ThumbType.DEFAULT}
         onSeekStart={onSeekStart}
         onSeekEnd={onSeekEnd}
         shouldDisableRTL={shouldDisableRTL}

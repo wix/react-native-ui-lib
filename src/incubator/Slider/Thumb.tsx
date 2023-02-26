@@ -23,6 +23,7 @@ export interface Props extends ViewProps {
   shouldBounceToStep: boolean;
   stepInterpolatedValue: SharedValue<number>;
   gap?: number;
+  secondary?: boolean;
 }
 
 const SHADOW_RADIUS = 4;
@@ -43,7 +44,8 @@ const Thumb = (props: Props) => {
     shouldDisableRTL,
     shouldBounceToStep,
     stepInterpolatedValue,
-    gap = 0
+    gap = 0,
+    secondary
   } = props;
 
   const rtlFix = Constants.isRTL ? -1 : 1;
@@ -59,7 +61,7 @@ const Thumb = (props: Props) => {
     .onUpdate(e => {
       onSeekStart?.();
       let newX = lastOffset.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
-      
+
       if (newX < start.value) {
         // adjust start edge
         newX = start.value;
@@ -67,7 +69,9 @@ const Thumb = (props: Props) => {
         // adjust end edge
         newX = end.value;
       }
-      if (newX < end.value - gap && newX > start.value + gap) {
+      if (!secondary && newX < gap || 
+        secondary && newX > end.value - gap || 
+        newX < end.value - gap && newX > start.value + gap) {
         offset.value = newX;
       }
     })

@@ -6,9 +6,9 @@ import {renderBooleanOption} from '../ExampleScreenPresenter';
 const VALUE = 20;
 const NEGATIVE_VALUE = -30;
 const MIN = 0;
-const MAX = 100;
-const INITIAL_MIN = 10;
-const INITIAL_MAX = 70;
+const MAX = Constants.screenWidth - 40; // horizontal margins 20
+const INITIAL_MIN = 30;
+const INITIAL_MAX = 270;
 
 const IncubatorSliderScreen = () => {
   const [disableRTL, setDisableRTL] = useState<boolean>(false);
