@@ -110,7 +110,6 @@ type State = {
  * `react-native-svg` and `react-native-svg-transformer`,
  * and also configure them (see `metro.config.js`)
  */
-
 class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
 
@@ -209,7 +208,7 @@ class Image extends PureComponent<Props, State> {
     const {
       tintColor,
       style,
-      width,
+      width, 
       height,
       supportRTL,
       cover,

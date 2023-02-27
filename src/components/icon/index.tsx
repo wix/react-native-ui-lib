@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, {useMemo} from 'react';
+import React, {useMemo, forwardRef} from 'react';
 import {Image, ImageProps, StyleSheet} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
@@ -39,7 +39,7 @@ type Props = IconProps & BaseComponentInjectedProps;
 
 const defaultWebIconSize = 16;
 
-const Icon = (props: Props) => {
+const Icon = forwardRef((props: Props, ref: any) => {
   const {size, tintColor, style, supportRTL, source, assetGroup, assetName, modifiers, ...others} = props;
   const {margins} = modifiers;
   const webIconSize = Constants.isWeb
@@ -78,11 +78,12 @@ const Icon = (props: Props) => {
   ) : (
     <Image
       {...others}
+      ref={ref}
       source={iconSource}
       style={[style, margins, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}]}
     />
   );
-};
+});
 
 Icon.displayName = 'Icon';
 Icon.defaultProps = {

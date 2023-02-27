@@ -12,10 +12,11 @@ import {
 import {Colors, Spacings} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
-import {asBaseComponent, Constants} from '../../commons/new';
+import {asBaseComponent, ForwardRefInjectedProps} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import Text, {TextProps} from '../text';
 import View from '../view';
+import Icon from '../icon';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
@@ -84,6 +85,8 @@ export interface CheckboxProps extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
 
+export type Props = CheckboxProps & ForwardRefInjectedProps;
+
 interface CheckboxState {
   isChecked: Animated.Value;
 }
@@ -94,14 +97,15 @@ interface CheckboxState {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true
  */
-class Checkbox extends Component<CheckboxProps, CheckboxState> {
+
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+class Checkbox extends Component<Props, CheckboxState> {
   static displayName = 'Checkbox';
 
   styles: {
     container: StyleProp<ViewStyle>;
     selectedIcon: StyleProp<ImageStyle>;
     checkboxLabel: StyleProp<TextStyle>;
-    selectedIconWeb: StyleProp<ImageStyle>;
   };
 
   animationStyle: {
@@ -116,7 +120,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     ];
   };
 
-  constructor(props: CheckboxProps) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -222,10 +226,9 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
               {backgroundColor: this.getBackgroundColor()}
             ]}
           >
-            <Animated.Image
+            <AnimatedIcon
               style={[
                 this.styles.selectedIcon,
-                Constants.isWeb && this.styles.selectedIconWeb,
                 {transform: this.animationStyle.transform},
                 {tintColor: this.getTintColor()}
               ]}
@@ -279,12 +282,8 @@ function createStyles(props: CheckboxProps) {
       marginLeft: Spacings.s3,
       alignSelf: 'center',
       color: Colors.$textDefault
-    },
-    selectedIconWeb: {
-      width: size,
-      height: size
     }
   });
 }
 
-export default asBaseComponent<CheckboxProps>(Checkbox);
+export default asBaseComponent<Props>(Checkbox);
