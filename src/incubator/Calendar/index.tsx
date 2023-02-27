@@ -129,18 +129,13 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   },
   (selected, previous) => {
     const index = getItemIndex(selected);
-    const shouldReloadPages = shouldAddPages(index);
-
-    if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
-      if (previous && !isSameMonth(selected, previous)) {
-        if (!shouldReloadPages) {
-          runOnJS(scrollToIndex)(index);
-        }
-      }
-    }
-
-    if (shouldReloadPages) {
+    
+    if (shouldAddPages(index)) {
       runOnJS(addPages)(index);
+    } else if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
+      if (previous && !isSameMonth(selected, previous)) {
+        runOnJS(scrollToIndex)(index);
+      }
     }
   }, [getItemIndex]);
 
