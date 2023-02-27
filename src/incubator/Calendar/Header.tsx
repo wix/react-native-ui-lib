@@ -4,28 +4,36 @@ import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import {Colors, Typography} from 'style';
 import View from '../../components/view';
 import Button from '../../components/button';
-import {getDateObject, addMonths, getMonthForIndex} from './helpers/DateUtils';
+import {getDateObject, getMonthForIndex, addMonths, getTimestamp} from './helpers/DateUtils';
 import {HeaderProps, DayNamesFormat, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
 
-const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
-const WEEK_NUMBER_WIDTH = 30;
 
+const WEEK_NUMBER_WIDTH = 32;
 const ARROW_NEXT = require('./assets/arrowNext.png');
 const ARROW_BACK = require('./assets/arrowBack.png');
+
+const AnimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
 
 const Header = (props: HeaderProps) => {
   const {month, year} = props;
   const {selectedDate, setDate, showWeeksNumbers, staticHeader, setHeaderHeight} = useContext(CalendarContext);
 
+  const getNewDate = useCallback((count: number) => {
+    const newDate = addMonths(selectedDate.value, count);
+    const dateObject = getDateObject(newDate);
+    return getTimestamp({year: dateObject.year, month: dateObject.month, day: 1});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const onLeftArrowPress = useCallback(() => {
-    setDate(addMonths(selectedDate.value, -1), UpdateSource.MONTH_ARROW);
-  }, [selectedDate.value, setDate]);
+    setDate(getNewDate(-1), UpdateSource.MONTH_ARROW);
+  }, [setDate, getNewDate]);
 
   const onRightArrowPress = useCallback(() => {
-    setDate(addMonths(selectedDate.value, 1), UpdateSource.MONTH_ARROW);
-  }, [selectedDate.value, setDate]);
+    setDate(getNewDate(1), UpdateSource.MONTH_ARROW);
+  }, [setDate, getNewDate]);
 
   const animatedProps = useAnimatedProps(() => {
     const dateObject = getDateObject(selectedDate.value);
