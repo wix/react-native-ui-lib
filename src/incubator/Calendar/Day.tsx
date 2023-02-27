@@ -38,7 +38,7 @@ const Day = (props: DayProps) => {
 
   const animatedSelectionStyles = useAnimatedStyle(() => {
     return {
-      backgroundColor: isSelected.value ? SELECTED_BACKGROUND_COLOR : backgroundColor
+      backgroundColor: withTiming(isSelected.value ? SELECTED_BACKGROUND_COLOR : backgroundColor, {duration: 100})
     };
   });
 
@@ -46,7 +46,7 @@ const Day = (props: DayProps) => {
     return {
       color: withTiming(isSelected.value ? 
         SELECTED_TEXT_COLOR : inactive ? 
-          showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR : TEXT_COLOR)
+          showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR : TEXT_COLOR, {duration: 100})
     };
   });
 
