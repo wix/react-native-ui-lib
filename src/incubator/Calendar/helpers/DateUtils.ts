@@ -93,6 +93,16 @@ export function addMonths(date: number, count: number) {
   return new Date(date).setMonth(month + count);
 }
 
+export function addYears(date: number, count: number) {
+  'worklet';
+  if (count === 0) {
+    return date;
+  }
+
+  const year = getDateObject(date).year;
+  return new Date(date).setFullYear(year + count);
+}
+
 export function getMonthForIndex(index: number) {
   'worklet';
   const months = [
