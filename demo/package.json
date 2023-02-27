@@ -16,7 +16,7 @@
     "demoRelease": "node ./scripts/demoRelease.js"
   },
   "devDependencies": {
-    "react-native-ui-lib": "*",
+    "react-native-ui-lib": "7.1.0",
     "shell-utils": "^1.0.10"
   },
   "peerDependencies": {

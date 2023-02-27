@@ -3,27 +3,28 @@ import React, {Component} from 'react';
 import {ScrollView, View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Colors, Shadows} from 'react-native-ui-lib'; // eslint-disable-line
 
-
 const {height} = Dimensions.get('window');
 const SHAPE_DIAMETER = 80;
 
-const shadowsOverWhiteBkg = _.reduce(Shadows, (results, value, key) => {
-  if (key.startsWith('white')) {
-    results[key] = value;
-  }
-  return results;
-}, {});
+const shadowsOverWhiteBkg = _.reduce(Shadows,
+  (results, value, key) => {
+    if (key.startsWith('white')) {
+      results[key] = value;
+    }
+    return results;
+  },
+  {});
 
-const shadowsOverDarkBkg = _.reduce(Shadows, (results, value, key) => {
-  if (key.startsWith('dark')) {
-    results[key] = value;
-  }
-  return results;
-}, {});
-
+const shadowsOverGreyBkg = _.reduce(Shadows,
+  (results, value, key) => {
+    if (key.startsWith('grey')) {
+      results[key] = value;
+    }
+    return results;
+  },
+  {});
 
 export default class ShadowsScreen extends Component {
-
   renderShadows(shadowsList) {
     return []
       .concat(_.map(shadowsList, (value, key) => this.renderCircleWithShadow(value, key)))
@@ -59,12 +60,8 @@ export default class ShadowsScreen extends Component {
         </View>
         <ScrollView>
           <View style={styles.container}>
-            <View style={styles.subContainer}>
-              {this.renderShadows(shadowsOverDarkBkg)}
-            </View>
-            <View style={styles.subContainer}>
-              {this.renderShadows(shadowsOverWhiteBkg)}
-            </View>
+            <View style={styles.subContainer}>{this.renderShadows(shadowsOverGreyBkg)}</View>
+            <View style={styles.subContainer}>{this.renderShadows(shadowsOverWhiteBkg)}</View>
           </View>
         </ScrollView>
       </View>
@@ -76,14 +73,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   subContainer: {
     flex: 1,
     flexDirection: 'column',
     minHeight: 0.8 * height,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   shadowCircle: {
     width: SHAPE_DIAMETER,
@@ -92,14 +89,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 40,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   innerCircle: {
     width: SHAPE_DIAMETER,
     height: SHAPE_DIAMETER,
     borderRadius: SHAPE_DIAMETER / 2,
     backgroundColor: 'white',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   shadowSquare: {
     width: SHAPE_DIAMETER,
@@ -107,17 +104,17 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: 'white',
     margin: 40,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   innerSquare: {
     width: SHAPE_DIAMETER,
     height: SHAPE_DIAMETER,
     borderRadius: 6,
     backgroundColor: 'white',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   shadowLabel: {
     fontSize: 9,
-    textAlign: 'center',
-  },
+    textAlign: 'center'
+  }
 });

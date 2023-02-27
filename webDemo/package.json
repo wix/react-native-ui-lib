@@ -17,8 +17,6 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "^3.4.6",
     "@react-native-community/netinfo": "^9.3.0",
-    "@react-native-community/picker": "^1.8.1",
-    "@react-native-picker/picker": "^2.4.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-native-gesture-handler": "^1.10.3",

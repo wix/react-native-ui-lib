@@ -77,9 +77,6 @@ export default {
   get KeyboardAwareScrollView() {
     return require('./KeyboardAwareScrollView').KeyboardAwareScrollView;
   },
-  get KeyboardAwareListView() {
-    return require('./KeyboardAwareScrollView').KeyboardAwareListView;
-  },
   get KeyboardAwareFlatList() {
     return require('./KeyboardAwareScrollView').KeyboardAwareFlatList;
   },
@@ -143,9 +140,6 @@ export default {
   get TabController() {
     return require('./tabController').default;
   },
-  get TabBar() { //TODO: remove on V7
-    return require('./tabBar').default;
-  },
   get ChipsInput() {
     return require('./ChipsInput').default;
   },
@@ -191,9 +185,6 @@ export default {
   },
   get Wizard() {
     return require('./wizard').default;
-  },
-  get WheelPickerDialog() {
-    return require('./wheelPickerDialog').default;
   },
   get ScrollBar() {
     return require('./scrollBar').default;

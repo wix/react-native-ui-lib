@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {TextInput, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
-const {TextField} = Incubator;
+import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, TextField, TextFieldMethods} from 'react-native-ui-lib'; //eslint-disable-line
 const {KeyboardAwareInsetsView} = Keyboard;
 
 const priceFormatter = Intl.NumberFormat('en-US');
@@ -10,13 +9,15 @@ const priceFormatter = Intl.NumberFormat('en-US');
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
   input2 = React.createRef<TextInput>();
-  inputWithValidation = React.createRef<TextInput>();
+  inputWithValidation = React.createRef<TextFieldMethods>();
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
     shouldDisable: false,
+    isReadonly: false,
     value: 'Initial Value',
     searching: false,
-    preset: 'withUnderline'
+    preset: 'withUnderline',
+    price: ''
   };
 
   componentDidMount() {
@@ -50,7 +51,7 @@ export default class TextFieldScreen extends Component {
   }
 
   render() {
-    const {errorPosition, shouldDisable, price, preset} = this.state;
+    const {errorPosition, shouldDisable, isReadonly, price, preset} = this.state;
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-page>
@@ -161,6 +162,7 @@ export default class TextFieldScreen extends Component {
 
           <View row top marginT-s4>
             <TextField
+              // @ts-expect-error
               ref={this.inputWithValidation}
               placeholder="Enter full name"
               validate="required"
@@ -182,11 +184,19 @@ export default class TextFieldScreen extends Component {
             <Text h3 blue50 marginV-s4>
               Colors By State
             </Text>
-            <Button
-              label={shouldDisable ? 'Enable' : 'Disable'}
-              onPress={() => this.setState({shouldDisable: !shouldDisable})}
-              size={Button.sizes.xSmall}
-            />
+            <View row>
+              <Button
+                label={isReadonly ? 'Enable' : 'Readonly'}
+                onPress={() => this.setState({isReadonly: !isReadonly})}
+                size={Button.sizes.xSmall}
+                marginR-s4
+              />
+              <Button
+                label={shouldDisable ? 'Enable' : 'Disable'}
+                onPress={() => this.setState({shouldDisable: !shouldDisable})}
+                size={Button.sizes.xSmall}
+              />
+            </View>
           </View>
 
           <TextField
@@ -195,7 +205,8 @@ export default class TextFieldScreen extends Component {
               default: Colors.$textDefault,
               focus: Colors.$textGeneral,
               error: Colors.$textDangerLight,
-              disabled: Colors.$textDisabled
+              disabled: Colors.$textDisabled,
+              readonly: Colors.$textNeutral
             }}
             placeholder="Enter valid email"
             validationMessage="Email is invalid"
@@ -203,6 +214,7 @@ export default class TextFieldScreen extends Component {
             validateOnChange
             fieldStyle={styles.withFrame}
             editable={!shouldDisable}
+            readonly={isReadonly}
           />
 
           <View row spread centerV>
@@ -224,6 +236,7 @@ export default class TextFieldScreen extends Component {
               preset === 'withUnderline' ? styles.withUnderline : styles.withFrame
             }
             editable={!shouldDisable}
+            readonly={isReadonly}
           />
 
           <Text h3 blue50 marginV-s4>

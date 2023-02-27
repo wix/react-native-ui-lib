@@ -11,7 +11,7 @@ export class TextDriver extends ComponentDriver {
   }
 
   isPressable = async () => {
-    if (this.exists()) {
+    if (await this.exists()) {
       return typeof (await this.getElementProps()).onPress === 'function';
     } else {
       console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
