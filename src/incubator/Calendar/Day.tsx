@@ -14,6 +14,7 @@ import CalendarContext from './CalendarContext';
 const NO_COLOR = Colors.transparent;
 const TEXT_COLOR = Colors.$textPrimary;
 const TODAY_BACKGROUND_COLOR = Colors.$backgroundPrimaryLight;
+const INACTIVE_TODAY_BACKGROUND_COLOR = Colors.$backgroundNeutral;
 const SELECTED_BACKGROUND_COLOR = Colors.$backgroundPrimaryHeavy;
 const SELECTED_TEXT_COLOR = Colors.$textDefaultLight;
 const INACTIVE_TEXT_COLOR = Colors.$textNeutralLight;
@@ -25,7 +26,8 @@ const Day = (props: DayProps) => {
   const {selectedDate, setDate, showExtraDays} = useContext(CalendarContext);
 
   const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
-  const backgroundColor = isToday(date) ? TODAY_BACKGROUND_COLOR : NO_COLOR;
+  const backgroundColor = !isToday(date) ? NO_COLOR :
+    inactive ? INACTIVE_TODAY_BACKGROUND_COLOR : TODAY_BACKGROUND_COLOR;
   const isHidden = !showExtraDays && inactive;
 
   useAnimatedReaction(() => {
