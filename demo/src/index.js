@@ -198,6 +198,9 @@ module.exports = {
       get ColorsScreen() {
         return require('./screens/foundationScreens/ColorsScreen').default;
       },
+      get DarkMode() {
+        return require('./screens/foundationScreens/DarkModeScreen').default;
+      },
       get TypographyScreen() {
         return require('./screens/foundationScreens/TypographyScreen').default;
       },
@@ -214,9 +217,39 @@ module.exports = {
       get ProgressBarScreen() {
         return require('./screens/componentScreens/ProgressBarScreen').default;
       },
+      get ScrollBar() {
+        return require('./screens/componentScreens/ScrollBarScreen').default;
+      },
+      get Marquee() {
+        return require('./screens/componentScreens/MarqueeScreen').default;
+      },
+      get NumberInput() {
+        return require('./screens/componentScreens/NumberInputScreen').default;
+      },
+      get WheelPicker() {
+        return require('./screens/componentScreens/WheelPickerScreen').default;
+      },
+      get GridList() {
+        return require('./screens/componentScreens/GridListScreen').default;
+      },
+      get SortableGridList() {
+        return require('./screens/componentScreens/SortableGridListScreen').default;
+      },
       // Incubator
       get PanViewScreen() {
         return require('./screens/incubatorScreens/PanViewScreen').default;
+      },
+      get IncubatorSlider() {
+        return require('./screens/incubatorScreens/IncubatorSliderScreen').default;
+      },
+      get IncubatorDialog() {
+        return require('./screens/incubatorScreens/IncubatorDialogScreen').default;
+      },
+      get IncubatorToast() {
+        return require('./screens/incubatorScreens/IncubatorToastScreen').default;
+      },
+      get IncubatorExpandableOverlay() {
+        return require('./screens/incubatorScreens/IncubatorExpandableOverlayScreen').default;
       },
       // realExamples
       get AppleMusic() {
@@ -237,6 +270,30 @@ module.exports = {
       // wrapperScreens
       get TouchableOpacityScreen() {
         return require('./screens/componentScreens/TouchableOpacityScreen').default;
+      },
+      get Modal() {
+        return require('./screens/componentScreens/ModalScreen').default;
+      },
+      get Timeline() {
+        return require('./screens/componentScreens/TimelineScreen').default;
+      },
+      get WithScrollEnabler() {
+        return require('./screens/componentScreens/WithScrollEnablerScreen').default;
+      },
+      get WithScrollReached() {
+        return require('./screens/componentScreens/WithScrollReachedScreen').default;
+      },
+      get Fader() {
+        return require('./screens/componentScreens/FaderScreen').default;
+      },
+      get GridView() {
+        return require('./screens/componentScreens/GridViewScreen').default;
+      },
+      get Playground() {
+        return require('./screens/PlaygroundScreen').default;
+      },
+      get KeyboardAwareScrollView() {
+        return require('./screens/componentScreens/KeyboardAwareScrollViewScreen').default;
       }
     };
   },
