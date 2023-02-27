@@ -11,14 +11,14 @@ export default class CalendarScreen extends Component {
   //   }, 2000);
   // }
 
-  state = {
-    date: undefined
-  };
+  // state = {
+  //   date: undefined
+  // };
   
   render() {
     return (
       <View flex>
-        <Incubator.Calendar data={data} staticHeader initialDate={this.state.date}>
+        <Incubator.Calendar data={data} staticHeader /* initialDate={this.state.date} */>
           <Incubator.Calendar.Agenda/>
         </Incubator.Calendar>
       </View>
