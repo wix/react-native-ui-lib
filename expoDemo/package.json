@@ -29,7 +29,7 @@
     "react-native-svg-transformer": "^1.0.0",
     "react-native-ui-lib": "^7.1.0",
     "react-native-web": "~0.18.12",
-    "unicorn-demo-app": "file:../demo"
+    "unicorn-demo-app": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
