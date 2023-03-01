@@ -328,7 +328,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     const data = showContent && _.isFunction(renderContent) ? renderContent(this.props) : children;
 
     return (
-      <View style={style} {...this.contentAccessibilityProps} {...others}>
+      <View style={style} {...this.contentAccessibilityProps} {...others} testID={`${others.testID}-shimmer-wrapper`}>
         <ShimmerPlaceholder {...this.getDefaultSkeletonProps()} {...others}>
           {showContent && data}
         </ShimmerPlaceholder>
