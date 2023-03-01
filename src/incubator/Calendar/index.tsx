@@ -60,7 +60,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   const scrollToIndex = useCallback((index: number) => {
     scrolledByUser.value = false;
     // @ts-expect-error
-    flashListRef.current?.scrollToIndex({index, animated: false});
+    flashListRef.current?.scrollToIndex({index, animated: true});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getItemIndex]);
 

@@ -36,7 +36,7 @@ function CalendarItem(props: CalendarItemProps) {
   return null;
 }
 
-export default CalendarItem;
+export default React.memo(CalendarItem);
 
 const styles = StyleSheet.create({
   container: {
