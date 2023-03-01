@@ -1,115 +1,308 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView, View, Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
-import {Colors, Typography, Toast} from 'react-native-ui-lib';//eslint-disable-line
+import {ScrollView, StyleSheet} from 'react-native';
+import {
+  Colors,
+  Spacings,
+  Assets,
+  View,
+  Text,
+  TouchableOpacity,
+  Icon,
+  Button,
+  TextField,
+  Incubator
+} from 'react-native-ui-lib';
 
+const {Toast} = Incubator;
 
-const {width} = Dimensions.get('window');
-const baseColors = ['grey', 'blue', 'cyan', 'green', 'yellow', 'orange', 'red', 'purple', 'violet'];
+const SYSTEM_COLORS = ['grey', 'violet', 'blue', 'green', 'red', 'yellow', 'orange'];
+const PRIVATE_COLORS = ['dine', 'fit', 'premium'];
+const INITIAL_COLOR = Colors.white;
+const BASE_PALETTE = ['1', '5', '10', '20', '30', '40', '50', '60', '70', '80'];
+const TOKENS_CATEGORIES = ['Background', 'Text', 'Icon', 'Outline'];
+const TOKENS_ARRAYS = {};
+TOKENS_CATEGORIES.map(category => (TOKENS_ARRAYS[category] = []));
 
-export default class ColorsScreen extends Component {
+for (const key in Colors) {
+  if (key.startsWith('$background')) {
+    TOKENS_ARRAYS.Background.push(key);
+  } else if (key.startsWith('$text')) {
+    TOKENS_ARRAYS.Text.push(key);
+  } else if (key.startsWith('$icon')) {
+    TOKENS_ARRAYS.Icon.push(key);
+  } else if (key.startsWith('$outline')) {
+    TOKENS_ARRAYS.Outline.push(key);
+  }
+}
 
-  constructor(props) {
-    super(props);
+class ColorsScreen extends Component {
+  state = {
+    selectedColor: INITIAL_COLOR,
+    searchValue: '',
+    filteredTokens: [],
+    showToast: false,
+    message: undefined
+  };
 
-    this.state = {
-      key: '',
-      color: Colors.white,
-      background: Colors.blue40,
-      showToast: false
-    };
+  scrollViewRef = React.createRef();
+  searchRef = React.createRef();
+
+  scrollToTop = () => {
+    this?.scrollViewRef?.current?.scrollTo({x: 0, y: 0, animated: true});
+  };
+
+  toggleToastVisibility = () => {
+    const {showToast} = this.state;
+    if (!showToast) {
+      this.setState({
+        showToast: !showToast
+      });
+    }
+  };
+
+  onTokenPress = value => {
+    const systemColorName = Colors.getSystemColorByHex(Colors[value].toString(), [
+      ...SYSTEM_COLORS,
+      ...PRIVATE_COLORS,
+      'white',
+      'black'
+    ]);
+    const message = systemColorName
+      ? `${value}\n ${Colors[value].toString()}\n ${systemColorName}`
+      : `${value}\n ${Colors[value].toString()}`;
+    this.setState({
+      message
+    });
+    this.toggleToastVisibility();
+  };
+
+  onChangeText = _.throttle(searchValue => {
+    this.setState({searchValue}, () => {
+      this.filterTokens();
+    });
+  },
+  500,
+  {leading: false, trailing: true});
+
+  filterToken = token => token.toString().toLowerCase().includes(this.state.searchValue.toLowerCase());
+
+  filterTokens = () => {
+    const {searchValue} = this.state;
+    const filteredTokens = [];
+    if (!searchValue) {
+      this.scrollToTop();
+    } else {
+      for (category of TOKENS_CATEGORIES) {
+        const categoryTokens = TOKENS_ARRAYS[category].filter(token => {
+          return this.filterToken(token) && token.toString();
+        });
+        filteredTokens.push(...categoryTokens);
+      }
+    }
+    this.setState({filteredTokens});
+    this.scrollToTop();
+  };
+
+  updateSearch = _.throttle(searchValue => {
+    this.setState({searchValue});
+  }, 800);
+
+  clearSearch = () => {
+    this.updateSearch(undefined);
+    this.searchRef?.clear();
+  };
+
+  closeSearchBox = () => {
+    this.searchRef?.blur();
+  };
+
+  onSearchBoxBlur = () => {
+    this.closeSearchBox();
+  };
+
+  renderSearch = () => {
+    const {searchValue} = this.state;
+    return (
+      <TextField
+        migrate
+        ref={r => (this.searchRef = r)}
+        placeholder="Search tokens by category"
+        onChangeText={this.onChangeText}
+        onBlur={this.onSearchBoxBlur}
+        containerStyle={styles.searchContainer}
+        fieldStyle={styles.searchField}
+        enableErrors={false}
+        hideUnderline
+        floatingPlaceholder={false}
+        text70
+        leadingAccessory={
+          <View>
+            <Icon marginR-s2 tintColor={Colors.$iconDefault} source={Assets.icons.demo.search}/>
+          </View>
+        }
+        trailingAccessory={
+          searchValue ? (
+            <Button link marginR-5 iconSource={Assets.icons.demo.close} $iconDefault onPress={this.clearSearch}/>
+          ) : undefined
+        }
+      />
+    );
+  };
+
+  renderToast = () => {
+    const {showToast, message} = this.state;
+
+    return (
+      <Toast
+        key={`${showToast}-${message}`}
+        visible={showToast}
+        position={'bottom'}
+        message={message}
+        preset={'general'}
+        swipeable
+        onDismiss={this.toggleToastVisibility}
+        autoDismiss={3000}
+      />
+    );
+  };
+
+  renderTints(color) {
+    const colorName = color.charAt(0).toUpperCase() + color.slice(1);
+    return (
+      <View row spread marginB-20>
+        {BASE_PALETTE.map((colorKey, index) => {
+          const colorProp = {[`bg-${color}${colorKey}`]: true};
+          const textColor = colorKey < 40 ? Colors.white : Colors.black;
+          return (
+            <View key={`${colorKey}-${index}`}>
+              <View key={`${colorKey}-${index}`} center height={80} width={80} {...colorProp}>
+                <Text style={{color: textColor}}>{'AAA'}</Text>
+              </View>
+              <View>
+                <Text $textDisabled text80R>
+                  {colorName + ' ' + colorKey}
+                </Text>
+                <Text $textDisabled text80R>
+                  {Colors[`${color}${colorKey}`]}
+                </Text>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+    );
   }
 
-  onPress(key, value) {
-    this.setState({key});
-    if (_.includes(key, '60') || _.includes(key, '70') || _.includes(key, '80') || _.includes(key, 'white')) {
-      this.setState({color: Colors.grey10});
-    } else {
-      this.setState({color: Colors.white});
-    }
-    this.setState({background: value});
-    this.setState({showToast: true});
+  renderColors(colors, title) {
+    return (
+      <View padding-page>
+        <Text text50 marginB-20>
+          {title}
+        </Text>
+
+        {_.map(colors, (color, index) => {
+          return (
+            <View key={`${color}-${index}`}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {this.renderTints(color)}
+              </ScrollView>
+            </View>
+          );
+        })}
+      </View>
+    );
+  }
+
+  renderDesignTokens() {
+    const {searchValue, filteredTokens} = this.state;
+    return (
+      <View>
+        <Text text50 marginT-20 marginL-20>
+          DESIGN TOKENS
+        </Text>
+        <View marginL-10 marginT-10>
+          {searchValue ? (
+            filteredTokens.length ? (
+              filteredTokens.map(token => {
+                return this.renderToken(token);
+              })
+            ) : (
+              <Text marginL-10>No Results!</Text>
+            )
+          ) : (
+            TOKENS_CATEGORIES.map(category => {
+              return this.renderCategoryToken(category);
+            })
+          )}
+        </View>
+      </View>
+    );
+  }
+
+  renderCategoryToken(category) {
+    return (
+      <View key={category}>
+        <Text text60 marginT-10 marginB-10 marginL-10>
+          {category}
+        </Text>
+        {TOKENS_ARRAYS[category].map((token, index) => {
+          return this.renderToken(token, index);
+        })}
+      </View>
+    );
+  }
+
+  renderToken(token, index) {
+    return (
+      <View key={`${token}-${index}`} marginH-10 marginV-3>
+        <TouchableOpacity onPress={() => this.onTokenPress(token)}>
+          <View key={`${token}-${index}`} flex center row marginB-3>
+            <Text flexG $textDefault text70R>
+              {token}
+            </Text>
+            <View
+              br40
+              marginR-10
+              key={`${token}-${index}-light`}
+              marginL-10
+              style={{
+                height: 50,
+                width: 100,
+                backgroundColor: Colors[token],
+                borderWidth: 3,
+                borderColor: Colors.grey70
+              }}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   render() {
     return (
-      <View useSafeArea>
-        <Toast
-          message={this.state.key}
-          color={this.state.color}
-          backgroundColor={this.state.background}
-          allowDismiss
-          onDismiss={() => this.setState({showToast: false})}
-          visible={this.state.showToast}
-        />
-        <ScrollView style={{backgroundColor: Colors.grey80}}>
-          <View style={styles.pallete}>
-            {_.map(Colors, (value, key) => {
-              if (!_.isFunction(value)) {
-                return (
-                  <TouchableOpacity key={key} onPress={() => this.onPress(key, value)}>
-                    <View style={[styles.palletEeColor, {backgroundColor: value}]}/>
-                  </TouchableOpacity>
-                );
-              }
-            })}
-          </View>
-
-          {_.map(baseColors, (baseColor) => {
-            const baseColorTints = _.pickBy(Colors, (color, key) => key.includes(baseColor));
-            return (
-              <View key={baseColor} style={{paddingLeft: 10}}>
-                <Text style={[Typography.text60, {marginBottom: 2, color: Colors.grey30}]}>{baseColor}s</Text>
-                <ScrollView
-                  horizontal
-                  contentContainerStyle={{marginBottom: 20}}
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {_.map(baseColorTints, (value, key) => {
-                    return (
-                      <View key={key} style={[styles.colorBlock, {backgroundColor: value}]}>
-                        <Text style={styles.colorBlockLabel}>
-                          {key}: {value}
-                        </Text>
-                      </View>
-                    );
-                  })}
-                </ScrollView>
-              </View>
-            );
-          })}
+      <>
+        {this.renderSearch()}
+        <ScrollView ref={this.scrollViewRef}>
+          {this.renderDesignTokens()}
+          {this.renderColors(SYSTEM_COLORS, 'SYSTEM COLORS')}
         </ScrollView>
-      </View>
+        {this.renderToast()}
+      </>
     );
   }
 }
 
-const PALLETE_COLOR_MARGIN = 5;
-const PALLETE_COLOR_WIDTH = ((width - (2 * 10)) / 8) - (PALLETE_COLOR_MARGIN * 2);
 const styles = StyleSheet.create({
-  container: {
+  searchContainer: {
+    padding: Spacings.s1,
+    paddingBottom: 0
   },
-  pallete: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    padding: 10,
-  },
-  palletEeColor: {
-    width: PALLETE_COLOR_WIDTH,
-    height: PALLETE_COLOR_WIDTH,
-    borderRadius: PALLETE_COLOR_WIDTH / 2,
-    margin: PALLETE_COLOR_MARGIN,
-  },
-  colorBlock: {
-    width: width * 0.35,
-    height: width * 0.25,
-    marginRight: 10,
-    justifyContent: 'flex-end',
-  },
-  colorBlockLabel: {
-    backgroundColor: Colors.white,
-    opacity: 0.5,
-    ...Typography.text90,
-    fontWeight: '500',
-  },
+  searchField: {
+    padding: Spacings.s3,
+    borderRadius: 8
+  }
 });
+
+export default ColorsScreen;
