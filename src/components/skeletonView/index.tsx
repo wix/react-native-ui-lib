@@ -215,7 +215,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
 
   getDefaultSkeletonProps = (input?: {circleOverride: boolean; style: StyleProp<ViewStyle>}) => {
     const {circleOverride, style} = input || {};
-    const {circle, colors, width, height = 0, shimmerStyle} = this.props;
+    const {circle, colors, width, height = 0, shimmerStyle, testID} = this.props;
     let {borderRadius} = this.props;
     let size;
 
@@ -230,7 +230,8 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
       style: [{borderRadius}, style],
       width: size || width,
       height: size || height,
-      shimmerStyle
+      shimmerStyle,
+      containerProps: {testID: `${testID}-shimmer-placeholder`}
     };
   };
 
@@ -328,7 +329,12 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     const data = showContent && _.isFunction(renderContent) ? renderContent(this.props) : children;
 
     return (
-      <View style={style} {...this.contentAccessibilityProps} {...others} testID={`${others.testID}-shimmer-wrapper`}>
+      <View
+        style={style}
+        {...this.contentAccessibilityProps}
+        {...others}
+        testID={`${others.testID}-shimmer-placeholder-wrapper`}
+      >
         <ShimmerPlaceholder {...this.getDefaultSkeletonProps()} {...others}>
           {showContent && data}
         </ShimmerPlaceholder>
