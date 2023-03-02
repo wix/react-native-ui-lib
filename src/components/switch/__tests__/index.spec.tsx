@@ -23,6 +23,13 @@ describe('Switch', () => {
     });
   };
 
+  it('Should fire onPress event', async () => {
+    const testId = 'switch-comp';
+    const onPress = jest.fn();
+    const driver = await switchDriver(testId, {onPress});
+    await driver.press();
+    expect(onPress).toHaveBeenCalled();
+  });
 
   it('Should fire onChange event', async () => {
     const testId = 'switch-comp';
@@ -46,6 +53,15 @@ describe('Switch', () => {
     const driver = await switchDriver(testId, {onValueChange: onChange, value: false});
     await driver.press();
     expect(onChange).toHaveBeenCalledWith(true);
+  });
+
+  it('Should not fire onPress when disabled', async () => {
+    const testId = 'switch-comp';
+    const onPress = jest.fn();
+    const driver = await switchDriver(testId, {disabled: true, onPress});
+
+    await driver.press();
+    expect(onPress).not.toHaveBeenCalled();
   });
 
   it('Should not fire onChange when disabled', async () => {

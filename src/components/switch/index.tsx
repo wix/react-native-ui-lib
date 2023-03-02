@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
+import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue, GestureResponderEvent} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
@@ -54,6 +54,10 @@ export type SwitchProps = {
    * The Switch's thumb style
    */
   thumbStyle?: StyleProp<ViewStyle>;
+  onPress?: (event: GestureResponderEvent) => void;
+  onLongPress?: (event: GestureResponderEvent) => void;
+  onPressIn?: (event: GestureResponderEvent) => void;
+  onPressOut?: (event: GestureResponderEvent) => void;
   style?: StyleProp<ViewStyle>;
   testID?: string;
 }
@@ -105,11 +109,36 @@ class Switch extends Component<SwitchProps> {
     }).start();
   }
 
-  onPress = () => {
+  onPress = (event: GestureResponderEvent) => {
     const {disabled} = this.props;
 
     if (!disabled) {
+      this.props.onPress?.(event);
       this.props.onValueChange?.(!this.props.value);
+    }
+  };
+
+  onLongPress = (event: GestureResponderEvent) => {
+    const {disabled} = this.props;
+
+    if (!disabled) {
+      this.props.onLongPress?.(event);
+    }
+  };
+
+  onPressIn = (event: GestureResponderEvent) => {
+    const {disabled} = this.props;
+
+    if (!disabled) {
+      this.props.onPressIn?.(event);
+    }
+  };
+
+  onPressOut = (event: GestureResponderEvent) => {
+    const {disabled} = this.props;
+
+    if (!disabled) {
+      this.props.onPressOut?.(event);
     }
   };
 
@@ -164,6 +193,9 @@ class Switch extends Component<SwitchProps> {
         {...others}
         style={this.getSwitchStyle()}
         onPress={this.onPress}
+        onLongPress={this.onLongPress}
+        onPressIn={this.onPressIn}
+        onPressOut={this.onPressOut}
       >
         {this.renderThumb()}
       </TouchableOpacity>
