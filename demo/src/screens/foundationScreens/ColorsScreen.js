@@ -53,12 +53,11 @@ class ColorsScreen extends Component {
   };
 
   toggleToastVisibility = () => {
-    const {showToast} = this.state;
-    if (!showToast) {
-      this.setState({
-        showToast: !showToast
-      });
-    }
+    this.setState({showToast: true});
+  };
+
+  dismissToast = () => {
+    this.setState({showToast: false});
   };
 
   onTokenPress = value => {
@@ -126,6 +125,7 @@ class ColorsScreen extends Component {
     return (
       <TextField
         migrate
+        preset={null}
         ref={r => (this.searchRef = r)}
         placeholder="Search tokens by category"
         onChangeText={this.onChangeText}
@@ -161,7 +161,7 @@ class ColorsScreen extends Component {
         message={message}
         preset={'general'}
         swipeable
-        onDismiss={this.toggleToastVisibility}
+        onDismiss={this.dismissToast}
         autoDismiss={3000}
       />
     );
