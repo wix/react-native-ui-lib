@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useMemo, useContext, useState, useRef, ReactNode} from 'react';
-import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
