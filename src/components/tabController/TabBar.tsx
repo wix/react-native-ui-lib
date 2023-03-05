@@ -12,7 +12,7 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import View from '../view';
-import {Colors, Spacings, Typography} from '../../style';
+import {Colors, Spacings, Typography, Shadows} from '../../style';
 import FadedScrollView from '../fadedScrollView';
 import {FaderProps} from '../fader';
 import useScrollToItem from './useScrollToItem';
@@ -271,7 +271,7 @@ const TabBar = (props: Props) => {
   });
 
   const shadowStyle = useMemo(() => {
-    return enableShadow ? propsShadowStyle || styles.containerShadow : undefined;
+    return enableShadow ? propsShadowStyle || Shadows.sh10.bottom : undefined;
   }, [enableShadow, propsShadowStyle]);
 
   const _containerStyle = useMemo(() => {
@@ -350,20 +350,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 2,
     backgroundColor: Colors.$backgroundPrimaryHeavy
-  },
-  containerShadow: {
-    ...Platform.select({
-      ios: {
-        shadowColor: Colors.black,
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
-        shadowOffset: {height: 6, width: 0}
-      },
-      android: {
-        elevation: 5,
-        backgroundColor: Colors.$backgroundElevated
-      }
-    })
   },
   spreadItems: {
     flex: 1

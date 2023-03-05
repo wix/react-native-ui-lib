@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
-import {Colors, Typography, BorderRadiuses} from 'style';
+import {Colors, Typography, BorderRadiuses, Shadows} from 'style';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
@@ -232,11 +232,10 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getShadowStyle() {
-    const backgroundColor = this.getBackgroundColor();
     const {enableShadow} = this.props;
 
     if (enableShadow) {
-      return [this.styles.shadowStyle, {shadowColor: backgroundColor}];
+      return Shadows.sh20.bottom;
     }
   }
 

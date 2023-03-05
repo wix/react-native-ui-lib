@@ -1,9 +1,15 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, ViewStyle} from 'react-native';
-import {Colors, BorderRadiuses} from '../../style';
+import {Colors, BorderRadiuses, Shadows} from '../../style';
 // import {PureBaseComponent} from '../../commons';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps
+} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Icon from '../icon';
@@ -181,7 +187,7 @@ class Card extends PureComponent<PropTypes, State> {
     const {enableShadow} = this.props;
 
     if (enableShadow) {
-      return this.styles.containerShadow;
+      return Shadows.sh10.bottom;
     }
   }
 
@@ -305,13 +311,6 @@ function createStyles({width, height, borderRadius, selectionOptions}: CardProps
       height,
       overflow: 'visible',
       borderRadius: brRadius
-    },
-    containerShadow: {
-      // sh30 bottom
-      shadowColor: Colors.$backgroundNeutralIdle,
-      shadowOpacity: 0.25,
-      shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0}
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,
