@@ -433,6 +433,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   }
 });
-export {FeatureHighlight as testable};
+export {FeatureHighlight}; // for tests
 //@ts-ignore typescript - will be fixed when moved to functional component
 export default asBaseComponent<FeatureHighlightProps, typeof FeatureHighlight>(FeatureHighlight);
