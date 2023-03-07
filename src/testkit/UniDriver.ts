@@ -7,6 +7,8 @@ export interface UniDriver {
   instance(): Promise<any>;
   getInstanceProps(): Promise<any>;
   press(): void;
+  focus(): void;
+  blur(): void;
   typeText(text: string): Promise<void>;
   scrollX(deltaX: number): Promise<void>;
   scrollY(deltaY: number): Promise<void>;
