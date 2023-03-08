@@ -59,6 +59,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     return (
       <Image
         {...others}
+        ref={ref}
         source={iconSource}
         style={[
           style,
