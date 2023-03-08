@@ -12,7 +12,7 @@ import {
 import {Colors, Spacings} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
-import {asBaseComponent, ForwardRefInjectedProps} from '../../commons/new';
+import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import Text, {TextProps} from '../text';
 import View from '../view';
@@ -85,7 +85,7 @@ export interface CheckboxProps extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
 
-export type Props = CheckboxProps & ForwardRefInjectedProps;
+export type Props = CheckboxProps;
 
 interface CheckboxState {
   isChecked: Animated.Value;
