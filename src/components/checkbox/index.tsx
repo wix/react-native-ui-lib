@@ -227,13 +227,10 @@ class Checkbox extends Component<Props, CheckboxState> {
             ]}
           >
             <AnimatedIcon
-              style={[
-                this.styles.selectedIcon,
-                {transform: this.animationStyle.transform},
-                {tintColor: this.getTintColor()}
-              ]}
+              style={[this.styles.selectedIcon, {transform: this.animationStyle.transform}]}
               source={selectedIcon || Assets.icons.checkSmall}
               testID={`${testID}.selected`}
+              tintColor={this.getTintColor()}
             />
           </Animated.View>
         }
