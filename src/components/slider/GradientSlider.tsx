@@ -107,7 +107,7 @@ class GradientSlider extends Component<Props, GradientSliderState> {
 
   reset = () => {
     this.updateColor(this.state.initialColor);
-  }
+  };
 
   getColor() {
     const {color} = this.state;

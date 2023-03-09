@@ -195,7 +195,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
       nextProps.title !== this.props.title ||
       nextProps.visible !== this.props.visible
     );
-  }
+  };
 
   componentDidUpdate(nextProps: FeatureHighlightProps) {
     if (this.shouldSetTargetPosition(nextProps)) {

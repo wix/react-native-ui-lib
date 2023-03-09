@@ -25,7 +25,7 @@ export class TextFieldDriver extends ComponentDriver {
       console.warn(`TextField component with testId:${this.testID}, is not found. So you can't get the content`);
       return null;
     }
-  }
+  };
 
   isDisabled = async () => {
     if (await this.exists()) {
@@ -34,7 +34,7 @@ export class TextFieldDriver extends ComponentDriver {
       console.warn(`TextField component with testId:${this.testID}, is not found. So you can't get the disabled state`);
       return null;
     }
-  }
+  };
 
   changeText = async (text: string) => (await this.uniDriver.selectorByTestId(this.testID)).typeText(text);
 
@@ -45,7 +45,7 @@ export class TextFieldDriver extends ComponentDriver {
       console.warn(`TextField component with testId:${this.testID}, is not found. So you can't get the placeholder`);
       return null;
     }
-  }
+  };
 
   isPlaceholderVisible = async () => {
     if (await this.exists()) {
@@ -55,7 +55,7 @@ export class TextFieldDriver extends ComponentDriver {
     } else {
       console.warn(`TextField component with testId:${this.testID}, is not found.`);
     }
-  }
+  };
 
   isPressable = async () => {
     if (await this.exists()) {
@@ -64,7 +64,7 @@ export class TextFieldDriver extends ComponentDriver {
       console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
       return null;
     }
-  }
+  };
 
   // label
   getLabelElement = () => this.labelDriver.getElement();

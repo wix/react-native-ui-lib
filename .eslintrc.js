@@ -43,7 +43,6 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/camelcase': 0,
     '@typescript-eslint/indent': 0,
-    '@typescript-eslint/explicit-module-boundary-types': 0,
-    semi: [0, 'never']
+    '@typescript-eslint/explicit-module-boundary-types': 0
   }
 };
