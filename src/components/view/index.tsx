@@ -142,7 +142,7 @@ function View(props: ViewProps, ref: any) {
 
   return (
     <ViewContainer
-      //@ts-ignore
+      //@ts-expect-error
       accessibilityElementsHidden={inaccessible}
       importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
       {...others}
