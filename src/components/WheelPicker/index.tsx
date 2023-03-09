@@ -328,6 +328,7 @@ const WheelPicker = ({
             listKey={`${testID}.flatList`}
             height={height}
             data={items}
+            initialNumToRender={items.length}
             // @ts-ignore reanimated2
             keyExtractor={keyExtractor}
             scrollEventThrottle={100}
