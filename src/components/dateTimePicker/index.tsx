@@ -14,7 +14,8 @@ import type {TextFieldProps} from '../../incubator/TextField';
 
 const MODES = {
   DATE: 'date',
-  TIME: 'time'
+  TIME: 'time',
+  DATETIME: 'datetime'
 };
 
 export type DateTimePickerProps = Omit<TextFieldProps, 'value' | 'onChange'> & {
@@ -43,21 +44,29 @@ export type DateTimePickerProps = Omit<TextFieldProps, 'value' | 'onChange'> & {
    */
   maximumDate?: Date;
   /**
-   * The date format for the text display
+   * The date format for the text display when mode is 'date'
    */
   dateFormat?: string;
   /**
-   * A callback function to format date
+   * A callback function to format date when mode is 'date'
    */
   dateFormatter?: (date: Date) => string;
   /**
-   * The time format for the text display
+   * The date format for the text display when mode is 'time'
    */
   timeFormat?: string;
   /**
-   * A callback function to format time
+   * A callback function to format date when mode is 'time'
    */
   timeFormatter?: (date: Date) => string;
+  /**
+   * The date format for the text display when mode is 'dateTime'
+   */
+  dateTimeFormat?: string;
+  /**
+   * A callback function to format date when mode is 'dateTime'
+   */
+  dateTimeFormatter?: (date: Date) => string;
   /**
    * Allows changing of the locale of the component (iOS only)
    */
@@ -121,8 +130,10 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     mode = MODES.DATE,
     dateFormat,
     timeFormat,
+    dateTimeFormat,
     dateFormatter,
     timeFormatter,
+    dateTimeFormatter,
     minimumDate,
     maximumDate,
     locale,
@@ -192,6 +203,12 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
             ? timeFormatter(value)
             : timeFormat && moment
               ? moment(value).format(timeFormat)
+              : value.toLocaleTimeString();
+        case MODES.DATETIME:
+          return dateTimeFormatter
+            ? dateTimeFormatter(value)
+            : dateTimeFormat && moment
+              ? moment(value).format(dateTimeFormat)
               : value.toLocaleTimeString();
       }
     }
