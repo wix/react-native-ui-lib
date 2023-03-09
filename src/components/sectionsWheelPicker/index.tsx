@@ -51,7 +51,8 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
     numberOfVisibleRows,
     activeTextColor,
     inactiveTextColor,
-    textStyle
+    textStyle,
+    flatListProps: {initialNumToRender: sections?.length, maxToRenderPerBatch: sections?.length, style: {flex: 0}}
   };
 
   const shouldDisableRTL = useMemo(() => {
