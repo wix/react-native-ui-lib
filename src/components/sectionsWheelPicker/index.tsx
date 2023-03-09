@@ -52,11 +52,12 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
     activeTextColor,
     inactiveTextColor,
     textStyle,
-    flatListProps: Constants.isAndroid && {
-      initialNumToRender: sections?.length,
-      maxToRenderPerBatch: sections?.length,
-      style: {flex: 0}
-    }
+    flatListProps: Constants.isAndroid
+      ? {
+        initialNumToRender: sections?.length,
+        maxToRenderPerBatch: sections?.length
+      }
+      : undefined
   };
 
   const shouldDisableRTL = useMemo(() => {
