@@ -42,10 +42,8 @@ const defaultWebIconSize = 16;
 const Icon = forwardRef((props: Props, ref: any) => {
   const {size, tintColor, style, supportRTL, source, assetGroup, assetName, modifiers, ...others} = props;
   const {margins} = modifiers;
-  const webIconSize = Constants.isWeb
-    ? {width: size || defaultWebIconSize, height: size || defaultWebIconSize}
-    : undefined;
-  const iconSize = size ? {width: size, height: size} : webIconSize;
+  const hwSize = Constants.isWeb ? size || defaultWebIconSize : size;
+  const iconSize = {width: hwSize, height: hwSize};
   const shouldFlipRTL = supportRTL && Constants.isRTL;
 
   const iconSource = useMemo(() => {
@@ -55,28 +53,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     return source;
   }, [source, assetGroup, assetName]);
 
-  if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
-    return (
-      <Image
-        {...others}
-        ref={ref}
-        source={iconSource}
-        style={[
-          style,
-          margins,
-          iconSize,
-          shouldFlipRTL && styles.rtlFlipped,
-          !!tintColor && {
-            tintColor
-          }
-        ]}
-      />
-    );
-  }
-
-  return isSvg(source) ? (
-    <SvgImage data={source} {...props}/>
-  ) : (
+  const renderImage = () => (
     <Image
       {...others}
       ref={ref}
@@ -84,6 +61,12 @@ const Icon = forwardRef((props: Props, ref: any) => {
       style={[style, margins, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}]}
     />
   );
+
+  if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
+    return renderImage();
+  }
+
+  return isSvg(source) ? <SvgImage data={source} {...props}/> : renderImage();
 });
 
 Icon.displayName = 'Icon';

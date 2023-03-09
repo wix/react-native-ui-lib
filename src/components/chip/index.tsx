@@ -170,7 +170,8 @@ const Chip = ({
 
     return (
       <Icon
-        source={(isLeftIcon ? iconSource : rightIconSource) as ImageSourcePropType}
+        //@ts-expect-error
+        source={isLeftIcon ? iconSource : rightIconSource}
         testID={`${testID}.icon`}
         tintColor={Colors.$iconDefault}
         {...iconProps}

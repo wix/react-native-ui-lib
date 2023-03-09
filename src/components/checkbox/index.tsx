@@ -85,8 +85,6 @@ export interface CheckboxProps extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
 
-export type Props = CheckboxProps;
-
 interface CheckboxState {
   isChecked: Animated.Value;
 }
@@ -99,7 +97,7 @@ interface CheckboxState {
  */
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
-class Checkbox extends Component<Props, CheckboxState> {
+class Checkbox extends Component<CheckboxProps, CheckboxState> {
   static displayName = 'Checkbox';
 
   styles: {
@@ -120,7 +118,7 @@ class Checkbox extends Component<Props, CheckboxState> {
     ];
   };
 
-  constructor(props: Props) {
+  constructor(props: CheckboxProps) {
     super(props);
 
     this.state = {
@@ -283,4 +281,4 @@ function createStyles(props: CheckboxProps) {
   });
 }
 
-export default asBaseComponent<Props>(Checkbox);
+export default asBaseComponent<CheckboxProps>(Checkbox);

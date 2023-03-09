@@ -1,7 +1,6 @@
 import {useCallback, useMemo} from 'react';
 import _ from 'lodash';
 import {PickerProps, PickerValue} from '../types';
-import {Constants} from 'react-native-ui-lib';
 
 interface UsePickerLabelProps
   extends Pick<
@@ -16,13 +15,10 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
 
   const getLabelsFromArray = useCallback((value: PickerValue) => {
     const itemsByValue = _.keyBy(items, 'value');
-    const selectedItems = _.flow(arr =>
+
+    return _.flow(arr =>
       _.map(arr, item => (_.isPlainObject(item) ? getItemLabel?.(item) || item?.label : itemsByValue[item]?.label)),
     arr => _.join(arr, ', '))(value);
-    if (Constants.isWeb) {
-      return selectedItems ? selectedItems : undefined;
-    }
-    return selectedItems;
   },
   [getItemLabel]);
 
@@ -42,9 +38,7 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
 
     // otherwise, extract from picker items
     const selectedItem = _.find(items, {value});
-    if (Constants.isWeb) {
-      return _.get(selectedItem?.value || selectedItem, 'label');
-    }
+
     return _.get(selectedItem, 'label');
   },
   [getLabelsFromArray]);
