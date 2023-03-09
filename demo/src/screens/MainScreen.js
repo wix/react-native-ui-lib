@@ -269,7 +269,7 @@ class MainScreen extends Component {
   onCheckViewableItems = ({viewableItems}) => {
     const {chipsLabels, selectedSection} = this.state;
     if (!this.hasPressItem && this.hasUserScrolled) {
-      const title = viewableItems[0].section.title;
+      const title = viewableItems[0]?.section.title;
       const sectionIndex = _.findIndex(chipsLabels, c => {
         return c === title;
       });
