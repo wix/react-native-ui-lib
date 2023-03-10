@@ -2,7 +2,7 @@ import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
 global._UILIB_TESTING = true;
 
 NativeModules.StatusBarManager = {getHeight: jest.fn()};
-jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => new Promise.resolve(false));
+jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => Promise.resolve(false));
 
 // mock native modules
 jest.mock('@react-native-community/blur', () => {});

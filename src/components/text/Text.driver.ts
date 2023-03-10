@@ -8,7 +8,7 @@ export class TextDriver extends ComponentDriver {
       console.warn(`Text component with testID:${this.testID}, is not found. So you can't get the content`);
       return null;
     }
-  }
+  };
 
   isPressable = async () => {
     if (await this.exists()) {
@@ -17,5 +17,5 @@ export class TextDriver extends ComponentDriver {
       console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
       return null;
     }
-  }
+  };
 }

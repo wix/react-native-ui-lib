@@ -71,7 +71,7 @@ function Agenda() {
   },
   [renderEvent, renderHeader]);
 
-  const getItemType = useCallback(item => item.type, []);
+  const getItemType = useCallback((item: any) => item.type, []);
 
   const findClosestDateAfter = useCallback((selected: number) => {
     'worklet';

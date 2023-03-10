@@ -23,7 +23,7 @@ export class ButtonDriver extends ComponentDriver {
       console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
       return null;
     }
-  }
+  };
 
   // label
   getLabelRootElement = () => this.labelDriver.getElement();
@@ -31,6 +31,5 @@ export class ButtonDriver extends ComponentDriver {
   getLabelContent = () => this.labelDriver.getTextContent();
   // icon
   getIconElement = () => this.iconDriver.getElement();
-  isIconExists = () => this.iconDriver.exists()
-
+  isIconExists = () => this.iconDriver.exists();
 }
