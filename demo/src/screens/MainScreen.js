@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import PropTypes from 'prop-types';
 import {StyleSheet, FlatList, SectionList, ScrollView} from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
@@ -134,7 +134,7 @@ class MainScreen extends Component {
     Navigation.push(this.props.componentId, {
       component: {
         name: options.name || options.screen,
-        id: this.settingsScreenName,
+        id: options.screen,
         passProps: options.passProps,
         options: {
           topBar: {

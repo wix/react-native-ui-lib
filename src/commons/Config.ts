@@ -6,7 +6,7 @@ const validateAsyncStorage = (method: 'get' | 'set') => {
   if (isAsyncStorageInstalled) {
     return true;
   } else {
-    console.error(`RNUILib requires installing "@react-native-async-storage/async-storage" dependency to use ${method}LocalScheme`);
+    console.error(`RNUILib requires installing "@react-native-community/async-storage" dependency to use ${method}LocalScheme`);
     return false;
   }
 };
