@@ -85,6 +85,24 @@ export class TestingLibraryDriver implements UniDriver {
     fireEvent.press(this.reactTestInstances[0]);
   };
 
+  focus = (): void => {
+    if (!this.reactTestInstances) {
+      throw new NoSelectorException();
+    }
+    this.validateExplicitInstance();
+    this.validateSingleInstance();
+    fireEvent(this.reactTestInstances[0], 'focus');
+  };
+
+  blur = (): void => {
+    if (!this.reactTestInstances) {
+      throw new NoSelectorException();
+    }
+    this.validateExplicitInstance();
+    this.validateSingleInstance();
+    fireEvent(this.reactTestInstances[0], 'blur');
+  };
+
   typeText = async (text: string): Promise<void> => {
     console.log('this.reactTestInstances: ', this.reactTestInstances);
     if (!this.reactTestInstances) {
