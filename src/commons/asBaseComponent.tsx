@@ -66,7 +66,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       const {forwardedRef, ...others} = themeProps;
       return (
         (this.state.error && UIComponent.defaultProps?.renderError) || (
-          <WrappedComponent {...others} modifiers={modifiers} ref={forwardedRef}/>
+          <WrappedComponent {...others} modifiers={modifiers} ref={forwardedRef} flex={undefined}/>
         )
       );
     }
