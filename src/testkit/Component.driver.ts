@@ -45,6 +45,18 @@ export class ComponentDriver {
       .then((driver) => driver.press());
   };
 
+  focus = async () => {
+    return this.uniDriver
+      .selectorByTestId(this.testID)
+      .then((driver) => driver.focus());
+  };
+
+  blur = async () => {
+    return this.uniDriver
+      .selectorByTestId(this.testID)
+      .then((driver) => driver.blur());
+  };
+
   protected getByTestId = (testID: string) => {
     return this.uniDriver
       .selectorByTestId(testID)

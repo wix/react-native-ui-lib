@@ -3,35 +3,28 @@ import {waitFor} from '@testing-library/react-native';
 import View from '../../../components/view';
 import {TextFieldDriver} from '../TextField.driver';
 import TextField from '../index';
-import {Validator} from '../types';
+import {TextFieldProps} from '../types';
 
 const TEXT_FIELD_TEST_ID = 'text_field_test_id';
-interface TextFieldProps {
-  value?: string;
-  placeholder?: string;
-  label?: string;
-  validationMessage?: string;
-  validate?: Validator;
-  validateOnStart?: boolean;
-  validateOnChange?: boolean;
-  enableErrors?: boolean;
-  editable?: boolean;
-  readonly?: boolean;
-  floatingPlaceholder?: boolean;
-  showCharCounter?: boolean;
-  maxLength?: number;
-}
 
 function TestCase(textFieldProps?: TextFieldProps) {
   const [value, setValue] = useState(textFieldProps?.value);
-  return (<View>
-    <TextField {...textFieldProps} testID={TEXT_FIELD_TEST_ID} value={value} onChangeText={setValue}/>
-  </View>);
+  return (
+    <View>
+      <TextField {...textFieldProps} testID={TEXT_FIELD_TEST_ID} value={value} onChangeText={setValue}/>
+    </View>
+  );
 }
 
+const validate = jest.fn((value: string) => {
+  return !!value;
+});
 
 describe('TextField', () => {
-  afterEach(() => TextFieldDriver.clear());
+  afterEach(() => {
+    TextFieldDriver.clear();
+    jest.clearAllMocks();
+  });
 
   it('should render textField', async () => {
     const component = <TestCase/>;
@@ -246,6 +239,40 @@ describe('TextField', () => {
       textFieldDriver.changeText('abcd');
 
       await waitFor(async () => expect(await textFieldDriver.getCharCounterContent()).toEqual('4/10'));
+    });
+  });
+
+  describe('validateOnBlur', () => {
+    it('validate is called with undefined when defaultValue is not given', async () => {
+      const component = (
+        <TestCase
+          validateOnBlur
+          validationMessage={'Not valid'}
+          validate={[validate]}
+        />
+      );
+      const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
+      textFieldDriver.focus();
+      textFieldDriver.blur();
+      await waitFor(() => expect(validate).toHaveBeenCalledTimes(1));
+      await waitFor(() => expect(validate).toHaveBeenCalledWith(undefined));
+    });
+
+    it('validate is called with defaultValue when defaultValue is given', async () => {
+      const defaultValue = '1';
+      const component = (
+        <TestCase
+          validateOnBlur
+          validationMessage={'Not valid'}
+          validate={[validate]}
+          defaultValue={defaultValue}
+        />
+      );
+      const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
+      textFieldDriver.focus();
+      textFieldDriver.blur();
+      await waitFor(() => expect(validate).toHaveBeenCalledTimes(1));
+      await waitFor(() => expect(validate).toHaveBeenCalledWith(defaultValue));
     });
   });
 });
