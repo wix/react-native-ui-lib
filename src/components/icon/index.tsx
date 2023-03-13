@@ -52,7 +52,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     ...others
   } = props;
   const {margins} = modifiers;
-  const iconSize = {width: size, height: size};
+  const iconSize = size ? {width: size, height: size} : undefined;
   const shouldFlipRTL = supportRTL && Constants.isRTL;
 
   const iconSource = useMemo(() => {
