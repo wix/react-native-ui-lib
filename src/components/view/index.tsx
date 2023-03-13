@@ -21,11 +21,11 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, C
    */
   inaccessible?: boolean;
   /**
-   * TODO: probobly isn't needed
+   * TODO: probably isn't needed
    */
   width?: string | number;
   /**
-   * TODO: probobly isn't needed
+   * TODO: probably isn't needed
    */
   height?: string | number;
   /**
