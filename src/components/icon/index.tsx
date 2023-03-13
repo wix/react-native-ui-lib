@@ -40,10 +40,19 @@ type Props = IconProps & BaseComponentInjectedProps;
 const defaultWebIconSize = 16;
 
 const Icon = forwardRef((props: Props, ref: any) => {
-  const {size, tintColor, style, supportRTL, source, assetGroup, assetName, modifiers, ...others} = props;
+  const {
+    size = Constants.isWeb ? defaultWebIconSize : undefined,
+    tintColor,
+    style,
+    supportRTL,
+    source,
+    assetGroup,
+    assetName,
+    modifiers,
+    ...others
+  } = props;
   const {margins} = modifiers;
-  const hwSize = Constants.isWeb ? size || defaultWebIconSize : size;
-  const iconSize = {width: hwSize, height: hwSize};
+  const iconSize = {width: size, height: size};
   const shouldFlipRTL = supportRTL && Constants.isRTL;
 
   const iconSource = useMemo(() => {
@@ -62,11 +71,13 @@ const Icon = forwardRef((props: Props, ref: any) => {
     />
   );
 
+  const renderSvg = () => <SvgImage data={source} {...props}/>;
+
   if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
     return renderImage();
   }
 
-  return isSvg(source) ? <SvgImage data={source} {...props}/> : renderImage();
+  return isSvg(source) ? renderSvg() : renderImage();
 });
 
 Icon.displayName = 'Icon';
