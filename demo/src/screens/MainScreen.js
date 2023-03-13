@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
 import {StyleSheet, FlatList, SectionList, ScrollView} from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
@@ -269,7 +269,7 @@ class MainScreen extends Component {
   onCheckViewableItems = ({viewableItems}) => {
     const {chipsLabels, selectedSection} = this.state;
     if (!this.hasPressItem && this.hasUserScrolled) {
-      const title = viewableItems[0].section.title;
+      const title = viewableItems[0]?.section.title;
       const sectionIndex = _.findIndex(chipsLabels, c => {
         return c === title;
       });

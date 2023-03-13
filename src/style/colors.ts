@@ -273,10 +273,10 @@ export class Colors {
     return _.inRange(hue, 51, 184);
   }
 
-  isDark(colorValue: string | OpaqueColorValue) {
+  isDark(colorValue: string | OpaqueColorValue, darkThreshold = 0.55) {
     const color = colorValue === null ? undefined : colorStringValue(colorValue);
     const lum = tinycolor(color).getLuminance();
-    return lum < 0.55;
+    return lum < darkThreshold;
   }
   isValidHex(string: string) {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(string);
