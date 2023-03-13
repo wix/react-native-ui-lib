@@ -3,6 +3,23 @@
 exports[`Button backgroundColor should return backgroundColor according to modifier 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -15,7 +32,7 @@ exports[`Button backgroundColor should return backgroundColor according to modif
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#FB6413",
       "borderRadius": 999,
@@ -31,8 +48,8 @@ exports[`Button backgroundColor should return backgroundColor according to modif
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -45,8 +62,8 @@ exports[`Button backgroundColor should return backgroundColor according to modif
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -54,7 +71,7 @@ exports[`Button backgroundColor should return backgroundColor according to modif
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -73,6 +90,23 @@ exports[`Button backgroundColor should return backgroundColor according to modif
 exports[`Button backgroundColor should return backgroundColor according to prop value 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -85,7 +119,7 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "red",
       "borderRadius": 999,
@@ -101,8 +135,8 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -115,8 +149,8 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -124,7 +158,7 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -143,6 +177,23 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
 exports[`Button backgroundColor should return defined theme backgroundColor 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -155,7 +206,7 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#b268ca",
       "borderRadius": 999,
@@ -171,8 +222,8 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -185,8 +236,8 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -194,7 +245,7 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -214,8 +265,20 @@ exports[`Button backgroundColor should return theme disabled color if button is 
 <View
   accessibilityRole="button"
   accessibilityState={
-    Object {
+    {
+      "busy": undefined,
+      "checked": undefined,
       "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
     }
   }
   accessible={true}
@@ -230,7 +293,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#D2D6D8",
       "borderRadius": 999,
@@ -246,8 +309,8 @@ exports[`Button backgroundColor should return theme disabled color if button is 
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -260,8 +323,8 @@ exports[`Button backgroundColor should return theme disabled color if button is 
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -269,7 +332,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -288,6 +351,23 @@ exports[`Button backgroundColor should return theme disabled color if button is 
 exports[`Button backgroundColor should return undefined if this button is link 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -300,7 +380,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -316,8 +396,8 @@ exports[`Button backgroundColor should return undefined if this button is link 1
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -330,8 +410,8 @@ exports[`Button backgroundColor should return undefined if this button is link 1
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -339,7 +419,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -358,6 +438,23 @@ exports[`Button backgroundColor should return undefined if this button is link 1
 exports[`Button backgroundColor should return undefined if this button is outline 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -370,7 +467,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -388,8 +485,8 @@ exports[`Button backgroundColor should return undefined if this button is outlin
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -402,8 +499,8 @@ exports[`Button backgroundColor should return undefined if this button is outlin
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -411,7 +508,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -430,6 +527,23 @@ exports[`Button backgroundColor should return undefined if this button is outlin
 exports[`Button border radius should return 0 border radius when border radius prop is 0 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -442,7 +556,7 @@ exports[`Button border radius should return 0 border radius when border radius p
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 0,
@@ -458,8 +572,8 @@ exports[`Button border radius should return 0 border radius when border radius p
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -472,8 +586,8 @@ exports[`Button border radius should return 0 border radius when border radius p
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -481,7 +595,7 @@ exports[`Button border radius should return 0 border radius when border radius p
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -500,6 +614,23 @@ exports[`Button border radius should return 0 border radius when border radius p
 exports[`Button border radius should return 0 border radius when button is full width 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -512,7 +643,7 @@ exports[`Button border radius should return 0 border radius when button is full 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 0,
@@ -528,8 +659,8 @@ exports[`Button border radius should return 0 border radius when button is full 
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -542,8 +673,8 @@ exports[`Button border radius should return 0 border radius when button is full 
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -551,7 +682,7 @@ exports[`Button border radius should return 0 border radius when button is full 
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -570,6 +701,23 @@ exports[`Button border radius should return 0 border radius when button is full 
 exports[`Button border radius should return given border radius when use plain number 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -582,7 +730,7 @@ exports[`Button border radius should return given border radius when use plain n
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 12,
@@ -598,8 +746,8 @@ exports[`Button border radius should return given border radius when use plain n
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -612,8 +760,8 @@ exports[`Button border radius should return given border radius when use plain n
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -621,7 +769,7 @@ exports[`Button border radius should return given border radius when use plain n
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -640,6 +788,23 @@ exports[`Button border radius should return given border radius when use plain n
 exports[`Button container size should avoid minWidth limitation if avoidMinWidth was sent 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -652,7 +817,7 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -668,8 +833,8 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -682,8 +847,8 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -691,10 +856,10 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -715,6 +880,23 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
 exports[`Button container size should have no padding if avoidInnerPadding prop was sent 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -727,7 +909,7 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -743,8 +925,8 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -757,8 +939,8 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -766,10 +948,10 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -790,6 +972,23 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
 exports[`Button container size should have no padding of button is a link nor min width 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -802,7 +1001,7 @@ exports[`Button container size should have no padding of button is a link nor mi
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -818,8 +1017,8 @@ exports[`Button container size should have no padding of button is a link nor mi
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -832,8 +1031,8 @@ exports[`Button container size should have no padding of button is a link nor mi
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -841,10 +1040,10 @@ exports[`Button container size should have no padding of button is a link nor mi
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -865,6 +1064,23 @@ exports[`Button container size should have no padding of button is a link nor mi
 exports[`Button container size should have no padding of button is an icon button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -877,7 +1093,7 @@ exports[`Button container size should have no padding of button is an icon butto
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -897,7 +1113,7 @@ exports[`Button container size should have no padding of button is an icon butto
     onError={[Function]}
     source={14}
     style={
-      Array [
+      [
         undefined,
         undefined,
         undefined,
@@ -907,8 +1123,8 @@ exports[`Button container size should have no padding of button is an icon butto
         undefined,
         undefined,
         false,
-        Array [
-          Object {
+        [
+          {
             "marginRight": 8,
             "tintColor": "#FFFFFF",
           },
@@ -922,8 +1138,8 @@ exports[`Button container size should have no padding of button is an icon butto
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -936,8 +1152,8 @@ exports[`Button container size should have no padding of button is an icon butto
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -945,10 +1161,10 @@ exports[`Button container size should have no padding of button is an icon butto
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -969,6 +1185,23 @@ exports[`Button container size should have no padding of button is an icon butto
 exports[`Button container size should reduce padding by outlineWidth in case of outline button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -981,7 +1214,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -999,8 +1232,8 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1013,8 +1246,8 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1022,7 +1255,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -1041,6 +1274,23 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
 exports[`Button container size should return style for large button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1053,7 +1303,7 @@ exports[`Button container size should return style for large button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -1069,8 +1319,8 @@ exports[`Button container size should return style for large button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1083,8 +1333,8 @@ exports[`Button container size should return style for large button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1092,7 +1342,7 @@ exports[`Button container size should return style for large button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -1111,6 +1361,23 @@ exports[`Button container size should return style for large button 1`] = `
 exports[`Button container size should return style for large button 2`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1123,7 +1390,7 @@ exports[`Button container size should return style for large button 2`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -1141,8 +1408,8 @@ exports[`Button container size should return style for large button 2`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1155,8 +1422,8 @@ exports[`Button container size should return style for large button 2`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1164,7 +1431,7 @@ exports[`Button container size should return style for large button 2`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -1183,6 +1450,23 @@ exports[`Button container size should return style for large button 2`] = `
 exports[`Button container size should return style for medium button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1195,7 +1479,7 @@ exports[`Button container size should return style for medium button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -1211,8 +1495,8 @@ exports[`Button container size should return style for medium button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1225,8 +1509,8 @@ exports[`Button container size should return style for medium button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1234,10 +1518,10 @@ exports[`Button container size should return style for medium button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -1258,6 +1542,23 @@ exports[`Button container size should return style for medium button 1`] = `
 exports[`Button container size should return style for medium button 2`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1270,7 +1571,7 @@ exports[`Button container size should return style for medium button 2`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -1288,8 +1589,8 @@ exports[`Button container size should return style for medium button 2`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1302,8 +1603,8 @@ exports[`Button container size should return style for medium button 2`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1311,10 +1612,10 @@ exports[`Button container size should return style for medium button 2`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -1335,6 +1636,23 @@ exports[`Button container size should return style for medium button 2`] = `
 exports[`Button container size should return style for round button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1347,7 +1665,7 @@ exports[`Button container size should return style for round button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -1363,8 +1681,8 @@ exports[`Button container size should return style for round button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1377,8 +1695,8 @@ exports[`Button container size should return style for round button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1386,7 +1704,7 @@ exports[`Button container size should return style for round button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -1405,6 +1723,23 @@ exports[`Button container size should return style for round button 1`] = `
 exports[`Button container size should return style for small button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1417,7 +1752,7 @@ exports[`Button container size should return style for small button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -1433,8 +1768,8 @@ exports[`Button container size should return style for small button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1447,8 +1782,8 @@ exports[`Button container size should return style for small button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1456,10 +1791,10 @@ exports[`Button container size should return style for small button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -1480,6 +1815,23 @@ exports[`Button container size should return style for small button 1`] = `
 exports[`Button container size should return style for small button 2`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1492,7 +1844,7 @@ exports[`Button container size should return style for small button 2`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -1510,8 +1862,8 @@ exports[`Button container size should return style for small button 2`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1524,8 +1876,8 @@ exports[`Button container size should return style for small button 2`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1533,10 +1885,10 @@ exports[`Button container size should return style for small button 2`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -1557,6 +1909,23 @@ exports[`Button container size should return style for small button 2`] = `
 exports[`Button container size should return style for xSmall button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1569,7 +1938,7 @@ exports[`Button container size should return style for xSmall button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -1585,8 +1954,8 @@ exports[`Button container size should return style for xSmall button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1599,8 +1968,8 @@ exports[`Button container size should return style for xSmall button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1608,10 +1977,10 @@ exports[`Button container size should return style for xSmall button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -1632,6 +2001,23 @@ exports[`Button container size should return style for xSmall button 1`] = `
 exports[`Button container size should return style for xSmall button 2`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1644,7 +2030,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -1662,8 +2048,8 @@ exports[`Button container size should return style for xSmall button 2`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1676,8 +2062,8 @@ exports[`Button container size should return style for xSmall button 2`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1685,10 +2071,10 @@ exports[`Button container size should return style for xSmall button 2`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -1709,6 +2095,23 @@ exports[`Button container size should return style for xSmall button 2`] = `
 exports[`Button hyperlink should render button as a hyperlink 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1721,7 +2124,7 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -1737,8 +2140,8 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -1747,14 +2150,14 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
         undefined,
         undefined,
         undefined,
-        Object {},
+        {},
         undefined,
         undefined,
-        Object {
+        {
           "textDecorationLine": "underline",
         },
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -1762,7 +2165,7 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -1781,6 +2184,23 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
 exports[`Button icon should apply color on icon 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1793,7 +2213,7 @@ exports[`Button icon should apply color on icon 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -1813,7 +2233,7 @@ exports[`Button icon should apply color on icon 1`] = `
     onError={[Function]}
     source={12}
     style={
-      Array [
+      [
         undefined,
         undefined,
         undefined,
@@ -1823,8 +2243,8 @@ exports[`Button icon should apply color on icon 1`] = `
         undefined,
         undefined,
         false,
-        Array [
-          Object {
+        [
+          {
             "tintColor": "green",
           },
           undefined,
@@ -1840,6 +2260,23 @@ exports[`Button icon should apply color on icon 1`] = `
 exports[`Button icon should apply color on icon 2`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1852,7 +2289,7 @@ exports[`Button icon should apply color on icon 2`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -1872,7 +2309,7 @@ exports[`Button icon should apply color on icon 2`] = `
     onError={[Function]}
     source={12}
     style={
-      Array [
+      [
         undefined,
         undefined,
         undefined,
@@ -1882,8 +2319,8 @@ exports[`Button icon should apply color on icon 2`] = `
         undefined,
         undefined,
         false,
-        Array [
-          Object {
+        [
+          {
             "tintColor": "#FC3D2F",
           },
           undefined,
@@ -1899,6 +2336,23 @@ exports[`Button icon should apply color on icon 2`] = `
 exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1911,7 +2365,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -1931,7 +2385,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
     onError={[Function]}
     source={12}
     style={
-      Array [
+      [
         undefined,
         undefined,
         undefined,
@@ -1941,11 +2395,11 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
         undefined,
         undefined,
         false,
-        Array [
-          Object {
+        [
+          {
             "tintColor": "#FFFFFF",
           },
-          Object {
+          {
             "marginRight": 9,
             "tintColor": "red",
           },
@@ -1961,6 +2415,23 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
 exports[`Button icon should return icon style according to different variations 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1973,7 +2444,7 @@ exports[`Button icon should return icon style according to different variations 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -1995,7 +2466,7 @@ exports[`Button icon should return icon style according to different variations 
     onError={[Function]}
     source={12}
     style={
-      Array [
+      [
         undefined,
         undefined,
         undefined,
@@ -2005,8 +2476,8 @@ exports[`Button icon should return icon style according to different variations 
         undefined,
         undefined,
         false,
-        Array [
-          Object {
+        [
+          {
             "tintColor": "#5A48F5",
           },
           undefined,
@@ -2022,6 +2493,23 @@ exports[`Button icon should return icon style according to different variations 
 exports[`Button icon should return icon style according to different variations 2`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2034,7 +2522,7 @@ exports[`Button icon should return icon style according to different variations 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -2054,7 +2542,7 @@ exports[`Button icon should return icon style according to different variations 
     onError={[Function]}
     source={12}
     style={
-      Array [
+      [
         undefined,
         undefined,
         undefined,
@@ -2064,8 +2552,8 @@ exports[`Button icon should return icon style according to different variations 
         undefined,
         undefined,
         false,
-        Array [
-          Object {
+        [
+          {
             "tintColor": "#5A48F5",
           },
           undefined,
@@ -2082,8 +2570,20 @@ exports[`Button icon should return icon style according to different variations 
 <View
   accessibilityRole="button"
   accessibilityState={
-    Object {
+    {
+      "busy": undefined,
+      "checked": undefined,
       "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
     }
   }
   accessible={true}
@@ -2098,7 +2598,7 @@ exports[`Button icon should return icon style according to different variations 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#D2D6D8",
       "borderRadius": 999,
@@ -2118,7 +2618,7 @@ exports[`Button icon should return icon style according to different variations 
     onError={[Function]}
     source={12}
     style={
-      Array [
+      [
         undefined,
         undefined,
         undefined,
@@ -2128,8 +2628,8 @@ exports[`Button icon should return icon style according to different variations 
         undefined,
         undefined,
         false,
-        Array [
-          Object {
+        [
+          {
             "tintColor": "#FFFFFF",
           },
           undefined,
@@ -2145,6 +2645,23 @@ exports[`Button icon should return icon style according to different variations 
 exports[`Button icon should return the right spacing according to button size when label exists and icon on the right 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2157,7 +2674,7 @@ exports[`Button icon should return the right spacing according to button size wh
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2173,8 +2690,8 @@ exports[`Button icon should return the right spacing according to button size wh
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2187,8 +2704,8 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2196,7 +2713,7 @@ exports[`Button icon should return the right spacing according to button size wh
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -2215,6 +2732,23 @@ exports[`Button icon should return the right spacing according to button size wh
 exports[`Button icon should return the right spacing according to button size when label exists and icon on the right 2`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2227,7 +2761,7 @@ exports[`Button icon should return the right spacing according to button size wh
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2243,8 +2777,8 @@ exports[`Button icon should return the right spacing according to button size wh
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2257,8 +2791,8 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2266,10 +2800,10 @@ exports[`Button icon should return the right spacing according to button size wh
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -2290,6 +2824,23 @@ exports[`Button icon should return the right spacing according to button size wh
 exports[`Button icon should return the right spacing according to button size when label exists and icon on the right 3`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2302,7 +2853,7 @@ exports[`Button icon should return the right spacing according to button size wh
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2318,8 +2869,8 @@ exports[`Button icon should return the right spacing according to button size wh
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2332,8 +2883,8 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2341,10 +2892,10 @@ exports[`Button icon should return the right spacing according to button size wh
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -2365,6 +2916,23 @@ exports[`Button icon should return the right spacing according to button size wh
 exports[`Button icon should return the right spacing according to button size when label exists and icon on the right 4`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2377,7 +2945,7 @@ exports[`Button icon should return the right spacing according to button size wh
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2393,8 +2961,8 @@ exports[`Button icon should return the right spacing according to button size wh
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2407,8 +2975,8 @@ exports[`Button icon should return the right spacing according to button size wh
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2416,10 +2984,10 @@ exports[`Button icon should return the right spacing according to button size wh
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -2440,6 +3008,23 @@ exports[`Button icon should return the right spacing according to button size wh
 exports[`Button label size should return style for large button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2452,7 +3037,7 @@ exports[`Button label size should return style for large button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2468,8 +3053,8 @@ exports[`Button label size should return style for large button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2482,8 +3067,8 @@ exports[`Button label size should return style for large button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2491,7 +3076,7 @@ exports[`Button label size should return style for large button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -2510,6 +3095,23 @@ exports[`Button label size should return style for large button 1`] = `
 exports[`Button label size should return style for medium button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2522,7 +3124,7 @@ exports[`Button label size should return style for medium button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2538,8 +3140,8 @@ exports[`Button label size should return style for medium button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2552,8 +3154,8 @@ exports[`Button label size should return style for medium button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2561,10 +3163,10 @@ exports[`Button label size should return style for medium button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -2585,6 +3187,23 @@ exports[`Button label size should return style for medium button 1`] = `
 exports[`Button label size should return style for small button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2597,7 +3216,7 @@ exports[`Button label size should return style for small button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2613,8 +3232,8 @@ exports[`Button label size should return style for small button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2627,8 +3246,8 @@ exports[`Button label size should return style for small button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2636,10 +3255,10 @@ exports[`Button label size should return style for small button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -2660,6 +3279,23 @@ exports[`Button label size should return style for small button 1`] = `
 exports[`Button label size should return style for xSmall button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2672,7 +3308,7 @@ exports[`Button label size should return style for xSmall button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2688,8 +3324,8 @@ exports[`Button label size should return style for xSmall button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2702,8 +3338,8 @@ exports[`Button label size should return style for xSmall button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2711,10 +3347,10 @@ exports[`Button label size should return style for xSmall button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
-          Object {
+          {
             "fontFamily": "System",
             "fontSize": 14,
             "fontWeight": "400",
@@ -2735,6 +3371,23 @@ exports[`Button label size should return style for xSmall button 1`] = `
 exports[`Button labelColor should return Theme linkColor color for link 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2747,7 +3400,7 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -2763,8 +3416,8 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2777,8 +3430,8 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2786,7 +3439,7 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFD54E",
           },
           undefined,
@@ -2805,6 +3458,23 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
 exports[`Button labelColor should return color according to color modifier 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2817,7 +3487,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2833,8 +3503,8 @@ exports[`Button labelColor should return color according to color modifier 1`] =
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2847,8 +3517,8 @@ exports[`Button labelColor should return color according to color modifier 1`] =
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2856,7 +3526,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#D52712",
           },
           undefined,
@@ -2875,6 +3545,23 @@ exports[`Button labelColor should return color according to color modifier 1`] =
 exports[`Button labelColor should return color according to color prop 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2887,7 +3574,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -2903,8 +3590,8 @@ exports[`Button labelColor should return color according to color prop 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2917,8 +3604,8 @@ exports[`Button labelColor should return color according to color prop 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -2926,7 +3613,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "green",
           },
           undefined,
@@ -2946,8 +3633,20 @@ exports[`Button labelColor should return disabled text color according to theme 
 <View
   accessibilityRole="button"
   accessibilityState={
-    Object {
+    {
+      "busy": undefined,
+      "checked": undefined,
       "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
     }
   }
   accessible={true}
@@ -2962,7 +3661,7 @@ exports[`Button labelColor should return disabled text color according to theme 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -2978,8 +3677,8 @@ exports[`Button labelColor should return disabled text color according to theme 
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -2992,8 +3691,8 @@ exports[`Button labelColor should return disabled text color according to theme 
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3001,7 +3700,7 @@ exports[`Button labelColor should return disabled text color according to theme 
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#D2D6D8",
           },
           undefined,
@@ -3020,6 +3719,23 @@ exports[`Button labelColor should return disabled text color according to theme 
 exports[`Button labelColor should return linkColor color for link 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3032,7 +3748,7 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -3048,8 +3764,8 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3062,8 +3778,8 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3071,7 +3787,7 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FDB893",
           },
           undefined,
@@ -3090,6 +3806,23 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
 exports[`Button labelColor should return undefined color if this is an icon button (without label) 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3102,7 +3835,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -3122,7 +3855,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
     onError={[Function]}
     source={12}
     style={
-      Array [
+      [
         undefined,
         undefined,
         undefined,
@@ -3132,8 +3865,8 @@ exports[`Button labelColor should return undefined color if this is an icon butt
         undefined,
         undefined,
         false,
-        Array [
-          Object {
+        [
+          {
             "tintColor": "#FFFFFF",
           },
           undefined,
@@ -3149,6 +3882,23 @@ exports[`Button labelColor should return undefined color if this is an icon butt
 exports[`Button link should render button as a link 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3161,7 +3911,7 @@ exports[`Button link should render button as a link 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -3177,8 +3927,8 @@ exports[`Button link should render button as a link 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3191,8 +3941,8 @@ exports[`Button link should render button as a link 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3200,7 +3950,7 @@ exports[`Button link should render button as a link 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -3219,6 +3969,23 @@ exports[`Button link should render button as a link 1`] = `
 exports[`Button outline should render button with an outline 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3231,7 +3998,7 @@ exports[`Button outline should render button with an outline 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -3249,8 +4016,8 @@ exports[`Button outline should render button with an outline 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3263,8 +4030,8 @@ exports[`Button outline should render button with an outline 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3272,7 +4039,7 @@ exports[`Button outline should render button with an outline 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -3291,6 +4058,23 @@ exports[`Button outline should render button with an outline 1`] = `
 exports[`Button outline should render button with an outlineColor 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3303,7 +4087,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderColor": "blue",
@@ -3321,8 +4105,8 @@ exports[`Button outline should render button with an outlineColor 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3335,8 +4119,8 @@ exports[`Button outline should render button with an outlineColor 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3344,7 +4128,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,
@@ -3363,6 +4147,23 @@ exports[`Button outline should render button with an outlineColor 1`] = `
 exports[`Button outline should render button with outline and outlineColor 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3375,7 +4176,7 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "blue",
@@ -3393,8 +4194,8 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3407,8 +4208,8 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3416,7 +4217,7 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "blue",
           },
           undefined,
@@ -3435,6 +4236,23 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
 exports[`Button outline should return custom borderWidth according to outlineWidth passed 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3447,7 +4265,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#5A48F5",
@@ -3465,8 +4283,8 @@ exports[`Button outline should return custom borderWidth according to outlineWid
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3479,8 +4297,8 @@ exports[`Button outline should return custom borderWidth according to outlineWid
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3488,7 +4306,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -3508,8 +4326,20 @@ exports[`Button outline should return disabled color for outline if button is di
 <View
   accessibilityRole="button"
   accessibilityState={
-    Object {
+    {
+      "busy": undefined,
+      "checked": undefined,
       "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
     }
   }
   accessible={true}
@@ -3524,7 +4354,7 @@ exports[`Button outline should return disabled color for outline if button is di
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderColor": "#D2D6D8",
@@ -3542,8 +4372,8 @@ exports[`Button outline should return disabled color for outline if button is di
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3556,8 +4386,8 @@ exports[`Button outline should return disabled color for outline if button is di
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3565,7 +4395,7 @@ exports[`Button outline should return disabled color for outline if button is di
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#D2D6D8",
           },
           undefined,
@@ -3584,6 +4414,23 @@ exports[`Button outline should return disabled color for outline if button is di
 exports[`Button outline should return undefined when link is true, even when outline is true 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3596,7 +4443,7 @@ exports[`Button outline should return undefined when link is true, even when out
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "transparent",
       "borderRadius": 0,
@@ -3612,8 +4459,8 @@ exports[`Button outline should return undefined when link is true, even when out
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3626,8 +4473,8 @@ exports[`Button outline should return undefined when link is true, even when out
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3635,7 +4482,7 @@ exports[`Button outline should return undefined when link is true, even when out
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#5A48F5",
           },
           undefined,
@@ -3654,6 +4501,23 @@ exports[`Button outline should return undefined when link is true, even when out
 exports[`Button should render default button 1`] = `
 <View
   accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -3666,7 +4530,7 @@ exports[`Button should render default button 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "alignItems": "center",
       "backgroundColor": "#5A48F5",
       "borderRadius": 999,
@@ -3682,8 +4546,8 @@ exports[`Button should render default button 1`] = `
   <Text
     numberOfLines={1}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "color": "#20303C",
           "textAlign": "left",
@@ -3696,8 +4560,8 @@ exports[`Button should render default button 1`] = `
         undefined,
         undefined,
         undefined,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "flexDirection": "row",
             "fontFamily": "System",
@@ -3705,7 +4569,7 @@ exports[`Button should render default button 1`] = `
             "fontWeight": "400",
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#FFFFFF",
           },
           undefined,

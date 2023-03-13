@@ -32,7 +32,7 @@ class ProgressiveImage extends React.Component {
         loader={<View style={styles.container}/>}        
       />
     );
-  }
+  };
 
   render() {    
     return (

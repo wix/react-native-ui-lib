@@ -55,7 +55,7 @@ export class TestingLibraryDriver implements UniDriver {
     }
     const instances = await this.renderAPI?.findAllByDisplayValue(value).catch(() => []);
     return new TestingLibraryDriver(instances);
-  }
+  };
 
   first = (): Promise<UniDriver> => this.at(0);
 
@@ -74,7 +74,7 @@ export class TestingLibraryDriver implements UniDriver {
   getInstanceProps = async (): Promise<any> => {
     const instance = await this.instance();
     return _.get(instance, 'props');
-  }
+  };
 
   press = (): void => {
     if (!this.reactTestInstances) {
