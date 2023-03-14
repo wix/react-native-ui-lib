@@ -25,6 +25,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     data,
     children,
     initialDate = NOW,
+    onChangeDate,
     firstDayOfWeek = FirstDayOfWeek.MONDAY,
     staticHeader = false,
     showExtraDays = true
@@ -54,6 +55,9 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   const setDate = useCallback<CalendarContextProps['setDate']>((date: number, updateSource: UpdateSource) => {
     current.value = date;
     lastUpdateSource.value = updateSource;
+    if (updateSource !== UpdateSource.PROP_UPDATE) {
+      onChangeDate?.(date);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -91,7 +95,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       setHeaderHeight,
       headerHeight
     };
-  }, []);
+  }, [processedData]);
 
   /** Pages reload */
 

@@ -1,18 +1,20 @@
 import React, {useContext, useCallback, useRef} from 'react';
+import {ActivityIndicator} from 'react-native';
 import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
 import {FlashListPackage} from 'optionalDeps';
 import type {FlashList as FlashListType, ViewToken} from '@shopify/flash-list';
-import {BorderRadiuses} from 'style';
+import {BorderRadiuses, Colors} from 'style';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {isSameDay, isSameMonth} from './helpers/DateUtils';
-import {InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
+import {AgendaProps, InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 const {FlashList} = FlashListPackage;
 
 // TODO: Fix initial scrolling
-function Agenda() {
+function Agenda(props: AgendaProps) {
+  const {onEndReached, showLoader} = props;
   const {data, selectedDate, setDate, updateSource} = useContext(CalendarContext);
   const flashList = useRef<FlashListType<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
@@ -48,14 +50,7 @@ function Agenda() {
 
   const renderHeader = useCallback((item: DateSectionHeader) => {
     return (
-      <View
-        marginB-1
-        paddingB-4
-        marginH-10
-        paddingH-10
-        height={50}
-        bottom
-      >
+      <View marginB-1 paddingB-4 marginH-10 paddingH-10 height={50} bottom>
         <Text>{item.header}</Text>
       </View>
     );
@@ -142,19 +137,31 @@ function Agenda() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const _onEndReached = useCallback(() => {
+    onEndReached(selectedDate.value);
+  }, []);
+
   return (
-    <FlashList
-      ref={flashList}
-      estimatedItemSize={52}
-      data={data}
-      keyExtractor={keyExtractor}
-      renderItem={renderItem}
-      getItemType={getItemType}
-      onViewableItemsChanged={onViewableItemsChanged}
-      onMomentumScrollBegin={onMomentumScrollBegin}
-      onScrollBeginDrag={onScrollBeginDrag}
-      initialScrollIndex={findClosestDateAfter(selectedDate.value)?.index ?? 0}
-    />
+    <View flex>
+      <FlashList
+        ref={flashList}
+        estimatedItemSize={52}
+        data={data}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        getItemType={getItemType}
+        onViewableItemsChanged={onViewableItemsChanged}
+        onMomentumScrollBegin={onMomentumScrollBegin}
+        onScrollBeginDrag={onScrollBeginDrag}
+        initialScrollIndex={findClosestDateAfter(selectedDate.value)?.index ?? 0}
+        onEndReached={_onEndReached}
+      />
+      {showLoader && (
+        <View absF center style={{backgroundColor: Colors.rgba(Colors.grey10, 0.2)}}>
+          <ActivityIndicator/>
+        </View>
+      )}
+    </View>
   );
 }
 
