@@ -7,4 +7,3 @@ export {default as HapticFeedbackPackage} from './HapticFeedbackPackage';
 export {default as SvgPackage} from './SvgPackage';
 export {createShimmerPlaceholder} from './ShimmerPackage';
 export {default as LinearGradientPackage} from './LinearGradientPackage';
-export {default as AsyncStoragePackage} from './AsyncStoragePackage';
