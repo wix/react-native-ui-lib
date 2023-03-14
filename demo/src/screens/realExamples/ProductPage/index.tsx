@@ -77,13 +77,12 @@ class Product extends Component {
               migrate
               value={selectedColor}
               onChange={(value: string) => this.setState({selectedColor: value})}
-              rightIconSource={{}}
-              rightIconStyle={{
+              trailingAccessory={<Icon {...{
                 width: 24,
                 height: 24,
                 backgroundColor: colorOptions[selectedColor].color,
                 borderRadius: 12
-              }}
+              }} />}
             >
               {_.map(colorOptions, (colorOption, colorKey) => {
                 return <Picker.Item key={colorKey} value={colorKey} label={colorOption.name}/>;

@@ -139,7 +139,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     }
   }, [getItemIndex]);
 
-  const onViewableItemsChanged = useCallback(({viewableItems}) => {
+  const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
     const item = viewableItems?.[0]?.item;
     if (item && scrolledByUser.value) {
       if (!isSameMonth(item, current.value)) {
@@ -160,7 +160,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderCalendarItem = useCallback(({item}) => {
+  const renderCalendarItem = useCallback(({item}: any) => {
     return <CalendarItem year={item.year} month={item.month}/>;
   }, []);
 

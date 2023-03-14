@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, ViewProps, ViewStyle} from 'react-native';
+import {StyleSheet, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {SharedValue, useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
@@ -23,6 +23,7 @@ export interface Props extends ViewProps {
   shouldBounceToStep: boolean;
   stepInterpolatedValue: SharedValue<number>;
   gap?: number;
+  secondary?: boolean;
 }
 
 const SHADOW_RADIUS = 4;
@@ -43,17 +44,18 @@ const Thumb = (props: Props) => {
     shouldDisableRTL,
     shouldBounceToStep,
     stepInterpolatedValue,
-    gap = 0
+    gap = 0,
+    secondary
   } = props;
 
   const rtlFix = Constants.isRTL ? -1 : 1;
-  const isPressedDefault = useSharedValue(false);
+  const isPressed = useSharedValue(false);
   const thumbSize = useSharedValue({width: THUMB_SIZE, height: THUMB_SIZE});
   const lastOffset = useSharedValue(0);
 
   const gesture = Gesture.Pan()
     .onBegin(() => {
-      isPressedDefault.value = true;
+      isPressed.value = true;
       lastOffset.value = offset.value;
     })
     .onUpdate(e => {
@@ -67,7 +69,9 @@ const Thumb = (props: Props) => {
         // adjust end edge
         newX = end.value;
       }
-      if (newX < end.value - gap && newX > start.value + gap) {
+      if (!secondary && newX < gap || 
+        secondary && newX > end.value - gap || 
+        newX < end.value - gap && newX > start.value + gap) {
         offset.value = newX;
       }
     })
@@ -75,7 +79,7 @@ const Thumb = (props: Props) => {
       onSeekEnd?.();
     })
     .onFinalize(() => {
-      isPressedDefault.value = false;
+      isPressed.value = false;
       if (shouldBounceToStep) {
         offset.value = Math.round(offset.value / stepInterpolatedValue.value) * stepInterpolatedValue.value;
       }
@@ -83,17 +87,17 @@ const Thumb = (props: Props) => {
   gesture.enabled(!disabled);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const customStyle = isPressedDefault.value ? activeStyle?.value : defaultStyle?.value;
+    const customStyle = isPressed.value ? activeStyle?.value : defaultStyle?.value;
     return {
       ...customStyle,
       transform: [
         {translateX: (offset.value - thumbSize.value.width / 2) * rtlFix},
-        {scale: withSpring(!disableActiveStyling && isPressedDefault.value ? 1.3 : 1)}
+        {scale: withSpring(!disableActiveStyling && isPressed.value ? 1.3 : 1)}
       ]
     };
   });
 
-  const onThumbLayout = useCallback(event => {
+  const onThumbLayout = useCallback((event: LayoutChangeEvent) => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
     thumbSize.value = {width, height};

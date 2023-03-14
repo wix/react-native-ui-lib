@@ -37,12 +37,24 @@ export class ComponentDriver {
 
   getElement = () => {
     return this.getByTestId(this.testID);
-  }
+  };
 
   press = async () => {
     return this.uniDriver
       .selectorByTestId(this.testID)
       .then((driver) => driver.press());
+  };
+
+  focus = async () => {
+    return this.uniDriver
+      .selectorByTestId(this.testID)
+      .then((driver) => driver.focus());
+  };
+
+  blur = async () => {
+    return this.uniDriver
+      .selectorByTestId(this.testID)
+      .then((driver) => driver.blur());
   };
 
   protected getByTestId = (testID: string) => {
@@ -65,11 +77,11 @@ export class ComponentDriver {
     return this.uniDriver
       .selectorByText(text)
       .then((driver) => driver.instance());
-  }
+  };
 
   getByDisplayValue = (text: string) => {
     return this.uniDriver
       .getByDisplayValue(text)
       .then((driver) => driver.instance());
-  }
+  };
 }

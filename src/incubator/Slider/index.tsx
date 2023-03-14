@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
-import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -59,7 +59,7 @@ const Slider = React.memo((props: Props) => {
     thumbHitSlop,
     disableActiveStyling,
     disabled,
-    useGap,
+    useGap = true,
     accessible,
     testID
   } = props;
@@ -171,7 +171,7 @@ const Slider = React.memo((props: Props) => {
 
   /** events */
 
-  const onTrackLayout = useCallback(event => {
+  const onTrackLayout = useCallback((event: LayoutChangeEvent) => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
     trackSize.value = {width, height};
@@ -180,7 +180,7 @@ const Slider = React.memo((props: Props) => {
     setInitialPositions(width);
   }, []);
 
-  const onTrackPress = useCallback(event => {
+  const onTrackPress = useCallback((event: GestureResponderEvent) => {
     if (disabled) {
       return;
     }
@@ -214,7 +214,7 @@ const Slider = React.memo((props: Props) => {
     if (useRange) {
       return {
         transform: [{translateX: withTiming(defaultThumbOffset.value * rtlFix, {duration: 10})}],
-        width: withTiming(rangeThumbOffset.value - defaultThumbOffset.value, {duration: 10})
+        width: withTiming(Math.abs(rangeThumbOffset.value - defaultThumbOffset.value), {duration: 10})
       };
     } else {
       return {
@@ -232,6 +232,7 @@ const Slider = React.memo((props: Props) => {
         end={type === ThumbType.DEFAULT ? rangeThumbOffset : end}
         offset={type === ThumbType.DEFAULT ? defaultThumbOffset : rangeThumbOffset}
         gap={rangeGap}
+        secondary={type !== ThumbType.DEFAULT}
         onSeekStart={onSeekStart}
         onSeekEnd={onSeekEnd}
         shouldDisableRTL={shouldDisableRTL}

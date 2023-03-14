@@ -16,6 +16,7 @@ import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import Text, {TextProps} from '../text';
 import View from '../view';
+import Icon from '../icon';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
@@ -94,6 +95,8 @@ interface CheckboxState {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true
  */
+
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 class Checkbox extends Component<CheckboxProps, CheckboxState> {
   static displayName = 'Checkbox';
 
@@ -203,7 +206,6 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   renderCheckbox() {
     const {selectedIcon, label, testID, style, containerStyle, ...others} = this.props;
-
     return (
       //@ts-ignore
       <TouchableOpacity
@@ -222,14 +224,11 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
               {backgroundColor: this.getBackgroundColor()}
             ]}
           >
-            <Animated.Image
-              style={[
-                this.styles.selectedIcon,
-                {transform: this.animationStyle.transform},
-                {tintColor: this.getTintColor()}
-              ]}
+            <AnimatedIcon
+              style={[this.styles.selectedIcon, {transform: this.animationStyle.transform}]}
               source={selectedIcon || Assets.icons.checkSmall}
               testID={`${testID}.selected`}
+              tintColor={this.getTintColor()}
             />
           </Animated.View>
         }

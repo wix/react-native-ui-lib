@@ -131,6 +131,7 @@ const constants = {
       (screenHeight >= 812 || screenWidth >= 812);
   },
   /* Orientation */
+  dimensionsEventListener: undefined,
   addDimensionsEventListener: (callback: any) => {
     return Dimensions.addEventListener('change', callback);
   },
@@ -138,8 +139,6 @@ const constants = {
   removeDimensionsEventListener: (callback: any) => {
     if (callback.remove) {
       callback.remove();
-    } else {
-      Dimensions.removeEventListener('change', callback);
     }
   },
   /* Accessibility */

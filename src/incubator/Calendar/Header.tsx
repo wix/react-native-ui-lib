@@ -1,5 +1,5 @@
 import React, {useContext, useCallback} from 'react';
-import {StyleSheet, TextInput} from 'react-native';
+import {StyleSheet, TextInput, LayoutChangeEvent} from 'react-native';
 import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import {Colors, Typography} from 'style';
 import View from '../../components/view';
@@ -44,7 +44,7 @@ const Header = (props: HeaderProps) => {
     };
   });
 
-  const onLayout = useCallback((event) => {
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
     setHeaderHeight?.(event.nativeEvent.layout.height);
   }, []);
 
