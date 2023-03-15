@@ -1,8 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Navigation} from 'react-native-navigation';
 import {Constants, Colors, Typography} from 'react-native-ui-lib'; // eslint-disable-line
 import {registerScreens} from './screens';
-
+import Storage, {DEFAULT_SCREEN} from './storage';
 
 /** Examples - uncomment when needed */
 // Typography.loadTypographies({
@@ -115,12 +114,10 @@ function startApp(defaultScreen) {
   Navigation.setRoot(rootObject);
 }
 
-async function getDefaultScreenAndStartApp() {
-  try {
-    const defaultScreen = await AsyncStorage.getItem('uilib.defaultScreen');
-    startApp(defaultScreen);
-  } catch (error) {
-    console.warn(error);
+function getDefaultScreenAndStartApp() {
+  if (Storage.contains(DEFAULT_SCREEN)) {
+    startApp(Storage.getString(DEFAULT_SCREEN));
+  } else {
     startApp();
   }
 }
