@@ -237,8 +237,9 @@ export interface PickerItemProps {
   disabled?: boolean;
   /**
    * Callback for onPress action
+   * @param selected true\false in multi mode and undefined in single mode
    */
-  onPress?: () => void;
+  onPress?: (selected?: boolean) => void;
   /**
    * Component test id
    */
