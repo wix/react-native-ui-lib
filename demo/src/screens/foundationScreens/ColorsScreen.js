@@ -36,19 +36,14 @@ for (const key in Colors) {
 }
 
 class ColorsScreen extends Component {
-  constructor(props) {
-    super(props);
 
-    this.extraColors = this.props.extraColors;
-
-    this.state = {
-      selectedColor: INITIAL_COLOR,
-      searchValue: '',
-      filteredTokens: [],
-      showToast: false,
-      message: undefined
-    };
-  }
+  state = {
+    selectedColor: INITIAL_COLOR,
+    searchValue: '',
+    filteredTokens: [],
+    showToast: false,
+    message: undefined
+  };
 
   scrollViewRef = React.createRef();
   searchRef = React.createRef();
@@ -66,9 +61,10 @@ class ColorsScreen extends Component {
   };
 
   onTokenPress = value => {
+    const {extraColors = []} = this.props;
     const systemColorName = Colors.getSystemColorByHex(Colors[value].toString(), [
       ...SYSTEM_COLORS,
-      ...(this.extraColors || []),
+      ...extraColors,
       'white',
       'black'
     ]);
