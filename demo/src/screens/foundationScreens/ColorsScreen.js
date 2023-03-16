@@ -17,7 +17,6 @@ import {
 const {Toast} = Incubator;
 
 const SYSTEM_COLORS = ['grey', 'violet', 'blue', 'green', 'red', 'yellow', 'orange'];
-const PRIVATE_COLORS = ['dine', 'fit', 'premium'];
 const INITIAL_COLOR = Colors.white;
 const BASE_PALETTE = ['1', '5', '10', '20', '30', '40', '50', '60', '70', '80'];
 const TOKENS_CATEGORIES = ['Background', 'Text', 'Icon', 'Outline'];
@@ -37,13 +36,19 @@ for (const key in Colors) {
 }
 
 class ColorsScreen extends Component {
-  state = {
-    selectedColor: INITIAL_COLOR,
-    searchValue: '',
-    filteredTokens: [],
-    showToast: false,
-    message: undefined
-  };
+  constructor(props) {
+    super(props);
+
+    this.extraColors = this.props.extraColors;
+
+    this.state = {
+      selectedColor: INITIAL_COLOR,
+      searchValue: '',
+      filteredTokens: [],
+      showToast: false,
+      message: undefined
+    };
+  }
 
   scrollViewRef = React.createRef();
   searchRef = React.createRef();
@@ -63,7 +68,7 @@ class ColorsScreen extends Component {
   onTokenPress = value => {
     const systemColorName = Colors.getSystemColorByHex(Colors[value].toString(), [
       ...SYSTEM_COLORS,
-      ...PRIVATE_COLORS,
+      ...(this.extraColors || []),
       'white',
       'black'
     ]);
