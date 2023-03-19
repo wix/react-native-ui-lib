@@ -78,6 +78,7 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
         style={style}
         onLayout={onPlaceholderLayout}
         testID={testID}
+        recorderTag={'unmask'}
       >
         {placeholder}
       </Text>
