@@ -10,24 +10,28 @@ import Reanimated, {
   useScrollViewOffset,
   useSharedValue,
   useDerivedValue,
-  useAnimatedGestureHandler
+  useAnimatedGestureHandler,
+  useAnimatedScrollHandler
 } from 'react-native-reanimated';
 import {Gesture, GestureDetector, TapGestureHandler} from 'react-native-gesture-handler';
 import {FlashList} from '@shopify/flash-list';
 import Month from '../../../src/incubator/Calendar/Month';
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
+const AnimatedFlashList = Reanimated.createAnimatedComponent(FlashList);
 
 const AnimatedTouchableOpacity = Reanimated.createAnimatedComponent(TouchableOpacity);
 // const AnimatedFlatList = Reanimated.createAnimatedComponent(FlashList);
 
 const data = _.times(50, i => i);
+const events = _.times(300, i => i);
 
 export default class PlaygroundScreen extends Component {
   render() {
     return (
       <View flex>
-        <AnimatedList/>
+        {/* <AnimatedList/> */}
+        <AgendaList/>
         {/* <List/> */}
       </View>
     );
@@ -129,6 +133,24 @@ const List = () => {
       <FlatList ref={ref} horizontal scrollEventThrottle={16} data={data} renderItem={renderItem}/>
     </View>
   );
+};
+
+const AgendaList = () => {
+  const renderItem = useCallback(({item}) => {
+    return (
+      <View height={80}>
+        <Text>Event {item}</Text>
+      </View>
+    );
+  }, []);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      console.log('ethan - scrolling', event.contentOffset.y);
+    }
+  });
+
+  return <AnimatedFlatList data={events} renderItem={renderItem} onScroll={scrollHandler} scrollEventThrottle={150}/>;
 };
 
 const styles = StyleSheet.create({
