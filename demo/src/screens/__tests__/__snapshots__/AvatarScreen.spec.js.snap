@@ -3074,8 +3074,8 @@ exports[`AvatarScreen renders screen 1`] = `
                   undefined,
                   undefined,
                   undefined,
-                  Array [
-                    Object {
+                  [
+                    {
                       "backgroundColor": "transparent",
                       "color": "#FFFFFF",
                       "fontFamily": "System",
