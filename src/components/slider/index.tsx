@@ -329,7 +329,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   setActiveThumb = (ref: React.RefObject<RNView>) => {
     this.activeThumbRef = ref;
-  }
+  };
 
   get_x() {
     if (this.isDefaultThumbActive()) {
@@ -487,7 +487,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   isDefaultThumbActive = () => {
     return this.activeThumbRef === this.thumb;
-  }
+  };
 
   getRoundedValue(value: number) {
     const {step} = this.props;
@@ -635,11 +635,11 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   onMinTouchStart = () => {
     this.setActiveThumb(this.minThumb);
-  }
+  };
 
   onTouchStart = () => {
     this.setActiveThumb(this.thumb);
-  }
+  };
 
   getThumbProps = () => {
     const {thumbStyle, activeThumbStyle, disableActiveStyling, disabled, thumbTintColor, thumbHitSlop} = this.props;
@@ -653,7 +653,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       thumbHitSlop,
       onLayout: this.onThumbLayout
     };
-  }
+  };
 
   /* Renders */
   renderMinThumb = () => {

@@ -324,12 +324,12 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   };
 
   renderAdvanced = () => {
-    const {children, renderContent, showContent, style, ...others} = this.props;
+    const {children, renderContent, showContent, style, testID, ...others} = this.props;
     const data = showContent && _.isFunction(renderContent) ? renderContent(this.props) : children;
 
     return (
-      <View style={style} {...this.contentAccessibilityProps} {...others}>
-        <ShimmerPlaceholder {...this.getDefaultSkeletonProps()} {...others}>
+      <View style={style} {...this.contentAccessibilityProps} testID={testID} {...others}>
+        <ShimmerPlaceholder {...this.getDefaultSkeletonProps()} testID={`${testID}.shimmer`} {...others}>
           {showContent && data}
         </ShimmerPlaceholder>
       </View>

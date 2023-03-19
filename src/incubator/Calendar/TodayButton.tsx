@@ -1,5 +1,5 @@
 import React, {useContext, useCallback} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, GestureResponderEvent} from 'react-native';
 import {/* Animated,  */ useAnimatedStyle /* , useSharedValue */} from 'react-native-reanimated';
 import {Colors} from '../../style';
 import View from '../../components/view';
@@ -32,7 +32,7 @@ const TodayButton = (props: TodayButtonProps) => {
   //   return <Animated.Image source={source.value} style={style}/>;
   // }, []);
 
-  const onPress = useCallback(event => {
+  const onPress = useCallback((event: GestureResponderEvent) => {
     setDate(Date.now(), UpdateSource.TODAY_PRESS);
     buttonProps?.onPress?.(event);
   },

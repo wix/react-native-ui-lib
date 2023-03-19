@@ -264,3 +264,5 @@ export interface TextFieldMethods {
   validate: () => boolean;
   isValid: () => boolean;
 }
+
+export type TextFieldRef = TextInput & TextFieldMethods;

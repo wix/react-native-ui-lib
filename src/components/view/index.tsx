@@ -22,11 +22,11 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, C
    */
   inaccessible?: boolean;
   /**
-   * TODO: probobly isn't needed
+   * TODO: probably isn't needed
    */
   width?: string | number;
   /**
-   * TODO: probobly isn't needed
+   * TODO: probably isn't needed
    */
   height?: string | number;
   /**
@@ -148,6 +148,7 @@ function View(props: ViewProps, ref: any) {
 
   return (
     <ViewContainer
+      //@ts-expect-error
       accessibilityElementsHidden={inaccessible}
       importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
       fsTagName={recorderTag}

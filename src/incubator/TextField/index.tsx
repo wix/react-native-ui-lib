@@ -17,7 +17,9 @@ import {
   InternalTextFieldProps,
   ValidationMessagePosition,
   FieldContextType,
-  TextFieldMethods
+  TextFieldMethods,
+  TextFieldRef,
+  Validator
 } from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
@@ -218,7 +220,9 @@ export {
   FieldContextType,
   StaticMembers as TextFieldStaticMembers,
   TextFieldMethods,
-  ValidationMessagePosition as TextFieldValidationMessagePosition
+  TextFieldRef,
+  ValidationMessagePosition as TextFieldValidationMessagePosition,
+  Validator as TextFieldValidator
 };
 export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any), {
   modifiersOptions: {

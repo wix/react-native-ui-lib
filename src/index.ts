@@ -29,7 +29,9 @@ import * as Incubator from './incubator';
 export {
   TextFieldProps,
   TextFieldMethods,
+  TextFieldRef,
   TextFieldValidationMessagePosition,
+  TextFieldValidator,
   FieldContextType,
   ToastProps,
   ToastPresets,

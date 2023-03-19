@@ -7,7 +7,7 @@
     "privacy": "public",
     "description": "Demo project show case for react-native-ui-lib components",
     "githubUrl": "https://github.com/wix/react-native-ui-lib",
-    "version": "2.0.0",
+    "version": "7.1.0",
     "orientation": "portrait",
     "icon": "https://user-images.githubusercontent.com/1780255/107911939-34e98a80-6f66-11eb-91a6-1eb1b384e429.png",
     "splash": {

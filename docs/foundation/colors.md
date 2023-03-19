@@ -49,7 +49,7 @@ All the design tokens and their mapping in light mode can be found [here](https:
 Adding or overriding your own design tokens can be done by using the [loadSchemes](https://wix.github.io/react-native-ui-lib/docs/foundation/colors#loadschemes) method.
 To generate the design tokens, based on your app primary color and load them automatically into the `Colors` object, use:
 ```javascript
-Colros.loadDesignTokens({primaryColor: <your primary color>});
+Colors.loadDesignTokens({primaryColor: <your primary color>});
 ```
 This method will update all the `primary` tokens to be based on your app primary color, both in light and dark mode.
 

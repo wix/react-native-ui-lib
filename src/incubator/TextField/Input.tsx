@@ -14,6 +14,11 @@ const DEFAULT_INPUT_COLOR: ColorType = {
 };
 
 const Input = ({
+  // (!) extract flex prop to avoid passing them on Android
+  /* eslint-disable */
+  // @ts-ignore (does not exist on props)
+  flex,
+  /* eslint-enable */
   style,
   hint,
   color = DEFAULT_INPUT_COLOR,
