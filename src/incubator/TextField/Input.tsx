@@ -15,9 +15,18 @@ const DEFAULT_INPUT_COLOR: ColorType = {
 
 const Input = ({
   // (!) extract flex prop to avoid passing them on Android
+  // TODO: extract alignment (top, right, ...) props till we manage to exclude them from typings
   /* eslint-disable */
   // @ts-ignore (does not exist on props)
   flex,
+  // @ts-ignore
+  left,
+  // @ts-ignore
+  top,
+  // @ts-ignore
+  right,
+  // @ts-ignore
+  bottom,
   /* eslint-enable */
   style,
   hint,
