@@ -51,13 +51,7 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
     numberOfVisibleRows,
     activeTextColor,
     inactiveTextColor,
-    textStyle,
-    flatListProps: Constants.isAndroid
-      ? {
-        initialNumToRender: sections?.length,
-        maxToRenderPerBatch: sections?.length
-      }
-      : undefined
+    textStyle
   };
 
   const shouldDisableRTL = useMemo(() => {
@@ -66,11 +60,18 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
 
   const renderSections = () =>
     _.map(sections, (section, index) => {
+      const sectionItemsLength = section?.items?.length;
       return (
         <WheelPicker
           disableRTL={shouldDisableRTL}
           key={index}
           testID={`${testID}.${index}`}
+          flatListProps={
+            Constants.isAndroid
+              ? {initialNumToRender: sectionItemsLength, maxToRenderPerBatch: sectionItemsLength}
+              : undefined
+          }
+          style={Constants.isAndroid ? styles.androidSectionWheelPicker : undefined}
           {...wheelPickerProps}
           {...section}
         />
@@ -91,5 +92,8 @@ export default asBaseComponent<SectionsWheelPickerProps>(SectionsWheelPicker);
 const styles = StyleSheet.create({
   disableRTL: {
     flexDirection: 'row-reverse'
+  },
+  androidSectionWheelPicker: {
+    flex: 0
   }
 });
