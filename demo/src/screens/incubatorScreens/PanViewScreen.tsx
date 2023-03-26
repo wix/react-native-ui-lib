@@ -21,7 +21,7 @@ interface Item {
   label: string;
 }
 
-const overlayBackgroundColor = Colors.rgba(Colors.black, 0.2);
+const OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.black, 0.5);
 const colors: Item[] = [
   {value: Colors.red10, label: 'Red10'},
   {value: Colors.red30, label: 'Red30'},
@@ -76,7 +76,7 @@ class PanViewScreen extends Component {
         <Modal
           transparent
           onBackgroundPress={this.onDialogDismissed}
-          overlayBackgroundColor={overlayBackgroundColor}
+          overlayBackgroundColor={OVERLAY_BACKGROUND_COLOR}
           useGestureHandlerRootView
           visible
         >

@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
 import PropTypes from 'prop-types';
 import {StyleSheet, FlatList, SectionList, ScrollView} from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
@@ -21,6 +20,7 @@ import {
   Dividers
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
+import Storage, {DEFAULT_SCREEN} from '../storage';
 
 const settingsIcon = require('../assets/icons/settings.png');
 const chevronIcon = require('../assets/icons/chevronRight.png');
@@ -152,7 +152,7 @@ class MainScreen extends Component {
   };
 
   setDefaultScreen = ({customValue: item}) => {
-    AsyncStorage.setItem('uilib.defaultScreen', item.screen);
+    Storage.set(DEFAULT_SCREEN, item.screen);
     this.openScreen({customValue: item});
   };
 
@@ -269,7 +269,7 @@ class MainScreen extends Component {
   onCheckViewableItems = ({viewableItems}) => {
     const {chipsLabels, selectedSection} = this.state;
     if (!this.hasPressItem && this.hasUserScrolled) {
-      const title = viewableItems[0].section.title;
+      const title = viewableItems[0]?.section.title;
       const sectionIndex = _.findIndex(chipsLabels, c => {
         return c === title;
       });

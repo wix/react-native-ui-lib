@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, ViewProps, ViewStyle} from 'react-native';
+import {StyleSheet, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {SharedValue, useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
@@ -97,7 +97,7 @@ const Thumb = (props: Props) => {
     };
   });
 
-  const onThumbLayout = useCallback(event => {
+  const onThumbLayout = useCallback((event: LayoutChangeEvent) => {
     const width = event.nativeEvent.layout.width;
     const height = event.nativeEvent.layout.height;
     thumbSize.value = {width, height};

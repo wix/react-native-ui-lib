@@ -13,5 +13,5 @@ export class RadioButtonDriver extends ComponentDriver {
   }
 
   hasLabel = () => this.labelDriver.exists();
-  hasIcon= () => this.iconDriver.exists();
+  hasIcon = () => this.iconDriver.exists();
 }

@@ -170,7 +170,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
             onBackgroundPress={useBackdrop && !useTargetFrame ? this.toggleHint : undefined}
-            backdropColor={Colors.rgba(Colors.$backgroundInverted, 0.3)}
+            backdropColor={Colors.rgba(Colors.black, 0.5)}
             customContent={
               showCustomContent
                 ? this.renderCustomContent()

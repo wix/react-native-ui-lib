@@ -71,8 +71,8 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
    * The props that will be passed to the pannable header
    */
   pannableHeaderProps?: any;
-  /** 
-   * Additional props for the modal. 
+  /**
+   * Additional props for the modal.
    */
   modalProps?: ModalProps;
   /**
@@ -93,7 +93,7 @@ interface DialogState {
   fadeOut?: boolean;
 }
 
-const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.grey20, 0.65);
+const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.black, 0.5);
 
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
@@ -213,7 +213,10 @@ class Dialog extends Component<DialogProps, DialogState> {
             containerStyle={this.styles.flexType}
             style={this.styles.flexType}
           >
-            <Container directions={[panDirection]} style={[this.styles.overflow, this.styles.flexType, containerStyle]}>
+            <Container
+              directions={[panDirection]}
+              style={[this.styles.overflow, !Constants.isWeb && this.styles.flexType, containerStyle]}
+            >
               {this.renderPannableHeader([panDirection])}
               {children}
             </Container>

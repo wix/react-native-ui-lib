@@ -260,7 +260,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     }
 
     return contentOffset;
-  }
+  };
 
   shouldUsePageWidth() {
     const {loop, pageWidth} = this.props;

@@ -59,7 +59,7 @@ const svgData = `<?xml version="1.0" encoding="UTF-8"?>
 
 const itemsToRender: ItemToRender[] = [
   {
-    title: 'ca',
+    title: 'Carousel',
     FC: CarouselWrapper
 
   },
