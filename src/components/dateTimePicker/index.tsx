@@ -1,6 +1,10 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {DateTimePickerPackage as RNDateTimePicker, MomentPackage as moment} from '../../optionalDependencies';
+import {
+  DateTimePickerPackage as RNDateTimePicker,
+  MomentPackage as moment,
+  LightDatePackage as LightDate
+} from '../../optionalDependencies';
 import {useDidUpdate} from 'hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
@@ -98,10 +102,14 @@ export type DateTimePickerProps = Omit<TextFieldProps, 'value' | 'onChange'> & {
    * Should migrate to the new TextField implementation
    */
   migrateTextField?: boolean;
-}
+  /**
+   * Use the LightDate library instead of moment.
+   * Only send if you have both installed and you prefer using LightDate (moment is the default).
+   */
+  useLightDate?: boolean;
+};
 
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
-
 
 /*eslint-disable*/
 /**
@@ -137,6 +145,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     useCustomTheme,
     testID,
     migrateTextField = true,
+    useLightDate,
     ...others
   } = props;
 
@@ -146,14 +155,26 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
 
   useEffect(() => {
     if (!RNDateTimePicker) {
+      // eslint-disable-next-line max-len
       console.error(`RNUILib DateTimePicker component requires installing "@react-native-community/datetimepicker" dependency`);
     }
   }, []);
 
+  const format =
+    moment && (!LightDate || !useLightDate)
+      ? // @ts-expect-error
+      (date: Date, format: string) => moment(date).format(format)
+      : LightDate
+        ? // @ts-expect-error
+        (date: Date, format: string) => LightDate.format(date, format)
+        : undefined;
+
   useEffect(() => {
-    if (!moment && (dateFormat || timeFormat)) {
-      console.error(`RNUILib DateTimePicker component with date/time format requires installing "moment" dependency`);
+    if (!format && (dateFormat || timeFormat)) {
+      // eslint-disable-next-line max-len
+      console.error(`RNUILib DateTimePicker component with date/time format requires installing "moment" or "light-date" dependency`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateFormat, timeFormat]);
 
   useDidUpdate(() => {
@@ -184,14 +205,14 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         case MODES.DATE:
           return dateFormatter
             ? dateFormatter(value)
-            : dateFormat && moment
-              ? moment(value).format(dateFormat)
+            : dateFormat && format
+              ? format(value, dateFormat)
               : value.toLocaleDateString();
         case MODES.TIME:
           return timeFormatter
             ? timeFormatter(value)
-            : timeFormat && moment
-              ? moment(value).format(timeFormat)
+            : timeFormat && format
+              ? format(value, timeFormat)
               : value.toLocaleTimeString();
       }
     }

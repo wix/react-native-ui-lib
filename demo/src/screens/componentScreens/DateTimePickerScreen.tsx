@@ -62,7 +62,7 @@ export default class DateTimePickerScreen extends Component {
             value={new Date('2015-03-25T12:00:00-06:30')}
           />
           <Text text60R marginT-40>
-            Custom Input
+            Custom Input (date)
           </Text>
           <DateTimePicker
             migrateTextField
@@ -71,6 +71,23 @@ export default class DateTimePickerScreen extends Component {
             placeholder={'Select a date'}
             renderInput={this.renderCustomInput}
             dateFormat={'MMM D, YYYY'}
+            // useLightDate
+            // dateFormat={'{mm}-{dd}-{yyyy}'}
+            // value={new Date('2015-03-25T12:00:00-06:30')}
+          />
+          <Text text60R marginT-40>
+            Custom Input (time)
+          </Text>
+          <DateTimePicker
+            migrateTextField
+            containerStyle={{marginVertical: 20}}
+            mode={'time'}
+            label={'Time'}
+            placeholder={'Select a date'}
+            renderInput={this.renderCustomInput}
+            timeFormat={'h:mm A'}
+            // useLightDate
+            // timeFormat={'{HH}:{mm}'}
             // value={new Date('2015-03-25T12:00:00-06:30')}
           />
         </View>
