@@ -315,7 +315,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         disabled={editable === false}
         // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
         renderCustomOverlay={Constants.isAndroid ? renderAndroidDateTimePicker : undefined}
-        testID={testID}
+        testID={`${testID}.container`}
       >
         {renderInput ? (
           renderInput({...props, value: getStringValue()})
@@ -323,7 +323,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
           <TextField
             {...others}
             migrate={migrateTextField}
-            testID={`${testID}.input`}
+            testID={testID}
             editable={editable}
             // @ts-expect-error should be remove after completing TextField migration
             expandable={!!others.renderExpandableInput}
