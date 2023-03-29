@@ -60,7 +60,10 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
 
   const renderSections = () =>
     _.map(sections, (section, index) => {
-      const sectionItemsLength = section?.items?.length;
+      let sectionItemsLength = section?.items?.length;
+      if (sectionItemsLength) {
+        sectionItemsLength /= 2;
+      }
       return (
         <WheelPicker
           disableRTL={shouldDisableRTL}
