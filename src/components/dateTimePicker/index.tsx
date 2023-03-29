@@ -315,7 +315,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         disabled={editable === false}
         // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
         renderCustomOverlay={Constants.isAndroid ? renderAndroidDateTimePicker : undefined}
-        testID={`${testID}.container`}
+        testID={`${testID}.overlay`}
       >
         {renderInput ? (
           renderInput({...props, value: getStringValue()})
