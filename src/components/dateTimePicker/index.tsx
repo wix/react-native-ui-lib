@@ -241,14 +241,14 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
           iconSource={Assets.icons.x}
           iconStyle={{tintColor: Colors.$iconDefault}}
           onPress={toggleExpandableOverlay}
-          testID={`${testID}.cancelBtn`}
+          testID={`${testID}.cancel`}
         />
         <Button
           link
           iconSource={Assets.icons.check}
           useCustomTheme={useCustomTheme}
           onPress={onDonePressed}
-          testID={`${testID}.submitBtn`}
+          testID={`${testID}.done`}
         />
       </View>
     );
@@ -272,7 +272,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
         display={Constants.isIOS ? 'spinner' : undefined}
         themeVariant={themeVariant}
-        testID={`${testID}.modal`}
+        testID={`${testID}.picker`}
       />
     );
   }, [
