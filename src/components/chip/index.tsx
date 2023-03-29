@@ -263,7 +263,7 @@ const Chip = ({
           }
           if (rightElement && leftElement) {
             return {
-              marginHorizontally: 2
+              marginHorizontal: 2
             };
           }
           if (iconSource || leftElement) {

@@ -110,8 +110,17 @@ class Text extends PureComponent<PropsTypes> {
   render() {
     const {
       // (!) extract flex prop to avoid passing them on Android
+      // TODO: extract alignment (top, right, ...) props till we manage to exclude them from typings
       /* eslint-disable */
       flex,
+      // @ts-ignore
+      left,
+      // @ts-ignore
+      top,
+      // @ts-ignore
+      right,
+      // @ts-ignore
+      bottom,
       /* eslint-enable */
       modifiers,
       style,

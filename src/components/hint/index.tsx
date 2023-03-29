@@ -533,7 +533,9 @@ class Hint extends Component<HintProps, HintState> {
       const layout = {
         ...this.getContainerPosition(),
         width: this.targetLayout?.width,
-        height: this.targetLayout?.height
+        height: this.targetLayout?.height,
+        right: Constants.isRTL ? this.targetLayout?.x : undefined,
+        left: Constants.isRTL ? undefined : this.targetLayout?.x
       };
 
       return (
