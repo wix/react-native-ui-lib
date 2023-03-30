@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 import {Spacings} from 'style';
-import {useOrientation} from 'hooks';
+import {useOrientation, useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
 import {GridListBaseProps} from './types';
 
@@ -16,7 +16,7 @@ const useGridLayout = (props: GridListBaseProps) => {
     keepItemSize,
     containerWidth,
     contentContainerStyle
-  } = props;
+  } = useThemeProps(props, 'useGridLayout');
 
   const {orientation} = useOrientation();
 
