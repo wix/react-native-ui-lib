@@ -1,4 +1,3 @@
-import {StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import {SharedValue, interpolate} from 'react-native-reanimated';
 import {SliderProps} from '../../components/slider';
 
@@ -53,12 +52,6 @@ export function validateValues(props: SliderProps) {
       !inRange(initialMaximumValue, minimumValue, maximumValue)) {
       console.error('Your passed values are invalid. Please check that they are in range of the minimum and maximum values');
     }
-  }
-}
-
-export function unpackStyle(style?: StyleProp<ViewStyle>) {
-  if (style) {
-    return JSON.parse(JSON.stringify(StyleSheet.flatten(style)));
   }
 }
 
