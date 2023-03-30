@@ -25,7 +25,8 @@
     {"name": "textStyle", "type": "TextStyle", "description": "Row text style"},
     {"name": "xxx", "type": "xxxx", "description": "xxxxx"},
     {"name": "testID", "type": "string", "description": "The component test id"},
-    {"name": "faderProps", "type": "FaderProps", "description": "Custom props for fader."}
+    {"name": "faderProps", "type": "FaderProps", "description": "Custom props for fader."},
+    {"name": "androidBigDataSection", "type": "boolean", "description": "Android, flatList props suite for big data section. Solve the bug that section isn't render all the values after value pick."}
   ],
   "snippet": [
     "<SectionsWheelPicker sections={sections$1}/>"

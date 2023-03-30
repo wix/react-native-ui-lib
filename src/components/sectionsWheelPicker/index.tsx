@@ -32,6 +32,10 @@ export type SectionsWheelPickerProps = {
    * Row text style
    */
   textStyle?: TextStyle;
+  /**
+   * Android, flatList props suite for big data section. Solve the bug that section isn't render all the values after value pick.
+   */
+  androidBigDataSection?: boolean;
   disableRTL?: boolean;
   testID?: string;
 };
@@ -43,7 +47,7 @@ export type SectionsWheelPickerProps = {
  */
 
 const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
-  const {sections, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, disableRTL, testID} =
+  const {sections, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, disableRTL, testID, androidBigDataSection} =
     props;
 
   const wheelPickerProps = {
@@ -60,21 +64,19 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
 
   const renderSections = () =>
     _.map(sections, (section, index) => {
-      let sectionItemsLength = section?.items?.length;
-      if (sectionItemsLength) {
-        sectionItemsLength /= 2;
-      }
+      const sectionItemsLength = section?.items?.length;
+      const androidBigSection = Constants.isAndroid && androidBigDataSection;
       return (
         <WheelPicker
           disableRTL={shouldDisableRTL}
           key={index}
           testID={`${testID}.${index}`}
           flatListProps={
-            Constants.isAndroid
+            androidBigSection
               ? {initialNumToRender: sectionItemsLength, maxToRenderPerBatch: sectionItemsLength}
               : undefined
           }
-          style={Constants.isAndroid ? styles.androidSectionWheelPicker : undefined}
+          style={androidBigSection ? styles.androidSectionWheelPicker : undefined}
           {...wheelPickerProps}
           {...section}
         />
