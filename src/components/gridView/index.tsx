@@ -142,7 +142,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
     const containerWidth = this.getGridContainerWidth();
     const numColumns = this.calcNumberOfColumns();
 
-    return (containerWidth - itemSpacing * (numColumns - 1)) / numColumns;
+    return Math.floor((containerWidth - itemSpacing * (numColumns - 1)) / numColumns);
   }
 
   renderLastItemOverlay() {
