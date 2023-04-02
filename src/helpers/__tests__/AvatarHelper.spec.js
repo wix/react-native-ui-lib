@@ -1,9 +1,22 @@
-import Colors from '../../../src/style/colors';
+import {Colors, Typography} from '../../../src/style';
 
 describe('services/AvatarService', () => {
   let uut;
   beforeEach(() => {
     uut = require('../../../src/helpers/AvatarHelper');
+  });
+
+  it('should getInitialsTypography', () => {
+    expect(uut.getInitialsTypography(12)).toEqual({fontSize: 10});
+    expect(uut.getInitialsTypography(16)).toEqual({fontSize: 10});
+    expect(uut.getInitialsTypography(20)).toEqual({fontSize: 10});
+    expect(uut.getInitialsTypography(28)).toEqual(Typography.text90BO);
+    expect(uut.getInitialsTypography(40)).toEqual(Typography.text80BO);
+    expect(uut.getInitialsTypography(48)).toEqual(Typography.text80BO);
+    expect(uut.getInitialsTypography(60)).toEqual(Typography.text60BO);
+    expect(uut.getInitialsTypography(80)).toEqual(Typography.text50H);
+    expect(uut.getInitialsTypography(120)).toEqual(Typography.text40H);
+    expect(uut.getInitialsTypography(200)).toEqual(Typography.text40H);
   });
 
   it('should getAvatarColors', () => {
