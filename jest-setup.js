@@ -1,4 +1,16 @@
 import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
+const {defineProperty} = Object;
+Object.defineProperty = function (object, name, meta) {
+  if (meta.get && !meta.configurable) {
+    return defineProperty(object, name, {
+      ...meta,
+      configurable: true
+    });
+  }
+
+  return defineProperty(object, name, meta);
+};
+
 global._UILIB_TESTING = true;
 
 NativeModules.StatusBarManager = {getHeight: jest.fn()};
@@ -21,6 +33,26 @@ jest.mock('react-native-gesture-handler',
   () => {
     jest.requireActual('react-native-gesture-handler/jestSetup');
     const GestureHandler = jest.requireActual('react-native-gesture-handler');
+    GestureHandler.Gesture.Tap = () => {
+      const TapMock = {
+        _handlers: {}
+      };
+
+      const getDefaultMockedHandler = handlerName => handler => {
+        if (typeof handler === 'function') {
+          TapMock._handlers[handlerName] = handler;
+        }
+        return TapMock;
+      };
+
+      TapMock.type = 'tap';
+      TapMock.maxDuration = getDefaultMockedHandler('maxDuration');
+      TapMock.onEnd = getDefaultMockedHandler('onEnd');
+      TapMock.onFinalize = getDefaultMockedHandler('onFinalize');
+      TapMock.onTouchesDown = getDefaultMockedHandler('onTouchesDown');
+      return TapMock;
+    };
+
     GestureHandler.Gesture.Pan = () => {
       const PanMock = {
         _handlers: {}
@@ -33,13 +65,22 @@ jest.mock('react-native-gesture-handler',
         return PanMock;
       };
 
+      PanMock.type = 'pan';
       PanMock.onStart = getDefaultMockedHandler('onStart');
       PanMock.onUpdate = getDefaultMockedHandler('onUpdate');
       PanMock.onEnd = getDefaultMockedHandler('onEnd');
-      PanMock.prepare = jest.fn();
+      PanMock.initialize = jest.fn();
+      PanMock.toGestureArray = jest.fn(() => {
+        return [PanMock];
+      });
       return PanMock;
     };
 
+    try {
+      jest
+        .spyOn(GestureHandler, 'GestureDetector', 'get')
+        .mockReturnValue(require('./GestureDetectorMock').GestureDetectorMock);
+    } catch {}
     return GestureHandler;
   },
   {virtual: true});
