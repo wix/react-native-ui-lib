@@ -1,15 +1,20 @@
 import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
-const {defineProperty} = Object;
-Object.defineProperty = function (object, name, meta) {
-  if (meta.get && !meta.configurable) {
-    return defineProperty(object, name, {
-      ...meta,
-      configurable: true
-    });
+// ========= Mock Object.defineProperty to always allow overriding =========
+const originalDefineProperty = Object.defineProperty;
+Object.defineProperty = (obj, prop, desc) => {
+  try {
+    return originalDefineProperty(obj, prop, {...desc, configurable: true});
+  } catch (e) {
+    return originalDefineProperty(obj, prop, desc);
   }
-
-  return defineProperty(object, name, meta);
 };
+Object.defineProperties = (obj, props) => {
+  Object.keys(props).forEach(key => {
+    Object.defineProperty(obj, key, props[key]);
+  });
+  return obj;
+};
+// =========================================================================
 
 global._UILIB_TESTING = true;
 
@@ -77,9 +82,9 @@ jest.mock('react-native-gesture-handler',
     };
 
     try {
-      jest
-        .spyOn(GestureHandler, 'GestureDetector', 'get')
-        .mockReturnValue(require('./GestureDetectorMock').GestureDetectorMock);
+      Object.defineProperty(GestureHandler, 'GestureDetector', {
+        value: require('./GestureDetectorMock').GestureDetectorMock
+      });
     } catch {}
     return GestureHandler;
   },
