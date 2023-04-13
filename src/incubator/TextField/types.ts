@@ -140,7 +140,7 @@ export interface InputProps
    */
   placeholderTextColor?: ColorType;
   /**
-   * Custom formatter for the input value (used only when input if not focused)
+   * Custom formatter for the input value (used only when input is not focused)
    */
   formatter?: (value?: string) => string | undefined;
   /**
