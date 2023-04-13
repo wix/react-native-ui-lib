@@ -10,7 +10,7 @@ class LogService {
 
   logBI = (event: any) => {
     this.biLogger?.log(event);
-  }
+  };
 
   warn = (message: string) => {
     if (__DEV__) {

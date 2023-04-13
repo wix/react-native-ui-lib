@@ -1,6 +1,33 @@
 import _ from 'lodash';
 import URL from 'url-parse';
 import Colors from '../style/colors';
+import {Typography} from 'style';
+
+export function getInitialsTypography(size: number) {
+  let typography;
+  switch (true) {
+    case size < 24:
+      typography = {fontSize: 10};
+      break;
+    case size < 34:
+      typography = Typography.text90BO;
+      break;
+    case size < 54:
+      typography = Typography.text80BO;
+      break;
+    case size < 70:
+      typography = Typography.text60BO;
+      break;
+    case size < 100:
+      typography = Typography.text50H;
+      break;
+    default:
+    case size >= 100:
+      typography = Typography.text40H;
+      break;
+  }
+  return typography;
+}
 
 export function hashStringToNumber(str?: string) {
   let hash = 5381;

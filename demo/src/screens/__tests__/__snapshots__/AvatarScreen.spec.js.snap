@@ -3,7 +3,7 @@
 exports[`AvatarScreen renders screen 1`] = `
 <RCTScrollView
   contentContainerStyle={
-    Object {
+    {
       "backgroundColor": "#FFFFFF",
       "padding": 25,
     }
@@ -12,7 +12,7 @@ exports[`AvatarScreen renders screen 1`] = `
   <View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -20,7 +20,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -32,23 +32,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -62,6 +62,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -73,7 +90,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -86,7 +103,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -94,8 +111,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -105,7 +122,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#D1CCFF",
                 },
                 false,
@@ -118,7 +135,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -126,7 +143,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -138,23 +155,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -168,6 +185,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -179,7 +213,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -192,7 +226,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -200,8 +234,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -211,7 +245,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#F8f9FA",
                 },
                 false,
@@ -222,7 +256,7 @@ exports[`AvatarScreen renders screen 1`] = `
         />
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -230,14 +264,14 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "borderRadius": 25,
                   "left": 29.411764705882355,
                   "position": "absolute",
                   "top": "10%",
                 },
-                Object {
+                {
                   "backgroundColor": "#5A48F5",
                   "paddingHorizontal": 6,
                   "paddingVertical": 3,
@@ -251,24 +285,24 @@ exports[`AvatarScreen renders screen 1`] = `
             $textDefaultLight={true}
             numberOfLines={1}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
                   "textAlign": "left",
                 },
-                Object {
+                {
                   "fontFamily": "System",
                   "fontSize": 10,
                   "fontWeight": "700",
                   "lineHeight": 16,
                 },
-                Object {
+                {
                   "color": "#FFFFFF",
                 },
                 undefined,
                 undefined,
-                Object {},
+                {},
                 undefined,
                 undefined,
                 undefined,
@@ -284,7 +318,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -292,7 +326,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -304,23 +338,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -334,6 +368,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -345,7 +396,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -358,7 +409,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -366,8 +417,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -377,7 +428,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#FFF4D3",
                 },
                 false,
@@ -389,8 +440,8 @@ exports[`AvatarScreen renders screen 1`] = `
           <Text
             numberOfLines={1}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
                   "textAlign": "left",
@@ -403,16 +454,19 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
-                Array [
-                  Object {
-                    "fontSize": 16,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
-                  Object {
+                  {
                     "backgroundColor": "transparent",
                     "color": "#CD4700",
                     "lineHeight": undefined,
                   },
-                  Object {
+                  {
                     "color": "#CD4700",
                   },
                 ],
@@ -425,7 +479,7 @@ exports[`AvatarScreen renders screen 1`] = `
         </View>
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -433,19 +487,19 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "borderRadius": 25,
                   "left": 29.411764705882355,
                   "position": "absolute",
                   "top": "10%",
                 },
-                Object {
+                {
                   "backgroundColor": "#5A48F5",
                   "paddingHorizontal": 6,
                   "paddingVertical": 3,
                 },
-                Object {
+                {
                   "backgroundColor": "#9f42bd",
                 },
               ],
@@ -456,24 +510,24 @@ exports[`AvatarScreen renders screen 1`] = `
             $textDefaultLight={true}
             numberOfLines={1}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
                   "textAlign": "left",
                 },
-                Object {
+                {
                   "fontFamily": "System",
                   "fontSize": 10,
                   "fontWeight": "700",
                   "lineHeight": 16,
                 },
-                Object {
+                {
                   "color": "#FFFFFF",
                 },
                 undefined,
                 undefined,
-                Object {},
+                {},
                 undefined,
                 undefined,
                 undefined,
@@ -489,7 +543,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -497,7 +551,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -509,23 +563,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -539,6 +593,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -550,7 +621,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -563,7 +634,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -571,8 +642,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -582,7 +653,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#F8f9FA",
                 },
                 false,
@@ -594,8 +665,8 @@ exports[`AvatarScreen renders screen 1`] = `
           <Text
             numberOfLines={1}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
                   "textAlign": "left",
@@ -608,16 +679,19 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
-                Array [
-                  Object {
-                    "fontSize": 16,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
-                  Object {
+                  {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
                     "lineHeight": undefined,
                   },
-                  Object {
+                  {
                     "color": "#20303C",
                   },
                 ],
@@ -633,14 +707,14 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityRole="text"
           accessible={false}
           iconProps={
-            Object {
+            {
               "tintColor": null,
             }
           }
-          modifiers={Object {}}
+          modifiers={{}}
           size={10}
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -648,7 +722,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Object {
+              {
                 "position": "absolute",
                 "right": 2.322330470336313,
                 "top": 2.322330470336313,
@@ -660,24 +734,24 @@ exports[`AvatarScreen renders screen 1`] = `
             pointerEvents="none"
             row={true}
             style={
-              Array [
+              [
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {},
-                Object {},
-                Object {
+                {},
+                {},
+                {
                   "flexDirection": "row",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "height": 10,
                     "minWidth": undefined,
                     "paddingHorizontal": 0,
                     "width": 10,
                   },
-                  Object {
+                  {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
                     "backgroundColor": "#116DFF",
@@ -685,8 +759,8 @@ exports[`AvatarScreen renders screen 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {},
-                  Object {
+                  {},
+                  {
                     "backgroundColor": "#00A87E",
                   },
                 ],
@@ -699,7 +773,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -707,7 +781,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -719,23 +793,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -749,6 +823,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -760,7 +851,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -773,7 +864,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -781,8 +872,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -792,10 +883,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#F8f9FA",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -811,7 +902,7 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           assetGroup="icons"
           containerStyle={
-            Object {
+            {
               "alignItems": "center",
               "borderRadius": 999,
               "height": 50,
@@ -821,18 +912,18 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           onError={[Function]}
           source={
-            Object {
+            {
               "uri": "https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg",
             }
           }
           style={
-            Array [
+            [
               undefined,
               undefined,
-              Object {
+              {
                 "width": 50,
               },
-              Object {
+              {
                 "height": 50,
               },
               undefined,
@@ -840,15 +931,15 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "height": 50,
                   "justifyContent": "center",
                   "width": 50,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -867,14 +958,14 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityRole="text"
           accessible={false}
           iconProps={
-            Object {
+            {
               "tintColor": null,
             }
           }
-          modifiers={Object {}}
+          modifiers={{}}
           size={10}
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -882,7 +973,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Object {
+              {
                 "bottom": 2.322330470336313,
                 "position": "absolute",
                 "right": 2.322330470336313,
@@ -894,24 +985,24 @@ exports[`AvatarScreen renders screen 1`] = `
             pointerEvents="none"
             row={true}
             style={
-              Array [
+              [
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {},
-                Object {},
-                Object {
+                {},
+                {},
+                {
                   "flexDirection": "row",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "height": 10,
                     "minWidth": undefined,
                     "paddingHorizontal": 0,
                     "width": 10,
                   },
-                  Object {
+                  {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
                     "backgroundColor": "#116DFF",
@@ -919,8 +1010,8 @@ exports[`AvatarScreen renders screen 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {},
-                  Object {
+                  {},
+                  {
                     "backgroundColor": "#FFC50D",
                   },
                 ],
@@ -933,7 +1024,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -941,7 +1032,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -953,23 +1044,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -983,6 +1074,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -994,7 +1102,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 40,
@@ -1007,7 +1115,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1015,8 +1123,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -1026,10 +1134,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#F8f9FA",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -1045,7 +1153,7 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           assetGroup="icons"
           containerStyle={
-            Object {
+            {
               "alignItems": "center",
               "borderRadius": 999,
               "height": 40,
@@ -1055,18 +1163,18 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           onError={[Function]}
           source={
-            Object {
+            {
               "uri": "https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg",
             }
           }
           style={
-            Array [
+            [
               undefined,
               undefined,
-              Object {
+              {
                 "width": 40,
               },
-              Object {
+              {
                 "height": 40,
               },
               undefined,
@@ -1074,15 +1182,15 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "height": 40,
                   "justifyContent": "center",
                   "width": 40,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1101,14 +1209,14 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityRole="text"
           accessible={false}
           iconProps={
-            Object {
+            {
               "tintColor": null,
             }
           }
-          modifiers={Object {}}
+          modifiers={{}}
           size={10}
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1116,7 +1224,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Object {
+              {
                 "bottom": 0.8578643762690499,
                 "left": 0.8578643762690499,
                 "position": "absolute",
@@ -1128,24 +1236,24 @@ exports[`AvatarScreen renders screen 1`] = `
             pointerEvents="none"
             row={true}
             style={
-              Array [
+              [
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {},
-                Object {},
-                Object {
+                {},
+                {},
+                {
                   "flexDirection": "row",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "height": 10,
                     "minWidth": undefined,
                     "paddingHorizontal": 0,
                     "width": 10,
                   },
-                  Object {
+                  {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
                     "backgroundColor": "#116DFF",
@@ -1153,8 +1261,8 @@ exports[`AvatarScreen renders screen 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {},
-                  Object {
+                  {},
+                  {
                     "backgroundColor": "#D2D6D8",
                   },
                 ],
@@ -1167,7 +1275,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -1175,7 +1283,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -1187,23 +1295,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -1217,6 +1325,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -1228,7 +1353,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 60,
@@ -1241,7 +1366,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1249,8 +1374,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -1260,10 +1385,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#F8f9FA",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -1276,7 +1401,7 @@ exports[`AvatarScreen renders screen 1`] = `
         />
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1284,7 +1409,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Object {
+              {
                 "alignItems": "center",
                 "borderRadius": 999,
                 "height": 60,
@@ -1301,18 +1426,18 @@ exports[`AvatarScreen renders screen 1`] = `
             onError={[Function]}
             onLoad={[Function]}
             source={
-              Object {
+              {
                 "uri": "https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg",
               }
             }
             style={
-              Array [
+              [
                 undefined,
                 undefined,
-                Object {
+                {
                   "width": 60,
                 },
-                Object {
+                {
                   "height": 60,
                 },
                 undefined,
@@ -1320,16 +1445,16 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 false,
-                Array [
-                  Array [
-                    Object {
+                [
+                  [
+                    {
                       "alignItems": "center",
                       "borderRadius": 999,
                       "height": 60,
                       "justifyContent": "center",
                       "width": 60,
                     },
-                    Object {
+                    {
                       "bottom": 0,
                       "left": 0,
                       "position": "absolute",
@@ -1338,7 +1463,7 @@ exports[`AvatarScreen renders screen 1`] = `
                     },
                     undefined,
                   ],
-                  Object {
+                  {
                     "opacity": 0,
                   },
                 ],
@@ -1352,7 +1477,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -1360,7 +1485,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -1372,23 +1497,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -1402,6 +1527,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -1413,7 +1555,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 70,
@@ -1426,7 +1568,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1434,8 +1576,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -1445,10 +1587,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "red",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -1464,7 +1606,7 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           assetGroup="icons"
           containerStyle={
-            Object {
+            {
               "alignItems": "center",
               "borderRadius": 999,
               "height": 70,
@@ -1474,18 +1616,18 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           onError={[Function]}
           source={
-            Object {
+            {
               "uri": "https://randomuser.me/api/portraits/women/24.jpg",
             }
           }
           style={
-            Array [
+            [
               undefined,
               undefined,
-              Object {
+              {
                 "width": 70,
               },
-              Object {
+              {
                 "height": 70,
               },
               undefined,
@@ -1493,15 +1635,15 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "height": 70,
                   "justifyContent": "center",
                   "width": 70,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1520,14 +1662,14 @@ exports[`AvatarScreen renders screen 1`] = `
           accessibilityRole="text"
           accessible={false}
           iconProps={
-            Object {
+            {
               "tintColor": null,
             }
           }
-          modifiers={Object {}}
+          modifiers={{}}
           size={14}
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1535,7 +1677,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Object {
+              {
                 "left": 3.2512626584708375,
                 "position": "absolute",
                 "top": 3.2512626584708375,
@@ -1547,24 +1689,24 @@ exports[`AvatarScreen renders screen 1`] = `
             pointerEvents="none"
             row={true}
             style={
-              Array [
+              [
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {},
-                Object {},
-                Object {
+                {},
+                {},
+                {
                   "flexDirection": "row",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "height": 14,
                     "minWidth": undefined,
                     "paddingHorizontal": 0,
                     "width": 14,
                   },
-                  Object {
+                  {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
                     "backgroundColor": "#116DFF",
@@ -1572,8 +1714,8 @@ exports[`AvatarScreen renders screen 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {},
-                  Object {
+                  {},
+                  {
                     "backgroundColor": "#00A87E",
                   },
                 ],
@@ -1586,7 +1728,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -1594,7 +1736,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -1606,23 +1748,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -1636,6 +1778,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -1647,7 +1806,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 60,
@@ -1660,7 +1819,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1668,8 +1827,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -1679,10 +1838,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#F8f9FA",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -1698,7 +1857,7 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           assetGroup="icons"
           containerStyle={
-            Object {
+            {
               "alignItems": "center",
               "borderRadius": 999,
               "height": 60,
@@ -1708,18 +1867,18 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           onError={[Function]}
           source={
-            Object {
+            {
               "uri": "https://randomuser.me/api/portraits/women/24.jpg",
             }
           }
           style={
-            Array [
+            [
               undefined,
               undefined,
-              Object {
+              {
                 "width": 60,
               },
-              Object {
+              {
                 "height": 60,
               },
               undefined,
@@ -1727,15 +1886,15 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "height": 60,
                   "justifyContent": "center",
                   "width": 60,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1755,24 +1914,24 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           borderColor="#FFFFFF"
           icon={
-            Object {
+            {
               "testUri": "../../../demo/src/assets/icons/star.png",
             }
           }
           iconProps={
-            Object {
+            {
               "tintColor": null,
             }
           }
           iconStyle={
-            Object {
+            {
               "backgroundColor": "#FFC50D",
             }
           }
-          modifiers={Object {}}
+          modifiers={{}}
           size={14}
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1780,7 +1939,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Object {
+              {
                 "position": "absolute",
                 "right": 0.28679656440357526,
                 "top": 0.28679656440357526,
@@ -1792,24 +1951,24 @@ exports[`AvatarScreen renders screen 1`] = `
             pointerEvents="none"
             row={true}
             style={
-              Array [
+              [
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {},
-                Object {},
-                Object {
+                {},
+                {},
+                {
                   "flexDirection": "row",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "height": 17,
                     "minWidth": undefined,
                     "paddingHorizontal": 0,
                     "width": 17,
                   },
-                  Object {
+                  {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
                     "backgroundColor": undefined,
@@ -1817,7 +1976,7 @@ exports[`AvatarScreen renders screen 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {
+                  {
                     "borderColor": "#FFFFFF",
                     "borderWidth": 1.5,
                   },
@@ -1835,12 +1994,12 @@ exports[`AvatarScreen renders screen 1`] = `
               onError={[Function]}
               resizeMode="contain"
               source={
-                Object {
+                {
                   "testUri": "../../../demo/src/assets/icons/star.png",
                 }
               }
               style={
-                Array [
+                [
                   null,
                   undefined,
                   undefined,
@@ -1850,7 +2009,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   undefined,
                   undefined,
                   false,
-                  Object {
+                  {
                     "backgroundColor": "#FFC50D",
                     "flex": 1,
                   },
@@ -1864,7 +2023,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -1872,7 +2031,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -1884,23 +2043,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -1914,6 +2073,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -1925,7 +2101,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 48,
@@ -1938,7 +2114,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -1946,8 +2122,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -1957,10 +2133,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#F8f9FA",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -1976,7 +2152,7 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           assetGroup="icons"
           containerStyle={
-            Object {
+            {
               "alignItems": "center",
               "borderRadius": 999,
               "height": 48,
@@ -1986,18 +2162,18 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           onError={[Function]}
           source={
-            Object {
+            {
               "uri": "https://media.giphy.com/media/3oEdv8elIVRa3daNl6/giphy.gif",
             }
           }
           style={
-            Array [
+            [
               undefined,
               undefined,
-              Object {
+              {
                 "width": 48,
               },
-              Object {
+              {
                 "height": 48,
               },
               undefined,
@@ -2005,15 +2181,15 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "height": 48,
                   "justifyContent": "center",
                   "width": 48,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2031,7 +2207,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -2039,7 +2215,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -2051,23 +2227,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -2081,6 +2257,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -2092,7 +2285,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -2105,7 +2298,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -2113,8 +2306,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -2124,10 +2317,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#E8ECF0",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -2141,8 +2334,8 @@ exports[`AvatarScreen renders screen 1`] = `
           <Text
             numberOfLines={1}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
                   "textAlign": "left",
@@ -2155,16 +2348,19 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
-                Array [
-                  Object {
-                    "fontSize": 16,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
-                  Object {
+                  {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
                     "lineHeight": undefined,
                   },
-                  Object {
+                  {
                     "color": "#20303C",
                   },
                 ],
@@ -2180,7 +2376,7 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           assetGroup="icons"
           containerStyle={
-            Object {
+            {
               "alignItems": "center",
               "borderRadius": 999,
               "height": 50,
@@ -2192,18 +2388,18 @@ exports[`AvatarScreen renders screen 1`] = `
           onLoadEnd={[Function]}
           onLoadStart={[Function]}
           source={
-            Object {
+            {
               "uri": "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=404",
             }
           }
           style={
-            Array [
+            [
               undefined,
               undefined,
-              Object {
+              {
                 "width": 50,
               },
-              Object {
+              {
                 "height": 50,
               },
               undefined,
@@ -2211,15 +2407,15 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "height": 50,
                   "justifyContent": "center",
                   "width": 50,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2237,7 +2433,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -2245,7 +2441,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -2257,23 +2453,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -2287,6 +2483,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -2298,7 +2511,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -2311,7 +2524,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -2319,8 +2532,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -2330,10 +2543,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#116DFF",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -2347,8 +2560,8 @@ exports[`AvatarScreen renders screen 1`] = `
           <Text
             numberOfLines={1}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
                   "textAlign": "left",
@@ -2361,16 +2574,19 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
-                Array [
-                  Object {
-                    "fontSize": 16,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
-                  Object {
+                  {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
                     "lineHeight": undefined,
                   },
-                  Object {
+                  {
                     "color": "#20303C",
                   },
                 ],
@@ -2386,7 +2602,7 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           assetGroup="icons"
           containerStyle={
-            Object {
+            {
               "alignItems": "center",
               "borderRadius": 999,
               "height": 50,
@@ -2398,18 +2614,18 @@ exports[`AvatarScreen renders screen 1`] = `
           onLoadEnd={[Function]}
           onLoadStart={[Function]}
           source={
-            Object {
+            {
               "uri": "https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg",
             }
           }
           style={
-            Array [
+            [
               undefined,
               undefined,
-              Object {
+              {
                 "width": 50,
               },
-              Object {
+              {
                 "height": 50,
               },
               undefined,
@@ -2417,15 +2633,15 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "height": 50,
                   "justifyContent": "center",
                   "width": 50,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2443,7 +2659,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -2451,7 +2667,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -2463,23 +2679,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -2493,6 +2709,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -2504,7 +2737,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -2517,7 +2750,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -2525,8 +2758,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -2536,10 +2769,10 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#FFEDEC",
                 },
-                Object {
+                {
                   "bottom": 1,
                   "left": 1,
                   "right": 1,
@@ -2555,7 +2788,7 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={false}
           assetGroup="icons"
           containerStyle={
-            Object {
+            {
               "alignItems": "center",
               "borderRadius": 999,
               "height": 50,
@@ -2565,18 +2798,18 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           onError={[Function]}
           source={
-            Object {
+            {
               "uri": "https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank",
             }
           }
           style={
-            Array [
+            [
               undefined,
               undefined,
-              Object {
+              {
                 "width": 50,
               },
-              Object {
+              {
                 "height": 50,
               },
               undefined,
@@ -2584,15 +2817,15 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               false,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "height": 50,
                   "justifyContent": "center",
                   "width": 50,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2610,7 +2843,7 @@ exports[`AvatarScreen renders screen 1`] = `
     </View>
     <View
       style={
-        Array [
+        [
           undefined,
           undefined,
           undefined,
@@ -2618,7 +2851,7 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          Object {
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
@@ -2630,23 +2863,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <Text
         $textDefault={true}
         style={
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "transparent",
               "color": "#20303C",
               "textAlign": "left",
             },
             undefined,
-            Object {
+            {
               "color": "#20303C",
             },
             undefined,
             undefined,
-            Object {},
+            {},
             undefined,
             undefined,
             undefined,
-            Object {
+            {
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "400",
@@ -2660,6 +2893,23 @@ exports[`AvatarScreen renders screen 1`] = `
       <View
         accessibilityLabel="Avatar"
         accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -2671,7 +2921,7 @@ exports[`AvatarScreen renders screen 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 50,
@@ -2684,7 +2934,7 @@ exports[`AvatarScreen renders screen 1`] = `
       >
         <View
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
@@ -2692,8 +2942,8 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderRadius": 999,
                   "bottom": 0,
@@ -2703,7 +2953,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "right": 0,
                   "top": 0,
                 },
-                Object {
+                {
                   "backgroundColor": "#FFEDEC",
                 },
                 false,
@@ -2715,8 +2965,8 @@ exports[`AvatarScreen renders screen 1`] = `
           <Text
             numberOfLines={1}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
                   "textAlign": "left",
@@ -2729,16 +2979,19 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
-                Array [
-                  Object {
-                    "fontSize": 16,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
-                  Object {
+                  {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
                     "lineHeight": undefined,
                   },
-                  Object {
+                  {
                     "color": "#20303C",
                   },
                 ],
@@ -2755,23 +3008,23 @@ exports[`AvatarScreen renders screen 1`] = `
           accessible={true}
           borderColor="#FFFFFF"
           iconProps={
-            Object {
+            {
               "tintColor": null,
             }
           }
           label="+2"
-          modifiers={Object {}}
+          modifiers={{}}
           size={24}
           style={
-            Array [
+            [
               undefined,
               undefined,
               undefined,
               undefined,
-              Object {},
-              Object {},
-              Object {},
-              Object {
+              {},
+              {},
+              {},
+              {
                 "bottom": -6.177669529663687,
                 "position": "absolute",
                 "right": -6.177669529663687,
@@ -2783,23 +3036,23 @@ exports[`AvatarScreen renders screen 1`] = `
             pointerEvents="none"
             row={true}
             style={
-              Array [
+              [
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {},
-                Object {},
-                Object {
+                {},
+                {},
+                {
                   "flexDirection": "row",
                 },
-                Array [
-                  Object {
+                [
+                  {
                     "height": 27,
                     "minWidth": 27,
                     "paddingHorizontal": 6,
                   },
-                  Object {
+                  {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
                     "backgroundColor": "#116DFF",
@@ -2807,7 +3060,7 @@ exports[`AvatarScreen renders screen 1`] = `
                     "justifyContent": "center",
                     "overflow": "hidden",
                   },
-                  Object {
+                  {
                     "borderColor": "#FFFFFF",
                     "borderWidth": 1.5,
                   },
@@ -2821,8 +3074,8 @@ exports[`AvatarScreen renders screen 1`] = `
               allowFontScaling={false}
               numberOfLines={1}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "backgroundColor": "transparent",
                     "color": "#FFFFFF",
                     "fontFamily": "System",

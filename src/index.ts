@@ -31,6 +31,7 @@ export {
   TextFieldMethods,
   TextFieldRef,
   TextFieldValidationMessagePosition,
+  TextFieldValidator,
   FieldContextType,
   ToastProps,
   ToastPresets,

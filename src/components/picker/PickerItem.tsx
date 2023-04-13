@@ -63,7 +63,7 @@ const PickerItem = (props: PickerItemProps) => {
   }, [isItemDisabled, labelStyle]);
 
   const _onPress = useCallback(() => {
-    onPress?.();
+    onPress?.(context.isMultiMode ? !isSelected : undefined);
     if (migrate) {
       context.onPress(value);
     } else {

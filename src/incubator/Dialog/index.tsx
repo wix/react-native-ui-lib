@@ -27,7 +27,7 @@ import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
-const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.grey20, 0.65);
+const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.$backgroundInverted, 0.3);
 const THRESHOLD_VELOCITY = 750;
 
 export interface DialogStatics {
