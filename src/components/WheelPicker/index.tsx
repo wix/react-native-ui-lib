@@ -146,6 +146,16 @@ const WheelPicker = ({
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
   const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
+  const itemsLength = useMemo(() => items.length, [items]);
+  const androidFlatListProps = useMemo(() => itemsLength > 20 && Constants.isAndroid, [itemsLength]);
+  const bigDataFlatListProps = useMemo(() => {
+    if (androidFlatListProps) {
+      return {
+        initialNumToRender: itemsLength,
+        maxToRenderPerBatch: itemsLength
+      };
+    }
+  }, [androidFlatListProps, itemsLength]);
 
   useEffect(() => {
     // This effect making sure to reset index if initialValue has changed
@@ -319,11 +329,12 @@ const WheelPicker = ({
   }, []);
 
   return (
-    <View testID={testID} bg-$backgroundDefault style={style}>
+    <View testID={testID} bg-$backgroundDefault style={[style, androidFlatListProps && styles.androidBigData]}>
       <View row centerH>
         <View flexG>
           <AnimatedFlatList
             {...flatListProps}
+            {...bigDataFlatListProps}
             testID={`${testID}.list`}
             listKey={`${testID}.flatList`}
             height={height}
@@ -373,5 +384,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     bottom: 0
+  },
+  androidBigData: {
+    flex: 0
   }
 });
