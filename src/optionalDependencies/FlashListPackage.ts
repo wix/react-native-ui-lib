@@ -1,4 +1,4 @@
-let FlashListPackage: any;
+let FlashListPackage = {FlashList: {}};
 try {
   FlashListPackage = require('@shopify/flash-list');
 } catch (error) {}
