@@ -456,7 +456,10 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 [
                   {
-                    "fontSize": 16,
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
                   {
                     "backgroundColor": "transparent",
@@ -678,7 +681,10 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 [
                   {
-                    "fontSize": 16,
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
                   {
                     "backgroundColor": "transparent",
@@ -2344,7 +2350,10 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 [
                   {
-                    "fontSize": 16,
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
                   {
                     "backgroundColor": "transparent",
@@ -2567,7 +2576,10 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 [
                   {
-                    "fontSize": 16,
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
                   {
                     "backgroundColor": "transparent",
@@ -2969,7 +2981,10 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 [
                   {
-                    "fontSize": 16,
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
                   },
                   {
                     "backgroundColor": "transparent",
