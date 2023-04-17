@@ -7,7 +7,7 @@ import {SpacingLiterals} from '../style/spacings';
 import {colorsPalette} from '../style/colorsPalette';
 export const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
 export const PADDING_KEY_PATTERN = new RegExp(`padding[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
-export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
+export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]*-([0-9]*|${Spacings.getKeysPattern()})`);
 export const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
 export const POSITION_KEY_PATTERN = /^abs([F|L|R|T|B|V|H])?$/;
 const BACKGROUND_COLOR_KEYS_PATTERN = Colors.getBackgroundKeysPattern();
@@ -169,12 +169,15 @@ export function extractMarginValues(props: Dictionary<any>) {
 
   _.forEach(marginPropsKeys, key => {
     if (props[key] === true) {
-      const [marginKey, marginValue] = key.split('-') as [keyof typeof MARGIN_VARIATIONS, string];
+      const [marginKey, marginValue, negativeMarginValue] = key.split('-') as [keyof typeof MARGIN_VARIATIONS, string, string | undefined];
       const paddingVariation = MARGIN_VARIATIONS[marginKey];
-      if (!isNaN(Number(marginValue))) {
-        margins[paddingVariation] = Number(marginValue);
-      } else if (Spacings.getKeysPattern().test(marginValue)) {
-        margins[paddingVariation] = Spacings[marginValue as keyof typeof SpacingLiterals];
+      const value = negativeMarginValue ?? marginValue;
+      const sign = negativeMarginValue ? -1 : 1;
+
+      if (!isNaN(Number(value))) {
+        margins[paddingVariation] = sign * Number(value);
+      } else if (Spacings.getKeysPattern().test(value)) {
+        margins[paddingVariation] = sign * Spacings[value as keyof typeof SpacingLiterals];
       }
     }
   });
