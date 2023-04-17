@@ -174,7 +174,7 @@ class ActionSheet extends Component<ActionSheetProps> {
       >
         <View row paddingL-16 flex centerV>
           {this.handleRenderIcon(option)}
-          <Text text70 grey10 numberOfLines={1}>
+          <Text text70 grey10 numberOfLines={1} style={option.labelStyle}>
             {option.label}
           </Text>
         </View>
