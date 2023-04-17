@@ -14,7 +14,7 @@ const segments = {
     },
     {label: 'Short'}
   ],
-  forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Colors'}],
+  forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Style'}],
   fifth: [{label: 'Full'}, {label: 'Width'}],
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}]
 };
@@ -49,6 +49,8 @@ const SegmentedControlScreen = () => {
             backgroundColor={Colors.$backgroundInverted}
             activeBackgroundColor={Colors.$backgroundNeutralIdle}
             inactiveColor={Colors.$textDisabled}
+            style={styles.customStyle}
+            segmentStyle={styles.customSegmentStyle}
           />
         </View>
         <SegmentedControl
@@ -70,6 +72,13 @@ const SegmentedControlScreen = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20
+  },
+  customStyle: {
+    height: 50,
+    width: 300
+  },
+  customSegmentStyle: {
+    height: 50
   }
 });
 

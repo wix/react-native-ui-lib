@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp} from 'react-native';
+import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -49,6 +49,10 @@ export type SegmentProps = SegmentedControlItemProps & {
    * onLayout function.
    */
   onLayout?: (index: number, event: LayoutChangeEvent) => void;
+  /**
+   * Additional style for the segment.
+   */
+  segmentStyle?: StyleProp<ViewStyle>;
   testID?: string;
 };
 
@@ -67,6 +71,7 @@ const Segment = React.memo((props: SegmentProps) => {
     inactiveColor,
     index,
     iconOnRight,
+    segmentStyle: style,
     testID
   } = props;
 
@@ -80,7 +85,9 @@ const Segment = React.memo((props: SegmentProps) => {
     return {tintColor};
   });
 
-  const segmentStyle = useMemo(() => ({paddingHorizontal: Spacings.s3, paddingVertical: Spacings.s2}), []);
+  const segmentStyle = useMemo(() => {
+    return [{paddingHorizontal: Spacings.s3, paddingVertical: Spacings.s2}, style];
+  }, [style]);
 
   const renderIcon = useCallback(() => {
     return iconSource && <Reanimated.Image source={iconSource} style={[animatedIconStyle, iconStyle]}/>;
