@@ -30,6 +30,11 @@
       "type": "number",
       "default": "1",
       "description": "Scale the item once dragged."
+    },
+    {
+      "name": "itemMargins",
+      "type": "{marginTop?: number; marginBottom?: number, marginLeft?: number, marginRight?: number}",
+      "description": "Extra margins for the item (for controlling the space between the items)."
     }
   ],
   "snippet": [

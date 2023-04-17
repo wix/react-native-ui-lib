@@ -35,6 +35,7 @@ const SortableListItem = (props: Props) => {
   const {
     data,
     itemHeight,
+    itemMargins,
     onItemLayout,
     itemsOrder,
     lockedIds,
@@ -48,6 +49,7 @@ const SortableListItem = (props: Props) => {
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
   const translateY = useSharedValue<number>(0);
+  const itemContainerHeight = itemHeight.value + (itemMargins?.marginTop ?? 0) + (itemMargins?.marginBottom ?? 0);
 
   const isDragging = useSharedValue(false);
 
@@ -81,7 +83,7 @@ const SortableListItem = (props: Props) => {
 
       currIndex.value = newIndex;
       if (!isDragging.value) {
-        const translation = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
+        const translation = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemContainerHeight);
 
         translateY.value = withTiming(translation, animationConfig);
       }
@@ -93,7 +95,7 @@ const SortableListItem = (props: Props) => {
     .enabled(!locked)
     .onStart(() => {
       isDragging.value = true;
-      translateY.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
+      translateY.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemContainerHeight);
       tempTranslateY.value = translateY.value;
       tempItemsOrder.value = itemsOrder.value;
     })
@@ -106,7 +108,7 @@ const SortableListItem = (props: Props) => {
       translateY.value = tempTranslateY.value + event.translationY;
 
       // Swapping items
-      let newIndex = getIndexByPosition(translateY.value, itemHeight.value) + initialIndex.value;
+      let newIndex = getIndexByPosition(translateY.value, itemContainerHeight) + initialIndex.value;
       const oldIndex = getItemIndexById(itemsOrder.value, id);
 
       if (newIndex !== oldIndex) {
@@ -136,7 +138,7 @@ const SortableListItem = (props: Props) => {
     .onEnd(() => {
       const translation = getTranslationByIndexChange(getItemIndexById(itemsOrder.value, id),
         getItemIndexById(tempItemsOrder.value, id),
-        itemHeight.value);
+        itemContainerHeight);
 
       translateY.value = withTiming(tempTranslateY.value + translation, animationConfig, () => {
         if (tempItemsOrder.value.toString() !== itemsOrder.value.toString()) {
@@ -163,6 +165,7 @@ const SortableListItem = (props: Props) => {
       zIndex,
       transform: [{translateY: translateY.value}, {scale}],
       opacity,
+      ...itemMargins,
       ...shadow
     };
   });
