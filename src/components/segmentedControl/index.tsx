@@ -169,7 +169,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           selectedIndex={animatedSelectedIndex}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
-          segmentStyle={segmentStyle}
+          style={segmentStyle}
           {...segments?.[index]}
           testID={testID}
         />

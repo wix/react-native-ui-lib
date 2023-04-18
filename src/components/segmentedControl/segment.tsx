@@ -52,7 +52,7 @@ export type SegmentProps = SegmentedControlItemProps & {
   /**
    * Additional style for the segment.
    */
-  segmentStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
 };
 
@@ -71,7 +71,7 @@ const Segment = React.memo((props: SegmentProps) => {
     inactiveColor,
     index,
     iconOnRight,
-    segmentStyle: style,
+    style,
     testID
   } = props;
 
