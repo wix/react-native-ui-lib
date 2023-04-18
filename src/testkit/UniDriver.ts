@@ -1,3 +1,14 @@
+export type DragData = {
+  absoluteX?: number;
+  absoluteY?: number;
+  translationX?: number;
+  translationY?: number;
+  velocityX?: number;
+  velocityY?: number;
+  x?: number;
+  y?: number;
+};
+
 export interface UniDriver {
   selectorByTestId(testId: string): Promise<UniDriver>;
   selectorByText(text: string): Promise<UniDriver>;
@@ -7,6 +18,7 @@ export interface UniDriver {
   instance(): Promise<any>;
   getInstanceProps(): Promise<any>;
   press(): void;
+  drag(data: DragData | DragData[]): void;
   focus(): void;
   blur(): void;
   typeText(text: string): Promise<void>;
