@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {View, Incubator} from 'react-native-ui-lib';
+import {Incubator} from 'react-native-ui-lib';
 import MockServer from './MockServer';
 
 export default class CalendarScreen extends Component {

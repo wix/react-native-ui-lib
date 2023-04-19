@@ -91,7 +91,7 @@ function Agenda(props: AgendaProps) {
     return selectedDate.value;
   },
   (selected, previous) => {
-    if (updateSource?.value !== UpdateSource.AGENDA_SCROLL) {
+    if (updateSource.value !== UpdateSource.AGENDA_SCROLL) {
       if (
         selected !== previous &&
           (closestSectionHeader.value?.date === undefined || !isSameDay(selected, closestSectionHeader.value?.date))

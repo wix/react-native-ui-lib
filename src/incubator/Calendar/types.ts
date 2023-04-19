@@ -56,7 +56,7 @@ export interface CalendarContextProps {
   data: InternalData;
   showWeeksNumbers: boolean;
   showExtraDays: boolean;
-  updateSource?: SharedValue<UpdateSource | undefined>;
+  updateSource: SharedValue<UpdateSource>;
   staticHeader?: boolean;
   setHeaderHeight?: (height: number) => void;
   headerHeight: SharedValue<number>;
