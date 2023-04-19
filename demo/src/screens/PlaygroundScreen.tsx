@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
 import {View, Text, Card, TextField, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
@@ -19,7 +18,3 @@ export default class PlaygroundScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {}
-});
