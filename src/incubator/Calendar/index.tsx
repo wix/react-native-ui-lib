@@ -13,7 +13,7 @@ import TodayButton from './TodayButton';
 import Header from './Header';
 import {useDidUpdate} from 'hooks';
 
-const {FlashList} = FlashListPackage;
+const FlashList = FlashListPackage?.FlashList;
 
 const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 200};
 const YEARS_RANGE = 1;

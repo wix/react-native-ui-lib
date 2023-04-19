@@ -10,7 +10,7 @@ import {isSameDay, isSameMonth} from './helpers/DateUtils';
 import {AgendaProps, InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
-const {FlashList} = FlashListPackage;
+const FlashList = FlashListPackage?.FlashList;
 
 // TODO: Fix initial scrolling
 function Agenda(props: AgendaProps) {
