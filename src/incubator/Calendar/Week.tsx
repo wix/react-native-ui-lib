@@ -9,7 +9,7 @@ import CalendarContext from './CalendarContext';
 import Day from './Day';
 
 
-const WEEK_NUMBER_WIDTH = 18;
+const WEEK_NUMBER_WIDTH = 20;
 
 const Week = (props: WeekProps) => {
   const {weekNumber, year} = props;
@@ -22,7 +22,7 @@ const Week = (props: WeekProps) => {
 
   const renderWeekNumbers = () => {
     if (showWeeksNumbers) {
-      return <Text center $textNeutral style={styles.weekNumber}>{weekNumber}</Text>;
+      return <Text center $textNeutral numberOfLines={1} style={styles.weekNumber}>{weekNumber}</Text>;
     }
   };
 
