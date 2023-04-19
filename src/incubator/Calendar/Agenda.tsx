@@ -138,8 +138,9 @@ function Agenda(props: AgendaProps) {
   }, []);
 
   const _onEndReached = useCallback(() => {
-    onEndReached(selectedDate.value);
-  }, []);
+    onEndReached?.(selectedDate.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onEndReached]);
 
   return (
     <View flex>
