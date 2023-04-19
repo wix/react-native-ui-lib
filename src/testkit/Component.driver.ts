@@ -9,7 +9,7 @@ export type ComponentDriverArgs = {
 
 /**
  * Please run clear after each test
- * */
+ */
 export class ComponentDriver {
   protected readonly testID: string;
   protected readonly uniDriver: UniDriver;

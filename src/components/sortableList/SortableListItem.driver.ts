@@ -3,7 +3,7 @@ import {ComponentDriver} from '../../testkit/Component.driver';
 
 /**
  * Please run clear after each test
- * */
+ */
 export class SortableListItemDriver extends ComponentDriver {
   dragUp = async (indices: number) => {
     this.validateIndices(indices);

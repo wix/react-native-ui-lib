@@ -34,8 +34,6 @@ const TestCase = props => {
   );
 };
 
-const _TestCase = props => <TestCase {...props}/>;
-
 describe('SortableList', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -47,7 +45,7 @@ describe('SortableList', () => {
 
   it('SortableList onOrderChange is called - down', async () => {
     const onOrderChange = jest.fn();
-    const component = _TestCase({onOrderChange});
+    const component = <TestCase onOrderChange={onOrderChange}/>;
     const sortableListDriver = new ComponentDriver({component, testID: 'sortableList'});
     expect(await sortableListDriver.exists()).toBeTruthy();
     expect(onOrderChange).toHaveBeenCalledTimes(0);
@@ -66,7 +64,7 @@ describe('SortableList', () => {
 
   it('SortableList onOrderChange is called - up', async () => {
     const onOrderChange = jest.fn();
-    const component = _TestCase({onOrderChange});
+    const component = <TestCase onOrderChange={onOrderChange}/>;
     const sortableListDriver = new ComponentDriver({component, testID: 'sortableList'});
     expect(await sortableListDriver.exists()).toBeTruthy();
     expect(onOrderChange).toHaveBeenCalledTimes(0);
