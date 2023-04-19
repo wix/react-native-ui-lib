@@ -262,9 +262,8 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   }, [_baseContainerStyle, containerStyle]);
 
   const textStyle = useMemo(() => {
-    const fontSizeToImageSizeRatio = 0.32;
-    const fontSize = size * fontSizeToImageSizeRatio;
-    return [{fontSize}, initialsStyle, {color: labelColor}];
+    const typography = AvatarHelper.getInitialsTypography(size);
+    return [typography, initialsStyle, {color: labelColor}];
   }, [size, initialsStyle, labelColor]);
 
   const textContainerStyle = useMemo(() => {

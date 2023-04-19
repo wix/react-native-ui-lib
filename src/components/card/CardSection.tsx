@@ -120,6 +120,7 @@ export default asBaseComponent<CardSectionProps>(asCardChild(CardSection));
 
 const styles = StyleSheet.create({
   container: {
+    borderColor: 'transparent',
     overflow: 'hidden'
   }
 });
