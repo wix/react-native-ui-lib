@@ -13,7 +13,7 @@ import Agenda from './Agenda';
 import TodayButton from './TodayButton';
 import Header from './Header';
 
-const {FlashList} = FlashListPackage;
+const FlashList = FlashListPackage?.FlashList;
 
 // TODO: Move this logic elsewhere to pre-generate on install?
 const MONTH_ITEMS = generateMonthItems(2);
