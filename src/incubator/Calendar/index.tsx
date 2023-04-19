@@ -18,7 +18,7 @@ const FlashList = FlashListPackage?.FlashList;
 const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 200};
 const YEARS_RANGE = 1;
 const PAGE_RELOAD_THRESHOLD = 3;
-const NOW = Date.now(); // so the 'initialDate' effect won't get called since the now differes on every rerender 
+const NOW = Date.now(); // so the 'initialDate' effect won't get called since the now different on every rerender 
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {
