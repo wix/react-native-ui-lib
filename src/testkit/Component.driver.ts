@@ -1,4 +1,4 @@
-import {UniDriver, UniDriverClass} from './UniDriver';
+import {DragData, UniDriver, UniDriverClass} from './UniDriver';
 import {TestingLibraryDriver} from './drivers/TestingLibraryDriver';
 
 export type ComponentDriverArgs = {
@@ -9,7 +9,7 @@ export type ComponentDriverArgs = {
 
 /**
  * Please run clear after each test
- * */
+ */
 export class ComponentDriver {
   protected readonly testID: string;
   protected readonly uniDriver: UniDriver;
@@ -43,6 +43,12 @@ export class ComponentDriver {
     return this.uniDriver
       .selectorByTestId(this.testID)
       .then((driver) => driver.press());
+  };
+
+  drag = async (data: DragData | DragData[]) => {
+    return this.uniDriver
+      .selectorByTestId(this.testID)
+      .then((driver) => driver.drag(data));
   };
 
   focus = async () => {
