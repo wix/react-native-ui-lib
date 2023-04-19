@@ -11,6 +11,8 @@ import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 
+const DAY_SIZE = 32;
+const SELECTION_SIZE = 24;
 const NO_COLOR = Colors.transparent;
 const TEXT_COLOR = Colors.$textPrimary;
 const TODAY_BACKGROUND_COLOR = Colors.$backgroundPrimaryLight;
@@ -80,13 +82,13 @@ export default Day;
 
 const styles = StyleSheet.create({
   dayContainer: {
-    width: 32,
-    height: 32
+    width: DAY_SIZE,
+    height: DAY_SIZE
   },
   selection: {
     position: 'absolute',
-    width: 24,
-    height: 24,
-    borderRadius: 12
+    width: SELECTION_SIZE,
+    height: SELECTION_SIZE,
+    borderRadius: SELECTION_SIZE / 2
   }
 });

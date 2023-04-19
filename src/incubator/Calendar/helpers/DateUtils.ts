@@ -20,7 +20,7 @@ export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWee
   return weekNumbers;
 }
 
-function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
+export function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
   const numberOfDaysInMonth = new Date(year, month + 1, 0).getDate();
   const dayOfTheWeek = new Date(year, month, 1).getDay();
   // Modify day in the week based on the first day of the week

@@ -42,11 +42,9 @@ export default class CalendarScreen extends Component {
   render() {
     const {date, events, showLoader} = this.state;
     return (
-      <View flex>
-        <Incubator.Calendar data={events} staticHeader initialDate={date} onChangeDate={this.onChangeDate}>
-          <Incubator.Calendar.Agenda onEndReached={this.onEndReached} showLoader={showLoader}/>
-        </Incubator.Calendar>
-      </View>
+      <Incubator.Calendar data={events} initialDate={date} onChangeDate={this.onChangeDate} staticHeader>
+        <Incubator.Calendar.Agenda onEndReached={this.onEndReached} showLoader={showLoader}/>
+      </Incubator.Calendar>
     );
   }
 }

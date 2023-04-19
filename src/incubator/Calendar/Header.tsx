@@ -46,7 +46,7 @@ const Header = (props: HeaderProps) => {
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     setHeaderHeight?.(event.nativeEvent.layout.height);
-  }, []);
+  }, [setHeaderHeight]);
 
   const renderTitle = () => {
     // @ts-expect-error
