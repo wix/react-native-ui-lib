@@ -50,7 +50,7 @@ const SegmentedControlScreen = () => {
             activeBackgroundColor={Colors.$backgroundNeutralIdle}
             inactiveColor={Colors.$textDisabled}
             style={styles.customStyle}
-            segmentStyle={styles.customSegmentStyle}
+            segmentsStyle={styles.customSegmentsStyle}
           />
         </View>
         <SegmentedControl
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 300
   },
-  customSegmentStyle: {
+  customSegmentsStyle: {
     height: 50
   }
 });
