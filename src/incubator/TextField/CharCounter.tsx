@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import Text from '../../components/text';
@@ -7,7 +7,7 @@ import {CharCounterProps} from './types';
 
 const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) => {
   const {value} = useContext(FieldContext);
-  const length = useMemo(() => (_.isUndefined(value) ? 0 : value.length), [value]);
+  const length = value?.length ?? 0;
   if (_.isUndefined(maxLength)) {
     return null;
   }
