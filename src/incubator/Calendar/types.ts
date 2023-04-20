@@ -55,7 +55,8 @@ export interface CalendarContextProps {
   setDate: (date: number, updateSource: UpdateSource) => void;
   data: InternalData;
   showWeeksNumbers: boolean;
-  updateSource?: SharedValue<UpdateSource | undefined>;
+  showExtraDays: boolean;
+  updateSource: SharedValue<UpdateSource>;
   staticHeader?: boolean;
   setHeaderHeight?: (height: number) => void;
   headerHeight: SharedValue<number>;
@@ -64,11 +65,13 @@ export interface CalendarContextProps {
 export interface DayProps {
   date: number | null;
   onPress?: (date: number) => void;
+  inactive?: boolean; // inactive look but still pressable
 }
 
 export interface WeekProps {
   weekNumber: number;
   year: number;
+  month: number;
 }
 
 export interface MonthProps {
@@ -107,12 +110,16 @@ export enum DayNamesFormat {
 export interface CalendarProps {
   data: Data;
   initialDate?: number;
+  onChangeDate: (date: number) => void;
   firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */ FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
   staticHeader?: boolean;
+  showExtraDays?: boolean;
 }
 
-// export interface AgendaProps {
-//   // Type: list(events)/timeline
-//   // layout:
-//   // scrollTo(date)
-// }
+export interface AgendaProps {
+  showLoader?: boolean;
+  onEndReached?: (date: number) => void;
+  // Type: list(events)/timeline
+  // layout:
+  // scrollTo(date)
+}

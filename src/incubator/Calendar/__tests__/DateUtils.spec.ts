@@ -273,6 +273,24 @@ describe('Calendar/DateUtils', () => {
     });
   });
 
+  describe('addYears', () => {
+    it('should return the date timestamp for the next (1) year in the same month', () => {
+      const date = DateUtils.addYears(new Date(2022, 11, 26).getTime(), 1);
+      const dayObject = DateUtils.getDateObject(date);
+      expect(dayObject.day).toBe(26);
+      expect(dayObject.month).toBe(11);
+      expect(dayObject.year).toBe(2023);
+    });
+
+    it('should return the date timestamp for the previous (-1) year in the same month', () => {
+      const date = DateUtils.addYears(new Date(2022, 11, 26).getTime(), -1);
+      const dayObject = DateUtils.getDateObject(date);
+      expect(dayObject.day).toBe(26);
+      expect(dayObject.month).toBe(11);
+      expect(dayObject.year).toBe(2021);
+    });
+  });
+
   describe('getWeekDayNames', () => {
     it('should return the week days names for first day = Sunday', () => {
       const weekDaysNames = DateUtils.getWeekDayNames();
