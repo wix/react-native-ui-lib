@@ -1,4 +1,21 @@
 import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
+// ========= Mock Object.defineProperty to always allow overriding =========
+const originalDefineProperty = Object.defineProperty;
+Object.defineProperty = (obj, prop, desc) => {
+  try {
+    return originalDefineProperty(obj, prop, {...desc, configurable: true});
+  } catch (e) {
+    return originalDefineProperty(obj, prop, desc);
+  }
+};
+Object.defineProperties = (obj, props) => {
+  Object.keys(props).forEach(key => {
+    Object.defineProperty(obj, key, props[key]);
+  });
+  return obj;
+};
+// =========================================================================
+
 global._UILIB_TESTING = true;
 
 NativeModules.StatusBarManager = {getHeight: jest.fn()};
@@ -21,6 +38,26 @@ jest.mock('react-native-gesture-handler',
   () => {
     jest.requireActual('react-native-gesture-handler/jestSetup');
     const GestureHandler = jest.requireActual('react-native-gesture-handler');
+    GestureHandler.Gesture.Tap = () => {
+      const TapMock = {
+        _handlers: {}
+      };
+
+      const getDefaultMockedHandler = handlerName => handler => {
+        if (typeof handler === 'function') {
+          TapMock._handlers[handlerName] = handler;
+        }
+        return TapMock;
+      };
+
+      TapMock.type = 'tap';
+      TapMock.maxDuration = getDefaultMockedHandler('maxDuration');
+      TapMock.onEnd = getDefaultMockedHandler('onEnd');
+      TapMock.onFinalize = getDefaultMockedHandler('onFinalize');
+      TapMock.onTouchesDown = getDefaultMockedHandler('onTouchesDown');
+      return TapMock;
+    };
+
     GestureHandler.Gesture.Pan = () => {
       const PanMock = {
         _handlers: {}
@@ -33,13 +70,27 @@ jest.mock('react-native-gesture-handler',
         return PanMock;
       };
 
+      PanMock.type = 'pan';
       PanMock.onStart = getDefaultMockedHandler('onStart');
       PanMock.onUpdate = getDefaultMockedHandler('onUpdate');
       PanMock.onEnd = getDefaultMockedHandler('onEnd');
+      PanMock.onFinalize = getDefaultMockedHandler('onFinalize');
+      PanMock.activateAfterLongPress = getDefaultMockedHandler('activateAfterLongPress');
+      PanMock.enabled = getDefaultMockedHandler('enabled');
+      PanMock.onTouchesMove = getDefaultMockedHandler('onTouchesMove');
       PanMock.prepare = jest.fn();
+      PanMock.initialize = jest.fn();
+      PanMock.toGestureArray = jest.fn(() => {
+        return [PanMock];
+      });
       return PanMock;
     };
 
+    try {
+      Object.defineProperty(GestureHandler, 'GestureDetector', {
+        value: require('./GestureDetectorMock').GestureDetectorMock
+      });
+    } catch {}
     return GestureHandler;
   },
   {virtual: true});

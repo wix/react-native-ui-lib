@@ -249,14 +249,28 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
 
   const renderHeader = () => {
     return (
-      <View row spread bg-$backgroundDefault paddingH-20 style={[styles.header, headerStyle]}>
+      <View
+        row
+        spread
+        bg-$backgroundDefault
+        paddingH-20
+        style={[styles.header, headerStyle]}
+        testID={`${testID}.header`}
+      >
         <Button
           link
           iconSource={Assets.icons.x}
           iconStyle={{tintColor: Colors.$iconDefault}}
           onPress={toggleExpandableOverlay}
+          testID={`${testID}.cancel`}
         />
-        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={onDonePressed}/>
+        <Button
+          link
+          iconSource={Assets.icons.check}
+          useCustomTheme={useCustomTheme}
+          onPress={onDonePressed}
+          testID={`${testID}.done`}
+        />
       </View>
     );
   };
@@ -279,6 +293,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
         display={Constants.isIOS ? 'spinner' : undefined}
         themeVariant={themeVariant}
+        testID={`${testID}.picker`}
       />
     );
   }, [
@@ -321,6 +336,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         disabled={editable === false}
         // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
         renderCustomOverlay={Constants.isAndroid ? renderAndroidDateTimePicker : undefined}
+        testID={`${testID}.overlay`}
       >
         {renderInput ? (
           renderInput({...props, value: getStringValue()})

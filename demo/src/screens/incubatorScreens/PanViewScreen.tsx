@@ -21,7 +21,7 @@ interface Item {
   label: string;
 }
 
-const OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.black, 0.5);
+const OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.$backgroundInverted, 0.3);
 const colors: Item[] = [
   {value: Colors.red10, label: 'Red10'},
   {value: Colors.red30, label: 'Red30'},

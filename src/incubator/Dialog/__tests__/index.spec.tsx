@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Button from '../../../components/button';
 import View from '../../../components/view';
 import Dialog from '../index';
-import {/* ButtonDriver,  */ComponentDriver} from '../../../testkit';
+import {ButtonDriver, ComponentDriver} from '../../../testkit';
 
 const onDismiss = () => {};
 
@@ -41,21 +41,19 @@ const TestCase = props => {
   );
 };
 
-const _TestCase = props => <TestCase {...props}/>;
-
 describe('Incubator.Dialog', () => {
   it('Incubator.Dialog should exist only if visible', async () => {
     const onDismiss = jest.fn();
-    const component = _TestCase({onDismiss});
+    const component = <TestCase onDismiss={onDismiss}/>;
     const dialogDriver = new ComponentDriver({component, testID: 'dialog'});
     expect(await dialogDriver.exists()).toBeFalsy();
-    // const openButtonDriver = new ButtonDriver({component, testID: 'openButton'});
-    // await openButtonDriver.press();
-    // expect(await dialogDriver.exists()).toBeTruthy();
-    // expect(onDismiss).toHaveBeenCalledTimes(0);
-    // const closeButtonDriver = new ButtonDriver({component, testID: 'closeButton'});
-    // await closeButtonDriver.press();
-    // expect(await dialogDriver.exists()).toBeFalsy();
-    // expect(onDismiss).toHaveBeenCalledTimes(1);
+    const openButtonDriver = new ButtonDriver({component, testID: 'openButton'});
+    await openButtonDriver.press();
+    expect(await dialogDriver.exists()).toBeTruthy();
+    expect(onDismiss).toHaveBeenCalledTimes(0);
+    const closeButtonDriver = new ButtonDriver({component, testID: 'closeButton'});
+    await closeButtonDriver.press();
+    expect(await dialogDriver.exists()).toBeFalsy();
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });

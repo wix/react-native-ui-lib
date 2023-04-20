@@ -1,3 +1,4 @@
 import * as TextUtils from './textUtils';
+import * as StyleUtils from './styleUtils';
 
-export {TextUtils};
+export {TextUtils, StyleUtils};

@@ -4,7 +4,7 @@ import {TextDriver} from '../text/Text.driver';
 
 /**
  * Please run clear after each test
- * */
+ */
 export class ButtonDriver extends ComponentDriver {
   private readonly labelDriver: TextDriver;
   private readonly iconDriver: ImageDriver;

@@ -1,4 +1,4 @@
-import {UniDriver} from '../UniDriver';
+import {DragData, UniDriver} from '../UniDriver';
 import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
 import {ReactTestInstance} from 'react-test-renderer';
 import {act} from '@testing-library/react-hooks';
@@ -83,6 +83,15 @@ export class TestingLibraryDriver implements UniDriver {
     this.validateExplicitInstance();
     this.validateSingleInstance();
     fireEvent.press(this.reactTestInstances[0]);
+  };
+
+  drag = (data: DragData | DragData[]): void => {
+    if (!this.reactTestInstances) {
+      throw new NoSelectorException();
+    }
+    this.validateExplicitInstance();
+    this.validateSingleInstance();
+    fireEvent.press(this.reactTestInstances[0], data);
   };
 
   focus = (): void => {

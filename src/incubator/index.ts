@@ -1,4 +1,4 @@
-// export {default as Calendar} from './Calendar';
+export {default as Calendar} from './Calendar';
 export {default as ExpandableOverlay} from './expandableOverlay';
 // @ts-ignore
 export {

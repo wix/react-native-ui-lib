@@ -5,13 +5,13 @@ import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTimi
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
+import {StyleUtils} from 'utils';
 import View from '../../components/view';
 import {SliderProps} from '../../components/slider';
 import {
   validateValues,
   getOffsetForValue,
   getValueForOffset,
-  unpackStyle,
   getStepInterpolated
 } from './SliderPresenter';
 import Thumb from './Thumb';
@@ -99,12 +99,12 @@ const Slider = React.memo((props: Props) => {
   const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     styles.thumb, {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
   ], [disabled, thumbTintColor]);
-  const _thumbStyle = useSharedValue(unpackStyle(thumbStyle || defaultThumbStyle));
-  const _activeThumbStyle = useSharedValue(unpackStyle(activeThumbStyle));
+  const _thumbStyle = useSharedValue(StyleUtils.unpackStyle(thumbStyle || defaultThumbStyle, {flatten: true}));
+  const _activeThumbStyle = useSharedValue(StyleUtils.unpackStyle(activeThumbStyle, {flatten: true}));
 
   useEffect(() => {
     if (!thumbStyle) {
-      _thumbStyle.value = unpackStyle(defaultThumbStyle);
+      _thumbStyle.value = StyleUtils.unpackStyle(defaultThumbStyle, {flatten: true});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultThumbStyle, thumbStyle]);
