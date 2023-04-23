@@ -65,10 +65,8 @@ class NativePicker extends Component {
 
   renderPicker = () => {
     const {selectedValue} = this.state;
-    const {children, /* renderNativePicker, */ pickerStyle, wheelPickerProps, testID} = this.props;
-    // if (_.isFunction(renderNativePicker)) {
-    //   return renderNativePicker(this.props);
-    // }
+    const {children, pickerStyle, wheelPickerProps, testID} = this.props;
+    
     return (
       <WheelPicker
         style={pickerStyle}

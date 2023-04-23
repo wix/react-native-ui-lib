@@ -155,10 +155,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      * Use wheel picker instead of a list picker
      */
     useWheelPicker?: boolean;
-    // /**
-    //  * Callback for rendering a custom native picker inside the dialog (relevant to native picker only)
-    //  */
-    // renderNativePicker?: () => React.ReactElement;
     /**
      * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
      */
