@@ -18,7 +18,7 @@ import {
 } from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from '../../style';
 import {useDidUpdate} from '../../hooks';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import View from '../../components/view';
 import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
@@ -113,7 +113,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     if (wasMeasured) {
       if (modalVisibility) {
         open();
-      } else {
+      } else if (Constants.isAndroid) {
         onDismiss?.();
       }
     }
@@ -217,10 +217,6 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     <View testID={`${testID}.overlayFadingBackground`} absF reanimated style={overlayStyle} pointerEvents="none"/>
   );
 
-  if (!modalVisibility) {
-    return null;
-  }
-
   return (
     <Modal
       transparent
@@ -231,7 +227,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
       visible={modalVisibility}
       onBackgroundPress={ignoreBackgroundPress ? undefined : close}
       onRequestClose={ignoreBackgroundPress ? undefined : close}
-      onDismiss={undefined}
+      onDismiss={onDismiss}
     >
       {renderOverlayView()}
       <View useSafeArea={useSafeArea} pointerEvents={'box-none'} style={alignmentStyle}>
