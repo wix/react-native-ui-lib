@@ -330,8 +330,8 @@ const WheelPicker = ({
       <View row centerH>
         <View flexG>
           <AnimatedFlatList
-            {...flatListProps}
             {...androidFlatListProps}
+            {...flatListProps}
             testID={`${testID}.list`}
             listKey={`${testID}.flatList`}
             height={height}
