@@ -47,7 +47,10 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
   const onItemLayout = useCallback((event: LayoutChangeEvent) => {
     // Round height for Android
     const newHeight = Math.round(event.nativeEvent.layout.height);
-    itemHeight.value = newHeight;
+    // Check validity for tests
+    if (newHeight) {
+      itemHeight.value = newHeight;
+    }
   }, []);
 
   const context = useMemo(() => {

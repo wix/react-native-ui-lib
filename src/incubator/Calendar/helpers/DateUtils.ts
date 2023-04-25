@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import getWeek from 'date-fns/getWeek';
-import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay} from '../types';
+import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay, DateObject} from '../types';
 
 export const HOUR_IN_MS = 60 * 60 * 1000;
 const DAY_IN_MS = 24 * HOUR_IN_MS;
@@ -20,7 +20,7 @@ export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWee
   return weekNumbers;
 }
 
-function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
+export function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
   const numberOfDaysInMonth = new Date(year, month + 1, 0).getDate();
   const dayOfTheWeek = new Date(year, month, 1).getDay();
   // Modify day in the week based on the first day of the week
@@ -78,6 +78,11 @@ export function getDateObject(date: number) {
   };
 }
 
+export function getTimestamp(date: DateObject) {
+  'worklet';
+  return new Date(date.year, date.month, date.day).getTime();
+}
+
 export function addMonths(date: number, count: number) {
   'worklet';
   if (count === 0) {
@@ -86,6 +91,16 @@ export function addMonths(date: number, count: number) {
 
   const month = getDateObject(date).month;
   return new Date(date).setMonth(month + count);
+}
+
+export function addYears(date: number, count: number) {
+  'worklet';
+  if (count === 0) {
+    return date;
+  }
+
+  const year = getDateObject(date).year;
+  return new Date(date).setFullYear(year + count);
 }
 
 export function getMonthForIndex(index: number) {

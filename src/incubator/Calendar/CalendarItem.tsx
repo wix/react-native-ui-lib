@@ -7,7 +7,8 @@ import CalendarContext from './CalendarContext';
 import Month from './Month';
 import Header from './Header';
 
-const CALENDAR_HEIGHT = 250;
+
+const CALENDAR_HEIGHT = 270;
 
 function CalendarItem(props: CalendarItemProps) {
   const {year, month} = props;
@@ -21,6 +22,7 @@ function CalendarItem(props: CalendarItemProps) {
         height: CALENDAR_HEIGHT - (staticHeader ? headerHeight.value : 0)
       }
     ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [staticHeader]);
 
   if (month !== undefined) {
@@ -34,7 +36,7 @@ function CalendarItem(props: CalendarItemProps) {
   return null;
 }
 
-export default CalendarItem;
+export default React.memo(CalendarItem);
 
 const styles = StyleSheet.create({
   container: {
