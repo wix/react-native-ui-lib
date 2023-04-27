@@ -33,7 +33,12 @@
       "default": "center"
     },
     {"name": "separatorsStyle", "type": "ViewStyle", "description": "Extra style for the separators"},
-    {"name": "testID", "type": "string", "description": "test identifier"}
+    {"name": "testID", "type": "string", "description": "test identifier"},
+    {
+      "name": "flatListProps",
+      "type": "FlatListProps",
+      "description": "Props to be sent to the FlatList. When using Android by default the FlatList will have 'maxToRenderPerBatch' prop set to items.length to solve FlatList bug on Android, you can override it by passing your own 'flatListProps' with 'maxToRenderPerBatch' prop"
+    }
   ],
   "snippet": [
     "<WheelPicker",
