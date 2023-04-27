@@ -139,7 +139,7 @@
       "/uilib-docs/"
     ],
     "setupFiles": [
-      "./jest-setup.js"
+      "./jestSetup/jest-setup.js"
     ],
     "testMatch": [
       "**/*.spec.(js|ts|tsx)"
