@@ -13,7 +13,8 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
   extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'>,
     Pick<SortableListContextType<ItemT>, 'scale'> {
   /**
-   * The data of the list, do not update the data.
+   * The data of the list.
+     IMPORTANT: Do not update 'data' in 'onOrderChange' (i.e. for each order change); only update it when you change the items (i.g. adding and removing an item).
    */
   data: Data<ItemT>;
   /**

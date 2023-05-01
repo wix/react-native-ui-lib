@@ -13,7 +13,7 @@ import Reanimated, {
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
-import Segment, {SegmentedControlItemProps as SegmentProps} from './segment';
+import Segment, {SegmentedControlItemProps} from './segment';
 
 const BORDER_WIDTH = 1;
 const TIMING_CONFIG: WithTimingConfig = {
@@ -21,7 +21,7 @@ const TIMING_CONFIG: WithTimingConfig = {
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
 
-export type SegmentedControlItemProps = SegmentProps;
+export {SegmentedControlItemProps};
 export type SegmentedControlProps = {
   /**
    * Array on segments.
@@ -72,6 +72,10 @@ export type SegmentedControlProps = {
    */
   throttleTime?: number;
   /**
+   * Additional style for the segment
+   */
+  segmentsStyle?: StyleProp<ViewStyle>;
+  /**
    * Additional spacing styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -98,6 +102,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     outlineColor = activeColor,
     outlineWidth = BORDER_WIDTH,
     throttleTime = 0,
+    segmentsStyle: segmentsStyleProp,
     testID
   } = props;
   const animatedSelectedIndex = useSharedValue(initialIndex);
@@ -164,6 +169,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           selectedIndex={animatedSelectedIndex}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
+          style={segmentsStyleProp}
           {...segments?.[index]}
           testID={testID}
         />
