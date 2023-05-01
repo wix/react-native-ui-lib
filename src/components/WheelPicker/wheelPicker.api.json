@@ -2,6 +2,7 @@
   "name": "WheelPicker",
   "category": "form",
   "description": "A customizable WheelPicker component",
+  "note": "When using Android by default the FlatList will have 'maxToRenderPerBatch' prop set to items.length to solve FlatList bug on Android, you can override it by passing your own 'flatListProps' with 'maxToRenderPerBatch' prop. See the RN FlatList issue for more info: https://github.com/facebook/react-native/issues/15990",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WheelPickerScreen.tsx",
   "images": [],
   "props": [
@@ -37,7 +38,7 @@
     {
       "name": "flatListProps",
       "type": "FlatListProps",
-      "description": "Props to be sent to the FlatList. When using Android by default the FlatList will have 'maxToRenderPerBatch' prop set to items.length to solve FlatList bug on Android, you can override it by passing your own 'flatListProps' with 'maxToRenderPerBatch' prop"
+      "description": "Props to be sent to the FlatList."
     }
   ],
   "snippet": [
