@@ -54,7 +54,6 @@ describe('Incubator.Dialog', () => {
     const closeButtonDriver = new ButtonDriver({component, testID: 'closeButton'});
     await closeButtonDriver.press();
     expect(await dialogDriver.exists()).toBeFalsy();
-    // TODO:
-    // expect(onDismiss).toHaveBeenCalledTimes(1);
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });
