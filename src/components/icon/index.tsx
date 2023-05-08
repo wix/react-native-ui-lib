@@ -27,6 +27,16 @@ export type IconProps = ImageProps &
      * whether the icon should flip horizontally on RTL
      */
     supportRTL?: boolean;
+    /**
+     * Width and height of the icon will be used only in case that the icon is svg image.
+     * 
+     * The icon width
+     */
+    width?: string | number;
+    /**
+     * The icon height
+     */
+    height?: string | number;
   };
 
 /**
@@ -76,6 +86,8 @@ const Icon = forwardRef((props: Props, ref: any) => {
   if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
     return renderImage();
   }
+
+  console.log(`isSvg(source)L`, isSvg(source));
 
   return isSvg(source) ? renderSvg() : renderImage();
 });
