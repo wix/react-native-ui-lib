@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert, Image} from 'react-native';
-import {Text, View, Assets, Constants, Button, Colors, Typography, ButtonProps} from 'react-native-ui-lib'; //eslint-disable-line
+import {Text, View, Assets, Constants, Button, Colors, Typography, ButtonProps} from 'react-native-ui-lib';
 
 const ButtonSpace = 20;
 const plusIcon = Assets.getAssetByPath('icons.demo.plus');

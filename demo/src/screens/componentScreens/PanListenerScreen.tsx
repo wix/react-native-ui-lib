@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, PanListenerView, PanDirectionsProps, PanAmountsProps} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, PanListenerView, PanDirectionsProps, PanAmountsProps} from 'react-native-ui-lib';
 
 export default class PanListenerScreen extends Component {
   state = {

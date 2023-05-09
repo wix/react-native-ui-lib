@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Text, Incubator, TouchableOpacity, ExpandableOverlayMethods, PickerMethods} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, Text, Incubator, TouchableOpacity, ExpandableOverlayMethods, PickerMethods} from 'react-native-ui-lib';
 import _ from 'lodash';
 
 const COLOR_OPTIONS: {[key: string]: string} = {

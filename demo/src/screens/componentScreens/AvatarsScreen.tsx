@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert} from 'react-native';
-import {Avatar, AvatarHelper, View, Text, Colors, Typography, AvatarProps} from 'react-native-ui-lib'; //eslint-disable-line
+import {Avatar, AvatarHelper, View, Text, Colors, Typography, AvatarProps} from 'react-native-ui-lib';
 
 
 const star = require('../../assets/icons/star.png');
