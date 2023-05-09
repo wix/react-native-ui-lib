@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollBar, Button} from 'react-native-ui-lib';
 
-
 class ScrollBarScreen extends Component {
   state = {
     selectedIndex: 0
   };
 
-  focus = ({index}) => {
+  focus = ({customValue: index}: {customValue: number}) => {
     this.setState({selectedIndex: index});
   };
 
@@ -33,7 +32,7 @@ class ScrollBarScreen extends Component {
             'November',
             'December'
           ].map((item, index) => {
-            return <Button key={item} index={index} label={item} size="small" onPress={this.focus} marginR-s2/>;
+            return <Button key={item} customValue={index} label={item} size="small" onPress={this.focus} marginR-s2/>;
           })}
         </ScrollBar>
       </View>
