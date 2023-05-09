@@ -19,11 +19,15 @@ export enum ButtonSize {
   large = 'large'
 }
 
+export type ButtonSizeProp = ButtonSize | `${ButtonSize}`;
+
 export enum ButtonAnimationDirection {
   center = 'center',
   left = 'left',
   right = 'right'
 }
+
+export type ButtonAnimationDirectionProp = ButtonAnimationDirection | `${ButtonAnimationDirection}`;
 
 export type ButtonProps = TouchableOpacityProps &
   TypographyModifiers &
@@ -40,8 +44,9 @@ export type ButtonProps = TouchableOpacityProps &
     color?: string;
     /**
      * Icon image source or a callback function that returns a source
+     * TODO: Deprecate icon source as function
      */
-    iconSource?: ImageProps['source'] | Function;
+    iconSource?: ImageProps['source'] | null | ((iconStyle?: StyleProp<ImageStyle>[]) => JSX.Element);
     /**
      * Icon image style
      */
@@ -65,7 +70,7 @@ export type ButtonProps = TouchableOpacityProps &
     /**
      * Size of the button [large, medium, small, xSmall]
      */
-    size?: ButtonSize;
+    size?: ButtonSizeProp;
     /**
      * Custom border radius.
      */
@@ -143,7 +148,7 @@ export type ButtonProps = TouchableOpacityProps &
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: ButtonAnimationDirection;
+    animateTo?: ButtonAnimationDirectionProp;
   };
 
 export type ButtonState = {

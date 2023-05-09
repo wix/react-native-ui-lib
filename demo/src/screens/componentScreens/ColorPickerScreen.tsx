@@ -7,7 +7,7 @@ import {renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 interface Props {}
 interface State {
   color: string;
-  textColor: string;
+  textColor?: string;
   customColors: string[];
   paletteChange: boolean;
   backgroundColor: string;

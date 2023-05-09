@@ -14,7 +14,6 @@ export default class BasicListScreen extends Component {
     return (
       <View>
         <ListItem
-          // @ts-expect-error
           activeBackgroundColor={Colors.grey60}
           activeOpacity={0.3}
           height={77.5}
