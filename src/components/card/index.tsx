@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, ViewStyle} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Icon from '../icon';
@@ -38,7 +38,7 @@ export interface CardSelectionOptions {
 
 export {CardSectionProps};
 export type CardProps = ViewProps &
-  TouchableOpacityProps & {
+  TouchableOpacityProps & MarginModifiers & {
     /**
      * card custom width
      */

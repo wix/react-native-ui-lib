@@ -9,7 +9,7 @@ interface ModalScreenProps {
 }
 
 interface State {
-  currentPage?: number;
+  currentPage: number;
 }
 
 export default class ModalScreen extends Component<ModalScreenProps, State> {

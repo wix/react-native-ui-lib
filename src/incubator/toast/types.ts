@@ -1,4 +1,4 @@
-import {ReactElement} from 'react';
+import {ReactElement, ReactNode} from 'react';
 import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {ButtonProps} from '../../components/button';
 
@@ -76,7 +76,7 @@ export interface ToastProps {
   /**
    * The preset look for GENERAL, SUCCESS and FAILURE (Toast.presets.xxx)
    */
-  preset?: ToastPresets;
+  preset?: ToastPresets | `${ToastPresets}`;
   /**
    * Whether to trigger an haptic feedback once the toast is shown (requires react-native-haptic-feedback dependency)
    */
@@ -105,4 +105,5 @@ export interface ToastProps {
    * The background color of the toast
    */
   backgroundColor?: string;
+  children?: ReactNode;
 }
