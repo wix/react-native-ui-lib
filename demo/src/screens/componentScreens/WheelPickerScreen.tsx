@@ -32,8 +32,8 @@ export default () => {
   },
   [yearsValue]);
 
-  const onChange = useCallback((value) => {
-    setYearsValue(value);
+  const onChange = useCallback((value: number | string) => {
+    setYearsValue(value as number);
   }, []);
 
   const onPickDaysPress = useCallback(() => {

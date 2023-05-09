@@ -29,7 +29,7 @@ const SectionsWheelPickerScreen = () => {
     return Constants.isRTL && disableRTL;
   }, [disableRTL]);
 
-  const getItems = useCallback(values => {
+  const getItems = useCallback((values: (number | string)[]) => {
     return _.map(values, item => ({label: '' + item, value: item}));
   }, []);
 

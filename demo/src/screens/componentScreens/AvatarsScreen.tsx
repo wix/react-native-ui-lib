@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert} from 'react-native';
-import {Avatar, AvatarHelper, View, Text, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {Avatar, AvatarHelper, View, Text, Colors, Typography, AvatarProps} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 const star = require('../../assets/icons/star.png');
@@ -25,7 +25,7 @@ const examples = [
         'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'
     },
     badgeProps: {size: 10, backgroundColor: Colors.$backgroundWarningHeavy},
-    badgePosition: 'BOTTOM_RIGHT'
+    badgePosition: 'BOTTOM_RIGHT' as AvatarProps['badgePosition']
   },
 
   {
@@ -36,7 +36,7 @@ const examples = [
         'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'
     },
     badgeProps: {size: 10, backgroundColor: Colors.$backgroundDisabled},
-    badgePosition: 'BOTTOM_LEFT'
+    badgePosition: 'BOTTOM_LEFT' as AvatarProps['badgePosition']
   },
   {
     title: 'Image with fade in animation',
@@ -53,7 +53,7 @@ const examples = [
       uri: 'https://randomuser.me/api/portraits/women/24.jpg'
     },
     badgeProps: {size: 14, borderWidth: 0, backgroundColor: onlineColor},
-    badgePosition: 'TOP_LEFT'
+    badgePosition: 'TOP_LEFT' as AvatarProps['badgePosition']
   },
   {
     title: 'Icon badge',
@@ -102,7 +102,7 @@ const examples = [
     title: 'With custom badge label',
     label: 'LD',
     backgroundColor: Colors.$backgroundDangerLight,
-    badgePosition: 'BOTTOM_RIGHT',
+    badgePosition: 'BOTTOM_RIGHT' as AvatarProps['badgePosition'],
     badgeProps: {
       label: '+2',
       size: 24,
@@ -123,7 +123,7 @@ export default class AvatarsScreen extends Component {
       patchedGravatar ? `Patched-uri: ${patchedGravatar}` : ''
     }`;
     Alert.alert(title, message);
-  }
+  };
 
   render() {
     return (

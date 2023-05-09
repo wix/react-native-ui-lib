@@ -79,6 +79,7 @@ const IncubatorSliderScreen = () => {
         </Text>
         {renderValuesBox(sliderValue)}
         <Incubator.Slider
+          // @ts-expect-error TODO: need to properly support SliderMethods type to use for ref
           ref={slider}
           onValueChange={onValueChange}
           containerStyle={styles.container}
@@ -97,6 +98,7 @@ const IncubatorSliderScreen = () => {
         <Text margin-10 text70BL $textDefault>
           Disabled Slider
         </Text>
+        {/* @ts-expect-error */}
         <Incubator.Slider value={0.4} containerStyle={styles.container} disableRTL={disableRTL} disabled/>
       </View>
     );
@@ -110,6 +112,7 @@ const IncubatorSliderScreen = () => {
         </Text>
         {renderValuesBox(customSliderValue)}
         <Incubator.Slider
+          // @ts-expect-error
           ref={customSlider}
           onValueChange={onCustomValueChange}
           value={20}
@@ -137,6 +140,7 @@ const IncubatorSliderScreen = () => {
         </Text>
         {renderValuesBox(negativeSliderValue)}
         <Incubator.Slider
+          // @ts-expect-error
           ref={negativeSlider}
           onValueChange={onNegativeValueChange}
           value={-30}
@@ -159,6 +163,7 @@ const IncubatorSliderScreen = () => {
         <View marginH-20>
           {renderValuesBox(sliderMinValue, sliderMaxValue)}
           <Incubator.Slider
+            // @ts-expect-error
             ref={rangeSlider}
             useRange
             onRangeChange={onRangeChange}

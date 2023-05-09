@@ -21,11 +21,18 @@ const IMAGES = [
   'https://images.pexels.com/photos/3206153/pexels-photo-3206153.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 ];
 
+// @ts-expect-error
 const GUTTER_SIZE = Spacings.page;
+// @ts-expect-error
 const COLUMN_SIZE = (Constants.screenWidth - 2 * Spacings.page - GUTTER_SIZE) / 2;
 
-class Pinterest extends Component {
-  constructor(props) {
+type ImageObject = {uri: string; width: number; height: number; aspectRatio: number};
+interface State {
+  images?: ImageObject[];
+}
+
+class Pinterest extends Component<{}, State> {
+  constructor(props: any) {
     super(props);
 
     this.state = {};
@@ -46,11 +53,11 @@ class Pinterest extends Component {
   }
 
   loadImages() {
-    const images = {};
+    const images: ImageObject[] = [];
 
     _.map(IMAGES, (image, index) => {
       Image.getSize(image,
-        (width, height) => {
+        (width: number, height: number) => {
           images[index] = {
             uri: image,
             width,
@@ -73,7 +80,8 @@ class Pinterest extends Component {
     });
   }
 
-  renderImage(image) {
+  
+  renderImage(image: ImageObject) {
     return (
       <Card
         key={image.uri}
@@ -98,7 +106,7 @@ class Pinterest extends Component {
     );
   }
 
-  renderColumn(columnIndex) {
+  renderColumn(columnIndex: number) {
     const {images} = this.state;
     return (
       <View marginR-page={columnIndex === 0}>
