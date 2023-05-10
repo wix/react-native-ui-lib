@@ -102,8 +102,9 @@ export type BackgroundColorModifier = Modifier<'bg'>;
 export type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export type PositionModifiers = Modifier<PositionLiterals>;
 export type PaddingModifiers = Modifier<PaddingLiterals>;
-// export type MarginModifiers = Modifier<MarginLiterals>;
-export type MarginModifiers = {[key: `${MarginLiterals}-${number}`]: boolean};
+export type MarginModifiers = Modifier<MarginLiterals>;
+// TODO: This caused issue with with some typings that inherit this type
+// export type MarginModifiers = Partial<{[key: `${MarginLiterals}-${number}`]: boolean}>;
 export type FlexModifiers = Modifier<FlexLiterals>;
 export type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
 
