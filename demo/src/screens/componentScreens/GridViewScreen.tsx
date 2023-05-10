@@ -53,7 +53,7 @@ class GridViewScreen extends Component {
           descriptionLines: 2,
           alignToStart: true,
           onPress: () => Alert.alert('My price was ' + product.formattedPrice + ', now it is $50')
-        })))(products),
+        })))(products) as GridViewProps['items'],
     dynamicLayout: _.flow(products => _.take(products, 3),
       (products: any[]) =>
         _.map(products, product => ({

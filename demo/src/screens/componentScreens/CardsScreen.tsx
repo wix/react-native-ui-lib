@@ -160,7 +160,9 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
   renderCoupons = () => {
     return (
       <View row spread marginB-10>
+        {/* @ts-expect-error */}
         {this.renderCoupon({'marginR-10': true})}
+        {/* @ts-expect-error */}
         {this.renderCoupon({'marginL-10': true})}
       </View>
     );
@@ -185,6 +187,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <View row spread height={160}>
         {
           // Icon
+          // @ts-expect-error
           this.renderComplexImage({'marginR-5': true},
             <Card.Section
               flex
@@ -202,6 +205,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
         }
         {
           // Image with overlay content
+          // @ts-expect-error
           this.renderComplexImage({'marginL-5': true},
             <Card.Section
               flex
