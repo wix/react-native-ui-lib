@@ -83,7 +83,7 @@ export default class WizardScreen extends Component<{}, State> {
     }
 
     const activeIndex = prevActiveIndex + 1;
-    let completedStepIndex = prevCompletedStepIndex;
+    let completedStepIndex: number | undefined = prevCompletedStepIndex;
     if (!prevCompletedStepIndex || prevCompletedStepIndex < prevActiveIndex) {
       completedStepIndex = prevActiveIndex;
     }
@@ -150,10 +150,11 @@ export default class WizardScreen extends Component<{}, State> {
           value={customerName}
           validate={'required'}
           validateOnChange
-          errorMessage="This is required"
+          validationMessage="This is required"
           onChangeText={this.onNameEntered}
         />
         {this.renderPrevButton()}
+        {/* @ts-expect-error */}
         {this.renderNextButton(_.isNil(customerName) || customerName.trim().length === 0)}
       </View>
     );
@@ -186,7 +187,7 @@ export default class WizardScreen extends Component<{}, State> {
   getStepState(index: number) {
     const {activeIndex, completedStepIndex} = this.state;
     let state = Wizard.States.DISABLED;
-    if (completedStepIndex > index - 1) {
+    if (completedStepIndex && completedStepIndex > index - 1) {
       state = Wizard.States.COMPLETED;
     } else if (activeIndex === index || completedStepIndex === index - 1) {
       state = Wizard.States.ENABLED;

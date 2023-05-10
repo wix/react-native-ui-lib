@@ -64,7 +64,7 @@ export default class PanDismissibleScreen extends Component {
           <PanningProvider>
             {!isCoupled && panListener}
             <PanDismissibleView
-              key={key}
+              key={key.toString()}
               style={[styles.panDismissible, {marginTop: isCoupled ? PAN_LISTENER_VIEW_HEIGHT : undefined}]}
             >
               {isCoupled && panListener}

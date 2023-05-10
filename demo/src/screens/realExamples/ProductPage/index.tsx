@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {Assets, View, Text, Icon, Colors, Image, Button, Carousel, Picker} from 'react-native-ui-lib';
+import {Assets, View, Text, Icon, Colors, Image, Button, Carousel, Picker, PickerValue} from 'react-native-ui-lib';
 import _ from 'lodash';
 
 const colorOptions: {[key: string]: {name: string; color: string}} = {
@@ -76,19 +76,27 @@ class Product extends Component {
             <Picker
               migrate
               value={selectedColor}
-              onChange={(value: string) => this.setState({selectedColor: value})}
-              trailingAccessory={<Icon {...{
-                width: 24,
-                height: 24,
-                backgroundColor: colorOptions[selectedColor].color,
-                borderRadius: 12
-              }} />}
+              onChange={(value: PickerValue) => this.setState({selectedColor: value})}
+              trailingAccessory={
+                <Icon
+                  {...{
+                    width: 24,
+                    height: 24,
+                    backgroundColor: colorOptions[selectedColor].color,
+                    borderRadius: 12
+                  }}
+                />
+              }
             >
               {_.map(colorOptions, (colorOption, colorKey) => {
                 return <Picker.Item key={colorKey} value={colorKey} label={colorOption.name}/>;
               })}
             </Picker>
-            <Picker migrate value={selectedSize} onChange={(value: string) => this.setState({selectedSize: value})}>
+            <Picker
+              migrate
+              value={selectedSize}
+              onChange={(value: PickerValue) => this.setState({selectedSize: value})}
+            >
               {_.map(sizeOptions, (sizeOption, sizeKey) => {
                 return <Picker.Item key={sizeKey} value={sizeKey} label={sizeOption.name}/>;
               })}

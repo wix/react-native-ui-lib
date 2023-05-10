@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Alert} from 'react-native';
+import {Alert, ViewStyle} from 'react-native';
 import {Colors, View, Text, Hint, Button, Assets, Incubator} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions, renderBooleanOption} from '../ExampleScreenPresenter';
 
@@ -16,7 +16,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
     useShortMessage: false,
     showBottomHint: false,
     showIcon: false,
-    targetPosition: 'flex-start',
+    targetPosition: 'flex-start' as ViewStyle['alignSelf'],
     useBackdrop: true,
     useTargetFrame: false,
     useSideTip: false,
