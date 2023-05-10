@@ -4,6 +4,6 @@
     "emitDeclarationOnly": false,
     "noEmit": true
   },
-  "include": ["src/**/*", "typings/**/*", "lib/components/**/*", "demo/**/*"],
+  "include": ["src/**/*", "typings/**/*", "lib/components/**/*"],
   "exclude": ["node_modules", "src/**/__tests__"]
 }

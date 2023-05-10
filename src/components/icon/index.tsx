@@ -5,7 +5,7 @@ import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants}
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import SvgImage from '../svgImage';
 
-export type IconProps = Omit<ImageProps, 'source'> &
+export type IconProps = ImageProps &
   MarginModifiers & {
     /**
      * if provided icon source will be driven from asset name
@@ -27,7 +27,6 @@ export type IconProps = Omit<ImageProps, 'source'> &
      * whether the icon should flip horizontally on RTL
      */
     supportRTL?: boolean;
-    source?: ImageProps['source']
   };
 
 /**

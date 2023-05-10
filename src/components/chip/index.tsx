@@ -170,6 +170,7 @@ const Chip = ({
 
     return (
       <Icon
+        //@ts-expect-error
         source={isLeftIcon ? iconSource : rightIconSource}
         testID={`${testID}.icon`}
         tintColor={Colors.$iconDefault}

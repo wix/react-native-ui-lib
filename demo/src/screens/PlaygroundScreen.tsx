@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, Card, TextField, Button} from 'react-native-ui-lib';
+import {StyleSheet} from 'react-native';
+import {View, Text, Card, TextField, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
   render() {

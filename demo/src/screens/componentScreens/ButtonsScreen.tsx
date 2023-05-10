@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert, Image} from 'react-native';
-import {Text, View, Assets, Constants, Button, Colors, Typography, ButtonProps} from 'react-native-ui-lib';
+import {Text, View, Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 
 const ButtonSpace = 20;
 const plusIcon = Assets.getAssetByPath('icons.demo.plus');
@@ -9,12 +9,16 @@ const labelButton = {label: 'Animated'};
 const iconButton = {round: true};
 
 export default class ButtonsScreen extends Component {
-  state = {
-    backgroundColor: Colors.yellow30,
-    label: 'Button',
-    // outline: true,
-    buttonProps: labelButton as ButtonProps
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      backgroundColor: Colors.yellow30,
+      label: 'Button',
+      // outline: true,
+      buttonProps: labelButton
+    };
+  }
 
   changeProps = () => {
     if (this.state.buttonProps === labelButton) {
@@ -237,11 +241,9 @@ export default class ButtonsScreen extends Component {
                   style={{
                     width: 20,
                     height: 20,
-                    // @ts-expect-error
-                    backgroundColor: iconStyle[0]?.tintColor,
+                    backgroundColor: iconStyle[0].tintColor,
                     borderRadius: 10,
-                    // @ts-expect-error
-                    marginRight: iconStyle[0]?.marginRight
+                    marginRight: iconStyle[0].marginRight
                   }}
                 />
               )}

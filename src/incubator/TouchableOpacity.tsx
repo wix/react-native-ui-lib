@@ -55,7 +55,6 @@ export type TouchableOpacityProps = {
    * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
    */
   customValue?: any;
-  children?: React.ReactNode;
   onLayout?: (event: LayoutChangeEvent) => void;
   testID?: string;
 };

@@ -288,7 +288,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
           // @ts-expect-error - hopefully will be solved after the picker migration ends
           renderPicker(value, label)
         ) : (
-          // @ts-expect-error
           <TextFieldMigrator
             migrate={migrateTextField}
             // customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"

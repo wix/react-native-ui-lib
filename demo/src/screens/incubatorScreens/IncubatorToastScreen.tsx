@@ -6,7 +6,6 @@ import {renderMultipleSegmentOptions, renderBooleanOption, renderRadioGroup} fro
 const {Toast} = Incubator;
 
 const TOAST_ACTIONS = {
-  none: {},
   label: {label: 'Undo', onPress: () => console.warn('undo')},
   icon: {iconSource: Assets.icons.demo.plus, onPress: () => console.warn('add')}
 };
@@ -25,9 +24,9 @@ export default class ToastsScreen extends Component {
     toastPosition: 'bottom' as Incubator.ToastProps['position'],
     isCustomContent: false,
     showLoader: false,
-    selectedAction: 'none' as keyof typeof TOAST_ACTIONS,
+    selectedAction: '',
     hasAttachment: false,
-    selectedPreset: '' as Incubator.ToastProps['preset'] & '',
+    selectedPreset: '' as Incubator.ToastProps['preset'],
     isSwipeable: true
   };
 

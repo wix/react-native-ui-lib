@@ -28,7 +28,7 @@ export interface ModalTopBarProps {
   /**
    * done action icon
    */
-  doneIcon?: ImageSourcePropType | null;
+  doneIcon?: ImageSourcePropType;
   /**
    * done action callback
    */
@@ -44,7 +44,7 @@ export interface ModalTopBarProps {
   /**
    * cancel action icon
    */
-  cancelIcon?: ImageSourcePropType | null;
+  cancelIcon?: ImageSourcePropType;
   /**
    * cancel action callback
    */
@@ -74,7 +74,7 @@ export interface ModalTopBarProps {
 type topBarButtonProp = {
   onPress?: (props: any) => void;
   label?: string;
-  icon?: ImageSourcePropType | null;
+  icon?: ImageSourcePropType;
   accessibilityLabel?: string;
   buttonProps?: Omit<ButtonProps, 'onPress'>;
 };

@@ -27,8 +27,6 @@ export {BaseComponent, PureBaseComponent} from './commons';
 
 import * as Incubator from './incubator';
 export {
-  ExpandableOverlayProps,
-  ExpandableOverlayMethods,
   TextFieldProps,
   TextFieldMethods,
   TextFieldRef,

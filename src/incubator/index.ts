@@ -1,5 +1,5 @@
 // export {default as Calendar} from './Calendar';
-export {default as ExpandableOverlay, ExpandableOverlayProps, ExpandableOverlayMethods} from './expandableOverlay';
+export {default as ExpandableOverlay} from './expandableOverlay';
 // @ts-ignore
 export {
   default as TextField,

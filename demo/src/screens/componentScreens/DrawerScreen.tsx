@@ -1,48 +1,61 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, LayoutAnimation} from 'react-native';
-import {Assets, Colors, Typography, View, Drawer, Text, Button, Avatar, Badge, DrawerProps} from 'react-native-ui-lib';
+import {
+  Assets,
+  Colors,
+  Typography,
+  View,
+  Drawer,
+  Text,
+  Button,
+  Avatar,
+  Badge
+} from 'react-native-ui-lib'; //eslint-disable-line
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import conversations from '../../data/conversations';
 
-import {renderBooleanOption, renderSliderOption, renderColorOption} from '../ExampleScreenPresenter';
+import {
+  renderBooleanOption,
+  renderSliderOption,
+  renderColorOption
+} from '../ExampleScreenPresenter';
 
 const ITEMS = {
   read: {
     icon: require('../../assets/icons/mail.png'),
     text: 'Read',
     background: Colors.green30,
-    testID: 'left_item_read'
+    testID: "left_item_read"
   },
   archive: {
     icon: require('../../assets/icons/archive.png'),
     text: 'Archive',
     background: Colors.blue30,
-    testID: 'right_item_archive'
+    testID: "right_item_archive"
   },
   delete: {
     icon: require('../../assets/icons/delete.png'),
     text: 'Delete',
     background: Colors.red30,
-    testID: 'right_item_delete'
+    testID: "right_item_delete"
   }
 };
 
 class DrawerScreen extends Component {
-  state = {
-    hideItem: false,
-    showRightItems: true,
-    fullSwipeRight: true,
-    showLeftItem: true,
-    fullSwipeLeft: true,
-    unread: true,
-    itemsTintColor: undefined,
-    bounciness: undefined,
-    itemsIconSize: undefined
-  };
+  constructor(props) {
+    super(props);
 
-  ref: React.Ref<typeof Drawer> = null;
+    this.state = {
+      hideItem: false,
+      showRightItems: true,
+      fullSwipeRight: true,
+      showLeftItem: true,
+      fullSwipeLeft: true,
+      unread: true
+    };
+  }
 
-  componentDidUpdate(_prevProps: any, prevState: typeof this.state) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.state.hideItem && prevState.hideItem) {
       this.showItem();
     }
@@ -69,7 +82,7 @@ class DrawerScreen extends Component {
 
   toggleReadState = () => {
     this.setState({unread: !this.state.unread});
-  };
+  }
 
   showItem = () => {
     this.setState({hideItem: false});
@@ -77,37 +90,31 @@ class DrawerScreen extends Component {
 
   openLeftDrawer = () => {
     if (this.ref) {
-      // @ts-expect-error
       this.ref.openLeft();
     }
   };
   openLeftDrawerFull = () => {
     if (this.ref) {
-      // @ts-expect-error
       this.ref.openLeftFull();
     }
   };
   toggleLeftDrawer = () => {
     if (this.ref) {
-      // @ts-expect-error
       this.ref.toggleLeft();
     }
   };
   openRightDrawer = () => {
     if (this.ref) {
-      // @ts-expect-error
       this.ref.openRight();
     }
   };
   openRightDrawerFull = () => {
     if (this.ref) {
-      // @ts-expect-error
       this.ref.openRightFull();
     }
   };
   closeDrawer = () => {
     if (this.ref) {
-      // @ts-expect-error
       this.ref.closeDrawer();
     }
   };
@@ -142,7 +149,13 @@ class DrawerScreen extends Component {
           </View>
 
           <View marginH-20>
-            <Button onPress={this.closeDrawer} label="Close" style={{margin: 3}} size={'xSmall'} testID="close_btn"/>
+            <Button
+              onPress={this.closeDrawer}
+              label="Close"
+              style={{margin: 3}}
+              size={'xSmall'}
+              testID="close_btn"
+            />
           </View>
 
           <View>
@@ -179,14 +192,10 @@ class DrawerScreen extends Component {
         style={{borderBottomWidth: 1, borderColor: Colors.grey60}}
         testID="drawer_item"
       >
-        {this.state.unread && (
-          <Badge testID="drawer_item_badge" size={6} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>
-        )}
+        {this.state.unread && <Badge testID="drawer_item_badge" size={6} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
         <Avatar source={{uri: data.thumbnail}}/>
         <View marginL-20>
-          <Text text70R={!this.state.unread} text70BO={this.state.unread}>
-            {data.name}
-          </Text>
+          <Text text70R={!this.state.unread} text70BO={this.state.unread}>{data.name}</Text>
           <Text text80 marginT-2>
             {data.text}
           </Text>
@@ -207,12 +216,11 @@ class DrawerScreen extends Component {
       hideItem
     } = this.state;
 
-    const drawerProps: DrawerProps = {
+    const drawerProps = {
       itemsTintColor,
       itemsIconSize,
       bounciness,
-      // @ts-expect-error
-      ref: component => (this.ref = component),
+      ref: (component) => (this.ref = component),
       fullSwipeRight,
       onFullSwipeRight: this.deleteItem,
       fullSwipeLeft,
@@ -228,7 +236,7 @@ class DrawerScreen extends Component {
       drawerProps.leftItem = {
         ...ITEMS.read,
         icon: this.state.unread ? require('../../assets/icons/mail.png') : require('../../assets/icons/refresh.png'),
-        text: !this.state.unread ? 'Unread' : 'Read',
+        text: !this.state.unread ? 'Unread' : 'Read', 
         background: this.state.unread ? Colors.green30 : Colors.orange30,
         onPress: this.toggleReadState
       };
@@ -257,13 +265,22 @@ class DrawerScreen extends Component {
           </>
         )}
 
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
           <View padding-20>
             {this.renderActions()}
             {renderBooleanOption.call(this, 'rightItems', 'showRightItems')}
-            {showRightItems && renderBooleanOption.call(this, 'fullSwipeRight', 'fullSwipeRight')}
+            {showRightItems &&
+              renderBooleanOption.call(
+                this,
+                'fullSwipeRight',
+                'fullSwipeRight'
+              )}
             {renderBooleanOption.call(this, 'leftItem', 'showLeftItem')}
-            {showLeftItem && renderBooleanOption.call(this, 'fullSwipeLeft', 'fullSwipeLeft')}
+            {showLeftItem &&
+              renderBooleanOption.call(this, 'fullSwipeLeft', 'fullSwipeLeft')}
             {renderColorOption.call(this, 'icon+text color', 'itemsTintColor')}
             {renderSliderOption.call(this, 'bounciness', 'bounciness', {
               min: 5,
