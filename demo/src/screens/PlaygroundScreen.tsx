@@ -18,7 +18,3 @@ export default class PlaygroundScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {}
-});
