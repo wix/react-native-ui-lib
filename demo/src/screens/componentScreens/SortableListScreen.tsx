@@ -76,6 +76,7 @@ const SortableListScreen = () => {
     const Container = locked ? View : TouchableOpacity;
     return (
       <Container
+        // TODO: fix Android selection color
         style={[styles.itemContainer, isSelected && styles.selectedItemContainer]}
         onPress={() => toggleItemSelection(item)}
         // overriding the BG color to anything other than white will cause Android's elevation to fail
