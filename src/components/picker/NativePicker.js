@@ -7,6 +7,7 @@ import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
 import {WheelPicker} from '../../incubator';
 
+// TODO: remove this file?
 class NativePicker extends Component {
   static displayName = 'NativePicker';
 
