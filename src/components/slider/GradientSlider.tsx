@@ -225,6 +225,7 @@ class GradientSlider extends Component<Props, GradientSliderState> {
     return (
       <SliderComponent
         {...others}
+        //@ts-expect-error
         ref={forwardedRef}
         onReset={this.reset}
         renderTrack={renderTrack}

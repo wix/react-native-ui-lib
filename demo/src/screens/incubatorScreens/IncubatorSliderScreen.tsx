@@ -58,7 +58,7 @@ const IncubatorSliderScreen = () => {
   }, []);
 
   const onGroupValueChange = (value: string) => {
-    console.warn('onGroupValueChange: ', value);
+    console.log('onGroupValueChange: ', value);
   };
 
   const renderValuesBox = (min: number, max?: number) => {
@@ -244,7 +244,7 @@ const IncubatorSliderScreen = () => {
           sliderContainerStyle={styles.slider}
           containerStyle={styles.group}
           showLabels
-          // onValueChange={onGroupValueChange}
+          onValueChange={onGroupValueChange}
           migrate
         />
       </>
