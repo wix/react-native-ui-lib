@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
+import IncubatorSlider from '../../incubator/Slider';
 import View from '../view';
 import Thumb, {ThumbProps} from './Thumb';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -120,6 +121,9 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    * The slider's test identifier
    */
   testID?: string;
+  /** Whether to use the new Slider implementation using Reanimated
+   */
+  migrate?: boolean;
 } & typeof defaultProps;
 
 interface State {
@@ -739,7 +743,11 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   render() {
-    const {containerStyle, testID} = this.props;
+    const {containerStyle, testID, migrate} = this.props;
+
+    if (migrate) {
+      return <IncubatorSlider {...this.props}/>;
+    }
     
     return (
       <View
