@@ -48,9 +48,6 @@ export type GradientSliderProps = Omit<SliderProps, 'onValueChange'> & {
    * If true the Slider will be disabled and will appear in disabled color
    */
   disabled?: boolean;
-  /** Whether to use the new Slider implementation using Reanimated
-   */
-  migrate?: boolean;
 };
 
 type GradientSliderComponentProps = {
