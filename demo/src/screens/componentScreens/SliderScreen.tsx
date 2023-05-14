@@ -115,6 +115,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             // @ts-expect-error
             ref={this.slider}
             onReset={this.onSliderReset}
+            migrate
           />
           <Text bodySmall $textNeutral style={styles.text} numberOfLines={1}>
             ${sliderValue}
@@ -137,6 +138,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           minimumTrackTintColor={Colors.red30}
           thumbTintColor={Colors.red50}
           containerStyle={styles.slider}
+          migrate
         />
         <Slider
           minimumValue={-300}
@@ -145,6 +147,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           minimumTrackTintColor={Colors.red30}
           thumbTintColor={Colors.red50}
           containerStyle={styles.slider}
+          migrate
         />
       </Fragment>
     );
@@ -156,8 +159,14 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
         <Text $textDefault text70BO marginT-20>
           Disabled
         </Text>
-        <Slider minimumValue={100} maximumValue={200} value={120} containerStyle={styles.slider} disabled/>
+        <Slider minimumValue={100} maximumValue={200} value={120} containerStyle={styles.slider} disabled migrate/>
+      </Fragment>
+    );
+  }
 
+  renderCustomSlider() {
+    return (
+      <>
         <Text $textDefault text70BO marginT-15>
           Custom with Steps
         </Text>
@@ -173,8 +182,9 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           thumbTintColor={Colors.violet70}
           minimumTrackTintColor={Colors.violet40}
           maximumTrackTintColor={Colors.violet70}
+          migrate
         />
-      </Fragment>
+      </>
     );
   }
 
@@ -205,6 +215,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           // @ts-expect-error
           ref={this.rangeSlider}
           onReset={this.onRangeSliderReset}
+          migrate
         />
       </Fragment>
     );
@@ -237,6 +248,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           disableRTL={forceLTR}
           initialMinimumValue={25}
           initialMaximumValue={80}
+          migrate
         />
       </Fragment>
     );
@@ -260,6 +272,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             onValueChange={this.onGradientValueChange}
             // @ts-expect-error
             ref={this.gradientSlider}
+            migrate
           />
           <View style={styles.box}>
             <View style={{flex: 1, backgroundColor: color, opacity: alpha}}/>
@@ -274,6 +287,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             color={COLOR}
             containerStyle={styles.gradientSliderContainer}
             onValueChange={this.onGradientValueChange}
+            migrate
           />
           <View style={styles.box}>
             <View style={{flex: 1, backgroundColor: color}}/>
@@ -297,6 +311,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           containerStyle={styles.group}
           showLabels
           // onValueChange={this.onGroupValueChange}
+          migrate
         />
       </Fragment>
     );
@@ -317,6 +332,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           {this.renderDefaultSliderExample()}
           {this.renderNegativeSliderExample()}
           {this.renderDisabledSliderExample()}
+          {this.renderCustomSlider()}
           {this.renderRangeSliderExample()}
           {this.renderRangeSliderWithValuesExample()}
           {this.renderGradientSlidersExample()}
