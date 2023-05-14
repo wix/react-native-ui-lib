@@ -5,6 +5,7 @@ import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import Slider, {SliderProps} from './index';
+import {Slider as NewSlider} from '../../incubator';
 import {SliderContextProps} from './context/SliderContext';
 import asSliderGroupChild from './context/asSliderGroupChild';
 import Gradient from '../gradient';
@@ -47,6 +48,9 @@ export type GradientSliderProps = Omit<SliderProps, 'onValueChange'> & {
    * If true the Slider will be disabled and will appear in disabled color
    */
   disabled?: boolean;
+  /** Whether to use the new Slider implementation using Reanimated
+   */
+  migrate?: boolean;
 };
 
 type GradientSliderComponentProps = {
@@ -216,8 +220,10 @@ class GradientSlider extends Component<Props, GradientSliderState> {
         break;
     }
 
+    const SliderComponent = this.props.migrate ? NewSlider : Slider;
+
     return (
-      <Slider
+      <SliderComponent
         {...others}
         ref={forwardedRef}
         onReset={this.reset}

@@ -143,16 +143,18 @@ const Slider = React.memo((props: Props) => {
     return Math.round(defaultThumbOffset.value);
   },
   (offset, _prevOffset) => {
-    const value = getValueForOffset(offset, trackSize.value.width, minimumValue, maximumValue, stepXValue.value);
-    if (useRange) {
-      const maxValue = getValueForOffset(rangeThumbOffset.value,
-        trackSize.value.width,
-        minimumValue,
-        maximumValue,
-        stepXValue.value);
-      runOnJS(onRangeChangeThrottled)(value, maxValue);
-    } else {
-      runOnJS(onValueChangeThrottled)(value);
+    if (offset !== _prevOffset) {
+      const value = getValueForOffset(offset, trackSize.value.width, minimumValue, maximumValue, stepXValue.value);
+      if (useRange) {
+        const maxValue = getValueForOffset(rangeThumbOffset.value,
+          trackSize.value.width,
+          minimumValue,
+          maximumValue,
+          stepXValue.value);
+        runOnJS(onRangeChangeThrottled)(value, maxValue);
+      } else {
+        runOnJS(onValueChangeThrottled)(value);
+      }
     }
   });
 
