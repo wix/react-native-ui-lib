@@ -42,7 +42,8 @@ export type ColorSliderGroupProps = {
    * If true the component will have accessibility features enabled
    */
   accessible?: boolean;
-  /** Whether to use the new Slider implementation using Reanimated
+  /** 
+   * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
 };

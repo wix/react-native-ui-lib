@@ -121,7 +121,8 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    * The slider's test identifier
    */
   testID?: string;
-  /** Whether to use the new Slider implementation using Reanimated
+  /** 
+   * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
 } & typeof defaultProps;
