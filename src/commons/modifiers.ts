@@ -93,6 +93,7 @@ export type AlignmentLiterals =
 export type PositionLiterals = 'absF' | 'absL' | 'absR' | 'absT' | 'absB' | 'absV' | 'absH';
 
 export type Modifier<T extends string> = Partial<Record<T, boolean>>;
+export type NumberModifier<T extends string> = Partial<Record<T, number>>;
 export type CustomModifier = {[key: string]: boolean};
 
 // TODO: migrate other modifiers to the same new structure as Margin modifier, using template literals
@@ -101,8 +102,8 @@ export type ColorsModifiers = Modifier<ColorLiterals> | CustomModifier;
 export type BackgroundColorModifier = Modifier<'bg'>;
 export type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export type PositionModifiers = Modifier<PositionLiterals>;
-export type PaddingModifiers = Modifier<PaddingLiterals>;
-export type MarginModifiers = Modifier<MarginLiterals>;
+export type PaddingModifiers = NumberModifier<PaddingLiterals>;
+export type MarginModifiers = NumberModifier<MarginLiterals>;
 // TODO: This caused issue with with some typings that inherit this type
 // export type MarginModifiers = Partial<{[key: `${MarginLiterals}-${number}`]: boolean}>;
 export type FlexModifiers = Modifier<FlexLiterals>;
@@ -151,6 +152,8 @@ export function extractTypographyValue(props: Dictionary<any>): object | undefin
 export function extractPaddingValues(props: Dictionary<any>) {
   const paddings: Partial<Record<NativePaddingKeyType, number>> = {};
   const paddingPropsKeys = Object.keys(props).filter(key => PADDING_KEY_PATTERN.test(key));
+  const numberPaddingPropsKeys = Object.keys(props).filter(key => Object.keys(PADDING_VARIATIONS).includes(key));
+  
   _.forEach(paddingPropsKeys, key => {
     if (props[key] === true) {
       const [paddingKey, paddingValue] = key.split('-') as [keyof typeof PADDING_VARIATIONS, string];
@@ -163,25 +166,46 @@ export function extractPaddingValues(props: Dictionary<any>) {
     }
   });
 
+  _.forEach(numberPaddingPropsKeys, key => {
+    const paddingVariation = PADDING_VARIATIONS[key as keyof typeof PADDING_VARIATIONS];
+
+    if (!isNaN(Number(props[key]))) {
+      paddings[paddingVariation] = Number(props[key]);
+    } else if (Spacings.getKeysPattern().test(props[key])) {
+      paddings[paddingVariation] = Spacings[props[key] as keyof typeof SpacingLiterals];
+    }
+  });
+
   return paddings;
 }
 
 export function extractMarginValues(props: Dictionary<any>) {
   const margins: Partial<Record<NativeMarginModifierKeyType, number>> = {};
   const marginPropsKeys = Object.keys(props).filter(key => MARGIN_KEY_PATTERN.test(key));
+  const numberMarginPropsKeys = Object.keys(props).filter(key => Object.keys(MARGIN_VARIATIONS).includes(key));
 
   _.forEach(marginPropsKeys, key => {
     if (props[key] === true) {
       const [marginKey, marginValue, negativeMarginValue] = key.split('-') as [keyof typeof MARGIN_VARIATIONS, string, string | undefined];
-      const paddingVariation = MARGIN_VARIATIONS[marginKey];
+      const marginVariation = MARGIN_VARIATIONS[marginKey];
       const value = negativeMarginValue ?? marginValue;
       const sign = negativeMarginValue ? -1 : 1;
 
       if (!isNaN(Number(value))) {
-        margins[paddingVariation] = sign * Number(value);
+        margins[marginVariation] = sign * Number(value);
       } else if (Spacings.getKeysPattern().test(value)) {
-        margins[paddingVariation] = sign * Spacings[value as keyof typeof SpacingLiterals];
+        margins[marginVariation] = sign * Spacings[value as keyof typeof SpacingLiterals];
       }
+    }
+  });
+
+  _.forEach(numberMarginPropsKeys, key => {
+    const marginVariation = MARGIN_VARIATIONS[key as keyof typeof MARGIN_VARIATIONS];
+
+    if (!isNaN(Number(props[key]))) {
+      margins[marginVariation] = Number(props[key]);
+    } else if (Spacings.getKeysPattern().test(props[key])) {
+      margins[marginVariation] = Spacings[props[key] as keyof typeof SpacingLiterals];
     }
   });
 
