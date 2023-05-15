@@ -10,7 +10,6 @@ import com.facebook.react.bridge.JSIModulePackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.wix.reactnativeuilib.UiLibPackageList;
-import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
 import java.util.List;
 
@@ -21,11 +20,6 @@ public class MainApplication extends NavigationApplication {
         @Override
         protected String getJSMainModuleName() {
             return "demo";
-        }
-
-        @Override
-        protected JSIModulePackage getJSIModulePackage() {
-            return new ReanimatedJSIModulePackage();
         }
 
         @Override
