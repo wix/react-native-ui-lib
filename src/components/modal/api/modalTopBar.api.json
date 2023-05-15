@@ -7,6 +7,8 @@
   "props": [
     {"name": "title", "type": "string", "description": "Title to display in the center of the top bar"},
     {"name": "titleStyle", "type": "TextStyle", "description": "Title custom style"},
+    {"name": "subtitle", "type": "string", "description": "Subtitle to display below the top bar title"},
+    {"name": "subtitleStyle", "type": "TextStyle", "description": "Subtitle custom style"},
     {
       "name": "doneButtonProps",
       "type": "ButtonProps",
