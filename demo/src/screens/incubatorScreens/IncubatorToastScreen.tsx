@@ -19,6 +19,7 @@ const TOAST_MESSAGES = {
   offline: 'Check Your Internet Connection'
 };
 
+// TODO: "ReactImageView: Image source "null" doesn't exist" (Android + preset "none")
 class ToastsScreen extends Component {
   showToast = false; // keep this state in class instance for immediate response
   state = {
