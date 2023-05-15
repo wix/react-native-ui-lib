@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {View, Text, Colors, Incubator} from 'react-native-ui-lib';
 
+// TODO: Android - multiple clicks on the long press button (maybe dragging is also involved) -->
+// long press on it --> sometimes the counter just start ticking up
+// (happens on 2.17.0 as well but more rare, with gestureHandlerRootHOC)
 class TouchableOpacityScreen extends Component {
   state = {
     counter: 0,
