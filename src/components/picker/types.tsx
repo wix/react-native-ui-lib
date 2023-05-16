@@ -158,7 +158,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
     /**
      * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
      */
-    listProps?: FlatListProps<any>;
+    listProps?: Partial<FlatListProps<any>>;
     /**
      * Pass props to the picker modal
      */
