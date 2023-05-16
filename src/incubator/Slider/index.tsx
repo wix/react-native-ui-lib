@@ -148,8 +148,8 @@ const Slider = React.memo((props: Props) => {
   useAnimatedReaction(() => {
     return Math.round(defaultThumbOffset.value);
   },
-  (offset, _prevOffset) => {
-    if (offset !== _prevOffset) {
+  (offset, prevOffset) => {
+    if (offset !== prevOffset) {
       const value = getValueForOffset(offset, trackSize.value.width, minimumValue, maximumValue, stepXValue.value);
       if (useRange) {
         const maxValue = getValueForOffset(rangeThumbOffset.value,

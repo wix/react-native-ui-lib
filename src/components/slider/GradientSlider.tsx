@@ -185,7 +185,7 @@ class GradientSlider extends Component<Props, GradientSliderState> {
   };
 
   render() {
-    const {type, containerStyle, disabled, accessible, forwardedRef, ...others} = this.props;
+    const {type, containerStyle, disabled, accessible, forwardedRef, migrate, ...others} = this.props;
     const initialColor = this.state.initialColor;
     const color = this.getColor();
     const thumbTintColor = Colors.getHexString(color);
@@ -217,7 +217,7 @@ class GradientSlider extends Component<Props, GradientSliderState> {
         break;
     }
 
-    const SliderComponent = this.props.migrate ? NewSlider : Slider;
+    const SliderComponent = migrate ? NewSlider : Slider;
 
     return (
       <SliderComponent
