@@ -39,21 +39,27 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
   }, [shouldFloat]);
 
   const animatedStyle = useMemo(() => {
+    const {left, top} = placeholderOffset;
+    if (left !== 0 && top !== 0) {
+      return {
+        transform: [
+          {
+            scale: interpolateValue(animation, [1, FLOATING_PLACEHOLDER_SCALE])
+          },
+          {
+            translateX: interpolateValue(animation, [
+              0,
+              -placeholderOffset.left - extraOffset / FLOATING_PLACEHOLDER_SCALE
+            ])
+          },
+          {
+            translateY: interpolateValue(animation, [0, -placeholderOffset.top])
+          }
+        ]
+      };
+    }
     return {
-      transform: [
-        {
-          scale: interpolateValue(animation, [1, FLOATING_PLACEHOLDER_SCALE])
-        },
-        {
-          translateX: interpolateValue(animation, [
-            0,
-            -placeholderOffset.left - extraOffset / FLOATING_PLACEHOLDER_SCALE
-          ])
-        },
-        {
-          translateY: interpolateValue(animation, [0, -placeholderOffset.top])
-        }
-      ]
+      opacity: 0
     };
   }, [placeholderOffset, extraOffset]);
 

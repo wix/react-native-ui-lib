@@ -6,7 +6,7 @@ import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import {RecorderTag} from 'services';
 import SvgImage from '../svgImage';
 
-export type IconProps = ImageProps &
+export type IconProps = Omit<ImageProps, 'source'> &
   MarginModifiers & {
     /**
      * if provided icon source will be driven from asset name
@@ -32,6 +32,7 @@ export type IconProps = ImageProps &
      * Recorder tag
      */
     recorderTag?: RecorderTag;
+    source?: ImageProps['source'];
   };
 
 /**

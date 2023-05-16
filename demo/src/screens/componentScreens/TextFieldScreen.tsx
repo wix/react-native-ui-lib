@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, TextField, TextFieldRef} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, Spacings, View, Text, Button, Keyboard, TextField, TextFieldRef} from 'react-native-ui-lib';
 const {KeyboardAwareInsetsView} = Keyboard;
 
 const priceFormatter = Intl.NumberFormat('en-US');

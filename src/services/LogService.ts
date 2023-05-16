@@ -12,15 +12,15 @@ class LogService {
     this.biLogger?.log(event);
   };
 
-  warn = (message: string) => {
+  warn = (message?: any, ...optionalParams: any[]) => {
     if (__DEV__) {
-      console.warn(message);
+      console.warn(message, ...optionalParams);
     }
   };
 
-  error = (message: string) => {
+  error = (message?: any, ...optionalParams: any[]) => {
     if (__DEV__) {
-      console.error(message);
+      console.error(message, ...optionalParams);
     }
   };
 

@@ -11,6 +11,7 @@ const {interpolate: _interpolate, interpolateNode} = Animated;
 const Easing = EasingNode || _Easing;
 const interpolate = interpolateNode || _interpolate;
 
+// TODO: 2.17 breaks Android (at list the screen, the image is not shown) - move to incubator?
 class SharedArea extends Component {
   displayName = 'IGNORE';
   static propTypes = {

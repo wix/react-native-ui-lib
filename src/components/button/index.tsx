@@ -8,7 +8,15 @@ import Text from '../text';
 import Image from '../image';
 import Icon from '../icon';
 
-import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
+import {
+  ButtonSize,
+  ButtonAnimationDirection,
+  ButtonProps,
+  ButtonState,
+  Props,
+  DEFAULT_PROPS,
+  ButtonSizeProp
+} from './ButtonTypes';
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
@@ -247,7 +255,7 @@ class Button extends PureComponent<Props, ButtonState> {
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
     };
-    const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
+    const marginSide = ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size) ? 8 : 4;
 
     if (!this.isIconButton) {
       if (iconOnRight) {

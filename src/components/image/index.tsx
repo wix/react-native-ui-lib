@@ -310,4 +310,4 @@ const styles = StyleSheet.create({
 
 hoistNonReactStatic(Image, RNImage);
 export {Image};
-export default asBaseComponent<ImageProps, typeof Image>(Image, {modifiersOptions: {margins: true}});
+export default asBaseComponent<ImageProps, typeof Image & typeof RNImage>(Image, {modifiersOptions: {margins: true}});
