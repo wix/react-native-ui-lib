@@ -194,7 +194,7 @@ const IncubatorSliderScreen = () => {
 
   const renderGradientSlidersExample = () => {
     return (
-      <>
+      <View marginH-20>
         <Text margin-10 text70BL $textDefault>
           Gradient Sliders
         </Text>
@@ -229,7 +229,7 @@ const IncubatorSliderScreen = () => {
             <View style={{flex: 1, backgroundColor: color}}/>
           </View>
         </View>
-      </>
+      </View>
     );
   };
 
