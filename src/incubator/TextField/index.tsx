@@ -30,6 +30,7 @@ import useFieldState from './useFieldState';
 import usePreset from './usePreset';
 import FloatingPlaceholder from './FloatingPlaceholder';
 import CharCounter from './CharCounter';
+import useSafeMultiline from './useSafeMultiline';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
@@ -80,6 +81,10 @@ const TextField = (props: InternalTextFieldProps) => {
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
   const {onFocus, onBlur, onChangeText, fieldState, validateField, checkValidity} = useFieldState(others);
+  //TODO: Remove safeOnChangeText when RN 0.71.8 is released.
+  //GitHub issue link: https://github.com/facebook/react-native/issues/36494
+  const {multiline, maxLength, value} = others;
+  const safeOnChangeText = useSafeMultiline({multiline, maxLength, value, onChangeText});
 
   const context = useMemo(() => {
     return {
@@ -178,7 +183,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 style={inputStyle}
                 onFocus={onFocus}
                 onBlur={onBlur}
-                onChangeText={onChangeText}
+                onChangeText={safeOnChangeText}
                 placeholder={placeholder}
                 hint={hint}
               />
