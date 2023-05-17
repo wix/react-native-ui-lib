@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {View, Text, Image, Colors, Constants, Avatar, GridView, Card} from 'react-native-ui-lib';
+import {View, Text, Image, Colors, Constants, Avatar, GridView, Card, GridViewProps} from 'react-native-ui-lib';
 import React, {Component} from 'react';
 import {Alert, ScrollView} from 'react-native';
 import conversations from '../../data/conversations';
@@ -30,7 +30,7 @@ class GridViewScreen extends Component {
               return <Text text={product.price} style={{alignSelf: 'center', marginTop: 3}}/>;
             }
           }
-        })))(products),
+        })))(products) as GridViewProps['items'],
     pairs: _.flow(products => _.take(products, 2),
       (products: any[]) =>
         _.map(products, product => ({
@@ -53,7 +53,7 @@ class GridViewScreen extends Component {
           descriptionLines: 2,
           alignToStart: true,
           onPress: () => Alert.alert('My price was ' + product.formattedPrice + ', now it is $50')
-        })))(products),
+        })))(products) as GridViewProps['items'],
     dynamicLayout: _.flow(products => _.take(products, 3),
       (products: any[]) =>
         _.map(products, product => ({
@@ -102,7 +102,7 @@ class GridViewScreen extends Component {
               );
             }
           }
-        })))(products),
+        })))(products) as GridViewProps['items'],
 
     avatars: _.flow(products => _.take(products, 9),
       (products: any[]) =>

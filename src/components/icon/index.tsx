@@ -5,7 +5,7 @@ import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants}
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import SvgImage from '../svgImage';
 
-export type IconProps = ImageProps &
+export type IconProps = Omit<ImageProps, 'source'> &
   MarginModifiers & {
     /**
      * if provided icon source will be driven from asset name
@@ -36,6 +36,7 @@ export type IconProps = ImageProps &
      * The icon height, height will be used only in case that the icon is svg image.
      */
     height?: string | number;
+    source?: ImageProps['source']
   };
 
 /**
