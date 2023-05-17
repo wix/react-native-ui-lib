@@ -28,13 +28,12 @@ export type IconProps = ImageProps &
      */
     supportRTL?: boolean;
     /**
-     * Width and height of the icon will be used only in case that the icon is svg image.
      * 
-     * The icon width
+     * The icon width, width will be used only in case that the icon is svg image.
      */
     width?: string | number;
     /**
-     * The icon height
+     * The icon height, height will be used only in case that the icon is svg image.
      */
     height?: string | number;
   };
@@ -86,8 +85,6 @@ const Icon = forwardRef((props: Props, ref: any) => {
   if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
     return renderImage();
   }
-
-  console.log(`isSvg(source)L`, isSvg(source));
 
   return isSvg(source) ? renderSvg() : renderImage();
 });
