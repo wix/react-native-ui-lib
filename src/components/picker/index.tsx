@@ -5,7 +5,7 @@
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
-import React, {useMemo, useState, useRef, useCallback} from 'react';
+import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {Typography} from 'style';
 import {useThemeProps} from 'hooks';
@@ -95,7 +95,14 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const {preset} = others;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items] = useState(extractPickerItems(themeProps));
+  const [items, setItems] = useState(extractPickerItems(themeProps));
+
+  useEffect(() => {
+    const newItems = extractPickerItems(themeProps);
+    if (!_.isEqual(newItems, items)) {
+      setItems(newItems);
+    }
+  }, [children]);
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
