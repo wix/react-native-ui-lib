@@ -1,11 +1,11 @@
-import {useCallback, useMemo, useRef} from 'react';
+import {useCallback, useRef} from 'react';
 import {InternalTextFieldProps} from './types';
 import {Constants} from '../../commons/new';
 
 type SafeMultilineProps = Pick<InternalTextFieldProps, 'multiline' | 'maxLength' | 'value' | 'onChangeText'>;
 
 export default function useSafeMultiline({multiline, maxLength, value, onChangeText}: SafeMultilineProps) {
-  const isSafeMultiline = useMemo(() => multiline && maxLength && Constants.isIOS, [multiline, maxLength]);
+  const isSafeMultiline = multiline && maxLength && Constants.isIOS;
   const lockedText = useRef(value);
   const emitChangeText = useCallback((text: string) => {
     const old = lockedText.current;
