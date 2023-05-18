@@ -185,7 +185,7 @@ class TopBar extends Component<ModalTopBarProps> {
               {title}
             </Text>
             {subtitle && (
-              <Text $textDefault accessible={!!subtitle} numberOfLines={1} style={subtitleStyle}>
+              <Text $textDefault accessible={!!subtitle} bodySmall numberOfLines={1} style={subtitleStyle}>
                 {subtitle}
               </Text>
             )}
