@@ -20,7 +20,7 @@
     "android": "react-native run-android",
     "iPad": "react-native run-ios --simulator='iPad Pro (9.7 inch)'",
     "pretest": "npm run lint",
-    "postinstall": "./scripts/postinstall.sh",
+    "postinstall": "./postinstall.sh",
     "lint": "eslint src -c .eslintrc.js --ext .tsx,.ts,.js",
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "test": "jest",
