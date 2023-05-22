@@ -32,9 +32,9 @@
       "description": "Scale the item once dragged."
     },
     {
-      "name": "itemMargins",
-      "type": "{marginTop?: number; marginBottom?: number, marginLeft?: number, marginRight?: number}",
-      "description": "Extra margins for the item (for controlling the space between the items)."
+      "name": "itemProps",
+      "type": "{margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}}",
+      "description": "Extra props for the item."
     }
   ],
   "snippet": [

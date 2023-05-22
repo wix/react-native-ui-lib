@@ -27,7 +27,7 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
    */
   enableHaptic?: boolean;
   /**
-   * Extra margins for the item (for controlling the space between the items)
+   * Extra props for the item
    */
-  itemMargins?: {marginTop?: number; marginBottom?: number, marginLeft?: number, marginRight?: number};
+  itemProps?: {margins?: {marginTop?: number; marginBottom?: number, marginLeft?: number, marginRight?: number}};
 }

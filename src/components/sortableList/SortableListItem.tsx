@@ -39,7 +39,7 @@ const SortableListItem = (props: Props) => {
   const {
     data,
     itemHeight,
-    itemMargins,
+    itemProps,
     onItemLayout,
     itemsOrder,
     lockedIds,
@@ -168,7 +168,7 @@ const SortableListItem = (props: Props) => {
       zIndex,
       transform: [{translateY: translateY.value}, {scale}],
       opacity,
-      ...itemMargins,
+      ...itemProps?.margins,
       ...shadow
     };
   });
