@@ -95,7 +95,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       setHeaderHeight,
       headerHeight
     };
-  }, [processedData]);
+  }, [processedData, staticHeader, showExtraDays, firstDayOfWeek]);
 
   /** Pages reload */
 
@@ -135,6 +135,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     const index = getItemIndex(selected);
     
     if (shouldAddPages(index)) {
+      console.log('Add new pages');
       runOnJS(addPages)(index);
     } else if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
       if (previous && !isSameMonth(selected, previous)) {
@@ -142,6 +143,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       }
     }
   }, [getItemIndex]);
+
+  /** Events */
 
   const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
     const item = viewableItems?.[0]?.item;
