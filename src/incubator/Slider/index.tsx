@@ -139,7 +139,7 @@ const Slider = React.memo((props: Props) => {
 
   const onValueChangeThrottled = useCallback(_.throttle(value => {
     onValueChange?.(value);
-  }, 100), [onValueChange]);
+  }, 200), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
     onRangeChange?.({min, max});
