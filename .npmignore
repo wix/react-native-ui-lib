@@ -240,6 +240,8 @@ markdowns/
 .babelrc
 # typings/
 # eslint-rules/
+scripts/*
+!scripts/postinstall.sh
 demo-app.component.js
 index.android.js
 index.ios.js
