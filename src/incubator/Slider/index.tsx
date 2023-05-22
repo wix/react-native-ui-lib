@@ -95,11 +95,17 @@ const Slider = React.memo((props: Props) => {
   const end = useSharedValue(0);
   const defaultThumbOffset = useSharedValue(0);
   const rangeThumbOffset = useSharedValue(0);
-
-  const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
-    styles.thumb, {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
+  
+  const thumbBackground: StyleProp<ViewStyle> = useMemo(() => [
+    {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
   ], [disabled, thumbTintColor]);
-  const _thumbStyle = useSharedValue(StyleUtils.unpackStyle(thumbStyle || defaultThumbStyle, {flatten: true}));
+  const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
+    styles.thumb, thumbBackground
+  ], [thumbBackground]);
+  const customThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
+    thumbStyle, thumbBackground
+  ], [thumbStyle, thumbBackground]); 
+  const _thumbStyle = useSharedValue(StyleUtils.unpackStyle(customThumbStyle || defaultThumbStyle, {flatten: true}));
   const _activeThumbStyle = useSharedValue(StyleUtils.unpackStyle(activeThumbStyle, {flatten: true}));
 
   useEffect(() => {
@@ -142,17 +148,19 @@ const Slider = React.memo((props: Props) => {
   useAnimatedReaction(() => {
     return Math.round(defaultThumbOffset.value);
   },
-  (offset, _prevOffset) => {
-    const value = getValueForOffset(offset, trackSize.value.width, minimumValue, maximumValue, stepXValue.value);
-    if (useRange) {
-      const maxValue = getValueForOffset(rangeThumbOffset.value,
-        trackSize.value.width,
-        minimumValue,
-        maximumValue,
-        stepXValue.value);
-      runOnJS(onRangeChangeThrottled)(value, maxValue);
-    } else {
-      runOnJS(onValueChangeThrottled)(value);
+  (offset, prevOffset) => {
+    if (offset !== prevOffset) {
+      const value = getValueForOffset(offset, trackSize.value.width, minimumValue, maximumValue, stepXValue.value);
+      if (useRange) {
+        const maxValue = getValueForOffset(rangeThumbOffset.value,
+          trackSize.value.width,
+          minimumValue,
+          maximumValue,
+          stepXValue.value);
+        runOnJS(onRangeChangeThrottled)(value, maxValue);
+      } else {
+        runOnJS(onValueChangeThrottled)(value);
+      }
     }
   });
 

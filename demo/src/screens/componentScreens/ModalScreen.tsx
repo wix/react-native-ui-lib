@@ -63,6 +63,7 @@ export default class ModalScreen extends Component<ModalScreenProps, State> {
           <View bg-violet80 flex style={styles.page}>
             <Modal.TopBar
               title="another example"
+              subtitle="with a subtitle"
               onCancel={() => Alert.alert('cancel')}
               onDone={() => Alert.alert('done')}
               cancelIcon={null}

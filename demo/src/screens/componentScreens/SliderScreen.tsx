@@ -157,7 +157,13 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           Disabled
         </Text>
         <Slider minimumValue={100} maximumValue={200} value={120} containerStyle={styles.slider} disabled/>
+      </Fragment>
+    );
+  }
 
+  renderCustomSlider() {
+    return (
+      <>
         <Text $textDefault text70BO marginT-15>
           Custom with Steps
         </Text>
@@ -174,7 +180,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           minimumTrackTintColor={Colors.violet40}
           maximumTrackTintColor={Colors.violet70}
         />
-      </Fragment>
+      </>
     );
   }
 
@@ -317,6 +323,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           {this.renderDefaultSliderExample()}
           {this.renderNegativeSliderExample()}
           {this.renderDisabledSliderExample()}
+          {this.renderCustomSlider()}
           {this.renderRangeSliderExample()}
           {this.renderRangeSliderWithValuesExample()}
           {this.renderGradientSlidersExample()}

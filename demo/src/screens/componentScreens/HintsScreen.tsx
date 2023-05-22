@@ -10,7 +10,6 @@ const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 type HintScreenProps = {};
 
 export default class HintsScreen extends Component<HintScreenProps> {
-
   state = {
     showHint: true,
     useShortMessage: false,
@@ -134,6 +133,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
     const message = useShortMessage
       ? 'Add other cool and useful stuff.'
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
+    const color = !showCustomContent && showReactionStrip ? {color: Colors.$backgroundDefault} : undefined;
 
     return (
       <View flex>
@@ -178,7 +178,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
                   ? this.renderReactionStrip()
                   : undefined
             }
-            color={!showCustomContent && showReactionStrip ? Colors.$backgroundDefault : undefined}
+            {...color}
             removePaddings={!showCustomContent && showReactionStrip}
             enableShadow={enableShadow}
             testID={'Hint'}
