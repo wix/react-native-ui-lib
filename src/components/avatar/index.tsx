@@ -18,7 +18,7 @@ import View from '../view';
 import Text from '../text';
 import Image, {ImageProps} from '../image';
 // @ts-ignore
-import AnimatedImage from '../animatedImage';
+import AnimatedImage, {AnimatedImageProps} from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
 import {useThemeProps} from '../../hooks';
 import {isSvg} from '../../utils/imageUtils';
@@ -60,7 +60,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
     /**
      * Badge location on Avatar
      */
-    badgePosition?: BadgePosition;
+    badgePosition?: `${BadgePosition}` | BadgePosition;
     /**
      * Badge props passed down to Badge component
      */
@@ -76,7 +76,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
     /**
      * Image props object
      */
-    imageProps?: ImageProps;
+    imageProps?: Partial<ImageProps & AnimatedImageProps>;
     /**
      * Image style object used to pass additional style props
      * by components which render image
@@ -139,7 +139,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
     /**
      * Custom size for the Avatar
      */
-    size: number;
+    size?: number;
     /**
      * Press handler
      */

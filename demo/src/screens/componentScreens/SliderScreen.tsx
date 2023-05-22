@@ -1,6 +1,16 @@
 import React, {Component, Fragment} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Colors, View, Text, Button, Icon, Slider, GradientSlider, ColorSliderGroup} from 'react-native-ui-lib';
+import {
+  Constants,
+  Colors,
+  View,
+  Text,
+  Button,
+  Icon,
+  Slider,
+  GradientSlider,
+  ColorSliderGroup
+} from 'react-native-ui-lib';
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 interface SliderScreenProps {
@@ -41,17 +51,20 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
   gradientSlider = React.createRef();
 
   resetSlider = () => {
+    // @ts-expect-error
     this.slider.current?.reset();
+    // @ts-expect-error
     this.rangeSlider.current?.reset();
+    // @ts-expect-error
     this.gradientSlider.current?.reset();
-  }
+  };
 
-  onSliderRangeChange = (values: {min: number, max: number}) => {
+  onSliderRangeChange = (values: {min: number; max: number}) => {
     const {min, max} = values;
     this.setState({sliderMinValue: min, sliderMaxValue: max});
   };
 
-  onSliderRangeChange2 = (values: {min: number, max: number}) => {
+  onSliderRangeChange2 = (values: {min: number; max: number}) => {
     const {min, max} = values;
     this.setState({sliderMinValue2: min, sliderMaxValue2: max});
   };
@@ -62,11 +75,11 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
 
   onSliderReset = () => {
     this.setState({sliderValue: INITIAL_VALUE});
-  }
+  };
 
   onRangeSliderReset = () => {
     this.setState({sliderMinValue: RANGE_INITIAL_MIN, sliderMaxValue: RANGE_INITIAL_MAX});
-  }
+  };
 
   onGradientValueChange = (value: string, alpha: number) => {
     this.setState({color: value, alpha});
@@ -78,7 +91,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
 
   getReverseStyle = () => {
     return Constants.isRTL && this.state.forceLTR && styles.ltr;
-  }
+  };
 
   renderDefaultSliderExample() {
     const {sliderValue, forceLTR} = this.state;
@@ -88,7 +101,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
         <Text $textDefault text70BO>
           Default slider
         </Text>
-        
+
         <View row centerV style={this.getReverseStyle()}>
           <Icon assetName={'search'} style={styles.image}/>
           <Slider
@@ -99,6 +112,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             step={1}
             containerStyle={styles.sliderContainer}
             disableRTL={forceLTR}
+            // @ts-expect-error
             ref={this.slider}
             onReset={this.onSliderReset}
           />
@@ -143,7 +157,13 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           Disabled
         </Text>
         <Slider minimumValue={100} maximumValue={200} value={120} containerStyle={styles.slider} disabled/>
+      </Fragment>
+    );
+  }
 
+  renderCustomSlider() {
+    return (
+      <>
         <Text $textDefault text70BO marginT-15>
           Custom with Steps
         </Text>
@@ -160,7 +180,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           minimumTrackTintColor={Colors.violet40}
           maximumTrackTintColor={Colors.violet70}
         />
-      </Fragment>
+      </>
     );
   }
 
@@ -188,6 +208,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           maximumValue={100}
           step={1}
           disableRTL={forceLTR}
+          // @ts-expect-error
           ref={this.rangeSlider}
           onReset={this.onRangeSliderReset}
         />
@@ -243,6 +264,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             color={color}
             containerStyle={styles.gradientSliderContainer}
             onValueChange={this.onGradientValueChange}
+            // @ts-expect-error
             ref={this.gradientSlider}
           />
           <View style={styles.box}>
@@ -301,6 +323,7 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           {this.renderDefaultSliderExample()}
           {this.renderNegativeSliderExample()}
           {this.renderDisabledSliderExample()}
+          {this.renderCustomSlider()}
           {this.renderRangeSliderExample()}
           {this.renderRangeSliderWithValuesExample()}
           {this.renderGradientSlidersExample()}

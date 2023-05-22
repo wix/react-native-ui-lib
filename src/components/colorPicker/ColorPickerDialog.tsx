@@ -51,6 +51,10 @@ interface Props extends DialogProps {
     doneButton?: string,
     input?: string
   };
+  /** 
+   * Whether to use the new Slider implementation using Reanimated
+   */
+  migrate?: boolean;
 }
 export type ColorPickerDialogProps = Props;
 
@@ -247,6 +251,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
 
   renderSliders() {
     const {keyboardHeight, color} = this.state;
+    const {migrate} = this.props;
     const colorValue = color.a === 0 ? Colors.$backgroundInverted : Colors.getHexString(color);
 
     return (
@@ -258,6 +263,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
         labelsStyle={styles.label}
         onValueChange={this.onSliderValueChange}
         accessible={false}
+        migrate={migrate}
       />
     );
   }

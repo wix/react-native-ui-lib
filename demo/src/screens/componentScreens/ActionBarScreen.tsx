@@ -9,13 +9,9 @@ import collections from '../../assets/icons/collections.png';
 import richText from '../../assets/icons/richText.png';
 
 export default class ActionBarScreen extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentPage: 0
-    };
-  }
+  state = {
+    currentPage: 0
+  };
 
   render() {
     return (

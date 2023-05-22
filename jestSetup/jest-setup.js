@@ -97,6 +97,20 @@ jest.mock('react-native-gesture-handler',
 jest.mock('react-native', () => {
   const reactNative = jest.requireActual('react-native');
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
+  const OriginalModal = reactNative.Modal;
+  const React = jest.requireActual('react');
+  const useDidUpdate = require('./useDidUpdate').default;
+  Object.defineProperty(reactNative, 'Modal', {
+    value: props => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useDidUpdate(() => {
+        if (!props.visible) {
+          props.onDismiss?.();
+        }
+      }, [props.visible]);
+      return <OriginalModal {...props}/>;
+    }
+  });
   return reactNative;
 });
 
