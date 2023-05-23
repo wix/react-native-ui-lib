@@ -29,5 +29,5 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
   /**
    * Extra props for the item
    */
-  itemProps?: {margins?: {marginTop?: number; marginBottom?: number, marginLeft?: number, marginRight?: number}};
+  itemProps?: {margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}};
 }
