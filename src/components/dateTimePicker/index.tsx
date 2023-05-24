@@ -343,7 +343,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
             testID={testID}
             editable={editable}
             // @ts-expect-error should be remove after completing TextField migration
-            expandable={!!others.renderExpandableInput}
+            expandable={migrateTextField ? undefined : !!others.renderExpandableInput}
             value={getStringValue()}
           />
         )}
