@@ -74,6 +74,11 @@ jest.mock('react-native-gesture-handler',
       PanMock.onStart = getDefaultMockedHandler('onStart');
       PanMock.onUpdate = getDefaultMockedHandler('onUpdate');
       PanMock.onEnd = getDefaultMockedHandler('onEnd');
+      PanMock.onFinalize = getDefaultMockedHandler('onFinalize');
+      PanMock.activateAfterLongPress = getDefaultMockedHandler('activateAfterLongPress');
+      PanMock.enabled = getDefaultMockedHandler('enabled');
+      PanMock.onTouchesMove = getDefaultMockedHandler('onTouchesMove');
+      PanMock.prepare = jest.fn();
       PanMock.initialize = jest.fn();
       PanMock.toGestureArray = jest.fn(() => {
         return [PanMock];
@@ -92,6 +97,20 @@ jest.mock('react-native-gesture-handler',
 jest.mock('react-native', () => {
   const reactNative = jest.requireActual('react-native');
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
+  const OriginalModal = reactNative.Modal;
+  const React = jest.requireActual('react');
+  const useDidUpdate = require('./useDidUpdate').default;
+  Object.defineProperty(reactNative, 'Modal', {
+    value: props => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useDidUpdate(() => {
+        if (!props.visible) {
+          props.onDismiss?.();
+        }
+      }, [props.visible]);
+      return <OriginalModal {...props}/>;
+    }
+  });
   return reactNative;
 });
 

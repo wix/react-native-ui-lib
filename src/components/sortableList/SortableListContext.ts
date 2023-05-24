@@ -12,6 +12,7 @@ export interface SortableListContextType<ItemT extends SortableListItemProps> {
   onItemLayout: ViewProps['onLayout'];
   enableHaptic?: boolean;
   scale?: number;
+  itemProps?: {margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}};
 }
 
 // @ts-ignore

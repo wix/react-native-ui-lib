@@ -41,12 +41,10 @@ const TestCase = props => {
   );
 };
 
-const _TestCase = props => <TestCase {...props}/>;
-
 describe('Incubator.Dialog', () => {
   it('Incubator.Dialog should exist only if visible', async () => {
     const onDismiss = jest.fn();
-    const component = _TestCase({onDismiss});
+    const component = <TestCase onDismiss={onDismiss}/>;
     const dialogDriver = new ComponentDriver({component, testID: 'dialog'});
     expect(await dialogDriver.exists()).toBeFalsy();
     const openButtonDriver = new ButtonDriver({component, testID: 'openButton'});
