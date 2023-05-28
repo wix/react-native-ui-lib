@@ -20,6 +20,7 @@ import {
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
+import {Dictionary} from '../../../typings';
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';

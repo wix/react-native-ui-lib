@@ -5,6 +5,7 @@ import {ModalTopBarProps} from '../modal/TopBar';
 // TODO: Replace with new TextField Props after migration to new TextField has completed
 // import {TextFieldProps} from '../../../typings/components/Inputs';
 import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../../incubator/TextField';
+import {ThemeComponent} from '../../../typings';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {

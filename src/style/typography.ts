@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Constants from '../commons/Constants';
 
 import TypographyPresets from './typographyPresets';
+import {Dictionary, ExtendTypeWith} from '../../typings';
 
 type MeasureTextTypography = TextStyle & {allowFontScaling?: boolean};
 

@@ -5,6 +5,7 @@ import {useDidUpdate, useThemeProps} from 'hooks';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
 import Text from '../text';
 import {getInitialData, parseInput, generateOptions, Options, NumberInputData} from './Presenter';
+import {ThemeComponent} from 'typings';
 
 export {NumberInputData};
 
@@ -80,12 +81,14 @@ function NumberInput(props: NumberInputProps, ref: any) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialNumber]);
 
-  const processInput = useCallback((text: string) => {
-    const newData = parseInput(text, options);
-    onChangeNumber(newData);
-    setData(newData);
-  },
-  [onChangeNumber, options]);
+  const processInput = useCallback(
+    (text: string) => {
+      const newData = parseInput(text, options);
+      onChangeNumber(newData);
+      setData(newData);
+    },
+    [onChangeNumber, options]
+  );
 
   useDidUpdate(() => {
     if (data?.type === 'valid') {
@@ -115,10 +118,12 @@ function NumberInput(props: NumberInputProps, ref: any) {
     return [styles.containerStyle, containerStyle];
   }, [containerStyle]);
 
-  const _onChangeText = useCallback((text: string) => {
-    processInput(text);
-  },
-  [processInput]);
+  const _onChangeText = useCallback(
+    (text: string) => {
+      processInput(text);
+    },
+    [processInput]
+  );
 
   const value = useMemo(() => {
     return data?.type === 'valid' || data?.type === 'error' ? data.userInput : '';

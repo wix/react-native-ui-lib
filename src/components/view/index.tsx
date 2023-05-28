@@ -2,6 +2,7 @@ import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
 import {Constants, ContainerModifiers} from '../../commons/new';
+import {ThemeComponent} from 'typings';
 
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers {
   /**

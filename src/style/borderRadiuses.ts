@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Constants from '../commons/Constants';
+import {Dictionary, ExtendTypeWith} from '../../typings';
 
 // TODO: enable template type after we're ready to use TS 4.4.0
 // interface IBorderRadiusesLiterals {

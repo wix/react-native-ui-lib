@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import type {Context} from 'react';
+import {Dictionary, Extendable} from '../../typings';
 
 interface Theme {
   components: Extendable;

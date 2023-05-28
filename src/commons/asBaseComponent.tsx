@@ -4,6 +4,7 @@ import * as Modifiers from './modifiers';
 import {Scheme, ThemeManager} from '../style';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
+import {ThemeComponent} from '../../typings';
 
 export interface BaseComponentInjectedProps {
   /**

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {Dictionary, ExtendTypeWith} from 'typings';
 
 export const SpacingLiterals = {
   s1: 4,
