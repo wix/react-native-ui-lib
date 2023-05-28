@@ -4,7 +4,7 @@ const childProcess = require('child_process');
 const fetch = require('node-fetch');
 const readline = require('readline');
 
-const GITHUB_TOKEN = 'xxxx';
+const GITHUB_TOKEN = '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';
 let LATEST_VERSION = '7.3.0';
 let NEW_VERSION = '7.4.0';
 let releaseNotes;
@@ -90,14 +90,16 @@ function parsePR(prContent) {
 const silentPRs = [];
 
 function generateNotes(PRs) {
-  const features = [],
+  const silentPRs = [],features = [],
     web = [],
     fixes = [],
     infra = [],
     others = [];
 
   PRs.forEach(pr => {
-    if (pr.branch.startsWith('feat/')) {
+    if (isSilent(pr)) {
+      silentPRs.push(pr);
+    } else if (pr.branch.startsWith('feat/')) {
       features.push(pr);
     } else if (pr.branch.startsWith('web/')) {
       web.push(pr);
@@ -142,42 +144,35 @@ function generateNotes(PRs) {
   console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32muilib-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
 }
 
+function isSilent(pr) {
+  if (!pr.info.changelog) {
+    return true;
+  } else {
+    const changelog = pr.info.changelog.toLowerCase();
+    if (changelog === 'none' || changelog === 'n/a') {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function addTitle(title) {
   releaseNotes += `\n\n${title}\n\n`;
 }
 
 function addEntry(pr) {
-  const isSilent = _isSilent(pr);
-  if (isSilent && !pr.isSilent) {
-    silentPRs.push({...pr, isSilent: true});
-  } else if (!isSilent || pr.isSilent) {
-    pr.isSilent = false;
-    const log = pr.info.changelog || pr.title;
-    const requester = getRequester(pr);
+  const log = pr.info.changelog || pr.title;
+  const requester = getRequester(pr);
 
-    const prNumber = ` (#${pr.number})`;
-    if (log.includes('\r\n')) {
-      log.split('\r\n').forEach(l => {
-        releaseNotes += getLine(l, requester, prNumber);
-      });
-    } else {
-      releaseNotes += getLine(log, requester, prNumber);
-    }
-  }
-}
-
-function _isSilent(pr) {
-  let isSilent = false;
-  if (!pr.info.changelog) {
-    isSilent = true;
+  const prNumber = ` (#${pr.number})`;
+  if (log.includes('\r\n')) {
+    log.split('\r\n').forEach(l => {
+      releaseNotes += getLine(l, requester, prNumber);
+    });
   } else {
-    const changelog = pr.info.changelog.toLowerCase();
-    if (changelog === 'none' || changelog === 'n/a') {
-      isSilent = true;
-    }
+    releaseNotes += getLine(log, requester, prNumber);
   }
-
-  return isSilent;
 }
 
 function getRequester(pr) {
