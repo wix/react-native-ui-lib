@@ -5,8 +5,8 @@ const fetch = require('node-fetch');
 const readline = require('readline');
 
 const GITHUB_TOKEN = 'xxxx';
-let LATEST_VERSION = '5.14.0';
-let NEW_VERSION = '5.15.0';
+let LATEST_VERSION = '7.3.0';
+let NEW_VERSION = '7.4.0';
 let releaseNotes;
 
 const rl = readline.createInterface({
@@ -16,8 +16,8 @@ const rl = readline.createInterface({
 
 rl.question(`What is the current version? `, currentVersion => {
   rl.question('What is the next version for release? ', newVersion => {
-    LATEST_VERSION = currentVersion;
-    NEW_VERSION = newVersion;
+    LATEST_VERSION = currentVersion || LATEST_VERSION;
+    NEW_VERSION = newVersion || NEW_VERSION;
     rl.close();
   });
 });
@@ -87,17 +87,22 @@ function parsePR(prContent) {
   return PRInfo;
 }
 
+const silentPRs = [];
+
 function generateNotes(PRs) {
   const features = [],
+    web = [],
     fixes = [],
     infra = [],
     others = [];
 
   PRs.forEach(pr => {
     if (pr.branch.startsWith('feat/')) {
-      fixes.push(pr);
-    } else if (pr.branch.startsWith('fix/')) {
       features.push(pr);
+    } else if (pr.branch.startsWith('web/')) {
+      web.push(pr);
+    } else if (pr.branch.startsWith('fix/')) {
+      fixes.push(pr);
     } else if (pr.branch.startsWith('infra/')) {
       infra.push(pr);
     } else {
@@ -105,9 +110,15 @@ function generateNotes(PRs) {
     }
   });
 
+  // What's New?
+  addTitle(':rocket: What’s New?');
+
   // features
   addTitle(':gift: Features');
   features.forEach(addEntry);
+  // web
+  addTitle(':spider_web: Web support');
+  web.forEach(addEntry);
   // bug fixes
   addTitle(':wrench: Fixes');
   fixes.forEach(addEntry);
@@ -119,6 +130,10 @@ function generateNotes(PRs) {
   // others
   addTitle('OTHERS');
   others.forEach(addEntry);
+
+  // Silent
+  addTitle('// Silent - these PRs did not have a changelog or were left out for some other reason, is it on purpose?');
+  silentPRs.forEach(addEntry);
 
   fs.writeFileSync(`${process.env.HOME}/Downloads/uilib-release-notes_${NEW_VERSION}.txt`, releaseNotes, {
     encoding: 'utf8'
@@ -132,5 +147,39 @@ function addTitle(title) {
 }
 
 function addEntry(pr) {
-  releaseNotes += `• ${pr.info.changelog || pr.title} (#${pr.number}) \n`;
+  let isSilent = false;
+  if (!pr.info.changelog) {
+    isSilent = true;
+  } else {
+    const changelog = pr.info.changelog.toLowerCase();
+    if (changelog === 'none' || changelog === 'n/a') {
+      isSilent = true;
+    }
+  }
+
+  if (isSilent && !pr.isSilent) {
+    silentPRs.push({...pr, isSilent: true});
+  } else if (!isSilent || pr.isSilent) {
+    pr.isSilent = false;
+    const log = pr.info.changelog || pr.title;
+    let requester = pr.info['jira issue'];
+    if (requester === undefined || requester.toLowerCase() === 'none' || requester.includes('???')) {
+      requester = '';
+    } else {
+      requester = ` (${requester})`;
+    }
+
+    const prNumber = ` (#${pr.number})`;
+    if (log.includes('\r\n')) {
+      log.split('\r\n').forEach(l => {
+        releaseNotes += getLine(l, requester, prNumber);
+      });
+    } else {
+      releaseNotes += getLine(log, requester, prNumber);
+    }
+  }
+}
+
+function getLine(log, requester, prNumber) {
+  return `• ${log}${requester}${prNumber} \n`;
 }
