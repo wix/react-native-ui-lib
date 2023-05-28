@@ -147,27 +147,13 @@ function addTitle(title) {
 }
 
 function addEntry(pr) {
-  let isSilent = false;
-  if (!pr.info.changelog) {
-    isSilent = true;
-  } else {
-    const changelog = pr.info.changelog.toLowerCase();
-    if (changelog === 'none' || changelog === 'n/a') {
-      isSilent = true;
-    }
-  }
-
+  const isSilent = _isSilent(pr);
   if (isSilent && !pr.isSilent) {
     silentPRs.push({...pr, isSilent: true});
   } else if (!isSilent || pr.isSilent) {
     pr.isSilent = false;
     const log = pr.info.changelog || pr.title;
-    let requester = pr.info['jira issue'];
-    if (requester === undefined || requester.toLowerCase() === 'none' || requester.includes('???')) {
-      requester = '';
-    } else {
-      requester = ` (${requester})`;
-    }
+    const requester = getRequester(pr);
 
     const prNumber = ` (#${pr.number})`;
     if (log.includes('\r\n')) {
@@ -178,6 +164,31 @@ function addEntry(pr) {
       releaseNotes += getLine(log, requester, prNumber);
     }
   }
+}
+
+function _isSilent(pr) {
+  let isSilent = false;
+  if (!pr.info.changelog) {
+    isSilent = true;
+  } else {
+    const changelog = pr.info.changelog.toLowerCase();
+    if (changelog === 'none' || changelog === 'n/a') {
+      isSilent = true;
+    }
+  }
+
+  return isSilent;
+}
+
+function getRequester(pr) {
+  let requester = pr.info['jira issue'];
+  if (requester === undefined || requester.toLowerCase() === 'none' || requester.includes('???')) {
+    requester = '';
+  } else {
+    requester = ` (${requester})`;
+  }
+
+  return requester;
 }
 
 function getLine(log, requester, prNumber) {
