@@ -4,7 +4,7 @@ const childProcess = require('child_process');
 const fetch = require('node-fetch');
 const readline = require('readline');
 
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = 'xxxx';
 let LATEST_VERSION = '7.3.0';
 let NEW_VERSION = '7.4.0';
 let releaseNotes;
@@ -87,10 +87,9 @@ function parsePR(prContent) {
   return PRInfo;
 }
 
-const silentPRs = [];
-
 function generateNotes(PRs) {
-  const silentPRs = [],features = [],
+  const silentPRs = [],
+    features = [],
     web = [],
     fixes = [],
     infra = [],
