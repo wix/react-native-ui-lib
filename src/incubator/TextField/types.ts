@@ -165,6 +165,10 @@ export type TextFieldProps = MarginModifiers &
   ValidationMessageProps &
   Omit<CharCounterProps, 'maxLength' | 'testID'> & {
     /**
+     * Pass id to the container
+     */
+    containerId?: string;
+    /**
      * Pass to render a leading element
      */
     leadingAccessory?: ReactElement;
