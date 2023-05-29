@@ -42,6 +42,10 @@ export type ColorSliderGroupProps = {
    * If true the component will have accessibility features enabled
    */
   accessible?: boolean;
+  /** 
+   * Whether to use the new Slider implementation using Reanimated
+   */
+  migrate?: boolean;
 };
 
 interface ColorSliderGroupState {
@@ -79,7 +83,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
   };
 
   renderSlider = (type: GradientSliderTypes) => {
-    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.props;
+    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels, migrate} = this.props;
 
     return (
       <>
@@ -93,6 +97,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
           type={type}
           containerStyle={sliderContainerStyle}
           accessible={accessible}
+          migrate={migrate}
         />
       </>
     );

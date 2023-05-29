@@ -1,6 +1,6 @@
 import React, {useState, useRef, useCallback} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Colors, View, Text, Button, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Colors, View, Text, Button, Incubator, GradientSlider, ColorSliderGroup} from 'react-native-ui-lib'; //eslint-disable-line
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 const VALUE = 20;
@@ -9,6 +9,7 @@ const MIN = 0;
 const MAX = Constants.screenWidth - 40; // horizontal margins 20
 const INITIAL_MIN = 30;
 const INITIAL_MAX = 270;
+const COLOR = Colors.blue30;
 
 const IncubatorSliderScreen = () => {
   const [disableRTL, setDisableRTL] = useState<boolean>(false);
@@ -18,6 +19,9 @@ const IncubatorSliderScreen = () => {
   const [negativeSliderValue, setNegativeSliderValue] = useState(NEGATIVE_VALUE);
   const [sliderMinValue, setSliderMinValue] = useState(INITIAL_MIN);
   const [sliderMaxValue, setSliderMaxValue] = useState(INITIAL_MAX);
+
+  const [color, setColor] = useState(COLOR);
+  const [alpha, setAlpha] = useState(1);
 
   const slider = useRef<typeof Incubator.Slider>();
   const customSlider = useRef<typeof Incubator.Slider>();
@@ -47,6 +51,15 @@ const IncubatorSliderScreen = () => {
     setSliderMaxValue(value.max);
     setSliderMinValue(value.min);
   }, []);
+
+  const onGradientValueChange = useCallback((value: string, alpha: number) => {
+    setColor(value);
+    setAlpha(alpha);
+  }, []);
+
+  const onGroupValueChange = (value: string) => {
+    console.log('onGroupValueChange: ', value);
+  };
 
   const renderValuesBox = (min: number, max?: number) => {
     if (max !== undefined) {
@@ -179,6 +192,65 @@ const IncubatorSliderScreen = () => {
     );
   };
 
+  const renderGradientSlidersExample = () => {
+    return (
+      <View marginH-20>
+        <Text margin-10 text70BL $textDefault>
+          Gradient Sliders
+        </Text>
+        <View row centerV>
+          <Text text90 $textNeutral>
+            DEFAULT
+          </Text>
+          <GradientSlider
+            color={color}
+            containerStyle={styles.gradientSliderContainer}
+            onValueChange={onGradientValueChange}
+            // @ts-expect-error
+            ref={this.gradientSlider}
+            migrate
+          />
+          <View style={styles.box}>
+            <View style={{flex: 1, backgroundColor: color, opacity: alpha}}/>
+          </View>
+        </View>
+        <View row centerV>
+          <Text text90 $textNeutral>
+            HUE
+          </Text>
+          <GradientSlider
+            type={GradientSlider.types.HUE}
+            color={COLOR}
+            containerStyle={styles.gradientSliderContainer}
+            onValueChange={onGradientValueChange}
+            migrate
+          />
+          <View style={styles.box}>
+            <View style={{flex: 1, backgroundColor: color}}/>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const renderColorSliderGroupExample = () => {
+    return (
+      <>
+        <Text margin-10 text70BL $textDefault>
+          Color Slider Group
+        </Text>
+        <ColorSliderGroup
+          initialColor={color}
+          sliderContainerStyle={styles.slider}
+          containerStyle={styles.group}
+          showLabels
+          onValueChange={onGroupValueChange}
+          migrate
+        />
+      </>
+    );
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: Colors.$backgroundDefault}}>
       <View row spread margin-20>
@@ -196,6 +268,8 @@ const IncubatorSliderScreen = () => {
       {renderCustomSliderExample()}
       {renderNegativeSliderExample()}
       {renderRangeSliderExample()}
+      {renderGradientSlidersExample()}
+      {renderColorSliderGroupExample()}
     </ScrollView>
   );
 };
@@ -221,5 +295,26 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.red30,
     borderWidth: 2,
     borderColor: Colors.red70
+  },
+  gradientSliderContainer: {
+    flex: 1, // NOTE: to place a slider in a row layout you must set flex in its 'containerStyle'!!!
+    marginHorizontal: 20,
+    marginVertical: 10
+  },
+  box: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: Colors.$outlineDefault
+  },
+  slider: {
+    marginVertical: 6
+  },
+  group: {
+    backgroundColor: Colors.$backgroundNeutralMedium,
+    padding: 20,
+    margin: 20,
+    borderRadius: 6
   }
 });
