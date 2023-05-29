@@ -46,6 +46,7 @@ async function fetchLatestReleaseDate(version) {
 }
 
 async function fetchMergedPRs(postMergedDate) {
+  console.log('Find all merged PRs since - ', postMergedDate);
   const page = 1;
   // process.stderr.write(`Loading page ${page}..`);
   const url =
@@ -54,6 +55,11 @@ async function fetchMergedPRs(postMergedDate) {
   const headers = {Authorization: `token ${GITHUB_TOKEN}`};
   const response = await fetch(url, {headers});
   const PRs = await response.json();
+
+  if (PRs.message) {
+    console.error('\x1b[31m', 'Something went wrong', PRs.message);
+    exit(1);
+  }
 
   const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate),
     prs => _.sortBy(prs, 'merged_at'),
