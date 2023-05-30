@@ -46,7 +46,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const {
     modifiers,
     // General
-    containerProps = {},
+    containerProps,
     fieldStyle: fieldStyleProp,
     dynamicFieldStyle,
     containerStyle,

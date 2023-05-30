@@ -166,10 +166,6 @@ export type TextFieldProps = MarginModifiers &
   ValidationMessageProps &
   Omit<CharCounterProps, 'maxLength' | 'testID'> & {
     /**
-     * Pass props to the container
-     */
-    containerProps?: Omit<ViewProps, 'style'>;
-    /**
      * Pass to render a leading element
      */
     leadingAccessory?: ReactElement;
@@ -221,6 +217,10 @@ export type TextFieldProps = MarginModifiers &
      * Internal dynamic style callback for the field container
      */
     dynamicFieldStyle?: (context: FieldContextType, props: {preset: TextFieldProps['preset']}) => StyleProp<ViewStyle>;
+    /**
+     * Pass props to the container
+     */
+    containerProps?: Omit<ViewProps, 'style'>;
     /**
      * Container style of the whole component
      */
