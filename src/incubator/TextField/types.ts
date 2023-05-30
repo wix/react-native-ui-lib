@@ -10,6 +10,7 @@ import {
 } from '../../commons/new';
 import {TextProps} from '../../components/text';
 import {PropsWithChildren, ReactElement} from 'react';
+import {ViewProps} from '../../components/view';
 
 export type ColorType =
   | string
@@ -165,9 +166,9 @@ export type TextFieldProps = MarginModifiers &
   ValidationMessageProps &
   Omit<CharCounterProps, 'maxLength' | 'testID'> & {
     /**
-     * Pass id to the container
+     * Pass props to the container
      */
-    containerId?: string;
+    containerProps?: Omit<ViewProps, 'style'>;
     /**
      * Pass to render a leading element
      */

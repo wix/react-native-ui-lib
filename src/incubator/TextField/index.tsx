@@ -46,7 +46,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const {
     modifiers,
     // General
-    containerId,
+    containerProps = {},
     fieldStyle: fieldStyleProp,
     dynamicFieldStyle,
     containerStyle,
@@ -124,7 +124,7 @@ const TextField = (props: InternalTextFieldProps) => {
 
   return (
     <FieldContext.Provider value={context}>
-      <View id={containerId} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
+      <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <Label
           label={label}
           labelColor={labelColor}
