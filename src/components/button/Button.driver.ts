@@ -4,7 +4,7 @@ import {TextDriver} from '../text/Text.driver';
 
 /**
  * Please run clear after each test
- * */
+ */
 export class ButtonDriver extends ComponentDriver {
   private readonly labelDriver: TextDriver;
   private readonly iconDriver: ImageDriver;
@@ -17,13 +17,13 @@ export class ButtonDriver extends ComponentDriver {
   }
 
   isPressable = async () => {
-    if (this.exists()) {
+    if (await this.exists()) {
       return typeof (await this.getElementProps()).onPress === 'function';
     } else {
       console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
       return null;
     }
-  }
+  };
 
   // label
   getLabelRootElement = () => this.labelDriver.getElement();
@@ -31,6 +31,5 @@ export class ButtonDriver extends ComponentDriver {
   getLabelContent = () => this.labelDriver.getTextContent();
   // icon
   getIconElement = () => this.iconDriver.getElement();
-  isIconExists = () => this.iconDriver.exists()
-
+  isIconExists = () => this.iconDriver.exists();
 }

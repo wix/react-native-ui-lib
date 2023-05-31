@@ -19,8 +19,10 @@ Check out our [Docs](https://wix.github.io/react-native-ui-lib/). <br>
 Our [Discord Channel](https://discord.gg/2eW4g6Z)
 
 Download our Expo demo app <br>
-<img height="120" src="https://user-images.githubusercontent.com/1780255/76164023-f2171400-6153-11ea-962d-d57b64a08a80.png"> <br>
+<img height="120" src="https://qr.expo.dev/expo-go?owner=vn.chemgio&slug=rnuilib&releaseChannel=default&host=exp.host"> <br>
 (You will need the Expo App)
+or open link in your devices
+[expo ] [exp://exp.host/@vn.chemgio/rnuilib?release-channel=default](exp://exp.host/@vn.chemgio/rnuilib?release-channel=default)
 
 ## Installing
 
@@ -125,3 +127,7 @@ class MyScreen extends Component {
   }
 }
 ```
+
+## Contributing
+ See [Contribution Guide](https://github.com/wix/react-native-ui-lib/blob/master/CONTRIBUTING.md)
+ 

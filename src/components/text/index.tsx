@@ -103,7 +103,29 @@ class Text extends PureComponent<PropsTypes> {
   }
 
   render() {
-    const {modifiers, style, center, uppercase, underline, children, forwardedRef, ...others} = this.props;
+    const {
+      // (!) extract flex prop to avoid passing them on Android
+      // TODO: extract alignment (top, right, ...) props till we manage to exclude them from typings
+      /* eslint-disable */
+      flex,
+      // @ts-ignore
+      left,
+      // @ts-ignore
+      top,
+      // @ts-ignore
+      right,
+      // @ts-ignore
+      bottom,
+      /* eslint-enable */
+      modifiers,
+      style,
+      center,
+      uppercase,
+      underline,
+      children,
+      forwardedRef,
+      ...others
+    } = this.props;
     const color = this.props.color || modifiers.color;
     const {margins, typography, backgroundColor, flexStyle} = modifiers;
     const textStyle = [
@@ -153,7 +175,6 @@ const styles = StyleSheet.create({
 });
 
 export {Text}; // For tests
-
 
 const modifiersOptions = {
   color: true,

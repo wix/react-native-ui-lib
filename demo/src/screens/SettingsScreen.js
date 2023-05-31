@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
 import {StyleSheet, I18nManager} from 'react-native';
 import {Colors, View, Text, Picker, Incubator, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
+import Storage, {DEFAULT_SCREEN, IS_RTL} from '../storage';
 
 const none = {label: '[None]', value: ''};
 
@@ -28,17 +28,17 @@ class SettingsScreen extends Component {
 
     this.state = {
       showRefreshMessage: false,
+      isRTL: false,
       screens
     };
   }
 
-  async UNSAFE_componentWillMount() {
+  UNSAFE_componentWillMount() {
     const {screens} = this.state;
-    const defaultScreenId = await AsyncStorage.getItem('uilib.defaultScreen');
+    const defaultScreenId = Storage.getString(DEFAULT_SCREEN);
     const defaultScreen = _.find(screens, {value: defaultScreenId});
 
-    const isRTLString = await AsyncStorage.getItem('uilib.isRTL');
-    const isRTL = isRTLString === 'true';
+    const isRTL = Storage.getBoolean(IS_RTL);
 
     this.setState({defaultScreen, isRTL});
   }
@@ -46,7 +46,7 @@ class SettingsScreen extends Component {
   onDirectionChange = () => {
     this.setState({isRTL: !this.state.isRTL}, () => {
       I18nManager.forceRTL(this.state.isRTL);
-      AsyncStorage.setItem('uilib.isRTL', `${this.state.isRTL}`);
+      Storage.set(IS_RTL, this.state.isRTL);
       setTimeout(() => {
         this.setState({showRefreshMessage: true});
       }, 1000);
@@ -55,7 +55,7 @@ class SettingsScreen extends Component {
 
   setDefaultScreen = screen => {
     this.setState({defaultScreen: screen});
-    AsyncStorage.setItem('uilib.defaultScreen', screen.value);
+    Storage.set(DEFAULT_SCREEN, screen);
     setTimeout(() => {
       this.setState({showRefreshMessage: true});
     }, 1000);

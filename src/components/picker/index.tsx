@@ -17,8 +17,7 @@ import TextFieldMigrator from '../textField/TextFieldMigrator';
 import Icon from '../icon';
 import View from '../view';
 import Text from '../text';
-// @ts-expect-error
-import NativePicker from './NativePicker';
+// import NativePicker from './NativePicker';
 import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
@@ -26,7 +25,7 @@ import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
-import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+// import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
 import {extractPickerItems} from './PickerPresenter';
 import {
   PickerProps,
@@ -63,7 +62,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchStyle,
     searchPlaceholder,
     renderCustomSearch,
-    useNativePicker,
+    // useNativePicker,
     useWheelPicker,
     renderPicker,
     customPickerProps,
@@ -86,8 +85,11 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     renderItem,
     children,
     useSafeArea,
-    migrate,
-    migrateTextField,
+    // TODO: Remove migrate props and migrate code
+    migrate = true,
+    migrateTextField = true,
+    accessibilityLabel,
+    accessibilityHint,
     ...others
   } = themeProps;
   const {preset} = others;
@@ -97,7 +99,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
-  usePickerMigrationWarnings({value, mode});
+  // TODO: Remove
+  // usePickerMigrationWarnings({value, mode});
 
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
   const {
@@ -121,6 +124,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items,
     getItemLabel,
     getLabel,
+    accessibilityLabel,
+    accessibilityHint,
     placeholder: themeProps.placeholder
   });
 
@@ -130,6 +135,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   }, []);
 
   const contextValue = useMemo(() => {
+    // @ts-expect-error cleanup after removing migrate prop
     const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? value?.value : value;
     return {
       migrate,
@@ -260,9 +266,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   };
 
-  if (useNativePicker) {
-    return <NativePicker {...themeProps}/>;
-  }
+  // if (useNativePicker) {
+  //   return <NativePicker {...themeProps}/>;
+  // }
 
   return (
     <PickerContext.Provider value={contextValue}>
@@ -284,12 +290,14 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         ) : (
           <TextFieldMigrator
             migrate={migrateTextField}
-            customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
+            // customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
+            // @ts-expect-error
             ref={pickerRef}
             // {...textInputProps}
             {...others}
             {...propsByFieldType}
             testID={`${testID}.input`}
+            // @ts-expect-error
             containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
             labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
             {...accessibilityInfo}
@@ -297,7 +305,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
             value={label}
             selection={Constants.isAndroid ? {start: 0} : undefined}
             /* Note: Disable TextField expandable feature */
-            topBarProps={undefined}
+            // topBarProps={undefined}
           >
             {renderPickerInnerInput()}
           </TextFieldMigrator>

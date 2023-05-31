@@ -17,7 +17,8 @@ import {
   PanGestureHandlerEventPayload
 } from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {useDidUpdate} from '../../hooks';
+import {asBaseComponent, Constants} from '../../commons/new';
 import View from '../../components/view';
 import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
@@ -26,7 +27,7 @@ import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
-const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.grey20, 0.65);
+const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.$backgroundInverted, 0.3);
 const THRESHOLD_VELOCITY = 750;
 
 export interface DialogStatics {
@@ -108,11 +109,11 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, wasMeasured]);
 
-  useEffect(() => {
+  useDidUpdate(() => {
     if (wasMeasured) {
       if (modalVisibility) {
         open();
-      } else {
+      } else if (Constants.isAndroid) {
         onDismiss?.();
       }
     }
@@ -226,7 +227,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
       visible={modalVisibility}
       onBackgroundPress={ignoreBackgroundPress ? undefined : close}
       onRequestClose={ignoreBackgroundPress ? undefined : close}
-      onDismiss={undefined}
+      onDismiss={onDismiss}
     >
       {renderOverlayView()}
       <View useSafeArea={useSafeArea} pointerEvents={'box-none'} style={alignmentStyle}>

@@ -437,7 +437,7 @@ const Day = React.memo(({date, onPress}: {date: string}) => {
     // const backgroundColor = isSelected ? 'red' : 'transparent';
     return {
       // backgroundColor: isSelected.value ? 'red' : 'transparent',
-      backgroundColor: withTiming(isSelected.value ? Colors.primary : 'transparent', {duration: 60}),
+      backgroundColor: withTiming(isSelected.value ? 'red' : 'transparent', {duration: 60}),
       borderRadius: 999
     };
   });

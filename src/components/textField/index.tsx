@@ -263,7 +263,7 @@ export default class TextField extends BaseInput {
   toggleExpandableModal = (value) => {
     this.setState({showExpandableModal: value});
     _.invoke(this.props, 'onToggleExpandableModal', value);
-  }
+  };
 
   updateFloatingPlaceholderState = withoutAnimation => {
     if (withoutAnimation) {

@@ -1,5 +1,5 @@
 import {updateConstants} from '../../../commons/Constants';
-import {testable as FeatureHighlight} from '../';
+import {FeatureHighlight} from '../index';
 
 describe('FeatureHighlight', () => {
   beforeEach(() => {
@@ -45,6 +45,7 @@ describe('FeatureHighlight', () => {
       const uut = new FeatureHighlight({getTarget: getTargetMock});
       jest.spyOn(FeatureHighlight, 'getDerivedStateFromProps');
       jest.spyOn(FeatureHighlight, 'findTargetNode').mockImplementation(() => 23);
+      jest.spyOn(window, 'setTimeout');
 
       jest.useFakeTimers();
 

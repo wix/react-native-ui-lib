@@ -90,7 +90,7 @@ class Twitter extends Component {
             ) : null}
             <View row style={{justifyContent: 'space-between', marginVertical: 10}}>
               {post.icons
-                ? post.icons.map((icnSource: any, index) => {
+                ? post.icons.map((icnSource: any, index: number) => {
                   return (
                     <Button
                       key={index}

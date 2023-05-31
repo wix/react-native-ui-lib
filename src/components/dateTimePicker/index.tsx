@@ -1,8 +1,16 @@
-import moment from 'moment';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+  ForwardedRef
+} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
-import {useDidUpdate} from 'hooks';
+import {DateTimePickerPackage as RNDateTimePicker, MomentPackage as moment} from '../../optionalDependencies';
+import {useDidUpdate} from '../../hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
@@ -11,7 +19,7 @@ import {DialogProps} from '../dialog';
 import View from '../view';
 import Button from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
-import type {TextFieldProps} from '../../incubator/TextField';
+import type {TextFieldProps, TextFieldMethods} from '../../incubator/TextField';
 
 const MODES = {
   DATE: 'date',
@@ -99,10 +107,9 @@ export type DateTimePickerProps = Omit<TextFieldProps, 'value' | 'onChange'> & {
    * Should migrate to the new TextField implementation
    */
   migrateTextField?: boolean;
-}
+};
 
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
-
 
 /*eslint-disable*/
 /**
@@ -114,7 +121,7 @@ type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedPr
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_iOS.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_Android.gif?raw=true
  */
 /*eslint-enable*/
-function DateTimePicker(props: DateTimePickerPropsInternal) {
+const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: ForwardedRef<any>) => {
   const {
     value: propsValue,
     renderInput,
@@ -137,19 +144,32 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
     // @ts-expect-error
     useCustomTheme,
     testID,
-    migrateTextField,
+    migrateTextField = true,
     ...others
   } = props;
 
   const [value, setValue] = useState(propsValue);
   const chosenDate = useRef(propsValue);
   const expandable = useRef<ExpandableOverlayMethods>();
+  const textField = useRef<TextFieldMethods>();
+
+  useImperativeHandle(ref, () => {
+    return {
+      validate: () => textField.current?.validate()
+    };
+  });
 
   useEffect(() => {
     if (!RNDateTimePicker) {
       console.error(`RNUILib DateTimePicker component requires installing "@react-native-community/datetimepicker" dependency`);
     }
   }, []);
+
+  useEffect(() => {
+    if (!moment && (dateFormat || timeFormat)) {
+      console.error(`RNUILib DateTimePicker component with date/time format requires installing "moment" dependency`);
+    }
+  }, [dateFormat, timeFormat]);
 
   useDidUpdate(() => {
     setValue(propsValue);
@@ -179,13 +199,13 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         case MODES.DATE:
           return dateFormatter
             ? dateFormatter(value)
-            : dateFormat
+            : dateFormat && moment
               ? moment(value).format(dateFormat)
               : value.toLocaleDateString();
         case MODES.TIME:
           return timeFormatter
             ? timeFormatter(value)
-            : timeFormat
+            : timeFormat && moment
               ? moment(value).format(timeFormat)
               : value.toLocaleTimeString();
       }
@@ -223,14 +243,28 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
 
   const renderHeader = () => {
     return (
-      <View row spread bg-$backgroundDefault paddingH-20 style={[styles.header, headerStyle]}>
+      <View
+        row
+        spread
+        bg-$backgroundDefault
+        paddingH-20
+        style={[styles.header, headerStyle]}
+        testID={`${testID}.header`}
+      >
         <Button
           link
           iconSource={Assets.icons.x}
           iconStyle={{tintColor: Colors.$iconDefault}}
           onPress={toggleExpandableOverlay}
+          testID={`${testID}.cancel`}
         />
-        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={onDonePressed}/>
+        <Button
+          link
+          iconSource={Assets.icons.check}
+          useCustomTheme={useCustomTheme}
+          onPress={onDonePressed}
+          testID={`${testID}.done`}
+        />
       </View>
     );
   };
@@ -253,6 +287,7 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
         display={Constants.isIOS ? 'spinner' : undefined}
         themeVariant={themeVariant}
+        testID={`${testID}.picker`}
       />
     );
   }, [
@@ -295,24 +330,27 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         disabled={editable === false}
         // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
         renderCustomOverlay={Constants.isAndroid ? renderAndroidDateTimePicker : undefined}
+        testID={`${testID}.overlay`}
       >
         {renderInput ? (
           renderInput({...props, value: getStringValue()})
         ) : (
           <TextField
             {...others}
+            // @ts-expect-error
+            ref={textField}
             migrate={migrateTextField}
             testID={testID}
             editable={editable}
             // @ts-expect-error should be remove after completing TextField migration
-            expandable={!!others.renderExpandableInput}
+            expandable={migrateTextField ? undefined : !!others.renderExpandableInput}
             value={getStringValue()}
           />
         )}
       </ExpandableOverlay>
     </>
   );
-}
+});
 
 DateTimePicker.displayName = 'DateTimePicker';
 export {DateTimePicker}; // For tests

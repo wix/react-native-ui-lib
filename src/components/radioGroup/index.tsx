@@ -55,7 +55,7 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
     }
 
     return null;
-  }
+  };
 
   getContextProviderValue() {
     const {value} = this.state;

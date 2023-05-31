@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
 import {
@@ -11,7 +12,6 @@ import {
   TabControllerImperativeMethods
 } from 'react-native-ui-lib';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import _ from 'lodash';
 
 import Tab1 from './tab1';
 import Tab2 from './tab2';
@@ -39,14 +39,13 @@ class TabControllerScreen extends Component<{}, State> {
       initialIndex: 0,
       selectedIndex: 0,
       key: Date.now(),
-      items: []
+      items: this.generateTabItems(false)
     };
-
-    this.state.items = this.generateTabItems();
   }
   tabController = React.createRef<TabControllerImperativeMethods>();
 
   generateTabItems = (fewItems = this.state.fewItems): TabControllerItemProps[] => {
+    // @ts-expect-error
     const items: TabControllerItemProps[] = _.flow(tabs => _.take(tabs, fewItems ? 3 : TABS.length),
       (tabs: TabControllerItemProps[]) =>
         _.map<TabControllerItemProps>(tabs, (tab: TabControllerItemProps, index: number) => ({
@@ -58,7 +57,7 @@ class TabControllerScreen extends Component<{}, State> {
           trailingAccessory: index === 4 ? <Text marginL-4>{Assets.emojis.camera}</Text> : undefined
         })))(TABS);
 
-    const addItem: TabControllerItemProps = {
+    const addItem: TabControllerItemProps & {key: string} = {
       icon: Assets.icons.demo.add,
       key: 'add',
       ignore: true,
@@ -162,14 +161,13 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   render() {
-    const {key, initialIndex, /* selectedIndex, */ asCarousel, centerSelected, fewItems, items} = this.state;
+    const {key, initialIndex, asCarousel, centerSelected, fewItems, items} = this.state;
     return (
       <View flex bg-$backgroundDefault>
         <TabController
           key={key}
           ref={this.tabController}
           asCarousel={asCarousel}
-          // selectedIndex={selectedIndex}
           initialIndex={initialIndex}
           onChangeIndex={this.onChangeIndex}
           items={items}

@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
+import IncubatorSlider from '../../incubator/Slider';
 import View from '../view';
 import Thumb, {ThumbProps} from './Thumb';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -120,6 +121,10 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    * The slider's test identifier
    */
   testID?: string;
+  /** 
+   * Whether to use the new Slider implementation using Reanimated
+   */
+  migrate?: boolean;
 } & typeof defaultProps;
 
 interface State {
@@ -329,7 +334,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   setActiveThumb = (ref: React.RefObject<RNView>) => {
     this.activeThumbRef = ref;
-  }
+  };
 
   get_x() {
     if (this.isDefaultThumbActive()) {
@@ -487,7 +492,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   isDefaultThumbActive = () => {
     return this.activeThumbRef === this.thumb;
-  }
+  };
 
   getRoundedValue(value: number) {
     const {step} = this.props;
@@ -635,11 +640,11 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   onMinTouchStart = () => {
     this.setActiveThumb(this.minThumb);
-  }
+  };
 
   onTouchStart = () => {
     this.setActiveThumb(this.thumb);
-  }
+  };
 
   getThumbProps = () => {
     const {thumbStyle, activeThumbStyle, disableActiveStyling, disabled, thumbTintColor, thumbHitSlop} = this.props;
@@ -653,7 +658,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       thumbHitSlop,
       onLayout: this.onThumbLayout
     };
-  }
+  };
 
   /* Renders */
   renderMinThumb = () => {
@@ -739,7 +744,11 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   render() {
-    const {containerStyle, testID} = this.props;
+    const {containerStyle, testID, migrate} = this.props;
+
+    if (migrate) {
+      return <IncubatorSlider {...this.props}/>;
+    }
     
     return (
       <View

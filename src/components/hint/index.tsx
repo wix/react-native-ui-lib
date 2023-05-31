@@ -291,7 +291,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   getTargetPositionOnScreen() {
-    if (this.targetLayout?.x && this.targetLayout?.width) {
+    if (this.targetLayout?.x !== undefined && this.targetLayout?.width) {
       const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
 
       if (targetMidPosition > this.containerWidth * (2 / 3)) {
@@ -314,7 +314,7 @@ class Hint extends Component<HintProps, HintState> {
     const {position} = this.props;
     const hintPositionStyle: HintPositionStyle = {alignItems: 'center'};
 
-    if (this.targetLayout?.x) {
+    if (this.targetLayout?.x !== undefined) {
       hintPositionStyle.left = -this.targetLayout.x;
     }
 
@@ -337,7 +337,7 @@ class Hint extends Component<HintProps, HintState> {
   getHintPadding() {
     const paddings: Paddings = {paddingVertical: this.hintOffset, paddingHorizontal: this.edgeMargins};
 
-    if (this.useSideTip && this.targetLayout?.x) {
+    if (this.useSideTip && this.targetLayout?.x !== undefined) {
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
       if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
         paddings.paddingLeft = this.targetLayout.x;
@@ -376,7 +376,7 @@ class Hint extends Component<HintProps, HintState> {
 
     const layoutWidth = this.targetLayout?.width || 0;
 
-    if (this.targetLayout?.x) {
+    if (this.targetLayout?.x !== undefined) {
       const targetMidWidth = layoutWidth / 2;
       const tipMidWidth = this.tipSize.width / 2;
 
@@ -533,12 +533,14 @@ class Hint extends Component<HintProps, HintState> {
       const layout = {
         ...this.getContainerPosition(),
         width: this.targetLayout?.width,
-        height: this.targetLayout?.height
+        height: this.targetLayout?.height,
+        right: Constants.isRTL ? this.targetLayout?.x : undefined,
+        left: Constants.isRTL ? undefined : this.targetLayout?.x
       };
 
       return (
         <View style={[styles.mockChildrenContainer, layout]}>
-          {React.cloneElement(children, {
+          {React.cloneElement<any>(children, {
             collapsable: false,
             key: 'mock',
             style: [children.props.style, styles.mockChildren]
@@ -552,7 +554,7 @@ class Hint extends Component<HintProps, HintState> {
     const {targetFrame} = this.props;
 
     if (!targetFrame && isValidElement(this.props.children)) {
-      return React.cloneElement(this.props.children, {
+      return React.cloneElement<any>(this.props.children, {
         key: 'clone',
         collapsable: false,
         onLayout: this.onTargetLayout,

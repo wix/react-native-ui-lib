@@ -9,16 +9,32 @@ import useImperativeInputHandle from './useImperativeInputHandle';
 
 const DEFAULT_INPUT_COLOR: ColorType = {
   default: Colors.$textDefault,
-  disabled: Colors.$textDisabled
+  disabled: Colors.$textDisabled,
+  readonly: Colors.$textNeutral
 };
 
 const Input = ({
+  // (!) extract flex prop to avoid passing them on Android
+  // TODO: extract alignment (top, right, ...) props till we manage to exclude them from typings
+  /* eslint-disable */
+  // @ts-ignore (does not exist on props)
+  flex,
+  // @ts-ignore
+  left,
+  // @ts-ignore
+  top,
+  // @ts-ignore
+  right,
+  // @ts-ignore
+  bottom,
+  /* eslint-enable */
   style,
   hint,
   color = DEFAULT_INPUT_COLOR,
   forwardedRef,
   formatter,
   useGestureHandlerInput,
+  readonly,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
   const inputRef = useImperativeInputHandle(forwardedRef, {onChangeText: props.onChangeText});
@@ -27,6 +43,7 @@ const Input = ({
   const inputColor = getColorByState(color, context);
   const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
   const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
+  const disabled = props.editable === false || readonly;
 
   const TextInput = useMemo(() => {
     if (useGestureHandlerInput) {
@@ -43,13 +60,14 @@ const Input = ({
     <TextInput
       style={[styles.input, !!inputColor && {color: inputColor}, style, Constants.isWeb && styles.webStyle]}
       {...props}
+      editable={!disabled}
       value={value}
       placeholder={placeholder}
       placeholderTextColor={placeholderTextColor}
       // @ts-expect-error
       ref={inputRef}
       underlineColorAndroid="transparent"
-      accessibilityState={{disabled: props.editable === false}}
+      accessibilityState={{disabled}}
     />
   );
 };

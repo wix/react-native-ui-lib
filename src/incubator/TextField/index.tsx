@@ -17,7 +17,9 @@ import {
   InternalTextFieldProps,
   ValidationMessagePosition,
   FieldContextType,
-  TextFieldMethods
+  TextFieldMethods,
+  TextFieldRef,
+  Validator
 } from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
@@ -73,14 +75,21 @@ const TextField = (props: InternalTextFieldProps) => {
     placeholder,
     children,
     centered,
+    readonly = false,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
   const {onFocus, onBlur, onChangeText, fieldState, validateField, checkValidity} = useFieldState(others);
 
   const context = useMemo(() => {
-    return {...fieldState, disabled: others.editable === false, validateField, checkValidity};
-  }, [fieldState, others.editable, validateField, checkValidity]);
+    return {
+      ...fieldState,
+      disabled: others.editable === false,
+      readonly,
+      validateField,
+      checkValidity
+    };
+  }, [fieldState, others.editable, readonly, validateField, checkValidity]);
 
   const leadingAccessoryClone = useMemo(() => {
     if (leadingAccessory) {
@@ -163,14 +172,15 @@ const TextField = (props: InternalTextFieldProps) => {
               )}
               <Input
                 placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
+                value={fieldState.value}
                 {...others}
+                readonly={readonly}
                 style={inputStyle}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChangeText}
                 placeholder={placeholder}
                 hint={hint}
-                value={fieldState.value}
               />
             </View>
           )}
@@ -205,7 +215,15 @@ const TextField = (props: InternalTextFieldProps) => {
 TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
-export {TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers, TextFieldMethods};
+export {
+  TextFieldProps,
+  FieldContextType,
+  StaticMembers as TextFieldStaticMembers,
+  TextFieldMethods,
+  TextFieldRef,
+  ValidationMessagePosition as TextFieldValidationMessagePosition,
+  Validator as TextFieldValidator
+};
 export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any), {
   modifiersOptions: {
     margins: true,

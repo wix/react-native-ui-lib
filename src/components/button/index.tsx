@@ -6,8 +6,17 @@ import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import Image from '../image';
+import Icon from '../icon';
 
-import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
+import {
+  ButtonSize,
+  ButtonAnimationDirection,
+  ButtonProps,
+  ButtonState,
+  Props,
+  DEFAULT_PROPS,
+  ButtonSizeProp
+} from './ButtonTypes';
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
@@ -246,7 +255,7 @@ class Button extends PureComponent<Props, ButtonState> {
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
     };
-    const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
+    const marginSide = ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size) ? 8 : 4;
 
     if (!this.isIconButton) {
       if (iconOnRight) {
@@ -290,6 +299,11 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
+        if (Constants.isWeb) {
+          return (
+            <Icon style={iconStyle} tintColor={Colors.$iconDefault} source={iconSource} testID={`${testID}.icon`}/>
+          );
+        }
         return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle} testID={`${testID}.icon`}/>;
       }
     }

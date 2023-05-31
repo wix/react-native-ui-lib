@@ -14,7 +14,8 @@ export default function useFieldState({
   onChangeValidity,
   ...props
 }: FieldStateProps) {
-  const [value, setValue] = useState(props.value ?? props.defaultValue);
+  const propsValue = props.value ?? props.defaultValue;
+  const [value, setValue] = useState(propsValue);
   const [isFocused, setIsFocused] = useState(false);
   const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
   const [failingValidatorIndex, setFailingValidatorIndex] = useState<number | undefined>(undefined);
@@ -39,16 +40,16 @@ export default function useFieldState({
   }, []);
 
   useEffect(() => {
-    if (props.value !== value) {
-      setValue(props.value);
+    if (propsValue !== value) {
+      setValue(propsValue);
 
-      if (validateOnChange && (!props.defaultValue || value !== props.defaultValue)) {
-        validateField(props.value);
+      if (validateOnChange) {
+        validateField(propsValue);
       }
     }
-    /* On purpose listen only to props.value change */
+    /* On purpose listen only to propsValue change */
     /* eslint-disable-next-line react-hooks/exhaustive-deps*/
-  }, [props.value, validateOnChange]);
+  }, [propsValue, validateOnChange]);
 
   useDidUpdate(() => {
     if (!_.isUndefined(isValid)) {

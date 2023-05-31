@@ -17,6 +17,7 @@ import {useDidUpdate} from 'hooks';
 import SortableListContext from './SortableListContext';
 import usePresenter from './usePresenter';
 import {HapticService, HapticType} from '../../services';
+import {StyleUtils} from 'utils';
 export interface InternalSortableListItemProps {
   index: number;
 }
@@ -28,12 +29,17 @@ const animationConfig = {
   duration: 350
 };
 
+// Reanimated 3 - Solving the following error:
+// ReanimatedError: Trying to access property `$backgroundDefault` of an object which cannot be sent to the UI runtime., js engine: reanimated
+const LIST_ITEM_BACKGROUND = Colors.$backgroundDefault;
+
 const SortableListItem = (props: Props) => {
   const {children, index} = props;
 
   const {
     data,
     itemHeight,
+    itemProps,
     onItemLayout,
     itemsOrder,
     lockedIds,
@@ -49,6 +55,17 @@ const SortableListItem = (props: Props) => {
   const translateY = useSharedValue<number>(0);
 
   const isDragging = useSharedValue(false);
+
+  const draggedItemShadow = useSharedValue(StyleUtils.unpackStyle({
+    ...Shadows.sh30.bottom,
+    ...Shadows.sh30.top
+  }));
+
+  const defaultItemShadow = useSharedValue(StyleUtils.unpackStyle({
+    shadowColor: Colors.transparent,
+    elevation: 0
+  }));
+
   const tempTranslateY = useSharedValue<number>(0);
   const tempItemsOrder = useSharedValue<string[]>(itemsOrder.value);
 
@@ -143,20 +160,15 @@ const SortableListItem = (props: Props) => {
     const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
     const opacity = isDragging.value ? 0.95 : 1;
     const shadow = isDragging.value
-      ? {
-        ...Shadows.sh30.bottom,
-        ...Shadows.sh30.top
-      }
-      : {
-        shadowColor: Colors.transparent,
-        elevation: 0
-      };
+      ? draggedItemShadow.value
+      : defaultItemShadow.value;
 
     return {
-      backgroundColor: Colors.$backgroundDefault, // required for elevation to work in Android
+      backgroundColor: LIST_ITEM_BACKGROUND, // required for elevation to work in Android
       zIndex,
       transform: [{translateY: translateY.value}, {scale}],
       opacity,
+      ...itemProps?.margins,
       ...shadow
     };
   });

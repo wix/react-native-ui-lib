@@ -38,12 +38,12 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     if (!isEmpty(title) || !isEmpty(subtitle)) {
       return (
         <Container onPress={onPress} center flex>
-          {title && (
+          {!isEmpty(title) && (
             <Text $textDefault {...titleProps} marginB-s3 style={titleStyle}>
               {title}
             </Text>
           )}
-          {subtitle && (
+          {!isEmpty(subtitle) && (
             <Text $textDefault {...subtitleProps} marginB-s3 style={subtitleStyle}>
               {subtitle}
             </Text>

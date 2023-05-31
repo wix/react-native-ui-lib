@@ -1,4 +1,4 @@
-import {UniDriver} from '../UniDriver';
+import {DragData, UniDriver} from '../UniDriver';
 import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
 import {ReactTestInstance} from 'react-test-renderer';
 import {act} from '@testing-library/react-hooks';
@@ -33,10 +33,12 @@ export class TestingLibraryDriver implements UniDriver {
     if (!this.renderAPI) {
       throw new SelectorChainingException();
     }
-    const instances = await this.renderAPI
-      .findAllByTestId(testId)
-      .catch(() => []);
-    return new TestingLibraryDriver(instances);
+    const instances = await this.renderAPI.queryAllByTestId(testId);
+    if (instances) {
+      return Promise.resolve(new TestingLibraryDriver(instances));
+    } else {
+      return Promise.reject(new NoSelectorException());
+    }
   };
 
   selectorByText = async (text: string): Promise<UniDriver> => {
@@ -53,7 +55,7 @@ export class TestingLibraryDriver implements UniDriver {
     }
     const instances = await this.renderAPI?.findAllByDisplayValue(value).catch(() => []);
     return new TestingLibraryDriver(instances);
-  }
+  };
 
   first = (): Promise<UniDriver> => this.at(0);
 
@@ -72,15 +74,42 @@ export class TestingLibraryDriver implements UniDriver {
   getInstanceProps = async (): Promise<any> => {
     const instance = await this.instance();
     return _.get(instance, 'props');
-  }
+  };
 
-  press = async (): Promise<void> => {
+  press = (): void => {
     if (!this.reactTestInstances) {
       throw new NoSelectorException();
     }
     this.validateExplicitInstance();
     this.validateSingleInstance();
-    await act(() => fireEvent.press(this.reactTestInstances[0]));
+    fireEvent.press(this.reactTestInstances[0]);
+  };
+
+  drag = (data: DragData | DragData[]): void => {
+    if (!this.reactTestInstances) {
+      throw new NoSelectorException();
+    }
+    this.validateExplicitInstance();
+    this.validateSingleInstance();
+    fireEvent.press(this.reactTestInstances[0], data);
+  };
+
+  focus = (): void => {
+    if (!this.reactTestInstances) {
+      throw new NoSelectorException();
+    }
+    this.validateExplicitInstance();
+    this.validateSingleInstance();
+    fireEvent(this.reactTestInstances[0], 'focus');
+  };
+
+  blur = (): void => {
+    if (!this.reactTestInstances) {
+      throw new NoSelectorException();
+    }
+    this.validateExplicitInstance();
+    this.validateSingleInstance();
+    fireEvent(this.reactTestInstances[0], 'blur');
   };
 
   typeText = async (text: string): Promise<void> => {

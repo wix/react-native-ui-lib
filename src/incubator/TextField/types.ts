@@ -18,12 +18,15 @@ export type ColorType =
       focus?: string;
       error?: string;
       disabled?: string;
+      readonly?: string;
     };
 
 export enum ValidationMessagePosition {
   TOP = 'top',
   BOTTOM = 'bottom'
 }
+
+type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
 
 export type Validator = Function | keyof typeof formValidators;
 
@@ -51,7 +54,7 @@ export interface LabelProps {
    */
   label?: string;
   /**
-   * Field label color. Either a string or color by state map ({default, focus, error, disabled})
+   * Field label color. Either a string or color by state map ({default, focus, error, disabled, readonly})
    */
   labelColor?: ColorType;
   /**
@@ -62,7 +65,7 @@ export interface LabelProps {
    * Pass extra props to the label Text element
    */
   labelProps?: TextProps;
-  validationMessagePosition?: ValidationMessagePosition;
+  validationMessagePosition?: ValidationMessagePositionType;
   floatingPlaceholder?: boolean;
   testID?: string;
 }
@@ -84,7 +87,7 @@ export interface FloatingPlaceholderProps {
    * Should placeholder float on focus or when start typing
    */
   floatOnFocus?: boolean;
-  validationMessagePosition?: ValidationMessagePosition;
+  validationMessagePosition?: ValidationMessagePositionType;
   extraOffset?: number;
   defaultValue?: TextInputProps['defaultValue'];
   testID: string;
@@ -137,13 +140,17 @@ export interface InputProps
    */
   placeholderTextColor?: ColorType;
   /**
-   * Custom formatter for the input value (used only when input if not focused)
+   * Custom formatter for the input value (used only when input is not focused)
    */
   formatter?: (value?: string) => string | undefined;
   /**
    * Use react-native-gesture-handler instead of react-native for the base TextInput
    */
   useGestureHandlerInput?: boolean;
+  /**
+   * A UI preset for read only state
+   */
+  readonly?: boolean;
 }
 
 export type TextFieldProps = MarginModifiers &
@@ -200,7 +207,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * The position of the validation message (top/bottom)
      */
-    validationMessagePosition?: ValidationMessagePosition;
+    validationMessagePosition?: ValidationMessagePositionType;
     /**
      * Internal style for the field container
      */
@@ -239,6 +246,7 @@ export type FieldContextType = {
   isValid: boolean;
   failingValidatorIndex?: number;
   disabled: boolean;
+  readonly: boolean;
   validateField: () => void;
   checkValidity: () => boolean;
 };
@@ -251,3 +259,5 @@ export interface TextFieldMethods {
   validate: () => boolean;
   isValid: () => boolean;
 }
+
+export type TextFieldRef = TextInput & TextFieldMethods;
