@@ -41,7 +41,9 @@ export default class SliderGroup extends Component<SliderGroupProps, SliderGroup
   render() {
     return (
       <View {...this.props}>
-        <SliderContext.Provider value={this.getContextProviderValue()}>{this.props.children}</SliderContext.Provider>
+        <SliderContext.Provider value={this.getContextProviderValue()}>
+          {this.props.children}
+        </SliderContext.Provider>
       </View>
     );
   }

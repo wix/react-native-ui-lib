@@ -26,4 +26,8 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
    * (please note that react-native-haptic-feedback does not support the specific haptic type on Android starting on an unknown version, you can use 1.8.2 for it to work properly)
    */
   enableHaptic?: boolean;
+  /**
+   * Extra props for the item
+   */
+  itemProps?: {margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}};
 }

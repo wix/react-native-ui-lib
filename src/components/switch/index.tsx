@@ -56,6 +56,7 @@ export type SwitchProps = {
   thumbStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  id?: string;
 }
 
 /**

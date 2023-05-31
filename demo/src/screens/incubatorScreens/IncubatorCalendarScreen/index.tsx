@@ -12,8 +12,7 @@ export default class CalendarScreen extends Component {
     showLoader: false
   };
 
-  constructor(props: any) {
-    super(props);
+  componentDidMount(): void {
     this.loadEvents(this.state.date);
   }
 

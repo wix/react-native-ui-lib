@@ -30,6 +30,11 @@
       "type": "number",
       "default": "1",
       "description": "Scale the item once dragged."
+    },
+    {
+      "name": "itemProps",
+      "type": "{margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}}",
+      "description": "Extra props for the item."
     }
   ],
   "snippet": [

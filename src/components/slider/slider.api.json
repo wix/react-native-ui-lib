@@ -83,7 +83,8 @@
       "type": "boolean",
       "description": "If true the component will have accessibility features enabled"
     },
-    {"name": "testID", "type": "string", "description": "The component test id"}
+    {"name": "testID", "type": "string", "description": "The component test id"},
+    {"name": "migrate", "type": "boolean", "description": "Temporary prop required for migration to the Slider's new implementation"}
   ],
   "snippet": [
     "<Slider",

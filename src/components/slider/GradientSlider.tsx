@@ -5,6 +5,7 @@ import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import Slider, {SliderProps} from './index';
+import {Slider as NewSlider} from '../../incubator';
 import {SliderContextProps} from './context/SliderContext';
 import asSliderGroupChild from './context/asSliderGroupChild';
 import Gradient from '../gradient';
@@ -184,7 +185,7 @@ class GradientSlider extends Component<Props, GradientSliderState> {
   };
 
   render() {
-    const {type, containerStyle, disabled, accessible, forwardedRef, ...others} = this.props;
+    const {type, containerStyle, disabled, accessible, forwardedRef, migrate, ...others} = this.props;
     const initialColor = this.state.initialColor;
     const color = this.getColor();
     const thumbTintColor = Colors.getHexString(color);
@@ -216,9 +217,12 @@ class GradientSlider extends Component<Props, GradientSliderState> {
         break;
     }
 
+    const SliderComponent = migrate ? NewSlider : Slider;
+
     return (
-      <Slider
+      <SliderComponent
         {...others}
+        //@ts-expect-error
         ref={forwardedRef}
         onReset={this.reset}
         renderTrack={renderTrack}
