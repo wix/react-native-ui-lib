@@ -1,5 +1,5 @@
 import isNull from 'lodash/isNull';
-import React, {useContext, useCallback} from 'react';
+import React, {useContext, useCallback, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {Colors} from 'style';
@@ -28,9 +28,14 @@ const Day = (props: DayProps) => {
   const {selectedDate, setDate, showExtraDays} = useContext(CalendarContext);
 
   const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
-  const backgroundColor = !isToday(date) ? NO_COLOR :
-    inactive ? INACTIVE_TODAY_BACKGROUND_COLOR : TODAY_BACKGROUND_COLOR;
   const isHidden = !showExtraDays && inactive;
+
+  const backgroundColor = useMemo(() => {
+    return !isToday(date) ? NO_COLOR : inactive ? INACTIVE_TODAY_BACKGROUND_COLOR : TODAY_BACKGROUND_COLOR;
+  }, [date, inactive]);
+  const textColor = useMemo(() => {
+    return inactive ? showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR : TEXT_COLOR;
+  }, [inactive, showExtraDays]);
 
   useAnimatedReaction(() => {
     return selectedDate.value;
@@ -38,19 +43,22 @@ const Day = (props: DayProps) => {
     isSelected.value = !inactive && isSameDay(selected, date!);
   }, []);
 
+  const animatedTextStyles = useAnimatedStyle(() => {
+    return {
+      color: withTiming(isSelected.value ? 
+        SELECTED_TEXT_COLOR : textColor, {duration: 100})
+    };
+  });
+
   const animatedSelectionStyles = useAnimatedStyle(() => {
     return {
       backgroundColor: withTiming(isSelected.value ? SELECTED_BACKGROUND_COLOR : backgroundColor, {duration: 100})
     };
   });
 
-  const animatedTextStyles = useAnimatedStyle(() => {
-    return {
-      color: withTiming(isSelected.value ? 
-        SELECTED_TEXT_COLOR : inactive ? 
-          showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR : TEXT_COLOR, {duration: 100})
-    };
-  });
+  const selectionStyle = useMemo(() => {
+    return [styles.selection, animatedSelectionStyles];
+  }, [animatedSelectionStyles]);
 
   const _onPress = useCallback(() => {
     if (date !== null && !isHidden) {
@@ -65,7 +73,7 @@ const Day = (props: DayProps) => {
     const day = !isNull(date) ? getDayOfDate(date) : '';
     return (
       <View center>
-        <View reanimated style={[styles.selection, animatedSelectionStyles]}/>
+        <View reanimated style={selectionStyle}/>
         <AnimatedText style={animatedTextStyles}>{day}</AnimatedText>
       </View>
     );
