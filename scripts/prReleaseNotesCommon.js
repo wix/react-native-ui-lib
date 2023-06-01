@@ -41,8 +41,8 @@ async function fetchMergedPRs(postMergedDate, repo, githubToken) {
   const PRs = await response.json();
 
   if (PRs.message) {
-    console.error('\x1b[31m', 'Something went wrong', PRs.message);
-    exit(1);
+    console.log('\x1b[31m', 'Something went wrong', PRs.message);
+    return;
   }
 
   const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate),
@@ -105,30 +105,30 @@ function getLine(log, requester, prNumber) {
   return `• ${log}${requester}${prNumber} \n`;
 }
 
-function getRequester(pr) {
+function getAdditionalInfo(pr) {
   // TODO: Remove `jira issue` once fully migrated (has to remain for backwards compatibility)
-  let requester = pr.info['jira issue'] || pr.info['Additional link'];
-  if (requester === undefined || requester.toLowerCase() === 'none' || requester.includes('???')) {
-    requester = '';
+  let additionalInfo = pr.info['jira issue'] || pr.info['Additional info'];
+  if (additionalInfo === undefined || additionalInfo.toLowerCase() === 'none' || additionalInfo.includes('???')) {
+    additionalInfo = '';
   } else {
-    requester = ` (${requester})`;
+    additionalInfo = ` (${additionalInfo})`;
   }
 
-  return requester;
+  return additionalInfo;
 }
 
 function getEntry(pr) {
   let releaseNotes = '';
   const log = pr.info.changelog || pr.title;
-  const requester = getRequester(pr);
+  const additionalInfo = getAdditionalInfo(pr);
 
   const prNumber = ` (#${pr.number})`;
   if (log.includes('\r\n')) {
     log.split('\r\n').forEach(l => {
-      releaseNotes += getLine(l, requester, prNumber);
+      releaseNotes += getLine(l, additionalInfo, prNumber);
     });
   } else {
-    releaseNotes = getLine(log, requester, prNumber);
+    releaseNotes = getLine(log, additionalInfo, prNumber);
   }
 
   return releaseNotes;
@@ -150,32 +150,28 @@ function getReleaseNotesForType(PRs, title) {
 async function _generateReleaseNotes(latestVersion, newVersion, githubToken, prefix, repo, header) {
   const latestReleaseDate = fetchLatestReleaseDate(latestVersion);
   const PRs = await fetchMergedPRs(latestReleaseDate, repo, githubToken);
+  if (!PRs) {
+    return;
+  }
+
   const {silentPRs, features, web, fixes, infra, others} = getPRsByType(PRs);
 
   let releaseNotes = header;
 
-  // What's New?
   releaseNotes += getTitle(':rocket: What’s New?');
 
-  // features
   releaseNotes += getReleaseNotesForType(features, ':gift: Features');
 
-  // web
   releaseNotes += getReleaseNotesForType(web, ':spider_web: Web support');
 
-  // bug fixes
   releaseNotes += getReleaseNotesForType(fixes, ':wrench: Fixes');
 
-  // migrations
-  releaseNotes += getReleaseNotesForType(infra, ':bulb: Deprecations & Migrations');
+  releaseNotes += getReleaseNotesForType(infra, ':gear: Maintenance & Infra');
 
-  // Maintenance & Infra
-  releaseNotes += getTitle(':gear: Maintenance & Infra');
+  releaseNotes += getTitle(':bulb: Deprecations & Migrations');
 
-  // others
   releaseNotes += getReleaseNotesForType(others, 'OTHERS');
 
-  // Silent
   releaseNotes += getReleaseNotesForType(silentPRs,
     '// Silent - these PRs did not have a changelog or were left out for some other reason, is it on purpose?');
 
