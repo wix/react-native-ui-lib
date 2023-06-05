@@ -4,7 +4,7 @@ import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import {Colors, Typography} from 'style';
 import View from '../../components/view';
 import Button from '../../components/button';
-import {getDateObject, getMonthForIndex, addMonths, getTimestamp} from './helpers/DateUtils';
+import {getDateObject, getMonthForIndex, addMonths} from './helpers/DateUtils';
 import {HeaderProps, DayNamesFormat, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
@@ -23,7 +23,7 @@ const Header = (props: HeaderProps) => {
   const getNewDate = useCallback((count: number) => {
     const newDate = addMonths(selectedDate.value, count);
     const dateObject = getDateObject(newDate);
-    return getTimestamp({year: dateObject.year, month: dateObject.month, day: 1});
+    return getDateObject({year: dateObject.year, month: dateObject.month, day: 1}).timestamp;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

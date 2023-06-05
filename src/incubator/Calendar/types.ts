@@ -6,6 +6,15 @@ export interface DateObject {
   month: number;
   year: number;
   day: number;
+  dayOfTheWeek: number;
+  timestamp: number;
+  date: Date;
+}
+
+export interface DateObjectWithDate {
+  month: number;
+  year: number;
+  day: number;
 }
 
 export interface DateObjectWithOptionalDay {

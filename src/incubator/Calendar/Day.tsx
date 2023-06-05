@@ -6,7 +6,7 @@ import {Colors} from 'style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
-import {getDayOfDate, isSameDay, isToday} from './helpers/DateUtils';
+import {getDateObject, isSameDay, isToday} from './helpers/DateUtils';
 import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
@@ -26,6 +26,7 @@ const AnimatedText = Reanimated.createAnimatedComponent(Text);
 const Day = (props: DayProps) => {
   const {date, onPress, inactive} = props;
   const {selectedDate, setDate, showExtraDays} = useContext(CalendarContext);
+  const day = !isNull(date) ? getDateObject(date).day : '';
 
   const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
   const isHidden = !showExtraDays && inactive;
@@ -70,7 +71,6 @@ const Day = (props: DayProps) => {
   }, [date, setDate, onPress]);
   
   const renderDay = () => {
-    const day = !isNull(date) ? getDayOfDate(date) : '';
     return (
       <View center>
         <View reanimated style={selectionStyle}/>
