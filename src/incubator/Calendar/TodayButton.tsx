@@ -4,7 +4,7 @@ import {/* Animated,  */ useAnimatedStyle /* , useSharedValue */} from 'react-na
 import {Colors} from '../../style';
 import View from '../../components/view';
 import Button from '../../components/button';
-import {isToday/*, isPastDate*/} from './helpers/DateUtils';
+import {isSameDay /*, isPastDate*/} from './helpers/DateUtils';
 import {TodayButtonProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
@@ -20,7 +20,7 @@ const TodayButton = (props: TodayButtonProps) => {
     return {
       transform: [
         {
-          translateY: isToday(selectedDate.value) ? 100 : 0
+          translateY: isSameDay(selectedDate.value, Date.now()) ? 100 : 0
         }
       ]
     };
