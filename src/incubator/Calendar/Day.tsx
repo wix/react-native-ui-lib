@@ -24,11 +24,21 @@ const INACTIVE_TEXT_COLOR = Colors.$textNeutralLight;
 const AnimatedText = Reanimated.createAnimatedComponent(Text);
 
 const Day = (props: DayProps) => {
-  const {date, onPress, inactive} = props;
+  const {date, onPress, currentMonth} = props;
   const {selectedDate, setDate, showExtraDays} = useContext(CalendarContext);
-  const day = !isNull(date) ? getDateObject(date).day : '';
-
+  
+  const dateObject = useMemo(() => {
+    return !isNull(date) && getDateObject(date);
+  }, [date]);
+  const day = dateObject ? dateObject.day : '';
+  
   const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
+  const inactive = useMemo(() => { // inactive have different look but is still pressable
+    if (dateObject) {
+      const dayMonth = dateObject.month;
+      return dayMonth !== currentMonth;
+    }
+  }, [dateObject, currentMonth]);
   const isHidden = !showExtraDays && inactive;
 
   const backgroundColor = useMemo(() => {
@@ -46,8 +56,7 @@ const Day = (props: DayProps) => {
 
   const animatedTextStyles = useAnimatedStyle(() => {
     return {
-      color: withTiming(isSelected.value ? 
-        SELECTED_TEXT_COLOR : textColor, {duration: 100})
+      color: withTiming(isSelected.value ? SELECTED_TEXT_COLOR : textColor, {duration: 100})
     };
   });
 
@@ -69,19 +78,13 @@ const Day = (props: DayProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date, setDate, onPress]);
-  
-  const renderDay = () => {
-    return (
+
+  return (
+    <TouchableOpacity flex center style={styles.dayContainer} onPress={_onPress} activeOpacity={1}>
       <View center>
         <View reanimated style={selectionStyle}/>
         <AnimatedText style={animatedTextStyles}>{day}</AnimatedText>
       </View>
-    );
-  };
-
-  return (
-    <TouchableOpacity flex center style={styles.dayContainer} onPress={_onPress} activeOpacity={1}>
-      {renderDay()}
     </TouchableOpacity>
   );
 };
