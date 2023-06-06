@@ -21,9 +21,7 @@ const Header = (props: HeaderProps) => {
   const {selectedDate, setDate, showWeeksNumbers, staticHeader, setHeaderHeight} = useContext(CalendarContext);
 
   const getNewDate = useCallback((count: number) => {
-    const newDate = addMonths(selectedDate.value, count);
-    const dateObject = getDateObject(newDate);
-    return getDateObject({year: dateObject.year, month: dateObject.month, day: 1}).timestamp;
+    return addMonths(selectedDate.value, count, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

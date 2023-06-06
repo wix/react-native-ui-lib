@@ -252,6 +252,15 @@ describe('Calendar/DateUtils', () => {
       expect(dayObject.month).toBe(11);
       expect(dayObject.year).toBe(2020);
     });
+
+    // resetDay
+    it('should return the date timestamp for the 1st day of the next (1) months in the next (1) years', () => {
+      const date = DateUtils.addMonths(new Date(2022, 11, 26).getTime(), 1, true);
+      const dayObject = DateUtils.getDateObject(date);
+      expect(dayObject.day).toBe(1);
+      expect(dayObject.month).toBe(0);
+      expect(dayObject.year).toBe(2023);
+    });
   });
 
   describe('addYears', () => {

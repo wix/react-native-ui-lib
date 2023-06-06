@@ -76,7 +76,7 @@ export function getDateObject(date: number | DateObjectWithDate) {
   };
 }
 
-export function addMonths(date: number, count: number) {
+export function addMonths(date: number, count: number, resetDay = false) {
   'worklet';
   if (count === 0) {
     return date;
@@ -84,7 +84,11 @@ export function addMonths(date: number, count: number) {
 
   const d = new Date(date);
   const month = d.getMonth();
-  return d.setMonth(month + count);
+  d.setMonth(month + count);
+  if (resetDay) { // feature: setting the new month to the first day of the month
+    d.setDate(1);
+  }
+  return d.getTime();
 }
 
 export function addYears(date: number, count: number) {
