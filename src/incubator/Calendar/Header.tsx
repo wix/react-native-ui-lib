@@ -34,11 +34,15 @@ const Header = (props: HeaderProps) => {
   }, [setDate, getNewDate]);
 
   const animatedProps = useAnimatedProps(() => {
-    const dateObject = getDateObject(selectedDate.value);
-    const monthString = getMonthForIndex(staticHeader ? dateObject.month : month!);
-    const dateString = staticHeader ? monthString + ` ${dateObject.year}` : monthString + ` ${year}`;
+    let m = month!;
+    let y = year;
+    if (staticHeader) {
+      const dateObject = getDateObject(selectedDate.value);
+      m = dateObject.month;
+      y = dateObject.year;
+    }
     return {
-      text: dateString
+      text: getMonthForIndex(m) + ` ${y}`
     };
   });
 
