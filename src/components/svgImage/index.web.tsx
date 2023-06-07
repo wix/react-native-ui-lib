@@ -18,16 +18,18 @@ function SvgImage(props: SvgImageProps) {
   const [svgStyleCss, setSvgStyleCss] = useState<string>(EMPTY_STYLE);
   const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
 
+  const styleObj = JSON.parse(JSON.stringify(style));
+
   const createStyleSvgCss = async (PostCssPackage: {postcss: any; cssjs: any}) => {
     setPostCssStyleCalled(true);
     const {postcss, cssjs} = PostCssPackage;
     postcss()
-      .process(style, {parser: cssjs})
+      .process(styleObj, {parser: cssjs})
       .then((style: {css: any}) => setSvgStyleCss(`{${style.css}}`));
   };
 
   if (isSvgUri(data)) {
-    return <img {...others} src={data.uri} style={style}/>;
+    return <img {...others} src={data.uri} style={styleObj}/>;
   } else if (isBase64ImageContent(data)) {
     if (tintColor) {
       return (
@@ -40,7 +42,7 @@ function SvgImage(props: SvgImageProps) {
         />
       );
     }
-    return <img {...others} src={data} style={style}/>;
+    return <img {...others} src={data} style={styleObj}/>;
   } else if (data) {
     const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
     if (PostCssPackage) {
