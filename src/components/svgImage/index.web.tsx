@@ -14,10 +14,7 @@ export interface SvgImageProps {
 }
 
 function SvgImage(props: SvgImageProps) {
-  const {data, style, tintColor, ...others} = props;
-
-  const styleObj = Object.assign({}, ...(style || []));
-
+  const {data, style = {}, tintColor, ...others} = props;
   const [svgStyleCss, setSvgStyleCss] = useState<string>(EMPTY_STYLE);
   const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
 
@@ -25,12 +22,12 @@ function SvgImage(props: SvgImageProps) {
     setPostCssStyleCalled(true);
     const {postcss, cssjs} = PostCssPackage;
     postcss()
-      .process(styleObj, {parser: cssjs})
+      .process(style, {parser: cssjs})
       .then((style: {css: any}) => setSvgStyleCss(`{${style.css}}`));
   };
 
   if (isSvgUri(data)) {
-    return <img {...others} src={data.uri} style={styleObj}/>;
+    return <img {...others} src={data.uri} style={style}/>;
   } else if (isBase64ImageContent(data)) {
     if (tintColor) {
       return (
@@ -43,7 +40,7 @@ function SvgImage(props: SvgImageProps) {
         />
       );
     }
-    return <img {...others} src={data} style={styleObj}/>;
+    return <img {...others} src={data} style={style}/>;
   } else if (data) {
     const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
     if (PostCssPackage) {
