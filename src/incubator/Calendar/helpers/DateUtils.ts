@@ -1,10 +1,21 @@
 import _ from 'lodash';
 import getWeek from 'date-fns/getWeek';
-import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay, DateObject} from '../types';
+import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay, DateObjectWithDate, DateObject} from '../types';
 
 export const HOUR_IN_MS = 60 * 60 * 1000;
 const DAY_IN_MS = 24 * HOUR_IN_MS;
 const WEEK_IN_MS = 7 * DAY_IN_MS;
+
+function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
+  const numberOfDaysInMonth = new Date(year, month + 1, 0).getDate();
+  const dayOfTheWeek = new Date(year, month, 1).getDay();
+  
+  // Modify day in the week based on the first day of the week
+  const fixedDayOfTheWeek = (7 - (firstDayOfWeek - dayOfTheWeek)) % 7;
+  const numberOfWeeks = Math.ceil((numberOfDaysInMonth + fixedDayOfTheWeek) / 7);
+  
+  return numberOfWeeks;
+}
 
 export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
   if (month < 0 || month > 11) {
@@ -14,24 +25,15 @@ export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWee
   const firstDayOfMonth = new Date(year, month, 1);
   const firstWeekNumber = getWeek(firstDayOfMonth, {weekStartsOn: firstDayOfWeek});
   const numberOfWeeks = getNumberOfWeeksInMonth(year, month, firstDayOfWeek);
+  
   const weekNumbers: number[] = [];
   _.times(numberOfWeeks, i => weekNumbers.push(i + firstWeekNumber));
-
+  
   return weekNumbers;
 }
 
-export function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
-  const numberOfDaysInMonth = new Date(year, month + 1, 0).getDate();
-  const dayOfTheWeek = new Date(year, month, 1).getDay();
-  // Modify day in the week based on the first day of the week
-  const fixedDayOfTheWeek = (7 - (firstDayOfWeek - dayOfTheWeek)) % 7;
-  const numberOfWeeks = Math.ceil((numberOfDaysInMonth + fixedDayOfTheWeek) / 7);
-  return numberOfWeeks;
-}
-
-function getFirstDayInTheWeek(date: number, firstDayOfWeek: FirstDayOfWeek) {
-  const dayOfTheWeek = new Date(date).getDay();
-  let result = date - DAY_IN_MS * ((dayOfTheWeek - firstDayOfWeek) % 7);
+function getFirstDayInTheWeek(date: DateObject, firstDayOfWeek: FirstDayOfWeek) {
+  let result = date.timestamp - DAY_IN_MS * ((date.dayOfTheWeek - firstDayOfWeek) % 7);
   const dayInMonth = getDateObject(result).day;
 
   if (dayInMonth > 1 && dayInMonth <= 7) {
@@ -41,8 +43,8 @@ function getFirstDayInTheWeek(date: number, firstDayOfWeek: FirstDayOfWeek) {
 }
 
 function getFirstDayInTheYear(year: number, firstDayOfWeek: FirstDayOfWeek) {
-  const dayInFirstWeekOfYear = new Date(year, 0, 1);
-  return getFirstDayInTheWeek(dayInFirstWeekOfYear.getTime(), firstDayOfWeek);
+  const dayInFirstWeekOfYear = getDateObject({year, month: 0, day: 1});
+  return getFirstDayInTheWeek(dayInFirstWeekOfYear, firstDayOfWeek);
 }
 
 // TODO: Fix to use Default behavior for week number
@@ -57,40 +59,35 @@ export function getDaysOfWeekNumber(year: number, weekNumber: number, firstDayOf
   return result;
 }
 
-export function getDayOfDate(date: number) {
-  return new Date(date).getDate();
-}
-
-export function getDayOfTheWeek(date: number) {
-  return new Date(date).getDay();
-}
-
 /* Worklets */
 
-export function getDateObject(date: number) {
+export function getDateObject(date: number | DateObjectWithDate) {
   'worklet';
-  const d = new Date(date);
+  const isNumberType = typeof date === 'number';
+  const d = isNumberType ? new Date(date) : new Date(date.year, date.month, date.day);
 
   return {
     day: d.getDate(),
     month: d.getMonth(),
-    year: d.getFullYear()
+    year: d.getFullYear(),
+    dayOfTheWeek: d.getDay(),
+    timestamp: isNumberType ? date : d.getTime()
   };
 }
 
-export function getTimestamp(date: DateObject) {
-  'worklet';
-  return new Date(date.year, date.month, date.day).getTime();
-}
-
-export function addMonths(date: number, count: number) {
+export function addMonths(date: number, count: number, useFirstDay = false) {
   'worklet';
   if (count === 0) {
     return date;
   }
 
-  const month = getDateObject(date).month;
-  return new Date(date).setMonth(month + count);
+  const d = new Date(date);
+  const month = d.getMonth();
+  d.setMonth(month + count);
+  if (useFirstDay) { // feature: setting the new month to the first day of the month
+    d.setDate(1);
+  }
+  return d.getTime();
 }
 
 export function addYears(date: number, count: number) {
@@ -99,8 +96,9 @@ export function addYears(date: number, count: number) {
     return date;
   }
 
-  const year = getDateObject(date).year;
-  return new Date(date).setFullYear(year + count);
+  const d = new Date(date);
+  const year = d.getFullYear();
+  return d.setFullYear(year + count);
 }
 
 export function getMonthForIndex(index: number) {
