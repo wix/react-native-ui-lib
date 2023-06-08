@@ -12,13 +12,11 @@ enum RecorderTagEnum {
   UNMASK = 'unmask'
 }
 
-type RecorderTag = RecorderTagEnum | `${RecorderTagEnum}`;
+export type RecorderTag = RecorderTagEnum | `${RecorderTagEnum}`;
 
-type RecorderProps = {
+export interface RecorderProps {
   /**
    * Recorder tag
    */
   recorderTag?: RecorderTag;
 };
-
-export {RecorderProps};
