@@ -10,7 +10,6 @@ import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 import Icon, {IconProps} from '../icon';
-import {RecorderTag} from 'services';
 
 export type ChipProps = ViewProps & TouchableOpacityProps & {
   //GENERAL
@@ -127,10 +126,6 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    * Dismiss container style
    */
   dismissContainerStyle?: StyleProp<ImageStyle>;
-  /**
-   * Recorder tag
-   */
-  recorderTag?: RecorderTag;
 }
 
 const DEFAULT_SIZE = 26;

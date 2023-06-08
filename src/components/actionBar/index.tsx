@@ -73,7 +73,7 @@ class ActionBar extends Component<ActionBarProps> {
         <View row centerV paddingH-20={!centered} style={[this.styles.container, style]} {...others}>
           {_.map(actions, (action, i) => (
             <View key={i} flex {...this.getAlignment(i)}>
-              <Button link size={Button.sizes.medium} $textPrimary recorderTag={'unmask'} {...action}/>
+              <Button link size={Button.sizes.medium} $textPrimary {...action}/>
             </View>
           ))}
         </View>
