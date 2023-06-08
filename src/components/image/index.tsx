@@ -18,7 +18,7 @@ import {
   BaseComponentInjectedProps,
   MarginModifiers
 } from '../../commons/new';
-import {RecorderTag} from 'services';
+import {RecorderProps} from 'services';
 import {getAsset, isSvg} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
@@ -26,7 +26,7 @@ import View from '../view';
 import {Colors} from '../../style';
 
 export type ImageProps = RNImageProps &
-  MarginModifiers & {
+  MarginModifiers & RecorderProps & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
@@ -94,10 +94,6 @@ export type ImageProps = RNImageProps &
      * The image height
      */
     height?: string | number;
-    /**
-     * Recorder tag
-     */
-    recorderTag?: RecorderTag;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;

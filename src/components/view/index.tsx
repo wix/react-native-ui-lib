@@ -2,9 +2,9 @@ import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
 import {Constants, ContainerModifiers} from '../../commons/new';
-import {RecorderTag} from 'services';
+import {RecorderProps} from 'services';
 
-export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers {
+export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers, RecorderProps {
   /**
    * If true, will render as SafeAreaView
    */
@@ -37,10 +37,6 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, C
    * Set background color
    */
   backgroundColor?: string;
-  /**
-   * Recorder tag
-   */
-  recorderTag?: RecorderTag;
   style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
 

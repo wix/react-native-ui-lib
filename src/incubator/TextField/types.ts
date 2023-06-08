@@ -9,7 +9,7 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import {TextProps} from '../../components/text';
-import {RecorderTag} from 'services';
+import {RecorderProps} from 'services';
 import {PropsWithChildren, ReactElement} from 'react';
 import {ViewProps} from '../../components/view';
 
@@ -128,7 +128,8 @@ export interface CharCounterProps {
 
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,
-    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'> {
+    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'>,
+    RecorderProps {
   /**
    * A hint text to display when focusing the field
    */
@@ -153,10 +154,6 @@ export interface InputProps
    * A UI preset for read only state
    */
   readonly?: boolean;
-  /**
-   * Recorder tag
-   */
-  recorderTag?: RecorderTag;
 }
 
 export type TextFieldProps = MarginModifiers &

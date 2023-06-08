@@ -3,11 +3,11 @@ import React, {useMemo, forwardRef} from 'react';
 import {Image, ImageProps, StyleSheet} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
-import {RecorderTag} from 'services';
+import {RecorderProps} from 'services';
 import SvgImage from '../svgImage';
 
 export type IconProps = Omit<ImageProps, 'source'> &
-  MarginModifiers & {
+  MarginModifiers & RecorderProps & {
     /**
      * if provided icon source will be driven from asset name
      */
@@ -28,10 +28,6 @@ export type IconProps = Omit<ImageProps, 'source'> &
      * whether the icon should flip horizontally on RTL
      */
     supportRTL?: boolean;
-    /**
-     * Recorder tag
-     */
-    recorderTag?: RecorderTag;
     source?: ImageProps['source'];
   };
 

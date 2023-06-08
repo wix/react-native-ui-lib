@@ -8,10 +8,17 @@ declare global {
 }
 
 enum RecorderTagEnum {
-    MASK = 'mask',
-    UNMASK = 'unmask'
+  MASK = 'mask',
+  UNMASK = 'unmask'
 }
 
-type RecorderTag = RecorderTagEnum | `${RecorderTagEnum}`
+type RecorderTag = RecorderTagEnum | `${RecorderTagEnum}`;
 
-export {RecorderTag};
+type RecorderProps = {
+  /**
+   * Recorder tag
+   */
+  recorderTag?: RecorderTag;
+};
+
+export {RecorderProps};

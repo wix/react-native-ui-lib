@@ -11,7 +11,7 @@ import {
   ColorsModifiers,
   FlexModifiers
 } from '../../commons/new';
-import {RecorderTag} from 'services';
+import {RecorderProps} from 'services';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
 
@@ -19,7 +19,8 @@ export type TextProps = RNTextProps &
   TypographyModifiers &
   ColorsModifiers &
   MarginModifiers &
-  FlexModifiers & {
+  FlexModifiers &
+  RecorderProps & {
     /**
      * color of the text
      */
@@ -48,10 +49,6 @@ export type TextProps = RNTextProps &
      * Use Animated.Text as a container
      */
     animated?: boolean;
-    /**
-     * Recorder tag
-     */
-    recorderTag?: RecorderTag;
     textAlign?: string;
     style?: StyleProp<TextStyle | Animated.AnimatedProps<TextStyle>>;
   };

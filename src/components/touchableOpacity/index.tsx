@@ -12,13 +12,13 @@ import {
   ForwardRefInjectedProps,
   ContainerModifiers
 } from '../../commons/new';
-import {RecorderTag} from 'services';
+import {RecorderProps} from 'services';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 import {ViewProps} from '../view';
 
 export interface TouchableOpacityProps
   extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'>,
-    ContainerModifiers {
+    ContainerModifiers, RecorderProps {
   /**
    * background color for TouchableOpacity
    */
@@ -47,10 +47,6 @@ export interface TouchableOpacityProps
    * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
    */
   customValue?: any;
-  /**
-   * Recorder tag
-   */
-  recorderTag?: RecorderTag;
   style?: ViewProps['style'];
   onPress?: (props?: (TouchableOpacityProps & {event: GestureResponderEvent}) | any) => void;
   onPressIn?: (
