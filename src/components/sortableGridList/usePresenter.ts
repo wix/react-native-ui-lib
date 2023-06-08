@@ -39,8 +39,10 @@ const usePresenter = (numOfColumns: number, itemSpacing: number) => {
     },
     getOrderByPosition: (positionX: number, positionY: number) => {
       'worklet';
-      const col = (Constants.isRTL ? -1 : 1) * Math.round(positionX / itemSize);
-      const row = Math.round(positionY / itemSize);
+      const width = itemLayout.value?.width || itemSize;
+      const height = itemLayout.value?.height || itemSize;
+      const col = (Constants.isRTL ? -1 : 1) * Math.round(positionX / width);
+      const row = Math.round(positionY / height);
       return row * numOfColumns + col;
     },
 
