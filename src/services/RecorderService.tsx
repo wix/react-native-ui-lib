@@ -19,4 +19,4 @@ export interface RecorderProps {
    * Recorder tag
    */
   recorderTag?: RecorderTag;
-};
+}
