@@ -8,7 +8,6 @@ export interface DateObject {
   day: number;
   dayOfTheWeek: number;
   timestamp: number;
-  date: Date;
 }
 
 export interface DateObjectWithDate {

@@ -71,12 +71,11 @@ export function getDateObject(date: number | DateObjectWithDate) {
     month: d.getMonth(),
     year: d.getFullYear(),
     dayOfTheWeek: d.getDay(),
-    timestamp: isNumberType ? date : d.getTime(),
-    date: d
+    timestamp: isNumberType ? date : d.getTime()
   };
 }
 
-export function addMonths(date: number, count: number, resetDay = false) {
+export function addMonths(date: number, count: number, useFirstDay = false) {
   'worklet';
   if (count === 0) {
     return date;
@@ -85,7 +84,7 @@ export function addMonths(date: number, count: number, resetDay = false) {
   const d = new Date(date);
   const month = d.getMonth();
   d.setMonth(month + count);
-  if (resetDay) { // feature: setting the new month to the first day of the month
+  if (useFirstDay) { // feature: setting the new month to the first day of the month
     d.setDate(1);
   }
   return d.getTime();
