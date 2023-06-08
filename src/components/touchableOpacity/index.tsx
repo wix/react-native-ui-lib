@@ -18,7 +18,8 @@ import {ViewProps} from '../view';
 
 export interface TouchableOpacityProps
   extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'>,
-    ContainerModifiers, RecorderProps {
+    ContainerModifiers,
+    RecorderProps {
   /**
    * background color for TouchableOpacity
    */

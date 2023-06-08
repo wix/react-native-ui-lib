@@ -26,7 +26,8 @@ import View from '../view';
 import {Colors} from '../../style';
 
 export type ImageProps = RNImageProps &
-  MarginModifiers & RecorderProps & {
+  MarginModifiers &
+  RecorderProps & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
@@ -209,7 +210,7 @@ class Image extends PureComponent<Props, State> {
     const {
       tintColor,
       style,
-      width, 
+      width,
       height,
       supportRTL,
       cover,

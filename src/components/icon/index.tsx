@@ -7,7 +7,8 @@ import {RecorderProps} from 'services';
 import SvgImage from '../svgImage';
 
 export type IconProps = Omit<ImageProps, 'source'> &
-  MarginModifiers & RecorderProps & {
+  MarginModifiers &
+  RecorderProps & {
     /**
      * if provided icon source will be driven from asset name
      */
