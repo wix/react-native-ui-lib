@@ -4,7 +4,7 @@ import {FlashListPackage} from 'optionalDeps';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
-import {isSameMonth, getTimestamp, addYears} from './helpers/DateUtils';
+import {isSameMonth, getTimestamp, addYears, getDateObject} from './helpers/DateUtils';
 import {CalendarContextProps, CalendarProps, FirstDayOfWeek, UpdateSource, DateObjectWithOptionalDay} from './types';
 import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
@@ -36,8 +36,9 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
 
   const getItemIndex = useCallback((date: number) => {
     'worklet';
+    const dateObject = getDateObject(date);
     for (let i = 0; i < items.length; i++) {
-      if (isSameMonth(items[i], date)) {
+      if (items[i].month === dateObject.month && items[i].year === dateObject.year) {
         return i;
       }
     }

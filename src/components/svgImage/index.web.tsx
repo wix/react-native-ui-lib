@@ -14,12 +14,11 @@ export interface SvgImageProps {
 }
 
 function SvgImage(props: SvgImageProps) {
-  const {data, style, tintColor, ...others} = props;
-
-  const styleObj = Object.assign({}, ...(style || []));
-
+  const {data, style = {}, tintColor, ...others} = props;
   const [svgStyleCss, setSvgStyleCss] = useState<string>(EMPTY_STYLE);
   const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
+
+  const styleObj = JSON.parse(JSON.stringify(style));
 
   const createStyleSvgCss = async (PostCssPackage: {postcss: any; cssjs: any}) => {
     setPostCssStyleCalled(true);
