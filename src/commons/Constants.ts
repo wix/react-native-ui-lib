@@ -6,7 +6,7 @@ import {
   AccessibilityInfo,
   AccessibilityChangeEvent
 } from 'react-native';
-import {getScreenHeight, getScreenWidth, getWindowHeight, getWindowWidth} from './dimensions';
+import {constantsUpdater, getScreenHeight, getScreenWidth, getWindowHeight, getWindowWidth} from './dimensions';
 
 export enum orientations {
   PORTRAIT = 'portrait',
@@ -55,11 +55,12 @@ function getOrientation(height: number, width: number) {
   return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
 }
 
-export function updateConstants() {
-  screenHeight = getScreenHeight();
-  screenWidth = getScreenWidth();
-  windowHeight = getWindowHeight();
-  windowWidth = getWindowWidth();
+export function updateConstants(dimensions: any) {
+  const updatedDimensions = constantsUpdater(dimensions);
+  screenHeight = updatedDimensions.screen.height;
+  screenWidth = updatedDimensions.screen.width;
+  windowHeight = updatedDimensions.window.height;
+  windowWidth = updatedDimensions.window.width;
 
   setStatusBarHeight();
 }

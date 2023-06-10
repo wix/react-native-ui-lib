@@ -21,3 +21,17 @@ export const getWindowWidth = () => {
 export const getWindowHeight = () => {
   return getContainerElementDimension('clientHeight');
 };
+
+
+export function constantsUpdater() {
+  return {
+    screen: {
+      height: getScreenHeight(),
+      width: getScreenWidth()
+    },
+    window: {
+      height: getWindowHeight(),
+      width: getWindowWidth()
+    }
+  };
+}
