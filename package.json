@@ -7,7 +7,7 @@
   "homepage": "https://github.com/wix/react-native-ui-lib",
   "license": "MIT",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/react-native-ui-lib"
   },
   "repository": {
     "type": "git",
