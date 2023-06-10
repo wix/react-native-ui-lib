@@ -6,7 +6,7 @@ import {
   AccessibilityInfo,
   AccessibilityChangeEvent
 } from 'react-native';
-import { getScreenHeight, getScreenWidth, getWindowHeight, getWindowWidth } from './dimensions';
+import {getScreenHeight, getScreenWidth, getWindowHeight, getWindowWidth} from './dimensions';
 
 export enum orientations {
   PORTRAIT = 'portrait',
