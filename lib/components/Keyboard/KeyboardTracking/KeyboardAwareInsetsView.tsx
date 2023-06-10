@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import KeyboardTrackingView, {KeyboardTrackingViewProps} from './KeyboardTrackingView';
-import { getWindowWidth } from 'src/commons/dimensions';
 
 /**
  * @description: Used to add an inset when a keyboard is used and might hide part of the screen.
@@ -13,10 +12,10 @@ const KeyboardAwareInsetsView = (props: KeyboardTrackingViewProps) => (
   <KeyboardTrackingView {...props} pointerEvents={'none'} style={styles.insetsView} scrollToFocusedInput/>
 );
 
-const width = getWindowWidth();
+const ScreenSize = Dimensions.get('window');
 const styles = StyleSheet.create({
   insetsView: {
-    width,
+    width: ScreenSize.width,
     height: 0.5,
     position: 'absolute',
     bottom: 0,
