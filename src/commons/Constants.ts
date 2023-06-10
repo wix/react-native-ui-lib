@@ -6,6 +6,7 @@ import {
   AccessibilityInfo,
   AccessibilityChangeEvent
 } from 'react-native';
+import { getScreenHeight, getScreenWidth, getWindowHeight, getWindowWidth } from './dimensions';
 
 export enum orientations {
   PORTRAIT = 'portrait',
@@ -26,10 +27,10 @@ const isIOS: boolean = Platform.OS === 'ios';
 const isWeb: boolean = Platform.OS === 'web';
 let isTablet: boolean;
 let statusBarHeight: number;
-let screenHeight: number = Dimensions.get('screen').height;
-let screenWidth: number = Dimensions.get('screen').width;
-let windowHeight: number = Dimensions.get('window').height;
-let windowWidth: number = Dimensions.get('window').width;
+let screenHeight: number = getScreenHeight();
+let screenWidth: number = getScreenWidth();
+let windowHeight: number = getWindowHeight();
+let windowWidth: number = getWindowWidth();
 let breakpoints: Breakpoint[];
 let defaultMargin = 0;
 
@@ -54,11 +55,11 @@ function getOrientation(height: number, width: number) {
   return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
 }
 
-export function updateConstants(dimensions: any) {
-  screenHeight = dimensions.screen.height;
-  screenWidth = dimensions.screen.width;
-  windowWidth = dimensions.window.width;
-  windowHeight = dimensions.window.height;
+export function updateConstants() {
+  screenHeight = getScreenHeight();
+  screenWidth = getScreenWidth();
+  windowHeight = getWindowHeight();
+  windowWidth = getWindowWidth();
 
   setStatusBarHeight();
 }

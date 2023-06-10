@@ -74,7 +74,9 @@ docs/**/*.md
 /ios/Podfile.lock
 expoDemo/ios/Pods
 
-.reassure 
+.reassure
 
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
+
+.history
