@@ -4,7 +4,7 @@ import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import {Colors, Typography} from 'style';
 import View from '../../components/view';
 import Button from '../../components/button';
-import {getDateObject, getMonthForIndex, addMonths, getTimestamp} from './helpers/DateUtils';
+import {getDateObject, getMonthForIndex, addMonths} from './helpers/DateUtils';
 import {HeaderProps, DayNamesFormat, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
@@ -21,9 +21,7 @@ const Header = (props: HeaderProps) => {
   const {selectedDate, setDate, showWeeksNumbers, staticHeader, setHeaderHeight} = useContext(CalendarContext);
 
   const getNewDate = useCallback((count: number) => {
-    const newDate = addMonths(selectedDate.value, count);
-    const dateObject = getDateObject(newDate);
-    return getTimestamp({year: dateObject.year, month: dateObject.month, day: 1});
+    return addMonths(selectedDate.value, count, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -36,11 +34,15 @@ const Header = (props: HeaderProps) => {
   }, [setDate, getNewDate]);
 
   const animatedProps = useAnimatedProps(() => {
-    const dateObject = getDateObject(selectedDate.value);
-    const monthString = getMonthForIndex(staticHeader ? dateObject.month : month!);
-    const dateString = staticHeader ? monthString + ` ${dateObject.year}` : monthString + ` ${year}`;
+    let m = month!;
+    let y = year;
+    if (staticHeader) {
+      const dateObject = getDateObject(selectedDate.value);
+      m = dateObject.month;
+      y = dateObject.year;
+    }
     return {
-      text: dateString
+      text: getMonthForIndex(m) + ` ${y}`
     };
   });
 

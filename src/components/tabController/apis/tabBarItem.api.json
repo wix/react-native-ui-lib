@@ -6,7 +6,8 @@
   "images": [],
   "props": [
     {"name": "label", "type": "string", "description": "Label of the tab"},
-    {"name": "labelStyle;", "type": "TextStyle", "description": "Custom label style"},
+    {"name": "labelStyle", "type": "TextStyle", "description": "Custom label style"},
+    {"name": "labelProps", "type": "TextProps", "description": "Extra label props to pass to label Text element"},
     {"name": "selectedLabelStyle", "type": "TextStyle", "description": "Custom selected label style"},
     {"name": "labelColor", "type": "string", "description": "The default label color", "default": "Colors.black"},
     {

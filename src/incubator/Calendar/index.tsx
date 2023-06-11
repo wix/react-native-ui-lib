@@ -4,7 +4,7 @@ import {FlashListPackage} from 'optionalDeps';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
-import {isSameMonth, getTimestamp, addYears, getDateObject} from './helpers/DateUtils';
+import {isSameMonth, addYears, getDateObject} from './helpers/DateUtils';
 import {CalendarContextProps, CalendarProps, FirstDayOfWeek, UpdateSource, DateObjectWithOptionalDay} from './types';
 import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
@@ -74,6 +74,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   }, [initialDate]);
 
   useDidUpdate(() => {
+    console.log('Update items');
     const index = getItemIndex(current.value);
     scrollToIndex(index);
   }, [items, getItemIndex]);
@@ -136,7 +137,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     const index = getItemIndex(selected);
     
     if (shouldAddPages(index)) {
-      console.log('Add new pages');
+      console.log('Add new pages: ', index, items.length);
       runOnJS(addPages)(index);
     } else if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
       if (previous && !isSameMonth(selected, previous)) {
@@ -151,7 +152,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     const item = viewableItems?.[0]?.item;
     if (item && scrolledByUser.value) {
       if (!isSameMonth(item, current.value)) {
-        const newDate = getTimestamp({year: item.year, month: item.month, day: 1});
+        const newDate = getDateObject({year: item.year, month: item.month, day: 1}).timestamp;
         setDate(newDate, UpdateSource.MONTH_SCROLL);
       }
     }
