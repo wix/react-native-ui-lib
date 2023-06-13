@@ -27,7 +27,7 @@ export type IconProps = Omit<ImageProps, 'source'> &
      * whether the icon should flip horizontally on RTL
      */
     supportRTL?: boolean;
-    source?: ImageProps['source']
+    source?: ImageProps['source'];
   };
 
 /**
@@ -72,7 +72,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     />
   );
 
-  const renderSvg = () => <SvgImage data={source} {...props}/>;
+  const renderSvg = () => <SvgImage data={source} {...props} {...iconSize}/>;
 
   if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
     return renderImage();
