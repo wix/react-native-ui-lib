@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
-import TouchableOpacity from '../touchableOpacity';
+import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 
 const INNER_PADDING = 2;
 const DEFAULT_WIDTH = 42;
 const DEFAULT_HEIGHT = 24;
 const DEFAULT_THUMB_SIZE = 20;
 
-export type SwitchProps = {
+export type SwitchProps = TouchableOpacityProps & {
   /**
    * The value of the switch. If true the switch will be turned on. Default value is false
    */

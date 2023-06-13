@@ -6,7 +6,6 @@ import {
   AccessibilityInfo,
   AccessibilityChangeEvent
 } from 'react-native';
-import {LogService} from '../services';
 
 export enum orientations {
   PORTRAIT = 'portrait',
@@ -138,7 +137,6 @@ const constants = {
   },
   getPageMargins(): number {
     if (!breakpoints) {
-      LogService.warn('UILib breakpoints must be set via setBreakpoints before using getPageMargins');
       return 0;
     }
 
