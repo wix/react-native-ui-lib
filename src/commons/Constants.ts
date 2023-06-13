@@ -1,9 +1,24 @@
-import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityChangeEvent} from 'react-native';
-
+import {
+  Platform,
+  Dimensions,
+  NativeModules,
+  I18nManager,
+  AccessibilityInfo,
+  AccessibilityChangeEvent
+} from 'react-native';
 
 export enum orientations {
   PORTRAIT = 'portrait',
   LANDSCAPE = 'landscape'
+}
+
+export interface Breakpoint {
+  breakpoint: number;
+  pageMargin: number;
+}
+
+function breakpointComparator(b1: Breakpoint, b2: Breakpoint) {
+  return b1.breakpoint - b2.breakpoint;
 }
 
 const isAndroid: boolean = Platform.OS === 'android';
@@ -15,6 +30,8 @@ let screenHeight: number = Dimensions.get('screen').height;
 let screenWidth: number = Dimensions.get('screen').width;
 let windowHeight: number = Dimensions.get('window').height;
 let windowWidth: number = Dimensions.get('window').width;
+let breakpoints: Breakpoint[];
+let defaultMargin = 0;
 
 //@ts-ignore
 isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
@@ -112,6 +129,25 @@ const constants = {
   set isTablet(value: boolean) {
     isTablet = value;
   },
+  setBreakpoints(value: Breakpoint[], options?: {defaultMargin: number}) {
+    breakpoints = value.sort(breakpointComparator);
+    if (options) {
+      defaultMargin = options.defaultMargin;
+    }
+  },
+  getPageMargins(): number {
+    if (!breakpoints) {
+      return 0;
+    }
+
+    for (let i = breakpoints.length - 1; i >= 0; --i) {
+      if (screenWidth > breakpoints[i].breakpoint) {
+        return breakpoints[i].pageMargin;
+      }
+    }
+
+    return defaultMargin;
+  },
   get isWideScreen() {
     return isTablet || this.isLandscape;
   },
@@ -123,12 +159,14 @@ const constants = {
   },
   /* Devices */
   get isIphoneX() {
-    return isIOS &&
+    return (
+      isIOS &&
       //@ts-ignore
       !Platform.isPad &&
       //@ts-ignore
       !Platform.isTVOS &&
-      (screenHeight >= 812 || screenWidth >= 812);
+      (screenHeight >= 812 || screenWidth >= 812)
+    );
   },
   /* Orientation */
   dimensionsEventListener: undefined,
@@ -154,3 +192,10 @@ setStatusBarHeight();
 Dimensions.addEventListener('change', updateConstants);
 
 export default constants;
+
+// For tests
+export const _reset = () => {
+  // @ts-ignore
+  breakpoints = undefined;
+  defaultMargin = 0;
+};

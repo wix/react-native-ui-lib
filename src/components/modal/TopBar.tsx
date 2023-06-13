@@ -18,6 +18,14 @@ export interface ModalTopBarProps {
    */
   titleStyle?: StyleProp<TextStyle>;
   /**
+   * subtitle to display below the top bar title
+   */
+  subtitle?: string;
+  /**
+   * subtitle custom style
+   */
+  subtitleStyle?: StyleProp<TextStyle>;
+  /**
    * done action props (Button props)
    */
   doneButtonProps?: Omit<ButtonProps, 'onPress'>;
@@ -28,7 +36,7 @@ export interface ModalTopBarProps {
   /**
    * done action icon
    */
-  doneIcon?: ImageSourcePropType;
+  doneIcon?: ImageSourcePropType | null;
   /**
    * done action callback
    */
@@ -44,7 +52,7 @@ export interface ModalTopBarProps {
   /**
    * cancel action icon
    */
-  cancelIcon?: ImageSourcePropType;
+  cancelIcon?: ImageSourcePropType | null;
   /**
    * cancel action callback
    */
@@ -74,7 +82,7 @@ export interface ModalTopBarProps {
 type topBarButtonProp = {
   onPress?: (props: any) => void;
   label?: string;
-  icon?: ImageSourcePropType;
+  icon?: ImageSourcePropType | null;
   accessibilityLabel?: string;
   buttonProps?: Omit<ButtonProps, 'onPress'>;
 };
@@ -162,22 +170,27 @@ class TopBar extends Component<ModalTopBarProps> {
   };
 
   render() {
-    const {title, titleStyle, includeStatusBar, containerStyle, useSafeArea} = this.props;
+    const {title, titleStyle, subtitle, subtitleStyle, includeStatusBar, containerStyle, useSafeArea} = this.props;
 
     return (
       <View style={containerStyle} useSafeArea={useSafeArea}>
         {includeStatusBar && <View style={styles.statusBar}/>}
         <View style={styles.container}>
-          <View row flex bottom paddingL-15 centerV>
+          <View row flex paddingL-15 centerV>
             {this.renderCancel()}
             {this.renderLeftButtons()}
           </View>
-          <View row flex-3 bottom centerH centerV>
+          <View flex-3 centerH centerV>
             <Text $textDefault accessible={!!title} numberOfLines={1} text70 style={[styles.title, titleStyle]}>
               {title}
             </Text>
+            {subtitle && (
+              <Text $textDefault accessible={!!subtitle} bodySmall numberOfLines={1} style={subtitleStyle}>
+                {subtitle}
+              </Text>
+            )}
           </View>
-          <View row flex bottom right paddingR-15 centerV>
+          <View row flex right paddingR-15 centerV>
             {this.renderRightButtons()}
             {this.renderDone()}
           </View>

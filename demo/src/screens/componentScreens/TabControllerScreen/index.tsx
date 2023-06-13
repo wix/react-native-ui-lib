@@ -39,14 +39,13 @@ class TabControllerScreen extends Component<{}, State> {
       initialIndex: 0,
       selectedIndex: 0,
       key: Date.now(),
-      items: []
+      items: this.generateTabItems(false)
     };
-
-    this.state.items = this.generateTabItems();
   }
   tabController = React.createRef<TabControllerImperativeMethods>();
 
   generateTabItems = (fewItems = this.state.fewItems): TabControllerItemProps[] => {
+    // @ts-expect-error
     const items: TabControllerItemProps[] = _.flow(tabs => _.take(tabs, fewItems ? 3 : TABS.length),
       (tabs: TabControllerItemProps[]) =>
         _.map<TabControllerItemProps>(tabs, (tab: TabControllerItemProps, index: number) => ({
@@ -58,7 +57,7 @@ class TabControllerScreen extends Component<{}, State> {
           trailingAccessory: index === 4 ? <Text marginL-4>{Assets.emojis.camera}</Text> : undefined
         })))(TABS);
 
-    const addItem: TabControllerItemProps = {
+    const addItem: TabControllerItemProps & {key: string} = {
       icon: Assets.icons.demo.add,
       key: 'add',
       ignore: true,

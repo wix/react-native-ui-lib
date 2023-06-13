@@ -1,11 +1,20 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+  ForwardedRef
+} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {
   DateTimePickerPackage as RNDateTimePicker,
   MomentPackage as moment,
   LightDatePackage as LightDate
 } from '../../optionalDependencies';
-import {useDidUpdate} from 'hooks';
+import {useDidUpdate} from '../../hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
@@ -14,7 +23,7 @@ import {DialogProps} from '../dialog';
 import View from '../view';
 import Button from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
-import type {TextFieldProps} from '../../incubator/TextField';
+import type {TextFieldProps, TextFieldMethods} from '../../incubator/TextField';
 
 const MODES = {
   DATE: 'date',
@@ -121,7 +130,7 @@ type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedPr
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_iOS.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_Android.gif?raw=true
  */
 /*eslint-enable*/
-function DateTimePicker(props: DateTimePickerPropsInternal) {
+const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: ForwardedRef<any>) => {
   const {
     value: propsValue,
     renderInput,
@@ -152,6 +161,13 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
   const [value, setValue] = useState(propsValue);
   const chosenDate = useRef(propsValue);
   const expandable = useRef<ExpandableOverlayMethods>();
+  const textField = useRef<TextFieldMethods>();
+
+  useImperativeHandle(ref, () => {
+    return {
+      validate: () => textField.current?.validate()
+    };
+  });
 
   useEffect(() => {
     if (!RNDateTimePicker) {
@@ -343,18 +359,20 @@ function DateTimePicker(props: DateTimePickerPropsInternal) {
         ) : (
           <TextField
             {...others}
+            // @ts-expect-error
+            ref={textField}
             migrate={migrateTextField}
             testID={testID}
             editable={editable}
             // @ts-expect-error should be remove after completing TextField migration
-            expandable={!!others.renderExpandableInput}
+            expandable={migrateTextField ? undefined : !!others.renderExpandableInput}
             value={getStringValue()}
           />
         )}
       </ExpandableOverlay>
     </>
   );
-}
+});
 
 DateTimePicker.displayName = 'DateTimePicker';
 export {DateTimePicker}; // For tests

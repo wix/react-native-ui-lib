@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Alert} from 'react-native';
+import {Alert, ViewStyle} from 'react-native';
 import {Colors, View, Text, Hint, Button, Assets, Incubator} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions, renderBooleanOption} from '../ExampleScreenPresenter';
 
@@ -10,13 +10,12 @@ const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 type HintScreenProps = {};
 
 export default class HintsScreen extends Component<HintScreenProps> {
-
   state = {
     showHint: true,
     useShortMessage: false,
     showBottomHint: false,
     showIcon: false,
-    targetPosition: 'flex-start',
+    targetPosition: 'flex-start' as ViewStyle['alignSelf'],
     useBackdrop: true,
     useTargetFrame: false,
     useSideTip: false,
@@ -134,6 +133,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
     const message = useShortMessage
       ? 'Add other cool and useful stuff.'
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
+    const color = !showCustomContent && showReactionStrip ? {color: Colors.$backgroundDefault} : undefined;
 
     return (
       <View flex>
@@ -178,7 +178,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
                   ? this.renderReactionStrip()
                   : undefined
             }
-            color={!showCustomContent && showReactionStrip ? Colors.$backgroundDefault : undefined}
+            {...color}
             removePaddings={!showCustomContent && showReactionStrip}
             enableShadow={enableShadow}
             testID={'Hint'}

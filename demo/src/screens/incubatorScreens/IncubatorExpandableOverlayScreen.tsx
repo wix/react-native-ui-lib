@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Text, Incubator, TouchableOpacity} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, Text, Incubator, TouchableOpacity, ExpandableOverlayMethods, PickerMethods} from 'react-native-ui-lib';
 import _ from 'lodash';
 
 const COLOR_OPTIONS: {[key: string]: string} = {
@@ -11,8 +11,8 @@ const COLOR_OPTIONS: {[key: string]: string} = {
 };
 
 export default class TextFieldScreen extends Component {
-  expandableInputRef = React.createRef();
-  expandablePickerRef = React.createRef();
+  expandableInputRef = React.createRef<ExpandableOverlayMethods>();
+  expandablePickerRef = React.createRef<PickerMethods>();
 
   state = {
     textFieldValueDraft: '',
@@ -24,16 +24,16 @@ export default class TextFieldScreen extends Component {
 
   onDone = () => {
     this.setState({textFieldValue: this.state.textFieldValueDraft});
-    this.expandableInputRef.current.closeExpandable();
+    this.expandableInputRef.current?.closeExpandable();
   };
   onCancel = () => {
     this.setState({textFieldValueDraft: this.state.textFieldValue});
-    this.expandableInputRef.current.closeExpandable();
+    this.expandableInputRef.current?.closeExpandable();
   };
 
   onPickItem = ({customValue: color}: {customValue: string}) => {
     this.setState({selectedColor: color});
-    this.expandablePickerRef.current.closeExpandable();
+    this.expandablePickerRef.current?.closeExpandable();
   };
 
   renderInputModal = () => {

@@ -146,6 +146,13 @@ const WheelPicker = ({
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
   const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
+  const androidFlatListProps = useMemo(() => {
+    if (Constants.isAndroid) {
+      return {
+        maxToRenderPerBatch: items.length
+      };
+    }
+  }, [items]);
 
   useEffect(() => {
     // This effect making sure to reset index if initialValue has changed
@@ -323,6 +330,7 @@ const WheelPicker = ({
       <View row centerH>
         <View flexG>
           <AnimatedFlatList
+            {...androidFlatListProps}
             {...flatListProps}
             testID={`${testID}.list`}
             listKey={`${testID}.flatList`}
@@ -343,7 +351,7 @@ const WheelPicker = ({
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
             getItemLayout={getItemLayout}
-            initialScrollIndex={currentIndex}
+            initialScrollIndex={Constants.isIOS ? currentIndex : undefined}
             onContentSizeChange={updateFlatListWidth}
             /* This fixes an issue with RTL when centering flatlist content using alignSelf */
             centerContent={align === 'center' && Constants.isRTL}
