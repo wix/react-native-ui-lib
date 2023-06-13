@@ -351,7 +351,7 @@ const WheelPicker = ({
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
             getItemLayout={getItemLayout}
-            initialScrollIndex={currentIndex}
+            initialScrollIndex={Constants.isIOS ? currentIndex : undefined}
             onContentSizeChange={updateFlatListWidth}
             /* This fixes an issue with RTL when centering flatlist content using alignSelf */
             centerContent={align === 'center' && Constants.isRTL}
