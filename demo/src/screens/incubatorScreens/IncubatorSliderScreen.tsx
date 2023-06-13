@@ -111,7 +111,6 @@ const IncubatorSliderScreen = () => {
         <Text margin-10 text70BL $textDefault>
           Disabled Slider
         </Text>
-        {/* @ts-expect-error */}
         <Incubator.Slider value={0.4} containerStyle={styles.container} disableRTL={disableRTL} disabled/>
       </View>
     );

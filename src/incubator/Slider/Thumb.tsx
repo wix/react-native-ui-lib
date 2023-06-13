@@ -6,30 +6,29 @@ import {Colors} from '../../style';
 import View from '../../components/view';
 import {Constants} from '../../commons/new';
 
-export interface Props extends ViewProps {
+interface ThumbProps extends ViewProps {
+  start: SharedValue<number>;
+  end: SharedValue<number>;
+  offset: SharedValue<number>;
+  stepInterpolatedValue: SharedValue<number>;
+  stepInterpolation?: () => number;
+  shouldBounceToStep?: boolean;
+  gap?: number;
+  disabled?: boolean;
+  secondary?: boolean;
   defaultStyle?: SharedValue<ViewStyle>;
   activeStyle?: SharedValue<ViewStyle>;
   disableActiveStyling?: boolean;
   hitSlop?: ViewProps['hitSlop'];
-  disabled?: boolean;
+  shouldDisableRTL?: boolean;
   onSeekStart?: () => void;
   onSeekEnd?: () => void;
-  disableRTL?: boolean;
-  start: SharedValue<number>;
-  end: SharedValue<number>;
-  offset: SharedValue<number>;
-  shouldDisableRTL?: boolean;
-  stepInterpolation?: () => number;
-  shouldBounceToStep: boolean;
-  stepInterpolatedValue: SharedValue<number>;
-  gap?: number;
-  secondary?: boolean;
 }
 
 const SHADOW_RADIUS = 4;
 const THUMB_SIZE = 24;
 
-const Thumb = (props: Props) => {
+const Thumb = (props: ThumbProps) => {
   const {
     disabled,
     disableActiveStyling,
