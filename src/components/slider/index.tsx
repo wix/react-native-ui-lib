@@ -259,7 +259,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       accessibilityLabel: 'Slider',
       accessible: true,
       accessibilityRole: 'adjustable' as AccessibilityRole,
-      accessibilityStates: disabled ? ['disabled'] : [],
+      accessibilityState: disabled ? {disabled} : undefined,
       accessibilityActions: [
         {name: 'increment', label: 'increment'},
         {name: 'decrement', label: 'decrement'}

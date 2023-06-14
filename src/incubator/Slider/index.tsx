@@ -174,7 +174,7 @@ const Slider = React.memo((props: Props) => {
     disableActiveStyling,
     disabled,
     useGap = true,
-    accessible,
+    accessible = true,
     testID
   } = props;
 
@@ -184,7 +184,7 @@ const Slider = React.memo((props: Props) => {
         accessibilityLabel: 'Slider',
         accessible: true,
         accessibilityRole: 'adjustable' as AccessibilityRole,
-        accessibilityStates: disabled ? ['disabled'] : [],
+        accessibilityState: disabled ? {disabled} : undefined,
         accessibilityActions: [
           {name: 'increment', label: 'increment'},
           {name: 'decrement', label: 'decrement'}

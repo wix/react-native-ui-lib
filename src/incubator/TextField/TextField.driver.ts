@@ -30,7 +30,7 @@ export class TextFieldDriver extends ComponentDriver<TextFieldProps> {
 
   isDisabled = async () => {
     if (await this.exists()) {
-      return (await this.getElementProps()).accessibilityState.disabled;
+      return (await this.getElementProps()).accessibilityState?.disabled;
     } else {
       console.warn(`TextField component with testId:${this.testID}, is not found. So you can't get the disabled state`);
       return null;
@@ -55,15 +55,6 @@ export class TextFieldDriver extends ComponentDriver<TextFieldProps> {
       return hasPlaceholderProp && (!hasInputText || (hasInputText && await this.floatingPlaceholderDriver.exists()));
     } else {
       console.warn(`TextField component with testId:${this.testID}, is not found.`);
-    }
-  };
-
-  isPressable = async () => {
-    if (await this.exists()) {
-      return typeof (await this.getElementProps()).onPress === 'function';
-    } else {
-      console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
-      return null;
     }
   };
 

@@ -2,11 +2,12 @@ import {SwitchProps} from './index';
 import {ComponentDriver} from '../../testkit';
 
 export class SwitchDriver extends ComponentDriver<SwitchProps> {
-  getAccessibilityValue = async () => (await this.getElementProps()).accessibilityValue.text === '1';
+  getAccessibilityValue = async () => (await this.getElementProps()).accessibilityValue?.text === '1';
 
-  isDisabled = async () => (await this.getElementProps()).accessibilityState.disabled === true;
+  isDisabled = async () => (await this.getElementProps()).accessibilityState?.disabled === true;
 
-  isChecked = async () => (await this.getElementProps()).accessibilityState.checked === 'checked';
+  isChecked = async () => (await this.getElementProps()).accessibilityValue?.text === '1';
 
+  // @ts-ignore
   getColor = async () => (await this.getElementProps()).style.backgroundColor;
 }
