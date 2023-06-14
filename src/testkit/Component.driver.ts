@@ -10,9 +10,9 @@ export type ComponentDriverArgs = {
 /**
  * Please run clear after each test
  */
-export class ComponentDriver {
+export class ComponentDriver<Props> {
   protected readonly testID: string;
-  protected readonly uniDriver: UniDriver;
+  protected readonly uniDriver: UniDriver<Props>;
   static uniDrivers: {[key: string]: UniDriver} = {};
 
   static clear() {
@@ -69,11 +69,11 @@ export class ComponentDriver {
       .then((driver) => driver.instance());
   };
 
-  getElementProps = () => {
+  getElementProps = (): Promise<Props> => {
     return this.getPropsByTestId(this.testID);
   };
 
-  getPropsByTestId = (testID: string) => {
+  getPropsByTestId = (testID: string): Promise<Props> => {
     return this.uniDriver
       .selectorByTestId(testID)
       .then((driver) => driver.getInstanceProps());

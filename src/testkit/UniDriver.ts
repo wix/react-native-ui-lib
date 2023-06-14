@@ -9,14 +9,14 @@ export type DragData = {
   y?: number;
 };
 
-export interface UniDriver {
-  selectorByTestId(testId: string): Promise<UniDriver>;
-  selectorByText(text: string): Promise<UniDriver>;
-  getByDisplayValue(value: string): Promise<UniDriver>;
-  first(): Promise<UniDriver>;
-  at(index: number): Promise<UniDriver>;
+export interface UniDriver<Props = any> {
+  selectorByTestId(testId: string): Promise<UniDriver<Props>>;
+  selectorByText(text: string): Promise<UniDriver<Props>>;
+  getByDisplayValue(value: string): Promise<UniDriver<Props>>;
+  first(): Promise<UniDriver<Props>>;
+  at(index: number): Promise<UniDriver<Props>>;
   instance(): Promise<any>;
-  getInstanceProps(): Promise<any>;
+  getInstanceProps(): Promise<Props>;
   press(): void;
   drag(data: DragData | DragData[]): void;
   focus(): void;
