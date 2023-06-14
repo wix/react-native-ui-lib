@@ -41,7 +41,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       Scheme.removeChangeListener(this.appearanceListener);
     }
 
-    appearanceListener = (colorScheme: Parameters<SchemeChangeListener>['0']) => {
+    appearanceListener: SchemeChangeListener = (colorScheme) => {
       // iOS 13 and above will trigger this call with the wrong colorScheme value. So just ignore returned colorScheme for now
       // https://github.com/facebook/react-native/issues/28525
       // this.setState({colorScheme: Appearance.getColorScheme()});
