@@ -87,10 +87,10 @@ const Thumb = forwardRef((props: ThumbProps, ref: any) => {
       const style = thumbStyle || styles.thumb;
       const activeStyle = activeThumbStyle || styles.activeThumb;
       const activeOrInactiveStyle = !disabled ? (start ? activeStyle : style) : {};
-      
+
       thumbStyles.style = _.omit(activeOrInactiveStyle, 'height', 'width');
       //@ts-expect-error
-      thumbRef.current?.setNativeProps(thumbStyles);
+      thumbRef.current?.setNativeProps?.(thumbStyles);
 
       scaleThumb(start);
     }
