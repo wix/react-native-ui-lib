@@ -111,6 +111,6 @@ const styles = StyleSheet.create({
     width: '100%',
     ...Shadows.sh10.bottom,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.$outlineDisabled
+    borderBottomColor: Colors.$outlineDefault
   }
 });
