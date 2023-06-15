@@ -374,15 +374,15 @@ function App() {
   return (
     <View flex>
       <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.title}>Welcome to react-native-ui-lib for Web</Text>
+        <View padding-page>
+          <Text text40H center marginV-s1>Welcome to wix-react-native-ui-lib for Web</Text>
         </View>
 
         {
           itemsToRender.map(({title, FC}: ItemToRender) =>
             (
-              <View style={styles.componentContainer} key={'component_' + title}>
-                <Text style={styles.compTitle}> {title} </Text>
+              <View bg-grey80 paddingT-s5 paddingB-s5 center style={styles.componentContainer} key={'component_' + title}>
+                <Text text60H> {title} </Text>
                 <FC/>
               </View>
             ))
@@ -399,30 +399,10 @@ function App() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    padding: 20
-  },
   componentContainer: {
-    backgroundColor: '#F5FCFF',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'white',
-    borderBottomWidth: 5,
-    paddingBottom: 20,
-    paddingTop: 20
-  },
-  compTitle: {
-    fontWeight: 'bold',
-    fontSize: '1rem',
-    marginVertical: 4,
-    textAlign: 'center'
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: '1.5rem',
-    marginVertical: '1em',
-    textAlign: 'center'
+    borderColor: Colors.white,
+    borderBottomWidth: 8
   }
 });
+
 export default App;
