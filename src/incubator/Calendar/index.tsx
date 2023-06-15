@@ -4,7 +4,7 @@ import {FlashListPackage} from 'optionalDeps';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
-import {isSameMonth, addYears, getDateObject} from './helpers/DateUtils';
+import {isSameMonth, /* addYears, */ getDateObject} from './helpers/DateUtils';
 import {CalendarContextProps, CalendarProps, FirstDayOfWeek, UpdateSource, DateObjectWithOptionalDay} from './types';
 import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
@@ -32,7 +32,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   } = props;
 
   const initialItems = generateMonthItems(initialDate, YEARS_RANGE, YEARS_RANGE);
-  const [items, setItems] = useState<DateObjectWithOptionalDay[]>(initialItems);
+  const [items/* , setItems */] = useState<DateObjectWithOptionalDay[]>(initialItems);
 
   const getItemIndex = useCallback((date: number) => {
     'worklet';
@@ -101,26 +101,27 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
 
   /** Pages reload */
 
-  const mergeArrays = (prepend: boolean, array: DateObjectWithOptionalDay[], newArray: DateObjectWithOptionalDay[]) => {
-    const arr: DateObjectWithOptionalDay[] = array.slice();
-    if (prepend) {
-      arr.unshift(...newArray);
-    } else {
-      arr.push(...newArray);
-    }
-    return arr;
-  };
+  // const mergeArrays = (prepend: boolean, array: DateObjectWithOptionalDay[], newArray: DateObjectWithOptionalDay[]) => {
+  //   const arr: DateObjectWithOptionalDay[] = array.slice();
+  //   if (prepend) {
+  //     arr.unshift(...newArray);
+  //   } else {
+  //     arr.push(...newArray);
+  //   }
+  //   return arr;
+  // };
 
-  const addPages = useCallback((index: number) => {
-    const prepend = index < PAGE_RELOAD_THRESHOLD;
-    const append = index > items.length - PAGE_RELOAD_THRESHOLD;
-    const pastRange = prepend ? YEARS_RANGE : 0;
-    const futureRange = append ? YEARS_RANGE : 0;
-    const newDate = addYears(current.value, prepend ? -1 : 1);
-    const newItems = generateMonthItems(newDate, pastRange, futureRange);
-    const newArray = mergeArrays(prepend, items, newItems);
-    setItems(newArray);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const addPages = useCallback((/* index: number */) => {
+
+    // const prepend = index < PAGE_RELOAD_THRESHOLD;
+    // const append = index > items.length - PAGE_RELOAD_THRESHOLD;
+    // const pastRange = prepend ? YEARS_RANGE : 0;
+    // const futureRange = append ? YEARS_RANGE : 0;
+    // const newDate = addYears(current.value, prepend ? -1 : 1);
+    // const newItems = generateMonthItems(newDate, pastRange, futureRange);
+    // const newArray = mergeArrays(prepend, items, newItems);
+    // setItems(newArray);
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   const shouldAddPages = useCallback((index: number) => {
@@ -138,7 +139,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     
     if (shouldAddPages(index)) {
       console.log('Add new pages: ', index, items.length);
-      runOnJS(addPages)(index);
+      runOnJS(addPages)(/* index */);
     } else if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
       if (previous && !isSameMonth(selected, previous)) {
         runOnJS(scrollToIndex)(index);
