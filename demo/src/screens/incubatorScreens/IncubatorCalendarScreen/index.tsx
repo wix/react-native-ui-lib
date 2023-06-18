@@ -12,8 +12,7 @@ export default class CalendarScreen extends Component {
     showLoader: false
   };
 
-  constructor(props: any) {
-    super(props);
+  componentDidMount(): void {
     this.loadEvents(this.state.date);
   }
 
@@ -40,10 +39,10 @@ export default class CalendarScreen extends Component {
   };
 
   render() {
-    const {date, events, showLoader} = this.state;
+    const {date, events/* , showLoader */} = this.state;
     return (
-      <Incubator.Calendar data={events} initialDate={date} onChangeDate={this.onChangeDate} staticHeader>
-        <Incubator.Calendar.Agenda onEndReached={this.onEndReached} showLoader={showLoader}/>
+      <Incubator.Calendar data={events} initialDate={date} /* onChangeDate={this.onChangeDate} */ staticHeader>
+        {/* <Incubator.Calendar.Agenda onEndReached={this.onEndReached} showLoader={showLoader}/> */}
       </Incubator.Calendar>
     );
   }

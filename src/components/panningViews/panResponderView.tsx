@@ -88,7 +88,7 @@ class PanResponderView extends PureComponent<Props> {
 
   setNativeProps(left: number, top: number) {
     if (this.ref.current) {
-      this.ref.current.setNativeProps({style: {left, top}});
+      this.ref.current?.setNativeProps?.({style: {left, top}});
       this.left = left;
       this.top = top;
     }

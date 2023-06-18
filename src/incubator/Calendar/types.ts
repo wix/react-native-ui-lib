@@ -6,6 +6,14 @@ export interface DateObject {
   month: number;
   year: number;
   day: number;
+  dayOfTheWeek: number;
+  timestamp: number;
+}
+
+export interface DateObjectWithDate {
+  month: number;
+  year: number;
+  day: number;
 }
 
 export interface DateObjectWithOptionalDay {
@@ -65,7 +73,7 @@ export interface CalendarContextProps {
 export interface DayProps {
   date: number | null;
   onPress?: (date: number) => void;
-  inactive?: boolean; // inactive look but still pressable
+  currentMonth?: number;
 }
 
 export interface WeekProps {
@@ -110,7 +118,7 @@ export enum DayNamesFormat {
 export interface CalendarProps {
   data: Data;
   initialDate?: number;
-  onChangeDate: (date: number) => void;
+  onChangeDate?: (date: number) => void;
   firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */ FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
   staticHeader?: boolean;
   showExtraDays?: boolean;

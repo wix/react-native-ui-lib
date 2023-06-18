@@ -55,7 +55,7 @@ export default class KeyboardAwareBase extends Component {
   componentDidMount() {
     if (this._keyboardAwareView && this.props.startScrolledToBottom) {
       this.scrollToBottom(false);
-      setTimeout(() => this._keyboardAwareView.setNativeProps({opacity: 1}), 100);
+      setTimeout(() => this._keyboardAwareView.setNativeProps?.({opacity: 1}), 100);
     }
   }
 

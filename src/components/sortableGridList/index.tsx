@@ -9,7 +9,7 @@ import SortableItem from './SortableItem';
 import usePresenter from './usePresenter';
 import {ItemsOrder, SortableGridListProps, ItemProps} from './types';
 
-import useGridLayout, {DEFAULT_ITEM_SPACINGS, DEFAULT_NUM_COLUMNS} from '../gridList/useGridLayout';
+import useGridLayout, {DEFAULT_ITEM_SPACINGS} from '../gridList/useGridLayout';
 
 function generateItemsOrder(data: SortableGridListProps['data']) {
   return _.map(data, item => item.id);
@@ -19,15 +19,14 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   const {renderItem, onOrderChange, ...others} = props;
 
   const {itemContainerStyle, numberOfColumns, listContentStyle} = useGridLayout(props);
-  const {numColumns = DEFAULT_NUM_COLUMNS, itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
+  const {itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
   const itemsOrder = useSharedValue<ItemsOrder>(generateItemsOrder(data));
 
   useDidUpdate(() => {
     itemsOrder.value = generateItemsOrder(data);
   }, [data]);
 
-  // TODO: Get the number of columns from GridList calculation somehow
-  const presenter = usePresenter(numColumns, itemSpacing);
+  const presenter = usePresenter(numberOfColumns, itemSpacing);
 
   const onChange = useCallback(() => {
     const newData: ItemProps<T>[] = [];

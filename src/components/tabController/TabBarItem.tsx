@@ -1,6 +1,6 @@
 // TODO: support commented props
 import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement} from 'react';
-import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle, TextProps} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {runOnJS, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
@@ -21,6 +21,10 @@ export interface TabControllerItemProps {
    * custom label style
    */
   labelStyle?: StyleProp<TextStyle>;
+  /**
+   * Extra label props to pass to label Text element
+   */
+  labelProps?: Omit<TextProps, 'style'> ;
   /**
    * custom selected label style
    */
@@ -114,6 +118,7 @@ export default function TabBarItem({
   labelColor = DEFAULT_LABEL_COLOR,
   selectedLabelColor = DEFAULT_SELECTED_LABEL_COLOR,
   labelStyle,
+  labelProps,
   selectedLabelStyle,
   icon,
   badge,
@@ -154,7 +159,7 @@ export default function TabBarItem({
     if (!itemWidth.current && itemRef?.current) {
       itemWidth.current = width;
       // @ts-ignore
-      itemRef.current?.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
+      itemRef.current?.setNativeProps?.({style: {width, paddingHorizontal: null, flex: null}});
       props.onLayout?.(event, index);
     }
   },
@@ -225,7 +230,10 @@ export default function TabBarItem({
           />
         )}
         {!_.isEmpty(label) && (
-          <Reanimated.Text style={[styles.tabItemLabel, labelStyle, animatedLabelStyle, animatedLabelColorStyle]}>
+          <Reanimated.Text
+            {...labelProps}
+            style={[styles.tabItemLabel, labelStyle, animatedLabelStyle, animatedLabelColorStyle]}
+          >
             {uppercase ? _.toUpper(label) : label}
           </Reanimated.Text>
         )}

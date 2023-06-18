@@ -46,6 +46,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const {
     modifiers,
     // General
+    containerProps,
     fieldStyle: fieldStyleProp,
     dynamicFieldStyle,
     containerStyle,
@@ -115,7 +116,7 @@ const TextField = (props: InternalTextFieldProps) => {
     return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
   }, [validationMessageStyle, centered]);
   const inputStyle = useMemo(() => {
-    return [typographyStyle, colorStyle, others.style, centered && styles.centeredInput];
+    return [typographyStyle, colorStyle, others.style, fieldState.value && centered && styles.centeredInput];
   }, [typographyStyle, colorStyle, others.style, centered]);
   const dummyPlaceholderStyle = useMemo(() => {
     return [inputStyle, styles.dummyPlaceholder];
@@ -123,7 +124,7 @@ const TextField = (props: InternalTextFieldProps) => {
 
   return (
     <FieldContext.Provider value={context}>
-      <View style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
+      <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <Label
           label={label}
           labelColor={labelColor}

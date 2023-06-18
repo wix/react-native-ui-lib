@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import {Constants} from '../../commons/new';
 import {Colors} from '../../style';
+import IncubatorSlider from '../../incubator/Slider';
 import View from '../view';
 import Thumb, {ThumbProps} from './Thumb';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -81,7 +82,7 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    */
   onSeekEnd?: () => void;
   /**
-   * Callback that notifies when the reset function was invoked 
+   * Callback that notifies when the reset function was invoked
    */
   onReset?: () => void;
   /**
@@ -120,6 +121,10 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    * The slider's test identifier
    */
   testID?: string;
+  /**
+   * Whether to use the new Slider implementation using Reanimated
+   */
+  migrate?: boolean;
 } & typeof defaultProps;
 
 interface State {
@@ -164,10 +169,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
   private minThumb = React.createRef<RNView>();
   private activeThumbRef: React.RefObject<RNView>;
   private panResponder;
-  
+
   private minTrack = React.createRef<RNView>();
   private _minTrackStyles: MinTrackStyle = {};
-  
+
   private _x = 0;
   private _x_min = 0;
   private lastDx = 0;
@@ -265,10 +270,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   componentDidUpdate(prevProps: SliderProps, prevState: State) {
     const {useRange, value, initialMinimumValue} = this.props;
-    
+
     if (!useRange && prevProps.value !== value) {
       this.initialValue = this.getRoundedValue(value);
-      
+
       // set position for new value
       this._x = this.getXForValue(this.initialValue);
       this.moveTo(this._x);
@@ -276,7 +281,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
     if (prevState.measureCompleted !== this.state.measureCompleted) {
       this.initialThumbSize = this.state.thumbSize; // for thumb enlargement
-      
+
       // set initial position
       this._x = this.getXForValue(this.initialValue);
       this._x_min = this.getXForValue(this.minInitialValue);
@@ -390,16 +395,16 @@ export default class Slider extends PureComponent<SliderProps, State> {
         const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
         const _x = this.shouldForceLTR ? trackSize.width - x : x; // adjust for RTL
         const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
-        
+
         if (useRange) {
           const minThumbPosition = this._minThumbStyles?.left as number;
-          if (useGap && left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP 
+          if (useGap && left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP
             || !useGap && left >= minThumbPosition) {
             this._thumbStyles.left = left;
-            
+
             const width = left - minThumbPosition;
             this._minTrackStyles.width = width;
-            
+
             if (this.didMount) {
               this.updateValue(x);
             }
@@ -408,9 +413,9 @@ export default class Slider extends PureComponent<SliderProps, State> {
           this._thumbStyles.left = left;
           this._minTrackStyles.width = Math.min(trackSize.width, x);
         }
-        
-        this.thumb.current.setNativeProps(this._thumbStyles);
-        this.minTrack.current?.setNativeProps(this._minTrackStyles);
+
+        this.thumb.current?.setNativeProps?.(this._thumbStyles);
+        this.minTrack.current?.setNativeProps?.(this._minTrackStyles);
       }
     } else {
       this.moveMinTo(x);
@@ -425,18 +430,18 @@ export default class Slider extends PureComponent<SliderProps, State> {
       const nonOverlappingTrackWidth = trackSize.width - this.initialThumbSize.width;
       const _x = this.shouldForceLTR ? nonOverlappingTrackWidth - x : x; // adjust for RTL
       const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
-      
+
       const maxThumbPosition = this._thumbStyles?.left as number;
-      if (useGap && left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP 
+      if (useGap && left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP
         || !useGap && left <= maxThumbPosition) {
         this._minThumbStyles.left = left;
-        
+
         this._minTrackStyles.width = maxThumbPosition - x;
         this._minTrackStyles.left = x;
-        
-        this.minThumb.current?.setNativeProps(this._minThumbStyles);
-        this.minTrack.current?.setNativeProps(this._minTrackStyles);
-        
+
+        this.minThumb.current?.setNativeProps?.(this._minThumbStyles);
+        this.minTrack.current?.setNativeProps?.(this._minTrackStyles);
+
         if (this.didMount) {
           this.updateValue(x);
         }
@@ -459,9 +464,9 @@ export default class Slider extends PureComponent<SliderProps, State> {
         this.setActiveThumb(this.thumb);
       }
     }
-      
+
     this.set_x(newX);
-    
+
     if (!useRange) {
       this.updateValue(this.get_x());
     }
@@ -545,7 +550,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
     }
 
     let values = {min: this.lastMinValue, max: this.lastValue};
-    
+
     if (Constants.isRTL && this.props.disableRTL) { // forceRTL for range slider
       const {maximumValue} = this.props;
       values = {min: maximumValue - this.lastValue, max: maximumValue - this.lastMinValue};
@@ -739,8 +744,12 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   render() {
-    const {containerStyle, testID} = this.props;
-    
+    const {containerStyle, testID, migrate} = this.props;
+
+    if (migrate) {
+      return <IncubatorSlider {...this.props}/>;
+    }
+
     return (
       <View
         style={[styles.container, containerStyle]}
