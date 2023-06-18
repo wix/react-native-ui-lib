@@ -50,7 +50,6 @@
     {"name": "dismissIcon", "type": "ImageSourcePropType", "description": "Dismiss asset"},
     {"name": "dismissIconStyle", "type": "ImageStyle", "description": "Dismiss style"},
     {"name": "dismissContainerStyle", "type": "ImageStyle", "description": "Dismiss container style"},
-    {"name": "recorderTag", "type": "'mask' | 'unmask", "description": "Recorder tag"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
   ],
   "snippet": [
