@@ -92,7 +92,8 @@
       "description": "Pass props to the list component that wraps the picker options (allows to control FlatList behavior)"
     },
     {"name": "pickerModalProps", "type": "ModalProps", "description": "Pass props to the picker modal"},
-    {"name": "useSafeArea", "type": "boolean", "description": "Add safe area in the Picker modal view"}
+    {"name": "useSafeArea", "type": "boolean", "description": "Add safe area in the Picker modal view"},
+    {"name": "items", "type": "PickerItemProps[]", "description": "Data source for Picker"}
   ],
   "snippet": [
     "<Picker",

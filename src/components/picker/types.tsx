@@ -181,7 +181,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
     testID?: string;
     children?: ReactNode | undefined;
     /**
-     * Data source for WheelPicker
+     * Data source for Picker
      */
     items?: Pick<PickerItemProps, 'label' | 'value'>[];
   };
