@@ -60,3 +60,11 @@ export class PureBaseComponent<P = {}, S = {}, SS = any> extends React.PureCompo
   extractAccessibilityProps: () => AccessibilityProps;
 }
 
+declare global {
+  namespace JSX {
+    interface IntrinsicAttributes {
+      fsTagName?: string;
+    }
+  }
+}
+
