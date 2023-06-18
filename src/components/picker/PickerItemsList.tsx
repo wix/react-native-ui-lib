@@ -68,7 +68,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   [children]);
 
   const renderPropItems = useCallback(({item}: ListRenderItemInfo<PickerItemProps>) => {
-    return <PickerItem value={item.value} label={item.label} disabled={item.disabled}/>;
+    return <PickerItem {...item}/>;
   }, []);
 
   const renderList = () => {
