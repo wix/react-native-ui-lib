@@ -11,7 +11,6 @@ import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 import Icon, {IconProps} from '../icon';
 
-
 export type ChipProps = ViewProps & TouchableOpacityProps & {
   //GENERAL
   /**
@@ -161,6 +160,7 @@ const Chip = ({
   resetSpacings,
   size = DEFAULT_SIZE,
   useSizeAsMinimum = true,
+  recorderTag,
   testID,
   ...others
 }: ChipProps) => {
@@ -232,6 +232,7 @@ const Chip = ({
         $textDefault
         style={[styles.label, getMargins('label'), labelStyle]}
         testID={`${testID}.label`}
+        recorderTag={recorderTag}
       >
         {!!label && label}
       </Text>

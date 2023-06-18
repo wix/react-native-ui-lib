@@ -203,6 +203,7 @@ class Stepper extends PureComponent<Props, State> {
           $textDisabled={disabled}
           style={[Typography.text70M, styles.text]}
           testID={`${testID}.currentValue`}
+          recorderTag={'unmask'}
         >
           {currentValue}
         </Text>

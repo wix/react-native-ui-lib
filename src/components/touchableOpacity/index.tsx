@@ -12,12 +12,14 @@ import {
   ForwardRefInjectedProps,
   ContainerModifiers
 } from '../../commons/new';
+import {RecorderProps} from 'services';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 import {ViewProps} from '../view';
 
 export interface TouchableOpacityProps
   extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'>,
-    ContainerModifiers {
+    ContainerModifiers,
+    RecorderProps {
   /**
    * background color for TouchableOpacity
    */
@@ -133,17 +135,18 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 
   render() {
-    const {useNative, activeScale, style, modifiers, forwardedRef, ...others} = this.props;
+    const {useNative, activeScale, style, modifiers, forwardedRef, recorderTag, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     if (useNative || !_.isUndefined(activeScale)) {
       // @ts-ignore
-      return <IncubatorTouchableOpacity {...this.props}/>;
+      return <IncubatorTouchableOpacity fsTagName={recorderTag} {...this.props}/>;
     }
 
     return (
       // @ts-ignore
       <RNTouchableOpacity
+        fsTagName={recorderTag}
         {...this.getAccessibilityInfo()}
         {...others}
         onPress={this.onPress}

@@ -222,6 +222,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     return (
       label && (
         <Text
+          recorderTag={'unmask'} 
           flexS
           marginL-10={!contentOnLeft}
           marginR-10={contentOnLeft}
