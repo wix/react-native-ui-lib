@@ -76,7 +76,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     />
   );
 
-  const renderSvg = () => <SvgImage fsTagName={recorderTag} data={source} {...props}/>;
+  const renderSvg = () => <SvgImage fsTagName={recorderTag} data={source} {...props} {...iconSize}/>;
 
   if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
     return renderImage();

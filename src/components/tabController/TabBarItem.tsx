@@ -159,7 +159,7 @@ export default function TabBarItem({
     if (!itemWidth.current && itemRef?.current) {
       itemWidth.current = width;
       // @ts-ignore
-      itemRef.current?.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
+      itemRef.current?.setNativeProps?.({style: {width, paddingHorizontal: null, flex: null}});
       props.onLayout?.(event, index);
     }
   },

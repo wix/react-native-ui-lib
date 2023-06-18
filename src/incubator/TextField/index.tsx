@@ -116,7 +116,7 @@ const TextField = (props: InternalTextFieldProps) => {
     return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
   }, [validationMessageStyle, centered]);
   const inputStyle = useMemo(() => {
-    return [typographyStyle, colorStyle, others.style, centered && styles.centeredInput];
+    return [typographyStyle, colorStyle, others.style, fieldState.value && centered && styles.centeredInput];
   }, [typographyStyle, colorStyle, others.style, centered]);
   const dummyPlaceholderStyle = useMemo(() => {
     return [inputStyle, styles.dummyPlaceholder];

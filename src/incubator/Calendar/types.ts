@@ -118,7 +118,7 @@ export enum DayNamesFormat {
 export interface CalendarProps {
   data: Data;
   initialDate?: number;
-  onChangeDate: (date: number) => void;
+  onChangeDate?: (date: number) => void;
   firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */ FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
   staticHeader?: boolean;
   showExtraDays?: boolean;
