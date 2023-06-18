@@ -176,14 +176,14 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     useSafeArea?: boolean;
     /**
+     * Data source for Picker
+     */
+    items?: Pick<PickerItemProps, 'label' | 'value'>[];
+    /**
      * Component test id
      */
     testID?: string;
     children?: ReactNode | undefined;
-    /**
-     * Data source for Picker
-     */
-    items?: Pick<PickerItemProps, 'label' | 'value'>[];
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
