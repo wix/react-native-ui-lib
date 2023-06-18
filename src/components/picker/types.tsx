@@ -180,6 +180,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     testID?: string;
     children?: ReactNode | undefined;
+    /**
+     * Data source for WheelPicker
+     */
+    items?: Pick<PickerItemProps, 'label' | 'value'>[];
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {

@@ -10,6 +10,7 @@ import Icon from '../icon';
 import WheelPicker from '../WheelPicker';
 import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
 import PickerContext from './PickerContext';
+import PickerItem from './PickerItem';
 
 const keyExtractor = (_item: string, index: number) => index.toString();
 
@@ -66,7 +67,15 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   },
   [children]);
 
+  const renderPropItems = useCallback(({item}: ListRenderItemInfo<PickerItemProps>) => {
+    return <PickerItem key={item.value} value={item.value} label={item.label} disabled={item.disabled}/>;
+  },
+  [items]);
+
   const renderList = () => {
+    if (items) {
+      return <FlatList data={items} renderItem={renderPropItems} keyExtractor={keyExtractor} {...listProps}/>;
+    }
     return (
       <FlatList
         data={_.times(React.Children.count(children))}

@@ -90,19 +90,19 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     migrateTextField = true,
     accessibilityLabel,
     accessibilityHint,
+    items: propItems,
     ...others
   } = themeProps;
   const {preset} = others;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items, setItems] = useState(extractPickerItems(themeProps));
+  const [items, setItems] = useState(propItems || extractPickerItems(themeProps));
 
   useEffect(() => {
-    const newItems = extractPickerItems(themeProps);
-    if (!_.isEqual(newItems, items)) {
-      setItems(newItems);
+    if (propItems) {
+      setItems(propItems);
     }
-  }, [children]);
+  }, [propItems]);
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
@@ -211,11 +211,12 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   };
 
   const expandableModalContent = useMemo(() => {
+    const useItems = useWheelPicker || propItems;
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
         useWheelPicker={useWheelPicker}
-        items={useWheelPicker ? items : undefined}
+        items={useItems ? items : undefined}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
