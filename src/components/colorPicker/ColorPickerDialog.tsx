@@ -290,6 +290,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
                 transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
               }}
               accessible={false}
+              recorderTag={'unmask'}
             >
               #
             </Text>

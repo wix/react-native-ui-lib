@@ -9,6 +9,7 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import {TextProps} from '../../components/text';
+import {RecorderProps} from 'services';
 import {PropsWithChildren, ReactElement} from 'react';
 import {ViewProps} from '../../components/view';
 
@@ -127,7 +128,8 @@ export interface CharCounterProps {
 
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,
-    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'> {
+    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'>,
+    RecorderProps {
   /**
    * A hint text to display when focusing the field
    */

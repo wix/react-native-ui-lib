@@ -103,7 +103,8 @@
       "name": "readonly",
       "type": "boolean",
       "description": "A UI preset for read only state"
-    }
+    },
+    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
   ],
   "snippet": [
     "<TextField",
