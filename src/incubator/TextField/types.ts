@@ -37,6 +37,10 @@ export interface FieldStateProps extends InputProps {
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
   /**
+   * Callback for when field validated and failed
+  */
+  onValidateFailed?: (failedValidatorIndex: number) => void;
+  /**
    * A single or multiple validator. Can be a string (required, email) or custom function.
    */
   validate?: Validator | Validator[];
@@ -203,6 +207,10 @@ export type TextFieldProps = MarginModifiers &
      * Should validate when losing focus of TextField
      */
     validateOnBlur?: boolean;
+    /**
+     * Callback for when field validated and failed
+     */
+    onValidateFailed?: (failedValidatorIndex: number) => void;
     /**
      * Callback for when field validity has changed
      */
