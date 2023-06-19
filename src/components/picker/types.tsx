@@ -178,7 +178,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
     /**
      * Data source for Picker
      */
-    items?: Pick<PickerItemProps, 'label' | 'value'>[];
+    items?: Pick<PickerItemProps, 'label' | 'value' | 'disabled'>[];
     /**
      * Component test id
      */
