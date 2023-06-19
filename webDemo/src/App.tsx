@@ -377,6 +377,13 @@ function App() {
         <View style={styles.header}>
           <Text style={styles.title}>Welcome to react-native-ui-lib for Web</Text>
         </View>
+        <iframe
+          src="http://localhost:9001/" style={{
+            alignSelf: 'center',
+            width: 375,
+            height: 300
+          }}
+        />
 
         {
           itemsToRender.map(({title, FC}: ItemToRender) =>
@@ -387,7 +394,6 @@ function App() {
               </View>
             ))
         }
-
       </ScrollView>
       {/* <FloatingButton
         visible={true}
