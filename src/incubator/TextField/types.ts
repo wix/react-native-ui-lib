@@ -9,7 +9,7 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import {TextProps} from '../../components/text';
-import {RecorderProps} from 'services';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
 import {ViewProps} from '../../components/view';
 

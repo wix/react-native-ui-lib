@@ -3,7 +3,7 @@ import React, {useMemo, forwardRef} from 'react';
 import {Image, ImageProps, StyleSheet} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
-import {RecorderProps} from 'services';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import SvgImage from '../svgImage';
 
 export type IconProps = Omit<ImageProps, 'source'> &

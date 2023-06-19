@@ -12,7 +12,7 @@ import {
   ForwardRefInjectedProps,
   ContainerModifiers
 } from '../../commons/new';
-import {RecorderProps} from 'services';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 import {ViewProps} from '../view';
 

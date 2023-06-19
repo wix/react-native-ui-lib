@@ -11,7 +11,7 @@ import {
   ColorsModifiers,
   FlexModifiers
 } from '../../commons/new';
-import {RecorderProps} from 'services';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
 
