@@ -39,7 +39,7 @@ export interface FieldStateProps extends InputProps {
   /**
    * Callback for when field validated and failed
   */
-  onValidateFailed?: (failedValidatorIndex: number) => void;
+  onValidationFailed?: (failedValidatorIndex: number) => void;
   /**
    * A single or multiple validator. Can be a string (required, email) or custom function.
    */
@@ -210,7 +210,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Callback for when field validated and failed
      */
-    onValidateFailed?: (failedValidatorIndex: number) => void;
+    onValidationFailed?: (failedValidatorIndex: number) => void;
     /**
      * Callback for when field validity has changed
      */

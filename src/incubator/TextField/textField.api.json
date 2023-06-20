@@ -52,6 +52,11 @@
       "description": "Callback for when field validity has changed"
     },
     {
+      "name": "onValidationFailed",
+      "type": "(failedValidatorIndex: number) => void",
+      "description": "Callback for when field validated and failed"
+    },
+    {
       "name": "fieldStyle",
       "type": "ViewStyle | (context: FieldContextType, props) => ViewStyle",
       "description": "Internal style for the field container to style the field underline, outline and fill color"

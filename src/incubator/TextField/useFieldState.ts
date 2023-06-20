@@ -11,7 +11,7 @@ export default function useFieldState({
   validateOnBlur,
   validateOnChange,
   validateOnStart,
-  onValidateFailed,
+  onValidationFailed,
   onChangeValidity,
   ...props
 }: FieldStateProps) {
@@ -69,13 +69,13 @@ export default function useFieldState({
     setIsValid(_isValid);
     setFailingValidatorIndex(_failingValidatorIndex);
 
-    if (!_isValid && _failingValidatorIndex !== undefined && _failingValidatorIndex >= 0) {
-      onValidateFailed?.(_failingValidatorIndex);
+    if (!_isValid && !_.isUndefined(_failingValidatorIndex)) {
+      onValidationFailed?.(_failingValidatorIndex);
     }
 
     return _isValid;
   },
-  [value, validate, onValidateFailed]);
+  [value, validate, onValidationFailed]);
 
   const onFocus = useCallback((...args: any) => {
     setIsFocused(true);
