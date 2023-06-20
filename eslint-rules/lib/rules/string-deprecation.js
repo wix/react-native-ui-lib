@@ -3,7 +3,7 @@ const {
   stringify
 } = require('../utils');
 
-const RULE_ID = 'deprecated-string';
+const RULE_ID = 'string-deprecation';
 
 const MAP_SCHEMA = {
   type: 'object',

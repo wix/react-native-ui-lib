@@ -1,6 +1,6 @@
 const RuleTester = require('eslint').RuleTester;
-const rule = require('../../../lib/rules/string-deprecated');
-const deprecationsJson = require('../../string_deprecated.json');
+const rule = require('../../../lib/rules/string-deprecation');
+const deprecationsJson = require('../../string_deprecation.json');
 
 RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
