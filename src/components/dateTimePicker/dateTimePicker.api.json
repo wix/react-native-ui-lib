@@ -25,10 +25,11 @@
     {"name": "editable", "type": "boolean", "description": "Should this input be editable or disabled"},
     {"name": "minimumDate", "type": "Date", "description": "The minimum date or time value to use"},
     {"name": "maximumDate", "type": "Date", "description": "The maximum date or time value to use"},
-    {"name": "dateFormat", "type": "string", "description": "The date format for the text display"},
-    {"name": "dateFormatter", "type": "() => Date", "description": "A callback function to format date"},
-    {"name": "timeFormat", "type": "string", "description": "The time format for the text display"},
-    {"name": "timeFormatter", "type": "() => Date", "description": "A callback function to format time"},
+    {
+      "name": "dateTimeFormatter",
+      "type": "(value: Date, mode: DateTimePickerMode) => string",
+      "description": "A callback function to format the time or date"
+    },
     {
       "name": "locale",
       "type": "string",
@@ -62,7 +63,5 @@
       "description": "Override system theme variant (dark or light mode) used by the date picker"
     }
   ],
-  "snippet": [
-    "<DateTimePicker title={'Select time'$1} placeholder={'Placeholder'$2} mode={'time'$3}/>"
-  ]
+  "snippet": ["<DateTimePicker title={'Select time'$1} placeholder={'Placeholder'$2} mode={'time'$3}/>"]
 }
