@@ -1,9 +1,10 @@
 import _ from 'lodash';
+import {TextFieldProps} from './types';
 import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
 import {TextDriver} from '../../components/text/Text.driver';
 
 
-export class TextFieldDriver extends ComponentDriver {
+export class TextFieldDriver extends ComponentDriver<TextFieldProps> {
   private readonly labelDriver: TextDriver;
   private readonly validationMsgDriver: TextDriver;
   private readonly floatingPlaceholderDriver: TextDriver;
@@ -29,7 +30,7 @@ export class TextFieldDriver extends ComponentDriver {
 
   isDisabled = async () => {
     if (await this.exists()) {
-      return (await this.getElementProps()).accessibilityState.disabled;
+      return (await this.getElementProps()).accessibilityState?.disabled;
     } else {
       console.warn(`TextField component with testId:${this.testID}, is not found. So you can't get the disabled state`);
       return null;
@@ -54,15 +55,6 @@ export class TextFieldDriver extends ComponentDriver {
       return hasPlaceholderProp && (!hasInputText || (hasInputText && await this.floatingPlaceholderDriver.exists()));
     } else {
       console.warn(`TextField component with testId:${this.testID}, is not found.`);
-    }
-  };
-
-  isPressable = async () => {
-    if (await this.exists()) {
-      return typeof (await this.getElementProps()).onPress === 'function';
-    } else {
-      console.warn(`TextDriver: cannot click because testID:${this.testID} were not found`);
-      return null;
     }
   };
 
