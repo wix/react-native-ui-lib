@@ -3,10 +3,12 @@ import React, {useMemo, forwardRef} from 'react';
 import {Image, ImageProps, StyleSheet} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import SvgImage from '../svgImage';
 
 export type IconProps = Omit<ImageProps, 'source'> &
-  MarginModifiers & {
+  MarginModifiers &
+  RecorderProps & {
     /**
      * if provided icon source will be driven from asset name
      */
@@ -27,7 +29,7 @@ export type IconProps = Omit<ImageProps, 'source'> &
      * whether the icon should flip horizontally on RTL
      */
     supportRTL?: boolean;
-    source?: ImageProps['source']
+    source?: ImageProps['source'];
   };
 
 /**
@@ -50,6 +52,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     assetGroup,
     assetName,
     modifiers,
+    recorderTag,
     ...others
   } = props;
   const {margins} = modifiers;
@@ -65,6 +68,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
 
   const renderImage = () => (
     <Image
+      fsTagName={recorderTag}
       {...others}
       ref={ref}
       source={iconSource}
@@ -72,7 +76,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     />
   );
 
-  const renderSvg = () => <SvgImage data={source} {...props}/>;
+  const renderSvg = () => <SvgImage fsTagName={recorderTag} data={source} {...props} {...iconSize}/>;
 
   if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
     return renderImage();

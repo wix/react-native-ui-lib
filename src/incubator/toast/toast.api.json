@@ -9,6 +9,7 @@
     {"name": "position", "type": "'top' | 'bottom'", "description": "The position of the toast. 'top' or 'bottom'."},
     {"name": "message", "type": "string", "description": "Toast message"},
     {"name": "messageStyle", "type": "StyleProp<TextStyle>", "description": "Toast message style"},
+    {"name": "messageProps", "type": "TextProps", "description": "Toast message props"},
     {"name": "centerMessage", "type": "boolean", "description": "Should message be centered in the toast"},
     {"name": "zIndex", "type": "number", "description": "Custom zIndex for toast"},
     {"name": "elevation", "type": "number", "description": "Custom elevation", "note": "Android only"},

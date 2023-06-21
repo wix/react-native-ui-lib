@@ -176,6 +176,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     useSafeArea?: boolean;
     /**
+     * Data source for Picker
+     */
+    items?: Pick<PickerItemProps, 'label' | 'value' | 'disabled'>[];
+    /**
      * Component test id
      */
     testID?: string;

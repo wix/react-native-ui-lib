@@ -1,5 +1,5 @@
 import {SharedValue, interpolate} from 'react-native-reanimated';
-import {SliderProps} from '../../components/slider';
+import {SliderProps} from './index';
 
 export function getOffsetForValue(value: number, span: number, minimumValue = 0, maximumValue = 1) {
   const range = maximumValue - minimumValue;
@@ -38,7 +38,7 @@ function inRange(value: number, min: number, max: number) {
 }
 
 export function validateValues(props: SliderProps) {
-  const {useRange, value, minimumValue, maximumValue, initialMinimumValue, initialMaximumValue} = props;
+  const {useRange, value, minimumValue = 0, maximumValue = 1, initialMinimumValue, initialMaximumValue} = props;
   if (minimumValue > maximumValue || 
     useRange && initialMinimumValue && initialMaximumValue && initialMinimumValue > initialMaximumValue) {
     console.error('Your passed values are invalid. Please check if minimum values are not higher than maximum values');

@@ -68,7 +68,7 @@ export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/s
 export {default as ColorSwatch, ColorSwatchProps} from './components/colorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Dash, DashProps} from './components/dash';
-export {default as DateTimePicker, DateTimePickerProps} from './components/dateTimePicker';
+export {default as DateTimePicker, DateTimePickerProps, DateTimePickerMode} from './components/dateTimePicker';
 export {default as Dialog, DialogProps, DialogDirections, DialogDirectionsEnum} from './components/dialog';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
@@ -126,6 +126,7 @@ export {
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
+export type {RecorderProps} from '../typings/recorderTypes';
 export {default as ScrollBar, ScrollBarProps} from './components/scrollBar';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
 export {

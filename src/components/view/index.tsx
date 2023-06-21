@@ -2,8 +2,9 @@ import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
 import {Constants, ContainerModifiers} from '../../commons/new';
+import {RecorderProps} from '../../../typings/recorderTypes';
 
-export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers {
+export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers, RecorderProps {
   /**
    * If true, will render as SafeAreaView
    */
@@ -74,6 +75,7 @@ function View(props: ViewProps, ref: any) {
     reanimated,
     children,
     backgroundColor: backgroundColorProps,
+    recorderTag,
     ...others
   } = themeProps;
   const {
@@ -145,6 +147,7 @@ function View(props: ViewProps, ref: any) {
       //@ts-expect-error
       accessibilityElementsHidden={inaccessible}
       importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
+      fsTagName={recorderTag}
       {...others}
       style={_style}
       ref={ref}

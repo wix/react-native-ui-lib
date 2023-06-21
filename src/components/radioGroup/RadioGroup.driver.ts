@@ -1,10 +1,11 @@
+import {RadioGroupProps} from './index';
 import {ComponentDriver} from '../../testkit';
 import {RadioButtonDriver} from '../radioButton/RadioButton.driver';
 import {ComponentDriverArgs} from '../../testkit/Component.driver';
 
 type RadioGroupDriverArgs = ComponentDriverArgs & {testIDs: {[key: string]: string}}
 
-export class RadioGroupDriver extends ComponentDriver {
+export class RadioGroupDriver extends ComponentDriver<RadioGroupProps> {
   private readonly radioButtonDrivers: {[key: string]: RadioButtonDriver};
   constructor(radioGroupDriverArgs: RadioGroupDriverArgs) {
     super({...radioGroupDriverArgs});

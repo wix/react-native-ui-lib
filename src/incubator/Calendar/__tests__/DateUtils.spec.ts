@@ -48,7 +48,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(28);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(6);
+        expect(dayObject.dayOfTheWeek).toBe(6);
       });
 
       it('2020 When Sunday is first day of the week - should return Sunday Dec 29th', () => {
@@ -56,7 +56,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(29);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(0);
+        expect(dayObject.dayOfTheWeek).toBe(0);
       });
 
       it('2020 When Monday is first day of the week - should return Monday Dec 30th', () => {
@@ -64,7 +64,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(30);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(1);
+        expect(dayObject.dayOfTheWeek).toBe(1);
       });
     });
 
@@ -74,7 +74,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(26);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(6);
+        expect(dayObject.dayOfTheWeek).toBe(6);
       });
 
       it('2021 When Sunday is first day of the week - should return Sunday Dec 27th', () => {
@@ -82,7 +82,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(27);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(0);
+        expect(dayObject.dayOfTheWeek).toBe(0);
       });
 
       it('2021 When Monday is first day of the week - should return Monday Dec 28th', () => {
@@ -90,7 +90,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(28);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(1);
+        expect(dayObject.dayOfTheWeek).toBe(1);
       });
     });
 
@@ -100,7 +100,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(1);
         expect(dayObject.month).toBe(0);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(6);
+        expect(dayObject.dayOfTheWeek).toBe(6);
       });
 
       it('2022 When Sunday is first day of the week - should return Sunday Dec 26th', () => {
@@ -108,7 +108,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(26);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(0);
+        expect(dayObject.dayOfTheWeek).toBe(0);
       });
 
       it('2022 When Monday is first day of the week - should return Monday Dec 27th', () => {
@@ -116,7 +116,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(27);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(1);
+        expect(dayObject.dayOfTheWeek).toBe(1);
       });
     });
 
@@ -126,7 +126,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(31);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(6);
+        expect(dayObject.dayOfTheWeek).toBe(6);
       });
 
       it('2023 When Sunday is first day of the week - should return Sunday Jan 1st', () => {
@@ -134,7 +134,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(1);
         expect(dayObject.month).toBe(0);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(0);
+        expect(dayObject.dayOfTheWeek).toBe(0);
       });
 
       it('2023 When Monday is first day of the week - should return Monday Dec 26th', () => {
@@ -142,7 +142,7 @@ describe('Calendar/DateUtils', () => {
         const dayObject = DateUtils.getDateObject(firstDayInTheYear);
         expect(dayObject.day).toBe(26);
         expect(dayObject.month).toBe(11);
-        expect(DateUtils.getDayOfTheWeek(firstDayInTheYear)).toBe(1);
+        expect(dayObject.dayOfTheWeek).toBe(1);
       });
     });
   });
@@ -186,25 +186,6 @@ describe('Calendar/DateUtils', () => {
       expect(lastDayObject.year).toBe(2023);
     });
   });
-
-  describe('getDayOfDate', () => {
-    it('should return the day number from the date timestamp', () => {
-      const day = DateUtils.getDayOfDate(new Date(2022, 11, 26).getTime());
-      expect(day).toBe(26);
-    });
-  });
-
-  describe('getDayOfTheWeek', () => {
-    it('should return the day of week (Sunday = 0) from the date timestamp', () => {
-      const day = DateUtils.getDayOfTheWeek(new Date(2023, 1, 5).getTime());
-      expect(day).toBe(0);
-    });
-    it('should return the day of week (Friday = 5) from the date timestamp', () => {
-      const day = DateUtils.getDayOfTheWeek(new Date(2023, 1, 3).getTime());
-      expect(day).toBe(5);
-    });
-  });
-
 
   describe('addMonths', () => {
     it('should return the date timestamp for the next (1) months in the next (1) years', () => {
@@ -270,6 +251,15 @@ describe('Calendar/DateUtils', () => {
       expect(dayObject.day).toBe(26);
       expect(dayObject.month).toBe(11);
       expect(dayObject.year).toBe(2020);
+    });
+
+    // useFirstDay
+    it('should return the date timestamp for the 1st day of the next (1) months in the next (1) years', () => {
+      const date = DateUtils.addMonths(new Date(2022, 11, 26).getTime(), 1, true);
+      const dayObject = DateUtils.getDateObject(date);
+      expect(dayObject.day).toBe(1);
+      expect(dayObject.month).toBe(0);
+      expect(dayObject.year).toBe(2023);
     });
   });
 

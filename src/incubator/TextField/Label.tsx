@@ -35,6 +35,7 @@ const Label = ({
         testID={testID}
         color={getColorByState(labelColor, context)}
         style={style}
+        recorderTag={'unmask'}
         {...labelProps}
       >
         {label}

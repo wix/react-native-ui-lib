@@ -9,7 +9,7 @@ import React, {
   ForwardedRef
 } from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {DateTimePickerPackage as RNDateTimePicker, MomentPackage as moment} from '../../optionalDependencies';
+import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
 import {useDidUpdate} from '../../hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
@@ -20,17 +20,15 @@ import View from '../view';
 import Button from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
 import type {TextFieldProps, TextFieldMethods} from '../../incubator/TextField';
+import useOldApi, {OldApiProps} from './useOldApi';
 
-const MODES = {
-  DATE: 'date',
-  TIME: 'time'
-};
+export type DateTimePickerMode = 'date' | 'time';
 
-export type DateTimePickerProps = Omit<TextFieldProps, 'value' | 'onChange'> & {
+export type DateTimePickerProps = OldApiProps & Omit<TextFieldProps, 'value' | 'onChange'> & {
   /**
    * The type of picker to display ('date' or 'time')
    */
-  mode?: 'date' | 'time';
+  mode?: DateTimePickerMode;
   /**
    * The initial value to set the picker to. Defaults to device's date / time
    */
@@ -52,21 +50,11 @@ export type DateTimePickerProps = Omit<TextFieldProps, 'value' | 'onChange'> & {
    */
   maximumDate?: Date;
   /**
-   * The date format for the text display
+   * A callback function to format the time or date
+   * @param mode the type of the picker ('date' or 'time')
+   * @returns the formatted string to display
    */
-  dateFormat?: string;
-  /**
-   * A callback function to format date
-   */
-  dateFormatter?: (date: Date) => string;
-  /**
-   * The time format for the text display
-   */
-  timeFormat?: string;
-  /**
-   * A callback function to format time
-   */
-  timeFormatter?: (date: Date) => string;
+  dateTimeFormatter?: (value: Date, mode: DateTimePickerMode) => string;
   /**
    * Allows changing of the locale of the component (iOS only)
    */
@@ -126,11 +114,12 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     value: propsValue,
     renderInput,
     editable,
-    mode = MODES.DATE,
+    mode = 'date',
     dateFormat,
     timeFormat,
     dateFormatter,
     timeFormatter,
+    dateTimeFormatter,
     minimumDate,
     maximumDate,
     locale,
@@ -161,15 +150,10 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
 
   useEffect(() => {
     if (!RNDateTimePicker) {
+      // eslint-disable-next-line max-len
       console.error(`RNUILib DateTimePicker component requires installing "@react-native-community/datetimepicker" dependency`);
     }
   }, []);
-
-  useEffect(() => {
-    if (!moment && (dateFormat || timeFormat)) {
-      console.error(`RNUILib DateTimePicker component with date/time format requires installing "moment" dependency`);
-    }
-  }, [dateFormat, timeFormat]);
 
   useDidUpdate(() => {
     setValue(propsValue);
@@ -193,21 +177,16 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     };
   }, [dialogProps, testID]);
 
+  const {getStringValue: getStringValueOld} = useOldApi({dateFormat, dateFormatter, timeFormat, timeFormatter});
+
   const getStringValue = () => {
     if (value) {
-      switch (mode) {
-        case MODES.DATE:
-          return dateFormatter
-            ? dateFormatter(value)
-            : dateFormat && moment
-              ? moment(value).format(dateFormat)
-              : value.toLocaleDateString();
-        case MODES.TIME:
-          return timeFormatter
-            ? timeFormatter(value)
-            : timeFormat && moment
-              ? moment(value).format(timeFormat)
-              : value.toLocaleTimeString();
+      if (dateTimeFormatter) {
+        return dateTimeFormatter(value, mode);
+      } else {
+        return getStringValueOld(value, mode);
+        // TODO: once we remove the old implementation, add the following:
+        // return mode === 'time' ? value.toLocaleTimeString() : value.toLocaleDateString();
       }
     }
   };
@@ -343,7 +322,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
             testID={testID}
             editable={editable}
             // @ts-expect-error should be remove after completing TextField migration
-            expandable={!!others.renderExpandableInput}
+            expandable={migrateTextField ? undefined : !!others.renderExpandableInput}
             value={getStringValue()}
           />
         )}

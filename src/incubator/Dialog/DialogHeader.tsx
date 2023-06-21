@@ -20,9 +20,10 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     showDivider = true,
     leadingAccessory,
     trailingAccessory,
+    topAccessory,
+    bottomAccessory,
     contentContainerStyle,
     onPress,
-    bottomAccessory,
     style,
     ...others
   } = props;
@@ -75,10 +76,11 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
     }
   }, [showDivider]);
 
-  if (knob || content || bottomAccessory || divider) {
+  if (knob || content || topAccessory || bottomAccessory || divider) {
     return (
       <View {...others} style={style}>
         {knob}
+        {topAccessory}
         {content}
         {bottomAccessory}
         {divider}

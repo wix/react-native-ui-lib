@@ -103,6 +103,7 @@ class WizardStep extends Component<Props> {
             numberOfLines={1}
             style={[styles.label, {maxWidth}, labelStyle]}
             accessible={false}
+            recorderTag={'unmask'}
           >
             {label}
           </Text>
@@ -117,8 +118,8 @@ export default asBaseComponent<WizardStepProps>(WizardStep);
 
 const styles = StyleSheet.create({
   connector: {
-    borderWidth: 0.5,
-    borderColor: Colors.$outlineDisabled
+    borderWidth: 1,
+    borderColor: Colors.$outlineDefault
   },
   circle: {
     width: 24,

@@ -5,7 +5,7 @@
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
-import React, {useMemo, useState, useRef, useCallback} from 'react';
+import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import {Typography} from 'style';
 import {useThemeProps} from 'hooks';
@@ -90,12 +90,19 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     migrateTextField = true,
     accessibilityLabel,
     accessibilityHint,
+    items: propItems,
     ...others
   } = themeProps;
   const {preset} = others;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items] = useState(extractPickerItems(themeProps));
+  const [items, setItems] = useState(propItems || extractPickerItems(themeProps));
+
+  useEffect(() => {
+    if (propItems) {
+      setItems(propItems);
+    }
+  }, [propItems]);
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
@@ -204,11 +211,12 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   };
 
   const expandableModalContent = useMemo(() => {
+    const useItems = useWheelPicker || propItems;
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
         useWheelPicker={useWheelPicker}
-        items={useWheelPicker ? items : undefined}
+        items={useItems ? items : undefined}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,

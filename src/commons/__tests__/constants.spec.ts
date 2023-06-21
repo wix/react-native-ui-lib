@@ -6,13 +6,8 @@ describe('Constants', () => {
   });
 
   describe('Breakpoints and Page Margins', () => {
-    it('getPageMargins without init should return 0 and trigger a warn', () => {
-      const warn = console.warn;
-      console.warn = jest.fn();
+    it('getPageMargins without init should return 0', () => {
       expect(Constants.getPageMargins()).toBe(0);
-      expect(console.warn).toHaveBeenCalledTimes(1);
-      expect(console.warn).toHaveBeenCalledWith('UILib breakpoints must be set via setBreakpoints before using getPageMargins');
-      console.warn = warn;
     });
 
     it('getPageMargins with one breakpoint', () => {

@@ -9,7 +9,9 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import {TextProps} from '../../components/text';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
+import {ViewProps} from '../../components/view';
 
 export type ColorType =
   | string
@@ -34,6 +36,10 @@ export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
+  /**
+   * Callback for when field validated and failed
+  */
+  onValidationFailed?: (failedValidatorIndex: number) => void;
   /**
    * A single or multiple validator. Can be a string (required, email) or custom function.
    */
@@ -126,7 +132,8 @@ export interface CharCounterProps {
 
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,
-    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'> {
+    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'>,
+    RecorderProps {
   /**
    * A hint text to display when focusing the field
    */
@@ -201,6 +208,10 @@ export type TextFieldProps = MarginModifiers &
      */
     validateOnBlur?: boolean;
     /**
+     * Callback for when field validated and failed
+     */
+    onValidationFailed?: (failedValidatorIndex: number) => void;
+    /**
      * Callback for when field validity has changed
      */
     onChangeValidity?: (isValid: boolean) => void;
@@ -216,6 +227,10 @@ export type TextFieldProps = MarginModifiers &
      * Internal dynamic style callback for the field container
      */
     dynamicFieldStyle?: (context: FieldContextType, props: {preset: TextFieldProps['preset']}) => StyleProp<ViewStyle>;
+    /**
+     * Pass props to the container
+     */
+    containerProps?: Omit<ViewProps, 'style'>;
     /**
      * Container style of the whole component
      */

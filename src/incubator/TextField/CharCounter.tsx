@@ -13,7 +13,7 @@ const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) =>
   }
 
   return (
-    <Text $textNeutral style={[styles.container, charCounterStyle]} testID={testID}>
+    <Text $textNeutral style={[styles.container, charCounterStyle]} recorderTag={'unmask'} testID={testID}>
       {`${length}/${maxLength}`}
     </Text>
   );

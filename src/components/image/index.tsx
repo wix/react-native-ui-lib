@@ -18,6 +18,7 @@ import {
   BaseComponentInjectedProps,
   MarginModifiers
 } from '../../commons/new';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import {getAsset, isSvg} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
@@ -25,7 +26,8 @@ import View from '../view';
 import {Colors} from '../../style';
 
 export type ImageProps = RNImageProps &
-  MarginModifiers & {
+  MarginModifiers &
+  RecorderProps & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
@@ -187,8 +189,8 @@ class Image extends PureComponent<Props, State> {
   };
 
   renderSvg = () => {
-    const {source, ...others} = this.props;
-    return <SvgImage data={source} {...others}/>;
+    const {source, recorderTag, ...others} = this.props;
+    return <SvgImage data={source} fsTagName={recorderTag} {...others}/>;
   };
 
   renderImageWithContainer = () => {
@@ -208,7 +210,7 @@ class Image extends PureComponent<Props, State> {
     const {
       tintColor,
       style,
-      width, 
+      width,
       height,
       supportRTL,
       cover,
@@ -218,6 +220,7 @@ class Image extends PureComponent<Props, State> {
       overlayColor,
       customOverlayContent,
       modifiers,
+      recorderTag,
       ...others
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
@@ -242,6 +245,7 @@ class Image extends PureComponent<Props, State> {
         ]}
         accessible={false}
         accessibilityRole={'image'}
+        fsTagName={recorderTag}
         {...others}
         onError={this.onError}
         source={source}
