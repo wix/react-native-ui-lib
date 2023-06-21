@@ -241,7 +241,7 @@ markdowns/
 # typings/
 # eslint-rules/
 scripts/*
-!scripts/prReleaseNotesCommon.ts
+!scripts/prReleaseNotesCommon.js
 demo-app.component.js
 index.android.js
 index.ios.js
