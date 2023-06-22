@@ -15,6 +15,9 @@
     "release": "node ./scripts/release.js",
     "demoRelease": "node ./scripts/demoRelease.js"
   },
+  "dependencies": {
+    "light-date": "^1.2.0"
+  },
   "devDependencies": {
     "react-native-ui-lib": "7.1.0",
     "shell-utils": "^1.0.10"
