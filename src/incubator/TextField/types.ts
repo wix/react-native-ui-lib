@@ -112,7 +112,10 @@ export interface ValidationMessageProps {
    * Custom style for the validation message
    */
   validationMessageStyle?: StyleProp<TextStyle>;
-  retainSpace?: boolean;
+  /**
+   * Keep the validation space even if there is no validation message
+   */
+  retainValidationSpace?: boolean;
   validate?: FieldStateProps['validate'];
   testID?: string;
 }

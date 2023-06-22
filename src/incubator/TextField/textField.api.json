@@ -43,6 +43,12 @@
       "description": "The position of the validation message (top/bottom)"
     },
     {"name": "validationMessageStyle", "type": "TextStyle", "description": "Custom style for the validation message"},
+    {
+      "name": "retainValidationSpace",
+      "type": "boolean",
+      "description": "Keep the validation space even if there is no validation message",
+      "default": "true"
+    },
     {"name": "validateOnStart", "type": "boolean", "description": "Should validate when the TextField mounts"},
     {"name": "validateOnChange", "type": "boolean", "description": "Should validate when the TextField value changes"},
     {"name": "validateOnBlur", "type": "boolean", "description": "Should validate when losing focus of TextField"},
