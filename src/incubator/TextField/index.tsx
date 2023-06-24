@@ -69,6 +69,7 @@ const TextField = (props: InternalTextFieldProps) => {
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
+    retainValidationSpace = true,
     // Char Counter
     showCharCounter,
     charCounterStyle,
@@ -116,7 +117,7 @@ const TextField = (props: InternalTextFieldProps) => {
     return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
   }, [validationMessageStyle, centered]);
   const inputStyle = useMemo(() => {
-    return [typographyStyle, colorStyle, others.style, centered && styles.centeredInput];
+    return [typographyStyle, colorStyle, others.style, fieldState.value && centered && styles.centeredInput];
   }, [typographyStyle, colorStyle, others.style, centered]);
   const dummyPlaceholderStyle = useMemo(() => {
     return [inputStyle, styles.dummyPlaceholder];
@@ -140,7 +141,7 @@ const TextField = (props: InternalTextFieldProps) => {
             validate={others.validate}
             validationMessage={others.validationMessage}
             validationMessageStyle={_validationMessageStyle}
-            retainSpace={retainTopMessageSpace}
+            retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
             testID={`${props.testID}.validationMessage`}
           />
         )}
@@ -195,7 +196,7 @@ const TextField = (props: InternalTextFieldProps) => {
               validate={others.validate}
               validationMessage={others.validationMessage}
               validationMessageStyle={_validationMessageStyle}
-              retainSpace
+              retainValidationSpace={retainValidationSpace}
               testID={`${props.testID}.validationMessage`}
             />
           )}

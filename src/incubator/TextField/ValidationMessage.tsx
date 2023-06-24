@@ -9,7 +9,7 @@ const ValidationMessage = ({
   validationMessage,
   enableErrors,
   validationMessageStyle,
-  retainSpace,
+  retainValidationSpace,
   validate,
   testID
 }: ValidationMessageProps) => {
@@ -17,7 +17,7 @@ const ValidationMessage = ({
 
   const style = useMemo(() => [styles.validationMessage, validationMessageStyle], [validationMessageStyle]);
 
-  if (!enableErrors || (!retainSpace && context.isValid)) {
+  if (!enableErrors || (!retainValidationSpace && context.isValid)) {
     return null;
   }
 

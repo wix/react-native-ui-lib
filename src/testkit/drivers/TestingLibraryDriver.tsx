@@ -10,7 +10,7 @@ import {
   SelectorNotFoundException
 } from '../DriverException';
 
-export class TestingLibraryDriver implements UniDriver {
+export class TestingLibraryDriver<Props> implements UniDriver<Props> {
   private readonly renderAPI: RenderAPI | null;
   private readonly reactTestInstances: ReactTestInstance[];
 
@@ -29,7 +29,7 @@ export class TestingLibraryDriver implements UniDriver {
     }
   }
 
-  selectorByTestId = async (testId: string): Promise<UniDriver> => {
+  selectorByTestId = async (testId: string): Promise<UniDriver<Props>> => {
     if (!this.renderAPI) {
       throw new SelectorChainingException();
     }
@@ -41,7 +41,7 @@ export class TestingLibraryDriver implements UniDriver {
     }
   };
 
-  selectorByText = async (text: string): Promise<UniDriver> => {
+  selectorByText = async (text: string): Promise<UniDriver<Props>> => {
     if (!this.renderAPI) {
       throw new SelectorChainingException();
     }
@@ -49,7 +49,7 @@ export class TestingLibraryDriver implements UniDriver {
     return new TestingLibraryDriver(instances);
   };
 
-  getByDisplayValue = async (value: string): Promise<UniDriver> => {
+  getByDisplayValue = async (value: string): Promise<UniDriver<Props>> => {
     if (!this.renderAPI) {
       throw new SelectorChainingException();
     }
@@ -57,9 +57,9 @@ export class TestingLibraryDriver implements UniDriver {
     return new TestingLibraryDriver(instances);
   };
 
-  first = (): Promise<UniDriver> => this.at(0);
+  first = (): Promise<UniDriver<Props>> => this.at(0);
 
-  at = (index: number): Promise<UniDriver> => {
+  at = (index: number): Promise<UniDriver<Props>> => {
     return Promise.resolve(new TestingLibraryDriver([this.reactTestInstances[index]]));
   };
 

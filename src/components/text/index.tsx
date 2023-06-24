@@ -11,6 +11,7 @@ import {
   ColorsModifiers,
   FlexModifiers
 } from '../../commons/new';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
 
@@ -18,7 +19,8 @@ export type TextProps = RNTextProps &
   TypographyModifiers &
   ColorsModifiers &
   MarginModifiers &
-  FlexModifiers & {
+  FlexModifiers &
+  RecorderProps & {
     /**
      * color of the text
      */
@@ -124,6 +126,7 @@ class Text extends PureComponent<PropsTypes> {
       underline,
       children,
       forwardedRef,
+      recorderTag,
       ...others
     } = this.props;
     const color = this.props.color || modifiers.color;
@@ -144,7 +147,7 @@ class Text extends PureComponent<PropsTypes> {
     const TextContainer = this.TextContainer;
 
     return (
-      <TextContainer {...others} style={textStyle} ref={forwardedRef}>
+      <TextContainer fsTagName={recorderTag} {...others} style={textStyle} ref={forwardedRef}>
         {this.renderText(children)}
       </TextContainer>
     );

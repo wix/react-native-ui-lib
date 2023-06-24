@@ -29,6 +29,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     containerStyle,
     message,
     messageStyle,
+    messageProps,
     renderAttachment,
     centerMessage,
     showLoader,
@@ -160,6 +161,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
           ref={viewRef}
           style={[styles.message, {textAlign}, messageStyle]}
           accessibilityLabel={toastPreset.accessibilityMessage}
+          {...messageProps}
         >
           {message}
         </Text>

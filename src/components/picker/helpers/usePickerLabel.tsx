@@ -41,7 +41,7 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
 
     return _.get(selectedItem, 'label');
   },
-  [getLabelsFromArray]);
+  [getLabelsFromArray, items]);
 
   const accessibilityInfo = useMemo(() => {
     const label = _getLabel(value);

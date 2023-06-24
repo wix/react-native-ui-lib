@@ -324,6 +324,7 @@ class Button extends PureComponent<Props, ButtonState> {
           underline={hyperlink}
           numberOfLines={1}
           testID={`${testID}.label`}
+          recorderTag={'unmask'}
           {...labelProps}
         >
           {label}

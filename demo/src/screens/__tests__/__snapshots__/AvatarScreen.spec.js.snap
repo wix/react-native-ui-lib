@@ -3072,19 +3072,35 @@ exports[`AvatarScreen renders screen 1`] = `
           >
             <Text
               allowFontScaling={false}
+              fsTagName="unmask"
               numberOfLines={1}
               style={
                 [
                   {
                     "backgroundColor": "transparent",
-                    "color": "#FFFFFF",
-                    "fontFamily": "System",
-                    "fontSize": 12,
-                    "fontWeight": "700",
-                    "lineHeight": 16,
+                    "color": "#20303C",
+                    "textAlign": "left",
                   },
-                  false,
                   undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#FFFFFF",
+                      "fontFamily": "System",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "lineHeight": 16,
+                    },
+                    false,
+                    undefined,
+                  ],
                 ]
               }
               testID="badge"

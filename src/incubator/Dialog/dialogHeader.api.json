@@ -14,6 +14,16 @@
     {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
     {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
     {
+      "name": "topAccessory",
+      "type": "ReactElement",
+      "description": "Pass to render a top element above the title"
+    },
+    {
+      "name": "bottomAccessory",
+      "type": "ReactElement",
+      "description": "Pass to render a bottom element below the subtitle"
+    },
+    {
       "name": "contentContainerStyle",
       "type": "ViewProps['style']",
       "description": "Style for the leading + content + trailing components (without the bottomAccessory)"
@@ -22,14 +32,7 @@
       "name": "onPress",
       "type": "() => void",
       "description": "onPress callback for the inner content"
-    },
-    {
-      "name": "bottomAccessory",
-      "type": "ReactElement",
-      "description": "Pass to render a bottom element below the input"
     }
   ],
-  "snippet": [
-    "<Dialog.Header title={'Title'$1} subtitle={'Subtitle'$2} trailingAccessory={renderAccessory$3}/>"
-  ]
+  "snippet": ["<Dialog.Header title={'Title'$1} subtitle={'Subtitle'$2} trailingAccessory={renderAccessory$3}/>"]
 }

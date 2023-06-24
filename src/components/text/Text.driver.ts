@@ -1,6 +1,7 @@
+import {TextProps} from './index';
 import {ComponentDriver} from '../../testkit';
 
-export class TextDriver extends ComponentDriver {
+export class TextDriver extends ComponentDriver<TextProps> {
   getTextContent = async () => {
     if (await this.exists()) {
       return (await this.getElementProps()).children;

@@ -9,6 +9,7 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import {TextProps} from '../../components/text';
+import {RecorderProps} from '../../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
 import {ViewProps} from '../../components/view';
 
@@ -35,6 +36,10 @@ export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
+  /**
+   * Callback for when field validated and failed
+  */
+  onValidationFailed?: (failedValidatorIndex: number) => void;
   /**
    * A single or multiple validator. Can be a string (required, email) or custom function.
    */
@@ -107,7 +112,10 @@ export interface ValidationMessageProps {
    * Custom style for the validation message
    */
   validationMessageStyle?: StyleProp<TextStyle>;
-  retainSpace?: boolean;
+  /**
+   * Keep the validation space even if there is no validation message
+   */
+  retainValidationSpace?: boolean;
   validate?: FieldStateProps['validate'];
   testID?: string;
 }
@@ -127,7 +135,8 @@ export interface CharCounterProps {
 
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,
-    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'> {
+    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'>,
+    RecorderProps {
   /**
    * A hint text to display when focusing the field
    */
@@ -201,6 +210,10 @@ export type TextFieldProps = MarginModifiers &
      * Should validate when losing focus of TextField
      */
     validateOnBlur?: boolean;
+    /**
+     * Callback for when field validated and failed
+     */
+    onValidationFailed?: (failedValidatorIndex: number) => void;
     /**
      * Callback for when field validity has changed
      */
