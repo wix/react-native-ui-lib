@@ -68,8 +68,8 @@ const Thumb = (props: ThumbProps) => {
         // adjust end edge
         newX = end.value;
       }
-      if (!secondary && newX < gap || 
-        secondary && newX > end.value - gap || 
+      if (!secondary && newX <= gap || 
+        secondary && newX >= end.value - gap || 
         newX < end.value - gap && newX > start.value + gap) {
         offset.value = newX;
       }
