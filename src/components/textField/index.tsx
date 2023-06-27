@@ -444,7 +444,7 @@ export default class TextField extends BaseInput {
                   {
                     scale: floatingPlaceholderState.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [1, FLOATING_PLACEHOLDER_SCALE]
+                      outputRange: [1, floatingPlaceholderScale]
                     })
                   },
                   {
