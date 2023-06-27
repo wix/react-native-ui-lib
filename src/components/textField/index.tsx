@@ -44,7 +44,6 @@ const CHAR_COUNTER_COLOR_BY_STATE = {
 const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
 const ICON_LEFT_PADDING = 6;
-const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
 /**
  * @description: A wrapper for TextInput component with extra functionality like floating placeholder and validations (This is an uncontrolled component)
@@ -64,6 +63,10 @@ export default class TextField extends BaseInput {
      * should placeholder have floating behavior
      */
     floatingPlaceholder: PropTypes.bool,
+    /**
+     * scale the placeholder will shrink when active
+     */
+    floatingPlaceholderScale: PropTypes.number,
     /**
      * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
@@ -189,7 +192,8 @@ export default class TextField extends BaseInput {
 
   static defaultProps = {
     enableErrors: true,
-    validateOnBlur: true
+    validateOnBlur: true,
+    floatingPlaceholderScale: 0.875
   };
 
   constructor(props) {
@@ -226,8 +230,8 @@ export default class TextField extends BaseInput {
 
   onPlaceholderLayout = (event) => {
     const {width} = event.nativeEvent.layout;
-    const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
-    this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
+    const translate = width / 2 - (width * floatingPlaceholderScale) / 2;
+    this.setState({floatingPlaceholderTranslate: translate / floatingPlaceholderScale});
   };
 
   /** Actions */
