@@ -116,7 +116,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   },
   throttleTime,
   {trailing: true, leading: false}),
-  [throttleTime]);
+  [throttleTime, onChangeIndex]);
 
   useAnimatedReaction(() => {
     return animatedSelectedIndex.value;
@@ -126,7 +126,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
       onChangeIndex && runOnJS(changeIndex)();
     }
   },
-  []);
+  [onChangeIndex]);
 
   const onSegmentPress = useCallback((index: number) => {
     animatedSelectedIndex.value = index;
