@@ -9,8 +9,6 @@ import View from '../../components/view';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
 
-const FLOATING_PLACEHOLDER_SCALE = 0.875;
-
 const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
   const {
     placeholder,
@@ -18,6 +16,7 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
     floatingPlaceholderStyle,
     validationMessagePosition,
     extraOffset = 0,
+    floatingPlaceholderScale = 0.875,
     testID
   } = props;
   const context = useContext(FieldContext);
@@ -44,12 +43,12 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
       return {
         transform: [
           {
-            scale: interpolateValue(animation, [1, FLOATING_PLACEHOLDER_SCALE])
+            scale: interpolateValue(animation, [1, floatingPlaceholderScale])
           },
           {
             translateX: interpolateValue(animation, [
               0,
-              -placeholderOffset.left - extraOffset / FLOATING_PLACEHOLDER_SCALE
+              -placeholderOffset.left - extraOffset / floatingPlaceholderScale
             ])
           },
           {
@@ -68,13 +67,13 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
 
   const onPlaceholderLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
-    let translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
+    let translate = width / 2 - (width * floatingPlaceholderScale) / 2;
     translate = Constants.isRTL ? -translate : translate;
     setPlaceholderOffset({
-      left: translate / FLOATING_PLACEHOLDER_SCALE,
+      left: translate / floatingPlaceholderScale,
       top: height
     });
-  }, []);
+  }, [floatingPlaceholderScale]);
 
   return (
     <View absF style={hidePlaceholder && styles.hidden} pointerEvents={'none'}>

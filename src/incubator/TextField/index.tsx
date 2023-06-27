@@ -51,6 +51,7 @@ const TextField = (props: InternalTextFieldProps) => {
     dynamicFieldStyle,
     containerStyle,
     floatingPlaceholder,
+    floatingPlaceholderScale,
     floatingPlaceholderColor,
     floatingPlaceholderStyle,
     floatOnFocus,
@@ -165,6 +166,7 @@ const TextField = (props: InternalTextFieldProps) => {
                   defaultValue={others.defaultValue}
                   placeholder={placeholder}
                   floatingPlaceholderStyle={_floatingPlaceholderStyle}
+                  floatingPlaceholderScale={floatingPlaceholderScale}
                   floatingPlaceholderColor={floatingPlaceholderColor}
                   floatOnFocus={floatOnFocus}
                   validationMessagePosition={validationMessagePosition}

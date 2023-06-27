@@ -90,6 +90,10 @@ export interface FloatingPlaceholderProps {
    */
   floatingPlaceholderStyle?: StyleProp<TextStyle>;
   /**
+   * the scale of the floating placeholder
+   */
+  floatingPlaceholderScale?: number;
+  /**
    * Should placeholder float on focus or when start typing
    */
   floatOnFocus?: boolean;
@@ -190,6 +194,10 @@ export type TextFieldProps = MarginModifiers &
      * Pass to add floating placeholder support
      */
     floatingPlaceholder?: boolean;
+    /**
+     * the scale of the floating placeholder label (0.7 - 1.0)
+     */
+    floatingPlaceholderScale?: number;
     /**
      * Custom style for the floating placeholder
      */

@@ -230,8 +230,8 @@ export default class TextField extends BaseInput {
 
   onPlaceholderLayout = (event) => {
     const {width} = event.nativeEvent.layout;
-    const translate = width / 2 - (width * floatingPlaceholderScale) / 2;
-    this.setState({floatingPlaceholderTranslate: translate / floatingPlaceholderScale});
+    const translate = width / 2 - (width * this.props.floatingPlaceholderScale) / 2;
+    this.setState({floatingPlaceholderTranslate: translate / this.props.floatingPlaceholderScale});
   };
 
   /** Actions */
@@ -444,7 +444,7 @@ export default class TextField extends BaseInput {
                   {
                     scale: floatingPlaceholderState.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [1, floatingPlaceholderScale]
+                      outputRange: [1, this.props.floatingPlaceholderScale]
                     })
                   },
                   {
@@ -593,7 +593,7 @@ export default class TextField extends BaseInput {
       expandable,
       rightIconSource,
       color,
-      placeholder, 
+      placeholder,
       helperText,
       ...others
     } = this.getThemeProps();
