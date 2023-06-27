@@ -51,6 +51,11 @@ interface Props {
    * Invoked once when value changes by selecting one of the swatches in the palette
    */
   onValueChange?: (value: string, options: object) => void;
+  /**
+   * Should the result be returned only with 6 characters (#FFFFFF and never #FFF)
+   * default is false
+   */
+  resultInHexString?: boolean;
   style?: StyleProp<ViewStyle>;
   testID?: string;
   /**
@@ -72,6 +77,10 @@ const HORIZONTAL_PADDING = 20;
 const MINIMUM_MARGIN = 16;
 const SCROLLABLE_HEIGHT = 92;
 const DEFAULT_NUMBER_OF_ROWS = 3;
+
+export function getHexString(value?: string, resultInHexString = false) {
+  return _.toUpper(resultInHexString ? Colors.getHexString(value) : value);
+}
 
 /**
  * @description: A color palette component
@@ -155,12 +164,12 @@ class ColorPalette extends PureComponent<Props, State> {
   }
 
   get value() {
-    const {value} = this.props;
+    const {value, resultInHexString} = this.props;
 
     if (Colors.isTransparent(value)) {
       return value;
     }
-    return _.toUpper(value);
+    return getHexString(value, resultInHexString);
   }
 
   get colors() {
@@ -262,7 +271,8 @@ class ColorPalette extends PureComponent<Props, State> {
   };
 
   onValueChange = (value: string, options: object) => {
-    this.props.onValueChange?.(value, options);
+    const {onValueChange, resultInHexString} = this.props;
+    onValueChange?.(getHexString(value, resultInHexString), options);
   };
 
   getHorizontalMargins = (index: number) => {
@@ -302,7 +312,7 @@ class ColorPalette extends PureComponent<Props, State> {
   };
 
   renderColorSwatch(color: string, index: number) {
-    const {animatedIndex, testID} = this.props;
+    const {animatedIndex, testID, resultInHexString} = this.props;
 
     return (
       <ColorSwatch
@@ -311,7 +321,7 @@ class ColorPalette extends PureComponent<Props, State> {
         key={color}
         color={color}
         value={color}
-        selected={this.value === color}
+        selected={this.value === getHexString(color, resultInHexString)}
         animated={index === animatedIndex}
         onPress={this.onValueChange}
         ref={this.itemsRefs.current[index]}

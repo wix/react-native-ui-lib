@@ -21,8 +21,9 @@ import Dialog, {DialogProps} from '../dialog';
 import Button from '../button';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import PanningProvider from '../panningViews/panningProvider';
+import {getHexString, ColorPaletteProps} from '../colorPalette';
 
-interface Props extends DialogProps {
+interface Props extends DialogProps, Pick<ColorPaletteProps, 'resultInHexString'> {
   /**
    * The initial color to pass the picker dialog
    */
@@ -45,13 +46,13 @@ interface Props extends DialogProps {
   /**
    * Ok (v) button color
    */
-  doneButtonColor?: string,
+  doneButtonColor?: string;
   accessibilityLabels?: {
-    dismissButton?: string,
-    doneButton?: string,
-    input?: string
+    dismissButton?: string;
+    doneButton?: string;
+    input?: string;
   };
-  /** 
+  /**
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
@@ -59,10 +60,10 @@ interface Props extends DialogProps {
 export type ColorPickerDialogProps = Props;
 
 interface State {
-  keyboardHeight: number,
-  color: any,
-  text?: string,
-  valid: boolean
+  keyboardHeight: number;
+  color: any;
+  text?: string;
+  valid: boolean;
 }
 
 const KEYBOARD_HEIGHT = 216;
@@ -210,11 +211,12 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   };
 
   onDonePressed = () => {
+    const {resultInHexString} = this.props;
     const {text} = this.state;
     const {hex} = this.getValidColorString(text);
 
     if (hex) {
-      this.props.onSubmit?.(hex, this.getTextColor(hex));
+      this.props.onSubmit?.(getHexString(hex, resultInHexString), this.getTextColor(hex));
       this.onDismiss();
     }
   };
@@ -356,7 +358,6 @@ class ColorPickerDialog extends PureComponent<Props, State> {
 }
 
 export default asBaseComponent<Props>(ColorPickerDialog);
-
 
 const BORDER_RADIUS = 12;
 

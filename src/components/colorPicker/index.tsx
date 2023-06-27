@@ -4,11 +4,11 @@ import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
-import ColorPalette from '../colorPalette';
+import ColorPalette, {ColorPaletteProps} from '../colorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
 
-interface Props extends ColorPickerDialogProps {
+interface Props extends ColorPickerDialogProps, Pick<ColorPaletteProps, 'onValueChange' | 'resultInHexString'> {
   /**
    * Array of colors for the picker's color palette (hex values)
    */
@@ -21,10 +21,6 @@ interface Props extends ColorPickerDialogProps {
    * The index of the item to animate at first render (default is last)
    */
   animatedIndex?: number;
-  /**
-   * onValueChange callback for the picker's color palette change
-   */
-  onValueChange?: (value: string, options: object) => void;
   /**
    * Accessibility labels as an object of strings, ex.
    * {
@@ -90,7 +86,16 @@ class ColorPicker extends PureComponent<Props> {
   };
 
   render() {
-    const {initialColor, colors, value, testID, accessibilityLabels, backgroundColor} = this.props;
+    const {
+      initialColor,
+      colors,
+      value,
+      testID,
+      accessibilityLabels,
+      backgroundColor,
+      onValueChange,
+      resultInHexString
+    } = this.props;
     const {show} = this.state;
     return (
       <View row testID={testID} style={{backgroundColor}}>
@@ -100,7 +105,8 @@ class ColorPicker extends PureComponent<Props> {
           style={styles.palette}
           usePagination={false}
           animatedIndex={this.animatedIndex}
-          onValueChange={this.onValueChange}
+          onValueChange={onValueChange}
+          resultInHexString={resultInHexString}
           testID={`${testID}-palette`}
           backgroundColor={backgroundColor}
         />
@@ -131,11 +137,6 @@ class ColorPicker extends PureComponent<Props> {
       </View>
     );
   }
-
-  // ColorPalette
-  onValueChange = (value: string, options: object) => {
-    this.props.onValueChange?.(value, options);
-  };
 }
 
 export default ColorPicker;

@@ -282,7 +282,7 @@ export class Colors {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(string);
   }
 
-  getHexString(color: tinycolor.ColorInput) {
+  getHexString(color?: tinycolor.ColorInput) {
     return tinycolor(color).toHexString();
   }
   getHSL(color?: string) {

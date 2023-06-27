@@ -34,6 +34,12 @@
       "type": "(value: string, options: object) => void",
       "description": "Invoked once when value changes by selecting one of the swatches in the palette"
     },
+    {
+      "name": "resultInHexString",
+      "type": "boolean",
+      "description": "Should the result be returned only with 6 characters (#FFFFFF and never #FFF)",
+      "default": "false"
+    },
     {"name": "swatchStyle", "type": "ViewStyle", "description": "Style to pass all the ColorSwatches in the palette"},
     {"name": "containerWidth", "type": "number", "description": "The container margins"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},

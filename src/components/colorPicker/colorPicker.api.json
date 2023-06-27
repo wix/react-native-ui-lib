@@ -26,6 +26,12 @@
       "description": "Callback for the picker's color palette change"
     },
     {
+      "name": "resultInHexString",
+      "type": "boolean",
+      "description": "Should the result be returned only with 6 characters (#FFFFFF and never #FFF)",
+      "default": "false"
+    },
+    {
       "name": "accessibilityLabels",
       "type": "{\n addButton: string,\n dismissButton: string,\n doneButton: string,\n input: string}",
       "description": "Accessibility labels as an object of strings",

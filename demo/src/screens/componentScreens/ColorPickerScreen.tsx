@@ -4,7 +4,6 @@ import {StyleSheet, ScrollView} from 'react-native';
 import {Colors, View, Text, ColorPicker, ColorPalette, ColorName} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
-interface Props {}
 interface State {
   color: string;
   textColor?: string;
@@ -25,7 +24,7 @@ const colors = [
   '#8B1079', '#A0138E', '#B13DAC', '#C164BD', '#D08BCD', '#E0B1DE', '#EFD8EE', '#F7EBF7'
 ];
 
-export default class ColorPickerScreen extends Component<Props, State> {
+export default class ColorPickerScreen extends Component<{}, State> {
   state: State = {
     color: INITIAL_COLOR,
     textColor: Colors.$textDefaultLight,
