@@ -1,6 +1,6 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useEffect} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {useDidUpdate, useThemeProps} from 'hooks';
 import MaskedInput from '../maskedInput/new';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
@@ -62,7 +62,7 @@ type _NumberInputProps = {
   /**
    * The style of the leading text
    */
-  leadingTextStyle?: StyleProp<ViewStyle>;
+  leadingTextStyle?: StyleProp<TextStyle>;
   /**
    * A trailing text
    */
@@ -70,7 +70,7 @@ type _NumberInputProps = {
   /**
    * The style of the trailing text
    */
-  trailingTextStyle?: StyleProp<ViewStyle>;
+  trailingTextStyle?: StyleProp<TextStyle>;
   /**
    * Container style of the whole component
    */
