@@ -2,15 +2,42 @@ import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useDidUpdate, useThemeProps} from 'hooks';
+import MaskedInput from '../maskedInput/new';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
+import View from '../view';
 import Text from '../text';
-import {getInitialData, parseInput, generateOptions, Options, NumberInputData} from './Presenter';
+import {
+  getInitialData,
+  parseInput,
+  parsePastedData,
+  generateOptions,
+  getInitialNumber,
+  Options,
+  NumberInputData
+} from './Presenter';
+import {ClipboardPackage as Clipboard} from 'optionalDeps';
 
 export {NumberInputData};
 
-export type NumberInputProps = React.PropsWithRef<
-  Omit<TextFieldProps, 'leadingAccessory' | 'trailingAccessory' | 'value' | 'onChangeText'> & ThemeComponent
-> & {
+type _TextFieldProps = Omit<
+  TextFieldProps,
+  | 'leadingAccessory'
+  | 'trailingAccessory'
+  | 'value'
+  | 'onChangeText'
+  | 'placeholder'
+  | 'placeholderTextColor'
+  | 'floatingPlaceholder'
+  | 'floatingPlaceholderColor'
+  | 'floatingPlaceholderStyle'
+  | 'contextMenuHidden'
+>;
+
+type _NumberInputProps = {
+  /**
+   * Pass additional props to the TextField
+   */
+  textFieldProps?: _TextFieldProps;
   /**
    * Callback that is called when the number value has changed (undefined in both if the user has deleted the number).
    */
@@ -44,26 +71,46 @@ export type NumberInputProps = React.PropsWithRef<
    * The style of the trailing text
    */
   trailingTextStyle?: StyleProp<ViewStyle>;
+  /**
+   * Container style of the whole component
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * If true, context menu is hidden. The default value is true.
+   * Requires @react-native-community/clipboard to be installed.
+   */
+  contextMenuHidden?: boolean;
 };
+
+export type NumberInputProps = React.PropsWithRef<_NumberInputProps>;
 
 function NumberInput(props: NumberInputProps, ref: any) {
   const themeProps = useThemeProps(props, 'NumberInput');
   const {
+    textFieldProps,
     onChangeNumber,
-    initialNumber,
+    initialNumber: propsInitialNumber,
     fractionDigits = 2,
     // @ts-expect-error
     locale = 'en',
     containerStyle,
+    contextMenuHidden = true,
     leadingText,
     leadingTextStyle,
     trailingText,
-    trailingTextStyle,
-    placeholder,
-    ...others
+    trailingTextStyle
   } = themeProps;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
   const [data, setData] = useState<NumberInputData>();
+
+  const initialNumber = getInitialNumber(propsInitialNumber, options);
+
+  useEffect(() => {
+    if (!contextMenuHidden && !Clipboard) {
+      // eslint-disable-next-line max-len
+      console.error(`RNUILib NumberInput's "contextMenuHidden" prop requires installing "@react-native-community/clipboard" dependency`);
+    }
+  }, [contextMenuHidden]);
 
   useDidUpdate(() => {
     setOptions(generateOptions(locale, fractionDigits));
@@ -79,6 +126,13 @@ function NumberInput(props: NumberInputProps, ref: any) {
     handleInitialValueChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialNumber]);
+
+  const handlePastedDate = useCallback((text: string) => {
+    const newData = parsePastedData(options, text);
+    onChangeNumber(newData);
+    setData(newData);
+  },
+  [onChangeNumber, options]);
 
   const processInput = useCallback((text: string) => {
     const newData = parseInput(text, options);
@@ -111,41 +165,53 @@ function NumberInput(props: NumberInputProps, ref: any) {
     }
   }, [hasText, trailingText, trailingTextStyle]);
 
-  const _containerStyle = useMemo(() => {
-    return [styles.containerStyle, containerStyle];
-  }, [containerStyle]);
-
-  const _onChangeText = useCallback((text: string) => {
+  const onChangeText = useCallback(async (text: string) => {
+    if (!contextMenuHidden && Clipboard) {
+      const copiedContent = await Clipboard.getString();
+      if (copiedContent !== '') {
+        const isPasted = text.endsWith(copiedContent);
+        if (isPasted) {
+          handlePastedDate(copiedContent);
+          return;
+        }
+      }
+    }
     processInput(text);
   },
-  [processInput]);
-
-  const value = useMemo(() => {
-    return data?.type === 'valid' || data?.type === 'error' ? data.userInput : '';
-  }, [data]);
+  [contextMenuHidden, handlePastedDate, processInput]);
 
   const formatter = useCallback(() => {
     return data?.type === 'valid' ? data.formattedNumber : data?.type === 'error' ? data.userInput : '';
   }, [data]);
 
-  // Fixing RN bug in Android (placeholder + trailingText) - https://github.com/facebook/react-native/issues/35611
-  const _placeholder = useMemo(() => {
-    return isEmpty(value) ? placeholder : undefined;
-  }, [placeholder, value]);
+  const renderNumberInput = useCallback((value?: string) => {
+    return (
+      <View row style={containerStyle}>
+        {/* @ts-expect-error ref is somehow required, not sure from where */}
+        <TextField
+          {...textFieldProps}
+          value={value}
+          onChangeText={onChangeText}
+          formatter={formatter}
+          floatingPlaceholder={false}
+          leadingAccessory={leadingAccessory}
+          trailingAccessory={trailingAccessory}
+          containerStyle={[styles.textFieldContainerStyle, textFieldProps?.containerStyle]}
+          keyboardType={'numeric'}
+        />
+      </View>
+    );
+  },
+  [onChangeText, containerStyle, formatter, leadingAccessory, textFieldProps, trailingAccessory]);
 
   return (
-    <TextField
-      {...others}
-      placeholder={_placeholder}
-      value={value}
-      onChangeText={_onChangeText}
-      formatter={formatter}
+    <MaskedInput
       ref={ref}
-      floatingPlaceholder={false}
-      leadingAccessory={leadingAccessory}
-      trailingAccessory={trailingAccessory}
-      containerStyle={_containerStyle}
+      renderMaskedText={renderNumberInput}
       keyboardType={'numeric'}
+      initialValue={initialNumber ? `${initialNumber}` : undefined}
+      onChangeText={onChangeText}
+      contextMenuHidden={contextMenuHidden}
     />
   );
 }
@@ -153,8 +219,8 @@ function NumberInput(props: NumberInputProps, ref: any) {
 export default React.forwardRef<TextFieldProps, NumberInputProps>(NumberInput);
 
 const styles = StyleSheet.create({
-  containerStyle: {
-    overflow: 'hidden'
+  textFieldContainerStyle: {
+    flexShrink: 1
   },
   accessory: {
     flexGrow: 999

@@ -1,11 +1,6 @@
-import {isEmpty} from 'lodash';
-
 export type NumberInputData =
   | {type: 'valid'; userInput: string; number: number; formattedNumber: string}
-  | {type: 'empty'}
   | {type: 'error'; userInput: string};
-
-export const EMPTY: NumberInputData = {type: 'empty'};
 
 export interface LocaleOptions {
   locale: string;
@@ -19,20 +14,25 @@ export interface Options {
 }
 
 function formatNumber(value: number, options: Options) {
-  return value.toLocaleString(options.localeOptions.locale, {maximumFractionDigits: options.fractionDigits});
+  return value.toLocaleString(options.localeOptions.locale, {
+    maximumFractionDigits: options.fractionDigits,
+    minimumFractionDigits: options.fractionDigits
+  });
 }
 
 function generateLocaleOptions(locale: string) {
-  const options: Options = {
+  const options: Omit<Options, 'fractionDigits'> = {
     localeOptions: {
       locale,
       decimalSeparator: '', // fake decimalSeparator, we're creating it now
       thousandSeparator: '' // fake thousandSeparator, we're creating it now
-    },
-    fractionDigits: 1
+    }
   };
-  const decimalSeparator = formatNumber(1.1, options).replace(/1/g, '');
-  const thousandSeparator = formatNumber(1111, options).replace(/1/g, '');
+  const decimalOptions: Options = {...options, fractionDigits: 1};
+  const thousandOptions: Options = {...options, fractionDigits: 0};
+
+  const decimalSeparator = formatNumber(1.1, decimalOptions).replace(/1/g, '');
+  const thousandSeparator = formatNumber(1111, thousandOptions).replace(/1/g, '');
 
   return {
     locale,
@@ -45,11 +45,11 @@ export function generateOptions(locale: string, fractionDigits: number): Options
   return {localeOptions: generateLocaleOptions(locale), fractionDigits};
 }
 
-export function parseInput(text: string, options: Options): NumberInputData {
-  if (isEmpty(text)) {
-    return EMPTY;
-  }
+export function getInitialNumber(propsInitialNumber = 0, options: Options) {
+  return propsInitialNumber * Math.pow(10, options.fractionDigits);
+}
 
+export function parseInput(text: string, options: Options): NumberInputData {
   let cleanInput: string = text.replaceAll(options.localeOptions.thousandSeparator, '');
   cleanInput = cleanInput.replaceAll(options.localeOptions.decimalSeparator, '.');
   let number = Number(cleanInput);
@@ -58,15 +58,18 @@ export function parseInput(text: string, options: Options): NumberInputData {
   }
 
   number = Number(number.toFixed(options.fractionDigits));
-  const formattedNumber = formatNumber(number, options);
+  if (options.fractionDigits > 0) {
+    number /= Math.pow(10, options.fractionDigits);
+  }
 
+  const formattedNumber = formatNumber(number, options);
   return {type: 'valid', userInput: text, number, formattedNumber};
 }
 
-export function getInitialData(options: Options, initialValue?: number): NumberInputData {
-  if (initialValue === undefined) {
-    return EMPTY;
-  }
-
+export function getInitialData(options: Options, initialValue: number): NumberInputData {
   return parseInput(formatNumber(initialValue, options), options);
+}
+
+export function parsePastedData(options: Options, text: string): NumberInputData {
+  return parseInput(text, options);
 }
