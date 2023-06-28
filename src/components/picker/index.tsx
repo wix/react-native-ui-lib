@@ -96,13 +96,13 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const {preset} = others;
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items, setItems] = useState(propItems || extractPickerItems(themeProps));
+  const pickerItems = propItems || extractPickerItems(themeProps);
+  const [items, setItems] = useState(pickerItems);
 
   useEffect(() => {
-    if (propItems) {
-      setItems(propItems);
-    }
-  }, [propItems]);
+    setItems(pickerItems);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [propItems, children]);
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
