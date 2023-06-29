@@ -1,19 +1,12 @@
 import {isEmpty} from 'lodash';
-import React, {useMemo, useCallback, useState, useEffect} from 'react';
+import React, {useMemo, useCallback, useState} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {useDidUpdate, useThemeProps} from 'hooks';
 import MaskedInput from '../maskedInput/new';
 import TextField, {TextFieldProps} from '../../incubator/TextField';
 import View from '../view';
 import Text from '../text';
-import {
-  parseInput,
-  generateOptions,
-  getInitialNumber,
-  Options,
-  NumberInputData
-} from './Presenter';
-import {ClipboardPackage as Clipboard} from 'optionalDeps';
+import {parseInput, generateOptions, getInitialNumber, Options, NumberInputData} from './Presenter';
 
 export {NumberInputData};
 
@@ -104,13 +97,6 @@ function NumberInput(props: NumberInputProps, ref: any) {
   const initialNumber = getInitialNumber(propsInitialNumber, options);
   const [data, setData] = useState<NumberInputData>(parseInput(`${initialNumber}`, options, propsInitialNumber));
 
-  useEffect(() => {
-    if (!contextMenuHidden && !Clipboard) {
-      // eslint-disable-next-line max-len
-      console.error(`RNUILib NumberInput's "contextMenuHidden" prop requires installing "@react-native-community/clipboard" dependency`);
-    }
-  }, [contextMenuHidden]);
-
   useDidUpdate(() => {
     setOptions(generateOptions(locale, fractionDigits));
   }, [locale, fractionDigits]);
@@ -125,13 +111,6 @@ function NumberInput(props: NumberInputProps, ref: any) {
     handleInitialValueChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialNumber]);
-
-  const handlePastedDate = useCallback((text: string) => {
-    const newData = parseInput(text, options);
-    onChangeNumber(newData);
-    setData(newData);
-  },
-  [onChangeNumber, options]);
 
   const processInput = useCallback((text: string) => {
     const newData = parseInput(text, options);
@@ -165,19 +144,9 @@ function NumberInput(props: NumberInputProps, ref: any) {
   }, [hasText, trailingText, trailingTextStyle]);
 
   const onChangeText = useCallback(async (text: string) => {
-    if (!contextMenuHidden && Clipboard) {
-      const copiedContent = await Clipboard.getString();
-      if (copiedContent !== '') {
-        const isPasted = text.endsWith(copiedContent);
-        if (isPasted) {
-          handlePastedDate(copiedContent);
-          return;
-        }
-      }
-    }
     processInput(text);
   },
-  [contextMenuHidden, handlePastedDate, processInput]);
+  [processInput]);
 
   const formatter = useCallback(() => {
     return data?.type === 'valid' ? data.formattedNumber : data?.type === 'error' ? data.userInput : '';
