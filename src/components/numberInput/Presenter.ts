@@ -49,7 +49,7 @@ export function getInitialNumber(propsInitialNumber = 0, options: Options) {
   return propsInitialNumber * Math.pow(10, options.fractionDigits);
 }
 
-export function parseInput(text: string, options: Options): NumberInputData {
+export function parseInput(text: string, options: Options, initialNumber?: number): NumberInputData {
   let cleanInput: string = text.replaceAll(options.localeOptions.thousandSeparator, '');
   cleanInput = cleanInput.replaceAll(options.localeOptions.decimalSeparator, '.');
   let number = Number(cleanInput);
@@ -63,13 +63,5 @@ export function parseInput(text: string, options: Options): NumberInputData {
   }
 
   const formattedNumber = formatNumber(number, options);
-  return {type: 'valid', userInput: text, number, formattedNumber};
-}
-
-export function getInitialData(options: Options, initialValue: number): NumberInputData {
-  return parseInput(formatNumber(initialValue, options), options);
-}
-
-export function parsePastedData(options: Options, text: string): NumberInputData {
-  return parseInput(text, options);
+  return {type: 'valid', userInput: initialNumber ? `${initialNumber}` : text, number, formattedNumber};
 }

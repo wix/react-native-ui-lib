@@ -7,9 +7,7 @@ import TextField, {TextFieldProps} from '../../incubator/TextField';
 import View from '../view';
 import Text from '../text';
 import {
-  getInitialData,
   parseInput,
-  parsePastedData,
   generateOptions,
   getInitialNumber,
   Options,
@@ -80,6 +78,7 @@ type _NumberInputProps = {
    * Requires @react-native-community/clipboard to be installed.
    */
   contextMenuHidden?: boolean;
+  testID?: string;
 };
 
 export type NumberInputProps = React.PropsWithRef<_NumberInputProps>;
@@ -98,12 +97,12 @@ function NumberInput(props: NumberInputProps, ref: any) {
     leadingText,
     leadingTextStyle,
     trailingText,
-    trailingTextStyle
+    trailingTextStyle,
+    testID
   } = themeProps;
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
-  const [data, setData] = useState<NumberInputData>();
-
   const initialNumber = getInitialNumber(propsInitialNumber, options);
+  const [data, setData] = useState<NumberInputData>(parseInput(`${initialNumber}`, options, propsInitialNumber));
 
   useEffect(() => {
     if (!contextMenuHidden && !Clipboard) {
@@ -117,18 +116,18 @@ function NumberInput(props: NumberInputProps, ref: any) {
   }, [locale, fractionDigits]);
 
   const handleInitialValueChange = () => {
-    const newData = getInitialData(options, initialNumber);
+    const newData = parseInput(`${initialNumber}`, options, propsInitialNumber);
     onChangeNumber(newData);
     setData(newData);
   };
 
-  useEffect(() => {
+  useDidUpdate(() => {
     handleInitialValueChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialNumber]);
 
   const handlePastedDate = useCallback((text: string) => {
-    const newData = parsePastedData(options, text);
+    const newData = parseInput(text, options);
     onChangeNumber(newData);
     setData(newData);
   },
@@ -190,6 +189,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
         {/* @ts-expect-error ref is somehow required, not sure from where */}
         <TextField
           {...textFieldProps}
+          testID={`${testID}.visual`}
           value={value}
           onChangeText={onChangeText}
           formatter={formatter}
@@ -202,10 +202,11 @@ function NumberInput(props: NumberInputProps, ref: any) {
       </View>
     );
   },
-  [onChangeText, containerStyle, formatter, leadingAccessory, textFieldProps, trailingAccessory]);
+  [onChangeText, containerStyle, formatter, leadingAccessory, textFieldProps, trailingAccessory, testID]);
 
   return (
     <MaskedInput
+      testID={testID}
       ref={ref}
       renderMaskedText={renderNumberInput}
       keyboardType={'numeric'}
