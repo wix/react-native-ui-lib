@@ -267,8 +267,8 @@ const itemsToRender: ItemToRender[] = [
             onValueChange={(value: any) => {
               console.log('setSliderValue: ', value);
               setSliderValue(value);
-
             }}
+            migrate
             value={sliderValue}
             minimumValue={0}
             maximumValue={10}
