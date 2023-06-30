@@ -89,8 +89,13 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   const renderWheel = () => {
     return (
       <View>
-        <View row spread padding-page>
-          <Text>{topBarProps?.title}</Text>
+        <View row spread padding-page centerV style={topBarProps?.containerStyle}>
+          {topBarProps?.cancelLabel &&
+            <Text text70 $textPrimary accessibilityRole={'button'} onPress={topBarProps?.onCancel}>
+              {topBarProps?.cancelLabel}
+            </Text>
+          }
+          <Text style={topBarProps?.titleStyle}>{topBarProps?.title}</Text>
           <Text text70 $textPrimary accessibilityRole={'button'} onPress={() => context.onPress(wheelPickerValue)}>
             {topBarProps?.doneLabel ?? 'Select'}
           </Text>

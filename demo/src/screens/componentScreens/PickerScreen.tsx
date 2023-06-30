@@ -125,11 +125,9 @@ export default class PickerScreen extends Component {
             label="Wheel Picker"
             placeholder="Pick a Language"
             useWheelPicker
-            // useWheelPicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
-            // containerStyle={{marginTop: 20}}
             // renderPicker={() => {
             //   return (
             //     <View>
@@ -137,7 +135,13 @@ export default class PickerScreen extends Component {
             //     </View>
             //   );
             // }}
-            // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
+            topBarProps={{
+              doneLabel: 'YES',
+              cancelLabel: 'NO',
+              title: 'Wheel Picker',
+              containerStyle: {paddingHorizontal: 40},
+              titleStyle: {color: Colors.grey40}
+            }}
           >
             {_.map(options, option => (
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
