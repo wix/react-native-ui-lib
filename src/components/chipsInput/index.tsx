@@ -124,6 +124,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
               marginR-s2
               marginB-s2
               dismissIcon={removeIcon}
+              recorderTag={'mask'}
               {...defaultChipProps}
               {...(chip.invalid ? invalidChipProps : undefined)}
               {...chip}

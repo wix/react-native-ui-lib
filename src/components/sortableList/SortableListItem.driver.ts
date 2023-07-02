@@ -1,10 +1,11 @@
 import _ from 'lodash';
+import {SortableListProps, SortableListItemProps} from './types';
 import {ComponentDriver} from '../../testkit/Component.driver';
 
 /**
  * Please run clear after each test
  */
-export class SortableListItemDriver extends ComponentDriver {
+export class SortableListItemDriver<ItemT extends SortableListItemProps> extends ComponentDriver<SortableListProps<ItemT>> {
   dragUp = async (indices: number) => {
     this.validateIndices(indices);
     const data = _.times(indices, index => {

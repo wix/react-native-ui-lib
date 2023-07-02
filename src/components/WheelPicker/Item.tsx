@@ -93,6 +93,7 @@ const WheelPickerItem = memo(({
         testID={`${testID}.text`}
         numberOfLines={1}
         style={textStyle}
+        recorderTag={'unmask'}
       >
         {label}
       </AnimatedText>

@@ -51,17 +51,21 @@ export interface DialogHeaderProps extends ViewProps {
    */
   trailingAccessory?: ReactElement;
   /**
-   * Style for the leading + content + trailing components (without the bottomAccessory)
+   * Pass to render a top element above the title
+   */
+  topAccessory?: ReactElement;
+  /**
+   * Pass to render a bottom element below the subtitle
+   */
+  bottomAccessory?: ReactElement;
+  /**
+   * Style for the leading + content + trailing components (without the topAccessory\bottomAccessory)
    */
   contentContainerStyle?: ViewProps['style'];
   /**
    * onPress callback for the inner content
    */
   onPress?: () => void;
-  /**
-   * Pass to render a bottom element below the input
-   */
-  bottomAccessory?: ReactElement;
 }
 
 export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {

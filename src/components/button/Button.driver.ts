@@ -1,3 +1,4 @@
+import {ButtonProps} from './ButtonTypes';
 import {ImageDriver} from '../image/Image.driver';
 import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
 import {TextDriver} from '../text/Text.driver';
@@ -5,7 +6,7 @@ import {TextDriver} from '../text/Text.driver';
 /**
  * Please run clear after each test
  */
-export class ButtonDriver extends ComponentDriver {
+export class ButtonDriver extends ComponentDriver<ButtonProps> {
   private readonly labelDriver: TextDriver;
   private readonly iconDriver: ImageDriver;
 
