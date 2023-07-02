@@ -51,7 +51,7 @@ export function getInitialNumber(propsInitialNumber = 0, options: Options) {
 
 export function parseInput(text: string, options: Options, initialNumber?: number): NumberInputData {
   let cleanInput: string = text.replaceAll(options.localeOptions.thousandSeparator, '');
-  cleanInput = cleanInput.replaceAll(options.localeOptions.decimalSeparator, '.');
+  cleanInput = cleanInput.replaceAll(options.localeOptions.decimalSeparator, initialNumber ? '.' : '');
   let number = Number(cleanInput);
   if (isNaN(number)) {
     return {type: 'error', userInput: text};
@@ -63,5 +63,5 @@ export function parseInput(text: string, options: Options, initialNumber?: numbe
   }
 
   const formattedNumber = formatNumber(number, options);
-  return {type: 'valid', userInput: initialNumber ? `${initialNumber}` : text, number, formattedNumber};
+  return {type: 'valid', userInput: initialNumber ? `${initialNumber}` : cleanInput, number, formattedNumber};
 }

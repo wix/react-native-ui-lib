@@ -175,7 +175,7 @@ const NumberInputScreen = () => {
         <View marginT-50 centerH>
           <NumberInput
             key={exampleType}
-            // initialNumber={100}
+            // initialNumber={12.1}
             // contextMenuHidden={false}
             textFieldProps={textFieldProps}
             fractionDigits={fractionDigits}
