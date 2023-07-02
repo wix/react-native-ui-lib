@@ -10,6 +10,10 @@ import Image from '../image';
 export interface ColorExtraData {
   index?: number;
   tintColor?: string;
+  /**
+   * The color result with 6 characters (#FFFFFF and never #FFF)
+   */
+  hexString: string;
 }
 
 interface Props {
@@ -116,7 +120,9 @@ class ColorSwatch extends PureComponent<Props> {
   onPress = () => {
     const {color = '', value, index} = this.props;
     const tintColor = this.getTintColor(value);
-    this.props.onPress?.(value || color, {tintColor, index});
+    const result = value || color;
+    const hexString = Colors.getHexString(result);
+    this.props.onPress?.(result, {tintColor, index, hexString});
   };
 
   getTintColor(color?: string) {
