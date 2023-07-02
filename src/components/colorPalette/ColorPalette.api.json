@@ -31,7 +31,7 @@
     },
     {
       "name": "onValueChange",
-      "type": "(value: string, options: object) => void",
+      "type": "(color: string, extraData: ColorExtraData) => void",
       "description": "Invoked once when value changes by selecting one of the swatches in the palette"
     },
     {"name": "swatchStyle", "type": "ViewStyle", "description": "Style to pass all the ColorSwatches in the palette"},

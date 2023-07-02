@@ -7,6 +7,11 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 
+export interface ColorExtraData {
+  index?: number;
+  tintColor?: string;
+}
+
 interface Props {
   /**
    * The identifier value of the ColorSwatch in a ColorSwatch palette.
@@ -32,7 +37,7 @@ interface Props {
   /**
    * onPress callback
    */
-  onPress?: (value: string, options: object) => void;
+  onPress?: (color: string, extraData: ColorExtraData) => void;
   index?: number;
   style?: StyleProp<ViewStyle>;
   testID?: string;

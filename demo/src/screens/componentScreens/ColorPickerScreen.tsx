@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Text, ColorPicker, ColorPalette, ColorName} from 'react-native-ui-lib';
+import {Colors, View, Text, ColorPicker, ColorPalette, ColorName, ColorExtraData} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 interface State {
@@ -44,12 +44,12 @@ export default class ColorPickerScreen extends Component<{}, State> {
     this.setState({color, textColor, customColors: _.clone(customColors), paletteChange: false});
   };
 
-  onValueChange = (value: string, options: object) => {
-    this.setState({color: value, textColor: options ? _.get(options, 'tintColor') : undefined, paletteChange: false});
+  onValueChange = (color: string, extraData: ColorExtraData) => {
+    this.setState({color, textColor: extraData?.tintColor, paletteChange: false});
   };
 
-  onPaletteValueChange = (value: string, options: object) => {
-    this.setState({color: value, textColor: options ? _.get(options, 'tintColor') : undefined, paletteChange: true});
+  onPaletteValueChange = (color: string, extraData: ColorExtraData) => {
+    this.setState({color, textColor: extraData?.tintColor, paletteChange: true});
   };
 
   render() {

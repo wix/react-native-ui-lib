@@ -65,7 +65,7 @@ export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPalette';
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
-export {default as ColorSwatch, ColorSwatchProps} from './components/colorSwatch';
+export {default as ColorSwatch, ColorSwatchProps, ColorExtraData} from './components/colorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Dash, DashProps} from './components/dash';
 export {default as DateTimePicker, DateTimePickerProps, DateTimePickerMode} from './components/dateTimePicker';
