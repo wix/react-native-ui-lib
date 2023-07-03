@@ -20,6 +20,7 @@ export default ({
 }: UseToastAnimationProps) => {
   const toastAnimatedValue = useRef<Animated.Value>(new Animated.Value(0));
   const [isAnimating, setIsAnimating] = useState<boolean>();
+  const duration = toastHeight <= 500 ? 300 : toastHeight * 0.7;
 
   const _onAnimationEnd = () => {
     if (visible) {
@@ -35,7 +36,7 @@ export default ({
   const toggleToast = (show = false, {delay}: {delay?: number} = {}) => {
     Animated.timing(toastAnimatedValue.current, {
       toValue: Number(show),
-      duration: 300,
+      duration,
       delay,
       easing: Easing.bezier(0.215, 0.61, 0.355, 1),
       useNativeDriver: true

@@ -30,14 +30,25 @@ class ToastsScreen extends Component {
     selectedAction: 'none' as keyof typeof TOAST_ACTIONS,
     hasAttachment: false,
     selectedPreset: '' as Incubator.ToastProps['preset'] & '',
-    isSwipeable: true
+    isSwipeable: true,
+    containerStyle: undefined as Incubator.ToastProps['containerStyle'],
+    renderAbove: false
   };
 
   toggleVisibility = () => {
     // Im using this for storing toast visible since setState is async and takes time to response
     this.showToast = !this.showToast;
     this.setState({
-      visible: this.showToast
+      visible: this.showToast,
+      containerStyle: undefined
+    });
+  };
+
+  toggleVisibilityWithStyle = () => {
+    this.showToast = !this.showToast;
+    this.setState({
+      visible: this.showToast,
+      containerStyle: {marginBottom: 100}
     });
   };
 
@@ -93,8 +104,16 @@ class ToastsScreen extends Component {
   };
 
   renderToast = () => {
-    const {visible, toastPosition, showLoader, isCustomContent, hasAttachment, selectedPreset, isSwipeable} =
-      this.state;
+    const {
+      visible,
+      toastPosition,
+      showLoader,
+      isCustomContent,
+      hasAttachment,
+      selectedPreset,
+      isSwipeable,
+      containerStyle
+    } = this.state;
     const action = this.getAction();
 
     return (
@@ -110,6 +129,7 @@ class ToastsScreen extends Component {
         swipeable={isSwipeable}
         onDismiss={this.toggleVisibility}
         autoDismiss={3500}
+        containerStyle={containerStyle}
         // backgroundColor={Colors.$backgroundSuccessLight}
         // icon={Assets.icons.demo.add}
         // iconColor={Colors.$backgroundSuccessHeavy}
@@ -136,6 +156,7 @@ class ToastsScreen extends Component {
   };
 
   render() {
+    const {renderAbove} = this.state;
     return (
       <View flex padding-page>
         <Text $textDefault h1 marginB-s4>
@@ -153,6 +174,7 @@ class ToastsScreen extends Component {
             {renderBooleanOption.call(this, 'Use custom content', 'isCustomContent')}
             {renderBooleanOption.call(this, 'With an attachment', 'hasAttachment')}
             {renderBooleanOption.call(this, 'Swipeable', 'isSwipeable')}
+            {renderBooleanOption.call(this, 'Above Button', 'renderAbove')}
 
             {renderRadioGroup.call(this,
               'Action',
@@ -174,6 +196,17 @@ class ToastsScreen extends Component {
 
             {this.renderToggleButton()}
           </ScrollView>
+          {renderAbove && (
+            <View centerH bottom marginV-s4>
+              <Button
+                testID={`uilib.showToast`}
+                marginT-10
+                marginB-10
+                label={'Bottom Button'}
+                onPress={this.toggleVisibilityWithStyle}
+              />
+            </View>
+          )}
         </View>
         {this.renderToast()}
       </View>

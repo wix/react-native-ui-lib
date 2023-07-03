@@ -1,5 +1,13 @@
 import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {ActivityIndicator, StyleSheet, findNodeHandle, AccessibilityInfo, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  findNodeHandle,
+  AccessibilityInfo,
+  ViewStyle,
+  LayoutChangeEvent,
+  View as RNView
+} from 'react-native';
 import _ from 'lodash';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
@@ -15,6 +23,13 @@ import useToastPresets from './helpers/useToastPresets';
 import useToastAnimation from './helpers/useToastAnimation';
 
 const THRESHOLD = {x: Constants.screenWidth / 4, y: 10};
+
+interface Measurements {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 const Toast = (props: PropsWithChildren<ToastProps>) => {
   const {
@@ -50,7 +65,9 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   ]);
 
   const viewRef = useRef();
+  const toastRef = useRef<RNView>();
   const [toastHeight, setToastHeight] = useState<number | undefined>();
+  const [targetLayoutInWindow, setTargetLayoutInWindow] = useState<Measurements | undefined>();
 
   const {clearTimer, setTimer} = useToastTimer(props);
   const toastPreset = useToastPresets({icon, iconColor, message, preset});
@@ -114,11 +131,20 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const height = event.nativeEvent.layout.height;
-    if (height !== toastHeight) {
-      setToastHeight(height);
+
+    if (toastRef.current) {
+      toastRef.current.measureInWindow((x: number, y: number, width: number, height: number) => {
+        const targetLayoutInWindow = {x, y, width, height};
+        setTargetLayoutInWindow(targetLayoutInWindow);
+      });
+    }
+
+    if (height !== toastHeight || targetLayoutInWindow) {
+      const heightDiff = targetLayoutInWindow ? Constants.screenHeight - targetLayoutInWindow.y : 0;
+      setToastHeight(height + heightDiff);
     }
   },
-  [toastHeight]);
+  [toastHeight, targetLayoutInWindow]);
 
   const renderRightElement = () => {
     // NOTE: order does matter
@@ -179,7 +205,6 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     if (!_.isUndefined(children)) {
       return children;
     }
-
     return (
       <PanView
         directions={swipeable ? directions.current : []}
