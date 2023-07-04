@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
+import {render} from '@testing-library/react-native';
 import Text from '../../text';
 import View from '../../view';
 import SortableList from '../index';
-import {ComponentDriver, SortableListItemDriver} from '../../../testkit';
+import {ComponentDriver} from '../../../testkit/new/useComponent.driver';
+import {SortableListItemDriver} from '../SortableListItem.driver.new';
 
 const defaultProps = {
   testID: 'sortableList'
@@ -38,18 +40,14 @@ describe('SortableList', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  afterEach(() => {
-    ComponentDriver.clear();
-    SortableListItemDriver.clear();
-  });
 
   it('SortableList onOrderChange is called - down', async () => {
     const onOrderChange = jest.fn();
-    const component = <TestCase onOrderChange={onOrderChange}/>;
-    const sortableListDriver = new ComponentDriver({component, testID: 'sortableList'});
+    const renderTree = render(<TestCase onOrderChange={onOrderChange}/>);
+    const sortableListDriver = ComponentDriver({renderTree, testID: 'sortableList'});
     expect(await sortableListDriver.exists()).toBeTruthy();
     expect(onOrderChange).toHaveBeenCalledTimes(0);
-    const item1Driver = new SortableListItemDriver({component, testID: 'item1'});
+    const item1Driver = SortableListItemDriver({renderTree, testID: 'item1'});
     expect(await item1Driver.exists()).toBeTruthy();
     await item1Driver.dragDown(1);
     expect(onOrderChange).toHaveBeenCalledTimes(1);
@@ -64,11 +62,11 @@ describe('SortableList', () => {
 
   it('SortableList onOrderChange is called - up', async () => {
     const onOrderChange = jest.fn();
-    const component = <TestCase onOrderChange={onOrderChange}/>;
-    const sortableListDriver = new ComponentDriver({component, testID: 'sortableList'});
+    const renderTree = render(<TestCase onOrderChange={onOrderChange}/>);
+    const sortableListDriver = ComponentDriver({renderTree, testID: 'sortableList'});
     expect(await sortableListDriver.exists()).toBeTruthy();
     expect(onOrderChange).toHaveBeenCalledTimes(0);
-    const item4Driver = new SortableListItemDriver({component, testID: 'item4'});
+    const item4Driver = SortableListItemDriver({renderTree, testID: 'item4'});
     expect(await item4Driver.exists()).toBeTruthy();
     await item4Driver.dragUp(3);
     expect(onOrderChange).toHaveBeenCalledTimes(1);

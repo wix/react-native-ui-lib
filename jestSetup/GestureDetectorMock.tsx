@@ -34,8 +34,8 @@ export class GestureDetectorMock extends React.Component<Props> {
         );
       case 'pan':
         return (
-          <TouchableOpacity
-            onPress={(data) => {
+          <CaptureEvent
+            onPan={(data) => {
               this.props.gesture._handlers.onStart?.(DEFAULT_DATA);
               if (Array.isArray(data)) {
                 data.forEach(info => {
@@ -49,10 +49,19 @@ export class GestureDetectorMock extends React.Component<Props> {
             }}
           >
             {this.props.children}
-          </TouchableOpacity>
+          </CaptureEvent>
         );
       default:
         throw new Error(`Unhandled gesture of type: ${this.props.gesture.type}`);
     }
+  }
+}
+
+class CaptureEvent extends React.Component<{
+  onPan: (event: typeof DEFAULT_DATA) => void;
+  children: JSX.Element;
+}> {
+  render() {
+    return this.props.children;
   }
 }
