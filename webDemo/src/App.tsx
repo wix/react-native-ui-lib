@@ -39,7 +39,7 @@ interface ItemToRender {
   FC: React.FC
 }
 const svgData = `<?xml version="1.0" encoding="UTF-8"?>
-<svg data-bbox="2 2 28 28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="800" width="800" data-type="ugc">
+<svg data-bbox="2 2 28 28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="20" width="20" data-type="ugc">
     <g>
         <defs>
             <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(.893 0 0 .893 -64.139 -782.556)" y2="878.134" x2="105.452" y1="910.226" x1="73.714" id="1c6ca7ff-eba0-4dd0-82e3-63fdfa256791">
