@@ -129,6 +129,15 @@ export default class PickerScreen extends Component {
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
+            // migrateDialog
+            // dialogProps={{
+            //   headerProps: {title: 'DialogNew', subtitle: 'Pick a Language'},
+            //   modalProps: {
+            //     onBackgroundPress: () => {
+            //       console.log(`on bg press new dialog`);
+            //     }
+            //   }
+            // }}
             // containerStyle={{marginTop: 20}}
             // renderPicker={() => {
             //   return (
