@@ -1,5 +1,5 @@
 import {TextProps} from './index';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/useComponent.driver';
+import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
 export const TextDriver = (props: ComponentProps) => {

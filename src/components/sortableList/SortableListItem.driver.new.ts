@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {SortableListItemProps} from './types';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/useComponent.driver';
+import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {useDraggableDriver} from '../../testkit/new/useDraggable.driver';
 
 export const SortableListItemDriver = (props: ComponentProps) => {

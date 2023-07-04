@@ -4,7 +4,7 @@ import {render} from '@testing-library/react-native';
 import Text from '../../text';
 import View from '../../view';
 import SortableList from '../index';
-import {ComponentDriver} from '../../../testkit/new/useComponent.driver';
+import {ComponentDriver} from '../../../testkit/new/Component.driver';
 import {SortableListItemDriver} from '../SortableListItem.driver.new';
 
 const defaultProps = {
@@ -37,10 +37,6 @@ const TestCase = props => {
 };
 
 describe('SortableList', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('SortableList onOrderChange is called - down', async () => {
     const onOrderChange = jest.fn();
     const renderTree = render(<TestCase onOrderChange={onOrderChange}/>);

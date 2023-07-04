@@ -1,5 +1,5 @@
 import {fireEvent} from '@testing-library/react-native';
-import {ComponentDriverResult} from './useComponent.driver';
+import {ComponentDriverResult} from './Component.driver';
 import {PressableProps} from 'react-native';
 
 export interface PressableDriverResult<Props> extends ComponentDriverResult<Props> {
