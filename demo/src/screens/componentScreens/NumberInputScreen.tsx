@@ -143,18 +143,22 @@ const NumberInputScreen = () => {
     }
   }, [exampleType]);
 
+  const textStyle = useMemo(() => {
+    return [styles.mainText, !leadingText && {marginLeft: Spacings.s4}, !trailingText && {marginRight: Spacings.s4}];
+  }, [leadingText, trailingText]);
+
   const textFieldProps = useMemo(() => {
     return {
       label,
       labelStyle: styles.label,
-      style: [styles.mainText, !leadingText && {marginLeft: Spacings.s4}, !trailingText && {marginRight: Spacings.s4}],
+      style: textStyle,
       validate,
       validationMessage,
       validationMessageStyle: Typography.text80M,
       validateOnChange: true,
       centered: true
     };
-  }, [label, leadingText, trailingText, validate, validationMessage]);
+  }, [label, textStyle, validate, validationMessage]);
 
   return (
     <TouchableWithoutFeedback onPress={RNKeyboard.dismiss}>
