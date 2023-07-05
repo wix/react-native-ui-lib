@@ -45,8 +45,12 @@ export function generateOptions(locale: string, fractionDigits: number): Options
   return {localeOptions: generateLocaleOptions(locale), fractionDigits};
 }
 
+function factor(options: Options): number {
+  return Math.pow(10, options.fractionDigits);
+}
+
 export function getInitialNumber(propsInitialNumber = 0, options: Options) {
-  return propsInitialNumber * Math.pow(10, options.fractionDigits);
+  return propsInitialNumber * factor(options);
 }
 
 export function parseInput(text: string, options: Options, initialNumber?: number): NumberInputData {
@@ -59,7 +63,7 @@ export function parseInput(text: string, options: Options, initialNumber?: numbe
 
   number = Number(number.toFixed(options.fractionDigits));
   if (options.fractionDigits > 0) {
-    number /= Math.pow(10, options.fractionDigits);
+    number /= factor(options);
   }
 
   const formattedNumber = formatNumber(number, options);
