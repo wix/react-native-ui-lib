@@ -160,7 +160,6 @@ function NumberInput(props: NumberInputProps, ref: any) {
           {...textFieldProps}
           testID={`${testID}.visual`}
           value={value}
-          onChangeText={onChangeText}
           formatter={formatter}
           floatingPlaceholder={false}
           leadingAccessory={leadingAccessory}
@@ -171,7 +170,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
       </View>
     );
   },
-  [onChangeText, containerStyle, formatter, leadingAccessory, textFieldProps, trailingAccessory, testID]);
+  [containerStyle, formatter, leadingAccessory, textFieldProps, trailingAccessory, testID]);
 
   return (
     <MaskedInput
