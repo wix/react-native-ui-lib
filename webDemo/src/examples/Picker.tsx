@@ -39,7 +39,7 @@ const PickerWrapper = () => {
           onDone();
           toggleModal(false);
         }}
-        width="100%"
+        width="40%"
         height="45%"
         bottom
         useSafeArea
