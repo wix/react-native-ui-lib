@@ -166,7 +166,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
         <TextField
           {...textFieldProps}
           // @ts-expect-error
-          ref={ref => (textField.current = ref)}
+          ref={textField}
           testID={`${testID}.visual`}
           value={value}
           formatter={formatter}
