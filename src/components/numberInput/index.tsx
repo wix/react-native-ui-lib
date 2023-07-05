@@ -1,9 +1,9 @@
 import {isEmpty} from 'lodash';
-import React, {useMemo, useCallback, useState} from 'react';
+import React, {useMemo, useCallback, useState, useRef} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {useDidUpdate, useThemeProps} from 'hooks';
 import MaskedInput from '../maskedInput/new';
-import TextField, {TextFieldProps} from '../../incubator/TextField';
+import TextField, {TextFieldProps, TextFieldRef} from '../../incubator/TextField';
 import View from '../view';
 import Text from '../text';
 import {parseInput, generateOptions, getInitialNumber, Options, NumberInputData} from './Presenter';
@@ -96,6 +96,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
   const initialNumber = getInitialNumber(propsInitialNumber, options);
   const [data, setData] = useState<NumberInputData>(parseInput(`${initialNumber}`, options, propsInitialNumber));
+  const textField = useRef<TextFieldRef>();
 
   useDidUpdate(() => {
     setOptions(generateOptions(locale, fractionDigits));
@@ -152,12 +153,20 @@ function NumberInput(props: NumberInputProps, ref: any) {
     return data?.type === 'valid' ? data.formattedNumber : data?.type === 'error' ? data.userInput : '';
   }, [data]);
 
+  const onBlur = useCallback(() => {
+    if (textFieldProps?.validateOnBlur) {
+      textField.current?.validate();
+    }
+  },
+  [textFieldProps?.validateOnBlur]);
+
   const renderNumberInput = useCallback((value?: string) => {
     return (
       <View row style={containerStyle}>
-        {/* @ts-expect-error ref is somehow required, not sure from where */}
         <TextField
           {...textFieldProps}
+          // @ts-expect-error
+          ref={ref => (textField.current = ref)}
           testID={`${testID}.visual`}
           value={value}
           formatter={formatter}
@@ -181,6 +190,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
       initialValue={initialNumber ? `${initialNumber}` : undefined}
       onChangeText={onChangeText}
       contextMenuHidden={contextMenuHidden}
+      onBlur={onBlur}
     />
   );
 }
