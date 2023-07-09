@@ -21,11 +21,11 @@ export interface HighlightStringProps {
    */
   string: string;
   /**
-   * Callback for when a highlight string is pressed
+   * Callback for when a highlighted substring is pressed
    */
   onPress?: () => void;
   /**
-   * Custom highlight style for this specific highlight string. If not provided, the general @highlightStyle prop style will be used
+   * Custom highlight style for this specific highlighted substring. If not provided, the general `highlightStyle` prop style will be used
    */
   style?: TextStyle;
   testID?: string;
