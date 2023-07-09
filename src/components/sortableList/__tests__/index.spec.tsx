@@ -4,7 +4,7 @@ import {render} from '@testing-library/react-native';
 import Text from '../../text';
 import View from '../../view';
 import SortableList from '../index';
-import {ComponentDriver} from '../../../testkit/new/Component.driver';
+import {SortableListDriver} from '../SortableList.driver.new';
 import {SortableListItemDriver} from '../SortableListItem.driver.new';
 
 const defaultProps = {
@@ -40,7 +40,7 @@ describe('SortableList', () => {
   it('SortableList onOrderChange is called - down', async () => {
     const onOrderChange = jest.fn();
     const renderTree = render(<TestCase onOrderChange={onOrderChange}/>);
-    const sortableListDriver = ComponentDriver({renderTree, testID: 'sortableList'});
+    const sortableListDriver = SortableListDriver({renderTree, testID: 'sortableList'});
     expect(await sortableListDriver.exists()).toBeTruthy();
     expect(onOrderChange).toHaveBeenCalledTimes(0);
     const item1Driver = SortableListItemDriver({renderTree, testID: 'item1'});
@@ -59,7 +59,7 @@ describe('SortableList', () => {
   it('SortableList onOrderChange is called - up', async () => {
     const onOrderChange = jest.fn();
     const renderTree = render(<TestCase onOrderChange={onOrderChange}/>);
-    const sortableListDriver = ComponentDriver({renderTree, testID: 'sortableList'});
+    const sortableListDriver = SortableListDriver({renderTree, testID: 'sortableList'});
     expect(await sortableListDriver.exists()).toBeTruthy();
     expect(onOrderChange).toHaveBeenCalledTimes(0);
     const item4Driver = SortableListItemDriver({renderTree, testID: 'item4'});

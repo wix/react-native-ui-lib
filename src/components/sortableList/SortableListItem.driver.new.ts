@@ -1,7 +1,8 @@
 import _ from 'lodash';
-import {SortableListItemProps} from './types';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {useDraggableDriver} from '../../testkit/new/useDraggable.driver';
+import {SortableListItemProps} from './types';
+import {DEFAULT_LIST_ITEM_HEIGHT} from './SortableListItem';
 
 export const SortableListItemDriver = (props: ComponentProps) => {
   const driver = useDraggableDriver<SortableListItemProps>(useComponentDriver(props));
@@ -10,7 +11,7 @@ export const SortableListItemDriver = (props: ComponentProps) => {
     validateIndices(indices);
     const data = _.times(indices, index => {
       return {
-        translationY: -52 * (index + 1)
+        translationY: -DEFAULT_LIST_ITEM_HEIGHT * (index + 1)
       };
     });
 
@@ -21,7 +22,7 @@ export const SortableListItemDriver = (props: ComponentProps) => {
     validateIndices(indices);
     const data = _.times(indices, index => {
       return {
-        translationY: 52 * (index + 1)
+        translationY: DEFAULT_LIST_ITEM_HEIGHT * (index + 1)
       };
     });
 
