@@ -231,6 +231,13 @@ function WrapperScreenWithText(textProps: {
     text,
     highlightStyle} = textProps;
   return (<View>
-    <Text testID={TEXT_ID} onPress={onPress} highlightString={highlightString} highlightStyle={highlightStyle}>{text ?? TEXT_CONTENT}</Text>
+    <Text
+      testID={TEXT_ID}
+      onPress={onPress}
+      highlightString={highlightString}
+      highlightStyle={highlightStyle}
+    >
+      {text ?? TEXT_CONTENT}
+    </Text>
   </View>);
 }
