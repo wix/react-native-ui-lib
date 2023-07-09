@@ -24,11 +24,17 @@
       "default": "2"
     },
     {"name": "leadingText", "type": "string", "description": "A leading text"},
-    {"name": "leadingTextStyle", "type": "StyleProp<ViewStyle>", "description": "The style of the leading text"},
+    {"name": "leadingTextStyle", "type": "TextStyle", "description": "The style of the leading text"},
     {"name": "trailingText", "type": "string", "description": "A trailing text"},
-    {"name": "trailingTextStyle", "type": "StyleProp<ViewStyle>", "description": "The style of the trailing text"}
+    {"name": "trailingTextStyle", "type": "TextStyle", "description": "The style of the trailing text"},
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Container style of the whole component"},
+    {
+      "name": "contextMenuHidden",
+      "type": "boolean",
+      "description": "If true, context menu is hidden.",
+      "default": true,
+      "note": "Requires @react-native-community/clipboard to be installed."
+    }
   ],
-  "snippet": [
-    "<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'}/>"
-  ]
+  "snippet": ["<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'}/>"]
 }
