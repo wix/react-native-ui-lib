@@ -191,6 +191,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
       onChangeText={onChangeText}
       contextMenuHidden={contextMenuHidden}
       onBlur={onBlur}
+      editable={textFieldProps?.editable}
     />
   );
 }
