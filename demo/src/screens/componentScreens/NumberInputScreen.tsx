@@ -41,9 +41,6 @@ const NumberInputScreen = () => {
         case 'valid':
           newText = currentData.current.formattedNumber;
           break;
-        case 'empty':
-          newText = 'Empty';
-          break;
         case 'error':
           newText = `Error: value '${currentData.current.userInput}' is invalid`;
           break;
@@ -72,18 +69,6 @@ const NumberInputScreen = () => {
       }
     }
   }, [showLabel, exampleType]);
-
-  const placeholder = useMemo(() => {
-    switch (exampleType) {
-      case 'price':
-      default:
-        return 'Price';
-      case 'percentage':
-        return 'Discount';
-      case 'number':
-        return 'Any number';
-    }
-  }, [exampleType]);
 
   const fractionDigits = useMemo(() => {
     switch (exampleType) {
@@ -158,9 +143,26 @@ const NumberInputScreen = () => {
     }
   }, [exampleType]);
 
+  const textStyle = useMemo(() => {
+    return [styles.mainText, !leadingText && {marginLeft: Spacings.s4}, !trailingText && {marginRight: Spacings.s4}];
+  }, [leadingText, trailingText]);
+
+  const textFieldProps = useMemo(() => {
+    return {
+      label,
+      labelStyle: styles.label,
+      style: textStyle,
+      validate,
+      validationMessage,
+      validationMessageStyle: Typography.text80M,
+      validateOnChange: true,
+      centered: true
+    };
+  }, [label, textStyle, validate, validationMessage]);
+
   return (
     <TouchableWithoutFeedback onPress={RNKeyboard.dismiss}>
-      <View flex centerH>
+      <View centerH>
         <Text text40 margin-s10>
           Number Input
         </Text>
@@ -174,30 +176,19 @@ const NumberInputScreen = () => {
           ],
           {state: exampleType, setState: setExampleType})}
 
-        <View flex center>
+        <View marginT-50 centerH>
           <NumberInput
             key={exampleType}
-            // initialNumber={100}
-            label={label}
-            labelStyle={styles.label}
-            placeholder={placeholder}
+            // initialNumber={12.1}
+            // contextMenuHidden={false}
+            textFieldProps={textFieldProps}
             fractionDigits={fractionDigits}
             onChangeNumber={onChangeNumber}
             leadingText={leadingText}
             leadingTextStyle={leadingText && [styles.infoText, {marginLeft: Spacings.s4}]}
             trailingText={trailingText}
             trailingTextStyle={trailingText && [styles.infoText, {marginRight: Spacings.s4}]}
-            style={[
-              styles.mainText,
-              !leadingText && {marginLeft: Spacings.s4},
-              !trailingText && {marginRight: Spacings.s4}
-            ]}
             containerStyle={styles.containerStyle}
-            validate={validate}
-            validationMessage={validationMessage}
-            validationMessageStyle={Typography.text80M}
-            validateOnChange
-            centered
           />
           <Text marginT-s5>{text}</Text>
         </View>

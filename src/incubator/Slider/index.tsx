@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useImperativeHandle, useCallback, useMemo, useEffect, ReactElement} from 'react';
-import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps} from 'react-native';
+import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -16,7 +16,7 @@ import {
 import Thumb from './Thumb';
 import Track from './Track';
 
-export type SliderProps = {
+export interface SliderProps extends AccessibilityProps {
   /**
    * Initial value
    */

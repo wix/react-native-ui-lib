@@ -5,7 +5,6 @@ import React, {
   useState,
   useImperativeHandle,
   forwardRef,
-  ReactElement,
   ForwardedRef
 } from 'react';
 import _ from 'lodash';
@@ -22,7 +21,7 @@ export interface MaskedInputProps extends Omit<TextInputProps, 'value'> {
   /**
    * callback for rendering the custom input out of the value returns from the actual input
    */
-  renderMaskedText?: ReactElement;
+  renderMaskedText?: (value?: string) => JSX.Element | undefined;
   /**
    * Custom formatter for the input value
    */
@@ -30,7 +29,7 @@ export interface MaskedInputProps extends Omit<TextInputProps, 'value'> {
   /**
    * container style for the masked input container
    */
-  containerStyle: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 /**
