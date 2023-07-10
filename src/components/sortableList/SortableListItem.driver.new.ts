@@ -15,7 +15,7 @@ export const SortableListItemDriver = (props: ComponentProps) => {
       };
     });
 
-    driver.draggable.drag(data);
+    driver.drag(data);
   };
 
   const dragDown = async (indices: number) => {
@@ -26,7 +26,7 @@ export const SortableListItemDriver = (props: ComponentProps) => {
       };
     });
 
-    driver.draggable.drag(data);
+    driver.drag(data);
   };
 
   const validateIndices = (indices: number) => {

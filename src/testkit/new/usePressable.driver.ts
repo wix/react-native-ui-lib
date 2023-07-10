@@ -3,16 +3,14 @@ import {ComponentDriverResult} from './Component.driver';
 import {PressableProps} from 'react-native';
 
 export interface PressableDriverResult<Props> extends ComponentDriverResult<Props> {
-  pressable: {
-    press: () => void;
-    hasOnPress: () => boolean;
-    onPressIn: () => void;
-    hasOnPressIn: () => boolean;
-    onPressOut: () => void;
-    hasOnPressOut: () => boolean;
-    onLongPress: () => void;
-    hasOnLongPress: () => boolean;
-  };
+  press: () => void;
+  hasOnPress: () => boolean;
+  onPressIn: () => void;
+  hasOnPressIn: () => boolean;
+  onPressOut: () => void;
+  hasOnPressOut: () => boolean;
+  onLongPress: () => void;
+  hasOnLongPress: () => boolean;
 }
 
 export type PressableDriverProps = Partial<
@@ -59,6 +57,13 @@ export const usePressableDriver = <
 
   return {
     ...driver,
-    pressable: {press, hasOnPress, onPressIn, hasOnPressIn, onPressOut, hasOnPressOut, onLongPress, hasOnLongPress}
+    press,
+    hasOnPress,
+    onPressIn,
+    hasOnPressIn,
+    onPressOut,
+    hasOnPressOut,
+    onLongPress,
+    hasOnLongPress
   };
 };

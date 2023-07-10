@@ -32,7 +32,7 @@ describe('Text', () => {
       const renderTree = render(<WrapperScreenWithText onPress={onPressCallback}/>);
       const textDriver = TextDriver({renderTree, testID: TEXT_ID});
 
-      textDriver.pressable.press();
+      textDriver.press();
 
       expect(onPressCallback).toHaveBeenCalledTimes(1);
     });
@@ -40,7 +40,7 @@ describe('Text', () => {
     it('should not be pressable if onPress prop is not supplied', () => {
       const renderTree = render(<WrapperScreenWithText/>);
       const textDriver = TextDriver({renderTree, testID: TEXT_ID});
-      expect(textDriver.pressable.hasOnPress()).toBeFalsy();
+      expect(textDriver.hasOnPress()).toBeFalsy();
     });
   });
 });

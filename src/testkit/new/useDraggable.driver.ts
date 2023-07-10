@@ -13,9 +13,7 @@ export type DragEvent = {
 };
 
 export interface DraggableDriverResult<Props> extends ComponentDriverResult<Props> {
-  draggable: {
-    drag: (distanceOrEvent: DragEvent | DragEvent[] | number) => void;
-  };
+  drag: (distanceOrEvent: DragEvent | DragEvent[] | number) => void;
 }
 
 export const useDraggableDriver = <
@@ -39,6 +37,6 @@ export const useDraggableDriver = <
 
   return {
     ...driver,
-    draggable: {drag}
+    drag
   };
 };
