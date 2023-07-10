@@ -7,7 +7,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 
-export interface ColorExtraData {
+export interface ColorInfo {
   index?: number;
   tintColor?: string;
   /**
@@ -41,7 +41,7 @@ interface Props {
   /**
    * onPress callback
    */
-  onPress?: (value: string, extraData: ColorExtraData) => void;
+  onPress?: (value: string, colorInfo: ColorInfo) => void;
   index?: number;
   style?: StyleProp<ViewStyle>;
   testID?: string;

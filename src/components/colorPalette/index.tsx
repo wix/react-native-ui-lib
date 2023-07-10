@@ -8,7 +8,7 @@ import View from '../view';
 import Carousel from '../carousel';
 import ScrollBar from '../scrollBar';
 import PageControl from '../pageControl';
-import ColorSwatch, {ColorSwatchProps, ColorExtraData, SWATCH_SIZE, SWATCH_MARGIN} from '../colorSwatch';
+import ColorSwatch, {ColorSwatchProps, ColorInfo, SWATCH_SIZE, SWATCH_MARGIN} from '../colorSwatch';
 
 interface Props {
   /**
@@ -261,8 +261,8 @@ class ColorPalette extends PureComponent<Props, State> {
     this.setState({currentPage: index});
   };
 
-  onValueChange = (value: string, extraData: ColorExtraData) => {
-    this.props.onValueChange?.(value, extraData);
+  onValueChange = (value: string, colorInfo: ColorInfo) => {
+    this.props.onValueChange?.(value, colorInfo);
   };
 
   getHorizontalMargins = (index: number) => {
