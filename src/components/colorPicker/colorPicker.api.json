@@ -22,7 +22,7 @@
     },
     {
       "name": "onValueChange",
-      "type": "(color: string, extraData: ColorExtraData) => void",
+      "type": "(value: string, extraData: ColorExtraData) => void",
       "description": "Callback for the picker's color palette change"
     },
     {
