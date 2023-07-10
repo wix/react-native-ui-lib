@@ -41,7 +41,7 @@ interface Props {
   /**
    * onPress callback
    */
-  onPress?: (color: string, extraData: ColorExtraData) => void;
+  onPress?: (value: string, extraData: ColorExtraData) => void;
   index?: number;
   style?: StyleProp<ViewStyle>;
   testID?: string;

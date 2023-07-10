@@ -261,8 +261,8 @@ class ColorPalette extends PureComponent<Props, State> {
     this.setState({currentPage: index});
   };
 
-  onValueChange = (color: string, extraData: ColorExtraData) => {
-    this.props.onValueChange?.(color, extraData);
+  onValueChange = (value: string, extraData: ColorExtraData) => {
+    this.props.onValueChange?.(value, extraData);
   };
 
   getHorizontalMargins = (index: number) => {

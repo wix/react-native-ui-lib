@@ -44,12 +44,12 @@ export default class ColorPickerScreen extends Component<{}, State> {
     this.setState({color, textColor, customColors: _.clone(customColors), paletteChange: false});
   };
 
-  onValueChange = (color: string, extraData: ColorExtraData) => {
-    this.setState({color, textColor: extraData?.tintColor, paletteChange: false});
+  onValueChange = (value: string, extraData: ColorExtraData) => {
+    this.setState({color: value, textColor: extraData?.tintColor, paletteChange: false});
   };
 
-  onPaletteValueChange = (color: string, extraData: ColorExtraData) => {
-    this.setState({color, textColor: extraData?.tintColor, paletteChange: true});
+  onPaletteValueChange = (value: string, extraData: ColorExtraData) => {
+    this.setState({color: value, textColor: extraData?.tintColor, paletteChange: true});
   };
 
   render() {

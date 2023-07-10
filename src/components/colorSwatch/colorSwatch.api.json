@@ -16,7 +16,7 @@
     {"name": "color", "type": "string", "description": "The color of the ColorSwatch"},
     {"name": "selected", "type": "boolean", "description": "Is the initial state is selected"},
     {"name": "animated", "type": "boolean", "description": "Is first render should be animated"},
-    {"name": "onPress", "type": "(color: string, extraData: ColorExtraData) => void", "description": "Callback from press event"},
+    {"name": "onPress", "type": "(value: string, extraData: ColorExtraData) => void", "description": "Callback from press event"},
     {"name": "index", "type": "number", "description": "The index of the Swatch if in array"},
     {"name": "style", "type": "ViewStyle", "description": "Component's style"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"},
