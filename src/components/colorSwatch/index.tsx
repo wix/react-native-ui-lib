@@ -7,6 +7,15 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 
+export interface ColorInfo {
+  index?: number;
+  tintColor?: string;
+  /**
+   * The color result with 6 characters (#FFFFFF and never #FFF)
+   */
+  hexString: string;
+}
+
 interface Props {
   /**
    * The identifier value of the ColorSwatch in a ColorSwatch palette.
@@ -32,7 +41,7 @@ interface Props {
   /**
    * onPress callback
    */
-  onPress?: (value: string, options: object) => void;
+  onPress?: (value: string, colorInfo: ColorInfo) => void;
   index?: number;
   style?: StyleProp<ViewStyle>;
   testID?: string;
@@ -111,7 +120,9 @@ class ColorSwatch extends PureComponent<Props> {
   onPress = () => {
     const {color = '', value, index} = this.props;
     const tintColor = this.getTintColor(value);
-    this.props.onPress?.(value || color, {tintColor, index});
+    const result = value || color;
+    const hexString = Colors.getHexString(result);
+    this.props.onPress?.(result, {tintColor, index, hexString});
   };
 
   getTintColor(color?: string) {
