@@ -196,10 +196,15 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [fieldType, preset, themeProps.trailingAccessory]);
 
-  const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({visible, toggleExpandable}) => {
+  const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
+    visible,
+    closeExpandable,
+    toggleExpandable
+  }) => {
     if (renderCustomModal) {
       const modalProps = {
         visible,
+        closeModal: closeExpandable,
         toggleModal: toggleExpandable,
         onSearchChange: _onSearchChange,
         children,
