@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Image from '../image';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
-const EMPTY_STYLE = '{}';
 const DEFAULT_SIZE = 16;
 export interface SvgImageProps {
   /**
@@ -14,18 +13,21 @@ export interface SvgImageProps {
 }
 
 function SvgImage(props: SvgImageProps) {
-  const {data, style = {}, tintColor, ...others} = props;
-  const [svgStyleCss, setSvgStyleCss] = useState<string>(EMPTY_STYLE);
+  const {data, style = [], tintColor, ...others} = props;
+  const [svgStyleCss, setSvgStyleCss] = useState<string | undefined>(undefined);
   const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
+  
+  let styleObj = JSON.parse(JSON.stringify(style));
 
-  const styleObj = JSON.parse(JSON.stringify(style));
-
-  const createStyleSvgCss = async (PostCssPackage: {postcss: any; cssjs: any}) => {
+  const createStyleSvgCss = async (PostCssPackage: {postcss: any; cssjs: any}, styleObj?: Record<string, any>) => {
     setPostCssStyleCalled(true);
     const {postcss, cssjs} = PostCssPackage;
     postcss()
       .process(styleObj, {parser: cssjs})
-      .then((style: {css: any}) => setSvgStyleCss(`{${style.css}}`));
+      .then((style: {css: any}) => {
+        const svgPathCss = (styleObj?.tintColor) ? `svg path {fill: ${styleObj?.tintColor}}` : '';
+        setSvgStyleCss(`svg {${style.css}} ${svgPathCss}}`);
+      });
   };
 
   if (isSvgUri(data)) {
@@ -44,21 +46,24 @@ function SvgImage(props: SvgImageProps) {
     }
     return <img {...others} src={data} style={styleObj}/>;
   } else if (data) {
+    styleObj = Object.assign({}, ...(style || []));
     const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
     if (PostCssPackage) {
       if (!postCssStyleCalled) {
-        createStyleSvgCss(PostCssPackage);
+        createStyleSvgCss(PostCssPackage, styleObj);
         return null;
       }
-      const svgStyleTag = `<style> svg ${svgStyleCss} </style>`;
-
-      return (
-        <div
-          {...others}
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
-        />
-      );
+      
+      if (svgStyleCss) {
+        const svgStyleTag = `<style> ${svgStyleCss} </style>`;
+        return (
+          <div
+            {...others}
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
+          />
+        );
+      }
     }
   }
   return null;
