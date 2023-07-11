@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {StyleSheet} from 'react-native';
 import Image from '../image';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
@@ -16,8 +17,6 @@ function SvgImage(props: SvgImageProps) {
   const {data, style = [], tintColor, ...others} = props;
   const [svgStyleCss, setSvgStyleCss] = useState<string | undefined>(undefined);
   const [postCssStyleCalled, setPostCssStyleCalled] = useState(false);
-  
-  let styleObj = JSON.parse(JSON.stringify(style));
 
   const createStyleSvgCss = async (PostCssPackage: {postcss: any; cssjs: any}, styleObj?: Record<string, any>) => {
     setPostCssStyleCalled(true);
@@ -31,7 +30,7 @@ function SvgImage(props: SvgImageProps) {
   };
 
   if (isSvgUri(data)) {
-    return <img {...others} src={data.uri} style={styleObj}/>;
+    return <img {...others} src={data.uri} style={StyleSheet.flatten(style)}/>;
   } else if (isBase64ImageContent(data)) {
     if (tintColor) {
       return (
@@ -44,13 +43,13 @@ function SvgImage(props: SvgImageProps) {
         />
       );
     }
-    return <img {...others} src={data} style={styleObj}/>;
+    return <img {...others} src={data} style={StyleSheet.flatten(style)}/>;
   } else if (data) {
-    styleObj = Object.assign({}, ...(style || []));
+    
     const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
     if (PostCssPackage) {
       if (!postCssStyleCalled) {
-        createStyleSvgCss(PostCssPackage, styleObj);
+        createStyleSvgCss(PostCssPackage, StyleSheet.flatten(style));
         return null;
       }
       
