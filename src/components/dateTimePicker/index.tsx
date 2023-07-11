@@ -130,8 +130,6 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     onChange,
     dialogProps,
     headerStyle,
-    // @ts-expect-error
-    useCustomTheme,
     testID,
     migrateTextField = true,
     ...others
@@ -240,7 +238,6 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         <Button
           link
           iconSource={Assets.icons.check}
-          useCustomTheme={useCustomTheme}
           onPress={onDonePressed}
           testID={`${testID}.done`}
         />

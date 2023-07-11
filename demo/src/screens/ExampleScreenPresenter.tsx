@@ -53,7 +53,6 @@ export function renderBooleanOption(title: string,
         {title}
       </Text>
       <Switch
-        useCustomTheme
         key={key}
         testID={key}
         value={value}
@@ -84,7 +83,6 @@ export function renderBooleanGroup(title: string, options: string[]) {
             <View spread centerH row key={key}>
               <Checkbox
                 marginR-s2
-                useCustomTheme
                 key={key}
                 testID={key}
                 value={value}
@@ -125,7 +123,6 @@ export function renderRadioGroup(title: string,
         {_.map(options, (value, key) => {
           return (
             <RadioButton
-              useCustomTheme
               testID={key}
               key={key}
               marginB-s2
