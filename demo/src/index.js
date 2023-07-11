@@ -210,6 +210,9 @@ module.exports = {
       get SpacingsScreen() {
         return require('./screens/foundationScreens/SpacingsScreen').default;
       },
+      get RTLScreen() {
+        return require('./screens/foundationScreens/RTLScreen').default;
+      },
       // animationScreens
       get CardScannerScreen() {
         return require('./screens/componentScreens/CardScannerScreen').default;
