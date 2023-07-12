@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated, StyleProp} from 'react-native';
-import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -9,7 +9,8 @@ import {
   MarginModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  FlexModifiers
+  FlexModifiers,
+  Constants
 } from '../../commons/new';
 import {RecorderProps} from '../../../typings/recorderTypes';
 import {Colors} from 'style';
@@ -157,7 +158,9 @@ class Text extends PureComponent<PropsTypes> {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    color: Colors.$textDefault
+    color: Colors.$textDefault,
+    // textAlign: 'left'
+    writingDirection: Constants.isRTL ? 'rtl' : 'ltr'
   },
   centered: {
     textAlign: 'center'
