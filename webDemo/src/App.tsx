@@ -358,14 +358,14 @@ function App() {
   return (
     <View flex>
       <ScrollView>
-        <View style={styles.header}>
+        <View padding-page>
           <Text style={styles.title}>Welcome to react-native-ui-lib for Web</Text>
         </View>
 
         {
           itemsToRender.map(({title, FC}: ItemToRender) =>
             (
-              <View style={styles.componentContainer} key={'component_' + title}>
+              <View bg-grey80 paddingT-s5 paddingB-s5 center style={styles.componentContainer} key={'component_' + title}>
                 <Text style={styles.compTitle}> {title} </Text>
                 <FC/>
               </View>
@@ -387,14 +387,9 @@ const styles = StyleSheet.create({
     padding: 20
   },
   componentContainer: {
-    backgroundColor: '#F5FCFF',
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
     borderColor: 'white',
-    borderBottomWidth: 5,
-    paddingBottom: 20,
-    paddingTop: 20
+    borderBottomWidth: 5
   },
   compTitle: {
     fontWeight: 'bold',
@@ -409,4 +404,5 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+
 export default App;
