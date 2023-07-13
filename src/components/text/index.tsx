@@ -16,6 +16,11 @@ import {RecorderProps} from '../../../typings/recorderTypes';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
 
+enum writingDirectionTypes {
+  RTL = 'rtl',
+  LTR = 'ltr'
+}
+
 export type TextProps = RNTextProps &
   TypographyModifiers &
   ColorsModifiers &
@@ -160,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: Colors.$textDefault,
     // textAlign: 'left'
-    writingDirection: Constants.isRTL ? 'rtl' : 'ltr'
+    writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR
   },
   centered: {
     textAlign: 'center'
