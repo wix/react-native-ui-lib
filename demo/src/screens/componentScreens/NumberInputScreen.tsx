@@ -161,8 +161,8 @@ const NumberInputScreen = () => {
   }, [label, textStyle, validate, validationMessage]);
 
   return (
-    <TouchableWithoutFeedback onPress={RNKeyboard.dismiss}>
-      <View centerH>
+    <TouchableWithoutFeedback style={{flex: 1}} onPress={RNKeyboard.dismiss}>
+      <View centerH flex>
         <Text text40 margin-s10>
           Number Input
         </Text>
