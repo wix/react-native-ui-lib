@@ -24,6 +24,8 @@ export interface InternalSortableListItemProps {
 
 type Props = PropsWithChildren<InternalSortableListItemProps>;
 
+export const DEFAULT_LIST_ITEM_HEIGHT = 52;
+
 const animationConfig = {
   easing: Easing.inOut(Easing.ease),
   duration: 350

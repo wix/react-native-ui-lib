@@ -12,3 +12,4 @@ export {RadioButtonDriver} from '../components/radioButton/RadioButton.driver';
 export {RadioGroupDriver} from '../components/radioGroup/RadioGroup.driver';
 export {SortableListItemDriver} from '../components/sortableList/SortableListItem.driver';
 export {SliderDriver} from '../components/slider/slider.driver';
+export {SliderDriver as IncubatorSliderDriver} from '../incubator/Slider/Slider.driver';
