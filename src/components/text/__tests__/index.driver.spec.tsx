@@ -1,44 +1,46 @@
 import React from 'react';
+import {render} from '@testing-library/react-native';
 import View from '../../view';
 import Text from '../index';
-import {TextDriver} from '../Text.driver';
+import {TextDriver} from '../Text.driver.new';
 
 const TEXT_ID = 'text_test_id';
 const TEXT_CONTENT = 'text content';
-describe('Text', () => {
-  afterEach(() => {
-    TextDriver.clear();
-  });
 
-  it('should render Text Component', async () => {
-    const component = WrapperScreenWithText();
-    const textDriver = new TextDriver({component, testID: TEXT_ID});
-    const content = await textDriver.getTextContent();
+function WrapperScreenWithText(textProps: {onPress?: jest.Mock} = {}) {
+  const {onPress} = textProps;
+  return (
+    <View>
+      <Text testID={TEXT_ID} onPress={onPress}>
+        {TEXT_CONTENT}
+      </Text>
+    </View>
+  );
+}
+
+describe('Text', () => {
+  it('should render Text Component', () => {
+    const renderTree = render(<WrapperScreenWithText/>);
+    const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+    const content = textDriver.getText();
     expect(content).toEqual(TEXT_CONTENT);
   });
 
   describe('onPress', () => {
-    it('should press the text, and run callback', async () => {
+    it('should press the text, and run callback', () => {
       const onPressCallback = jest.fn();
-      const component = WrapperScreenWithText({onPress: onPressCallback});
-      const textDriver = new TextDriver({component, testID: TEXT_ID});
+      const renderTree = render(<WrapperScreenWithText onPress={onPressCallback}/>);
+      const textDriver = TextDriver({renderTree, testID: TEXT_ID});
 
-      await textDriver.press();
+      textDriver.press();
 
       expect(onPressCallback).toHaveBeenCalledTimes(1);
     });
 
-    it('should not be pressable if onPress prop is not supplied', async () => {
-      const component = WrapperScreenWithText();
-      const textDriver = new TextDriver({component, testID: TEXT_ID});
-      expect(await textDriver.isPressable()).toBeFalsy();
+    it('should not be pressable if onPress prop is not supplied', () => {
+      const renderTree = render(<WrapperScreenWithText/>);
+      const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+      expect(textDriver.hasOnPress()).toBeFalsy();
     });
   });
 });
-
-function WrapperScreenWithText(textProps: {onPress?: jest.Mock} = {}) {
-  const {onPress} = textProps;
-  return (<View>
-    <Text testID={TEXT_ID} onPress={onPress} >{TEXT_CONTENT}</Text>
-  </View>);
-}
