@@ -30,10 +30,10 @@ function isHighlightStringProps(highlightString: HighlightString): highlightStri
 }
 
 function getTextPartsByHighlight(targetString = '', highlightString: HighlightString = ''): TextPartByHighlight[] {
-  if (highlightString === '') {
+  const stringValue = getHighlightStringValue(highlightString);
+  if (stringValue === '') {
     return [{string: targetString, shouldHighlight: false}];
   }
-  const stringValue = getHighlightStringValue(highlightString);
   const textParts = [];
   let highlightIndex;
   do {

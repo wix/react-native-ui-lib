@@ -56,7 +56,7 @@ export type TextProps = RNTextProps &
      */
     underline?: boolean;
     /**
-     * Substring to highlight. Can be a simple string of a HighlightStringProps object, or an array of the above
+     * Substring to highlight. Can be a simple string or a HighlightStringProps object, or an array of the above
      */
     highlightString?: HighlightString | HighlightString[];
     /**
