@@ -1,9 +1,10 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useRef} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {useDidUpdate, useThemeProps} from 'hooks';
+import {useDidUpdate, useThemeProps} from '../../hooks';
+import {Colors} from '../../style';
 import MaskedInput from '../maskedInput/new';
-import TextField, {FieldContextType, TextFieldProps, TextFieldRef} from '../../incubator/TextField';
+import TextField, {TextFieldProps, TextFieldRef} from '../../incubator/TextField';
 import View from '../view';
 import Text from '../text';
 import {parseInput, generateOptions, getInitialNumber, Options, NumberInputData} from './Presenter';
@@ -165,13 +166,9 @@ function NumberInput(props: NumberInputProps, ref: any) {
     setIsFocused(true);
   }, []);
 
-  const dynamicFieldStyle = useCallback((context: FieldContextType, presetProps: {preset: TextFieldProps['preset']}) => {
-    const newContext = {...context, isFocused};
-    return textFieldProps?.dynamicFieldStyle
-      ? textFieldProps?.dynamicFieldStyle(newContext, presetProps)
-      : undefined;
-  },
-  [isFocused, textFieldProps?.dynamicFieldStyle]);
+  const dynamicFieldStyle = useCallback(() => {
+    return isFocused ? {borderBottomColor: Colors.$outlinePrimary} : undefined;
+  }, [isFocused]);
 
   const renderNumberInput = useCallback((value?: string) => {
     return (
