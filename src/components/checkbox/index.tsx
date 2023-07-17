@@ -210,17 +210,16 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   };
 
   getBorderStyle() {
-    const errorColor = !this.state.isValid && Colors.$outlineDanger;
-    const borderColor = {borderColor: errorColor || this.getColor()};
+    const borderColor = {borderColor: this.state.isValid ? this.getColor() : Colors.$outlineDanger};
     const borderStyle = [this.styles.container, {borderWidth: DEFAULT_BORDER_WIDTH}, borderColor];
 
     return borderStyle;
   }
 
   getLabelStyle = () => {
-    const errorColor = !this.state.isValid && Colors.$textDangerLight;
     return {
-      color: this.props.disabled ? Colors.$textDisabled : errorColor || Colors.$textDefault
+      color: 
+        this.props.disabled ? Colors.$textDisabled : this.state.isValid ? Colors.$textDefault : Colors.$textDangerLight
     };
   };
 
