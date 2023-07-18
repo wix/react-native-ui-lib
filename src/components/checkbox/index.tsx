@@ -87,13 +87,14 @@ export interface CheckboxProps extends TouchableOpacityProps {
 
 interface CheckboxMethods {
   validate: () => void;
+  isValid: () => boolean;
 }
 
 export type CheckboxRef = Checkbox & CheckboxMethods;
 
 interface CheckboxState {
   isChecked: Animated.Value;
-  isValid?: boolean;
+  valid?: boolean;
 }
 
 /**
@@ -130,7 +131,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
     this.state = {
       isChecked: new Animated.Value(this.props.value ? 1 : 0),
-      isValid: true
+      valid: true
     };
 
     this.styles = createStyles(props);
@@ -184,7 +185,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
     if (!disabled) {
       if (this.validationState) {
-        this.setState({isValid: !this.props.value});
+        this.setState({valid: !this.props.value});
       }
       this.props.onValueChange?.(!this.props.value);
     }
@@ -210,7 +211,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   };
 
   getBorderStyle() {
-    const borderColor = {borderColor: this.state.isValid ? this.getColor() : Colors.$outlineDanger};
+    const borderColor = {borderColor: this.state.valid ? this.getColor() : Colors.$outlineDanger};
     const borderStyle = [this.styles.container, {borderWidth: DEFAULT_BORDER_WIDTH}, borderColor];
 
     return borderStyle;
@@ -219,7 +220,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   getLabelStyle = () => {
     return {
       color: 
-        this.props.disabled ? Colors.$textDisabled : this.state.isValid ? Colors.$textDefault : Colors.$textDangerLight
+        this.props.disabled ? Colors.$textDisabled : this.state.valid ? Colors.$textDefault : Colors.$textDangerLight
     };
   };
 
@@ -273,8 +274,12 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     this.validationState = true;
     // Validation: value must be true (checked)
     if (!this.props.disabled && !this.props.value) {
-      this.setState({isValid: false});
+      this.setState({valid: false});
     }
+  }
+
+  isValid() {
+    return this.state.valid;
   }
 }
 
