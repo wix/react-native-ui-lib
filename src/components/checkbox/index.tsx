@@ -271,6 +271,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   validate() {
     this.validationState = true;
+    // Validation: value must be true (checked)
     if (!this.props.disabled && !this.props.value) {
       this.setState({isValid: false});
     }
