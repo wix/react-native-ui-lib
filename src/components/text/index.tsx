@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated, StyleProp} from 'react-native';
-import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -9,11 +9,17 @@ import {
   MarginModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  FlexModifiers
+  FlexModifiers,
+  Constants
 } from '../../commons/new';
 import {RecorderProps} from '../../../typings/recorderTypes';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
+
+enum writingDirectionTypes {
+  RTL = 'rtl',
+  LTR = 'ltr'
+}
 
 export interface HighlightStringProps {
   /**
@@ -177,8 +183,9 @@ class Text extends PureComponent<PropsTypes> {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    textAlign: 'left',
-    color: Colors.$textDefault
+    color: Colors.$textDefault,
+    // textAlign: 'left'
+    writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR // iOS only
   },
   centered: {
     textAlign: 'center'

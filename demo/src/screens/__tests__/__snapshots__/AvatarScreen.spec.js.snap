@@ -36,7 +36,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -159,7 +159,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -289,7 +289,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
-                  "textAlign": "left",
+                  "writingDirection": "ltr",
                 },
                 {
                   "fontFamily": "System",
@@ -342,7 +342,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -444,7 +444,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
-                  "textAlign": "left",
+                  "writingDirection": "ltr",
                 },
                 undefined,
                 undefined,
@@ -514,7 +514,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
-                  "textAlign": "left",
+                  "writingDirection": "ltr",
                 },
                 {
                   "fontFamily": "System",
@@ -567,7 +567,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -669,7 +669,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
-                  "textAlign": "left",
+                  "writingDirection": "ltr",
                 },
                 undefined,
                 undefined,
@@ -797,7 +797,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -1048,7 +1048,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -1299,7 +1299,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -1501,7 +1501,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -1752,7 +1752,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -2047,7 +2047,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -2231,7 +2231,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -2338,7 +2338,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
-                  "textAlign": "left",
+                  "writingDirection": "ltr",
                 },
                 undefined,
                 undefined,
@@ -2457,7 +2457,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -2564,7 +2564,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
-                  "textAlign": "left",
+                  "writingDirection": "ltr",
                 },
                 undefined,
                 undefined,
@@ -2683,7 +2683,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -2867,7 +2867,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
-              "textAlign": "left",
+              "writingDirection": "ltr",
             },
             undefined,
             {
@@ -2969,7 +2969,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
-                  "textAlign": "left",
+                  "writingDirection": "ltr",
                 },
                 undefined,
                 undefined,
@@ -3079,7 +3079,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
-                    "textAlign": "left",
+                    "writingDirection": "ltr",
                   },
                   undefined,
                   undefined,
