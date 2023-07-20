@@ -296,10 +296,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   isValid() {
-    const {validationState, isValid} = this.state;
-    if (validationState) {
-      return isValid;
-    }
+    return this.state.isValid;
   }
 }
 
