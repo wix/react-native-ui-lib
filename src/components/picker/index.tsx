@@ -89,7 +89,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     migrate = true,
     migrateTextField = true,
     migrateDialog,
-    dialogProps,
     accessibilityLabel,
     accessibilityHint,
     items: propItems,
@@ -291,7 +290,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         ref={pickerExpandable}
         useDialog={useWheelPicker}
         modalProps={modalProps}
-        dialogProps={dialogProps ? {...dialogProps, ...DIALOG_PROPS} : DIALOG_PROPS}
+        dialogProps={DIALOG_PROPS}
         migrateDialog={migrateDialog}
         expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}

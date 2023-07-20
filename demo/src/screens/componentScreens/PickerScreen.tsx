@@ -125,28 +125,9 @@ export default class PickerScreen extends Component {
             label="Wheel Picker"
             placeholder="Pick a Language"
             useWheelPicker
-            // useWheelPicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
-            // migrateDialog
-            // dialogProps={{
-            //   headerProps: {title: 'DialogNew', subtitle: 'Pick a Language'},
-            //   modalProps: {
-            //     onBackgroundPress: () => {
-            //       console.log(`on bg press new dialog`);
-            //     }
-            //   }
-            // }}
-            // containerStyle={{marginTop: 20}}
-            // renderPicker={() => {
-            //   return (
-            //     <View>
-            //       <Text>Open Native Picker!</Text>
-            //     </View>
-            //   );
-            // }}
-            // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
           >
             {_.map(options, option => (
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>

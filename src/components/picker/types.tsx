@@ -5,8 +5,6 @@ import {ModalTopBarProps} from '../modal/TopBar';
 // TODO: Replace with new TextField Props after migration to new TextField has completed
 // import {TextFieldProps} from '../../../typings/components/Inputs';
 import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../../incubator/TextField';
-import {DialogProps as DialogPropsOld} from '../dialog';
-import {DialogProps as DialogPropsNew} from '../../incubator/Dialog';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -64,10 +62,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      * Migrate the Dialog to DialogNew (make sure you use only new props in dialogProps)
      */
     migrateDialog?: boolean;
-    /**
-     * The props to pass to the dialog expandable container
-     */
-    dialogProps?: DialogPropsOld | DialogPropsNew;
     /**
      * Pass for different field type UI (form, filter or settings)
      */
