@@ -10,11 +10,31 @@ export default class CheckboxScreen extends Component {
     value4: true,
     value5: false,
     value6: false,
-    value7: false
+    value7: false,
+    validationText: '',
+    validationColor: Colors.$textDefault
   };
   checkbox = React.createRef<CheckboxRef>();
   checkbox1 = React.createRef<CheckboxRef>();
 
+  onPress = () => {
+    this.checkbox.current?.validate();
+  };
+
+  onValueChange = (value: boolean) => {
+    this.setState({value7: value}, () => {
+      // isValid checks against props.value, which have not been updated yet as this is an controlled component
+      console.log('onValueChange new value isValid: ', this.checkbox.current?.isValid());
+    });
+  };
+
+  onChangeValidity = (value?: boolean) => {
+    this.setState({
+      validationText: value === true ? 'Valid' : 'Not valid',
+      validationColor: value === true ? Colors.$textSuccess : Colors.$textDangerLight
+    });
+  };
+  
   render() {
     return (
       <View flex padding-page>
@@ -75,25 +95,17 @@ export default class CheckboxScreen extends Component {
           <Text text60 $textDefault marginB-10>
             Validation
           </Text>
-          <View row spread marginB-10>
+          <Text marginB-4 color={this.state.validationColor}>{this.state.validationText}</Text>
+          <View row centerV spread marginB-10>
             <Checkbox
+              required
+              onChangeValidity={this.onChangeValidity}
               ref={this.checkbox}
               value={this.state.value7}
-              onValueChange={value7 => this.setState({value7})}
+              onValueChange={this.onValueChange}
               label={'This is a checkbox'}
             />
-            <Button size={'small'} label={'Validate'} onPress={() => this.checkbox.current?.validate()}/>
-          </View>
-          <View row spread>
-            <Checkbox
-              disabled
-              ref={this.checkbox1}
-              value={this.state.value7}
-              onValueChange={value7 => this.setState({value7})}
-              iconColor={Colors.green10}
-              label={'This is disabled checkbox'}
-            />
-            <Button disabled size={'small'} label={'Validate'} onPress={() => this.checkbox1.current?.validate()}/>
+            <Button size={'small'} label={'Validate'} onPress={this.onPress}/>
           </View>
         </View>
       </View>

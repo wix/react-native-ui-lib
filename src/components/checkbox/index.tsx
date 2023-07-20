@@ -36,6 +36,14 @@ export interface CheckboxProps extends TouchableOpacityProps {
    */
   onValueChange?: (value: boolean) => void;
   /**
+   * Whether the checkbox is required
+   */
+  required?: boolean;
+  /** 
+   * Callback for when field validity has changed (only after invoking validate())
+   */
+  onChangeValidity?: (isValid?: boolean) => void;
+  /**
    * Whether the checkbox should be disabled
    */
   disabled?: boolean;
@@ -94,7 +102,9 @@ export type CheckboxRef = Checkbox & CheckboxMethods;
 
 interface CheckboxState {
   isChecked: Animated.Value;
-  valid?: boolean;
+  showError?: boolean;
+  isValid?: boolean;
+  validationState: boolean;
 }
 
 /**
@@ -131,7 +141,9 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
     this.state = {
       isChecked: new Animated.Value(this.props.value ? 1 : 0),
-      valid: true
+      showError: false,
+      isValid: false,
+      validationState: false
     };
 
     this.styles = createStyles(props);
@@ -148,12 +160,15 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
       ]
     };
   }
-  validationState = false;
 
-  componentDidUpdate(prevProps: CheckboxProps) {
-    const {value} = this.props;
+  componentDidUpdate(prevProps: CheckboxProps, prevState: CheckboxState) {
+    const {value, onChangeValidity} = this.props;
     if (prevProps.value !== value) {
       this.animateCheckbox(value);
+    }
+    
+    if (this.state.validationState && prevState.isValid !== this.state.isValid) {
+      onChangeValidity?.(this.state.isValid);
     }
   }
 
@@ -181,13 +196,17 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   onPress = () => {
-    const {disabled} = this.props;
-
+    const {disabled, value, required} = this.props;
+    
     if (!disabled) {
-      if (this.validationState) {
-        this.setState({valid: !this.props.value});
+      const newValue = !value;
+
+      if (this.state.validationState) {
+        const error = required && !newValue;
+        this.setState({showError: error, isValid: !error});
       }
-      this.props.onValueChange?.(!this.props.value);
+
+      this.props.onValueChange?.(newValue);
     }
   };
 
@@ -211,7 +230,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   };
 
   getBorderStyle() {
-    const borderColor = {borderColor: this.state.valid ? this.getColor() : Colors.$outlineDanger};
+    const borderColor = {borderColor: this.state.showError ? Colors.$outlineDanger : this.getColor()};
     const borderStyle = [this.styles.container, {borderWidth: DEFAULT_BORDER_WIDTH}, borderColor];
 
     return borderStyle;
@@ -219,8 +238,8 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   getLabelStyle = () => {
     return {
-      color: 
-        this.props.disabled ? Colors.$textDisabled : this.state.valid ? Colors.$textDefault : Colors.$textDangerLight
+      color: this.props.disabled ? Colors.$textDisabled : 
+        this.state.showError ? Colors.$textDangerLight : Colors.$textDefault
     };
   };
 
@@ -271,15 +290,16 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   validate() {
-    this.validationState = true;
-    // Validation: value must be true (checked)
-    if (!this.props.disabled && !this.props.value) {
-      this.setState({valid: false});
-    }
+    const {value, required} = this.props;
+    const error = required && !value;
+    this.setState({validationState: true, showError: error, isValid: !error});
   }
 
   isValid() {
-    return this.state.valid;
+    const {validationState, isValid} = this.state;
+    if (validationState) {
+      return isValid;
+    }
   }
 }
 
