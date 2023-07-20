@@ -39,6 +39,11 @@ export class TextFieldDriver extends ComponentDriver<TextFieldProps> {
 
   changeText = async (text: string) => (await this.uniDriver.selectorByTestId(this.testID)).typeText(text);
 
+  getText = async () => {
+    const props = await this.getPropsByTestId('field.visual');
+    return props.value;
+  };
+
   getPlaceholderContent = async () => {
     if (await this.isPlaceholderVisible()) {
       return (await this.getElementProps()).placeholder;

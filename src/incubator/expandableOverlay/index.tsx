@@ -3,7 +3,8 @@ import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperati
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
-import Dialog, {DialogProps} from '../../components/dialog';
+import DialogOld, {DialogProps as DialogPropsOld} from '../../components/dialog';
+import DialogNew, {DialogProps as DialogPropsNew} from '../Dialog';
 import {Colors} from 'style';
 
 export interface ExpandableOverlayMethods {
@@ -16,7 +17,29 @@ export interface RenderCustomOverlayProps extends ExpandableOverlayMethods {
   visible: boolean;
 }
 
+export interface _DialogPropsOld {
+  /**
+   * The props to pass to the dialog expandable container
+   */
+  dialogProps?: DialogPropsOld;
+  migrateDialog?: false;
+}
+
+export interface _DialogPropsNew {
+  /**
+   * The props to pass to the dialog expandable container
+   */
+  dialogProps?: DialogPropsNew;
+  /**
+   * Migrate the Dialog to DialogNew (make sure you use only new props in dialogProps)
+   */
+  migrateDialog: true;
+}
+
+export type DialogProps = _DialogPropsOld | _DialogPropsNew;
+
 export type ExpandableOverlayProps = TouchableOpacityProps &
+  DialogProps &
   PropsWithChildren<{
     /**
      * The content to render inside the expandable modal/dialog
@@ -30,10 +53,6 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
      * The props to pass to the modal expandable container
      */
     modalProps?: ModalProps;
-    /**
-     * The props to pass to the dialog expandable container
-     */
-    dialogProps?: DialogProps;
     /**
      * Whether to render a modal top bar (relevant only for modal)
      */
@@ -59,6 +78,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     useDialog,
     modalProps,
     dialogProps,
+    migrateDialog,
     showTopBar,
     topBarProps,
     renderCustomOverlay,
@@ -103,7 +123,9 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   };
 
   const renderDialog = () => {
+    const Dialog = migrateDialog ? DialogNew : DialogOld;
     return (
+      // @ts-expect-error
       <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={closeExpandable}>
         {expandableContent}
       </Dialog>

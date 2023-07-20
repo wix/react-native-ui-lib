@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated, StyleProp} from 'react-native';
-import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -9,11 +9,35 @@ import {
   MarginModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  FlexModifiers
+  FlexModifiers,
+  Constants
 } from '../../commons/new';
 import {RecorderProps} from '../../../typings/recorderTypes';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
+
+enum writingDirectionTypes {
+  RTL = 'rtl',
+  LTR = 'ltr'
+}
+
+export interface HighlightStringProps {
+  /**
+   * Substring to highlight
+   */
+  string: string;
+  /**
+   * Callback for when a highlighted substring is pressed
+   */
+  onPress?: () => void;
+  /**
+   * Custom highlight style for this specific highlighted substring. If not provided, the general `highlightStyle` prop style will be used
+   */
+  style?: TextStyle;
+  testID?: string;
+}
+
+export type HighlightString = string | HighlightStringProps;
 
 export type TextProps = RNTextProps &
   TypographyModifiers &
@@ -38,9 +62,9 @@ export type TextProps = RNTextProps &
      */
     underline?: boolean;
     /**
-     * Substring to highlight
+     * Substring to highlight. Can be a simple string or a HighlightStringProps object, or an array of the above
      */
-    highlightString?: string | string[];
+    highlightString?: HighlightString | HighlightString[];
     /**
      * Custom highlight style for highlight string
      */
@@ -92,7 +116,9 @@ class Text extends PureComponent<PropsTypes> {
             return (
               <RNText
                 key={index}
-                style={text.shouldHighlight ? [styles.highlight, highlightStyle] : styles.notHighlight}
+                style={text.shouldHighlight ? (text.style ?? [styles.highlight, highlightStyle]) : styles.notHighlight}
+                onPress={text.onPress}
+                testID={text.testID}
               >
                 {text.string}
               </RNText>
@@ -157,8 +183,9 @@ class Text extends PureComponent<PropsTypes> {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    textAlign: 'left',
-    color: Colors.$textDefault
+    color: Colors.$textDefault,
+    // textAlign: 'left'
+    writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR // iOS only
   },
   centered: {
     textAlign: 'center'

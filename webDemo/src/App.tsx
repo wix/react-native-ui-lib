@@ -38,24 +38,7 @@ interface ItemToRender {
   title: string,
   FC: React.FC
 }
-const svgData = `<?xml version="1.0" encoding="UTF-8"?>
-<svg data-bbox="2 2 28 28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="800" width="800" data-type="ugc">
-    <g>
-        <defs>
-            <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(.893 0 0 .893 -64.139 -782.556)" y2="878.134" x2="105.452" y1="910.226" x1="73.714" id="1c6ca7ff-eba0-4dd0-82e3-63fdfa256791">
-                <stop stop-color="#0296d8" offset="0"/>
-                <stop stop-color="#8371d9" offset="1"/>
-            </linearGradient>
-            <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(.893 0 0 .893 -64.139 -782.556)" y2="875.745" x2="102.279" y1="905.226" x1="69.813" id="85cd62d4-a6c1-4ded-b1ca-e6c438f49e1b">
-                <stop stop-color="#cb55c0" offset="0"/>
-                <stop stop-color="#f28e0e" offset="1"/>
-            </linearGradient>
-        </defs>
-        <path d="M2 2v28h28v-.047l-6.95-7-6.95-7.007 6.95-7.012L29.938 2Z" fill="url(#1c6ca7ff-eba0-4dd0-82e3-63fdfa256791)"/>
-        <path d="M16.318 2 2 16.318V30h.124l14.008-14.008-.031-.031L23.05 8.95 29.938 2Z" fill="url(#85cd62d4-a6c1-4ded-b1ca-e6c438f49e1b)"/>
-    </g>
-</svg>
-`;
+const svgData = '<svg data-bbox="18.5 31.5 163.1 137.2" viewBox="0 0 200 200" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color">\n    <g>\n        <path d="M18.5 99.5c0-5.7 2.3-10.8 6-14.5L72 37.5c3.7-3.7 8.8-6 14.5-6 11.4 0 20.5 9.2 20.5 20.5 0 5.7-2.3 10.8-6 14.5L88.1 79.4h72.3c11.7 0 21.2 9.5 21.2 21.2s-9.5 21.2-21.2 21.2H89.1l11.9 11.9c3.7 3.7 6 8.8 6 14.5 0 11.3-9.2 20.5-20.5 20.5-5.7 0-10.8-2.3-14.5-6L24.5 115c-3.7-3.7-6-8.8-6-14.5 0-.2 0-.4.1-.6 0 0-.1-.3-.1-.4z" fill="#000010" data-color="1"/>\n    </g>\n</svg>\n';
 
 const itemsToRender: ItemToRender[] = [
   {
@@ -118,7 +101,8 @@ const itemsToRender: ItemToRender[] = [
         iconSource={svgData}
         iconStyle={{
           width: 24,
-          height: 24
+          height: 24,
+          tintColor: 'red'
         }}
       />
     )
@@ -267,8 +251,8 @@ const itemsToRender: ItemToRender[] = [
             onValueChange={(value: any) => {
               console.log('setSliderValue: ', value);
               setSliderValue(value);
-
             }}
+            migrate
             value={sliderValue}
             minimumValue={0}
             maximumValue={10}
@@ -374,14 +358,14 @@ function App() {
   return (
     <View flex>
       <ScrollView>
-        <View style={styles.header}>
+        <View padding-page>
           <Text style={styles.title}>Welcome to react-native-ui-lib for Web</Text>
         </View>
 
         {
           itemsToRender.map(({title, FC}: ItemToRender) =>
             (
-              <View style={styles.componentContainer} key={'component_' + title}>
+              <View bg-grey80 paddingT-s5 paddingB-s5 center style={styles.componentContainer} key={'component_' + title}>
                 <Text style={styles.compTitle}> {title} </Text>
                 <FC/>
               </View>
@@ -403,14 +387,9 @@ const styles = StyleSheet.create({
     padding: 20
   },
   componentContainer: {
-    backgroundColor: '#F5FCFF',
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
     borderColor: 'white',
-    borderBottomWidth: 5,
-    paddingBottom: 20,
-    paddingTop: 20
+    borderBottomWidth: 5
   },
   compTitle: {
     fontWeight: 'bold',
@@ -425,4 +404,5 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+
 export default App;

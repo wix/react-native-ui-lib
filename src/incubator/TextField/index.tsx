@@ -69,6 +69,7 @@ const TextField = (props: InternalTextFieldProps) => {
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
+    retainValidationSpace = true,
     // Char Counter
     showCharCounter,
     charCounterStyle,
@@ -141,7 +142,7 @@ const TextField = (props: InternalTextFieldProps) => {
             validate={others.validate}
             validationMessage={others.validationMessage}
             validationMessageStyle={_validationMessageStyle}
-            retainSpace={retainTopMessageSpace}
+            retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
             testID={`${props.testID}.validationMessage`}
           />
         )}
@@ -196,7 +197,7 @@ const TextField = (props: InternalTextFieldProps) => {
               validate={others.validate}
               validationMessage={others.validationMessage}
               validationMessageStyle={_validationMessageStyle}
-              retainSpace
+              retainValidationSpace={retainValidationSpace}
               testID={`${props.testID}.validationMessage`}
             />
           )}
