@@ -286,46 +286,49 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
   return (
     <PickerContext.Provider value={contextValue}>
-      <ExpandableOverlay
-        ref={pickerExpandable}
-        useDialog={useWheelPicker}
-        modalProps={modalProps}
-        dialogProps={DIALOG_PROPS}
-        migrateDialog={migrateDialog}
-        expandableContent={expandableModalContent}
-        renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
-        onPress={onPress}
-        testID={testID}
-        {...customPickerProps}
-        disabled={themeProps.editable === false}
-      >
-        {renderPicker ? (
-          // @ts-expect-error - hopefully will be solved after the picker migration ends
-          renderPicker(value, label)
-        ) : (
-          <TextFieldMigrator
-            migrate={migrateTextField}
-            // customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
-            // @ts-expect-error
-            ref={pickerRef}
-            // {...textInputProps}
-            {...others}
-            {...propsByFieldType}
-            testID={`${testID}.input`}
-            // @ts-expect-error
-            containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
-            labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
-            {...accessibilityInfo}
-            importantForAccessibility={'no-hide-descendants'}
-            value={label}
-            selection={Constants.isAndroid ? {start: 0} : undefined}
-            /* Note: Disable TextField expandable feature */
-            // topBarProps={undefined}
-          >
-            {renderPickerInnerInput()}
-          </TextFieldMigrator>
-        )}
-      </ExpandableOverlay>
+      {
+        // @ts-expect-error
+        <ExpandableOverlay
+          ref={pickerExpandable}
+          useDialog={useWheelPicker}
+          modalProps={modalProps}
+          dialogProps={DIALOG_PROPS}
+          migrateDialog={migrateDialog}
+          expandableContent={expandableModalContent}
+          renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
+          onPress={onPress}
+          testID={testID}
+          {...customPickerProps}
+          disabled={themeProps.editable === false}
+        >
+          {renderPicker ? (
+            // @ts-expect-error - hopefully will be solved after the picker migration ends
+            renderPicker(value, label)
+          ) : (
+            <TextFieldMigrator
+              migrate={migrateTextField}
+              // customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
+              // @ts-expect-error
+              ref={pickerRef}
+              // {...textInputProps}
+              {...others}
+              {...propsByFieldType}
+              testID={`${testID}.input`}
+              // @ts-expect-error
+              containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
+              labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
+              {...accessibilityInfo}
+              importantForAccessibility={'no-hide-descendants'}
+              value={label}
+              selection={Constants.isAndroid ? {start: 0} : undefined}
+              /* Note: Disable TextField expandable feature */
+              // topBarProps={undefined}
+            >
+              {renderPickerInnerInput()}
+            </TextFieldMigrator>
+          )}
+        </ExpandableOverlay>
+      }
     </PickerContext.Provider>
   );
 });
