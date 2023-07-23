@@ -142,7 +142,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     this.state = {
       isChecked: new Animated.Value(this.props.value ? 1 : 0),
       showError: false,
-      isValid: false,
+      isValid: !(props.required && !props.value),
       validationState: false
     };
 

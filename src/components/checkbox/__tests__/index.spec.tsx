@@ -1,8 +1,10 @@
 import React, {useState, useCallback} from 'react';
-import Checkbox, {CheckboxProps} from '../index';
+import Checkbox, {CheckboxProps, CheckboxRef} from '../index';
 import {CheckboxDriver} from '../Checkbox.driver';
 
+
 const testID = 'checkbox';
+const checkboxRef = React.createRef<CheckboxRef>();
 const onValueChange = jest.fn();
 const onChangeValidity = jest.fn();
 
@@ -16,7 +18,7 @@ const TestCase = (props: CheckboxProps) => {
   },
   [_setValue, onValueChange]);
 
-  return <Checkbox {...others} onValueChange={_onValueChange} value={_value} testID={testID}/>;
+  return <Checkbox {...others} onValueChange={_onValueChange} value={_value} testID={testID} ref={checkboxRef}/>;
 };
 
 describe('Checkbox renderer test', () => {
@@ -83,7 +85,7 @@ describe('Checkbox renderer test', () => {
     });
   });
 
-  describe('Validation', () => {
+  describe.only('Validation', () => {
     describe('onChangeValidity', () => {
       it('should not been called', async () => {
         const props = {onChangeValidity};
@@ -100,6 +102,170 @@ describe('Checkbox renderer test', () => {
         await driver.press();
 
         expect(onChangeValidity).not.toHaveBeenCalled();
+      });
+
+      it('should not been called after invoking validate()', async () => {
+        const props = {required: true, onChangeValidity};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        checkboxRef.current?.validate();
+
+        expect(onChangeValidity).not.toHaveBeenCalled();
+      });
+
+      it('should not been called after invoking validate() and value changed to true if required is false', async () => {
+        const props = {onChangeValidity};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        checkboxRef.current?.validate();
+        await driver.press();
+
+        expect(onChangeValidity).not.toHaveBeenCalled();
+      });
+
+      it('should been called after invoking validate() and value changed to true', async () => {
+        const props = {required: true, onChangeValidity};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        checkboxRef.current?.validate();
+        await driver.press();
+
+        expect(onChangeValidity).toHaveBeenCalledWith(true);
+      });
+
+      it('should been called after invoking validate() and value changed to true and then false', async () => {
+        const props = {required: true, onChangeValidity};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        checkboxRef.current?.validate();
+        await driver.press();
+        await driver.press();
+
+        expect(onChangeValidity).toHaveBeenCalledWith(false);
+      });
+    });
+
+    describe('isValid', () => {
+      it('should be valid if initial value is false', async () => {
+        const props = {};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        const isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(true);
+      });
+
+      it('should be valid if initial value is true', async () => {
+        const props = {value: true};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        const isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(true);
+      });
+
+      it('should be valid if initial value is true and is required', async () => {
+        const props = {value: true, required: true};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        const isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(true);
+      });
+
+      it('should be invalid if initial value is false and is required', async () => {
+        const props = {required: true};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        const isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(false);
+      });
+
+      it('should be invalid after validate when initial value is false', async () => {
+        const props = {required: true};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        let isValid = checkboxRef.current?.isValid();
+        expect(isValid).toBe(false);
+
+        checkboxRef.current?.validate();
+        isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(false);
+      });
+
+      it('should be valid after validate when initial value is true', async () => {
+        const props = {value: true, required: true};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        let isValid = checkboxRef.current?.isValid();
+        expect(isValid).toBe(true);
+
+        checkboxRef.current?.validate();
+        isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(true);
+      });
+
+      it('should be valid after validate and value changed to true', async () => {
+        const props = {required: true};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        let isValid = checkboxRef.current?.isValid();
+        expect(isValid).toBe(false);
+
+        checkboxRef.current?.validate();
+        await driver.press();
+        isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(true);
+      });
+
+      it('should be invalid after validate and value changed to false', async () => {
+        const props = {value: true, required: true};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        let isValid = checkboxRef.current?.isValid();
+        expect(isValid).toBe(true);
+
+        checkboxRef.current?.validate();
+        await driver.press();
+        isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(false);
+      });
+
+      it('should be invalid after validate and value changed to true and then false', async () => {
+        const props = {required: true};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        let isValid = checkboxRef.current?.isValid();
+        expect(isValid).toBe(false);
+
+        checkboxRef.current?.validate();
+        await driver.press();
+        isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(true);
+
+        await driver.press();
+        isValid = checkboxRef.current?.isValid();
+
+        expect(isValid).toBe(false);
       });
     });
   });
