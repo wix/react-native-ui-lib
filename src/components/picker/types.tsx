@@ -59,6 +59,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     migrateTextField?: boolean;
     /**
+     * Migrate the Dialog to DialogNew (make sure you use only new props in dialogProps)
+     */
+    migrateDialog?: boolean;
+    /**
      * Pass for different field type UI (form, filter or settings)
      */
     fieldType?: PickerFieldTypes;

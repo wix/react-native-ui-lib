@@ -88,6 +88,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     // TODO: Remove migrate props and migrate code
     migrate = true,
     migrateTextField = true,
+    migrateDialog,
     accessibilityLabel,
     accessibilityHint,
     items: propItems,
@@ -194,10 +195,15 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [fieldType, preset, themeProps.trailingAccessory]);
 
-  const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({visible, toggleExpandable}) => {
+  const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
+    visible,
+    closeExpandable,
+    toggleExpandable
+  }) => {
     if (renderCustomModal) {
       const modalProps = {
         visible,
+        closeModal: closeExpandable,
         toggleModal: toggleExpandable,
         onSearchChange: _onSearchChange,
         children,
@@ -285,6 +291,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         useDialog={useWheelPicker}
         modalProps={modalProps}
         dialogProps={DIALOG_PROPS}
+        migrateDialog={migrateDialog}
         expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
         onPress={onPress}
