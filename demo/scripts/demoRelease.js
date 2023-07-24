@@ -32,8 +32,8 @@ function validateEnv() {
 }
 
 function copyNative() {
-  execSync(`cp -rf ../ios .`);
-  execSync(`cp -rf ../android .`);
+  exec.execSync(`cp -rf ../ios .`);
+  exec.execSync(`cp -rf ../android .`);
 }
 
 function createNpmRc() {
