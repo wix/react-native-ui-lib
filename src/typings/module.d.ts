@@ -3,11 +3,5 @@ declare namespace globalThis {
   var _UILIB_TESTING: boolean;
 }
 
-declare namespace JSX {
-  interface IntrinsicAttributes {
-    fsTagName?: string;
-  }
-}
-
 // This support importing png files, typing wise
 declare module '*.png';
