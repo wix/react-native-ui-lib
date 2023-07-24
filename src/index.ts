@@ -126,7 +126,7 @@ export {
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
-export type {RecorderProps} from '../typings/recorderTypes';
+export type {RecorderProps} from './typings/recorderTypes';
 export {default as ScrollBar, ScrollBarProps} from './components/scrollBar';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
 export {

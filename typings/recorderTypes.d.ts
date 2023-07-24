@@ -1,13 +1,13 @@
-enum RecorderTagEnum {
-  MASK = 'mask',
-  UNMASK = 'unmask'
-}
+// enum RecorderTagEnum {
+//   MASK = 'mask',
+//   UNMASK = 'unmask'
+// }
 
-export type RecorderTag = RecorderTagEnum | `${RecorderTagEnum}`;
+// export type RecorderTag = RecorderTagEnum | `${RecorderTagEnum}`;
 
-export interface RecorderProps {
-  /**
-   * Recorder tag
-   */
-  recorderTag?: RecorderTag;
-}
+// export interface RecorderProps {
+//   /**
+//    * Recorder tag
+//    */
+//   recorderTag?: RecorderTag;
+// }
