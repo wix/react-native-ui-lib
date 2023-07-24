@@ -13,6 +13,8 @@ export enum ChipsInputChangeReason {
   Removed = 'removed'
 }
 
+type RenderChip = {index: number; chip: ChipsInputChipProps; isMarkedForRemoval: boolean};
+
 export type ChipsInputChipProps = ChipProps & {invalid?: boolean};
 
 export type ChipsInputProps = Omit<TextFieldProps, 'ref'> & {
@@ -115,27 +117,37 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
         {leadingAccessory}
         {map(chips, (chip, index) => {
           const isMarkedForRemoval = index === markedForRemoval;
-          return (
-            <Chip
-              key={index}
-              customValue={index}
-              // resetSpacings
-              // paddingH-s2
-              marginR-s2
-              marginB-s2
-              dismissIcon={removeIcon}
-              recorderTag={'mask'}
-              {...defaultChipProps}
-              {...(chip.invalid ? invalidChipProps : undefined)}
-              {...chip}
-              onPress={onChipPress}
-              onDismiss={isMarkedForRemoval ? removeMarkedChip : undefined}
-            />
-          );
+          if (maxChips && index < maxChips) {
+            return renderChip({index, chip, isMarkedForRemoval});
+          }
+          if (!maxChips) {
+            return renderChip({index, chip, isMarkedForRemoval});
+          }
         })}
       </>
     );
   }, [chips, leadingAccessory, defaultChipProps, removeMarkedChip, markedForRemoval]);
+
+  const renderChip = (props: RenderChip) => {
+    const {index, chip, isMarkedForRemoval} = props;
+    return (
+      <Chip
+        key={index}
+        customValue={index}
+        // resetSpacings
+        // paddingH-s2
+        marginR-s2
+        marginB-s2
+        dismissIcon={removeIcon}
+        recorderTag={'mask'}
+        {...defaultChipProps}
+        {...(chip.invalid ? invalidChipProps : undefined)}
+        {...chip}
+        onPress={onChipPress}
+        onDismiss={isMarkedForRemoval ? removeMarkedChip : undefined}
+      />
+    );
+  };
 
   return (
     <TextField
