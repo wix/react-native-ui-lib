@@ -6,10 +6,10 @@ type Dictionary<TYPE> = {[key: string]: TYPE};
 declare module '*.png';
 declare module 'react-native-measureme';
 
-interface Extendable {
+declare interface Extendable {
   [key: string]: any;
 }
 
-interface ThemeComponent {
+declare interface ThemeComponent {
   useCustomTheme?: boolean;
 }
