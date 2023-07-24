@@ -5,3 +5,9 @@ declare namespace globalThis {
 
 // This support importing png files, typing wise
 declare module '*.png';
+
+declare namespace JSX {
+  interface IntrinsicAttributes {
+    fsTagName?: string;
+  }
+}

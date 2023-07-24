@@ -1,9 +1,3 @@
-declare namespace JSX {
-  interface IntrinsicAttributes {
-    fsTagName?: string;
-  }
-}
-
 enum RecorderTagEnum {
   MASK = 'mask',
   UNMASK = 'unmask'
