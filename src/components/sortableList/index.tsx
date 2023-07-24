@@ -8,6 +8,8 @@ import SortableListContext from './SortableListContext';
 import SortableListItem, {DEFAULT_LIST_ITEM_HEIGHT} from './SortableListItem';
 import {useDidUpdate, useThemeProps} from 'hooks';
 import {SortableListProps, SortableListItemProps} from './types';
+import type {Dictionary} from '../../typings/common';
+
 export {SortableListProps, SortableListItemProps};
 
 function generateItemsOrder<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {

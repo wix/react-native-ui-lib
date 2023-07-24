@@ -4,6 +4,7 @@ import * as Modifiers from './modifiers';
 import {Scheme, SchemeChangeListener, ThemeManager} from '../style';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
+import type {ThemeComponent} from '../typings/common';
 
 export interface BaseComponentInjectedProps {
   /**
@@ -41,7 +42,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       Scheme.removeChangeListener(this.appearanceListener);
     }
 
-    appearanceListener: SchemeChangeListener = (colorScheme) => {
+    appearanceListener: SchemeChangeListener = colorScheme => {
       // iOS 13 and above will trigger this call with the wrong colorScheme value. So just ignore returned colorScheme for now
       // https://github.com/facebook/react-native/issues/28525
       // this.setState({colorScheme: Appearance.getColorScheme()});
