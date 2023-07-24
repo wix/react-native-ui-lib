@@ -49,11 +49,6 @@ function copyNpmRc() {
   execSync(`cp -rf ${npmrcPath} .`);
 }
 
-function copyNative() {
-  execSync(`cp -rf ../ios .`);
-  execSync(`cp -rf ../android .`);
-}
-
 function tagAndPublish(newVersion) {
   console.log(`new version is: ${newVersion}`);
   execSync(`npm version ${newVersion} -m "v${newVersion} [ci skip]"`);
@@ -66,7 +61,6 @@ function run() {
     return;
   }
   copyNpmRc();
-  copyNative();
   tagAndPublish(calcNewVersion());
 }
 
