@@ -7,6 +7,7 @@ import Modal from '../modal';
 import View from '../view';
 import Text from '../text';
 import Icon from '../icon';
+import Button from '../button';
 import WheelPicker from '../WheelPicker';
 import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
 import PickerContext from './PickerContext';
@@ -86,13 +87,33 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
-  const renderWheel = () => {
+  const renderCancel = () => {
+    const {cancelButtonProps, cancelLabel, onCancel} = topBarProps ?? {};
+
     return (
-      <View>
-        <View row spread padding-page>
-          <Text>{topBarProps?.title}</Text>
+      <>
+        {cancelLabel ? (
+          <Text text70 $textPrimary accessibilityRole={'button'} onPress={onCancel}>
+            {cancelLabel}
+          </Text>
+        ) : cancelButtonProps ? (
+          <Button key={'cancel-button'} link onPress={onCancel} {...cancelButtonProps}/>
+        ) : undefined}
+      </>
+    );
+  };
+
+  const renderWheel = () => {
+    const {cancelButtonProps, cancelLabel, doneLabel, title, titleStyle, containerStyle, useSafeArea} =
+      topBarProps ?? {};
+
+    return (
+      <View useSafeArea={useSafeArea}>
+        <View row spread padding-page style={containerStyle}>
+          {(cancelButtonProps || cancelLabel) && renderCancel()}
+          <Text style={titleStyle}>{title}</Text>
           <Text text70 $textPrimary accessibilityRole={'button'} onPress={() => context.onPress(wheelPickerValue)}>
-            {topBarProps?.doneLabel ?? 'Select'}
+            {doneLabel ?? 'Select'}
           </Text>
         </View>
         <WheelPicker
