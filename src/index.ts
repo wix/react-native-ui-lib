@@ -189,14 +189,3 @@ export {
 // export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
 
 // export {default as ButtonDriverFactory} from './components/button/Button.driver';
-//================ Manual typings (all those exports should be removed one day) ==========
-// export {
-//   // BaseInput,
-//   // TextArea,
-//   // TextField,
-//   // MaskedInput,
-//   // SharedTransition,
-//   // Toast,
-//   // BaseComponent,
-//   // PureBaseComponent
-// } from '../typings';
