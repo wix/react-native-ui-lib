@@ -1,3 +1,15 @@
 node_modules/
 .npmignore
 showcase/
+
+## iOS
+
+../ios/build/
+../ios/Pods/
+../ios/Podfile.lock
+
+## Android
+../android/.gradle/
+../android/build/
+../android/local.properties
+../android/.idea/
