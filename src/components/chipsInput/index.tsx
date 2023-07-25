@@ -111,23 +111,6 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
   },
   [chips, props.onKeyPress, markedForRemoval, removeMarkedChip]);
 
-  const chipList = useMemo(() => {
-    return (
-      <>
-        {leadingAccessory}
-        {map(chips, (chip, index) => {
-          const isMarkedForRemoval = index === markedForRemoval;
-          if (maxChips && index < maxChips) {
-            return renderChip({index, chip, isMarkedForRemoval});
-          }
-          if (!maxChips) {
-            return renderChip({index, chip, isMarkedForRemoval});
-          }
-        })}
-      </>
-    );
-  }, [chips, leadingAccessory, defaultChipProps, removeMarkedChip, markedForRemoval]);
-
   const renderChip = (props: RenderChip) => {
     const {index, chip, isMarkedForRemoval} = props;
     return (
@@ -148,6 +131,23 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
       />
     );
   };
+
+  const chipList = useMemo(() => {
+    return (
+      <>
+        {leadingAccessory}
+        {map(chips, (chip, index) => {
+          const isMarkedForRemoval = index === markedForRemoval;
+          if (maxChips && index < maxChips) {
+            return renderChip({index, chip, isMarkedForRemoval});
+          }
+          if (!maxChips) {
+            return renderChip({index, chip, isMarkedForRemoval});
+          }
+        })}
+      </>
+    );
+  }, [chips, leadingAccessory, defaultChipProps, removeMarkedChip, markedForRemoval]);
 
   return (
     <TextField
