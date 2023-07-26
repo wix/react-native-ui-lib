@@ -20,7 +20,7 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
       _.map(arr, item => (_.isPlainObject(item) ? getItemLabel?.(item) || item?.label : itemsByValue[item]?.label)),
     arr => _.join(arr, ', '))(value);
   },
-  [getItemLabel]);
+  [getItemLabel, items]);
 
   const _getLabel = useCallback((value: PickerValue) => {
     if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
