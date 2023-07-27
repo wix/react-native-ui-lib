@@ -96,7 +96,7 @@ export interface FloatingPlaceholderProps {
   /**
    * Number in ms that describes how long floating placeholder will take it's place
    */
-  floatingPlaceholderAnimationDuration: number;
+  floatingPlaceholderAnimationDuration?: number;
   validationMessagePosition?: ValidationMessagePositionType;
   extraOffset?: number;
   defaultValue?: TextInputProps['defaultValue'];
@@ -205,7 +205,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Number in ms that describes how long floating placeholder will take it's place
      */
-    floatingPlaceholderAnimationDuration: number;
+    floatingPlaceholderAnimationDuration?: number;
     /**
      * Should validate when the TextField mounts
      */
