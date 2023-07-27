@@ -53,6 +53,7 @@ const TextField = (props: InternalTextFieldProps) => {
     floatingPlaceholder,
     floatingPlaceholderColor,
     floatingPlaceholderStyle,
+    floatingPlaceholderAnimationDuration,
     floatOnFocus,
     placeholderTextColor,
     hint,
@@ -167,6 +168,7 @@ const TextField = (props: InternalTextFieldProps) => {
                   placeholder={placeholder}
                   floatingPlaceholderStyle={_floatingPlaceholderStyle}
                   floatingPlaceholderColor={floatingPlaceholderColor}
+                  floatingPlaceholderAnimationDuration={floatingPlaceholderAnimationDuration}
                   floatOnFocus={floatOnFocus}
                   validationMessagePosition={validationMessagePosition}
                   extraOffset={leadingAccessoryMeasurements?.width}
