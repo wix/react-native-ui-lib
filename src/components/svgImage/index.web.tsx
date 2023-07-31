@@ -13,6 +13,23 @@ export interface SvgImageProps {
   style?: object[];
 }
 
+function setSVGSize(data: SvgImageProps['data'], style: SvgImageProps['style']) {
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = data.trim();
+  const svgElement = tempElement.querySelector('svg');
+
+  if (svgElement) {
+    const flattenStyle = StyleSheet.flatten(style) as {width?: string; height?: string};
+
+    svgElement?.setAttribute('width', `${flattenStyle?.width ?? DEFAULT_SIZE}`);
+    svgElement?.setAttribute('height', `${flattenStyle?.height ?? DEFAULT_SIZE}`);
+
+    return svgElement?.outerHTML;
+  }
+
+  return data;
+}
+
 function SvgImage(props: SvgImageProps) {
   const {data, style = [], tintColor, ...others} = props;
   const [svgStyleCss, setSvgStyleCss] = useState<string | undefined>(undefined);
@@ -45,21 +62,21 @@ function SvgImage(props: SvgImageProps) {
     }
     return <img {...others} src={data} style={StyleSheet.flatten(style)}/>;
   } else if (data) {
-    
+
     const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
     if (PostCssPackage) {
       if (!postCssStyleCalled) {
         createStyleSvgCss(PostCssPackage, StyleSheet.flatten(style));
         return null;
       }
-      
+
       if (svgStyleCss) {
         const svgStyleTag = `<style> ${svgStyleCss} </style>`;
         return (
           <div
             {...others}
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
+            dangerouslySetInnerHTML={{__html: svgStyleTag + setSVGSize(data, style)}}
           />
         );
       }
