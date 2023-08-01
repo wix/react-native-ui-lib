@@ -89,7 +89,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   const renderWheel = () => {
     return (
       <View>
-        <View row spread padding-page>
+        <View row spread centerV padding-page>
           <Text>{topBarProps?.title}</Text>
           <Text text70 $textPrimary accessibilityRole={'button'} onPress={() => context.onPress(wheelPickerValue)}>
             {topBarProps?.doneLabel ?? 'Select'}
