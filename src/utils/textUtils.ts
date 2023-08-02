@@ -1,8 +1,14 @@
 import {isEmpty, toLower} from 'lodash';
+import {HighlightString, HighlightStringProps} from '../components/text';
 
-function getPartsByHighlight(targetString = '', highlightString: string | string[]) {
-  if (typeof highlightString === 'string') {
-    if (isEmpty(highlightString.trim())) {
+interface TextPartByHighlight extends HighlightStringProps {
+  shouldHighlight: boolean;
+}
+
+function getPartsByHighlight(targetString = '', highlightString: HighlightString | HighlightString[]): TextPartByHighlight[] {
+  if (!Array.isArray(highlightString)) {
+    const stringValue = getHighlightStringValue(highlightString);
+    if (isEmpty(stringValue.trim())) {
       return [{string: targetString, shouldHighlight: false}];
     }
     return getTextPartsByHighlight(targetString, highlightString);
@@ -11,20 +17,42 @@ function getPartsByHighlight(targetString = '', highlightString: string | string
   }
 }
 
-function getTextPartsByHighlight(targetString = '', highlightString = '') {
-  if (highlightString === '') {
+function getHighlightStringValue(highlightString: HighlightString): string {
+  if (isHighlightStringProps(highlightString)) {
+    return highlightString.string;
+  } else {
+    return highlightString;
+  }
+}
+
+function isHighlightStringProps(highlightString: HighlightString): highlightString is HighlightStringProps {
+  return typeof highlightString !== 'string';
+}
+
+function getTextPartsByHighlight(targetString = '', highlightString: HighlightString = ''): TextPartByHighlight[] {
+  const stringValue = getHighlightStringValue(highlightString);
+  if (stringValue === '') {
     return [{string: targetString, shouldHighlight: false}];
   }
   const textParts = [];
   let highlightIndex;
   do {
-    highlightIndex = targetString.toLowerCase().indexOf(highlightString.toLowerCase());
+    highlightIndex = targetString.toLowerCase().indexOf(stringValue.toLowerCase());
     if (highlightIndex !== -1) {
       if (highlightIndex > 0) {
         textParts.push({string: targetString.substring(0, highlightIndex), shouldHighlight: false});
       }
-      textParts.push({string: targetString.substr(highlightIndex, highlightString.length), shouldHighlight: true});
-      targetString = targetString.substr(highlightIndex + highlightString.length);
+      const highlightStringProps = isHighlightStringProps(highlightString) ? {
+        onPress: highlightString.onPress,
+        style: highlightString.style,
+        testID: highlightString.testID
+      } : {};
+      textParts.push({
+        string: targetString.substr(highlightIndex, stringValue.length),
+        shouldHighlight: true,
+        ...highlightStringProps
+      });
+      targetString = targetString.substr(highlightIndex + stringValue.length);
     } else {
       textParts.push({string: targetString, shouldHighlight: false});
     }
@@ -33,13 +61,14 @@ function getTextPartsByHighlight(targetString = '', highlightString = '') {
   return textParts;
 }
 
-function getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
+function getArrayPartsByHighlight(targetString = '', highlightString: HighlightString[] = ['']): TextPartByHighlight[] {
   const target = toLower(targetString);
   const indices = [];
   let index = 0;
   let lastWordLength = 0;
   for (let j = 0; j < highlightString.length; j++) {
-    const word = toLower(highlightString[j]);
+    const stringValue = getHighlightStringValue(highlightString[j]);
+    const word = toLower(stringValue);
     if (word.length === 0) {
       break;
     }
@@ -48,7 +77,11 @@ function getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
     const i = targetSuffix.indexOf(word);
     if (i >= 0) {
       const newIndex = index + lastWordLength + i;
-      indices.push({start: index + lastWordLength + i, end: index + lastWordLength + i + word.length});
+      indices.push({
+        start: index + lastWordLength + i,
+        end: index + lastWordLength + i + word.length,
+        highlightStringIndex: j
+      });
       index = newIndex;
       lastWordLength = word.length;
     } else {
@@ -60,7 +93,17 @@ function getArrayPartsByHighlight(targetString = '', highlightString = ['']) {
     if (k === 0 && indices[k].start !== 0) {
       textParts.push({string: targetString.substring(0, indices[k].start), shouldHighlight: false});
     }
-    textParts.push({string: targetString.substring(indices[k].start, indices[k].end), shouldHighlight: true});
+    const currentHighlightString = highlightString[indices[k].highlightStringIndex];
+    const highlightStringProps = isHighlightStringProps(currentHighlightString) ? {
+      onPress: currentHighlightString.onPress,
+      style: currentHighlightString.style,
+      testID: currentHighlightString.testID
+    } : {};
+    textParts.push({
+      string: targetString.substring(indices[k].start, indices[k].end),
+      shouldHighlight: true,
+      ...highlightStringProps
+    });
     if (indices[k].end < targetString.length) {
       if (k === indices.length - 1) {
         textParts.push({string: targetString.substring(indices[k].end), shouldHighlight: false});

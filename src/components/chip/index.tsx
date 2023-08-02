@@ -278,7 +278,7 @@ const Chip = ({
               marginRight: Spacings.s2
             };
           } else {
-            return {marginHorizontal: Spacings.s3};
+            return {paddingHorizontal: Spacings.s3};
           }
         case 'avatar':
           return {

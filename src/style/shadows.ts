@@ -1,6 +1,7 @@
 import {ShadowStyleIOS} from 'react-native';
 import _ from 'lodash';
 import Colors from './colors';
+import type {Dictionary} from '../typings/common';
 
 type Shadow = {top?: ShadowStyleIOS; bottom?: ShadowStyleIOS} & ShadowStyleIOS;
 

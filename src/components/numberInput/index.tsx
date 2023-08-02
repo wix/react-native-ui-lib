@@ -1,7 +1,8 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useRef} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {useDidUpdate, useThemeProps} from 'hooks';
+import {useDidUpdate, useThemeProps} from '../../hooks';
+import {Colors} from '../../style';
 import MaskedInput from '../maskedInput/new';
 import TextField, {TextFieldProps, TextFieldRef} from '../../incubator/TextField';
 import View from '../view';
@@ -97,6 +98,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
   const initialNumber = getInitialNumber(propsInitialNumber, options);
   const [data, setData] = useState<NumberInputData>(parseInput(`${initialNumber}`, options, propsInitialNumber));
   const textField = useRef<TextFieldRef>();
+  const [isFocused, setIsFocused] = useState(textFieldProps?.autoFocus ?? false);
 
   useDidUpdate(() => {
     setOptions(generateOptions(locale, fractionDigits));
@@ -154,11 +156,19 @@ function NumberInput(props: NumberInputProps, ref: any) {
   }, [data]);
 
   const onBlur = useCallback(() => {
+    setIsFocused(false);
     if (textFieldProps?.validateOnBlur) {
       textField.current?.validate();
     }
-  },
-  [textFieldProps?.validateOnBlur]);
+  }, [textFieldProps?.validateOnBlur]);
+
+  const onFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const dynamicFieldStyle = useCallback(() => {
+    return isFocused ? {borderBottomColor: Colors.$outlinePrimary} : undefined;
+  }, [isFocused]);
 
   const renderNumberInput = useCallback((value?: string) => {
     return (
@@ -170,16 +180,18 @@ function NumberInput(props: NumberInputProps, ref: any) {
           testID={`${testID}.visual`}
           value={value}
           formatter={formatter}
+          dynamicFieldStyle={dynamicFieldStyle}
           floatingPlaceholder={false}
           leadingAccessory={leadingAccessory}
           trailingAccessory={trailingAccessory}
           containerStyle={[styles.textFieldContainerStyle, textFieldProps?.containerStyle]}
           keyboardType={'numeric'}
+          autoFocus={false}
         />
       </View>
     );
   },
-  [containerStyle, formatter, leadingAccessory, textFieldProps, trailingAccessory, testID]);
+  [containerStyle, dynamicFieldStyle, formatter, leadingAccessory, textFieldProps, trailingAccessory, testID]);
 
   return (
     <MaskedInput
@@ -191,7 +203,9 @@ function NumberInput(props: NumberInputProps, ref: any) {
       onChangeText={onChangeText}
       contextMenuHidden={contextMenuHidden}
       onBlur={onBlur}
+      onFocus={onFocus}
       editable={textFieldProps?.editable}
+      autoFocus={textFieldProps?.autoFocus}
     />
   );
 }

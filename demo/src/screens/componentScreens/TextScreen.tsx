@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Animated, ScrollView} from 'react-native';
+import {Alert, Animated, ScrollView} from 'react-native';
 import {View, Text, Colors} from 'react-native-ui-lib';
 
 class TextScreen extends Component {
@@ -84,6 +84,39 @@ class TextScreen extends Component {
             </Text>
             <Text text60R highlightString={['dancing', 'da']} highlightStyle={{color: Colors.green30}}>
               Dancing in The Dark
+            </Text>
+            <Text
+              text60R
+              highlightString={{
+                string: 'Dancing',
+                onPress: () => Alert.alert('Dancing is pressed!'),
+                style: {color: Colors.blue10, backgroundColor: Colors.green50}
+              }}
+              highlightStyle={{color: Colors.green30}}
+            >
+              Dancing in The Dark
+            </Text>
+            <Text
+              text60R
+              highlightString={[
+                {
+                  string: 'Dancing',
+                  onPress: () => Alert.alert('Dancing is pressed!'),
+                  style: {color: Colors.blue10, backgroundColor: Colors.green50}
+                },
+                {
+                  string: 'laugh',
+                  onPress: () => Alert.alert('laugh is pressed!'),
+                  style: {color: Colors.red50, textDecorationLine: 'underline', textDecorationColor: Colors.blue30}
+                },
+                {
+                  string: 'more',
+                  onPress: () => Alert.alert('more is pressed!')
+                }
+              ]}
+              highlightStyle={{color: Colors.green30}}
+            >
+              Dancing in The Dark, laughing drinking and more
             </Text>
           </View>
           {this.renderDivider()}

@@ -5,9 +5,11 @@ import {FlatList, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import SortableListContext from './SortableListContext';
-import SortableListItem from './SortableListItem';
+import SortableListItem, {DEFAULT_LIST_ITEM_HEIGHT} from './SortableListItem';
 import {useDidUpdate, useThemeProps} from 'hooks';
 import {SortableListProps, SortableListItemProps} from './types';
+import type {Dictionary} from '../../typings/common';
+
 export {SortableListProps, SortableListItemProps};
 
 function generateItemsOrder<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {
@@ -26,7 +28,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
   const lockedIds = useSharedValue<Dictionary<boolean>>(generateLockedIds(data));
-  const itemHeight = useSharedValue<number>(52);
+  const itemHeight = useSharedValue<number>(DEFAULT_LIST_ITEM_HEIGHT);
 
   useDidUpdate(() => {
     itemsOrder.value = generateItemsOrder(data);

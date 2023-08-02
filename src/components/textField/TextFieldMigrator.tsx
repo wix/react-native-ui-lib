@@ -4,6 +4,7 @@ import hoistStatics from 'hoist-non-react-statics';
 import OldTextField from './index';
 import NewTextField, {TextFieldStaticMembers, TextFieldProps} from '../../incubator/TextField';
 import {LogService} from '../../services';
+import type {Dictionary} from '../../typings/common';
 
 export interface TextFieldMigratorComponent
   extends React.ForwardRefExoticComponent<TextFieldProps>,
