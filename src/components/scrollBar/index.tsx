@@ -14,58 +14,56 @@ import {Constants, asBaseComponent, forwardRef, ForwardRefInjectedProps} from '.
 import View from '../view';
 import Image from '../image';
 
-
 export interface ScrollBarProps extends FlatListProps<any> {
   /**
-     * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
-     */
-    useList?: boolean,
-    /**
-     * The element to use as a container, instead of a View
-     */
-    containerView?: React.ComponentClass,
-    /**
-     * The props to pass the container
-     */
-    containerProps?: object,
-    /**
-     * The component's height
-     */
-    height?: number,
-    /**
-     * The gradient's height, defaults to the component's height
-     */
-    gradientHeight?: number,
-    /**
-     * The gradient's width
-     */
-    gradientWidth?: number,
-    /**
-     * The gradient's margins for the edge
-     */
-    gradientMargins?: number,
-    /**
-     * The gradient's tint color
-     */
-    gradientColor?: string,
-    /**
-     * The gradient's image, instead of the default image.
-     * NOTE: pass an image for the right-hand side and it will be flipped to match the left-hand side
-     */
-    gradientImage?: ImageSourcePropType,
-    /**
-     * The index to currently focus on
-     */
-    focusIndex?: number
+   * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
+   */
+  useList?: boolean;
+  /**
+   * The element to use as a container, instead of a View
+   */
+  containerView?: React.ComponentClass;
+  /**
+   * The props to pass the container
+   */
+  containerProps?: object;
+  /**
+   * The component's height
+   */
+  height?: number;
+  /**
+   * The gradient's height, defaults to the component's height
+   */
+  gradientHeight?: number;
+  /**
+   * The gradient's width
+   */
+  gradientWidth?: number;
+  /**
+   * The gradient's margins for the edge
+   */
+  gradientMargins?: number;
+  /**
+   * The gradient's tint color
+   */
+  gradientColor?: string;
+  /**
+   * The gradient's image, instead of the default image.
+   * NOTE: pass an image for the right-hand side and it will be flipped to match the left-hand side
+   */
+  gradientImage?: ImageSourcePropType;
+  /**
+   * The index to currently focus on
+   */
+  focusIndex?: number;
 }
 
 type Props = ScrollBarProps & ForwardRefInjectedProps;
 
 type State = {
-  gradientOpacity: Animated.Value,
-  gradientOpacityLeft: Animated.Value
+  gradientOpacity: Animated.Value;
+  gradientOpacityLeft: Animated.Value;
 };
-
 
 const GRADIENT_WIDTH = 76;
 const defaultImage = () => require('./assets/gradientOverlay.png');
@@ -266,7 +264,8 @@ class ScrollBar extends Component<Props, State> {
 const Item = ({children, index, onLayout}: any) => {
   const onItemLayout = useCallback(({nativeEvent: {layout}}: LayoutChangeEvent) => {
     onLayout({layout, index});
-  }, [children]);
+  },
+  [children]);
 
   return (
     <View flexG onLayout={onItemLayout}>
@@ -278,4 +277,3 @@ const Item = ({children, index, onLayout}: any) => {
 Item.displayName = 'IGNORE';
 ScrollBar.Item = Item;
 export default asBaseComponent<ScrollBarProps, typeof ScrollBar>(forwardRef(ScrollBar));
-
