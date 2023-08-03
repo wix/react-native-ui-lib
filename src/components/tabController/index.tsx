@@ -10,6 +10,8 @@ import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 import useImperativeTabControllerHandle, {TabControllerImperativeMethods} from './useImperativeTabControllerHandle';
+import type {ThemeComponent} from '../../typings/common';
+
 export {TabControllerItemProps, TabControllerImperativeMethods};
 
 interface TabControllerStatics {

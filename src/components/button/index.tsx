@@ -4,10 +4,10 @@ import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, Te
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
+import type {Dictionary} from '../../typings/common';
 import Text from '../text';
 import Image from '../image';
 import Icon from '../icon';
-
 import {
   ButtonSize,
   ButtonAnimationDirection,
@@ -17,9 +17,10 @@ import {
   DEFAULT_PROPS,
   ButtonSizeProp
 } from './ButtonTypes';
+import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
+
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
-import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';

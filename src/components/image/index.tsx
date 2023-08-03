@@ -18,7 +18,7 @@ import {
   BaseComponentInjectedProps,
   MarginModifiers
 } from '../../commons/new';
-import {RecorderProps} from '../../../typings/recorderTypes';
+import {RecorderProps} from '../../typings/recorderTypes';
 import {getAsset, isSvg} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
