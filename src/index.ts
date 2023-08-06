@@ -60,6 +60,7 @@ export {default as Button, ButtonProps, ButtonSize, ButtonAnimationDirection} fr
 export {default as Card, CardProps, CardSectionProps, CardSelectionOptions} from './components/card';
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as Checkbox, CheckboxProps} from './components/checkbox';
+export {default as NestedCheckbox} from './components/nestedCheckbox';
 export {default as ChipsInput, ChipsInputProps, ChipsInputChipProps} from './components/chipsInput';
 export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
