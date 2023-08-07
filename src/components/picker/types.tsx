@@ -157,6 +157,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     useWheelPicker?: boolean;
     /**
+     * Use dialog instead of modal picker
+     */
+    useDialog?: boolean;
+    /**
      * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
      */
     listProps?: Partial<FlatListProps<any>>;

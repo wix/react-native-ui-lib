@@ -54,6 +54,7 @@ export default class PickerScreen extends Component {
     language2: options[2].value,
     languages: [],
     nativePickerValue: 'java',
+    dialogPickerValue: 'java',
     customModalValues: [],
     filter: filters[0].value,
     scheme: schemes[0].value,
@@ -161,6 +162,21 @@ export default class PickerScreen extends Component {
                 labelStyle={Typography.text65}
                 disabled={option.disabled}
               />
+            ))}
+          </Picker>
+
+          <Picker
+            label="Dialog Picker"
+            placeholder="Pick a Language"
+            useDialog
+            //pass customPickerProps to use the new dialog
+            customPickerProps={{migrateDialog: true}}
+            value={this.state.dialogPickerValue}
+            onChange={dialogPickerValue => this.setState({dialogPickerValue})}
+            trailingAccessory={<Icon source={dropdown}/>}
+          >
+            {_.map(options, option => (
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
 

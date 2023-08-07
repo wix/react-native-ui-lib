@@ -64,6 +64,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     renderCustomSearch,
     // useNativePicker,
     useWheelPicker,
+    useDialog,
     renderPicker,
     customPickerProps,
     containerStyle,
@@ -287,7 +288,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     <PickerContext.Provider value={contextValue}>
       <ExpandableOverlay
         ref={pickerExpandable}
-        useDialog={useWheelPicker}
+        useDialog={useDialog || useWheelPicker}
         modalProps={modalProps}
         dialogProps={DIALOG_PROPS}
         expandableContent={expandableModalContent}
