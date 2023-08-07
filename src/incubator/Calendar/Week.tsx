@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import map from 'lodash/map';
 import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../../components/view';
@@ -31,7 +31,7 @@ const Week = (props: WeekProps) => {
   return (
     <View row>
       {renderWeekNumbers()}
-      {_.map(days, day => (
+      {map(days, day => (
         <Day date={day} currentMonth={month}/>
       ))}
     </View>
