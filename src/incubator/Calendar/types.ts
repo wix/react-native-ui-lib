@@ -3,11 +3,11 @@ import {SharedValue} from 'react-native-reanimated';
 import {ButtonProps} from '../../components/button';
 
 export interface DateObject {
+  timestamp: number;
   month: number;
   year: number;
   day: number;
   dayOfTheWeek: number;
-  timestamp: number;
 }
 
 export interface DateObjectWithDate {
@@ -17,6 +17,7 @@ export interface DateObjectWithDate {
 }
 
 export interface DateObjectWithOptionalDay {
+  timestamp: number;
   month: number;
   year: number;
   day?: number;

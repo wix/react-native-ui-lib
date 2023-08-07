@@ -194,6 +194,13 @@ export function isSameDay(d1: number, d2: number) {
 
 export function isSameMonth(d1: number | DateObjectWithOptionalDay, d2: number | DateObjectWithOptionalDay) {
   'worklet';
+  const timestamp1: number = typeof d1 === 'number' ? d1 : d1.timestamp;
+  const timestamp2: number = typeof d2 === 'number' ? d2 : d2.timestamp;
+  const diff = Math.abs(timestamp1 - timestamp2);
+  if (diff > DAY_IN_MS * 31) {
+    return false;
+  }
+
   const a = typeof d1 === 'number' ? getDateObject(d1) : d1;
   const b = typeof d2 === 'number' ? getDateObject(d2) : d2;
 

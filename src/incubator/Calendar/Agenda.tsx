@@ -90,7 +90,7 @@ function Agenda(props: AgendaProps) {
   useAnimatedReaction(() => {
     return selectedDate.value;
   },
-  (selected, previous) => {
+  (selected: number, previous: number | null) => {
     if (updateSource.value !== UpdateSource.AGENDA_SCROLL) {
       if (
         selected !== previous &&
