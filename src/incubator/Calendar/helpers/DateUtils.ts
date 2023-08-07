@@ -147,8 +147,7 @@ export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) {
   return weekDaysNames;
 }
 
-export function isPastDate(date: number) {
-  const today = new Date();
+export function isPastDate(date: number, today: Date) {
   const d = new Date(date);
 
   if (today.getFullYear() > d.getFullYear()) {
