@@ -18,10 +18,11 @@ export default class CalendarScreen extends Component {
 
   loadEvents = async (date: number) => {
     this.setState({showLoader: true});
-    const {events} = this.state;
+    // const {events} = this.state;
     const newEvents = await MockServer.getEvents(date);
     this.pageIndex++;
-    this.setState({events: _.uniqBy([...events, ...newEvents], e => e.id), showLoader: false});
+    // this.setState({events: _.uniqBy([...events, ...newEvents], e => e.id), showLoader: false});
+    this.setState({events: newEvents, showLoader: false});
   };
 
   onChangeDate = (date: number) => {
