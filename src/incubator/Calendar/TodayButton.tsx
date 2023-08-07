@@ -14,7 +14,7 @@ const UP_ICON = require('./assets/up.png');
 const TodayButton = (props: TodayButtonProps) => {
   //TODO: memoize
   const {containerStyle, buttonProps} = props;
-  const {selectedDate, setDate/* , today */} = useContext(CalendarContext);
+  const {selectedDate, setDate} = useContext(CalendarContext);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -27,7 +27,7 @@ const TodayButton = (props: TodayButtonProps) => {
   });
 
   /** animate button's icon */
-  // const source = useSharedValue(isPastDate(selectedDate.value, today) ? DOWN_ICON : UP_ICON);
+  // const source = useSharedValue(isPastDate(selectedDate.value) ? DOWN_ICON : UP_ICON);
   // const renderIcon = useCallback((style) => {
   //   return <Animated.Image source={source.value} style={style}/>;
   // }, []);
