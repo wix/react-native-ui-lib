@@ -1,4 +1,3 @@
-import isNull from 'lodash/isNull';
 import React, {useContext, useCallback, useMemo, useState} from 'react';
 import {StyleSheet, View, Text, TouchableWithoutFeedback} from 'react-native';
 import {useAnimatedReaction, runOnJS} from 'react-native-reanimated';
@@ -20,9 +19,7 @@ const Day = (props: DayProps) => {
   const {selectedDate, setDate, showExtraDays, today} = useContext(CalendarContext);
   const [selected, setSelected] = useState(false);
 
-  const dateObject = useMemo(() => {
-    return !isNull(date) && getDateObject(date);
-  }, [date]);
+  const dateObject = useMemo(() => getDateObject(date), [date]);
   const day = dateObject ? dateObject.day : '';
 
   useAnimatedReaction(() => (date ? isSameDay(selectedDate.value, date) : false),
