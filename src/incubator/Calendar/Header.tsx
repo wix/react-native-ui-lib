@@ -1,3 +1,4 @@
+import throttle from 'lodash/throttle';
 import React, {useContext, useCallback} from 'react';
 import {StyleSheet, TextInput, LayoutChangeEvent} from 'react-native';
 import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
@@ -25,13 +26,13 @@ const Header = (props: HeaderProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onLeftArrowPress = useCallback(() => {
+  const onLeftArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(-1), UpdateSource.MONTH_ARROW);
-  }, [setDate, getNewDate]);
+  }, 300), [setDate, getNewDate]);
 
-  const onRightArrowPress = useCallback(() => {
+  const onRightArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(1), UpdateSource.MONTH_ARROW);
-  }, [setDate, getNewDate]);
+  }, 300), [setDate, getNewDate]);
 
   const animatedProps = useAnimatedProps(() => {
     let m = month!;
