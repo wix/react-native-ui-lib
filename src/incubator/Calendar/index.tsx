@@ -31,8 +31,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     showExtraDays = true
   } = props;
 
-  const initialItems = generateMonthItems(initialDate, YEARS_RANGE, YEARS_RANGE);
-  const [items] = useState<DateObjectWithOptionalDay[]>(initialItems);
+  const [items] = useState<DateObjectWithOptionalDay[]>(() =>
+    generateMonthItems(initialDate, YEARS_RANGE, YEARS_RANGE));
 
   const getItemIndex = useCallback((date: number) => {
     'worklet';
@@ -177,7 +177,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   }, []);
 
   const renderCalendarItem = useCallback(({item}: any) => {
-    if (!staticHeader || headerHeight.value) { // item is rendered before static header height is calculated so it leaves extra space
+    if (!staticHeader || headerHeight.value) {
+      // item is rendered before static header height is calculated so it leaves extra space
       return <CalendarItem year={item.year} month={item.month}/>;
     }
   }, []);
