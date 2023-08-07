@@ -306,24 +306,6 @@ describe('Calendar/DateUtils', () => {
     });
   });
 
-  describe('isToday', () => {
-    it('should return true for a date that is today', () => {
-      expect(DateUtils.isToday(new Date().getTime())).toBe(true);
-    });
-
-    it('should return true for a date that is today', () => {
-      expect(DateUtils.isToday(Date.now())).toBe(true);
-    });
-
-    it('should return false for a past date', () => {
-      expect(DateUtils.isToday(new Date('2022-12-26').getTime())).toBe(false);
-    });
-
-    it('should return false for a future date', () => {
-      expect(DateUtils.isToday(new Date('2222-12-26').getTime())).toBe(false);
-    });
-  });
-
   describe('isPastDate', () => {
     it('should return true for a past date', () => {
       expect(DateUtils.isPastDate(new Date('2022-12-26').getTime())).toBe(true);

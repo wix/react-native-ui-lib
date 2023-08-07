@@ -147,11 +147,6 @@ export function getWeekDayNames(firstDayOfWeek = 0, format?: DayNamesFormat) {
   return weekDaysNames;
 }
 
-export function isToday(date: number | null) {
-  'worklet';
-  return date !== null && date !== undefined ? isSameDay(Date.now(), date) : false;
-}
-
 export function isPastDate(date: number) {
   const today = new Date();
   const d = new Date(date);

@@ -97,7 +97,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       updateSource: lastUpdateSource,
       staticHeader,
       setHeaderHeight,
-      headerHeight
+      headerHeight,
+      today: NOW
     };
   }, [processedData, staticHeader, showExtraDays, firstDayOfWeek]);
 

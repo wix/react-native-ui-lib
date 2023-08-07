@@ -6,7 +6,7 @@ import {Colors} from 'style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
-import {getDateObject, isSameDay, isToday} from './helpers/DateUtils';
+import {getDateObject, isSameDay} from './helpers/DateUtils';
 import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
@@ -24,7 +24,7 @@ const AnimatedText = Reanimated.createAnimatedComponent(Text);
 
 const Day = (props: DayProps) => {
   const {date, onPress, currentMonth} = props;
-  const {selectedDate, setDate, showExtraDays} = useContext(CalendarContext);
+  const {selectedDate, setDate, showExtraDays, today} = useContext(CalendarContext);
 
   const dateObject = useMemo(() => {
     return !isNull(date) && getDateObject(date);
@@ -42,8 +42,9 @@ const Day = (props: DayProps) => {
   const isHidden = !showExtraDays && inactive;
 
   const backgroundColor = useMemo(() => {
-    return !isToday(date) ? NO_COLOR : inactive ? INACTIVE_TODAY_BACKGROUND_COLOR : TODAY_BACKGROUND_COLOR;
-  }, [date, inactive]);
+    return date && !isSameDay(date, today) ? 
+      NO_COLOR : inactive ? INACTIVE_TODAY_BACKGROUND_COLOR : TODAY_BACKGROUND_COLOR;
+  }, [date, inactive, today]);
   const textColor = useMemo(() => {
     return inactive ? (showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR) : TEXT_COLOR;
   }, [inactive, showExtraDays]);

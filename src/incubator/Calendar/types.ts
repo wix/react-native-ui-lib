@@ -69,6 +69,7 @@ export interface CalendarContextProps {
   staticHeader?: boolean;
   setHeaderHeight?: (height: number) => void;
   headerHeight: SharedValue<number>;
+  today: number;
 }
 
 export interface DayProps {
