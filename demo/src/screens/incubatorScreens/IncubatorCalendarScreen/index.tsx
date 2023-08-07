@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Incubator} from 'react-native-ui-lib';
+import {Incubator, View, Text} from 'react-native-ui-lib';
 import MockServer from './MockServer';
 
 export default class CalendarScreen extends Component {
@@ -39,12 +39,46 @@ export default class CalendarScreen extends Component {
     this.loadEvents(date);
   };
 
+  // TODO: Fix type once we export them
+  renderEvent = (eventItem: any) => {
+    return (
+      <View marginH-10 padding-5 bg-blue70>
+        <Text>
+          Item for
+          {new Date(eventItem.start).toLocaleString('en-GB', {
+            month: 'short',
+            day: 'numeric',
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit'
+          })}
+          -{new Date(eventItem.end).toLocaleString('en-GB', {hour12: false, hour: '2-digit', minute: '2-digit'})}
+        </Text>
+      </View>
+    );
+  };
+
+  // TODO: Fix type once we export them
+  renderHeader = (headerItem: any) => {
+    return (
+      <View centerV flex marginL-5>
+        <Text>{headerItem.header}</Text>
+      </View>
+    );
+  };
+
   render() {
     const {date, events, showLoader} = this.state;
 
     return (
       <Incubator.Calendar data={events} initialDate={date} onChangeDate={this.onChangeDate} staticHeader>
-        <Incubator.Calendar.Agenda onEndReached={this.onEndReached} showLoader={showLoader}/>
+        <Incubator.Calendar.Agenda
+          renderEvent={this.renderEvent}
+          renderHeader={this.renderHeader}
+          // itemHeight={30}
+          onEndReached={this.onEndReached}
+          showLoader={showLoader}
+        />
       </Incubator.Calendar>
     );
   }
