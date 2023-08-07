@@ -1,5 +1,5 @@
 import React, {useContext, useCallback, useRef} from 'react';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, StyleSheet} from 'react-native';
 import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
 import {FlashListPackage} from 'optionalDeps';
 import type {FlashList as FlashListType, ViewToken} from '@shopify/flash-list';
@@ -14,7 +14,7 @@ const FlashList = FlashListPackage?.FlashList;
 
 // TODO: Fix initial scrolling
 function Agenda(props: AgendaProps) {
-  const {onEndReached, showLoader} = props;
+  const {renderEvent, renderHeader, itemHeight = 50, onEndReached, showLoader} = props;
   const {data, selectedDate, setDate, updateSource} = useContext(CalendarContext);
   const flashList = useRef<FlashListType<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
@@ -24,47 +24,55 @@ function Agenda(props: AgendaProps) {
     return item.type === 'Event' ? item.id : item.header;
   }, []); */
 
-  const renderEvent = useCallback((item: Event) => {
+  const _renderEvent = useCallback((eventItem: Event) => {
+    if (renderEvent) {
+      return (
+        <View height={itemHeight} style={styles.eventContainer}>
+          {renderEvent(eventItem)}
+        </View>
+      );
+    }
+
     return (
-      <View
-        marginV-1
-        marginH-10
-        paddingH-10
-        height={50}
-        style={{borderWidth: 1, borderRadius: BorderRadiuses.br20, justifyContent: 'center'}}
-      >
-        <Text style={{}}>
-          Item for{' '}
-          {new Date(item.start).toLocaleString('en-GB', {
+      <View marginV-1 marginH-10 paddingH-10 height={itemHeight} centerV style={styles.event}>
+        <Text>
+          Item for
+          {new Date(eventItem.start).toLocaleString('en-GB', {
             month: 'short',
             day: 'numeric',
             hour12: false,
             hour: '2-digit',
             minute: '2-digit'
           })}
-          -{new Date(item.end).toLocaleString('en-GB', {hour12: false, hour: '2-digit', minute: '2-digit'})}
+          -{new Date(eventItem.end).toLocaleString('en-GB', {hour12: false, hour: '2-digit', minute: '2-digit'})}
         </Text>
       </View>
     );
-  }, []);
+  },
+  [renderEvent, itemHeight]);
 
-  const renderHeader = useCallback((item: DateSectionHeader) => {
+  const _renderHeader = useCallback((headerItem: DateSectionHeader) => {
+    if (renderHeader) {
+      return <View height={itemHeight}>{renderHeader(headerItem)}</View>;
+    }
+
     return (
-      <View marginB-1 paddingB-4 marginH-10 paddingH-10 height={50} bottom>
-        <Text>{item.header}</Text>
+      <View bottom marginB-5 marginH-20 height={itemHeight}>
+        <Text>{headerItem.header}</Text>
       </View>
     );
-  }, []);
+  },
+  [renderHeader, itemHeight]);
 
   const renderItem = useCallback(({item}: {item: InternalEvent; index: number}) => {
     switch (item.type) {
       case 'Event':
-        return renderEvent(item);
+        return _renderEvent(item);
       case 'Header':
-        return renderHeader(item);
+        return _renderHeader(item);
     }
   },
-  [renderEvent, renderHeader]);
+  [_renderEvent, _renderHeader]);
 
   const getItemType = useCallback((item: any) => item.type, []);
 
@@ -168,3 +176,13 @@ function Agenda(props: AgendaProps) {
 }
 
 export default Agenda;
+
+const styles = StyleSheet.create({
+  eventContainer: {
+    overflow: 'hidden'
+  },
+  event: {
+    borderWidth: 1,
+    borderRadius: BorderRadiuses.br20
+  }
+});

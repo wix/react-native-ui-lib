@@ -14,7 +14,7 @@ function generateId() {
 
 const data = [];
 
-for (let year = 2021; year <= 2023; ++year) {
+for (let year = 2018; year <= 2028; ++year) {
   for (let month = 0; month <= 11; ++month) {
     for (let day = 1; day <= 31; day += Math.random() > 0.5 ? 2 : 1) {
       for (let hour = 9; hour <= 19; hour += Math.random() > 0.5 ? 4 : 3) {
