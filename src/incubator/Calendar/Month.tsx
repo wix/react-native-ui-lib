@@ -5,7 +5,6 @@ import {MonthProps} from './types';
 import Week from './Week';
 import CalendarContext from './CalendarContext';
 
-
 function Month(props: MonthProps) {
   const {year, month} = props;
   const {firstDayOfWeek} = useContext(CalendarContext);
@@ -17,7 +16,8 @@ function Month(props: MonthProps) {
   return (
     <View>
       {weekNumbers.map(weekNumber => {
-        return <Week key={weekNumber} weekNumber={weekNumber} year={year} month={month}/>;
+        // eslint-disable-next-line react/jsx-key
+        return <Week weekNumber={weekNumber} year={year} month={month}/>;
       })}
     </View>
   );

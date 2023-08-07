@@ -9,11 +9,11 @@ const WEEK_IN_MS = 7 * DAY_IN_MS;
 function getNumberOfWeeksInMonth(year: number, month: number, firstDayOfWeek: FirstDayOfWeek) {
   const numberOfDaysInMonth = new Date(year, month + 1, 0).getDate();
   const dayOfTheWeek = new Date(year, month, 1).getDay();
-  
+
   // Modify day in the week based on the first day of the week
   const fixedDayOfTheWeek = (7 - (firstDayOfWeek - dayOfTheWeek)) % 7;
   const numberOfWeeks = Math.ceil((numberOfDaysInMonth + fixedDayOfTheWeek) / 7);
-  
+
   return numberOfWeeks;
 }
 
@@ -25,10 +25,10 @@ export function getWeekNumbersOfMonth(year: number, month: number, firstDayOfWee
   const firstDayOfMonth = new Date(year, month, 1);
   const firstWeekNumber = getWeek(firstDayOfMonth, {weekStartsOn: firstDayOfWeek});
   const numberOfWeeks = getNumberOfWeeksInMonth(year, month, firstDayOfWeek);
-  
+
   const weekNumbers: number[] = [];
   _.times(numberOfWeeks, i => weekNumbers.push(i + firstWeekNumber));
-  
+
   return weekNumbers;
 }
 
@@ -84,7 +84,8 @@ export function addMonths(date: number, count: number, useFirstDay = false) {
   const d = new Date(date);
   const month = d.getMonth();
   d.setMonth(month + count);
-  if (useFirstDay) { // feature: setting the new month to the first day of the month
+  if (useFirstDay) {
+    // feature: setting the new month to the first day of the month
     d.setDate(1);
   }
   return d.getTime();
@@ -173,6 +174,11 @@ export function isPastDate(date: number) {
 
 export function isSameDay(d1: number, d2: number) {
   'worklet';
+  const diff = Math.abs(d1 - d2);
+  if (diff > DAY_IN_MS) {
+    return false;
+  }
+
   const a = getDateObject(d1);
   const b = getDateObject(d2);
 

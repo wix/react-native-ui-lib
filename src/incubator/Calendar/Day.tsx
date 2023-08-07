@@ -10,7 +10,6 @@ import {getDateObject, isSameDay, isToday} from './helpers/DateUtils';
 import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
-
 const DAY_SIZE = 32;
 const SELECTION_SIZE = 24;
 const NO_COLOR = Colors.transparent;
@@ -26,14 +25,15 @@ const AnimatedText = Reanimated.createAnimatedComponent(Text);
 const Day = (props: DayProps) => {
   const {date, onPress, currentMonth} = props;
   const {selectedDate, setDate, showExtraDays} = useContext(CalendarContext);
-  
+
   const dateObject = useMemo(() => {
     return !isNull(date) && getDateObject(date);
   }, [date]);
   const day = dateObject ? dateObject.day : '';
-  
+
   const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
-  const inactive = useMemo(() => { // inactive have different look but is still pressable
+  const inactive = useMemo(() => {
+    // inactive have different look but is still pressable
     if (dateObject) {
       const dayMonth = dateObject.month;
       return dayMonth !== currentMonth;
@@ -45,14 +45,16 @@ const Day = (props: DayProps) => {
     return !isToday(date) ? NO_COLOR : inactive ? INACTIVE_TODAY_BACKGROUND_COLOR : TODAY_BACKGROUND_COLOR;
   }, [date, inactive]);
   const textColor = useMemo(() => {
-    return inactive ? showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR : TEXT_COLOR;
+    return inactive ? (showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR) : TEXT_COLOR;
   }, [inactive, showExtraDays]);
 
   useAnimatedReaction(() => {
     return selectedDate.value;
-  }, (selected) => {
+  },
+  selected => {
     isSelected.value = !inactive && isSameDay(selected, date!);
-  }, []);
+  },
+  []);
 
   const animatedTextStyles = useAnimatedStyle(() => {
     return {
