@@ -42,7 +42,7 @@ const Day = (props: DayProps) => {
   const isHidden = !showExtraDays && inactive;
 
   const backgroundColor = useMemo(() => {
-    return date && !isSameDay(date, today) ? 
+    return !isSameDay(date!, today) ? 
       NO_COLOR : inactive ? INACTIVE_TODAY_BACKGROUND_COLOR : TODAY_BACKGROUND_COLOR;
   }, [date, inactive, today]);
   const textColor = useMemo(() => {
