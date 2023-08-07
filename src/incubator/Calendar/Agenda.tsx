@@ -20,9 +20,9 @@ function Agenda(props: AgendaProps) {
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
   const scrolledByUser = useSharedValue<boolean>(false);
 
-  const keyExtractor = useCallback((item: InternalEvent) => {
+  /* const keyExtractor = useCallback((item: InternalEvent) => {
     return item.type === 'Event' ? item.id : item.header;
-  }, []);
+  }, []); */
 
   const renderEvent = useCallback((item: Event) => {
     return (
@@ -148,7 +148,8 @@ function Agenda(props: AgendaProps) {
         ref={flashList}
         estimatedItemSize={52}
         data={data}
-        keyExtractor={keyExtractor}
+        // TODO: Not sure we need key extractor in flash list
+        // keyExtractor={keyExtractor}
         renderItem={renderItem}
         getItemType={getItemType}
         onViewableItemsChanged={onViewableItemsChanged}
