@@ -177,7 +177,9 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   }, []);
 
   const renderCalendarItem = useCallback(({item}: any) => {
-    return <CalendarItem year={item.year} month={item.month}/>;
+    if (!staticHeader || headerHeight.value) { // item is rendered before static header height is calculated so it leaves extra space
+      return <CalendarItem year={item.year} month={item.month}/>;
+    }
   }, []);
 
   return (
