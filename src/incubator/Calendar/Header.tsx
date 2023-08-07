@@ -34,12 +34,17 @@ const Header = (props: HeaderProps) => {
     setDate(getNewDate(1), UpdateSource.MONTH_ARROW);
   }, 300), [setDate, getNewDate]);
 
-  const animatedProps = useAnimatedProps(() => {
-    const dateObject = getDateObject(selectedDate.value);
+  const getTitle = useCallback((date: number) => {
+    'worklet';
+    const dateObject = getDateObject(date);
     const m = dateObject.month;
     const y = dateObject.year;
+    return getMonthForIndex(m) + ` ${y}`;
+  }, []);
+
+  const animatedProps = useAnimatedProps(() => { // get called only on value update
     return {
-      text: getMonthForIndex(m) + ` ${y}`
+      text: getTitle(selectedDate.value)
     };
   });
 
@@ -52,8 +57,14 @@ const Header = (props: HeaderProps) => {
       const title = getMonthForIndex(month!) + ` ${year}`;
       return <Text style={styles.title}>{title}</Text>;
     }
-    // @ts-expect-error
-    return <AnimatedTextInput {...{animatedProps}} editable={false} style={styles.title}/>;
+    return (
+      // @ts-expect-error
+      <AnimatedTextInput 
+        value={getTitle(selectedDate.value)} // setting initial value
+        {...{animatedProps}}
+        editable={false}
+        style={styles.title}
+      />);
   };
 
   const renderArrow = (source: number, onPress: () => void) => {
