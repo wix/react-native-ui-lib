@@ -1,6 +1,6 @@
 import throttle from 'lodash/throttle';
 import React, {useContext, useCallback} from 'react';
-import {StyleSheet, TextInput, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, TextInput, Text, LayoutChangeEvent} from 'react-native';
 import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import {Colors, Typography} from 'style';
 import View from '../../components/view';
@@ -35,13 +35,9 @@ const Header = (props: HeaderProps) => {
   }, 300), [setDate, getNewDate]);
 
   const animatedProps = useAnimatedProps(() => {
-    let m = month!;
-    let y = year;
-    if (staticHeader) {
-      const dateObject = getDateObject(selectedDate.value);
-      m = dateObject.month;
-      y = dateObject.year;
-    }
+    const dateObject = getDateObject(selectedDate.value);
+    const m = dateObject.month;
+    const y = dateObject.year;
     return {
       text: getMonthForIndex(m) + ` ${y}`
     };
@@ -52,6 +48,10 @@ const Header = (props: HeaderProps) => {
   }, [setHeaderHeight]);
 
   const renderTitle = () => {
+    if (!staticHeader) {
+      const title = getMonthForIndex(month!) + ` ${year}`;
+      return <Text style={styles.title}>{title}</Text>;
+    }
     // @ts-expect-error
     return <AnimatedTextInput {...{animatedProps}} editable={false} style={styles.title}/>;
   };
