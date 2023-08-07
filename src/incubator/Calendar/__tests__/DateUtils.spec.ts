@@ -360,23 +360,31 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return false for same month in MonthProps date format', () => {
-      expect(DateUtils.isSameMonth({month: 11, year: 2026}, {month: 10, year: 2026})).toBe(false);
+      expect(DateUtils.isSameMonth({month: 11, year: 2026, timestamp: new Date(2026, 11, 1).getTime()},
+        {month: 10, year: 2026, timestamp: new Date(2026, 10, 1).getTime()})).toBe(false);
     });
 
     it('should return false for same month in MonthProps date format', () => {
-      expect(DateUtils.isSameMonth({month: 10, year: 2023}, {month: 10, year: 2026})).toBe(false);
+      expect(DateUtils.isSameMonth({month: 10, year: 2023, timestamp: new Date(2023, 10, 1).getTime()},
+        {month: 10, year: 2026, timestamp: new Date(2026, 10, 1).getTime()})).toBe(false);
     });
 
     it('should return true for same month in MonthProps date format', () => {
-      expect(DateUtils.isSameMonth({month: 10, year: 2026}, {month: 10, year: 2026})).toBe(true);
+      expect(DateUtils.isSameMonth({month: 10, year: 2026, timestamp: new Date(2026, 10, 1).getTime()},
+        {month: 10, year: 2026, timestamp: new Date(2026, 10, 1).getTime()})).toBe(true);
     });
 
     it('should return true for same month in different date format', () => {
-      expect(DateUtils.isSameMonth({month: 0, year: 2022}, new Date('2022-01-27').getTime())).toBe(true);
+      expect(DateUtils.isSameMonth({month: 0, year: 2022, timestamp: new Date(2022, 0, 1).getTime()},
+        new Date('2022-01-27').getTime())).toBe(true);
     });
 
     it('should return true for same month in different date format', () => {
-      expect(DateUtils.isSameMonth(new Date('2026-11-27').getTime(), {month: 10, year: 2026})).toBe(true);
+      expect(DateUtils.isSameMonth(new Date('2026-11-27').getTime(), {
+        month: 10,
+        year: 2026,
+        timestamp: new Date(2026, 10, 1).getTime()
+      })).toBe(true);
     });
   });
 
