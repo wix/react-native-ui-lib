@@ -1,108 +1,104 @@
 import isNull from 'lodash/isNull';
-import React, {useContext, useCallback, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
-import Reanimated, {useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming} from 'react-native-reanimated';
+import React, {useContext, useCallback, useMemo, useState} from 'react';
+import {StyleSheet, View, Text, TouchableWithoutFeedback} from 'react-native';
+import {useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import {Colors} from 'style';
-import View from '../../components/view';
-import TouchableOpacity from '../../components/touchableOpacity';
-import Text from '../../components/text';
 import {getDateObject, isSameDay} from './helpers/DateUtils';
 import {DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 const DAY_SIZE = 32;
-const SELECTION_SIZE = 24;
 const NO_COLOR = Colors.transparent;
 const TEXT_COLOR = Colors.$textPrimary;
 const TODAY_BACKGROUND_COLOR = Colors.$backgroundPrimaryLight;
-const INACTIVE_TODAY_BACKGROUND_COLOR = Colors.$backgroundNeutral;
 const SELECTED_BACKGROUND_COLOR = Colors.$backgroundPrimaryHeavy;
 const SELECTED_TEXT_COLOR = Colors.$textDefaultLight;
 const INACTIVE_TEXT_COLOR = Colors.$textNeutralLight;
 
-const AnimatedText = Reanimated.createAnimatedComponent(Text);
-
 const Day = (props: DayProps) => {
   const {date, onPress, currentMonth} = props;
   const {selectedDate, setDate, showExtraDays, today} = useContext(CalendarContext);
+  const [selected, setSelected] = useState(false);
 
   const dateObject = useMemo(() => {
     return !isNull(date) && getDateObject(date);
   }, [date]);
   const day = dateObject ? dateObject.day : '';
 
-  const isSelected = useSharedValue(!isNull(date) ? isSameDay(selectedDate.value, date) : false);
-  const inactive = useMemo(() => {
-    // inactive have different look but is still pressable
-    if (dateObject) {
-      const dayMonth = dateObject.month;
-      return dayMonth !== currentMonth;
-    }
-  }, [dateObject, currentMonth]);
-  const isHidden = !showExtraDays && inactive;
-
-  const backgroundColor = useMemo(() => {
-    return !isSameDay(date!, today) ? 
-      NO_COLOR : inactive ? INACTIVE_TODAY_BACKGROUND_COLOR : TODAY_BACKGROUND_COLOR;
-  }, [date, inactive, today]);
-  const textColor = useMemo(() => {
-    return inactive ? (showExtraDays ? INACTIVE_TEXT_COLOR : NO_COLOR) : TEXT_COLOR;
-  }, [inactive, showExtraDays]);
-
-  useAnimatedReaction(() => {
-    return selectedDate.value;
-  },
-  selected => {
-    isSelected.value = !inactive && isSameDay(selected, date!);
-  },
-  []);
-
-  const animatedTextStyles = useAnimatedStyle(() => {
-    return {
-      color: withTiming(isSelected.value ? SELECTED_TEXT_COLOR : textColor, {duration: 100})
-    };
-  });
-
-  const animatedSelectionStyles = useAnimatedStyle(() => {
-    return {
-      backgroundColor: withTiming(isSelected.value ? SELECTED_BACKGROUND_COLOR : backgroundColor, {duration: 100})
-    };
-  });
-
-  const selectionStyle = useMemo(() => {
-    return [styles.selection, animatedSelectionStyles];
-  }, [animatedSelectionStyles]);
+  useAnimatedReaction(() => (date ? isSameDay(selectedDate.value, date) : false),
+    (selected, prevSelected) => {
+      if (selected !== prevSelected) {
+        runOnJS(setSelected)(selected);
+      }
+    });
 
   const _onPress = useCallback(() => {
-    if (date !== null && !isHidden) {
-      isSelected.value = true;
-      setDate(date, UpdateSource.DAY_SELECT);
-      onPress?.(date);
+    setDate(date, UpdateSource.DAY_SELECT);
+    onPress?.(date);
+  }, [setDate, date, onPress]);
+
+  const isToday = isSameDay(today, date);
+  const inactive = dateObject ? dateObject.month !== currentMonth : false;
+  const isHidden = !showExtraDays && inactive;
+
+  const textStyle = useMemo(() => {
+    if (isHidden) {
+      return styles.textHidden;
+    } else if (inactive) {
+      return styles.textInactive;
+    } else if (selected) {
+      return styles.textSelected;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date, setDate, onPress]);
+    return styles.text;
+  }, [selected, inactive, isHidden]);
 
   return (
-    <TouchableOpacity flex center style={styles.dayContainer} onPress={_onPress} activeOpacity={1}>
-      <View center>
-        <View reanimated style={selectionStyle}/>
-        <AnimatedText style={animatedTextStyles}>{day}</AnimatedText>
+    <TouchableWithoutFeedback onPress={_onPress}>
+      <View style={styles.container}>
+        {isToday && <View style={styles.todayIndicator}/>}
+        {selected && <View style={styles.selectedIndicator}/>}
+        <Text style={textStyle}>{day}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default Day;
 
 const styles = StyleSheet.create({
-  dayContainer: {
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     width: DAY_SIZE,
     height: DAY_SIZE
   },
-  selection: {
+  text: {
+    color: TEXT_COLOR
+  },
+  textSelected: {
+    color: SELECTED_TEXT_COLOR
+  },
+  textInactive: {
+    color: INACTIVE_TEXT_COLOR
+  },
+  textHidden: {
+    color: NO_COLOR
+  },
+  selectedIndicator: {
     position: 'absolute',
-    width: SELECTION_SIZE,
-    height: SELECTION_SIZE,
-    borderRadius: SELECTION_SIZE / 2
+    width: DAY_SIZE,
+    height: DAY_SIZE,
+    flex: 1,
+    borderRadius: 999,
+    backgroundColor: SELECTED_BACKGROUND_COLOR
+  },
+  todayIndicator: {
+    position: 'absolute',
+    width: DAY_SIZE,
+    height: DAY_SIZE,
+    flex: 1,
+    borderRadius: 999,
+    backgroundColor: TODAY_BACKGROUND_COLOR
   }
 });

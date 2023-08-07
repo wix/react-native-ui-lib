@@ -73,7 +73,7 @@ export interface CalendarContextProps {
 }
 
 export interface DayProps {
-  date: number | null;
+  date: number;
   onPress?: (date: number) => void;
   currentMonth?: number;
 }
