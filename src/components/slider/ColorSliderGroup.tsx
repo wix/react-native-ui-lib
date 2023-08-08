@@ -8,8 +8,6 @@ import Text from '../text';
 
 type SliderOnValueChange = (value: string) => void;
 
-type Labels = {[key in GradientSliderTypes]: string};
-
 export type ColorSliderGroupProps = {
   /**
    * The gradient color
@@ -34,14 +32,8 @@ export type ColorSliderGroupProps = {
   /**
    * In case you would like to change the default labels (translations etc.), you can provide
    * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
-   * @deprecated
    */
-  labels?: Labels;
-  /**
-   * In case you would like to change the default labels (translations etc.), you can provide
-   * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
-   */
-  getLabels?: () => Labels;
+  labels?: {[key in GradientSliderTypes]: string};
   /**
    * The labels style
    */
@@ -50,7 +42,7 @@ export type ColorSliderGroupProps = {
    * If true the component will have accessibility features enabled
    */
   accessible?: boolean;
-  /**
+  /** 
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
@@ -69,7 +61,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
   static displayName = 'ColorSliderGroup';
 
   static defaultProps = {
-    getLabels: () => ({hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'})
+    labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
   };
 
   state = {
@@ -91,16 +83,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
   };
 
   renderSlider = (type: GradientSliderTypes) => {
-    const {
-      sliderContainerStyle,
-      showLabels,
-      labelsStyle,
-      accessible,
-      labels: deprecatedLabels,
-      getLabels,
-      migrate
-    } = this.props;
-    const labels = deprecatedLabels ?? getLabels?.();
+    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels, migrate} = this.props;
 
     return (
       <>
