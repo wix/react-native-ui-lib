@@ -8,6 +8,13 @@ import ColorPalette, {ColorPaletteProps} from '../colorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
 
+interface AccessibilityLabels {
+  addButton?: string;
+  dismissButton?: string;
+  doneButton?: string;
+  input?: string;
+}
+
 interface Props extends ColorPickerDialogProps, Pick<ColorPaletteProps, 'onValueChange'> {
   /**
    * Array of colors for the picker's color palette (hex values)
@@ -29,13 +36,19 @@ interface Props extends ColorPickerDialogProps, Pick<ColorPaletteProps, 'onValue
    *  doneButton: 'done',
    *  input: 'custom hex color code'
    * }
+   * @deprecated
    */
-  accessibilityLabels?: {
-    addButton?: string;
-    dismissButton?: string;
-    doneButton?: string;
-    input?: string;
-  };
+  accessibilityLabels?: AccessibilityLabels;
+  /**
+   * A function that returns the accessibility labels as an object of strings, ex.
+   * {
+   *  addButton: 'add custom color using hex code',
+   *  dismissButton: 'dismiss',
+   *  doneButton: 'done',
+   *  input: 'custom hex color code'
+   * }
+   */
+  getAccessibilityLabels?: () => AccessibilityLabels;
   testID?: string;
   /**
    * The ColorPicker's background color
@@ -61,7 +74,7 @@ class ColorPicker extends PureComponent<Props> {
   static displayName = 'ColorPicker';
 
   static defaultProps = {
-    accessibilityLabels: ACCESSIBILITY_LABELS,
+    getAccessibilityLabels: () => ACCESSIBILITY_LABELS,
     backgroundColor: Colors.$backgroundDefault
   };
 
@@ -86,7 +99,17 @@ class ColorPicker extends PureComponent<Props> {
   };
 
   render() {
-    const {initialColor, colors, value, testID, accessibilityLabels, backgroundColor, onValueChange} = this.props;
+    const {
+      initialColor,
+      colors,
+      value,
+      testID,
+      accessibilityLabels: deprecatedAccessibilityLabels,
+      getAccessibilityLabels,
+      backgroundColor,
+      onValueChange
+    } = this.props;
+    const accessibilityLabels = deprecatedAccessibilityLabels ?? getAccessibilityLabels?.();
     const {show} = this.state;
     return (
       <View row testID={testID} style={{backgroundColor}}>

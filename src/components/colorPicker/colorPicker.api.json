@@ -26,10 +26,10 @@
       "description": "Callback for the picker's color palette change"
     },
     {
-      "name": "accessibilityLabels",
-      "type": "{\n addButton: string,\n dismissButton: string,\n doneButton: string,\n input: string}",
-      "description": "Accessibility labels as an object of strings",
-      "default": "{\n addButton: 'add custom color using hex code',\n dismissButton: 'dismiss',\n doneButton: 'done',\n input: 'custom hex color code'\n}"
+      "name": "getAccessibilityLabels",
+      "type": "() => {\n addButton: string,\n dismissButton: string,\n doneButton: string,\n input: string}",
+      "description": "A function that returns the accessibility labels as an object of strings",
+      "default": "() => {\n addButton: 'add custom color using hex code',\n dismissButton: 'dismiss',\n doneButton: 'done',\n input: 'custom hex color code'\n}"
     },
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"},
     {"name": "backgroundColor", "type": "string", "description": "The ColorPicker's background color"}
