@@ -1,6 +1,14 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated, StyleProp} from 'react-native';
+import {
+  Text as RNText,
+  StyleSheet,
+  TextProps as RNTextProps,
+  TextStyle,
+  Animated,
+  StyleProp,
+  Platform
+} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -116,7 +124,7 @@ class Text extends PureComponent<PropsTypes> {
             return (
               <RNText
                 key={index}
-                style={text.shouldHighlight ? (text.style ?? [styles.highlight, highlightStyle]) : styles.notHighlight}
+                style={text.shouldHighlight ? text.style ?? [styles.highlight, highlightStyle] : styles.notHighlight}
                 onPress={text.onPress}
                 testID={text.testID}
               >
@@ -184,8 +192,14 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
     color: Colors.$textDefault,
-    // textAlign: 'left'
-    writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR // iOS only
+    ...Platform.select({
+      ios: {
+        writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR
+      },
+      android: {
+        textAlign: 'left'
+      }
+    })
   },
   centered: {
     textAlign: 'center'
