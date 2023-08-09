@@ -9,7 +9,8 @@ export default class CheckboxScreen extends Component {
     value3: true,
     value4: true,
     value5: false,
-    value6: false
+    value6: false,
+    value7: true
   };
   
   render() {
@@ -48,6 +49,15 @@ export default class CheckboxScreen extends Component {
           label={'With label'}
           color={Colors.green20}
           onValueChange={value6 => this.setState({value6})}
+          containerStyle={styles.checkbox}
+        />
+
+        <Checkbox
+          value={this.state.value7}
+          onValueChange={value7 => this.setState({value7})}
+          indeterminate
+          label={'Indeterminate state'}
+          color={Colors.green20}
           containerStyle={styles.checkbox}
         />
 
