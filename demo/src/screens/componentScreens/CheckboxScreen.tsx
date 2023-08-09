@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Assets, Colors, View, Text, Button, Checkbox, CheckboxRef, NestedCheckbox} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, View, Text, Checkbox} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class CheckboxScreen extends Component {
   state = {
@@ -9,33 +9,7 @@ export default class CheckboxScreen extends Component {
     value3: true,
     value4: true,
     value5: false,
-    value6: false,
-    value7: false,
-    validationText: '',
-    validationColor: Colors.$textDefault,
-    parent: false,
-    child1: false,
-    child2: false
-  };
-  checkbox = React.createRef<CheckboxRef>();
-  checkbox1 = React.createRef<CheckboxRef>();
-
-  onPress = () => {
-    this.checkbox.current?.validate();
-  };
-
-  onValueChange = (value: boolean) => {
-    this.setState({value7: value}, () => {
-      // isValid checks against props.value, which have not been updated yet as this is an controlled component
-      console.log('onValueChange new value isValid: ', this.checkbox.current?.isValid());
-    });
-  };
-
-  onChangeValidity = (value?: boolean) => {
-    this.setState({
-      validationText: value === true ? 'Valid' : 'Not valid',
-      validationColor: value === true ? Colors.$textSuccess : Colors.$textDangerLight
-    });
+    value6: false
   };
   
   render() {
@@ -92,37 +66,6 @@ export default class CheckboxScreen extends Component {
             onValueChange={value5 => this.setState({value5})}
             iconColor={Colors.green10}
           />
-        </View>
-
-        <View marginT-20>
-          <Text text60 $textDefault>Validation</Text>
-
-          <Text marginB-4 color={this.state.validationColor}>{this.state.validationText}</Text>
-          <View row centerV spread marginB-10>
-            <Checkbox
-              required
-              onChangeValidity={this.onChangeValidity}
-              ref={this.checkbox}
-              value={this.state.value7}
-              onValueChange={this.onValueChange}
-              label={'This is a checkbox'}
-            />
-            <Button size={'small'} label={'Validate'} onPress={this.onPress}/>
-          </View>
-        </View>
-
-        <View marginT-20>
-          <Text text60 $textDefault marginB-20>Nested Checkbox</Text>
-
-          <NestedCheckbox /* value={true} */ onValueChange={(v) => console.log('Screen parent value changed: ', v)} label={'ParentA'} testID={'ParentA'}>
-            <Checkbox /* value={false} */ onValueChange={(v) => console.log('Screen child 1 value changed: ', v)} label={'Child 1'} testID={'Child1'}/>
-            <Checkbox onValueChange={(v) => console.log('Screen child 2 value changed: ', v)} label={'Child 2'} testID={'Child2'}/>
-            <Checkbox onValueChange={(v) => console.log('Screen child 3 value changed: ', v)} label={'Child 3'} testID={'Child3'}/>
-            <NestedCheckbox /* value={true} */ onValueChange={(v) => console.log('Screen parent B value changed: ', v)} label={'ParentB'} testID={'ParentA'}>
-              <Checkbox /* value={false} */ onValueChange={(v) => console.log('Screen child b-1 value changed: ', v)} label={'Child b-1'} testID={'Child-b-1'}/>
-              <Checkbox onValueChange={(v) => console.log('Screen child b-2 value changed: ', v)} label={'Child b-2'} testID={'Child-b-2'}/>
-            </NestedCheckbox>
-          </NestedCheckbox>
         </View>
       </View>
     );
