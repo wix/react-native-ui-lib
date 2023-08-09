@@ -1,27 +1,34 @@
 import _ from 'lodash';
-import React, {useState, useCallback, useMemo} from 'react';
-import {useDidUpdate} from '../../hooks';
+import React, {useState, useCallback, useMemo, useEffect, useRef} from 'react';
 import {Spacings} from '../../style';
 import View from '../view';
 import Checkbox, {CheckboxProps} from '../checkbox/index';
 
+enum ValueTypes {
+  CHECKED = 'checked',
+  UNCHECKED = 'unchecked',
+  INDETERMINATE = 'indeterminate'
+}
 export interface NestedCheckboxProps extends CheckboxProps {
-  children?: React.ReactElement<CheckboxProps> | React.ReactElement<CheckboxProps>[];
+  children?: React.ReactElement<CheckboxProps>[];
+  // setParentValue?: (value: ValueTypes) => void;
 }
 
 const NestedCheckbox = ((props: NestedCheckboxProps) => {
-  const {value = false, onValueChange, children, testID = 'checkbox'} = props;
-  
-  useDidUpdate(() => {
-    console.warn('NestedCheckbox is an uncontrolled component, do not update the value prop.');
-  }, [value]);
+  const parentRef = useRef<NestedCheckboxProps>(null);
+  const {value = false, onValueChange, children, /* setParentValue,  */...others} = props;
+
+  /** Children values */
 
   const values: boolean[] = useMemo(() => {
     const items = React.Children.map(children, (child) => {
-      return child?.props?.value || false;
+      const childValue = child?.props?.value;
+      // const childIndeterminateState = child?.type === NestedCheckbox;
+      // console.log('item value: ', child?.type === NestedCheckbox, childValue, child?.props?.indeterminate);
+      return childValue !== undefined ? childValue : value;
     });
     return items || [];
-  }, [children]);
+  }, [children, value]);
 
   const [childrenValues, setChildrenValues] = useState<boolean[]>(values);
 
@@ -46,8 +53,37 @@ const NestedCheckbox = ((props: NestedCheckboxProps) => {
     return true;
   }, [values]);
 
-  const [parentValue, setParentValue] = useState<boolean>(isSomeChildChecked());
-  const [indeterminate, setIndeterminate] = useState<boolean>(!areAllChildrenEqual());
+  /** Value */
+
+  const getCurrentValue = useCallback(() => {
+    if (!areAllChildrenEqual()) {
+      return ValueTypes.INDETERMINATE;
+    } else if (isSomeChildChecked()) {
+      return ValueTypes.CHECKED;
+    }
+    return ValueTypes.UNCHECKED;
+  }, [isSomeChildChecked, areAllChildrenEqual]);
+
+  const [currentValue, setCurrentValue] = useState<ValueTypes>(getCurrentValue());
+
+  useEffect(() => {
+    // currentValue was changed by a (child) checkbox
+    // console.log('----- effect currentValue -----: ', props.label, currentValue, setParentValue, getCurrentValue());
+    const current = getCurrentValue();
+    console.log('current: ', props.label, current, currentValue);
+    if (current === ValueTypes.INDETERMINATE) {
+      // setParentValue?.(current);
+      parentRef.current?.setCurrentValue?.(current);
+    } else {
+      parentRef.current?.onValueChange?.(!(current === ValueTypes.UNCHECKED));
+    }
+  }, [currentValue]);
+
+  useEffect(() => {
+    console.log('----- effect value -----: ', props.label, value);
+    // value was changed by a nested checkbox (current) of another nested checkbox
+    onCurrentValueChange?.(value);
+  }, [value]);
 
   const setAllValues = useCallback((value: boolean) => {
     for (let i = 0; i < values.length; i++) {
@@ -58,36 +94,39 @@ const NestedCheckbox = ((props: NestedCheckboxProps) => {
 
   const setValueForIndex = useCallback((value: boolean, index: number) => {
     values[index] = value;
-    setChildrenValues(_.clone(values)); // clone in order to invoke render in case parent/indeterminate didn't change
+    setChildrenValues(_.clone(values)); // clone in order to invoke render in case currentValue didn't change
   }, [values]);
 
-  const onParentValueChange = useCallback((value: boolean) => {
-    // update all children and parent and invoke onValueChange
+  const onCurrentValueChange = useCallback((value: boolean) => {
+    // update all children
     setAllValues(value);
-    setIndeterminate(false);
-    setParentValue(value);
-    
+
+    //current and invoke it's onValueChange
+    setCurrentValue(value ? ValueTypes.CHECKED : ValueTypes.UNCHECKED);
     onValueChange?.(value);
   }, [setAllValues, onValueChange]);
 
   const toggleChildValue = useCallback((value: boolean, index: number) => {
-    // update one child and parent
+    // update one child
     setValueForIndex(value, index);
-    setIndeterminate(!areAllChildrenEqual());
-    setParentValue(isSomeChildChecked());
-  }, [setValueForIndex, areAllChildrenEqual, isSomeChildChecked]);
+
+    // update current
+    const current = getCurrentValue();
+    setCurrentValue(current);
+  }, [setValueForIndex, getCurrentValue]);
 
   const renderChildren = (): any[] => {
     const items = React.Children.map(children, (child, index) => {
-      if (child && child.type === Checkbox) {
+      if (child && (child.type === Checkbox || child.type === NestedCheckbox)) {
         return React.cloneElement(child, {
-          testID: `${testID}.child${index}`,
           style: {marginTop: Spacings.s1},
           value: childrenValues[index],
           onValueChange: (value: boolean) => {
             toggleChildValue(value, index);
             child?.props?.onValueChange?.(value);
-          }
+          },
+          // setParentValue: child.type === NestedCheckbox ? setCurrentValue : undefined,
+          parentRef: parentRef.current
         });
       } else {
         console.warn('NestedCheckbox children must be of type Checkbox.');
@@ -98,7 +137,12 @@ const NestedCheckbox = ((props: NestedCheckboxProps) => {
 
   return (
     <>
-      <Checkbox indeterminate={indeterminate} value={parentValue} onValueChange={onParentValueChange} testID={'checkbox.parent'}/>
+      <Checkbox
+        {...others}
+        value={!(currentValue === ValueTypes.UNCHECKED)}
+        indeterminate={currentValue === ValueTypes.INDETERMINATE}
+        onValueChange={onCurrentValueChange}
+      />
       <View marginL-s5 marginV-s1>
         {renderChildren()}
       </View>
@@ -106,6 +150,5 @@ const NestedCheckbox = ((props: NestedCheckboxProps) => {
   );
 });
 
-export {NestedCheckbox}; // For tests
 NestedCheckbox.displayName = 'NestedCheckbox';
 export default NestedCheckbox;

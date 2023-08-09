@@ -114,10 +114,14 @@ export default class CheckboxScreen extends Component {
         <View marginT-20>
           <Text text60 $textDefault marginB-20>Nested Checkbox</Text>
 
-          <NestedCheckbox onValueChange={(v) => console.log('Screen parent value changed: ', v)}>
-            <Checkbox value={true} onValueChange={(v) => console.log('Screen child 1 value changed: ', v)}/>
-            <Checkbox onValueChange={(v) => console.log('Screen child 2 value changed: ', v)}/>
-            <Checkbox onValueChange={(v) => console.log('Screen child 3 value changed: ', v)}/>
+          <NestedCheckbox /* value={true} */ onValueChange={(v) => console.log('Screen parent value changed: ', v)} label={'ParentA'} testID={'ParentA'}>
+            <Checkbox /* value={false} */ onValueChange={(v) => console.log('Screen child 1 value changed: ', v)} label={'Child 1'} testID={'Child1'}/>
+            <Checkbox onValueChange={(v) => console.log('Screen child 2 value changed: ', v)} label={'Child 2'} testID={'Child2'}/>
+            <Checkbox onValueChange={(v) => console.log('Screen child 3 value changed: ', v)} label={'Child 3'} testID={'Child3'}/>
+            <NestedCheckbox /* value={true} */ onValueChange={(v) => console.log('Screen parent B value changed: ', v)} label={'ParentB'} testID={'ParentA'}>
+              <Checkbox /* value={false} */ onValueChange={(v) => console.log('Screen child b-1 value changed: ', v)} label={'Child b-1'} testID={'Child-b-1'}/>
+              <Checkbox onValueChange={(v) => console.log('Screen child b-2 value changed: ', v)} label={'Child b-2'} testID={'Child-b-2'}/>
+            </NestedCheckbox>
           </NestedCheckbox>
         </View>
       </View>
