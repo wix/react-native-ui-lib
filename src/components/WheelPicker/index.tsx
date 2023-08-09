@@ -155,6 +155,11 @@ const WheelPicker = ({
   }, [items]);
 
   useEffect(() => {
+    //This effect should replace the onLyout function in the flatlist, should happen only once
+    scrollToIndex(currentIndex, true);
+  }, []);
+
+  useEffect(() => {
     // This effect making sure to reset index if initialValue has changed
     !isUndefined(initialValue) && scrollToIndex(currentIndex, true);
   }, [currentIndex]);
@@ -200,9 +205,9 @@ const WheelPicker = ({
     setTimeout(() => scrollToOffset(index, animated), 100);
   };
 
-  const scrollToPassedIndex = useCallback(() => {
-    scrollToIndex(currentIndex, false);
-  }, []);
+  // const scrollToPassedIndex = useCallback(() => {
+  //   scrollToIndex(currentIndex, false);
+  // }, []);
 
   const selectItem = useCallback((index: number) => {
     scrollToIndex(index, true);
@@ -342,7 +347,7 @@ const WheelPicker = ({
             onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
-            onLayout={scrollToPassedIndex}
+            // onLayout={scrollToPassedIndex}
             // @ts-ignore
             ref={scrollView}
             // @ts-expect-error
