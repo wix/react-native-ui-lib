@@ -130,7 +130,7 @@ class ColorPicker extends PureComponent<Props> {
   }
 }
 
-export default asBaseComponent(ColorPicker);
+export default asBaseComponent<Props>(ColorPicker);
 
 const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;
 const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;
