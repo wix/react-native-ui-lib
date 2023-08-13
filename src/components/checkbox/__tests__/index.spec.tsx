@@ -2,7 +2,6 @@ import React, {useState, useCallback} from 'react';
 import Checkbox, {CheckboxProps, CheckboxRef} from '../index';
 import {CheckboxDriver} from '../Checkbox.driver';
 
-
 const testID = 'checkbox';
 const checkboxRef = React.createRef<CheckboxRef>();
 const onValueChange = jest.fn();
@@ -12,11 +11,13 @@ const TestCase = (props: CheckboxProps) => {
   const {value, onValueChange, ...others} = props;
 
   const [_value, _setValue] = useState(value);
-  const _onValueChange = useCallback((newValue: boolean) => {
-    _setValue(newValue);
-    onValueChange?.(newValue);
-  },
-  [_setValue, onValueChange]);
+  const _onValueChange = useCallback(
+    (newValue: boolean) => {
+      _setValue(newValue);
+      onValueChange?.(newValue);
+    },
+    [_setValue, onValueChange]
+  );
 
   return <Checkbox {...others} onValueChange={_onValueChange} value={_value} testID={testID} ref={checkboxRef}/>;
 };
@@ -32,27 +33,36 @@ describe('Checkbox renderer test', () => {
       const props = {onValueChange};
       const component = <TestCase {...props}/>;
       const driver = new CheckboxDriver({component, testID});
-  
+
       await driver.press();
-  
+
       expect(onValueChange).toHaveBeenCalledTimes(1);
       expect(onValueChange).toHaveBeenCalledWith(true);
     });
-  
+
     it.each`
-    checkboxInitialValue  | checkboxExpectedValue
-    ${false}              | ${true}
-    ${true}               | ${false}
-    `('Send value ($checkboxInitialValue)', async ({checkboxInitialValue, checkboxExpectedValue}: {checkboxInitialValue: boolean; checkboxExpectedValue: boolean}) => {
-      const props = {onValueChange, value: checkboxInitialValue};
-      const component = <TestCase {...props}/>;
-      const driver = new CheckboxDriver({component, testID});
-  
-      await driver.press();
-  
-      expect(onValueChange).toHaveBeenCalledTimes(1);
-      expect(onValueChange).toHaveBeenCalledWith(checkboxExpectedValue);
-    });
+      checkboxInitialValue | checkboxExpectedValue
+      ${false}             | ${true}
+      ${true}              | ${false}
+    `(
+      'Send value ($checkboxInitialValue)',
+      async ({
+        checkboxInitialValue,
+        checkboxExpectedValue
+      }: {
+        checkboxInitialValue: boolean;
+        checkboxExpectedValue: boolean;
+      }) => {
+        const props = {onValueChange, value: checkboxInitialValue};
+        const component = <TestCase {...props}/>;
+        const driver = new CheckboxDriver({component, testID});
+
+        await driver.press();
+
+        expect(onValueChange).toHaveBeenCalledTimes(1);
+        expect(onValueChange).toHaveBeenCalledWith(checkboxExpectedValue);
+      }
+    );
   });
 
   describe('Press', () => {
@@ -60,7 +70,7 @@ describe('Checkbox renderer test', () => {
       const props = {onValueChange};
       const component = <TestCase {...props}/>;
       const driver = new CheckboxDriver({component, testID});
-  
+
       await driver.press();
       expect(onValueChange).toHaveBeenCalledTimes(1);
       expect(onValueChange).toHaveBeenCalledWith(true);
@@ -69,18 +79,18 @@ describe('Checkbox renderer test', () => {
       await driver.press();
       expect(onValueChange.mock.calls).toEqual([[true], [false], [true]]);
     });
-  
+
     it.each`
-    checkboxInitialValue
-    ${false}
-    ${true}
+      checkboxInitialValue
+      ${false}
+      ${true}
     `('Disabled (value = $checkboxInitialValue)', async ({checkboxInitialValue}: {checkboxInitialValue: boolean}) => {
       const props = {onValueChange, value: checkboxInitialValue, disabled: true};
       const component = <TestCase {...props}/>;
       const driver = new CheckboxDriver({component, testID});
-  
+
       await driver.press();
-  
+
       expect(onValueChange).not.toHaveBeenCalled();
     });
   });
