@@ -118,7 +118,7 @@ describe('Checkbox renderer test', () => {
         const props = {required: true, onChangeValidity};
         const component = <TestCase {...props}/>;
         //eslint-disable-next-line
-        const driver = new CheckboxDriver({component, testID});
+        new CheckboxDriver({component, testID});
 
         checkboxRef.current?.validate();
 
@@ -165,7 +165,7 @@ describe('Checkbox renderer test', () => {
         const props = {};
         const component = <TestCase {...props}/>;
         //eslint-disable-next-line
-        const driver = new CheckboxDriver({component, testID});
+        new CheckboxDriver({component, testID});
 
         const isValid = checkboxRef.current?.isValid();
 
@@ -176,7 +176,7 @@ describe('Checkbox renderer test', () => {
         const props = {value: true};
         const component = <TestCase {...props}/>;
         //eslint-disable-next-line
-        const driver = new CheckboxDriver({component, testID});
+        new CheckboxDriver({component, testID});
 
         const isValid = checkboxRef.current?.isValid();
 
@@ -187,7 +187,7 @@ describe('Checkbox renderer test', () => {
         const props = {value: true, required: true};
         const component = <TestCase {...props}/>;
         //eslint-disable-next-line
-        const driver = new CheckboxDriver({component, testID});
+        new CheckboxDriver({component, testID});
 
         const isValid = checkboxRef.current?.isValid();
 
@@ -198,7 +198,7 @@ describe('Checkbox renderer test', () => {
         const props = {required: true};
         const component = <TestCase {...props}/>;
         //eslint-disable-next-line
-        const driver = new CheckboxDriver({component, testID});
+        new CheckboxDriver({component, testID});
 
         const isValid = checkboxRef.current?.isValid();
 
@@ -209,7 +209,7 @@ describe('Checkbox renderer test', () => {
         const props = {required: true};
         const component = <TestCase {...props}/>;
         //eslint-disable-next-line
-        const driver = new CheckboxDriver({component, testID});
+        new CheckboxDriver({component, testID});
 
         let isValid = checkboxRef.current?.isValid();
         expect(isValid).toBe(false);
@@ -224,7 +224,7 @@ describe('Checkbox renderer test', () => {
         const props = {value: true, required: true};
         const component = <TestCase {...props}/>;
         //eslint-disable-next-line
-        const driver = new CheckboxDriver({component, testID});
+        new CheckboxDriver({component, testID});
 
         let isValid = checkboxRef.current?.isValid();
         expect(isValid).toBe(true);
