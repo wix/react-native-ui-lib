@@ -105,13 +105,14 @@ describe('Checkbox renderer test', () => {
 
         expect(onChangeValidity).not.toHaveBeenCalled();
       });
-      it('should not been called with required prop', async () => {
+      it('should been called with required prop', async () => {
         const props = {onChangeValidity, required: true};
         const component = <TestCase {...props}/>;
         const driver = new CheckboxDriver({component, testID});
         await driver.press();
 
-        expect(onChangeValidity).not.toHaveBeenCalled();
+        expect(onChangeValidity).toHaveBeenCalled();
+        expect(onChangeValidity).toHaveBeenCalledWith(true);
       });
 
       it('should not been called after invoking validate()', async () => {

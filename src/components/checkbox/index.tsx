@@ -138,10 +138,12 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   constructor(props: CheckboxProps) {
     super(props);
 
+    const {value = false, required} = props;
+
     this.state = {
-      isChecked: new Animated.Value(this.props.value ? 1 : 0),
+      isChecked: new Animated.Value(value ? 1 : 0),
       showError: false,
-      isValid: !(props.required && !props.value)
+      isValid: !required || value
     };
 
     this.styles = createStyles(props);
@@ -161,14 +163,11 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   validationState = false;
 
-  componentDidUpdate(prevProps: CheckboxProps, prevState: CheckboxState) {
-    const {value, onChangeValidity} = this.props;
+  componentDidUpdate(prevProps: CheckboxProps) {
+    const {value} = this.props;
+
     if (prevProps.value !== value) {
       this.animateCheckbox(value);
-    }
-    
-    if (this.validationState && prevState.isValid !== this.state.isValid) {
-      onChangeValidity?.(this.state.isValid);
     }
   }
 
@@ -196,17 +195,19 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   onPress = () => {
-    const {disabled, value, required} = this.props;
+    const {disabled, value, required, onValueChange, onChangeValidity} = this.props;
     
     if (!disabled) {
       const newValue = !value;
 
-      if (this.validationState) {
-        const error = required && !newValue;
-        this.setState({showError: error, isValid: !error});
-      }
+      onValueChange?.(newValue);
 
-      this.props.onValueChange?.(newValue);
+      if (required) {
+        const error = required && !newValue;
+        this.setState({showError: this.validationState ? error : false, isValid: !error}, () => {
+          onChangeValidity?.(this.state.isValid);
+        });
+      }
     }
   };
 

@@ -14,8 +14,8 @@ export default class CheckboxScreen extends Component {
     validationText: '',
     validationColor: Colors.$textDefault
   };
+
   checkbox = React.createRef<CheckboxRef>();
-  checkbox1 = React.createRef<CheckboxRef>();
 
   onPress = () => {
     this.checkbox.current?.validate();
@@ -23,8 +23,7 @@ export default class CheckboxScreen extends Component {
 
   onValueChange = (value: boolean) => {
     this.setState({value7: value}, () => {
-      // isValid checks against props.value, which have not been updated yet as this is an controlled component
-      console.log('onValueChange new value isValid: ', this.checkbox.current?.isValid());
+      console.log('onValueChange: ', value);
     });
   };
 
