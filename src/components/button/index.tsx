@@ -15,12 +15,12 @@ import {
   ButtonState,
   Props,
   DEFAULT_PROPS,
-  ButtonSizeProp
+  ButtonSizeProp,
+  ButtonPresets
 } from './ButtonTypes';
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
-export {ButtonSize, ButtonAnimationDirection, ButtonProps};
-
+export {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPresets};
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
@@ -30,6 +30,8 @@ class Button extends PureComponent<Props, ButtonState> {
   static sizes = ButtonSize;
 
   static animationDirection = ButtonAnimationDirection;
+
+  static presets = ButtonPresets;
 
   // This redundant constructor for some reason fix tests :/
   // eslint-disable-next-line
@@ -64,8 +66,8 @@ class Button extends PureComponent<Props, ButtonState> {
   };
 
   get isOutline() {
-    const {outline, outlineColor} = this.props;
-    return Boolean(outline || outlineColor);
+    const {outline, outlineColor, preset} = this.props;
+    return Boolean(preset === ButtonPresets.secondary || outline || outlineColor);
   }
 
   get isLink() {
@@ -83,10 +85,10 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getBackgroundColor() {
-    const {disabled, outline, disabledBackgroundColor, backgroundColor, modifiers} = this.props;
+    const {disabled, outline, preset, disabledBackgroundColor, backgroundColor, modifiers} = this.props;
     const {backgroundColor: modifiersBackgroundColor} = modifiers;
 
-    if (!outline && !this.isLink) {
+    if (!(outline || preset === Button.presets.secondary) && !this.isLink) {
       if (disabled) {
         return disabledBackgroundColor || Colors.$backgroundDisabled;
       }
@@ -105,20 +107,30 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getLabelColor() {
-    const {linkColor, outline, outlineColor, disabled, color: propsColor, backgroundColor, modifiers} = this.props;
+    const {
+      linkColor,
+      outline,
+      preset,
+      outlineColor,
+      disabled,
+      color: propsColor,
+      backgroundColor,
+      modifiers
+    } = this.props;
     const {color: modifiersColor} = modifiers;
     const isLink = this.isLink;
+    const isOutline = this.isOutline;
 
     let color: string | undefined = Colors.$textDefaultLight;
     if (isLink) {
       color = linkColor || Colors.$textPrimary;
-    } else if (outline) {
+    } else if (outline || preset === Button.presets.secondary) {
       color = outlineColor || Colors.$textPrimary;
     } else if (this.isIconButton) {
       color = backgroundColor === 'transparent' ? undefined : Colors.$iconDefaultLight;
     }
 
-    if (disabled && (isLink || outline)) {
+    if (disabled && (isLink || isOutline)) {
       return Colors.$textDisabled;
     }
 
@@ -142,6 +154,7 @@ class Button extends PureComponent<Props, ButtonState> {
   getContainerSizeStyle() {
     const {
       outline,
+      preset,
       avoidMinWidth,
       avoidInnerPadding,
       round,
@@ -181,7 +194,7 @@ class Button extends PureComponent<Props, ButtonState> {
         minWidth: MIN_WIDTH.LARGE
       };
 
-    if (outline) {
+    if (outline || preset === Button.presets.secondary) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
         if (round) {
           style.padding -= outlineWidth; // eslint-disable-line
@@ -213,10 +226,10 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getOutlineStyle() {
-    const {outline, outlineColor, outlineWidth, disabled} = this.props;
+    const {outlineColor, outlineWidth, disabled} = this.props;
 
     let outlineStyle;
-    if ((outline || outlineColor) && !this.isLink) {
+    if (this.isOutline && !this.isLink) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
         borderColor: outlineColor || Colors.$outlinePrimary

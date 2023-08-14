@@ -27,6 +27,13 @@ export enum ButtonAnimationDirection {
   right = 'right'
 }
 
+export type ButtonPresetProp = ButtonPresets | `${ButtonPresets}`;
+
+export enum ButtonPresets {
+  primary = 'primary',
+  secondary = 'secondary'
+}
+
 export type ButtonAnimationDirectionProp = ButtonAnimationDirection | `${ButtonAnimationDirection}`;
 
 export type ButtonProps = TouchableOpacityProps &
@@ -71,6 +78,10 @@ export type ButtonProps = TouchableOpacityProps &
      * Size of the button [large, medium, small, xSmall]
      */
     size?: ButtonSizeProp;
+    /**
+     * Predefined preset to apply on the button
+     */
+    preset?: ButtonPresetProp;
     /**
      * Custom border radius.
      */
@@ -160,7 +171,8 @@ export type ButtonState = {
 export type Props = ButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 export const DEFAULT_PROPS = {
-  iconOnRight: false
+  iconOnRight: false,
+  preset: ButtonPresets.primary
 };
 
 /**
