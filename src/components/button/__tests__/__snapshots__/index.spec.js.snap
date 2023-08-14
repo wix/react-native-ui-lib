@@ -4542,6 +4542,184 @@ exports[`Button outline should return undefined when link is true, even when out
 </View>
 `;
 
+exports[`Button priority - primary should render default button, primary priority 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#5A48F5",
+      "borderRadius": 999,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": 90,
+      "opacity": 1,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
+    }
+  }
+>
+  <Text
+    fsTagName="unmask"
+    numberOfLines={1}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "color": "#20303C",
+          "writingDirection": "ltr",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          {
+            "color": "#FFFFFF",
+          },
+          undefined,
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.label"
+  >
+    Button
+  </Text>
+</View>
+`;
+
+exports[`Button priority - secondary should render button with an outline, secondary priority 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "borderColor": "#5A48F5",
+      "borderRadius": 999,
+      "borderWidth": 1,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": 90,
+      "opacity": 1,
+      "paddingHorizontal": 19,
+      "paddingVertical": 8.5,
+    }
+  }
+>
+  <Text
+    fsTagName="unmask"
+    numberOfLines={1}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "color": "#20303C",
+          "writingDirection": "ltr",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          {
+            "color": "#5A48F5",
+          },
+          undefined,
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.label"
+  >
+    Button
+  </Text>
+</View>
+`;
+
 exports[`Button should render default button 1`] = `
 <View
   accessibilityRole="button"
@@ -4584,6 +4762,358 @@ exports[`Button should render default button 1`] = `
       "opacity": 1,
       "paddingHorizontal": 20,
       "paddingVertical": 9.5,
+    }
+  }
+>
+  <Text
+    fsTagName="unmask"
+    numberOfLines={1}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "color": "#20303C",
+          "writingDirection": "ltr",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          {
+            "color": "#FFFFFF",
+          },
+          undefined,
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.label"
+  >
+    Button
+  </Text>
+</View>
+`;
+
+exports[`Button type should render default button, type standard 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#5A48F5",
+      "borderRadius": 999,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": 90,
+      "opacity": 1,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
+    }
+  }
+>
+  <Text
+    fsTagName="unmask"
+    numberOfLines={1}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "color": "#20303C",
+          "writingDirection": "ltr",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          {
+            "color": "#FFFFFF",
+          },
+          undefined,
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.label"
+  >
+    Button
+  </Text>
+</View>
+`;
+
+exports[`Button type should render full width button, type fullwidth 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#5A48F5",
+      "borderRadius": 0,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": 90,
+      "opacity": 1,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
+    }
+  }
+>
+  <Text
+    fsTagName="unmask"
+    numberOfLines={1}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "color": "#20303C",
+          "writingDirection": "ltr",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          {
+            "color": "#FFFFFF",
+          },
+          undefined,
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.label"
+  >
+    Button
+  </Text>
+</View>
+`;
+
+exports[`Button type should render link button, type link 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "borderRadius": 0,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": undefined,
+      "opacity": 1,
+      "paddingHorizontal": undefined,
+      "paddingVertical": undefined,
+    }
+  }
+>
+  <Text
+    fsTagName="unmask"
+    numberOfLines={1}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "color": "#20303C",
+          "writingDirection": "ltr",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          {
+            "color": "#5A48F5",
+          },
+          undefined,
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.label"
+  >
+    Button
+  </Text>
+</View>
+`;
+
+exports[`Button type should render round button, type icon 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#5A48F5",
+      "borderRadius": 999,
+      "flexDirection": "row",
+      "height": undefined,
+      "justifyContent": "center",
+      "opacity": 1,
+      "padding": 9.5,
+      "width": undefined,
     }
   }
 >

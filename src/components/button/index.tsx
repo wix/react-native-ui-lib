@@ -16,7 +16,9 @@ import {
   Props,
   DEFAULT_PROPS,
   ButtonSizeProp,
-  ButtonPresets
+  ButtonPresets,
+  ButtonPrioritys,
+  ButtonTypes
 } from './ButtonTypes';
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
@@ -30,6 +32,10 @@ class Button extends PureComponent<Props, ButtonState> {
   static sizes = ButtonSize;
 
   static animationDirection = ButtonAnimationDirection;
+
+  static prioritys = ButtonPrioritys;
+
+  static types = ButtonTypes;
 
   static presets = ButtonPresets;
 
@@ -53,8 +59,8 @@ class Button extends PureComponent<Props, ButtonState> {
   // This method will be called more than once in case of layout change!
   onLayout = (event: LayoutChangeEvent) => {
     const height = event.nativeEvent.layout.height;
-
-    if (this.props.round) {
+    const isRound = this.props.round || this.props.type === Button.types.icon;
+    if (isRound) {
       const width = event.nativeEvent.layout.width;
       const size = height >= width ? height : width;
       this.setState({size});
@@ -65,14 +71,28 @@ class Button extends PureComponent<Props, ButtonState> {
     }
   };
 
+  get isPrimary() {
+    const {priority} = this.props;
+    return Boolean(priority === ButtonPrioritys.primary);
+  }
+
+  get buttonType() {
+    return this.props.type;
+  }
+
   get isOutline() {
-    const {outline, outlineColor, preset} = this.props;
-    return Boolean(preset === ButtonPresets.secondary || outline || outlineColor);
+    const {outline, outlineColor, priority} = this.props;
+    return Boolean(priority === ButtonPrioritys.secondary || outline || outlineColor);
   }
 
   get isLink() {
-    const {link, hyperlink} = this.props;
-    return link || hyperlink;
+    const {link, hyperlink, type} = this.props;
+    return type === Button.types.link || link || hyperlink;
+  }
+
+  get isFullwidth() {
+    const {fullWidth, type} = this.props;
+    return type === Button.types.fullwidth || fullWidth;
   }
 
   get isFilled() {
@@ -85,10 +105,10 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getBackgroundColor() {
-    const {disabled, outline, preset, disabledBackgroundColor, backgroundColor, modifiers} = this.props;
+    const {disabled, outline, priority, disabledBackgroundColor, backgroundColor, modifiers} = this.props;
     const {backgroundColor: modifiersBackgroundColor} = modifiers;
 
-    if (!(outline || preset === Button.presets.secondary) && !this.isLink) {
+    if (!(outline || priority === ButtonPrioritys.secondary) && !this.isLink) {
       if (disabled) {
         return disabledBackgroundColor || Colors.$backgroundDisabled;
       }
@@ -110,7 +130,7 @@ class Button extends PureComponent<Props, ButtonState> {
     const {
       linkColor,
       outline,
-      preset,
+      priority,
       outlineColor,
       disabled,
       color: propsColor,
@@ -124,7 +144,7 @@ class Button extends PureComponent<Props, ButtonState> {
     let color: string | undefined = Colors.$textDefaultLight;
     if (isLink) {
       color = linkColor || Colors.$textPrimary;
-    } else if (outline || preset === Button.presets.secondary) {
+    } else if (outline || priority === ButtonPrioritys.secondary) {
       color = outlineColor || Colors.$textPrimary;
     } else if (this.isIconButton) {
       color = backgroundColor === 'transparent' ? undefined : Colors.$iconDefaultLight;
@@ -154,7 +174,7 @@ class Button extends PureComponent<Props, ButtonState> {
   getContainerSizeStyle() {
     const {
       outline,
-      preset,
+      priority,
       avoidMinWidth,
       avoidInnerPadding,
       round,
@@ -163,30 +183,31 @@ class Button extends PureComponent<Props, ButtonState> {
     } = this.props;
     const size = propsSize || DEFAULT_SIZE;
     const outlineWidth = propsOutlineWidth || 1;
+    const isRoundButton = round || this.buttonType === Button.types.icon;
 
     const CONTAINER_STYLE_BY_SIZE: Dictionary<any> = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = isRoundButton
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
       : {
         paddingVertical: PADDINGS.XSMALL,
         paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
         minWidth: MIN_WIDTH.XSMALL
       };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = isRoundButton
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL}
       : {
         paddingVertical: PADDINGS.SMALL,
         paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
         minWidth: MIN_WIDTH.SMALL
       };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = isRoundButton
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM}
       : {
         paddingVertical: PADDINGS.MEDIUM,
         paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
         minWidth: MIN_WIDTH.MEDIUM
       };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = isRoundButton
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE}
       : {
         paddingVertical: PADDINGS.LARGE,
@@ -194,9 +215,9 @@ class Button extends PureComponent<Props, ButtonState> {
         minWidth: MIN_WIDTH.LARGE
       };
 
-    if (outline || preset === Button.presets.secondary) {
+    if (outline || priority === Button.prioritys.secondary) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
-        if (round) {
+        if (isRoundButton) {
           style.padding -= outlineWidth; // eslint-disable-line
         } else {
           style.paddingVertical -= outlineWidth; // eslint-disable-line
@@ -207,7 +228,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
 
-    if (this.isLink || (this.isIconButton && !round)) {
+    if (this.isLink || (this.isIconButton && !isRoundButton)) {
       containerSizeStyle.paddingVertical = undefined;
       containerSizeStyle.paddingHorizontal = undefined;
       containerSizeStyle.minWidth = undefined;
@@ -243,10 +264,10 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getBorderRadiusStyle() {
-    const {fullWidth, borderRadius: propsBorderRadius, modifiers} = this.props;
+    const {borderRadius: propsBorderRadius, modifiers} = this.props;
     const {borderRadius: modifiersBorderRadius} = modifiers;
 
-    if (this.isLink || fullWidth || propsBorderRadius === 0) {
+    if (this.isLink || this.isFullwidth || propsBorderRadius === 0) {
       return {borderRadius: 0};
     }
 

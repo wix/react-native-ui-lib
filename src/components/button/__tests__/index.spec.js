@@ -15,6 +15,42 @@ describe('Button', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  describe('priority - primary', () => {
+    it('should render default button, primary priority', () => {
+      const tree = renderer.create(<Button label="Button" priority={'primary'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  describe('priority - secondary', () => {
+    it('should render button with an outline, secondary priority', () => {
+      const tree = renderer.create(<Button label="Button" priority={'secondary'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  describe('type', () => {
+    it('should render default button, type standard', () => {
+      const tree = renderer.create(<Button label="Button" type={'standard'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render round button, type icon', () => {
+      const tree = renderer.create(<Button label="Button" type={'icon'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render link button, type link', () => {
+      const tree = renderer.create(<Button label="Button" type={'link'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render full width button, type fullwidth', () => {
+      const tree = renderer.create(<Button label="Button" type={'fullwidth'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
   describe('outline', () => {
     it('should render button with an outline', () => {
       const tree = renderer.create(<Button label="Button" outline/>).toJSON();

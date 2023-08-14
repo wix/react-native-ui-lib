@@ -27,12 +27,30 @@ export enum ButtonAnimationDirection {
   right = 'right'
 }
 
-export type ButtonPresetProp = ButtonPresets | `${ButtonPresets}`;
-
-export enum ButtonPresets {
+export enum ButtonPrioritys {
   primary = 'primary',
   secondary = 'secondary'
 }
+
+export type ButtonPriorityProp = ButtonPrioritys | `${ButtonPrioritys}`;
+
+export enum ButtonTypes {
+  standard = 'standard',
+  icon = 'icon',
+  link = 'link',
+  fullwidth = 'fullwidth'
+}
+
+export type ButtonTypeProp = ButtonTypes | `${ButtonTypes}`;
+
+export enum ButtonPresets {
+  main = 'main',
+  inverted = 'inverted',
+  // premium = 'premium',
+  distructive = 'distructive'
+}
+
+export type ButtonPresetProp = ButtonPresets | `${ButtonPresets}`;
 
 export type ButtonAnimationDirectionProp = ButtonAnimationDirection | `${ButtonAnimationDirection}`;
 
@@ -78,6 +96,14 @@ export type ButtonProps = TouchableOpacityProps &
      * Size of the button [large, medium, small, xSmall]
      */
     size?: ButtonSizeProp;
+    /**
+     * Predefined priority to apply on the button
+     */
+    priority?: ButtonPriorityProp;
+    /**
+     * Predefined type to apply on the button
+     */
+    type?: ButtonTypeProp;
     /**
      * Predefined preset to apply on the button
      */
@@ -172,7 +198,9 @@ export type Props = ButtonProps & BaseComponentInjectedProps & ForwardRefInjecte
 
 export const DEFAULT_PROPS = {
   iconOnRight: false,
-  preset: ButtonPresets.primary
+  priority: ButtonPrioritys.primary,
+  type: ButtonTypes.standard,
+  preset: ButtonPresets.main
 };
 
 /**
@@ -183,8 +211,8 @@ export const DEFAULT_PROPS = {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Animated.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
  */
-// @ts-ignore 
-class FakeButtonForDocs extends PureComponent<ButtonProps> { // eslint-disable-line
+// @ts-ignore
+class FakeButtonForDocs extends PureComponent<ButtonProps> {// eslint-disable-line
   static displayName = 'Button';
 
   static defaultProps = DEFAULT_PROPS;
