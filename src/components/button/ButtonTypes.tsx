@@ -46,7 +46,6 @@ export type ButtonTypeProp = ButtonTypes | `${ButtonTypes}`;
 export enum ButtonPresets {
   main = 'main',
   inverted = 'inverted',
-  // premium = 'premium',
   distructive = 'distructive'
 }
 
