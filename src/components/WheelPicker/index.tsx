@@ -205,10 +205,6 @@ const WheelPicker = ({
     setTimeout(() => scrollToOffset(index, animated), 100);
   };
 
-  // const scrollToPassedIndex = useCallback(() => {
-  //   scrollToIndex(currentIndex, false);
-  // }, []);
-
   const selectItem = useCallback((index: number) => {
     scrollToIndex(index, true);
   },
@@ -347,7 +343,6 @@ const WheelPicker = ({
             onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
-            // onLayout={scrollToPassedIndex}
             // @ts-ignore
             ref={scrollView}
             // @ts-expect-error
