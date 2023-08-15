@@ -2,9 +2,11 @@ import {map} from 'lodash';
 import React from 'react';
 import {Text, View} from 'react-native';
 import {fireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
+import {render} from '@testing-library/react-native';
 import Carousel from '../index';
 import {Constants} from '../../../commons/new';
 import {CarouselDriver} from '../Carousel.driver';
+import {CarouselDriver as NewCarouselDriver} from '../Carousel.driver.new';
 
 const numberOfPagesShown = 5;
 const onChangePageMock = jest.fn();
@@ -12,12 +14,7 @@ const onScrollMock = jest.fn();
 const testID = 'carousel';
 const TestCase = (props: any) => {
   return (
-    <Carousel
-      testID={testID}
-      onChangePage={onChangePageMock}
-      onScroll={onScrollMock}
-      {...props}
-    >
+    <Carousel testID={testID} onChangePage={onChangePageMock} onScroll={onScrollMock} {...props}>
       {map([...Array(numberOfPagesShown)], (_, index) => (
         <Page key={index}>
           <Text testID={`page-${index}`}>Page #{index}</Text>
@@ -27,7 +24,7 @@ const TestCase = (props: any) => {
   );
 };
 
-const Page = ({children, ...others}:{children: React.ReactNode, others?: any}) => {
+const Page = ({children, ...others}: {children: React.ReactNode; others?: any}) => {
   return (
     <View {...others} style={{flex: 1}}>
       {children}
@@ -54,12 +51,13 @@ describe('Carousel render tests', () => {
 
   describe('onScroll', () => {
     it('should trigger onScroll from the second scroll', async () => {
-      const driver = new CarouselDriver({component: <TestCase/>, testID});
+      const renderTree = render(<TestCase/>);
+      const driver = NewCarouselDriver({renderTree, testID});
 
-      await driver.scroll(Constants.screenWidth); //NOTE: first scroll doesn't fire onScroll
+      await driver.scroll({contentOffset: {x: Constants.screenWidth, y: 0}}); //NOTE: first scroll doesn't fire onScroll
       expect(onScrollMock).not.toHaveBeenCalled();
 
-      await driver.scroll(Constants.screenWidth);
+      await driver.scroll({contentOffset: {x: Constants.screenWidth, y: 0}});
       expect(onScrollMock).toHaveBeenCalled();
     });
   });
