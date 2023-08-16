@@ -7,7 +7,8 @@ export const navigationData = {
       {title: 'Dark Mode', tags: 'dark mode colors', screen: 'unicorn.style.DarkModeScreen'},
       {title: 'Shadows (iOS)', tags: 'shadow', screen: 'unicorn.style.ShadowsScreen'},
       {title: 'Spacings', tags: 'space margins paddings gutter', screen: 'unicorn.style.SpacingsScreen'},
-      {title: 'Typography', tags: 'fonts text', screen: 'unicorn.style.TypographyScreen'}
+      {title: 'Typography', tags: 'fonts text', screen: 'unicorn.style.TypographyScreen'},
+      {title: 'RTL Support', tags: 'rtl', screen: 'unicorn.style.RTLScreen'}
     ]
   },
   // Wrappers: {

@@ -194,10 +194,15 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [fieldType, preset, themeProps.trailingAccessory]);
 
-  const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({visible, toggleExpandable}) => {
+  const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
+    visible,
+    closeExpandable,
+    toggleExpandable
+  }) => {
     if (renderCustomModal) {
       const modalProps = {
         visible,
+        closeModal: closeExpandable,
         toggleModal: toggleExpandable,
         onSearchChange: _onSearchChange,
         children,
@@ -256,7 +261,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const renderPickerInnerInput = () => {
     if (fieldType === PickerFieldTypes.filter) {
       return (
-        <Text text70 style={others.style}>
+        <Text text70 numberOfLines={1} style={others.style}>
           {label ?? others.placeholder}
         </Text>
       );

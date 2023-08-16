@@ -140,8 +140,6 @@ describe('TextField', () => {
     it('should not render label if floatingPlaceholder prop is passed', async () => {
       const component = <TestCase label={'mock label'} floatingPlaceholder/>;
       const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
-
-      console.log('await textFieldDriver.isLabelExists(): ', await textFieldDriver.isLabelExists());
       expect(await textFieldDriver.isLabelExists()).toBe(false);
     });
   });

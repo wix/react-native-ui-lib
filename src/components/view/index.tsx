@@ -1,10 +1,22 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
+import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
-import {RecorderProps} from '../../../typings/recorderTypes';
+import type {ThemeComponent} from '../../typings/common';
+import type {RecorderProps} from '../../typings/recorderTypes';
 
-export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers, RecorderProps {
+/**
+ * Extra props when using reanimated (only non experimental props)
+ */
+type ReanimatedProps = Pick<RNReanimatedProps<object>, 'entering' | 'exiting' | 'layout'>;
+
+export interface ViewProps
+  extends Omit<RNViewProps, 'style'>,
+    ReanimatedProps,
+    ThemeComponent,
+    ContainerModifiers,
+    RecorderProps {
   /**
    * If true, will render as SafeAreaView
    */

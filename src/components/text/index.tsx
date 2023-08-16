@@ -20,7 +20,7 @@ import {
   FlexModifiers,
   Constants
 } from '../../commons/new';
-import {RecorderProps} from '../../../typings/recorderTypes';
+import {RecorderProps} from '../../typings/recorderTypes';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
 

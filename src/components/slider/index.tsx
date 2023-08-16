@@ -244,10 +244,11 @@ export default class Slider extends PureComponent<SliderProps, State> {
   }
 
   checkProps(props: SliderProps) {
-    if (props.minimumValue >= props.maximumValue) {
+    const {useRange, minimumValue, maximumValue, value} = props;
+    if (minimumValue >= maximumValue) {
       console.warn('Slider minimumValue must be lower than maximumValue');
     }
-    if (props.value < props.minimumValue || props.value > props.maximumValue) {
+    if (!useRange && (value < minimumValue || value > maximumValue)) {
       console.warn('Slider value is not in range');
     }
   }

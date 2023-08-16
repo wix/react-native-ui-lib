@@ -18,7 +18,7 @@ const FlashList = FlashListPackage?.FlashList;
 const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 200};
 const YEARS_RANGE = 1;
 const PAGE_RELOAD_THRESHOLD = 3;
-const NOW = Date.now(); // so the 'initialDate' effect won't get called since the now different on every rerender 
+const NOW = Date.now(); // so the 'initialDate' effect won't get called since the now different on every rerender
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {
@@ -31,8 +31,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     showExtraDays = true
   } = props;
 
-  const initialItems = generateMonthItems(initialDate, YEARS_RANGE, YEARS_RANGE);
-  const [items/* , setItems */] = useState<DateObjectWithOptionalDay[]>(initialItems);
+  const [items] = useState<DateObjectWithOptionalDay[]>(() =>
+    generateMonthItems(initialDate, YEARS_RANGE, YEARS_RANGE));
 
   const getItemIndex = useCallback((date: number) => {
     'worklet';
@@ -43,7 +43,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       }
     }
     return -1;
-  }, [items]);
+  },
+  [items]);
 
   const flashListRef = useRef();
   const current = useSharedValue<number>(initialDate);
@@ -67,7 +68,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     // @ts-expect-error
     flashListRef.current?.scrollToIndex({index, animated: true});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getItemIndex]);
+  },
+  [getItemIndex]);
 
   useDidUpdate(() => {
     setDate(initialDate, UpdateSource.PROP_UPDATE);
@@ -95,7 +97,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       updateSource: lastUpdateSource,
       staticHeader,
       setHeaderHeight,
-      headerHeight
+      headerHeight,
+      today: NOW
     };
   }, [processedData, staticHeader, showExtraDays, firstDayOfWeek]);
 
@@ -112,7 +115,6 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   // };
 
   const addPages = useCallback((/* index: number */) => {
-
     // const prepend = index < PAGE_RELOAD_THRESHOLD;
     // const append = index > items.length - PAGE_RELOAD_THRESHOLD;
     // const pastRange = prepend ? YEARS_RANGE : 0;
@@ -122,21 +124,22 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     // const newArray = mergeArrays(prepend, items, newItems);
     // setItems(newArray);
     // // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  },
+  [items]);
 
   const shouldAddPages = useCallback((index: number) => {
     'worklet';
-    return index !== -1 && 
-      (index < PAGE_RELOAD_THRESHOLD || index > items.length - PAGE_RELOAD_THRESHOLD);
+    return index !== -1 && (index < PAGE_RELOAD_THRESHOLD || index > items.length - PAGE_RELOAD_THRESHOLD);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  },
+  [items]);
 
   useAnimatedReaction(() => {
     return current.value;
   },
-  (selected, previous) => {
+  (selected: number, previous: number | null) => {
     const index = getItemIndex(selected);
-    
+
     if (shouldAddPages(index)) {
       console.log('Add new pages: ', index, items.length);
       runOnJS(addPages)(/* index */);
@@ -145,11 +148,13 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
         runOnJS(scrollToIndex)(index);
       }
     }
-  }, [getItemIndex]);
+  },
+  [getItemIndex]);
 
   /** Events */
 
-  const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
+  // eslint-disable-next-line max-len
+  const onViewableItemsChanged = useCallback(({viewableItems}: {viewableItems: {item: DateObjectWithOptionalDay}[]}) => {
     const item = viewableItems?.[0]?.item;
     if (item && scrolledByUser.value) {
       if (!isSameMonth(item, current.value)) {
@@ -158,7 +163,8 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  },
+  []);
 
   const onMomentumScrollBegin = useCallback(() => {
     scrolledByUser.value = true;
@@ -171,7 +177,10 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   }, []);
 
   const renderCalendarItem = useCallback(({item}: any) => {
-    return <CalendarItem year={item.year} month={item.month}/>;
+    if (!staticHeader || headerHeight.value) {
+      // item is rendered before static header height is calculated so it leaves extra space
+      return <CalendarItem year={item.year} month={item.month}/>;
+    }
   }, []);
 
   return (
