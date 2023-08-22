@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useCallback} from 'react';
 import {StyleSheet, ScrollView, ActivityIndicator, Animated} from 'react-native';
 
 // import TextField from 'react-native-ui-lib/TextField';
@@ -94,18 +94,42 @@ const itemsToRender: ItemToRender[] = [
   },
   {
     title: 'Button with Svg as <svg> data tag',
-    FC: () => (
-      <Button
-        label={'Svg tag'}
-        size={Button.sizes.large}
-        iconSource={svgData}
-        iconStyle={{
-          width: 24,
-          height: 24,
-          tintColor: 'red'
-        }}
-      />
-    )
+    FC: () => {
+
+      const [firstBtnIconColor, setFirstBtnIconColor] = useState('red');
+      const [secondBtnIconColor, setSecondBtnIconColor] = useState('blue');
+
+      return (
+        <>
+          <Button
+            id={'first'}
+            label={'Svg tag - First'}
+            size={Button.sizes.large}
+            iconSource={svgData}
+            iconStyle={{
+              width: 100,
+              height: 100,
+              tintColor: firstBtnIconColor
+            }}
+            onPress={() => setFirstBtnIconColor(firstBtnIconColor === 'red' ? 'blue' : 'red')}
+          
+          />
+          <Button
+            id={'second'}
+            label={'Svg tag - Second'}
+            size={Button.sizes.large}
+            iconSource={svgData}
+            iconStyle={{
+              width: 24,
+              height: 24,
+              tintColor: secondBtnIconColor
+            }}
+            onPress={() => setSecondBtnIconColor(secondBtnIconColor === 'blue' ? 'red' : 'blue')}
+          
+          />
+        </>
+      );
+    }
   },
   {
     title: 'Link Button',

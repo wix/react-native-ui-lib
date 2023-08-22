@@ -301,7 +301,13 @@ class Button extends PureComponent<Props, ButtonState> {
       } else {
         if (Constants.isWeb) {
           return (
-            <Icon style={iconStyle} tintColor={Colors.$iconDefault} source={iconSource} testID={`${testID}.icon`}/>
+            <Icon 
+              id={`button_icon_${this.props.id}`}
+              style={iconStyle}
+              tintColor={Colors.$iconDefault}
+              source={iconSource}
+              testID={`${testID}.icon`}
+            />
           );
         }
         return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle} testID={`${testID}.icon`}/>;
