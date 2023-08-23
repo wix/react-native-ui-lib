@@ -73,7 +73,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
 
   const renderList = () => {
     if (items) {
-      return <FlatList data={items} renderItem={renderPropItems} keyExtractor={keyExtractor} {...listProps}/>;
+      return <FlatList         testID={`${testID}.list`}
+                               data={items} renderItem={renderPropItems} keyExtractor={keyExtractor} {...listProps}/>;
     }
     return (
       <FlatList
