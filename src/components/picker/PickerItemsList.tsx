@@ -81,6 +81,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         // @ts-expect-error
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        testID={`${testID}.list`}
         {...listProps}
       />
     );
