@@ -73,6 +73,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     onPress,
     onShow,
     onSearchChange,
+    onFilterChange,
     renderCustomModal,
     enableModalBlur,
     topBarProps,
@@ -114,7 +115,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     filteredChildren,
     setSearchValue,
     onSearchChange: _onSearchChange
-  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
+  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, onFilterChange});
   const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
     migrate,
     value,

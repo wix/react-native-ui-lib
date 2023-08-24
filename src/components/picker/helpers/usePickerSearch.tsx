@@ -1,12 +1,15 @@
-import {useCallback, useState, useMemo} from 'react';
+import {useCallback, useState, useMemo, useEffect} from 'react';
 import _ from 'lodash';
 import {PickerProps} from '../types';
 import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from '../PickerPresenter';
 
-type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel'>;
+type UsePickerSearchProps = Pick<
+  PickerProps,
+  'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel' | 'onFilterChange'
+>;
 
 const usePickerSearch = (props: UsePickerSearchProps) => {
-  const {showSearch, onSearchChange, children, getItemLabel} = props;
+  const {showSearch, onSearchChange, children, getItemLabel, onFilterChange} = props;
   const [searchValue, setSearchValue] = useState('');
 
   const _onSearchChange = useCallback((searchValue: string) => {
@@ -25,8 +28,13 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
+
     return children;
-  }, [showSearch, searchValue, children]);
+  }, [showSearch, onFilterChange, searchValue, children]);
+
+  useEffect(() => {
+    onFilterChange?.(filteredChildren);
+  }, [filteredChildren, onFilterChange]);
 
   return {setSearchValue, onSearchChange: _onSearchChange, filteredChildren};
 };
