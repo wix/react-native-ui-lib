@@ -27,7 +27,7 @@ function SvgImage(props: SvgImageProps) {
         .process(styleObj, {parser: cssjs})
         .then((style: {css: any}) => {
           const svgPathCss = (styleObj?.tintColor) ? `#${id} svg path {fill: ${styleObj?.tintColor}}` : '';
-          setSvgStyleCss(`#${id} svg {${style.css}} ${svgPathCss}}`);
+          setSvgStyleCss(`#${id} svg {${style.css}} #${id} {${style.css}} ${svgPathCss}}`);
         });
     }
   }, [style, id]);
