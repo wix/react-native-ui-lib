@@ -1,22 +1,13 @@
-import {useCallback, useState, useMemo, useEffect} from 'react';
+import {useCallback, useState, useMemo} from 'react';
 import _ from 'lodash';
 import {PickerProps} from '../types';
 import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from '../PickerPresenter';
 
-type UsePickerSearchProps = Pick<
-  PickerProps,
-  'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel' | 'onFilterChange'
->;
+type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel'>;
 
 const usePickerSearch = (props: UsePickerSearchProps) => {
-  const {showSearch, onSearchChange, children, getItemLabel, onFilterChange} = props;
+  const {showSearch, onSearchChange, children, getItemLabel} = props;
   const [searchValue, setSearchValue] = useState('');
-
-  const _onSearchChange = useCallback((searchValue: string) => {
-    setSearchValue(searchValue);
-    onSearchChange?.(searchValue);
-  },
-  [onSearchChange]);
 
   const filteredChildren = useMemo(() => {
     if (showSearch && !_.isEmpty(searchValue)) {
@@ -30,11 +21,13 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
     }
 
     return children;
-  }, [showSearch, onFilterChange, searchValue, children]);
+  }, [showSearch, searchValue, children]);
 
-  useEffect(() => {
-    onFilterChange?.(filteredChildren);
-  }, [filteredChildren, onFilterChange]);
+  const _onSearchChange = useCallback((searchValue: string) => {
+    setSearchValue(searchValue);
+    onSearchChange?.(searchValue, filteredChildren);
+  },
+  [onSearchChange, filteredChildren]);
 
   return {setSearchValue, onSearchChange: _onSearchChange, filteredChildren};
 };

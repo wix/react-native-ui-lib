@@ -102,7 +102,6 @@ export default class PickerScreen extends Component {
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // onSearchChange={value => console.warn('value', value)}
-            onFilterChange={filteredChildren => console.log('filteredChildren', filteredChildren)}
           >
             {_.map(longOptions, option => (
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
