@@ -9,7 +9,7 @@ import type {RecorderProps} from '../../typings/recorderTypes';
 /**
  * Extra props when using reanimated (only non experimental props)
  */
-type ReanimatedProps = Pick<RNReanimatedProps<object>, 'entering' | 'exiting' | 'layout'>;
+type ReanimatedProps = Partial<Pick<RNReanimatedProps<object>, 'entering' | 'exiting' | 'layout'>>;
 
 export interface ViewProps
   extends Omit<RNViewProps, 'style'>,
