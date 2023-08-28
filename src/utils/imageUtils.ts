@@ -8,7 +8,7 @@ export function isSvgUri(source?: ImageProps['source']) {
 }
 
 export function isSvg(source?: ImageProps['source']) {
-  return typeof source === 'string' || typeof source === 'function' || isSvgUri(source);
+  return isSvgUri(source) || typeof source === 'function';
 }
 
 export function isBase64ImageContent(data: string) {
