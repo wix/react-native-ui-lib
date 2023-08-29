@@ -21,6 +21,6 @@ export function getAsset(assetName = '', assetGroup = '') {
   return get(Assets, `${assetGroup}.${assetName}`);
 }
 
-function isSvgData(source: ImageProps['source']) {
-  return typeof source === 'string' && source.includes('</svg>');
+function isSvgData(source?: ImageProps['source']) {
+  return typeof source === 'string' && (source as string).includes('</svg>');
 }
