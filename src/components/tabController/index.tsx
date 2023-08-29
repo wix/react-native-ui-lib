@@ -10,7 +10,6 @@ import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 import useImperativeTabControllerHandle, {TabControllerImperativeMethods} from './useImperativeTabControllerHandle';
-import type {ThemeComponent} from '../../typings/common';
 
 export {TabControllerItemProps, TabControllerImperativeMethods};
 
@@ -21,7 +20,7 @@ interface TabControllerStatics {
   PageCarousel: typeof PageCarousel;
 }
 
-export interface TabControllerProps extends ThemeComponent {
+export interface TabControllerProps {
   /**
    * The list of tab bar items
    */
