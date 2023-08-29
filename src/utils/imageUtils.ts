@@ -8,7 +8,7 @@ export function isSvgUri(source?: ImageProps['source']) {
 }
 
 export function isSvg(source?: ImageProps['source']) {
-  return isSvgUri(source) || typeof source === 'function';
+  return typeof source === 'function' || isSvgData(source) || isSvgUri(source);
 }
 
 export function isBase64ImageContent(data: string) {
@@ -21,3 +21,6 @@ export function getAsset(assetName = '', assetGroup = '') {
   return get(Assets, `${assetGroup}.${assetName}`);
 }
 
+function isSvgData(source: ImageProps['source']) {
+  return typeof source === 'string' && source.includes('</svg>')
+}
