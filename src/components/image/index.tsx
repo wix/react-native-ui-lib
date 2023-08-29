@@ -242,7 +242,7 @@ class Image extends PureComponent<Props, State> {
 
     if (!this.shouldUseImageBackground() && Constants.isWeb) {
       const finalSource = source.uri ?? source;
-      return <img {...others} src={finalSource} style={StyleSheet.flatten(imageViewStyle)} aspectRatio={'auto'} />;
+      return <img {...others} src={finalSource} style={StyleSheet.flatten([...imageViewStyle, {aspectRatio: 'auto'}])}/>;
     }
 
     return (
