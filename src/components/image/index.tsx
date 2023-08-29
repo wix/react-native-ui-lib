@@ -226,23 +226,29 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
+    const imageViewStyle = [
+      tintColor && {tintColor},
+      shouldFlipRTL && styles.rtlFlipped,
+      width && {width},
+      height && {height},
+      cover && styles.coverImage,
+      this.isGif() && styles.gifImage,
+      aspectRatio && {aspectRatio},
+      !useImageInsideContainer && margins,
+      useImageInsideContainer && styles.containImage,
+      style,
+      useImageInsideContainer && styles.shrink
+    ];
+
+    if (!this.shouldUseImageBackground() && Constants.isWeb) {
+      const finalSource = source.uri ?? source;
+      return <img {...others} src={finalSource} style={StyleSheet.flatten(imageViewStyle)} aspectRatio={'auto'} />;
+    }
 
     return (
       // @ts-ignore
       <ImageView
-        style={[
-          tintColor && {tintColor},
-          shouldFlipRTL && styles.rtlFlipped,
-          width && {width},
-          height && {height},
-          cover && styles.coverImage,
-          this.isGif() && styles.gifImage,
-          aspectRatio && {aspectRatio},
-          !useImageInsideContainer && margins,
-          useImageInsideContainer && styles.containImage,
-          style,
-          useImageInsideContainer && styles.shrink
-        ]}
+        style={imageViewStyle}
         accessible={false}
         accessibilityRole={'image'}
         fsTagName={recorderTag}
