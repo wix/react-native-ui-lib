@@ -3,6 +3,8 @@ import {StyleSheet} from 'react-native';
 import Image from '../image';
 import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
 
+const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
+
 const DEFAULT_SIZE = 16;
 export interface SvgImageProps {
   /**
@@ -19,7 +21,6 @@ function SvgImage(props: SvgImageProps) {
   const [svgStyleCss, setSvgStyleCss] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
     if (PostCssPackage) {
       const {postcss, cssjs} = PostCssPackage;
       const styleObj: Record<string, any> = StyleSheet.flatten(style);
