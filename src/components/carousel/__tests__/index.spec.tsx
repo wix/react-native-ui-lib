@@ -5,8 +5,7 @@ import {fireOnMomentumScrollEnd} from '../../../uilib-test-renderer';
 import {render} from '@testing-library/react-native';
 import Carousel from '../index';
 import {Constants} from '../../../commons/new';
-import {CarouselDriver} from '../Carousel.driver';
-import {CarouselDriver as NewCarouselDriver} from '../Carousel.driver.new';
+import {CarouselDriver} from '../Carousel.driver.new';
 
 const numberOfPagesShown = 5;
 const onChangePageMock = jest.fn();
@@ -33,17 +32,17 @@ const Page = ({children, ...others}: {children: React.ReactNode; others?: any}) 
 };
 
 describe('Carousel render tests', () => {
-  afterEach(() => CarouselDriver.clear());
-
   describe('initialPage', () => {
     it('should be set to default initialPage', async () => {
-      const driver = new CarouselDriver({component: <TestCase/>, testID});
+      const renderTree = render(<TestCase/>);
+      const driver = CarouselDriver({renderTree, testID});
 
       expect((await driver.getContentOffset()).x).toBe(0);
     });
 
     it('should be set to initialPage = 2', async () => {
-      const driver = new CarouselDriver({component: <TestCase initialPage={2}/>, testID});
+      const renderTree = render(<TestCase initialPage={2}/>);
+      const driver = CarouselDriver({renderTree, testID});
 
       expect((await driver.getContentOffset()).x).toBe(Constants.screenWidth * 2);
     });
@@ -52,23 +51,24 @@ describe('Carousel render tests', () => {
   describe('onScroll', () => {
     it('should trigger onScroll from the second scroll', async () => {
       const renderTree = render(<TestCase/>);
-      const driver = NewCarouselDriver({renderTree, testID});
+      const driver = CarouselDriver({renderTree, testID});
 
-      await driver.scroll({contentOffset: {x: Constants.screenWidth, y: 0}}); //NOTE: first scroll doesn't fire onScroll
+      await driver.scroll({contentOffset: {x: Constants.screenWidth}}); //NOTE: first scroll doesn't fire onScroll
       expect(onScrollMock).not.toHaveBeenCalled();
 
-      await driver.scroll({contentOffset: {x: Constants.screenWidth, y: 0}});
+      await driver.scroll({contentOffset: {x: Constants.screenWidth}});
       expect(onScrollMock).toHaveBeenCalled();
     });
   });
 
   describe('onChangePage', () => {
     it('should trigger onChangePage with current page', async () => {
-      const driver = new CarouselDriver({component: <TestCase/>, testID});
+      const renderTree = render(<TestCase/>);
+      const driver = CarouselDriver({renderTree, testID});
       const scrollView = await driver.getElement();
 
-      await driver.scroll(Constants.screenWidth); //NOTE: first scroll doesn't fire onScroll
-      await driver.scroll(Constants.screenWidth);
+      await driver.scroll({contentOffset: {x: Constants.screenWidth}}); //NOTE: first scroll doesn't fire onScroll
+      await driver.scroll({contentOffset: {x: Constants.screenWidth}});
       expect(onChangePageMock).not.toHaveBeenCalled();
 
       fireOnMomentumScrollEnd(scrollView, {x: Constants.screenWidth});
