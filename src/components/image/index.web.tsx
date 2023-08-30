@@ -161,8 +161,7 @@ class Image extends PureComponent<Props, State> {
       !useImageInsideContainer && margins,
       useImageInsideContainer && styles.containImage,
       style,
-      useImageInsideContainer && styles.shrink,
-      {aspectRatio: 'auto'}
+      useImageInsideContainer && styles.shrink
     ];
 
     const finalSource = source.uri ?? source;
