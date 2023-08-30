@@ -4,7 +4,6 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import {
   StyleSheet,
   Image as RNImage,
-  ImageProps as RNImageProps,
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
@@ -14,87 +13,15 @@ import {
   Constants,
   asBaseComponent,
   ForwardRefInjectedProps,
-  BaseComponentInjectedProps,
-  MarginModifiers
+  BaseComponentInjectedProps
 } from '../../commons/new';
-import {RecorderProps} from '../../typings/recorderTypes';
 import {getAsset, isSvg} from '../../utils/imageUtils';
-import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
+import Overlay from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
+import {ImageProps} from './index';
 
-export type ImageProps = RNImageProps &
-  MarginModifiers &
-  RecorderProps & {
-    /**
-     * custom source transform handler for manipulating the image source (great for size control)
-     */
-    sourceTransformer?: (props: any) => ImagePropTypes.source;
-    /**
-     * if provided image source will be driven from asset name
-     */
-    assetName?: string;
-    /**
-     * the asset group, default is "icons"
-     */
-    assetGroup?: string;
-    /**
-     * the asset tint
-     */
-    tintColor?: string;
-    /**
-     * whether the image should flip horizontally on RTL locals
-     */
-    supportRTL?: boolean;
-    /**
-     * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
-     */
-    cover?: boolean;
-    /**
-     * The aspect ratio for the image
-     */
-    aspectRatio?: number;
-    /**
-     * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
-     * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
-     */
-    overlayType?: OverlayTypeType;
-    /**
-     * The intensity of the overlay ('LOW' | 'MEDIUM' | 'HIGH'), default is 'LOW'.
-     */
-    overlayIntensity?: OverlayIntensityType;
-    /**
-     * Pass a custom color for the overlay
-     */
-    overlayColor?: string;
-    /**
-     * Render an overlay with custom content
-     */
-    customOverlayContent?: JSX.Element;
-    /**
-     * Default image source in case of an error
-     */
-    errorSource?: ImagePropTypes.source;
-    /**
-     * An imageId that can be used in sourceTransformer logic
-     */
-    imageId?: string;
-    /**
-     * Use a container for the Image, this can solve issues on
-     * Android when animation needs to be performed on the same
-     * view; i.e. animation related crashes on Android.
-     */
-    useBackgroundContainer?: boolean;
-    /**
-     * The image width
-     */
-    width?: string | number;
-    /**
-     * The image height
-     */
-    height?: string | number;
-  };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
@@ -241,12 +168,9 @@ class Image extends PureComponent<Props, State> {
     const finalSource = source.uri ?? source;
 
     return (
-      // @ts-expect-error
-      <img
-        style={StyleSheet.flatten(imageViewStyle) as React.CSSProperties}
-        {...others}
-        src={finalSource}
-      >
+      <>
+        {/* @ts-expect-error */}
+        <img style={StyleSheet.flatten(imageViewStyle) as React.CSSProperties} {...others} src={finalSource}/>
         {(overlayType || customOverlayContent) && (
           <Overlay
             type={overlayType}
@@ -255,7 +179,7 @@ class Image extends PureComponent<Props, State> {
             customContent={customOverlayContent}
           />
         )}
-      </img>
+      </>
     );
   };
 
