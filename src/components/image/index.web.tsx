@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
+import React, {CSSProperties, PureComponent} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {
   StyleSheet,
@@ -167,18 +167,23 @@ class Image extends PureComponent<Props, State> {
     const finalSource = source.uri ?? source;
 
     return (
-      <>
+      // @ts-expect-error
+      <View style={imageViewStyle}>
         {/* @ts-expect-error */}
-        <img style={StyleSheet.flatten(imageViewStyle) as React.CSSProperties} {...others} src={finalSource}/>
-        {(overlayType || customOverlayContent) && (
-          <Overlay
-            type={overlayType}
-            intensity={overlayIntensity}
-            color={overlayColor}
+        <img 
+          {...others} 
+          src={finalSource} 
+          style={StyleSheet.flatten([imageViewStyle, styles.containImage]) as CSSProperties}
+        />
+        {(overlayType || customOverlayContent) && 
+          <Overlay 
+            type={overlayType} 
+            intensity={overlayIntensity} 
+            color={overlayColor} 
             customContent={customOverlayContent}
           />
-        )}
-      </>
+        }
+      </View>
     );
   };
 
@@ -221,7 +226,8 @@ const styles = StyleSheet.create({
     flexShrink: 1
   },
   containImage: {
-    resizeMode: 'contain'
+    objectFit: 'cover',
+    height: '100%'
   }
 });
 
