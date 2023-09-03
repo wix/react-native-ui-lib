@@ -4,7 +4,6 @@ import * as Modifiers from './modifiers';
 import {Scheme, SchemeChangeListener, ThemeManager} from '../style';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
-import type {ThemeComponent} from '../typings/common';
 
 export interface BaseComponentInjectedProps {
   /**
@@ -23,7 +22,7 @@ const EMPTY_MODIFIERS = {};
 const colorScheme = Scheme.getSchemeType();
 
 function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>,
-  options: AsBaseComponentOptions = {}): React.ComponentClass<PROPS & ThemeComponent> & STATICS {
+  options: AsBaseComponentOptions = {}): React.ComponentClass<PROPS> & STATICS {
   class BaseComponent extends UIComponent {
     static displayName: string | undefined;
     static propTypes: any;
