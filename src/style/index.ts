@@ -2,7 +2,7 @@ export {default as Colors} from './colors';
 export {default as DesignTokens} from './designTokens';
 export {default as DesignTokensDM} from './designTokensDM';
 export {default as Scheme, SchemeType, Schemes, SchemeChangeListener} from './scheme';
-export {default as Typography} from './typography';
+export {default as Typography, TypographyKeys} from './typography';
 export {default as BorderRadiuses} from './borderRadiuses';
 export {default as Shadows} from './shadows';
 export {default as Spacings} from './spacings';

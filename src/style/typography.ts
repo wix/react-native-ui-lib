@@ -2,7 +2,8 @@ import {TextStyle} from 'react-native';
 import _ from 'lodash';
 import Constants from '../commons/Constants';
 
-import TypographyPresets from './typographyPresets';
+import TypographyPresets, {TypographyKeys} from './typographyPresets';
+export type {TypographyKeys};
 import type {Dictionary, ExtendTypeWith} from '../typings/common';
 
 type MeasureTextTypography = TextStyle & {allowFontScaling?: boolean};
