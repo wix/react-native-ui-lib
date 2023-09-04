@@ -53,10 +53,10 @@ describe('Carousel render tests', () => {
       const renderTree = render(<TestCase/>);
       const driver = CarouselDriver({renderTree, testID});
 
-      await driver.scroll({contentOffset: {x: Constants.screenWidth}}); //NOTE: first scroll doesn't fire onScroll
+      await driver.scroll({x: Constants.screenWidth}); //NOTE: first scroll doesn't fire onScroll
       expect(onScrollMock).not.toHaveBeenCalled();
 
-      await driver.scroll({contentOffset: {x: Constants.screenWidth}});
+      await driver.scroll({x: Constants.screenWidth});
       expect(onScrollMock).toHaveBeenCalled();
     });
   });
@@ -67,8 +67,8 @@ describe('Carousel render tests', () => {
       const driver = CarouselDriver({renderTree, testID});
       const scrollView = await driver.getElement();
 
-      await driver.scroll({contentOffset: {x: Constants.screenWidth}}); //NOTE: first scroll doesn't fire onScroll
-      await driver.scroll({contentOffset: {x: Constants.screenWidth}});
+      await driver.scroll({x: Constants.screenWidth}); //NOTE: first scroll doesn't fire onScroll
+      await driver.scroll({x: Constants.screenWidth});
       expect(onChangePageMock).not.toHaveBeenCalled();
 
       fireOnMomentumScrollEnd(scrollView, {x: Constants.screenWidth});

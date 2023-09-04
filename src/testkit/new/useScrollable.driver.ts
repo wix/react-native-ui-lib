@@ -4,12 +4,12 @@ import {ScrollViewProps, NativeScrollEvent, NativeScrollPoint} from 'react-nativ
 
 type ScrollableDriverOptions = Omit<NativeScrollEvent, 'contentOffset'>;
 
-type ContentOffest = Partial<NativeScrollPoint>;
+type ContentOffset = Partial<NativeScrollPoint>;
 
-export type ScrollProps = {contentOffset: ContentOffest; options?: ScrollableDriverOptions};
+export type ScrollProps = ContentOffset & {options?: ScrollableDriverOptions};
 
 export interface ScrollableDriverResult<Props> extends ComponentDriverResult<Props> {
-  scroll: (contentOffset: ContentOffest, options?: ScrollableDriverOptions) => void;
+  scroll: (contentOffset: ContentOffset, options?: ScrollableDriverOptions) => void;
 }
 
 export type ScrollableDriverProps = Partial<Pick<ScrollViewProps, 'contentOffset'>>;

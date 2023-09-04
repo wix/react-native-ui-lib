@@ -6,8 +6,7 @@ export const CarouselDriver = (props: ComponentProps) => {
   const driver = useScrollableDriver<CarouselProps>(useComponentDriver(props));
 
   const scroll = (props: ScrollProps) => {
-    const {contentOffset, options} = props;
-    return driver.scroll(contentOffset, options);
+    return driver.scroll(props);
   };
 
   return {...driver, scroll};
