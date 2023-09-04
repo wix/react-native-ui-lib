@@ -240,13 +240,6 @@ class Image extends PureComponent<Props, State> {
       useImageInsideContainer && styles.shrink
     ];
 
-    if (!this.shouldUseImageBackground() && Constants.isWeb) {
-      const finalSource = source.uri ?? source;
-      imageViewStyle.push({aspectRatio: 'auto'});
-      // @ts-expect-error
-      return <img {...others} src={finalSource} style={StyleSheet.flatten(imageViewStyle) as React.CSSProperties}/>;
-    }
-
     return (
       // @ts-ignore
       <ImageView
