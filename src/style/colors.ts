@@ -15,7 +15,11 @@ export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toStr
 export type TokensOptions = {primaryColor: string};
 export type GetColorTintOptions = {avoidReverseOnDark?: boolean};
 export type GetColorByHexOptions = {validColors?: string[]};
-
+export type PaletteOptions = {
+  lightnessFix?: boolean;
+  saturationFix?: boolean;
+  darkModeColors?: boolean;
+}
 export class Colors {
   [key: string]: any;
   private shouldSupportDarkMode = false;
@@ -208,37 +212,46 @@ export class Colors {
     return colorsPalette[tintLevel - 1];
   }
 
-  private generatePalette = _.memoize((color: string): string[] => {
+  private generatePalette = _.memoize((color: string, 
+    options: PaletteOptions = {lightnessFix: true, saturationFix: true, darkModeColors: false}): string[] => {
+    
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
-    const lightColorsThreshold = this.shouldGenerateDarkerPalette(color) ? 5 : 0;
-
+    const lightColorsThreshold = options.lightnessFix && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
     const ls = [hsl.color[2]];
+
     let l = lightness - 10;
-    while (l >= 20 - lightColorsThreshold) {
+    while (l >= 20 - lightColorsThreshold) { // darker tints
       ls.unshift(l);
       l -= 10;
     }
 
+    if (options.darkModeColors) {
+      // darkest tints for dark mode
+      ls.unshift(l);
+      ls.unshift(l / 2);
+    }
+
     l = lightness + 10;
-    while (l < 100 - lightColorsThreshold) {
+    while (l < 100 - lightColorsThreshold) { // lighter tints
       ls.push(l);
       l += 10;
     }
-
+    
     const tints: string[] = [];
     _.forEach(ls, e => {
       const tint = generateColorTint(color, e);
       tints.push(tint);
     });
 
-    const sliced = tints.slice(0, 8);
-    const adjusted = adjustSaturation(sliced, color);
+    const size = options.darkModeColors ? 10 : 8;
+    const sliced = tints.slice(0, size);
+    const adjusted = options.saturationFix && adjustSaturation(sliced, color);
     return adjusted || sliced;
   });
 
-  generateColorPalette = _.memoize((color: string): string[] => {
-    const palette = this.generatePalette(color);
+  generateColorPalette = _.memoize((color: string, options: PaletteOptions): string[] => {
+    const palette = this.generatePalette(color, options);
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
