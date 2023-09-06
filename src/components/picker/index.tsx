@@ -222,11 +222,13 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       <PickerItemsList
         testID={`${testID}.modal`}
         useWheelPicker={useWheelPicker}
+        useDialog={useDialog}
         items={useItems ? items : undefined}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
-          onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
+          onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined,
+          includeStatusBar: useDialog ? false : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -285,12 +287,13 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   // }
 
   return (
+    //TODO : fix the ExpandableOverlay ts error
     <PickerContext.Provider value={contextValue}>
       <ExpandableOverlay
         ref={pickerExpandable}
         useDialog={useDialog || useWheelPicker}
         modalProps={modalProps}
-        dialogProps={DIALOG_PROPS}
+        dialogProps={customPickerProps?.dialogProps || DIALOG_PROPS}
         expandableContent={expandableModalContent}
         renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
         onPress={onPress}
