@@ -103,7 +103,7 @@ const text100: TextStyle = {
   fontFamily: 'System'
 };
 
-type TypographyKeys = Record<
+export type TypographyKeys = Record<
   | 'text10'
   | 'text20'
   | 'text30'

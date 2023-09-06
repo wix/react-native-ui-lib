@@ -73,7 +73,15 @@ const PickerItemsList = (props: PickerItemsListProps) => {
 
   const renderList = () => {
     if (items) {
-      return <FlatList data={items} renderItem={renderPropItems} keyExtractor={keyExtractor} {...listProps}/>;
+      return (
+        <FlatList
+          testID={`${testID}.list`}
+          data={items}
+          renderItem={renderPropItems}
+          keyExtractor={keyExtractor}
+          {...listProps}
+        />
+      );
     }
     return (
       <FlatList
@@ -81,6 +89,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         // @ts-expect-error
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        testID={`${testID}.list`}
         {...listProps}
       />
     );

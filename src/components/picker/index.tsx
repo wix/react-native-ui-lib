@@ -262,7 +262,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const renderPickerInnerInput = () => {
     if (fieldType === PickerFieldTypes.filter) {
       return (
-        <Text text70 style={others.style}>
+        <Text text70 numberOfLines={1} style={others.style}>
           {label ?? others.placeholder}
         </Text>
       );
