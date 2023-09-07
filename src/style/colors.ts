@@ -221,15 +221,10 @@ export class Colors {
     const ls = [hsl.color[2]];
 
     let l = lightness - 10;
-    while (l >= 20 - lightColorsThreshold) { // darker tints
+    const lightnessLevel = options.darkModeColors ? 0 : 20;
+    while (l >= lightnessLevel - lightColorsThreshold) { // darker tints
       ls.unshift(l);
       l -= 10;
-    }
-
-    if (options.darkModeColors) {
-      // darkest tints for dark mode
-      ls.unshift(l);
-      ls.unshift(l / 2);
     }
 
     l = lightness + 10;
@@ -237,7 +232,7 @@ export class Colors {
       ls.push(l);
       l += 10;
     }
-    
+
     const tints: string[] = [];
     _.forEach(ls, e => {
       const tint = generateColorTint(color, e);
