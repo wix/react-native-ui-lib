@@ -1,5 +1,5 @@
 import {Platform} from 'react-native';
-import fs from 'react-native-fs';
+import RNFS from './RNFSPackage';
 import {FontExtension} from './FontLoader';
 
 const DEFAULT_DYNAMIC_FONTS_FOLDER = '/dynamicFonts';
@@ -20,6 +20,7 @@ export type FontDownloaderProps = {
 // TODO: this can probably be a more general "downloader" if we so choose
 export default class FontDownloader {
   private readonly props: FontDownloaderProps;
+  private readonly fs: NonNullable<typeof RNFS>;
 
   constructor(props: FontDownloaderProps) {
     this.props = {
@@ -27,11 +28,18 @@ export default class FontDownloader {
       downloadErrorMessage: DEFAULT_DOWNLOAD_ERROR_MESSAGE,
       ...props
     };
+
+    if (!RNFS) {
+      throw new Error(`RNUILib FontDownloader requires installing "react-native-fs" dependency`);
+    }
+    this.fs = RNFS;
   }
 
   private getPrivateFolder() {
     const {dynamicFontsFolder} = this.props;
-    return (Platform.OS === 'android' ? fs.ExternalDirectoryPath : fs.DocumentDirectoryPath) + dynamicFontsFolder;
+    return (
+      (Platform.OS === 'android' ? this.fs.ExternalDirectoryPath : this.fs.DocumentDirectoryPath) + dynamicFontsFolder
+    );
   }
 
   private getPrivateFilePath(fileName: string) {
@@ -44,13 +52,13 @@ export default class FontDownloader {
 
   private async _isFontDownloaded(fileName: string) {
     const privateFilePath = this.getPrivateFilePath(fileName);
-    return await fs.exists(privateFilePath);
+    return await this.fs.exists(privateFilePath);
   }
 
   private async createPrivateFolderIfNeeded() {
     const privateFolder = this.getPrivateFolder();
-    if (!(await fs.exists(privateFolder))) {
-      await fs.mkdir(privateFolder);
+    if (!(await this.fs.exists(privateFolder))) {
+      await this.fs.mkdir(privateFolder);
     }
   }
 
@@ -95,7 +103,8 @@ export default class FontDownloader {
     const downloadLocation = this.getPrivateFilePath(fileName);
 
     try {
-      const result = await fs.downloadFile(this.getDownloadFontOptions(fontUri, downloadLocation, timeout)).promise;
+      const result = await this.fs.downloadFile(this.getDownloadFontOptions(fontUri, downloadLocation, timeout))
+        .promise;
       if (result.statusCode === 200) {
         return downloadLocation;
       } else {
@@ -126,8 +135,8 @@ export default class FontDownloader {
     let base64FontString;
     const fileName = this.getFileName(fontName, fontExtension);
     const privateFilePath = this.getPrivateFilePath(fileName);
-    if (await fs.exists(privateFilePath)) {
-      base64FontString = await fs.readFile(privateFilePath, 'base64').catch(() => {});
+    if (await this.fs.exists(privateFilePath)) {
+      base64FontString = await this.fs.readFile(privateFilePath, 'base64').catch(() => {});
     }
 
     return base64FontString;
