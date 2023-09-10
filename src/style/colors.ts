@@ -212,16 +212,17 @@ export class Colors {
     return colorsPalette[tintLevel - 1];
   }
 
-  private generatePalette = _.memoize((color: string, 
-    options: PaletteOptions = {lightnessFix: true, saturationFix: true, darkModeColors: false}): string[] => {
+  private generatePalette = _.memoize((color: string, options?: PaletteOptions): string[] => {
+    const defaultOptions = {lightnessFix: true, saturationFix: true, darkModeColors: false};
+    const _options = {...defaultOptions, ...options};
     
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
-    const lightColorsThreshold = options.lightnessFix && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
+    const lightColorsThreshold = _options.lightnessFix && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
     const ls = [hsl.color[2]];
 
     let l = lightness - 10;
-    const lightnessLevel = options.darkModeColors ? 0 : 20;
+    const lightnessLevel = _options.darkModeColors ? 0 : 20;
     while (l >= lightnessLevel - lightColorsThreshold) { // darker tints
       ls.unshift(l);
       l -= 10;
@@ -239,13 +240,13 @@ export class Colors {
       tints.push(tint);
     });
 
-    const size = options.darkModeColors ? 10 : 8;
+    const size = _options.darkModeColors ? 10 : 8;
     const sliced = tints.slice(0, size);
-    const adjusted = options.saturationFix && adjustSaturation(sliced, color);
+    const adjusted = _options.saturationFix && adjustSaturation(sliced, color);
     return adjusted || sliced;
   });
 
-  generateColorPalette = _.memoize((color: string, options: PaletteOptions): string[] => {
+  generateColorPalette = _.memoize((color: string, options?: PaletteOptions): string[] => {
     const palette = this.generatePalette(color, options);
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
