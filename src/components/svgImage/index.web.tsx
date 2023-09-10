@@ -13,11 +13,12 @@ export interface SvgImageProps {
   tintColor?: string | null;
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
   style?: object[];
+  id?: string;
 }
 
 function SvgImage(props: SvgImageProps) {
   const {data, style = [], tintColor, ...others} = props;
-  const [id] = useState(`svg-${new Date().getTime().toString()}`);
+  const [id] = useState(props.id ?? `svg-${new Date().getTime().toString()}`);
   const [svgStyleCss, setSvgStyleCss] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -27,8 +28,8 @@ function SvgImage(props: SvgImageProps) {
       postcss()
         .process(styleObj, {parser: cssjs})
         .then((style: {css: any}) => {
-          const svgPathCss = (styleObj?.tintColor) ? `#${id} svg path {fill: ${styleObj?.tintColor}}` : '';
-          setSvgStyleCss(`#${id} svg {${style.css}} #${id} {${style.css}} ${svgPathCss}}`);
+          const svgPathCss = styleObj?.tintColor ? `.${id} > svg path {fill: ${styleObj?.tintColor}}` : '';
+          setSvgStyleCss(`.${id} > svg {${style.css}} ${svgPathCss}}`);
         });
     }
   }, [style, id]);
@@ -51,9 +52,7 @@ function SvgImage(props: SvgImageProps) {
   } else if (data && svgStyleCss) {
     const svgStyleTag = `<style> ${svgStyleCss} </style>`;
     return (
-      <div
-        id={id}
-        {...others}
+       <div {...others} className={id}
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
       />
