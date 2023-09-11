@@ -17,7 +17,7 @@ import {Colors, Typography} from '../../style';
 import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
-import Dialog, {DialogProps} from '../dialog';
+import Dialog, {DialogProps} from '../../incubator/Dialog';
 import Button from '../button';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import PanningProvider from '../panningViews/panningProvider';
@@ -338,9 +338,9 @@ class ColorPickerDialog extends PureComponent<Props, State> {
         centerH
         onDismiss={this.onDismiss}
         containerStyle={styles.dialog}
-        panDirection={PanningProvider.Directions.DOWN}
+        direction={PanningProvider.Directions.DOWN}
         testID={`${testID}.dialog`}
-        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
+        modalProps={{supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right']}} // iOS only
         {...dialogProps}
       >
         {this.renderHeader()}
