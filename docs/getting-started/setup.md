@@ -68,6 +68,10 @@ Some of the components are using the native dependencies listed below - those ar
 - `cd react-native-ui-lib`
 - Install dependencies `npm install`
 - (for iOS) `cd ios && pod install`
+- (for Windows)
+  - update `...&& export DEV_MODE...` with `...&& set DEV_MODE...`
+  - copy `gradlew.bat` from a recent project to `./android/`
+  - install fb-watchman for [windows](https://facebook.github.io/watchman/docs/install#prebuilt-binaries) or `choco install watchman`  
 - Start the packager `npm start`
 - Build the app `npm run ios` or `npm run android` (or from Xcode or Android Studio).
 
