@@ -1,4 +1,5 @@
 import React from 'react';
+import {ImageStyle, StyleProp, StyleSheet} from 'react-native';
 import {isSvg, isSvgUri} from '../../utils/imageUtils';
 import {SvgPackage} from '../../optionalDependencies';
 
@@ -12,6 +13,7 @@ export interface SvgImageProps {
    */
   tintColor?: string | null;
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
+  style?: StyleProp<ImageStyle>;
 }
 
 function SvgImage(props: SvgImageProps) {
@@ -28,7 +30,12 @@ function SvgImage(props: SvgImageProps) {
   if (isSvgUri(data)) {
     return <SvgCssUri {...others} uri={data.uri}/>;
   } else if (typeof data === 'string') {
-    return <SvgXml xml={data} {...others}/>;
+    const flattenStyle = StyleSheet.flatten(props.style) as Record<string, any>;
+    const dimensions = {
+      ...(flattenStyle?.width ? {width: flattenStyle.width} : {}),
+      ...(flattenStyle?.height ? {height: flattenStyle.height} : {})
+    };
+    return <SvgXml xml={data} {...dimensions} {...others}/>;
   } else if (data) {
     const File = data; // Must be with capital letter
     return <File {...others}/>;
