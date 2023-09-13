@@ -85,29 +85,30 @@ export default class FontLoader {
     });
   };
 
-  public loadFontFromFile = (fontName: string, filePath: string) => {
-    if (!fontName) {
-      throw new Error('name is a required argument');
-    }
+  // TODO: Needs to be tested
+  // public loadFontFromFile = (fontName: string, filePath: string) => {
+  //   if (!fontName) {
+  //     throw new Error('name is a required argument');
+  //   }
 
-    if (!filePath) {
-      throw new Error('filePath is a required argument');
-    }
+  //   if (!filePath) {
+  //     throw new Error('filePath is a required argument');
+  //   }
 
-    return new Promise((resolve, reject) => {
-      DynamicFont.loadFontFromFile({
-        name: fontName,
-        filePath
-      },
-      (err: string, givenName: string) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve(givenName);
-      });
-    });
-  };
+  //   return new Promise((resolve, reject) => {
+  //     DynamicFont.loadFontFromFile({
+  //       name: fontName,
+  //       filePath
+  //     },
+  //     (err: string, givenName: string) => {
+  //       if (err) {
+  //         reject(err);
+  //         return;
+  //       }
+  //       resolve(givenName);
+  //     });
+  //   });
+  // };
 
   public loadFonts = (fonts: LoadFontInput | LoadFontInput[], forceLoad?: boolean) => {
     if (!fonts) {

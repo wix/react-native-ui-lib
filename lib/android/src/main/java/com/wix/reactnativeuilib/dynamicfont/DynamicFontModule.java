@@ -26,42 +26,44 @@ public class DynamicFontModule extends ReactContextBaseJavaModule {
     return "DynamicFont";
   }
 
-  @ReactMethod
-  public void loadFontFromFile(final ReadableMap options, final Callback callback) {
-    Activity currentActivity = getCurrentActivity();
-    if (currentActivity == null) {
-      callback.invoke("Invalid activity");
-      return;
-    }
+  // TODO: Needs to be tested
+  // @ReactMethod
+  // public void loadFontFromFile(final ReadableMap options, final Callback callback) {
+  //   Activity currentActivity = getCurrentActivity();
+  //   if (currentActivity == null) {
+  //     callback.invoke("Invalid activity");
+  //     return;
+  //   }
 
-    String filePath = options.hasKey("filePath") ? options.getString("filePath") : null,
-           name = (options.hasKey("name")) ? options.getString("name") : null;
+  //   String filePath = options.hasKey("filePath") ? options.getString("filePath") : null,
+  //          name = (options.hasKey("name")) ? options.getString("name") : null;
 
-    if (filePath == null || filePath.length() == 0) {
-      callback.invoke("filePath property empty");
-      return;
-    }
+  //   if (filePath == null || filePath.length() == 0) {
+  //     callback.invoke("filePath property empty");
+  //     return;
+  //   }
 
-    File f = new File(filePath);
+  //   File f = new File(filePath);
 
-    if (f.exists() && f.canRead()) {
-      boolean wasLoaded = false;
-      try {
-        Typeface typeface = Typeface.createFromFile(f);
-        //Cache the font for react
-        ReactFontManager.getInstance().setTypeface(name, typeface.getStyle(), typeface);
-        wasLoaded = true;
-      } catch (Throwable e) {
-        callback.invoke(e.getMessage());
-      } finally {
-        if (wasLoaded) {
-          callback.invoke(null, name);
-        }
-      }
-    } else {
-      callback.invoke("invalid file");
-    }
-  }
+  //   if (f.exists() && f.canRead()) {
+  //     boolean wasLoaded = false;
+  //     try {
+  //       Typeface typeface = Typeface.createFromFile(f);
+  //       //Cache the font for react
+  // TODO: probably needs to be Typeface.NORMAL and not typeface.getStyle()
+  //       ReactFontManager.getInstance().setTypeface(name, typeface.getStyle(), typeface);
+  //       wasLoaded = true;
+  //     } catch (Throwable e) {
+  //       callback.invoke(e.getMessage());
+  //     } finally {
+  //       if (wasLoaded) {
+  //         callback.invoke(null, name);
+  //       }
+  //     }
+  //   } else {
+  //     callback.invoke("invalid file");
+  //   }
+  // }
 
   @ReactMethod
   public void loadFont(final ReadableMap options, final Callback callback) throws Exception {

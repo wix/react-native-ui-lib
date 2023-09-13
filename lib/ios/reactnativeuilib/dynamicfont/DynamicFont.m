@@ -11,27 +11,28 @@
 }
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(
-  loadFontFromFile:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback)
-{
-    NSString *path = [options valueForKey:@"path"];
-    NSString *name = [options valueForKey:@"name"];
-    NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
-    CFErrorRef error;
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);
-    CGFontRef font = CGFontCreateWithDataProvider(provider);
-    NSString *newFontName = (__bridge NSString *)CGFontCopyPostScriptName(font);
-    if (! CTFontManagerRegisterGraphicsFont(font, &error)) {
-        CFStringRef errorDescription = CFErrorCopyDescription(error);
-        NSLog(@"Failed to load font: %@", errorDescription);
-        CFRelease(errorDescription);
-        callback(@[@"Failed to load font: %@", (__bridge NSString *)errorDescription]);
-    }
-    CFRelease(font);
-    CFRelease(provider);
-    // Resolve to the caller.
-    callback(@[[NSNull null], newFontName]);
-}
+// TODO: Needs to be tested
+// RCT_EXPORT_METHOD(
+//   loadFontFromFile:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback)
+// {
+//     NSString *path = [options valueForKey:@"path"];
+//     NSString *name = [options valueForKey:@"name"];
+//     NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+//     CFErrorRef error;
+//     CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);
+//     CGFontRef font = CGFontCreateWithDataProvider(provider);
+//     NSString *newFontName = (__bridge NSString *)CGFontCopyPostScriptName(font);
+//     if (! CTFontManagerRegisterGraphicsFont(font, &error)) {
+//         CFStringRef errorDescription = CFErrorCopyDescription(error);
+//         NSLog(@"Failed to load font: %@", errorDescription);
+//         CFRelease(errorDescription);
+//         callback(@[@"Failed to load font: %@", (__bridge NSString *)errorDescription]);
+//     }
+//     CFRelease(font);
+//     CFRelease(provider);
+//     // Resolve to the caller.
+//     callback(@[[NSNull null], newFontName]);
+// }
 
 RCT_EXPORT_METHOD(loadFont:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback)
 {
