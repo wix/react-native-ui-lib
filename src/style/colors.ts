@@ -216,7 +216,7 @@ export class Colors {
   }
 
   private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
-    const defaultOptions = {adjustLightness: true, saturationFix: true, addDarkestColors: false};
+    const defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestColors: false};
     const _options = {...defaultOptions, ...options};
     
     const hsl = Color(color).hsl();
