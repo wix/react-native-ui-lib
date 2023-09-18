@@ -55,9 +55,13 @@ const itemsToRender: ItemToRender[] = [
           size={Button.sizes.large}
           iconSource={svgData}
           iconStyle={{
-            width: size,
-            height: size,
+            // width: size,
+            // height: size,
             tintColor: '#ffffff'
+          }}
+          iconProps={{
+            width: size,
+            height: size
           }}
           onPress={() => {
             const newSize = size === Spacings.s4 ? Spacings.s6 : Spacings.s4;

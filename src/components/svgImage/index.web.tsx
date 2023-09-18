@@ -13,10 +13,12 @@ export interface SvgImageProps {
   tintColor?: string | null;
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
   style?: object[];
+  width?: number | string;
+  height?: number | string;
 }
 
 function SvgImage(props: SvgImageProps) {
-  const {data, style = [], tintColor, ...others} = props;
+  const {data, style = [], tintColor, width, height, ...others} = props;
   const [id] = useState(`svg-${new Date().getTime().toString()}`);
   const [svgStyleCss, setSvgStyleCss] = useState<string | undefined>(undefined);
 
@@ -25,13 +27,13 @@ function SvgImage(props: SvgImageProps) {
       const {postcss, cssjs} = PostCssPackage;
       const styleObj: Record<string, any> = StyleSheet.flatten(style);
       postcss()
-        .process(styleObj, {parser: cssjs})
+        .process({width, height, ...styleObj}, {parser: cssjs})
         .then((style: {css: any}) => {
           const svgPathCss = (styleObj?.tintColor) ? `#${id} svg path {fill: ${styleObj?.tintColor}}` : '';
           setSvgStyleCss(`#${id} svg {${style.css}} #${id} {${style.css}} ${svgPathCss}}`);
         });
     }
-  }, [style, id]);
+  }, [style, id, width, height]);
 
   if (isSvgUri(data)) {
     return <img {...others} src={data.uri} style={StyleSheet.flatten(style)}/>;

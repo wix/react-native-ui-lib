@@ -26,6 +26,14 @@ export type IconProps = Omit<ImageProps, 'source'> &
      */
     size?: number;
     /**
+     * the icon height
+     */
+    height?: number | string;
+    /**
+     * the icon width
+     */
+    width?: number | string;
+    /**
      * whether the icon should flip horizontally on RTL
      */
     supportRTL?: boolean;
@@ -53,10 +61,12 @@ const Icon = forwardRef((props: Props, ref: any) => {
     assetName,
     modifiers,
     recorderTag,
+    width,
+    height,
     ...others
   } = props;
   const {margins} = modifiers;
-  const iconSize = size ? {width: size, height: size} : undefined;
+  const iconSize = size ? {width: width ?? size, height: height ?? size} : undefined;
   const shouldFlipRTL = supportRTL && Constants.isRTL;
 
   const iconSource = useMemo(() => {

@@ -11,6 +11,8 @@
     {"name": "assetGroup", "type": "string", "description": "the asset group, default is icons"},
     {"name": "tintColor", "type": "string", "description": "The icon tint"},
     {"name": "size", "type": "number", "description": "The icon size"},
+    {"name": "height", "type": "number | string", "description": "The icon height"},
+    {"name": "width", "type": "number | string", "description": "The icon width"},
     {"name": "supportRTL", "type": "boolean", "description": "whether the image should flip horizontally on RTL locals"},
     {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
   ],
