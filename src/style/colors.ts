@@ -15,9 +15,12 @@ export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toStr
 export type TokensOptions = {primaryColor: string};
 export type GetColorTintOptions = {avoidReverseOnDark?: boolean};
 export type GetColorByHexOptions = {validColors?: string[]};
-export type PaletteOptions = {
-  lightnessFix?: boolean;
-  saturationFix?: boolean;
+export type GeneratePaletteOptions = {
+  /** Whether to adjust the lightness of very light colors (generating darker palette) */
+  adjustLightness?: boolean;
+  /** Whether to adjust the saturation of colors with high lightness and saturation (unifying saturation level throughout palette) */
+  adjustSaturation?: boolean;
+  /** Whether to add two extra darker colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
   darkModeColors?: boolean;
 }
 export class Colors {
@@ -212,13 +215,13 @@ export class Colors {
     return colorsPalette[tintLevel - 1];
   }
 
-  private generatePalette = _.memoize((color: string, options?: PaletteOptions): string[] => {
-    const defaultOptions = {lightnessFix: true, saturationFix: true, darkModeColors: false};
+  private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
+    const defaultOptions = {adjustLightness: true, saturationFix: true, darkModeColors: false};
     const _options = {...defaultOptions, ...options};
     
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
-    const lightColorsThreshold = _options.lightnessFix && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
+    const lightColorsThreshold = _options.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
     const ls = [hsl.color[2]];
 
     let l = lightness - 10;
@@ -242,11 +245,11 @@ export class Colors {
 
     const size = _options.darkModeColors ? 10 : 8;
     const sliced = tints.slice(0, size);
-    const adjusted = _options.saturationFix && adjustSaturation(sliced, color);
+    const adjusted = _options.adjustSaturation && adjustSaturation(sliced, color);
     return adjusted || sliced;
   });
 
-  generateColorPalette = _.memoize((color: string, options?: PaletteOptions): string[] => {
+  generateColorPalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
     const palette = this.generatePalette(color, options);
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
