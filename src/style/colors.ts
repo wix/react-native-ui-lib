@@ -21,7 +21,7 @@ export type GeneratePaletteOptions = {
   /** Whether to adjust the saturation of colors with high lightness and saturation (unifying saturation level throughout palette) */
   adjustSaturation?: boolean;
   /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
-  addDarkestColors?: boolean;
+  addDarkestTints?: boolean;
 }
 export class Colors {
   [key: string]: any;
@@ -216,7 +216,7 @@ export class Colors {
   }
 
   private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
-    const defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestColors: false};
+    const defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false};
     const _options = {...defaultOptions, ...options};
     
     const hsl = Color(color).hsl();
@@ -225,7 +225,7 @@ export class Colors {
     const ls = [hsl.color[2]];
 
     let l = lightness - 10;
-    const lightnessLevel = _options.addDarkestColors ? 0 : 20;
+    const lightnessLevel = _options.addDarkestTints ? 0 : 20;
     while (l >= lightnessLevel - lightColorsThreshold) { // darker tints
       ls.unshift(l);
       l -= 10;
@@ -243,7 +243,7 @@ export class Colors {
       tints.push(tint);
     });
 
-    const size = _options.addDarkestColors ? 10 : 8;
+    const size = _options.addDarkestTints ? 10 : 8;
     const sliced = tints.slice(0, size);
     const adjusted = _options.adjustSaturation && adjustSaturation(sliced, color);
     return adjusted || sliced;
