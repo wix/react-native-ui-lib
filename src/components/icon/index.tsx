@@ -26,14 +26,6 @@ export type IconProps = Omit<ImageProps, 'source'> &
      */
     size?: number;
     /**
-     * the icon height
-     */
-    height?: number | string;
-    /**
-     * the icon width
-     */
-    width?: number | string;
-    /**
      * whether the icon should flip horizontally on RTL
      */
     supportRTL?: boolean;
