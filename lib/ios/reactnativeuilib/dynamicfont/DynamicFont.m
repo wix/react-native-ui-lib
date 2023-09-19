@@ -11,7 +11,7 @@
 }
 RCT_EXPORT_MODULE()
 
-// TODO: Needs to be tested
+// TODO: Needs to be tested (notice param name "path" here)
 // RCT_EXPORT_METHOD(
 //   loadFontFromFile:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback)
 // {
