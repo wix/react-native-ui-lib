@@ -13,8 +13,8 @@ export interface SvgImageProps {
   tintColor?: string | null;
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
   style?: object[];
-  width?: number | string;
-  height?: number | string;
+  width?: number;
+  height?: number;
 }
 
 function SvgImage(props: SvgImageProps) {
