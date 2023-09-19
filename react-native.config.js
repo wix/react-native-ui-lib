@@ -8,10 +8,12 @@ module.exports = {
       // },
       android: {
         sourceDir: './lib/android/',
-        packageImportPath: `import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
+        packageImportPath: `import com.wix.reactnativeuilib.dynamicfont.DynamicFontModule;
+import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
 import com.wix.reactnativeuilib.keyboardinput.KeyboardInputPackage;
 import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;`,
-        packageInstance: `new HighlighterViewPackage(),
+        packageInstance: `new DynamicFontModule(),
+      new HighlighterViewPackage(),
       new TextInputDelKeyHandlerPackage(),
       new KeyboardInputPackage(getApplication())`
       }
