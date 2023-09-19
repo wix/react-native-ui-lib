@@ -55,8 +55,6 @@ const itemsToRender: ItemToRender[] = [
           size={Button.sizes.large}
           iconSource={svgData}
           iconStyle={{
-            // width: size,
-            // height: size,
             tintColor: '#ffffff'
           }}
           iconProps={{
