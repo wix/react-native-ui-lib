@@ -12,7 +12,7 @@ export type PermissionsAcquirerProps = {
 
 const DEFAULT_PERMISSIONS_ACQUIRER_PROPS: Required<PermissionsAcquirerProps> = {
   requestPermissionsTitle: 'Allow Storage Access',
-  requestPermissionsMessage: 'Give the Spaces app permission to access the files and storage on your device.',
+  requestPermissionsMessage: 'Give the app permission to access the files and storage on your device.',
   requestPermissionsNegativeButtonText: 'Cancel',
   requestPermissionsPositiveButtonText: 'Continue',
   permissionsRefusalMessage: 'Please edit your permission settings to continue.',
