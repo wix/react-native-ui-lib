@@ -4,7 +4,6 @@ const AndroidOsVersion = Platform.OS === 'android' ? Platform.constants.Release 
 export type PermissionsAcquirerProps = {
   requestPermissionsTitle?: string;
   requestPermissionsMessage?: string;
-  requestPermissionsNegativeButtonText?: string;
   requestPermissionsPositiveButtonText?: string;
   permissionsRefusalMessage?: string;
   permissionsErrorMessage?: string;
@@ -13,7 +12,6 @@ export type PermissionsAcquirerProps = {
 const DEFAULT_PERMISSIONS_ACQUIRER_PROPS: Required<PermissionsAcquirerProps> = {
   requestPermissionsTitle: 'Allow Storage Access',
   requestPermissionsMessage: 'Give the app permission to access the files and storage on your device.',
-  requestPermissionsNegativeButtonText: 'Cancel',
   requestPermissionsPositiveButtonText: 'Continue',
   permissionsRefusalMessage: 'Please edit your permission settings to continue.',
   permissionsErrorMessage: `We weren't able to obtain the required permissions. Please try Again.`
@@ -38,9 +36,6 @@ export default class PermissionsAcquirer {
       const result = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
         title: this.props.requestPermissionsTitle ?? DEFAULT_PERMISSIONS_ACQUIRER_PROPS.requestPermissionsTitle,
         message: this.props.requestPermissionsMessage ?? DEFAULT_PERMISSIONS_ACQUIRER_PROPS.requestPermissionsMessage,
-        buttonNegative:
-          this.props.requestPermissionsNegativeButtonText ??
-          DEFAULT_PERMISSIONS_ACQUIRER_PROPS.requestPermissionsNegativeButtonText,
         buttonPositive:
           this.props.requestPermissionsPositiveButtonText ??
           DEFAULT_PERMISSIONS_ACQUIRER_PROPS.requestPermissionsPositiveButtonText
