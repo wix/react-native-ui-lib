@@ -15,7 +15,14 @@ export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toStr
 export type TokensOptions = {primaryColor: string};
 export type GetColorTintOptions = {avoidReverseOnDark?: boolean};
 export type GetColorByHexOptions = {validColors?: string[]};
-
+export type GeneratePaletteOptions = {
+  /** Whether to adjust the lightness of very light colors (generating darker palette) */
+  adjustLightness?: boolean;
+  /** Whether to adjust the saturation of colors with high lightness and saturation (unifying saturation level throughout palette) */
+  adjustSaturation?: boolean;
+  /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
+  addDarkestTints?: boolean;
+}
 export class Colors {
   [key: string]: any;
   private shouldSupportDarkMode = false;
@@ -208,20 +215,24 @@ export class Colors {
     return colorsPalette[tintLevel - 1];
   }
 
-  private generatePalette = _.memoize((color: string): string[] => {
+  private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
+    const defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false};
+    const _options = {...defaultOptions, ...options};
+    
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
-    const lightColorsThreshold = this.shouldGenerateDarkerPalette(color) ? 5 : 0;
-
+    const lightColorsThreshold = _options.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
     const ls = [hsl.color[2]];
+
     let l = lightness - 10;
-    while (l >= 20 - lightColorsThreshold) {
+    const lightnessLevel = _options.addDarkestTints ? 0 : 20;
+    while (l >= lightnessLevel - lightColorsThreshold) { // darker tints
       ls.unshift(l);
       l -= 10;
     }
 
     l = lightness + 10;
-    while (l < 100 - lightColorsThreshold) {
+    while (l < 100 - lightColorsThreshold) { // lighter tints
       ls.push(l);
       l += 10;
     }
@@ -232,13 +243,14 @@ export class Colors {
       tints.push(tint);
     });
 
-    const sliced = tints.slice(0, 8);
-    const adjusted = adjustSaturation(sliced, color);
+    const size = _options.addDarkestTints ? 10 : 8;
+    const sliced = tints.slice(0, size);
+    const adjusted = _options.adjustSaturation && adjustSaturation(sliced, color);
     return adjusted || sliced;
   });
 
-  generateColorPalette = _.memoize((color: string): string[] => {
-    const palette = this.generatePalette(color);
+  generateColorPalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
+    const palette = this.generatePalette(color, options);
     return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
   });
 
