@@ -142,6 +142,11 @@ export const navigationData = {
         screen: 'unicorn.components.KeyboardAwareScrollViewScreen'
       },
       {
+        title: 'Dynamic Fonts',
+        tags: 'dynamic fonts load download',
+        screen: 'unicorn.nativeComponents.DynamicFontsScreen'
+      },
+      {
         title: 'Highlight Overlay',
         tags: 'native overlay',
         screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'
