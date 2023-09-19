@@ -61,12 +61,10 @@ const Icon = forwardRef((props: Props, ref: any) => {
     assetName,
     modifiers,
     recorderTag,
-    width,
-    height,
     ...others
   } = props;
   const {margins} = modifiers;
-  const iconSize = size ? {width: width ?? size, height: height ?? size} : undefined;
+  const iconSize = size ? {width: size, height: size} : undefined;
   const shouldFlipRTL = supportRTL && Constants.isRTL;
 
   const iconSource = useMemo(() => {
@@ -86,7 +84,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     />
   );
 
-  const renderSvg = () => <SvgImage fsTagName={recorderTag} data={source} {...props} {...iconSize}/>;
+  const renderSvg = () => <SvgImage fsTagName={recorderTag} data={source} {...iconSize} {...props}/>;
 
   if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
     return renderImage();
