@@ -128,7 +128,7 @@ export default class FontDownloader {
       }
       return Promise.reject({
         source: 'uilib:FontDownloader:downloadFont',
-        message: `${downloadErrorMessage} fontName: ${fontName} error: ${error}`
+        message: `${downloadErrorMessage} fontName: ${fontName} error: ${JSON.stringify(error)}`
       });
     }
   }
@@ -161,7 +161,7 @@ export default class FontDownloader {
         console.log(fontName, 'Finished reading from disk');
       }
     } else if (debug) {
-      console.log(fontName, 'Download folder does not exist (read)');
+      console.log(fontName, 'File does not exist (read)');
     }
 
     return base64FontString;
@@ -183,7 +183,7 @@ export default class FontDownloader {
         console.log(fontFullName, 'Finished deleting');
       }
     } else if (debug) {
-      console.log(fontFullName, 'Download folder does not exist (delete)');
+      console.log(fontFullName, 'File does not exist (delete)');
     }
   }
 }

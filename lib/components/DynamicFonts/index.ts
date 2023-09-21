@@ -60,7 +60,7 @@ export default class DynamicFonts {
     } catch (err) {
       return Promise.reject({
         source: 'uilib:FontDownloader:loadFont',
-        message: `${fontLoadErrorMessage} fontName: ${input.fontName}`
+        message: `${fontLoadErrorMessage} fontName: ${input.fontName} error: ${JSON.stringify(err)}`
       });
     }
   }
@@ -139,7 +139,7 @@ export default class DynamicFonts {
         fontsLoaded = await this.getFonts(fonts);
       } catch (error) {
         if (debug) {
-          console.log(`getFontFamily failed (try #${tryCounter}) error: ${error}`);
+          console.log(`getFontFamily failed (try #${tryCounter}) error:`, error);
         }
       }
     }
