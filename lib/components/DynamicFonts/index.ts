@@ -82,13 +82,7 @@ export default class DynamicFonts {
         console.log(fontName, 'Already downloaded');
       }
     } else {
-      if (debug) {
-        console.log(fontName, 'Starting to download');
-      }
       await this.fontDownloader.downloadFont(fontUri, fontName, fontExtension, timeout);
-      if (debug) {
-        console.log(fontName, 'Finished downloading');
-      }
     }
 
     const base64FontString = await this.fontDownloader.readFontFromDisk(fontName, fontExtension);
@@ -118,13 +112,13 @@ export default class DynamicFonts {
     }
   }
 
-  private buildFontName(rootUri: string,
+  private buildFontInput(rootUri: string,
     fontName: string,
     fontExtension: FontExtension,
-    fontNamePrefix?: string): GetFontInput {
+    fontNamePrefix?: string): GetFontInput & {fullFontName: string} {
     const _fontName = `${fontNamePrefix ?? ''}${fontName}`;
     const fullFontName = `${_fontName}.${fontExtension}`;
-    return {fontUri: `${rootUri}${fullFontName}`, fontName: _fontName, fontExtension};
+    return {fontUri: `${rootUri}${fullFontName}`, fontName: _fontName, fontExtension, fullFontName};
   }
 
   // eslint-disable-next-line max-params
@@ -135,7 +129,7 @@ export default class DynamicFonts {
     retries = 1): Promise<string[]> {
     const {debug} = this.props;
     const fonts: GetFontInput[] = fontNames.map(fontName =>
-      this.buildFontName(rootUri, fontName, fontExtension, fontNamePrefix));
+      this.buildFontInput(rootUri, fontName, fontExtension, fontNamePrefix));
     let fontsLoaded: string[] = [];
     let tryCounter = 0;
     while (fontsLoaded.length < fontNames.length && tryCounter < retries) {
@@ -151,5 +145,25 @@ export default class DynamicFonts {
     }
 
     return Promise.resolve(fontsLoaded);
+  }
+
+  private async deleteFontFromDisk(fontName: string, fontExtension: FontExtension, fontNamePrefix?: string) {
+    const fontInput = this.buildFontInput('', fontName, fontExtension, fontNamePrefix);
+    await this.fontDownloader.deleteFontFromDisk(fontInput.fullFontName);
+  }
+
+  public async deleteFont(fontName: string, fontExtension: FontExtension): Promise<void> {
+    await this.permissionsAcquirer.getPermissions();
+    if (await this.fontDownloader.isFontDownloaded(fontName, fontExtension)) {
+      await this.deleteFontFromDisk(fontName, fontExtension);
+    }
+  }
+
+  public async deleteFontFamily(fontNames: string[],
+    fontExtension: FontExtension,
+    fontNamePrefix?: string): Promise<void> {
+    fontNames.forEach(async fontName => {
+      await this.deleteFontFromDisk(fontName, fontExtension, fontNamePrefix);
+    });
   }
 }
