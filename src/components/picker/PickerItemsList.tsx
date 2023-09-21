@@ -28,6 +28,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     onSearchChange,
     renderCustomSearch,
     useSafeArea,
+    useDialog,
     testID
   } = props;
   const context = useContext(PickerContext);
@@ -136,7 +137,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   return (
-    <View bg-$backgroundDefault flex useSafeArea={useSafeArea}>
+    <View bg-$backgroundDefault style={{flex: useDialog ? 1 : 0}} useSafeArea={useSafeArea}>
       {!useWheelPicker && (
         <>
           {<Modal.TopBar {...topBarProps}/>}
