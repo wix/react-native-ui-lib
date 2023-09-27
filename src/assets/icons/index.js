@@ -5,6 +5,9 @@ export const icons = {
   get checkSmall() {
     return require('./check-small.png');
   },
+  get minusSmall() {
+    return require('./minusSmall.png');
+  },
   get plusSmall() {
     return require('./plusSmall.png');
   },
