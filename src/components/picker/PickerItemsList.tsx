@@ -137,10 +137,10 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   return (
-    <View bg-$backgroundDefault style={{flex: useDialog ? 1 : 0}} useSafeArea={useSafeArea}>
+    <View bg-$backgroundDefault style={{flex: useDialog ? 0 : 1}} useSafeArea={useSafeArea}>
       {!useWheelPicker && (
         <>
-          {<Modal.TopBar {...topBarProps}/>}
+          {!useDialog && <Modal.TopBar {...topBarProps}/>}
           {renderSearchInput()}
           {renderList()}
         </>
