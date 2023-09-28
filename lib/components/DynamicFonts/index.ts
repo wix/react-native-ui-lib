@@ -173,4 +173,8 @@ export default class DynamicFonts {
       await this.deleteFontFromDisk(fontName, fontExtension, fontNamePrefix);
     });
   }
+
+  public async isFontDownloaded(fontName: string, fontExtension: FontExtension): Promise<boolean> {
+    return await this.fontDownloader.isFontDownloaded(fontName, fontExtension);
+  }
 }
