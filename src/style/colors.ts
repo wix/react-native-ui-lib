@@ -22,6 +22,8 @@ export type GeneratePaletteOptions = {
   adjustSaturation?: boolean;
   /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
   addDarkestTints?: boolean;
+  /** Whether to reverse the color palette to generate dark mode palette (pass 'true' to generate the same palette for both light and dark modes) */
+  avoidReverseOnDark?: boolean;
 }
 export class Colors {
   [key: string]: any;
@@ -173,6 +175,8 @@ export class Colors {
     return validColors ? undefined : results[0];
   }
 
+  shouldReverseOnDark = (avoidReverseOnDark?: boolean) => !avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark';
+  
   getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number, options: GetColorTintOptions = {}) {
     if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
@@ -190,10 +194,8 @@ export class Colors {
     if (colorKey) {
       const colorKeys = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
       const keyIndex = _.indexOf(colorKeys, Number(tintKey));
-      const shouldReverseOnDark =
-        !options?.avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark';
-      const key = shouldReverseOnDark ? colorKeys[colorKeys.length - 1 - keyIndex] : tintKey;
-
+      const key = 
+        this.shouldReverseOnDark(options?.avoidReverseOnDark) ? colorKeys[colorKeys.length - 1 - keyIndex] : tintKey;
       const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
       const requiredColorKey1 = `${colorKey.slice(0, -1)}${key}`;
       const requiredColor = this[requiredColorKey] || this[requiredColorKey1];
@@ -215,17 +217,14 @@ export class Colors {
     return colorsPalette[tintLevel - 1];
   }
 
-  private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
-    const defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false};
-    const _options = {...defaultOptions, ...options};
-    
+  private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {    
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
-    const lightColorsThreshold = _options.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
+    const lightColorsThreshold = options?.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
     const ls = [hsl.color[2]];
 
     let l = lightness - 10;
-    const lightnessLevel = _options.addDarkestTints ? 0 : 20;
+    const lightnessLevel = options?.addDarkestTints ? 0 : 20;
     while (l >= lightnessLevel - lightColorsThreshold) { // darker tints
       ls.unshift(l);
       l -= 10;
@@ -243,15 +242,18 @@ export class Colors {
       tints.push(tint);
     });
 
-    const size = _options.addDarkestTints ? 10 : 8;
+    const size = options?.addDarkestTints ? 10 : 8;
     const sliced = tints.slice(0, size);
-    const adjusted = _options.adjustSaturation && adjustSaturation(sliced, color);
+    const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color);
     return adjusted || sliced;
   });
 
+  defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false, avoidReverseOnDark: false};
+
   generateColorPalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
-    const palette = this.generatePalette(color, options);
-    return this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark' ? _.reverse(palette) : palette;
+    const _options = {...this.defaultOptions, ...options};
+    const palette = this.generatePalette(color, _options);
+    return this.shouldReverseOnDark(_options?.avoidReverseOnDark) ? _.reverse(palette) : palette;
   });
 
   private generateDesignTokens(primaryColor: string, dark?: boolean) {

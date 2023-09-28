@@ -40,18 +40,22 @@ export default class FontLoader {
     this.props = props;
   }
 
+  private log(message?: any, ...optionalParams: any[]) {
+    const {debug} = this.props;
+    if (debug) {
+      console.log(message, optionalParams);
+    }
+  }
+
   public loadFont = ({
     fontName,
     base64FontString,
     fontExtension = 'ttf',
     forceLoad = false
   }: LoadFontInput): Promise<string> => {
-    const {debug} = this.props;
     /* Check if this font was already loaded */
     if (!forceLoad && this.loadedFonts.has(fontName)) {
-      if (debug) {
-        console.log(fontName, 'Already loaded');
-      }
+      this.log(fontName, 'Already loaded');
       return Promise.resolve(this.loadedFonts.get(fontName) as string);
     }
 
@@ -63,9 +67,7 @@ export default class FontLoader {
       throw new Error('base64FontString is a required argument');
     }
 
-    if (debug) {
-      console.log(fontName, 'Starting to load');
-    }
+    this.log(fontName, 'Starting to load');
     /* Load font via native binary code */
     return new Promise((resolve, reject) => {
       DynamicFont.loadFont({
