@@ -112,7 +112,7 @@ export default class DynamicFonts {
     }
   }
 
-  private buildFontInput(rootUri: string,
+  private buildFontData(rootUri: string,
     fontName: string,
     fontExtension: FontExtension,
     fontNamePrefix?: string): GetFontInput & {fullFontName: string} {
@@ -128,7 +128,7 @@ export default class DynamicFonts {
     fontNamePrefix?: string,
     retries = 1): Promise<string[]> {
     const fonts: GetFontInput[] = fontNames.map(fontName =>
-      this.buildFontInput(rootUri, fontName, fontExtension, fontNamePrefix));
+      this.buildFontData(rootUri, fontName, fontExtension, fontNamePrefix));
     let fontsLoaded: string[] = [];
     let tryCounter = 0;
     while (fontsLoaded.length < fontNames.length && tryCounter < retries) {
@@ -145,7 +145,7 @@ export default class DynamicFonts {
   }
 
   private async deleteFontFromDisk(fontName: string, fontExtension: FontExtension, fontNamePrefix?: string) {
-    const fontInput = this.buildFontInput('', fontName, fontExtension, fontNamePrefix);
+    const fontInput = this.buildFontData('', fontName, fontExtension, fontNamePrefix);
     await this.fontDownloader.deleteFontFromDisk(fontInput.fullFontName);
   }
 
