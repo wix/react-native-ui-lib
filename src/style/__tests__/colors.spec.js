@@ -104,7 +104,9 @@ describe('style/Colors', () => {
       expect(uut.getColorTint('#F1BE0B', 3)).toEqual('#8D7006');
       expect(uut.getColorTint('#F1BE0B', 95)).toEqual('#FFFEFA');
     });
+  });
 
+  describe('generateColorPalette', () => {
     it('should memoize calls for generateColorPalette', () => {
       uut.getColorTint('#3F88C5', 20);
       uut.getColorTint('#3F88C5', 50);
@@ -124,6 +126,16 @@ describe('style/Colors', () => {
       const palette = uut.generateColorPalette('#FFE5FF');
       expect(palette).toEqual(['#661A66', '#8F248F', '#B82EB7', '#D148D1', '#DB71DB', '#E699E6', '#F0C2F0', '#FFE5FF']);
     });
+  });
+
+  it('should generateColorPalette with avoidReverseOnDark option false not reverse on light mode', () => {
+    const palette = uut.generateColorPalette('#3F88C5', {avoidReverseOnDark: false});
+    expect(palette).toEqual(['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4']);
+  });
+
+  it('should generateColorPalette with avoidReverseOnDark option true not reverse on light mode', () => {
+    const palette = uut.generateColorPalette('#3F88C5', {avoidReverseOnDark: true});
+    expect(palette).toEqual(['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4']);
   });
 
   describe('generateDesignTokens(...)', () => {
