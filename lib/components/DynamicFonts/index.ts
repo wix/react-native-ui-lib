@@ -3,6 +3,7 @@ import FontLoader, {FontExtension, LoadFontInput} from './FontLoader';
 import FontDownloader, {FontDownloaderProps} from './FontDownloader';
 import PermissionsAcquirerAndroid, {PermissionsAcquirerProps} from './PermissionsAcquirer.android';
 import PermissionsAcquirerIOS from './PermissionsAcquirer.ios';
+import NoPermissionsAcquirer from './NoPermissionsAcquirer';
 const PermissionsAcquirer = Platform.OS === 'android' ? PermissionsAcquirerAndroid : PermissionsAcquirerIOS;
 
 const DEFAULT_FONT_LOAD_ERROR_MESSAGE = 'Unable to load this font.';
@@ -15,6 +16,10 @@ type DynamicFontsProps = {
    * Enable debug mode to print extra logs
    */
   debug?: boolean;
+  /**
+   * Do not request permissions
+   */
+  doNotRequestPermissions?: boolean;
 };
 
 type GetFontInput = {
@@ -45,9 +50,11 @@ export default class DynamicFonts {
   private readonly fontDownloader: InstanceType<typeof FontDownloader>;
 
   constructor(props: DynamicFontsProps) {
-    const {debug = __DEV__} = props;
+    const {debug = __DEV__, doNotRequestPermissions} = props;
     this.props = {fontLoadErrorMessage: DEFAULT_FONT_LOAD_ERROR_MESSAGE, ...props};
-    this.permissionsAcquirer = new PermissionsAcquirer(this.props.permissionsAcquirerProps ?? {});
+    this.permissionsAcquirer = doNotRequestPermissions
+      ? new NoPermissionsAcquirer()
+      : new PermissionsAcquirer(this.props.permissionsAcquirerProps ?? {});
     this.fontLoader = new FontLoader({debug});
     const fontDownloadingProps = this.props.fontDownloadingProps ?? {};
     this.fontDownloader = new FontDownloader({...fontDownloadingProps, debug});
@@ -161,5 +168,9 @@ export default class DynamicFonts {
     fontNames.forEach(async fontName => {
       await this.deleteFontFromDisk(fontName, fontExtension, fontNamePrefix);
     });
+  }
+
+  public async isFontDownloaded(fontName: string, fontExtension: FontExtension): Promise<boolean> {
+    return await this.fontDownloader.isFontDownloaded(fontName, fontExtension);
   }
 }
