@@ -35,6 +35,13 @@ export default class FontDownloader {
     this.fs = RNFS;
   }
 
+  private log(message?: any, ...optionalParams: any[]) {
+    const {debug} = this.props;
+    if (debug) {
+      console.log(message, optionalParams);
+    }
+  }
+
   private getPrivateFolder() {
     const {dynamicFontsFolder} = this.props;
     return (
@@ -97,35 +104,27 @@ export default class FontDownloader {
     fontName: string,
     fontExtension: FontExtension,
     timeout: number): Promise<string> {
-    const {downloadErrorMessage, debug} = this.props;
+    const {downloadErrorMessage} = this.props;
     await this.createPrivateFolderIfNeeded();
     const fileName = this.getFileName(fontName, fontExtension);
     const downloadLocation = this.getPrivateFilePath(fileName);
 
     try {
-      if (debug) {
-        console.log(fontName, 'Starting to download');
-      }
+      this.log(fontName, 'Starting to download');
       const result = await this.fs.downloadFile(this.getDownloadFontOptions(fontUri, downloadLocation, timeout))
         .promise;
       if (result.statusCode === 200) {
-        if (debug) {
-          console.log(fontName, 'Finished downloading');
-        }
+        this.log(fontName, 'Finished downloading');
         return downloadLocation;
       } else {
-        if (debug) {
-          console.log(fontName, 'Error downloading statusCode:', result.statusCode);
-        }
+        this.log(fontName, 'Error downloading statusCode:', result.statusCode);
         return Promise.reject({
           source: 'uilib:FontDownloader:downloadFont',
           message: `${downloadErrorMessage} fontName: ${fontName} statusCode: ${result.statusCode}`
         });
       }
     } catch (error) {
-      if (debug) {
-        console.log(fontName, 'Error downloading error:', error);
-      }
+      this.log(fontName, 'Error downloading error:', error);
       return Promise.reject({
         source: 'uilib:FontDownloader:downloadFont',
         message: `${downloadErrorMessage} fontName: ${fontName} error: ${JSON.stringify(error)}`
@@ -144,46 +143,32 @@ export default class FontDownloader {
   }
 
   public async readFontFromDisk(fontName: string, fontExtension: FontExtension): Promise<string | void> {
-    const {debug} = this.props;
     let base64FontString;
     const fileName = this.getFileName(fontName, fontExtension);
     const privateFilePath = this.getPrivateFilePath(fileName);
     if (await this.fs.exists(privateFilePath)) {
-      if (debug) {
-        console.log(fontName, 'Starting to read from disk');
-      }
+      this.log(fontName, 'Starting to read from disk');
       base64FontString = await this.fs.readFile(privateFilePath, 'base64').catch(err => {
-        if (debug) {
-          console.log(fontName, 'Failed reading from disk:', err);
-        }
+        this.log(fontName, 'Failed reading from disk:', err);
       });
-      if (debug) {
-        console.log(fontName, 'Finished reading from disk');
-      }
-    } else if (debug) {
-      console.log(fontName, 'File does not exist (read)');
+      this.log(fontName, 'Finished reading from disk');
+    } else {
+      this.log(fontName, 'File does not exist (read)');
     }
 
     return base64FontString;
   }
 
   public async deleteFontFromDisk(fontFullName: string): Promise<void> {
-    const {debug} = this.props;
     const privateFilePath = this.getPrivateFilePath(fontFullName);
     if (await this.fs.exists(privateFilePath)) {
-      if (debug) {
-        console.log(fontFullName, 'Starting to delete');
-      }
+      this.log(fontFullName, 'Starting to delete');
       await this.fs.unlink(privateFilePath).catch(err => {
-        if (debug) {
-          console.log(fontFullName, 'Failed deleting:', err);
-        }
+        this.log(fontFullName, 'Failed deleting:', err);
       });
-      if (debug) {
-        console.log(fontFullName, 'Finished deleting');
-      }
-    } else if (debug) {
-      console.log(fontFullName, 'File does not exist (delete)');
+      this.log(fontFullName, 'Finished deleting');
+    } else {
+      this.log(fontFullName, 'File does not exist (delete)');
     }
   }
 }
