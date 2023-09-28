@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet, FlatList, TextInput, ListRenderItemInfo} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
@@ -12,6 +12,7 @@ import WheelPicker from '../WheelPicker';
 import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
+import {Constants} from '../../commons/new';
 
 const keyExtractor = (_item: string, index: number) => index.toString();
 
@@ -33,7 +34,11 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   } = props;
   const context = useContext(PickerContext);
   const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0].value);
-
+  const wrapperContainerStyle = useMemo(() => {
+    const shouldFlex = Constants.isWeb ? 1 : useDialog ? 0 : 1;
+    const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
+    return style;
+  }, [useDialog]);
   const renderSearchInput = () => {
     if (showSearch) {
       if (_.isFunction(renderCustomSearch)) {
@@ -137,7 +142,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   return (
-    <View bg-$backgroundDefault style={{flex: useDialog ? 0 : 1}} useSafeArea={useSafeArea}>
+    <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {!useWheelPicker && (
         <>
           {!useDialog && <Modal.TopBar {...topBarProps}/>}
