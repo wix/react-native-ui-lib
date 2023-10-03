@@ -35,6 +35,13 @@ export default class FontDownloader {
     this.fs = RNFS;
   }
 
+  private log(message?: any, ...optionalParams: any[]) {
+    const {debug} = this.props;
+    if (debug) {
+      console.log(message, optionalParams);
+    }
+  }
+
   private getPrivateFolder() {
     const {dynamicFontsFolder} = this.props;
     return (
@@ -103,20 +110,24 @@ export default class FontDownloader {
     const downloadLocation = this.getPrivateFilePath(fileName);
 
     try {
+      this.log(fontName, 'Starting to download');
       const result = await this.fs.downloadFile(this.getDownloadFontOptions(fontUri, downloadLocation, timeout))
         .promise;
       if (result.statusCode === 200) {
+        this.log(fontName, 'Finished downloading');
         return downloadLocation;
       } else {
+        this.log(fontName, 'Error downloading statusCode:', result.statusCode);
         return Promise.reject({
           source: 'uilib:FontDownloader:downloadFont',
           message: `${downloadErrorMessage} fontName: ${fontName} statusCode: ${result.statusCode}`
         });
       }
     } catch (error) {
+      this.log(fontName, 'Error downloading error:', error);
       return Promise.reject({
         source: 'uilib:FontDownloader:downloadFont',
-        message: `${downloadErrorMessage} fontName: ${fontName} error: ${error}`
+        message: `${downloadErrorMessage} fontName: ${fontName} error: ${JSON.stringify(error)}`
       });
     }
   }
@@ -136,9 +147,28 @@ export default class FontDownloader {
     const fileName = this.getFileName(fontName, fontExtension);
     const privateFilePath = this.getPrivateFilePath(fileName);
     if (await this.fs.exists(privateFilePath)) {
-      base64FontString = await this.fs.readFile(privateFilePath, 'base64').catch(() => {});
+      this.log(fontName, 'Starting to read from disk');
+      base64FontString = await this.fs.readFile(privateFilePath, 'base64').catch(err => {
+        this.log(fontName, 'Failed reading from disk:', err);
+      });
+      this.log(fontName, 'Finished reading from disk');
+    } else {
+      this.log(fontName, 'File does not exist (read)');
     }
 
     return base64FontString;
+  }
+
+  public async deleteFontFromDisk(fontFullName: string): Promise<void> {
+    const privateFilePath = this.getPrivateFilePath(fontFullName);
+    if (await this.fs.exists(privateFilePath)) {
+      this.log(fontFullName, 'Starting to delete');
+      await this.fs.unlink(privateFilePath).catch(err => {
+        this.log(fontFullName, 'Failed deleting:', err);
+      });
+      this.log(fontFullName, 'Finished deleting');
+    } else {
+      this.log(fontFullName, 'File does not exist (delete)');
+    }
   }
 }
