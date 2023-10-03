@@ -173,4 +173,23 @@ export default class DynamicFonts {
   public async isFontDownloaded(fontName: string, fontExtension: FontExtension): Promise<boolean> {
     return await this.fontDownloader.isFontDownloaded(fontName, fontExtension);
   }
+
+  public async isFontFamilyDownloaded(rootUri: string,
+    fontNames: string[],
+    fontExtension: FontExtension,
+    fontNamePrefix?: string): Promise<boolean> {
+    const fonts: GetFontInput[] = fontNames.map(fontName =>
+      this.buildFontData(rootUri, fontName, fontExtension, fontNamePrefix));
+    try {
+      const areDownloaded = await Promise.all(fonts
+        .filter(font => font)
+        .map(font => {
+          return this.fontDownloader.isFontDownloaded(font.fontName, font.fontExtension);
+        }));
+      return Promise.resolve(areDownloaded.every(v => v === true));
+    } catch (error) {
+      this.log(`isFontFamilyDownloaded failed error:`, error);
+      return Promise.resolve(false);
+    }
+  }
 }
