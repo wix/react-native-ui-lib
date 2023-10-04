@@ -1,4 +1,4 @@
-import DynamicFonts from './DynamicFonts';
+import DynamicFonts, {FontExtension} from './DynamicFonts';
 import HighlighterOverlayView from './HighlighterOverlayView';
 import SafeAreaSpacerView from './SafeArea/SafeAreaSpacerView';
 import SafeAreaInsetsManager from './SafeArea/SafeAreaInsetsManager';
@@ -6,6 +6,7 @@ import Keyboard, {KeyboardTrackingViewProps, KeyboardAccessoryViewProps} from '.
 
 export {
   DynamicFonts,
+  FontExtension,
   HighlighterOverlayView,
   SafeAreaSpacerView,
   SafeAreaInsetsManager,
