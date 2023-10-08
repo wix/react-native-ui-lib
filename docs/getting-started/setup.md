@@ -34,7 +34,7 @@ If you plan on using specific components, see **UILib Packages** above.
 
 ### Peer Dependencies
 UILIb has mandatory peer dependencies on the following packages:
-- react-native-reanimated (Make sure to follow [Reanimated setup guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation))
+- react-native-reanimated (Make sure to follow [Reanimated setup guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started))
 - react-native-gesture-handler
 
 ### Optional Dependencies
