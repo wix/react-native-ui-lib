@@ -25,6 +25,7 @@
       "description": "Icon image source or a callback function that returns a source"
     },
     {"name": "iconStyle", "type": "ImageStyle", "description": "Icon image style"},
+    {"name": "iconProps", "type": "Partial<ImageProps>", "description": "Icon image props"},
     {"name": "iconOnRight", "type": "boolean", "description": "Should the icon be right to the label"},
     {"name": "supportRTL", "type": "boolean", "description": "whether the icon should flip horizontally on RTL locals"},
     {"name": "backgroundColor", "type": "string", "description": "Color of the button background"},

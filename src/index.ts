@@ -64,6 +64,7 @@ export {default as ChipsInput, ChipsInputProps, ChipsInputChipProps} from './com
 export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPalette';
+export {default as ColorPickerDialog, ColorPickerDialogProps} from './components/colorPicker/ColorPickerDialog';
 export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as ColorSwatch, ColorSwatchProps, ColorInfo} from './components/colorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';

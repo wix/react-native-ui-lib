@@ -9,12 +9,6 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
   const {showSearch, onSearchChange, children, getItemLabel} = props;
   const [searchValue, setSearchValue] = useState('');
 
-  const _onSearchChange = useCallback((searchValue: string) => {
-    setSearchValue(searchValue);
-    onSearchChange?.(searchValue);
-  },
-  [onSearchChange]);
-
   const filteredChildren = useMemo(() => {
     if (showSearch && !_.isEmpty(searchValue)) {
       // @ts-expect-error need to fix children type
@@ -25,8 +19,15 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
+
     return children;
   }, [showSearch, searchValue, children]);
+
+  const _onSearchChange = useCallback((searchValue: string) => {
+    setSearchValue(searchValue);
+    onSearchChange?.(searchValue, filteredChildren);
+  },
+  [onSearchChange, filteredChildren]);
 
   return {setSearchValue, onSearchChange: _onSearchChange, filteredChildren};
 };

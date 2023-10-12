@@ -83,6 +83,7 @@ export interface CheckboxProps extends TouchableOpacityProps {
    * Additional styling for checkbox and label container
    */
   containerStyle?: StyleProp<ViewStyle>;
+  indeterminate?: boolean;
 }
 
 interface CheckboxState {
@@ -205,7 +206,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   renderCheckbox() {
-    const {selectedIcon, label, testID, style, containerStyle, ...others} = this.props;
+    const {selectedIcon, label, testID, style, containerStyle, indeterminate, ...others} = this.props;
     return (
       //@ts-ignore
       <TouchableOpacity
@@ -226,7 +227,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
           >
             <AnimatedIcon
               style={[this.styles.selectedIcon, {transform: this.animationStyle.transform}]}
-              source={selectedIcon || Assets.icons.checkSmall}
+              source={indeterminate ? Assets.icons.minusSmall : selectedIcon || Assets.icons.checkSmall}
               testID={`${testID}.selected`}
               tintColor={this.getTintColor()}
             />
@@ -238,6 +239,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   render() {
     const {label, labelStyle, containerStyle, labelProps} = this.props;
+    
     return label ? (
       <View row centerV style={containerStyle}>
         {this.renderCheckbox()}

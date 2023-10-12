@@ -35,6 +35,9 @@ export default {
   get ColorPalette() {
     return require('./colorPicker/ColorPalette').default;
   },
+  get ColorPickerDialog() {
+    return require('./colorPicker/ColorPickerDialog').default;
+  },
   get ColorPicker() {
     return require('./colorPicker').default;
   },
