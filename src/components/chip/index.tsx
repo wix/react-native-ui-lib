@@ -293,10 +293,12 @@ const Chip = ({
             marginRight: Spacings.s2
           };
         case 'iconSource':
-          return {
-            marginLeft: Spacings.s3,
-            marginRight: 2
-          };
+          if (label || leftElement || rightElement) {
+            return {
+              marginLeft: Spacings.s1,
+              marginRight: Spacings.s2
+            };
+          }
       }
     }
   },
