@@ -11,123 +11,122 @@ import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 import Icon, {IconProps} from '../icon';
 
-export type ChipProps = ViewProps &
-  TouchableOpacityProps & {
-    //GENERAL
+export type ChipProps = ViewProps & TouchableOpacityProps & {
+  //GENERAL
+  /**
+   * Chip's size. Number or a width and height object.
+   */
+  size?: number | {width: number, height: number};
+  /**
+   * On Chip press callback
+   */
+  onPress?: (props: any) => void;
+  /**
+   * Chip's background color
+   */
+  backgroundColor?: string;
+  /**
+   * The Chip borderRadius
+   */
+  borderRadius?: number;
+  /**
+   * Chip's container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Uses size as minWidth and minHeight - default is true
+   */
+  useSizeAsMinimum?: boolean;
+  /**
+   * Disables all internal elements default spacings. Helps reach a custom design
+   */
+  resetSpacings?: boolean;
     /**
-     * Chip's size. Number or a width and height object.
-     */
-    size?: number | {width: number; height: number};
-    /**
-     * On Chip press callback
-     */
-    onPress?: (props: any) => void;
-    /**
-     * Chip's background color
-     */
-    backgroundColor?: string;
-    /**
-     * The Chip borderRadius
-     */
-    borderRadius?: number;
-    /**
-     * Chip's container style
-     */
-    containerStyle?: StyleProp<ViewStyle>;
-    /**
-     * Uses size as minWidth and minHeight - default is true
-     */
-    useSizeAsMinimum?: boolean;
-    /**
-     * Disables all internal elements default spacings. Helps reach a custom design
-     */
-    resetSpacings?: boolean;
-    /**
-     * Used as testing identifier
-     */
-    testID?: string;
+   * Used as testing identifier
+   */
+  testID?: string;
 
-    //LABEL
-    /**
-     * Main Chip text
-     */
-    label?: string;
-    /**
-     * Label's style
-     */
-    labelStyle?: StyleProp<TextStyle>;
+  //LABEL
+  /**
+   * Main Chip text
+   */
+  label?: string;
+  /**
+   * Label's style
+   */
+  labelStyle?: StyleProp<TextStyle>;
 
-    //BADGE
-    /**
-     * Badge props object
-     */
-    badgeProps?: BadgeProps;
-    /**
-     * Display badge as counter (no background)
-     */
-    useCounter?: boolean;
-    //AVATAR
-    /**
-     * Avatar props object
-     */
-    avatarProps?: AvatarProps;
+  //BADGE
+  /**
+   * Badge props object
+   */
+  badgeProps?: BadgeProps;
+  /**
+   * Display badge as counter (no background)
+   */
+  useCounter?: boolean;
+  //AVATAR
+  /**
+   * Avatar props object
+   */
+  avatarProps?: AvatarProps;
 
-    //ICON GENERAL
-    /**
-     * Additional icon props
-     */
-    iconProps?: Omit<IconProps, 'source'>;
-    /**
-     * Icon style
-     */
-    iconStyle?: StyleProp<ImageStyle>;
+  //ICON GENERAL
+  /**
+   * Additional icon props
+   */
+  iconProps?: Omit<IconProps, 'source'>;
+  /**
+   * Icon style
+   */
+  iconStyle?: StyleProp<ImageStyle>;
 
-    //LEFT ICON
-    /**
-     * Left icon's source
-     */
-    iconSource?: ImageSourcePropType;
+  //LEFT ICON
+  /**
+   * Left icon's source
+   */
+  iconSource?: ImageSourcePropType;
 
-    //RIGHT ICON
-    /**
-     * Right icon's source
-     */
-    rightIconSource?: ImageSourcePropType;
+  //RIGHT ICON
+  /**
+   * Right icon's source
+   */
+  rightIconSource?: ImageSourcePropType;
 
-    //LEFT ELEMENT
-    /**
-     * Left custom element
-     */
-    leftElement?: JSX.Element;
+  //LEFT ELEMENT
+  /**
+   * Left custom element
+   */
+  leftElement?: JSX.Element;
 
-    //RIGHT ELEMENT
-    /**
-     * Right custom element
-     */
-    rightElement?: JSX.Element;
-
-    //DISMISS ('x' button)
-    /**
-     * Adds a dismiss button and serves as its callback
-     */
-    onDismiss?: (props: any) => void;
-    /**
-     * Dismiss color
-     */
-    dismissColor?: string;
-    /**
-     * Dismiss asset
-     */
-    dismissIcon?: ImageSourcePropType;
-    /**
-     * Dismiss style
-     */
-    dismissIconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Dismiss container style
-     */
-    dismissContainerStyle?: StyleProp<ImageStyle>;
-  };
+  //RIGHT ELEMENT
+   /**
+    * Right custom element
+    */
+  rightElement?: JSX.Element;
+ 
+  //DISMISS ('x' button)
+  /**
+   * Adds a dismiss button and serves as its callback
+   */
+  onDismiss?: (props: any) => void;
+  /**
+   * Dismiss color
+   */
+  dismissColor?: string;
+  /**
+   * Dismiss asset
+   */
+  dismissIcon?: ImageSourcePropType;
+  /**
+   * Dismiss style
+   */
+  dismissIconStyle?: StyleProp<ImageStyle>;
+  /**
+   * Dismiss container style
+   */
+  dismissContainerStyle?: StyleProp<ImageStyle>;
+}
 
 const DEFAULT_SIZE = 26;
 
@@ -165,6 +164,7 @@ const Chip = ({
   testID,
   ...others
 }: ChipProps) => {
+
   const renderIcon = useCallback((iconPosition: 'left' | 'right') => {
     const isLeftIcon = iconPosition === 'left';
 
@@ -177,8 +177,8 @@ const Chip = ({
         style={[getMargins('iconSource'), iconStyle]}
       />
     );
-  },
-  [iconSource, rightIconSource, iconStyle, iconProps]);
+  }, [iconSource, rightIconSource, iconStyle, iconProps]);
+
 
   const renderBadge = useCallback(() => {
     return (
@@ -301,8 +301,7 @@ const Chip = ({
           }
       }
     }
-  },
-  [avatarProps, badgeProps, iconSource, rightIconSource, onDismiss]);
+  }, [avatarProps, badgeProps, iconSource, rightIconSource, onDismiss]);
 
   const getContainerSize = useCallback(() => {
     const width = useSizeAsMinimum ? 'minWidth' : 'width';
@@ -319,7 +318,13 @@ const Chip = ({
     <Container
       activeOpacity={1}
       onPress={onPress}
-      style={[styles.container, {backgroundColor}, {borderRadius}, containerStyle, getContainerSize()]}
+      style={[
+        styles.container,
+        {backgroundColor},
+        {borderRadius},
+        containerStyle,
+        getContainerSize()
+      ]}
       testID={testID}
       {...others}
     >
