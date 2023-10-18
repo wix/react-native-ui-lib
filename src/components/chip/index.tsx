@@ -256,7 +256,7 @@ const Chip = ({
             };
           }
           if (iconSource || leftElement || rightIconSource || rightElement) {
-            const marginFromElement = Spacings.s2;
+            const marginFromElement = Spacings.s1;
             if ((iconSource || leftElement) && (rightIconSource || rightElement)) {
               return {
                 marginHorizontal: marginFromElement
@@ -275,7 +275,6 @@ const Chip = ({
               };
             }
           }
-          
           if (onDismiss) {
             return {
               marginLeft: Spacings.s3,
