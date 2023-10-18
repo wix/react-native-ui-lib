@@ -255,7 +255,12 @@ const Chip = ({
               marginRight: Spacings.s1
             };
           }
-          if (rightElement && leftElement) {
+          // if (rightElement && leftElement) {
+          //   return {
+          //     marginHorizontal: 2
+          //   };
+          // }
+          if ((iconSource || leftElement) && (rightIconSource || rightElement)) {
             return {
               marginHorizontal: 2
             };
@@ -293,12 +298,12 @@ const Chip = ({
             marginRight: Spacings.s2
           };
         case 'iconSource':
-          if (label || leftElement || rightElement) {
-            return {
-              marginLeft: Spacings.s1,
-              marginRight: Spacings.s2
-            };
+          if (!label && !leftElement && !rightElement) {
+            return {};
           }
+          return {
+            marginHorizontal: Spacings.s1
+          };
       }
     }
   }, [avatarProps, badgeProps, iconSource, rightIconSource, onDismiss]);
