@@ -30,7 +30,7 @@ const INACTIVE_COLOR = Colors.$backgroundNeutralMedium;
 const MIN_RANGE_GAP = 4;
 
 export type SliderOnValueChange = (value: number) => void;
-export type SliderOnRangeChange = (values: {min: number, max: number}) => void;
+export type SliderOnRangeChange = (values: {min: number; max: number}) => void;
 
 export type SliderProps = Omit<ThumbProps, 'ref'> & {
   /**
@@ -142,7 +142,7 @@ type Measurements = {
 
 type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: StyleProp<number>};
 
-type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: StyleProp<number>, left?: StyleProp<number>};
+type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: StyleProp<number>; left?: StyleProp<number>};
 
 type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
 
@@ -220,7 +220,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
     });
   }
 
-  reset() { // NOTE: used with ref
+  reset() {
+    // NOTE: used with ref
     this.lastValue = this.initialValue;
     this.lastMinValue = this.minInitialValue;
     this.lastDx = 0;
@@ -399,8 +400,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
         if (useRange) {
           const minThumbPosition = this._minThumbStyles?.left as number;
-          if (useGap && left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP
-            || !useGap && left >= minThumbPosition) {
+          if (
+            (useGap && left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP) ||
+            (!useGap && left >= minThumbPosition)
+          ) {
             this._thumbStyles.left = left;
 
             const width = left - minThumbPosition;
@@ -433,8 +436,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
       const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
 
       const maxThumbPosition = this._thumbStyles?.left as number;
-      if (useGap && left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP
-        || !useGap && left <= maxThumbPosition) {
+      if (
+        (useGap && left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP) ||
+        (!useGap && left <= maxThumbPosition)
+      ) {
         this._minThumbStyles.left = left;
 
         this._minTrackStyles.width = maxThumbPosition - x;
@@ -483,7 +488,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   get disableRTL() {
     const {disableRTL, useRange} = this.props;
-    if (useRange) { // block forceRTL on range slider
+    if (useRange) {
+      // block forceRTL on range slider
       return false;
     }
     return disableRTL;
@@ -552,7 +558,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
     let values = {min: this.lastMinValue, max: this.lastValue};
 
-    if (Constants.isRTL && this.props.disableRTL) { // forceRTL for range slider
+    if (Constants.isRTL && this.props.disableRTL) {
+      // forceRTL for range slider
       const {maximumValue} = this.props;
       values = {min: maximumValue - this.lastValue, max: maximumValue - this.lastMinValue};
     }
@@ -693,40 +700,35 @@ export default class Slider extends PureComponent<SliderProps, State> {
       maximumTrackTintColor = DEFAULT_COLOR
     } = this.props;
 
-    return (
-      _.isFunction(renderTrack) ? (
+    return _.isFunction(renderTrack) ? (
+      <View style={[styles.track, {backgroundColor: maximumTrackTintColor}, trackStyle]} onLayout={this.onTrackLayout}>
+        {renderTrack()}
+      </View>
+    ) : (
+      <View>
         <View
-          style={[styles.track, {backgroundColor: maximumTrackTintColor}, trackStyle]}
+          style={[
+            styles.track,
+            trackStyle,
+            {
+              backgroundColor: disabled ? INACTIVE_COLOR : maximumTrackTintColor
+            }
+          ]}
           onLayout={this.onTrackLayout}
-        >
-          {renderTrack()}
-        </View>
-      ) : (
-        <View>
-          <View
-            style={[
-              styles.track,
-              trackStyle,
-              {
-                backgroundColor: disabled ? INACTIVE_COLOR : maximumTrackTintColor
-              }
-            ]}
-            onLayout={this.onTrackLayout}
-          />
-          <View
-            ref={this.minTrack}
-            style={[
-              styles.track,
-              trackStyle,
-              styles.minimumTrack,
-              this.shouldForceLTR && styles.trackDisableRTL,
-              {
-                backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
-              }
-            ]}
-          />
-        </View>
-      )
+        />
+        <View
+          ref={this.minTrack}
+          style={[
+            styles.track,
+            trackStyle,
+            styles.minimumTrack,
+            this.shouldForceLTR && styles.trackDisableRTL,
+            {
+              backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
+            }
+          ]}
+        />
+      </View>
     );
   }
 
@@ -736,11 +738,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       if (useGap) {
         return this.renderMinThumb();
       }
-      return (
-        <View style={{zIndex: this.isDefaultThumbActive() ? 0 : 1, top: '-50%'}}>
-          {this.renderMinThumb()}
-        </View>
-      );
+      return <View style={{zIndex: this.isDefaultThumbActive() ? 0 : 1, top: '-50%'}}>{this.renderMinThumb()}</View>;
     }
   }
 
