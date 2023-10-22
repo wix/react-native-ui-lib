@@ -30,6 +30,7 @@ import useFieldState from './useFieldState';
 import usePreset from './usePreset';
 import FloatingPlaceholder from './FloatingPlaceholder';
 import CharCounter from './CharCounter';
+import Colors from '../../style/colors';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
@@ -78,6 +79,7 @@ const TextField = (props: InternalTextFieldProps) => {
     children,
     centered,
     readonly = false,
+    showMandatoryIndication,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
@@ -124,18 +126,43 @@ const TextField = (props: InternalTextFieldProps) => {
     return [inputStyle, styles.dummyPlaceholder];
   }, [inputStyle]);
 
+  let textFieldLabel = (
+    <Label
+      label={label}
+      labelColor={labelColor}
+      labelStyle={_labelStyle}
+      labelProps={labelProps}
+      floatingPlaceholder={floatingPlaceholder}
+      validationMessagePosition={validationMessagePosition}
+      testID={`${props.testID}.label`}
+    />
+  );
+  if (showMandatoryIndication) {
+    if (
+      (typeof others.validate === 'string' && others.validate === 'required') ||
+      (Array.isArray(others.validate) && others.validate.includes('required'))
+    ) {
+      textFieldLabel = (
+        <View row>
+          {textFieldLabel}
+          <Label
+            label={'*'}
+            labelColor={Colors.red30} // TODO: Decide how and which color should be here.
+            labelStyle={_labelStyle}
+            labelProps={labelProps}
+            floatingPlaceholder={floatingPlaceholder}
+            validationMessagePosition={validationMessagePosition}
+            testID={`${props.testID}.label.mandatory`}
+          />
+        </View>
+      );
+    }
+  }
+
   return (
     <FieldContext.Provider value={context}>
       <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
-        <Label
-          label={label}
-          labelColor={labelColor}
-          labelStyle={_labelStyle}
-          labelProps={labelProps}
-          floatingPlaceholder={floatingPlaceholder}
-          validationMessagePosition={validationMessagePosition}
-          testID={`${props.testID}.label`}
-        />
+        {textFieldLabel}
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
             enableErrors={enableErrors}
