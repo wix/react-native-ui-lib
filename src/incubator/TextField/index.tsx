@@ -137,26 +137,25 @@ const TextField = (props: InternalTextFieldProps) => {
       testID={`${props.testID}.label`}
     />
   );
-  if (showMandatoryIndication) {
-    if (
-      (typeof others.validate === 'string' && others.validate === 'required') ||
-      (Array.isArray(others.validate) && others.validate.includes('required'))
-    ) {
-      textFieldLabel = (
-        <View row>
-          {textFieldLabel}
-          <Label
-            label={'*'}
-            labelColor={Colors.red30} // TODO: Decide how and which color should be here.
-            labelStyle={_labelStyle}
-            labelProps={labelProps}
-            floatingPlaceholder={floatingPlaceholder}
-            validationMessagePosition={validationMessagePosition}
-            testID={`${props.testID}.label.mandatory`}
-          />
-        </View>
-      );
-    }
+  const textFieldIsRequired =
+    (typeof others.validate === 'string' && others.validate === 'required') ||
+    (Array.isArray(others.validate) && others.validate.includes('required'));
+
+  if (showMandatoryIndication && textFieldIsRequired) {
+    textFieldLabel = (
+      <View row>
+        {textFieldLabel}
+        <Label
+          label={'*'}
+          labelColor={Colors.red30} // TODO: Decide how and which color should be here.
+          labelStyle={_labelStyle}
+          labelProps={labelProps}
+          floatingPlaceholder={floatingPlaceholder}
+          validationMessagePosition={validationMessagePosition}
+          testID={`${props.testID}.label.mandatory`}
+        />
+      </View>
+    );
   }
 
   return (
