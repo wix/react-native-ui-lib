@@ -378,7 +378,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
     }
   }
 
-  updateValue(x: number) {
+  _updateValue(x: number) {
     const value = this.getValueForX(x);
 
     if (this.props.useRange) {
@@ -387,6 +387,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       this.onValueChange(value);
     }
   }
+  updateValue = _.debounce(this._updateValue, 10, {leading: true});
 
   moveTo(x: number) {
     if (this.isDefaultThumbActive()) {
