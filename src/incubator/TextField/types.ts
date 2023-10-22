@@ -162,7 +162,7 @@ export interface InputProps
    */
   readonly?: boolean;
 }
-type MandatoryType = {showMandatoryIndication: boolean}
+type MandatoryField = {showMandatoryIndication: boolean}
 
 export type TextFieldProps = MarginModifiers &
   PaddingModifiers &
@@ -170,7 +170,7 @@ export type TextFieldProps = MarginModifiers &
   ColorsModifiers &
   InputProps &
   LabelProps &
-  MandatoryType &
+  MandatoryField &
   Omit<FloatingPlaceholderProps, 'testID'> &
   // We're declaring these props explicitly here for react-docgen (which can't read hooks)
   // FieldStateProps &
