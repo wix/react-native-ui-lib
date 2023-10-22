@@ -162,7 +162,7 @@ export interface InputProps
    */
   readonly?: boolean;
 }
-type MandatoryField = {showMandatoryIndication: boolean}
+type MandatoryField = {showMandatoryIndication?: boolean}
 
 export type TextFieldProps = MarginModifiers &
   PaddingModifiers &
