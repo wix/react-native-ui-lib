@@ -387,7 +387,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       this.onValueChange(value);
     }
   }
-  updateValue = _.debounce(this._updateValue, 10, {leading: true});
+  updateValue = _.throttle(this._updateValue, 3, {leading: true});
 
   moveTo(x: number) {
     if (this.isDefaultThumbActive()) {
