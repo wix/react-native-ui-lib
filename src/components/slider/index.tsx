@@ -193,8 +193,6 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   private didMount: boolean;
 
-  private ThrottleDelay = 100;
-
   constructor(props: SliderProps) {
     super(props);
 
@@ -380,7 +378,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
     }
   }
 
-  _updateValue(x: number) {
+  updateValue(x: number) {
     const value = this.getValueForX(x);
 
     if (this.props.useRange) {
@@ -389,7 +387,6 @@ export default class Slider extends PureComponent<SliderProps, State> {
       this.onValueChange(value);
     }
   }
-  updateValue = _.throttle(this._updateValue, this.ThrottleDelay);
 
   moveTo(x: number) {
     if (this.isDefaultThumbActive()) {
