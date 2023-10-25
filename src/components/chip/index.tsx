@@ -256,19 +256,21 @@ const Chip = ({
             };
           }
           if (iconSource || leftElement || rightIconSource || rightElement) {
+            const addMarginLeft = !!(iconSource || leftElement);
+            const addMarginRight = !!(rightIconSource || rightElement);
             const marginFromElement = Spacings.s1;
-            if ((iconSource || leftElement) && (rightIconSource || rightElement)) {
+            if (addMarginLeft && addMarginRight) {
               return {
                 marginHorizontal: marginFromElement
               };
             }
-            if (iconSource || leftElement) {
+            if (addMarginLeft) {
               return {
                 marginLeft: marginFromElement,
                 marginRight: Spacings.s3
               };
             }
-            if (rightIconSource || rightElement) {
+            if (addMarginRight) {
               return {
                 marginLeft: Spacings.s3,
                 marginRight: marginFromElement
