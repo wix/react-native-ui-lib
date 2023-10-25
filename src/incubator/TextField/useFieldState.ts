@@ -112,9 +112,10 @@ export default function useFieldState({
       hasValue: !_.isEmpty(value),
       isValid: validationMessage && !validate ? false : isValid ?? true,
       isFocused,
-      failingValidatorIndex
+      failingValidatorIndex,
+      isMandatory
     };
-  }, [value, isFocused, isValid, failingValidatorIndex, validationMessage, validate]);
+  }, [value, isFocused, isValid, failingValidatorIndex, validationMessage, validate, isMandatory]);
 
   return {
     onFocus,
@@ -122,7 +123,6 @@ export default function useFieldState({
     onChangeText,
     fieldState,
     validateField,
-    checkValidity,
-    isMandatory
+    checkValidity
   };
 }
