@@ -20,6 +20,8 @@ export default function useFieldState({
   const [isFocused, setIsFocused] = useState(false);
   const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
   const [failingValidatorIndex, setFailingValidatorIndex] = useState<number | undefined>(undefined);
+  const isMandatory = useMemo(() => ((typeof validate === 'string' && validate === 'required') || (Array.isArray(validate) && validate.includes('required'))), [validate]);
+
 
   useEffect(() => {
     if (Constants.isWeb && !props.value && props.defaultValue && props.defaultValue !== value) {
@@ -120,6 +122,7 @@ export default function useFieldState({
     onChangeText,
     fieldState,
     validateField,
-    checkValidity
+    checkValidity,
+    isMandatory
   };
 }
