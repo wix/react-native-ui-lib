@@ -126,42 +126,19 @@ const TextField = (props: InternalTextFieldProps) => {
     return [inputStyle, styles.dummyPlaceholder];
   }, [inputStyle]);
 
-  let textFieldLabel = (
-    <Label
-      label={label}
-      labelColor={labelColor}
-      labelStyle={_labelStyle}
-      labelProps={labelProps}
-      floatingPlaceholder={floatingPlaceholder}
-      validationMessagePosition={validationMessagePosition}
-      testID={`${props.testID}.label`}
-    />
-  );
-  const textFieldIsRequired =
-    (typeof others.validate === 'string' && others.validate === 'required') ||
-    (Array.isArray(others.validate) && others.validate.includes('required'));
-
-  if (showMandatoryIndication && textFieldIsRequired) {
-    textFieldLabel = (
-      <View row>
-        {textFieldLabel}
+  return (
+    <FieldContext.Provider value={context}>
+      <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <Label
-          label={'*'}
-          labelColor={Colors.red30} // TODO: Decide how and which color should be here.
+          label={label}
+          labelColor={labelColor}
           labelStyle={_labelStyle}
           labelProps={labelProps}
           floatingPlaceholder={floatingPlaceholder}
           validationMessagePosition={validationMessagePosition}
-          testID={`${props.testID}.label.mandatory`}
+          testID={`${props.testID}.label`}
+          showMandatoryIndication={showMandatoryIndication}
         />
-      </View>
-    );
-  }
-
-  return (
-    <FieldContext.Provider value={context}>
-      <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
-        {textFieldLabel}
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
             enableErrors={enableErrors}
