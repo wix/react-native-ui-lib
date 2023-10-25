@@ -255,22 +255,25 @@ const Chip = ({
               marginRight: Spacings.s1
             };
           }
-          if (rightElement && leftElement) {
-            return {
-              marginHorizontal: 2
-            };
-          }
-          if (iconSource || leftElement) {
-            return {
-              marginLeft: 2,
-              marginRight: Spacings.s3
-            };
-          }
-          if (rightIconSource || rightElement) {
-            return {
-              marginLeft: Spacings.s3,
-              marginRight: 2
-            };
+          if (iconSource || leftElement || rightIconSource || rightElement) {
+            const marginFromElement = Spacings.s1;
+            if ((iconSource || leftElement) && (rightIconSource || rightElement)) {
+              return {
+                marginHorizontal: marginFromElement
+              };
+            }
+            if (iconSource || leftElement) {
+              return {
+                marginLeft: marginFromElement,
+                marginRight: Spacings.s3
+              };
+            }
+            if (rightIconSource || rightElement) {
+              return {
+                marginLeft: Spacings.s3,
+                marginRight: marginFromElement
+              };
+            }
           }
           if (onDismiss) {
             return {
