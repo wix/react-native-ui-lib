@@ -162,7 +162,6 @@ export interface InputProps
    */
   readonly?: boolean;
 }
-type MandatoryField = {showMandatoryIndication?: boolean}
 
 export type TextFieldProps = MarginModifiers &
   PaddingModifiers &
@@ -253,6 +252,10 @@ export type TextFieldProps = MarginModifiers &
      * Set an alignment fit for inline behavior (when rendered inside a row container)
      */
     inline?: boolean;
+    /**
+     * Whether this field should show a mandatory field indication.
+     */
+    showMandatoryIndication?: boolean;
   };
 
 export type InternalTextFieldProps = PropsWithChildren<
