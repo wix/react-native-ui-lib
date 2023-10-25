@@ -170,7 +170,6 @@ export type TextFieldProps = MarginModifiers &
   ColorsModifiers &
   InputProps &
   LabelProps &
-  MandatoryField &
   Omit<FloatingPlaceholderProps, 'testID'> &
   // We're declaring these props explicitly here for react-docgen (which can't read hooks)
   // FieldStateProps &
