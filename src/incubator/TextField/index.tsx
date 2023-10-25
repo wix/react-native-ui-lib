@@ -30,7 +30,6 @@ import useFieldState from './useFieldState';
 import usePreset from './usePreset';
 import FloatingPlaceholder from './FloatingPlaceholder';
 import CharCounter from './CharCounter';
-import Colors from '../../style/colors';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
