@@ -6,7 +6,6 @@ import {ColorType, LabelProps, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import FieldContext from './FieldContext';
 
-
 const DEFAULT_LABEL_COLOR: ColorType = {
   default: Colors.$textDefault,
   readonly: Colors.$textNeutral
@@ -19,6 +18,7 @@ const Label = ({
   labelProps,
   validationMessagePosition,
   floatingPlaceholder,
+  showMandatoryIndication,
   testID
 }: LabelProps) => {
   const context = useContext(FieldContext);
@@ -39,6 +39,7 @@ const Label = ({
         {...labelProps}
       >
         {label}
+        {context.isMandatory && showMandatoryIndication && '*'}
       </Text>
     );
   }

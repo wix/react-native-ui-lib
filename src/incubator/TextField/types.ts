@@ -74,6 +74,7 @@ export interface LabelProps {
   validationMessagePosition?: ValidationMessagePositionType;
   floatingPlaceholder?: boolean;
   testID?: string;
+  showMandatoryIndication?: boolean;
 }
 
 export interface FloatingPlaceholderProps {
