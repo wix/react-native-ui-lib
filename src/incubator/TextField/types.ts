@@ -272,6 +272,7 @@ export type FieldContextType = {
   readonly: boolean;
   validateField: () => void;
   checkValidity: () => boolean;
+  isMandatory: boolean;
 };
 
 export interface TextFieldMethods {
