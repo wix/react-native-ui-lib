@@ -124,6 +124,7 @@ class ColorPicker extends PureComponent<Props> {
             doneButton: accessibilityLabels?.doneButton,
             input: accessibilityLabels?.input
           }}
+          migrate
         />
       </View>
     );
