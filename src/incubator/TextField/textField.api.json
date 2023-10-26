@@ -115,7 +115,8 @@
       "type": "boolean",
       "description": "A UI preset for read only state"
     },
-    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
+    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
+    {"name": "showMandatoryIndication", "type": "boolean", "description": "Whether this field should show a mandatory field indication"}
   ],
   "snippet": [
     "<TextField",
