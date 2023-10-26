@@ -83,6 +83,33 @@ describe('TextField', () => {
       const validationMessageElement = renderTree.queryByText(props.validationMessage);
       expect(validationMessageElement).toBe(null);
     });
+
+    describe('Mandatory Indication', () => {
+      it('Should show mandatory star indication - 1', async () => {
+        const renderTree = render(<TestCase testID={'field'} validate={'required'} label={'Label'} showMandatoryIndication/>);
+        const label = renderTree.getByTestId('field.label');
+        const text = label.children[0];
+        expect(text).toEqual('Label*');
+      });
+      it('Should show mandatory star indication - 2', () => {
+        const renderTree = render(<TestCase testID={'field'} validate={['email', 'required']} label={'Label'} showMandatoryIndication/>);
+        const label = renderTree.getByTestId('field.label');
+        const text = label.children[0];
+        expect(text).toEqual('Label*');
+      });
+      it('Should not show mandatory star indication - 3', () => {
+        const renderTree = render(<TestCase testID={'field'} validate={['email', 'required']} label={'Label'}/>);
+        const label = renderTree.getByTestId('field.label');
+        const text = label.children[0];
+        expect(text).not.toEqual('Label*');
+      });
+      it('Should not show mandatory star indication - 3', () => {
+        const renderTree = render(<TestCase testID={'field'} validate={['email']} label={'Label'} showMandatoryIndication/>);
+        const label = renderTree.getByTestId('field.label');
+        const text = label.children[0];
+        expect(text).not.toEqual('Label*');
+      });
+    });
   });
 
   describe('defaultValue', () => {
