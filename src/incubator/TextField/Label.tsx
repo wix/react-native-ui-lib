@@ -28,6 +28,7 @@ const Label = ({
   const style = useMemo(() => {
     return [styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder];
   }, [labelStyle, floatingPlaceholder]);
+  const shouldRenderIdication = context.isMandatory && showMandatoryIndication;
 
   if ((label || floatingPlaceholder) && !forceHidingLabel) {
     return (
@@ -38,8 +39,7 @@ const Label = ({
         recorderTag={'unmask'}
         {...labelProps}
       >
-        {label}
-        {context.isMandatory && showMandatoryIndication && '*'}
+        {shouldRenderIdication ? label?.concat('*') : label}
       </Text>
     );
   }
