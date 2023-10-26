@@ -253,7 +253,7 @@ export type TextFieldProps = MarginModifiers &
      */
     inline?: boolean;
     /**
-     * Whether this field should show a mandatory field indication.
+     * Whether to show a mandatory field indication.
      */
     showMandatoryIndication?: boolean;
   };
