@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		101C2DED2AA5CE4700AFCFFD /* DynamicFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 101C2DEC2AA5CE4700AFCFFD /* DynamicFont.m */; };
 		1054385623BBA1C200D04E48 /* ObservingInputAccessoryViewTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1054385523BBA1C200D04E48 /* ObservingInputAccessoryViewTemp.m */; };
 		1054385923BBA27900D04E48 /* UIResponder+FirstResponderTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1054385823BBA27900D04E48 /* UIResponder+FirstResponderTemp.m */; };
 		1054385C23BC748700D04E48 /* KeyboardTrackingViewTempManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1054385A23BC748700D04E48 /* KeyboardTrackingViewTempManager.m */; };
@@ -38,6 +39,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		101C2DEB2AA5CDE800AFCFFD /* DynamicFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicFont.h; sourceTree = "<group>"; };
+		101C2DEC2AA5CE4700AFCFFD /* DynamicFont.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DynamicFont.m; sourceTree = "<group>"; };
 		1054385423BBA1B800D04E48 /* ObservingInputAccessoryViewTemp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObservingInputAccessoryViewTemp.h; sourceTree = "<group>"; };
 		1054385523BBA1C200D04E48 /* ObservingInputAccessoryViewTemp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObservingInputAccessoryViewTemp.m; sourceTree = "<group>"; };
 		1054385723BBA26800D04E48 /* UIResponder+FirstResponderTemp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponderTemp.h"; sourceTree = "<group>"; };
@@ -85,6 +88,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		101C2DEA2AA5CDB500AFCFFD /* dynamicfont */ = {
+			isa = PBXGroup;
+			children = (
+				101C2DEB2AA5CDE800AFCFFD /* DynamicFont.h */,
+				101C2DEC2AA5CE4700AFCFFD /* DynamicFont.m */,
+			);
+			path = dynamicfont;
+			sourceTree = "<group>";
+		};
 		10823FAC23AFB06E00429E9A /* keyboardtrackingview */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +165,7 @@
 		D8D93E6620161A7F00A39331 /* reactnativeuilib */ = {
 			isa = PBXGroup;
 			children = (
+				101C2DEA2AA5CDB500AFCFFD /* dynamicfont */,
 				10823FB623B0B98400429E9A /* keyboardinput */,
 				10823FAC23AFB06E00429E9A /* keyboardtrackingview */,
 				D8E5A535204C4F170000DA01 /* safearea */,
@@ -257,6 +270,7 @@
 				D8D93E7620161B1F00A39331 /* HighlighterViewManager.m in Sources */,
 				1054385623BBA1C200D04E48 /* ObservingInputAccessoryViewTemp.m in Sources */,
 				D8E5A538204C4F170000DA01 /* SafeAreaManager.m in Sources */,
+				101C2DED2AA5CE4700AFCFFD /* DynamicFont.m in Sources */,
 				1054776424B47EA800D2026D /* RCTCustomKeyboardViewControllerTemp.m in Sources */,
 				D8AFAC9F204E004D00D28FED /* SafeAreaSpacerViewManager.m in Sources */,
 				D8AFACA1204E004D00D28FED /* SafeAreaSpacerViewLocalData.m in Sources */,

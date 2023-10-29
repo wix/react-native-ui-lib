@@ -117,7 +117,7 @@ class MainScreen extends Component {
     this?.sectionListRef?.current?.scrollToLocation({
       animated: true,
       sectionIndex: index,
-      itemIndex: 0,
+      itemIndex: 1,
       viewPosition: 0
     });
   };
