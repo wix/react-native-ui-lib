@@ -70,6 +70,7 @@ const Input = ({
       ref={inputRef}
       underlineColorAndroid="transparent"
       accessibilityState={{disabled}}
+      pointerEvents={disabled ? 'none' : 'auto'}
     />
   );
 };
