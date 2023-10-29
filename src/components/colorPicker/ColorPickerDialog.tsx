@@ -338,7 +338,6 @@ class ColorPickerDialog extends PureComponent<Props, State> {
         centerH
         onDismiss={this.onDismiss}
         containerStyle={styles.dialog}
-        direction={PanningProvider.Directions.DOWN}
         testID={`${testID}.dialog`}
         modalProps={{supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right']}} // iOS only
         {...dialogProps}
