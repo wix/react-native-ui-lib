@@ -36,6 +36,7 @@ const Input = ({
   useGestureHandlerInput,
   readonly,
   recorderTag,
+  pointerEvents,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
   const inputRef = useImperativeInputHandle(forwardedRef, {onChangeText: props.onChangeText});
@@ -70,6 +71,7 @@ const Input = ({
       ref={inputRef}
       underlineColorAndroid="transparent"
       accessibilityState={{disabled}}
+      pointerEvents={disabled ? 'none' : pointerEvents}
     />
   );
 };
