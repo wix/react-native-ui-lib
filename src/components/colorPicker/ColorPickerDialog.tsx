@@ -20,7 +20,6 @@ import TouchableOpacity from '../touchableOpacity';
 import Dialog, {DialogProps} from '../../incubator/Dialog';
 import Button from '../button';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
-import PanningProvider from '../panningViews/panningProvider';
 
 interface Props extends DialogProps {
   /**
