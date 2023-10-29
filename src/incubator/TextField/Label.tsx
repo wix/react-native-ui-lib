@@ -6,7 +6,6 @@ import {ColorType, LabelProps, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import FieldContext from './FieldContext';
 
-
 const DEFAULT_LABEL_COLOR: ColorType = {
   default: Colors.$textDefault,
   readonly: Colors.$textNeutral
@@ -19,6 +18,7 @@ const Label = ({
   labelProps,
   validationMessagePosition,
   floatingPlaceholder,
+  showMandatoryIndication,
   testID
 }: LabelProps) => {
   const context = useContext(FieldContext);
@@ -28,6 +28,7 @@ const Label = ({
   const style = useMemo(() => {
     return [styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder];
   }, [labelStyle, floatingPlaceholder]);
+  const shouldRenderIndication = context.isMandatory && showMandatoryIndication;
 
   if ((label || floatingPlaceholder) && !forceHidingLabel) {
     return (
@@ -38,7 +39,7 @@ const Label = ({
         recorderTag={'unmask'}
         {...labelProps}
       >
-        {label}
+        {shouldRenderIndication ? label?.concat('*') : label}
       </Text>
     );
   }
