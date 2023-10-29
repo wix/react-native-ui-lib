@@ -164,6 +164,9 @@ module.exports = {
         return require('./screens/componentScreens/WizardScreen').default;
       },
       // nativeComponentScreens
+      get DynamicFontsScreen() {
+        return require('./screens/nativeComponentScreens/DynamicFontsScreen').default;
+      },
       get HighlightOverlayViewScreen() {
         return require('./screens/nativeComponentScreens/HighlightOverlayViewScreen').default;
       },
@@ -209,6 +212,9 @@ module.exports = {
       },
       get SpacingsScreen() {
         return require('./screens/foundationScreens/SpacingsScreen').default;
+      },
+      get RTLScreen() {
+        return require('./screens/foundationScreens/RTLScreen').default;
       },
       // animationScreens
       get CardScannerScreen() {

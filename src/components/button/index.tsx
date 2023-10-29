@@ -292,7 +292,7 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   renderIcon() {
-    const {iconSource, supportRTL, testID} = this.props;
+    const {iconSource, supportRTL, testID, iconProps} = this.props;
 
     if (iconSource) {
       const iconStyle = this.getIconStyle();
@@ -302,10 +302,24 @@ class Button extends PureComponent<Props, ButtonState> {
       } else {
         if (Constants.isWeb) {
           return (
-            <Icon style={iconStyle} tintColor={Colors.$iconDefault} source={iconSource} testID={`${testID}.icon`}/>
+            <Icon
+              style={iconStyle}
+              tintColor={Colors.$iconDefault}
+              source={iconSource}
+              testID={`${testID}.icon`}
+              {...iconProps}
+            />
           );
         }
-        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle} testID={`${testID}.icon`}/>;
+        return (
+          <Image
+            source={iconSource}
+            supportRTL={supportRTL}
+            style={iconStyle}
+            testID={`${testID}.icon`}
+            {...iconProps}
+          />
+        );
       }
     }
     return null;

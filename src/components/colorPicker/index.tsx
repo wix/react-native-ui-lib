@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
+import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
@@ -123,13 +124,14 @@ class ColorPicker extends PureComponent<Props> {
             doneButton: accessibilityLabels?.doneButton,
             input: accessibilityLabels?.input
           }}
+          migrate
         />
       </View>
     );
   }
 }
 
-export default ColorPicker;
+export default asBaseComponent<Props>(ColorPicker);
 
 const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;
 const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;

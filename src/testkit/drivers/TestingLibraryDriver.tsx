@@ -113,7 +113,6 @@ export class TestingLibraryDriver<Props> implements UniDriver<Props> {
   };
 
   typeText = async (text: string): Promise<void> => {
-    console.log('this.reactTestInstances: ', this.reactTestInstances);
     if (!this.reactTestInstances) {
       throw new NoSelectorException();
     }

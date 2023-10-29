@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Text, ColorPicker, ColorPalette, ColorName, ColorInfo} from 'react-native-ui-lib';
+import {Colors, View, Text, ColorPicker, ColorPalette, ColorName, ColorInfo, TouchableOpacity, ColorPickerDialog} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 interface State {
@@ -10,6 +10,7 @@ interface State {
   customColors: string[];
   paletteChange: boolean;
   backgroundColor: string;
+  showPicker: boolean;
 }
 
 const INITIAL_COLOR = Colors.$backgroundPrimaryHeavy;
@@ -31,7 +32,8 @@ export default class ColorPickerScreen extends Component<{}, State> {
     textColor: Colors.$textDefaultLight,
     customColors: [],
     paletteChange: false,
-    backgroundColor: Colors.$backgroundDefault
+    backgroundColor: Colors.$backgroundDefault,
+    showPicker: false
   };
 
   onDismiss = () => {
@@ -123,6 +125,25 @@ export default class ColorPickerScreen extends Component<{}, State> {
             </Text>
           </View>
         </View>
+
+        <Text center text60 marginT-10>Color Picker Dialog</Text>
+        <View center>
+          <TouchableOpacity
+            margin-10 
+            center
+            style={{width: 60, height: 60, borderWidth: 1, borderRadius: 30, backgroundColor: color}} 
+            onPress={() => this.setState({showPicker: true})}
+          >
+            <Text>Press</Text>
+          </TouchableOpacity>
+        </View>
+        <ColorPickerDialog
+          visible={this.state.showPicker}
+          initialColor={color}
+          key={color}
+          onDismiss={() => this.setState({showPicker: false})}
+          onSubmit={this.onSubmit}
+        />
       </ScrollView>
     );
   }

@@ -8,7 +8,7 @@ import Month from './Month';
 import Header from './Header';
 
 
-const CALENDAR_HEIGHT = 270;
+const CALENDAR_HEIGHT = Constants.isAndroid ? 280 : 270;
 
 function CalendarItem(props: CalendarItemProps) {
   const {year, month} = props;

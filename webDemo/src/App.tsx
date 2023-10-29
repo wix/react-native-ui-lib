@@ -42,6 +42,34 @@ const svgData = '<svg data-bbox="18.5 31.5 163.1 137.2" viewBox="0 0 200 200" he
 
 const itemsToRender: ItemToRender[] = [
   {
+    title: 'IconButton SVG Resize',
+    FC: () => {
+      const [size, setSize] = useState(Spacings.s4);
+
+      console.log('$$ IconButton SVG Resize', {size});
+
+      return (
+        <Button
+          round
+          id={'iconButton_resize_svg'}
+          size={Button.sizes.large}
+          iconSource={svgData}
+          iconStyle={{
+            tintColor: '#ffffff'
+          }}
+          iconProps={{
+            width: size,
+            height: size
+          }}
+          onPress={() => {
+            const newSize = size === Spacings.s4 ? Spacings.s6 : Spacings.s4;
+            setSize(newSize);
+          }}
+        />
+      );
+    }
+  },
+  {
     title: 'Carousel',
     FC: CarouselWrapper
 
@@ -97,6 +125,7 @@ const itemsToRender: ItemToRender[] = [
     FC: () => (
       <Button
         label={'Svg tag'}
+        id={'iconButton'}
         size={Button.sizes.large}
         iconSource={svgData}
         iconStyle={{

@@ -89,6 +89,7 @@ export type BadgeProps = ViewProps &
      * Custom element to render instead of an icon
      */
     customElement?: JSX.Element;
+    key?: string | number;
   };
 
 /**
