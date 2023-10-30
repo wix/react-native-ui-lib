@@ -48,10 +48,6 @@ export interface TouchableOpacityProps
    * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
    */
   customValue?: any;
-  /**
-   * Testing identifier
-   */
-  testID?: string;
   style?: ViewProps['style'];
   onPress?: (props?: (TouchableOpacityProps & {event: GestureResponderEvent}) | any) => void;
   onPressIn?: (
