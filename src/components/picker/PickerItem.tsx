@@ -63,6 +63,8 @@ const PickerItem = (props: PickerItemProps) => {
   }, [isItemDisabled, labelStyle]);
 
   const _onPress = useCallback(async (props: any) => {
+    // Using !(await onPress?.(item)) does not work properly when onPress is not sent
+    // We have to explicitly state `false` so a synchronous void (undefined) will still work as expected
     if (onPress && await onPress(context.isMultiMode ? !isSelected : undefined, props) === false) {
       return;
     }

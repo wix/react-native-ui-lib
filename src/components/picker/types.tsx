@@ -236,8 +236,9 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
    */
   disabled?: boolean;
   /**
-   * Callback for onPress action
+   * Callback for onPress action, will stop selection if false is returned
    * @param selected true\false in multi mode and undefined in single mode
+   * @param props the props sent to the item
    */
   onPress?: (selected: boolean | undefined, props: any) => void | Promise<boolean>;
   /**
