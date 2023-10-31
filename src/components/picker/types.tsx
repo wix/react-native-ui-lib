@@ -96,6 +96,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
     label?: string
   ) => React.ReactElement;
   /**
+   * A callback to be used when an item has been pressed, will stop selection if false is returned
+   */
+  onItemPress?: (item: PickerValue) => Promise<boolean>;
+  /**
    * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
    */
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;

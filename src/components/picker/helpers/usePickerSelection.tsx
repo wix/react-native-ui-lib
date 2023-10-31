@@ -3,13 +3,14 @@ import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
 
 interface UsePickerSelectionProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
+  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode' | 'onItemPress'> {
   pickerExpandableRef: RefObject<any>;
   setSearchValue: (searchValue: string) => void;
 }
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
-  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} = props;
+  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode, onItemPress} =
+    props;
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
 
@@ -20,7 +21,11 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     }
   }, [value]);
 
-  const onDoneSelecting = useCallback((item: PickerValue) => {
+  const onDoneSelecting = useCallback(async (item: PickerValue) => {
+    // Using !(await onItemPress?.(item)) does not work properly when onItemPress is not sent
+    if (onItemPress && !(await onItemPress(item))) {
+      return;
+    }
     setSearchValue('');
     setMultiFinalValue(item as PickerMultiValue);
     pickerExpandableRef.current?.closeExpandable?.();

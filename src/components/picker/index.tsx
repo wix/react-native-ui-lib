@@ -83,6 +83,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     getItemLabel,
     getItemValue,
     renderItem,
+    onItemPress,
     children,
     useSafeArea,
     // TODO: Remove migrate props and migrate code
@@ -123,7 +124,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     getItemValue,
     topBarProps,
     setSearchValue,
-    mode
+    mode,
+    onItemPress
   });
 
   const {label, accessibilityInfo} = usePickerLabel({
