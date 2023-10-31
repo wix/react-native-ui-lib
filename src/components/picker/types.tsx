@@ -5,6 +5,7 @@ import {ModalTopBarProps} from '../modal/TopBar';
 // TODO: Replace with new TextField Props after migration to new TextField has completed
 // import {TextFieldProps} from '../../../typings/components/Inputs';
 import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../../incubator/TextField';
+import {TouchableOpacityProps} from '../touchableOpacity';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -197,7 +198,7 @@ export type PickerPropsWithMulti = PickerBaseProps & {
 
 export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
 
-export interface PickerItemProps {
+export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**
    * Item's value
    */
@@ -238,7 +239,7 @@ export interface PickerItemProps {
    * Callback for onPress action
    * @param selected true\false in multi mode and undefined in single mode
    */
-  onPress?: (selected?: boolean) => void;
+  onPress?: (selected: boolean | undefined, props: any) => void | Promise<boolean>;
   /**
    * Component test id
    */
