@@ -64,7 +64,7 @@ class ExpandableSectionScreen extends PureComponent {
     return (
       <View margin-10 spread row>
         <Text grey10 text60>
-          ExpandableSection's sectionHeader
+          ExpandableSection sectionHeader
         </Text>
         <Image style={styles.icon} source={this.getChevron()}/>
       </View>
@@ -73,7 +73,7 @@ class ExpandableSectionScreen extends PureComponent {
 
   getBodyElement() {
     return (
-      <Carousel pageWidth={350} itemSpacings={Spacings.s2}>
+      <Carousel>
         {_.map(this.elements, (element, key) => {
           return (
             <View key={key} margin-12>

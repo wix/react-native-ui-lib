@@ -169,7 +169,7 @@ class ColorPalette extends PureComponent<Props, State> {
 
   get containerWidth() {
     const {containerWidth} = this.props;
-    return containerWidth || Constants.screenWidth;
+    return containerWidth || Constants.windowWidth;
   }
 
   getUniqueColors = memoize(colors => {

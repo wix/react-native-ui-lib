@@ -21,7 +21,7 @@ const useGridLayout = (props: GridListBaseProps) => {
   const {orientation} = useOrientation();
 
   const _containerWidth = useMemo(() => {
-    return (containerWidth ?? Constants.screenWidth - Constants.getPageMargins()) - listPadding * 2;
+    return (containerWidth ?? Constants.windowWidth - Constants.getPageMargins()) - listPadding * 2;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listPadding, orientation, containerWidth]);
 
