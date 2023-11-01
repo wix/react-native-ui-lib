@@ -37,6 +37,7 @@ const Input = ({
   readonly,
   recorderTag,
   pointerEvents,
+  showMandatoryIndication,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
   const inputRef = useImperativeInputHandle(forwardedRef, {onChangeText: props.onChangeText});
@@ -46,6 +47,7 @@ const Input = ({
   const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
   const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
   const disabled = props.editable === false || readonly;
+  const shouldRenderIndication = context.isMandatory && showMandatoryIndication;
 
   const TextInput = useMemo(() => {
     if (useGestureHandlerInput) {
@@ -65,7 +67,7 @@ const Input = ({
       {...props}
       editable={!disabled}
       value={value}
-      placeholder={placeholder}
+      placeholder={shouldRenderIndication ? placeholder?.concat('*') : placeholder}
       placeholderTextColor={placeholderTextColor}
       // @ts-expect-error
       ref={inputRef}

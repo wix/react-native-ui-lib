@@ -18,7 +18,8 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
     floatingPlaceholderStyle,
     validationMessagePosition,
     extraOffset = 0,
-    testID
+    testID,
+    showMandatoryIndication
   } = props;
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
@@ -29,6 +30,7 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
   const shouldFloat = shouldPlaceholderFloat(props, context.isFocused, context.hasValue, context.value);
   const animation = useRef(new Animated.Value(Number(shouldFloat))).current;
   const hidePlaceholder = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
+  const shouldRenderIndication = context.isMandatory && showMandatoryIndication;
 
   useDidUpdate(() => {
     Animated.timing(animation, {
@@ -86,7 +88,7 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
         testID={testID}
         recorderTag={'unmask'}
       >
-        {placeholder}
+        {shouldRenderIndication ? placeholder?.concat('*') : placeholder}
       </Text>
     </View>
   );

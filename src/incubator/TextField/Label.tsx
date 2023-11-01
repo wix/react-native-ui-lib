@@ -29,7 +29,6 @@ const Label = ({
     return [styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder];
   }, [labelStyle, floatingPlaceholder]);
   const shouldRenderIndication = context.isMandatory && showMandatoryIndication;
-
   if ((label || floatingPlaceholder) && !forceHidingLabel) {
     return (
       <Text

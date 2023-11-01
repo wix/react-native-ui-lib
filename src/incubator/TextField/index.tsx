@@ -173,6 +173,7 @@ const TextField = (props: InternalTextFieldProps) => {
                   validationMessagePosition={validationMessagePosition}
                   extraOffset={leadingAccessoryMeasurements?.width}
                   testID={`${props.testID}.floatingPlaceholder`}
+                  showMandatoryIndication={showMandatoryIndication}
                 />
               )}
               <Input
@@ -186,6 +187,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 onChangeText={onChangeText}
                 placeholder={placeholder}
                 hint={hint}
+                showMandatoryIndication={showMandatoryIndication && !label}
               />
             </View>
           )}
