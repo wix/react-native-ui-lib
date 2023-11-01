@@ -14,6 +14,7 @@ import {
 import {Constants, asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
+import {ModalProps} from '../../components/modal';
 import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
@@ -65,6 +66,9 @@ interface State {
 }
 
 const KEYBOARD_HEIGHT = 216;
+const MODAL_PROPS = {
+  supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right'] // iOS only
+} as ModalProps;
 
 /**
  * @description: A color picker dialog component
@@ -338,7 +342,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
         onDismiss={this.onDismiss}
         containerStyle={styles.dialog}
         testID={`${testID}.dialog`}
-        modalProps={{supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right']}} // iOS only
+        modalProps={MODAL_PROPS}
         {...dialogProps}
       >
         {this.renderHeader()}
