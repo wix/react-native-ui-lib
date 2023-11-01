@@ -25,6 +25,10 @@ export type ExpandableSectionProps = {
    * action for when pressing the header of the expandableSection
    */
   onPress?: () => void;
+  /**
+   * Testing identifier
+   */
+  testID?: string;
 };
 
 /**
@@ -34,7 +38,7 @@ export type ExpandableSectionProps = {
  */
 
 function ExpandableSection(props: ExpandableSectionProps) {
-  const {expanded, sectionHeader, children, top} = props;
+  const {expanded, sectionHeader, children, top, testID} = props;
 
   /**
    * TODO: move to reanimated LayoutAnimation after updating to version 2.3.0
@@ -60,7 +64,7 @@ function ExpandableSection(props: ExpandableSectionProps) {
   return (
     <View style={styles.container}>
       {top && expanded && children}
-      <TouchableOpacity onPress={onPress} accessibilityState={accessibilityState}>
+      <TouchableOpacity onPress={onPress} testID={testID} accessibilityState={accessibilityState}>
         {sectionHeader}
       </TouchableOpacity>
       {!top && expanded && children}
