@@ -222,9 +222,10 @@ export class Colors {
     const lightness = Math.round(hsl.color[2]);
     const lightColorsThreshold = options?.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
     const ls = [hsl.color[2]];
+    const isWhite = lightness === 100;
+    const lightnessLevel = options?.addDarkestTints ? (isWhite ? 5 : 0) : 20;
 
     let l = lightness - 10;
-    const lightnessLevel = options?.addDarkestTints ? 0 : 20;
     while (l >= lightnessLevel - lightColorsThreshold) { // darker tints
       ls.unshift(l);
       l -= 10;
