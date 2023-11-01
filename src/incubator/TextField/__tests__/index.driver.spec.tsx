@@ -259,8 +259,22 @@ describe('TextField', () => {
       const labelContent = await textFieldDriver.getLabelContent();
       expect(labelContent).toMatch(starReg);
     });
+    it('Should show mandatory indication on the label', async () => {
+      const textFieldDriver = getTestCaseDriver({
+        label: 'Label',
+        validate: ['required'],
+        showMandatoryIndication: true
+      });
+      const labelContent = await textFieldDriver.getLabelContent();
+      expect(labelContent).toMatch(starReg);
+    });
     it('Should not show mandatory indication on label', async () => {
       const textFieldDriver = getTestCaseDriver({label: 'label', showMandatoryIndication: true});
+      const labelText = await textFieldDriver.getLabelContent();
+      expect(labelText).not.toMatch(starReg);
+    });
+    it('Should not show mandatory indication on label', async () => {
+      const textFieldDriver = getTestCaseDriver({label: 'label', validate: 'required'});
       const labelText = await textFieldDriver.getLabelContent();
       expect(labelText).not.toMatch(starReg);
     });
