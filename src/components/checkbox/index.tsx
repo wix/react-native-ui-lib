@@ -169,6 +169,9 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
     if (prevProps.value !== value) {
       this.animateCheckbox(value);
+      if (value !== undefined) {
+        this.setValidation(value);
+      }
     }
   }
 
@@ -195,20 +198,23 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     }).start();
   }
 
+  setValidation(newValue: boolean) {
+    const {required, onChangeValidity} = this.props;
+    if (required) {
+      const error = required && !newValue;
+      this.setState({showError: this.validationState ? error : false, isValid: !error}, () => {
+        onChangeValidity?.(this.state.isValid);
+      });
+    }
+  }
+
   onPress = () => {
-    const {disabled, value, required, onValueChange, onChangeValidity} = this.props;
+    const {disabled, value, onValueChange} = this.props;
     
     if (!disabled) {
       const newValue = !value;
-
       onValueChange?.(newValue);
-
-      if (required) {
-        const error = required && !newValue;
-        this.setState({showError: this.validationState ? error : false, isValid: !error}, () => {
-          onChangeValidity?.(this.state.isValid);
-        });
-      }
+      this.setValidation(newValue);
     }
   };
 
