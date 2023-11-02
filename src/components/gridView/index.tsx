@@ -119,7 +119,7 @@ class GridView extends UIComponent<GridViewProps, GridViewState> {
   };
 
   getDefaultViewWidth() {
-    return Constants.screenWidth - (Constants.getPageMargins() || Spacings.s5) * 2;
+    return Constants.windowWidth - (Constants.getPageMargins() || Spacings.s5) * 2;
   }
 
   getGridContainerWidth() {

@@ -78,6 +78,7 @@ const TextField = (props: InternalTextFieldProps) => {
     children,
     centered,
     readonly = false,
+    showMandatoryIndication,
     ...others
   } = usePreset(props);
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
@@ -135,6 +136,7 @@ const TextField = (props: InternalTextFieldProps) => {
           floatingPlaceholder={floatingPlaceholder}
           validationMessagePosition={validationMessagePosition}
           testID={`${props.testID}.label`}
+          showMandatoryIndication={showMandatoryIndication}
         />
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
