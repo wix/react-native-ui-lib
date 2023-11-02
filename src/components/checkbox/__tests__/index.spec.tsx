@@ -121,7 +121,8 @@ describe('Checkbox renderer test', () => {
         //eslint-disable-next-line
         new CheckboxDriver({component, testID});
 
-        checkboxRef.current?.validate();
+        //@ts-ignore
+        checkboxRef.current.validate();
 
         expect(onChangeValidity).not.toHaveBeenCalled();
       });

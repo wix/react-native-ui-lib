@@ -11,6 +11,7 @@ export default class CheckboxScreen extends Component {
     value5: false,
     value6: false,
     value7: false,
+    value8: false,
     validationText: '',
     validationColor: Colors.$textDefault
   };
@@ -29,7 +30,7 @@ export default class CheckboxScreen extends Component {
 
   onChangeValidity = (value?: boolean) => {
     this.setState({
-      validationText: value === true ? 'Valid' : 'Not valid',
+      validationText: String(value),
       validationColor: value === true ? Colors.$textSuccess : Colors.$textDangerLight
     });
   };
@@ -74,8 +75,8 @@ export default class CheckboxScreen extends Component {
         />
 
         <Checkbox
-          value={this.state.value7}
-          onValueChange={value7 => this.setState({value7})}
+          value={this.state.value8}
+          onValueChange={value8 => this.setState({value8})}
           indeterminate
           label={'Indeterminate state'}
           color={Colors.green20}
