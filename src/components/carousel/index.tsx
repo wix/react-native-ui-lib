@@ -52,7 +52,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const defaultPageWidth = props.loop || !props.pageWidth ? Constants.screenWidth : props.pageWidth;
     const pageHeight = props.pageHeight ?? Constants.screenHeight;
     this.isAutoScrolled = false;
-    
+
     this.state = {
       containerWidth: undefined,
       // @ts-ignore (defaultProps)
@@ -239,10 +239,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     if (containerWidth) {
       const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.props);
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
-      const snapToOffsets = _.times(
-        presenter.getChildrenLength(this.props),
-        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal()
-      );
+      const snapToOffsets = _.times(presenter.getChildrenLength(this.props),
+        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal());
       return snapToOffsets;
     }
   };
@@ -355,10 +353,11 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   };
 
   onScrollEvent = Animated.event([
-    {nativeEvent: 
-      {contentOffset: 
-        // @ts-ignore
-        {y: this.props?.animatedScrollOffset?.y, x: this.props?.animatedScrollOffset?.x}
+    {
+      nativeEvent: {
+        contentOffset:
+            // @ts-ignore
+            {y: this.props?.animatedScrollOffset?.y, x: this.props?.animatedScrollOffset?.x}
       }
     }
   ],
@@ -501,11 +500,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const ScrollContainer = animatedScrollOffset ? Animated.ScrollView : ScrollView;
     const contentOffset = this.getInitialContentOffset(snapToOffsets);
     return (
-      <View
-        animated={animated}
-        style={[{marginBottom}, containerStyle]}
-        onLayout={this.onContainerLayout}
-      >
+      <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollContainer
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
