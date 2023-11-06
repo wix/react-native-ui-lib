@@ -36,6 +36,10 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ReanimatedProps, 
    */
   height?: string | number;
   /**
+   * Set flexbox gap
+   */
+  gap?: number;
+  /**
    * Experimental: Pass time in ms to delay render
    */
   renderDelay?: number;
