@@ -33,6 +33,7 @@ let windowWidth: number = Dimensions.get('window').width;
 let breakpoints: Breakpoint[];
 let defaultMargin = 0;
 
+const isSubWindow = windowWidth < screenWidth;
 //@ts-ignore
 isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
@@ -114,11 +115,17 @@ const constants = {
   get windowHeight() {
     return windowHeight;
   },
+  get isSmallWindow() {
+    return windowWidth <= 340;
+  },
   get isSmallScreen() {
     return screenWidth <= 340;
   },
   get isShortScreen() {
     return screenHeight <= 600;
+  },
+  get isWideScreen() {
+    return isTablet && !isSubWindow || this.isLandscape;
   },
   get screenAspectRatio() {
     return getAspectRatio();
@@ -141,15 +148,12 @@ const constants = {
     }
 
     for (let i = breakpoints.length - 1; i >= 0; --i) {
-      if (screenWidth > breakpoints[i].breakpoint) {
+      if (windowWidth > breakpoints[i].breakpoint) {
         return breakpoints[i].pageMargin;
       }
     }
 
     return defaultMargin;
-  },
-  get isWideScreen() {
-    return isTablet || this.isLandscape;
   },
   getSafeAreaInsets: () => {
     const orientation = getOrientation(screenHeight, screenWidth);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Assets, Colors, View, Text, Checkbox} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, View, Text, Button, Checkbox, CheckboxRef} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class CheckboxScreen extends Component {
   state = {
@@ -10,7 +10,28 @@ export default class CheckboxScreen extends Component {
     value4: true,
     value5: false,
     value6: false,
-    value7: true
+    value7: false,
+    validationText: '',
+    validationColor: Colors.$textDefault
+  };
+
+  checkbox = React.createRef<CheckboxRef>();
+
+  onPress = () => {
+    this.checkbox.current?.validate();
+  };
+
+  onValueChange = (value: boolean) => {
+    this.setState({value7: value}, () => {
+      console.log('onValueChange: ', value);
+    });
+  };
+
+  onChangeValidity = (value?: boolean) => {
+    this.setState({
+      validationText: String(value),
+      validationColor: value === true ? Colors.$textSuccess : Colors.$textDangerLight
+    });
   };
   
   render() {
@@ -76,6 +97,24 @@ export default class CheckboxScreen extends Component {
             onValueChange={value5 => this.setState({value5})}
             iconColor={Colors.green10}
           />
+        </View>
+
+        <View marginT-20>
+          <Text text60 $textDefault marginB-10>
+            Validation
+          </Text>
+          <Text marginB-4 color={this.state.validationColor}>{this.state.validationText}</Text>
+          <View row centerV spread marginB-10>
+            <Checkbox
+              required
+              onChangeValidity={this.onChangeValidity}
+              ref={this.checkbox}
+              value={this.state.value7}
+              onValueChange={this.onValueChange}
+              label={'This is a checkbox'}
+            />
+            <Button size={'small'} label={'Validate'} onPress={this.onPress}/>
+          </View>
         </View>
       </View>
     );

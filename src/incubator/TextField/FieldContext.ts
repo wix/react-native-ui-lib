@@ -10,7 +10,8 @@ const FieldContext = createContext<FieldContextType>({
   disabled: false,
   readonly: false,
   validateField: _.noop,
-  checkValidity: () => true
+  checkValidity: () => true,
+  isMandatory: false
 });
 
 export default FieldContext;

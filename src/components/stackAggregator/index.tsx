@@ -249,7 +249,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
             alignSelf: 'center',
             zIndex: itemsCount - index,
             transform: [{scaleX: animatedScaleArray[index]}],
-            width: Constants.screenWidth - 40,
+            width: Constants.windowWidth - 40,
             height: isCollapsed ? firstItemHeight : undefined
           }
         ]}

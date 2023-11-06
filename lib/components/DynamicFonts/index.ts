@@ -1,10 +1,9 @@
-import {Platform} from 'react-native';
 import FontLoader, {FontExtension, LoadFontInput} from './FontLoader';
 import FontDownloader, {FontDownloaderProps} from './FontDownloader';
-import PermissionsAcquirerAndroid, {PermissionsAcquirerProps} from './PermissionsAcquirer.android';
-import PermissionsAcquirerIOS from './PermissionsAcquirer.ios';
+import type {PermissionsAcquirerProps} from './PermissionsAcquirer.android';
+// @ts-expect-error
+import PermissionsAcquirer from './PermissionsAcquirer';
 import NoPermissionsAcquirer from './NoPermissionsAcquirer';
-const PermissionsAcquirer = Platform.OS === 'android' ? PermissionsAcquirerAndroid : PermissionsAcquirerIOS;
 
 const DEFAULT_FONT_LOAD_ERROR_MESSAGE = 'Unable to load this font.';
 
@@ -172,5 +171,24 @@ export default class DynamicFonts {
 
   public async isFontDownloaded(fontName: string, fontExtension: FontExtension): Promise<boolean> {
     return await this.fontDownloader.isFontDownloaded(fontName, fontExtension);
+  }
+
+  public async isFontFamilyDownloaded(rootUri: string,
+    fontNames: string[],
+    fontExtension: FontExtension,
+    fontNamePrefix?: string): Promise<boolean> {
+    const fonts: GetFontInput[] = fontNames.map(fontName =>
+      this.buildFontData(rootUri, fontName, fontExtension, fontNamePrefix));
+    try {
+      const areDownloaded = await Promise.all(fonts
+        .filter(font => font)
+        .map(font => {
+          return this.fontDownloader.isFontDownloaded(font.fontName, font.fontExtension);
+        }));
+      return Promise.resolve(areDownloaded.every(v => v === true));
+    } catch (error) {
+      this.log(`isFontFamilyDownloaded failed error:`, error);
+      return Promise.resolve(false);
+    }
   }
 }

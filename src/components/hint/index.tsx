@@ -247,7 +247,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get containerWidth() {
-    const {containerWidth = Constants.screenWidth} = this.props;
+    const {containerWidth = Constants.windowWidth} = this.props;
     return containerWidth;
   }
 
@@ -626,7 +626,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: 'absolute',
-    width: Constants.screenWidth,
+    width: Constants.windowWidth,
     height: Constants.screenHeight
   },
   animatedContainer: {
@@ -636,7 +636,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   hint: {
-    maxWidth: Math.min(Constants.screenWidth - 2 * Spacings.s4, 400),
+    maxWidth: Math.min(Constants.windowWidth - 2 * Spacings.s4, 400),
     borderRadius: BorderRadiuses.br60,
     backgroundColor: DEFAULT_COLOR
   },
