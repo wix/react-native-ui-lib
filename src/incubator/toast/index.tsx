@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     marginRight: Spacings.s3
   },
   action: {
-    borderLeftColor: Colors.$outlineDisabled,
+    borderLeftColor: Colors.$outlineDisabledHeavy,
     borderLeftWidth: 1,
     borderTopRightRadius: BorderRadiuses.br40,
     borderBottomRightRadius: BorderRadiuses.br40,
