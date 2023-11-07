@@ -107,7 +107,7 @@ export interface CarouselState {
   pageHeight: number;
   initialOffset: PointPropType;
   prevProps: CarouselProps;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 // @ts-ignore

@@ -199,6 +199,9 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     this.stopAutoPlay();
     this.startAutoPlay();
   }
+  goToPage(pageIndex: number, animated = true) {
+    this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
+  }
 
   goToNextPage() {
     const {currentPage} = this.state;
