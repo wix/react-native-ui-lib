@@ -53,6 +53,11 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const pageHeight = props.pageHeight ?? Constants.screenHeight;
     this.isAutoScrolled = false;
 
+    let children = props.children;
+    if (Constants.isRTL && Constants.isAndroid) {
+      children = _.isArray(children) ? _.reverse(children) : children;
+    }
+
     this.state = {
       containerWidth: undefined,
       // @ts-ignore (defaultProps)
@@ -66,7 +71,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
         pageWidth: defaultPageWidth,
         pageHeight
       }),
-      prevProps: props
+      prevProps: props,
+      children
     };
   }
 
@@ -405,9 +411,9 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   };
 
   renderChildren() {
-    const {children, loop} = this.props;
+    const {loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
-
+    const {children} = this.state;
     const childrenArray = React.Children.map(children, (child, index) => {
       return this.renderChild(child, `${index}`);
     });
@@ -470,7 +476,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderAccessibleLayout() {
-    const {containerStyle, children, testID} = this.props;
+    const {containerStyle, testID} = this.props;
+    const {children} = this.state;
 
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
@@ -492,7 +499,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderCarousel() {
-    const {containerStyle, animated, horizontal, animatedScrollOffset, ...others} = this.props;
+    const {containerStyle, animated, horizontal, animatedScrollOffset, style, ...others} = this.props;
     const scrollContainerStyle = this.shouldUsePageWidth()
       ? {paddingRight: this.getItemSpacings(this.props)}
       : undefined;
@@ -500,6 +507,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
     const ScrollContainer = animatedScrollOffset ? Animated.ScrollView : ScrollView;
     const contentOffset = this.getInitialContentOffset(snapToOffsets);
+    const _style = Constants.isAndroid && Constants.isRTL ? [styles.invertView, style] : style;
     return (
       <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollContainer
@@ -507,6 +515,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           showsVerticalScrollIndicator={false}
           decelerationRate="fast"
           scrollEventThrottle={200}
+          style={_style}
           {...others}
           ref={this.carousel}
           onScroll={animatedScrollOffset ? this.onScrollEvent : this.onScroll}
@@ -552,5 +561,8 @@ const styles = StyleSheet.create({
   hiddenText: {
     position: 'absolute',
     width: 1
+  },
+  invertView: {
+    transform: [{scaleX: -1}]
   }
 });
