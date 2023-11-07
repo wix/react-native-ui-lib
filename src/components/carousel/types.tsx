@@ -97,6 +97,7 @@ export interface CarouselProps extends ScrollViewProps {
    * Carousel scroll offset (pass new Animated.ValueXY())
    */
   animatedScrollOffset?: Animated.ValueXY;
+  
 }
 
 export interface CarouselState {
@@ -110,9 +111,8 @@ export interface CarouselState {
   children?: React.ReactNode;
 }
 
-//@ts-ignore
-class CarouselTypesForDocs extends React.Component<CarouselProps> {
-  // eslint-disable-line
+// @ts-ignore
+class CarouselTypesForDocs extends React.Component<CarouselProps> { // eslint-disable-line
   static displayName = 'Carousel';
 
   render() {
