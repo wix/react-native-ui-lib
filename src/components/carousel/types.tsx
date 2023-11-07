@@ -110,7 +110,7 @@ export interface CarouselState {
   children?: React.ReactNode;
 }
 
-// @ts-ignore
+//@ts-ignore
 class CarouselTypesForDocs extends React.Component<CarouselProps> {
   // eslint-disable-line
   static displayName = 'Carousel';
