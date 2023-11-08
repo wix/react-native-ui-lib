@@ -228,7 +228,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   };
 
   renderHeader() {
-    const {doneButtonColor, accessibilityLabels} = this.props;
+    const {doneButtonColor, accessibilityLabels, testID} = this.props;
     const {valid} = this.state;
 
     return (
@@ -239,6 +239,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
           iconStyle={{tintColor: Colors.$iconDefault}}
           onPress={this.onDismiss}
           accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
+          testID={`${testID}.dialog.cancel`}
         />
         <Button
           color={doneButtonColor}
@@ -247,6 +248,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
           iconSource={Assets.icons.check}
           onPress={this.onDonePressed}
           accessibilityLabel={_.get(accessibilityLabels, 'doneButton')}
+          testID={`${testID}.dialog.done`}
         />
       </View>
     );
@@ -272,7 +274,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   }
 
   renderPreview() {
-    const {accessibilityLabels, previewInputStyle} = this.props;
+    const {accessibilityLabels, previewInputStyle, testID} = this.props;
     const {color, text} = this.state;
     const hex = this.getHexString(color);
     const textColor = this.getTextColor(hex);
@@ -322,6 +324,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
               enablesReturnKeyAutomatically
               onFocus={this.onFocus}
               accessibilityLabel={accessibilityLabels?.input}
+              testID={`${testID}.dialog.textInput`}
             />
           </View>
           <View style={[{backgroundColor: textColor}, styles.underline]}/>
