@@ -62,8 +62,12 @@ const PickerItem = (props: PickerItemProps) => {
     return [styles.labelText, isItemDisabled ? styles.labelTextDisabled : undefined, labelStyle];
   }, [isItemDisabled, labelStyle]);
 
-  const _onPress = useCallback(() => {
-    onPress?.(context.isMultiMode ? !isSelected : undefined);
+  const _onPress = useCallback(async (props: any) => {
+    // Using !(await onPress?.(item)) does not work properly when onPress is not sent
+    // We have to explicitly state `false` so a synchronous void (undefined) will still work as expected
+    if (onPress && await onPress(context.isMultiMode ? !isSelected : undefined, props) === false) {
+      return;
+    }
     if (migrate) {
       context.onPress(value);
     } else {
@@ -95,6 +99,7 @@ const PickerItem = (props: PickerItemProps) => {
       disabled={isItemDisabled}
       testID={testID}
       throttleTime={0}
+      customValue={props.customValue}
       {...accessibilityProps}
     >
       {customRenderItem ? customRenderItem(value, {...props, isSelected, isItemDisabled}, itemLabel) : _renderItem()}

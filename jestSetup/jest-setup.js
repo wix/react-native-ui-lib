@@ -115,6 +115,17 @@ jest.mock('react-native', () => {
   return reactNative;
 });
 
+jest.mock('react-native-fs',
+  () => {
+    return {
+      exists: jest.fn(() => true),
+      readFile: jest.fn(),
+      downloadFile: jest.fn(),
+      mkdir: jest.fn()
+    };
+  },
+  {virtual: true});
+
 Animated.timing = (value, config) => ({
   start: callback => {
     value.setValue(config.toValue);

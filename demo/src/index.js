@@ -164,6 +164,9 @@ module.exports = {
         return require('./screens/componentScreens/WizardScreen').default;
       },
       // nativeComponentScreens
+      get DynamicFontsScreen() {
+        return require('./screens/nativeComponentScreens/DynamicFontsScreen').default;
+      },
       get HighlightOverlayViewScreen() {
         return require('./screens/nativeComponentScreens/HighlightOverlayViewScreen').default;
       },

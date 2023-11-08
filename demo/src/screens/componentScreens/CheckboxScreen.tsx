@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Checkbox, Assets, Text, View, Colors} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, View, Text, Button, Checkbox, CheckboxRef} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class CheckboxScreen extends Component {
   state = {
@@ -9,9 +9,31 @@ export default class CheckboxScreen extends Component {
     value3: true,
     value4: true,
     value5: false,
-    value6: false
+    value6: false,
+    value7: false,
+    validationText: '',
+    validationColor: Colors.$textDefault
   };
 
+  checkbox = React.createRef<CheckboxRef>();
+
+  onPress = () => {
+    this.checkbox.current?.validate();
+  };
+
+  onValueChange = (value: boolean) => {
+    this.setState({value7: value}, () => {
+      console.log('onValueChange: ', value);
+    });
+  };
+
+  onChangeValidity = (value?: boolean) => {
+    this.setState({
+      validationText: String(value),
+      validationColor: value === true ? Colors.$textSuccess : Colors.$textDangerLight
+    });
+  };
+  
   render() {
     return (
       <View flex padding-page>
@@ -19,7 +41,8 @@ export default class CheckboxScreen extends Component {
           Checkbox
         </Text>
 
-        <Text marginB-s4>Customizable UI</Text>
+        <Text marginV-s4>Customizable UI</Text>
+
         <View row marginB-s5 centerV>
           <Checkbox value={this.state.value1} onValueChange={value1 => this.setState({value1})}/>
           <Checkbox
@@ -50,10 +73,18 @@ export default class CheckboxScreen extends Component {
           containerStyle={styles.checkbox}
         />
 
+        <Checkbox
+          value={this.state.value7}
+          onValueChange={value7 => this.setState({value7})}
+          indeterminate
+          label={'Indeterminate state'}
+          color={Colors.green20}
+          containerStyle={styles.checkbox}
+        />
+
         <View row style={styles.row}>
-          <Text $textDefault marginR-10>
-            Disabled States
-          </Text>
+          <Text $textDefault marginR-10>Disabled States</Text>
+
           <Checkbox
             disabled
             value={this.state.value5}
@@ -66,6 +97,24 @@ export default class CheckboxScreen extends Component {
             onValueChange={value5 => this.setState({value5})}
             iconColor={Colors.green10}
           />
+        </View>
+
+        <View marginT-20>
+          <Text text60 $textDefault marginB-10>
+            Validation
+          </Text>
+          <Text marginB-4 color={this.state.validationColor}>{this.state.validationText}</Text>
+          <View row centerV spread marginB-10>
+            <Checkbox
+              required
+              onChangeValidity={this.onChangeValidity}
+              ref={this.checkbox}
+              value={this.state.value7}
+              onValueChange={this.onValueChange}
+              label={'This is a checkbox'}
+            />
+            <Button size={'small'} label={'Validate'} onPress={this.onPress}/>
+          </View>
         </View>
       </View>
     );

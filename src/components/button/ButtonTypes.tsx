@@ -52,6 +52,10 @@ export type ButtonProps = TouchableOpacityProps &
      */
     iconStyle?: StyleProp<ImageStyle>;
     /**
+     * Other image props that will be passed to the image
+     */
+    iconProps?: Partial<ImageProps>;
+    /**
      * Should the icon be right to the label
      */
     iconOnRight?: boolean;
@@ -171,7 +175,7 @@ export const DEFAULT_PROPS = {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Animated.gif?raw=true
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
  */
-// @ts-ignore 
+// @ts-ignore
 class FakeButtonForDocs extends PureComponent<ButtonProps> { // eslint-disable-line
   static displayName = 'Button';
 

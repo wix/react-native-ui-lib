@@ -14,13 +14,13 @@ import {
 import {Constants, asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
+import {ModalProps} from '../../components/modal';
 import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
-import Dialog, {DialogProps} from '../dialog';
+import Dialog, {DialogProps} from '../../incubator/Dialog';
 import Button from '../button';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
-import PanningProvider from '../panningViews/panningProvider';
 
 interface Props extends DialogProps {
   /**
@@ -66,6 +66,9 @@ interface State {
 }
 
 const KEYBOARD_HEIGHT = 216;
+const MODAL_PROPS = {
+  supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right'] // iOS only
+} as ModalProps;
 
 /**
  * @description: A color picker dialog component
@@ -225,7 +228,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   };
 
   renderHeader() {
-    const {doneButtonColor, accessibilityLabels} = this.props;
+    const {doneButtonColor, accessibilityLabels, testID} = this.props;
     const {valid} = this.state;
 
     return (
@@ -236,6 +239,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
           iconStyle={{tintColor: Colors.$iconDefault}}
           onPress={this.onDismiss}
           accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
+          testID={`${testID}.dialog.cancel`}
         />
         <Button
           color={doneButtonColor}
@@ -244,6 +248,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
           iconSource={Assets.icons.check}
           onPress={this.onDonePressed}
           accessibilityLabel={_.get(accessibilityLabels, 'doneButton')}
+          testID={`${testID}.dialog.done`}
         />
       </View>
     );
@@ -269,7 +274,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
   }
 
   renderPreview() {
-    const {accessibilityLabels, previewInputStyle} = this.props;
+    const {accessibilityLabels, previewInputStyle, testID} = this.props;
     const {color, text} = this.state;
     const hex = this.getHexString(color);
     const textColor = this.getTextColor(hex);
@@ -319,6 +324,7 @@ class ColorPickerDialog extends PureComponent<Props, State> {
               enablesReturnKeyAutomatically
               onFocus={this.onFocus}
               accessibilityLabel={accessibilityLabels?.input}
+              testID={`${testID}.dialog.textInput`}
             />
           </View>
           <View style={[{backgroundColor: textColor}, styles.underline]}/>
@@ -338,9 +344,8 @@ class ColorPickerDialog extends PureComponent<Props, State> {
         centerH
         onDismiss={this.onDismiss}
         containerStyle={styles.dialog}
-        panDirection={PanningProvider.Directions.DOWN}
         testID={`${testID}.dialog`}
-        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
+        modalProps={MODAL_PROPS}
         {...dialogProps}
       >
         {this.renderHeader()}

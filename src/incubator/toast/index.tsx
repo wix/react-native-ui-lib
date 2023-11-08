@@ -141,10 +141,10 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
           link
           style={styles.action}
           color={Colors.$backgroundNeutralHeavy}
+          activeBackgroundColor={Colors.$backgroundNeutral}
           {...action}
           labelStyle={Typography.bodySmallBold}
           accessibilityRole={'button'}
-          activeBackgroundColor={Colors.$backgroundNeutral}
           testID={`${testID}-action`}
         />
       );
