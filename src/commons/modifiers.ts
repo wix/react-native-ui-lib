@@ -360,9 +360,7 @@ export function extractComponentProps(component: any, props: Dictionary<any>, ig
 }
 
 //@ts-ignore
-export function getThemeProps<T extends object>(props: T = this.props,
-  context = this.context,
-  componentDisplayName = ''): T {
+export function getThemeProps<T extends object>(props: T = this.props, context = this.context, componentDisplayName = ''): T {
   const componentName =
     //@ts-ignore
     componentDisplayName || this.displayName || this.constructor.displayName || this.constructor.name;
