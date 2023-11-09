@@ -55,12 +55,12 @@ class Wizard extends Component<WizardProps, State> {
   getMaxWidth() {
     if (Constants.isTablet) {
       if (Constants.isLandscape) {
-        return Constants.screenWidth * 0.2;
+        return Constants.windowWidth * 0.2;
       } else {
-        return Constants.screenWidth * 0.26;
+        return Constants.windowWidth * 0.26;
       }
     } else {
-      return Constants.screenWidth * 0.4;
+      return Constants.windowWidth * 0.4;
     }
   }
 

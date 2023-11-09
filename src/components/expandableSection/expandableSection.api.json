@@ -15,7 +15,8 @@
       "name": "onPress",
       "type": "() => void",
       "description": "Called when pressing the header of the ExpandableSection"
-    }
+    },
+    {"name": "testID","type": "string","description": "testing identifier"}
   ],
   "snippet": [
     "<ExpandableSection",

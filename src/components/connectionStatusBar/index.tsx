@@ -129,7 +129,7 @@ class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, Connec
 }
 
 function createStyles() {
-  const typography = Constants.isSmallScreen ? Typography.text90 : Typography.text80;
+  const typography = Constants.isSmallWindow ? Typography.text90 : Typography.text80;
   return StyleSheet.create({
     topContainer: {
       backgroundColor: Colors.grey30

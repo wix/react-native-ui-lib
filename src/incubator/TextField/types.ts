@@ -74,6 +74,7 @@ export interface LabelProps {
   validationMessagePosition?: ValidationMessagePositionType;
   floatingPlaceholder?: boolean;
   testID?: string;
+  showMandatoryIndication?: boolean;
 }
 
 export interface FloatingPlaceholderProps {
@@ -251,6 +252,10 @@ export type TextFieldProps = MarginModifiers &
      * Set an alignment fit for inline behavior (when rendered inside a row container)
      */
     inline?: boolean;
+    /**
+     * Whether to show a mandatory field indication.
+     */
+    showMandatoryIndication?: boolean;
   };
 
 export type InternalTextFieldProps = PropsWithChildren<
@@ -267,6 +272,7 @@ export type FieldContextType = {
   readonly: boolean;
   validateField: () => void;
   checkValidity: () => boolean;
+  isMandatory: boolean;
 };
 
 export interface TextFieldMethods {

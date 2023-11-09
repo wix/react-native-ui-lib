@@ -40,7 +40,7 @@ export default React.memo(CalendarItem);
 
 const styles = StyleSheet.create({
   container: {
-    width: Constants.screenWidth,
+    width: Constants.windowWidth,
     borderBottomWidth: 1
   }
 });

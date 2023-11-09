@@ -13,6 +13,12 @@
       "description": "The Checkbox value. If true the switch will be turned on. Default value is false"
     },
     {"name": "onValueChange", "type": "(value) => void", "description": "Callback function for value change event"},
+    {
+      "name": "onChangeValidity",
+      "type": "(isValid: boolean) => void",
+      "description": "Callback for when field validity has changed"
+    },
+    {"name": "required", "type": "boolean", "description": "Whether the checkbox is required"},
     {"name": "disabled", "type": "boolean", "description": "Whether the checkbox should be disabled"},
     {"name": "color", "type": "string", "description": "The Checkbox color"},
     {"name": "outline", "type": "boolean", "description": "Alternative Checkbox outline style"},
