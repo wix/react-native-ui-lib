@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
+import {ThemeManager, Colors, Typography, BorderRadiuses, Spacings} from '../../style';
 import * as uut from '../modifiers';
 
 describe('Modifiers', () => {
@@ -329,6 +329,22 @@ describe('Modifiers', () => {
         left: true,
         'bg-red10': false
       });
+      expect(uut.extractModifierProps({
+        'paddingL-20': true,
+        'gap-10': true,
+        other: 'some-value'
+      })).toEqual({
+        'paddingL-20': true,
+        'gap-10': true
+      });
+      expect(uut.extractModifierProps({
+        'paddingL-20': true,
+        'gap-s3': true,
+        other: 'some-value'
+      })).toEqual({
+        'paddingL-20': true,
+        'gap-s3': true
+      });
     });
   });
 
@@ -413,6 +429,25 @@ describe('Modifiers', () => {
       expect(modifiers.flexStyle).toBeUndefined();
       expect(modifiers.alignments).toBeUndefined();
       expect(modifiers.borderRadius).toBeUndefined();
+    });
+  });
+
+  describe('extractGapValues', () => {
+    it('Should return gap 10', () => {
+      const modifiers = uut.extractGapValues({'gap-10': true});
+      expect(modifiers).toEqual({gap: 10});
+    });
+    it('Should return gap 20', () => {
+      const modifiers = uut.extractGapValues({'gap-20': true});
+      expect(modifiers).toEqual({gap: 20});
+    });
+    it('Should return gap spacing s3', () => {
+      const modifiers = uut.extractGapValues({'gap-s3': true});
+      expect(modifiers).toEqual({gap: Spacings.s3});
+    });
+    it('Should return gap spacing s10', () => {
+      const modifiers = uut.extractGapValues({'gap-s10': true});
+      expect(modifiers).toEqual({gap: Spacings.s10});
     });
   });
 });

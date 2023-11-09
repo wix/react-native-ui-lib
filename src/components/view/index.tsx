@@ -53,7 +53,8 @@ const modifiersOptions = {
   margins: true,
   alignments: true,
   flex: true,
-  position: true
+  position: true,
+  gap: true
 };
 
 /**
@@ -91,7 +92,8 @@ function View(props: ViewProps, ref: any) {
     margins,
     alignments,
     flexStyle,
-    positionStyle
+    positionStyle,
+    gap
   } = useModifiers(themeProps, modifiersOptions);
   const [ready, setReady] = useState(!renderDelay);
 
@@ -130,6 +132,7 @@ function View(props: ViewProps, ref: any) {
       paddings,
       margins,
       alignments,
+      gap,
       style
     ];
   }, [
@@ -141,6 +144,7 @@ function View(props: ViewProps, ref: any) {
     paddings,
     margins,
     alignments,
+    gap,
     style
   ]);
 
