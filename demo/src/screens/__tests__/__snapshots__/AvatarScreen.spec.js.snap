@@ -20,7 +20,6 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          undefined,
           {
             "alignItems": "center",
             "flexDirection": "row",
@@ -112,7 +111,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               [
                 {
                   "alignItems": "center",
@@ -138,7 +136,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -237,7 +234,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               [
                 {
                   "alignItems": "center",
@@ -261,7 +257,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -324,7 +319,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -423,7 +417,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               [
                 {
                   "alignItems": "center",
@@ -494,7 +487,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               [
                 {
                   "borderRadius": 25,
@@ -552,7 +544,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -651,7 +642,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               [
                 {
                   "alignItems": "center",
@@ -732,7 +722,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               {
                 "position": "absolute",
                 "right": 2.322330470336313,
@@ -755,7 +744,6 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "flexDirection": "row",
                 },
-                {},
                 [
                   {
                     "height": 10,
@@ -786,7 +774,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -878,7 +865,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -987,7 +973,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               {
                 "bottom": 2.322330470336313,
                 "position": "absolute",
@@ -1010,7 +995,6 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "flexDirection": "row",
                 },
-                {},
                 [
                   {
                     "height": 10,
@@ -1041,7 +1025,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -1133,7 +1116,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -1242,7 +1224,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               {
                 "bottom": 0.8578643762690499,
                 "left": 0.8578643762690499,
@@ -1265,7 +1246,6 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "flexDirection": "row",
                 },
-                {},
                 [
                   {
                     "height": 10,
@@ -1296,7 +1276,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -1395,7 +1374,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               [
                 {
                   "alignItems": "center",
@@ -1424,7 +1402,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -1501,7 +1478,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -1593,7 +1569,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -1702,7 +1677,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               {
                 "left": 3.2512626584708375,
                 "position": "absolute",
@@ -1725,7 +1699,6 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "flexDirection": "row",
                 },
-                {},
                 [
                   {
                     "height": 14,
@@ -1756,7 +1729,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -1848,7 +1820,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -1968,7 +1939,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               {
                 "position": "absolute",
                 "right": 0.28679656440357526,
@@ -1991,7 +1961,6 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "flexDirection": "row",
                 },
-                {},
                 [
                   {
                     "height": 17,
@@ -2055,7 +2024,6 @@ exports[`AvatarScreen renders screen 1`] = `
     <View
       style={
         [
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -2147,7 +2115,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -2248,7 +2215,6 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          undefined,
           {
             "alignItems": "center",
             "flexDirection": "row",
@@ -2333,7 +2299,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -2476,7 +2441,6 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          undefined,
           {
             "alignItems": "center",
             "flexDirection": "row",
@@ -2561,7 +2525,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -2704,7 +2667,6 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          undefined,
           {
             "alignItems": "center",
             "flexDirection": "row",
@@ -2789,7 +2751,6 @@ exports[`AvatarScreen renders screen 1`] = `
         <View
           style={
             [
-              undefined,
               undefined,
               undefined,
               undefined,
@@ -2890,7 +2851,6 @@ exports[`AvatarScreen renders screen 1`] = `
           undefined,
           undefined,
           undefined,
-          undefined,
           {
             "alignItems": "center",
             "flexDirection": "row",
@@ -2982,7 +2942,6 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
               [
                 {
                   "alignItems": "center",
@@ -3065,7 +3024,6 @@ exports[`AvatarScreen renders screen 1`] = `
               {},
               {},
               {},
-              {},
               {
                 "bottom": -6.177669529663687,
                 "position": "absolute",
@@ -3088,7 +3046,6 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "flexDirection": "row",
                 },
-                {},
                 [
                   {
                     "height": 27,
