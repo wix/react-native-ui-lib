@@ -127,12 +127,14 @@ function View(props: ViewProps, ref: any) {
       borderRadius && {
         borderRadius
       },
+      gap && {
+        gap
+      },
       flexStyle,
       positionStyle,
       paddings,
       margins,
       alignments,
-      gap,
       style
     ];
   }, [

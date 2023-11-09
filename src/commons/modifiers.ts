@@ -194,7 +194,6 @@ export function extractMarginValues(props: Dictionary<any>) {
 }
 
 export function extractGapValues(props: Dictionary<any>) {
-  const gap: {gap?: number} = {};
   const gapPropsKeys = Object.keys(props).filter(key => GAP_KEY_PATTERN.test(key));
   // Taking only the last one
   const gapModifier = _.findLast(gapPropsKeys, key => props[key] === true);
@@ -202,12 +201,11 @@ export function extractGapValues(props: Dictionary<any>) {
     const [, gapValue] = gapModifier.split('-') as ['gap', 'string'];
     const parsedNumber = Number(gapValue);
     if (!isNaN(parsedNumber)) {
-      gap.gap = parsedNumber;
+      return parsedNumber;
     } else if (Spacings.getKeysPattern().test(gapValue)) {
-      gap.gap = Spacings[gapValue as keyof typeof SpacingLiterals];
+      return Spacings[gapValue as keyof typeof SpacingLiterals];
     }
   }
-  return gap;
 }
 
 export function extractAlignmentsValues(props: Dictionary<any>) {

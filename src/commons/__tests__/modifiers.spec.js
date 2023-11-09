@@ -434,20 +434,20 @@ describe('Modifiers', () => {
 
   describe('extractGapValues', () => {
     it('Should return gap 10', () => {
-      const modifiers = uut.extractGapValues({'gap-10': true});
-      expect(modifiers).toEqual({gap: 10});
+      const gap = uut.extractGapValues({'gap-10': true});
+      expect(gap).toEqual(10);
     });
     it('Should return gap 20', () => {
-      const modifiers = uut.extractGapValues({'gap-20': true});
-      expect(modifiers).toEqual({gap: 20});
+      const gap = uut.extractGapValues({'gap-20': true});
+      expect(gap).toEqual(20);
     });
     it('Should return gap spacing s3', () => {
-      const modifiers = uut.extractGapValues({'gap-s3': true});
-      expect(modifiers).toEqual({gap: Spacings.s3});
+      const gap = uut.extractGapValues({'gap-s3': true});
+      expect(gap).toEqual(Spacings.s3);
     });
     it('Should return gap spacing s10', () => {
-      const modifiers = uut.extractGapValues({'gap-s10': true});
-      expect(modifiers).toEqual({gap: Spacings.s10});
+      const gap = uut.extractGapValues({'gap-s10': true});
+      expect(gap).toEqual(Spacings.s10);
     });
   });
 });

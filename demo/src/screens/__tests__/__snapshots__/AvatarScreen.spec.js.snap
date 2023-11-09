@@ -739,6 +739,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
+                undefined,
                 {},
                 {},
                 {
@@ -990,6 +991,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
+                undefined,
                 {},
                 {},
                 {
@@ -1237,6 +1239,7 @@ exports[`AvatarScreen renders screen 1`] = `
             row={true}
             style={
               [
+                undefined,
                 undefined,
                 undefined,
                 undefined,
@@ -1694,6 +1697,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
+                undefined,
                 {},
                 {},
                 {
@@ -1952,6 +1956,7 @@ exports[`AvatarScreen renders screen 1`] = `
             row={true}
             style={
               [
+                undefined,
                 undefined,
                 undefined,
                 undefined,
@@ -3021,7 +3026,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
-              {},
+              undefined,
               {},
               {},
               {
@@ -3037,6 +3042,7 @@ exports[`AvatarScreen renders screen 1`] = `
             row={true}
             style={
               [
+                undefined,
                 undefined,
                 undefined,
                 undefined,
