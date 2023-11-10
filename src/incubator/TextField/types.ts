@@ -94,6 +94,10 @@ export interface FloatingPlaceholderProps {
    * Should placeholder float on focus or when start typing
    */
   floatOnFocus?: boolean;
+  /**
+   * Number in ms that describes how long floating placeholder will take it's place
+   */
+  floatingPlaceholderAnimationDuration?: number;
   validationMessagePosition?: ValidationMessagePositionType;
   extraOffset?: number;
   defaultValue?: TextInputProps['defaultValue'];
@@ -199,6 +203,10 @@ export type TextFieldProps = MarginModifiers &
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
     validate?: Validator | Validator[];
+    /**
+     * Number in ms that describes how long floating placeholder will take it's place
+     */
+    floatingPlaceholderAnimationDuration?: number;
     /**
      * Should validate when the TextField mounts
      */

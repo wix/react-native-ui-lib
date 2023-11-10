@@ -10,12 +10,15 @@ import Text from '../../components/text';
 import FieldContext from './FieldContext';
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
+const FLOATING_PLACEHOLDER_ANIMATION_DURATION = 200;
+
 
 const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
   const {
     placeholder,
     floatingPlaceholderColor = Colors.$textNeutralLight,
     floatingPlaceholderStyle,
+    floatingPlaceholderAnimationDuration = FLOATING_PLACEHOLDER_ANIMATION_DURATION,
     validationMessagePosition,
     extraOffset = 0,
     testID
@@ -33,7 +36,7 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
   useDidUpdate(() => {
     Animated.timing(animation, {
       toValue: Number(shouldFloat),
-      duration: 200,
+      duration: floatingPlaceholderAnimationDuration,
       useNativeDriver: true
     }).start();
   }, [shouldFloat]);

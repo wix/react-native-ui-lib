@@ -45,6 +45,7 @@ const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
 const ICON_LEFT_PADDING = 6;
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
+const FLOATING_PLACEHOLDER_ANIMATION_DURATION = 150;
 
 /**
  * @description: A wrapper for TextInput component with extra functionality like floating placeholder and validations (This is an uncontrolled component)
@@ -72,6 +73,10 @@ export default class TextField extends BaseInput {
      * Custom style for floating placeholder
      */
     floatingPlaceholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Number in ms that describes how long floating placeholder will take it's place
+     */
+    floatingPlaceholderAnimationDuration: PropTypes.number,
     /**
      * This text will appear as a placeholder when the textInput becomes focused, only when passing floatingPlaceholder
      * as well (NOT for expandable textInputs)
@@ -189,7 +194,8 @@ export default class TextField extends BaseInput {
 
   static defaultProps = {
     enableErrors: true,
-    validateOnBlur: true
+    validateOnBlur: true,
+    floatingPlaceholderAnimationDuration: FLOATING_PLACEHOLDER_ANIMATION_DURATION
   };
 
   constructor(props) {
@@ -271,7 +277,7 @@ export default class TextField extends BaseInput {
     } else {
       Animated.spring(this.state.floatingPlaceholderState, {
         toValue: this.shouldFloatPlaceholder() ? 1 : 0,
-        duration: 150,
+        duration: this.props.floatingPlaceholderAnimationDuration,
         useNativeDriver: true
       }).start();
     }
