@@ -391,7 +391,7 @@ export function generateModifiersStyle(options: ModifiersOptions = {
   alignments: true,
   flex: true,
   position: true,
-  gap: true
+  gap: false
 },
 props: Dictionary<any>) {
   //@ts-ignore
