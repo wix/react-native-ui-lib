@@ -62,6 +62,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchStyle,
     searchPlaceholder,
     renderCustomSearch,
+    renderCustomDialogHeader,
     // useNativePicker,
     useWheelPicker,
     useDialog,
@@ -149,7 +150,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       migrate,
       value: mode === PickerModes.MULTI ? multiDraftValue : pickerValue,
       onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
-      onDoneSelecting,
       isMultiMode: mode === PickerModes.MULTI,
       getItemValue,
       getItemLabel,
@@ -237,6 +237,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         searchPlaceholder={searchPlaceholder}
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
+        renderCustomDialogHeader={renderCustomDialogHeader}
         listProps={listProps}
         useSafeArea={useSafeArea}
       >
@@ -246,6 +247,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   }, [
     testID,
     mode,
+    useDialog,
     selectedItemPosition,
     topBarProps,
     cancelSelect,
@@ -256,6 +258,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchPlaceholder,
     _onSearchChange,
     renderCustomSearch,
+    renderCustomDialogHeader,
     listProps,
     filteredChildren,
     useSafeArea,
@@ -358,8 +361,7 @@ export {
   PickerModes,
   PickerFieldTypes,
   PickerSearchStyle,
-  PickerMethods,
-  PickerContext
+  PickerMethods
 };
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

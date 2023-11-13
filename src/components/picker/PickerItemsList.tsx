@@ -9,7 +9,7 @@ import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
-import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
+import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';
@@ -28,6 +28,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     searchPlaceholder = 'Search...',
     onSearchChange,
     renderCustomSearch,
+    renderCustomDialogHeader,
     useSafeArea,
     useDialog,
     mode,
@@ -40,6 +41,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
     return style;
   }, [useDialog]);
+
   const renderSearchInput = () => {
     if (showSearch) {
       if (_.isFunction(renderCustomSearch)) {
@@ -142,11 +144,19 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
+  const renderPickerHeader = () => {
+    if (renderCustomDialogHeader) {
+      return renderCustomDialogHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
+    } else if (!useDialog || mode === PickerModes.MULTI) {
+      return <Modal.TopBar {...topBarProps}/>;
+    }
+  };
+
   return (
     <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {!useWheelPicker && (
         <>
-          {(!useDialog || mode === 'MULTI') && <Modal.TopBar {...topBarProps}/>}
+          {renderPickerHeader()}
           {renderSearchInput()}
           {renderList()}
         </>

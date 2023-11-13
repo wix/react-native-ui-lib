@@ -122,8 +122,7 @@ export {
   PickerModes,
   PickerFieldTypes,
   PickerSearchStyle,
-  PickerMethods,
-  PickerContext
+  PickerMethods
 } from './components/picker';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
