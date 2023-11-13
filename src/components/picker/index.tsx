@@ -149,6 +149,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       migrate,
       value: mode === PickerModes.MULTI ? multiDraftValue : pickerValue,
       onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
+      onDoneSelecting,
       isMultiMode: mode === PickerModes.MULTI,
       getItemValue,
       getItemLabel,
@@ -222,6 +223,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       <PickerItemsList
         testID={`${testID}.modal`}
         useWheelPicker={useWheelPicker}
+        mode={mode}
         useDialog={useDialog}
         items={useItems ? items : undefined}
         topBarProps={{
@@ -349,6 +351,15 @@ Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
 
-export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
+export {
+  PickerProps,
+  PickerItemProps,
+  PickerValue,
+  PickerModes,
+  PickerFieldTypes,
+  PickerSearchStyle,
+  PickerMethods,
+  PickerContext
+};
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

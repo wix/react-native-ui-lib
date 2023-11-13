@@ -30,6 +30,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     renderCustomSearch,
     useSafeArea,
     useDialog,
+    mode,
     testID
   } = props;
   const context = useContext(PickerContext);
@@ -145,7 +146,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {!useWheelPicker && (
         <>
-          {!useDialog && <Modal.TopBar {...topBarProps}/>}
+          {(!useDialog || mode === 'MULTI') && <Modal.TopBar {...topBarProps}/>}
           {renderSearchInput()}
           {renderList()}
         </>

@@ -124,6 +124,7 @@ export default class PickerScreen extends Component {
           <Picker
             placeholder="Favorite Languages (up to 3)"
             value={this.state.languages}
+            useDialog
             onChange={items => this.setState({languages: items})}
             mode={Picker.modes.MULTI}
             selectionLimit={3}
@@ -138,7 +139,6 @@ export default class PickerScreen extends Component {
             label="Wheel Picker"
             placeholder="Pick a Language"
             useWheelPicker
-            // useWheelPicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}

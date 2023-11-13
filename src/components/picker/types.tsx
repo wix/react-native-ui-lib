@@ -272,6 +272,7 @@ export type PickerItemsListProps = Pick<
   | 'useSafeArea'
   | 'useWheelPicker'
   | 'useDialog'
+  | 'mode'
   | 'testID'
 > & {
   items?: {value: any; label: any}[];
