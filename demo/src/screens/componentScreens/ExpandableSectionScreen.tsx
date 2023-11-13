@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Card, Text, Image, ListItem, Carousel, Spacings, View, ExpandableSection, Switch} from 'react-native-ui-lib';
+import {Card, Text, Image, ListItem, Carousel, View, ExpandableSection, Switch} from 'react-native-ui-lib';
 
 const cardImage2 = require('../../assets/images/empty-state.jpg');
 const cardImage = require('../../assets/images/card-example.jpg');
