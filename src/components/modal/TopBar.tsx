@@ -18,9 +18,9 @@ export interface ModalTopBarProps {
    */
   titleStyle?: StyleProp<TextStyle>;
   /**
-   * Accessibility role for the title
+   * Accessibility props for the title
    */
-  titleAccessibilityRole?: AccessibilityProps['accessibilityRole'];
+  titleAccessibilityProps?: Omit<AccessibilityProps, 'accessible'>;
   /**
    * subtitle to display below the top bar title
    */
@@ -177,7 +177,7 @@ class TopBar extends Component<ModalTopBarProps> {
     const {
       title,
       titleStyle,
-      titleAccessibilityRole,
+      titleAccessibilityProps,
       subtitle,
       subtitleStyle,
       includeStatusBar,
@@ -200,7 +200,7 @@ class TopBar extends Component<ModalTopBarProps> {
               numberOfLines={1}
               text70
               style={[styles.title, titleStyle]}
-              accessibilityRole={titleAccessibilityRole}
+              {...titleAccessibilityProps}
             >
               {title}
             </Text>
