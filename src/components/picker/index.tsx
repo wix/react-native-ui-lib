@@ -11,9 +11,7 @@ import {Typography} from 'style';
 import {useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
-// @ts-expect-error
-import {TextField} from '../inputs';
-import TextFieldMigrator from '../textField/TextFieldMigrator';
+import TextField from '../textField';
 import Icon from '../icon';
 import View from '../view';
 import Text from '../text';
@@ -87,7 +85,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     useSafeArea,
     // TODO: Remove migrate props and migrate code
     migrate = true,
-    migrateTextField = true,
     accessibilityLabel,
     accessibilityHint,
     items: propItems,
@@ -301,9 +298,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
           // @ts-expect-error - hopefully will be solved after the picker migration ends
           renderPicker(value, label)
         ) : (
-          <TextFieldMigrator
-            migrate={migrateTextField}
-            // customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
+          <TextField
             // @ts-expect-error
             ref={pickerRef}
             // {...textInputProps}
@@ -321,7 +316,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
             // topBarProps={undefined}
           >
             {renderPickerInnerInput()}
-          </TextFieldMigrator>
+          </TextField>
         )}
       </ExpandableOverlay>
     </PickerContext.Provider>

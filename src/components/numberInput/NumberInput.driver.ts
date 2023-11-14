@@ -1,6 +1,6 @@
 import {NumberInputProps} from './index';
 import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
-import {TextFieldDriver} from '../../incubator/TextField/TextField.driver';
+import {TextFieldDriver} from '../textField/TextField.driver';
 
 export class NumberInputDriver extends ComponentDriver<NumberInputProps> {
   private readonly maskedInputDriver: TextFieldDriver;
