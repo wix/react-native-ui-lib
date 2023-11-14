@@ -62,14 +62,12 @@ export default class DateTimePickerScreen extends Component<{}, State> {
         <View padding-page>
           <Text text40>Date Time Picker</Text>
           <DateTimePicker
-            migrateTextField
             containerStyle={{marginVertical: 20}}
             label={'Date'}
             placeholder={'Select a date'}
             // value={new Date('October 13, 2014')}
           />
           <DateTimePicker
-            migrateTextField
             mode={'time'}
             label={'Time'}
             placeholder={'Select time'}
@@ -80,14 +78,12 @@ export default class DateTimePickerScreen extends Component<{}, State> {
             Disabled
           </Text>
           <DateTimePicker
-            migrateTextField
             containerStyle={{marginBottom: 20}}
             editable={false}
             label={'Date'}
             placeholder={'Select a date'}
           />
           <DateTimePicker
-            migrateTextField
             editable={false}
             mode={'time'}
             label={'Time'}
@@ -108,7 +104,6 @@ export default class DateTimePickerScreen extends Component<{}, State> {
             </View>
           </View>
           <DateTimePicker
-            migrateTextField
             containerStyle={{marginVertical: 20}}
             renderInput={this.renderCustomInput}
             mode={mode}

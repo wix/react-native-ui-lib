@@ -8,10 +8,10 @@ import {
   BaseComponentInjectedProps,
   ForwardRefInjectedProps
 } from '../../commons/new';
-import {TextProps} from '../../components/text';
+import {TextProps} from '../text';
 import {RecorderProps} from '../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
-import {ViewProps} from '../../components/view';
+import {ViewProps} from '../view';
 
 export type ColorType =
   | string

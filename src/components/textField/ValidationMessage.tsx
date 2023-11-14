@@ -1,6 +1,6 @@
 import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import Text from '../../components/text';
+import Text from '../text';
 import FieldContext from './FieldContext';
 import {getRelevantValidationMessage} from './Presenter';
 import {ValidationMessageProps} from './types';

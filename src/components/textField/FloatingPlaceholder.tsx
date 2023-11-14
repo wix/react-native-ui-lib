@@ -5,8 +5,8 @@ import {FloatingPlaceholderProps, ValidationMessagePosition} from './types';
 import {getColorByState, shouldPlaceholderFloat} from './Presenter';
 import {Colors} from '../../style';
 import {Constants} from '../../commons/new';
-import View from '../../components/view';
-import Text from '../../components/text';
+import View from '../view';
+import Text from '../text';
 import FieldContext from './FieldContext';
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
