@@ -326,7 +326,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 // @ts-expect-error
 Picker.Item = PickerItem;
 Picker.defaultProps = {
-  ...TextField.defaultProps,
   mode: PickerModes.SINGLE
 };
 Picker.displayName = 'Picker';
