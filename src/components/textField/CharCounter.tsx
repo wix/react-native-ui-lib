@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import Text from '../../components/text';
+import Text from '../text';
 import FieldContext from './FieldContext';
 import {CharCounterProps} from './types';
 

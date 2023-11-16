@@ -1,7 +1,7 @@
 import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../style';
-import Text from '../../components/text';
+import Text from '../text';
 import {ColorType, LabelProps, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import FieldContext from './FieldContext';
@@ -29,7 +29,6 @@ const Label = ({
     return [styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder];
   }, [labelStyle, floatingPlaceholder]);
   const shouldRenderIndication = context.isMandatory && showMandatoryIndication;
-
   if ((label || floatingPlaceholder) && !forceHidingLabel) {
     return (
       <Text

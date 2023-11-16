@@ -11,9 +11,7 @@ import {Typography} from 'style';
 import {useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
-// @ts-expect-error
-import {TextField} from '../inputs';
-import TextFieldMigrator from '../textField/TextFieldMigrator';
+import TextField from '../textField';
 import Icon from '../icon';
 import View from '../view';
 import Text from '../text';
@@ -89,7 +87,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     useSafeArea,
     // TODO: Remove migrate props and migrate code
     migrate = true,
-    migrateTextField = true,
     accessibilityLabel,
     accessibilityHint,
     items: propItems,
@@ -312,12 +309,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
             // @ts-expect-error - hopefully will be solved after the picker migration ends
             renderPicker(value, label)
           ) : (
-            <TextFieldMigrator
-              migrate={migrateTextField}
-              // customWarning="RNUILib Picker component's internal TextField will soon be replaced with a new implementation, in order to start the migration - please pass to Picker the 'migrateTextField' prop"
+            <TextField
               // @ts-expect-error
               ref={pickerRef}
-              // {...textInputProps}
               {...others}
               {...propsByFieldType}
               testID={`${testID}.input`}
@@ -328,11 +322,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
               importantForAccessibility={'no-hide-descendants'}
               value={label}
               selection={Constants.isAndroid ? {start: 0} : undefined}
-              /* Note: Disable TextField expandable feature */
-              // topBarProps={undefined}
             >
               {renderPickerInnerInput()}
-            </TextFieldMigrator>
+            </TextField>
           )}
         </ExpandableOverlay>
       }
@@ -343,7 +335,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 // @ts-expect-error
 Picker.Item = PickerItem;
 Picker.defaultProps = {
-  ...TextField.defaultProps,
   mode: PickerModes.SINGLE
 };
 Picker.displayName = 'Picker';
@@ -354,14 +345,6 @@ Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
 
-export {
-  PickerProps,
-  PickerItemProps,
-  PickerValue,
-  PickerModes,
-  PickerFieldTypes,
-  PickerSearchStyle,
-  PickerMethods
-};
+export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

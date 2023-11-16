@@ -68,7 +68,6 @@ const PickerWrapper = () => {
           showSearch
           searchPlaceholder={'Search a language'}
           searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
-          migrateTextField
         >
           {options.map(option => (
             <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
@@ -90,7 +89,6 @@ const PickerWrapper = () => {
           showSearch
           searchPlaceholder={'Search a filter'}
           searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
-          migrateTextField
         >
           {filters.map(filter => (
             <Picker.Item key={filter.value} value={filter.value} label={filter.label} disabled={filter.disabled}/>

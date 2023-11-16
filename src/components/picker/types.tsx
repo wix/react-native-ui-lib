@@ -4,7 +4,7 @@ import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/
 import {ModalTopBarProps} from '../modal/TopBar';
 // TODO: Replace with new TextField Props after migration to new TextField has completed
 // import {TextFieldProps} from '../../../typings/components/Inputs';
-import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../../incubator/TextField';
+import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
 // Note: enum values are uppercase due to legacy
@@ -58,10 +58,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
-  /**
-   * Temporary prop required for inner text field migration
-   */
-  migrateTextField?: boolean;
   /**
    * Pass for different field type UI (form, filter or settings)
    */
