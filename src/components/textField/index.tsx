@@ -219,7 +219,7 @@ const TextField = (props: InternalTextFieldProps) => {
   );
 };
 
-TextField.displayName = 'Incubator.TextField';
+TextField.displayName = 'TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
 export {
