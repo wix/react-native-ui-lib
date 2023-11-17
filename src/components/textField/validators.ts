@@ -8,9 +8,15 @@ const priceRegEx = /^[0-9]{1,9}([.][0-9]{1,2})?$/;
 
 const validators = {
   required: (value = '') => !_.isEmpty(value),
-  email: (value = '') => new EmailValidator().isValid(value),
+  email: (value = '') => {
+    // Allow empty strings
+    if (_.isEmpty(value)) {
+      return true;
+    }
+    return new EmailValidator().isValid(value);
+  },
   url: (value = '') => urlRegEx.test(value),
-  number: (value = '') => integerRegEx.test(value) || decimalNumberRegEx.test(value),
+  number: (value = '') => _.isEmpty(value) || integerRegEx.test(value) || decimalNumberRegEx.test(value),
   price: (value = '') => priceRegEx.test(value)
 };
 
