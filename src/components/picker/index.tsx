@@ -226,8 +226,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
-          onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined,
-          includeStatusBar: useDialog ? false : undefined
+          onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -292,7 +291,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     //TODO : fix the ExpandableOverlay ts error
     <PickerContext.Provider value={contextValue}>
       {
-        // @ts-expect-error
+        /* @ts-expect-error */
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
