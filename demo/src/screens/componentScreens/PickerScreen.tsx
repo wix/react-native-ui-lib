@@ -124,7 +124,6 @@ export default class PickerScreen extends Component {
           <Picker
             placeholder="Favorite Languages (up to 3)"
             value={this.state.languages}
-            useDialog
             onChange={items => this.setState({languages: items})}
             mode={Picker.modes.MULTI}
             selectionLimit={3}
