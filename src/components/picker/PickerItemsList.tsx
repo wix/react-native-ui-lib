@@ -36,11 +36,13 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   } = props;
   const context = useContext(PickerContext);
   const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0].value);
+  // TODO: Might not need this memoized style, instead we can move it to a stylesheet
   const wrapperContainerStyle = useMemo(() => {
-    const shouldFlex = Constants.isWeb ? 1 : useDialog ? 0 : 1;
+    // const shouldFlex = Constants.isWeb ? 1 : useDialog ? 1 : 1;
+    const shouldFlex = true;
     const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
     return style;
-  }, [useDialog]);
+  }, [/* useDialog */]);
 
   const renderSearchInput = () => {
     if (showSearch) {
