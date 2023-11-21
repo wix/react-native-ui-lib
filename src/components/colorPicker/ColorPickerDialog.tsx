@@ -285,10 +285,13 @@ const ColorPickerDialog = (props: Props) => {
 
   const resetValues = useCallback(() => {
     const color = Colors.getHSL(initialColor);
-    colorContext.hue.value = color.h;
-    colorContext.lightness.value = color.l;
-    colorContext.saturation.value = color.s;
-    setValid(getValidColorString(colorContext.hexValue.value).valid);
+    console.log(colorContext);
+    if (colorContext.hue && colorContext.lightness && colorContext.saturation) {
+      colorContext.hue.value = color.h;
+      colorContext.lightness.value = color.l;
+      colorContext.saturation.value = color.s;
+      setValid(getValidColorString(colorContext.hexValue.value).valid);
+    }
   }, [initialColor, colorContext, setValid]);
 
   const onDismiss = useCallback(() => {

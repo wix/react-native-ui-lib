@@ -3,7 +3,6 @@ import React, {PureComponent, GetDerivedStateFromProps} from 'react';
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import GradientSlider, {GradientSliderTypes} from './GradientSlider';
-import SliderGroup from './context/SliderGroup';
 import Text from '../text';
 import View from '../view';
 
