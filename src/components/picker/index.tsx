@@ -60,8 +60,10 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchStyle,
     searchPlaceholder,
     renderCustomSearch,
+    renderCustomDialogHeader,
     // useNativePicker,
     useWheelPicker,
+    useDialog,
     renderPicker,
     customPickerProps,
     containerStyle,
@@ -218,6 +220,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       <PickerItemsList
         testID={`${testID}.modal`}
         useWheelPicker={useWheelPicker}
+        mode={mode}
+        useDialog={useDialog}
         items={useItems ? items : undefined}
         topBarProps={{
           ...topBarProps,
@@ -229,6 +233,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         searchPlaceholder={searchPlaceholder}
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
+        renderCustomDialogHeader={renderCustomDialogHeader}
         listProps={listProps}
         useSafeArea={useSafeArea}
       >
@@ -238,6 +243,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   }, [
     testID,
     mode,
+    useDialog,
     selectedItemPosition,
     topBarProps,
     cancelSelect,
@@ -248,6 +254,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchPlaceholder,
     _onSearchChange,
     renderCustomSearch,
+    renderCustomDialogHeader,
     listProps,
     filteredChildren,
     useSafeArea,
@@ -281,44 +288,45 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   // }
 
   return (
+    //TODO : fix the ExpandableOverlay ts error
     <PickerContext.Provider value={contextValue}>
-      <ExpandableOverlay
-        ref={pickerExpandable}
-        useDialog={useWheelPicker}
-        modalProps={modalProps}
-        dialogProps={DIALOG_PROPS}
-        expandableContent={expandableModalContent}
-        renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
-        onPress={onPress}
-        testID={testID}
-        {...customPickerProps}
-        disabled={themeProps.editable === false}
-      >
-        {renderPicker ? (
-          // @ts-expect-error - hopefully will be solved after the picker migration ends
-          renderPicker(value, label)
-        ) : (
-          <TextField
-            // @ts-expect-error
-            ref={pickerRef}
-            // {...textInputProps}
-            {...others}
-            {...propsByFieldType}
-            testID={`${testID}.input`}
-            // @ts-expect-error
-            containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
-            labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
-            {...accessibilityInfo}
-            importantForAccessibility={'no-hide-descendants'}
-            value={label}
-            selection={Constants.isAndroid ? {start: 0} : undefined}
-            /* Note: Disable TextField expandable feature */
-            // topBarProps={undefined}
-          >
-            {renderPickerInnerInput()}
-          </TextField>
-        )}
-      </ExpandableOverlay>
+      {
+        /* @ts-expect-error */
+        <ExpandableOverlay
+          ref={pickerExpandable}
+          useDialog={useDialog || useWheelPicker}
+          modalProps={modalProps}
+          dialogProps={customPickerProps?.dialogProps || DIALOG_PROPS}
+          expandableContent={expandableModalContent}
+          renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
+          onPress={onPress}
+          testID={testID}
+          {...customPickerProps}
+          disabled={themeProps.editable === false}
+        >
+          {renderPicker ? (
+            // @ts-expect-error - hopefully will be solved after the picker migration ends
+            renderPicker(value, label)
+          ) : (
+            <TextField
+              // @ts-expect-error
+              ref={pickerRef}
+              {...others}
+              {...propsByFieldType}
+              testID={`${testID}.input`}
+              // @ts-expect-error
+              containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
+              labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
+              {...accessibilityInfo}
+              importantForAccessibility={'no-hide-descendants'}
+              value={label}
+              selection={Constants.isAndroid ? {start: 0} : undefined}
+            >
+              {renderPickerInnerInput()}
+            </TextField>
+          )}
+        </ExpandableOverlay>
+      }
     </PickerContext.Provider>
   );
 });

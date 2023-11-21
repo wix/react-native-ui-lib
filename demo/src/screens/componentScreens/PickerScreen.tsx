@@ -32,6 +32,7 @@ const options = [
   {label: 'C++', value: 'c++', disabled: true},
   {label: 'Perl', value: 'perl'}
 ];
+
 const filters = [
   {label: 'All', value: 0},
   {label: 'Draft', value: 1},
@@ -45,6 +46,16 @@ const schemes = [
   {label: 'Dark', value: 3}
 ];
 
+const dialogOptions = [
+  {label: 'Option 1', value: 0},
+  {label: 'Option 2', value: 1},
+  {label: 'Option 3', value: 2},
+  {label: 'Option 4', value: 3, disabled: true},
+  {label: 'Option 5', value: 4},
+  {label: 'Option 6', value: 5},
+  {label: 'Option 7', value: 6},
+  {label: 'Option 8', value: 6}
+];
 export default class PickerScreen extends Component {
   picker = React.createRef<PickerMethods>();
   state = {
@@ -53,7 +64,9 @@ export default class PickerScreen extends Component {
     language: undefined,
     language2: options[2].value,
     languages: [],
+    option: undefined,
     nativePickerValue: 'java',
+    dialogPickerValue: 'java',
     customModalValues: [],
     filter: filters[0].value,
     scheme: schemes[0].value,
@@ -125,7 +138,6 @@ export default class PickerScreen extends Component {
             label="Wheel Picker"
             placeholder="Pick a Language"
             useWheelPicker
-            // useWheelPicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
@@ -161,6 +173,30 @@ export default class PickerScreen extends Component {
                 labelStyle={Typography.text65}
                 disabled={option.disabled}
               />
+            ))}
+          </Picker>
+
+          <Picker
+            label="Dialog Picker"
+            placeholder="Favorite Language"
+            mode={Picker.modes.MULTI}
+            value={this.state.option}
+            enableModalBlur={false}
+            onChange={item => this.setState({option: item})}
+            topBarProps={{title: 'Languages'}}
+            useDialog
+            renderCustomDialogHeader={({onDone, onCancel}) => (
+              <View padding-s5 row spread>
+                <Button link label="Cancel" onPress={onCancel}/>
+                <Button link label="Done" onPress={onDone}/>
+              </View>
+            )}
+            customPickerProps={{migrateDialog: true, dialogProps: {bottom: true, width: '100%', height: '45%'}}}
+            showSearch
+            searchPlaceholder={'Search a language'}
+          >
+            {_.map(dialogOptions, option => (
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
 
