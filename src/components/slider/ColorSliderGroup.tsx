@@ -5,6 +5,7 @@ import {asBaseComponent} from '../../commons/new';
 import GradientSlider, {GradientSliderTypes} from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import Text from '../text';
+import View from '../view';
 
 type SliderOnValueChange = (value: string) => void;
 
@@ -42,7 +43,7 @@ export type ColorSliderGroupProps = {
    * If true the component will have accessibility features enabled
    */
   accessible?: boolean;
-  /** 
+  /**
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
@@ -83,8 +84,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
   };
 
   renderSlider = (type: GradientSliderTypes) => {
-    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels, migrate} = this.props;
-
+    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels, migrate, animatedValue} = this.props;
     return (
       <>
         {showLabels && labels && (
@@ -98,6 +98,7 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
           containerStyle={sliderContainerStyle}
           accessible={accessible}
           migrate={migrate}
+          useAnimatedColor
         />
       </>
     );
@@ -105,14 +106,12 @@ class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderG
 
   render() {
     const {containerStyle} = this.props;
-    const {initialColor} = this.state;
-
     return (
-      <SliderGroup style={containerStyle} color={initialColor} onValueChange={this.onValueChange}>
+      <View style={containerStyle}>
         {this.renderSlider(GradientSlider.types.HUE)}
         {this.renderSlider(GradientSlider.types.LIGHTNESS)}
         {this.renderSlider(GradientSlider.types.SATURATION)}
-      </SliderGroup>
+      </View>
     );
   }
 }

@@ -186,13 +186,12 @@ const DialogPreview = (props: DialogPreviewProps) => {
 
 type SlidersProps = Pick<Props, 'migrate'> & {
   keyboardHeight: number;
-  onSliderValueChange: (color: string) => void;
+  // onSliderValueChange: (color: string) => void;
 };
 
 const Sliders = (props: SlidersProps) => {
-  const {migrate, keyboardHeight, onSliderValueChange} = props;
+  const {migrate, keyboardHeight} = props;
   const colorContext = useContext(ColorContext);
-  // const colorValue = color.a === 0 ? Colors.$backgroundInverted : Colors.getHexString(color);
   return (
     <ColorSliderGroup
       initialColor={colorContext.hexValue.value}
@@ -200,10 +199,8 @@ const Sliders = (props: SlidersProps) => {
       sliderContainerStyle={styles.slider}
       showLabels
       labelsStyle={styles.label}
-      onValueChange={onSliderValueChange}
       accessible={false}
       migrate={migrate}
-      animatedValue={colorContext}
     />
   );
 };
@@ -217,6 +214,15 @@ function getValidColorString(text?: string) {
     }
   }
   return {undefined, valid: false};
+}
+
+function getHexColor(text: string) {
+  if (!Colors.isTransparent(text)) {
+    const trimmed = text.replace(/\s+/g, '');
+    const hex = `#${trimmed}`;
+    return hex;
+  }
+  return text;
 }
 
 /**
@@ -317,9 +323,6 @@ const ColorPickerDialog = (props: Props) => {
   },
   [colorContext, setValid]);
 
-
-
-
   return (
     <Dialog
       visible={visible} //TODO: pass all Dialog props instead
@@ -354,10 +357,8 @@ const ColorPickerDialog = (props: Props) => {
     </Dialog>
   );
 };
-  
-  
-  
-};
+
+export default ColorPickerDialog;
 
 const BORDER_RADIUS = 12;
 

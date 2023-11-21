@@ -9,6 +9,7 @@ import {Slider as NewSlider} from '../../incubator';
 import {SliderContextProps} from './context/SliderContext';
 import asSliderGroupChild from './context/asSliderGroupChild';
 import Gradient from '../gradient';
+import ColorContext from '../colorPicker/ColorContext';
 
 type SliderOnValueChange = (value: string, alfa: number) => void;
 
@@ -48,6 +49,8 @@ export type GradientSliderProps = Omit<SliderProps, 'onValueChange'> & {
    * If true the Slider will be disabled and will appear in disabled color
    */
   disabled?: boolean;
+
+  useAnimatedColor?: boolean;
 };
 
 type GradientSliderComponentProps = {
@@ -83,6 +86,8 @@ class GradientSlider extends Component<Props, GradientSliderState> {
   static defaultProps = defaultProps;
 
   static types = GradientSliderTypes;
+
+  static contextType?: React.Context<any> | undefined = ColorContext;
 
   constructor(props: Props) {
     super(props);
@@ -185,7 +190,7 @@ class GradientSlider extends Component<Props, GradientSliderState> {
   };
 
   render() {
-    const {type, containerStyle, disabled, accessible, forwardedRef, migrate, ...others} = this.props;
+    const {type, containerStyle, disabled, accessible, forwardedRef, migrate, useAnimatedColor, ...others} = this.props;
     const initialColor = this.state.initialColor;
     const color = this.getColor();
     const thumbTintColor = Colors.getHexString(color);
@@ -194,7 +199,6 @@ class GradientSlider extends Component<Props, GradientSliderState> {
     let value = color.a;
     let renderTrack = this.renderDefaultGradient;
     let onValueChange = this.updateAlpha;
-
     switch (type) {
       case GradientSliderTypes.HUE:
         step = 1;
@@ -216,26 +220,31 @@ class GradientSlider extends Component<Props, GradientSliderState> {
       default:
         break;
     }
-
     const SliderComponent = migrate ? NewSlider : Slider;
 
     return (
-      <SliderComponent
-        {...others}
-        //@ts-expect-error
-        ref={forwardedRef}
-        onReset={this.reset}
-        renderTrack={renderTrack}
-        step={step}
-        maximumValue={maximumValue}
-        value={value}
-        thumbTintColor={thumbTintColor}
-        onValueChange={onValueChange}
-        containerStyle={containerStyle}
-        disabled={disabled}
-        accessible={accessible}
-        useRange={false}
-      />
+      <ColorContext.Consumer>
+        {context => (
+          <SliderComponent
+            {...others}
+            //@ts-expect-error
+            ref={forwardedRef}
+            onReset={this.reset}
+            renderTrack={renderTrack}
+            step={step}
+            maximumValue={maximumValue}
+            value={value}
+            thumbTintColor={thumbTintColor}
+            onValueChange={onValueChange}
+            containerStyle={containerStyle}
+            disabled={disabled}
+            accessible={accessible}
+            useRange={false}
+            useAnimatedValue={useAnimatedColor}
+            animatedValue={context[type as 'hue' | 'lightness' | 'saturation']}
+          />
+        )}
+      </ColorContext.Consumer>
     );
   }
 }
