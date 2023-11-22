@@ -9,7 +9,7 @@ export {
   TextFieldRef,
   TextFieldValidationMessagePosition,
   TextFieldValidator
-} from './TextField';
+} from '../components/textField';
 export {default as Toast, ToastProps, ToastPresets} from './toast';
 export {default as TouchableOpacity, TouchableOpacityProps} from './TouchableOpacity';
 export {default as PanView, PanViewProps, PanViewDirections, PanViewDismissThreshold} from './panView';

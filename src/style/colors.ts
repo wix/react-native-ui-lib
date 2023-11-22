@@ -27,7 +27,7 @@ export type GeneratePaletteOptions = {
 }
 export class Colors {
   [key: string]: any;
-  private shouldSupportDarkMode = false;
+  shouldSupportDarkMode = false;
 
   constructor() {
     const colors = Object.assign(colorsPalette);

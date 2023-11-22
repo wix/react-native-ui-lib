@@ -14,12 +14,11 @@ import {useDidUpdate} from '../../hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
-import TextField from '../textField/TextFieldMigrator';
+import TextField, {TextFieldProps, TextFieldMethods} from '../textField';
 import {DialogProps} from '../dialog';
 import View from '../view';
 import Button from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
-import type {TextFieldProps, TextFieldMethods} from '../../incubator/TextField';
 import useOldApi, {OldApiProps} from './useOldApi';
 
 export type DateTimePickerMode = 'date' | 'time';
@@ -91,10 +90,6 @@ export type DateTimePickerProps = OldApiProps & Omit<TextFieldProps, 'value' | '
    * The component testID
    */
   testID?: string;
-  /**
-   * Should migrate to the new TextField implementation
-   */
-  migrateTextField?: boolean;
 };
 
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
@@ -131,7 +126,6 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     dialogProps,
     headerStyle,
     testID,
-    migrateTextField = true,
     ...others
   } = props;
 
@@ -315,11 +309,8 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
             {...others}
             // @ts-expect-error
             ref={textField}
-            migrate={migrateTextField}
             testID={testID}
             editable={editable}
-            // @ts-expect-error should be remove after completing TextField migration
-            expandable={migrateTextField ? undefined : !!others.renderExpandableInput}
             value={getStringValue()}
           />
         )}

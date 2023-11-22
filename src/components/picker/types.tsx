@@ -4,7 +4,7 @@ import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/
 import {ModalTopBarProps} from '../modal/TopBar';
 // TODO: Replace with new TextField Props after migration to new TextField has completed
 // import {TextFieldProps} from '../../../typings/components/Inputs';
-import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../../incubator/TextField';
+import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
 // Note: enum values are uppercase due to legacy
@@ -51,13 +51,13 @@ export interface PickerSearchStyle {
 export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /* ...TextField.propTypes, */
   /**
+   * Use dialog instead of modal picker
+   */
+  useDialog?: boolean;
+  /**
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
-  /**
-   * Temporary prop required for inner text field migration
-   */
-  migrateTextField?: boolean;
   /**
    * Pass for different field type UI (form, filter or settings)
    */
@@ -146,6 +146,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Render custom search input (only when passing showSearch)
    */
   renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
+  /**
+   * Render a custom header for Picker's dialog
+   */
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
   // /**
   //  * @deprecated pass useWheelPicker prop instead
   //  * Allow to use the native picker solution (different style for iOS and Android)
@@ -265,8 +269,11 @@ export type PickerItemsListProps = Pick<
   | 'searchPlaceholder'
   | 'onSearchChange'
   | 'renderCustomSearch'
+  | 'renderCustomDialogHeader'
   | 'useSafeArea'
   | 'useWheelPicker'
+  | 'useDialog'
+  | 'mode'
   | 'testID'
 > & {
   items?: {value: any; label: any}[];

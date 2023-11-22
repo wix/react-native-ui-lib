@@ -13,6 +13,7 @@ export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings
 export const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
 export const POSITION_KEY_PATTERN = /^abs([F|L|R|T|B|V|H])?$/;
 const BACKGROUND_COLOR_KEYS_PATTERN = Colors.getBackgroundKeysPattern();
+export const GAP_KEY_PATTERN = new RegExp(`gap-([0-9]*|${Spacings.getKeysPattern()})`);
 
 export interface AlteredOptions {
   flex?: boolean;
@@ -33,6 +34,7 @@ export interface ExtractedStyle {
   alignments?: ReturnType<typeof extractAlignmentsValues>;
   flexStyle?: ReturnType<typeof extractFlexStyle>;
   positionStyle?: ReturnType<typeof extractPositionStyle>;
+  gap?: ReturnType<typeof extractGapValues>;
 }
 
 export type ModifiersOptions = {
@@ -45,6 +47,7 @@ export type ModifiersOptions = {
   alignments?: boolean;
   flex?: boolean;
   position?: boolean;
+  gap?: boolean;
 };
 
 const PADDING_VARIATIONS = {
@@ -74,11 +77,11 @@ const STYLE_KEY_CONVERTERS = {
 } as const;
 
 export type PaddingLiterals = keyof typeof PADDING_VARIATIONS;
-export type NativePaddingKeyType = typeof PADDING_VARIATIONS[PaddingLiterals];
+export type NativePaddingKeyType = (typeof PADDING_VARIATIONS)[PaddingLiterals];
 export type MarginLiterals = keyof typeof MARGIN_VARIATIONS;
-export type NativeMarginModifierKeyType = typeof MARGIN_VARIATIONS[MarginLiterals];
+export type NativeMarginModifierKeyType = (typeof MARGIN_VARIATIONS)[MarginLiterals];
 export type FlexLiterals = keyof typeof STYLE_KEY_CONVERTERS;
-export type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexLiterals];
+export type NativeFlexModifierKeyType = (typeof STYLE_KEY_CONVERTERS)[FlexLiterals];
 export type ColorLiterals = keyof (typeof colorsPalette & typeof DesignTokens);
 export type TypographyLiterals = keyof typeof TypographyPresets;
 export type BorderRadiusLiterals = keyof typeof BorderRadiusesLiterals;
@@ -93,6 +96,7 @@ export type AlignmentLiterals =
   | 'top'
   | 'bottom';
 export type PositionLiterals = 'absF' | 'absL' | 'absR' | 'absT' | 'absB' | 'absV' | 'absH';
+export type GapLiterals = 'gap';
 
 export type Modifier<T extends string> = Partial<Record<T, boolean>>;
 export type CustomModifier = {[key: string]: boolean};
@@ -109,6 +113,7 @@ export type MarginModifiers = Modifier<MarginLiterals>;
 // export type MarginModifiers = Partial<{[key: `${MarginLiterals}-${number}`]: boolean}>;
 export type FlexModifiers = Modifier<FlexLiterals>;
 export type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
+export type GapModifiers = Modifier<GapLiterals>;
 
 export type ContainerModifiers = AlignmentModifiers &
   PositionModifiers &
@@ -116,7 +121,8 @@ export type ContainerModifiers = AlignmentModifiers &
   MarginModifiers &
   FlexModifiers &
   BorderRadiusModifiers &
-  BackgroundColorModifier;
+  BackgroundColorModifier &
+  GapModifiers;
 
 export function extractColorValue(props: Dictionary<any>) {
   const colorPropsKeys = Object.keys(props).filter(key => Colors[key] !== undefined);
@@ -185,6 +191,21 @@ export function extractMarginValues(props: Dictionary<any>) {
   });
 
   return margins;
+}
+
+export function extractGapValues(props: Dictionary<any>) {
+  const gapPropsKeys = Object.keys(props).filter(key => GAP_KEY_PATTERN.test(key));
+  // Taking only the last one
+  const gapModifier = _.findLast(gapPropsKeys, key => props[key] === true);
+  if (gapModifier) {
+    const [, gapValue] = gapModifier.split('-') as ['gap', 'string'];
+    const parsedNumber = Number(gapValue);
+    if (!isNaN(parsedNumber)) {
+      return parsedNumber;
+    } else if (Spacings.getKeysPattern().test(gapValue)) {
+      return Spacings[gapValue as keyof typeof SpacingLiterals];
+    }
+  }
 }
 
 export function extractAlignmentsValues(props: Dictionary<any>) {
@@ -306,6 +327,7 @@ export function extractModifierProps(props: Dictionary<any>) {
     PADDING_KEY_PATTERN,
     MARGIN_KEY_PATTERN,
     ALIGNMENT_KEY_PATTERN,
+    GAP_KEY_PATTERN,
     Colors.getBackgroundKeysPattern()
   ];
   const modifierProps = _.pickBy(props, (_value, key) => {
@@ -338,7 +360,7 @@ export function extractComponentProps(component: any, props: Dictionary<any>, ig
 }
 
 //@ts-ignore
-export function getThemeProps<T extends object>(props: T = this.props, context = this.context, componentDisplayName = ''):T {
+export function getThemeProps<T extends object>(props: T = this.props, context = this.context, componentDisplayName = ''): T {
   const componentName =
     //@ts-ignore
     componentDisplayName || this.displayName || this.constructor.displayName || this.constructor.name;
@@ -368,7 +390,8 @@ export function generateModifiersStyle(options: ModifiersOptions = {
   margins: true,
   alignments: true,
   flex: true,
-  position: true
+  position: true,
+  gap: false
 },
 props: Dictionary<any>) {
   //@ts-ignore
@@ -405,6 +428,9 @@ props: Dictionary<any>) {
   }
   if (options.position) {
     style.positionStyle = extractPositionStyle(boundProps);
+  }
+  if (options.gap) {
+    style.gap = extractGapValues(boundProps);
   }
 
   return style;

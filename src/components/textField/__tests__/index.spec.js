@@ -1,92 +1,147 @@
+import React, {useState} from 'react';
+import {fireEvent, render} from '@testing-library/react-native';
 import TextField from '../index';
-import {Colors} from '../../../style';
+import {Constants} from '../../../commons/new';
+
+const defaultProps = {
+  testID: 'field',
+  placeholder: 'Placeholder'
+};
+
+const TestCase = props => {
+  const [value, setValue] = useState(props.value);
+  return <TextField {...defaultProps} {...props} onChangeText={setValue} value={value}/>;
+};
 
 describe('TextField', () => {
+  describe('hint prop', () => {
+    it('should hint text replace placeholder when input is focused', () => {
+      const renderTree = render(<TestCase hint={'Hint'}/>);
 
-  describe('shouldFakePlaceholder', () => {
-    it('should shouldFakePlaceholder', () => {
-      let uut = new TextField({});
-      expect(uut.shouldFakePlaceholder()).toBe(false);
+      const input = renderTree.getByTestId('field');
+      renderTree.getByPlaceholderText(defaultProps.placeholder);
 
-      uut = new TextField({floatingPlaceholder: true});
-      expect(uut.shouldFakePlaceholder()).toBe(true);
+      fireEvent(input, 'focus');
+      renderTree.getByPlaceholderText('Hint');
+    });
 
-      uut = new TextField({floatingPlaceholder: true, centered: true});
-      expect(uut.shouldFakePlaceholder()).toBe(false);
+    it('should not show hint when hint prop not passed', () => {
+      const renderTree = render(<TestCase/>);
+
+      const input = renderTree.getByTestId('field');
+      renderTree.getByPlaceholderText(defaultProps.placeholder);
+
+      fireEvent(input, 'focus');
+      renderTree.getByPlaceholderText(defaultProps.placeholder);
     });
   });
 
-  describe('getStateColor', () => {
-    it('should return grey10 when no color state or color was passed', () => {
-      const uut = new TextField({});
-      expect(uut.getStateColor(undefined)).toEqual(Colors.grey10);
+  describe('formatter prop', () => {
+    const priceFormatter = Intl.NumberFormat('en-US');
+
+    const props = {
+      value: '10000',
+      formatter: value => priceFormatter.format(Number(value))
+    };
+
+    it('should format value while not focused based on formatter prop', () => {
+      const renderTree = render(<TestCase {...props}/>);
+      renderTree.getByDisplayValue('10,000');
     });
 
-    it('should return the string color given as the first argument ', () => {
-      const uut = new TextField({});
-      expect(uut.getStateColor(Colors.blue30)).toEqual(Colors.blue30);
-    });
-
-    it('should return "default" color from the color states object passed', () => {
-      const uut = new TextField({});
-      expect(uut.getStateColor({default: Colors.blue30})).toEqual(Colors.blue30);
-    });
-
-    it('should return "focus" color from the color states object passed when input is focused', () => {
-      const uut = new TextField({});
-      uut.state = {focused: true};
-      expect(uut.getStateColor({default: Colors.grey10, focus: Colors.green30})).toEqual(Colors.green30);
-    });
-    
-    it('should return default component state colors by default', () => {
-      const uut = new TextField({});
-      expect(uut.getStateColor()).toEqual(Colors.grey10);
-      uut.state = {focused: true};
-      expect(uut.getStateColor()).toEqual(Colors.grey10);
-    });
-    
-    it('should return default component state colors by default even when given partial color state', () => {
-      const uut = new TextField({});
-      expect(uut.getStateColor({focus: Colors.blue30})).toEqual(Colors.grey10);
-      uut.state = {focused: true};
-      expect(uut.getStateColor({default: Colors.grey20})).toEqual(Colors.grey10);
-    });
-    
-    it('should return default "error" state when there is an error', () => {
-      const uut = new TextField({error: 'error'});
-      expect(uut.getStateColor()).toEqual(Colors.grey10);
-    });
-    
-    it('should return given "error" state when there is an error', () => {
-      const uut = new TextField({error: 'error'});
-      expect(uut.getStateColor({default: Colors.grey10, error: Colors.red20})).toEqual(Colors.red20);
-    });
-    
-    it('should return disabled color when disabled', () => {
-      const uut = new TextField({editable: false});
-      expect(uut.getStateColor()).toEqual(Colors.grey50);
+    it('should not format value while focused', () => {
+      const renderTree = render(<TestCase {...props}/>);
+      const input = renderTree.getByTestId('field');
+      fireEvent(input, 'focus');
+      renderTree.getByDisplayValue('10000');
     });
   });
 
-  describe('getCharCount', () => {
-    it('should return 5 when value is "inbal"', () => {
-      const uut = new TextField({value: 'inbal'});
-      expect(uut.getCharCount()).toBe(5);
+  describe('validation', () => {
+    const props = {
+      testID: 'field',
+      enableErrors: true,
+      validate: 'email',
+      validationMessage: 'email is invalid'
+    };
+
+    it('should display validation error message when validation fail after blur', () => {
+      const renderTree = render(<TestCase {...props} validateOnBlur/>);
+      const input = renderTree.getByTestId('field');
+      fireEvent.changeText(input, 'invalidEmail');
+      fireEvent(input, 'blur');
+      renderTree.getByText(props.validationMessage);
+    });
+
+    it('should remove validation error message after entering a valid input', async () => {
+      const renderTree = render(<TestCase {...props} validateOnStart validateOnChange value={'invalid'}/>);
+      const input = renderTree.getByTestId('field');
+
+      renderTree.getByText(props.validationMessage);
+
+      fireEvent.changeText(input, 'mail@mail.com');
+      const validationMessageElement = renderTree.queryByText(props.validationMessage);
+      expect(validationMessageElement).toBe(null);
+    });
+
+    describe('Mandatory Indication', () => {
+      it('Should show mandatory star indication - 1', async () => {
+        const renderTree = render(<TestCase testID={'field'} validate={'required'} label={'Label'} showMandatoryIndication/>);
+        const label = renderTree.getByTestId('field.label');
+        const text = label.children[0];
+        expect(text).toEqual('Label*');
+      });
+      it('Should show mandatory star indication - 2', () => {
+        const renderTree = render(<TestCase testID={'field'} validate={['email', 'required']} label={'Label'} showMandatoryIndication/>);
+        const label = renderTree.getByTestId('field.label');
+        const text = label.children[0];
+        expect(text).toEqual('Label*');
+      });
+      it('Should not show mandatory star indication - 1', () => {
+        const renderTree = render(<TestCase testID={'field'} validate={['email', 'required']} label={'Label'}/>);
+        const label = renderTree.getByTestId('field.label');
+        const text = label.children[0];
+        expect(text).not.toEqual('Label*');
+      });
+      it('Should not show mandatory star indication - 2', () => {
+        const renderTree = render(<TestCase testID={'field'} validate={['email']} label={'Label'} showMandatoryIndication/>);
+        const label = renderTree.getByTestId('field.label');
+        const text = label.children[0];
+        expect(text).not.toEqual('Label*');
+      });
     });
   });
 
-  describe('isCounterLimit', () => {
-    it('should return true when character count = 10 and maxLength = 10', () => {
-      const uut = new TextField({maxLength: 10});
-      jest.spyOn(uut, 'getCharCount').mockImplementation(() => 10);
-      expect(uut.isCounterLimit()).toBe(true);
-      expect(uut.getCharCount).toHaveBeenCalledTimes(1);
+  describe('defaultValue', () => {
+    const props = {
+      ...defaultProps,
+      defaultValue: 'someDefaultValue',
+      value: 'someValue'
+    };
+
+    it('value should equal defaultValue on first render when value not given', () => {
+      const renderTree = render(<TestCase {...props} value={undefined}/>);
+
+      renderTree.getByDisplayValue('someDefaultValue');
     });
-    it('should return false when character count = 5 and maxLength = 10', () => {
-      const uut = new TextField({maxLength: 10});
-      jest.spyOn(uut, 'getCharCount').mockImplementation(() => 5);
-      expect(uut.isCounterLimit()).toBe(false);
-      expect(uut.getCharCount).toHaveBeenCalledTimes(1);
+
+    it('value should equal value on first render when given', () => {
+      const renderTree = render(<TestCase {...props} defaultValue={undefined}/>);
+
+      renderTree.getByDisplayValue('someValue');
+    });
+
+    it.each`
+    platform    | isWeb
+    ${'web'}    | ${true}
+    ${'native'} | ${false}
+    `('on $platform should reset defaultValue when prop changed after first render', (args) => {
+      Constants.isWeb = args.isWeb;
+
+      const renderTree = render(<TestCase {...props} value={undefined}/>);
+
+      renderTree.rerender(<TestCase {...props} value={undefined} defaultValue={'someUpdatedDefaultValue'}/>);
+      renderTree.getByDisplayValue('someUpdatedDefaultValue');
     });
   });
 });

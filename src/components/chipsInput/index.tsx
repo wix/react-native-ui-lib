@@ -3,7 +3,7 @@ import {StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData} from 'reac
 import {isUndefined, map} from 'lodash';
 import {Constants} from '../../commons/new';
 import {useCombinedRefs} from '../../hooks';
-import TextField, {TextFieldProps} from '../../incubator/TextField';
+import TextField, {TextFieldProps} from '../textField';
 import Chip, {ChipProps} from '../chip';
 
 const removeIcon = require('./assets/xSmall.png');

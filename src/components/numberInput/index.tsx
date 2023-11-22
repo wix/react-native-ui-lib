@@ -4,7 +4,7 @@ import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {useDidUpdate, useThemeProps} from '../../hooks';
 import {Colors} from '../../style';
 import MaskedInput from '../maskedInput/new';
-import TextField, {TextFieldProps, TextFieldRef} from '../../incubator/TextField';
+import TextField, {TextFieldProps, TextFieldRef} from '../textField';
 import View from '../view';
 import Text from '../text';
 import {parseInput, generateOptions, getInitialNumber, Options, NumberInputData} from './Presenter';
