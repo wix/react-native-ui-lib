@@ -17,10 +17,11 @@ export function isItemSelected(childValue: PickerSingleValue, selectedValue?: Pi
   let isSelected = false;
 
   if (Array.isArray(selectedValue)) {
-    isSelected = !!_.find(selectedValue, v => {
-      // @ts-expect-error TODO: fix after removing migrate prop completely
-      return v === childValue || (typeof v === 'object' && v?.value === childValue);
-    });
+    isSelected =
+      _.find(selectedValue, v => {
+        // @ts-expect-error TODO: fix after removing migrate prop completely
+        return v === childValue || (typeof v === 'object' && v?.value === childValue);
+      }) !== undefined;
   } else {
     isSelected = childValue === selectedValue;
   }
