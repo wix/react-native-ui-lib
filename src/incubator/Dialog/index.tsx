@@ -27,7 +27,6 @@ import DialogHeader from './DialogHeader';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
-const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.$backgroundInverted, 0.3);
 const THRESHOLD_VELOCITY = 750;
 
 export interface DialogStatics {
@@ -55,7 +54,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     testID,
     children
   } = props;
-  const {overlayBackgroundColor = DEFAULT_OVERLAY_BACKGROUND_COLOR, ...otherModalProps} = modalProps;
+  const {overlayBackgroundColor = Colors.rgba(Colors.$backgroundInverted, 0.3), ...otherModalProps} = modalProps;
 
   const visibility = useSharedValue(0); // value between 0 (closed) and 1 (open)
   const initialTranslation = useSharedValue(0);
@@ -140,6 +139,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const style = useMemo(() => {
     return [
       styles.defaultDialogStyle,
+      {backgroundColor: Colors.$backgroundDefault},
       containerStyle,
       animatedStyle,
       width ? {width} : undefined,
@@ -248,7 +248,6 @@ export default asBaseComponent<DialogProps, DialogStatics>(_Dialog);
 const styles = StyleSheet.create({
   defaultDialogStyle: {
     marginBottom: Spacings.s5,
-    backgroundColor: Colors.$backgroundDefault,
     maxHeight: '60%',
     width: 250,
     borderRadius: BorderRadiuses.br20,

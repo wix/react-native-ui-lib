@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet, FlatList, TextInput, ListRenderItemInfo} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
@@ -9,9 +9,10 @@ import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
-import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
+import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
+import {Constants} from '../../commons/new';
 
 const keyExtractor = (_item: string, index: number) => index.toString();
 
@@ -27,11 +28,21 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     searchPlaceholder = 'Search...',
     onSearchChange,
     renderCustomSearch,
+    renderCustomDialogHeader,
     useSafeArea,
+    useDialog,
+    mode,
     testID
   } = props;
   const context = useContext(PickerContext);
   const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0].value);
+  // TODO: Might not need this memoized style, instead we can move it to a stylesheet
+  const wrapperContainerStyle = useMemo(() => {
+    // const shouldFlex = Constants.isWeb ? 1 : useDialog ? 1 : 1;
+    const shouldFlex = true;
+    const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
+    return style;
+  }, [/* useDialog */]);
 
   const renderSearchInput = () => {
     if (showSearch) {
@@ -135,11 +146,19 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
+  const renderPickerHeader = () => {
+    if (renderCustomDialogHeader) {
+      return renderCustomDialogHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
+    } else if (!useDialog || mode === PickerModes.MULTI) {
+      return <Modal.TopBar {...topBarProps}/>;
+    }
+  };
+
   return (
-    <View bg-$backgroundDefault flex useSafeArea={useSafeArea}>
+    <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {!useWheelPicker && (
         <>
-          {<Modal.TopBar {...topBarProps}/>}
+          {renderPickerHeader()}
           {renderSearchInput()}
           {renderList()}
         </>

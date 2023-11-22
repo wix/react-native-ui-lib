@@ -80,7 +80,6 @@ class SettingsScreen extends Component {
             value={defaultScreen?.value}
             label={'Default Screen'}
             onChange={this.setDefaultScreen}
-            migrateTextField
           >
             {_.map(filteredScreens, screen => (
               <Picker.Item key={screen.value} value={screen.value} label={screen.label}/>
