@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, useCallback, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
@@ -58,78 +58,66 @@ const ACCESSIBILITY_LABELS = {
  * @notes: This is a screen width component
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPicker/ColorPicker.gif?raw=true
  */
-class ColorPicker extends PureComponent<Props> {
-  static displayName = 'ColorPicker';
+const ColorPicker = (props: Props) => {
+  const {
+    accessibilityLabels = ACCESSIBILITY_LABELS,
+    backgroundColor = Colors.$backgroundDefault,
+    initialColor,
+    colors,
+    value,
+    testID,
+    onValueChange,
+    animatedIndex
+  } = props;
+  const [show, setShow] = useState(false);
 
-  static defaultProps = {
-    accessibilityLabels: ACCESSIBILITY_LABELS,
-    backgroundColor: Colors.$backgroundDefault
-  };
+  //eslint-disable-next-line react-hooks/exhaustive-deps
+  const showDialog = useCallback(setShow.bind(this, true), [setShow]);
+  //eslint-disable-next-line react-hooks/exhaustive-deps
+  const hideDialog = useCallback(setShow.bind(this, false), [setShow]);
 
-  state = {
-    show: false
-  };
-
-  get animatedIndex() {
-    const {animatedIndex, colors} = this.props;
-    if (animatedIndex === undefined) {
-      return colors.length - 1;
-    }
-    return animatedIndex;
-  }
-
-  showDialog = () => {
-    this.setState({show: true});
-  };
-
-  hideDialog = () => {
-    this.setState({show: false});
-  };
-
-  render() {
-    const {initialColor, colors, value, testID, accessibilityLabels, backgroundColor, onValueChange} = this.props;
-    const {show} = this.state;
-    return (
-      <View row testID={testID} style={{backgroundColor}}>
-        <ColorPalette
-          value={value}
-          colors={colors}
-          style={styles.palette}
-          usePagination={false}
-          animatedIndex={this.animatedIndex}
-          onValueChange={onValueChange}
-          testID={`${testID}-palette`}
-          backgroundColor={backgroundColor}
-        />
-        <View style={[styles.buttonContainer, {backgroundColor}]}>
-          <Button
-            color={Colors.$textDefault}
-            outlineColor={Colors.$textDefault}
-            style={styles.button}
-            round
-            outline
-            iconSource={Assets.icons.plusSmall}
-            onPress={this.showDialog}
-            testID={`${testID}-button`}
-            accessibilityLabel={accessibilityLabels?.addButton}
-          />
-        </View>
-        <ColorPickerDialog
-          {...this.props}
-          key={initialColor}
-          visible={show}
-          onDismiss={this.hideDialog}
-          accessibilityLabels={{
-            dismissButton: accessibilityLabels?.dismissButton,
-            doneButton: accessibilityLabels?.doneButton,
-            input: accessibilityLabels?.input
-          }}
-          migrate
+  return (
+    <View row testID={testID} style={{backgroundColor}}>
+      <ColorPalette
+        value={value}
+        colors={colors}
+        style={styles.palette}
+        usePagination={false}
+        animatedIndex={animatedIndex || colors.length - 1}
+        onValueChange={onValueChange}
+        testID={`${testID}-palette`}
+        backgroundColor={backgroundColor}
+      />
+      <View style={[styles.buttonContainer, {backgroundColor}]}>
+        <Button
+          color={Colors.$textDefault}
+          outlineColor={Colors.$textDefault}
+          style={styles.button}
+          round
+          outline
+          iconSource={Assets.icons.plusSmall}
+          onPress={showDialog}
+          testID={`${testID}-button`}
+          accessibilityLabel={accessibilityLabels?.addButton}
         />
       </View>
-    );
-  }
-}
+      <ColorPickerDialog
+        {...props}
+        key={initialColor}
+        visible={show}
+        onDismiss={hideDialog}
+        accessibilityLabels={{
+          dismissButton: accessibilityLabels?.dismissButton,
+          doneButton: accessibilityLabels?.doneButton,
+          input: accessibilityLabels?.input
+        }}
+        migrate
+      />
+    </View>
+  );
+};
+
+ColorPicker.displayName = 'ColorPicker';
 
 export default asBaseComponent<Props>(ColorPicker);
 
