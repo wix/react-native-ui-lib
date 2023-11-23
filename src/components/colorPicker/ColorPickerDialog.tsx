@@ -212,7 +212,7 @@ type SlidersProps = Pick<Props, 'migrate'> & {
 };
 
 const Sliders = (props: SlidersProps) => {
-  const {keyboardHeight, color, migrate, ...others} = props;
+  const {keyboardHeight, color, migrate, onSliderValueChange} = props;
   const colorValue = color.a === 0 ? Colors.$backgroundInverted : Colors.getHexString(color);
   return (
     <ColorSliderGroup
@@ -223,7 +223,7 @@ const Sliders = (props: SlidersProps) => {
       labelsStyle={styles.label}
       accessible={false}
       migrate={migrate}
-      {...others}
+      onValueChange={onSliderValueChange}
     />
   );
 };
