@@ -241,7 +241,8 @@ const ColorPickerDialog = (props: Props) => {
     visible,
     accessibilityLabels,
     doneButtonColor,
-    previewInputStyle
+    previewInputStyle,
+    migrate
   } = props;
 
   const [keyboardHeight, setKeyboardHeight] = useState(KEYBOARD_HEIGHT);
@@ -262,7 +263,7 @@ const ColorPickerDialog = (props: Props) => {
   const keyboardDidShow = useCallback((e: any) => {
     setKeyboardHeight(prevKeyboardHeight => {
       if (Constants.isIOS && prevKeyboardHeight !== e.endCoordinates.height) {
-        setKeyboardHeight(e.endCoordinates.height);
+        return e.endCoordinates.height;
       }
       return prevKeyboardHeight;
     });
@@ -325,12 +326,10 @@ const ColorPickerDialog = (props: Props) => {
   };
 
   const updateColor = (hex: string) => {
-    const text = getColorValue(hex);
     setColor(Colors.getHSL(hex));
-    setText(text);
+    setText(_.toUpper(getColorValue(hex)));
     setValid(true);
   };
-
   return (
     <Dialog
       visible={visible} //TODO: pass all Dialog props instead
@@ -361,10 +360,12 @@ const ColorPickerDialog = (props: Props) => {
         onFocus={onFocus}
         onChangeText={onChangeText}
       />
-      <Sliders keyboardHeight={keyboardHeight} color={color} onSliderValueChange={updateColor}/>
+      <Sliders keyboardHeight={keyboardHeight} color={color} onSliderValueChange={updateColor} migrate={migrate}/>
     </Dialog>
   );
 };
+
+ColorPickerDialog.displayName = 'ColorPicker';
 
 export default asBaseComponent<Props>(ColorPickerDialog);
 
