@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
+import React, {PureComponent, useEffect, useRef, useState} from 'react';
 import {
   LayoutAnimation,
   StyleSheet,
@@ -75,7 +75,7 @@ const MODAL_PROPS = {
  * @extends: Dialog
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  */
-class ColorPickerDialog extends PureComponent<Props, State> {
+class _ColorPickerDialog extends PureComponent<Props, State> {
   static displayName = 'ColorPicker';
 
   static defaultProps = {
@@ -359,6 +359,163 @@ class ColorPickerDialog extends PureComponent<Props, State> {
     return this.renderDialog();
   }
 }
+
+function getColorValue(color?: string) {
+  if (!color) {
+    return;
+  }
+  return color.replace('#', '');
+}
+function getHexColor(text: string) {
+  if (!Colors.isTransparent(text)) {
+    const trimmed = text.replace(/\s+/g, '');
+    const hex = `#${trimmed}`;
+    return hex;
+  }
+  return text;
+}
+
+function getValidColorString(text?: string) {
+  if (text) {
+    const hex = getHexColor(text);
+
+    if (Colors.isValidHex(hex)) {
+      return {hex, valid: true};
+    }
+  }
+  return {undefined, valid: false};
+}
+
+type HeaderProps = Pick<Props, 'doneButtonColor' | 'accessibilityLabels' | 'testID'> & {
+  valid: boolean;
+  onDismiss: () => void;
+  onDonePressed: () => void;
+};
+
+const Header = (props: HeaderProps) => {
+  const {onDismiss, accessibilityLabels, testID, doneButtonColor, valid, onDonePressed} = props;
+
+  return (
+    <View row spread bg-white paddingH-20 style={styles.header}>
+      <Button
+        link
+        iconSource={Assets.icons.x}
+        iconStyle={{tintColor: Colors.$iconDefault}}
+        onPress={onDismiss}
+        accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
+        testID={`${testID}.dialog.cancel`}
+      />
+      <Button
+        color={doneButtonColor}
+        disabled={!valid}
+        link
+        iconSource={Assets.icons.check}
+        onPress={onDonePressed}
+        accessibilityLabel={_.get(accessibilityLabels, 'doneButton')}
+        testID={`${testID}.dialog.done`}
+      />
+    </View>
+  );
+};
+
+type HSLColor = ReturnType<typeof Colors.getHSL>;
+
+function getHexString(color: HSLColor) {
+  return _.toUpper(Colors.getHexString(color));
+}
+function getTextColor(color: string) {
+  return Colors.isDark(color) ? Colors.white : Colors.grey10;
+}
+
+type PreviewProps = Pick<Props, 'accessibilityLabels' | 'previewInputStyle' | 'testID'> & {
+  color: HSLColor;
+  text: ReturnType<typeof getColorValue>;
+  valid: boolean;
+  onChangeText: () => void;
+  onFocus: () => void;
+};
+const Preview = (props: PreviewProps) => {
+  const {color, text, onChangeText, previewInputStyle, onFocus, accessibilityLabels, testID} = props;
+  const textInput = useRef<TextInput>(null);
+
+  const hex = getHexString(color);
+  const textColor = getTextColor(hex);
+  const fontScale = PixelRatio.getFontScale();
+  const value = Colors.isTransparent(text) ? '000000' : text;
+
+  const setFocus = () => {
+    textInput.current?.focus();
+  };
+
+  return (
+    <View style={[styles.preview, {backgroundColor: hex}]}>
+      <TouchableOpacity center onPress={setFocus} activeOpacity={1} accessible={false}>
+        <View style={styles.inputContainer}>
+          <Text
+            text60
+            white
+            marginL-13
+            marginR-5={Constants.isIOS}
+            style={{
+              color: textColor,
+              transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
+            }}
+            accessible={false}
+            recorderTag={'unmask'}
+          >
+            #
+          </Text>
+          <TextInput
+            ref={textInput}
+            value={value}
+            maxLength={6}
+            numberOfLines={1}
+            onChangeText={onChangeText}
+            style={[
+              styles.input,
+              {
+                color: textColor,
+                width: value ? (value.length + 1) * 16.5 * fontScale : undefined
+              },
+              Constants.isAndroid && {padding: 0},
+              previewInputStyle
+            ]}
+            selectionColor={textColor}
+            underlineColorAndroid="transparent"
+            autoCorrect={false}
+            autoComplete={'off'}
+            autoCapitalize={'characters'}
+            // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
+            returnKeyType={'done'}
+            enablesReturnKeyAutomatically
+            onFocus={onFocus}
+            accessibilityLabel={accessibilityLabels?.input}
+            testID={`${testID}.dialog.textInput`}
+          />
+        </View>
+        <View style={[{backgroundColor: textColor}, styles.underline]}/>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const ColorPickerDialog = (props: Props) => {
+  const {initialColor = Colors.$backgroundNeutralLight} = props;
+
+  const [keyboardHeight, setKeyboardHeight] = useState(KEYBOARD_HEIGHT);
+  const [color, setColor] = useState(Colors.getHSL(initialColor));
+  const [text, setText] = useState(getColorValue(initialColor));
+  const [valid, setValid] = useState(getValidColorString(text));
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+};
 
 export default asBaseComponent<Props>(ColorPickerDialog);
 
