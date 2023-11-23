@@ -71,10 +71,9 @@ const ColorPicker = (props: Props) => {
   } = props;
   const [show, setShow] = useState(false);
 
-  //eslint-disable-next-line react-hooks/exhaustive-deps
-  const showDialog = useCallback(setShow.bind(this, true), [setShow]);
-  //eslint-disable-next-line react-hooks/exhaustive-deps
-  const hideDialog = useCallback(setShow.bind(this, false), [setShow]);
+  const showDialog = useCallback(() => setShow(true), []);
+
+  const hideDialog = useCallback(() => setShow(false), []);
 
   return (
     <View row testID={testID} style={{backgroundColor}}>
