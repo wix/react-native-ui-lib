@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
