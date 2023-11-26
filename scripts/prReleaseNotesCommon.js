@@ -4,8 +4,8 @@ const childProcess = require('child_process');
 const fetch = require('node-fetch');
 const readline = require('readline');
 
-function fetchLatestReleaseDate(version) {
-  const relesae = childProcess.execSync(`gh release view ${version}`).toString();
+function fetchLatestReleaseDate(tagPrefix, version) {
+  const relesae = childProcess.execSync(`gh release view ${tagPrefix}${version}`).toString();
   const releaseMetaData = relesae.split('--')[0];
   const createDate = _.flow(data => _.split(data, '\n'),
     linesData => _.find(linesData, l => l.startsWith('created')),
@@ -147,8 +147,8 @@ function getReleaseNotesForType(PRs, title) {
   return releaseNotes;
 }
 
-async function _generateReleaseNotes(latestVersion, newVersion, githubToken, prefix, repo, header) {
-  const latestReleaseDate = fetchLatestReleaseDate(latestVersion);
+async function _generateReleaseNotes(latestVersion, newVersion, githubToken, fileNamePrefix, repo, header, tagPrefix) {
+  const latestReleaseDate = fetchLatestReleaseDate(tagPrefix, latestVersion);
   const PRs = await fetchMergedPRs(latestReleaseDate, repo, githubToken);
   if (!PRs) {
     return;
@@ -175,14 +175,14 @@ async function _generateReleaseNotes(latestVersion, newVersion, githubToken, pre
   releaseNotes += getReleaseNotesForType(silentPRs,
     '// Silent - these PRs did not have a changelog or were left out for some other reason, is it on purpose?');
 
-  fs.writeFileSync(`${process.env.HOME}/Downloads/${prefix}-release-notes_${newVersion}.txt`, releaseNotes, {
+  fs.writeFileSync(`${process.env.HOME}/Downloads/${fileNamePrefix}-release-notes_${newVersion}.txt`, releaseNotes, {
     encoding: 'utf8'
   });
 
-  console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32m${prefix}-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
+  console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32m${fileNamePrefix}-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
 }
 
-async function generateReleaseNotes(latestVersion, newVersion, githubToken, prefix, repo, header = '') {
+async function generateReleaseNotes(latestVersion, newVersion, githubToken, fileNamePrefix, repo, header = '', tagPrefix = '') {
   let latestVer, newVer;
   const rl = readline.createInterface({
     input: process.stdin,
@@ -200,7 +200,7 @@ async function generateReleaseNotes(latestVersion, newVersion, githubToken, pref
   rl.on('close', () => {
     console.info(`Current latest version is v${latestVer}`);
     console.info(`Generating release notes out or PRs for v${newVer}`);
-    _generateReleaseNotes(latestVer, newVer, githubToken, prefix, repo, header);
+    _generateReleaseNotes(latestVer, newVer, githubToken, fileNamePrefix, repo, header, tagPrefix);
   });
 }
 

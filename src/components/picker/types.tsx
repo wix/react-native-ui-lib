@@ -51,6 +51,10 @@ export interface PickerSearchStyle {
 export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /* ...TextField.propTypes, */
   /**
+   * Use dialog instead of modal picker
+   */
+  useDialog?: boolean;
+  /**
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
@@ -142,6 +146,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Render custom search input (only when passing showSearch)
    */
   renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
+  /**
+   * Render a custom header for Picker's dialog
+   */
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
   // /**
   //  * @deprecated pass useWheelPicker prop instead
   //  * Allow to use the native picker solution (different style for iOS and Android)
@@ -261,8 +269,11 @@ export type PickerItemsListProps = Pick<
   | 'searchPlaceholder'
   | 'onSearchChange'
   | 'renderCustomSearch'
+  | 'renderCustomDialogHeader'
   | 'useSafeArea'
   | 'useWheelPicker'
+  | 'useDialog'
+  | 'mode'
   | 'testID'
 > & {
   items?: {value: any; label: any}[];
