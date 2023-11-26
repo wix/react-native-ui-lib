@@ -163,7 +163,7 @@ const GradientSlider = (props: Props) => {
   };
 
   const _color = getColor();
-  const thumbTintColor = Colors.getHexString(color);
+  const thumbTintColor = Colors.getHexString(_color);
   let step = 0.01;
   let maximumValue = 1;
   let value = color.a;
@@ -216,4 +216,5 @@ const GradientSlider = (props: Props) => {
 GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
 
+// eslint-disable-next-line max-len
 export default asBaseComponent<GradientSliderComponentProps, typeof GradientSlider>(forwardRef(asSliderGroupChild(GradientSlider)));
