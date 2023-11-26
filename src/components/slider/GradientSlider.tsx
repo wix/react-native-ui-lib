@@ -190,27 +190,27 @@ const GradientSlider = (props: Props) => {
       break;
     default:
       break;
-    
-      const SliderComponent = migrate ? NewSlider : Slider;
+  }
+  const SliderComponent = migrate ? NewSlider : Slider;
 
-    return (
-      <SliderComponent
-        {...others}
-        //@ts-expect-error
-        ref={forwardedRef}
-        onReset={reset}
-        renderTrack={renderTrack}
-        step={step}
-        maximumValue={maximumValue}
-        value={value}
-        thumbTintColor={thumbTintColor}
-        onValueChange={sliderOnValueChange}
-        containerStyle={containerStyle}
-        disabled={disabled}
-        accessible={accessible}
-        useRange={false}
-      />
-    );
+  return (
+    <SliderComponent
+      {...others}
+      //@ts-expect-error
+      ref={forwardedRef}
+      onReset={reset}
+      renderTrack={renderTrack}
+      step={step}
+      maximumValue={maximumValue}
+      value={value}
+      thumbTintColor={thumbTintColor}
+      onValueChange={sliderOnValueChange}
+      containerStyle={containerStyle}
+      disabled={disabled}
+      accessible={accessible}
+      useRange={false}
+    />
+  );
 };
 
 GradientSlider.displayName = 'GradientSlider';
