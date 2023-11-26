@@ -48,15 +48,11 @@ export type ColorSliderGroupProps = {
   migrate?: boolean;
 };
 
-type ColorSliderProps = {
+type ColorSliderProps = Pick<
+  ColorSliderGroupProps,
+  'sliderContainerStyle' | 'showLabels' | 'labelsStyle' | 'accessible' | 'labels' | 'migrate' | 'initialColor'
+> & {
   type: GradientSliderTypes;
-  sliderContainerStyle: ColorSliderGroupProps['sliderContainerStyle'];
-  showLabels: ColorSliderGroupProps['showLabels'];
-  labelsStyle: ColorSliderGroupProps['labelsStyle'];
-  accessible: ColorSliderGroupProps['accessible'];
-  labels: ColorSliderGroupProps['labels'];
-  migrate: ColorSliderGroupProps['migrate'];
-  initialColor: ColorSliderGroupProps['initialColor'];
 };
 
 const ColorSlider = (props: ColorSliderProps) => {
