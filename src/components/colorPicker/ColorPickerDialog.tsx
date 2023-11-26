@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent, useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   LayoutAnimation,
   StyleSheet,
@@ -8,8 +8,7 @@ import {
   PixelRatio,
   I18nManager,
   StyleProp,
-  ViewStyle,
-  EmitterSubscription
+  ViewStyle
 } from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
