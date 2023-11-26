@@ -58,13 +58,6 @@ interface Props extends DialogProps {
 }
 export type ColorPickerDialogProps = Props;
 
-interface State {
-  keyboardHeight: number;
-  color: any;
-  text?: string;
-  valid: boolean;
-}
-
 const KEYBOARD_HEIGHT = 216;
 const MODAL_PROPS = {
   supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right'] // iOS only
