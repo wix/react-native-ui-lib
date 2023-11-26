@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent, GetDerivedStateFromProps} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import GradientSlider, {GradientSliderTypes} from './GradientSlider';
@@ -42,79 +42,102 @@ export type ColorSliderGroupProps = {
    * If true the component will have accessibility features enabled
    */
   accessible?: boolean;
-  /** 
+  /**
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
 };
 
-interface ColorSliderGroupState {
-  initialColor: string;
-}
+type ColorSliderProps = {
+  type: GradientSliderTypes;
+  sliderContainerStyle: ColorSliderGroupProps['sliderContainerStyle'];
+  showLabels: ColorSliderGroupProps['showLabels'];
+  labelsStyle: ColorSliderGroupProps['labelsStyle'];
+  accessible: ColorSliderGroupProps['accessible'];
+  labels: ColorSliderGroupProps['labels'];
+  migrate: ColorSliderGroupProps['migrate'];
+  initialColor: ColorSliderGroupProps['initialColor'];
+};
+
+const ColorSlider = (props: ColorSliderProps) => {
+  const {type, sliderContainerStyle, showLabels, labelsStyle, accessible, labels, migrate, initialColor} = props;
+  return (
+    <>
+      {showLabels && labels && (
+        <Text recorderTag={'unmask'} $textNeutral text80 style={labelsStyle} accessible={accessible}>
+          {labels[type]}
+        </Text>
+      )}
+      <GradientSlider
+        color={initialColor}
+        type={type}
+        containerStyle={sliderContainerStyle}
+        accessible={accessible}
+        migrate={migrate}
+      />
+    </>
+  );
+};
 
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
  */
-class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderGroupState> {
-  static displayName = 'ColorSliderGroup';
+const ColorSliderGroup = (props: ColorSliderGroupProps) => {
+  const {
+    labels = {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation', default: ''},
+    initialColor,
+    containerStyle,
+    showLabels,
+    labelsStyle,
+    accessible,
+    migrate,
+    sliderContainerStyle
+  } = props;
+  const [color, setColor] = useState(initialColor);
+  useEffect(() => {
+    setColor(initialColor);
+  }, [initialColor]);
 
-  static defaultProps = {
-    labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
+  const onValueChange = (value: string) => {
+    _.invoke(props, 'onValueChange', value);
   };
+  return (
+    <SliderGroup style={containerStyle} color={color} onValueChange={onValueChange}>
+      <ColorSlider
+        type={GradientSlider.types.HUE}
+        initialColor={initialColor}
+        sliderContainerStyle={sliderContainerStyle}
+        showLabels={showLabels}
+        labelsStyle={labelsStyle}
+        accessible={accessible}
+        labels={labels}
+        migrate={migrate}
+      />
+      <ColorSlider
+        type={GradientSlider.types.LIGHTNESS}
+        initialColor={initialColor}
+        sliderContainerStyle={sliderContainerStyle}
+        showLabels={showLabels}
+        labelsStyle={labelsStyle}
+        accessible={accessible}
+        labels={labels}
+        migrate={migrate}
+      />
+      <ColorSlider
+        type={GradientSlider.types.SATURATION}
+        initialColor={initialColor}
+        sliderContainerStyle={sliderContainerStyle}
+        showLabels={showLabels}
+        labelsStyle={labelsStyle}
+        accessible={accessible}
+        labels={labels}
+        migrate={migrate}
+      />
+    </SliderGroup>
+  );
+};
 
-  state = {
-    initialColor: this.props.initialColor
-  };
-
-  static getDerivedStateFromProps: GetDerivedStateFromProps<ColorSliderGroupProps, ColorSliderGroupState> = (nextProps,
-    prevState) => {
-    if (prevState.initialColor !== nextProps.initialColor) {
-      return {
-        initialColor: nextProps.initialColor
-      };
-    }
-    return null;
-  };
-
-  onValueChange = (value: string) => {
-    _.invoke(this.props, 'onValueChange', value);
-  };
-
-  renderSlider = (type: GradientSliderTypes) => {
-    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels, migrate} = this.props;
-
-    return (
-      <>
-        {showLabels && labels && (
-          <Text recorderTag={'unmask'} $textNeutral text80 style={labelsStyle} accessible={accessible}>
-            {labels[type]}
-          </Text>
-        )}
-        <GradientSlider
-          color={this.props.initialColor}
-          type={type}
-          containerStyle={sliderContainerStyle}
-          accessible={accessible}
-          migrate={migrate}
-        />
-      </>
-    );
-  };
-
-  render() {
-    const {containerStyle} = this.props;
-    const {initialColor} = this.state;
-
-    return (
-      <SliderGroup style={containerStyle} color={initialColor} onValueChange={this.onValueChange}>
-        {this.renderSlider(GradientSlider.types.HUE)}
-        {this.renderSlider(GradientSlider.types.LIGHTNESS)}
-        {this.renderSlider(GradientSlider.types.SATURATION)}
-      </SliderGroup>
-    );
-  }
-}
-
+ColorSliderGroup.displayName = 'ColorSliderGroup';
 export default asBaseComponent<ColorSliderGroupProps, typeof ColorSliderGroup>(ColorSliderGroup);
