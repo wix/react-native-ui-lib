@@ -56,20 +56,19 @@ export default class MaskedInput extends BaseInput {
   }
 
   render() {
-    const {containerStyle} = this.props;
-    const TextInputProps = TextField.extractOwnProps(this.props, ['containerStyle', 'style']);
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    const {containerStyle, style} = this.props;
 
     return (
       <TouchableOpacity style={containerStyle} activeOpacity={1} onPress={() => this.input.focus()}>
         <TextField
-          {...this.props}
           ref={r => (this.input = r)}
           containerStyle={styles.hiddenInputContainer}
           style={styles.hiddenInput}
           enableErrors={false}
           hideUnderline
           placeholder=""
-          {...TextInputProps}
+          {...this.props}
           caretHidden
           multiline={false}
           onChangeText={this.onChangeText}
