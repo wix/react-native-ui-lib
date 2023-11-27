@@ -99,38 +99,22 @@ const ColorSliderGroup = (props: ColorSliderGroupProps) => {
   const onValueChange = (value: string) => {
     _.invoke(props, 'onValueChange', value);
   };
+
+  const sliderProps = {
+    initialColor,
+    sliderContainerStyle,
+    showLabels,
+    labelsStyle,
+    accessible,
+    labels,
+    migrate
+  };
+
   return (
     <SliderGroup style={containerStyle} color={color} onValueChange={onValueChange}>
-      <ColorSlider
-        type={GradientSlider.types.HUE}
-        initialColor={initialColor}
-        sliderContainerStyle={sliderContainerStyle}
-        showLabels={showLabels}
-        labelsStyle={labelsStyle}
-        accessible={accessible}
-        labels={labels}
-        migrate={migrate}
-      />
-      <ColorSlider
-        type={GradientSlider.types.LIGHTNESS}
-        initialColor={initialColor}
-        sliderContainerStyle={sliderContainerStyle}
-        showLabels={showLabels}
-        labelsStyle={labelsStyle}
-        accessible={accessible}
-        labels={labels}
-        migrate={migrate}
-      />
-      <ColorSlider
-        type={GradientSlider.types.SATURATION}
-        initialColor={initialColor}
-        sliderContainerStyle={sliderContainerStyle}
-        showLabels={showLabels}
-        labelsStyle={labelsStyle}
-        accessible={accessible}
-        labels={labels}
-        migrate={migrate}
-      />
+      <ColorSlider type={GradientSlider.types.HUE} {...sliderProps}/>
+      <ColorSlider type={GradientSlider.types.LIGHTNESS} {...sliderProps}/>
+      <ColorSlider type={GradientSlider.types.SATURATION} {...sliderProps}/>
     </SliderGroup>
   );
 };
