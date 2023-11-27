@@ -82,16 +82,14 @@ const GradientSlider = (props: Props) => {
     containerStyle,
     disabled,
     accessible,
+    forwardedRef,
     ...others
   } = props;
 
-  const [prevColor, setPrevColor] = useState(Colors.getHSL(propsColors));
   const [initialColor, setInitialColor] = useState(Colors.getHSL(propsColors));
   const [color, setColor] = useState(Colors.getHSL(propsColors));
-  const slider = useRef<any>(null);
 
   useEffect(() => {
-    setPrevColor(Colors.getHSL(propsColors)); // TODO: Why does prevColor takes the new color ????
     setColor(Colors.getHSL(propsColors));
   }, [propsColors]);
 
@@ -101,11 +99,6 @@ const GradientSlider = (props: Props) => {
 
   const getColor = () => {
     return color || sliderContext.value;
-  };
-
-  const getStepColor = (i: number) => {
-    const color = getColor();
-    return tinycolor({...color, a: i}).toHslString();
   };
 
   const renderDefaultGradient = () => {
