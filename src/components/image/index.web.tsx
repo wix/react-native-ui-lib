@@ -174,6 +174,7 @@ class Image extends PureComponent<Props, State> {
           {...others} 
           src={finalSource} 
           style={StyleSheet.flatten([imageViewStyle, styles.containImage]) as CSSProperties}
+          alt={''}
         />
         {(overlayType || customOverlayContent) && 
           <Overlay 
