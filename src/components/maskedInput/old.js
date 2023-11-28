@@ -4,7 +4,7 @@ import React from 'react';
 import {StyleSheet, Keyboard} from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import BaseInput from '../baseInput';
-import TextField from '../textField';
+import TextField from '../textFieldOld';
 import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
