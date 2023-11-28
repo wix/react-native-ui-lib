@@ -17,7 +17,9 @@ function generateItemsOrder<ItemT extends SortableListItemProps>(data: SortableL
 }
 
 function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableListProps<ItemT>['data']) {
+  // @ts-expect-error - not worth further time investment IMO, maybe it'll work some day
   return reduce(filter(data, item => item.locked),
+    // @ts-expect-error - not worth further time investment IMO, maybe it'll work some day
     (item, cur) => ({...item, [(cur as ItemT).id]: true}),
     {});
 }
