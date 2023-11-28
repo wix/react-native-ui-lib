@@ -55,7 +55,7 @@ const FLOATING_PLACEHOLDER_SCALE = 0.875;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/BasicTextFieldScreen.js
  */
 export default class TextField extends BaseInput {
-  static displayName = 'TextField';
+  static displayName = 'TextFieldOld';
 
   static propTypes = {
     ...TextInputPropTypes,
