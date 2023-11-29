@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {CSSProperties, PureComponent} from 'react';
+import React, {PureComponent} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {
   StyleSheet,
