@@ -30,7 +30,7 @@ const DialogHeader = (props: DialogHeaderProps = {}) => {
 
   const knob = useMemo(() => {
     if (showKnob) {
-      return <View style={styles.knob}/>;
+      return <View style={[styles.knob, {backgroundColor: Colors.$outlineDefault}]}/>;
     }
   }, [showKnob]);
 
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     height: Spacings.s1,
     marginTop: Spacings.s2,
     marginBottom: Spacings.s2,
-    backgroundColor: Colors.$outlineDefault,
     borderRadius: BorderRadiuses.br10
   }
 });

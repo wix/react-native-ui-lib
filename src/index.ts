@@ -163,7 +163,7 @@ export {
 export {default as Text, TextProps} from './components/text';
 // @ts-expect-error
 export {default as TextArea} from './components/textArea';
-export {default as TextField} from './components/textField/TextFieldMigrator';
+export {default as TextField} from './components/textField';
 // @ts-expect-error
 export {default as Toast} from './components/toast';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';

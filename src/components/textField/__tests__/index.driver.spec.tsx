@@ -146,12 +146,7 @@ describe('TextField', () => {
 
   describe('validation message', () => {
     it('should not render validationMessage if enableErrors prop not supplied', async () => {
-      const component = (
-        <TestCase
-          value={''}
-          validationMessage={'mock message'}
-          validateOnStart
-        />);
+      const component = <TestCase value={''} validationMessage={'mock message'} validateOnStart/>;
 
       const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
 
@@ -159,13 +154,7 @@ describe('TextField', () => {
     });
 
     it('should render validationMessage on start if input required and validateOnStart passed', async () => {
-      const component = (
-        <TestCase
-          value={''}
-          validationMessage={'mock message'}
-          enableErrors
-          validateOnStart
-        />);
+      const component = <TestCase value={''} validationMessage={'mock message'} enableErrors validateOnStart/>;
       const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
 
       expect(await textFieldDriver.isValidationMsgExists()).toBe(true);
@@ -174,13 +163,8 @@ describe('TextField', () => {
 
     it('should render validationMessage when input is requires after changing the input to empty string', async () => {
       const component = (
-        <TestCase
-          value={''}
-          validate={'required'}
-          validationMessage={'mock message'}
-          enableErrors
-          validateOnChange
-        />);
+        <TestCase value={''} validate={'required'} validationMessage={'mock message'} enableErrors validateOnChange/>
+      );
       const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
 
       expect(await textFieldDriver.isValidationMsgExists()).toBe(false);
@@ -242,13 +226,7 @@ describe('TextField', () => {
 
   describe('validateOnBlur', () => {
     it('validate is called with undefined when defaultValue is not given', async () => {
-      const component = (
-        <TestCase
-          validateOnBlur
-          validationMessage={'Not valid'}
-          validate={[validate]}
-        />
-      );
+      const component = <TestCase validateOnBlur validationMessage={'Not valid'} validate={[validate]}/>;
       const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
       textFieldDriver.focus();
       textFieldDriver.blur();
@@ -259,18 +237,104 @@ describe('TextField', () => {
     it('validate is called with defaultValue when defaultValue is given', async () => {
       const defaultValue = '1';
       const component = (
-        <TestCase
-          validateOnBlur
-          validationMessage={'Not valid'}
-          validate={[validate]}
-          defaultValue={defaultValue}
-        />
+        <TestCase validateOnBlur validationMessage={'Not valid'} validate={[validate]} defaultValue={defaultValue}/>
       );
       const textFieldDriver = new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
       textFieldDriver.focus();
       textFieldDriver.blur();
       await waitFor(() => expect(validate).toHaveBeenCalledTimes(1));
       await waitFor(() => expect(validate).toHaveBeenCalledWith(defaultValue));
+    });
+  });
+  describe('Mandatory Indication', () => {
+    const getTestCaseDriver = (props: TextFieldProps) => {
+      const component = <TestCase {...props}/>;
+      return new TextFieldDriver({component, testID: TEXT_FIELD_TEST_ID});
+    };
+    const starReg = /.*\*$/;
+
+    //Sanity
+    it('Should show mandatory indication on the label', async () => {
+      const textFieldDriver = getTestCaseDriver({label: 'Label', validate: 'required', showMandatoryIndication: true});
+      const labelContent = await textFieldDriver.getLabelContent();
+      expect(labelContent).toMatch(starReg);
+    });
+    it('Should show mandatory indication on the label', async () => {
+      const textFieldDriver = getTestCaseDriver({
+        label: 'Label',
+        validate: ['required'],
+        showMandatoryIndication: true
+      });
+      const labelContent = await textFieldDriver.getLabelContent();
+      expect(labelContent).toMatch(starReg);
+    });
+    it('Should not show mandatory indication on label', async () => {
+      const textFieldDriver = getTestCaseDriver({label: 'label', showMandatoryIndication: true});
+      const labelText = await textFieldDriver.getLabelContent();
+      expect(labelText).not.toMatch(starReg);
+    });
+    it('Should not show mandatory indication on label', async () => {
+      const textFieldDriver = getTestCaseDriver({label: 'label', validate: 'required'});
+      const labelText = await textFieldDriver.getLabelContent();
+      expect(labelText).not.toMatch(starReg);
+    });
+    it('Should have mandatory on the placeholder', async () => {
+      const textFieldDriver = getTestCaseDriver({
+        placeholder: 'placeholder',
+        showMandatoryIndication: true,
+        validate: 'required'
+      });
+      const placeholderText = await textFieldDriver.getPlaceholderContent();
+      expect(placeholderText).toMatch(starReg);
+    });
+    it('Should not have any mandatory - 1', async () => {
+      const textFieldDriver = getTestCaseDriver({
+        placeholder: 'placeholder',
+        showMandatoryIndication: true,
+        // validate: 'required',
+        label: 'label'
+      });
+      const placeholderText = await textFieldDriver.getPlaceholderContent();
+      const labelText = await textFieldDriver.getLabelContent();
+      expect(placeholderText).not.toMatch(starReg);
+      expect(labelText).not.toMatch(starReg);
+    });
+    it('Should not have any mandatory - 2', async () => {
+      const textFieldDriver = getTestCaseDriver({
+        placeholder: 'placeholder',
+        // showMandatoryIndication: true,
+        validate: 'required',
+        label: 'label'
+      });
+      const placeholderText = await textFieldDriver.getPlaceholderContent();
+      const labelText = await textFieldDriver.getLabelContent();
+      expect(placeholderText).not.toMatch(starReg);
+      expect(labelText).not.toMatch(starReg);
+    });
+    it('Should have mandatory on the floating placeholder', async () => {
+      const textFieldDriver = getTestCaseDriver({
+        placeholder: 'placeholder',
+        floatingPlaceholder: true,
+        floatOnFocus: true,
+        showMandatoryIndication: true,
+        validate: 'required'
+      });
+      const placeholderText = await textFieldDriver.getPlaceholderContent();
+      expect(placeholderText).toMatch(starReg);
+    });
+
+    // Special cases
+    it('Should have mandatory on the label and not on the placeholder', async () => {
+      const textFieldDriver = getTestCaseDriver({
+        placeholder: 'placeholder',
+        showMandatoryIndication: true,
+        validate: 'required',
+        label: 'label'
+      });
+      const labelText = await textFieldDriver.getLabelContent();
+      const placeholderText = await textFieldDriver.getPlaceholderContent();
+      expect(labelText).toMatch(starReg);
+      expect(placeholderText).not.toMatch(starReg);
     });
   });
 });

@@ -8,10 +8,10 @@ import {
   BaseComponentInjectedProps,
   ForwardRefInjectedProps
 } from '../../commons/new';
-import {TextProps} from '../../components/text';
+import {TextProps} from '../text';
 import {RecorderProps} from '../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
-import {ViewProps} from '../../components/view';
+import {ViewProps} from '../view';
 
 export type ColorType =
   | string
@@ -38,7 +38,7 @@ export interface FieldStateProps extends InputProps {
   validateOnBlur?: boolean;
   /**
    * Callback for when field validated and failed
-  */
+   */
   onValidationFailed?: (failedValidatorIndex: number) => void;
   /**
    * A single or multiple validator. Can be a string (required, email) or custom function.
@@ -54,7 +54,14 @@ export interface FieldStateProps extends InputProps {
   onChangeValidity?: (isValid: boolean) => void;
 }
 
-export interface LabelProps {
+interface MandatoryIndication {
+  /**
+   * Whether to show a mandatory field indication.
+   */
+  showMandatoryIndication?: boolean;
+}
+
+export interface LabelProps extends MandatoryIndication {
   /**
    * Field label
    */
@@ -74,10 +81,9 @@ export interface LabelProps {
   validationMessagePosition?: ValidationMessagePositionType;
   floatingPlaceholder?: boolean;
   testID?: string;
-  showMandatoryIndication?: boolean;
 }
 
-export interface FloatingPlaceholderProps {
+export interface FloatingPlaceholderProps extends MandatoryIndication {
   /**
    * The placeholder for the field
    */
@@ -137,6 +143,7 @@ export interface CharCounterProps {
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,
     Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'>,
+    MandatoryIndication,
     RecorderProps {
   /**
    * A hint text to display when focusing the field
@@ -171,6 +178,7 @@ export type TextFieldProps = MarginModifiers &
   InputProps &
   LabelProps &
   Omit<FloatingPlaceholderProps, 'testID'> &
+  MandatoryIndication &
   // We're declaring these props explicitly here for react-docgen (which can't read hooks)
   // FieldStateProps &
   ValidationMessageProps &
@@ -252,10 +260,6 @@ export type TextFieldProps = MarginModifiers &
      * Set an alignment fit for inline behavior (when rendered inside a row container)
      */
     inline?: boolean;
-    /**
-     * Whether to show a mandatory field indication.
-     */
-    showMandatoryIndication?: boolean;
   };
 
 export type InternalTextFieldProps = PropsWithChildren<

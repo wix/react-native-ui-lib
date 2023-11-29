@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Colors} from './../../style';
+import {Colors} from '../../style';
 import {ColorType, Validator, FieldContextType, FloatingPlaceholderProps} from './types';
 // TODO: Fix this import after moving all TextField types to a single file after we move to the new docs
 import {TextFieldProps} from './index';

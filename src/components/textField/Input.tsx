@@ -1,17 +1,11 @@
 import React, {useContext, useMemo} from 'react';
 import {TextInput as RNTextInput, StyleSheet, Platform} from 'react-native';
 import {Constants, ForwardRefInjectedProps} from '../../commons/new';
-import {InputProps, ColorType} from './types';
+import {InputProps} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
 import FieldContext from './FieldContext';
 import useImperativeInputHandle from './useImperativeInputHandle';
-
-const DEFAULT_INPUT_COLOR: ColorType = {
-  default: Colors.$textDefault,
-  disabled: Colors.$textDisabled,
-  readonly: Colors.$textNeutral
-};
 
 const Input = ({
   // (!) extract flex prop to avoid passing them on Android
@@ -30,13 +24,18 @@ const Input = ({
   /* eslint-enable */
   style,
   hint,
-  color = DEFAULT_INPUT_COLOR,
+  color = {
+    default: Colors.$textDefault,
+    disabled: Colors.$textDisabled,
+    readonly: Colors.$textNeutral
+  },
   forwardedRef,
   formatter,
   useGestureHandlerInput,
   readonly,
   recorderTag,
   pointerEvents,
+  showMandatoryIndication,
   ...props
 }: InputProps & ForwardRefInjectedProps) => {
   const inputRef = useImperativeInputHandle(forwardedRef, {onChangeText: props.onChangeText});
@@ -46,6 +45,7 @@ const Input = ({
   const placeholderTextColor = getColorByState(props.placeholderTextColor, context);
   const value = formatter && !context.isFocused ? formatter(props.value) : props.value;
   const disabled = props.editable === false || readonly;
+  const shouldRenderIndication = context.isMandatory && showMandatoryIndication;
 
   const TextInput = useMemo(() => {
     if (useGestureHandlerInput) {
@@ -65,7 +65,7 @@ const Input = ({
       {...props}
       editable={!disabled}
       value={value}
-      placeholder={placeholder}
+      placeholder={shouldRenderIndication ? placeholder?.concat('*') : placeholder}
       placeholderTextColor={placeholderTextColor}
       // @ts-expect-error
       ref={inputRef}

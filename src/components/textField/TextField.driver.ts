@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {TextFieldProps} from './types';
 import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
-import {TextDriver} from '../../components/text/Text.driver';
+import {TextDriver} from '../text/Text.driver';
 
 
 export class TextFieldDriver extends ComponentDriver<TextFieldProps> {
