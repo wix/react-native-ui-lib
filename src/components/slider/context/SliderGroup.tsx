@@ -32,3 +32,4 @@ const SliderGroup = (props: SliderGroupProps) => {
 };
 
 SliderGroup.displayName = 'IGNORE';
+export default SliderGroup;
