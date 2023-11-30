@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
-import React, {Component, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
@@ -184,6 +184,7 @@ const GradientSlider = (props: Props) => {
     default:
       break;
   }
+  console.log(migrate, 'migrate');
   const SliderComponent = migrate ? NewSlider : Slider;
 
   return (
@@ -210,4 +211,4 @@ GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
 
 // eslint-disable-next-line max-len
-export default asBaseComponent<GradientSliderComponentProps, typeof GradientSlider>(forwardRef(asSliderGroupChild(GradientSlider)));
+export default asBaseComponent<GradientSliderComponentProps, typeof GradientSlider>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));
