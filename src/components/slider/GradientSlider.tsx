@@ -97,29 +97,29 @@ const GradientSlider = (props: Props) => {
     updateColor(initialColor);
   };
 
-  const getColor = () => {
+  const getColor = useCallback(() => {
     return color || sliderContext.value;
-  };
+  }, [color, sliderContext.value]);
 
-  const renderDefaultGradient = () => {
+  const renderDefaultGradient = useCallback(() => {
     const color = getColor();
 
     return <Gradient color={color} numberOfSteps={gradientSteps}/>;
-  };
+  }, [getColor, gradientSteps]);
 
-  const renderHueGradient = () => {
+  const renderHueGradient = useCallback(() => {
     return <Gradient type={Gradient.types.HUE} numberOfSteps={gradientSteps}/>;
-  };
+  }, [gradientSteps]);
 
-  const renderLightnessGradient = () => {
+  const renderLightnessGradient = useCallback(() => {
     const color = getColor();
     return <Gradient type={Gradient.types.LIGHTNESS} color={color} numberOfSteps={gradientSteps}/>;
-  };
+  }, [getColor, gradientSteps]);
 
-  const renderSaturationGradient = () => {
+  const renderSaturationGradient = useCallback(() => {
     const color = getColor();
     return <Gradient type={Gradient.types.SATURATION} color={color} numberOfSteps={gradientSteps}/>;
-  };
+  }, [getColor, gradientSteps]);
 
   const onValueChange = useCallback((value: string, alpha: number) => {
     // alpha returns for type.DEFAULT
