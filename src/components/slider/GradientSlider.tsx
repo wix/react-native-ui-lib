@@ -86,7 +86,7 @@ const GradientSlider = (props: Props) => {
     ...others
   } = props;
 
-  const [initialColor, setInitialColor] = useState(Colors.getHSL(propsColors));
+  const [initialColor] = useState(Colors.getHSL(propsColors));
   const [color, setColor] = useState(Colors.getHSL(propsColors));
 
   useEffect(() => {
