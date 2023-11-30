@@ -178,8 +178,8 @@ const TextField = (props: InternalTextFieldProps) => {
               )}
               <Input
                 placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
-                value={fieldState.value}
                 {...others}
+                value={fieldState.value}
                 readonly={readonly}
                 style={inputStyle}
                 onFocus={onFocus}
