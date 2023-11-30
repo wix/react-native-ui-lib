@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
@@ -121,11 +121,13 @@ const GradientSlider = (props: Props) => {
     return <Gradient type={Gradient.types.SATURATION} color={color} numberOfSteps={gradientSteps}/>;
   };
 
-  const onValueChange = (value: string, alpha: number) => {
+  const onValueChange = useCallback((value: string, alpha: number) => {
     // alpha returns for type.DEFAULT
     _onValueChange?.(value, alpha);
-  };
-  const updateColor = (color: tinycolor.ColorFormats.HSLA) => {
+  },
+  [_onValueChange]);
+
+  const updateColor = useCallback((color: tinycolor.ColorFormats.HSLA) => {
     if (!_.isEmpty(sliderContext)) {
       sliderContext.setValue?.(color);
     } else {
@@ -133,27 +135,32 @@ const GradientSlider = (props: Props) => {
       const hex = Colors.getHexString(color);
       onValueChange(hex, color.a);
     }
-  };
+  },
+  [sliderContext, onValueChange]);
 
-  const updateAlpha = (a: number) => {
+  const updateAlpha = useCallback((a: number) => {
     const color = getColor();
     updateColor({...color, a});
-  };
+  },
+  [getColor, updateColor]);
 
-  const updateHue = (h: number) => {
+  const updateHue = useCallback((h: number) => {
     const color = getColor();
     updateColor({...color, h});
-  };
+  },
+  [getColor, updateColor]);
 
-  const updateLightness = (l: number) => {
+  const updateLightness = useCallback((l: number) => {
     const color = getColor();
     updateColor({...color, l});
-  };
+  },
+  [getColor, updateColor]);
 
-  const updateSaturation = (s: number) => {
+  const updateSaturation = useCallback((s: number) => {
     const color = getColor();
     updateColor({...color, s});
-  };
+  },
+  [getColor, updateColor]);
 
   const _color = getColor();
   const thumbTintColor = Colors.getHexString(_color);
@@ -184,7 +191,6 @@ const GradientSlider = (props: Props) => {
     default:
       break;
   }
-  console.log(migrate, 'migrate');
   const SliderComponent = migrate ? NewSlider : Slider;
 
   return (
