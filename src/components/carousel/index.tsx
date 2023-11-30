@@ -203,11 +203,11 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const pagesCount = presenter.getChildrenLength(this.props);
     const {loop} = this.props;
     let nextPageIndex;
-    if (currentPage === pagesCount + 1) {
-      this.goToPage(0, false);
-      return;
-    }
     if (loop) {
+      if (currentPage === pagesCount + 1) {
+        this.goToPage(0, false);
+        return;
+      }
       nextPageIndex = currentPage + 1;
     } else {
       nextPageIndex = Math.min(pagesCount - 1, currentPage + 1);
