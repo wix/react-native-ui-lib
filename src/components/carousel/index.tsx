@@ -204,7 +204,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {loop} = this.props;
     let nextPageIndex;
     if (currentPage === pagesCount + 1) {
-      return this.goToPage(0, false);
+      this.goToPage(0, false);
+      return;
     }
     if (loop) {
       nextPageIndex = currentPage + 1;
