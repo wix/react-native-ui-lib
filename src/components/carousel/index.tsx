@@ -195,7 +195,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   goToPage(pageIndex: number, animated = true) {
-    this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
+    this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
   }
 
   goToNextPage() {
@@ -203,7 +203,9 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const pagesCount = presenter.getChildrenLength(this.props);
     const {loop} = this.props;
     let nextPageIndex;
-
+    if (currentPage === pagesCount + 1) {
+      return this.goToPage(0, false);
+    }
     if (loop) {
       nextPageIndex = currentPage + 1;
     } else {
@@ -211,12 +213,11 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     }
 
     this.goToPage(nextPageIndex, true);
-
-    // in case of a loop, after we advanced right to the cloned first page,
-    // we return silently to the real first page
-    if (loop && currentPage === pagesCount) {
-      this.goToPage(0, false);
-    }
+    // // in case of a loop, after we advanced right to the cloned first page,
+    // // we return silently to the real first page
+    // if (loop && currentPage === pagesCount) {
+    //   this.goToPage(0, false);
+    // }
   }
 
   getCalcIndex(index: number): number {
@@ -403,9 +404,10 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   };
 
   renderChildren() {
-    const {children, loop} = this.props;
+    const {children: propsChildren, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
-
+    const children =
+      Constants.isRTL && Constants.isAndroid ? React.Children.toArray(propsChildren).reverse() : propsChildren;
     const childrenArray = React.Children.map(children, (child, index) => {
       return this.renderChild(child, `${index}`);
     });
@@ -454,14 +456,14 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   renderCounter() {
     const {pageWidth, showCounter, counterTextStyle} = this.props;
-    const {currentStandingPage} = this.state;
+    const {currentPage} = this.state;
     const pagesCount = presenter.getChildrenLength(this.props);
 
     if (showCounter && !pageWidth) {
       return (
         <View center style={styles.counter}>
           <Text grey80 text90 style={[{fontWeight: 'bold'}, counterTextStyle]}>
-            {currentStandingPage + 1}/{pagesCount}
+            {currentPage + 1}/{pagesCount}
           </Text>
         </View>
       );
@@ -469,8 +471,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderAccessibleLayout() {
-    const {containerStyle, children, testID} = this.props;
-
+    const {containerStyle, children: propsChildren, testID} = this.props;
+    const children = Constants.isRTL && Constants.isAndroid ? React.Children.toArray(propsChildren) : propsChildren;
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
         <ScrollView
