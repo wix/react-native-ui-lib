@@ -457,14 +457,14 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   renderCounter() {
     const {pageWidth, showCounter, counterTextStyle} = this.props;
-    const {currentPage} = this.state;
+    const {currentStandingPage} = this.state;
     const pagesCount = presenter.getChildrenLength(this.props);
 
     if (showCounter && !pageWidth) {
       return (
         <View center style={styles.counter}>
           <Text grey80 text90 style={[{fontWeight: 'bold'}, counterTextStyle]}>
-            {currentPage + 1}/{pagesCount}
+            {currentStandingPage + 1}/{pagesCount}
           </Text>
         </View>
       );
