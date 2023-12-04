@@ -20,6 +20,7 @@ import TouchableOpacity from '../touchableOpacity';
 import Dialog, {DialogProps} from '../../incubator/Dialog';
 import Button from '../button';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
+import {getColorValue, getValidColorString, HSLColor, getHexString, getTextColor} from './ColorPickerPresenter';
 
 interface Props extends DialogProps {
   /**
@@ -62,32 +63,6 @@ const MODAL_PROPS = {
   supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right'] // iOS only
 } as ModalProps;
 
-function getColorValue(color?: string) {
-  if (!color) {
-    return;
-  }
-  return color.replace('#', '');
-}
-function getHexColor(text: string) {
-  if (!Colors.isTransparent(text)) {
-    const trimmed = text.replace(/\s+/g, '');
-    const hex = `#${trimmed}`;
-    return hex;
-  }
-  return text;
-}
-
-function getValidColorString(text?: string) {
-  if (text) {
-    const hex = getHexColor(text);
-
-    if (Colors.isValidHex(hex)) {
-      return {hex, valid: true};
-    }
-  }
-  return {undefined, valid: false};
-}
-
 type HeaderProps = Pick<Props, 'doneButtonColor' | 'accessibilityLabels' | 'testID'> & {
   valid: boolean;
   onDismiss: () => void;
@@ -119,15 +94,6 @@ const Header = (props: HeaderProps) => {
     </View>
   );
 };
-
-type HSLColor = ReturnType<typeof Colors.getHSL>;
-
-function getHexString(color: HSLColor) {
-  return _.toUpper(Colors.getHexString(color));
-}
-function getTextColor(color: string) {
-  return Colors.isDark(color) ? Colors.white : Colors.grey10;
-}
 
 type PreviewProps = Pick<Props, 'accessibilityLabels' | 'previewInputStyle' | 'testID'> & {
   color: HSLColor;
@@ -317,11 +283,11 @@ const ColorPickerDialog = (props: Props) => {
     setValid(valid);
   };
 
-  const updateColor = (hex: string) => {
+  const updateColor = useCallback((hex: string) => {
     setColor(Colors.getHSL(hex));
     setText(_.toUpper(getColorValue(hex)));
     setValid(true);
-  };
+  }, []);
   return (
     <Dialog
       visible={visible} //TODO: pass all Dialog props instead
