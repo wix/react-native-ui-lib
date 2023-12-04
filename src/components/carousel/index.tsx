@@ -307,7 +307,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   onMomentumScrollEnd = () => {
     // finished full page scroll
     const {currentStandingPage, currentPage} = this.state;
-    const index = this.getCalcIndex(currentPage);
+    const index = currentPage;
     const pagesCount = presenter.getChildrenLength(this.props);
 
     if (index < pagesCount) {
