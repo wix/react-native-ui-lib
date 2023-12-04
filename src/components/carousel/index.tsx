@@ -472,8 +472,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderAccessibleLayout() {
-    const {containerStyle, children: propsChildren, testID} = this.props;
-    const children = Constants.isRTL && Constants.isAndroid ? React.Children.toArray(propsChildren) : propsChildren;
+    const {containerStyle, children, testID} = this.props;
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
         <ScrollView
