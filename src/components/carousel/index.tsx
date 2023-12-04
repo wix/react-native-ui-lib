@@ -449,7 +449,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           color={color}
           {...others}
           numOfPages={pagesCount}
-          currentPage={this.state.currentPage}
+          currentPage={this.state.currentStandingPage}
         />
       );
     }
