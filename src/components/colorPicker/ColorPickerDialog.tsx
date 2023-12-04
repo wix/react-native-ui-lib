@@ -1,26 +1,14 @@
 import _ from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-  LayoutAnimation,
-  StyleSheet,
-  Keyboard,
-  TextInput,
-  PixelRatio,
-  I18nManager,
-  StyleProp,
-  ViewStyle
-} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {LayoutAnimation, StyleSheet, Keyboard, StyleProp, ViewStyle} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
-import Assets from '../../assets';
-import {Colors, Typography} from '../../style';
+import {Colors} from '../../style';
 import {ModalProps} from '../../components/modal';
-import View from '../view';
-import Text from '../text';
-import TouchableOpacity from '../touchableOpacity';
 import Dialog, {DialogProps} from '../../incubator/Dialog';
-import Button from '../button';
-import ColorSliderGroup from '../slider/ColorSliderGroup';
-import {getColorValue, getValidColorString, HSLColor, getHexString, getTextColor} from './ColorPickerPresenter';
+import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS} from './ColorPickerPresenter';
+import Header from './ColorPickerDialogHeader';
+import Preview from './ColorPickerPreview';
+import Sliders from './ColorPickerDialogSliders';
 
 interface Props extends DialogProps {
   /**
@@ -62,129 +50,6 @@ const KEYBOARD_HEIGHT = 216;
 const MODAL_PROPS = {
   supportedOrientations: ['portrait', 'landscape', 'landscape-left', 'landscape-right'] // iOS only
 } as ModalProps;
-
-type HeaderProps = Pick<Props, 'doneButtonColor' | 'accessibilityLabels' | 'testID'> & {
-  valid: boolean;
-  onDismiss: () => void;
-  onDonePressed: () => void;
-};
-
-const Header = (props: HeaderProps) => {
-  const {onDismiss, accessibilityLabels, testID, doneButtonColor, valid, onDonePressed} = props;
-
-  return (
-    <View row spread bg-white paddingH-20 style={styles.header}>
-      <Button
-        link
-        iconSource={Assets.icons.x}
-        iconStyle={{tintColor: Colors.$iconDefault}}
-        onPress={onDismiss}
-        accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
-        testID={`${testID}.dialog.cancel`}
-      />
-      <Button
-        color={doneButtonColor}
-        disabled={!valid}
-        link
-        iconSource={Assets.icons.check}
-        onPress={onDonePressed}
-        accessibilityLabel={_.get(accessibilityLabels, 'doneButton')}
-        testID={`${testID}.dialog.done`}
-      />
-    </View>
-  );
-};
-
-type PreviewProps = Pick<Props, 'accessibilityLabels' | 'previewInputStyle' | 'testID'> & {
-  color: HSLColor;
-  text: ReturnType<typeof getColorValue>;
-  valid: boolean;
-  onChangeText: (value: string) => void;
-  onFocus: () => void;
-};
-const Preview = (props: PreviewProps) => {
-  const {color, text, onChangeText, previewInputStyle, onFocus, accessibilityLabels, testID} = props;
-  const textInput = useRef<TextInput>(null);
-
-  const hex = getHexString(color);
-  const textColor = getTextColor(hex);
-  const fontScale = PixelRatio.getFontScale();
-  const value = Colors.isTransparent(text) ? '000000' : text;
-
-  return (
-    <View style={[styles.preview, {backgroundColor: hex}]}>
-      <TouchableOpacity center onPress={textInput.current?.focus} activeOpacity={1} accessible={false}>
-        <View style={styles.inputContainer}>
-          <Text
-            text60
-            white
-            marginL-13
-            marginR-5={Constants.isIOS}
-            style={{
-              color: textColor,
-              transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
-            }}
-            accessible={false}
-            recorderTag={'unmask'}
-          >
-            #
-          </Text>
-          <TextInput
-            ref={textInput}
-            value={value}
-            maxLength={6}
-            numberOfLines={1}
-            onChangeText={onChangeText}
-            style={[
-              styles.input,
-              {
-                color: textColor,
-                width: value ? (value.length + 1) * 16.5 * fontScale : undefined
-              },
-              Constants.isAndroid && {padding: 0},
-              previewInputStyle
-            ]}
-            selectionColor={textColor}
-            underlineColorAndroid="transparent"
-            autoCorrect={false}
-            autoComplete={'off'}
-            autoCapitalize={'characters'}
-            // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
-            returnKeyType={'done'}
-            enablesReturnKeyAutomatically
-            onFocus={onFocus}
-            accessibilityLabel={accessibilityLabels?.input}
-            testID={`${testID}.dialog.textInput`}
-          />
-        </View>
-        <View style={[{backgroundColor: textColor}, styles.underline]}/>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-type SlidersProps = Pick<Props, 'migrate'> & {
-  keyboardHeight: number;
-  color: HSLColor;
-  onSliderValueChange: (value: string) => void;
-};
-
-const Sliders = (props: SlidersProps) => {
-  const {keyboardHeight, color, migrate, onSliderValueChange} = props;
-  const colorValue = color.a === 0 ? Colors.$backgroundInverted : Colors.getHexString(color);
-  return (
-    <ColorSliderGroup
-      initialColor={colorValue}
-      containerStyle={[styles.sliderGroup, {height: keyboardHeight}]}
-      sliderContainerStyle={styles.slider}
-      showLabels
-      labelsStyle={styles.label}
-      accessible={false}
-      migrate={migrate}
-      onValueChange={onSliderValueChange}
-    />
-  );
-};
 
 /**
  * @description: A color picker dialog component
@@ -327,51 +192,10 @@ ColorPickerDialog.displayName = 'ColorPicker';
 
 export default asBaseComponent<Props>(ColorPickerDialog);
 
-const BORDER_RADIUS = 12;
-
 const styles = StyleSheet.create({
   dialog: {
     backgroundColor: Colors.$backgroundDefault,
     borderTopLeftRadius: BORDER_RADIUS,
     borderTopRightRadius: BORDER_RADIUS
-  },
-  preview: {
-    height: 200,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  header: {
-    height: 56,
-    borderTopLeftRadius: BORDER_RADIUS,
-    borderTopRightRadius: BORDER_RADIUS,
-    backgroundColor: Colors.$backgroundDefault
-  },
-  inputContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginBottom: Constants.isAndroid ? 5 : 8,
-    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
-  },
-  input: {
-    ...Typography.text60,
-    letterSpacing: 3,
-    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
-  },
-  underline: {
-    height: 1.5,
-    width: Constants.isAndroid ? 119 : 134,
-    marginRight: Constants.isAndroid ? 13 : 8
-  },
-  sliderGroup: {
-    paddingTop: 12,
-    marginHorizontal: 20
-  },
-  slider: {
-    marginBottom: 15,
-    height: 26
-  },
-  label: {
-    marginBottom: 3
   }
 });

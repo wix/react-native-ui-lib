@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {Colors} from '../../style';
 
 export type HSLColor = ReturnType<typeof Colors.getHSL>;
+export const BORDER_RADIUS = 12;
 
 export function getColorValue(color?: string) {
   if (!color) {
