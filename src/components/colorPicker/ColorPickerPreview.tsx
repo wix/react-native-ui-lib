@@ -1,9 +1,12 @@
 import React, {useRef} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native-ui-lib';
 import {StyleSheet, TextInput, PixelRatio, I18nManager} from 'react-native';
+
 import {Colors, Typography} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
 import {BORDER_RADIUS, HSLColor, getColorValue, getHexString, getTextColor} from './ColorPickerPresenter';
+import View from '../view';
+import TouchableOpacity from '../touchableOpacity';
+import Text from '../text';
 import {Constants} from '../../commons/new';
 
 type PreviewProps = Pick<ColorPickerDialogProps, 'accessibilityLabels' | 'previewInputStyle' | 'testID'> & {

@@ -1,6 +1,7 @@
 import React from 'react';
-import {Colors} from '../../style';
 import {StyleSheet} from 'react-native';
+
+import {Colors} from '../../style';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import {HSLColor} from './ColorPickerPresenter';
 import {ColorPickerDialogProps} from './ColorPickerDialog';

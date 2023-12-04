@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
 import {LayoutAnimation, StyleSheet, Keyboard, StyleProp, ViewStyle} from 'react-native';
+
 import {Constants, asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
 import {ModalProps} from '../../components/modal';

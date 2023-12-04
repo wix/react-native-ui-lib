@@ -1,11 +1,14 @@
-import React from 'react';
 import _ from 'lodash';
-import {View, Button} from 'react-native-ui-lib';
+import React from 'react';
 import {StyleSheet} from 'react-native';
+
+import View from '../view';
+import Button from '../button';
 import Assets from '../../assets';
 import {Colors} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
 import {BORDER_RADIUS} from './ColorPickerPresenter';
+
 type HeaderProps = Pick<ColorPickerDialogProps, 'doneButtonColor' | 'accessibilityLabels' | 'testID'> & {
   valid: boolean;
   onDismiss: () => void;
