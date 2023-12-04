@@ -449,7 +449,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           color={color}
           {...others}
           numOfPages={pagesCount}
-          currentPage={this.getCalcIndex(this.state.currentPage)}
+          currentPage={this.state.currentPage}
         />
       );
     }
@@ -493,7 +493,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderCarousel() {
-    const {containerStyle, animated, horizontal, animatedScrollOffset, ...others} = this.props;
+    const {containerStyle, animated, horizontal, animatedScrollOffset, style, ...others} = this.props;
     const scrollContainerStyle = this.shouldUsePageWidth()
       ? {paddingRight: this.getItemSpacings(this.props)}
       : undefined;
@@ -501,6 +501,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
     const ScrollContainer = animatedScrollOffset ? Animated.ScrollView : ScrollView;
     const contentOffset = this.getInitialContentOffset(snapToOffsets);
+    const _style = Constants.isRTL && Constants.isAndroid ? [styles.invertedView, style] : style;
     return (
       <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollContainer
@@ -518,6 +519,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           contentOffset={contentOffset}
           // onContentSizeChange={this.onContentSizeChange}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
+          style={_style}
         >
           {this.renderChildren()}
         </ScrollContainer>
@@ -553,5 +555,8 @@ const styles = StyleSheet.create({
   hiddenText: {
     position: 'absolute',
     width: 1
+  },
+  invertedView: {
+    transform: [{scaleX: -1}]
   }
 });
