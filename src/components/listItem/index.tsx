@@ -49,7 +49,14 @@ class ListItem extends Component<ListItemProps, ListItemState> {
 
   renderViewContainer = () => {
     const {pressed} = this.state;
-    const {containerStyle, style, underlayColor, ...others} = this.props;
+    const {
+      containerStyle,
+      style,
+      underlayColor,
+      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+      hitSlop,
+      ...others
+    } = this.props;
     const pressedStyle = {backgroundColor: underlayColor};
     return (
       <View style={[this.styles.container, containerStyle]} {...others}>

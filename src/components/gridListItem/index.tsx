@@ -189,11 +189,13 @@ class GridListItem extends Component<GridListItemProps> {
     const TextContainer = overlayText ? View : React.Fragment;
     const textContainerStyle = overlayText ? {style: [styles.overlayText, overlayTextContainerStyle]} : null;
     const imageBorderRadius = imageProps?.borderRadius;
+    // @ts-ignore hitSlop issues
+    const {hitSlop, ...otherContainerProps} = containerProps; // eslint-disable-line
 
     return (
       <Container
         style={[styles.container, alignToStart && styles.containerAlignedToStart, {width}, containerStyle]}
-        {...containerProps}
+        {...otherContainerProps}
         onPress={hasPress ? this.onItemPress : undefined}
         accessible={renderCustomItem ? true : undefined}
         {...Modifiers.extractAccessibilityProps(this.props)}

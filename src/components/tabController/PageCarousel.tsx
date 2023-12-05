@@ -104,6 +104,7 @@ function PageCarousel(props: ScrollViewProps) {
     <Reanimated.ScrollView
       {...others}
       style={_style}
+      // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
       ref={carousel}
       horizontal
       pagingEnabled
