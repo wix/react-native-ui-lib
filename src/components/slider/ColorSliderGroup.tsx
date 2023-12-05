@@ -4,7 +4,7 @@ import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import GradientSlider, {GradientSliderTypes} from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
-import Text from '../text';
+import ColorSlider from './ColorSlider';
 
 type SliderOnValueChange = (value: string) => void;
 
@@ -48,49 +48,13 @@ export type ColorSliderGroupProps = {
   migrate?: boolean;
 };
 
-type ColorSliderProps = Pick<
-  ColorSliderGroupProps,
-  'sliderContainerStyle' | 'showLabels' | 'labelsStyle' | 'accessible' | 'labels' | 'migrate' | 'initialColor'
-> & {
-  type: GradientSliderTypes;
-};
-
-const ColorSlider = (props: ColorSliderProps) => {
-  const {type, sliderContainerStyle, showLabels, labelsStyle, accessible, labels, migrate, initialColor} = props;
-  return (
-    <>
-      {showLabels && labels && (
-        <Text recorderTag={'unmask'} $textNeutral text80 style={labelsStyle} accessible={accessible}>
-          {labels[type]}
-        </Text>
-      )}
-      <GradientSlider
-        color={initialColor}
-        type={type}
-        containerStyle={sliderContainerStyle}
-        accessible={accessible}
-        migrate={migrate}
-      />
-    </>
-  );
-};
-
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
  */
 const ColorSliderGroup = (props: ColorSliderGroupProps) => {
-  const {
-    labels = {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation', default: ''},
-    initialColor,
-    containerStyle,
-    showLabels,
-    labelsStyle,
-    accessible,
-    migrate,
-    sliderContainerStyle
-  } = props;
+  const {initialColor, containerStyle, ...others} = props;
   const [color, setColor] = useState(initialColor);
   useEffect(() => {
     setColor(initialColor);
@@ -101,21 +65,11 @@ const ColorSliderGroup = (props: ColorSliderGroupProps) => {
   },
   [props]);
 
-  const sliderProps = {
-    initialColor,
-    sliderContainerStyle,
-    showLabels,
-    labelsStyle,
-    accessible,
-    labels,
-    migrate
-  };
-
   return (
     <SliderGroup style={containerStyle} color={color} onValueChange={onValueChange}>
-      <ColorSlider type={GradientSlider.types.HUE} {...sliderProps}/>
-      <ColorSlider type={GradientSlider.types.LIGHTNESS} {...sliderProps}/>
-      <ColorSlider type={GradientSlider.types.SATURATION} {...sliderProps}/>
+      <ColorSlider type={GradientSlider.types.HUE} initialColor={initialColor} {...others}/>
+      <ColorSlider type={GradientSlider.types.LIGHTNESS} initialColor={initialColor} {...others}/>
+      <ColorSlider type={GradientSlider.types.SATURATION} initialColor={initialColor} {...others}/>
     </SliderGroup>
   );
 };
