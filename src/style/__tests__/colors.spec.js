@@ -111,7 +111,7 @@ describe('style/Colors', () => {
       uut.getColorTint('#3F88C5', 20);
       uut.getColorTint('#3F88C5', 50);
       uut.getColorTint('#3F88C5', 70);
-      const cachedPalette = uut.generateColorPalette.cache.get('#3F88C5');
+      const cachedPalette = uut.generateColorPalette.cache.get('#3F88C5_');
       expect(cachedPalette).toBeDefined();
       expect(cachedPalette.length).toBe(8);
       expect(cachedPalette.includes('#3F88C5')).toBe(true);

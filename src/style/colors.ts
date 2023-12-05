@@ -372,7 +372,7 @@ function threeDigitHexToSix(value: string) {
 }
 
 function generatePaletteCacheResolver(color: string, options?: GeneratePaletteOptions) {
-  return `${color}_${JSON.stringify(options)}`;
+  return `${color}_${options ? JSON.stringify(options) : ''}`;
 } 
 
 const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette & typeof DesignTokens>;
