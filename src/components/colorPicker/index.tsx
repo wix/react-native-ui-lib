@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
@@ -71,9 +71,9 @@ const ColorPicker = (props: Props) => {
   } = props;
   const [show, setShow] = useState(false);
 
-  const showDialog = () => setShow(true);
+  const showDialog = useCallback(() => setShow(true), []);
 
-  const hideDialog = () => setShow(false);
+  const hideDialog = useCallback(() => setShow(false), []);
 
   return (
     <View row testID={testID} style={{backgroundColor}}>
