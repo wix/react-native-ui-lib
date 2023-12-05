@@ -9,17 +9,17 @@ type ItemsOrder = string[];
 
 const usePresenter = () => {
   return {
-    getTranslationByIndexChange: (newIndex: number, oldIndex: number, itemHeight: number) => {
+    getTranslationByIndexChange: (newIndex: number, oldIndex: number, itemSize: number) => {
       'worklet';
       if (newIndex === undefined) {
         return 0;
       }
 
-      return (newIndex - oldIndex) * itemHeight;
+      return (newIndex - oldIndex) * itemSize;
     },
-    getIndexByPosition: (positionY: number, itemHeight: number) => {
+    getIndexByPosition: (position: number, itemSize: number) => {
       'worklet';
-      return Math.round(positionY / itemHeight);
+      return Math.round(position / itemSize);
     },
     getItemIndexById: (itemsOrder: ItemsOrder, itemId: string) => {
       'worklet';
