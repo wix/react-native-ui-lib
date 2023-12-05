@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import GradientSlider, {GradientSliderTypes} from './GradientSlider';
@@ -96,9 +96,10 @@ const ColorSliderGroup = (props: ColorSliderGroupProps) => {
     setColor(initialColor);
   }, [initialColor]);
 
-  const onValueChange = (value: string) => {
+  const onValueChange = useCallback((value: string) => {
     _.invoke(props, 'onValueChange', value);
-  };
+  },
+  [props]);
 
   const sliderProps = {
     initialColor,
