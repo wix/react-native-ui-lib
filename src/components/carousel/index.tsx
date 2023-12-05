@@ -307,14 +307,13 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   onMomentumScrollEnd = () => {
     // finished full page scroll
     const {currentStandingPage, currentPage} = this.state;
-    const index = currentPage;
     const pagesCount = presenter.getChildrenLength(this.props);
 
-    if (index < pagesCount) {
-      this.setState({currentStandingPage: index});
+    if (currentPage < pagesCount) {
+      this.setState({currentStandingPage: currentPage});
 
-      if (currentStandingPage !== index) {
-        this.props.onChangePage?.(index, currentStandingPage, {isAutoScrolled: this.isAutoScrolled});
+      if (currentStandingPage !== currentPage) {
+        this.props.onChangePage?.(currentPage, currentStandingPage, {isAutoScrolled: this.isAutoScrolled});
         this.isAutoScrolled = false;
       }
     }
@@ -425,6 +424,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   renderPageControl() {
     const {pageControlPosition, pageControlProps = {}} = this.props;
+    const {currentStandingPage} = this.state;
 
     if (pageControlPosition) {
       const {
@@ -449,7 +449,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           color={color}
           {...others}
           numOfPages={pagesCount}
-          currentPage={this.state.currentStandingPage}
+          currentPage={currentStandingPage}
         />
       );
     }
