@@ -16,17 +16,17 @@ const SliderGroup = (props: SliderGroupProps) => {
   const {color, onValueChange, children} = props;
   const [value, setValue] = useState(Colors.getHSL(color));
 
-  const valueSetter = useCallback((value: tinycolor.ColorFormats.HSLA) => {
+  const _setValue = useCallback((value: tinycolor.ColorFormats.HSLA) => {
     setValue(value);
     onValueChange?.(Colors.getHexString(value));
   },
   [onValueChange]);
 
-  const providerValue = useMemo(() => ({value, setValue: valueSetter}), [value, valueSetter]);
+  const contextProviderValue = useMemo(() => ({value, setValue: _setValue}), [value, _setValue]);
 
   return (
     <View {...props}>
-      <SliderContext.Provider value={providerValue}>{children}</SliderContext.Provider>
+      <SliderContext.Provider value={contextProviderValue}>{children}</SliderContext.Provider>
     </View>
   );
 };
