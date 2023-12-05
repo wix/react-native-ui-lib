@@ -161,7 +161,7 @@ class GridListItem extends Component<GridListItemProps> {
       imageProps,
       alignToStart,
       containerStyle,
-      containerProps,
+      containerProps = {},
       renderCustomItem,
       children,
       title,
