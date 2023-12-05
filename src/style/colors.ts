@@ -247,7 +247,7 @@ export class Colors {
     const sliced = tints.slice(0, size);
     const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color);
     return adjusted || sliced;
-  });
+  }, generatePaletteCacheResolver);
 
   defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false, avoidReverseOnDark: false};
 
@@ -255,7 +255,7 @@ export class Colors {
     const _options = {...this.defaultOptions, ...options};
     const palette = this.generatePalette(color, _options);
     return this.shouldReverseOnDark(_options?.avoidReverseOnDark) ? _.reverse(palette) : palette;
-  });
+  }, generatePaletteCacheResolver);
 
   private generateDesignTokens(primaryColor: string, dark?: boolean) {
     let colorPalette: string[] = this.generatePalette(primaryColor);
@@ -370,6 +370,10 @@ function validateHex(value: string) {
 function threeDigitHexToSix(value: string) {
   return value.replace(/./g, '$&$&');
 }
+
+function generatePaletteCacheResolver(color: string, options?: GeneratePaletteOptions) {
+  return `${color}_${JSON.stringify(options)}`;
+} 
 
 const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette & typeof DesignTokens>;
 const colorObject = new TypedColors();
