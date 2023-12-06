@@ -156,7 +156,7 @@ const TextField = (props: InternalTextFieldProps) => {
             Known Issue: This slightly push the trailing accessory when entering a long text
           */}
           {children || (
-            <View flexG={!Constants.isWeb} flex={Constants.isWeb}>
+            <View {...(Constants.isWeb ? {flex: true} : {flexG: true})}>
               {/* Note: Render dummy placeholder for Android center issues */}
               {Constants.isAndroid && centered && (
                 <Text marginR-s1 style={dummyPlaceholderStyle}>
