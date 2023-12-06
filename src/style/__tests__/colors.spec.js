@@ -1,8 +1,12 @@
 import uut from '../colors';
+import LogService from '../../services/LogService';
+
 const SYSTEM_COLORS = ['grey', 'white', 'black'];
 const GetColorsByHexOptions = {validColors: SYSTEM_COLORS};
 
 describe('style/Colors', () => {
+  const logServiceSpy = jest.spyOn(LogService, 'error');
+  // jest.mock('../../services/LogService');
   it('should add alpha to hex color value', () => {
     expect(uut.rgba(uut.green30, 0.7)).toBe('rgba(0, 168, 126, 0.7)');
     expect(uut.rgba(uut.red10, 0.7)).toBe('rgba(213, 39, 18, 0.7)');
@@ -29,7 +33,10 @@ describe('style/Colors', () => {
   });
 
   it('should handle wrong number of params', () => {
-    expect(() => uut.rgba(101, 136, 0.7)).toThrow(new Error('rgba can work with either 2 or 4 arguments'));
+    expect(uut.rgba(101, 136, 0.7)).toBe(undefined);
+    expect(logServiceSpy).toHaveBeenCalledWith('Colors.rgba fail due to invalid arguments');
+    expect(uut.rgba(undefined, 0.2)).toBe(undefined);
+    expect(logServiceSpy).toHaveBeenCalledWith('Colors.rgba fail due to invalid arguments');
   });
 
   it('should handle invalid rgb code', () => {
