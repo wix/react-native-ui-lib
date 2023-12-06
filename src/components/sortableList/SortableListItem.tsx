@@ -24,7 +24,7 @@ export interface InternalSortableListItemProps {
 
 type Props = PropsWithChildren<InternalSortableListItemProps>;
 
-export const DEFAULT_LIST_ITEM_HEIGHT = 52;
+export const DEFAULT_LIST_ITEM_SIZE = 52;
 
 const animationConfig = {
   easing: Easing.inOut(Easing.ease),
@@ -40,7 +40,8 @@ const SortableListItem = (props: Props) => {
 
   const {
     data,
-    itemHeight,
+    itemSize,
+    horizontal,
     itemProps,
     onItemLayout,
     itemsOrder,
@@ -54,7 +55,7 @@ const SortableListItem = (props: Props) => {
   const locked: boolean = data[index].locked;
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
-  const translateY = useSharedValue<number>(0);
+  const translation = useSharedValue<number>(0);
 
   const isDragging = useSharedValue(false);
 
@@ -68,7 +69,7 @@ const SortableListItem = (props: Props) => {
     elevation: 0
   }));
 
-  const tempTranslateY = useSharedValue<number>(0);
+  const tempTranslation = useSharedValue<number>(0);
   const tempItemsOrder = useSharedValue<string[]>(itemsOrder.value);
 
   useDidUpdate(() => {
@@ -77,7 +78,7 @@ const SortableListItem = (props: Props) => {
     initialIndex.value = newItemIndex;
     currIndex.value = newItemIndex;
 
-    translateY.value = 0;
+    translation.value = 0;
   }, [data]);
 
   useAnimatedReaction(() => getItemIndexById(itemsOrder.value, id),
@@ -88,9 +89,9 @@ const SortableListItem = (props: Props) => {
 
       currIndex.value = newIndex;
       if (!isDragging.value) {
-        const translation = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
+        const _translation = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemSize.value);
 
-        translateY.value = withTiming(translation, animationConfig);
+        translation.value = withTiming(_translation, animationConfig);
       }
     },
     []);
@@ -100,8 +101,8 @@ const SortableListItem = (props: Props) => {
     .enabled(!locked)
     .onStart(() => {
       isDragging.value = true;
-      translateY.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemHeight.value);
-      tempTranslateY.value = translateY.value;
+      translation.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemSize.value);
+      tempTranslation.value = translation.value;
       tempItemsOrder.value = itemsOrder.value;
     })
     .onTouchesMove(() => {
@@ -110,10 +111,12 @@ const SortableListItem = (props: Props) => {
       }
     })
     .onUpdate(event => {
-      translateY.value = tempTranslateY.value + event.translationY;
+      const {translationX, translationY} = event;
+      const _translation = horizontal ? translationX : translationY;
+      translation.value = tempTranslation.value + _translation;
 
       // Swapping items
-      let newIndex = getIndexByPosition(translateY.value, itemHeight.value) + initialIndex.value;
+      let newIndex = getIndexByPosition(translation.value, itemSize.value) + initialIndex.value;
       const oldIndex = getItemIndexById(itemsOrder.value, id);
 
       if (newIndex !== oldIndex) {
@@ -141,11 +144,11 @@ const SortableListItem = (props: Props) => {
       }
     })
     .onEnd(() => {
-      const translation = getTranslationByIndexChange(getItemIndexById(itemsOrder.value, id),
+      const _translation = getTranslationByIndexChange(getItemIndexById(itemsOrder.value, id),
         getItemIndexById(tempItemsOrder.value, id),
-        itemHeight.value);
+        itemSize.value);
 
-      translateY.value = withTiming(tempTranslateY.value + translation, animationConfig, () => {
+      translation.value = withTiming(tempTranslation.value + _translation, animationConfig, () => {
         if (tempItemsOrder.value.toString() !== itemsOrder.value.toString()) {
           runOnJS(onChange)();
         }
@@ -168,7 +171,7 @@ const SortableListItem = (props: Props) => {
     return {
       backgroundColor: LIST_ITEM_BACKGROUND, // required for elevation to work in Android
       zIndex,
-      transform: [{translateY: translateY.value}, {scale}],
+      transform: [horizontal ? {translateX: translation.value} : {translateY: translation.value}, {scale}],
       opacity,
       ...itemProps?.margins,
       ...shadow

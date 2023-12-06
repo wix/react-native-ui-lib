@@ -156,7 +156,7 @@ const TextField = (props: InternalTextFieldProps) => {
             Known Issue: This slightly push the trailing accessory when entering a long text
           */}
           {children || (
-            <View flexG>
+            <View {...(Constants.isWeb ? {flex: true} : {flexG: true})}>
               {/* Note: Render dummy placeholder for Android center issues */}
               {Constants.isAndroid && centered && (
                 <Text marginR-s1 style={dummyPlaceholderStyle}>
@@ -178,8 +178,8 @@ const TextField = (props: InternalTextFieldProps) => {
               )}
               <Input
                 placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
-                value={fieldState.value}
                 {...others}
+                value={fieldState.value}
                 readonly={readonly}
                 style={inputStyle}
                 onFocus={onFocus}

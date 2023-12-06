@@ -9,7 +9,8 @@ export interface SortableListContextType<ItemT extends SortableListItemProps> {
   itemsOrder: SharedValue<string[]>;
   lockedIds: SharedValue<Dictionary<boolean>>;
   onChange: () => void;
-  itemHeight: SharedValue<number>;
+  itemSize: SharedValue<number>;
+  horizontal?: boolean;
   onItemLayout: ViewProps['onLayout'];
   enableHaptic?: boolean;
   scale?: number;
