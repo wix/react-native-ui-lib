@@ -87,6 +87,7 @@ const FloatingPlaceholder = (props: FloatingPlaceholderProps) => {
         onLayout={onPlaceholderLayout}
         testID={testID}
         recorderTag={'unmask'}
+        numberOfLines={1}
       >
         {shouldRenderIndication ? placeholder?.concat('*') : placeholder}
       </Text>

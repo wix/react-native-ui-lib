@@ -28,7 +28,7 @@ export enum ValidationMessagePosition {
   BOTTOM = 'bottom'
 }
 
-type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
+export type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
 
 export type Validator = Function | keyof typeof formValidators;
 
@@ -54,7 +54,7 @@ export interface FieldStateProps extends InputProps {
   onChangeValidity?: (isValid: boolean) => void;
 }
 
-interface MandatoryIndication {
+export interface MandatoryIndication {
   /**
    * Whether to show a mandatory field indication.
    */

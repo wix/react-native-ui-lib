@@ -64,7 +64,6 @@ yarn-error.log
 # UILib
 dist
 dist-ts
-yarn.lock
 package-lock.json
 docs/**/*.md
 

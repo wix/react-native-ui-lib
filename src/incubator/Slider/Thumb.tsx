@@ -85,6 +85,7 @@ const Thumb = (props: ThumbProps) => {
     });
   gesture.enabled(!disabled);
 
+  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     const customStyle = isPressed.value ? activeStyle?.value : defaultStyle?.value;
     return {
@@ -107,6 +108,7 @@ const Thumb = (props: ThumbProps) => {
     <GestureDetector gesture={gesture}>
       <View
         reanimated
+        // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
         style={[styles.thumbPosition, styles.thumbShadow, animatedStyle]}
         hitSlop={hitSlop}
         onLayout={onThumbLayout}

@@ -99,6 +99,7 @@ export const navigationData = {
       {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
       {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
       {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'},
+      {title: 'HorizontalSortableList', tags: 'sortable horizontal list drag', screen: 'unicorn.components.HorizontalSortableListScreen'},
       {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
       {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'}
     ]
