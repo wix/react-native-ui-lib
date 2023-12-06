@@ -19,7 +19,9 @@ import {
   FieldContextType,
   TextFieldMethods,
   TextFieldRef,
-  Validator
+  Validator,
+  ValidationMessagePositionType,
+  MandatoryIndication
 } from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
@@ -229,7 +231,9 @@ export {
   TextFieldMethods,
   TextFieldRef,
   ValidationMessagePosition as TextFieldValidationMessagePosition,
-  Validator as TextFieldValidator
+  Validator as TextFieldValidator,
+  ValidationMessagePositionType as TextFieldValidationMessagePositionType,
+  MandatoryIndication as TextFieldMandatoryIndication
 };
 export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any), {
   modifiersOptions: {
