@@ -10,6 +10,7 @@ import DesignTokensDM from './designTokensDM';
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
 import type {ExtendTypeWith} from '../typings/common';
+import LogService from '../services/LogService';
 
 export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
 export type TokensOptions = {primaryColor: string};
@@ -101,9 +102,9 @@ export class Colors {
    * p3 - B part of RGB
    * p4 - opacity
    */
-  rgba(p1: string, p2: number): string;
-  rgba(p1: number, p2: number, p3: number, p4: number): string;
-  rgba(p1: number | string, p2: number, p3?: number, p4?: number): string {
+  rgba(p1: string, p2: number): string | undefined;
+  rgba(p1: number, p2: number, p3: number, p4: number): string | undefined;
+  rgba(p1: number | string, p2: number, p3?: number, p4?: number): string | undefined {
     let hex;
     let opacity;
     let red;
@@ -129,7 +130,8 @@ export class Colors {
       blue = validateRGB(p3!);
       opacity = p4;
     } else {
-      throw new Error('rgba can work with either 2 or 4 arguments');
+      LogService.error('Colors.rgba fail due to invalid arguments');
+      return undefined;
     }
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
   }
