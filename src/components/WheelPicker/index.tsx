@@ -249,7 +249,7 @@ const WheelPicker = ({
     fakeLabelProps,
     offset,
     testID,
-    labelStyle,
+    itemLabelStyle,
     label,
     activeTextColor,
     inactiveTextColor,
