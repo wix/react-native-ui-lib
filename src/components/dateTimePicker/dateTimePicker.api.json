@@ -3,7 +3,9 @@
   "category": "form",
   "description": "Date and Time Picker Component that wraps RNDateTimePicker for date and time modes. See: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker",
   "note": "DateTimePicker uses a native library. You MUST add and link the native library to both iOS and Android projects",
-  "extends": ["form/TextField"],
+  "extends": [
+    "form/TextField"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DateTimePickerScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_iOS.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/DateTimePicker/DateTimePicker_Android.gif?raw=true"
@@ -21,10 +23,26 @@
       "description": "The initial value to set the picker to",
       "note": "Defaults to device's date and time"
     },
-    {"name": "onChange", "type": "() => Date", "description": "Called when the date/time change"},
-    {"name": "editable", "type": "boolean", "description": "Should this input be editable or disabled"},
-    {"name": "minimumDate", "type": "Date", "description": "The minimum date or time value to use"},
-    {"name": "maximumDate", "type": "Date", "description": "The maximum date or time value to use"},
+    {
+      "name": "onChange",
+      "type": "() => Date",
+      "description": "Called when the date/time change"
+    },
+    {
+      "name": "editable",
+      "type": "boolean",
+      "description": "Should this input be editable or disabled"
+    },
+    {
+      "name": "minimumDate",
+      "type": "Date",
+      "description": "The minimum date or time value to use"
+    },
+    {
+      "name": "maximumDate",
+      "type": "Date",
+      "description": "The maximum date or time value to use"
+    },
     {
       "name": "dateTimeFormatter",
       "type": "(value: Date, mode: DateTimePickerMode) => string",
@@ -54,14 +72,33 @@
       "description": "Allows changing of the timeZone of the date picker. By default it uses the device's time zone",
       "note": "iOS only"
     },
-    {"name": "dialogProps", "type": "DialogProps", "description": "Props to pass the Dialog component"},
-    {"name": "headerStyle", "type": "ViewStyle", "description": "Style to apply to the iOS dialog header"},
-    {"name": "renderInput", "type": "JSX.Element", "description": "Render custom input"},
+    {
+      "name": "dialogProps",
+      "type": "DialogProps",
+      "description": "Props to pass the Dialog component"
+    },
+    {
+      "name": "headerStyle",
+      "type": "ViewStyle",
+      "description": "Style to apply to the iOS dialog header"
+    },
+    {
+      "name": "renderInput",
+      "type": "JSX.Element",
+      "description": "Render custom input"
+    },
     {
       "name": "themeVariant",
       "type": "LIGHT | DARK",
       "description": "Override system theme variant (dark or light mode) used by the date picker"
+    },
+    {
+      "name": "display",
+      "type": "string",
+      "description": "Defines the visual display of the picker. The default value is 'spinner' on iOS and 'default' on Android. The list of all possible values are default, spinner, calendar or clock on Android and default, spinner, compact or inline for iOS. Full list can be found here: https://github.com/react-native-datetimepicker/datetimepicker#display-optional"
     }
   ],
-  "snippet": ["<DateTimePicker title={'Select time'$1} placeholder={'Placeholder'$2} mode={'time'$3}/>"]
+  "snippet": [
+    "<DateTimePicker title={'Select time'$1} placeholder={'Placeholder'$2} mode={'time'$3}/>"
+  ]
 }

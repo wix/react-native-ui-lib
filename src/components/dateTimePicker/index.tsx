@@ -126,6 +126,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     dialogProps,
     headerStyle,
     testID,
+    display = Constants.isIOS ? 'spinner' : undefined,
     ...others
   } = props;
 
@@ -255,7 +256,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         is24Hour={is24Hour}
         minuteInterval={minuteInterval}
         timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
-        display={Constants.isIOS ? 'spinner' : undefined}
+        display={display}
         themeVariant={themeVariant}
         testID={`${testID}.picker`}
       />
