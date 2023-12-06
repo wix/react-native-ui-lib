@@ -90,6 +90,10 @@ export type DateTimePickerProps = OldApiProps & Omit<TextFieldProps, 'value' | '
    * The component testID
    */
   testID?: string;
+  /**
+   * Allows changing the visual display of the picker
+   */
+  display?: string;
 };
 
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
