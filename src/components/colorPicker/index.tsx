@@ -82,7 +82,7 @@ const ColorPicker = (props: Props) => {
         colors={colors}
         style={styles.palette}
         usePagination={false}
-        animatedIndex={animatedIndex || colors.length - 1}
+        animatedIndex={animatedIndex === undefined ? colors.length - 1 : animatedIndex}
         onValueChange={onValueChange}
         testID={`${testID}-palette`}
         backgroundColor={backgroundColor}
