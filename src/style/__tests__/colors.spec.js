@@ -36,7 +36,7 @@ describe('style/Colors', () => {
     expect(uut.rgba(101, 136, 0.7)).toBe(undefined);
     expect(logServiceSpy).toHaveBeenCalledWith('Colors.rgba fail due to invalid arguments');
     expect(uut.rgba(undefined, 0.2)).toBe(undefined);
-    expect(logServiceSpy).toHaveBeenCalledWith('Colors.rgba fail due to invalid arguments');
+    expect(logServiceSpy).toHaveBeenNthCalledWith(2, 'Colors.rgba fail due to invalid arguments');
   });
 
   it('should handle invalid rgb code', () => {
