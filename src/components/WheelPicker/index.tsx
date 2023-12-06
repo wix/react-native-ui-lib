@@ -222,7 +222,7 @@ const WheelPicker = ({
   const fakeLabelProps = useMemo(() => {
     return {...labelMargins, ...labelProps};
   }, [labelMargins, labelProps]);
-
+  const itemLabelStyle = useMemo(() => ({...labelStyle, opacity: 0}), [labelStyle]);
   const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps>) => {
     return (
       <Item
@@ -235,7 +235,7 @@ const WheelPicker = ({
         {...item}
         disableRTL={shouldDisableRTL}
         fakeLabel={label}
-        fakeLabelStyle={labelStyle}
+        fakeLabelStyle={itemLabelStyle}
         fakeLabelProps={fakeLabelProps}
         centerH={!label}
         onSelect={selectItem}
