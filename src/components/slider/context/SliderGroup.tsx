@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../../style';
 import SliderContext from './SliderContext';
 import View from '../../view';
+import tinycolor from 'tinycolor2';
 
 interface SliderGroupProps {
   color: string;
@@ -11,40 +12,24 @@ interface SliderGroupProps {
   children?: React.ReactNode;
 }
 
-interface SliderGroupState {
-  value: tinycolor.ColorFormats.HSLA;
-}
+const SliderGroup = (props: SliderGroupProps) => {
+  const {color, onValueChange, children} = props;
+  const [value, setValue] = useState(Colors.getHSL(color));
 
-export default class SliderGroup extends Component<SliderGroupProps, SliderGroupState> {
-  static displayName = 'IGNORE';
+  const _setValue = useCallback((value: tinycolor.ColorFormats.HSLA) => {
+    setValue(value);
+    onValueChange?.(Colors.getHexString(value));
+  },
+  [onValueChange]);
 
-  constructor(props: SliderGroupProps) {
-    super(props);
+  const contextProviderValue = useMemo(() => ({value, setValue: _setValue}), [value, _setValue]);
 
-    this.state = {
-      value: Colors.getHSL(props.color)
-    };
-  }
+  return (
+    <View {...props}>
+      <SliderContext.Provider value={contextProviderValue}>{children}</SliderContext.Provider>
+    </View>
+  );
+};
 
-  getContextProviderValue() {
-    return {
-      value: this.state.value,
-      setValue: this.setValue
-    };
-  }
-
-  setValue = (value: tinycolor.ColorFormats.HSLA) => {
-    this.setState({value});
-    this.props.onValueChange?.(Colors.getHexString(value));
-  };
-
-  render() {
-    return (
-      <View {...this.props}>
-        <SliderContext.Provider value={this.getContextProviderValue()}>
-          {this.props.children}
-        </SliderContext.Provider>
-      </View>
-    );
-  }
-}
+SliderGroup.displayName = 'IGNORE';
+export default SliderGroup;

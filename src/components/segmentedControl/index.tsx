@@ -7,7 +7,6 @@ import Reanimated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-  WithTimingConfig,
   runOnJS
 } from 'react-native-reanimated';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
@@ -16,7 +15,7 @@ import View from '../view';
 import Segment, {SegmentedControlItemProps} from './segment';
 
 const BORDER_WIDTH = 1;
-const TIMING_CONFIG: WithTimingConfig = {
+const TIMING_CONFIG = {
   duration: 300,
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
