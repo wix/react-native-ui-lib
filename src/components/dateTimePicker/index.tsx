@@ -90,6 +90,10 @@ export type DateTimePickerProps = OldApiProps & Omit<TextFieldProps, 'value' | '
    * The component testID
    */
   testID?: string;
+  /**
+   * Allows changing the visual display of the picker
+   */
+  display?: string;
 };
 
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
@@ -126,6 +130,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     dialogProps,
     headerStyle,
     testID,
+    display = Constants.isIOS ? 'spinner' : undefined,
     ...others
   } = props;
 
@@ -255,7 +260,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         is24Hour={is24Hour}
         minuteInterval={minuteInterval}
         timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
-        display={Constants.isIOS ? 'spinner' : undefined}
+        display={display}
         themeVariant={themeVariant}
         testID={`${testID}.picker`}
       />
