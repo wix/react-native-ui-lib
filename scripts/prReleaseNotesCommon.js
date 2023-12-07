@@ -48,15 +48,21 @@ async function fetchMergedPRs(postMergedDate, repo, githubToken) {
   const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate),
     prs => _.sortBy(prs, 'merged_at'),
     prs =>
-      _.map(prs, pr => ({
-        state: pr.state,
-        merged_at: pr.merged_at,
-        html_url: pr.html_url,
-        branch: pr.head.ref,
-        number: pr.number,
-        title: pr.title,
-        info: parsePR(pr.body)
-      })))(PRs);
+      _.map(prs, pr => {
+        try {
+          return {
+            state: pr.state,
+            merged_at: pr.merged_at,
+            html_url: pr.html_url,
+            branch: pr.head.ref,
+            number: pr.number,
+            title: pr.title,
+            info: parsePR(pr.body)
+          };
+        } catch {
+          console.error('Failed parsing PR: ', pr.html_url);
+        }
+      }))(PRs);
 
   return relevantPRs;
 }
@@ -182,7 +188,13 @@ async function _generateReleaseNotes(latestVersion, newVersion, githubToken, fil
   console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32m${fileNamePrefix}-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
 }
 
-async function generateReleaseNotes(latestVersion, newVersion, githubToken, fileNamePrefix, repo, header = '', tagPrefix = '') {
+async function generateReleaseNotes(latestVersion,
+  newVersion,
+  githubToken,
+  fileNamePrefix,
+  repo,
+  header = '',
+  tagPrefix = '') {
   let latestVer, newVer;
   const rl = readline.createInterface({
     input: process.stdin,
