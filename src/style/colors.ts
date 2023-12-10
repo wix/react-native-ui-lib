@@ -177,7 +177,7 @@ export class Colors {
     return validColors ? undefined : results[0];
   }
 
-  shouldReverseOnDark = (avoidReverseOnDark?: boolean) => !avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark';
+  shouldReverseOnDark = (avoidReverseOnDark?: boolean) => !avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.isDarkMode();
   
   getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number, options: GetColorTintOptions = {}) {
     if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
