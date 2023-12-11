@@ -275,12 +275,15 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           <Text text90 $textNeutral>
             HUE
           </Text>
-          <GradientSlider
-            type={GradientSlider.types.HUE}
-            color={COLOR}
-            containerStyle={styles.gradientSliderContainer}
-            onValueChange={this.onGradientValueChange}
-          />
+          {
+            // @ts-ignore
+            <GradientSlider
+              type={GradientSlider.types.HUE}
+              color={COLOR}
+              containerStyle={styles.gradientSliderContainer}
+              onValueChange={this.onGradientValueChange}
+            />
+          }
           <View style={styles.box}>
             <View style={{flex: 1, backgroundColor: color}}/>
           </View>
