@@ -61,7 +61,7 @@ const ColorSliderGroup = (props: ColorSliderGroupProps) => {
   }, [initialColor]);
 
   const onValueChange = useCallback((value: string) => {
-    _.invoke(props, 'onValueChange', value);
+    props.onValueChange?.(value);
   },
   [props]);
 
