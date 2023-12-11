@@ -10,6 +10,7 @@ import DesignTokensDM from './designTokensDM';
 import ColorName from './colorName';
 import Scheme, {Schemes, SchemeType} from './scheme';
 import type {ExtendTypeWith} from '../typings/common';
+import LogService from '../services/LogService';
 
 export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
 export type TokensOptions = {primaryColor: string};
@@ -101,9 +102,9 @@ export class Colors {
    * p3 - B part of RGB
    * p4 - opacity
    */
-  rgba(p1: string, p2: number): string;
-  rgba(p1: number, p2: number, p3: number, p4: number): string;
-  rgba(p1: number | string, p2: number, p3?: number, p4?: number): string {
+  rgba(p1: string, p2: number): string | undefined;
+  rgba(p1: number, p2: number, p3: number, p4: number): string | undefined;
+  rgba(p1: number | string, p2: number, p3?: number, p4?: number): string | undefined {
     let hex;
     let opacity;
     let red;
@@ -129,7 +130,8 @@ export class Colors {
       blue = validateRGB(p3!);
       opacity = p4;
     } else {
-      throw new Error('rgba can work with either 2 or 4 arguments');
+      LogService.error('Colors.rgba fail due to invalid arguments');
+      return undefined;
     }
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
   }
@@ -175,7 +177,7 @@ export class Colors {
     return validColors ? undefined : results[0];
   }
 
-  shouldReverseOnDark = (avoidReverseOnDark?: boolean) => !avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.getSchemeType() === 'dark';
+  shouldReverseOnDark = (avoidReverseOnDark?: boolean) => !avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.isDarkMode();
   
   getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number, options: GetColorTintOptions = {}) {
     if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
@@ -247,7 +249,7 @@ export class Colors {
     const sliced = tints.slice(0, size);
     const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color);
     return adjusted || sliced;
-  });
+  }, generatePaletteCacheResolver);
 
   defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false, avoidReverseOnDark: false};
 
@@ -255,7 +257,7 @@ export class Colors {
     const _options = {...this.defaultOptions, ...options};
     const palette = this.generatePalette(color, _options);
     return this.shouldReverseOnDark(_options?.avoidReverseOnDark) ? _.reverse(palette) : palette;
-  });
+  }, generatePaletteCacheResolver);
 
   private generateDesignTokens(primaryColor: string, dark?: boolean) {
     let colorPalette: string[] = this.generatePalette(primaryColor);
@@ -370,6 +372,10 @@ function validateHex(value: string) {
 function threeDigitHexToSix(value: string) {
   return value.replace(/./g, '$&$&');
 }
+
+function generatePaletteCacheResolver(color: string, options?: GeneratePaletteOptions) {
+  return `${color}${options ? '_' + JSON.stringify(options) : ''}`;
+} 
 
 const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette & typeof DesignTokens>;
 const colorObject = new TypedColors();

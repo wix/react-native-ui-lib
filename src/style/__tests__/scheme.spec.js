@@ -105,4 +105,15 @@ describe('Scheme', () => {
       expect(listener).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('isDarkMode', () => {
+    it('should return false when app is on light mode', () => {
+      expect(Scheme.isDarkMode()).toBe(false);
+    });
+
+    it('should return true when app is on dark mode', () => {
+      Scheme.setScheme('dark');
+      expect(Scheme.isDarkMode()).toBe(true);
+    });
+  });
 });

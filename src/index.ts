@@ -29,12 +29,6 @@ import * as Incubator from './incubator';
 export {
   ExpandableOverlayProps,
   ExpandableOverlayMethods,
-  TextFieldProps,
-  TextFieldMethods,
-  TextFieldRef,
-  TextFieldValidationMessagePosition,
-  TextFieldValidator,
-  FieldContextType,
   ToastProps,
   ToastPresets,
   PanViewProps,
@@ -163,7 +157,17 @@ export {
 export {default as Text, TextProps} from './components/text';
 // @ts-expect-error
 export {default as TextArea} from './components/textArea';
-export {default as TextField} from './components/textField';
+export {
+  default as TextField,
+  TextFieldProps,
+  TextFieldMethods,
+  TextFieldRef,
+  TextFieldValidationMessagePosition,
+  TextFieldValidationMessagePositionType,
+  TextFieldMandatoryIndication,
+  TextFieldValidator,
+  FieldContextType
+} from './components/textField';
 // @ts-expect-error
 export {default as Toast} from './components/toast';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';

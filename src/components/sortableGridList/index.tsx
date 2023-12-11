@@ -63,7 +63,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   return (
     <GestureHandlerRootView>
       <ScrollView contentContainerStyle={[styles.listContent, listContentStyle]}>
-        {data?.map((item, index) => _renderItem({item, index} as ListRenderItemInfo<ItemProps<T>>))}
+        {_.map(data, (item, index) => _renderItem({item, index} as ListRenderItemInfo<ItemProps<T>>))}
       </ScrollView>
     </GestureHandlerRootView>
   );
