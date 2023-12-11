@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {useState, useEffect, useCallback} from 'react';
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
