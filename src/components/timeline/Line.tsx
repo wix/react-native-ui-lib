@@ -17,7 +17,7 @@ const Line = React.memo((props: LinePropsInternal) => {
 
   const solidLineStyle = useMemo(() => {
     return [style, styles.line, {width, backgroundColor: color}];
-  }, [color, style]);
+  }, [color, style, width]);
 
   const dashedLineStyle = useMemo(() => {
     return [style, styles.line];
