@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {ImageRequireSource} from 'react-native';
-import { IconProps } from '../icon';
+import {IconProps} from '../icon';
 
 export enum StateTypes {
   CURRENT = 'current', // default
