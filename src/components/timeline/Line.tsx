@@ -54,5 +54,5 @@ const styles = StyleSheet.create({
   },
   line: {
     overflow: 'hidden'
-  },
+  }
 });
