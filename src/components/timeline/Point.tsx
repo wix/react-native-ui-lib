@@ -20,7 +20,7 @@ type PointPropsInternal = PointProps & {
 };
 
 const Point = (props: PointPropsInternal) => {
-  const {icon, label, type, color, onLayout} = props;
+  const {icon, iconProps, label, type, color, onLayout} = props;
 
   const pointStyle = useMemo(() => {
     const hasOutline = type === PointTypes.OUTLINE;
@@ -43,7 +43,7 @@ const Point = (props: PointPropsInternal) => {
 
   const renderPointContent = () => {
     if (icon) {
-      return <Icon source={icon} size={ICON_SIZE} tintColor={Colors.$iconDefaultLight}/>;
+      return <Icon size={ICON_SIZE} tintColor={Colors.$iconDefaultLight} {...iconProps} source={icon}/>;
     } else if (label) {
       return <Text recorderTag={'unmask'} $textDefaultLight subtextBold>{label}</Text>;
     }
