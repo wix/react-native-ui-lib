@@ -3,7 +3,6 @@ import React from 'react';
 
 const useCombinedRefs = (...refs: React.Ref<any>[]) => {
   const targetRef = React.useRef();
-  console.log(refs);
 
   React.useEffect(() => {
     refs.forEach(ref => {
