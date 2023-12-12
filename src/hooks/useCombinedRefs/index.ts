@@ -1,14 +1,16 @@
+import _ from 'lodash';
 import React from 'react';
 
 const useCombinedRefs = (...refs: React.Ref<any>[]) => {
   const targetRef = React.useRef();
+  console.log(refs);
 
   React.useEffect(() => {
     refs.forEach(ref => {
       if (!ref) {
         return;
       }
-
+      console.log('hello');
       if (typeof ref === 'function') {
         ref(targetRef.current);
       } else {
@@ -16,7 +18,8 @@ const useCombinedRefs = (...refs: React.Ref<any>[]) => {
         ref.current = targetRef.current;
       }
     });
-  }, [refs]);
+  },
+  _.isArray(refs) ? refs : [refs]);
 
   return targetRef;
 };
