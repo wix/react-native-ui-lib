@@ -221,22 +221,24 @@ export class Colors {
 
   private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {    
     const hsl = Color(color).hsl();
-    const lightness = Math.round(hsl.color[2]);
-    const lightColorsThreshold = options?.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
-    const ls = [hsl.color[2]];
+    const colorLightness = hsl.color[2];
+    const lightness = Math.round(colorLightness);
     const isWhite = lightness === 100;
     const lightnessLevel = options?.addDarkestTints ? (isWhite ? 5 : 0) : 20;
-
-    let l = lightness - 10;
+    const lightColorsThreshold = options?.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
+    const step = options?.addDarkestTints ? 9 : 10;
+    const ls = [colorLightness];
+    
+    let l = lightness - step;
     while (l >= lightnessLevel - lightColorsThreshold) { // darker tints
       ls.unshift(l);
-      l -= 10;
+      l -= step;
     }
 
-    l = lightness + 10;
+    l = lightness + step;
     while (l < 100 - lightColorsThreshold) { // lighter tints
       ls.push(l);
-      l += 10;
+      l += step;
     }
 
     const tints: string[] = [];
@@ -244,17 +246,25 @@ export class Colors {
       const tint = generateColorTint(color, e);
       tints.push(tint);
     });
-
+    
     const size = options?.addDarkestTints ? 10 : 8;
-    const sliced = tints.slice(0, size);
+    const start = options?.addDarkestTints && colorLightness > 10 ? -size : 0;
+    const end = options?.addDarkestTints && colorLightness > 10 ? undefined : size;
+    const sliced = tints.slice(start, end);
+    
     const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color);
     return adjusted || sliced;
   }, generatePaletteCacheResolver);
 
-  defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false, avoidReverseOnDark: false};
+  defaultPaletteOptions = {
+    adjustLightness: true,
+    adjustSaturation: true,
+    addDarkestTints: false,
+    avoidReverseOnDark: false
+  };
 
   generateColorPalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
-    const _options = {...this.defaultOptions, ...options};
+    const _options = {...this.defaultPaletteOptions, ...options};
     const palette = this.generatePalette(color, _options);
     return this.shouldReverseOnDark(_options?.avoidReverseOnDark) ? _.reverse(palette) : palette;
   }, generatePaletteCacheResolver);

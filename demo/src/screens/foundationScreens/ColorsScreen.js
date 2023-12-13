@@ -11,8 +11,11 @@ import {
   Icon,
   Button,
   TextField,
-  Incubator
+  Incubator,
+  ColorPalette,
+  ColorPickerDialog
 } from 'react-native-ui-lib';
+import {renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
 
 const {Toast} = Incubator;
 
@@ -42,7 +45,14 @@ class ColorsScreen extends Component {
     searchValue: '',
     filteredTokens: [],
     showToast: false,
-    message: undefined
+    message: undefined,
+    currentColor: Colors.red30,
+    showPicker: false,
+    isDefaultOptions: false,
+    adjustLightness: false,
+    adjustSaturation: false,
+    addDarkestTints: true,
+    avoidReverseOnDark: true
   };
 
   scrollViewRef = React.createRef();
@@ -281,11 +291,91 @@ class ColorsScreen extends Component {
     );
   }
 
+  /** Color Palette */
+
+  showColorPicker = () => {
+    this.setState({showPicker: true});
+  };
+
+  onValueChange = (color) => {
+    this.setState({currentColor: color});
+  };
+
+  onSubmit = (color) => {
+    this.setState({currentColor: color});
+  };
+
+  onDismiss = () => {
+    this.setState({showPicker: false});
+  };
+
+  setDefaultOptions = () => {
+    const designKitsOptions = {adjustLightness: false, adjustSaturation: false, addDarkestTints: true, avoidReverseOnDark: true};
+    const defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false, avoidReverseOnDark: false};
+    if (this.state.isDefaultOptions) {
+      this.setState({...designKitsOptions, isDefaultOptions: false});
+    } else {
+      this.setState({...defaultOptions, isDefaultOptions: true});
+    }
+  };
+
+  renderColorPicker = () => {
+    const {showPicker, currentColor} = this.state;
+    return (
+      <ColorPickerDialog
+        visible={showPicker}
+        initialColor={currentColor}
+        key={currentColor}
+        onDismiss={this.onDismiss}
+        onSubmit={this.onSubmit}
+      />
+    );
+  };
+
+  renderOptions = () => {
+    return (
+      <View padding-20>
+        {renderBooleanOption.call(this, 'adjustLightness', 'adjustLightness')}
+        {renderBooleanOption.call(this, 'adjustSaturation', 'adjustSaturation')}
+        {renderBooleanOption.call(this, 'addDarkestTints', 'addDarkestTints')}
+        {renderBooleanOption.call(this, 'avoidReverseOnDark', 'avoidReverseOnDark')}
+        <Button label={this.state.isDefaultOptions ? 'Reset example' : 'Set defaults'} onPress={this.setDefaultOptions}/>
+      </View>
+    );
+  };
+
+  renderColorPalette = () => {
+    const {currentColor, adjustLightness, adjustSaturation, addDarkestTints, avoidReverseOnDark} = this.state;
+    const paletteOptions = {adjustLightness, adjustSaturation, addDarkestTints, avoidReverseOnDark};
+    const palette = Colors.generateColorPalette(currentColor, paletteOptions);
+    return (
+      <View margin-12 br40 style={{borderWidth: 1}}>
+        {this.renderOptions()}
+        <View center row>
+          <TouchableOpacity
+            marginH-10 
+            style={[styles.colorBox, {backgroundColor: currentColor}]} 
+            onPress={this.showColorPicker}
+          />
+          <ColorPalette
+            colors={palette}
+            value={currentColor}
+            swatchStyle={styles.swatchStyle}
+            containerStyle={{marginLeft: -10}}
+            onValueChange={this.onValueChange}
+          />
+        </View>
+      </View>
+    );
+  };
+
   render() {
     return (
       <>
         {this.renderSearch()}
         <ScrollView ref={this.scrollViewRef}>
+          {this.renderColorPalette()}
+          {this.renderColorPicker()}
           {this.renderDesignTokens()}
           {this.renderColors(SYSTEM_COLORS, 'SYSTEM COLORS')}
         </ScrollView>
@@ -303,6 +393,19 @@ const styles = StyleSheet.create({
   searchField: {
     padding: Spacings.s3,
     borderRadius: 8
+  },
+  colorBox: {
+    width: 60,
+    height: 60,
+    borderWidth: 1,
+    borderRadius: 30
+  },
+  swatchStyle: {
+    width: 18,
+    height: 40,
+    borderRadius: 10,
+    marginLeft: 4, 
+    marginRight: 4
   }
 });
 
