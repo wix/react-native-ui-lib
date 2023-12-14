@@ -369,13 +369,21 @@ class ColorsScreen extends Component {
     );
   };
 
+  renderColorPaletteExample = () => {
+    return (
+      <>
+        {this.renderColorPalette()}
+        {this.renderColorPicker()}
+      </>
+    );
+  };
+
   render() {
     return (
       <>
         {this.renderSearch()}
         <ScrollView ref={this.scrollViewRef}>
-          {this.renderColorPalette()}
-          {this.renderColorPicker()}
+          {/* {this.renderColorPaletteExample()} */}
           {this.renderDesignTokens()}
           {this.renderColors(SYSTEM_COLORS, 'SYSTEM COLORS')}
         </ScrollView>
