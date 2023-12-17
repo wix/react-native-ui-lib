@@ -7,7 +7,8 @@ import {
   ImageProps as RNImageProps,
   ImageBackground,
   NativeSyntheticEvent,
-  ImageErrorEventData
+  ImageErrorEventData,
+  Platform
 } from 'react-native';
 // @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
 import {ImagePropTypes} from 'deprecated-react-native-prop-types';
@@ -227,6 +228,12 @@ class Image extends PureComponent<Props, State> {
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
 
+    let finalSource = source;
+    if (source && Platform.OS === 'web') {
+      finalSource = source.uri;
+    }
+
+
     return (
       // @ts-ignore
       <ImageView
@@ -248,7 +255,7 @@ class Image extends PureComponent<Props, State> {
         fsTagName={recorderTag}
         {...others}
         onError={this.onError}
-        source={source}
+        source={finalSource}
       >
         {(overlayType || customOverlayContent) && (
           <Overlay
