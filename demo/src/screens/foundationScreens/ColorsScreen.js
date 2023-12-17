@@ -15,7 +15,7 @@ import {
   ColorPalette,
   ColorPickerDialog
 } from 'react-native-ui-lib';
-import {renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
+import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 const {Toast} = Incubator;
 
