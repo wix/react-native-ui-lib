@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {
   StyleSheet,
@@ -7,10 +7,11 @@ import {
   ImageProps as RNImageProps,
   ImageBackground,
   NativeSyntheticEvent,
-  ImageErrorEventData
+  ImageErrorEventData,
+  Platform
 } from 'react-native';
 // @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
-import {ImagePropTypes} from 'deprecated-react-native-prop-types';
+import { ImagePropTypes } from 'deprecated-react-native-prop-types';
 import {
   Constants,
   asBaseComponent,
@@ -18,12 +19,12 @@ import {
   BaseComponentInjectedProps,
   MarginModifiers
 } from '../../commons/new';
-import {RecorderProps} from '../../typings/recorderTypes';
-import {getAsset, isSvg} from '../../utils/imageUtils';
-import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
+import { RecorderProps } from '../../typings/recorderTypes';
+import { getAsset, isSvg } from '../../utils/imageUtils';
+import Overlay, { OverlayTypeType, OverlayIntensityType } from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
-import {Colors} from '../../style';
+import { Colors } from '../../style';
 
 export type ImageProps = RNImageProps &
   MarginModifiers &
@@ -147,7 +148,7 @@ class Image extends PureComponent<Props, State> {
 
   isGif() {
     if (Constants.isAndroid) {
-      const {source} = this.props;
+      const { source } = this.props;
       const url = _.get(source, 'uri');
       const isGif = /(http(s?):)([/|.|\w|\s|-])*\.gif/.test(url ?? '');
       return isGif;
@@ -155,7 +156,7 @@ class Image extends PureComponent<Props, State> {
   }
 
   shouldUseImageBackground() {
-    const {overlayType, customOverlayContent} = this.props;
+    const { overlayType, customOverlayContent } = this.props;
 
     return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
@@ -163,13 +164,13 @@ class Image extends PureComponent<Props, State> {
   getVerifiedSource(source?: ImagePropTypes.source) {
     if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       // @ts-ignore
-      return {...source, uri: undefined};
+      return { ...source, uri: undefined };
     }
     return source;
   }
 
   getImageSource() {
-    const {assetName, assetGroup, source} = this.props;
+    const { assetName, assetGroup, source } = this.props;
 
     if (!_.isUndefined(assetName)) {
       return getAsset(assetName, assetGroup);
@@ -183,29 +184,29 @@ class Image extends PureComponent<Props, State> {
 
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
     if (event.nativeEvent.error) {
-      this.setState({error: true});
+      this.setState({ error: true });
       this.props.onError?.(event);
     }
   };
 
   renderSvg = () => {
-    const {source, recorderTag, ...others} = this.props;
-    return <SvgImage data={source} fsTagName={recorderTag} {...others}/>;
+    const { source, recorderTag, ...others } = this.props;
+    return <SvgImage data={source} fsTagName={recorderTag} {...others} />;
   };
 
   renderImageWithContainer = () => {
-    const {style, cover, modifiers, width, height} = this.props;
-    const {margins} = modifiers;
+    const { style, cover, modifiers, width, height } = this.props;
+    const { margins } = modifiers;
 
     return (
-      <View style={[{width, height}, margins, style, styles.errorImageContainer, cover && styles.coverImage]}>
+      <View style={[{ width, height }, margins, style, styles.errorImageContainer, cover && styles.coverImage]}>
         {this.renderImage(true)}
       </View>
     );
   };
 
   renderImage = (useImageInsideContainer: boolean) => {
-    const {error} = this.state;
+    const { error } = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
       tintColor,
@@ -227,21 +228,21 @@ class Image extends PureComponent<Props, State> {
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
 
     let finalSource;
-    if (source.uri) {
+    if (source && Platform.OS === 'web') {
       finalSource = source.uri;
     } else if (!_.isEmpty(source)) {
       finalSource = source;
     }
-    
-    const {margins} = modifiers;
+
+    const { margins } = modifiers;
     const imageViewStyle = [
-      tintColor && {tintColor},
+      tintColor && { tintColor },
       shouldFlipRTL && styles.rtlFlipped,
-      width && {width},
-      height && {height},
+      width && { width },
+      height && { height },
       cover && styles.coverImage,
       this.isGif() && styles.gifImage,
-      aspectRatio && {aspectRatio},
+      aspectRatio && { aspectRatio },
       !useImageInsideContainer && margins,
       useImageInsideContainer && styles.containImage,
       style,
@@ -272,8 +273,8 @@ class Image extends PureComponent<Props, State> {
   };
 
   renderRegularImage() {
-    const {error} = this.state;
-    const {useBackgroundContainer} = this.props;
+    const { error } = this.state;
+    const { useBackgroundContainer } = this.props;
     if (error || useBackgroundContainer) {
       return this.renderImageWithContainer();
     } else {
@@ -282,7 +283,7 @@ class Image extends PureComponent<Props, State> {
   }
 
   render() {
-    const {source} = this.props;
+    const { source } = this.props;
     if (isSvg(source)) {
       return this.renderSvg();
     } else {
@@ -293,7 +294,7 @@ class Image extends PureComponent<Props, State> {
 
 const styles = StyleSheet.create({
   rtlFlipped: {
-    transform: [{scaleX: -1}]
+    transform: [{ scaleX: -1 }]
   },
   coverImage: {
     width: '100%',
@@ -315,5 +316,5 @@ const styles = StyleSheet.create({
 });
 
 hoistNonReactStatic(Image, RNImage);
-export {Image};
-export default asBaseComponent<ImageProps, typeof Image & typeof RNImage>(Image, {modifiersOptions: {margins: true}});
+export { Image };
+export default asBaseComponent<ImageProps, typeof Image & typeof RNImage>(Image, { modifiersOptions: { margins: true } });
