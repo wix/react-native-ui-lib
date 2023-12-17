@@ -228,12 +228,6 @@ class Image extends PureComponent<Props, State> {
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
 
-    let finalSource = source;
-    if (source && Platform.OS === 'web') {
-      finalSource = source.uri;
-    }
-
-
     return (
       // @ts-ignore
       <ImageView
