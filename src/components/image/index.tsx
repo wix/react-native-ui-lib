@@ -7,8 +7,7 @@ import {
   ImageProps as RNImageProps,
   ImageBackground,
   NativeSyntheticEvent,
-  ImageErrorEventData,
-  Platform
+  ImageErrorEventData
 } from 'react-native';
 // @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
 import {ImagePropTypes} from 'deprecated-react-native-prop-types';
