@@ -7,8 +7,7 @@ import {
   ImageProps as RNImageProps,
   ImageBackground,
   NativeSyntheticEvent,
-  ImageErrorEventData,
-  Platform
+  ImageErrorEventData
 } from 'react-native';
 // @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
 import {ImagePropTypes} from 'deprecated-react-native-prop-types';
@@ -227,13 +226,6 @@ class Image extends PureComponent<Props, State> {
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
-
-    // let finalSource;
-    // if (source && Platform.OS === 'web') {
-    //   finalSource = source.uri;
-    // } else if (!_.isEmpty(source)) {
-    //   finalSource = source;
-    // }
 
     return (
       // @ts-ignore
