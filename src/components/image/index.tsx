@@ -248,7 +248,7 @@ class Image extends PureComponent<Props, State> {
         fsTagName={recorderTag}
         {...others}
         onError={this.onError}
-        source={finalSource}
+        source={source}
       >
         {(overlayType || customOverlayContent) && (
           <Overlay
