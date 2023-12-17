@@ -228,12 +228,12 @@ class Image extends PureComponent<Props, State> {
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
 
-    let finalSource;
-    if (source && Platform.OS === 'web') {
-      finalSource = source.uri;
-    } else if (!_.isEmpty(source)) {
-      finalSource = source;
-    }
+    // let finalSource;
+    // if (source && Platform.OS === 'web') {
+    //   finalSource = source.uri;
+    // } else if (!_.isEmpty(source)) {
+    //   finalSource = source;
+    // }
 
     return (
       // @ts-ignore
@@ -256,7 +256,7 @@ class Image extends PureComponent<Props, State> {
         fsTagName={recorderTag}
         {...others}
         onError={this.onError}
-        source={finalSource}
+        source={source}
       >
         {(overlayType || customOverlayContent) && (
           <Overlay
