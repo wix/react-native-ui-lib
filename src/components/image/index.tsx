@@ -225,6 +225,14 @@ class Image extends PureComponent<Props, State> {
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
+
+    let finalSource;
+    if (source.uri) {
+      finalSource = source.uri;
+    } else if (!_.isEmpty(source)) {
+      finalSource = source;
+    }
+    
     const {margins} = modifiers;
     const imageViewStyle = [
       tintColor && {tintColor},
@@ -249,7 +257,7 @@ class Image extends PureComponent<Props, State> {
         fsTagName={recorderTag}
         {...others}
         onError={this.onError}
-        source={source}
+        source={finalSource}
       >
         {(overlayType || customOverlayContent) && (
           <Overlay
