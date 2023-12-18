@@ -168,7 +168,7 @@ describe('style/Colors', () => {
       expect(palette).toEqual(generatedPaletteLight);
     });
 
-    it('should generateColorPalette with avoidReverseOnDark option false not reverse on light mode', () => {
+    it('should generateColorPalette with avoidReverseOnDark option false not reverse on light mode (default)', () => {
       const palette = uut.generateColorPalette(baseColor, {avoidReverseOnDark: false});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
@@ -177,6 +177,13 @@ describe('style/Colors', () => {
   
     it('should generateColorPalette with avoidReverseOnDark option true not reverse on light mode', () => {
       const palette = uut.generateColorPalette(baseColor, {avoidReverseOnDark: true});
+      expect(palette.length).toBe(8);
+      expect(palette).toContain(baseColor);
+      expect(palette).toEqual(generatedPalette);
+    });
+
+    it('should generateColorPalette with addDarkestTints option false return 8 tints with 10 lightness increment (default)', () => {
+      const palette = uut.generateColorPalette(baseColor, {addDarkestTints: false});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
       expect(palette).toEqual(generatedPalette);
