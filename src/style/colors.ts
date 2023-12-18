@@ -337,7 +337,7 @@ function colorStringValue(color: string | object) {
   return color?.toString();
 }
 
-function adjustAllTints(colors: string[], color: string, levels: number[]) {
+function adjustAllSaturations(colors: string[], color: string, levels: number[]) {
   const array: string[] = [];
   _.forEach(colors, (c, index) => {
     if (c === color) {
@@ -359,7 +359,7 @@ function adjustAllTints(colors: string[], color: string, levels: number[]) {
 
 function adjustSaturation(colors: string[], color: string, levels?: number[]) {
   if (levels) {
-    return adjustAllTints(colors, color, levels);
+    return adjustAllSaturations(colors, color, levels);
   }
 
   let array;
