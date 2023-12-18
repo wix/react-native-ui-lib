@@ -339,16 +339,14 @@ function colorStringValue(color: string | object) {
 
 function adjustAllTints(colors: string[], levels: number[]) {
   const array: string[] = [];
-  console.log('INBAL - adjustAllTints 1:', colors, levels);
   _.forEach(colors, (color, index) => {
     const hsl = Color(color).hsl();
     const saturation = hsl.color[1];
     const level = levels[index];
     if (level) {
-      const saturationLevel = saturation + levels[index];
-      // const xxx = saturationLevel > 100
-      const adjusted = addSaturation(color, saturationLevel);
-      console.log('INBAL - adjustAllTints 2:', color, index, levels[index], saturation, saturationLevel, adjusted);
+      const saturationLevel = saturation + level;
+      const outOfRange = saturationLevel >= 100 || saturationLevel <= 0;
+      const adjusted = !outOfRange ? addSaturation(color, saturationLevel) : color;
       array[index] = adjusted;
     }
   });
