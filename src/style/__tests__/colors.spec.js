@@ -123,8 +123,8 @@ describe('style/Colors', () => {
     const tintsAdjustedLightness = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
     const tintsAdjustedSaturation = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
     const saturationLevels = [-10, -10, -20, -20, -25, -25, -25, -25, -20, -10];
-    const tintsSaturationLevels = ['#1E384D', '#2D5271', '#466C8C', '#5886AC', '#7F9EB8', '#A0B7CB', '#C1D0DD', '#E2E9EE'];
-    const tintsSaturationLevelsDarkest = ['#162837', '#223F58', '#385770', '#486E90', '#5E85A6', '#7C9CB6', '#9AB2C6', '#B7C9D7', '#D3DFE9', '#F0F5F9'];
+    const tintsSaturationLevels = ['#1E384D', '#2D5271', '#466C8C', '#3F88C5', '#7F9EB8', '#A0B7CB', '#C1D0DD', '#E2E9EE'];
+    const tintsSaturationLevelsDarkest = ['#162837', '#223F58', '#385770', '#486E90', '#3F88C5', '#7C9CB6', '#9AB2C6', '#B7C9D7', '#D3DFE9', '#F0F5F9'];
     const tintsAddDarkestTints = ['#12283B', '#1C405E', '#275881', '#3270A5', '#3F88C5', '#629ED0', '#86B4DA', '#A9CAE5', '#CCDFF0', '#EFF5FA'];
 
     it('should memoize calls for generateColorPalette', () => {
@@ -174,7 +174,7 @@ describe('style/Colors', () => {
     it('should generateColorPalette with adjustSaturation option true and saturationLevels 8 array', () => {
       const palette = uut.generateColorPalette(baseColor, {adjustSaturation: true, saturationLevels});
       expect(palette.length).toBe(8);
-      expect(palette).not.toContain(baseColor); // adjusting baseColor tint as well
+      expect(palette).toContain(baseColor); // adjusting baseColor tint as well
       expect(palette).toEqual(tintsSaturationLevels);
     });
 
@@ -182,7 +182,7 @@ describe('style/Colors', () => {
       const options = {adjustSaturation: true, saturationLevels, addDarkestTints: true};
       const palette = uut.generateColorPalette(baseColor, options);
       expect(palette.length).toBe(10);
-      expect(palette).not.toContain(baseColor); // adjusting baseColor tint as well
+      expect(palette).toContain(baseColor); // adjusting baseColor tint as well
       expect(palette).toEqual(tintsSaturationLevelsDarkest);
     });
 

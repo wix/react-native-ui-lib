@@ -337,17 +337,21 @@ function colorStringValue(color: string | object) {
   return color?.toString();
 }
 
-function adjustAllTints(colors: string[], levels: number[]) {
+function adjustAllTints(colors: string[], color: string, levels: number[]) {
   const array: string[] = [];
-  _.forEach(colors, (color, index) => {
-    const hsl = Color(color).hsl();
-    const saturation = hsl.color[1];
-    const level = levels[index];
-    if (level) {
-      const saturationLevel = saturation + level;
-      const outOfRange = saturationLevel >= 100 || saturationLevel <= 0;
-      const adjusted = !outOfRange ? addSaturation(color, saturationLevel) : color;
-      array[index] = adjusted;
+  _.forEach(colors, (c, index) => {
+    if (c === color) {
+      array[index] = color;
+    } else {
+      const hsl = Color(c).hsl();
+      const saturation = hsl.color[1];
+      const level = levels[index];
+      if (level) {
+        const saturationLevel = saturation + level;
+        const clampedLevel = _.clamp(saturationLevel, 0, 100);
+        const adjusted = addSaturation(c, clampedLevel);
+        array[index] = adjusted;
+      }
     }
   });
   return array;
@@ -355,7 +359,7 @@ function adjustAllTints(colors: string[], levels: number[]) {
 
 function adjustSaturation(colors: string[], color: string, levels?: number[]) {
   if (levels) {
-    return adjustAllTints(colors, levels);
+    return adjustAllTints(colors, color, levels);
   }
 
   let array;
