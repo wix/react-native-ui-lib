@@ -117,12 +117,15 @@ describe('style/Colors', () => {
 
   describe('generateColorPalette', () => {
     const baseColor = '#3F88C5';
+    const tints = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
     const baseColorLight = '#DCE9F4';
-    const generatedPalette = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
-    const generatedPaletteLight = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
-    const generatedPaletteAdjustedSaturation = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
-    const generatedPaletteAdjustedLightness = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
-    const generatedPaletteAddDarkestTints = ['#12283B', '#1C405E', '#275881', '#3270A5', '#3F88C5', '#629ED0', '#86B4DA', '#A9CAE5', '#CCDFF0', '#EFF5FA'];
+    const tintsLight = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
+    const tintsAdjustedLightness = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
+    const tintsAdjustedSaturation = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
+    const saturationLevels = [-10, -10, -20, -20, -25, -25, -25, -25, -20, -10];
+    const tintsSaturationLevels = ['#1E384D', '#2D5271', '#466C8C', '#5886AC', '#7F9EB8', '#A0B7CB', '#C1D0DD', '#E2E9EE'];
+    const tintsSaturationLevelsDarkest = ['#162837', '#223F58', '#385770', '#486E90', '#5E85A6', '#7C9CB6', '#9AB2C6', '#B7C9D7', '#D3DFE9', '#F0F5F9'];
+    const tintsAddDarkestTints = ['#12283B', '#1C405E', '#275881', '#3270A5', '#3F88C5', '#629ED0', '#86B4DA', '#A9CAE5', '#CCDFF0', '#EFF5FA'];
 
     it('should memoize calls for generateColorPalette', () => {
       uut.getColorTint(baseColor, 20);
@@ -137,63 +140,78 @@ describe('style/Colors', () => {
       const palette = uut.generateColorPalette(baseColor);
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
-      expect(palette).toEqual(generatedPalette);
+      expect(palette).toEqual(tints);
     });
 
     it('should generateColorPalette with adjustLightness option true (default)', () => {
       const palette = uut.generateColorPalette(baseColor, {adjustLightness: true});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
-      expect(palette).toEqual(generatedPaletteAdjustedLightness);
+      expect(palette).toEqual(tintsAdjustedLightness);
     });
 
     it('should generateColorPalette with adjustLightness option false', () => {
       const palette = uut.generateColorPalette(baseColor, {adjustLightness: false});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
-      expect(palette).toEqual(generatedPalette);
+      expect(palette).toEqual(tints);
     });
 
     it('should generateColorPalette with adjustSaturation option true (default)', () => {
       const palette = uut.generateColorPalette(baseColorLight, {adjustSaturation: true});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColorLight);
-      expect(palette).toEqual(generatedPaletteAdjustedSaturation);
+      expect(palette).toEqual(tintsAdjustedSaturation);
     });
 
     it('should generateColorPalette with adjustSaturation option false', () => {
       const palette = uut.generateColorPalette(baseColorLight, {adjustSaturation: false});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColorLight);
-      expect(palette).toEqual(generatedPaletteLight);
+      expect(palette).toEqual(tintsLight);
+    });
+
+    it('should generateColorPalette with adjustSaturation option true and saturationLevels 8 array', () => {
+      const palette = uut.generateColorPalette(baseColor, {adjustSaturation: true, saturationLevels});
+      expect(palette.length).toBe(8);
+      expect(palette).not.toContain(baseColor); // adjusting baseColor tint as well
+      expect(palette).toEqual(tintsSaturationLevels);
+    });
+
+    it('should generateColorPalette with adjustSaturation option true and saturationLevels 10 array and addDarkestTints true', () => {
+      const options = {adjustSaturation: true, saturationLevels, addDarkestTints: true};
+      const palette = uut.generateColorPalette(baseColor, options);
+      expect(palette.length).toBe(10);
+      expect(palette).not.toContain(baseColor); // adjusting baseColor tint as well
+      expect(palette).toEqual(tintsSaturationLevelsDarkest);
     });
 
     it('should generateColorPalette with avoidReverseOnDark option false not reverse on light mode (default)', () => {
       const palette = uut.generateColorPalette(baseColor, {avoidReverseOnDark: false});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
-      expect(palette).toEqual(generatedPalette);
+      expect(palette).toEqual(tints);
     });
   
     it('should generateColorPalette with avoidReverseOnDark option true not reverse on light mode', () => {
       const palette = uut.generateColorPalette(baseColor, {avoidReverseOnDark: true});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
-      expect(palette).toEqual(generatedPalette);
+      expect(palette).toEqual(tints);
     });
 
     it('should generateColorPalette with addDarkestTints option false return 8 tints with 10 lightness increment (default)', () => {
       const palette = uut.generateColorPalette(baseColor, {addDarkestTints: false});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
-      expect(palette).toEqual(generatedPalette);
+      expect(palette).toEqual(tints);
     });
   
     it('should generateColorPalette with addDarkestTints option true return 10 tints with 9 lightness increment', () => {
       const palette = uut.generateColorPalette(baseColor, {addDarkestTints: true});
       expect(palette.length).toBe(10);
       expect(palette).toContain(baseColor);
-      expect(palette).toEqual(generatedPaletteAddDarkestTints);
+      expect(palette).toEqual(tintsAddDarkestTints);
     });
   });
 

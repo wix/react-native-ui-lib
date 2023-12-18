@@ -21,6 +21,9 @@ export type GeneratePaletteOptions = {
   adjustLightness?: boolean;
   /** Whether to adjust the saturation of colors with high lightness and saturation (unifying saturation level throughout palette) */
   adjustSaturation?: boolean;
+  /** Array of saturation adjustments to apply on the color's tints array (from darkest to lightest). 
+   * The 'adjustSaturation' option must be true */
+  saturationLevels?: number[];
   /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
   addDarkestTints?: boolean;
   /** Whether to reverse the color palette to generate dark mode palette (pass 'true' to generate the same palette for both light and dark modes) */
@@ -252,7 +255,7 @@ export class Colors {
     const end = options?.addDarkestTints && colorLightness > 10 ? undefined : size;
     const sliced = tints.slice(start, end);
     
-    const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color);
+    const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color, options?.saturationLevels);
     return adjusted || sliced;
   }, generatePaletteCacheResolver);
 
@@ -260,7 +263,8 @@ export class Colors {
     adjustLightness: true,
     adjustSaturation: true,
     addDarkestTints: false,
-    avoidReverseOnDark: false
+    avoidReverseOnDark: false,
+    saturationLevels: undefined
   };
 
   generateColorPalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
@@ -333,7 +337,29 @@ function colorStringValue(color: string | object) {
   return color?.toString();
 }
 
-function adjustSaturation(colors: string[], color: string) {
+function adjustAllTints(colors: string[], levels: number[]) {
+  const array: string[] = [];
+  console.log('INBAL - adjustAllTints 1:', colors, levels);
+  _.forEach(colors, (color, index) => {
+    const hsl = Color(color).hsl();
+    const saturation = hsl.color[1];
+    const level = levels[index];
+    if (level) {
+      const saturationLevel = saturation + levels[index];
+      // const xxx = saturationLevel > 100
+      const adjusted = addSaturation(color, saturationLevel);
+      console.log('INBAL - adjustAllTints 2:', color, index, levels[index], saturation, saturationLevel, adjusted);
+      array[index] = adjusted;
+    }
+  });
+  return array;
+}
+
+function adjustSaturation(colors: string[], color: string, levels?: number[]) {
+  if (levels) {
+    return adjustAllTints(colors, levels);
+  }
+
   let array;
   const lightnessLevel = 80;
   const saturationLevel = 60;
