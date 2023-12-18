@@ -121,6 +121,7 @@ describe('style/Colors', () => {
     const generatedPalette = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
     const generatedPaletteLight = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
     const generatedPaletteAdjustedSaturation = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
+    const generatedPaletteAdjustedLightness = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
     const generatedPaletteAddDarkestTints = ['#12283B', '#1C405E', '#275881', '#3270A5', '#3F88C5', '#629ED0', '#86B4DA', '#A9CAE5', '#CCDFF0', '#EFF5FA'];
 
     it('should memoize calls for generateColorPalette', () => {
@@ -134,6 +135,20 @@ describe('style/Colors', () => {
 
     it('should generateColorPalette return 8 tints with 10 lightness increment', () => {
       const palette = uut.generateColorPalette(baseColor);
+      expect(palette.length).toBe(8);
+      expect(palette).toContain(baseColor);
+      expect(palette).toEqual(generatedPalette);
+    });
+
+    it('should generateColorPalette with adjustLightness option true (default)', () => {
+      const palette = uut.generateColorPalette(baseColor, {adjustLightness: true});
+      expect(palette.length).toBe(8);
+      expect(palette).toContain(baseColor);
+      expect(palette).toEqual(generatedPaletteAdjustedLightness);
+    });
+
+    it('should generateColorPalette with adjustLightness option false', () => {
+      const palette = uut.generateColorPalette(baseColor, {adjustLightness: false});
       expect(palette.length).toBe(8);
       expect(palette).toContain(baseColor);
       expect(palette).toEqual(generatedPalette);
