@@ -357,21 +357,21 @@ function adjustAllSaturations(colors: string[], baseColor: string, levels: numbe
   return array;
 }
 
-function adjustSaturation(colors: string[], color: string, levels?: number[]) {
+function adjustSaturation(colors: string[], baseColor: string, levels?: number[]) {
   if (levels) {
-    return adjustAllSaturations(colors, color, levels);
+    return adjustAllSaturations(colors, baseColor, levels);
   }
 
   let array;
   const lightnessLevel = 80;
   const saturationLevel = 60;
-  const hsl = Color(color).hsl();
+  const hsl = Color(baseColor).hsl();
   const lightness = Math.round(hsl.color[2]);
 
   if (lightness > lightnessLevel) {
     const saturation = Math.round(hsl.color[1]);
     if (saturation > saturationLevel) {
-      array = _.map(colors, e => (e !== color ? setSaturation(e, saturationLevel) : e));
+      array = _.map(colors, e => (e !== baseColor ? setSaturation(e, saturationLevel) : e));
     }
   }
   return array;
