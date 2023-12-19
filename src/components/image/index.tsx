@@ -104,6 +104,8 @@ type State = {
   prevSource: ImagePropTypes.source;
 };
 
+const defaultWebImageSize = 48;
+
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
@@ -207,11 +209,13 @@ class Image extends PureComponent<Props, State> {
   renderImage = (useImageInsideContainer: boolean) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
+    const defaultImageSize = Constants.isWeb ? defaultWebImageSize : undefined;
+
     const {
       tintColor,
       style,
-      width,
-      height,
+      width = defaultImageSize,
+      height = defaultImageSize,
       supportRTL,
       cover,
       aspectRatio,
