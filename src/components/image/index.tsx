@@ -218,7 +218,7 @@ class Image extends PureComponent<Props, State> {
       height = defaultImageSize,
       supportRTL,
       cover,
-      aspectRatio,
+      aspectRatio = 1,
       overlayType,
       overlayIntensity,
       overlayColor,
