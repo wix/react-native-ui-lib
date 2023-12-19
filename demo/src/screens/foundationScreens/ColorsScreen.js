@@ -46,7 +46,7 @@ class ColorsScreen extends Component {
     filteredTokens: [],
     showToast: false,
     message: undefined,
-    currentColor: Colors.red30,
+    currentColor: Colors.$textPrimary,
     showPicker: false,
     isDefaultOptions: false,
     adjustLightness: false,
@@ -372,6 +372,7 @@ class ColorsScreen extends Component {
   renderColorPaletteExample = () => {
     return (
       <>
+        <Text text50 marginL-20>Generate Color Palette</Text>
         {this.renderColorPalette()}
         {this.renderColorPicker()}
       </>
@@ -383,9 +384,9 @@ class ColorsScreen extends Component {
       <>
         {this.renderSearch()}
         <ScrollView ref={this.scrollViewRef}>
-          {/* {this.renderColorPaletteExample()} */}
           {this.renderDesignTokens()}
           {this.renderColors(SYSTEM_COLORS, 'SYSTEM COLORS')}
+          {this.renderColorPaletteExample()}
         </ScrollView>
         {this.renderToast()}
       </>

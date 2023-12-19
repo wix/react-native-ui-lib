@@ -25,7 +25,7 @@ export type GeneratePaletteOptions = {
    * The 'adjustSaturation' option must be true */
   saturationLevels?: number[];
   /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
-  addDarkestTints?: boolean;
+  addDarkestTints?: boolean; // TODO: rename 'fullPalette'
   /** Whether to reverse the color palette to generate dark mode palette (pass 'true' to generate the same palette for both light and dark modes) */
   avoidReverseOnDark?: boolean;
 }
@@ -337,19 +337,19 @@ function colorStringValue(color: string | object) {
   return color?.toString();
 }
 
-function adjustAllSaturations(colors: string[], color: string, levels: number[]) {
+function adjustAllSaturations(colors: string[], baseColor: string, levels: number[]) {
   const array: string[] = [];
   _.forEach(colors, (c, index) => {
-    if (c === color) {
-      array[index] = color;
+    if (c === baseColor) {
+      array[index] = baseColor;
     } else {
       const hsl = Color(c).hsl();
       const saturation = hsl.color[1];
       const level = levels[index];
-      if (level) {
+      if (level !== undefined) {
         const saturationLevel = saturation + level;
         const clampedLevel = _.clamp(saturationLevel, 0, 100);
-        const adjusted = addSaturation(c, clampedLevel);
+        const adjusted = setSaturation(c, clampedLevel);
         array[index] = adjusted;
       }
     }
@@ -371,13 +371,13 @@ function adjustSaturation(colors: string[], color: string, levels?: number[]) {
   if (lightness > lightnessLevel) {
     const saturation = Math.round(hsl.color[1]);
     if (saturation > saturationLevel) {
-      array = _.map(colors, e => (e !== color ? addSaturation(e, saturationLevel) : e));
+      array = _.map(colors, e => (e !== color ? setSaturation(e, saturationLevel) : e));
     }
   }
   return array;
 }
 
-function addSaturation(color: string, saturation: number): string {
+function setSaturation(color: string, saturation: number): string {
   const hsl = Color(color).hsl();
   hsl.color[1] = saturation;
   return hsl.hex();
