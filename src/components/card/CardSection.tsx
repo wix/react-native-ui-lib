@@ -107,13 +107,9 @@ class CardSection extends PureComponent<Props> {
       style,
       ...others
     } = this.props;
-    let alignItems;
-    if (Constants.isWeb) {
-      alignItems = 'stretch';
-    }
-
+  
     return (
-      <View style={[styles.container, borderStyle, style, {alignItems}]} {...others}>
+      <View style={[styles.container, borderStyle, style, Constants.isWeb && {alignItems: 'stretch'}]} {...others}>
         {imageSource && this.renderImage()}
         {!imageSource && this.renderContent()}
       </View>
