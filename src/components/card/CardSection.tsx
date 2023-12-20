@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
+import {Constants} from 'react-native-ui-lib';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import Text, {TextProps} from '../text';
@@ -106,9 +107,16 @@ class CardSection extends PureComponent<Props> {
       style,
       ...others
     } = this.props;
+    let alignItems;
+    if (Constants.isWeb) {
+      alignItems = 'stretch';
+    } else {
+      // @ts-expect-error
+      alignItems = style?.alignItems;
+    }
 
     return (
-      <View style={[styles.container, borderStyle, style]} {...others}>
+      <View style={[styles.container, borderStyle, style, {alignItems}]} {...others}>
         {imageSource && this.renderImage()}
         {!imageSource && this.renderContent()}
       </View>
