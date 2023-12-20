@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
-import {Constants} from 'react-native-ui-lib';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import Text, {TextProps} from '../text';
