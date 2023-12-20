@@ -1,15 +1,15 @@
 import _ from 'lodash';
-import React, { PureComponent } from 'react';
-import { StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp } from 'react-native';
-import { Constants } from 'react-native-ui-lib';
-import { asBaseComponent } from '../../commons/new';
-import View, { ViewProps } from '../view';
-import Text, { TextProps } from '../text';
-import Image, { ImageProps } from '../image';
-import asCardChild, { asCardChildProps } from './asCardChild';
+import React, {PureComponent} from 'react';
+import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
+import {Constants} from 'react-native-ui-lib';
+import {asBaseComponent} from '../../commons/new';
+import View, {ViewProps} from '../view';
+import Text, {TextProps} from '../text';
+import Image, {ImageProps} from '../image';
+import asCardChild, {asCardChildProps} from './asCardChild';
 
 
-type ContentType = TextProps & { text?: string };
+type ContentType = TextProps & {text?: string};
 
 export type CardSectionProps = ViewProps & {
   /**
@@ -57,18 +57,18 @@ class CardSection extends PureComponent<Props> {
   static displayName = 'Card.Section';
 
   renderContent = () => {
-    const { content, leadingIcon, trailingIcon, contentStyle, testID } = this.props;
+    const {content, leadingIcon, trailingIcon, contentStyle, testID} = this.props;
     if (!leadingIcon && !trailingIcon && _.isEmpty(content)) {
       return;
     }
 
     return (
       <>
-        {leadingIcon && <Image testID={`${testID}.leadingIcon`} {...leadingIcon} />}
+        {leadingIcon && <Image testID={`${testID}.leadingIcon`} {...leadingIcon}/>}
         <View testID={`${testID}.contentContainer`} style={[contentStyle]}>
           {_.map(content,
             // @ts-ignore
-            ({ text, ...others } = {}, index) => {
+            ({text, ...others} = {}, index) => {
               return (
                 !_.isUndefined(text) && (
                   <Text testID={`${testID}.text.${index}`} key={index} {...others}>
@@ -78,13 +78,13 @@ class CardSection extends PureComponent<Props> {
               );
             })}
         </View>
-        {trailingIcon && <Image testID={`${testID}.trailingIcon`} {...trailingIcon} />}
+        {trailingIcon && <Image testID={`${testID}.trailingIcon`} {...trailingIcon}/>}
       </>
     );
   };
 
   renderImage = () => {
-    const { imageSource, imageStyle, imageProps, testID } = this.props;
+    const {imageSource, imageStyle, imageProps, testID} = this.props;
 
     // not actually needed, instead of adding ts-ignore
     if (imageSource) {
@@ -103,11 +103,11 @@ class CardSection extends PureComponent<Props> {
   render() {
     const {
       imageSource,
-      context: { borderStyle },
+      context: {borderStyle},
       style,
       ...others
     } = this.props;
-
+  
     return (
       <View style={[styles.container, borderStyle, style]} {...others}>
         {imageSource && this.renderImage()}
