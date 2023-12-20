@@ -381,14 +381,17 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
       return (
         <View
-          style={{
-            width: pageWidth,
-            height: !horizontal ? pageHeight : undefined,
-            paddingLeft,
-            marginLeft,
-            marginRight,
-            paddingVertical
-          }}
+          style={[
+            {
+              width: pageWidth,
+              height: !horizontal ? pageHeight : undefined,
+              paddingLeft,
+              marginLeft,
+              marginRight,
+              paddingVertical
+            },
+            Constants.isRTL && Constants.isAndroid && styles.invertedView
+          ]}
           key={key}
           collapsable={false}
         >
