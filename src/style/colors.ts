@@ -229,7 +229,7 @@ export class Colors {
     const isWhite = lightness === 100;
     const lightnessLevel = options?.addDarkestTints ? (isWhite ? 5 : 0) : 20;
     const lightColorsThreshold = options?.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
-    const step = options?.addDarkestTints ? 9 : 10;
+    const step = /* options?.addDarkestTints ? 9 :  */10;
     const ls = [colorLightness];
     
     let l = lightness - step;
