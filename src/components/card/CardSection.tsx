@@ -110,9 +110,6 @@ class CardSection extends PureComponent<Props> {
     let alignItems;
     if (Constants.isWeb) {
       alignItems = 'stretch';
-    } else {
-      // @ts-expect-error
-      alignItems = style?.alignItems;
     }
 
     return (
