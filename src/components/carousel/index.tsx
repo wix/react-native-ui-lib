@@ -56,7 +56,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     this.state = {
       containerWidth: undefined,
       // @ts-ignore (defaultProps)
-      currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
+      currentPage: props.initialPage,
       currentStandingPage: props.initialPage || 0,
       pageWidth: defaultPageWidth,
       pageHeight,
@@ -219,15 +219,6 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     // if (loop && currentPage === pagesCount) {
     //   this.goToPage(0, false);
     // }
-  }
-
-  getCalcIndex(index: number): number {
-    // to handle scrollView index issue in Android's RTL layout
-    if (Constants.isRTL && Constants.isAndroid) {
-      const length = presenter.getChildrenLength(this.props) - 1;
-      return length - index;
-    }
-    return index;
   }
 
   // TODO: currently this returns pagesCount offsets, not starting from 0; look into changing this into (pagesCount - 1) or to have the 1st item as 0
