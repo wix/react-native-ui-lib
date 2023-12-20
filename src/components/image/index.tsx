@@ -207,7 +207,8 @@ class Image extends PureComponent<Props, State> {
   renderImage = (useImageInsideContainer: boolean) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
-    
+    const defaultAspectRatio = Constants.isWeb ? (this.props.aspectRatio || 1) : this.props.aspectRatio;
+
     const {
       tintColor,
       style,
@@ -215,7 +216,7 @@ class Image extends PureComponent<Props, State> {
       height,
       supportRTL,
       cover,
-      aspectRatio = 1,
+      aspectRatio = defaultAspectRatio,
       overlayType,
       overlayIntensity,
       overlayColor,
