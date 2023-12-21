@@ -43,7 +43,7 @@ const isSubWindow = windowWidth < screenWidth();
 isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth(), screenHeight()) >= 900);
 
 function setStatusBarHeight() {
-  const { StatusBarManager } = NativeModules;
+  const {StatusBarManager} = NativeModules;
   statusBarHeight = StatusBarManager?.HEIGHT || 0; // So there will be a value for any case
   // statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT;
   // if (isIOS) {
@@ -141,7 +141,7 @@ const constants = {
   set isTablet(value: boolean) {
     isTablet = value;
   },
-  setBreakpoints(value: Breakpoint[], options?: { defaultMargin: number }) {
+  setBreakpoints(value: Breakpoint[], options?: {defaultMargin: number}) {
     breakpoints = value.sort(breakpointComparator);
     if (options) {
       defaultMargin = options.defaultMargin;
@@ -163,8 +163,8 @@ const constants = {
   getSafeAreaInsets: () => {
     const orientation = getOrientation(screenHeight(), screenWidth());
     return orientation === orientations.LANDSCAPE
-      ? { left: 44, right: 44, bottom: 24, top: 0 }
-      : { left: 0, right: 0, bottom: 34, top: 44 };
+      ? {left: 44, right: 44, bottom: 24, top: 0}
+      : {left: 0, right: 0, bottom: 34, top: 44};
   },
   /* Devices */
   get isIphoneX() {
