@@ -21,26 +21,21 @@ function breakpointComparator(b1: Breakpoint, b2: Breakpoint) {
   return b1.breakpoint - b2.breakpoint;
 }
 
-function queryWebFrameDevice() {
-  return document?.querySelector(WebDeviceFrameSelector);
-}
-
 const isAndroid: boolean = Platform.OS === 'android';
 const isIOS: boolean = Platform.OS === 'ios';
 const isWeb: boolean = Platform.OS === 'web';
-const WebDeviceFrameSelector = '[data-react-native-web-dimensions="true"]';
 let isTablet: boolean;
 let statusBarHeight: number;
-const getScreenHeight = () => isWeb ? (queryWebFrameDevice()?.clientHeight ?? 0) : Dimensions.get('screen').height;
-const getScreenWidth = () => isWeb ? (queryWebFrameDevice()?.clientWidth ?? 0) : Dimensions.get('screen').width;
+let screenHeight: number = Dimensions.get('screen').height;
+let screenWidth: number = Dimensions.get('screen').width;
 let windowHeight: number = Dimensions.get('window').height;
 let windowWidth: number = Dimensions.get('window').width;
 let breakpoints: Breakpoint[];
 let defaultMargin = 0;
 
-const isSubWindow = windowWidth < getScreenWidth();
+const isSubWindow = windowWidth < screenWidth;
 //@ts-ignore
-isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(getScreenWidth(), getScreenHeight()) >= 900);
+isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 function setStatusBarHeight() {
   const {StatusBarManager} = NativeModules;
@@ -53,7 +48,7 @@ function setStatusBarHeight() {
 }
 
 function getAspectRatio() {
-  return getScreenWidth < getScreenHeight ? getScreenHeight() / getScreenWidth() : getScreenWidth() / getScreenHeight();
+  return screenWidth < screenHeight ? screenHeight / screenWidth : screenWidth / screenHeight;
 }
 
 function getOrientation(height: number, width: number) {
@@ -61,8 +56,8 @@ function getOrientation(height: number, width: number) {
 }
 
 export function updateConstants(dimensions: any) {
-  // screenHeight = dimensions.screen.height;
-  // screenWidth = dimensions.screen.width;
+  screenHeight = dimensions.screen.height;
+  screenWidth = dimensions.screen.width;
   windowWidth = dimensions.window.width;
   windowHeight = dimensions.window.height;
 
@@ -109,10 +104,10 @@ const constants = {
     return getOrientation(windowHeight, windowWidth) === orientations.LANDSCAPE;
   },
   get screenWidth() {
-    return getScreenWidth();
+    return screenWidth;
   },
   get screenHeight() {
-    return getScreenHeight();
+    return screenHeight;
   },
   get windowWidth() {
     return windowWidth;
@@ -124,10 +119,10 @@ const constants = {
     return windowWidth <= 340;
   },
   get isSmallScreen() {
-    return getScreenWidth() <= 340;
+    return screenWidth <= 340;
   },
   get isShortScreen() {
-    return getScreenHeight() <= 600;
+    return screenHeight <= 600;
   },
   get isWideScreen() {
     return isTablet && !isSubWindow || this.isLandscape;
@@ -161,7 +156,7 @@ const constants = {
     return defaultMargin;
   },
   getSafeAreaInsets: () => {
-    const orientation = getOrientation(getScreenHeight(), getScreenWidth());
+    const orientation = getOrientation(screenHeight, screenWidth);
     return orientation === orientations.LANDSCAPE
       ? {left: 44, right: 44, bottom: 24, top: 0}
       : {left: 0, right: 0, bottom: 34, top: 44};
@@ -174,7 +169,7 @@ const constants = {
       !Platform.isPad &&
       //@ts-ignore
       !Platform.isTVOS &&
-      (getScreenHeight() >= 812 || getScreenWidth() >= 812)
+      (screenHeight >= 812 || screenWidth >= 812)
     );
   },
   /* Orientation */
