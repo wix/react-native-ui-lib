@@ -21,14 +21,18 @@ function breakpointComparator(b1: Breakpoint, b2: Breakpoint) {
   return b1.breakpoint - b2.breakpoint;
 }
 
+function queryWebFrameDevice() {
+  return document?.querySelector(WebDeviceFrameSelector);
+}
+
 const isAndroid: boolean = Platform.OS === 'android';
 const isIOS: boolean = Platform.OS === 'ios';
 const isWeb: boolean = Platform.OS === 'web';
 const WebDeviceFrameSelector = '[data-react-native-web-dimensions="true"]';
 let isTablet: boolean;
 let statusBarHeight: number;
-let screenHeight: number = Dimensions.get('screen').height;
-let screenWidth: number = Dimensions.get('screen').width;
+let screenHeight: number = isWeb ? (queryWebFrameDevice()?.clientHeight ?? 0) : Dimensions.get('screen').height;
+let screenWidth: number = isWeb ? (queryWebFrameDevice()?.clientWidth ?? 0) : Dimensions.get('screen').width;
 let windowHeight: number = Dimensions.get('window').height;
 let windowWidth: number = Dimensions.get('window').width;
 let breakpoints: Breakpoint[];
@@ -54,10 +58,6 @@ function getAspectRatio() {
 
 function getOrientation(height: number, width: number) {
   return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
-}
-
-function queryWebFrameDevice() {
-  return document?.querySelector(WebDeviceFrameSelector);
 }
 
 export function updateConstants(dimensions: any) {
@@ -109,10 +109,10 @@ const constants = {
     return getOrientation(windowHeight, windowWidth) === orientations.LANDSCAPE;
   },
   get screenWidth() {
-    return isWeb ? queryWebFrameDevice()?.clientWidth : screenWidth;
+    return screenWidth;
   },
   get screenHeight() {
-    return isWeb ? queryWebFrameDevice()?.clientHeight : screenHeight;
+    return screenHeight;
   },
   get windowWidth() {
     return windowWidth;
