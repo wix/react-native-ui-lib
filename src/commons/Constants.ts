@@ -57,7 +57,7 @@ function getOrientation(height: number, width: number) {
 }
 
 function queryWebFrameDevice() {
-  return document.querySelector(WebDeviceFrameSelector);
+  return document?.querySelector(WebDeviceFrameSelector);
 }
 
 export function updateConstants(dimensions: any) {
