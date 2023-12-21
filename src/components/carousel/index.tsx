@@ -60,12 +60,12 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       currentStandingPage: props.initialPage || 0,
       pageWidth: defaultPageWidth,
       pageHeight,
-      initialOffset: presenter.calcOffset(props, {
-        // @ts-ignore (defaultProps)
-        currentPage: props.initialPage,
-        pageWidth: defaultPageWidth,
-        pageHeight
-      }),
+      // initialOffset: presenter.calcOffset(props, {
+      //   // @ts-ignore (defaultProps)
+      //   currentPage: props.initialPage,
+      //   pageWidth: defaultPageWidth,
+      //   pageHeight
+      // }),
       prevProps: props
     };
   }
