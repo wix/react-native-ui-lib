@@ -1,15 +1,15 @@
-import { Appearance, PlatformColor } from 'react-native';
-import { remove, xor, isEmpty, merge, forEach, cloneDeep } from 'lodash';
-import Constants from '../commons/Constants/Mobile';
+import {Appearance, PlatformColor} from 'react-native';
+import {remove, xor, isEmpty, merge, forEach, cloneDeep} from 'lodash';
+import Constants from '../commons/Constants';
 import Config from '../commons/Config';
 
-export type Schemes = { light: { [key: string]: string }; dark: { [key: string]: string } };
+export type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
 export type SchemeType = 'default' | 'light' | 'dark';
 export type SchemeChangeListener = (schemeType?: 'light' | 'dark') => void;
 
 class Scheme {
   private currentScheme: SchemeType = Config.appScheme;
-  private schemes: Schemes = { light: {}, dark: {} };
+  private schemes: Schemes = {light: {}, dark: {}};
   private changeListeners: SchemeChangeListener[] = [];
 
   constructor() {

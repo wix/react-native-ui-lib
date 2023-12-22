@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import React, { useMemo, useContext, useState, useRef, ReactNode } from 'react';
-import { StyleSheet, Platform, StyleProp, ViewStyle } from 'react-native';
-import Reanimated, { runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate } from 'react-native-reanimated';
+import React, {useMemo, useContext, useState, useRef, ReactNode} from 'react';
+import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
+import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
-import TabBarItem, { TabControllerItemProps } from './TabBarItem';
+import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import {
   Constants,
   asBaseComponent,
@@ -31,7 +31,7 @@ const DEFAULT_SELECTED_LABEL_STYLE = {
   letterSpacing: 0
 };
 
-const DEFAULT_FADER_PROPS = { size: 76, tintColor: Colors.$backgroundElevated };
+const DEFAULT_FADER_PROPS = {size: 76, tintColor: Colors.$backgroundElevated};
 
 export interface TabControllerBarProps {
   /**
@@ -195,11 +195,11 @@ const TabBar = (props: Props) => {
   useAnimatedReaction(() => {
     return Math.round(currentPage.value);
   },
-    (currIndex, prevIndex) => {
-      if (prevIndex !== null && currIndex !== prevIndex) {
-        runOnJS(focusIndex)(currIndex);
-      }
-    });
+  (currIndex, prevIndex) => {
+    if (prevIndex !== null && currIndex !== prevIndex) {
+      runOnJS(focusIndex)(currIndex);
+    }
+  });
 
   const tabBarItems = useMemo((): ReactNode => {
     return _.map(items, (item, index) => {
@@ -268,11 +268,11 @@ const TabBar = (props: Props) => {
   }, [enableShadow, propsShadowStyle]);
 
   const _containerStyle = useMemo(() => {
-    return [styles.container, shadowStyle, { width: containerWidth }, containerStyle];
+    return [styles.container, shadowStyle, {width: containerWidth}, containerStyle];
   }, [shadowStyle, containerWidth, containerStyle]);
 
   const tabBarContainerStyle = useMemo(() => {
-    return [styles.tabBar, spreadItems && styles.spreadItems, !_.isUndefined(height) && { height }, { backgroundColor }];
+    return [styles.tabBar, spreadItems && styles.spreadItems, !_.isUndefined(height) && {height}, {backgroundColor}];
   }, [height, backgroundColor]);
 
   const scrollViewContainerStyle = useMemo(() => {
@@ -310,7 +310,7 @@ const TabBar = (props: Props) => {
       >
         <View style={tabBarContainerStyle}>{tabBarItems}</View>
         {itemsCount > 1 && (
-          <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]} />
+          <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
         )}
       </FadedScrollView>
     </View>
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
         shadowColor: Colors.black,
         shadowOpacity: 0.05,
         shadowRadius: 2,
-        shadowOffset: { height: 6, width: 0 }
+        shadowOffset: {height: 6, width: 0}
       },
       android: {
         elevation: 5,
