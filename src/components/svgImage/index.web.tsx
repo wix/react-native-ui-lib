@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import Image from '../image';
-import {isSvg, isSvgUri, isBase64ImageContent} from '../../utils/imageUtils';
+import { isSvg, isSvgUri, isBase64ImageContent } from '../../utils/imageUtils';
 
 const PostCssPackage = require('../../optionalDependencies').PostCssPackage;
 
@@ -19,46 +19,46 @@ export interface SvgImageProps {
 }
 
 function SvgImage(props: SvgImageProps) {
-  const {data, style = [], tintColor, width, height, ...others} = props;
+  const { data, style = [], tintColor, width, height, ...others } = props;
   const [className] = useState(`svg-${new Date().getTime().toString()}`);
   const [svgStyleCss, setSvgStyleCss] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (PostCssPackage) {
-      const {postcss, cssjs} = PostCssPackage;
+      const { postcss, cssjs } = PostCssPackage;
       const styleObj: Record<string, any> = StyleSheet.flatten(style);
       postcss()
-        .process({width, height, ...styleObj}, {parser: cssjs})
-        .then((style: {css: any}) => {
+        .process({ width, height, ...styleObj }, { parser: cssjs })
+        .then((style: { css: any }) => {
           const svgPathCss = styleObj?.tintColor ? `.${className} > svg path {fill: ${styleObj?.tintColor}}` : '';
           setSvgStyleCss(`.${className} > svg {${style.css}} ${svgPathCss}}`);
         });
     }
   }, [style, className, width, height]);
 
-  if (isSvgUri(data)) {
-    return <img {...others} src={data.uri} style={StyleSheet.flatten(style)}/>;
+  if (isSvgUri(data) || data.uri) {
+    return <img {...others} src={data.uri} style={StyleSheet.flatten(style)} />;
   } else if (isBase64ImageContent(data)) {
     if (tintColor) {
       return (
         <Image
-          source={{uri: data}}
+          source={{ uri: data }}
           width={DEFAULT_SIZE}
           height={DEFAULT_SIZE}
-          style={[style, {tintColor}]}
+          style={[style, { tintColor }]}
           {...others}
         />
       );
     }
-    return <img {...others} src={data} style={StyleSheet.flatten(style)}/>;
+    return <img {...others} src={data} style={StyleSheet.flatten(style)} />;
   } else if (data && svgStyleCss) {
     const svgStyleTag = `<style> ${svgStyleCss} </style>`;
     return (
-      <div 
+      <div
         {...others}
         className={className}
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{__html: svgStyleTag + data}}
+        dangerouslySetInnerHTML={{ __html: svgStyleTag + data }}
       />
     );
   }
