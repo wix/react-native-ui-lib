@@ -192,10 +192,11 @@ const constants = {
   enterKey: 'Enter'
 };
 
-export default constants;
 
 setStatusBarHeight();
 Dimensions.addEventListener('change', updateConstants);
+
+export default constants;
 
 // For tests
 export const _reset = () => {
