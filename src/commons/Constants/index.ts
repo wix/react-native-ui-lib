@@ -1,4 +1,4 @@
 export * from './Mobile';
-import {default as Constants} from './Mobile';
+import {constants} from './Mobile';
 
-export default Constants;
+export default constants;

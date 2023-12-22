@@ -1,4 +1,4 @@
 export * from './Web';
-import {default as Constants} from './Web';
+import {constants} from './Web';
 
-export default Constants;
+export default constants;

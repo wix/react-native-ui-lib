@@ -82,7 +82,7 @@ function setAccessibility() {
 
 setAccessibility();
 
-const constants = {
+export const constants = {
   /* Platform */
   orientations,
   isAndroid,
@@ -194,8 +194,6 @@ const constants = {
 
 setStatusBarHeight();
 Dimensions.addEventListener('change', updateConstants);
-
-export default constants;
 
 // For tests
 export const _reset = () => {
