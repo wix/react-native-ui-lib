@@ -164,7 +164,7 @@ const TabBar = (props: Props) => {
   const tabBar = useRef<typeof FadedScrollView>();
   const [key, setKey] = useState<string>(generateKey(Constants.orientation, labelColor, selectedLabelColor));
   const context = useContext(TabBarContext);
-  const { items: contextItems, currentPage, targetPage, containerWidth: contextContainerWidth } = context;
+  const {items: contextItems, currentPage, targetPage, containerWidth: contextContainerWidth} = context;
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || contextContainerWidth;
   }, [propsContainerWidth, contextContainerWidth]);
@@ -276,7 +276,7 @@ const TabBar = (props: Props) => {
   }, [height, backgroundColor]);
 
   const scrollViewContainerStyle = useMemo(() => {
-    return { minWidth: containerWidth };
+    return {minWidth: containerWidth};
   }, [containerWidth]);
 
   useDidUpdate(() => {
