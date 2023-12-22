@@ -13,6 +13,12 @@ const constants = {
   },
   get screenHeight() {
     return queryWebFrameDevice()?.clientHeight;
+  },
+  get windowWidth() {
+    return queryWebFrameDevice()?.clientWidth;
+  },
+  get windowHeight() {
+    return queryWebFrameDevice()?.clientHeight;
   }
 };
 
