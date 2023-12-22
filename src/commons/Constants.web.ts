@@ -1,5 +1,5 @@
-export * from './Mobile';
-import {constants} from './Mobile';
+export * from './CommonConstants';
+import {default as constants} from './CommonConstants';
 
 const WebDeviceFrameSelector = '[data-react-native-web-dimensions="true"]';
 function queryWebFrameDevice() {
