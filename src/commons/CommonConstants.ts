@@ -33,8 +33,6 @@ let windowWidth: number = Dimensions.get('window').width;
 let breakpoints: Breakpoint[];
 let defaultMargin = 0;
 
-const WebDeviceFrameSelector = '[data-react-native-web-dimensions="true"]';
-
 const isSubWindow = windowWidth < screenWidth;
 //@ts-ignore
 isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
@@ -55,10 +53,6 @@ function getAspectRatio() {
 
 function getOrientation(height: number, width: number) {
   return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
-}
-
-function queryWebFrameDevice() {
-  return document?.querySelector(WebDeviceFrameSelector);
 }
 
 export function updateConstants(dimensions: any) {
