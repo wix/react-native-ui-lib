@@ -66,6 +66,9 @@ module.exports = {
       get HintsScreen() {
         return require('./screens/componentScreens/HintsScreen').default;
       },
+      get HorizontalSortableListScreen() {
+        return require('./screens/componentScreens/HorizontalSortableListScreen').default;
+      },
       get IconScreen() {
         return require('./screens/componentScreens/IconScreen').default;
       },

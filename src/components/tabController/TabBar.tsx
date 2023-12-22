@@ -12,16 +12,14 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import View from '../view';
-import { Colors, Spacings, Typography } from '../../style';
+import {Colors, Spacings, Typography} from '../../style';
 import FadedScrollView from '../fadedScrollView';
-import { FaderProps } from '../fader';
+import {FaderProps} from '../fader';
 import useScrollToItem from './useScrollToItem';
-import { orientations } from '../../commons/Constants/Mobile';
-import { useDidUpdate } from 'hooks';
+import {useDidUpdate} from 'hooks';
 
 const FIX_RTL = Constants.isRTL && Constants.isAndroid;
 const DEFAULT_HEIGHT = 48;
-const DEFAULT_BACKGROUND_COLOR = Colors.$backgroundElevated;
 
 const DEFAULT_LABEL_STYLE = {
   ...Typography.text80M,
@@ -152,7 +150,7 @@ const TabBar = (props: Props) => {
     iconColor,
     selectedIconColor,
     activeBackgroundColor,
-    backgroundColor,
+    backgroundColor = Colors.$backgroundElevated,
     faderProps,
     containerWidth: propsContainerWidth,
     centerSelected,
@@ -164,7 +162,7 @@ const TabBar = (props: Props) => {
   } = props;
 
   const tabBar = useRef<typeof FadedScrollView>();
-  const [key, setKey] = useState<orientations>(Constants.orientation);
+  const [key, setKey] = useState<string>(generateKey(Constants.orientation, labelColor, selectedLabelColor));
   const context = useContext(TabBarContext);
   const { items: contextItems, currentPage, targetPage, containerWidth: contextContainerWidth } = context;
   const containerWidth: number = useMemo(() => {
@@ -286,9 +284,13 @@ const TabBar = (props: Props) => {
       focusIndex(currentPage.value);
     } else {
       reset();
-      setKey(Constants.orientation);
+      setKey(generateKey(Constants.orientation, labelColor, selectedLabelColor));
     }
   }, [containerWidth]);
+
+  useDidUpdate(() => {
+    setKey(generateKey(Constants.orientation, labelColor, selectedLabelColor));
+  }, [labelColor, selectedLabelColor]);
 
   return (
     <View style={_containerStyle} key={key} bg-$backgroundElevated>
@@ -319,7 +321,6 @@ TabBar.displayName = 'TabController.TabBar';
 TabBar.defaultProps = {
   labelStyle: DEFAULT_LABEL_STYLE,
   selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
-  backgroundColor: DEFAULT_BACKGROUND_COLOR,
   faderProps: DEFAULT_FADER_PROPS,
   spreadItems: true
 };
@@ -364,5 +365,8 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+const generateKey = (orientation: string, labelColor = '', selectedLabelColor = '') =>
+  `${orientation}_${labelColor}_${selectedLabelColor}`;
 
 export default asBaseComponent<TabControllerBarProps>(forwardRef<Props>(TabBar));

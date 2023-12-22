@@ -13,14 +13,14 @@ type LinePropsInternal = LineProps & {
 };
 
 const Line = React.memo((props: LinePropsInternal) => {
-  const {type, color = 'transparent', entry, top, style} = props;
+  const {type, color = 'transparent', entry, top, style, width = LINE_WIDTH} = props;
 
   const solidLineStyle = useMemo(() => {
-    return [style, styles.solidLine, {backgroundColor: color}];
-  }, [color, style]);
+    return [style, styles.line, {width, backgroundColor: color}];
+  }, [color, style, width]);
 
   const dashedLineStyle = useMemo(() => {
-    return [style, styles.dashedLine];
+    return [style, styles.line];
   }, [style]);
 
   const renderStartPoint = () => {
@@ -52,11 +52,7 @@ const styles = StyleSheet.create({
     width: 12,
     height: ENTRY_POINT_HEIGHT
   },
-  solidLine: {
-    width: LINE_WIDTH,
-    overflow: 'hidden'
-  },
-  dashedLine: {
+  line: {
     overflow: 'hidden'
   }
 });

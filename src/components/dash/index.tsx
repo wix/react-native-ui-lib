@@ -1,7 +1,6 @@
 import React, {useState, useCallback, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
 import View from '../view';
-import {Colors} from '../../style';
 
 //TODO: move to some global types (shared with Timeline component)
 export type Layout = {
@@ -35,11 +34,10 @@ const Dash = (props: DashProps) => {
       width: vertical ? thickness : length,
       height: vertical ? length : thickness,
       marginRight: vertical ? 0 : gap,
-      marginBottom: vertical ? gap : 0,
-      backgroundColor: color
+      marginBottom: vertical ? gap : 0
     };
     return [style, _style];
-  }, [vertical, length, thickness, gap, color, style]);
+  }, [vertical, length, thickness, gap, style]);
 
   const lineStyle = useMemo(() => {
     const directionStyle = vertical ? styles.column : styles.row;
@@ -56,7 +54,7 @@ const Dash = (props: DashProps) => {
     const dash = [];
     
     for (let i = 0; i < n; i++) {
-      dash.push(<View key={i} style={dashStyle}/>);
+      dash.push(<View key={i} bg-$outlineDefault backgroundColor={color} style={dashStyle}/>);
     }
 
     return dash;
@@ -73,8 +71,7 @@ export default Dash;
 Dash.defaultProps = {
   gap: 6,
   length: 6,
-  thickness: 2,
-  color: Colors.black
+  thickness: 2
 };
 
 const styles = StyleSheet.create({

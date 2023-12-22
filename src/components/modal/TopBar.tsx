@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, StyleProp, TextStyle, ImageSourcePropType} from 'react-native';
+import {StyleSheet, StyleProp, TextStyle, ImageSourcePropType, AccessibilityProps} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
@@ -17,6 +17,10 @@ export interface ModalTopBarProps {
    * title custom style
    */
   titleStyle?: StyleProp<TextStyle>;
+  /**
+   * Accessibility props for the title
+   */
+  titleAccessibilityProps?: Omit<AccessibilityProps, 'accessible'>;
   /**
    * subtitle to display below the top bar title
    */
@@ -170,7 +174,16 @@ class TopBar extends Component<ModalTopBarProps> {
   };
 
   render() {
-    const {title, titleStyle, subtitle, subtitleStyle, includeStatusBar, containerStyle, useSafeArea} = this.props;
+    const {
+      title,
+      titleStyle,
+      titleAccessibilityProps,
+      subtitle,
+      subtitleStyle,
+      includeStatusBar,
+      containerStyle,
+      useSafeArea
+    } = this.props;
 
     return (
       <View style={containerStyle} useSafeArea={useSafeArea}>
@@ -181,7 +194,14 @@ class TopBar extends Component<ModalTopBarProps> {
             {this.renderLeftButtons()}
           </View>
           <View flex-3 centerH centerV>
-            <Text $textDefault accessible={!!title} numberOfLines={1} text70 style={[styles.title, titleStyle]}>
+            <Text
+              $textDefault
+              accessible={!!title}
+              numberOfLines={1}
+              text70
+              style={[styles.title, titleStyle]}
+              {...titleAccessibilityProps}
+            >
               {title}
             </Text>
             {subtitle && (

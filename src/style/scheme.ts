@@ -32,6 +32,13 @@ class Scheme {
     return scheme ?? 'light';
   }
 
+  /** 
+   * Whether the app's scheme is 'dark', i.e. is on dark mode
+   */
+  isDarkMode() {
+    return this.getSchemeType() === 'dark';
+  }
+
   /**
    * Set color scheme for app
    * arguments:
