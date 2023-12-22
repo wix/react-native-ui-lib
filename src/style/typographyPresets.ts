@@ -1,8 +1,8 @@
-import {Platform, TextStyle} from 'react-native';
+import { Platform, TextStyle } from 'react-native';
 import _ from 'lodash';
-import Constants from '../commons/Constants';
+import Constants from '../commons/Constants/Mobile';
 
-export const WEIGHT_TYPES: {[key: string]: TextStyle['fontWeight']} = {
+export const WEIGHT_TYPES: { [key: string]: TextStyle['fontWeight'] } = {
   THIN: '200' as const,
   LIGHT: '300' as const,
   REGULAR: '400' as const,

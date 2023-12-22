@@ -1,9 +1,9 @@
 import isString from 'lodash/isString';
 import tinycolor from 'tinycolor2';
-import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import Constants from '../../commons/Constants';
-import {Colors} from '../../style';
+import React, { useCallback, useMemo } from 'react';
+import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import Constants from '../../commons/Constants/Mobile';
+import { Colors } from '../../style';
 import View from '../view';
 
 export enum GradientTypes {
@@ -20,7 +20,7 @@ export interface GradientProps {
 }
 
 const Gradient = (props: GradientProps) => {
-  const {color = Colors.white, type, style, numberOfSteps} = props;
+  const { color = Colors.white, type, style, numberOfSteps } = props;
 
   const getBackgroundColor = useCallback((index: number) => {
     const hslColor = isString(color) ? Colors.getHSL(color) : color;
@@ -28,14 +28,14 @@ const Gradient = (props: GradientProps) => {
     const i = index * maximum / numberOfSteps;
 
     switch (type) {
-      case GradientTypes.HUE: 
-        return tinycolor({s: 1, l: 0.5, h: i}).toHslString();
+      case GradientTypes.HUE:
+        return tinycolor({ s: 1, l: 0.5, h: i }).toHslString();
       case GradientTypes.LIGHTNESS:
-        return tinycolor({...hslColor, l: i}).toHslString();
+        return tinycolor({ ...hslColor, l: i }).toHslString();
       case GradientTypes.SATURATION:
-        return tinycolor({...hslColor, s: i}).toHslString();
+        return tinycolor({ ...hslColor, s: i }).toHslString();
       default:
-        return tinycolor({...hslColor, a: i}).toHslString();
+        return tinycolor({ ...hslColor, a: i }).toHslString();
     }
   }, [color, numberOfSteps, type]);
 
@@ -46,11 +46,11 @@ const Gradient = (props: GradientProps) => {
       backgroundColor: getBackgroundColor(index)
     };
   }, [getBackgroundColor]);
-  
+
   const rows = useMemo(() => {
     const array = [];
     for (let i = 0; i <= numberOfSteps; i++) {
-      array.push(<View key={i} style={getStyle(i)}/>);
+      array.push(<View key={i} style={getStyle(i)} />);
     }
     return array;
   }, [numberOfSteps, getStyle]);

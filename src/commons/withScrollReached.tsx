@@ -1,8 +1,8 @@
-import React, {useState, useCallback} from 'react';
-import {FlatListProps, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
-import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
+import React, { useState, useCallback } from 'react';
+import { FlatListProps, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import forwardRef, { ForwardRefInjectedProps } from './forwardRef';
 import hoistStatics from 'hoist-non-react-statics';
-import Constants from './Constants';
+import Constants from './Constants/Mobile';
 
 type ScrollReachedProps = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -53,9 +53,9 @@ function withScrollReached<PROPS, STATICS = {}>(WrappedComponent: React.Componen
     const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const {
         nativeEvent: {
-          layoutMeasurement: {width: layoutWidth, height: layoutHeight},
-          contentOffset: {x: offsetX, y: offsetY},
-          contentSize: {width: contentWidth, height: contentHeight}
+          layoutMeasurement: { width: layoutWidth, height: layoutHeight },
+          contentOffset: { x: offsetX, y: offsetY },
+          contentSize: { width: contentWidth, height: contentHeight }
         }
       } = event;
 
@@ -79,12 +79,12 @@ function withScrollReached<PROPS, STATICS = {}>(WrappedComponent: React.Componen
         setScrollAtEnd(closeToEnd);
       }
     },
-    [isScrollAtStart, isScrollAtEnd]);
+      [isScrollAtStart, isScrollAtEnd]);
 
     return (
       <WrappedComponent
         {...props}
-        scrollReachedProps={{onScroll, isScrollAtStart, isScrollAtEnd}}
+        scrollReachedProps={{ onScroll, isScrollAtStart, isScrollAtEnd }}
         ref={props.forwardedRef}
       />
     );

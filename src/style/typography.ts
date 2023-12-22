@@ -1,12 +1,12 @@
-import {TextStyle} from 'react-native';
+import { TextStyle } from 'react-native';
 import _ from 'lodash';
-import Constants from '../commons/Constants';
+import Constants from '../commons/Constants/Mobile';
 
-import TypographyPresets, {TypographyKeys} from './typographyPresets';
-export type {TypographyKeys};
-import type {Dictionary, ExtendTypeWith} from '../typings/common';
+import TypographyPresets, { TypographyKeys } from './typographyPresets';
+export type { TypographyKeys };
+import type { Dictionary, ExtendTypeWith } from '../typings/common';
 
-type MeasureTextTypography = TextStyle & {allowFontScaling?: boolean};
+type MeasureTextTypography = TextStyle & { allowFontScaling?: boolean };
 
 export class Typography {
   keysPattern = this.generateKeysPattern();
@@ -58,7 +58,7 @@ export class Typography {
     }
   }
 }
-type CustomTypographyPresets = {[custom: string]: TextStyle};
+type CustomTypographyPresets = { [custom: string]: TextStyle };
 const TypedTypography = Typography as ExtendTypeWith<
   ExtendTypeWith<typeof Typography, typeof TypographyPresets>,
   CustomTypographyPresets

@@ -1,6 +1,6 @@
-import {Easing, useSharedValue} from 'react-native-reanimated';
-import Constants from '../../commons/Constants';
-import {ItemLayout, ItemsOrder} from './types';
+import { Easing, useSharedValue } from 'react-native-reanimated';
+import Constants from '../../commons/Constants/Mobile';
+import { ItemLayout, ItemsOrder } from './types';
 
 export const WINDOW_WIDTH = Constants.windowWidth;
 export const DEFAULT_NO_OF_COLUMNS = 3;
@@ -16,7 +16,7 @@ const usePresenter = (numOfColumns: number, itemSpacing: number) => {
   const itemSize = getItemSize(numOfColumns, Constants.screenWidth);
 
   return {
-    updateItemLayout: (layout: {width: number; height: number}) => {
+    updateItemLayout: (layout: { width: number; height: number }) => {
       'worklet';
 
       if (itemLayout.value === undefined) {
