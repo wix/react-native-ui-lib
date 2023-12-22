@@ -16,7 +16,7 @@ const usePresenter = (numOfColumns: number, itemSpacing: number) => {
   const itemSize = getItemSize(numOfColumns, Constants.screenWidth);
 
   return {
-    updateItemLayout: (layout: { width: number; height: number }) => {
+    updateItemLayout: (layout: {width: number; height: number}) => {
       'worklet';
 
       if (itemLayout.value === undefined) {

@@ -46,7 +46,7 @@ const Gradient = (props: GradientProps) => {
       backgroundColor: getBackgroundColor(index)
     };
   }, [getBackgroundColor]);
- 
+  
   const rows = useMemo(() => {
     const array = [];
     for (let i = 0; i <= numberOfSteps; i++) {
