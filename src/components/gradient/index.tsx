@@ -28,7 +28,7 @@ const Gradient = (props: GradientProps) => {
     const i = index * maximum / numberOfSteps;
 
     switch (type) {
-      case GradientTypes.HUE:
+      case GradientTypes.HUE: 
         return tinycolor({s: 1, l: 0.5, h: i}).toHslString();
       case GradientTypes.LIGHTNESS:
         return tinycolor({...hslColor, l: i}).toHslString();
@@ -46,7 +46,7 @@ const Gradient = (props: GradientProps) => {
       backgroundColor: getBackgroundColor(index)
     };
   }, [getBackgroundColor]);
-
+ 
   const rows = useMemo(() => {
     const array = [];
     for (let i = 0; i <= numberOfSteps; i++) {
