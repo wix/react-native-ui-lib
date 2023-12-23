@@ -1,4 +1,4 @@
 import {Constants} from './Constants';
 
-export * from './BaseConstants';
+export * from './Constants';
 export default Constants;
