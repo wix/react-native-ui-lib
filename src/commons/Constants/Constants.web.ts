@@ -1,5 +1,5 @@
 export * from './BaseConstants';
-import BaseConstants from './BaseConstants';
+import {Constants as BaseConstants} from './BaseConstants';
 
 const WebDeviceFrameSelector = '[data-react-native-web-dimensions="true"]';
 
@@ -7,7 +7,7 @@ function queryWebFrameDevice() {
   return document?.querySelector(WebDeviceFrameSelector);
 }
 
-const Constants = {
+export const Constants = {
   ...BaseConstants,
   get screenWidth() {
     return queryWebFrameDevice()?.clientWidth;
@@ -22,5 +22,3 @@ const Constants = {
     return queryWebFrameDevice()?.clientHeight;
   }
 };
-
-export default Constants;

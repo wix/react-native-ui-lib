@@ -1,4 +1,4 @@
-import PlatformBasedConstants from './Constants';
+import {Constants} from './Constants';
 
 export * from './BaseConstants';
-export default PlatformBasedConstants;
+export default Constants;
