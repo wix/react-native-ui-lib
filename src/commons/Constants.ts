@@ -88,7 +88,7 @@ function queryWebFrameDevice() {
   return document?.querySelector(WebDeviceFrameSelector);
 }
 
-export const Constants = {
+const constants = {
   /* Platform */
   orientations,
   isAndroid,
@@ -204,6 +204,7 @@ export const Constants = {
   enterKey: 'Enter'
 };
 
+export default constants;
 
 setStatusBarHeight();
 Dimensions.addEventListener('change', updateConstants);
