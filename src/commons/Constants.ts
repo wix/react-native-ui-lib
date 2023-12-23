@@ -82,6 +82,12 @@ function setAccessibility() {
 
 setAccessibility();
 
+const WebDeviceFrameSelector = '[data-react-native-web-dimensions="true"]';
+
+function queryWebFrameDevice() {
+  return document?.querySelector(WebDeviceFrameSelector);
+}
+
 export const Constants = {
   /* Platform */
   orientations,
@@ -104,9 +110,15 @@ export const Constants = {
     return getOrientation(windowHeight, windowWidth) === orientations.LANDSCAPE;
   },
   get screenWidth() {
+    if (isWeb) {
+      return queryWebFrameDevice()?.clientWidth;
+    }
     return screenWidth;
   },
   get screenHeight() {
+    if (isWeb) {
+      return queryWebFrameDevice()?.clientHeight;
+    }
     return screenHeight;
   },
   get windowWidth() {
