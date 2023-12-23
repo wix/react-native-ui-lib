@@ -111,20 +111,26 @@ const constants = {
   },
   get screenWidth() {
     if (isWeb) {
-      return queryWebFrameDevice()?.clientWidth;
+      return queryWebFrameDevice()?.clientWidth ?? 0;
     }
     return screenWidth;
   },
   get screenHeight() {
     if (isWeb) {
-      return queryWebFrameDevice()?.clientHeight;
+      return queryWebFrameDevice()?.clientHeight ?? 0;
     }
     return screenHeight;
   },
   get windowWidth() {
+    if (isWeb) {
+      return queryWebFrameDevice()?.clientWidth ?? 0;
+    }
     return windowWidth;
   },
   get windowHeight() {
+    if (isWeb) {
+      return queryWebFrameDevice()?.clientHeight ?? 0;
+    }
     return windowHeight;
   },
   get isSmallWindow() {
