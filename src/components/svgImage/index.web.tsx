@@ -36,7 +36,7 @@ function SvgImage(props: SvgImageProps) {
     }
   }, [style, className, width, height]);
 
-  if (isSvgUri(data) || data.uri) {
+  if (isSvgUri(data)) {
     return <img {...others} src={data.uri} style={StyleSheet.flatten(style)}/>;
   } else if (isBase64ImageContent(data)) {
     if (tintColor) {
