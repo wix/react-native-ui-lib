@@ -9,7 +9,7 @@ export function isSvgUri(source?: ImageProps['source']) {
 }
 
 export function isSvg(source?: ImageProps['source']) {
-  return typeof source === 'function' || isSvgUri(source) || (Constants.isWeb && isSvgData(source))
+  return typeof source === 'function' || isSvgUri(source) || (Constants.isWeb && isSvgData(source));
 }
 
 export function isBase64ImageContent(data: string) {
