@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 
 const useCombinedRefs = (...refs: React.Ref<any>[]) => {
@@ -16,8 +15,7 @@ const useCombinedRefs = (...refs: React.Ref<any>[]) => {
         ref.current = targetRef.current;
       }
     });
-  },
-  _.isArray(refs) ? refs : [refs]);
+  }, refs);
 
   return targetRef;
 };
