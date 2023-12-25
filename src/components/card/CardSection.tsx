@@ -106,7 +106,7 @@ class CardSection extends PureComponent<Props> {
       style,
       ...others
     } = this.props;
-  
+
     return (
       <View style={[styles.container, borderStyle, style]} {...others}>
         {imageSource && this.renderImage()}

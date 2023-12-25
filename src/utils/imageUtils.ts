@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import {ImageProps} from 'react-native';
 import Assets from '../assets';
+import {Constants} from 'src/commons/new';
 
 export function isSvgUri(source?: ImageProps['source']) {
   // @ts-expect-error
@@ -8,7 +9,15 @@ export function isSvgUri(source?: ImageProps['source']) {
 }
 
 export function isSvg(source?: ImageProps['source']) {
-  return typeof source === 'function' || isSvgData(source) || isSvgUri(source);
+  let isSvg = false;
+  if (typeof source === 'function') {
+    isSvg = true;
+  } else if (isSvgUri(source)) {
+    isSvg = true;
+  } else if (Constants.isWeb && isSvgData(source)) {
+    isSvg = true;
+  }
+  return isSvg;
 }
 
 export function isBase64ImageContent(data: string) {
