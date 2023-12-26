@@ -88,22 +88,11 @@ const WheelPickerItem = memo(({
       testID={testID}
       row
     >
-      <AnimatedText
-        text60R
-        testID={`${testID}.text`}
-        numberOfLines={1}
-        style={textStyle}
-        recorderTag={'unmask'}
-      >
+      <AnimatedText text60R testID={`${testID}.text`} numberOfLines={1} style={textStyle} recorderTag={'unmask'}>
         {label}
       </AnimatedText>
       {fakeLabel && (
-        <Text
-          text80M
-          $textDefaultLight
-          {...fakeLabelProps}
-          style={fakeLabelStyle}
-        >
+        <Text text80M $textDefaultLight {...fakeLabelProps} style={fakeLabelStyle}>
           {fakeLabel}
         </Text>
       )}
