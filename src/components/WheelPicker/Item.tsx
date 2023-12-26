@@ -73,6 +73,7 @@ const WheelPickerItem = memo(({
     return [animatedColorStyle, style, fakeLabel ? textWithLabelPaddingStyle : styles.textPadding];
   }, [style, fakeLabel, animatedColorStyle, textWithLabelPaddingStyle]);
 
+  const _fakeLabelStyle = useMemo(() => StyleSheet.flatten([fakeLabelStyle, styles.hidden]), [fakeLabelStyle]);
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
@@ -92,7 +93,7 @@ const WheelPickerItem = memo(({
         {label}
       </AnimatedText>
       {fakeLabel && (
-        <Text text80M $textDefaultLight {...fakeLabelProps} style={fakeLabelStyle}>
+        <Text text80M $textDefaultLight {...fakeLabelProps} style={_fakeLabelStyle}>
           {fakeLabel}
         </Text>
       )}
@@ -111,5 +112,8 @@ const styles = StyleSheet.create({
   },
   disableRTL: {
     flexDirection: 'row-reverse'
+  },
+  hidden: {
+    opacity: 0
   }
 });
