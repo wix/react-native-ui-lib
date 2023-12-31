@@ -32,10 +32,7 @@ const IconScreen = () => {
         <Text marginR-s2>Custom Color</Text>
         <Switch value={customColor} onValueChange={setCustomColor}/>
       </View>
-      {
-        // @ts-ignore
-        <GradientSlider type={GradientSlider.types.HUE} color={color as string} onValueChange={setColor}/>
-      }
+      <GradientSlider type={GradientSlider.types.HUE} color={color as string} onValueChange={setColor}/>
       <Text marginT-s2>Custom color: {color || '#000000'}</Text>
     </View>
   );
