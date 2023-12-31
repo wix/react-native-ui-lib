@@ -19,7 +19,10 @@ export enum GradientSliderTypes {
   SATURATION = 'saturation'
 }
 
-export type GradientSliderProps = Omit<SliderProps, 'onValueChange'> & {
+export type GradientSliderProps = Omit<
+  SliderProps,
+  'onValueChange' | 'value' | 'minimumValue' | 'maximumValue' | 'step' | 'thumbHitSlop' | 'useGap'
+> & {
   /**
    * The gradient color
    */
@@ -48,23 +51,16 @@ export type GradientSliderProps = Omit<SliderProps, 'onValueChange'> & {
    * If true the Slider will be disabled and will appear in disabled color
    */
   disabled?: boolean;
-};
+} & Partial<Pick<SliderProps, 'value' | 'minimumValue' | 'maximumValue' | 'step' | 'thumbHitSlop' | 'useGap'>>; // Fixes typing errors with the old slider.
 
 type GradientSliderComponentProps = {
   /**
    * Context of the slider group
    */
   sliderContext: SliderContextProps;
-} & GradientSliderProps &
-  typeof defaultProps;
+} & GradientSliderProps;
 
 type Props = GradientSliderComponentProps & ForwardRefInjectedProps;
-
-const defaultProps = {
-  type: GradientSliderTypes.DEFAULT,
-  gradientSteps: 120,
-  color: Colors.$backgroundPrimaryHeavy
-};
 
 /**
  * @description: A Gradient Slider component
@@ -92,10 +88,6 @@ const GradientSlider = (props: Props) => {
   useEffect(() => {
     setColor(Colors.getHSL(propsColors));
   }, [propsColors]);
-
-  const reset = () => {
-    updateColor(initialColor);
-  };
 
   const getColor = useCallback(() => {
     return color || sliderContext.value;
@@ -137,6 +129,10 @@ const GradientSlider = (props: Props) => {
     }
   },
   [sliderContext, onValueChange]);
+
+  const reset = useCallback(() => {
+    updateColor(initialColor);
+  }, [initialColor, updateColor]);
 
   const updateAlpha = useCallback((a: number) => {
     const color = getColor();
@@ -217,4 +213,4 @@ GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
 
 // eslint-disable-next-line max-len
-export default asBaseComponent<GradientSliderComponentProps, typeof GradientSlider>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));
+export default asBaseComponent<GradientSliderProps, typeof GradientSlider>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));
