@@ -16,10 +16,11 @@ const IconScreen = () => {
         <Icon
           margin-30
           size={customSize ? size : undefined}
-          tintColor={customColor ? (color as string) : undefined}
+          tintColor={customColor ? color as string : undefined}
           source={Assets.icons.search}
         />
       </View>
+
       <View marginB-s3 row>
         <Text marginR-s2>Custom Size</Text>
         <Switch value={customSize} onValueChange={setCustomSize}/>
@@ -28,6 +29,7 @@ const IconScreen = () => {
       <Text marginB-50 marginT-s2>
         Custom size: {size}
       </Text>
+
       <View marginB-s3 row>
         <Text marginR-s2>Custom Color</Text>
         <Switch value={customColor} onValueChange={setCustomColor}/>

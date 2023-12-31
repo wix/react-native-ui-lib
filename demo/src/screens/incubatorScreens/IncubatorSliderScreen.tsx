@@ -201,17 +201,14 @@ const IncubatorSliderScreen = () => {
           <Text text90 $textNeutral>
             DEFAULT
           </Text>
-          {
-            // @ts-ignore
-            <GradientSlider
-              color={color}
-              containerStyle={styles.gradientSliderContainer}
-              onValueChange={onGradientValueChange}
-              // @ts-expect-error
-              ref={this.gradientSlider}
-              migrate
-            />
-          }
+          <GradientSlider
+            color={color}
+            containerStyle={styles.gradientSliderContainer}
+            onValueChange={onGradientValueChange}
+            // @ts-expect-error
+            ref={this.gradientSlider}
+            migrate
+          />
           <View style={styles.box}>
             <View style={{flex: 1, backgroundColor: color, opacity: alpha}}/>
           </View>
@@ -220,16 +217,13 @@ const IncubatorSliderScreen = () => {
           <Text text90 $textNeutral>
             HUE
           </Text>
-          {
-            // @ts-ignore
-            <GradientSlider
-              type={GradientSlider.types.HUE}
-              color={COLOR}
-              containerStyle={styles.gradientSliderContainer}
-              onValueChange={onGradientValueChange}
-              migrate
-            />
-          }
+          <GradientSlider
+            type={GradientSlider.types.HUE}
+            color={COLOR}
+            containerStyle={styles.gradientSliderContainer}
+            onValueChange={onGradientValueChange}
+            migrate
+          />
           <View style={styles.box}>
             <View style={{flex: 1, backgroundColor: color}}/>
           </View>
