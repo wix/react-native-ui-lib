@@ -61,7 +61,7 @@ export interface MandatoryIndication {
   showMandatoryIndication?: boolean;
 }
 
-export interface LabelProps extends MandatoryIndication {
+export interface LabelProps extends MandatoryIndication, Pick<ValidationMessageProps, 'enableErrors'> {
   /**
    * Field label
    */
