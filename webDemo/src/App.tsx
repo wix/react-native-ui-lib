@@ -203,7 +203,7 @@ const itemsToRender: ItemToRender[] = [
     }
   },
   {
-    title: 'TextField1',
+    title: 'TextField',
     FC: () => {
       const [defaultValue, setDefaultValue] = useState('I am Default value');
       const updateDefaultValue = () => {
