@@ -50,7 +50,7 @@ function factor(options: Options): number {
 }
 
 export function getInitialNumber(propsInitialNumber = 0, options: Options) {
-  return propsInitialNumber * factor(options);
+  return Number((propsInitialNumber * factor(options)).toFixed(0));
 }
 
 export function parseInput(text: string, options: Options, initialNumber?: number): NumberInputData {
