@@ -216,6 +216,7 @@ const itemsToRender: ItemToRender[] = [
           <Incubator.TextField
             text70
             migrate
+            multiline
             defaultValue={defaultValue}
             containerStyle={{marginBottom: 10}}
             placeholder="Enter your email..."
