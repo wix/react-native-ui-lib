@@ -1,5 +1,6 @@
 import React, {useContext, useMemo} from 'react';
-import {TextInput as RNTextInput, StyleSheet, Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
+import {TextInput as RNTextInput} from './textInput';
 import {Constants, ForwardRefInjectedProps} from '../../commons/new';
 import {InputProps} from './types';
 import {getColorByState} from './Presenter';

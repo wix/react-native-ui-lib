@@ -207,6 +207,7 @@ class Image extends PureComponent<Props, State> {
   renderImage = (useImageInsideContainer: boolean) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
+
     const {
       tintColor,
       style,
