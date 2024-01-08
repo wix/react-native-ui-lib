@@ -142,6 +142,7 @@ export interface CharCounterProps {
 
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,
+    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'>,
     MandatoryIndication,
     RecorderProps {
   /**
