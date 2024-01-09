@@ -8,12 +8,12 @@ export interface ForwardRefInjectedProps<T> {
   forwardedRef: Ref<T>;
 }
 
-export default function forwardRef<P = {}, STATICS extends {[key: string]: true} = {}, T = any>(WrappedComponent: React.ComponentType<P & ForwardRefInjectedProps<T>>) {
-  function forwardRef(props: P, ref: Ref<T>) {
+export default function forwardRef<P = {}, STATICS extends {[key: string]: true} = {}, RefInterface = any>(WrappedComponent: React.ComponentType<P & ForwardRefInjectedProps<RefInterface>>) {
+  function forwardRef(props: P, ref: Ref<RefInterface>) {
     return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
 
-  const ForwardedComponent = React.forwardRef<T, P>(forwardRef);
+  const ForwardedComponent = React.forwardRef<RefInterface, P>(forwardRef);
 
   const FinalComponent = hoistStatics<typeof ForwardedComponent, typeof WrappedComponent, STATICS>(ForwardedComponent,
     WrappedComponent);
