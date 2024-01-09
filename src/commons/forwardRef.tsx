@@ -1,5 +1,4 @@
-import React, {useRef, Ref, ForwardedRef, useImperativeHandle, useEffect} from 'react';
-import {TextInput, View, Text} from 'react-native';
+import React, {Ref} from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 
 export interface ForwardRefInjectedProps<T> {
@@ -26,32 +25,3 @@ export default function forwardRef<P = {}, STATICS extends {[key: string]: true}
 
   return FinalComponent;
 }
-
-type TestProps = {
-  labelColor: string;
-};
-
-type TestRef = {
-  hello: () => void;
-  focus: () => void;
-};
-
-const Test = (props: TestProps & ForwardRefInjectedProps<TestRef>) => {
-  const {labelColor, forwardedRef} = props;
-  useImperativeHandle(forwardedRef, () => ({hello: () => console.log('hello'), focus: () => console.log('focus')}), []);
-  return (
-    <View>
-      <Text style={{color: labelColor}}>Test passing ref</Text>
-      <TextInput/>
-    </View>
-  );
-};
-const T = forwardRef<TestProps, {}, TestRef>(Test);
-
-const App = () => {
-  const inputRef = useRef<TestRef>(null);
-  useEffect(() => {
-    inputRef.current?.hello();
-  }, []);
-  return <T labelColor="red" ref={inputRef}/>;
-};
