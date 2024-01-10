@@ -21,6 +21,11 @@ import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonCo
 
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
+type ButtonStatics = {
+  sizes: typeof ButtonSize;
+
+  animationDirection: typeof ButtonAnimationDirection;
+}
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
@@ -430,4 +435,4 @@ const modifiersOptions = {
   color: true
 };
 
-export default asBaseComponent<ButtonProps, typeof Button>(forwardRef<Props>(Button), {modifiersOptions});
+export default asBaseComponent<ButtonProps, ButtonStatics, {}>(forwardRef(Button), {modifiersOptions});
