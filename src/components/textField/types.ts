@@ -32,9 +32,18 @@ export type ValidationMessagePositionType = `${ValidationMessagePosition}` | Val
 
 export type Validator = Function | keyof typeof formValidators;
 
-export interface FieldStateProps extends InputProps {
+interface FieldValidationProps {
+  /**
+   * Should validate when the TextField mounts
+   */
   validateOnStart?: boolean;
+  /**
+   * Should validate when the TextField value changes
+   */
   validateOnChange?: boolean;
+  /**
+   * Should validate when losing focus of TextField
+   */
   validateOnBlur?: boolean;
   /**
    * Callback for when field validated and failed
@@ -52,7 +61,17 @@ export interface FieldStateProps extends InputProps {
    * Callback for when field validity has changed
    */
   onChangeValidity?: (isValid: boolean) => void;
+  /**
+   * The position of the validation message (top/bottom)
+   */
+  validationMessagePosition?: ValidationMessagePositionType;
+  /**
+   * Should support showing validation error message
+   */
+  enableErrors?: boolean; // TODO: rename to enableValidation
 }
+
+export interface FieldStateProps extends InputProps, FieldValidationProps {}
 
 export interface MandatoryIndication {
   /**
@@ -61,7 +80,7 @@ export interface MandatoryIndication {
   showMandatoryIndication?: boolean;
 }
 
-export interface LabelProps extends MandatoryIndication, Pick<ValidationMessageProps, 'enableErrors'> {
+export interface LabelProps extends MandatoryIndication, Pick<FieldValidationProps, 'validationMessagePosition'> {
   /**
    * Field label
    */
@@ -78,7 +97,6 @@ export interface LabelProps extends MandatoryIndication, Pick<ValidationMessageP
    * Pass extra props to the label Text element
    */
   labelProps?: TextProps;
-  validationMessagePosition?: ValidationMessagePositionType;
   floatingPlaceholder?: boolean;
   testID?: string;
 }
@@ -106,15 +124,8 @@ export interface FloatingPlaceholderProps extends MandatoryIndication {
   testID: string;
 }
 
-export interface ValidationMessageProps {
-  /**
-   * Should support showing validation error message
-   */
-  enableErrors?: boolean;
-  /**
-   * The validation message to display when field is invalid (depends on validate)
-   */
-  validationMessage?: string | string[];
+export interface ValidationMessageProps
+  extends Pick<FieldValidationProps, 'validate' | 'validationMessage' | 'enableErrors'> {
   /**
    * Custom style for the validation message
    */
@@ -123,7 +134,6 @@ export interface ValidationMessageProps {
    * Keep the validation space even if there is no validation message
    */
   retainValidationSpace?: boolean;
-  validate?: FieldStateProps['validate'];
   testID?: string;
 }
 
@@ -170,18 +180,16 @@ export interface InputProps
   readonly?: boolean;
 }
 
-export type TextFieldProps = MarginModifiers &
-  PaddingModifiers &
-  TypographyModifiers &
-  ColorsModifiers &
-  InputProps &
+export type TextFieldProps = InputProps &
+  FieldValidationProps &
   LabelProps &
   Omit<FloatingPlaceholderProps, 'testID'> &
-  MandatoryIndication &
-  // We're declaring these props explicitly here for react-docgen (which can't read hooks)
-  // FieldStateProps &
   ValidationMessageProps &
-  Omit<CharCounterProps, 'maxLength' | 'testID'> & {
+  Omit<CharCounterProps, 'maxLength' | 'testID'> &
+  MarginModifiers &
+  PaddingModifiers &
+  TypographyModifiers &
+  ColorsModifiers & {
     /**
      * Pass to render a leading element
      */
@@ -202,34 +210,6 @@ export type TextFieldProps = MarginModifiers &
      * Custom style for the floating placeholder
      */
     floatingPlaceholderStyle?: TextStyle;
-    /**
-     * A single or multiple validator. Can be a string (required, email) or custom function.
-     */
-    validate?: Validator | Validator[];
-    /**
-     * Should validate when the TextField mounts
-     */
-    validateOnStart?: boolean;
-    /**
-     * Should validate when the TextField value changes
-     */
-    validateOnChange?: boolean;
-    /**
-     * Should validate when losing focus of TextField
-     */
-    validateOnBlur?: boolean;
-    /**
-     * Callback for when field validated and failed
-     */
-    onValidationFailed?: (failedValidatorIndex: number) => void;
-    /**
-     * Callback for when field validity has changed
-     */
-    onChangeValidity?: (isValid: boolean) => void;
-    /**
-     * The position of the validation message (top/bottom)
-     */
-    validationMessagePosition?: ValidationMessagePositionType;
     /**
      * Internal style for the field container
      */
@@ -265,7 +245,7 @@ export type InternalTextFieldProps = PropsWithChildren<
   TextFieldProps & BaseComponentInjectedProps & ForwardRefInjectedProps
 >;
 
-export type FieldContextType = {
+export type FieldContextType = Pick<FieldValidationProps, 'enableErrors'> & {
   value?: string;
   isFocused: boolean;
   hasValue: boolean;

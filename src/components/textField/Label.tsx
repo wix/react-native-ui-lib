@@ -19,13 +19,11 @@ const Label = ({
   validationMessagePosition,
   floatingPlaceholder,
   showMandatoryIndication,
-  enableErrors,
   testID
 }: LabelProps) => {
   const context = useContext(FieldContext);
 
-  const forceHidingLabel =
-    enableErrors && !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
+  const forceHidingLabel = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
   const style = useMemo(() => {
     return [styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder];
