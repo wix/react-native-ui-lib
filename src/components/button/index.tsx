@@ -15,17 +15,12 @@ import {
   ButtonState,
   Props,
   DEFAULT_PROPS,
-  ButtonSizeProp
+  ButtonSizeProp,
+  ButtonStatics
 } from './ButtonTypes';
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
-
-type ButtonStatics = {
-  sizes: typeof ButtonSize;
-
-  animationDirection: typeof ButtonAnimationDirection;
-}
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';

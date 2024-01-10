@@ -27,6 +27,12 @@ export enum ButtonAnimationDirection {
   right = 'right'
 }
 
+export type ButtonStatics = {
+  sizes: typeof ButtonSize;
+
+  animationDirection: typeof ButtonAnimationDirection;
+}
+
 export type ButtonAnimationDirectionProp = ButtonAnimationDirection | `${ButtonAnimationDirection}`;
 
 export type ButtonProps = TouchableOpacityProps &
