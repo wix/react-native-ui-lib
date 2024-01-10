@@ -39,6 +39,10 @@ describe('NumberInput', () => {
     it('should return 10 for 1 if fractionDigits is 1', () => {
       expect(getInitialNumber(1, {...EN_OPTIONS, fractionDigits: 1})).toEqual(10);
     });
+
+    it('Handle wrong result with some X.XX numbers', () => {
+      expect(getInitialNumber(8.97, {...EN_OPTIONS})).toEqual(897);
+    });
   });
 
   describe('getInitialData', () => {
