@@ -1,15 +1,15 @@
-import React, {Ref, ComponentType} from 'react';
+import React, {ComponentType, ForwardedRef} from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 
-export interface ForwardRefInjectedProps<T> {
+export interface ForwardRefInjectedProps<T = any> {
   /**
    * The forwarded ref of the containing element
    */
-  forwardedRef: Ref<T>;
+  forwardedRef: ForwardedRef<T>;
 }
 
 export default function forwardRef<P, STATICS = {}, RefInterface = any>(WrappedComponent: ComponentType<P & ForwardRefInjectedProps<RefInterface>>) {
-  function forwardRef(props: P, ref: Ref<RefInterface>) {
+  function forwardRef(props: P, ref: ForwardedRef<RefInterface>) {
     return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
 
