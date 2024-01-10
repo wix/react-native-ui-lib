@@ -21,7 +21,7 @@ export interface AsBaseComponentOptions {
 const EMPTY_MODIFIERS = {};
 const colorScheme = Scheme.getSchemeType();
 
-function asBaseComponent<PROPS, STATICS extends object = {}, RefInterface = any>(WrappedComponent: React.ComponentType<any>,
+function asBaseComponent<PROPS, STATICS = {}, RefInterface = any>(WrappedComponent: React.ComponentType<any>,
   options: AsBaseComponentOptions = {}) {
   class BaseComponent extends UIComponent<PROPS & ForwardRefInjectedProps<RefInterface>> {
     static displayName: string | undefined;

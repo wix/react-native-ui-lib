@@ -8,22 +8,20 @@ export interface ForwardRefInjectedProps<T> {
   forwardedRef: Ref<T>;
 }
 
-type DerivedStatics<T> = {[K in keyof T]: true};
-
-export default function forwardRef<P, STATICS extends object, RefInterface = any>(WrappedComponent: ComponentType<P & ForwardRefInjectedProps<RefInterface>>) {
+export default function forwardRef<P, STATICS = {}, RefInterface = any>(WrappedComponent: ComponentType<P & ForwardRefInjectedProps<RefInterface>>) {
   function forwardRef(props: P, ref: Ref<RefInterface>) {
     return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
 
   const ForwardedComponent = React.forwardRef<RefInterface, P>(forwardRef);
 
-  const FinalComponent = hoistStatics<typeof ForwardedComponent, typeof WrappedComponent, DerivedStatics<STATICS>>(ForwardedComponent,
-    WrappedComponent);
-  FinalComponent.displayName = WrappedComponent.displayName;
+  hoistStatics(ForwardedComponent, WrappedComponent);
   //@ts-ignore
-  FinalComponent.propTypes = WrappedComponent.propTypes;
+  ForwardedComponent.displayName = WrappedComponent.displayName;
   //@ts-ignore
-  FinalComponent.defaultProps = WrappedComponent.defaultProps;
+  ForwardedComponent.propTypes = WrappedComponent.propTypes;
+  //@ts-ignore
+  ForwardedComponent.defaultProps = WrappedComponent.defaultProps;
 
-  return FinalComponent;
+  return ForwardedComponent as typeof ForwardedComponent & STATICS;
 }
