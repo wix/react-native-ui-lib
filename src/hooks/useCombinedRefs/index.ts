@@ -15,7 +15,7 @@ const useCombinedRefs = (...refs: React.Ref<any>[]) => {
         ref.current = targetRef.current;
       }
     });
-  }, refs);
+  }, [refs]);
 
   return targetRef;
 };
