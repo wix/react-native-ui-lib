@@ -124,7 +124,6 @@ class TextScreen extends Component {
             <Text
               text70
               animated
-              // @ts-expect-error
               style={{transform: [{scale: this.animatedValue.interpolate({inputRange: [0, 1], outputRange: [1, 2]})}]}}
               onPress={this.animate}
             >
