@@ -2,7 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, {useMemo, forwardRef} from 'react';
 import {Image, ImageProps, StyleSheet} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
-import { ComponentStatics } from '../../typings/common';
+import {ComponentStatics} from '../../typings/common';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import {RecorderProps} from '../../typings/recorderTypes';
 import SvgImage from '../svgImage';

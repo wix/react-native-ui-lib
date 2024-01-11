@@ -11,7 +11,7 @@ import useScrollEnabler from '../../hooks/useScrollEnabler';
 import useScrollReached from '../../hooks/useScrollReached';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {ScrollView as GestureScrollView} from 'react-native-gesture-handler';
-import { ComponentStatics } from 'src/typings/common';
+import {ComponentStatics} from 'src/typings/common';
 
 export type FadedScrollViewProps = ScrollViewProps & {
   /**
