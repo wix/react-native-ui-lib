@@ -4,7 +4,7 @@ import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, Te
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
-import type {Dictionary} from '../../typings/common';
+import type {Dictionary, ComponentStatics} from '../../typings/common';
 import Text from '../text';
 import Image from '../image';
 import Icon from '../icon';
@@ -15,8 +15,7 @@ import {
   ButtonState,
   Props,
   DEFAULT_PROPS,
-  ButtonSizeProp,
-  ButtonStatics
+  ButtonSizeProp
 } from './ButtonTypes';
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
@@ -429,5 +428,6 @@ const modifiersOptions = {
   typography: true,
   color: true
 };
-
-export default asBaseComponent<ButtonProps, ButtonStatics, {}>(forwardRef(Button), {modifiersOptions});
+export default asBaseComponent<ButtonProps, ComponentStatics<typeof Button>, {}>(forwardRef(Button), {
+  modifiersOptions
+});
