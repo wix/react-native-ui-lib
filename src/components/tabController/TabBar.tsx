@@ -13,7 +13,7 @@ import {
 } from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
-import FadedScrollView from '../fadedScrollView';
+import FadedScrollView, {FadedScrollViewRef} from '../fadedScrollView';
 import {FaderProps} from '../fader';
 import useScrollToItem from './useScrollToItem';
 import {useDidUpdate} from 'hooks';
@@ -161,7 +161,7 @@ const TabBar = (props: Props) => {
     testID
   } = props;
 
-  const tabBar = useRef<typeof FadedScrollView>();
+  const tabBar = useRef<FadedScrollViewRef>(null);
   const [key, setKey] = useState<string>(generateKey(Constants.orientation, labelColor, selectedLabelColor));
   const context = useContext(TabBarContext);
   const {items: contextItems, currentPage, targetPage, containerWidth: contextContainerWidth} = context;
@@ -295,7 +295,6 @@ const TabBar = (props: Props) => {
   return (
     <View style={_containerStyle} key={key} bg-$backgroundElevated>
       <FadedScrollView
-        // @ts-expect-error
         ref={tabBar}
         horizontal
         showsHorizontalScrollIndicator={false}
