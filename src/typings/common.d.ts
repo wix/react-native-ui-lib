@@ -8,3 +8,5 @@ export type ExtendTypeWith<T extends Constructor<any>, OtherObject extends objec
   ConstructorParameters<T>
 >;
 export type Dictionary<TYPE> = {[key: string]: TYPE};
+
+export type ComponentStatics<T> = {[Key in keyof T]: T[Key]}
