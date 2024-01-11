@@ -214,4 +214,4 @@ GradientSlider.types = GradientSliderTypes;
 
 // eslint-disable-next-line max-len
 // @ts-expect-error
-export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>, {}>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));
+export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));
