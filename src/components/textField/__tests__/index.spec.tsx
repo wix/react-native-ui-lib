@@ -81,7 +81,7 @@ describe('TextField', () => {
     });
 
     describe('Mandatory Indication', () => {
-      it('Should show mandatory star indication - 1', async () => {
+      it('Should show mandatory star indication - 1', () => {
         const renderTree = render(<TestCase testID={'field'} validate={'required'} label={'Label'} showMandatoryIndication/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
         expect(textFieldDriver.getLabelText()).toEqual('Label*');
