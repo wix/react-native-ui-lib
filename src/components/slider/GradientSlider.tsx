@@ -4,6 +4,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import {ComponentStatics} from '../../typings/common';
 import Slider, {SliderProps} from './index';
 import {Slider as NewSlider} from '../../incubator';
 import {SliderContextProps} from './context/SliderContext';
@@ -192,7 +193,6 @@ const GradientSlider = (props: Props) => {
   return (
     <SliderComponent
       {...others}
-      //@ts-expect-error
       ref={forwardedRef}
       onReset={reset}
       renderTrack={renderTrack}
@@ -213,4 +213,5 @@ GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
 
 // eslint-disable-next-line max-len
-export default asBaseComponent<GradientSliderProps, typeof GradientSlider>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));
+// @ts-expect-error
+export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));

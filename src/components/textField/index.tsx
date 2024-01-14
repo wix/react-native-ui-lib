@@ -235,7 +235,7 @@ export {
   ValidationMessagePositionType as TextFieldValidationMessagePositionType,
   MandatoryIndication as TextFieldMandatoryIndication
 };
-export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any), {
+export default asBaseComponent<TextFieldProps, StaticMembers, TextFieldRef>(forwardRef(TextField as any), {
   modifiersOptions: {
     margins: true,
     paddings: true,

@@ -164,7 +164,6 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
       <View accessible={Constants.isIOS} style={styles.messageContainer}>
         <Text
           testID={`${testID}-message`}
-          // @ts-expect-error
           ref={viewRef}
           style={[styles.message, {textAlign}, messageStyle]}
           accessibilityLabel={toastPreset.accessibilityMessage}

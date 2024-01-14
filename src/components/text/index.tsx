@@ -47,7 +47,7 @@ export interface HighlightStringProps {
 
 export type HighlightString = string | HighlightStringProps;
 
-export type TextProps = RNTextProps &
+export type TextProps = Omit<RNTextProps, 'style'> &
   TypographyModifiers &
   ColorsModifiers &
   MarginModifiers &

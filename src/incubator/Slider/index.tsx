@@ -15,7 +15,7 @@ import {
 } from './SliderPresenter';
 import Thumb from './Thumb';
 import Track from './Track';
-
+import {ComponentStatics} from '../../typings/common';
 export interface SliderProps extends AccessibilityProps {
   /**
    * Initial value
@@ -131,8 +131,8 @@ export interface SliderProps extends AccessibilityProps {
   migrate?: boolean;
 }
 
-type Props = SliderProps & ForwardRefInjectedProps;
-interface Statics {
+type Props = SliderProps & ForwardRefInjectedProps<SliderRef>;
+export interface SliderRef {
   reset: () => void;
 }
 
@@ -398,8 +398,7 @@ const Slider = React.memo((props: Props) => {
   );
 });
 
-// @ts-expect-error
-export default forwardRef<SliderProps, Statics>(Slider);
+export default forwardRef<SliderProps, ComponentStatics<typeof Slider>, SliderRef>(Slider);
 
 const styles = StyleSheet.create({
   container: {

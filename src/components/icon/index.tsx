@@ -2,6 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, {useMemo, forwardRef} from 'react';
 import {Image, ImageProps, StyleSheet} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
+import {ComponentStatics} from '../../typings/common';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import {RecorderProps} from '../../typings/recorderTypes';
 import SvgImage from '../svgImage';
@@ -89,7 +90,8 @@ Icon.displayName = 'Icon';
 Icon.defaultProps = {
   assetGroup: 'icons'
 };
-export default asBaseComponent<IconProps, typeof Icon>(Icon, {modifiersOptions: {margins: true}});
+
+export default asBaseComponent<IconProps, ComponentStatics<typeof Icon>>(Icon, {modifiersOptions: {margins: true}});
 
 const styles = StyleSheet.create({
   rtlFlipped: {
