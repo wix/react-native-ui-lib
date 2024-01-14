@@ -15,7 +15,7 @@ import {
 } from './SliderPresenter';
 import Thumb from './Thumb';
 import Track from './Track';
-import {ComponentStatics} from 'src/typings/common';
+import {ComponentStatics} from '../../typings/common';
 export interface SliderProps extends AccessibilityProps {
   /**
    * Initial value

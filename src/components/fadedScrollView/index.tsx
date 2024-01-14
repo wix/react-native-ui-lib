@@ -6,12 +6,12 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent
 } from 'react-native';
+import {ScrollView as GestureScrollView} from 'react-native-gesture-handler';
 import Fader, {FaderProps} from '../fader';
 import useScrollEnabler from '../../hooks/useScrollEnabler';
 import useScrollReached from '../../hooks/useScrollReached';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
-import {ScrollView as GestureScrollView} from 'react-native-gesture-handler';
-import {ComponentStatics} from 'src/typings/common';
+import {ComponentStatics} from '../../typings/common';
 
 export type FadedScrollViewProps = ScrollViewProps & {
   /**
