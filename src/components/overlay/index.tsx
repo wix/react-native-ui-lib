@@ -31,7 +31,7 @@ export type OverlayTypes = {
   /**
    * The intensity of the gradient, default is 'LOW'.
    */
-  intensity?: OverlayIntensityType;
+  intensity?: OverlayIntensityType | `${OverlayIntensityType}`;
   /**
    * The overlay color
    */
