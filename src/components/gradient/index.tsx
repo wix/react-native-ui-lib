@@ -14,7 +14,7 @@ export enum GradientTypes {
 
 export interface GradientProps {
   color?: string | tinycolor.ColorFormats.HSLA;
-  type?: GradientTypes;
+  type?: GradientTypes | `${GradientTypes}`;
   numberOfSteps: number;
   style?: StyleProp<ViewStyle>;
 }
