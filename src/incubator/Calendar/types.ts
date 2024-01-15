@@ -59,7 +59,7 @@ export type InternalEvent = (Event & {type: 'Event'}) | (DateSectionHeader & {ty
 export type InternalData = InternalEvent[];
 
 export interface CalendarContextProps {
-  firstDayOfWeek: FirstDayOfWeek;
+  firstDayOfWeek: FirstDayOfWeek | `${FirstDayOfWeek}`;
   selectedDate: SharedValue<number>;
   setDate: (date: number, updateSource: UpdateSource) => void;
   data: InternalData;
@@ -108,7 +108,7 @@ export interface TodayButtonProps {
 export interface WeekDaysNamesProps {
   containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  format?: /* `${DayNamesFormat}` &  */ DayNamesFormat; // NOTE: template literals usage depends on ts min version ^4.3.2
+  format?: `${DayNamesFormat}` | DayNamesFormat;
 }
 
 export enum DayNamesFormat {
@@ -121,7 +121,7 @@ export interface CalendarProps {
   data: Data;
   initialDate?: number;
   onChangeDate?: (date: number) => void;
-  firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */ FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
+  firstDayOfWeek?: `${FirstDayOfWeek}` | FirstDayOfWeek;
   staticHeader?: boolean;
   showExtraDays?: boolean;
 }
