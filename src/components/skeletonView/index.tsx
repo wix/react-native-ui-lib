@@ -151,7 +151,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   contentAccessibilityProps?: AccessibilityProps;
   listItemAccessibilityProps?: AccessibilityProps;
 
-  setAccessibilityProps(template?: `${Template}`) {
+  setAccessibilityProps(template?: SkeletonViewProps['template']) {
     const isListItem = template === Template.LIST_ITEM;
     const accessibilityProps = {
       accessible: true,
