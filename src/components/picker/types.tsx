@@ -61,7 +61,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Pass for different field type UI (form, filter or settings)
    */
-  fieldType?: PickerFieldTypes;
+  fieldType?: PickerFieldTypes | `${PickerFieldTypes}`;
   /**
    * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
    */
@@ -73,7 +73,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * SINGLE mode or MULTI mode
    */
-  mode?: PickerModes;
+  mode?: PickerModes | `${PickerModes}`;
   /**
    * Limit the number of selected items
    */
