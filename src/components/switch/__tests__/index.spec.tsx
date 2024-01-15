@@ -1,6 +1,5 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import View from '../../view';
 import Switch, {SwitchProps} from '../index';
 import {SwitchDriver} from '../Switch.driver';
 
@@ -14,7 +13,7 @@ const onColor = 'red';
 const offColor = 'grey';
 
 const testCase = (testID: string, props: Partial<SwitchProps>) => {
-  const renderTree = render(<View><Switch testID={testID} {...defaultProps} {...props}/></View>);
+  const renderTree = render(<Switch testID={testID} {...defaultProps} {...props}/>);
   return SwitchDriver({renderTree, testID});
 };
 
