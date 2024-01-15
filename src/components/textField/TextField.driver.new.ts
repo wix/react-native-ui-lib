@@ -45,34 +45,34 @@ export const TextFieldDriver = (props: ComponentProps) => {
   };
 
   const getPlaceholder = () => {
-    const placeholderExists = (): boolean => {
+    const exists = (): boolean => {
       const hasPlaceholder = !!driver.getProps().placeholder;
       const hasText = !!getValue();
       return hasPlaceholder && (!hasText || (hasText && floatingPlaceholderDriver.exists()));
     };
-    const getPlaceholderText = (): string | undefined => {
-      if (placeholderExists()) {
+    const getText = (): string | undefined => {
+      if (exists()) {
         return driver.getProps().placeholder;
       }
     };
 
-    return {...floatingPlaceholderDriver, exists: placeholderExists, getText: getPlaceholderText};
+    return {...floatingPlaceholderDriver, exists, getText};
   };
 
   const getLabel = () => {
-    const labelExists = (): boolean => {
+    const exists = (): boolean => {
       return labelDriver.exists() && !floatingPlaceholderDriver.exists();
     };
 
-    return {...labelDriver, exists: labelExists};
+    return {...labelDriver, exists};
   };
 
   const getValidationMessage = () => {
-    const validationMessageExists = (): boolean => {
+    const exists = (): boolean => {
       return validationMsgDriver.exists() && !_.isEmpty(validationMsgDriver.getText());
     };
 
-    return {...validationMsgDriver, exists: validationMessageExists};
+    return {...validationMsgDriver, exists};
   };
 
   const getCharCounter = () => {
