@@ -87,36 +87,36 @@ describe('TextField', () => {
       const renderTree = render(<TestCase placeholder={'mock placeholder'}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.isPlaceholderVisible()).toBe(true);
-      expect(textFieldDriver.getPlaceholderText()).toEqual('mock placeholder');
+      expect(textFieldDriver.getPlaceholder().exists()).toBe(true);
+      expect(textFieldDriver.getPlaceholder().getText()).toEqual('mock placeholder');
     });
 
     it('should not render placeholder', () => {
       const renderTree = render(<TestCase/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.isPlaceholderVisible()).toBe(false);
+      expect(textFieldDriver.getPlaceholder().exists()).toBe(false);
     });
 
     it('should not render placeholder after user changing the input text(no floating prop)', () => {
       const renderTree = render(<TestCase placeholder={'mock placeholder'}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.isPlaceholderVisible()).toBe(true);
+      expect(textFieldDriver.getPlaceholder().exists()).toBe(true);
 
       textFieldDriver.changeText('mock input value');
 
-      expect(textFieldDriver.isPlaceholderVisible()).toBe(false);
+      expect(textFieldDriver.getPlaceholder().exists()).toBe(false);
     });
 
     it('should render placeholder(floating) after user changing text if floatingPlaceholder prop sent', () => {
       const renderTree = render(<TestCase placeholder={'mock placeholder'} floatingPlaceholder/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.isPlaceholderVisible()).toBe(true);
+      expect(textFieldDriver.getPlaceholder().exists()).toBe(true);
 
       textFieldDriver.changeText('mock input value');
 
-      expect(textFieldDriver.isPlaceholderVisible()).toBe(true);
-      expect(textFieldDriver.getPlaceholderText()).toEqual('mock placeholder');
+      expect(textFieldDriver.getPlaceholder().exists()).toBe(true);
+      expect(textFieldDriver.getPlaceholder().getText()).toEqual('mock placeholder');
     });
   });
 
@@ -125,21 +125,21 @@ describe('TextField', () => {
       const renderTree = render(<TestCase/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.isLabelVisible()).toBe(false);
+      expect(textFieldDriver.getLabel().exists()).toBe(false);
     });
 
     it('should render a label', () => {
       const renderTree = render(<TestCase label={'mock label'}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.isLabelVisible()).toBe(true);
+      expect(textFieldDriver.getLabel().exists()).toBe(true);
 
-      expect(textFieldDriver.getLabelText()).toEqual('mock label');
+      expect(textFieldDriver.getLabel().getText()).toEqual('mock label');
     });
 
     it('should not render label if floatingPlaceholder prop is passed', () => {
       const renderTree = render(<TestCase label={'mock label'} floatingPlaceholder/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.isLabelVisible()).toBe(false);
+      expect(textFieldDriver.getLabel().exists()).toBe(false);
     });
   });
 
@@ -149,28 +149,28 @@ describe('TextField', () => {
 
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.isValidationMsgVisible()).toBe(false);
+      expect(textFieldDriver.getValidationMessage().exists()).toBe(false);
     });
 
     it('should render validationMessage on start if input required and validateOnStart passed', () => {
       const renderTree = render(<TestCase value={''} validationMessage={'mock message'} enableErrors validateOnStart/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.isValidationMsgVisible()).toBe(true);
-      expect(textFieldDriver.getValidationMsgText()).toEqual('mock message');
+      expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+      expect(textFieldDriver.getValidationMessage().getText()).toEqual('mock message');
     });
 
     it('should render validationMessage when input is requires after changing the input to empty string', () => {
       const renderTree = render(<TestCase value={''} validate={'required'} validationMessage={'mock message'} enableErrors validateOnChange/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.isValidationMsgVisible()).toBe(false);
-      expect(textFieldDriver.getValidationMsgText()).toEqual('');
+      expect(textFieldDriver.getValidationMessage().exists()).toBe(false);
+      expect(textFieldDriver.getValidationMessage().getText()).toEqual('');
 
       textFieldDriver.changeText('');
 
-      expect(textFieldDriver.isValidationMsgVisible()).toBe(true);
-      expect(textFieldDriver.getValidationMsgText()).toEqual('mock message');
+      expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+      expect(textFieldDriver.getValidationMessage().getText()).toEqual('mock message');
     });
   });
 
@@ -179,45 +179,45 @@ describe('TextField', () => {
       const renderTree = render(<TestCase maxLength={10} showCharCounter/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.isCharCounterVisible()).toBe(true);
+      expect(textFieldDriver.getCharCounter().exists()).toBe(true);
     });
 
     it('should not render counter if maxLength prop not supplied', () => {
       const renderTree = render(<TestCase showCharCounter/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.isCharCounterVisible()).toBe(false);
+      expect(textFieldDriver.getCharCounter().exists()).toBe(false);
     });
 
     it('should not render counter if showCharCounter prop not supplied', () => {
       const renderTree = render(<TestCase maxLength={10}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.isCharCounterVisible()).toBe(false);
+      expect(textFieldDriver.getCharCounter().exists()).toBe(false);
     });
 
     it('should render char counter, with "0/10" if value not supplied', () => {
       const renderTree = render(<TestCase maxLength={10} showCharCounter/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.getCharCounterText()).toEqual('0/10');
+      expect(textFieldDriver.getCharCounter().getText()).toEqual('0/10');
     });
 
     it('should render char counter with correct content supplied', () => {
       const renderTree = render(<TestCase value={'abc'} maxLength={10} showCharCounter/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.getCharCounterText()).toEqual('3/10');
+      expect(textFieldDriver.getCharCounter().getText()).toEqual('3/10');
     });
 
     it('should update char counter after changing the text', () => {
       const renderTree = render(<TestCase value={'ab'} maxLength={10} showCharCounter/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-      expect(textFieldDriver.getCharCounterText()).toEqual('2/10');
+      expect(textFieldDriver.getCharCounter().getText()).toEqual('2/10');
 
       textFieldDriver.changeText('abcd');
 
-      expect(textFieldDriver.getCharCounterText()).toEqual('4/10');
+      expect(textFieldDriver.getCharCounter().getText()).toEqual('4/10');
     });
   });
 
@@ -251,7 +251,7 @@ describe('TextField', () => {
     //Sanity
     it('Should show mandatory indication on the label', () => {
       const textFieldDriver = getTestCaseDriver({label: 'Label', validate: 'required', showMandatoryIndication: true});
-      const labelContent = textFieldDriver.getLabelText();
+      const labelContent = textFieldDriver.getLabel().getText();
       expect(labelContent).toMatch(starReg);
     });
     it('Should show mandatory indication on the label', () => {
@@ -260,17 +260,17 @@ describe('TextField', () => {
         validate: ['required'],
         showMandatoryIndication: true
       });
-      const labelContent = textFieldDriver.getLabelText();
+      const labelContent = textFieldDriver.getLabel().getText();
       expect(labelContent).toMatch(starReg);
     });
     it('Should not show mandatory indication on label', () => {
       const textFieldDriver = getTestCaseDriver({label: 'label', showMandatoryIndication: true});
-      const labelText = textFieldDriver.getLabelText();
+      const labelText = textFieldDriver.getLabel().getText();
       expect(labelText).not.toMatch(starReg);
     });
     it('Should not show mandatory indication on label', () => {
       const textFieldDriver = getTestCaseDriver({label: 'label', validate: 'required'});
-      const labelText = textFieldDriver.getLabelText();
+      const labelText = textFieldDriver.getLabel().getText();
       expect(labelText).not.toMatch(starReg);
     });
     it('Should have mandatory on the placeholder', () => {
@@ -279,7 +279,7 @@ describe('TextField', () => {
         showMandatoryIndication: true,
         validate: 'required'
       });
-      const placeholderText = textFieldDriver.getPlaceholderText();
+      const placeholderText = textFieldDriver.getPlaceholder().getText();
       expect(placeholderText).toMatch(starReg);
     });
     it('Should not have any mandatory - 1', () => {
@@ -289,8 +289,8 @@ describe('TextField', () => {
         // validate: 'required',
         label: 'label'
       });
-      const placeholderText = textFieldDriver.getPlaceholderText();
-      const labelText = textFieldDriver.getLabelText();
+      const placeholderText = textFieldDriver.getPlaceholder().getText();
+      const labelText = textFieldDriver.getLabel().getText();
       expect(placeholderText).not.toMatch(starReg);
       expect(labelText).not.toMatch(starReg);
     });
@@ -301,8 +301,8 @@ describe('TextField', () => {
         validate: 'required',
         label: 'label'
       });
-      const placeholderText = textFieldDriver.getPlaceholderText();
-      const labelText = textFieldDriver.getLabelText();
+      const placeholderText = textFieldDriver.getPlaceholder().getText();
+      const labelText = textFieldDriver.getLabel().getText();
       expect(placeholderText).not.toMatch(starReg);
       expect(labelText).not.toMatch(starReg);
     });
@@ -314,7 +314,7 @@ describe('TextField', () => {
         showMandatoryIndication: true,
         validate: 'required'
       });
-      const placeholderText = textFieldDriver.getPlaceholderText();
+      const placeholderText = textFieldDriver.getPlaceholder().getText();
       expect(placeholderText).toMatch(starReg);
     });
 
@@ -326,8 +326,8 @@ describe('TextField', () => {
         validate: 'required',
         label: 'label'
       });
-      const labelText = textFieldDriver.getLabelText();
-      const placeholderText = textFieldDriver.getPlaceholderText();
+      const labelText = textFieldDriver.getLabel().getText();
+      const placeholderText = textFieldDriver.getPlaceholder().getText();
       expect(labelText).toMatch(starReg);
       expect(placeholderText).not.toMatch(starReg);
     });

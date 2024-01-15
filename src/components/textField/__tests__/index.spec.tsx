@@ -20,17 +20,17 @@ describe('TextField', () => {
     it('should hint text replace placeholder when input is focused', () => {
       const renderTree = render(<TestCase hint={'Hint'}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.getPlaceholderText()).toEqual(defaultProps.placeholder);
+      expect(textFieldDriver.getPlaceholder().getText()).toEqual(defaultProps.placeholder);
       textFieldDriver.focus();
-      expect(textFieldDriver.getPlaceholderText()).toEqual('Hint');
+      expect(textFieldDriver.getPlaceholder().getText()).toEqual('Hint');
     });
 
     it('should not show hint when hint prop not passed', () => {
       const renderTree = render(<TestCase/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.getPlaceholderText()).toEqual(defaultProps.placeholder);
+      expect(textFieldDriver.getPlaceholder().getText()).toEqual(defaultProps.placeholder);
       textFieldDriver.focus();
-      expect(textFieldDriver.getPlaceholderText()).toEqual(defaultProps.placeholder);
+      expect(textFieldDriver.getPlaceholder().getText()).toEqual(defaultProps.placeholder);
     });
   });
 
@@ -69,37 +69,37 @@ describe('TextField', () => {
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
       textFieldDriver.changeText('invalidEmail');
       textFieldDriver.blur();
-      expect(textFieldDriver.getValidationMsgText()).toEqual(props.validationMessage);
+      expect(textFieldDriver.getValidationMessage().getText()).toEqual(props.validationMessage);
     });
 
     it('should remove validation error message after entering a valid input', () => {
       const renderTree = render(<TestCase {...props} validateOnStart validateOnChange value={'invalid'}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.getValidationMsgText()).toEqual(props.validationMessage);
+      expect(textFieldDriver.getValidationMessage().getText()).toEqual(props.validationMessage);
       textFieldDriver.changeText('mail@mail.com');
-      expect(textFieldDriver.isValidationMsgVisible()).toEqual(false);
+      expect(textFieldDriver.getValidationMessage().exists()).toEqual(false);
     });
 
     describe('Mandatory Indication', () => {
       it('Should show mandatory star indication - 1', () => {
         const renderTree = render(<TestCase testID={'field'} validate={'required'} label={'Label'} showMandatoryIndication/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-        expect(textFieldDriver.getLabelText()).toEqual('Label*');
+        expect(textFieldDriver.getLabel().getText()).toEqual('Label*');
       });
       it('Should show mandatory star indication - 2', () => {
         const renderTree = render(<TestCase testID={'field'} validate={['email', 'required']} label={'Label'} showMandatoryIndication/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-        expect(textFieldDriver.getLabelText()).toEqual('Label*');
+        expect(textFieldDriver.getLabel().getText()).toEqual('Label*');
       });
       it('Should not show mandatory star indication - 1', () => {
         const renderTree = render(<TestCase testID={'field'} validate={['email', 'required']} label={'Label'}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-        expect(textFieldDriver.getLabelText()).not.toEqual('Label*');
+        expect(textFieldDriver.getLabel().getText()).not.toEqual('Label*');
       });
       it('Should not show mandatory star indication - 2', () => {
         const renderTree = render(<TestCase testID={'field'} validate={['email']} label={'Label'} showMandatoryIndication/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-        expect(textFieldDriver.getLabelText()).not.toEqual('Label*');
+        expect(textFieldDriver.getLabel().getText()).not.toEqual('Label*');
       });
     });
   });

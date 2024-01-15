@@ -6,6 +6,7 @@ import {TextDriver} from '../text/Text.driver.new';
 
 export const TextFieldDriver = (props: ComponentProps) => {
   const driver = useComponentDriver<TextFieldProps>(props);
+
   const floatingPlaceholderDriver = TextDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.floatingPlaceholder`
@@ -22,10 +23,6 @@ export const TextFieldDriver = (props: ComponentProps) => {
     renderTree: props.renderTree,
     testID: `${props.testID}.charCounter`
   });
-
-  const hasFloatingPlaceholder = (): boolean => {
-    return floatingPlaceholderDriver.exists();
-  };
 
   const getText = (): string | undefined => {
     return driver.getProps().value ?? driver.getProps().defaultValue;
@@ -47,44 +44,39 @@ export const TextFieldDriver = (props: ComponentProps) => {
     return !driver.getProps().accessibilityState?.disabled;
   };
 
-  const isPlaceholderVisible = (): boolean => {
-    const hasPlaceholder = !!driver.getProps().placeholder;
-    const hasText = !!getText();
-    return hasPlaceholder && (!hasText || (hasText && hasFloatingPlaceholder()));
+  const getPlaceholder = () => {
+    const placeholderExists = (): boolean => {
+      const hasPlaceholder = !!driver.getProps().placeholder;
+      const hasText = !!getText();
+      return hasPlaceholder && (!hasText || (hasText && floatingPlaceholderDriver.exists()));
+    };
+    const getPlaceholderText = (): string | undefined => {
+      if (placeholderExists()) {
+        return driver.getProps().placeholder;
+      }
+    };
+
+    return {...floatingPlaceholderDriver, exists: placeholderExists, getText: getPlaceholderText};
   };
 
-  const getPlaceholderText = (): React.ReactNode | undefined => {
-    if (isPlaceholderVisible()) {
-      return driver.getProps().placeholder;
-    }
+  const getLabel = () => {
+    const labelExists = (): boolean => {
+      return labelDriver.exists() && !floatingPlaceholderDriver.exists();
+    };
+
+    return {...labelDriver, exists: labelExists};
   };
 
-  const isLabelVisible = (): boolean => {
-    return labelDriver.exists() && !hasFloatingPlaceholder();
+  const getValidationMessage = () => {
+    const validationMessageExists = (): boolean => {
+      return validationMsgDriver.exists() && !_.isEmpty(validationMsgDriver.getText());
+    };
+
+    return {...validationMsgDriver, exists: validationMessageExists};
   };
 
-  const getLabelText = (): React.ReactNode | undefined => {
-    if (labelDriver.exists()) {
-      return labelDriver.getText();
-    }
-  };
-
-  const isValidationMsgVisible = (): boolean => {
-    return validationMsgDriver.exists() && !_.isEmpty(validationMsgDriver.getText());
-  };
-
-  const getValidationMsgText = (): React.ReactNode | undefined => {
-    if (validationMsgDriver.exists()) {
-      return validationMsgDriver.getText();
-    }
-  };
-
-  const isCharCounterVisible = (): boolean => {
-    return charCounterDriver.exists();
-  };
-
-  const getCharCounterText = (): React.ReactNode | undefined => {
-    return charCounterDriver.getText();
+  const getCharCounter = () => {
+    return charCounterDriver;
   };
 
   return {
@@ -94,13 +86,9 @@ export const TextFieldDriver = (props: ComponentProps) => {
     focus,
     blur,
     isEnabled,
-    isPlaceholderVisible,
-    getPlaceholderText,
-    isLabelVisible,
-    getLabelText,
-    isValidationMsgVisible,
-    getValidationMsgText,
-    isCharCounterVisible,
-    getCharCounterText
+    getPlaceholder,
+    getLabel,
+    getValidationMessage,
+    getCharCounter
   };
 };
