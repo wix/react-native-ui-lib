@@ -1,8 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import Modal from '../';
+import Modal, {ModalProps} from '../';
 import {ModalDriver} from '../Modal.driver.new';
-import {ModalProps} from 'react-native';
 
 const testID = 'modal';
 

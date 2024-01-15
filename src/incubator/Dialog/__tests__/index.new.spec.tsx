@@ -20,4 +20,9 @@ describe('Sanity checks', () => {
     const {driver} = getDriver({visible: true});
     expect(driver.isVisible()).toBeTruthy();
   });
+  it('Should dismiss dialog on background press', () => {
+    const {driver} = getDriver({visible: true});
+    driver.pressOnBackground();
+    expect(driver.isVisible()).toBeFalsy();
+  });
 });
