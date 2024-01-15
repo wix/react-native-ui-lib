@@ -9,20 +9,22 @@ const TestCase = (props: Omit<DialogProps, 'testID'>) => {
   return <Dialog testID={testID} {...props}/>;
 };
 
-const getDriver = (props: DialogProps) => {
-  const renderTree = render(<TestCase {...props}/>);
-  const driver = DialogDriver({renderTree, testID});
-  return {renderTree, driver};
+const getDriver = (Element: React.JSX.Element) => {
+  const renderTree = render(Element);
+  const dialogDriver = DialogDriver({renderTree, testID});
+  return {renderTree, dialogDriver};
 };
 
 describe('Sanity checks', () => {
   it('Should show dialog', () => {
-    const {driver} = getDriver({visible: true});
-    expect(driver.isVisible()).toBeTruthy();
+    const {dialogDriver} = getDriver(<TestCase visible/>);
+    expect(dialogDriver.isVisible()).toBeTruthy();
   });
+
   it('Should dismiss dialog on background press', () => {
-    const {driver} = getDriver({visible: true});
-    driver.pressOnBackground();
-    expect(driver.isVisible()).toBeFalsy();
+    const {dialogDriver} = getDriver(<TestCase visible/>);
+    expect(dialogDriver.isVisible()).toBeTruthy();
+    dialogDriver.pressOnBackground();
+    expect(dialogDriver.isVisible()).toBeFalsy();
   });
 });

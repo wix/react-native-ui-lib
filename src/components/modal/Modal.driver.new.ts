@@ -11,8 +11,10 @@ export const ModalDriver = (props: ComponentProps) => {
   };
 
   const pressOnBackground = () => {
-    const overlay = renderTree.getByTestId(`${testID}.TouchableOverlay`);
-    fireEvent.press(overlay);
+    const overlay = renderTree.queryByTestId(`${testID}.TouchableOverlay`);
+    if (overlay) {
+      fireEvent.press(overlay);
+    }
   };
 
   return {...driver, isVisible, pressOnBackground};
