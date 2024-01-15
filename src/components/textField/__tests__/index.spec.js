@@ -143,5 +143,26 @@ describe('TextField', () => {
       renderTree.rerender(<TestCase {...props} value={undefined} defaultValue={'someUpdatedDefaultValue'}/>);
       renderTree.getByDisplayValue('someUpdatedDefaultValue');
     });
+
+    it('should prevent invalid input to TextField', async () => {
+      function ComplicatedTestCase() {
+        const [value, setValue] = React.useState('90');
+        const updateValue = React.useCallback((text) => {
+          if (text.match(/^\d*(\.\d*)?$/)) {
+            setValue(text);
+          } else {
+            setValue(old => old);
+          }
+        }, []);
+        return <TextField {...defaultProps} value={value} onChangeText={updateValue}/>;
+      }
+
+      const renderTree = render(<ComplicatedTestCase/>);
+  
+      fireEvent.changeText(renderTree.getByTestId(defaultProps.testID), '90.');
+      fireEvent.changeText(renderTree.getByTestId(defaultProps.testID), '90..');
+  
+      expect(renderTree.getByTestId(defaultProps.testID).props.value).toBe('90.');
+    });
   });
 });
