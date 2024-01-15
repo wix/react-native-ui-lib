@@ -49,7 +49,7 @@ const Timeline = (props: TimelineProps) => {
     return [styles.container, visibleStyle];
   }, [visibleStyle]);
 
-  const getStateColor = (state?: StateTypes) => {
+  const getStateColor = (state?: PointProps['state']) => {
     switch (state) {
       case StateTypes.CURRENT:
         return Colors.$backgroundPrimaryHeavy;
