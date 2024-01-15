@@ -45,14 +45,14 @@ describe('TextField', () => {
     it('should format value while not focused based on formatter prop', () => {
       const renderTree = render(<TestCase {...props}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.getText()).toEqual('10,000');
+      expect(textFieldDriver.getValue()).toEqual('10,000');
     });
 
     it('should not format value while focused', () => {
       const renderTree = render(<TestCase {...props}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
       textFieldDriver.focus();
-      expect(textFieldDriver.getText()).toEqual('10000');
+      expect(textFieldDriver.getValue()).toEqual('10000');
     });
   });
 
@@ -114,13 +114,13 @@ describe('TextField', () => {
     it('value should equal defaultValue on first render when value not given', () => {
       const renderTree = render(<TestCase {...props} value={undefined}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.getText()).toEqual('someDefaultValue');
+      expect(textFieldDriver.getValue()).toEqual('someDefaultValue');
     });
 
     it('value should equal value on first render when given', () => {
       const renderTree = render(<TestCase {...props} defaultValue={undefined}/>);
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      expect(textFieldDriver.getText()).toEqual('someValue');
+      expect(textFieldDriver.getValue()).toEqual('someValue');
     });
 
     it.each`
@@ -134,7 +134,7 @@ describe('TextField', () => {
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
       
       renderTree.rerender(<TestCase {...props} value={undefined} defaultValue={'someUpdatedDefaultValue'}/>);
-      expect(textFieldDriver.getText()).toEqual('someUpdatedDefaultValue');
+      expect(textFieldDriver.getValue()).toEqual('someUpdatedDefaultValue');
     });
   });
 });

@@ -36,18 +36,18 @@ describe('TextField', () => {
     const renderTree = render(<TestCase value={'aa'}/>);
     const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-    expect(textFieldDriver.getText()).toEqual('aa');
+    expect(textFieldDriver.getValue()).toEqual('aa');
   });
 
   it('should change the text correctly', () => {
     const renderTree = render(<TestCase value={'aa'}/>);
     const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
-    expect(textFieldDriver.getText()).toEqual('aa');
+    expect(textFieldDriver.getValue()).toEqual('aa');
 
     textFieldDriver.changeText('bb');
 
-    expect(textFieldDriver.getText()).toEqual('bb');
+    expect(textFieldDriver.getValue()).toEqual('bb');
   });
 
   describe('editable', () => {

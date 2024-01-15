@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {fireEvent} from '@testing-library/react-native';
-import {TextFieldProps} from './index';
+import {TextFieldProps} from './types';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {TextDriver} from '../text/Text.driver.new';
 
@@ -24,7 +24,7 @@ export const TextFieldDriver = (props: ComponentProps) => {
     testID: `${props.testID}.charCounter`
   });
 
-  const getText = (): string | undefined => {
+  const getValue = (): string | undefined => {
     return driver.getProps().value ?? driver.getProps().defaultValue;
   };
 
@@ -47,7 +47,7 @@ export const TextFieldDriver = (props: ComponentProps) => {
   const getPlaceholder = () => {
     const placeholderExists = (): boolean => {
       const hasPlaceholder = !!driver.getProps().placeholder;
-      const hasText = !!getText();
+      const hasText = !!getValue();
       return hasPlaceholder && (!hasText || (hasText && floatingPlaceholderDriver.exists()));
     };
     const getPlaceholderText = (): string | undefined => {
@@ -81,7 +81,7 @@ export const TextFieldDriver = (props: ComponentProps) => {
 
   return {
     ...driver,
-    getText,
+    getValue,
     changeText,
     focus,
     blur,
