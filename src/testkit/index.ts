@@ -14,3 +14,5 @@ export {SortableListItemDriver} from '../components/sortableList/SortableListIte
 export {SliderDriver} from '../components/slider/slider.driver';
 export {SliderDriver as IncubatorSliderDriver} from '../incubator/Slider/Slider.driver';
 export {ViewDriver} from '../components/view/View.driver.new';
+export {ModalDriver} from '../components/modal/Modal.driver.new';
+export {DialogDriver} from '../incubator/Dialog/Dialog.driver.new';

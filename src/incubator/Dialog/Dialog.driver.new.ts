@@ -1,6 +1,6 @@
-import {DialogProps} from './index';
+import {DialogProps} from '../../components/dialog/index';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {ModalDriver} from '../modal/Modal.driver.new';
+import {ModalDriver} from '../../testkit/';
 
 export const DialogDriver = (props: ComponentProps) => {
   const {renderTree, testID} = props;
