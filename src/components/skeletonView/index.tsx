@@ -33,12 +33,12 @@ export interface SkeletonListProps {
    * The size of the skeleton view.
    * Types: SMALL and LARGE (using SkeletonView.sizes.###)
    */
-  size?: Size;
+  size?: Size | `${Size}`;
   /**
    * Add content to the skeleton.
    * Types: AVATAR and THUMBNAIL (using SkeletonView.contentTypes.###)
    */
-  contentType?: ContentType;
+  contentType?: ContentType | `${ContentType}`;
   /**
    * Whether to hide the list item template separator
    */
@@ -71,7 +71,7 @@ export interface SkeletonViewProps extends AccessibilityProps, AlignmentModifier
    * The type of the skeleton view.
    * Types: LIST_ITEM and TEXT_CONTENT (using SkeletonView.templates.###)
    */
-  template?: Template;
+  template?: Template | `${Template}`;
   /**
    * Props that are available when using template={SkeletonView.templates.LIST_ITEM}
    */
@@ -151,7 +151,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   contentAccessibilityProps?: AccessibilityProps;
   listItemAccessibilityProps?: AccessibilityProps;
 
-  setAccessibilityProps(template?: Template) {
+  setAccessibilityProps(template?: `${Template}`) {
     const isListItem = template === Template.LIST_ITEM;
     const accessibilityProps = {
       accessible: true,
