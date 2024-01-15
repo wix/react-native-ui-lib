@@ -292,7 +292,9 @@ describe('Checkbox renderer test', () => {
         const props = {label: text};
         const renderTree = render(<TestCase {...props}/>);
         const driver = CheckboxDriver({renderTree, testID});
+        
         const label = driver.getLabel();
+        
         expect(label).toEqual(text);
       });
     });
