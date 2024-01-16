@@ -62,7 +62,7 @@ export interface CarouselProps extends ScrollViewProps {
   /**
    * The position of the PageControl component ['over', 'under'], otherwise it won't display
    */
-  pageControlPosition?: PageControlPosition;
+  pageControlPosition?: PageControlPosition | `${PageControlPosition}`;
   /**
    * whether to show a page counter (will not work with 'pageWidth' prop)
    */

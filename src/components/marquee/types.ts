@@ -21,7 +21,7 @@ export type MarqueeProps = PropsWithChildren<{
   /**
    * Marquee direction
    */
-  direction?: MarqueeDirections;
+  direction?: MarqueeDirections | `${MarqueeDirections}`;
   /**
    * Marquee animation duration
    */
