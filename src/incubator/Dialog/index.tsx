@@ -52,7 +52,8 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     modalProps = {},
     useSafeArea,
     testID,
-    children
+    children,
+    recorderTag='unmask'
   } = props;
   const {overlayBackgroundColor = Colors.rgba(Colors.$backgroundInverted, 0.3), ...otherModalProps} = modalProps;
 
@@ -201,7 +202,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const renderDialog = () => (
     <GestureDetector gesture={panGesture}>
       {/* @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881) */}
-      <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
+      <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID} recorderTag={recorderTag}>
         {headerProps && <DialogHeader {...headerProps}/>}
         {children}
       </View>
