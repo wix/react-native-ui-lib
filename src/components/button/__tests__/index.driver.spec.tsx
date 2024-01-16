@@ -4,7 +4,7 @@ import View from '../../view';
 import Text from '../../text';
 import Button from '../index';
 import {ImageSourcePropType} from 'react-native';
-import {ButtonDriver} from '../Button.new.driver';
+import {ButtonDriver} from '../Button.driver.new';
 import {TextDriver} from '../../text/Text.driver.new';
 
 const BUTTON_ID = 'button_test_id';

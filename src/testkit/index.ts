@@ -9,3 +9,5 @@ export {CarouselDriver} from '../components/carousel/Carousel.driver.new';
 export {SortableListDriver} from '../components/sortableList/SortableList.driver.new';
 export {SortableListItemDriver} from '../components/sortableList/SortableListItem.driver.new';
 export {CheckboxDriver} from '../components/checkbox/Checkbox.driver';
+export {ButtonDriver} from '../components/button/Button.driver.new';
+export {ImageDriver} from '../components/image/Image.driver.new';
