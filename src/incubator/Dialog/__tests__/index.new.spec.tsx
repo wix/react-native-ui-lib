@@ -1,5 +1,5 @@
-import React from 'react';
-import {render} from '@testing-library/react-native';
+import React, {useRef} from 'react';
+import {render, act} from '@testing-library/react-native';
 import Dialog, {DialogProps} from '../index';
 import {DialogDriver} from '../Dialog.driver.new';
 
@@ -25,6 +25,20 @@ describe('Sanity checks', () => {
     const {dialogDriver} = getDriver(<TestCase visible/>);
     expect(dialogDriver.isVisible()).toBeTruthy();
     dialogDriver.pressOnBackground();
+    expect(dialogDriver.isVisible()).toBeFalsy();
+  });
+
+  it('Should dismiss dialog on dismiss call', () => {
+    let dialogRef: React.RefObject<{dismiss: () => void}>;
+    const RefTestCase = () => {
+      dialogRef = useRef<{dismiss:() => void}>(null);
+      return <Dialog testID={testID} visible ref={dialogRef}/>;
+    };
+    const {dialogDriver} = getDriver(<RefTestCase/>);
+    expect(dialogDriver.isVisible()).toBeTruthy();
+    act(() => {
+      dialogRef.current?.dismiss();
+    });
     expect(dialogDriver.isVisible()).toBeFalsy();
   });
 });

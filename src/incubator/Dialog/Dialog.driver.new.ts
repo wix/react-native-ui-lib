@@ -1,4 +1,4 @@
-import {DialogProps} from '../index';
+import {DialogProps} from './index';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {ModalDriver} from '../../testkit/';
 
