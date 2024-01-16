@@ -37,8 +37,9 @@ export {
 } from './incubator';
 import * as Hooks from './hooks';
 import * as Modifiers from './commons/modifiers';
+export {Incubator, Hooks, Modifiers};
 import * as TestKit from './testkit';
-export {Incubator, Hooks, Modifiers, TestKit};
+export {TestKit};
 
 export {default as LogService} from './services/LogService';
 
