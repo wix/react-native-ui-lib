@@ -14,17 +14,21 @@ export const ButtonDriver = (props: ComponentProps) => {
     testID: `${props.testID}.icon`
   });
 
-  const isLabelExist = () => {
-    return labelDriver.exists();
+  const getLabel = () => {
+    const exists = (): boolean => {
+      return labelDriver.exists();
+    };
+
+    return {...labelDriver, exists};
   };
 
-  const getIconElement = () => {
-    return iconDriver.getElement();
+  const getIcon = () => {
+    const exists = (): boolean => {
+      return iconDriver.exists();
+    };
+
+    return {...iconDriver, exists};
   };
 
-  const isIconExist = () => {
-    return iconDriver.exists();
-  };
-
-  return {...labelDriver, isLabelExist, ...iconDriver, getIconElement, isIconExist, ...driver};
+  return {...labelDriver, getLabel, ...iconDriver, getIcon, ...driver};
 };

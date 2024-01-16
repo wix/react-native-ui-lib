@@ -13,10 +13,6 @@ const CHILDREN_TEXT = 'custom button text';
 
 // TODO: This tests are flaky and only fail on CI - we should investigate why
 describe('Button', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('should render a button', async () => {
     const renderTree = render(<WrapperScreenWithButton/>);
     const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
@@ -67,20 +63,20 @@ describe('Button', () => {
       const props = {label: LABEL};
       const renderTree = render(<WrapperScreenWithButton {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
-      expect(await buttonDriver.getText()).toEqual(LABEL);
+      expect(await buttonDriver.getLabel().getText()).toEqual(LABEL);
     });
 
     it('should render a button with correct label content. ', async () => {
       const props = {label: LABEL};
       const renderTree = render(<WrapperScreenWithButton {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
-      expect(await buttonDriver.getText()).toEqual(LABEL);
+      expect(await buttonDriver.getLabel().getText()).toEqual(LABEL);
     });
 
     it('should render a button without label. ', async () => {
       const renderTree = render(<WrapperScreenWithButton/>);
       const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
-      expect(await buttonDriver.isLabelExist()).toBeFalsy();
+      expect(await buttonDriver.getLabel().exists()).toBeFalsy();
     });
   });
 
@@ -88,7 +84,7 @@ describe('Button', () => {
     it('should render a button without an icon. ', async () => {
       const renderTree = render(<WrapperScreenWithButton/>);
       const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
-      expect(await buttonDriver.isIconExist()).toBeFalsy();
+      expect(await buttonDriver.getIcon().exists()).toBeFalsy();
     });
 
     it('should render a button with icon. ', async () => {
@@ -97,7 +93,7 @@ describe('Button', () => {
       const renderTree = render(<WrapperScreenWithButton {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
 
-      expect(await buttonDriver.getIconElement()).toBeTruthy();
+      expect(await buttonDriver.getIcon().exists()).toBeTruthy();
     });
   });
 

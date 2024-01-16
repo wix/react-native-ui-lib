@@ -2,5 +2,5 @@ import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.dr
 
 export const ImageDriver = (props: ComponentProps) => {
   const driver = useComponentDriver(props);
-  return {...driver};
+  return driver;
 };
