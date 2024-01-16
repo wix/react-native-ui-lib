@@ -15,20 +15,12 @@ export const ButtonDriver = (props: ComponentProps) => {
   });
 
   const getLabel = () => {
-    const exists = (): boolean => {
-      return labelDriver.exists();
-    };
-
-    return {...labelDriver, exists};
+    return labelDriver;
   };
 
   const getIcon = () => {
-    const exists = (): boolean => {
-      return iconDriver.exists();
-    };
-
-    return {...iconDriver, exists};
+    return iconDriver;
   };
 
-  return {...labelDriver, getLabel, ...iconDriver, getIcon, ...driver};
+  return {getLabel, getIcon, ...driver};
 };
