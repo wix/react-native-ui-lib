@@ -5,7 +5,7 @@ import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 export const TextDriver = (props: ComponentProps) => {
   const driver = usePressableDriver<TextProps>(useComponentDriver(props));
 
-  const getText = (): React.ReactNode | undefined => {
+  const getText = (): React.ReactNode | string | undefined => {
     return driver.getProps().children;
   };
 
