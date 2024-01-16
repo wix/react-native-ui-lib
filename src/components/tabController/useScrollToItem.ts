@@ -28,7 +28,7 @@ export type ScrollToItemProps<T extends ScrollToSupportedViews> = {
   /**
    * Where would the item be located (default to CENTER)
    */
-  offsetType?: OffsetType;
+  offsetType?: OffsetType | `${OffsetType}`;
   /**
    * Add a margin to the offset (default to true)
    * This gives a better UX

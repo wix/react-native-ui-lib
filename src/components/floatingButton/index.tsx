@@ -49,7 +49,7 @@ export interface FloatingButtonProps {
   /**
    * Button layout direction: vertical or horizontal
    */
-  buttonLayout?: FloatingButtonLayouts;
+  buttonLayout?: FloatingButtonLayouts | `${FloatingButtonLayouts}`;
 }
 
 const gradientImage = () => require('./gradient.png');

@@ -22,7 +22,7 @@ export enum PointTypes {
 
 export type LineProps = {
   state?: StateTypes;
-  type?: LineTypes;
+  type?: LineTypes | `${LineTypes}`;
   color?: string;
   /** to mark as entry point */
   entry?: boolean;
@@ -30,8 +30,8 @@ export type LineProps = {
 }
 
 export type PointProps = {
-  state?: StateTypes;
-  type?: PointTypes;
+  state?: StateTypes | `${StateTypes}`;
+  type?: PointTypes | `${PointTypes}`;
   color?: string;
   icon?: ImageRequireSource;
   iconProps?: IconProps;
