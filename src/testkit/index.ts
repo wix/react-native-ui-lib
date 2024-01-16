@@ -10,3 +10,4 @@ export {SortableListItemDriver} from '../components/sortableList/SortableListIte
 export {TextDriver} from '../components/text/Text.driver.new';
 export {TextFieldDriver} from '../components/textField/TextField.driver.new';
 export {ViewDriver} from '../components/view/View.driver.new';
+export {HintDriver} from '../components/hint/Hint.driver.new';
