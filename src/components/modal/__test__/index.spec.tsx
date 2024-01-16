@@ -10,9 +10,11 @@ const TestCase = (props: Omit<ModalProps, 'testID'>) => {
 };
 
 describe('Sanity modal test', () => {
-  it('Should be visible', () => {
-    const renderTree = render(<TestCase visible/>);
+  it('Should be not visible at first and visible at second render', () => {
+    const renderTree = render(<TestCase/>);
     const modal = ModalDriver({renderTree, testID});
+    expect(modal.isVisible()).toBeFalsy();
+    renderTree.rerender(<TestCase visible/>);
     expect(modal.isVisible()).toBeTruthy();
   });
 });

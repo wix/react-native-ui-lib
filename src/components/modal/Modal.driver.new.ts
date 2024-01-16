@@ -1,21 +1,15 @@
 import {ModalProps} from './index';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {fireEvent} from '@testing-library/react-native';
+import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
 export const ModalDriver = (props: ComponentProps) => {
   const {renderTree, testID} = props;
   const driver = useComponentDriver<ModalProps>(props);
+  const overlayDriver = usePressableDriver<{}>(useComponentDriver<{}>({renderTree, testID: `${testID}.TouchableOverlay`}));
 
   const isVisible = () => {
     return !!driver.getProps().visible;
   };
 
-  const pressOnBackground = () => {
-    const overlay = renderTree.queryByTestId(`${testID}.TouchableOverlay`);
-    if (overlay) {
-      fireEvent.press(overlay);
-    }
-  };
-
-  return {...driver, isVisible, pressOnBackground};
+  return {...driver, isVisible, pressOnBackground: overlayDriver.press};
 };
