@@ -37,8 +37,10 @@ export {
 } from './incubator';
 import * as Hooks from './hooks';
 import * as Modifiers from './commons/modifiers';
+import * as TestKit from './testkit';
+export {Incubator, Hooks, Modifiers, TestKit};
+
 export {default as LogService} from './services/LogService';
-export {Incubator, Hooks, Modifiers};
 
 /* ===== Components ===== */
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
