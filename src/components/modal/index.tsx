@@ -14,11 +14,12 @@ import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
+import {RecorderProps} from 'src/typings/recorderTypes';
 
 const BlurView = BlurViewPackage?.BlurView;
 
 export {ModalTopBarProps};
-export interface ModalProps extends RNModalProps {
+export interface ModalProps extends RNModalProps, RecorderProps {
   /**
    * Blurs the modal background when transparent (iOS only)
    */
@@ -110,6 +111,7 @@ class Modal extends Component<ModalProps> {
       useGestureHandlerRootView,
       useKeyboardAvoidingView,
       keyboardAvoidingViewProps,
+      recorderTag,
       ...others
     } = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
@@ -124,10 +126,10 @@ class Modal extends Component<ModalProps> {
     const Container: any = blurView ? blurView : defaultContainer;
 
     return (
-      <RNModal visible={Boolean(visible)} {...others}>
+      <RNModal visible={Boolean(visible)} {...others} fsTagName={recorderTag}>
         <GestureContainer {...gestureContainerProps}>
           <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
-            <Container style={styles.fill} blurType="light">
+            <Container style={styles.fill} blurType="light" fsTagName={recorderTag}>
               {this.renderTouchableOverlay()}
               {this.props.children}
             </Container>

@@ -53,7 +53,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     assetGroup,
     assetName,
     modifiers,
-    recorderTag,
+    recorderTag = 'unmask',
     ...others
   } = props;
   const {margins} = modifiers;

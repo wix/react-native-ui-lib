@@ -13,11 +13,12 @@ import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
 import {Dialog as IncubatorDialog, DialogProps as IncubatorDialogProps} from '../../incubator';
 import {LogService} from '../../services';
+import {RecorderProps} from 'src/typings/recorderTypes';
 
 const VERTICAL_PADDING = 8;
 type ActionSheetOnOptionPress = (index: number) => void;
 
-type ActionSheetProps = {
+type ActionSheetProps = RecorderProps & {
   /**
    * Migrate to the Incubator.Dialog component
    */
@@ -183,11 +184,11 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   renderActions() {
-    const {title, options, cancelButtonIndex, renderAction, optionsStyle} = this.props;
+    const {title, options, cancelButtonIndex, renderAction, optionsStyle, recorderTag} = this.props;
     const optionsToRender = _.filter(options, (_option, index) => index !== cancelButtonIndex);
 
     return (
-      <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, optionsStyle]}>
+      <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, optionsStyle]} recorderTag={recorderTag}>
         {_.isFunction(renderAction)
           ? optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress))
           : _.map(optionsToRender, this.renderAction)}
@@ -248,7 +249,7 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   renderNewDialog() {
-    const {visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps} = this.props;
+    const {visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps, recorderTag} = this.props;
 
     if (onModalDismissed) {
       LogService.deprecationWarn({component: 'ActionSheet', oldProp: 'onModalDismissed', newProp: 'onDismiss'});
@@ -267,6 +268,7 @@ class ActionSheet extends Component<ActionSheetProps> {
         containerStyle={[styles.incubatorDialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
+        recorderTag={recorderTag}
       >
         {this.renderSheet()}
       </IncubatorDialog>
