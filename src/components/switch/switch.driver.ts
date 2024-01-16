@@ -1,5 +1,5 @@
 import {SwitchProps} from './index';
-import {ComponentDriver} from '../../testkit';
+import {ComponentDriver} from '../../testkit/Component.driver';
 
 export class SwitchDriver extends ComponentDriver<SwitchProps> {
   getAccessibilityValue = async () => (await this.getElementProps()).accessibilityValue?.text === '1';
