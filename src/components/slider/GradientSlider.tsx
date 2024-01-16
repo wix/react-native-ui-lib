@@ -31,7 +31,7 @@ export type GradientSliderProps = Omit<
   /**
    * The gradient type (default, hue, lightness, saturation)
    */
-  type?: GradientSliderTypes;
+  type?: GradientSliderTypes | `${GradientSliderTypes}`;
   /**
    * The gradient steps
    */

@@ -31,7 +31,7 @@ export type OverlayTypes = {
   /**
    * The intensity of the gradient, default is 'LOW'.
    */
-  intensity?: OverlayIntensityType;
+  intensity?: OverlayIntensityType | `${OverlayIntensityType}`;
   /**
    * The overlay color
    */
@@ -91,7 +91,7 @@ class Overlay extends PureComponent<OverlayTypes> {
     return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
-  getImageSource = (type?: OverlayTypeType, intensity?: OverlayIntensityType) => {
+  getImageSource = (type?: OverlayTypeType, intensity?: OverlayTypes['intensity']) => {
     if (type !== OVERLY_TYPES.SOLID) {
       if (intensity === OverlayIntensityType.MEDIUM) {
         return gradientImageMed;

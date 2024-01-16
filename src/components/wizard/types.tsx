@@ -14,7 +14,7 @@ export interface WizardStepProps {
   /**
    * The state of the step (Wizard.States.X)
    */
-  state: WizardStepStates;
+  state: WizardStepStates | `${WizardStepStates}`;
   /**
    * The label of the item
    */
