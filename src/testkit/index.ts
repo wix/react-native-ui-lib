@@ -12,3 +12,4 @@ export {TextFieldDriver} from '../components/textField/TextField.driver.new';
 export {ViewDriver} from '../components/view/View.driver.new';
 export {ButtonDriver} from '../components/button/Button.driver.new';
 export {ImageDriver} from '../components/image/Image.driver.new';
+export {SwitchDriver} from '../components/switch/switch.driver';
