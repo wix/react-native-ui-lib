@@ -5,7 +5,6 @@ import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
 export const SwitchDriver = (props: ComponentProps) => {
   const driver = usePressableDriver<SwitchProps>(useComponentDriver(props));
-  console.log('INBAL - SwitchDriver:', driver.getProps());
   
   const getStyle = () => driver.getProps().style as ViewStyle;
   const getAccessibilityValue = () => driver.getProps().accessibilityValue?.text === '1';
