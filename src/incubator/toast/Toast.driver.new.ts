@@ -1,7 +1,6 @@
 import {ToastProps} from '../index';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {TextDriver} from '../../components/text/Text.driver.new';
-import {fireEvent} from '@testing-library/react-native';
 import {ButtonDriver} from '../../components/button/Button.driver.new';
 
 export const ToastDriver = (props: ComponentProps) => {
