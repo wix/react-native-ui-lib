@@ -1,6 +1,6 @@
 import {HintProps} from './index';
 import {TouchableOpacityProps} from '../touchableOpacity';
-import {useComponentDriver, ComponentProps, usePressableDriver, ViewDriver} from '../../testkit';
+import {useComponentDriver, ComponentProps, usePressableDriver, ViewDriver, ImageDriver} from '../../testkit';
 import {ViewStyle, StyleSheet} from 'react-native';
 
 export const HintDriver = (props: ComponentProps) => {
@@ -26,12 +26,21 @@ export const HintDriver = (props: ComponentProps) => {
     testID: `${props.testID}.overlay`
   }));
 
-  const getContentStyle = (): ViewStyle => {
-    return StyleSheet.flatten(contentDriver.getProps().style) as ViewStyle;
-  };
+  const iconDriver = ImageDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.icon`
+  });
 
   const getModal = () => {
     return modalDriver;
+  };
+
+  const getIcon = () => {
+    return iconDriver;
+  };
+
+  const getContentStyle = (): ViewStyle => {
+    return StyleSheet.flatten(contentDriver.getProps().style) as ViewStyle;
   };
 
   const getHintTouchable = () => {
@@ -42,5 +51,5 @@ export const HintDriver = (props: ComponentProps) => {
     return overlayTouchableDriver;
   };
 
-  return {getContentStyle, getModal, getHintTouchable, getOverlayTouchable, ...driver};
+  return {getContentStyle, getModal, getIcon, getHintTouchable, getOverlayTouchable, ...driver};
 };
