@@ -20,6 +20,7 @@ describe('Sanity checks', () => {
     const {toastDriver} = getDriver();
     expect(toastDriver.exists()).toBeTruthy();
   });
+  
   it('Should dismiss after time', async () => {
     const TIME = 50;
     const dismissFn = jest.fn();
@@ -29,6 +30,13 @@ describe('Sanity checks', () => {
     await new Promise(r => setTimeout(r, TIME + 100));
     expect(dismissFn).toHaveBeenCalled();
   });
+
+  it('Should show an Hello World message', () => {
+    const MESSAGE = 'Hello World';
+    const {toastDriver} = getDriver({message: MESSAGE});
+    expect(toastDriver.getMessage().getText()).toEqual(MESSAGE);
+  });
+
   it('Should press on action button', () => {
     const actionFn = jest.fn();
     const {toastDriver} = getDriver({action: {onPress: actionFn}});
