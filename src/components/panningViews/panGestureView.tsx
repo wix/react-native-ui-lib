@@ -30,7 +30,7 @@ export interface PanGestureViewProps {
   /**
    * The direction of the allowed pan (default is down)
    */
-  direction?: GestureDirections;
+  direction?: GestureDirections | `${GestureDirections}`;
   children?: React.ReactNode;
 }
 

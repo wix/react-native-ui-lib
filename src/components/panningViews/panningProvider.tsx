@@ -8,7 +8,7 @@ export enum PanningDirectionsEnum {
   RIGHT = 'right'
 }
 
-export type PanningDirectionsUnion = 'up' | 'down' | 'left' | 'right';
+export type PanningDirectionsUnion = `${PanningDirectionsEnum}`;
 
 export type PanningDirections = PanningDirectionsEnum | PanningDirectionsUnion;
 

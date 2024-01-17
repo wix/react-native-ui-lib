@@ -2,7 +2,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Button from '../../../components/button';
 import View from '../../../components/view';
 import Dialog from '../index';
-import {ButtonDriver, ComponentDriver} from '../../../testkit';
+import {ComponentDriver} from '../../../testkit/Component.driver';
+import {ButtonDriver} from '../../../components/button/Button.driver';
 
 const onDismiss = () => {};
 

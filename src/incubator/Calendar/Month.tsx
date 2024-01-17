@@ -10,7 +10,7 @@ function Month(props: MonthProps) {
   const {firstDayOfWeek} = useContext(CalendarContext);
 
   const weekNumbers = useMemo(() => {
-    return getWeekNumbersOfMonth(year, month, firstDayOfWeek);
+    return getWeekNumbersOfMonth(year, month, Number(firstDayOfWeek));
   }, [year, month, firstDayOfWeek]);
 
   return (

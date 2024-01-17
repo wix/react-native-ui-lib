@@ -108,7 +108,7 @@ export interface TodayButtonProps {
 export interface WeekDaysNamesProps {
   containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  format?: /* `${DayNamesFormat}` &  */ DayNamesFormat; // NOTE: template literals usage depends on ts min version ^4.3.2
+  format?: DayNamesFormat;
 }
 
 export enum DayNamesFormat {
@@ -121,7 +121,7 @@ export interface CalendarProps {
   data: Data;
   initialDate?: number;
   onChangeDate?: (date: number) => void;
-  firstDayOfWeek?: /* `${FirstDayOfWeek}` &  */ FirstDayOfWeek; // NOTE: template literals usage depends on ts min version ^4.3.2
+  firstDayOfWeek?: FirstDayOfWeek;
   staticHeader?: boolean;
   showExtraDays?: boolean;
 }

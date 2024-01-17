@@ -264,7 +264,6 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             color={color}
             containerStyle={styles.gradientSliderContainer}
             onValueChange={this.onGradientValueChange}
-            // @ts-expect-error
             ref={this.gradientSlider}
           />
           <View style={styles.box}>

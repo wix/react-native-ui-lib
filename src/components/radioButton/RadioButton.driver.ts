@@ -1,6 +1,7 @@
 import {RadioButtonProps} from './index';
-import {ComponentDriver, ImageDriver, TextDriver} from '../../testkit';
-import {ComponentDriverArgs} from '../../testkit/Component.driver';
+import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
+import {ImageDriver} from '../image/Image.driver';
+import {TextDriver} from '../text/Text.driver';
 
 export class RadioButtonDriver extends ComponentDriver<RadioButtonProps> {
   private readonly labelDriver: TextDriver;
