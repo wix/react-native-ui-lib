@@ -62,10 +62,13 @@ describe('Incubator.Dialog sanity checks', () => {
   });
 
   it('Should dismiss dialog on background press', () => {
-    const {dialogDriver} = getDriver(<TestCase1 visible/>);
+    const dismissFn = jest.fn();
+    const {dialogDriver} = getDriver(<TestCase1 visible onDismiss={dismissFn}/>);
+    expect(dismissFn).not.toHaveBeenCalled();
     expect(dialogDriver.isVisible()).toBeTruthy();
     dialogDriver.pressOnBackground();
     expect(dialogDriver.isVisible()).toBeFalsy();
+    expect(dismissFn).toHaveBeenCalledTimes(1);
   });
 
   it('Should dismiss dialog on dismiss call', () => {
