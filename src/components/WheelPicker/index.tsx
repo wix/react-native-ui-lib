@@ -232,6 +232,7 @@ const WheelPicker = ({
         activeColor={activeTextColor}
         inactiveColor={inactiveTextColor}
         style={textStyle}
+        testID={`${testID}.item_${index}`}
         {...item}
         disableRTL={shouldDisableRTL}
         fakeLabel={label}
@@ -239,7 +240,6 @@ const WheelPicker = ({
         fakeLabelProps={fakeLabelProps}
         centerH={!label}
         onSelect={selectItem}
-        testID={`${testID}.item_${index}`}
       />
     );
   },
