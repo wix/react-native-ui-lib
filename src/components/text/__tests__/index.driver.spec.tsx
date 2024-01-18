@@ -7,9 +7,6 @@ import {StyleSheet} from 'react-native';
 
 const TEXT_ID = 'text_test_id';
 const TEXT_CONTENT = 'text content';
-beforeEach(() => {
-  jest.resetModules();
-});
 
 function WrapperScreenWithText(textProps: {onPress?: jest.Mock} = {}) {
   const {onPress} = textProps;
@@ -49,29 +46,41 @@ describe('Text', () => {
   });
 });
 
-jest.mock('react-native/Libraries/ReactNative/I18nManager', () => ({
-  isRTL: true
-}));
-
-describe('Automation gap - Android', () => {
-  jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-    OS: 'android',
-    select: obj => obj.android
-  }));
-  it('Should render text on right on rtl', () => {
+// jest.mock('react-native/Libraries/ReactNative/I18nManager', () => ({
+//   isRTL: true
+// }));
+// jest.mock('react-native', () => {
+//   const actualRN = jest.requireActual('react-native');
+//   actualRN.Platform.OS = 'android';
+//   return actualRN;
+// });
+describe('Automation gap', () => {
+  beforeEach(() => {
+    jest.resetModules();
+  });
+  it('Should render text on right on rtl - Android', () => {
+    jest.mock('react-native', () => {
+      const ReactNative = jest.requireActual('react-native');
+      ReactNative.Platform.OS = 'android';
+      ReactNative.Platform.select = (obj) => {
+        console.log(`Nitzan - 'hello`);
+        return obj.android;
+      };
+      ReactNative.I18nManager.isRTL = true;
+      return ReactNative;
+    });
     const renderTree = render(<WrapperScreenWithText/>);
     const textDriver = TextDriver({renderTree, testID: TEXT_ID});
     const textStyle = textDriver.getProps().style;
     expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
   });
-});
-
-describe('Automation gap - IOS', () => {
-  jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-    OS: 'ios',
-    select: obj => obj.ios
-  }));
-  it('Should render text on right on rtl', () => {
+  it('Should render text on right on rtl - IOS', () => {
+    jest.mock('react-native', () => {
+      const ReactNative = jest.requireActual('react-native');
+      ReactNative.Platform.OS = 'ios';
+      ReactNative.I18nManager.isRTL = true;
+      return ReactNative;
+    });
     const renderTree = render(<WrapperScreenWithText/>);
     const textDriver = TextDriver({renderTree, testID: TEXT_ID});
     const textStyle = textDriver.getProps().style;
