@@ -1,7 +1,5 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import View from '../../view';
-import Text from '../index';
 import {TextDriver} from '../Text.driver.new';
 import {StyleSheet} from 'react-native';
 
@@ -10,12 +8,11 @@ const TEXT_CONTENT = 'text content';
 
 function WrapperScreenWithText(textProps: {onPress?: jest.Mock} = {}) {
   const {onPress} = textProps;
+  const Text = require('../../text').default;
   return (
-    <View>
-      <Text testID={TEXT_ID} onPress={onPress}>
-        {TEXT_CONTENT}
-      </Text>
-    </View>
+    <Text testID={TEXT_ID} onPress={onPress}>
+      {TEXT_CONTENT}
+    </Text>
   );
 }
 
@@ -45,45 +42,31 @@ describe('Text', () => {
     });
   });
 });
+const setConstants = (isAndroid: boolean, isRTL: boolean) => {
+  const Constants = require('../../../commons/new').Constants;
+  Constants.isAndroid = isAndroid;
+  Constants.isIOS = !isAndroid;
+  Constants.isRTL = isRTL;
+};
 
-// jest.mock('react-native/Libraries/ReactNative/I18nManager', () => ({
-//   isRTL: true
-// }));
-// jest.mock('react-native', () => {
-//   const actualRN = jest.requireActual('react-native');
-//   actualRN.Platform.OS = 'android';
-//   return actualRN;
-// });
 describe('Automation gap', () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
   it('Should render text on right on rtl - Android', () => {
-    jest.mock('react-native', () => {
-      const ReactNative = jest.requireActual('react-native');
-      ReactNative.Platform.OS = 'android';
-      ReactNative.Platform.select = (obj) => {
-        console.log(`Nitzan - 'hello`);
-        return obj.android;
-      };
-      ReactNative.I18nManager.isRTL = true;
-      return ReactNative;
+    jest.isolateModules(() => {
+      setConstants(true, true);
+      // setConstants(true, true);
+      const renderTree = render(<WrapperScreenWithText/>);
+      const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+      const textStyle = textDriver.getProps().style;
+      expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
     });
-    const renderTree = render(<WrapperScreenWithText/>);
-    const textDriver = TextDriver({renderTree, testID: TEXT_ID});
-    const textStyle = textDriver.getProps().style;
-    expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
   });
   it('Should render text on right on rtl - IOS', () => {
-    jest.mock('react-native', () => {
-      const ReactNative = jest.requireActual('react-native');
-      ReactNative.Platform.OS = 'ios';
-      ReactNative.I18nManager.isRTL = true;
-      return ReactNative;
+    jest.isolateModules(() => {
+      setConstants(false, true);
+      const renderTree = render(<WrapperScreenWithText/>);
+      const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+      const textStyle = textDriver.getProps().style;
+      expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('rtl');
     });
-    const renderTree = render(<WrapperScreenWithText/>);
-    const textDriver = TextDriver({renderTree, testID: TEXT_ID});
-    const textStyle = textDriver.getProps().style;
-    expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('rtl');
   });
 });
