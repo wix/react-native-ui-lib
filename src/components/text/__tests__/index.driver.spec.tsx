@@ -1,14 +1,19 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import View from '../../view';
-import Text from '../index';
-import {TextDriver} from '../Text.driver.new';
 import {StyleSheet} from 'react-native';
+import {Constants} from '../../../commons/new';
+
+// let View, Text;
+// import View from '../../view';
+// import Text from '../index';
+import {TextDriver} from '../Text.driver.new';
 
 const TEXT_ID = 'text_test_id';
 const TEXT_CONTENT = 'text content';
 
 function WrapperScreenWithText(textProps: {onPress?: jest.Mock} = {}) {
+  const View = require('../../view').default;
+  const Text = require('../index').default;
   const {onPress} = textProps;
   return (
     <View>
@@ -56,24 +61,47 @@ describe('Text', () => {
 // });
 describe('Automation gap', () => {
   beforeEach(() => {
-    jest.resetModules();
-  });
-  it('Should render text on right on rtl - Android', () => {
+    // jest.resetModules();
+
+    // option 1 - mock the source -> RN. You will need to somehow run this before Constants file is loaded which can be difficult
     jest.mock('react-native', () => {
       const ReactNative = jest.requireActual('react-native');
       ReactNative.Platform.OS = 'android';
-      ReactNative.Platform.select = (obj) => {
-        console.log(`Nitzan - 'hello`);
-        return obj.android;
-      };
+      // ReactNative.Platform.select = (obj) => {
+      //   console.log(`Nitzan - 'hello`);
+      //   return obj.android;
+      // };
       ReactNative.I18nManager.isRTL = true;
       return ReactNative;
     });
+
+    
+  });
+  it.only('Should render text on right on rtl - Android', () => {
+    // jest.mock('react-native', () => {
+    //   const ReactNative = jest.requireActual('react-native');
+    //   ReactNative.Platform.OS = 'android';
+    //   ReactNative.Platform.select = (obj) => {
+    //     console.log(`Nitzan - 'hello`);
+    //     return obj.android;
+    //   };
+    //   ReactNative.I18nManager.isRTL = true;
+    //   return ReactNative;
+    // });
+
+
+    // Options 2 - mock by overriding Constants - you will need to change implementation in Text's styles
+    mockPlatform(true);
+    mockRTL(true);
+
+
     const renderTree = render(<WrapperScreenWithText/>);
     const textDriver = TextDriver({renderTree, testID: TEXT_ID});
     const textStyle = textDriver.getProps().style;
+    console.log('ethan - textStyle', textStyle)
     expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
   });
+
   it('Should render text on right on rtl - IOS', () => {
     jest.mock('react-native', () => {
       const ReactNative = jest.requireActual('react-native');
@@ -87,3 +115,13 @@ describe('Automation gap', () => {
     expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('rtl');
   });
 });
+
+
+function mockRTL(isRTL: boolean) {
+  Constants.isRTL = isRTL;
+}
+
+function mockPlatform(isAndroid: boolean) {
+  Constants.isIOS = !isAndroid;
+  Constants.isAndroid = isAndroid;
+}

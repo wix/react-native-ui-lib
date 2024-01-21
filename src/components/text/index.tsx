@@ -139,6 +139,7 @@ class Text extends PureComponent<PropsTypes> {
   }
 
   render() {
+    console.log('ethan - Constants.isRTL in render is', Constants.isRTL)
     const {
       // (!) extract flex prop to avoid passing them on Android
       // TODO: extract alignment (top, right, ...) props till we manage to exclude them from typings
@@ -187,6 +188,8 @@ class Text extends PureComponent<PropsTypes> {
     );
   }
 }
+
+console.log('ethan - Constants.isRTL', Constants.isRTL)
 
 const styles = StyleSheet.create({
   container: {

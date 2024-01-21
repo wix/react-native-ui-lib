@@ -1,3 +1,4 @@
+console.log('ethan - Constants was loaded', console.trace())
 import {
   Platform,
   Dimensions,
