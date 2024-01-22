@@ -1,13 +1,10 @@
-// import {PickerProps} from './types';
-import {/* useComponentDriver,  */ ComponentProps} from '../../testkit/new/Component.driver';
+import {ComponentProps} from '../../testkit/new/Component.driver';
 import {TextFieldDriver} from '../textField/TextField.driver.new';
 import {ModalDriver} from '../modal/Modal.driver.new';
 import {DialogDriver} from '../../incubator/Dialog/Dialog.driver.new';
 import {ButtonDriver} from '../button/Button.driver.new';
 
 export const PickerDriver = (props: ComponentProps) => {
-  // const driver = useComponentDriver<PickerProps>(props);
-
   const textFieldDriver = TextFieldDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.input`
