@@ -27,7 +27,7 @@ describe('Sanity checks', () => {
     const {toastDriver} = getDriver({autoDismiss: TIME, onDismiss: dismissFn});
     expect(toastDriver.exists()).toBeTruthy();
     expect(dismissFn).not.toHaveBeenCalled();
-    await new Promise(r => setTimeout(r, TIME + 100));
+    await new Promise(r => setTimeout(r, TIME + 50));
     expect(dismissFn).toHaveBeenCalled();
   });
 
@@ -41,7 +41,7 @@ describe('Sanity checks', () => {
     const actionFn = jest.fn();
     const {toastDriver} = getDriver({action: {onPress: actionFn}});
     expect(actionFn).not.toHaveBeenCalled();
-    toastDriver.pressOnAction();
+    toastDriver.getActionButton().press();
     expect(actionFn).toHaveBeenCalled();
   });
 });

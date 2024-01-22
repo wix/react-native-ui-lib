@@ -7,12 +7,15 @@ export const ToastDriver = (props: ComponentProps) => {
   const {renderTree, testID} = props;
   const driver = useComponentDriver<ToastProps>(props);
   const actionButtonDriver = ButtonDriver({renderTree, testID: `${testID}-action`});
+  const messageDriver = TextDriver({renderTree, testID: `${testID}-message`});
 
   const getMessage = () => {
-    const messageDriver = TextDriver({renderTree, testID: `${testID}-message`});
     return messageDriver;
   };
-  
 
-  return {...driver, getMessage, pressOnAction: actionButtonDriver.press};
+  const getActionButton = () => {
+    return actionButtonDriver;
+  };
+
+  return {...driver, getMessage, getActionButton};
 };
