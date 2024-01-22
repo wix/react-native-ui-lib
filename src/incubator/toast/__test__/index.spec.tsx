@@ -21,14 +21,15 @@ describe('Sanity checks', () => {
     expect(toastDriver.exists()).toBeTruthy();
   });
   
-  it('Should dismiss after time', async () => {
-    const TIME = 50;
+  it('Should dismiss after one second', async () => {
+    jest.useFakeTimers();
+    const TIME = 1000;
     const dismissFn = jest.fn();
     const {toastDriver} = getDriver({autoDismiss: TIME, onDismiss: dismissFn});
     expect(toastDriver.exists()).toBeTruthy();
     expect(dismissFn).not.toHaveBeenCalled();
-    await new Promise(r => setTimeout(r, TIME + 50));
-    expect(dismissFn).toHaveBeenCalled();
+    jest.advanceTimersByTime(TIME);
+    expect(dismissFn).toHaveBeenCalledTimes(1);
   });
 
   it('Should show an Hello World message', () => {
