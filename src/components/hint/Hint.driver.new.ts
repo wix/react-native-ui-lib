@@ -1,12 +1,19 @@
 import {HintProps} from './index';
 import {TouchableOpacityProps} from '../touchableOpacity';
-import {useComponentDriver, ComponentProps, usePressableDriver, ViewDriver, ImageDriver} from '../../testkit';
+import {
+  useComponentDriver,
+  ComponentProps,
+  usePressableDriver,
+  ViewDriver,
+  ImageDriver,
+  ModalDriver
+} from '../../testkit';
 import {ViewStyle, StyleSheet} from 'react-native';
 
 export const HintDriver = (props: ComponentProps) => {
   const driver = usePressableDriver<HintProps>(useComponentDriver(props));
 
-  const modalDriver = ViewDriver({
+  const modalDriver = ModalDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.modal`
   });

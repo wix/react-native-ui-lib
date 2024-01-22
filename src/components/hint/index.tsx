@@ -411,6 +411,7 @@ class Hint extends Component<HintProps, HintState> {
   renderOverlay() {
     const {targetLayoutInWindow} = this.state;
     const {onBackgroundPress, backdropColor, testID} = this.props;
+    console.log(`inside renderOverlay, targetLayoutInWindow:`, targetLayoutInWindow);
     if (targetLayoutInWindow) {
       const containerPosition = this.getContainerPosition() as {top: number; left: number};
       return (
@@ -558,7 +559,6 @@ class Hint extends Component<HintProps, HintState> {
 
   renderChildren() {
     const {targetFrame} = this.props;
-
     if (!targetFrame && isValidElement(this.props.children)) {
       return React.cloneElement<any>(this.props.children, {
         key: 'clone',

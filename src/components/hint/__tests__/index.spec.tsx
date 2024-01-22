@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {waitFor, render} from '@testing-library/react-native';
-import {Hint, Colors} from 'react-native-ui-lib';
+import {Hint, Colors, Button} from 'react-native-ui-lib';
 import {HintDriver} from '../Hint.driver.new';
 
 const TEST_ID = 'Hint';
@@ -12,6 +12,7 @@ const HintTestComponent = ({
   color,
   onPress,
   onBackgroundPress,
+  useTargetFrame = true,
   useModal,
   useIcon
 }: {
@@ -19,9 +20,11 @@ const HintTestComponent = ({
   color?: string;
   onPress?: Function;
   onBackgroundPress?: Function;
+  useTargetFrame?: boolean;
   useModal?: boolean;
   useIcon?: boolean;
 }) => {
+  const ref = useRef();
   return (
     <Hint
       visible={showHint}
@@ -29,7 +32,7 @@ const HintTestComponent = ({
       position={Hint.positions.TOP}
       useSideTip
       key={'1'}
-      targetFrame={{x: 1, y: 1, height: 1, width: 1}}
+      targetFrame={useTargetFrame && {x: 1, y: 1, height: 1, width: 1}}
       onBackgroundPress={onBackgroundPress}
       onPress={onPress}
       color={color}
@@ -38,7 +41,10 @@ const HintTestComponent = ({
       testID={TEST_ID}
       useModal={useModal}
       icon={useIcon ? settingsIcon : undefined}
-    />
+      ref={ref}
+    >
+      <Button round $backgroundDefault/>
+    </Hint>
   );
 };
 
@@ -92,6 +98,7 @@ describe('Hint Screen component test', () => {
   });
 
   describe('Test Hint onPress & onBackgroundPress', () => {
+    //TODO - add test for onBackgroundTest, should mock measureInWindow functionally to test it
     let onPressCallback: jest.Mock;
     beforeEach(() => (onPressCallback = jest.fn()));
     afterEach(() => onPressCallback.mockClear());
@@ -102,17 +109,6 @@ describe('Hint Screen component test', () => {
       driver.getHintTouchable().press();
       await waitFor(() => expect(onPressCallback).toHaveBeenCalledTimes(1));
     });
-
-    //TODO - fix this test for onBackgroundTest
-    // it('should trigger onBackgroundPress callback', async () => {
-    //   jest.useFakeTimers();
-    //   const renderTree = render(<HintTestComponent showHint onBackgroundPress={onPressCallback} useModal={false}/>);
-    //   const driver = HintDriver({renderTree, testID: TEST_ID});
-    //   act(() => {
-    //     driver.getOverlayTouchable().press();
-    //   });
-    //   await waitFor(() => expect(onPressCallback).toHaveBeenCalledTimes(1));
-    // });
 
     it('should not trigger onPress callback when onPress isn\'t passed', async () => {
       const renderTree = render(<HintTestComponent showHint/>);
