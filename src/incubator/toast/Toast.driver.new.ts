@@ -13,9 +13,9 @@ export const ToastDriver = (props: ComponentProps) => {
     return messageDriver;
   };
 
-  const getActionButton = () => {
+  const getAction = () => {
     return actionButtonDriver;
   };
 
-  return {...driver, getMessage, getActionButton};
+  return {...driver, getMessage, getAction};
 };

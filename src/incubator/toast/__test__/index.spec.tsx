@@ -42,7 +42,7 @@ describe('Sanity checks', () => {
     const actionFn = jest.fn();
     const {toastDriver} = getDriver({action: {onPress: actionFn}});
     expect(actionFn).not.toHaveBeenCalled();
-    toastDriver.getActionButton().press();
+    toastDriver.getAction().press();
     expect(actionFn).toHaveBeenCalled();
   });
 });
