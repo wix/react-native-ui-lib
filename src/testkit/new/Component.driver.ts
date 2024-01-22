@@ -16,7 +16,12 @@ export const useComponentDriver = <Props>(props: ComponentProps): ComponentDrive
   const {renderTree, testID} = props;
 
   const getElement = (): ReactTestInstance => {
-    const element = renderTree.queryByTestId(testID);
+    const elements = renderTree.queryAllByTestId(testID);
+    if (elements.length > 1) {
+      throw new Error(`Found more than one element with testID: ${testID}`);
+    }
+
+    const element = elements[0];
     if (element) {
       return element;
     } else {
