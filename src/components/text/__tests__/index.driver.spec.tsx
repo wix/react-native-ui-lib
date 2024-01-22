@@ -43,7 +43,7 @@ describe('Text', () => {
   });
 });
 const setConstants = (isAndroid: boolean, isRTL: boolean) => {
-  const Constants = require('../../../commons/new').Constants;
+  const {Constants} = require('../../../commons/new');
   Constants.isAndroid = isAndroid;
   Constants.isIOS = !isAndroid;
   Constants.isRTL = isRTL;
