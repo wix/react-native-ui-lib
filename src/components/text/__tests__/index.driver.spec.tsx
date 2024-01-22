@@ -53,7 +53,6 @@ describe('Automation gap', () => {
   it('Should render text on right on rtl - Android', () => {
     jest.isolateModules(() => {
       setConstants(true, true);
-      // setConstants(true, true);
       const renderTree = render(<WrapperScreenWithText/>);
       const textDriver = TextDriver({renderTree, testID: TEXT_ID});
       const textStyle = textDriver.getProps().style;
