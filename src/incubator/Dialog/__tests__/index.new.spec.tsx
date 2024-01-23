@@ -85,22 +85,22 @@ describe('Incubator.Dialog sanity checks', () => {
     expect(dialogDriver.getModal().isVisible()).toBeFalsy();
   });
 
-  it('Should exist only if visible', async () => {
+  it('Should exist only if visible', () => {
     const onDismiss = jest.fn();
     const component = <TestCase2 onDismiss={onDismiss}/>;
     const {dialogDriver, renderTree} = getDriver(component);
     expect(dialogDriver.getModal().isVisible()).toBeFalsy();
     const openButtonDriver = ButtonDriver({renderTree, testID: 'openButton'});
     openButtonDriver.press();
-    expect(await dialogDriver.getModal().isVisible()).toBeTruthy();
+    expect(dialogDriver.getModal().isVisible()).toBeTruthy();
     expect(onDismiss).toHaveBeenCalledTimes(0);
     const closeButtonDriver = ButtonDriver({renderTree, testID: 'closeButton'});
     closeButtonDriver.press();
-    expect(await dialogDriver.getModal().isVisible()).toBeFalsy();
+    expect(dialogDriver.getModal().isVisible()).toBeFalsy();
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
-  it('Modal exists even when not visible (WOAUILIB-3606)', async () => {
+  it('Modal exists even when not visible (WOAUILIB-3606)', () => {
     const onDismiss = jest.fn();
     const component = <TestCase2 onDismiss={onDismiss}/>;
     const {dialogDriver} = getDriver(component);
