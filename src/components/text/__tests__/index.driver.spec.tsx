@@ -20,7 +20,7 @@ const getDriver = (textProps: {onPress?: jest.Mock} = {}) => {
   const {onPress} = textProps;
   const renderTree = render(<WrapperScreenWithText onPress={onPress}/>);
   const textDriver = TextDriver({renderTree, testID: TEXT_ID});
-  return {renderTree, textDriver};
+  return {textDriver};
 };
 
 describe('Text', () => {
