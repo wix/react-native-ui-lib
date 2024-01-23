@@ -14,3 +14,5 @@ export {DialogDriver} from '../incubator/Dialog/Dialog.driver.new';
 export {ButtonDriver} from '../components/button/Button.driver.new';
 export {ImageDriver} from '../components/image/Image.driver.new';
 export {SwitchDriver} from '../components/switch/switch.driver';
+export {WheelPickerDriver} from '../components/WheelPicker/WheelPicker.driver';
+export {WheelPickerItemDriver} from '../components/WheelPicker/WheelPickerItem.driver';
