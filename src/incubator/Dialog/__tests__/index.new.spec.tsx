@@ -84,6 +84,7 @@ describe('Incubator.Dialog sanity checks', () => {
     });
     expect(dialogDriver.getModal().isVisible()).toBeFalsy();
   });
+
   it('Should exist only if visible', async () => {
     const onDismiss = jest.fn();
     const component = <TestCase2 onDismiss={onDismiss}/>;
@@ -97,5 +98,12 @@ describe('Incubator.Dialog sanity checks', () => {
     closeButtonDriver.press();
     expect(await dialogDriver.getModal().isVisible()).toBeFalsy();
     expect(onDismiss).toHaveBeenCalledTimes(1);
+  });
+
+  it('Modal exists even when not visible (WOAUILIB-3606)', async () => {
+    const onDismiss = jest.fn();
+    const component = <TestCase2 onDismiss={onDismiss}/>;
+    const {dialogDriver} = getDriver(component);
+    expect(dialogDriver.getModal().exists()).toBeTruthy();
   });
 });
