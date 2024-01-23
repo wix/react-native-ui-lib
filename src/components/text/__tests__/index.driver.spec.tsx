@@ -16,10 +16,16 @@ function WrapperScreenWithText(textProps: {onPress?: jest.Mock} = {}) {
   );
 }
 
+const getDriver = (textProps: {onPress?: jest.Mock} = {}) => {
+  const {onPress} = textProps;
+  const renderTree = render(<WrapperScreenWithText onPress={onPress}/>);
+  const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+  return {renderTree, textDriver};
+};
+
 describe('Text', () => {
   it('should render Text Component', () => {
-    const renderTree = render(<WrapperScreenWithText/>);
-    const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+    const {textDriver} = getDriver();
     const content = textDriver.getText();
     expect(content).toEqual(TEXT_CONTENT);
   });
@@ -27,17 +33,13 @@ describe('Text', () => {
   describe('onPress', () => {
     it('should press the text, and run callback', () => {
       const onPressCallback = jest.fn();
-      const renderTree = render(<WrapperScreenWithText onPress={onPressCallback}/>);
-      const textDriver = TextDriver({renderTree, testID: TEXT_ID});
-
+      const {textDriver} = getDriver({onPress: onPressCallback});
       textDriver.press();
-
       expect(onPressCallback).toHaveBeenCalledTimes(1);
     });
 
     it('should not be pressable if onPress prop is not supplied', () => {
-      const renderTree = render(<WrapperScreenWithText/>);
-      const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+      const {textDriver} = getDriver();
       expect(textDriver.hasOnPress()).toBeFalsy();
     });
   });
@@ -53,8 +55,7 @@ describe('Automation gap', () => {
   it('Should render text on right on rtl - Android', () => {
     jest.isolateModules(() => {
       setConstants(true, true);
-      const renderTree = render(<WrapperScreenWithText/>);
-      const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+      const {textDriver} = getDriver();
       const textStyle = textDriver.getProps().style;
       expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
     });
@@ -62,8 +63,7 @@ describe('Automation gap', () => {
   it('Should render text on right on rtl - IOS', () => {
     jest.isolateModules(() => {
       setConstants(false, true);
-      const renderTree = render(<WrapperScreenWithText/>);
-      const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+      const {textDriver} = getDriver();
       const textStyle = textDriver.getProps().style;
       expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('rtl');
     });
