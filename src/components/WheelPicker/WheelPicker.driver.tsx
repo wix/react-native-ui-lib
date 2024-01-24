@@ -6,7 +6,7 @@ import {useScrollableDriver} from '../../testkit/new/useScrollable.driver';
 export const WheelPickerDriver = (props: ComponentProps) => {
   const driver = useComponentDriver<WheelPickerProps>(props);
 
-  const scrollToIndex = (index: number, numberOfRows: number, itemHeight: number) => {
+  const moveToItem = (index: number, numberOfRows: number, itemHeight: number) => {
     const nativeEvent = {
       contentSize: {height: numberOfRows * itemHeight, width: 400},
       layoutMeasurement: {height: 100, width: 400}
@@ -28,5 +28,5 @@ export const WheelPickerDriver = (props: ComponentProps) => {
     return listDriver.getProps().height;
   };
 
-  return {...driver, ...listDriver, getListHeight, scrollToIndex};
+  return {...driver, ...listDriver, getListHeight, moveToItem};
 };
