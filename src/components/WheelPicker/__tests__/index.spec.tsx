@@ -59,6 +59,15 @@ describe('WheelPicker', () => {
     });
   });
 
+  describe('label', () => {
+    it('should return label', () => {
+      const label = 'Hours';
+      const renderTree = render(<TestCase label={label}/>);
+      const driver = WheelPickerDriver({renderTree, testID});
+      expect(driver.getLabel()).toEqual(label);
+    });
+  });
+
   describe('PickerItem', () => {
     it('should get first item\'s label', () => {
       const renderTree = render(<TestCase/>);
@@ -67,7 +76,7 @@ describe('WheelPicker', () => {
       expect(driver.getLabel()).toEqual('item #0');
     });
 
-    it('should get first item\'s text style', () => {
+    it('should get first item\'s text style when no active/inactive colors', () => {
       const renderTree = render(<TestCase textStyle={{color: Colors.green30}}/>);
       const index = 0;
       const driver = WheelPickerItemDriver({renderTree, testID: `${index}`});
