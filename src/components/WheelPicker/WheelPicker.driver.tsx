@@ -7,6 +7,11 @@ import {TextDriver} from '../../components/Text/Text.driver.new';
 export const WheelPickerDriver = (props: ComponentProps) => {
   const driver = useComponentDriver<WheelPickerProps>(props);
 
+  const listDriver = useScrollableDriver<FlatListProps<WheelPickerItemProps>>(useComponentDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.list`
+  }));
+  
   const moveToItem = (index: number, numberOfRows: number, itemHeight: number) => {
     listDriver.triggerEvent('onMomentumScrollEnd', {
       contentOffset: {x: 0, y: itemHeight * index}, 
@@ -14,11 +19,6 @@ export const WheelPickerDriver = (props: ComponentProps) => {
       layoutMeasurement: {height: 100, width: 400}
     });
   };
-
-  const listDriver = useScrollableDriver<FlatListProps<WheelPickerItemProps>>(useComponentDriver({
-    renderTree: props.renderTree,
-    testID: `${props.testID}.list`
-  }));
 
   const getListHeight = () => {
     //@ts-expect-error
