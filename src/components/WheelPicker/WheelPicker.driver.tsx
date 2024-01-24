@@ -8,14 +8,10 @@ export const WheelPickerDriver = (props: ComponentProps) => {
   const driver = useComponentDriver<WheelPickerProps>(props);
 
   const moveToItem = (index: number, numberOfRows: number, itemHeight: number) => {
-    const nativeEvent = {
-      contentSize: {height: numberOfRows * itemHeight, width: 400},
-      layoutMeasurement: {height: 100, width: 400}
-    };
-
     listDriver.triggerEvent('onMomentumScrollEnd', {
       contentOffset: {x: 0, y: itemHeight * index}, 
-      ...nativeEvent
+      contentSize: {height: numberOfRows * itemHeight, width: 400},
+      layoutMeasurement: {height: 100, width: 400}
     });
   };
 

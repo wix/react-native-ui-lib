@@ -89,8 +89,8 @@ describe('WheelPicker', () => {
     //   const driver = WheelPickerItemDriver({renderTree, testID: `${index}`});
       
     //   driver.press();
-  
-    //   expect(onChange).toHaveBeenCalledTimes(1);
+
+    //   expect(await onChange).toHaveBeenCalledTimes(1);
     //   expect(onChange).toHaveBeenCalledWith(1);
     // });
 
