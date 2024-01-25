@@ -81,6 +81,7 @@ export interface ModalTopBarProps {
    * Whether or not to handle SafeArea
    */
   useSafeArea?: boolean;
+  testID?: string;
 }
 
 type topBarButtonProp = {
@@ -89,6 +90,7 @@ type topBarButtonProp = {
   icon?: ImageSourcePropType | null;
   accessibilityLabel?: string;
   buttonProps?: Omit<ButtonProps, 'onPress'>;
+  testID?: string;
 };
 
 const TOP_BAR_HEIGHT = Constants.isIOS ? 44 : 56;
@@ -111,7 +113,7 @@ class TopBar extends Component<ModalTopBarProps> {
     includeStatusBar: Constants.isIOS
   };
 
-  renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps}: topBarButtonProp, key: string) {
+  renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps, testID}: topBarButtonProp, key: string) {
     if (onPress && (label || icon)) {
       return (
         <Button
@@ -125,6 +127,7 @@ class TopBar extends Component<ModalTopBarProps> {
           {...DEFAULT_BUTTON_PROPS}
           accessibilityLabel={accessibilityLabel}
           hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}
+          testID={testID}
           {...buttonProps}
         />
       );
@@ -132,24 +135,26 @@ class TopBar extends Component<ModalTopBarProps> {
   }
 
   renderDone() {
-    const {doneButtonProps, doneLabel, doneIcon, onDone} = this.props;
+    const {doneButtonProps, doneLabel, doneIcon, onDone, testID} = this.props;
     return this.renderTopBarButton({
       onPress: onDone,
       label: doneLabel,
       icon: doneIcon,
       accessibilityLabel: 'Done',
+      testID: `${testID}.done`,
       buttonProps: doneButtonProps
     },
     'done');
   }
 
   renderCancel() {
-    const {cancelButtonProps, cancelLabel, cancelIcon, onCancel} = this.props;
+    const {cancelButtonProps, cancelLabel, cancelIcon, onCancel, testID} = this.props;
     return this.renderTopBarButton({
       onPress: onCancel,
       label: cancelLabel,
       icon: cancelIcon,
       accessibilityLabel: 'Cancel',
+      testID: `${testID}.cancel`,
       buttonProps: cancelButtonProps
     },
     'cancel');

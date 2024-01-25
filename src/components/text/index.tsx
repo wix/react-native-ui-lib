@@ -6,8 +6,7 @@ import {
   TextProps as RNTextProps,
   TextStyle,
   Animated,
-  StyleProp,
-  Platform
+  StyleProp
 } from 'react-native';
 import {
   asBaseComponent,
@@ -192,14 +191,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
     color: Colors.$textDefault,
-    ...Platform.select({
-      ios: {
+    ...(Constants.isIOS
+      ? {
         writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR
-      },
-      android: {
-        textAlign: 'left'
       }
-    })
+      : {
+        textAlign: 'left'
+      })
   },
   centered: {
     textAlign: 'center'

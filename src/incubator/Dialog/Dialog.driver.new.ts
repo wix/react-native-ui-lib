@@ -6,5 +6,5 @@ export const DialogDriver = (props: ComponentProps) => {
   const {renderTree, testID} = props;
   const driver = useComponentDriver<DialogProps>(props);
   const modalDriver = ModalDriver({renderTree, testID: `${testID}.modal`});
-  return {...modalDriver, ...driver};
+  return {...driver, getModal: () => modalDriver};
 };

@@ -1,4 +1,4 @@
-export {useComponentDriver, ComponentProps} from './new/Component.driver';
+export {useComponentDriver, ComponentDriver, ComponentProps} from './new/Component.driver';
 export {usePressableDriver} from './new/usePressable.driver';
 export {useScrollableDriver} from './new/useScrollable.driver';
 export {useDraggableDriver} from './new/useDraggable.driver';
