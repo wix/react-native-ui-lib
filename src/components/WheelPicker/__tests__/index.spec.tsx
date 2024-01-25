@@ -82,7 +82,7 @@ describe('WheelPicker', () => {
       const driver = WheelPickerItemDriver({renderTree, testID: `${index}`});
       expect(driver.getLabelStyle()?.color).toEqual(Colors.green30);
     });
-
+//TODO: Fix these test's using AnimatedStyle mocking
     // it('should call onChange after second item is pressed', async () => {
     //   const renderTree = render(<TestCase/>);
     //   const index = 1;
