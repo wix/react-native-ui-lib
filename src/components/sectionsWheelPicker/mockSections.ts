@@ -29,7 +29,6 @@ export const sections = [
   {
     items: getItems(MINUTES),
     onChange: onMinutesChange,
-    // initialValue: selectedMinutes,
     label: labels[2]
   }
 ];
