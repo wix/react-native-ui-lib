@@ -50,41 +50,36 @@ describe('Text', () => {
     Constants.isRTL = isRTL;
   };
 
-  describe('Automation gap', () => {
-    describe('Both RTL and LTR', () => {
-      it('Should always align text to left on Android', () => {
-        jest.isolateModules(() => {
-          setConstants(true, true);
-          const {textDriver} = getDriver();
-          const textStyle = textDriver.getProps().style;
-          expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
-        });
-        jest.isolateModules(() => {
-          setConstants(true, false);
-          const {textDriver} = getDriver();
-          const textStyle = textDriver.getProps().style;
-          expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
-        });
+  describe('Text alignment', () => {
+    it('Should always align text to left on Android (LTR/RTL)', () => {
+      jest.isolateModules(() => {
+        setConstants(true, true);
+        const {textDriver} = getDriver();
+        const textStyle = textDriver.getProps().style;
+        expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
+      });
+      jest.isolateModules(() => {
+        setConstants(true, false);
+        const {textDriver} = getDriver();
+        const textStyle = textDriver.getProps().style;
+        expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
       });
     });
-    describe('RTL', () => {
-      it('Should have text of left on iOS', () => {
-        jest.isolateModules(() => {
-          setConstants(false, true);
-          const {textDriver} = getDriver();
-          const textStyle = textDriver.getProps().style;
-          expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('rtl');
-        });
+    
+    it('Should have text of right on iOS RTL', () => {
+      jest.isolateModules(() => {
+        setConstants(false, true);
+        const {textDriver} = getDriver();
+        const textStyle = textDriver.getProps().style;
+        expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('rtl');
       });
     });
-    describe('LTR', () => {
-      it('Should have text of right on iOS', () => {
-        jest.isolateModules(() => {
-          setConstants(false, false);
-          const {textDriver} = getDriver();
-          const textStyle = textDriver.getProps().style;
-          expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('ltr');
-        });
+    it('Should have text of left on iOS LTR', () => {
+      jest.isolateModules(() => {
+        setConstants(false, false);
+        const {textDriver} = getDriver();
+        const textStyle = textDriver.getProps().style;
+        expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('ltr');
       });
     });
   });
