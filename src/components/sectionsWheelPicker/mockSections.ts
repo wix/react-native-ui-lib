@@ -24,7 +24,6 @@ export const sections = [
   {
     items: getItems(HOURS),
     onChange: onHoursChange,
-    // initialValue: selectedHours,
     label: labels[1]
   },
   {
