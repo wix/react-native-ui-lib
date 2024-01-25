@@ -18,7 +18,6 @@ export const sections = [
   {
     items: getItems(DAYS),
     onChange: onDaysChange,
-    // initialValue: selectedDays,
     label: labels[0]
   },
   {
