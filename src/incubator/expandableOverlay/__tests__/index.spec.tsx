@@ -12,15 +12,14 @@ import ExpandableOverlayDriver from '../ExpandableOverlay.driver';
  */
 
 const testID = 'expandableOverylayTest';
-const helloWorldTestId = 'helloWorldContent';
-const helloUniverseTestId = 'helloUniverseContent';
+const helloWorld = 'Hello World';
 
 const TestCase = (props: Omit<ExpandableOverlayProps, 'testID'>) => {
   return (
     //@ts-expect-error
     <ExpandableOverlay migrateDialog {...props} testID={testID}>
       <View>
-        <Text testID={helloWorldTestId}>Hello world</Text>
+        <Text>{helloWorld}</Text>
       </View>
     </ExpandableOverlay>
   );
@@ -44,13 +43,14 @@ describe('ExpandableOverlay', () => {
       driver.press();
       expect(driver.getOverlay().exists()).toBeTruthy();
     });
-    it('should render Hello World on starting view and Hello Universe in the dialog only after pressing', () => {
-      const content = <Text testID={helloUniverseTestId}>Hello Universe</Text>;
+    const universe = 'Hello Universe';
+    it(`should render ${helloWorld} on starting view and ${universe} in the dialog only after pressing`, () => {
+      const content = <Text>{universe}</Text>;
       const {driver, renderTree} = getDriver({useDialog: true, expandableContent: content});
-      expect(renderTree.queryByTestId(helloWorldTestId)).toBeTruthy();
-      expect(renderTree.queryByTestId(helloUniverseTestId)).toBeFalsy();
+      expect(renderTree.queryByText(helloWorld)).toBeTruthy();
+      expect(renderTree.queryByText(universe)).toBeFalsy();
       driver.press();
-      expect(renderTree.queryByTestId(helloUniverseTestId)).toBeTruthy();
+      expect(renderTree.queryByText(universe)).toBeTruthy();
     });
   });
 });
