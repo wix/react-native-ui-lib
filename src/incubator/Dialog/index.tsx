@@ -53,7 +53,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     useSafeArea,
     testID,
     children,
-    recorderTag='unmask'
+    recorderTag = 'unmask'
   } = props;
   const {overlayBackgroundColor = Colors.rgba(Colors.$backgroundInverted, 0.3), ...otherModalProps} = modalProps;
 
