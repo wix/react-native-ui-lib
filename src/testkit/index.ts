@@ -17,3 +17,4 @@ export {SwitchDriver} from '../components/switch/switch.driver';
 export {SectionsWheelPickerDriver} from '../components/sectionsWheelPicker/SectionsWheelPicker.driver';
 export {WheelPickerDriver} from '../components/WheelPicker/WheelPicker.driver';
 export {WheelPickerItemDriver} from '../components/WheelPicker/WheelPickerItem.driver';
+export {ExpandableOverlayDriver} from '../incubator/expandableOverlay/ExpandableOverlay.driver';

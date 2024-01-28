@@ -5,7 +5,7 @@ type OverlayDriverType<Props extends ExpandableOverlayProps> = Props extends {us
   ? ReturnType<typeof DialogDriver>
   : ReturnType<typeof ModalDriver>;
 
-const ExpandableOverlayDriver = <Props extends ExpandableOverlayProps>(props: ComponentProps) => {
+export const ExpandableOverlayDriver = <Props extends ExpandableOverlayProps>(props: ComponentProps) => {
   const {renderTree, testID} = props;
 
   const driver = usePressableDriver<Props>(useComponentDriver<Props>({renderTree, testID}));
@@ -24,4 +24,3 @@ const ExpandableOverlayDriver = <Props extends ExpandableOverlayProps>(props: Co
   return {...driver, getOverlay};
 };
 
-export default ExpandableOverlayDriver;
