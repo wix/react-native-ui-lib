@@ -51,16 +51,14 @@ describe('WheelPicker', () => {
     });
 
     it('should call onChange after scrolling ends with default itemHeight and numberOfRows', () => {
-      const itemHeight = 44;
-      const numberOfRows = 5;
-      const props = {itemHeight, numberOfVisibleRows: numberOfRows};
+      const props = {itemHeight: undefined, numberOfVisibleRows: undefined};
       const renderTree = render(<TestCase {...props}/>);
       const driver = WheelPickerDriver({renderTree, testID});
 
-      driver.moveToItem(4, itemHeight);
+      driver.moveToItem(4);
       expect(onChange).toHaveBeenCalledWith(4, 4);
 
-      driver.moveToItem(7, itemHeight);
+      driver.moveToItem(7);
       expect(onChange).toHaveBeenCalledWith(7, 7);
     });
   });
