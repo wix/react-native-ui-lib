@@ -1,18 +1,21 @@
-import React from 'react';
 import {DialogDriver, ModalDriver, useComponentDriver, usePressableDriver, ComponentProps} from '../../../testkit';
 import {ExpandableOverlayProps} from '.';
 
-type usingDialog = 'dialog' | 'modal';
+type OverlayDriverType<Props extends ExpandableOverlayProps> = Props extends {useDialog: true}
+  ? ReturnType<typeof DialogDriver>
+  : ReturnType<typeof ModalDriver>;
 
-
-const ExpandableOverlayDriver = <T extends usingDialog>(props: ComponentProps) => {
+const ExpandableOverlayDriver = <Props extends ExpandableOverlayProps>(props: ComponentProps) => {
   const {renderTree, testID} = props;
 
-  const driver = usePressableDriver<ExpandableOverlayProps>(useComponentDriver<ExpandableOverlayProps>({renderTree, testID}));
+  const driver = usePressableDriver<Props>(useComponentDriver<Props>({renderTree, testID}));
 
-  const isUsingDialog = driver.getProps().useDialog;
+  const isUsingDialog = !!renderTree.queryByTestId(`${testID}.overlay.modal`);
 
-  const overlayDriver = (isUsingDialog ? DialogDriver : ModalDriver)({renderTree, testID: `${testID}.overlay`});
+  const overlayDriver = (isUsingDialog ? DialogDriver : ModalDriver)({
+    renderTree,
+    testID: `${testID}.overlay`
+  }) as OverlayDriverType<Props>;
 
   const getOverlay = () => {
     return overlayDriver;
