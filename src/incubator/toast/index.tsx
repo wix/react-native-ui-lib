@@ -206,7 +206,6 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
         directionLock
         onDismiss={handleDismiss}
         threshold={THRESHOLD}
-        recorderTag={recorderTag}
       >
         <View
           style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}

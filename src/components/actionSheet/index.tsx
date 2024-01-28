@@ -13,7 +13,7 @@ import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
 import {Dialog as IncubatorDialog, DialogProps as IncubatorDialogProps} from '../../incubator';
 import {LogService} from '../../services';
-import {RecorderProps} from 'src/typings/recorderTypes';
+import {RecorderProps} from '../../typings/recorderTypes';
 
 const VERTICAL_PADDING = 8;
 type ActionSheetOnOptionPress = (index: number) => void;
@@ -256,7 +256,7 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   renderNewDialog() {
-    const {visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps, recorderTag} = this.props;
+    const {visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps} = this.props;
 
     if (onModalDismissed) {
       LogService.deprecationWarn({component: 'ActionSheet', oldProp: 'onModalDismissed', newProp: 'onDismiss'});
@@ -275,7 +275,6 @@ class ActionSheet extends Component<ActionSheetProps> {
         containerStyle={[styles.incubatorDialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
-        recorderTag={recorderTag}
       >
         {this.renderSheet()}
       </IncubatorDialog>
