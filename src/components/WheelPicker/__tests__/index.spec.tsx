@@ -43,10 +43,10 @@ describe('WheelPicker', () => {
       const renderTree = render(<TestCase/>);
       const driver = WheelPickerDriver({renderTree, testID});
 
-      driver.moveToItem(4, NUM_OF_ROWS, ITEM_HEIGHT);
+      driver.moveToItem(4, ITEM_HEIGHT);
       expect(onChange).toHaveBeenCalledWith(4, 4);
 
-      driver.moveToItem(7, NUM_OF_ROWS, ITEM_HEIGHT);
+      driver.moveToItem(7, ITEM_HEIGHT);
       expect(onChange).toHaveBeenCalledWith(7, 7);
     });
   });

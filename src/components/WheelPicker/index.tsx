@@ -24,7 +24,6 @@ export {WheelPickerAlign};
 
 const AnimatedFlatList = Animated.createAnimatedComponent<FlatListProps<ItemProps>>(FlatList);
 export const ITEM_HEIGHT = 44;
-export const NUMBER_OF_VISIBLE_ROWS = 5;
 
 export interface WheelPickerProps {
   /**
@@ -104,7 +103,7 @@ export interface WheelPickerProps {
 const WheelPicker = ({
   items: propItems,
   itemHeight = ITEM_HEIGHT,
-  numberOfVisibleRows = NUMBER_OF_VISIBLE_ROWS,
+  numberOfVisibleRows = 5,
   activeTextColor = Colors.$textPrimary,
   inactiveTextColor,
   textStyle,
