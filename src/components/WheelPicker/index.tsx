@@ -232,6 +232,7 @@ const WheelPicker = ({
         activeColor={activeTextColor}
         inactiveColor={inactiveTextColor}
         style={textStyle}
+        testID={`${testID}.item_${index}`}
         {...item}
         disableRTL={shouldDisableRTL}
         fakeLabel={label}
@@ -239,7 +240,6 @@ const WheelPicker = ({
         fakeLabelProps={fakeLabelProps}
         centerH={!label}
         onSelect={selectItem}
-        testID={`${testID}.item_${index}`}
       />
     );
   },
@@ -296,7 +296,14 @@ const WheelPicker = ({
       // @ts-expect-error
       <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
         <View style={labelInnerContainerStyle} centerV pointerEvents="none">
-          <Text {...labelMargins} text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+          <Text
+            {...labelMargins}
+            text80M
+            {...labelProps}
+            color={activeTextColor}
+            style={labelStyle}
+            testID={`${testID}.label`}
+          >
             {label}
           </Text>
         </View>
@@ -310,7 +317,8 @@ const WheelPicker = ({
     label,
     labelProps,
     activeTextColor,
-    labelStyle
+    labelStyle,
+    testID
   ]);
 
   const fader = useMemo(() => (position: FaderPosition) => {

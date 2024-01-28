@@ -150,7 +150,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     if (renderCustomDialogHeader) {
       return renderCustomDialogHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
     } else if (!useDialog || mode === PickerModes.MULTI) {
-      return <Modal.TopBar {...topBarProps}/>;
+      return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
     }
   };
 

@@ -1,115 +1,97 @@
 import React from 'react';
+import {render} from '@testing-library/react-native';
 import Switch, {SwitchProps} from '../index';
-import View from '../../view';
 import {SwitchDriver} from '../Switch.driver';
 
+const testID = 'switch';
+const defaultProps: SwitchProps = {
+  value: false,
+  onValueChange: jest.fn(),
+  disabled: false
+};
+const onColor = 'red';
+const offColor = 'grey';
+
+const testCase = (testID: string, props: Partial<SwitchProps>) => {
+  const renderTree = render(<Switch testID={testID} {...defaultProps} {...props}/>);
+  return SwitchDriver({renderTree, testID});
+};
+
 describe('Switch', () => {
-  afterEach(() => {
-    SwitchDriver.clear();
-  });
-
-  const switchDriver = (testID: string, props: Partial<SwitchProps>) => {
-    const defaultProps: SwitchProps = {
-      testID,
-      value: false,
-      onValueChange: jest.fn(),
-      disabled: false
-    };
-
-    const component = (<View><Switch {...defaultProps} {...props}/></View>);
-    return new SwitchDriver({
-      component,
-      testID
-    });
-  };
-
-
   it('Should fire onChange event', async () => {
-    const testId = 'switch-comp';
     const onChange = jest.fn();
-    const driver = await switchDriver(testId, {onValueChange: onChange});
-    await driver.press();
+    const driver = testCase(testID, {onValueChange: onChange});
+    driver.press();
     expect(onChange).toHaveBeenCalled();
   });
 
   it('Should fire onChange event with false value when toggling off', async () => {
-    const testId = 'switch-comp';
     const onChange = jest.fn();
-    const driver = await switchDriver(testId, {onValueChange: onChange, value: true});
-    await driver.press();
+    const driver = testCase(testID, {onValueChange: onChange, value: true});
+    driver.press();
     expect(onChange).toHaveBeenCalledWith(false);
   });
 
   it('Should fire onChange event with true value when toggling on', async () => {
-    const testId = 'switch-comp';
     const onChange = jest.fn();
-    const driver = await switchDriver(testId, {onValueChange: onChange, value: false});
-    await driver.press();
+    const driver = testCase(testID, {onValueChange: onChange, value: false});
+    driver.press();
     expect(onChange).toHaveBeenCalledWith(true);
   });
 
   it('Should not fire onChange when disabled', async () => {
-    const testId = 'switch-comp';
     const onValueChange = jest.fn();
-    const driver = await switchDriver(testId, {disabled: true, onValueChange});
+    const driver = testCase(testID, {disabled: true, onValueChange});
 
-    await driver.press();
+    driver.press();
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
   it('Accessibility value should be true when checked', async () => {
-    const testId = 'switch-comp';
-    const driver = await switchDriver(testId, {value: true});
+    const driver = testCase(testID, {value: true});
 
-    expect(await driver.getAccessibilityValue()).toBe(true);
+    expect(driver.getAccessibilityValue()).toBe(true);
   });
 
   it('Accessibility value should be false when not checked', async () => {
-    const testId = 'switch-comp';
-    const driver = await switchDriver(testId, {value: false});
+    const driver = testCase(testID, {value: false});
 
-    expect(await driver.isChecked()).toBe(false);
+    expect(driver.isChecked()).toBe(false);
   });
 
   it('Accessibility value should be checked when checked', async () => {
-    const testId = 'switch-comp';
-    const driver = await switchDriver(testId, {value: true});
+    const driver = testCase(testID, {value: true});
 
-    expect(await driver.isChecked()).toBe(true);
+    expect(driver.isChecked()).toBe(true);
   });
 
   it('Accessibility value should be false when not checked', async () => {
-    const testId = 'switch-comp';
-    const driver = await switchDriver(testId, {value: false});
+    const driver = testCase(testID, {value: false});
 
-    expect(await driver.getAccessibilityValue()).toBe(false);
+    expect(driver.getAccessibilityValue()).toBe(false);
   });
 
   it('Should be disabled', async () => {
-    const testId = 'switch-comp';
-    const driver = await switchDriver(testId, {disabled: true});
+    const driver = testCase(testID, {disabled: true});
 
-    expect(await driver.isDisabled()).toBe(true);
+    expect(driver.isDisabled()).toBe(true);
   });
 
   it('Should be disabled', async () => {
-    const testId = 'switch-comp';
-    const driver = await switchDriver(testId, {disabled: false});
+    const driver = testCase(testID, {disabled: false});
 
-    expect(await driver.isDisabled()).toBe(false);
+    expect(driver.isDisabled()).toBe(false);
   });
 
   it('Should pass correct color when on', async () => {
-    const testId = 'switch-comp';
-    const driver = await switchDriver(testId, {value: true, onColor: 'red'});
-
-    expect(await driver.getColor()).toBe('red');
+    const driver = testCase(testID, {value: true, onColor, offColor});
+    
+    expect(driver.getStyle()?.backgroundColor).toBe(onColor);
   });
 
   it('Should pass correct color when off', async () => {
-    const testId = 'switch-comp';
-    const driver = await switchDriver(testId, {value: false, offColor: 'red'});
+    const driver = testCase(testID, {value: false, onColor, offColor});
 
-    expect(await driver.getColor()).toBe('red');
+    expect(driver.getStyle()?.backgroundColor).toBe(offColor);
   });
 });

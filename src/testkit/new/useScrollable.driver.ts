@@ -1,6 +1,6 @@
 import {fireEvent} from '@testing-library/react-native';
 import {ComponentDriverResult} from './Component.driver';
-import {ScrollViewProps, NativeScrollEvent, NativeScrollPoint} from 'react-native';
+import {NativeScrollEvent, NativeScrollPoint} from 'react-native';
 
 type ScrollableDriverOptions = Omit<NativeScrollEvent, 'contentOffset'>;
 
@@ -10,17 +10,15 @@ export type ScrollProps = ContentOffset & {options?: ScrollableDriverOptions};
 
 export interface ScrollableDriverResult<Props> extends ComponentDriverResult<Props> {
   scroll: (contentOffset: ContentOffset, options?: ScrollableDriverOptions) => void;
+  triggerEvent: (eventName?: string, event?: Partial<NativeScrollEvent>) => void;
 }
 
-export type ScrollableDriverProps = Partial<Pick<ScrollViewProps, 'contentOffset'>>;
+export const useScrollableDriver = 
+<Props, DriverProps extends ComponentDriverResult<Props> = ComponentDriverResult<Props>>(driver: DriverProps): 
+ScrollableDriverResult<Props> & DriverProps => {
 
-export const useScrollableDriver = <
-  Props extends ScrollableDriverProps,
-  DriverProps extends ComponentDriverResult<Props> = ComponentDriverResult<Props> // Allows for chaining multiple drivers
->(
-    driver: DriverProps
-  ): ScrollableDriverResult<Props> & DriverProps => {
   const getContentOffset = async () => await driver.getElement().props.contentOffset;
+
   const scroll = ({x = 0, y = 0}, options?: ScrollableDriverOptions) => {
     fireEvent.scroll(driver.getElement(), {
       nativeEvent: {
@@ -30,9 +28,18 @@ export const useScrollableDriver = <
     });
   };
 
+  const triggerEvent = (eventName?: string, event?: Partial<NativeScrollEvent>) => {
+    if (eventName) {
+      fireEvent(driver.getElement(), eventName, {
+        nativeEvent: event
+      });
+    }
+  };
+
   return {
     ...driver,
     getContentOffset,
-    scroll
+    scroll,
+    triggerEvent
   };
 };
