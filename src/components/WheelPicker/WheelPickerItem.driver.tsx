@@ -1,6 +1,6 @@
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 // import {usePressableDriver} from '../../testkit';
-import {TextDriver} from '../../components/Text/Text.driver.new';
+import {TextDriver} from '../../components/text/Text.driver.new';
 // import {WheelPickerItemProps} from './index';
 
 
