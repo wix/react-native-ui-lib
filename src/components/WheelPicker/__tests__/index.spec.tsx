@@ -39,17 +39,6 @@ describe('WheelPicker', () => {
       expect(driver.getListHeight()).toBe(NUM_OF_ROWS * ITEM_HEIGHT);
     });
 
-    it('should call onChange after scrolling ends', () => {
-      const renderTree = render(<TestCase/>);
-      const driver = WheelPickerDriver({renderTree, testID});
-
-      driver.moveToItem(4, ITEM_HEIGHT);
-      expect(onChange).toHaveBeenCalledWith(4, 4);
-
-      driver.moveToItem(7, ITEM_HEIGHT);
-      expect(onChange).toHaveBeenCalledWith(7, 7);
-    });
-
     it('should call onChange after scrolling ends with default itemHeight and numberOfRows', () => {
       const props = {itemHeight: undefined, numberOfVisibleRows: undefined};
       const renderTree = render(<TestCase {...props}/>);
@@ -59,6 +48,17 @@ describe('WheelPicker', () => {
       expect(onChange).toHaveBeenCalledWith(4, 4);
 
       driver.moveToItem(7);
+      expect(onChange).toHaveBeenCalledWith(7, 7);
+    });
+
+    it('should call onChange after scrolling ends', () => {
+      const renderTree = render(<TestCase/>);
+      const driver = WheelPickerDriver({renderTree, testID});
+
+      driver.moveToItem(4, ITEM_HEIGHT);
+      expect(onChange).toHaveBeenCalledWith(4, 4);
+
+      driver.moveToItem(7, ITEM_HEIGHT);
       expect(onChange).toHaveBeenCalledWith(7, 7);
     });
   });
