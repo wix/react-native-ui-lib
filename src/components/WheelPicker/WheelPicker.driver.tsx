@@ -1,8 +1,8 @@
 import {FlatListProps} from 'react-native';
-import {WheelPickerProps, WheelPickerItemProps} from './index';
+import {WheelPickerProps, WheelPickerItemProps, ITEM_HEIGHT} from './index';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {useScrollableDriver} from '../../testkit/new/useScrollable.driver';
-import {TextDriver} from '../../components/Text/Text.driver.new';
+import {TextDriver} from '../../components/text/Text.driver.new';
 
 export const WheelPickerDriver = (props: ComponentProps) => {
   const driver = useComponentDriver<WheelPickerProps>(props);
@@ -11,10 +11,12 @@ export const WheelPickerDriver = (props: ComponentProps) => {
     renderTree: props.renderTree,
     testID: `${props.testID}.list`
   }));
-  
-  const moveToItem = (index: number, numberOfRows: number, itemHeight: number) => {
+
+  const itemsLength = listDriver.getProps().data?.length ?? 0;
+
+  const moveToItem = (index: number, itemHeight: number = ITEM_HEIGHT, numberOfRows: number = itemsLength) => {
     listDriver.triggerEvent('onMomentumScrollEnd', {
-      contentOffset: {x: 0, y: itemHeight * index}, 
+      contentOffset: {x: 0, y: itemHeight * index},
       contentSize: {height: numberOfRows * itemHeight, width: 400},
       layoutMeasurement: {height: 100, width: 400}
     });

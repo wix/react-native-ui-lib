@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import {render/* , act, waitFor */} from '@testing-library/react-native';
+import {render /* , act, waitFor */} from '@testing-library/react-native';
 import {Colors} from '../../../style';
 import WheelPicker from '../index';
 import {WheelPickerDriver} from '../WheelPicker.driver';
@@ -39,14 +39,26 @@ describe('WheelPicker', () => {
       expect(driver.getListHeight()).toBe(NUM_OF_ROWS * ITEM_HEIGHT);
     });
 
+    it('should call onChange after scrolling ends with default itemHeight and numberOfRows', () => {
+      const props = {itemHeight: undefined, numberOfVisibleRows: undefined};
+      const renderTree = render(<TestCase {...props}/>);
+      const driver = WheelPickerDriver({renderTree, testID});
+
+      driver.moveToItem(4);
+      expect(onChange).toHaveBeenCalledWith(4, 4);
+
+      driver.moveToItem(7);
+      expect(onChange).toHaveBeenCalledWith(7, 7);
+    });
+
     it('should call onChange after scrolling ends', () => {
       const renderTree = render(<TestCase/>);
       const driver = WheelPickerDriver({renderTree, testID});
 
-      driver.moveToItem(4, NUM_OF_ROWS, ITEM_HEIGHT);
+      driver.moveToItem(4, ITEM_HEIGHT);
       expect(onChange).toHaveBeenCalledWith(4, 4);
 
-      driver.moveToItem(7, NUM_OF_ROWS, ITEM_HEIGHT);
+      driver.moveToItem(7, ITEM_HEIGHT);
       expect(onChange).toHaveBeenCalledWith(7, 7);
     });
   });
@@ -88,7 +100,7 @@ describe('WheelPicker', () => {
     //   const renderTree = render(<TestCase/>);
     //   const index = 1;
     //   const driver = WheelPickerItemDriver({renderTree, testID: `${index}`});
-      
+
     //   driver.press();
 
     //   expect(await onChange).toHaveBeenCalledTimes(1);
@@ -99,7 +111,7 @@ describe('WheelPicker', () => {
     //   const renderTree = render(<TestCase/>);
     //   const index = 0;
     //   const driver = WheelPickerItemDriver({renderTree, testID: `${index}`});
-      
+
     //   driver.press();
 
     //   expect(onChange).not.toHaveBeenCalledTimes(1);
