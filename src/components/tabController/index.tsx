@@ -5,13 +5,13 @@ import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-na
 import {useOrientation, useThemeProps} from '../../hooks';
 import {Constants} from '../../commons/new';
 import TabBarContext from './TabBarContext';
-import TabBar from './TabBar';
+import TabBar, {TabControllerBarProps} from './TabBar';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 import useImperativeTabControllerHandle, {TabControllerImperativeMethods} from './useImperativeTabControllerHandle';
 
-export {TabControllerItemProps, TabControllerImperativeMethods};
+export {TabControllerBarProps, TabControllerItemProps, TabControllerImperativeMethods};
 
 interface TabControllerStatics {
   TabBar: typeof TabBar;
