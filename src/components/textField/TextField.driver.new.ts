@@ -3,9 +3,10 @@ import {fireEvent} from '@testing-library/react-native';
 import {TextFieldProps} from './types';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {TextDriver} from '../text/Text.driver.new';
+import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
 export const TextFieldDriver = (props: ComponentProps) => {
-  const driver = useComponentDriver<TextFieldProps>(props);
+  const driver = usePressableDriver<TextFieldProps>(useComponentDriver(props));
 
   const floatingPlaceholderDriver = TextDriver({
     renderTree: props.renderTree,

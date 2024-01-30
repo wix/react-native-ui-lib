@@ -58,6 +58,7 @@ export type TouchableOpacityProps = {
   children?: React.ReactNode;
   onLayout?: (event: LayoutChangeEvent) => void;
   testID?: string;
+  nativeID?: string;
 };
 
 type Props = PropsWithChildren<TouchableOpacityProps & BaseComponentInjectedProps & ForwardRefInjectedProps>;
