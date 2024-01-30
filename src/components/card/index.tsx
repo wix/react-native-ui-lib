@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Animated, ViewStyle} from 'react-native';
+import {StyleSheet, Animated, StyleProp, ViewStyle} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
 import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers} from '../../commons/new';
@@ -78,7 +78,7 @@ export type CardProps = ViewProps &
     /**
      * Additional styles for the top container
      */
-    containerStyle?: ViewStyle;
+    containerStyle?: StyleProp<ViewStyle>;
     /**
      * Adds visual indication that the card is selected
      */

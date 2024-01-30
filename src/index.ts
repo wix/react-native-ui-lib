@@ -143,6 +143,7 @@ export {default as Switch, SwitchProps} from './components/switch';
 export {
   default as TabController,
   TabControllerProps,
+  TabControllerBarProps,
   TabControllerItemProps,
   TabControllerImperativeMethods
 } from './components/tabController';
