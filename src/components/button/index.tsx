@@ -250,12 +250,16 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getIconStyle() {
-    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize} = this.props;
+    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
     const size = propsSize || DEFAULT_SIZE;
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
     };
-    const marginSide = ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size) ? 8 : 4;
+    const marginSide = link
+      ? 4
+      : ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size)
+        ? 8
+        : 4;
 
     if (!this.isIconButton) {
       if (iconOnRight) {
