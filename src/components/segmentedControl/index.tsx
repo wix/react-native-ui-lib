@@ -135,7 +135,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
     segmentsStyle.value[index] = {x, width};
-    segmentedControlHeight.value = height - 2 * BORDER_WIDTH;
+    segmentedControlHeight.value = height + 2 * BORDER_WIDTH;
     segmentsCounter.current++;
 
     if (segmentsCounter.current === segments?.length) {
@@ -148,9 +148,11 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     if (segmentsStyle.value.length !== 0) {
-      const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x, TIMING_CONFIG);
-      const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width - 2 * BORDER_WIDTH,
-        TIMING_CONFIG);
+      const isFirstElementSelected = animatedSelectedIndex.value === 0;
+      const isLastElementSelected = animatedSelectedIndex.value === segmentsStyle.value.length - 1;
+      const xOffset = isFirstElementSelected ? -2 : isLastElementSelected ? 2 : 0;
+      const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x + xOffset, TIMING_CONFIG);
+      const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width * BORDER_WIDTH, TIMING_CONFIG);
       const height = segmentedControlHeight.value;
       return Constants.isRTL ? {width, right: inset, height} : {width, left: inset, height};
     }
