@@ -57,7 +57,7 @@ class Button extends PureComponent<Props, ButtonState> {
       this.setState({size});
     }
 
-    if (Constants.isAndroid && Platform.Version <= 17) {
+    if (Constants.isAndroid && (Platform.Version as number) <= 17) {
       this.setState({borderRadius: height / 2});
     }
   };
