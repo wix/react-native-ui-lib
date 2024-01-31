@@ -311,8 +311,12 @@ export class Colors {
     return _.inRange(hue, 51, 184);
   }
 
-  isDark(colorValue: string | OpaqueColorValue, darkThreshold = 0.55) {
-    const color = colorValue === null ? undefined : colorStringValue(colorValue);
+  isDark(colorValue: string | OpaqueColorValue | undefined, darkThreshold = 0.55) {
+    if (colorValue === undefined || colorValue === null) {
+      return true;
+    }
+
+    const color = colorStringValue(colorValue);
     const lum = tinycolor(color).getLuminance();
     return lum < darkThreshold;
   }
