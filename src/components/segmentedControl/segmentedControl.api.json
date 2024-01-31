@@ -19,7 +19,7 @@
     {"name": "segmentsStyle", "type": "ViewStyle", "description": "Additional style for the segments"},
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"},
     {"name": "style", "type": "ViewStyle", "description": "Custom style to inner container"},
-    {"name": "segmentTypography", "type": "string", "description": "Segment typography"},
+    {"name": "segmentLabelStyle", "type": "TextStyle", "description": "Segment label style"},
     {"name": "testID", "type": "string", "description": "Component test id"}
   ],
   "snippet": [

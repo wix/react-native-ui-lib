@@ -6,7 +6,7 @@ import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import {SegmentedControlProps} from './index';
 
-export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentTypography'> & {
+export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabelStyle'> & {
   /**
    * The label of the segment.
    */
@@ -73,7 +73,7 @@ const Segment = React.memo((props: SegmentProps) => {
     index,
     iconOnRight,
     style,
-    segmentTypography,
+    segmentLabelStyle,
     testID
   } = props;
 
@@ -121,7 +121,7 @@ const Segment = React.memo((props: SegmentProps) => {
         <Reanimated.Text
           fsTagName={'unmasked'}
           numberOfLines={1}
-          style={[animatedTextStyle, Typography[segmentTypography || 'text90']]}
+          style={[animatedTextStyle, Typography.text90, segmentLabelStyle]}
         >
           {label}
         </Reanimated.Text>
