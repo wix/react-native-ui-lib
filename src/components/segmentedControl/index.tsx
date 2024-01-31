@@ -75,6 +75,10 @@ export type SegmentedControlProps = {
    */
   segmentsStyle?: StyleProp<ViewStyle>;
   /**
+   * Segment typography
+   */
+  segmentTypography?: string;
+  /**
    * Additional spacing styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -102,6 +106,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     outlineWidth = BORDER_WIDTH,
     throttleTime = 0,
     segmentsStyle: segmentsStyleProp,
+    segmentTypography,
     testID
   } = props;
   const animatedSelectedIndex = useSharedValue(initialIndex);
@@ -169,6 +174,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           activeColor={activeColor}
           inactiveColor={inactiveColor}
           style={segmentsStyleProp}
+          segmentTypography={segmentTypography}
           {...segments?.[index]}
           testID={testID}
         />
