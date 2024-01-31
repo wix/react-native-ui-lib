@@ -104,7 +104,7 @@ export type CustomModifier = {[key: string]: boolean};
 // TODO: migrate other modifiers to the same new structure as Margin modifier, using template literals
 export type TypographyModifiers = Modifier<TypographyLiterals> | CustomModifier;
 export type ColorsModifiers = Modifier<ColorLiterals> | CustomModifier;
-export type BackgroundColorModifier = Modifier<'bg'>;
+export type BackgroundColorModifier = Modifier<`bg-${ColorLiterals}`>;
 export type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export type PositionModifiers = Modifier<PositionLiterals>;
 export type PaddingModifiers = Modifier<PaddingLiterals>;
