@@ -67,8 +67,8 @@ const ColorSliderGroup = (props: ColorSliderGroupProps) => {
   return (
     <SliderGroup style={containerStyle} color={color} onValueChange={onValueChange}>
       <ColorSlider type={GradientSlider.types.HUE} initialColor={initialColor} {...others}/>
-      <ColorSlider type={GradientSlider.types.LIGHTNESS} initialColor={initialColor} {...others}/>
       <ColorSlider type={GradientSlider.types.SATURATION} initialColor={initialColor} {...others}/>
+      <ColorSlider type={GradientSlider.types.LIGHTNESS} initialColor={initialColor} {...others}/>
     </SliderGroup>
   );
 };

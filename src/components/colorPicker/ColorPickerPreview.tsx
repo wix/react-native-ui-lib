@@ -89,7 +89,11 @@ const styles = StyleSheet.create({
   preview: {
     height: 200,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.$outlineDisabled,
+    borderTopWidth: 0.5,
+    borderTopColor: Colors.$outlineDisabled
   },
   inputContainer: {
     alignItems: 'center',

@@ -84,7 +84,13 @@
       "description": "If true the component will have accessibility features enabled"
     },
     {"name": "testID", "type": "string", "description": "The component test id"},
-    {"name": "migrate", "type": "boolean", "description": "Temporary prop required for migration to the Slider's new implementation"}
+    {"name": "migrate", "type": "boolean", "description": "Temporary prop required for migration to the Slider's new implementation"},
+    {
+      "name": "enableThumbShadow",
+      "type": "boolean",
+      "description": "Whether the thumb will have a shadow (with 'migrate' true only)",
+      "default": "true"
+    }
   ],
   "snippet": [
     "<Slider",
