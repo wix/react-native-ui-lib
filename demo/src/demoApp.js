@@ -1,7 +1,8 @@
 import {Navigation} from 'react-native-navigation';
 import {Constants, Colors, Typography} from 'react-native-ui-lib'; // eslint-disable-line
+import {I18nManager} from 'react-native';
 import {registerScreens} from './screens';
-import Storage, {DEFAULT_SCREEN} from './storage';
+// import Storage, {DEFAULT_SCREEN} from './storage';
 
 /** Examples - uncomment when needed */
 // Typography.loadTypographies({
@@ -115,11 +116,12 @@ function startApp(defaultScreen) {
 }
 
 function getDefaultScreenAndStartApp() {
-  if (Storage.contains(DEFAULT_SCREEN)) {
-    startApp(Storage.getString(DEFAULT_SCREEN));
-  } else {
-    startApp();
-  }
+  // if (Storage.contains(DEFAULT_SCREEN)) {
+  //   startApp(Storage.getString(DEFAULT_SCREEN));
+  // } else {
+  startApp('unicorn.PlaygroundScreen');
+  I18nManager.forceRTL(true);
+  // }
 }
 
 Navigation.events().registerAppLaunchedListener(() => {
@@ -127,14 +129,12 @@ Navigation.events().registerAppLaunchedListener(() => {
   getDefaultScreenAndStartApp();
 });
 
-
 /* Setting Intl Polyfills
 This is due to lack of Intl support in Hermes engine
  */
 
 if (global.HermesInternal) {
-  if (Constants.isIOS) {  
-    
+  if (Constants.isIOS) {
     // Polyfills required to use Intl with Hermes engine
     require('@formatjs/intl-getcanonicallocales/polyfill').default;
     require('@formatjs/intl-locale/polyfill').default;

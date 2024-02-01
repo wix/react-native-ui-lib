@@ -46,6 +46,7 @@ function PageCarousel(props: ScrollViewProps) {
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
       // carouselOffset.value = e.contentOffset.x;
+      console.log(`If this is 0 (and there's a 3rd log), there's a bug`, e.contentOffset.x);
       const xOffset = calcOffset(e.contentOffset.x);
       const newIndex = xOffset / pageWidth;
 
