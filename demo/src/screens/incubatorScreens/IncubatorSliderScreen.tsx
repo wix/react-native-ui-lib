@@ -21,6 +21,7 @@ const IncubatorSliderScreen = () => {
   const [sliderMaxValue, setSliderMaxValue] = useState(INITIAL_MAX);
 
   const [color, setColor] = useState(COLOR);
+  const [groupColor, setGroupColor] = useState(Colors.yellow30);
   const [alpha, setAlpha] = useState(1);
 
   const slider = useRef<Incubator.SliderRef>(null);
@@ -58,7 +59,7 @@ const IncubatorSliderScreen = () => {
   }, []);
 
   const onGroupValueChange = (value: string) => {
-    console.log('onGroupValueChange: ', value);
+    setGroupColor(value);
   };
 
   const renderValuesBox = (min: number, max?: number) => {
@@ -235,9 +236,9 @@ const IncubatorSliderScreen = () => {
           Color Slider Group
         </Text>
         <ColorSliderGroup
-          initialColor={color}
+          initialColor={groupColor}
           sliderContainerStyle={styles.slider}
-          containerStyle={styles.group}
+          containerStyle={[styles.group, {borderWidth: 12, borderColor: groupColor}]}
           showLabels
           onValueChange={onGroupValueChange}
           migrate

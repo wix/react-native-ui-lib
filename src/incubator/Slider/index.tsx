@@ -277,7 +277,7 @@ const Slider = React.memo((props: Props) => {
           maximumValue,
           stepXValue.value);
         runOnJS(onRangeChangeThrottled)(value, maxValue);
-      } else {
+      } else if (prevOffset) { // don't invoke onChange when setting the slider
         runOnJS(onValueChangeThrottled)(value);
       }
     }
