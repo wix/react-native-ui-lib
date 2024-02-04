@@ -120,9 +120,9 @@ const GradientSlider = (props: Props) => {
   },
   [_onValueChange]);
 
-  const updateColor = useCallback((color: tinycolor.ColorFormats.HSLA) => {
+  const updateColor = useCallback((color: tinycolor.ColorFormats.HSLA, type?: GradientSliderTypes) => {
     if (!_.isEmpty(sliderContext)) {
-      sliderContext.setValue?.(color);
+      sliderContext.setValue?.(color, type);
     } else {
       setColor(color);
       const hex = Colors.getHexString(color);
@@ -137,25 +137,25 @@ const GradientSlider = (props: Props) => {
 
   const updateAlpha = useCallback((a: number) => {
     const color = getColor();
-    updateColor({...color, a});
+    updateColor({...color, a}, GradientSliderTypes.DEFAULT);
   },
   [getColor, updateColor]);
 
   const updateHue = useCallback((h: number) => {
     const color = getColor();
-    updateColor({...color, h});
+    updateColor({...color, h}, GradientSliderTypes.HUE);
   },
   [getColor, updateColor]);
 
   const updateLightness = useCallback((l: number) => {
     const color = getColor();
-    updateColor({...color, l});
+    updateColor({...color, l}, GradientSliderTypes.LIGHTNESS);
   },
   [getColor, updateColor]);
 
   const updateSaturation = useCallback((s: number) => {
     const color = getColor();
-    updateColor({...color, s});
+    updateColor({...color, s}, GradientSliderTypes.SATURATION);
   },
   [getColor, updateColor]);
 

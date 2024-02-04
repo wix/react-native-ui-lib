@@ -1,6 +1,6 @@
 import React, {useState, useRef, useCallback} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Colors, View, Text, Button, Incubator, GradientSlider, ColorSliderGroup} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Colors, View, Text, Button, Incubator, GradientSlider, ColorSliderGroup, GradientSliderTypes} from 'react-native-ui-lib'; //eslint-disable-line
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 const VALUE = 20;
@@ -57,8 +57,10 @@ const IncubatorSliderScreen = () => {
     setAlpha(alpha);
   }, []);
 
-  const onGroupValueChange = (value: string) => {
-    console.log('onGroupValueChange: ', value);
+  const onGroupValueChange = (value: string, type?: GradientSliderTypes) => {
+    if (type === GradientSliderTypes.HUE) {
+      setColor(value);
+    }
   };
 
   const renderValuesBox = (min: number, max?: number) => {
@@ -132,9 +134,10 @@ const IncubatorSliderScreen = () => {
           trackStyle={styles.customTrack}
           minimumTrackTintColor={Colors.grey30}
           maximumTrackTintColor={Colors.grey70}
-          // thumbTintColor={Colors.orange30}
-          thumbStyle={styles.customThumb}
-          activeThumbStyle={styles.customActiveThumb}
+          thumbTintColor={Colors.$backgroundElevated}
+          thumbStyle={{width: 24, height: 24, borderRadius: 12, borderWidth: 1.5, borderColor: Colors.$outlineDisabled}}//{styles.customThumb}
+          enableThumbShadow={false}
+          // activeThumbStyle={styles.customActiveThumb}
           disableRTL={disableRTL}
           // disableActiveStyling
         />

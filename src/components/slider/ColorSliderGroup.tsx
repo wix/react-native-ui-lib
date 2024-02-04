@@ -5,7 +5,6 @@ import GradientSlider, {GradientSliderTypes} from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import ColorSlider from './ColorSlider';
 
-type SliderOnValueChange = (value: string) => void;
 
 export type ColorSliderGroupProps = {
   /**
@@ -15,7 +14,7 @@ export type ColorSliderGroupProps = {
   /**
    * Callback for onValueChange returns the new hex color
    */
-  onValueChange?: SliderOnValueChange;
+  onValueChange?: (value: string, type?: GradientSliderTypes) => void;
   /**
    * Group container style
    */
@@ -59,8 +58,8 @@ const ColorSliderGroup = (props: ColorSliderGroupProps) => {
     setColor(initialColor);
   }, [initialColor]);
 
-  const onValueChange = useCallback((value: string) => {
-    props?.onValueChange?.(value);
+  const onValueChange = useCallback((value: string, type?: GradientSliderTypes) => {
+    props?.onValueChange?.(value, type);
   },
   [props]);
 
