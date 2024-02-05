@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
@@ -83,9 +83,9 @@ const GradientSlider = (props: Props) => {
     ...others
   } = props;
 
-  const [initialColor] = useState(Colors.getHSL(propsColors));
+  const initialColor = useRef(Colors.getHSL(propsColors));
   const [color, setColor] = useState(Colors.getHSL(propsColors));
-
+  
   useEffect(() => {
     setColor(Colors.getHSL(propsColors));
   }, [propsColors]);
@@ -94,10 +94,18 @@ const GradientSlider = (props: Props) => {
     return color || sliderContext.value;
   }, [color, sliderContext.value]);
 
-  const renderDefaultGradient = useCallback(() => {
+  const getHueColor = useCallback(() => {
     const color = getColor();
+    return {
+      h: color.h,
+      s: 1,
+      l: 0.5,
+      a: 1
+    };
+  }, [getColor]);
 
-    return <Gradient color={color} numberOfSteps={gradientSteps}/>;
+  const renderDefaultGradient = useCallback(() => {
+    return <Gradient color={getColor()} numberOfSteps={gradientSteps}/>;
   }, [getColor, gradientSteps]);
 
   const renderHueGradient = useCallback(() => {
@@ -105,14 +113,12 @@ const GradientSlider = (props: Props) => {
   }, [gradientSteps]);
 
   const renderLightnessGradient = useCallback(() => {
-    const color = getColor();
-    return <Gradient type={Gradient.types.LIGHTNESS} color={color} numberOfSteps={gradientSteps}/>;
-  }, [getColor, gradientSteps]);
+    return <Gradient type={Gradient.types.LIGHTNESS} color={getHueColor()} numberOfSteps={gradientSteps}/>;
+  }, [getHueColor, gradientSteps]);
 
   const renderSaturationGradient = useCallback(() => {
-    const color = getColor();
-    return <Gradient type={Gradient.types.SATURATION} color={color} numberOfSteps={gradientSteps}/>;
-  }, [getColor, gradientSteps]);
+    return <Gradient type={Gradient.types.SATURATION} color={getHueColor()} numberOfSteps={gradientSteps}/>;
+  }, [getHueColor, gradientSteps]);
 
   const onValueChange = useCallback((value: string, alpha: number) => {
     // alpha returns for type.DEFAULT
@@ -132,7 +138,7 @@ const GradientSlider = (props: Props) => {
   [sliderContext, onValueChange]);
 
   const reset = useCallback(() => {
-    updateColor(initialColor);
+    updateColor(initialColor.current);
   }, [initialColor, updateColor]);
 
   const updateAlpha = useCallback((a: number) => {
@@ -159,8 +165,6 @@ const GradientSlider = (props: Props) => {
   },
   [getColor, updateColor]);
 
-  const _color = getColor();
-  const thumbTintColor = Colors.getHexString(_color);
   let step = 0.01;
   let maximumValue = 1;
   let value = color.a;
@@ -171,17 +175,17 @@ const GradientSlider = (props: Props) => {
     case GradientSliderTypes.HUE:
       step = 1;
       maximumValue = 359;
-      value = initialColor.h;
+      value = initialColor.current.h;
       renderTrack = renderHueGradient;
       sliderOnValueChange = updateHue;
       break;
     case GradientSliderTypes.LIGHTNESS:
-      value = initialColor.l;
+      value = initialColor.current.l;
       renderTrack = renderLightnessGradient;
       sliderOnValueChange = updateLightness;
       break;
     case GradientSliderTypes.SATURATION:
-      value = initialColor.s;
+      value = initialColor.current.s;
       renderTrack = renderSaturationGradient;
       sliderOnValueChange = updateSaturation;
       break;
@@ -199,7 +203,7 @@ const GradientSlider = (props: Props) => {
       step={step}
       maximumValue={maximumValue}
       value={value}
-      thumbTintColor={thumbTintColor}
+      thumbTintColor={Colors.getHexString(getHueColor())}
       onValueChange={sliderOnValueChange}
       containerStyle={containerStyle}
       disabled={disabled}
