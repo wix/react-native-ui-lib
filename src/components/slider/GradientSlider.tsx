@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
-import React, {useCallback, useEffect, useState, useRef, usMemo} from 'react';
+import React, {useCallback, useEffect, useState, useRef, useMemo} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
@@ -94,7 +94,7 @@ const GradientSlider = (props: Props) => {
     return color || sliderContext.value;
   }, [color, sliderContext.value]);
 
-  const hueColor = usMemo(() => {
+  const hueColor = useMemo(() => {
     const color = getColor();
     return {
       h: color.h,
