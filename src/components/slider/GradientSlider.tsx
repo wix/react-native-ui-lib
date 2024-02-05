@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
-import React, {useCallback, useEffect, useState, useRef} from 'react';
+import React, {useCallback, useEffect, useState, useRef, useMemo} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
@@ -94,7 +94,7 @@ const GradientSlider = (props: Props) => {
     return color || sliderContext.value;
   }, [color, sliderContext.value]);
 
-  const getHueColor = useCallback(() => {
+  const hueColor = useMemo(() => {
     const color = getColor();
     return {
       h: color.h,
@@ -113,12 +113,12 @@ const GradientSlider = (props: Props) => {
   }, [gradientSteps]);
 
   const renderLightnessGradient = useCallback(() => {
-    return <Gradient type={Gradient.types.LIGHTNESS} color={getHueColor()} numberOfSteps={gradientSteps}/>;
-  }, [getHueColor, gradientSteps]);
+    return <Gradient type={Gradient.types.LIGHTNESS} color={hueColor} numberOfSteps={gradientSteps}/>;
+  }, [hueColor, gradientSteps]);
 
   const renderSaturationGradient = useCallback(() => {
-    return <Gradient type={Gradient.types.SATURATION} color={getHueColor()} numberOfSteps={gradientSteps}/>;
-  }, [getHueColor, gradientSteps]);
+    return <Gradient type={Gradient.types.SATURATION} color={hueColor} numberOfSteps={gradientSteps}/>;
+  }, [hueColor, gradientSteps]);
 
   const onValueChange = useCallback((value: string, alpha: number) => {
     // alpha returns for type.DEFAULT
@@ -203,7 +203,7 @@ const GradientSlider = (props: Props) => {
       step={step}
       maximumValue={maximumValue}
       value={value}
-      thumbTintColor={Colors.getHexString(getHueColor())}
+      thumbTintColor={Colors.getHexString(hueColor)}
       onValueChange={sliderOnValueChange}
       containerStyle={containerStyle}
       disabled={disabled}
