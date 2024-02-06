@@ -11,7 +11,7 @@ import {SliderContextProps} from './context/SliderContext';
 import asSliderGroupChild from './context/asSliderGroupChild';
 import Gradient from '../gradient';
 
-type SliderOnValueChange = (value: string, alfa: number) => void;
+export type HSLA = tinycolor.ColorFormats.HSLA;
 
 export enum GradientSliderTypes {
   DEFAULT = 'default',
@@ -27,7 +27,7 @@ export type GradientSliderProps = Omit<
   /**
    * The gradient color
    */
-  color?: string;
+  color?: string | HSLA;
   /**
    * The gradient type (default, hue, lightness, saturation)
    */
@@ -39,7 +39,7 @@ export type GradientSliderProps = Omit<
   /**
    * Callback for onValueChange, returns the updated color
    */
-  onValueChange?: SliderOnValueChange;
+  onValueChange?: (value: string, alfa: number) => void;
   /**
    * If true the component will have accessibility features enabled
    */
@@ -83,12 +83,13 @@ const GradientSlider = (props: Props) => {
     ...others
   } = props;
 
-  const initialColor = useRef(Colors.getHSL(propsColors));
-  const [color, setColor] = useState(Colors.getHSL(propsColors));
+  const colorProp = _.isString(propsColors) ? Colors.getHSL(propsColors) : propsColors;
+  const initialColor = useRef(colorProp);
+  const [color, setColor] = useState(colorProp);
   
   useEffect(() => {
-    setColor(Colors.getHSL(propsColors));
-  }, [propsColors]);
+    setColor(colorProp);
+  }, [colorProp]);
 
   const getColor = useCallback(() => {
     return color || sliderContext.value;
@@ -126,7 +127,7 @@ const GradientSlider = (props: Props) => {
   },
   [_onValueChange]);
 
-  const updateColor = useCallback((color: tinycolor.ColorFormats.HSLA) => {
+  const updateColor = useCallback((color: HSLA) => {
     if (!_.isEmpty(sliderContext)) {
       sliderContext.setValue?.(color);
     } else {

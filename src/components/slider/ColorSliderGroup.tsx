@@ -1,21 +1,22 @@
+import _ from 'lodash';
 import React, {useState, useEffect, useCallback} from 'react';
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
+import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
-import GradientSlider, {GradientSliderTypes} from './GradientSlider';
+import GradientSlider, {GradientSliderTypes, HSLA} from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import ColorSlider from './ColorSlider';
 
-type SliderOnValueChange = (value: string) => void;
 
 export type ColorSliderGroupProps = {
   /**
    * The gradient color
    */
-  initialColor: string;
+  initialColor: string | HSLA;
   /**
    * Callback for onValueChange returns the new hex color
    */
-  onValueChange?: SliderOnValueChange;
+  onValueChange?: (value: string | HSLA) => void;
   /**
    * Group container style
    */
@@ -54,12 +55,13 @@ export type ColorSliderGroupProps = {
  */
 const ColorSliderGroup = (props: ColorSliderGroupProps) => {
   const {initialColor, containerStyle, ...others} = props;
-  const [color, setColor] = useState(initialColor);
+  const [color, setColor] = useState(_.isString(initialColor) ? Colors.HSLA(initialColor) : initialColor);
+  
   useEffect(() => {
-    setColor(initialColor);
+    setColor(_.isString(initialColor) ? Colors.HSLA(initialColor) : initialColor);
   }, [initialColor]);
 
-  const onValueChange = useCallback((value: string) => {
+  const onValueChange = useCallback((value: string | HSLA) => {
     props?.onValueChange?.(value);
   },
   [props]);

@@ -1,8 +1,8 @@
 import React from 'react';
-
+import {HSLA} from '../GradientSlider';
 export interface SliderContextProps {
-  value?: tinycolor.ColorFormats.HSLA;
-  setValue?: (value: tinycolor.ColorFormats.HSLA) => void;
+  value?: HSLA;
+  setValue?: (value: HSLA) => void;
 }
 
 const SliderContext: React.Context<SliderContextProps> = React.createContext({});

@@ -1,23 +1,23 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-
 import {Colors} from '../../style';
-import ColorSliderGroup from '../slider/ColorSliderGroup';
+import ColorSliderGroup, {ColorSliderGroupProps} from '../slider/ColorSliderGroup';
 import {HSLColor} from './ColorPickerPresenter';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
 
 type SlidersProps = Pick<ColorPickerDialogProps, 'migrate'> & {
   keyboardHeight: number;
   color: HSLColor;
-  onSliderValueChange: (value: string) => void;
+  onSliderValueChange: ColorSliderGroupProps['onValueChange'];
 };
 
 const Sliders = (props: SlidersProps) => {
   const {keyboardHeight, color, migrate, onSliderValueChange} = props;
-  const colorValue = color.a === 0 ? Colors.$backgroundInverted : Colors.getHexString(color);
+  const initialColor = color.a === 0 ? Colors.getHSL(Colors.$backgroundInverted) : color;
+  
   return (
     <ColorSliderGroup
-      initialColor={colorValue}
+      initialColor={initialColor}
       containerStyle={[styles.sliderGroup, {height: keyboardHeight}]}
       sliderContainerStyle={styles.slider}
       showLabels
