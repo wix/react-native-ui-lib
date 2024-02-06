@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     height: 50
   },
   customTypography: {
-    ...Typography.text70
+    ...Typography.text80BO
   }
 });
 
