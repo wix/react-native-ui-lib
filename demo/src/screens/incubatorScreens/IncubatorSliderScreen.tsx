@@ -58,7 +58,7 @@ const IncubatorSliderScreen = () => {
     setAlpha(alpha);
   }, []);
 
-  const onGroupValueChange = (value: string) => {
+  const onGroupValueChange = (value: any) => {
     setGroupColor(value);
   };
 
