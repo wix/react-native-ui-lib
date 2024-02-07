@@ -1,9 +1,9 @@
+import tinycolor from 'tinycolor2';
 import React, {useCallback, useMemo, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '../../../style';
-import SliderContext from './SliderContext';
 import View from '../../view';
-import tinycolor from 'tinycolor2';
+import SliderContext from './SliderContext';
 
 interface SliderGroupProps {
   color: string;

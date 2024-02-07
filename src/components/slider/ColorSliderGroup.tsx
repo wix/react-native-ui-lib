@@ -1,51 +1,9 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
-import GradientSlider, {GradientSliderTypes} from './GradientSlider';
+import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import ColorSlider from './ColorSlider';
-
-type SliderOnValueChange = (value: string) => void;
-
-export type ColorSliderGroupProps = {
-  /**
-   * The gradient color
-   */
-  initialColor: string;
-  /**
-   * Callback for onValueChange returns the new hex color
-   */
-  onValueChange?: SliderOnValueChange;
-  /**
-   * Group container style
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Sliders style
-   */
-  sliderContainerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Show the sliders labels (defaults are: Hue, Lightness, Saturation)
-   */
-  showLabels?: boolean;
-  /**
-   * In case you would like to change the default labels (translations etc.), you can provide
-   * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
-   */
-  labels?: {[key in GradientSliderTypes]: string};
-  /**
-   * The labels style
-   */
-  labelsStyle?: StyleProp<TextStyle>;
-  /**
-   * If true the component will have accessibility features enabled
-   */
-  accessible?: boolean;
-  /**
-   * Whether to use the new Slider implementation using Reanimated
-   */
-  migrate?: boolean;
-};
+import {ColorSliderGroupProps} from './types';
 
 /**
  * @description: A Gradient Slider component
