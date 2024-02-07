@@ -1,6 +1,9 @@
+import tinycolor from 'tinycolor2';
 import {ReactElement} from 'react';
 import {StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ThumbProps} from './Thumb';
+
+export type HSLA = tinycolor.ColorFormats.HSLA;
 
 export type SliderOnValueChange = (value: number) => void;
 export type SliderOnRangeChange = (values: {min: number; max: number}) => void;
@@ -107,11 +110,11 @@ export enum GradientSliderTypes {
   SATURATION = 'saturation'
 }
 
-export type GradientSliderProps = Omit<SliderProps, 'onValueChange'> & {
+export type GradientSliderProps<T> = Omit<SliderProps, 'onValueChange'> & {
   /**
    * The gradient color
    */
-  color?: string;
+  color?: T;
   /**
    * The gradient type (default, hue, lightness, saturation)
    */
@@ -138,15 +141,15 @@ export type GradientSliderProps = Omit<SliderProps, 'onValueChange'> & {
   disabled?: boolean;
 }
 
-export type ColorSliderGroupProps = {
+export type ColorSliderGroupProps<T> = {
   /**
    * The gradient color
    */
-  initialColor: string;
+  initialColor: T;
   /**
    * Callback for onValueChange returns the new hex color
    */
-  onValueChange?: (value: string) => void;
+  onValueChange?: (value: T) => void;
   /**
    * Group container style
    */
