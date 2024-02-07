@@ -1,8 +1,7 @@
 import React from 'react';
-
 import Text from '../text';
-import GradientSlider, {GradientSliderTypes} from './GradientSlider';
-import {ColorSliderGroupProps} from './ColorSliderGroup';
+import {GradientSliderTypes, ColorSliderGroupProps} from './types';
+import GradientSlider from './GradientSlider';
 
 type ColorSliderProps = Pick<
   ColorSliderGroupProps,
@@ -40,4 +39,5 @@ const ColorSlider = (props: ColorSliderProps) => {
   );
 };
 
+ColorSlider.displayName = 'IGNORE';
 export default ColorSlider;
