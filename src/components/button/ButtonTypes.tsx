@@ -1,4 +1,3 @@
-import {PureComponent} from 'react';
 import {ImageStyle, TextStyle, StyleProp} from 'react-native';
 import {
   BaseComponentInjectedProps,
@@ -161,27 +160,10 @@ export type ButtonState = {
   isLandscape?: boolean;
 };
 
-export type Props = ButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
+export type Props<ModifiedButtonProps extends ButtonProps> = BaseComponentInjectedProps &
+  ForwardRefInjectedProps &
+  ModifiedButtonProps;
 
 export const DEFAULT_PROPS = {
   iconOnRight: false
 };
-
-/**
- * @description: Basic button component
- * @extends: TouchableOpacity
- * @modifiers: margin, background
- * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Sizes.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Typographies.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Outlines.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Corners.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Custom.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Inspirations.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Round.png?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Full.png?raw=true
- * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Animated.gif?raw=true
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
- */
-// @ts-ignore
-class FakeButtonForDocs extends PureComponent<ButtonProps> { // eslint-disable-line
-  static displayName = 'Button';
-
-  static defaultProps = DEFAULT_PROPS;
-
-  render() {
-    return null;
-  }
-}

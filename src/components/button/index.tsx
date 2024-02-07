@@ -21,7 +21,10 @@ import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonCo
 
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
-class Button extends PureComponent<Props, ButtonState> {
+class Button<ModifiedButtonProps extends ButtonProps = ButtonProps> extends PureComponent<
+  Props<ModifiedButtonProps>,
+  ButtonState
+> {
   static displayName = 'Button';
 
   static defaultProps = DEFAULT_PROPS;
@@ -32,7 +35,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
   // This redundant constructor for some reason fix tests :/
   // eslint-disable-next-line
-  constructor(props: Props) {
+  constructor(props: Props<ModifiedButtonProps>) {
     super(props);
   }
 
@@ -41,7 +44,7 @@ class Button extends PureComponent<Props, ButtonState> {
   };
   styles = createStyles();
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props<ModifiedButtonProps>) {
     if (this.props.animateLayout && !_.isEqual(prevProps, this.props)) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
