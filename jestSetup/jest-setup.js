@@ -22,7 +22,6 @@ Object.defineProperty(React, 'Component', {
     componentDidMount() {
       super.componentDidMount?.();
       this.props.onLayout?.({nativeEvent: {layout: {}}});
-      console.log(`MOCK MOCK MOCK! this.measureInWindow:`, this.measureInWindow);
       this.measureInWindow?.({nativeEvent: {layout: {}}});
     }
   }

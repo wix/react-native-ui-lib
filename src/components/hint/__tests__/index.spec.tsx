@@ -48,8 +48,8 @@ const HintTestComponent = ({
   );
 };
 
-//TODO: Add test for onPress functionality
 describe('Hint Screen component test', () => {
+  //TODO: Add test for Hint tip position
   describe('Test Hint style:', () => {
     it('Test Hint component background color', async () => {
       const expectedColor = Colors.$backgroundPrimaryHeavy;
@@ -57,13 +57,13 @@ describe('Hint Screen component test', () => {
       const driver = HintDriver({renderTree, testID: TEST_ID});
       expect(await driver.getElement()).toBeTruthy();
 
-      let contentColor = await driver.getContentStyle().backgroundColor;
+      let contentColor = await driver.getBackgroundColor();
       expect(contentColor).toBe(expectedColor);
 
       const whiteHintRenderTree = render(<HintTestComponent showHint color={Colors.white}/>);
       const whiteHintDriver = HintDriver({renderTree: whiteHintRenderTree, testID: TEST_ID});
 
-      contentColor = await whiteHintDriver.getContentStyle().backgroundColor;
+      contentColor = await whiteHintDriver.getBackgroundColor();
       expect(contentColor).toBe(Colors.white);
     });
   });
@@ -82,6 +82,14 @@ describe('Hint Screen component test', () => {
     });
   });
 
+  describe('Test Hint content', () => {
+    it('Hint should include message', async () => {
+      const renderTree = render(<HintTestComponent showHint/>);
+      const message = renderTree.getByTestId(`${TEST_ID}.text`).props.children;
+      expect(message).toBe('Hint message to hint things');
+    });
+  });
+
   describe('Test Hint modal visibility:', () => {
     it('Test Hint modal is not visible when showHint is false', async () => {
       const renderTree = render(<HintTestComponent showHint={false}/>);
@@ -93,12 +101,11 @@ describe('Hint Screen component test', () => {
       const renderTree = render(<HintTestComponent showHint onBackgroundPress={() => {}}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
       expect(await driver.exists()).toBeTruthy();
-      expect(await driver.getModal().exists()).toBeTruthy();
+      expect(await driver.getModal().isVisible()).toBeTruthy();
     });
   });
 
-  describe('Test Hint onPress & onBackgroundPress', () => {
-    //TODO - add test for onBackgroundTest, should mock measureInWindow functionally to test it
+  describe('Test Hint onPress', () => {
     let onPressCallback: jest.Mock;
     beforeEach(() => (onPressCallback = jest.fn()));
     afterEach(() => onPressCallback.mockClear());
@@ -116,13 +123,13 @@ describe('Hint Screen component test', () => {
       driver.getHintTouchable().press();
       await waitFor(() => expect(onPressCallback).toHaveBeenCalledTimes(0));
     });
+  });
 
+  describe('Test Hint  onBackgroundPress', () => {
     it('should not create touchable overlay driver when onBackgroundPress isn\'t passed', async () => {
       const renderTree = render(<HintTestComponent showHint/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
-      expect(driver.getOverlayTouchable().exists()).toBeFalsy();
+      expect(driver.getOverlay().exists()).toBeFalsy();
     });
   });
-
-  describe('Test Hint tip', () => {});
 });

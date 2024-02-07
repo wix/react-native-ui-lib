@@ -28,7 +28,7 @@ export const HintDriver = (props: ComponentProps) => {
     testID: `${props.testID}`
   }));
 
-  const overlayTouchableDriver = usePressableDriver<TouchableOpacityProps>(useComponentDriver({
+  const overlayDriver = usePressableDriver<TouchableOpacityProps>(useComponentDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.overlay`
   }));
@@ -46,17 +46,17 @@ export const HintDriver = (props: ComponentProps) => {
     return iconDriver;
   };
 
-  const getContentStyle = (): ViewStyle => {
-    return StyleSheet.flatten(contentDriver.getProps().style) as ViewStyle;
+  const getBackgroundColor = (): ViewStyle => {
+    return StyleSheet.flatten(contentDriver.getProps().style).backgroundColor as ViewStyle;
   };
 
   const getHintTouchable = () => {
     return hintTouchableDriver;
   };
 
-  const getOverlayTouchable = () => {
-    return overlayTouchableDriver;
+  const getOverlay = () => {
+    return overlayDriver;
   };
-
-  return {getContentStyle, getModal, getIcon, getHintTouchable, getOverlayTouchable, ...driver};
+  
+  return {getBackgroundColor, getModal, getIcon, getHintTouchable, getOverlay, ...driver};
 };

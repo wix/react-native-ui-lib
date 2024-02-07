@@ -411,7 +411,6 @@ class Hint extends Component<HintProps, HintState> {
   renderOverlay() {
     const {targetLayoutInWindow} = this.state;
     const {onBackgroundPress, backdropColor, testID} = this.props;
-    console.log(`inside renderOverlay, targetLayoutInWindow:`, targetLayoutInWindow);
     if (targetLayoutInWindow) {
       const containerPosition = this.getContainerPosition() as {top: number; left: number};
       return (
@@ -485,7 +484,7 @@ class Hint extends Component<HintProps, HintState> {
         {customContent}
         {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]} testID={`${testID}.icon`}/>}
         {!customContent && (
-          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>
+          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]} testID={`${testID}.text`}>
             {message}
           </Text>
         )}
