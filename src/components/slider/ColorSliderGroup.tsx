@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
-import {asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
+import {useThemeProps} from '../../hooks';
 import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import ColorSlider from './ColorSlider';
@@ -12,8 +12,9 @@ import {ColorSliderGroupProps, HSLA} from './types';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
  */
-const GenericColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGroupProps<T>) => {
-  const {initialColor, containerStyle, onValueChange, ...others} = props;
+const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGroupProps<T>) => {
+  const themeProps = useThemeProps(props, 'ColorSliderGroup');
+  const {initialColor, containerStyle, onValueChange, ...others} = themeProps;
   const _initialColor = useMemo(() => {
     return _.isString(initialColor) ? Colors.HSLA(initialColor) : initialColor;
   }, [initialColor]);
@@ -37,9 +38,5 @@ const GenericColorSliderGroup = <T extends string | HSLA = string>(props: ColorS
   );
 };
 
-const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGroupProps<T>) => {
-  const BaseComponent = asBaseComponent<ColorSliderGroupProps<T>, typeof GenericColorSliderGroup>(GenericColorSliderGroup);
-  return <BaseComponent {...props}/>;
-};
 ColorSliderGroup.displayName = 'ColorSliderGroup';
 export default ColorSliderGroup;
