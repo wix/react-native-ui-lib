@@ -7,7 +7,7 @@ const ComponentsMap = new Map<Components, React.ElementType>();
 ComponentsMap.set('Button', Button);
 
 // eslint-disable-next-line max-len
-export function createComponent<c extends Components, Props extends ComponentsTypesMap[c]>(component: Components): ComponentType<Props> {
+function createComponent<c extends Components, Props extends ComponentsTypesMap[c]>(component: Components): ComponentType<Props> {
   const ModifiedComponent = (props: Props) => {
     const Component = ComponentsMap.get(component);
     // @ts-expect-error
@@ -16,3 +16,7 @@ export function createComponent<c extends Components, Props extends ComponentsTy
 
   return ModifiedComponent;
 }
+
+export default {
+  createComponent
+};
