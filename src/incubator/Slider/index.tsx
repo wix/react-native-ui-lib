@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
+import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
@@ -9,7 +9,6 @@ import {StyleUtils} from 'utils';
 import {useThemeProps} from '../../hooks';
 import View from '../../components/view';
 import {ComponentStatics} from '../../typings/common';
-import {SliderProps as BaseSliderProps} from '../../components/slider/types';
 import {
   validateValues,
   getOffsetForValue,
@@ -19,8 +18,67 @@ import {
 import Thumb from './Thumb';
 import Track from './Track';
 
-// TODO: after removing old Slider move these extra props to the SliderProps in types.ts
-export interface SliderProps extends BaseSliderProps, AccessibilityProps {
+export interface SliderProps extends AccessibilityProps {
+  /**
+   * Initial value
+   */
+  value?: number;
+  /**
+   * Track minimum value
+   */
+  minimumValue?: number;
+  /**
+   * Track maximum value
+   */
+  maximumValue?: number;
+  /**
+   * Initial minimum value (when useRange is true)
+   */
+  initialMinimumValue?: number;
+  /**
+   * Initial maximum value (when useRange is true)
+   */
+  initialMaximumValue?: number;
+  /**
+   * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
+   */
+  step?: number;
+  /**
+   * Callback for onValueChange
+   */
+  onValueChange?: (value: number) => void;
+  /**
+   * Callback that notifies about slider seeking is started
+   */
+  onSeekStart?: () => void;
+  /**
+   * Callback that notifies about slider seeking is finished
+   */
+  onSeekEnd?: () => void;
+  /**
+   * Callback that notifies when the reset function was invoked 
+   */
+  onReset?: () => void;
+  /**
+   * The container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The color used for the track from minimum value to current value
+   */
+  minimumTrackTintColor?: string;
+  /**
+   * The track color
+   */
+  maximumTrackTintColor?: string;
+  /**
+   * The track style
+   */
+  trackStyle?: StyleProp<ViewStyle>;
+  /**
+   * Custom render instead of rendering the track
+   */
+  renderTrack?: () => ReactElement | ReactElement[];
   /**
    * The thumb style
    */
@@ -34,7 +92,7 @@ export interface SliderProps extends BaseSliderProps, AccessibilityProps {
    */
   disableActiveStyling?: boolean;
   /**
-   * Defines how far a touch event can start away from the thumb.
+   * Defines how far a touch event can start away from the thumb
    */
   thumbHitSlop?: ViewProps['hitSlop'];
   /**
@@ -45,6 +103,42 @@ export interface SliderProps extends BaseSliderProps, AccessibilityProps {
    * Thumb color
    */
   thumbTintColor?: string;
+  /**
+   * Disabled thumb tint color
+   */
+  disabledThumbTintColor?: string;
+  /**
+   * If true the Slider will be disabled and will appear in disabled color
+   */
+  disabled?: boolean;
+  /**
+   * If true the Slider will display a second thumb for the min value
+   */
+  useRange?: boolean;
+  /**
+   * If true the min and max thumbs will not overlap
+   */
+  useGap?: boolean;
+  /**
+   * Callback for onRangeChange. Returns values object with the min and max values
+   */
+  onRangeChange?: (values: {min: number, max: number}) => void;
+  /**
+   * If true the Slider will stay in LTR mode even if the app is on RTL mode
+   */
+  disableRTL?: boolean;
+  /**
+   * If true the component will have accessibility features enabled
+   */
+  accessible?: boolean;
+  /**
+   * The slider's test identifier
+   */
+  testID?: string;
+  /** 
+   * Whether to use the new Slider implementation using Reanimated
+   */
+  migrate?: boolean;
 }
 
 type Props = SliderProps & ForwardRefInjectedProps<SliderRef>;
@@ -87,6 +181,7 @@ const Slider = React.memo((props: Props) => {
     thumbStyle,
     activeThumbStyle,
     thumbTintColor = Colors.$backgroundPrimaryHeavy,
+    disabledThumbTintColor = Colors.$backgroundDisabled,
     thumbHitSlop,
     disableActiveStyling,
     disabled,
@@ -129,7 +224,7 @@ const Slider = React.memo((props: Props) => {
   const rangeThumbOffset = useSharedValue(0);
   
   const thumbBackground: StyleProp<ViewStyle> = useMemo(() => [
-    {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
+    {backgroundColor: disabled ? disabledThumbTintColor : thumbTintColor}
   ], [disabled, thumbTintColor]);
   const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     styles.thumb, thumbBackground
