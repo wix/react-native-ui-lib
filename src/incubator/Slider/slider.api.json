@@ -1,9 +1,9 @@
 {
   "name": "Slider",
-  "category": "controls",
+  "category": "Incubator",
   "description": "A Slider component",
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx",
-  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorSliderScreen.tsx",
+  "images": [],
   "props": [
     {"name": "value", "type": "number", "description": "Initial value"},
     {"name": "minimumValue", "type": "number", "description": "Track minimum value"},
@@ -26,18 +26,6 @@
       "description": "If true the min and max thumbs will not overlap",
       "default": "true"
     },
-    {
-      "name": "minimumTrackTintColor",
-      "type": "string",
-      "description": "The color used for the track from minimum value to current value"
-    },
-    {"name": "maximumTrackTintColor", "type": "string", "description": "The track color"},
-    {
-      "name": "renderTrack",
-      "type": "() => ReactElement | ReactElement[]",
-      "description": "Custom render instead of rendering the track"
-    },
-    {"name": "thumbTintColor", "type": "string", "description": "Thumb color"},
     {"name": "onValueChange", "type": "SliderOnValueChange", "description": "Callback for onValueChange"},
     {
       "name": "onRangeChange",
@@ -60,9 +48,29 @@
       "description": "Callback that notifies when the reset function was invoked"
     },
     {"name": "containerStyle", "type": "ViewStyle", "description": "The container style"},
+    {
+      "name": "minimumTrackTintColor",
+      "type": "string",
+      "description": "The color used for the track from minimum value to current value"
+    },
+    {"name": "maximumTrackTintColor", "type": "string", "description": "The track color"},
     {"name": "trackStyle", "type": "ViewStyle", "description": "The track style"},
+    {
+      "name": "renderTrack",
+      "type": "() => ReactElement | ReactElement[]",
+      "description": "Custom render instead of rendering the track"
+    },
+    {"name": "thumbTintColor", "type": "string", "description": "Thumb color"},
+    {"name": "DisabledThumbTintColor", "type": "string", "description": "Disabled thumb color"},
     {"name": "thumbStyle", "type": "ViewStyle", "description": "The thumb style"},
     {"name": "activeThumbStyle", "type": "ViewStyle", "description": "The active (during press) thumb style"},
+    {
+      "name": "enableThumbShadow",
+      "type": "boolean",
+      "description": "Whether the thumb will have a shadow (with 'migrate' true only)",
+      "default": "true"
+    },
+    {"name": "thumbHitSlop", "type": "number", "description": "Defines how far a touch event can start away from the thumb"},
     {
       "name": "disableActiveStyling",
       "type": "boolean",
@@ -83,11 +91,10 @@
       "type": "boolean",
       "description": "If true the component will have accessibility features enabled"
     },
-    {"name": "testID", "type": "string", "description": "The component test id"},
-    {"name": "migrate", "type": "boolean", "description": "Temporary prop required for migration to the Slider's new implementation"}
+    {"name": "testID", "type": "string", "description": "The component test id"}
   ],
   "snippet": [
-    "<Slider",
+    "<Incubator.Slider",
     "  value={0$1}",
     "  minimumValue={0$2}",
     "  maximumValue={10$3}",
