@@ -169,5 +169,4 @@ const GradientSlider = (props: Props) => {
 
 GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
-// @ts-expect-error
 export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));

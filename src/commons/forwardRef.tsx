@@ -5,7 +5,7 @@ export interface ForwardRefInjectedProps<T = any> {
   /**
    * The forwarded ref of the containing element
    */
-  forwardedRef: ForwardedRef<T>;
+  forwardedRef?: ForwardedRef<T>;
 }
 
 export default function forwardRef<P, STATICS = {}, RefInterface = any>(WrappedComponent: ComponentType<P & ForwardRefInjectedProps<RefInterface>>) {
