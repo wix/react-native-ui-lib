@@ -37,7 +37,7 @@ export type BadgeProps = ViewProps &
     /**
      * the badge size
      */
-    size?: string | number;
+    size?: number;
     /**
      * Press handler
      */
@@ -125,10 +125,7 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   isSmallBadge() {
-    if (!isNaN(Number(this.size))) {
-      return Number(this.size) <= 16;
-    }
-    return false;
+    return this.size <= 16;
   }
 
   getBadgeSizeStyle() {
