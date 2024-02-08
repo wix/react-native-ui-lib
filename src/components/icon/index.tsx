@@ -81,13 +81,11 @@ const Icon = forwardRef((props: Props, ref: any) => {
       top: -3
     };
     if (isPimple()) {
-      //badge size 10
-      badgePosition.right = (size || 24) / 10;
-      badgePosition.top = (size || 24) / 10;
+      badgePosition.right = -2;
+      badgePosition.top = -2;
     } else {
-      //badge size 16
-      badgePosition.right = (size || 24) / 16;
-      badgePosition.top = (size || 24) / 16;
+      badgePosition.right = -5;
+      badgePosition.top = -5;
     }
     return [badgePosition, containerStyle];
   };
@@ -100,7 +98,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
 
   const getBadgeSize = () => {
     const size = isPimple() ? 10 : 16;
-    return size;
+    return badgeProps?.size ? badgeProps?.size : size;
   };
 
   const isPimple = () => {
@@ -133,7 +131,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
   }
 
   return (
-    <View style={{borderWidth: 1}}>
+    <View>
       {isSvg(source) ? renderSvg() : renderImage()}
       {shouldShowBadge && (
         <Badge
