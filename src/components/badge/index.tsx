@@ -37,7 +37,7 @@ export type BadgeProps = ViewProps &
     /**
      * the badge size
      */
-    size?: number;
+    size?: string | number;
     /**
      * Press handler
      */
@@ -125,7 +125,10 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   isSmallBadge() {
-    return this.size <= 16;
+    if (!isNaN(Number(this.size))) {
+      return Number(this.size) <= 16;
+    }
+    return false;
   }
 
   getBadgeSizeStyle() {
@@ -285,7 +288,7 @@ function createStyles(props: BadgeProps) {
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: (!props.icon || props.customElement) ? Colors.$backgroundGeneralHeavy : undefined,
+      backgroundColor: !props.icon || props.customElement ? Colors.$backgroundGeneralHeavy : undefined,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'
