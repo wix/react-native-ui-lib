@@ -15,6 +15,7 @@ import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import TextField, {TextFieldProps, TextFieldMethods} from '../textField';
+import {DialogMigrationProps} from '../../incubator/Dialog';
 import {DialogProps} from '../dialog';
 import View from '../view';
 import Button from '../button';
@@ -23,7 +24,7 @@ import useOldApi, {OldApiProps} from './useOldApi';
 
 export type DateTimePickerMode = 'date' | 'time';
 
-export type DateTimePickerProps = OldApiProps & Omit<TextFieldProps, 'value' | 'onChange'> & {
+export type DateTimePickerProps = OldApiProps & Omit<TextFieldProps, 'value' | 'onChange'> & DialogMigrationProps & {
   /**
    * The type of picker to display ('date' or 'time')
    */
@@ -70,10 +71,6 @@ export type DateTimePickerProps = OldApiProps & Omit<TextFieldProps, 'value' | '
    * Allows changing of the timeZone of the date picker. By default it uses the device's time zone (iOS only)
    */
   timeZoneOffsetInMinutes?: number;
-  /**
-   * Props to pass the Dialog component
-   */
-  dialogProps?: DialogProps;
   /**
    * style to apply to the iOS dialog header
    */
@@ -128,6 +125,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     themeVariant = Colors.getScheme(),
     onChange,
     dialogProps,
+    migrateDialog,
     headerStyle,
     testID,
     display = Constants.isIOS ? 'spinner' : undefined,
@@ -302,6 +300,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         expandableContent={Constants.isIOS ? renderIOSExpandableOverlay() : undefined}
         useDialog
         dialogProps={_dialogProps}
+        migrateDialog={migrateDialog}
         disabled={editable === false}
         // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
         renderCustomOverlay={Constants.isAndroid ? renderAndroidDateTimePicker : undefined}
