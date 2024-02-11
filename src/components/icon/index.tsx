@@ -1,5 +1,4 @@
 import isUndefined from 'lodash/isUndefined';
-import get from 'lodash/get';
 import React, {useMemo, forwardRef} from 'react';
 import {Image, ImageProps, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
@@ -25,10 +24,6 @@ export type IconProps = Omit<ImageProps, 'source'> &
      * Badge props passed down to Badge component
      */
     badgeProps?: BadgeProps;
-    /**
-     * Hide badge shown on button
-     */
-    hideBadge?: boolean;
     /**
      * the icon tint
      */
@@ -66,45 +61,22 @@ const Icon = forwardRef((props: Props, ref: any) => {
     modifiers,
     recorderTag,
     badgeProps,
-    hideBadge,
     ...others
   } = props;
   const {margins} = modifiers;
-  const shouldShowBadge = !hideBadge && badgeProps;
   const iconSize = size ? {width: size, height: size} : undefined;
   const shouldFlipRTL = supportRTL && Constants.isRTL;
 
   const getBadgeStyling = (): StyleProp<ViewStyle> => {
     const containerStyle = badgeProps?.containerStyle;
+    const badgeSizeProp = badgeProps?.size || 1;
     const badgePosition: StyleProp<ViewStyle> = {
-      position: 'absolute',
-      top: -3
+      position: 'absolute'
     };
-    if (isPimple()) {
-      badgePosition.right = -2;
-      badgePosition.top = -2;
-    } else {
-      badgePosition.right = -5;
-      badgePosition.top = -5;
-    }
+    const position = -badgeSizeProp / 2;
+    badgePosition.right = position;
+    badgePosition.top = position;
     return [badgePosition, containerStyle];
-  };
-
-  const getBadgeLabel = () => {
-    const {badgeProps} = props;
-    const label = get(badgeProps, 'label');
-    return label;
-  };
-
-  const getBadgeSize = () => {
-    const size = isPimple() ? 10 : 16;
-    return badgeProps?.size ? badgeProps?.size : size;
-  };
-
-  const isPimple = () => {
-    if (getBadgeLabel() === undefined) {
-      return true;
-    }
   };
 
   const iconSource = useMemo(() => {
@@ -133,12 +105,10 @@ const Icon = forwardRef((props: Props, ref: any) => {
   return (
     <View>
       {isSvg(source) ? renderSvg() : renderImage()}
-      {shouldShowBadge && (
+      {badgeProps && (
         <Badge
           pointerEvents={'none'}
           {...badgeProps}
-          label={getBadgeLabel()}
-          size={getBadgeSize()}
           containerStyle={getBadgeStyling()}
           testID={`${props?.testID}.badge`}
         />
