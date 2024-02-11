@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {map, mapKeys, filter, reduce} from 'lodash';
-import React, {useMemo, useCallback} from 'react';
+import React, {useMemo, useCallback, forwardRef, ForwardedRef} from 'react';
 import {FlatList, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -24,7 +24,7 @@ function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableLi
     {});
 }
 
-const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
+const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>, ref?: ForwardedRef<FlatList<ItemT>>) => {
   const themeProps = useThemeProps(props, 'SortableList');
   const {data, onOrderChange, enableHaptic, scale, itemProps, horizontal, ...others} = themeProps;
 
@@ -80,6 +80,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     <GestureHandlerRootView>
       <SortableListContext.Provider value={context}>
         <FlatList
+          ref={ref}
           {...others}
           horizontal={horizontal}
           data={data}
@@ -91,4 +92,4 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
   );
 };
 
-export default SortableList;
+export default forwardRef(SortableList) as <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT> & {ref?: ForwardedRef<FlatList<ItemT>>}) => React.ReactElement;
