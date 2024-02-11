@@ -15,8 +15,8 @@ import {ColorSliderGroupProps, HSLA} from './types';
 const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGroupProps<T>) => {
   const themeProps = useThemeProps(props, 'ColorSliderGroup');
   const {initialColor, containerStyle, onValueChange, ...others} = themeProps;
-  const _initialColor = useMemo(() => {
-    return _.isString(initialColor) ? Colors.HSLA(initialColor) : initialColor;
+  const _initialColor = useMemo<HSLA>(() => {
+    return _.isString(initialColor) ? Colors.getHSL(initialColor) : initialColor;
   }, [initialColor]);
   const [color, setColor] = useState<HSLA>(_initialColor);
 
