@@ -10,8 +10,9 @@ ComponentsMap.set('Button', Button);
 export function createComponent<c extends Components, Props extends ComponentsTypesMap[c]>(component: Components): ComponentType<Props> {
   const ModifiedComponent = (props: Props) => {
     const Component = ComponentsMap.get(component);
-    // @ts-expect-error
-    return <Component {...props}/>;
+    if (Component) {
+      return <Component {...props}/>;
+    }
   };
 
   return ModifiedComponent;
