@@ -5,6 +5,7 @@ import {ModalProps} from '../../components/modal';
 import {ViewProps} from '../../components/view';
 import {TextProps} from '../../components/text';
 import {PanningDirections, PanningDirectionsEnum} from '../panView';
+import {RecorderProps} from 'src/typings/recorderTypes';
 type DialogDirections = PanningDirections;
 const DialogDirectionsEnum = PanningDirectionsEnum;
 export {DialogDirections, DialogDirectionsEnum};
@@ -68,7 +69,7 @@ export interface DialogHeaderProps extends ViewProps {
   onPress?: () => void;
 }
 
-export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
+export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'>, RecorderProps {
   /**
    * The visibility of the dialog.
    */

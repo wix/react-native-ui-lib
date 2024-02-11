@@ -10,6 +10,7 @@ import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import OverlayFadingBackground from './OverlayFadingBackground';
 import PanningProvider, {PanningDirections, PanningDirectionsEnum} from '../panningViews/panningProvider';
+import {RecorderProps} from '../../typings/recorderTypes';
 export {PanningDirections as DialogDirections, PanningDirectionsEnum as DialogDirectionsEnum};
 
 // TODO: KNOWN ISSUES
@@ -22,7 +23,7 @@ interface RNPartialProps
   extends Pick<ModalPropsIOS, 'supportedOrientations'>,
     Pick<AccessibilityProps, 'accessibilityLabel'> {}
 
-export interface DialogProps extends AlignmentModifiers, RNPartialProps {
+export interface DialogProps extends AlignmentModifiers, RNPartialProps, RecorderProps {
   /**
    * Control visibility of the dialog
    */
@@ -199,12 +200,12 @@ class Dialog extends Component<DialogProps, DialogState> {
   };
 
   renderDialogView = () => {
-    const {children, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.props;
+    const {children, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID, recorderTag} = this.props;
     const {dialogVisibility} = this.state;
     const Container = this.getContainerType();
 
     return (
-      <View testID={testID} style={[this.styles.dialogViewSize]} pointerEvents="box-none">
+      <View testID={testID} style={[this.styles.dialogViewSize]} pointerEvents="box-none" recorderTag={recorderTag}>
         <PanningProvider>
           <DialogDismissibleView
             direction={panDirection}
@@ -229,7 +230,7 @@ class Dialog extends Component<DialogProps, DialogState> {
   // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
   renderDialogContainer = () => {
     const {modalVisibility, dialogVisibility, fadeOut} = this.state;
-    const {useSafeArea, bottom, overlayBackgroundColor, testID} = this.props;
+    const {useSafeArea, bottom, overlayBackgroundColor, testID, recorderTag} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && useSafeArea && bottom;
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
     const onFadeDone = Constants.isIOS ? this.onFadeDone : undefined;
@@ -239,6 +240,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         useSafeArea={useSafeArea}
         style={[this.styles.centerHorizontal, this.styles.alignments, this.styles.container]}
         pointerEvents="box-none"
+        recorderTag={recorderTag}
       >
         <OverlayFadingBackground
           testID={`${testID}.overlayFadingBackground`}
@@ -256,7 +258,7 @@ class Dialog extends Component<DialogProps, DialogState> {
 
   render = () => {
     const {modalVisibility} = this.state;
-    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress, modalProps} = this.props;
+    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress, modalProps, recorderTag} = this.props;
     const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
 
     return (
@@ -270,6 +272,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
         {...modalProps}
+        recorderTag={recorderTag}
       >
         {this.renderDialogContainer()}
       </Modal>

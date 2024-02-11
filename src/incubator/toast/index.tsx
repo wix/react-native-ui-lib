@@ -47,6 +47,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     onDismiss,
     onAnimationEnd,
     children,
+    recorderTag = 'unmask',
     testID
   } = props;
 
@@ -133,6 +134,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
       return (
         loaderElement ?? (
           <ActivityIndicator
+            fsTagName={recorderTag}
             size={'small'}
             testID={`${testID}-loader`}
             color={Colors.rgba(Colors.$backgroundNeutralHeavy, 0.6)}
@@ -145,7 +147,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     if (action) {
       return (
         <Button
-          link
+          linkRecorderProps
           style={styles.action}
           color={Colors.$backgroundNeutralHeavy}
           activeBackgroundColor={Colors.$backgroundNeutral}
@@ -153,6 +155,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
           labelStyle={Typography.bodySmallBold}
           accessibilityRole={'button'}
           testID={`${testID}-action`}
+          recorderTag={recorderTag}
         />
       );
     }
@@ -161,8 +164,9 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   const renderMessage = () => {
     const textAlign = centerMessage ? 'center' : 'left';
     return (
-      <View accessible={Constants.isIOS} style={styles.messageContainer}>
+      <View accessible={Constants.isIOS} style={styles.messageContainer} recorderTag={recorderTag}>
         <Text
+          recorderTag={recorderTag}
           testID={`${testID}-message`}
           ref={viewRef}
           style={[styles.message, {textAlign}, messageStyle]}
@@ -178,7 +182,13 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   const renderIcon = () => {
     if (toastPreset.icon) {
       return (
-        <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor}/>
+        <Icon
+          source={toastPreset.icon}
+          resizeMode={'contain'}
+          style={styles.icon}
+          tintColor={toastPreset.iconColor}
+          recorderTag={recorderTag}
+        />
       );
     }
   };
@@ -197,7 +207,10 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
         onDismiss={handleDismiss}
         threshold={THRESHOLD}
       >
-        <View style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}>
+        <View
+          style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}
+          recorderTag={recorderTag}
+        >
           {renderIcon()}
           {renderMessage()}
           {renderRightElement()}
@@ -208,13 +221,17 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
 
   const renderAttachmentContent = () => {
     if (renderAttachment) {
-      return <View pointerEvents={'box-none'}>{renderAttachment()}</View>;
+      return (
+        <View pointerEvents={'box-none'} recorderTag={recorderTag}>
+          {renderAttachment()}
+        </View>
+      );
     }
   };
 
   const _renderAttachment = (positionStyle: object, zIndex?: number) => {
     return (
-      <View style={[positionStyle, {zIndex}]} pointerEvents={'box-none'}>
+      <View style={[positionStyle, {zIndex}]} pointerEvents={'box-none'} recorderTag={recorderTag}>
         {renderAttachmentContent()}
       </View>
     );
@@ -226,7 +243,14 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     return (
       <>
         {!isTop && !!toastHeight && renderAttachmentContent()}
-        <View animated useSafeArea style={toastStyle} onLayout={onLayout} pointerEvents={visible ? 'box-none' : 'none'}>
+        <View
+          animated
+          useSafeArea
+          style={toastStyle}
+          onLayout={onLayout}
+          pointerEvents={visible ? 'box-none' : 'none'}
+          recorderTag={recorderTag}
+        >
           {renderToastContent()}
         </View>
         {isTop && !!toastHeight && renderAttachmentContent()}
@@ -239,7 +263,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   }
 
   return (
-    <View key="toast" animated testID={testID} style={toastContainerStyle} pointerEvents={'box-none'}>
+    <View key="toast" animated testID={testID} style={toastContainerStyle} pointerEvents={'box-none'} recorderTag={recorderTag}>
       {renderToast()}
     </View>
   );

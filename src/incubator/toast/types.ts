@@ -2,6 +2,7 @@ import {ReactElement, ReactNode} from 'react';
 import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {ButtonProps} from '../../components/button';
 import {TextProps} from '../../components/text';
+import {RecorderProps} from '../../typings/recorderTypes';
 
 export enum ToastPresets {
   GENERAL = 'general',
@@ -10,7 +11,7 @@ export enum ToastPresets {
   OFFLINE = 'offline'
 }
 
-export interface ToastProps {
+export interface ToastProps extends RecorderProps {
   /**
    * Whether to show or hide the toast
    */

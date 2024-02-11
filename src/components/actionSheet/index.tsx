@@ -13,11 +13,12 @@ import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
 import {Dialog as IncubatorDialog, DialogProps as IncubatorDialogProps} from '../../incubator';
 import {LogService} from '../../services';
+import {RecorderProps} from '../../typings/recorderTypes';
 
 const VERTICAL_PADDING = 8;
 type ActionSheetOnOptionPress = (index: number) => void;
 
-type ActionSheetProps = {
+type ActionSheetProps = RecorderProps & {
   /**
    * Migrate to the Incubator.Dialog component
    */
@@ -110,6 +111,9 @@ type ActionSheetProps = {
  */
 class ActionSheet extends Component<ActionSheetProps> {
   static displayName = 'ActionSheet';
+  static defaultProps: Partial<ActionSheetProps> = {
+    recorderTag: 'unmask'
+  };
 
   constructor(props: ActionSheetProps) {
     super(props);
@@ -159,10 +163,12 @@ class ActionSheet extends Component<ActionSheetProps> {
   };
 
   renderIcon(iconSource: ImageSourcePropType) {
-    return <Image source={iconSource} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>;
+    const {recorderTag} = this.props;
+    return <Image source={iconSource} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}} recorderTag={recorderTag}/>;
   }
 
   renderAction(option: ButtonProps, index: number) {
+    const {recorderTag} = this.props;
     return (
       <ListItem
         style={{backgroundColor: 'transparent'}}
@@ -171,10 +177,11 @@ class ActionSheet extends Component<ActionSheetProps> {
         testID={option.testID}
         onPress={() => this.onOptionPress(index)}
         activeBackgroundColor={Colors.grey80}
+        recorderTag={recorderTag}
       >
-        <View row paddingL-16 flex centerV>
+        <View row paddingL-16 flex centerV recorderTag={recorderTag}>
           {this.handleRenderIcon(option)}
-          <Text text70 grey10 numberOfLines={1} style={option.labelStyle}>
+          <Text text70 grey10 numberOfLines={1} style={option.labelStyle} recorderTag={recorderTag}>
             {option.label}
           </Text>
         </View>
@@ -183,11 +190,11 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   renderActions() {
-    const {title, options, cancelButtonIndex, renderAction, optionsStyle} = this.props;
+    const {title, options, cancelButtonIndex, renderAction, optionsStyle, recorderTag} = this.props;
     const optionsToRender = _.filter(options, (_option, index) => index !== cancelButtonIndex);
 
     return (
-      <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, optionsStyle]}>
+      <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, optionsStyle]} recorderTag={recorderTag}>
         {_.isFunction(renderAction)
           ? optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress))
           : _.map(optionsToRender, this.renderAction)}
@@ -210,10 +217,10 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   renderSheet() {
-    const {renderTitle} = this.props;
+    const {renderTitle, recorderTag} = this.props;
     const {containerStyle} = this.props;
     return (
-      <View style={[styles.sheet, containerStyle]}>
+      <View style={[styles.sheet, containerStyle]} recorderTag={recorderTag}>
         {_.isFunction(renderTitle) ? renderTitle() : this.renderTitle()}
         {this.renderActions()}
       </View>
@@ -221,7 +228,7 @@ class ActionSheet extends Component<ActionSheetProps> {
   }
 
   renderOldDialog() {
-    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps} =
+    const {useNativeIOS, visible, onDismiss, dialogStyle, onModalDismissed, testID, useSafeArea, dialogProps, recorderTag} =
       this.props;
 
     if (Constants.isIOS && useNativeIOS) {
@@ -241,6 +248,7 @@ class ActionSheet extends Component<ActionSheetProps> {
         visible={visible}
         onDismiss={onDismiss}
         onDialogDismissed={onModalDismissed}
+        recorderTag={recorderTag}
       >
         {this.renderSheet()}
       </Dialog>
