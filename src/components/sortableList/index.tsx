@@ -24,7 +24,9 @@ function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableLi
     {});
 }
 
-const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>, ref?: ForwardedRef<FlatList<ItemT>>) => {
+type Props<ItemT extends SortableListItemProps> = SortableListProps<ItemT> & {ref?: ForwardedRef<FlatList<ItemT>>};
+
+const SortableList = <ItemT extends SortableListItemProps>(props: Props<ItemT>) => {
   const themeProps = useThemeProps(props, 'SortableList');
   const {data, onOrderChange, enableHaptic, scale, itemProps, horizontal, ...others} = themeProps;
 
@@ -80,7 +82,6 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     <GestureHandlerRootView>
       <SortableListContext.Provider value={context}>
         <FlatList
-          ref={ref}
           {...others}
           horizontal={horizontal}
           data={data}
@@ -92,4 +93,4 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
   );
 };
 
-export default forwardRef(SortableList) as <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT> & {ref?: ForwardedRef<FlatList<ItemT>>}) => React.ReactElement;
+export default SortableList;
