@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {map, mapKeys, filter, reduce} from 'lodash';
-import React, {useMemo, useCallback, forwardRef, ForwardedRef} from 'react';
+import React, {useMemo, useCallback, ForwardedRef} from 'react';
 import {FlatList, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -24,9 +24,8 @@ function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableLi
     {});
 }
 
-type Props<ItemT extends SortableListItemProps> = SortableListProps<ItemT> & {ref?: ForwardedRef<FlatList<ItemT>>};
 
-const SortableList = <ItemT extends SortableListItemProps>(props: Props<ItemT>) => {
+const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
   const themeProps = useThemeProps(props, 'SortableList');
   const {data, onOrderChange, enableHaptic, scale, itemProps, horizontal, ...others} = themeProps;
 
