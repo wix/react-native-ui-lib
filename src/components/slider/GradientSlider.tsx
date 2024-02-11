@@ -36,8 +36,8 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     ...others
   } = props;
 
-  const initialColor = useMemo<HSLA>(() => {
-    return _.isString(propsColors) ? Colors.HSLA(propsColors) : propsColors;
+  const initialColor = useMemo((): HSLA => {
+    return _.isString(propsColors) ? Colors.getHSL(propsColors) : propsColors;
   }, [propsColors]);
   const [color, setColor] = useState(initialColor);
   
@@ -171,4 +171,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
 GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
 // @ts-expect-error
-export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));
+export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(
+  // @ts-expect-error
+  forwardRef(asSliderGroupChild(forwardRef(GradientSlider)))
+);
