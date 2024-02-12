@@ -14,11 +14,12 @@ export const SectionsWheelPickerDriver = (props: ComponentProps & CustomSections
   const driver = useComponentDriver<SectionsWheelPickerProps>(others);
 
   let sectionsDrivers: (ReturnType<typeof WheelPickerDriver>)[];
+  const {renderTree} = props;
   if (customSectionTestIds) {
-    sectionsDrivers = customSectionTestIds.map(item => {
+    sectionsDrivers = customSectionTestIds.map(testID => {
       return WheelPickerDriver({
-        renderTree: props.renderTree,
-        testID: `${props.testID}.${item}`
+        renderTree,
+        testID
       });
     });
   } else {
