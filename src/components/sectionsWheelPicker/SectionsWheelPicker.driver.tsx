@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {WheelPickerDriver} from '../WheelPicker/WheelPicker.driver';
