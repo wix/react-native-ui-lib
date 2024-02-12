@@ -24,8 +24,8 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import DialogHeader from './DialogHeader';
-import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
-export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
+import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps} from './types';
+export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps};
 
 const THRESHOLD_VELOCITY = 750;
 
