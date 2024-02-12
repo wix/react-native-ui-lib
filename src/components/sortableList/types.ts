@@ -1,4 +1,5 @@
-import {FlatListProps} from 'react-native';
+import {ForwardedRef} from 'react';
+import {FlatListProps, FlatList} from 'react-native';
 import {SortableListContextType} from './SortableListContext';
 
 export interface SortableListItemProps {
@@ -30,4 +31,8 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
    * Extra props for the item
    */
   itemProps?: {margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}};
+  /**
+   * List forwarded ref.
+   */
+  listRef?: ForwardedRef<FlatList<ItemT>>
 }
