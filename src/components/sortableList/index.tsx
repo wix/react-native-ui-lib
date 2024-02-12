@@ -26,7 +26,7 @@ function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableLi
 
 const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
   const themeProps = useThemeProps(props, 'SortableList');
-  const {data, onOrderChange, enableHaptic, scale, itemProps, horizontal, ...others} = themeProps;
+  const {data, onOrderChange, enableHaptic, scale, itemProps, horizontal, listRef, ...others} = themeProps;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
   const lockedIds = useSharedValue<Dictionary<boolean>>(generateLockedIds(data));
@@ -75,12 +75,12 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
       scale
     };
   }, [data]);
-
   return (
     <GestureHandlerRootView>
       <SortableListContext.Provider value={context}>
         <FlatList
           {...others}
+          ref={listRef}
           horizontal={horizontal}
           data={data}
           CellRendererComponent={SortableListItem}

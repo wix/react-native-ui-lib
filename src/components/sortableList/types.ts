@@ -34,5 +34,5 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
   /**
    * List forwarded ref.
    */
-  ref?: ForwardedRef<FlatList<ItemT>>
+  listRef?: ForwardedRef<FlatList<ItemT>>
 }
