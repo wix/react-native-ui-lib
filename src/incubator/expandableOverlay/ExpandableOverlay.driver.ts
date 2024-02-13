@@ -9,7 +9,6 @@ export const ExpandableOverlayDriver = <Props extends ExpandableOverlayProps>(pr
   const {renderTree, testID} = props;
 
   const driver = usePressableDriver<Props>(useComponentDriver<Props>({renderTree, testID}));
-
   const isUsingDialog = !!renderTree.queryByTestId(`${testID}.overlay.modal`);
 
   const overlayDriver = (isUsingDialog ? DialogDriver : ModalDriver)({

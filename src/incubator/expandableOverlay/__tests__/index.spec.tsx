@@ -38,10 +38,9 @@ describe('ExpandableOverlay', () => {
     });
     it('should open dialog when pressed', () => {
       const {driver} = getDriver({useDialog: true});
-      expect(driver.getOverlay().exists()).toBeFalsy();
-      expect(driver.getOverlay().getModal().exists()).toBeTruthy();
+      expect(driver.getOverlay().getModal().isVisible()).toBeFalsy();
       driver.press();
-      expect(driver.getOverlay().exists()).toBeTruthy();
+      expect(driver.getOverlay().getModal().isVisible()).toBeTruthy();
     });
     const universe = 'Hello Universe';
     it(`should render ${helloWorld} on starting view and ${universe} in the dialog only after pressing`, () => {
