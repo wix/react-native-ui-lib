@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useCallback, useEffect, useState, useMemo} from 'react';
+import React, {useCallback, useEffect, useState, useMemo, useContext} from 'react';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
 import {Colors} from '../../style';
@@ -9,6 +9,7 @@ import {GradientSliderProps, GradientSliderTypes, HSLA} from './types';
 import Slider from './index';
 import {SliderContextProps} from './context/SliderContext';
 import asSliderGroupChild from './context/asSliderGroupChild';
+import {ColorPickerContext} from '../colorPicker/ColorPickerContext';
 
 type GradientSliderComponentProps<T> = {
   sliderContext: SliderContextProps;
@@ -40,7 +41,12 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     return _.isString(propsColors) ? Colors.getHSL(propsColors) : propsColors;
   }, [propsColors]);
   const [color, setColor] = useState(initialColor);
-  
+
+  const colorPickerContext = useContext(ColorPickerContext);
+
+  console.log(`Nitzan - colorPickerContext.value`, colorPickerContext.value.value.h);
+
+
   useEffect(() => {
     setColor(initialColor);
   }, [initialColor]);
@@ -173,5 +179,4 @@ GradientSlider.types = GradientSliderTypes;
 // @ts-expect-error
 export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(
   // @ts-expect-error
-  forwardRef(asSliderGroupChild(forwardRef(GradientSlider)))
-);
+  forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));

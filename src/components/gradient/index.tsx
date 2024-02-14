@@ -5,6 +5,7 @@ import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import Constants from '../../commons/Constants';
 import {Colors} from '../../style';
 import View from '../view';
+import { SharedValue } from 'react-native-reanimated';
 
 export enum GradientTypes {
   HUE = 'hue',
@@ -13,7 +14,7 @@ export enum GradientTypes {
 }
 
 export interface GradientProps {
-  color?: string | tinycolor.ColorFormats.HSLA;
+  color?: string | tinycolor.ColorFormats.HSLA | SharedValue<tinycolor.ColorFormats.HSL>;
   type?: GradientTypes | `${GradientTypes}`;
   numberOfSteps: number;
   style?: StyleProp<ViewStyle>;

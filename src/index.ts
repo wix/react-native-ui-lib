@@ -190,6 +190,8 @@ export {
   WheelPickerAlign
 } from './components/WheelPicker';
 
+export {default as MyColorPicker} from './components/colorPicker/ColorPickerContext';
+
 /* ===== TestKit ===== */
 // export {default as TextTestKit} from './components/text/Text.driver';
 // export {default as ImageTestKit} from './components/image/Image.driver';
