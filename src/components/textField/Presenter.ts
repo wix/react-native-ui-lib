@@ -16,7 +16,7 @@ export function getColorByState(color?: ColorType, context?: FieldContextType) {
       finalColor = color?.disabled;
     } else if (context?.readonly) {
       finalColor = color?.readonly;
-    } else if (!context?.isValid) {
+    } else if (!context?.isValid && context?.enableErrors) {
       finalColor = color?.error;
     } else if (context?.isFocused) {
       finalColor = color?.focus;

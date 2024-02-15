@@ -68,7 +68,7 @@ const TextField = (props: InternalTextFieldProps) => {
     trailingAccessory,
     bottomAccessory,
     // Validation
-    enableErrors, // TODO: rename to enableValidation
+    enableErrors,
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
     retainValidationSpace = true,
@@ -92,7 +92,8 @@ const TextField = (props: InternalTextFieldProps) => {
       disabled: others.editable === false,
       readonly,
       validateField,
-      checkValidity
+      checkValidity,
+      enableErrors
     };
   }, [fieldState, others.editable, readonly, validateField, checkValidity]);
 
