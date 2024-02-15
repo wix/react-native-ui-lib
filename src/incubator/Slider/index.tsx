@@ -157,7 +157,7 @@ const SHADOW_RADIUS = 4;
 const GAP = Spacings.s2;
 
 const Slider = React.memo((props: Props) => {
-  const themeProps = useThemeProps(props, 'IncubatorSlider');
+  const themeProps = useThemeProps(props, 'Incubator.Slider');
   const {
     forwardedRef,
     useRange,
@@ -412,6 +412,7 @@ const Slider = React.memo((props: Props) => {
   );
 });
 
+Slider.displayName = 'Incubator.Slider';
 export default forwardRef<SliderProps, ComponentStatics<typeof Slider>, SliderRef>(Slider);
 
 const styles = StyleSheet.create({
