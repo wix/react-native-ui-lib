@@ -18,7 +18,7 @@ import {
   BaseComponentInjectedProps,
   MarginModifiers
 } from '../../commons/new';
-import {RecorderProps} from '../../../typings/recorderTypes';
+import {RecorderProps} from '../../typings/recorderTypes';
 import {getAsset, isSvg} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
@@ -207,6 +207,7 @@ class Image extends PureComponent<Props, State> {
   renderImage = (useImageInsideContainer: boolean) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
+
     const {
       tintColor,
       style,

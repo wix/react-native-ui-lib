@@ -103,6 +103,7 @@ export interface TabControllerItemProps {
 interface Props extends TabControllerItemProps {
   index: number;
   targetPage: any; // TODO: typescript?
+  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   currentPage: Reanimated.Adaptable<number>;
   onLayout?: (event: LayoutChangeEvent, index: number) => void;
 }
@@ -138,8 +139,8 @@ export default function TabBarItem({
   const itemWidth = useRef(props.width);
   const isPressed = useSharedValue(false);
   // JSON.parse(JSON.stringify is due to an issue with reanimated
-  const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(labelStyle)));
-  const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(selectedLabelStyle)));
+  const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(labelStyle))));
+  const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(selectedLabelStyle))));
 
   // NOTE: We clone these color values in refs because they might contain a PlatformColor value
   //       which throws an error (see https://github.com/software-mansion/react-native-reanimated/issues/3164)

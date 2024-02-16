@@ -5,4 +5,5 @@ export function registerScreens(registrar) {
   registrar('unicorn.style.TypographyScreen', () => require('./TypographyScreen').default);
   registrar('unicorn.style.ShadowsScreen', () => require('./ShadowsScreen').default);
   registrar('unicorn.style.SpacingsScreen', () => require('./SpacingsScreen').default);
+  registrar('unicorn.style.RTLScreen', () => require('./RTLScreen').default);
 }

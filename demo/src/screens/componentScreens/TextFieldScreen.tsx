@@ -56,12 +56,11 @@ export default class TextFieldScreen extends Component {
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-page>
           <Text h1>TextField</Text>
-          <Text h3 blue50 marginV-s4>
+          <Text h3 marginV-s4>
             Default
           </Text>
           <TextField ref={this.input} label="Name" placeholder="Enter full name"/>
-
-          <Text h3 blue50 marginV-s4>
+          <Text h3 marginV-s4>
             Static vs Floating Placeholder
           </Text>
           <View row bottom>
@@ -83,7 +82,7 @@ export default class TextFieldScreen extends Component {
               fieldStyle={styles.withUnderline}
             />
           </View>
-          <Text h3 blue50 marginV-s4>
+          <Text h3 marginV-s4>
             Accessories
           </Text>
 
@@ -124,7 +123,7 @@ export default class TextFieldScreen extends Component {
           />
 
           <View row marginV-s4 spread>
-            <Text h3 blue50>
+            <Text h3>
               Validation
             </Text>
 
@@ -180,7 +179,7 @@ export default class TextFieldScreen extends Component {
           </View>
 
           <View row centerV spread>
-            <Text h3 blue50 marginV-s4>
+            <Text h3 marginV-s4>
               Colors By State
             </Text>
             <View row>
@@ -217,7 +216,7 @@ export default class TextFieldScreen extends Component {
           />
 
           <View row spread centerV>
-            <Text h3 blue50 marginV-s4>
+            <Text h3 marginV-s4>
               Custom Field Style
             </Text>
             <Button
@@ -238,7 +237,7 @@ export default class TextFieldScreen extends Component {
             readonly={isReadonly}
           />
 
-          <Text h3 blue50 marginV-s4>
+          <Text h3 marginV-s4>
             Char Counter
           </Text>
 
@@ -256,7 +255,7 @@ export default class TextFieldScreen extends Component {
             maxLength={20}
             fieldStyle={styles.withFrame}
           />
-          <Text h3 blue50 marginV-s4>
+          <Text h3 marginV-s4>
             Hint
           </Text>
           <TextField
@@ -265,7 +264,7 @@ export default class TextFieldScreen extends Component {
             hint="1-6 chars including numeric chars"
             fieldStyle={styles.withUnderline}
           />
-          <Text h3 blue50 marginV-s4>
+          <Text h3 marginV-s4>
             Formatter
           </Text>
           <TextField
@@ -285,7 +284,7 @@ export default class TextFieldScreen extends Component {
             fieldStyle={styles.withUnderline}
           />
 
-          <Text h3 blue50 marginV-s4>
+          <Text h3 marginV-s4>
             Custom Alignments
           </Text>
 

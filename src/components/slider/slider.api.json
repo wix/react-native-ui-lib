@@ -33,7 +33,7 @@
     },
     {"name": "maximumTrackTintColor", "type": "string", "description": "The track color"},
     {
-      "name": "renderTrack?",
+      "name": "renderTrack",
       "type": "() => ReactElement | ReactElement[]",
       "description": "Custom render instead of rendering the track"
     },

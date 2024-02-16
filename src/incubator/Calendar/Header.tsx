@@ -1,5 +1,6 @@
+import throttle from 'lodash/throttle';
 import React, {useContext, useCallback} from 'react';
-import {StyleSheet, TextInput, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, TextInput, Text, LayoutChangeEvent} from 'react-native';
 import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import {Colors, Typography} from 'style';
 import View from '../../components/view';
@@ -25,24 +26,25 @@ const Header = (props: HeaderProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onLeftArrowPress = useCallback(() => {
+  const onLeftArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(-1), UpdateSource.MONTH_ARROW);
-  }, [setDate, getNewDate]);
+  }, 300), [setDate, getNewDate]);
 
-  const onRightArrowPress = useCallback(() => {
+  const onRightArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(1), UpdateSource.MONTH_ARROW);
-  }, [setDate, getNewDate]);
+  }, 300), [setDate, getNewDate]);
 
-  const animatedProps = useAnimatedProps(() => {
-    let m = month!;
-    let y = year;
-    if (staticHeader) {
-      const dateObject = getDateObject(selectedDate.value);
-      m = dateObject.month;
-      y = dateObject.year;
-    }
+  const getTitle = useCallback((date: number) => {
+    'worklet';
+    const dateObject = getDateObject(date);
+    const m = dateObject.month;
+    const y = dateObject.year;
+    return getMonthForIndex(m) + ` ${y}`;
+  }, []);
+
+  const animatedProps = useAnimatedProps(() => { // get called only on value update
     return {
-      text: getMonthForIndex(m) + ` ${y}`
+      text: getTitle(selectedDate.value)
     };
   });
 
@@ -51,8 +53,18 @@ const Header = (props: HeaderProps) => {
   }, [setHeaderHeight]);
 
   const renderTitle = () => {
-    // @ts-expect-error
-    return <AnimatedTextInput {...{animatedProps}} editable={false} style={styles.title}/>;
+    if (!staticHeader) {
+      const title = getMonthForIndex(month!) + ` ${year}`;
+      return <Text style={styles.title}>{title}</Text>;
+    }
+    return (
+      <AnimatedTextInput 
+        value={getTitle(selectedDate.value)} // setting initial value
+        {...{animatedProps}}
+        editable={false}
+        // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
+        style={styles.title}
+      />);
   };
 
   const renderArrow = (source: number, onPress: () => void) => {

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent, ReactElement} from 'react';
+import React, {PureComponent} from 'react';
 import {
   StyleSheet,
   PanResponder,
@@ -14,12 +14,13 @@ import {
   AccessibilityRole,
   View as RNView
 } from 'react-native';
-import {Constants} from '../../commons/new';
-import {Colors} from '../../style';
-import IncubatorSlider from '../../incubator/Slider';
-import View from '../view';
-import Thumb, {ThumbProps} from './Thumb';
+import {Constants, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
+import {Colors} from '../../style';
+import View from '../view';
+import IncubatorSlider from '../../incubator/Slider';
+import {SliderProps} from './types';
+import Thumb from './Thumb';
 
 const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;
@@ -29,103 +30,7 @@ const ACTIVE_COLOR = Colors.$backgroundPrimaryHeavy;
 const INACTIVE_COLOR = Colors.$backgroundNeutralMedium;
 const MIN_RANGE_GAP = 4;
 
-export type SliderOnValueChange = (value: number) => void;
-export type SliderOnRangeChange = (values: {min: number, max: number}) => void;
-
-export type SliderProps = Omit<ThumbProps, 'ref'> & {
-  /**
-   * Initial value
-   */
-  value?: number;
-  /**
-   * Track minimum value
-   */
-  minimumValue?: number;
-  /**
-   * Track maximum value
-   */
-  maximumValue?: number;
-  /**
-   * Initial minimum value (when useRange is true)
-   */
-  initialMinimumValue?: number;
-  /**
-   * Initial maximum value (when useRange is true)
-   */
-  initialMaximumValue?: number;
-  /**
-   * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
-   */
-  step?: number;
-  /**
-   * The color used for the track from minimum value to current value
-   */
-  minimumTrackTintColor?: string;
-  /**
-   * The track color
-   */
-  maximumTrackTintColor?: string;
-  /**
-   * Custom render instead of rendering the track
-   */
-  renderTrack?: () => ReactElement | ReactElement[];
-  /**
-   * Callback for onValueChange
-   */
-  onValueChange?: SliderOnValueChange;
-  /**
-   * Callback that notifies about slider seeking is started
-   */
-  onSeekStart?: () => void;
-  /**
-   * Callback that notifies about slider seeking is finished
-   */
-  onSeekEnd?: () => void;
-  /**
-   * Callback that notifies when the reset function was invoked
-   */
-  onReset?: () => void;
-  /**
-   * The container style
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * The track style
-   */
-  trackStyle?: StyleProp<ViewStyle>;
-  /**
-   * If true the Slider will be disabled and will appear in disabled color
-   */
-  disabled?: boolean;
-  /**
-   * If true the Slider will display a second thumb for the min value
-   */
-  useRange?: boolean;
-  /**
-   * If true the min and max thumbs will not overlap
-   */
-  useGap?: boolean;
-  /**
-   * Callback for onRangeChange. Returns values object with the min and max values
-   */
-  onRangeChange?: SliderOnRangeChange;
-  /**
-   * If true the Slider will stay in LTR mode even if the app is on RTL mode
-   */
-  disableRTL?: boolean;
-  /**
-   * If true the component will have accessibility features enabled
-   */
-  accessible?: boolean;
-  /**
-   * The slider's test identifier
-   */
-  testID?: string;
-  /**
-   * Whether to use the new Slider implementation using Reanimated
-   */
-  migrate?: boolean;
-} & typeof defaultProps;
+type InternalSliderProps = SliderProps & typeof defaultProps;
 
 interface State {
   containerSize: Measurements;
@@ -142,7 +47,7 @@ type Measurements = {
 
 type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: StyleProp<number>};
 
-type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: StyleProp<number>, left?: StyleProp<number>};
+type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: StyleProp<number>; left?: StyleProp<number>};
 
 type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
 
@@ -160,7 +65,7 @@ const defaultProps = {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true
  */
-export default class Slider extends PureComponent<SliderProps, State> {
+class Slider extends PureComponent<InternalSliderProps, State> {
   static displayName = 'Slider';
 
   static defaultProps = defaultProps;
@@ -193,7 +98,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   private didMount: boolean;
 
-  constructor(props: SliderProps) {
+  constructor(props: InternalSliderProps) {
     super(props);
 
     this.activeThumbRef = this.thumb;
@@ -220,7 +125,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
     });
   }
 
-  reset() { // NOTE: used with ref
+  reset() {
+    // NOTE: used with ref
     this.lastValue = this.initialValue;
     this.lastMinValue = this.minInitialValue;
     this.lastDx = 0;
@@ -243,11 +149,12 @@ export default class Slider extends PureComponent<SliderProps, State> {
     return useRange ? initialMaximumValue || maximumValue : value;
   }
 
-  checkProps(props: SliderProps) {
-    if (props.minimumValue >= props.maximumValue) {
+  checkProps(props: InternalSliderProps) {
+    const {useRange, minimumValue, maximumValue, value} = props;
+    if (minimumValue >= maximumValue) {
       console.warn('Slider minimumValue must be lower than maximumValue');
     }
-    if (props.value < props.minimumValue || props.value > props.maximumValue) {
+    if (!useRange && (value < minimumValue || value > maximumValue)) {
       console.warn('Slider value is not in range');
     }
   }
@@ -398,8 +305,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
         if (useRange) {
           const minThumbPosition = this._minThumbStyles?.left as number;
-          if (useGap && left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP
-            || !useGap && left >= minThumbPosition) {
+          if (
+            (useGap && left > minThumbPosition + thumbSize.width + MIN_RANGE_GAP) ||
+            (!useGap && left >= minThumbPosition)
+          ) {
             this._thumbStyles.left = left;
 
             const width = left - minThumbPosition;
@@ -432,8 +341,10 @@ export default class Slider extends PureComponent<SliderProps, State> {
       const left = trackSize.width === 0 ? _x : (_x * nonOverlappingTrackWidth) / trackSize.width; // do not render above prefix\suffix icon\text
 
       const maxThumbPosition = this._thumbStyles?.left as number;
-      if (useGap && left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP
-        || !useGap && left <= maxThumbPosition) {
+      if (
+        (useGap && left < maxThumbPosition - thumbSize.width - MIN_RANGE_GAP) ||
+        (!useGap && left <= maxThumbPosition)
+      ) {
         this._minThumbStyles.left = left;
 
         this._minTrackStyles.width = maxThumbPosition - x;
@@ -482,7 +393,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
   get disableRTL() {
     const {disableRTL, useRange} = this.props;
-    if (useRange) { // block forceRTL on range slider
+    if (useRange) {
+      // block forceRTL on range slider
       return false;
     }
     return disableRTL;
@@ -551,7 +463,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
 
     let values = {min: this.lastMinValue, max: this.lastValue};
 
-    if (Constants.isRTL && this.props.disableRTL) { // forceRTL for range slider
+    if (Constants.isRTL && this.props.disableRTL) {
+      // forceRTL for range slider
       const {maximumValue} = this.props;
       values = {min: maximumValue - this.lastValue, max: maximumValue - this.lastMinValue};
     }
@@ -692,40 +605,35 @@ export default class Slider extends PureComponent<SliderProps, State> {
       maximumTrackTintColor = DEFAULT_COLOR
     } = this.props;
 
-    return (
-      _.isFunction(renderTrack) ? (
+    return _.isFunction(renderTrack) ? (
+      <View style={[styles.track, {backgroundColor: maximumTrackTintColor}, trackStyle]} onLayout={this.onTrackLayout}>
+        {renderTrack()}
+      </View>
+    ) : (
+      <View>
         <View
-          style={[styles.track, {backgroundColor: maximumTrackTintColor}, trackStyle]}
+          style={[
+            styles.track,
+            trackStyle,
+            {
+              backgroundColor: disabled ? INACTIVE_COLOR : maximumTrackTintColor
+            }
+          ]}
           onLayout={this.onTrackLayout}
-        >
-          {renderTrack()}
-        </View>
-      ) : (
-        <View>
-          <View
-            style={[
-              styles.track,
-              trackStyle,
-              {
-                backgroundColor: disabled ? INACTIVE_COLOR : maximumTrackTintColor
-              }
-            ]}
-            onLayout={this.onTrackLayout}
-          />
-          <View
-            ref={this.minTrack}
-            style={[
-              styles.track,
-              trackStyle,
-              styles.minimumTrack,
-              this.shouldForceLTR && styles.trackDisableRTL,
-              {
-                backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
-              }
-            ]}
-          />
-        </View>
-      )
+        />
+        <View
+          ref={this.minTrack}
+          style={[
+            styles.track,
+            trackStyle,
+            styles.minimumTrack,
+            this.shouldForceLTR && styles.trackDisableRTL,
+            {
+              backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
+            }
+          ]}
+        />
+      </View>
     );
   }
 
@@ -735,11 +643,7 @@ export default class Slider extends PureComponent<SliderProps, State> {
       if (useGap) {
         return this.renderMinThumb();
       }
-      return (
-        <View style={{zIndex: this.isDefaultThumbActive() ? 0 : 1, top: '-50%'}}>
-          {this.renderMinThumb()}
-        </View>
-      );
+      return <View style={{zIndex: this.isDefaultThumbActive() ? 0 : 1, top: '-50%'}}>{this.renderMinThumb()}</View>;
     }
   }
 
@@ -766,6 +670,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
     );
   }
 }
+
+export default asBaseComponent<SliderProps>(Slider);
 
 const styles = StyleSheet.create({
   container: {

@@ -1,6 +1,13 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated, StyleProp} from 'react-native';
+import {
+  Text as RNText,
+  StyleSheet,
+  TextProps as RNTextProps,
+  TextStyle,
+  Animated,
+  StyleProp
+} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -12,7 +19,7 @@ import {
   FlexModifiers,
   Constants
 } from '../../commons/new';
-import {RecorderProps} from '../../../typings/recorderTypes';
+import {RecorderProps} from '../../typings/recorderTypes';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
 
@@ -39,7 +46,7 @@ export interface HighlightStringProps {
 
 export type HighlightString = string | HighlightStringProps;
 
-export type TextProps = RNTextProps &
+export type TextProps = Omit<RNTextProps, 'style'> &
   TypographyModifiers &
   ColorsModifiers &
   MarginModifiers &
@@ -116,7 +123,7 @@ class Text extends PureComponent<PropsTypes> {
             return (
               <RNText
                 key={index}
-                style={text.shouldHighlight ? (text.style ?? [styles.highlight, highlightStyle]) : styles.notHighlight}
+                style={text.shouldHighlight ? text.style ?? [styles.highlight, highlightStyle] : styles.notHighlight}
                 onPress={text.onPress}
                 testID={text.testID}
               >
@@ -184,8 +191,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
     color: Colors.$textDefault,
-    // textAlign: 'left'
-    writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR // iOS only
+    ...(Constants.isIOS
+      ? {
+        writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR
+      }
+      : {
+        textAlign: 'left'
+      })
   },
   centered: {
     textAlign: 'center'

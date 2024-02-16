@@ -89,6 +89,7 @@ export type BadgeProps = ViewProps &
      * Custom element to render instead of an icon
      */
     customElement?: JSX.Element;
+    key?: string | number;
   };
 
 /**
@@ -284,7 +285,7 @@ function createStyles(props: BadgeProps) {
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: (!props.icon || props.customElement) ? Colors.$backgroundGeneralHeavy : undefined,
+      backgroundColor: !props.icon || props.customElement ? Colors.$backgroundGeneralHeavy : undefined,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'

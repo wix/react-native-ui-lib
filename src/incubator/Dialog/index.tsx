@@ -24,10 +24,9 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import DialogHeader from './DialogHeader';
-import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
-export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
+import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps} from './types';
+export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps};
 
-const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.$backgroundInverted, 0.3);
 const THRESHOLD_VELOCITY = 750;
 
 export interface DialogStatics {
@@ -55,7 +54,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     testID,
     children
   } = props;
-  const {overlayBackgroundColor = DEFAULT_OVERLAY_BACKGROUND_COLOR, ...otherModalProps} = modalProps;
+  const {overlayBackgroundColor = Colors.rgba(Colors.$backgroundInverted, 0.3), ...otherModalProps} = modalProps;
 
   const visibility = useSharedValue(0); // value between 0 (closed) and 1 (open)
   const initialTranslation = useSharedValue(0);
@@ -125,6 +124,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     if (isVertical) {
       return {
@@ -140,6 +140,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const style = useMemo(() => {
     return [
       styles.defaultDialogStyle,
+      {backgroundColor: Colors.$backgroundDefault},
       containerStyle,
       animatedStyle,
       width ? {width} : undefined,
@@ -199,6 +200,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
 
   const renderDialog = () => (
     <GestureDetector gesture={panGesture}>
+      {/* @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881) */}
       <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
         {headerProps && <DialogHeader {...headerProps}/>}
         {children}
@@ -248,7 +250,6 @@ export default asBaseComponent<DialogProps, DialogStatics>(_Dialog);
 const styles = StyleSheet.create({
   defaultDialogStyle: {
     marginBottom: Spacings.s5,
-    backgroundColor: Colors.$backgroundDefault,
     maxHeight: '60%',
     width: 250,
     borderRadius: BorderRadiuses.br20,

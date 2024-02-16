@@ -2,7 +2,7 @@ import React from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
 import {Scheme, SchemeChangeListener, ThemeManager} from '../style';
-import forwardRef from './forwardRef';
+import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
 import UIComponent from './UIComponent';
 
 export interface BaseComponentInjectedProps {
@@ -21,9 +21,9 @@ export interface AsBaseComponentOptions {
 const EMPTY_MODIFIERS = {};
 const colorScheme = Scheme.getSchemeType();
 
-function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>,
-  options: AsBaseComponentOptions = {}): React.ComponentClass<PROPS & ThemeComponent> & STATICS {
-  class BaseComponent extends UIComponent {
+function asBaseComponent<PROPS, STATICS = {}, RefInterface = any>(WrappedComponent: React.ComponentType<any>,
+  options: AsBaseComponentOptions = {}) {
+  class BaseComponent extends UIComponent<PROPS & ForwardRefInjectedProps<RefInterface>> {
     static displayName: string | undefined;
     static propTypes: any;
     static defaultProps: any;
@@ -41,7 +41,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       Scheme.removeChangeListener(this.appearanceListener);
     }
 
-    appearanceListener: SchemeChangeListener = (colorScheme) => {
+    appearanceListener: SchemeChangeListener = colorScheme => {
       // iOS 13 and above will trigger this call with the wrong colorScheme value. So just ignore returned colorScheme for now
       // https://github.com/facebook/react-native/issues/28525
       // this.setState({colorScheme: Appearance.getColorScheme()});
@@ -85,8 +85,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
   if (ThemeContext) {
     BaseComponent.contextType = ThemeContext;
   }
-
-  return forwardRef(BaseComponent) as any;
+  return forwardRef<PROPS, STATICS, RefInterface>(BaseComponent);
 }
 
 export default asBaseComponent;

@@ -112,6 +112,7 @@ export default class TextFieldScreen extends Component {
           useDialog
           expandableContent={this.renderPickerContent()}
           dialogProps={{bottom: true, onDismiss: () => console.warn('Dialog is dismissed')}}
+          migrateDialog
         >
           {this.renderColorRow(selectedColor)}
         </Incubator.ExpandableOverlay>

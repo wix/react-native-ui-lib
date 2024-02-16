@@ -1,10 +1,16 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
+import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
-import {RecorderProps} from '../../../typings/recorderTypes';
+import type {RecorderProps} from '../../typings/recorderTypes';
 
-export interface ViewProps extends Omit<RNViewProps, 'style'>, ThemeComponent, ContainerModifiers, RecorderProps {
+/**
+ * Extra props when using reanimated (only non experimental props)
+ */
+type ReanimatedProps = Partial<Pick<RNReanimatedProps<object>, 'entering' | 'exiting' | 'layout'>>;
+
+export interface ViewProps extends Omit<RNViewProps, 'style'>, ReanimatedProps, ContainerModifiers, RecorderProps {
   /**
    * If true, will render as SafeAreaView
    */
@@ -47,7 +53,8 @@ const modifiersOptions = {
   margins: true,
   alignments: true,
   flex: true,
-  position: true
+  position: true,
+  gap: true
 };
 
 /**
@@ -85,7 +92,8 @@ function View(props: ViewProps, ref: any) {
     margins,
     alignments,
     flexStyle,
-    positionStyle
+    positionStyle,
+    gap
   } = useModifiers(themeProps, modifiersOptions);
   const [ready, setReady] = useState(!renderDelay);
 
@@ -119,6 +127,9 @@ function View(props: ViewProps, ref: any) {
       borderRadius && {
         borderRadius
       },
+      gap && {
+        gap
+      },
       flexStyle,
       positionStyle,
       paddings,
@@ -135,6 +146,7 @@ function View(props: ViewProps, ref: any) {
     paddings,
     margins,
     alignments,
+    gap,
     style
   ]);
 

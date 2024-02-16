@@ -36,6 +36,14 @@ export interface CheckboxProps extends TouchableOpacityProps {
    */
   onValueChange?: (value: boolean) => void;
   /**
+   * Whether the checkbox is required
+   */
+  required?: boolean;
+  /** 
+   * Callback for when field validity has changed (only after invoking validate())
+   */
+  onChangeValidity?: (isValid?: boolean) => void;
+  /**
    * Whether the checkbox should be disabled
    */
   disabled?: boolean;
@@ -83,10 +91,20 @@ export interface CheckboxProps extends TouchableOpacityProps {
    * Additional styling for checkbox and label container
    */
   containerStyle?: StyleProp<ViewStyle>;
+  indeterminate?: boolean;
 }
+
+interface CheckboxMethods {
+  validate: () => void;
+  isValid: () => boolean;
+}
+
+export type CheckboxRef = Checkbox & CheckboxMethods;
 
 interface CheckboxState {
   isChecked: Animated.Value;
+  showError?: boolean;
+  isValid?: boolean;
 }
 
 /**
@@ -121,8 +139,12 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   constructor(props: CheckboxProps) {
     super(props);
 
+    const {value = false, required} = props;
+
     this.state = {
-      isChecked: new Animated.Value(this.props.value ? 1 : 0)
+      isChecked: new Animated.Value(value ? 1 : 0),
+      showError: false,
+      isValid: !required || value
     };
 
     this.styles = createStyles(props);
@@ -140,10 +162,16 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     };
   }
 
+  validationState = false;
+
   componentDidUpdate(prevProps: CheckboxProps) {
     const {value} = this.props;
+
     if (prevProps.value !== value) {
       this.animateCheckbox(value);
+      if (value !== undefined) {
+        this.setValidation(value);
+      }
     }
   }
 
@@ -170,11 +198,23 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     }).start();
   }
 
-  onPress = () => {
-    const {disabled} = this.props;
+  setValidation(newValue: boolean) {
+    const {required, onChangeValidity} = this.props;
+    if (required) {
+      const error = required && !newValue;
+      this.setState({showError: this.validationState ? error : false, isValid: !error}, () => {
+        onChangeValidity?.(this.state.isValid);
+      });
+    }
+  }
 
+  onPress = () => {
+    const {disabled, value, onValueChange} = this.props;
+    
     if (!disabled) {
-      this.props.onValueChange?.(!this.props.value);
+      const newValue = !value;
+      onValueChange?.(newValue);
+      this.setValidation(newValue);
     }
   };
 
@@ -198,14 +238,21 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   };
 
   getBorderStyle() {
-    const borderColor = {borderColor: this.getColor()};
+    const borderColor = {borderColor: this.state.showError ? Colors.$outlineDanger : this.getColor()};
     const borderStyle = [this.styles.container, {borderWidth: DEFAULT_BORDER_WIDTH}, borderColor];
 
     return borderStyle;
   }
 
+  getLabelStyle = () => {
+    return {
+      color: this.props.disabled ? Colors.$textDisabled : 
+        this.state.showError ? Colors.$textDangerLight : Colors.$textDefault
+    };
+  };
+
   renderCheckbox() {
-    const {selectedIcon, label, testID, style, containerStyle, ...others} = this.props;
+    const {selectedIcon, label, testID, style, containerStyle, indeterminate, ...others} = this.props;
     return (
       //@ts-ignore
       <TouchableOpacity
@@ -226,7 +273,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
           >
             <AnimatedIcon
               style={[this.styles.selectedIcon, {transform: this.animationStyle.transform}]}
-              source={selectedIcon || Assets.icons.checkSmall}
+              source={indeterminate ? Assets.icons.minusSmall : selectedIcon || Assets.icons.checkSmall}
               testID={`${testID}.selected`}
               tintColor={this.getTintColor()}
             />
@@ -237,11 +284,12 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   render() {
-    const {label, labelStyle, containerStyle, labelProps} = this.props;
+    const {label, labelStyle, containerStyle, labelProps, testID} = this.props;
+    
     return label ? (
       <View row centerV style={containerStyle}>
         {this.renderCheckbox()}
-        <Text flexS style={[this.styles.checkboxLabel, labelStyle]} recorderTag={'unmask'} {...labelProps} onPress={this.onPress}>
+        <Text flexS style={[this.styles.checkboxLabel, this.getLabelStyle(), labelStyle]} recorderTag={'unmask'} {...labelProps} onPress={this.onPress} testID={`${testID}.label`}>
           {label}
         </Text>
       </View>
@@ -249,6 +297,17 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
       this.renderCheckbox()
     );
   }
+
+  validate = () => {
+    const {value, required} = this.props;
+    const error = required && !value;
+    this.validationState = true; 
+    this.setState({showError: error, isValid: !error});
+  };
+
+  isValid = () => {
+    return this.state.isValid;
+  };
 }
 
 function createStyles(props: CheckboxProps) {
@@ -275,8 +334,7 @@ function createStyles(props: CheckboxProps) {
     },
     checkboxLabel: {
       marginLeft: Spacings.s3,
-      alignSelf: 'center',
-      color: Colors.$textDefault
+      alignSelf: 'center'
     }
   });
 }

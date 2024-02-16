@@ -8,7 +8,6 @@ const useCombinedRefs = (...refs: React.Ref<any>[]) => {
       if (!ref) {
         return;
       }
-
       if (typeof ref === 'function') {
         ref(targetRef.current);
       } else {

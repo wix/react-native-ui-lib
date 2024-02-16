@@ -23,6 +23,7 @@ import {WheelPickerAlign} from './types';
 export {WheelPickerAlign};
 
 const AnimatedFlatList = Animated.createAnimatedComponent<FlatListProps<ItemProps>>(FlatList);
+export const ITEM_HEIGHT = 44;
 
 export interface WheelPickerProps {
   /**
@@ -101,7 +102,7 @@ export interface WheelPickerProps {
 
 const WheelPicker = ({
   items: propItems,
-  itemHeight = 44,
+  itemHeight = ITEM_HEIGHT,
   numberOfVisibleRows = 5,
   activeTextColor = Colors.$textPrimary,
   inactiveTextColor,
@@ -155,6 +156,11 @@ const WheelPicker = ({
   }, [items]);
 
   useEffect(() => {
+    //This effect should replace the onLyout function in the flatlist, should happen only once
+    scrollToIndex(currentIndex, true);
+  }, []);
+
+  useEffect(() => {
     // This effect making sure to reset index if initialValue has changed
     !isUndefined(initialValue) && scrollToIndex(currentIndex, true);
   }, [currentIndex]);
@@ -200,10 +206,6 @@ const WheelPicker = ({
     setTimeout(() => scrollToOffset(index, animated), 100);
   };
 
-  const scrollToPassedIndex = useCallback(() => {
-    scrollToIndex(currentIndex, false);
-  }, []);
-
   const selectItem = useCallback((index: number) => {
     scrollToIndex(index, true);
   },
@@ -231,6 +233,7 @@ const WheelPicker = ({
         activeColor={activeTextColor}
         inactiveColor={inactiveTextColor}
         style={textStyle}
+        testID={`${testID}.item_${index}`}
         {...item}
         disableRTL={shouldDisableRTL}
         fakeLabel={label}
@@ -238,7 +241,6 @@ const WheelPicker = ({
         fakeLabelProps={fakeLabelProps}
         centerH={!label}
         onSelect={selectItem}
-        testID={`${testID}.item_${index}`}
       />
     );
   },
@@ -295,7 +297,14 @@ const WheelPicker = ({
       // @ts-expect-error
       <View style={labelContainerStyle} width={flatListWidth} pointerEvents="none">
         <View style={labelInnerContainerStyle} centerV pointerEvents="none">
-          <Text {...labelMargins} text80M {...labelProps} color={activeTextColor} style={labelStyle}>
+          <Text
+            {...labelMargins}
+            text80M
+            {...labelProps}
+            color={activeTextColor}
+            style={labelStyle}
+            testID={`${testID}.label`}
+          >
             {label}
           </Text>
         </View>
@@ -309,7 +318,8 @@ const WheelPicker = ({
     label,
     labelProps,
     activeTextColor,
-    labelStyle
+    labelStyle,
+    testID
   ]);
 
   const fader = useMemo(() => (position: FaderPosition) => {
@@ -342,7 +352,6 @@ const WheelPicker = ({
             onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
-            onLayout={scrollToPassedIndex}
             // @ts-ignore
             ref={scrollView}
             // @ts-expect-error

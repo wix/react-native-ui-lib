@@ -6,11 +6,12 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent
 } from 'react-native';
+import {ScrollView as GestureScrollView} from 'react-native-gesture-handler';
 import Fader, {FaderProps} from '../fader';
 import useScrollEnabler from '../../hooks/useScrollEnabler';
 import useScrollReached from '../../hooks/useScrollReached';
 import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
-import {ScrollView as GestureScrollView} from 'react-native-gesture-handler';
+import {ComponentStatics} from '../../typings/common';
 
 export type FadedScrollViewProps = ScrollViewProps & {
   /**
@@ -37,7 +38,7 @@ export type FadedScrollViewProps = ScrollViewProps & {
 };
 
 type Props = FadedScrollViewProps & ForwardRefInjectedProps;
-interface Statics {
+export interface FadedScrollViewRef {
   scrollTo(
     y?: number | {x?: number | undefined; y?: number | undefined; animated?: boolean | undefined},
     x?: number,
@@ -139,5 +140,4 @@ const FadedScrollView = (props: Props) => {
 };
 
 FadedScrollView.displayName = 'IGNORE';
-// @ts-expect-error
-export default forwardRef<FadedScrollViewProps, Statics>(FadedScrollView);
+export default forwardRef<FadedScrollViewProps, ComponentStatics<FadedScrollViewProps>, FadedScrollViewRef>(FadedScrollView);

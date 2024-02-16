@@ -20,7 +20,7 @@ export type FaderProps = Pick<ImageProps, 'supportRTL'> & {
   /**
    * The position of the fader (the image is different), defaults to Fader.position.END
    */
-  position?: FaderPosition;
+  position?: FaderPosition | `${FaderPosition}`;
   /**
    * Set to change from the default size (50) of the fade view.
    */

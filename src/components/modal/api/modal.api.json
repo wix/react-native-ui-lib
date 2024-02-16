@@ -16,7 +16,7 @@
     {
       "name": "blurView",
       "type": "JSX.Element",
-      "description": "A custom view to use as a BlueView instead of the default one"
+      "description": "A custom view to use as a BlurView instead of the default one"
     },
     {
       "name": "onBackgroundPress",

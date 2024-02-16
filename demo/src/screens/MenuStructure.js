@@ -7,7 +7,8 @@ export const navigationData = {
       {title: 'Dark Mode', tags: 'dark mode colors', screen: 'unicorn.style.DarkModeScreen'},
       {title: 'Shadows (iOS)', tags: 'shadow', screen: 'unicorn.style.ShadowsScreen'},
       {title: 'Spacings', tags: 'space margins paddings gutter', screen: 'unicorn.style.SpacingsScreen'},
-      {title: 'Typography', tags: 'fonts text', screen: 'unicorn.style.TypographyScreen'}
+      {title: 'Typography', tags: 'fonts text', screen: 'unicorn.style.TypographyScreen'},
+      {title: 'RTL Support', tags: 'rtl', screen: 'unicorn.style.RTLScreen'}
     ]
   },
   // Wrappers: {
@@ -50,7 +51,7 @@ export const navigationData = {
     title: 'Form',
     screens: [
       {title: 'Checkbox', tags: 'checkbox toggle controls', screen: 'unicorn.components.CheckboxScreen'},
-      {title: 'Color Picker', tags: 'color picker control', screen: 'unicorn.components.ColorPickerScreen'},
+      {title: 'ColorPicker', tags: 'color picker control', screen: 'unicorn.components.ColorPickerScreen'},
       {title: 'Color Swatch', tags: 'color swatch and palette', screen: 'unicorn.components.ColorSwatchScreen'},
       {title: 'TextField', tags: 'text input field form', screen: 'unicorn.components.TextFieldScreen'},
       {title: 'NumberInput', tags: 'number input', screen: 'unicorn.components.NumberInputScreen'},
@@ -98,6 +99,7 @@ export const navigationData = {
       {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
       {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
       {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'},
+      {title: 'HorizontalSortableList', tags: 'sortable horizontal list drag', screen: 'unicorn.components.HorizontalSortableListScreen'},
       {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
       {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'}
     ]
@@ -139,6 +141,11 @@ export const navigationData = {
         title: 'KeyboardAwareScrollView',
         tags: 'KeyboardAwareScrollView',
         screen: 'unicorn.components.KeyboardAwareScrollViewScreen'
+      },
+      {
+        title: 'Dynamic Fonts',
+        tags: 'dynamic fonts load download',
+        screen: 'unicorn.nativeComponents.DynamicFontsScreen'
       },
       {
         title: 'Highlight Overlay',

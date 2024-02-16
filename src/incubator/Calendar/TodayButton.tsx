@@ -16,6 +16,7 @@ const TodayButton = (props: TodayButtonProps) => {
   const {containerStyle, buttonProps} = props;
   const {selectedDate, setDate} = useContext(CalendarContext);
 
+  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -39,6 +40,7 @@ const TodayButton = (props: TodayButtonProps) => {
   [buttonProps]);
 
   return (
+    // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
     <View reanimated style={[styles.container, containerStyle, animatedStyle]}>
       <Button
         outline

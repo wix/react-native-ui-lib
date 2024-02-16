@@ -7,13 +7,12 @@ import {
   StyleProp,
   ImageSourcePropType,
   ImageStyle,
-  ViewStyle,
-  ViewProps
+  ViewStyle
 } from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
-import View from '../view';
+import View, {ViewProps} from '../view';
 import Text from '../text';
 import Image from '../image';
 import asRadioGroupChild from '../radioGroup/asRadioGroupChild';
@@ -187,7 +186,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
 
   getRadioButtonOutlineStyle() {
     const {color, size, borderRadius, style: propsStyle, disabled} = this.props;
-    const style = [this.styles.radioButtonOutline];
+    const style: ViewProps['style'][] = [this.styles.radioButtonOutline];
 
     if (size) {
       style.push({width: size, height: size});
@@ -224,8 +223,8 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         <Text
           recorderTag={'unmask'} 
           flexS
-          marginL-10={!contentOnLeft}
-          marginR-10={contentOnLeft}
+          marginL-s3={!contentOnLeft}
+          marginR-s3={contentOnLeft}
           $textDefault
           style={labelStyle}
           testID={`${testID}.label`}

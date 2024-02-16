@@ -5,12 +5,13 @@ import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-na
 import {useOrientation, useThemeProps} from '../../hooks';
 import {Constants} from '../../commons/new';
 import TabBarContext from './TabBarContext';
-import TabBar from './TabBar';
+import TabBar, {TabControllerBarProps} from './TabBar';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 import useImperativeTabControllerHandle, {TabControllerImperativeMethods} from './useImperativeTabControllerHandle';
-export {TabControllerItemProps, TabControllerImperativeMethods};
+
+export {TabControllerBarProps, TabControllerItemProps, TabControllerImperativeMethods};
 
 interface TabControllerStatics {
   TabBar: typeof TabBar;
@@ -19,7 +20,7 @@ interface TabControllerStatics {
   PageCarousel: typeof PageCarousel;
 }
 
-export interface TabControllerProps extends ThemeComponent {
+export interface TabControllerProps {
   /**
    * The list of tab bar items
    */

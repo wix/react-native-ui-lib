@@ -1,5 +1,12 @@
 import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {ActivityIndicator, StyleSheet, findNodeHandle, AccessibilityInfo, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  findNodeHandle,
+  AccessibilityInfo,
+  ViewStyle,
+  LayoutChangeEvent
+} from 'react-native';
 import _ from 'lodash';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
@@ -141,10 +148,10 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
           link
           style={styles.action}
           color={Colors.$backgroundNeutralHeavy}
+          activeBackgroundColor={Colors.$backgroundNeutral}
           {...action}
           labelStyle={Typography.bodySmallBold}
           accessibilityRole={'button'}
-          activeBackgroundColor={Colors.$backgroundNeutral}
           testID={`${testID}-action`}
         />
       );
@@ -157,7 +164,6 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
       <View accessible={Constants.isIOS} style={styles.messageContainer}>
         <Text
           testID={`${testID}-message`}
-          // @ts-expect-error
           ref={viewRef}
           style={[styles.message, {textAlign}, messageStyle]}
           accessibilityLabel={toastPreset.accessibilityMessage}
@@ -170,9 +176,11 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const renderIcon = () => {
-    return (
-      <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor}/>
-    );
+    if (toastPreset.icon) {
+      return (
+        <Icon source={toastPreset.icon} resizeMode={'contain'} style={styles.icon} tintColor={toastPreset.iconColor}/>
+      );
+    }
   };
 
   const renderToastContent = () => {

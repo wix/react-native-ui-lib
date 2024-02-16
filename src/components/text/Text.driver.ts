@@ -1,5 +1,5 @@
 import {TextProps} from './index';
-import {ComponentDriver} from '../../testkit';
+import {ComponentDriver} from '../../testkit/Component.driver';
 
 export class TextDriver extends ComponentDriver<TextProps> {
   getTextContent = async () => {
