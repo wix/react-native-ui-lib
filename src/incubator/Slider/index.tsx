@@ -1,12 +1,14 @@
 import _ from 'lodash';
-import React, {useImperativeHandle, useCallback, useMemo, useEffect, ReactElement} from 'react';
+import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import {StyleUtils} from 'utils';
+import {useThemeProps} from '../../hooks';
 import View from '../../components/view';
+import {ComponentStatics} from '../../typings/common';
 import {
   validateValues,
   getOffsetForValue,
@@ -15,7 +17,7 @@ import {
 } from './SliderPresenter';
 import Thumb from './Thumb';
 import Track from './Track';
-import {ComponentStatics} from '../../typings/common';
+
 export interface SliderProps extends AccessibilityProps {
   /**
    * Initial value
@@ -42,18 +44,6 @@ export interface SliderProps extends AccessibilityProps {
    */
   step?: number;
   /**
-   * The color used for the track from minimum value to current value
-   */
-  minimumTrackTintColor?: string;
-  /**
-   * The track color
-   */
-  maximumTrackTintColor?: string;
-  /**
-   * Custom render instead of rendering the track
-   */
-  renderTrack?: () => ReactElement | ReactElement[];
-  /**
    * Callback for onValueChange
    */
   onValueChange?: (value: number) => void;
@@ -74,9 +64,21 @@ export interface SliderProps extends AccessibilityProps {
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
+   * The color used for the track from minimum value to current value
+   */
+  minimumTrackTintColor?: string;
+  /**
+   * The track color
+   */
+  maximumTrackTintColor?: string;
+  /**
    * The track style
    */
   trackStyle?: StyleProp<ViewStyle>;
+  /**
+   * Custom render instead of rendering the track
+   */
+  renderTrack?: () => ReactElement | ReactElement[];
   /**
    * The thumb style
    */
@@ -90,13 +92,21 @@ export interface SliderProps extends AccessibilityProps {
    */
   disableActiveStyling?: boolean;
   /**
-   * Defines how far a touch event can start away from the thumb.
+   * Defines how far a touch event can start away from the thumb
    */
   thumbHitSlop?: ViewProps['hitSlop'];
+  /**
+   * Whether the thumb will have a shadow
+   */
+  enableThumbShadow?: boolean;
   /**
    * Thumb color
    */
   thumbTintColor?: string;
+  /**
+   * Disabled thumb tint color
+   */
+  disabledThumbTintColor?: string;
   /**
    * If true the Slider will be disabled and will appear in disabled color
    */
@@ -147,6 +157,7 @@ const SHADOW_RADIUS = 4;
 const GAP = Spacings.s2;
 
 const Slider = React.memo((props: Props) => {
+  const themeProps = useThemeProps(props, 'Incubator.Slider');
   const {
     forwardedRef,
     useRange,
@@ -170,13 +181,15 @@ const Slider = React.memo((props: Props) => {
     thumbStyle,
     activeThumbStyle,
     thumbTintColor = Colors.$backgroundPrimaryHeavy,
+    disabledThumbTintColor = Colors.$backgroundDisabled,
     thumbHitSlop,
     disableActiveStyling,
     disabled,
     useGap = true,
     accessible = true,
-    testID
-  } = props;
+    testID,
+    enableThumbShadow = true
+  } = themeProps;
 
   const accessibilityProps = useMemo(() => {
     if (accessible) {
@@ -211,7 +224,7 @@ const Slider = React.memo((props: Props) => {
   const rangeThumbOffset = useSharedValue(0);
   
   const thumbBackground: StyleProp<ViewStyle> = useMemo(() => [
-    {backgroundColor: disabled ? Colors.$backgroundDisabled : thumbTintColor}
+    {backgroundColor: disabled ? disabledThumbTintColor : thumbTintColor}
   ], [disabled, thumbTintColor]);
   const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     styles.thumb, thumbBackground
@@ -272,7 +285,7 @@ const Slider = React.memo((props: Props) => {
           maximumValue,
           stepXValue.value);
         runOnJS(onRangeChangeThrottled)(value, maxValue);
-      } else {
+      } else if (prevOffset) { // don't invoke onChange when setting the slider
         runOnJS(onValueChangeThrottled)(value);
       }
     }
@@ -366,6 +379,7 @@ const Slider = React.memo((props: Props) => {
         hitSlop={thumbHitSlop}
         shouldBounceToStep={shouldBounceToStep}
         stepInterpolatedValue={stepInterpolatedValue}
+        enableShadow={enableThumbShadow}
       />
     );
   };
@@ -398,6 +412,7 @@ const Slider = React.memo((props: Props) => {
   );
 });
 
+Slider.displayName = 'Incubator.Slider';
 export default forwardRef<SliderProps, ComponentStatics<typeof Slider>, SliderRef>(Slider);
 
 const styles = StyleSheet.create({

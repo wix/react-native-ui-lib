@@ -3,7 +3,6 @@
   "category": "form",
   "description": "Number Input to create an input with a formatted number",
   "note": "This requires RN67 to work on Android.",
-  "extends": ["form/TextField"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/NumberInputScreen.tsx",
   "props": [
     {
@@ -34,6 +33,11 @@
       "description": "If true, context menu is hidden.",
       "default": true,
       "note": "Requires @react-native-community/clipboard to be installed."
+    },
+    {
+      "name": "textFieldProps",
+      "type": "TextFieldProps",
+      "description": "Most of TextField's props can be applied, except for ones that are passed directly via named props."
     }
   ],
   "snippet": ["<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'}/>"]

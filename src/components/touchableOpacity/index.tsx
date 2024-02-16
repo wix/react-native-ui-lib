@@ -10,7 +10,8 @@ import {
   forwardRef,
   BaseComponentInjectedProps,
   ForwardRefInjectedProps,
-  ContainerModifiers
+  ContainerModifiers,
+  BackgroundColorModifier
 } from '../../commons/new';
 import {RecorderProps} from '../../typings/recorderTypes';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
@@ -19,6 +20,7 @@ import {ViewProps} from '../view';
 export interface TouchableOpacityProps
   extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'>,
     ContainerModifiers,
+    BackgroundColorModifier,
     RecorderProps {
   /**
    * background color for TouchableOpacity
@@ -59,6 +61,7 @@ export interface TouchableOpacityProps
   onLongPress?: (
     props?: (TouchableOpacityProps & {event: GestureResponderEvent}) | any
   ) => void | RNTouchableOpacityProps['onLongPress'];
+  nativeID?: string;
 }
 
 type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;

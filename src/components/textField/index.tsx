@@ -139,6 +139,7 @@ const TextField = (props: InternalTextFieldProps) => {
           validationMessagePosition={validationMessagePosition}
           testID={`${props.testID}.label`}
           showMandatoryIndication={showMandatoryIndication}
+          enableErrors={enableErrors}
         />
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage

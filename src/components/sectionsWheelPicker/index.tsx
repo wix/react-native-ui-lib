@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import React, {useMemo} from 'react';
+import React, {PropsWithChildren, useMemo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import WheelPicker, {WheelPickerProps} from '../WheelPicker';
 
-export type SectionsWheelPickerProps = {
+export type SectionsWheelPickerProps = PropsWithChildren<{
   /**
    * Array of sections.
    */
@@ -34,7 +34,7 @@ export type SectionsWheelPickerProps = {
   textStyle?: TextStyle;
   disableRTL?: boolean;
   testID?: string;
-};
+}>;
 
 /**
  * @description: SectionsWheelPicker component for presenting set of wheelPickers

@@ -59,7 +59,6 @@ export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPalette';
 export {default as ColorPickerDialog, ColorPickerDialogProps} from './components/colorPicker/ColorPickerDialog';
-export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as ColorSwatch, ColorSwatchProps, ColorInfo} from './components/colorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Dash, DashProps} from './components/dash';
@@ -71,7 +70,10 @@ export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps, FloatingButtonLayouts} from './components/floatingButton';
 export {default as Gradient, GradientProps, GradientTypes} from './components/gradient';
-export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
+export {default as Slider} from './components/slider';
+export {default as GradientSlider} from './components/slider/GradientSlider';
+export {default as ColorSliderGroup} from './components/slider/ColorSliderGroup';
+export type {SliderProps, GradientSliderProps, ColorSliderGroupProps} from './components/slider/types';
 export {default as GridListItem, GridListItemProps} from './components/gridListItem';
 export {default as GridList, GridListProps} from './components/gridList';
 export {default as GridView, GridViewProps} from './components/gridView';
@@ -133,7 +135,6 @@ export {
 // @ts-expect-error
 export {default as SharedTransition} from './components/sharedTransition';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
-export {default as Slider, SliderProps} from './components/slider';
 export {default as SortableGridList, SortableGridListProps} from './components/sortableGridList';
 export {default as SortableList, SortableListProps, SortableListItemProps} from './components/sortableList';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
@@ -143,6 +144,7 @@ export {default as Switch, SwitchProps} from './components/switch';
 export {
   default as TabController,
   TabControllerProps,
+  TabControllerBarProps,
   TabControllerItemProps,
   TabControllerImperativeMethods
 } from './components/tabController';

@@ -112,7 +112,6 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
             step={1}
             containerStyle={styles.sliderContainer}
             disableRTL={forceLTR}
-            // @ts-expect-error
             ref={this.slider}
             onReset={this.onSliderReset}
           />
@@ -208,7 +207,6 @@ export default class SliderScreen extends Component<SliderScreenProps, SliderScr
           maximumValue={100}
           step={1}
           disableRTL={forceLTR}
-          // @ts-expect-error
           ref={this.rangeSlider}
           onReset={this.onRangeSliderReset}
         />

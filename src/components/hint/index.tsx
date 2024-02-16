@@ -227,7 +227,7 @@ class Hint extends Component<HintProps, HintState> {
 
     if (!this.state.targetLayoutInWindow || this.props.onBackgroundPress) {
       setTimeout(() => {
-        this.targetRef?.measureInWindow((x: number, y: number, width: number, height: number) => {
+        this.targetRef?.measureInWindow?.((x: number, y: number, width: number, height: number) => {
           const targetLayoutInWindow = {x, y, width, height};
           this.setState({targetLayoutInWindow});
         });

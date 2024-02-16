@@ -23,6 +23,7 @@ interface ThumbProps extends ViewProps {
   shouldDisableRTL?: boolean;
   onSeekStart?: () => void;
   onSeekEnd?: () => void;
+  enableShadow?: boolean;
 }
 
 const SHADOW_RADIUS = 4;
@@ -44,7 +45,8 @@ const Thumb = (props: ThumbProps) => {
     shouldBounceToStep,
     stepInterpolatedValue,
     gap = 0,
-    secondary
+    secondary,
+    enableShadow
   } = props;
 
   const rtlFix = Constants.isRTL ? -1 : 1;
@@ -109,7 +111,7 @@ const Thumb = (props: ThumbProps) => {
       <View
         reanimated
         // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
-        style={[styles.thumbPosition, styles.thumbShadow, animatedStyle]}
+        style={[styles.thumbPosition, enableShadow && styles.thumbShadow, animatedStyle]}
         hitSlop={hitSlop}
         onLayout={onThumbLayout}
       />
