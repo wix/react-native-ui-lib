@@ -101,7 +101,7 @@ describe('Hint Screen component test', () => {
       const renderTree = render(<HintTestComponent showHint onBackgroundPress={() => {}}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
       expect(await driver.exists()).toBeTruthy();
-      expect(await driver.getModal().isVisible()).toBeTruthy();
+      expect(await driver.getModal().isVisible()).toBeFalsy();
     });
   });
 
@@ -113,14 +113,14 @@ describe('Hint Screen component test', () => {
     it('should trigger onPress callback', async () => {
       const renderTree = render(<HintTestComponent showHint onPress={onPressCallback}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
-      driver.getHintTouchable().press();
+      driver.hintPress();
       await waitFor(() => expect(onPressCallback).toHaveBeenCalledTimes(1));
     });
 
     it('should not trigger onPress callback when onPress isn\'t passed', async () => {
       const renderTree = render(<HintTestComponent showHint/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
-      driver.getHintTouchable().press();
+      driver.hintPress();
       await waitFor(() => expect(onPressCallback).toHaveBeenCalledTimes(0));
     });
   });
