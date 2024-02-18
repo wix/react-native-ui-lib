@@ -99,8 +99,7 @@ const IncubatorSliderScreen = () => {
           disableRTL={disableRTL}
           // maximumValue={0}
           // maximumValue={50}
-          // step={0.1}
-          onSeekStart={() => console.log('onSeekStart')}
+          step={0.1}
         />
       </View>
     );
