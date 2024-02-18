@@ -90,18 +90,18 @@ describe('Hint Screen component test', () => {
     });
   });
 
-  describe('Test Hint modal visibility:', () => {
-    it('Test Hint modal is not visible when showHint is false', async () => {
-      const renderTree = render(<HintTestComponent showHint={false}/>);
+  describe('Test Hint  visibility:', () => {
+    it('Test Hint is not visible when showHint is false', async () => {
+      const renderTree = render(<HintTestComponent showHint={false} onBackgroundPress={() => {}}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
-      expect(await driver.getModal().exists()).toBeFalsy();
+      expect(await driver.modalDriver.exists()).toBeFalsy();
     });
 
-    it('Test Hint modal is visible when showHint is true', async () => {
+    it('Test Hint  is visible when showHint is true', async () => {
       const renderTree = render(<HintTestComponent showHint onBackgroundPress={() => {}}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
       expect(await driver.exists()).toBeTruthy();
-      expect(await driver.getModal().isVisible()).toBeTruthy();
+      expect(await driver.modalDriver.isVisible()).toBeTruthy();
     });
   });
 

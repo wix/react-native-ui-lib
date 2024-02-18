@@ -6,8 +6,7 @@ import {
   usePressableDriver,
   ViewDriver,
   ImageDriver,
-  ModalDriver,
-  TextDriver
+  ModalDriver
 } from '../../testkit';
 import {ViewStyle, StyleSheet} from 'react-native';
 
@@ -22,11 +21,6 @@ export const HintDriver = (props: ComponentProps) => {
   const contentDriver = ViewDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.message`
-  });
-
-  const textDriver = TextDriver({
-    renderTree: props.renderTree,
-    testID: `${props.testID}.text`
   });
 
   const hintPressableDriver = usePressableDriver<TouchableOpacityProps>(useComponentDriver({
@@ -44,24 +38,12 @@ export const HintDriver = (props: ComponentProps) => {
     testID: `${props.testID}.icon`
   });
 
-  const getModal = () => {
-    return modalDriver;
-  };
-
   const getIcon = () => {
     return iconDriver;
   };
 
   const getBackgroundColor = (): ViewStyle => {
     return StyleSheet.flatten(contentDriver.getProps().style).backgroundColor as ViewStyle;
-  };
-
-  const getMessage = () => {
-    return textDriver.getText();
-  };
-
-  const getHintPressable = () => {
-    return hintPressableDriver;
   };
 
   const getOverlay = () => {
@@ -72,19 +54,17 @@ export const HintDriver = (props: ComponentProps) => {
     return hintPressableDriver.press();
   };
 
-  const hintPressOnBackground = () => {
+  const pressOnBackground = () => {
     return overlayDriver.press();
   };
 
   return {
     getBackgroundColor,
-    getModal,
     getIcon,
-    getMessage,
-    getHintPressable,
     getOverlay,
     hintPress,
-    hintPressOnBackground,
+    pressOnBackground,
+    modalDriver,
     ...driver
   };
 };
