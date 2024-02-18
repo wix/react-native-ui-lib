@@ -59,11 +59,13 @@ export interface GradientProps {
 
 const Gradient = (props: GradientProps) => {
   const {color, type, numberOfSteps, style} = props;
-  const rows = [...Array(numberOfSteps).keys()].map(index => {
-    return (
+  const rows = Array(numberOfSteps);
+  for (let index = 0; index < numberOfSteps; index++) {
+    rows[index] = (
       <AnimatedGradientStep color={color} type={type} index={index} numberOfSteps={numberOfSteps} key={index}/>
     );
-  });
+  }
+  
   const containerStyle = useMemo(() => {
     return [styles.container, style];
   }, [style]);
