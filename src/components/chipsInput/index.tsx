@@ -138,16 +138,13 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
         {leadingAccessory}
         {map(chips, (chip, index) => {
           const isMarkedForRemoval = index === markedForRemoval;
-          if (maxChips && index < maxChips) {
-            return renderChip({index, chip, isMarkedForRemoval});
-          }
-          if (!maxChips) {
+          if (!maxChips || (maxChips && index < maxChips)) {
             return renderChip({index, chip, isMarkedForRemoval});
           }
         })}
       </>
     );
-  }, [chips, leadingAccessory, defaultChipProps, removeMarkedChip, markedForRemoval]);
+  }, [chips, leadingAccessory, defaultChipProps, removeMarkedChip, markedForRemoval, maxChips]);
 
   return (
     <TextField
