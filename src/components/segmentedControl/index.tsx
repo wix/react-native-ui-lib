@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useRef, useCallback} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent} from 'react-native';
 import Reanimated, {
   Easing,
   useAnimatedReaction,
@@ -75,6 +75,10 @@ export type SegmentedControlProps = {
    */
   segmentsStyle?: StyleProp<ViewStyle>;
   /**
+   * Segment label style
+   */
+  segmentLabelStyle?: StyleProp<TextStyle>;
+  /**
    * Additional spacing styles for the container
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -102,6 +106,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     outlineWidth = BORDER_WIDTH,
     throttleTime = 0,
     segmentsStyle: segmentsStyleProp,
+    segmentLabelStyle,
     testID
   } = props;
   const animatedSelectedIndex = useSharedValue(initialIndex);
@@ -171,6 +176,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           activeColor={activeColor}
           inactiveColor={inactiveColor}
           style={segmentsStyleProp}
+          segmentLabelStyle={segmentLabelStyle}
           {...segments?.[index]}
           testID={testID}
         />
