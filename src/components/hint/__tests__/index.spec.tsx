@@ -101,7 +101,7 @@ describe('Hint Screen component test', () => {
       const renderTree = render(<HintTestComponent showHint onBackgroundPress={() => {}}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
       expect(await driver.exists()).toBeTruthy();
-      expect(await driver.getModal().isVisible()).toBeFalsy();
+      expect(await driver.getModal().isVisible()).toBeTruthy();
     });
   });
 
