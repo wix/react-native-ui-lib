@@ -1,7 +1,10 @@
 import React, {useMemo} from 'react';
-import {GradientTypes, View, Constants, Text} from 'react-native-ui-lib';
-import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
-import {StyleSheet} from 'react-native';
+import {GradientTypes} from './index';
+import View from '../view';
+import Constants from '../../commons/Constants';
+import Colors from '../../style/colors';
+import Animated, {SharedValue, useAnimatedStyle, isSharedValue} from 'react-native-reanimated';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import tinycolor from 'tinycolor2';
 
 const toHSLStringWorklet = (hsla: tinycolor.ColorFormats.HSLA | tinycolor.ColorFormats.HSL) => {
@@ -12,21 +15,20 @@ const toHSLStringWorklet = (hsla: tinycolor.ColorFormats.HSLA | tinycolor.ColorF
   return `hsl(${hsla.h}, ${Math.round(hsla.s * 100)}%, ${Math.round(hsla.l * 100)}%)`;
 };
 
-
 interface GradientStepProps {
-  color: SharedValue<tinycolor.ColorFormats.HSLA>;
+  color?: SharedValue<tinycolor.ColorFormats.HSLA>;
   index: number;
   type?: GradientTypes | `${GradientTypes}`;
   numberOfSteps: number;
 }
 
 const AnimatedGradientStep = (props: GradientStepProps) => {
-  const {color, type, index, numberOfSteps} = props;
+  const {color = tinycolor(Colors.white).toHsl(), type, index, numberOfSteps} = props;
   const maximum = type === GradientTypes.HUE ? 359 : 1;
   const i = (index * maximum) / numberOfSteps;
 
   const animatedStepStyle = useAnimatedStyle(() => {
-    const hslColor = color.value;
+    const hslColor = isSharedValue<tinycolor.ColorFormats.HSLA>(color) ? color.value : color;
     let backgroundColor;
     switch (type) {
       case GradientTypes.HUE:
@@ -41,7 +43,6 @@ const AnimatedGradientStep = (props: GradientStepProps) => {
       default:
         backgroundColor = toHSLStringWorklet({...hslColor, a: i});
     }
-    // console.log(`Nitzan - backgroundColor`, backgroundColor);
     return {
       backgroundColor
     };
@@ -50,21 +51,27 @@ const AnimatedGradientStep = (props: GradientStepProps) => {
 };
 
 export interface GradientProps {
-  color: SharedValue<tinycolor.ColorFormats.HSLA>;
+  color?: SharedValue<tinycolor.ColorFormats.HSLA>;
   type?: GradientTypes | `${GradientTypes}`;
   numberOfSteps: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Gradient = (props: GradientProps) => {
-  const {color, type, numberOfSteps} = props;
+  const {color, type, numberOfSteps, style} = props;
   const rows = [...Array(numberOfSteps).keys()].map(index => {
     return (
-      // <Text key={index}>Hello</Text>
       <AnimatedGradientStep color={color} type={type} index={index} numberOfSteps={numberOfSteps} key={index}/>
     );
   });
-  return <View style={[styles.container]}>{rows}</View>;
+  const containerStyle = useMemo(() => {
+    return [styles.container, style];
+  }, [style]);
+
+  return <View style={containerStyle}>{rows}</View>;
 };
+
+Gradient.types = GradientTypes;
 
 export default Gradient;
 
