@@ -345,6 +345,20 @@ const Slider = React.memo((props: Props) => {
     }
   }, []);
 
+  const _onSeekStart = () => {
+    'worklet';
+    if (onSeekStart) {
+      runOnJS(onSeekStart)();
+    }
+  };
+
+  const _onSeekEnd = () => {
+    'worklet';
+    if (onSeekEnd) {
+      runOnJS(onSeekEnd)();
+    }
+  };
+
   // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
@@ -360,7 +374,6 @@ const Slider = React.memo((props: Props) => {
   });
 
   /** renders */
-
   const renderThumb = (type: ThumbType) => {
     return (
       <Thumb
@@ -369,8 +382,8 @@ const Slider = React.memo((props: Props) => {
         offset={type === ThumbType.DEFAULT ? defaultThumbOffset : rangeThumbOffset}
         gap={rangeGap}
         secondary={type !== ThumbType.DEFAULT}
-        onSeekStart={onSeekStart}
-        onSeekEnd={onSeekEnd}
+        onSeekStart={_onSeekStart}
+        onSeekEnd={_onSeekEnd}
         shouldDisableRTL={shouldDisableRTL}
         disabled={disabled}
         disableActiveStyling={disableActiveStyling}

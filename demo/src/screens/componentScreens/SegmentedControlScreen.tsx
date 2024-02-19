@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses} from 'react-native-ui-lib';
+import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses, Typography} from 'react-native-ui-lib';
 
 const segments = {
   first: [{label: 'Left'}, {label: 'Right'}],
@@ -16,18 +16,21 @@ const segments = {
   ],
   forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Style'}],
   fifth: [{label: 'Full'}, {label: 'Width'}],
-  sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}]
+  sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
+  seventh: [{label: '$'}, {label: '%'}]
 };
 
 const SegmentedControlScreen = () => {
-
   const onChangeIndex = useCallback((index: number) => {
     console.warn('Index ' + index + ' of the second segmentedControl was pressed');
   }, []);
 
   return (
     <View flex bottom padding-page>
-      <View flex centerV>
+      <Text center text40 $textDefault>
+        Segmented Control
+      </Text>
+      <View flex marginT-s8>
         <View center>
           <SegmentedControl segments={segments.first}/>
           <SegmentedControl
@@ -53,18 +56,17 @@ const SegmentedControlScreen = () => {
             segmentsStyle={styles.customSegmentsStyle}
           />
         </View>
+        <SegmentedControl containerStyle={styles.container} segments={segments.fifth}/>
+        <SegmentedControl containerStyle={styles.container} segments={segments.sixth}/>
+        <Text marginT-s4 center>
+          Custom Typography
+        </Text>
         <SegmentedControl
           containerStyle={styles.container}
-          segments={segments.fifth}
-        />
-        <SegmentedControl
-          containerStyle={styles.container}
-          segments={segments.sixth}
+          segments={segments.seventh}
+          segmentLabelStyle={styles.customTypography}
         />
       </View>
-      <Text text40 $textDefault>
-        Segmented Control
-      </Text>
     </View>
   );
 };
@@ -79,6 +81,9 @@ const styles = StyleSheet.create({
   },
   customSegmentsStyle: {
     height: 50
+  },
+  customTypography: {
+    ...Typography.text80BO
   }
 });
 
