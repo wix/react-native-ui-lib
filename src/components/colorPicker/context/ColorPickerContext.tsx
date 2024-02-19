@@ -8,6 +8,7 @@ export type SharedColorContextType = {
   value: SharedValue<HSLA>;
   hex: SharedValue<string | undefined>;
   isValid: SharedValue<boolean>;
+  setColor: (hsla: HSLA) => void;
   updateAlpha: (a: number) => void;
   updateHue: (h: number) => void;
   updateSaturation: (s: number) => void;
@@ -65,8 +66,13 @@ export const ColorPickerContextProvider = (props: ColorPickerContextProviderProp
       hex.value = current.hex?.toUpperCase();
     }
     if (current.valid !== prev?.valid) {
+      console.log(`Nitzan - new valid`, current.valid);
       isValid.value = current.valid;
     }
+  });
+
+  const setColor = useWorkletCallback((hsla: HSLA) => {
+    color.value = hsla;
   });
 
   const providerValue = useMemo(() => {
@@ -74,12 +80,13 @@ export const ColorPickerContextProvider = (props: ColorPickerContextProviderProp
       value: color,
       hex,
       isValid,
+      setColor,
       updateAlpha,
       updateHue,
       updateLightness,
       updateSaturation,
       reset
     };
-  }, [color, reset, updateAlpha, updateHue, updateLightness, updateSaturation, hex, isValid]);
+  }, [color, reset, updateAlpha, updateHue, updateLightness, updateSaturation, hex, isValid, setColor]);
   return <ColorPickerContext.Provider value={providerValue}>{children}</ColorPickerContext.Provider>;
 };
