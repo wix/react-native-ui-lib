@@ -42,7 +42,7 @@ const Gradient = (props: GradientProps) => {
   const getStyle = useCallback((index: number) => {
     return {
       flex: 1,
-      marginLeft: Constants.isIOS ? -StyleSheet.hairlineWidth : 0,
+      marginLeft: -StyleSheet.hairlineWidth,
       backgroundColor: getBackgroundColor(index)
     };
   }, [getBackgroundColor]);
