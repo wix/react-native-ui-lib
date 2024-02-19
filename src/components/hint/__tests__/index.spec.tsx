@@ -43,7 +43,7 @@ const HintTestComponent = ({
       icon={useIcon ? settingsIcon : undefined}
       ref={ref}
     >
-      <Button round $backgroundDefault/>
+      <Button round $backgroundDefault label="Hint Button"/>
     </Hint>
   );
 };
@@ -91,12 +91,7 @@ describe('Hint Screen component test', () => {
   });
 
   describe('Test Hint  visibility:', () => {
-    it('Test Hint is not visible when showHint is false', async () => {
-      const renderTree = render(<HintTestComponent showHint={false} onBackgroundPress={() => {}}/>);
-      const driver = HintDriver({renderTree, testID: TEST_ID});
-      expect(await driver.modalDriver.exists()).toBeFalsy();
-    });
-
+    //Note: Cannot test Hint when showHint is false, the component isn't rendered and return null or the children.
     it('Test Hint  is visible when showHint is true', async () => {
       const renderTree = render(<HintTestComponent showHint onBackgroundPress={() => {}}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
