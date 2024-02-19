@@ -1,64 +1,84 @@
-import React, {useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {StyleSheet, TextInput, PixelRatio, I18nManager} from 'react-native';
 
 import {Colors, Typography} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
-import {BORDER_RADIUS, HSLColor, getColorValue, getHexString, getTextColor} from './ColorPickerPresenter';
+import {BORDER_RADIUS, getTextColor} from './ColorPickerPresenter';
+import {ColorPickerContext} from './context/ColorPickerContext';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import {Constants} from '../../commons/new';
+import Animated, {useAnimatedStyle, useAnimatedProps, useAnimatedRef, useDerivedValue} from 'react-native-reanimated';
 
 type PreviewProps = Pick<ColorPickerDialogProps, 'accessibilityLabels' | 'previewInputStyle' | 'testID'> & {
-  color: HSLColor;
-  text: ReturnType<typeof getColorValue>;
-  valid: boolean;
   onChangeText: (value: string) => void;
   onFocus: () => void;
 };
-const Preview = (props: PreviewProps) => {
-  const {color, text, onChangeText, previewInputStyle, onFocus, accessibilityLabels, testID} = props;
-  const textInput = useRef<TextInput>(null);
 
-  const hex = getHexString(color);
-  const textColor = getTextColor(hex);
+Animated.addWhitelistedNativeProps({text: true, selectionColor: true});
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+
+const Preview = (props: PreviewProps) => {
+  const {onChangeText, previewInputStyle, onFocus, accessibilityLabels, testID} = props;
+  const colorPickerContext = useContext(ColorPickerContext);
+  const {grey10, white} = Colors;
   const fontScale = PixelRatio.getFontScale();
-  const value = Colors.isTransparent(text) ? '000000' : text;
+
+  const previewBackgroundColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: colorPickerContext?.hex.value || '#ffffff'
+    };
+  });
+
+  const textColor = useDerivedValue(() => {
+    const l = colorPickerContext?.value.value.l;
+    return l && l > 0.45 ? grey10 : white;
+  });
+
+  const textStyle = useAnimatedStyle(() => {
+    const value = colorPickerContext?.hex.value;
+    return {
+      color: textColor.value,
+      width: value ? value.length * 16.5 * fontScale : undefined
+    };
+  });
+
+  const underlineStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: textColor.value
+    };
+  });
+
+  const animatedProps = useAnimatedProps(() => {
+    return {
+      text: colorPickerContext?.hex.value?.toUpperCase()
+      // selectionColor: textColor.value
+    } as any;
+  }, [colorPickerContext]);
+
+  const textInput = useAnimatedRef<TextInput>();
 
   return (
-    <View style={[styles.preview, {backgroundColor: hex}]}>
-      <TouchableOpacity center onPress={textInput.current?.focus} activeOpacity={1} accessible={false}>
+    <Animated.View style={[styles.preview, previewBackgroundColor]}>
+      <TouchableOpacity
+        center
+        onPress={() => {
+          textInput.current?.focus();
+        }}
+        activeOpacity={1}
+        accessible={false}
+      >
         <View style={styles.inputContainer}>
-          <Text
-            text60
-            white
-            marginL-13
-            marginR-5={Constants.isIOS}
-            style={{
-              color: textColor,
-              transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
-            }}
-            accessible={false}
-            recorderTag={'unmask'}
-          >
-            #
-          </Text>
-          <TextInput
+          <AnimatedTextInput
+            // @ts-expect-error
             ref={textInput}
-            value={value}
+            value={colorPickerContext?.hex.value}
             maxLength={6}
             numberOfLines={1}
             onChangeText={onChangeText}
-            style={[
-              styles.input,
-              {
-                color: textColor,
-                width: value ? (value.length + 1) * 16.5 * fontScale : undefined
-              },
-              Constants.isAndroid && {padding: 0},
-              previewInputStyle
-            ]}
-            selectionColor={textColor}
+            style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
             underlineColorAndroid="transparent"
             autoCorrect={false}
             autoComplete={'off'}
@@ -69,11 +89,12 @@ const Preview = (props: PreviewProps) => {
             onFocus={onFocus}
             accessibilityLabel={accessibilityLabels?.input}
             testID={`${testID}.dialog.textInput`}
+            {...{animatedProps}}
           />
         </View>
-        <View style={[{backgroundColor: textColor}, styles.underline]}/>
+        <Animated.View style={[underlineStyle, styles.underline]}/>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 
