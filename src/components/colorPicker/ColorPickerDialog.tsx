@@ -1,14 +1,16 @@
-import _ from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
 import {LayoutAnimation, StyleSheet, Keyboard, StyleProp, ViewStyle} from 'react-native';
+import {useSharedValue} from 'react-native-reanimated';
+import tinycolor from 'tinycolor2';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
 import {ModalProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../incubator/Dialog';
-import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, HSLColor} from './ColorPickerPresenter';
+import {getTextColor, BORDER_RADIUS} from './ColorPickerPresenter';
 import Header from './ColorPickerDialogHeader';
 import Preview from './ColorPickerPreview';
 import Sliders from './ColorPickerDialogSliders';
+import {ColorPickerContextProvider} from './context/ColorPickerContext';
 
 export interface ColorPickerDialogProps extends DialogProps {
   /**
@@ -68,9 +70,10 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
   } = props;
 
   const [keyboardHeight, setKeyboardHeight] = useState(KEYBOARD_HEIGHT);
-  const [color, setColor] = useState(Colors.getHSL(initialColor));
-  const [text, setText] = useState(getColorValue(initialColor));
-  const [valid, setValid] = useState(getValidColorString(text).valid);
+  // const [color, setColor] = useState(Colors.getHSL(initialColor));
+  // const [text, setText] = useState(getColorValue(initialColor));
+
+  const color = useSharedValue<tinycolor.ColorFormats.HSLA>(tinycolor(initialColor).toHsl());
 
   const changeHeight = (height: number) => {
     setKeyboardHeight(prevKeyboardHeight => {
@@ -107,13 +110,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
   }, [keyboardDidShow, keyboardDidHide]);
 
   const resetValues = () => {
-    const color = Colors.getHSL(initialColor);
-    const text = getColorValue(initialColor);
-    const {valid} = getValidColorString(text);
-
-    setColor(color);
-    setText(text);
-    setValid(valid);
+    color.value = tinycolor(initialColor).toHsl();
   };
 
   const onDismiss = () => {
@@ -122,8 +119,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
   };
 
   const onDonePressed = () => {
-    const {hex} = getValidColorString(text);
-
+    const hex = tinycolor(color.value).toHexString();
     if (hex) {
       props.onSubmit?.(hex, getTextColor(hex));
       onDismiss();
@@ -133,58 +129,38 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
     changeHeight(0);
   };
 
-  const onChangeText = (value: string) => {
-    applyColor(value);
-  };
-
-  const applyColor = (text: string) => {
-    const {hex, valid} = getValidColorString(text);
-
-    if (hex) {
-      setColor(Colors.getHSL(hex));
-    }
-    setText(text);
-    setValid(valid);
-  };
-
-  const updateColor = useCallback((value: HSLColor) => {
-    setColor(value);
-    const hex = Colors.getHexString(value);
-    setText(_.toUpper(getColorValue(hex)));
-    setValid(true);
-  }, []);
   return (
-    <Dialog
-      visible={visible} //TODO: pass all Dialog props instead
-      width="100%"
-      bottom
-      centerH
-      onDismiss={onDismiss}
-      containerStyle={styles.dialog}
-      testID={`${testID}.dialog`}
-      modalProps={MODAL_PROPS}
-      {...dialogProps}
-    >
-      <Header
-        accessibilityLabels={accessibilityLabels}
-        valid={valid}
-        onDonePressed={onDonePressed}
-        testID={testID}
-        doneButtonColor={doneButtonColor}
+    <ColorPickerContextProvider color={color}>
+      <Dialog
+        visible={visible} //TODO: pass all Dialog props instead
+        width="100%"
+        bottom
+        centerH
         onDismiss={onDismiss}
-      />
-      <Preview
-        color={color}
-        text={text}
-        valid={valid}
-        accessibilityLabels={accessibilityLabels}
-        previewInputStyle={previewInputStyle}
-        testID={testID}
-        onFocus={onFocus}
-        onChangeText={onChangeText}
-      />
-      <Sliders keyboardHeight={keyboardHeight} color={color} onSliderValueChange={updateColor} migrate={migrate}/>
-    </Dialog>
+        containerStyle={styles.dialog}
+        testID={`${testID}.dialog`}
+        modalProps={MODAL_PROPS}
+        {...dialogProps}
+      >
+        <Header
+          accessibilityLabels={accessibilityLabels}
+          onDonePressed={onDonePressed}
+          testID={testID}
+          doneButtonColor={doneButtonColor}
+          onDismiss={onDismiss}
+        />
+        <Preview
+          accessibilityLabels={accessibilityLabels}
+          previewInputStyle={previewInputStyle}
+          testID={testID}
+          onFocus={onFocus}
+          onChangeText={(value: string) => {
+            color.value = tinycolor(value).toHsl();
+          }}
+        />
+        <Sliders keyboardHeight={keyboardHeight} migrate/>
+      </Dialog>
+    </ColorPickerContextProvider>
   );
 };
 
