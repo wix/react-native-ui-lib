@@ -50,14 +50,14 @@ const AnimatedGradientStep = (props: GradientStepProps) => {
   return <Animated.View key={i} style={[animatedStepStyle, styles.row]}/>;
 };
 
-export interface GradientProps {
-  color?: SharedValue<tinycolor.ColorFormats.HSLA>;
+export interface AnimatedGradientProps {
+  color?: Readonly<SharedValue<tinycolor.ColorFormats.HSLA>>;
   type?: GradientTypes | `${GradientTypes}`;
   numberOfSteps: number;
   style?: StyleProp<ViewStyle>;
 }
 
-const Gradient = (props: GradientProps) => {
+const AnimatedGradient = (props: AnimatedGradientProps) => {
   const {color, type, numberOfSteps, style} = props;
   const rows = Array(numberOfSteps);
   for (let index = 0; index < numberOfSteps; index++) {
@@ -73,9 +73,9 @@ const Gradient = (props: GradientProps) => {
   return <View style={containerStyle}>{rows}</View>;
 };
 
-Gradient.types = GradientTypes;
+AnimatedGradient.types = GradientTypes;
 
-export default Gradient;
+export default AnimatedGradient;
 
 const styles = StyleSheet.create({
   row: {
