@@ -10,9 +10,9 @@ import {WheelPickerAlign} from './types';
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-export interface ItemProps {
+export interface ItemProps<T = string | number> {
   label: string;
-  value: string | number;
+  value: T;
   align?: WheelPickerAlign;
   disableRTL?: boolean;
 }

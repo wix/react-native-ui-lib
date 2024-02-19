@@ -5,33 +5,33 @@ import useMiddleIndex from './helpers/useListMiddleIndex';
 
 export type ItemValueTypes = ItemProps | number | string;
 
-type PropTypes = {
-  initialValue?: ItemValueTypes;
+type PropTypes<T> = {
+  initialValue?: ItemProps<T> | T;
   children?: JSX.Element | JSX.Element[];
-  items?: ItemProps[];
+  items?: ItemProps<T>[];
   itemHeight: number;
   preferredNumVisibleRows: number;
 };
 
-type RowItem = {
-  value: string | number;
+type RowItem<T> = {
+  value: T;
   index: number;
 };
 
-interface Presenter {
-  items: ItemProps[];
+interface Presenter<T> {
+  items: ItemProps<T>[];
   index: number;
   height: number;
-  getRowItemAtOffset: (offset: number) => RowItem;
+  getRowItemAtOffset: (offset: number) => RowItem<T>;
 }
 
-const usePresenter = ({
-  initialValue = 0,
+const usePresenter = <T extends string | number = string>({
+  initialValue, // = 0
   children,
   items: propItems,
   itemHeight,
   preferredNumVisibleRows
-}: PropTypes): Presenter => {
+}: PropTypes<T>): Presenter<T> => {
   const extractItemsFromChildren = (): ItemProps[] => {
     const items = React.Children.map(children, child => {
       const childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};
@@ -50,10 +50,10 @@ const usePresenter = ({
     return _.findIndex(items, {value: initialValue?.value});
   };
 
-  const getRowItemAtOffset = (offset: number): RowItem => {
+  const getRowItemAtOffset = (offset: number): RowItem<T> => {
     const index = middleIndex(offset);
     const value = items[index].value;
-    return {index, value};
+    return {value, index};
   };
 
   return {
