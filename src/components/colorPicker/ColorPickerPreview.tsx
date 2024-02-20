@@ -1,14 +1,14 @@
-import React, {useContext, useState, useRef} from 'react';
-import {StyleSheet, TextInput, PixelRatio, I18nManager} from 'react-native';
+import React, {useContext, useState, useRef, useEffect} from 'react';
+import {StyleSheet, TextInput, PixelRatio, I18nManager, TextInputProps} from 'react-native';
 
 import {Colors, Typography} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
-import {BORDER_RADIUS} from './ColorPickerPresenter';
+import {BORDER_RADIUS, isValidHex} from './ColorPickerPresenter';
 import {ColorPickerContext} from './context/ColorPickerContext';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import {Constants} from '../../commons/new';
-import Animated, {useAnimatedStyle, useAnimatedProps, useAnimatedRef, useDerivedValue} from 'react-native-reanimated';
+import Animated, {useAnimatedStyle, useAnimatedProps, useDerivedValue} from 'react-native-reanimated';
 import tinycolor from 'tinycolor2';
 
 type PreviewProps = Pick<ColorPickerDialogProps, 'accessibilityLabels' | 'previewInputStyle' | 'testID'> & {
@@ -26,13 +26,13 @@ const Preview = (props: PreviewProps) => {
   const {grey10, white} = Colors;
   const fontScale = PixelRatio.getFontScale();
   const [isFocused, setIsFocused] = useState(false);
-  const [hex, setHex] = useState<string | undefined>(colorPickerContext?.hex.value);
+  const [hex, setHex] = useState<string>(colorPickerContext?.hex.value || '#');
 
   const previewBackgroundColor = useAnimatedStyle(() => {
     return {
       backgroundColor: colorPickerContext?.hex.value || '#ffffff'
     };
-  });
+  }, [colorPickerContext]);
 
   const textColor = useDerivedValue(() => {
     const l = colorPickerContext?.value.value.l;
@@ -40,10 +40,9 @@ const Preview = (props: PreviewProps) => {
   });
 
   const textStyle = useAnimatedStyle(() => {
-    const value = colorPickerContext?.hex.value;
     return {
       color: textColor.value,
-      width: value ? value.length * 16.5 * fontScale : undefined
+      width: 10 * 16.5 * fontScale
     };
   });
 
@@ -52,7 +51,6 @@ const Preview = (props: PreviewProps) => {
       backgroundColor: textColor.value
     };
   });
-  const textInput = useRef<TextInput>();
 
   const animatedProps = useAnimatedProps(() => {
     return {
@@ -63,10 +61,7 @@ const Preview = (props: PreviewProps) => {
 
   const _onFocus = () => {
     setIsFocused(true);
-    setHex(colorPickerContext?.hex.value);
-    // onFocus();
-    console.log(`Nitzan - textInput.current?.focus()`, textInput.current?.focus);
-    textInput.current?.focus();
+    setHex(colorPickerContext?.hex.value || '#');
   };
   const _onChangeText = (value: string) => {
     if (isFocused) {
@@ -74,63 +69,74 @@ const Preview = (props: PreviewProps) => {
     }
   };
 
-  const _onBlur = () => {
-    console.log(`Nitzan - bbb`);
-    if (colorPickerContext?.value) {
+  const onBlur = () => {
+    if (!isValidHex(hex)) {
+      return;
+    }
+    if (colorPickerContext) {
       colorPickerContext.setColor(tinycolor(hex).toHsl());
     }
     setIsFocused(false);
-    setHex(undefined);
+    setHex('#');
   };
 
-  const TextInputRenderFunction = () => {
-    if (!isFocused) {
-      return (
-        <AnimatedTextInput
-          // // @ts-expect-error
-          // ref={textInput}
-          value={colorPickerContext?.hex.value}
-          maxLength={7}
-          numberOfLines={1}
-          // onChangeText={_onChangeText}
-          style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
-          underlineColorAndroid="transparent"
-          autoCorrect={false}
-          autoComplete={'off'}
-          autoCapitalize={'characters'}
-          // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
-          returnKeyType={'done'}
-          enablesReturnKeyAutomatically
-          accessibilityLabel={accessibilityLabels?.input}
-          testID={`${testID}.dialog.textInput`}
-          editable={false}
-          {...{animatedProps}}
-        />
-      );
-    } else {
-      return (
-        <AnimatedTextInput
-          // @ts-expect-error
-          ref={textInput}
-          value={hex}
-          maxLength={7}
-          numberOfLines={1}
-          onChangeText={_onChangeText}
-          style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
-          underlineColorAndroid="transparent"
-          autoCorrect={false}
-          autoComplete={'off'}
-          autoCapitalize={'characters'}
-          // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
-          returnKeyType={'done'}
-          enablesReturnKeyAutomatically
-          accessibilityLabel={accessibilityLabels?.input}
-          testID={`${testID}.dialog.textInput`}
-          onBlur={_onBlur}
-        />
-      );
-    }
-  };
+  // const TextInputRenderFunction = (props: {focusedProps: Partial<TextInputProps>; notFocusedProps: Partial<TextInputProps>}) => {
+  //   const {focusedProps, notFocusedProps} = props;
+  //   if (!isFocused) {
+  //     return (
+  //       <TouchableOpacity
+  //         center
+  //         bg-red10
+  //         onPress={() => {
+  //           _onFocus();
+  //         }}
+  //         activeOpacity={1}
+  //         accessible={false}
+  //       >
+  //         <AnimatedTextInput
+  //           value={colorPickerContext?.hex.value}
+  //           maxLength={7}
+  //           numberOfLines={1}
+  //           style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
+  //           underlineColorAndroid="transparent"
+  //           autoCorrect={false}
+  //           autoComplete={'off'}
+  //           autoCapitalize={'characters'}
+  //           // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
+  //           returnKeyType={'done'}
+  //           enablesReturnKeyAutomatically
+  //           accessibilityLabel={accessibilityLabels?.input}
+  //           testID={`${testID}.dialog.textInput`}
+  //           editable={false}
+  //           // {...{animatedProps}}
+  //           {...notFocusedProps}
+  //         />
+  //       </TouchableOpacity>
+  //     );
+  //   } else {
+  //     return (
+  //       <AnimatedTextInput
+  //         ref={textInput}
+  //         value={hex}
+  //         maxLength={7}
+  //         numberOfLines={1}
+  //         onChangeText={_onChangeText}
+  //         style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
+  //         underlineColorAndroid="transparent"
+  //         autoCorrect={false}
+  //         autoComplete={'off'}
+  //         autoCapitalize={'characters'}
+  //         // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
+  //         returnKeyType={'done'}
+  //         enablesReturnKeyAutomatically
+  //         accessibilityLabel={accessibilityLabels?.input}
+  //         testID={`${testID}.dialog.textInput`}
+  //         onBlur={onBlur}
+  //         {...focusedProps}
+  //       />
+  //     );
+  //   }
+  // };
 
   console.log(`Nitzan - isFocused`, isFocused);
   return (
@@ -138,8 +144,8 @@ const Preview = (props: PreviewProps) => {
       <View style={styles.inputContainer}>
         {!isFocused ? (
           <TouchableOpacity
-            center
             bg-red10
+            center
             onPress={() => {
               _onFocus();
             }}
@@ -147,8 +153,6 @@ const Preview = (props: PreviewProps) => {
             accessible={false}
           >
             <AnimatedTextInput
-              // @ts-expect-error
-              // ref={textInput}
               value={colorPickerContext?.hex.value}
               maxLength={7}
               numberOfLines={1}
@@ -170,8 +174,6 @@ const Preview = (props: PreviewProps) => {
           </TouchableOpacity>
         ) : (
           <AnimatedTextInput
-            // @ts-expect-error
-            ref={textInput}
             value={hex}
             maxLength={7}
             numberOfLines={1}
@@ -186,7 +188,9 @@ const Preview = (props: PreviewProps) => {
             enablesReturnKeyAutomatically
             accessibilityLabel={accessibilityLabels?.input}
             testID={`${testID}.dialog.textInput`}
-            onBlur={_onBlur}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            autoFocus
           />
         )}
       </View>
