@@ -4,20 +4,20 @@ import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanima
 import Text, {TextProps} from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
-import {asBaseComponent} from '../../commons/new';
+import {useThemeProps} from '../../hooks';
 import {WheelPickerAlign} from './types';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-export interface ItemProps<T = string | number> {
+export interface ItemProps<T> {
   label: string;
   value: T;
   align?: WheelPickerAlign;
   disableRTL?: boolean;
 }
 
-interface InternalProps extends ItemProps {
+interface InternalProps<T> extends ItemProps<T> {
   index: number;
   offset: Animated.SharedValue<number>;
   itemHeight: number;
@@ -32,23 +32,25 @@ interface InternalProps extends ItemProps {
   testID?: string;
 }
 
-const WheelPickerItem = memo(({
-  index,
-  label,
-  fakeLabel,
-  fakeLabelStyle,
-  fakeLabelProps,
-  itemHeight,
-  onSelect,
-  offset,
-  activeColor = Colors.$textPrimary,
-  inactiveColor = Colors.$textNeutralHeavy,
-  style,
-  testID,
-  centerH = true,
-  align,
-  disableRTL
-}: InternalProps) => {
+const WheelPickerItem = <T extends {} = string | number>(props: InternalProps<T>) => {
+  const themeProps = useThemeProps(props, 'WheelPickerItem');
+  const {
+    index,
+    label,
+    fakeLabel,
+    fakeLabelStyle,
+    fakeLabelProps,
+    itemHeight,
+    onSelect,
+    offset,
+    activeColor = Colors.$textPrimary,
+    inactiveColor = Colors.$textNeutralHeavy,
+    style,
+    testID,
+    centerH = true,
+    align,
+    disableRTL
+  } = themeProps;
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
   const _activeColor = useRef(activeColor.toString());
@@ -99,9 +101,9 @@ const WheelPickerItem = memo(({
       )}
     </AnimatedTouchableOpacity>
   );
-});
+};
 
-export default asBaseComponent<InternalProps>(WheelPickerItem);
+export default memo(WheelPickerItem) as typeof WheelPickerItem;
 
 const styles = StyleSheet.create({
   container: {
