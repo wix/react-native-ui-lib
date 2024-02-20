@@ -1,10 +1,10 @@
 import React, {useCallback, useMemo, memo, useRef} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
-import Text, {TextProps} from '../../components/text';
-import TouchableOpacity from '../../components/touchableOpacity';
 import {Colors, Spacings} from '../../../src/style';
 import {useThemeProps} from '../../hooks';
+import Text, {TextProps} from '../../components/text';
+import TouchableOpacity from '../../components/touchableOpacity';
 import {WheelPickerAlign} from './types';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
@@ -32,7 +32,7 @@ interface InternalProps<T> extends ItemProps<T> {
   testID?: string;
 }
 
-const WheelPickerItem = <T extends {} = string | number>(props: InternalProps<T>) => {
+const WheelPickerItem = <T extends string | number = number>(props: InternalProps<T>) => {
   const themeProps = useThemeProps(props, 'WheelPickerItem');
   const {
     index,
@@ -51,6 +51,7 @@ const WheelPickerItem = <T extends {} = string | number>(props: InternalProps<T>
     align,
     disableRTL
   } = themeProps;
+  
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
   const _activeColor = useRef(activeColor.toString());

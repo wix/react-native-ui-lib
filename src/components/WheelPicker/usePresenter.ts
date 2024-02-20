@@ -1,12 +1,14 @@
 import _ from 'lodash';
 import React from 'react';
+import {LogService} from '../../services';
 import {ItemProps} from './Item';
 import useMiddleIndex from './helpers/useListMiddleIndex';
 
-export type ItemValueTypes = ItemProps | number | string;
+//TODO: deprecate this type
+export type ItemValueTypes = /* ItemProps |  */number | string;
 
 type PropTypes<T> = {
-  initialValue?: ItemProps<T> | T;
+  initialValue?: T;
   children?: JSX.Element | JSX.Element[];
   items?: ItemProps<T>[];
   itemHeight: number;
@@ -18,36 +20,32 @@ type RowItem<T> = {
   index: number;
 };
 
-interface Presenter<T> {
-  items: ItemProps<T>[];
-  index: number;
-  height: number;
-  getRowItemAtOffset: (offset: number) => RowItem<T>;
-}
-
-const usePresenter = <T extends string | number = string>({
-  initialValue, // = 0
+const usePresenter = <T extends string | number = number>({
+  initialValue,
   children,
   items: propItems,
   itemHeight,
   preferredNumVisibleRows
-}: PropTypes<T>): Presenter<T> => {
-  const extractItemsFromChildren = (): ItemProps[] => {
+}: PropTypes<T>) => {
+
+  const extractItemsFromChildren = (): ItemProps<T>[] => {
     const items = React.Children.map(children, child => {
-      const childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};
+      const childAsType: ItemProps<T> = {value: child?.props.value, label: child?.props.label};
       return childAsType;
     });
     return items || [];
   };
-
   const items = children ? extractItemsFromChildren() : propItems || [];
   const middleIndex = useMiddleIndex({itemHeight, listSize: items.length});
 
   const getSelectedValueIndex = () => {
-    if (_.isString(initialValue) || _.isNumber(initialValue)) {
-      return _.findIndex(items, {value: initialValue});
+    if (_.isObject(initialValue)) {
+      LogService.warn('UILib WheelPicker will stop supporting initialValue prop type as an object (ItemProps). Please pass string or number only');
+      //@ts-expect-error
+      return _.findIndex(items, {value: initialValue?.value});
+    } else {
+      return initialValue && _.findIndex(items, (item) => item.value === initialValue);
     }
-    return _.findIndex(items, {value: initialValue?.value});
   };
 
   const getRowItemAtOffset = (offset: number): RowItem<T> => {

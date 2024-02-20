@@ -23,14 +23,13 @@ import usePresenter from './usePresenter';
 import {WheelPickerAlign} from './types';
 export {WheelPickerAlign};
 
-const AnimatedFlatList = Animated.createAnimatedComponent<FlatListProps<ItemProps>>(FlatList);
 export const ITEM_HEIGHT = 44;
 
 export type WheelPickerProps<T> = {
   /**
    * Initial value
    */
-  initialValue?: ItemProps | T;
+  initialValue?: T;
   /**
    * Data source for WheelPicker
    */
@@ -98,10 +97,11 @@ export type WheelPickerProps<T> = {
   /**
    * Props to be sent to the FlatList
    */
-  flatListProps?: Partial<FlatListProps<ItemProps>>;
+  flatListProps?: Partial<FlatListProps<ItemProps<T>>>;
 }
 
-const WheelPicker = <T extends string | number = string>(props: WheelPickerProps<T>) => {
+const WheelPicker = <T extends string | number = number>(props: WheelPickerProps<T>) => {
+  const AnimatedFlatList = useMemo(() => Animated.createAnimatedComponent<FlatListProps<ItemProps<T>>>(FlatList), []);
   const themeProps = useThemeProps(props, 'WheelPicker');
 
   const {
@@ -119,7 +119,7 @@ const WheelPicker = <T extends string | number = string>(props: WheelPickerProps
     disableRTL,
     style,
     children,
-    initialValue = 0,
+    initialValue,
     separatorsStyle,
     testID,
     faderProps,
@@ -137,7 +137,7 @@ const WheelPicker = <T extends string | number = string>(props: WheelPickerProps
   const {
     height,
     items,
-    index: currentIndex,
+    index: currentIndex = 0,
     getRowItemAtOffset
   } = usePresenter({
     initialValue,
@@ -150,7 +150,7 @@ const WheelPicker = <T extends string | number = string>(props: WheelPickerProps
   const prevInitialValue = useRef(initialValue);
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
-  const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
+  const keyExtractor = useCallback((item: ItemProps<T>, index: number) => `${item}.${index}`, []);
   const androidFlatListProps = useMemo(() => {
     if (Constants.isAndroid) {
       return {
@@ -160,7 +160,7 @@ const WheelPicker = <T extends string | number = string>(props: WheelPickerProps
   }, [items]);
 
   useEffect(() => {
-    //This effect should replace the onLyout function in the flatlist, should happen only once
+    // This effect should replace the onLayout function in the FlatList, should happen only once
     scrollToIndex(currentIndex, true);
   }, []);
 
@@ -228,7 +228,7 @@ const WheelPicker = <T extends string | number = string>(props: WheelPickerProps
     return {...labelMargins, ...labelProps};
   }, [labelMargins, labelProps]);
 
-  const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps>) => {
+  const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps<T>>) => {
     return (
       <Item
         index={index}
