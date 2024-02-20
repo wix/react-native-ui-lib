@@ -70,9 +70,6 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
   } = props;
 
   const [keyboardHeight, setKeyboardHeight] = useState(KEYBOARD_HEIGHT);
-  // const [color, setColor] = useState(Colors.getHSL(initialColor));
-  // const [text, setText] = useState(getColorValue(initialColor));
-
   const color = useSharedValue<tinycolor.ColorFormats.HSLA>(tinycolor(initialColor).toHsl());
 
   const changeHeight = (height: number) => {
