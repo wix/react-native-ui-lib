@@ -2,7 +2,6 @@ import isString from 'lodash/isString';
 import tinycolor from 'tinycolor2';
 import React, {useCallback, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import Constants from '../../commons/Constants';
 import {Colors} from '../../style';
 import View from '../view';
 
