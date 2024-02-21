@@ -32,6 +32,8 @@ import {
   PickerModes,
   PickerFieldTypes,
   PickerSearchStyle,
+  RenderCustomModalProps,
+  PickerItemsListProps,
   PickerMethods
 } from './types';
 
@@ -344,6 +346,16 @@ Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
 
-export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
+export {
+  PickerProps,
+  PickerItemProps,
+  PickerValue,
+  PickerModes,
+  PickerFieldTypes,
+  PickerSearchStyle,
+  RenderCustomModalProps,
+  PickerItemsListProps,
+  PickerMethods
+};
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;
