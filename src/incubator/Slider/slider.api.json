@@ -1,6 +1,6 @@
 {
   "name": "Slider",
-  "category": "Incubator",
+  "category": "incubator",
   "description": "A Slider component",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorSliderScreen.tsx",
   "images": [],
