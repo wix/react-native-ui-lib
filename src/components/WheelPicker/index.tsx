@@ -12,12 +12,12 @@ import {
 } from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {FlatList} from 'react-native-gesture-handler';
-import {Colors, Spacings} from 'style';
+import {Colors, Spacings} from '../../style';
 import {Constants} from '../../commons/new';
 import {useThemeProps} from '../../hooks';
-import View from '../../components/view';
-import Text, {TextProps} from '../../components/text';
-import Fader, {FaderPosition, FaderProps} from '../../components/fader';
+import View from '../view';
+import Text, {TextProps} from '../text';
+import Fader, {FaderPosition, FaderProps} from '../fader';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
 import {WheelPickerAlign} from './types';

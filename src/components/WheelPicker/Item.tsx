@@ -1,10 +1,10 @@
 import React, {useCallback, useMemo, memo, useRef} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
-import {Colors, Spacings} from '../../../src/style';
+import {Colors, Spacings} from '../../style';
 import {useThemeProps} from '../../hooks';
-import Text, {TextProps} from '../../components/text';
-import TouchableOpacity from '../../components/touchableOpacity';
+import Text, {TextProps} from '../text';
+import TouchableOpacity from '../touchableOpacity';
 import {WheelPickerAlign} from './types';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);

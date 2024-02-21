@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
 import {LogService} from '../../services';
-import {ItemProps} from './Item';
 import useMiddleIndex from './helpers/useListMiddleIndex';
+import {ItemProps} from './Item';
 
 //TODO: deprecate this type
 export type ItemValueTypes = /* ItemProps |  */number | string;
