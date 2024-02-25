@@ -118,6 +118,8 @@ export {
   PickerModes,
   PickerFieldTypes,
   PickerSearchStyle,
+  RenderCustomModalProps,
+  PickerItemsListProps,
   PickerMethods
 } from './components/picker';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
