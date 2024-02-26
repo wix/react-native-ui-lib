@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useRef, useCallback} from 'react';
+import React, {useRef, useCallback, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent} from 'react-native';
 import Reanimated, {
   Easing,
@@ -113,6 +113,10 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
   const segmentedControlHeight = useSharedValue(0);
   const segmentsCounter = useRef(0);
+
+  useEffect(() => {
+    animatedSelectedIndex.value = initialIndex;
+  }, [initialIndex, animatedSelectedIndex]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const changeIndex = useCallback(_.throttle(() => {
