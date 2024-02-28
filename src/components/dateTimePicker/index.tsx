@@ -15,6 +15,7 @@ import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import TextField, {TextFieldProps, TextFieldMethods} from '../textField';
+import type {DialogMigrationProps} from '../../incubator/Dialog';
 import {DialogProps} from '../dialog';
 import View from '../view';
 import Button from '../button';
@@ -23,78 +24,76 @@ import useOldApi, {OldApiProps} from './useOldApi';
 
 export type DateTimePickerMode = 'date' | 'time';
 
-export type DateTimePickerProps = OldApiProps & Omit<TextFieldProps, 'value' | 'onChange'> & {
-  /**
-   * The type of picker to display ('date' or 'time')
-   */
-  mode?: DateTimePickerMode;
-  /**
-   * The initial value to set the picker to. Defaults to device's date / time
-   */
-  value?: Date;
-  /**
-   * The onChange callback
-   */
-  onChange?: (date: Date) => void;
-  /**
-   * Should this input be editable or disabled
-   */
-  editable?: boolean;
-  /**
-   * The minimum date or time value to use
-   */
-  minimumDate?: Date;
-  /**
-   * The maximum date or time value to use
-   */
-  maximumDate?: Date;
-  /**
-   * A callback function to format the time or date
-   * @param mode the type of the picker ('date' or 'time')
-   * @returns the formatted string to display
-   */
-  dateTimeFormatter?: (value: Date, mode: DateTimePickerMode) => string;
-  /**
-   * Allows changing of the locale of the component (iOS only)
-   */
-  locale?: string;
-  /**
-   * Allows changing of the time picker to a 24 hour format (Android only)
-   */
-  is24Hour?: boolean;
-  /**
-   * The interval at which minutes can be selected. Possible values are: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30 (iOS only)
-   */
-  minuteInterval?: number;
-  /**
-   * Allows changing of the timeZone of the date picker. By default it uses the device's time zone (iOS only)
-   */
-  timeZoneOffsetInMinutes?: number;
-  /**
-   * Props to pass the Dialog component
-   */
-  dialogProps?: DialogProps;
-  /**
-   * style to apply to the iOS dialog header
-   */
-  headerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Render custom input
-   */
-  renderInput?: (props: Omit<DateTimePickerProps, 'value'> & {value?: string}) => React.ReactElement;
-  /**
-   * Override system theme variant (dark or light mode) used by the date picker.
-   */
-  themeVariant?: 'light' | 'dark';
-  /**
-   * The component testID
-   */
-  testID?: string;
-  /**
-   * Allows changing the visual display of the picker
-   */
-  display?: string;
-};
+export type DateTimePickerProps = OldApiProps &
+  Omit<TextFieldProps, 'value' | 'onChange'> &
+  DialogMigrationProps & {
+    /**
+     * The type of picker to display ('date' or 'time')
+     */
+    mode?: DateTimePickerMode;
+    /**
+     * The initial value to set the picker to. Defaults to device's date / time
+     */
+    value?: Date;
+    /**
+     * The onChange callback
+     */
+    onChange?: (date: Date) => void;
+    /**
+     * Should this input be editable or disabled
+     */
+    editable?: boolean;
+    /**
+     * The minimum date or time value to use
+     */
+    minimumDate?: Date;
+    /**
+     * The maximum date or time value to use
+     */
+    maximumDate?: Date;
+    /**
+     * A callback function to format the time or date
+     * @param mode the type of the picker ('date' or 'time')
+     * @returns the formatted string to display
+     */
+    dateTimeFormatter?: (value: Date, mode: DateTimePickerMode) => string;
+    /**
+     * Allows changing of the locale of the component (iOS only)
+     */
+    locale?: string;
+    /**
+     * Allows changing of the time picker to a 24 hour format (Android only)
+     */
+    is24Hour?: boolean;
+    /**
+     * The interval at which minutes can be selected. Possible values are: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30 (iOS only)
+     */
+    minuteInterval?: number;
+    /**
+     * Allows changing of the timeZone of the date picker. By default it uses the device's time zone (iOS only)
+     */
+    timeZoneOffsetInMinutes?: number;
+    /**
+     * style to apply to the iOS dialog header
+     */
+    headerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Render custom input
+     */
+    renderInput?: (props: Omit<DateTimePickerProps, 'value'> & {value?: string}) => React.ReactElement;
+    /**
+     * Override system theme variant (dark or light mode) used by the date picker.
+     */
+    themeVariant?: 'light' | 'dark';
+    /**
+     * The component testID
+     */
+    testID?: string;
+    /**
+     * Allows changing the visual display of the picker
+     */
+    display?: string;
+  };
 
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
 
@@ -128,6 +127,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     themeVariant = Colors.getScheme(),
     onChange,
     dialogProps,
+    migrateDialog,
     headerStyle,
     testID,
     display = Constants.isIOS ? 'spinner' : undefined,
@@ -234,12 +234,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
           onPress={toggleExpandableOverlay}
           testID={`${testID}.cancel`}
         />
-        <Button
-          link
-          iconSource={Assets.icons.check}
-          onPress={onDonePressed}
-          testID={`${testID}.done`}
-        />
+        <Button link iconSource={Assets.icons.check} onPress={onDonePressed} testID={`${testID}.done`}/>
       </View>
     );
   };
@@ -302,6 +297,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         expandableContent={Constants.isIOS ? renderIOSExpandableOverlay() : undefined}
         useDialog
         dialogProps={_dialogProps}
+        migrateDialog={migrateDialog}
         disabled={editable === false}
         // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
         renderCustomOverlay={Constants.isAndroid ? renderAndroidDateTimePicker : undefined}

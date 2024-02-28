@@ -1,11 +1,10 @@
 import React from 'react';
-
 import Text from '../text';
-import GradientSlider, {GradientSliderTypes} from './GradientSlider';
-import {ColorSliderGroupProps} from './ColorSliderGroup';
+import {GradientSliderTypes, ColorSliderGroupProps, HSLA} from './types';
+import GradientSlider from './GradientSlider';
 
 type ColorSliderProps = Pick<
-  ColorSliderGroupProps,
+  ColorSliderGroupProps<HSLA>,
   'sliderContainerStyle' | 'showLabels' | 'labelsStyle' | 'accessible' | 'labels' | 'migrate' | 'initialColor'
 > & {
   type: GradientSliderTypes;
@@ -40,4 +39,5 @@ const ColorSlider = (props: ColorSliderProps) => {
   );
 };
 
+ColorSlider.displayName = 'IGNORE';
 export default ColorSlider;

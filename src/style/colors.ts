@@ -21,14 +21,14 @@ export type GeneratePaletteOptions = {
   adjustLightness?: boolean;
   /** Whether to adjust the saturation of colors with high lightness and saturation (unifying saturation level throughout palette) */
   adjustSaturation?: boolean;
-  /** Array of saturation adjustments to apply on the color's tints array (from darkest to lightest). 
+  /** Array of saturation adjustments to apply on the color's tints array (from darkest to lightest).
    * The 'adjustSaturation' option must be true */
   saturationLevels?: number[];
   /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
   addDarkestTints?: boolean; // TODO: rename 'fullPalette'
   /** Whether to reverse the color palette to generate dark mode palette (pass 'true' to generate the same palette for both light and dark modes) */
   avoidReverseOnDark?: boolean;
-}
+};
 export class Colors {
   [key: string]: any;
   shouldSupportDarkMode = false;
@@ -180,9 +180,12 @@ export class Colors {
     return validColors ? undefined : results[0];
   }
 
-  shouldReverseOnDark = (avoidReverseOnDark?: boolean) => !avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.isDarkMode();
-  
-  getColorTint(colorValue: string | OpaqueColorValue, tintKey: string | number, options: GetColorTintOptions = {}) {
+  shouldReverseOnDark = (avoidReverseOnDark?: boolean) =>
+    !avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.isDarkMode();
+
+  getColorTint(colorValue: string | OpaqueColorValue | undefined,
+    tintKey: string | number,
+    options: GetColorTintOptions = {}) {
     if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(colorValue)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return colorValue;
@@ -199,8 +202,9 @@ export class Colors {
     if (colorKey) {
       const colorKeys = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
       const keyIndex = _.indexOf(colorKeys, Number(tintKey));
-      const key = 
-        this.shouldReverseOnDark(options?.avoidReverseOnDark) ? colorKeys[colorKeys.length - 1 - keyIndex] : tintKey;
+      const key = this.shouldReverseOnDark(options?.avoidReverseOnDark)
+        ? colorKeys[colorKeys.length - 1 - keyIndex]
+        : tintKey;
       const requiredColorKey = `${colorKey.slice(0, -2)}${key}`;
       const requiredColorKey1 = `${colorKey.slice(0, -1)}${key}`;
       const requiredColor = this[requiredColorKey] || this[requiredColorKey1];
@@ -222,24 +226,26 @@ export class Colors {
     return colorsPalette[tintLevel - 1];
   }
 
-  private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {    
+  private generatePalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
     const hsl = Color(color).hsl();
     const colorLightness = hsl.color[2];
     const lightness = Math.round(colorLightness);
     const isWhite = lightness === 100;
     const lightnessLevel = options?.addDarkestTints ? (isWhite ? 5 : 0) : 20;
     const lightColorsThreshold = options?.adjustLightness && this.shouldGenerateDarkerPalette(color) ? 5 : 0;
-    const step = /* options?.addDarkestTints ? 9 :  */10;
+    const step = /* options?.addDarkestTints ? 9 :  */ 10;
     const ls = [colorLightness];
-    
+
     let l = lightness - step;
-    while (l >= lightnessLevel - lightColorsThreshold) { // darker tints
+    while (l >= lightnessLevel - lightColorsThreshold) {
+      // darker tints
       ls.unshift(l);
       l -= step;
     }
 
     l = lightness + step;
-    while (l < 100 - lightColorsThreshold) { // lighter tints
+    while (l < 100 - lightColorsThreshold) {
+      // lighter tints
       ls.push(l);
       l += step;
     }
@@ -249,12 +255,12 @@ export class Colors {
       const tint = generateColorTint(color, e);
       tints.push(tint);
     });
-    
+
     const size = options?.addDarkestTints ? 10 : 8;
     const start = options?.addDarkestTints && colorLightness > 10 ? -size : 0;
     const end = options?.addDarkestTints && colorLightness > 10 ? undefined : size;
     const sliced = tints.slice(start, end);
-    
+
     const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color, options?.saturationLevels);
     return adjusted || sliced;
   }, generatePaletteCacheResolver);
@@ -305,8 +311,12 @@ export class Colors {
     return _.inRange(hue, 51, 184);
   }
 
-  isDark(colorValue: string | OpaqueColorValue, darkThreshold = 0.55) {
-    const color = colorValue === null ? undefined : colorStringValue(colorValue);
+  isDark(colorValue: string | OpaqueColorValue | undefined, darkThreshold = 0.55) {
+    if (colorValue === undefined || colorValue === null) {
+      return true;
+    }
+
+    const color = colorStringValue(colorValue);
     const lum = tinycolor(color).getLuminance();
     return lum < darkThreshold;
   }
@@ -413,7 +423,7 @@ function threeDigitHexToSix(value: string) {
 
 function generatePaletteCacheResolver(color: string, options?: GeneratePaletteOptions) {
   return `${color}${options ? '_' + JSON.stringify(options) : ''}`;
-} 
+}
 
 const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette & typeof DesignTokens>;
 const colorObject = new TypedColors();

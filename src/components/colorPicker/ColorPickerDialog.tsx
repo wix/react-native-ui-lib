@@ -1,17 +1,16 @@
 import _ from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
 import {LayoutAnimation, StyleSheet, Keyboard, StyleProp, ViewStyle} from 'react-native';
-
 import {Constants, asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
 import {ModalProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../incubator/Dialog';
-import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS} from './ColorPickerPresenter';
+import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, HSLColor} from './ColorPickerPresenter';
 import Header from './ColorPickerDialogHeader';
 import Preview from './ColorPickerPreview';
 import Sliders from './ColorPickerDialogSliders';
 
-interface Props extends DialogProps {
+export interface ColorPickerDialogProps extends DialogProps {
   /**
    * The initial color to pass the picker dialog
    */
@@ -45,7 +44,6 @@ interface Props extends DialogProps {
    */
   migrate?: boolean;
 }
-export type ColorPickerDialogProps = Props;
 
 const KEYBOARD_HEIGHT = 216;
 const MODAL_PROPS = {
@@ -57,7 +55,7 @@ const MODAL_PROPS = {
  * @extends: Dialog
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  */
-const ColorPickerDialog = (props: Props) => {
+const ColorPickerDialog = (props: ColorPickerDialogProps) => {
   const {
     initialColor = Colors.$backgroundNeutralLight,
     dialogProps,
@@ -149,8 +147,9 @@ const ColorPickerDialog = (props: Props) => {
     setValid(valid);
   };
 
-  const updateColor = useCallback((hex: string) => {
-    setColor(Colors.getHSL(hex));
+  const updateColor = useCallback((value: HSLColor) => {
+    setColor(value);
+    const hex = Colors.getHexString(value);
     setText(_.toUpper(getColorValue(hex)));
     setValid(true);
   }, []);
@@ -191,7 +190,7 @@ const ColorPickerDialog = (props: Props) => {
 
 ColorPickerDialog.displayName = 'ColorPicker';
 
-export default asBaseComponent<Props>(ColorPickerDialog);
+export default asBaseComponent<ColorPickerDialogProps>(ColorPickerDialog);
 
 const styles = StyleSheet.create({
   dialog: {

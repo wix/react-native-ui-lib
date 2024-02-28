@@ -4,8 +4,9 @@ import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
+import {SegmentedControlProps} from './index';
 
-export type SegmentedControlItemProps = {
+export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabelStyle'> & {
   /**
    * The label of the segment.
    */
@@ -72,6 +73,7 @@ const Segment = React.memo((props: SegmentProps) => {
     index,
     iconOnRight,
     style,
+    segmentLabelStyle,
     testID
   } = props;
 
@@ -116,7 +118,11 @@ const Segment = React.memo((props: SegmentProps) => {
     >
       {!iconOnRight && renderIcon()}
       {label && (
-        <Reanimated.Text fsTagName={'unmasked'} numberOfLines={1} style={[animatedTextStyle, Typography.text90]}>
+        <Reanimated.Text
+          fsTagName={'unmasked'}
+          numberOfLines={1}
+          style={[Typography.text90, segmentLabelStyle, animatedTextStyle]}
+        >
           {label}
         </Reanimated.Text>
       )}

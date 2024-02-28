@@ -35,6 +35,7 @@ export type PointProps = {
   color?: string;
   icon?: ImageRequireSource;
   iconProps?: IconProps;
+  removeIconBackground?: boolean;
   label?: number;
   /** to align point to this view's center */
   anchorRef?: React.MutableRefObject<undefined>;
