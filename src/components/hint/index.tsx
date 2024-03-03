@@ -442,7 +442,6 @@ class Hint extends Component<HintProps, HintState> {
     const tipPosition = this.getTipPosition();
     const locationOnScreen = this.getTargetPositionOnScreen();
     const {messageLayout} = this.state;
-    console.log(`Nitzan - tip location layout`, tipPosition, locationOnScreen, messageLayout);
     if (
       (typeof tipPosition.left === 'number' || typeof tipPosition.right === 'number') &&
       messageLayout.width &&
@@ -460,7 +459,6 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   onMessageLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
-    console.log(`Nitzan - layout`, layout);
     this.setState({messageLayout: layout});
   };
 
@@ -490,7 +488,6 @@ class Hint extends Component<HintProps, HintState> {
       visible,
       testID
     } = this.props;
-    console.log(`Nitzan - this.getMessagePosition()`, this.getMessagePosition());
     return (
       <View
         testID={`${testID}.message`}
