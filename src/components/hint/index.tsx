@@ -151,6 +151,7 @@ interface HintState {
   targetLayout?: HintTargetFrame;
   targetLayoutInWindow?: HintTargetFrame;
   hintUnmounted: boolean;
+  messageLayout?: HintTargetFrame;
 }
 
 /**
@@ -176,7 +177,8 @@ class Hint extends Component<HintProps, HintState> {
   state = {
     targetLayoutInWindow: undefined as {x: number; y: number; width: number; height: number} | undefined,
     targetLayout: this.props.targetFrame,
-    hintUnmounted: !this.props.visible
+    hintUnmounted: !this.props.visible,
+    messageLayout: {} as HintTargetFrame
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
@@ -330,7 +332,7 @@ class Hint extends Component<HintProps, HintState> {
     } else if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
       hintPositionStyle.alignItems = Constants.isRTL ? 'flex-end' : 'flex-start';
     }
-
+    delete hintPositionStyle.alignItems;
     return hintPositionStyle;
   }
 
@@ -436,6 +438,31 @@ class Hint extends Component<HintProps, HintState> {
       );
     }
   }
+  getMessagePosition() {
+    const tipPosition = this.getTipPosition();
+    const locationOnScreen = this.getTargetPositionOnScreen();
+    const {messageLayout} = this.state;
+    console.log(`Nitzan - tip location layout`, tipPosition, locationOnScreen, messageLayout);
+    if (
+      (typeof tipPosition.left === 'number' || typeof tipPosition.right === 'number') &&
+      messageLayout.width &&
+      this.tipSize.width
+    ) {
+      const tipOffset = tipPosition.left || tipPosition.right;
+      if (typeof tipOffset === 'number') {
+        return locationOnScreen === TARGET_POSITIONS.CENTER
+          ? {left: tipOffset - messageLayout.width / 2 - this.tipSize.width / 2}
+          : locationOnScreen === TARGET_POSITIONS.LEFT
+            ? {left: 0}
+            : {right: 0};
+      }
+    }
+  }
+
+  onMessageLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
+    console.log(`Nitzan - layout`, layout);
+    this.setState({messageLayout: layout});
+  };
 
   renderHintTip() {
     const {position, color = DEFAULT_COLOR} = this.props;
@@ -463,7 +490,7 @@ class Hint extends Component<HintProps, HintState> {
       visible,
       testID
     } = this.props;
-
+    console.log(`Nitzan - this.getMessagePosition()`, this.getMessagePosition());
     return (
       <View
         testID={`${testID}.message`}
@@ -474,13 +501,19 @@ class Hint extends Component<HintProps, HintState> {
           !removePaddings && styles.hintPaddings,
           visible && enableShadow && styles.containerShadow,
           {backgroundColor: color},
-          !_.isUndefined(borderRadius) && {borderRadius}
+          !_.isUndefined(borderRadius) && {borderRadius},
+          this.getMessagePosition()
         ]}
         ref={this.hintRef}
+        onLayout={this.onMessageLayout}
       >
         {customContent}
         {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-        {!customContent && <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>{message}</Text>}
+        {!customContent && (
+          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>
+            {message}
+          </Text>
+        )}
       </View>
     );
   }
@@ -498,7 +531,8 @@ class Hint extends Component<HintProps, HintState> {
             styles.animatedContainer,
             this.getHintPosition(),
             this.getHintPadding(),
-            this.getHintAnimatedStyle()
+            this.getHintAnimatedStyle(),
+            {backgroundColor: 'red'}
           ]}
           pointerEvents="box-none"
           testID={testID}
@@ -638,7 +672,9 @@ const styles = StyleSheet.create({
   hint: {
     maxWidth: Math.min(Constants.windowWidth - 2 * Spacings.s4, 400),
     borderRadius: BorderRadiuses.br60,
-    backgroundColor: DEFAULT_COLOR
+    backgroundColor: DEFAULT_COLOR,
+    alignSelf: 'flex-start',
+    position: 'absolute'
   },
   hintPaddings: {
     paddingHorizontal: Spacings.s5,
