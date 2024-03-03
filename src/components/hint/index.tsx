@@ -314,7 +314,7 @@ class Hint extends Component<HintProps, HintState> {
 
   getHintPosition() {
     const {position} = this.props;
-    const hintPositionStyle: HintPositionStyle = {};
+    const hintPositionStyle: Position = {};
 
     if (this.targetLayout?.x !== undefined) {
       hintPositionStyle.left = -this.targetLayout.x;
@@ -430,24 +430,34 @@ class Hint extends Component<HintProps, HintState> {
       );
     }
   }
-  getMessagePosition() {
+  getMessagePosition(): Position {
+    const {position} = this.props;
     const tipPosition = this.getTipPosition();
     const locationOnScreen = this.getTargetPositionOnScreen();
     const {messageLayout} = this.state;
+    const messagePositionStyle: Position = {};
+    const {width: tipWidth} = this.tipSize;
     if (
       (typeof tipPosition.left === 'number' || typeof tipPosition.right === 'number') &&
       messageLayout.width &&
-      this.tipSize.width
+      tipWidth
     ) {
       const tipOffset = tipPosition.left || tipPosition.right;
       if (typeof tipOffset === 'number') {
-        return locationOnScreen === TARGET_POSITIONS.CENTER
-          ? {left: tipOffset - messageLayout.width / 2 - this.tipSize.width / 2}
+        locationOnScreen === TARGET_POSITIONS.CENTER
+          ? (messagePositionStyle.left = tipOffset - messageLayout.width / 2 - tipWidth / 2)
           : locationOnScreen === TARGET_POSITIONS.LEFT
-            ? {left: 0}
-            : {right: 0};
+            ? (messagePositionStyle.left = 0)
+            : (messagePositionStyle.right = 0);
       }
     }
+
+    if (position === HintPositions.TOP) {
+      messagePositionStyle.bottom = 0;
+    } else {
+      messagePositionStyle.top = 0;
+    }
+    return messagePositionStyle;
   }
 
   onMessageLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
