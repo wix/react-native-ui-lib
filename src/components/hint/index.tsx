@@ -531,8 +531,7 @@ class Hint extends Component<HintProps, HintState> {
             styles.animatedContainer,
             this.getHintPosition(),
             this.getHintPadding(),
-            this.getHintAnimatedStyle(),
-            {backgroundColor: 'red'}
+            this.getHintAnimatedStyle()
           ]}
           pointerEvents="box-none"
           testID={testID}
