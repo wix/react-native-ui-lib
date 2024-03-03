@@ -314,7 +314,7 @@ class Hint extends Component<HintProps, HintState> {
 
   getHintPosition() {
     const {position} = this.props;
-    const hintPositionStyle: HintPositionStyle = {alignItems: 'center'};
+    const hintPositionStyle: HintPositionStyle = {};
 
     if (this.targetLayout?.x !== undefined) {
       hintPositionStyle.left = -this.targetLayout.x;
@@ -325,14 +325,6 @@ class Hint extends Component<HintProps, HintState> {
     } else if (this.targetLayout?.height) {
       hintPositionStyle.top = this.targetLayout.height;
     }
-
-    const targetPositionOnScreen = this.getTargetPositionOnScreen();
-    if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
-      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-start' : 'flex-end';
-    } else if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
-      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-end' : 'flex-start';
-    }
-    delete hintPositionStyle.alignItems;
     return hintPositionStyle;
   }
 
