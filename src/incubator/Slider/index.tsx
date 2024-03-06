@@ -313,7 +313,7 @@ const Slider = React.memo((props: Props) => {
     end.value = width;
     stepInterpolatedValue.value = Math.abs(getStepInterpolated(width, minimumValue, maximumValue, stepXValue));
     setInitialPositions(width);
-  }, []);
+  }, [minimumValue, maximumValue, value, setInitialPositions]);
 
   const onTrackPress = useCallback((event: GestureResponderEvent) => {
     if (disabled) {
