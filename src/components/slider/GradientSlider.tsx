@@ -3,7 +3,6 @@ import React, {useCallback, useEffect, useState, useMemo} from 'react';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
 import {Colors} from '../../style';
-import {useThemeProps} from '../../hooks';
 import {Slider as NewSlider} from '../../incubator';
 import Gradient from '../gradient';
 import {GradientSliderProps, GradientSliderTypes, HSLA} from './types';
@@ -23,7 +22,6 @@ type Props<T> = GradientSliderComponentProps<T> & ForwardRefInjectedProps;
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/GradientSlider/GradientSlider.gif?raw=true
  */
 const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
-  const themeProps = useThemeProps(props, 'GradientSlider');
   const {
     type = GradientSliderTypes.DEFAULT,
     gradientSteps = 120,
@@ -36,7 +34,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     accessible,
     forwardedRef,
     ...others
-  } = themeProps;
+  } = props;
 
   const initialColor = useMemo((): HSLA => {
     return _.isString(propsColors) ? Colors.getHSL(propsColors) : propsColors;
