@@ -1,12 +1,11 @@
 import _ from 'lodash';
 import {fireEvent} from '@testing-library/react-native';
-import {TextFieldProps} from './types';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {TextDriver} from '../text/Text.driver.new';
 import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
 export const TextFieldDriver = (props: ComponentProps) => {
-  const driver = usePressableDriver<TextFieldProps>(useComponentDriver(props));
+  const driver = usePressableDriver(useComponentDriver(props));
 
   const floatingPlaceholderDriver = TextDriver({
     renderTree: props.renderTree,
@@ -26,7 +25,7 @@ export const TextFieldDriver = (props: ComponentProps) => {
   });
 
   const getValue = (): string | undefined => {
-    return driver.getProps().value ?? driver.getProps().defaultValue;
+    return driver.getElementProps().value ?? driver.getElementProps().defaultValue;
   };
 
   const changeText = (text: string): void => {
@@ -42,18 +41,18 @@ export const TextFieldDriver = (props: ComponentProps) => {
   };
 
   const isEnabled = (): boolean => {
-    return !driver.getProps().accessibilityState?.disabled;
+    return !driver.getElementProps().accessibilityState?.disabled;
   };
 
   const getPlaceholder = () => {
     const exists = (): boolean => {
-      const hasPlaceholder = !!driver.getProps().placeholder;
+      const hasPlaceholder = !!driver.getElementProps().placeholder;
       const hasText = !!getValue();
       return hasPlaceholder && (!hasText || (hasText && floatingPlaceholderDriver.exists()));
     };
     const getText = (): string | undefined => {
       if (exists()) {
-        return driver.getProps().placeholder;
+        return driver.getElementProps().placeholder;
       }
     };
 

@@ -4,8 +4,8 @@ import {WheelPickerDriver} from '../WheelPicker/WheelPicker.driver';
 import {SectionsWheelPickerProps} from './index';
 
 export const SectionsWheelPickerDriver = (props: ComponentProps) => {
-  const driver = useComponentDriver<SectionsWheelPickerProps>(props);
-  const sections = driver.getProps().children as SectionsWheelPickerProps;
+  const driver = useComponentDriver(props);
+  const sections = driver.getElementChildren() as SectionsWheelPickerProps;
   const sectionsDrivers = _.map(sections, (_, index) => {
     const sectionTestID = `${props.testID}.${index}`;
     return WheelPickerDriver({

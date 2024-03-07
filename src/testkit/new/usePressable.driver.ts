@@ -2,7 +2,7 @@ import {fireEvent} from '@testing-library/react-native';
 import {ComponentDriverResult} from './Component.driver';
 import {PressableProps} from 'react-native';
 
-export interface PressableDriverResult<Props> extends ComponentDriverResult<Props> {
+export interface PressableDriverResult extends ComponentDriverResult {
   press: () => void;
   hasOnPress: () => boolean;
   onPressIn: () => void;
@@ -18,17 +18,16 @@ export type PressableDriverProps = Partial<
 >;
 
 export const usePressableDriver = <
-  Props extends PressableDriverProps,
-  DriverProps extends ComponentDriverResult<Props> = ComponentDriverResult<Props> // Allows for chaining multiple drivers
+  DriverProps extends ComponentDriverResult = ComponentDriverResult // Allows for chaining multiple drivers
 >(
     driver: DriverProps
-  ): PressableDriverResult<Props> & DriverProps => {
+  ): PressableDriverResult & DriverProps => {
   const press = () => {
     fireEvent.press(driver.getElement());
   };
 
   const hasOnPress = () => {
-    return typeof driver.getProps().onPress === 'function';
+    return typeof driver.getElementProps().onPress === 'function';
   };
 
   const onPressIn = () => {
@@ -36,7 +35,7 @@ export const usePressableDriver = <
   };
 
   const hasOnPressIn = () => {
-    return typeof driver.getProps().onPressIn === 'function';
+    return typeof driver.getElementProps().onPressIn === 'function';
   };
 
   const onPressOut = () => {
@@ -44,7 +43,7 @@ export const usePressableDriver = <
   };
 
   const hasOnPressOut = () => {
-    return typeof driver.getProps().onPressOut === 'function';
+    return typeof driver.getElementProps().onPressOut === 'function';
   };
 
   const onLongPress = () => {
@@ -52,7 +51,7 @@ export const usePressableDriver = <
   };
 
   const hasOnLongPress = () => {
-    return typeof driver.getProps().onLongPress === 'function';
+    return typeof driver.getElementProps().onLongPress === 'function';
   };
 
   return {
