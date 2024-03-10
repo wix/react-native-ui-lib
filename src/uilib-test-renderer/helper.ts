@@ -9,10 +9,11 @@ interface Component {
 }
 
 const findStyle = <T>(key: string, component: Component): T => {
-  const style = component.props.style;
+  const style = component?.props?.style;
   if (style) {
     return StyleSheet.flatten(style)[key];
   }
+  return style;
 };
 
 export {findStyle};
