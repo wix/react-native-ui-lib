@@ -28,7 +28,7 @@ export interface FloatingButtonProps {
    */
   bottomMargin?: number;
   /**
-   * Whether the buttons get the container's full with (in vertical layout with secondary button)
+   * Whether the buttons get the container's full with (vertical layout only)
    */
   fullWidth?: boolean;
   /**
