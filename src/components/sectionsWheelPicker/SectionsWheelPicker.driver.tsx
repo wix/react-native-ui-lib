@@ -4,32 +4,18 @@ import {WheelPickerDriver} from '../WheelPicker/WheelPicker.driver';
 import {SectionsWheelPickerProps} from './index';
 
 
-type CustomSectionsTestIds = {
-  customSectionTestIds?: string[]
-};
+export const SectionsWheelPickerDriver = (props: ComponentProps) => {
+  const driver = useComponentDriver<SectionsWheelPickerProps>(props);
 
-export const SectionsWheelPickerDriver = (props: ComponentProps & CustomSectionsTestIds) => {
-  const {customSectionTestIds, ...others} = props;
-  const driver = useComponentDriver<SectionsWheelPickerProps>(others);
-
-  let sectionsDrivers: (ReturnType<typeof WheelPickerDriver>)[];
-  const {renderTree} = props;
-  if (customSectionTestIds) {
-    sectionsDrivers = customSectionTestIds.map(testID => {
-      return WheelPickerDriver({
-        renderTree,
-        testID
-      });
-    });
-  } else {
-    // Default sections test ids.
-    sectionsDrivers = React.Children.toArray(driver.getElement().props.children).map((_section, index) => {
+  const sectionsDrivers = React.Children.toArray(driver.getElement().props.children).map((_section, index) => {
+    if (typeof _section === 'object' && 'props' in _section) {
       return WheelPickerDriver({
         renderTree: props.renderTree,
         testID: `${props.testID}.${index}`
       });
-    });
-  }
+    }
+    return undefined;
+  }).filter((driver): driver is ReturnType<typeof WheelPickerDriver> => !!driver);
 
   return {...driver, sectionsDrivers};
 };
