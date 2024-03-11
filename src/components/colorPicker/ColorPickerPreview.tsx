@@ -144,7 +144,7 @@ const Preview = (props: PreviewProps) => {
       <View style={styles.inputContainer}>
         {!isFocused ? (
           <TouchableOpacity
-            bg-red10
+            // bg-red10
             center
             onPress={() => {
               _onFocus();

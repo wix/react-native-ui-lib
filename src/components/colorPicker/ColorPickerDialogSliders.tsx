@@ -14,12 +14,13 @@ const Sliders = (props: SlidersProps) => {
   const {keyboardHeight, migrate} = props;
   const colorPickerContext = useContext(ColorPickerContext);
   const colorValue =
-    !colorPickerContext || colorPickerContext.value.value.a === 0
+    !colorPickerContext || colorPickerContext.statefulColor.a === 0
       ? Colors.getHSL(Colors.$backgroundInverted)
-      : colorPickerContext?.value.value;
-
+      : colorPickerContext.statefulColor;
+  console.log(`Nitzan - sliders colorValue`, colorValue);
   return (
     <ColorSliderGroup<HSLColor>
+      key={Colors.getHexString(colorValue)}
       initialColor={colorValue}
       containerStyle={[styles.sliderGroup, {height: keyboardHeight}]}
       sliderContainerStyle={styles.slider}

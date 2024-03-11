@@ -47,6 +47,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
   }
   
   useEffect(() => {
+    console.log(`Nitzan - dfgsdfgjsfgjh`, )
     setColor(initialColor);
   }, [initialColor]);
 

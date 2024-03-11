@@ -61,15 +61,11 @@ export const ColorPickerContextProvider = (props: ColorPickerContextProviderProp
 
   useAnimatedReaction(() => {
     const {h, s, l} = color.value;
-    console.log(`Nitzan - changed`, h);
-    console.log(`Nitzan - hslToHex({h, s: s * 100, l: l * 100})`, hslToHex({h, s: s * 100, l: l * 100}));
     return getValidColorString(hslToHex({h, s: s * 100, l: l * 100}));
   },
   (current, prev) => {
-    console.log(`Nitzan - current.hex, prev?.hex`, current.hex, prev?.hex);
     if (current.hex !== prev?.hex) {
       if (current.valid) {
-        console.log(`Nitzan - hex changing`, current.hex);
         hex.value = current.hex?.toUpperCase();
       }
     }
