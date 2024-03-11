@@ -13,7 +13,8 @@ export default class FloatingButtonScreen extends Component<{}, State> {
   state = {
     showButton: true,
     showSecondary: true,
-    showVertical: true
+    showVertical: true,
+    fullWidth: false
   };
 
   notNow = () => {
@@ -34,6 +35,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
           Trigger Floating Button
         </Text>
         {renderBooleanOption.call(this, 'Show Floating Button', 'showButton')}
+        {renderBooleanOption.call(this, 'Full Width Button', 'fullWidth')}
         {renderBooleanOption.call(this, 'Show Secondary Button', 'showSecondary')}
         {renderBooleanOption.call(this, 'Button Layout Vertical', 'showVertical')}
 
@@ -64,6 +66,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
 
         <FloatingButton
           visible={this.state.showButton}
+          fullWidth={this.state.fullWidth}
           button={{
             label: 'Approve',
             onPress: this.close
