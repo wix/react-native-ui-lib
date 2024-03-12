@@ -22,4 +22,3 @@ export const ExpandableOverlayDriver = <Props extends ExpandableOverlayProps>(pr
 
   return {...driver, getOverlay};
 };
-
