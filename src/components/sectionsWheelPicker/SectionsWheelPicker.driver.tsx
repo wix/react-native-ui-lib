@@ -3,10 +3,8 @@ import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.dr
 import {WheelPickerDriver} from '../WheelPicker/WheelPicker.driver';
 import {SectionsWheelPickerProps} from './index';
 
-
 export const SectionsWheelPickerDriver = (props: ComponentProps) => {
   const driver = useComponentDriver<SectionsWheelPickerProps>(props);
-
   const sectionsDrivers = React.Children.toArray(driver.getElement().props.children).map((section) => {
     if (typeof section === 'object' && 'props' in section) {
       return WheelPickerDriver({
