@@ -126,7 +126,7 @@ class Modal extends Component<ModalProps> {
       <RNModal visible={Boolean(visible)} {...others}>
         <GestureContainer {...gestureContainerProps}>
           <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
-            <Container style={styles.fill} blurType="light" testID={`${others.testID}.modalContainer`}>
+            <Container style={styles.fill} blurType="light">
               {this.renderTouchableOverlay()}
               {this.props.children}
             </Container>
