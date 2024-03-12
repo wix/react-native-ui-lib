@@ -8,7 +8,7 @@ export const ModalDriver = (props: ComponentProps) => {
   const overlayDriver = ButtonDriver({renderTree, testID: `${testID}.TouchableOverlay`});
 
   const isVisible = () => {
-    return driver.getProps().visible;
+    return !!driver.getProps().visible;
   };
 
   return {...driver, isVisible, pressOnBackground: overlayDriver.press};
