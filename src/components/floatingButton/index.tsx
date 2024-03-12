@@ -193,8 +193,8 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
     return (
       <View
-        row={!!this.isSecondaryHorizontal}
-        center={!!this.isSecondaryHorizontal || !fullWidth}
+        row={this.isSecondaryHorizontal}
+        center={this.isSecondaryHorizontal || !fullWidth}
         paddingH-16={!this.isSecondaryHorizontal && fullWidth}
         pointerEvents="box-none"
         animated
