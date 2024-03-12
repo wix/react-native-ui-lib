@@ -36,20 +36,39 @@ describe('ExpandableOverlay', () => {
     it('should render', () => {
       render(<TestCase/>);
     });
-    it('should open dialog when pressed', () => {
-      const {driver} = getDriver({useDialog: true});
-      expect(driver.getOverlay().getModal().isVisible()).toBeFalsy();
-      driver.press();
-      expect(driver.getOverlay().getModal().isVisible()).toBeTruthy();
+    describe('with useDialog true', () => {
+      it('should open dialog when pressed', () => {
+        const {driver} = getDriver({useDialog: true});
+        expect(driver.getOverlay().getModal().isVisible()).toBeFalsy();
+        driver.press();
+        expect(driver.getOverlay().getModal().isVisible()).toBeTruthy();
+      });
+      const universe = 'Hello Universe';
+      it(`should render ${helloWorld} on starting view and ${universe} in the dialog only after pressing`, () => {
+        const content = <Text>{universe}</Text>;
+        const {driver, renderTree} = getDriver({useDialog: true, expandableContent: content});
+        expect(renderTree.queryByText(helloWorld)).toBeTruthy();
+        expect(renderTree.queryByText(universe)).toBeFalsy();
+        driver.press();
+        expect(renderTree.queryByText(universe)).toBeTruthy();
+      });
     });
-    const universe = 'Hello Universe';
-    it(`should render ${helloWorld} on starting view and ${universe} in the dialog only after pressing`, () => {
-      const content = <Text>{universe}</Text>;
-      const {driver, renderTree} = getDriver({useDialog: true, expandableContent: content});
-      expect(renderTree.queryByText(helloWorld)).toBeTruthy();
-      expect(renderTree.queryByText(universe)).toBeFalsy();
-      driver.press();
-      expect(renderTree.queryByText(universe)).toBeTruthy();
+    describe('with useDialog false', () => {
+      it('should open modal when pressed', () => {
+        const {driver} = getDriver({useDialog: false});
+        expect(driver.getOverlay().isVisible()).toBeFalsy();
+        driver.press();
+        expect(driver.getOverlay().isVisible()).toBeTruthy();
+      });
+      const universe = 'Hello Universe';
+      it(`should render ${helloWorld} on starting view and ${universe} in the modal only after pressing`, () => {
+        const content = <Text>{universe}</Text>;
+        const {driver, renderTree} = getDriver({useDialog: false, expandableContent: content});
+        expect(renderTree.queryByText(helloWorld)).toBeTruthy();
+        expect(renderTree.queryByText(universe)).toBeFalsy();
+        driver.press();
+        expect(renderTree.queryByText(universe)).toBeTruthy();
+      });
     });
   });
 });
