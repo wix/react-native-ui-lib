@@ -13,6 +13,7 @@ import {
   PanningProvider,
   Typography,
   PickerProps,
+  RenderCustomModalProps,
   PickerMethods,
   Button
 } from 'react-native-ui-lib'; //eslint-disable-line
@@ -73,7 +74,7 @@ export default class PickerScreen extends Component {
     contact: 0
   };
 
-  renderDialog: PickerProps['renderCustomModal'] = modalProps => {
+  renderDialog: PickerProps['renderCustomModal'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
 
     return (
@@ -81,7 +82,7 @@ export default class PickerScreen extends Component {
         visible={visible}
         onDismiss={() => {
           onDone();
-          toggleModal(false);
+          toggleModal();
         }}
         width="100%"
         height="45%"

@@ -3,8 +3,8 @@ import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperati
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
-import DialogOld, {DialogProps as DialogPropsOld} from '../../components/dialog';
-import DialogNew, {DialogProps as DialogPropsNew} from '../Dialog';
+import DialogOld from '../../components/dialog';
+import DialogNew, {DialogMigrationProps} from '../Dialog';
 import {Colors} from 'style';
 
 export interface ExpandableOverlayMethods {
@@ -17,29 +17,8 @@ export interface RenderCustomOverlayProps extends ExpandableOverlayMethods {
   visible: boolean;
 }
 
-export interface _DialogPropsOld {
-  /**
-   * The props to pass to the dialog expandable container
-   */
-  dialogProps?: DialogPropsOld;
-  migrateDialog?: false;
-}
-
-export interface _DialogPropsNew {
-  /**
-   * The props to pass to the dialog expandable container
-   */
-  dialogProps?: DialogPropsNew;
-  /**
-   * Migrate the Dialog to DialogNew (make sure you use only new props in dialogProps)
-   */
-  migrateDialog: true;
-}
-
-export type DialogProps = _DialogPropsOld | _DialogPropsNew;
-
 export type ExpandableOverlayProps = TouchableOpacityProps &
-  DialogProps &
+  DialogMigrationProps &
   PropsWithChildren<{
     /**
      * The content to render inside the expandable modal/dialog

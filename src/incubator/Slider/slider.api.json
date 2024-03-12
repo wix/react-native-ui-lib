@@ -1,6 +1,6 @@
 {
   "name": "Slider",
-  "category": "Incubator",
+  "category": "incubator",
   "description": "A Slider component",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorSliderScreen.tsx",
   "images": [],
@@ -61,7 +61,7 @@
       "description": "Custom render instead of rendering the track"
     },
     {"name": "thumbTintColor", "type": "string", "description": "Thumb color"},
-    {"name": "DisabledThumbTintColor", "type": "string", "description": "Disabled thumb color"},
+    {"name": "disabledThumbTintColor", "type": "string", "description": "Disabled thumb color"},
     {"name": "thumbStyle", "type": "ViewStyle", "description": "The thumb style"},
     {"name": "activeThumbStyle", "type": "ViewStyle", "description": "The active (during press) thumb style"},
     {
