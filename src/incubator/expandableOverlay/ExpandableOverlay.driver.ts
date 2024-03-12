@@ -1,5 +1,8 @@
-import {DialogDriver, ModalDriver, useComponentDriver, usePressableDriver, ComponentProps} from '../../../testkit';
-import {ExpandableOverlayProps} from '.';
+import type {ExpandableOverlayProps} from '.';
+import {ModalDriver} from '../../components/modal/Modal.driver.new';
+import {DialogDriver} from '../Dialog/Dialog.driver.new';
+import {type ComponentProps, useComponentDriver} from '../../testkit/new/Component.driver';
+import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
 type OverlayDriverType<Props extends ExpandableOverlayProps> = Props extends {useDialog: true}
   ? ReturnType<typeof DialogDriver>
