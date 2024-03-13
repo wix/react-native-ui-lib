@@ -4,7 +4,7 @@ import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.dr
 import {useScrollableDriver} from '../../testkit/new/useScrollable.driver';
 import {TextDriver} from '../../components/text/Text.driver.new';
 
-export const WheelPickerDriver = <T extends string | number = number>(props: ComponentProps) => {
+export const WheelPickerDriver = <T extends string | number>(props: ComponentProps) => {
   const driver = useComponentDriver<WheelPickerProps<T>>(props);
 
   const listDriver = useScrollableDriver<FlatListProps<WheelPickerItemProps<T>>>(useComponentDriver({

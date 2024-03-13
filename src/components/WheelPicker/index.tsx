@@ -18,14 +18,14 @@ import {useThemeProps} from '../../hooks';
 import View from '../view';
 import Text, {TextProps} from '../text';
 import Fader, {FaderPosition, FaderProps} from '../fader';
-import Item, {ItemProps} from './Item';
+import Item, {WheelPickerItemProps} from './Item';
 import usePresenter from './usePresenter';
 import {WheelPickerAlign} from './types';
 export {WheelPickerAlign};
 
 export const ITEM_HEIGHT = 44;
 
-export type WheelPickerProps<T> = {
+export type WheelPickerProps<T = string | number> = {
   /**
    * Initial value
    */
@@ -33,7 +33,7 @@ export type WheelPickerProps<T> = {
   /**
    * Data source for WheelPicker
    */
-  items?: ItemProps<T>[];
+  items?: WheelPickerItemProps<T>[];
   /**
    * Describe the height of each item in the WheelPicker
    * default value: 44
@@ -97,11 +97,12 @@ export type WheelPickerProps<T> = {
   /**
    * Props to be sent to the FlatList
    */
-  flatListProps?: Partial<FlatListProps<ItemProps<T>>>;
+  flatListProps?: Partial<FlatListProps<WheelPickerItemProps<T>>>;
 }
 
-const WheelPicker = <T extends string | number = number>(props: WheelPickerProps<T>) => {
-  const AnimatedFlatList = useMemo(() => Animated.createAnimatedComponent<FlatListProps<ItemProps<T>>>(FlatList), []);
+const WheelPicker = <T extends string | number>(props: WheelPickerProps<T>) => {
+  const AnimatedFlatList = 
+    useMemo(() => Animated.createAnimatedComponent<FlatListProps<WheelPickerItemProps<T>>>(FlatList), []);
   const themeProps = useThemeProps(props, 'WheelPicker');
 
   const {
@@ -150,7 +151,7 @@ const WheelPicker = <T extends string | number = number>(props: WheelPickerProps
   const prevInitialValue = useRef(initialValue);
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
-  const keyExtractor = useCallback((item: ItemProps<T>, index: number) => `${item}.${index}`, []);
+  const keyExtractor = useCallback((item: WheelPickerItemProps<T>, index: number) => `${item}.${index}`, []);
   const androidFlatListProps = useMemo(() => {
     if (Constants.isAndroid) {
       return {
@@ -228,7 +229,7 @@ const WheelPicker = <T extends string | number = number>(props: WheelPickerProps
     return {...labelMargins, ...labelProps};
   }, [labelMargins, labelProps]);
 
-  const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps<T>>) => {
+  const renderItem = useCallback(({item, index}: ListRenderItemInfo<WheelPickerItemProps<T>>) => {
     return (
       <Item
         index={index}
@@ -381,7 +382,7 @@ const WheelPicker = <T extends string | number = number>(props: WheelPickerProps
 
 WheelPicker.alignments = WheelPickerAlign;
 export default WheelPicker;
-export {ItemProps as WheelPickerItemProps};
+export {WheelPickerItemProps};
 
 const styles = StyleSheet.create({
   separators: {

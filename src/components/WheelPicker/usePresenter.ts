@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import {LogService} from '../../services';
 import useMiddleIndex from './helpers/useListMiddleIndex';
-import {ItemProps} from './Item';
+import {WheelPickerItemProps} from './Item';
 
 //TODO: deprecate this type
 export type ItemValueTypes = /* ItemProps |  */number | string;
@@ -10,7 +10,7 @@ export type ItemValueTypes = /* ItemProps |  */number | string;
 type PropTypes<T> = {
   initialValue?: T;
   children?: JSX.Element | JSX.Element[];
-  items?: ItemProps<T>[];
+  items?: WheelPickerItemProps<T>[];
   itemHeight: number;
   preferredNumVisibleRows: number;
 };
@@ -20,7 +20,7 @@ type RowItem<T> = {
   index: number;
 };
 
-const usePresenter = <T extends string | number = number>({
+const usePresenter = <T extends string | number>({
   initialValue,
   children,
   items: propItems,
@@ -28,9 +28,9 @@ const usePresenter = <T extends string | number = number>({
   preferredNumVisibleRows
 }: PropTypes<T>) => {
 
-  const extractItemsFromChildren = (): ItemProps<T>[] => {
+  const extractItemsFromChildren = (): WheelPickerItemProps<T>[] => {
     const items = React.Children.map(children, child => {
-      const childAsType: ItemProps<T> = {value: child?.props.value, label: child?.props.label};
+      const childAsType: WheelPickerItemProps<T> = {value: child?.props.value, label: child?.props.label};
       return childAsType;
     });
     return items || [];

@@ -43,7 +43,7 @@ export type SectionsWheelPickerProps<T> = PropsWithChildren<{
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/SectionsWheelPicker/SectionsWheelPicker.gif?raw=true
  */
 
-const SectionsWheelPicker = <T extends string | number = number>(props: SectionsWheelPickerProps<T>) => {
+const SectionsWheelPicker = <T extends string | number>(props: SectionsWheelPickerProps<T>) => {
   const themeProps = useThemeProps(props, 'SectionsWheelPicker');
   const {
     sections,
