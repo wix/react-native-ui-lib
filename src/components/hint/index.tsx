@@ -432,30 +432,38 @@ class Hint extends Component<HintProps, HintState> {
     const {position} = this.props;
     const tipPosition = this.getTipPosition();
     const locationOnScreen = this.getTargetPositionOnScreen();
-    const {messageLayout} = this.state;
-    const messagePositionStyle: Position = {};
-    const {width: tipWidth} = this.tipSize;
-    if (
-      (typeof tipPosition.left === 'number' || typeof tipPosition.right === 'number') &&
-      messageLayout.width &&
-      tipWidth
-    ) {
-      const tipOffset = tipPosition.left || tipPosition.right;
-      if (typeof tipOffset === 'number') {
-        locationOnScreen === TARGET_POSITIONS.CENTER
-          ? (messagePositionStyle.left = tipOffset - messageLayout.width / 2 - tipWidth / 2)
-          : locationOnScreen === TARGET_POSITIONS.LEFT
-            ? (messagePositionStyle.left = 0)
-            : (messagePositionStyle.right = 0);
+    const {
+      messageLayout: {width: messageWidth, height: messageHeight}
+    } = this.state;
+    const {height: tipHeight, width: tipWidth} = this.tipSize;
+    let messagePosition: Position = {};
+    if (!messageWidth || typeof messageWidth !== 'number') {
+      return {};
+    }
+    if (locationOnScreen === TARGET_POSITIONS.CENTER) {
+      // The message should be centered on the tip
+      messagePosition = {...tipPosition};
+      messagePosition.left -= messageWidth / 2 - tipWidth / 2;
+    } else if (locationOnScreen === TARGET_POSITIONS.LEFT) {
+      // The tip should be on the left side of the message
+      messagePosition = {...tipPosition};
+      if (!this.useSideTip) {
+        messagePosition.left -= tipWidth;
+      }
+    } else {
+      /// The tip should be on the right side of the message.
+      messagePosition = {...tipPosition};
+      messagePosition.right += messageWidth;
+      if (!this.useSideTip) {
+        messagePosition.right -= tipWidth;
       }
     }
-
     if (position === HintPositions.TOP) {
-      messagePositionStyle.bottom = 0;
+      messagePosition.bottom = tipPosition.bottom + tipHeight + messageHeight;
     } else {
-      messagePositionStyle.top = 0;
+      messagePosition.top = tipPosition.top + tipHeight;
     }
-    return messagePositionStyle;
+    return messagePosition;
   }
 
   onMessageLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
@@ -498,15 +506,18 @@ class Hint extends Component<HintProps, HintState> {
           !removePaddings && styles.hintPaddings,
           visible && enableShadow && styles.containerShadow,
           {backgroundColor: color},
-          !_.isUndefined(borderRadius) && {borderRadius},
-          this.getMessagePosition()
+          !_.isUndefined(borderRadius) && {borderRadius}
         ]}
         ref={this.hintRef}
         onLayout={this.onMessageLayout}
       >
         {customContent}
         {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-        {!customContent && <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>{message}</Text>}
+        {!customContent && (
+          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>
+            {message}
+          </Text>
+        )}
       </View>
     );
   }
@@ -514,7 +525,6 @@ class Hint extends Component<HintProps, HintState> {
   renderHint() {
     const {onPress, testID} = this.props;
     const opacity = onPress ? 0.9 : 1.0;
-
     if (this.showHint) {
       return (
         <View
@@ -529,7 +539,11 @@ class Hint extends Component<HintProps, HintState> {
           pointerEvents="box-none"
           testID={testID}
         >
-          <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
+          <TouchableOpacity
+            activeOpacity={opacity}
+            onPress={onPress}
+            style={[this.getMessagePosition(), styles.message]}
+          >
             {this.renderContent()}
           </TouchableOpacity>
           {this.renderHintTip()}
@@ -661,11 +675,13 @@ const styles = StyleSheet.create({
   hintTip: {
     position: 'absolute'
   },
+  message: {
+    position: 'absolute'
+  },
   hint: {
     maxWidth: Math.min(Constants.windowWidth - 2 * Spacings.s4, 400),
     borderRadius: BorderRadiuses.br60,
     backgroundColor: DEFAULT_COLOR,
-    alignSelf: 'flex-start',
     position: 'absolute'
   },
   hintPaddings: {
