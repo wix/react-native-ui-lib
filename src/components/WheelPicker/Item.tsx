@@ -104,7 +104,7 @@ const WheelPickerItem = <T extends string | number = number>(props: InternalProp
   );
 };
 
-export default memo(WheelPickerItem) as typeof WheelPickerItem;
+export default memo(WheelPickerItem);
 
 const styles = StyleSheet.create({
   container: {
