@@ -70,13 +70,13 @@ describe('Text', () => {
       jest.isolateModules(() => {
         setConstants(true, true);
         const {textDriver} = getDriver();
-        const textStyle = textDriver.getElementProps().style;
+        const textStyle = textDriver.getElement().props.style;
         expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
       });
       jest.isolateModules(() => {
         setConstants(true, false);
         const {textDriver} = getDriver();
-        const textStyle = textDriver.getElementProps().style;
+        const textStyle = textDriver.getElement().props.style;
         expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
       });
     });
@@ -85,7 +85,7 @@ describe('Text', () => {
       jest.isolateModules(() => {
         setConstants(false, true);
         const {textDriver} = getDriver();
-        const textStyle = textDriver.getElementProps().style;
+        const textStyle = textDriver.getElement().props.style;
         expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('rtl');
       });
     });
@@ -93,7 +93,7 @@ describe('Text', () => {
       jest.isolateModules(() => {
         setConstants(false, false);
         const {textDriver} = getDriver();
-        const textStyle = textDriver.getElementProps().style;
+        const textStyle = textDriver.getElement().props.style;
         expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('ltr');
       });
     });
