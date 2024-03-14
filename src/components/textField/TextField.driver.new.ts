@@ -25,7 +25,7 @@ export const TextFieldDriver = (props: ComponentProps) => {
   });
 
   const getValue = (): string | undefined => {
-    return driver.getElementProps().value ?? driver.getElementProps().defaultValue;
+    return driver.getElement().props.value ?? driver.getElement().props.defaultValue;
   };
 
   const changeText = (text: string): void => {
@@ -41,18 +41,18 @@ export const TextFieldDriver = (props: ComponentProps) => {
   };
 
   const isEnabled = (): boolean => {
-    return !driver.getElementProps().accessibilityState?.disabled;
+    return !driver.getElement().props.accessibilityState?.disabled;
   };
 
   const getPlaceholder = () => {
     const exists = (): boolean => {
-      const hasPlaceholder = !!driver.getElementProps().placeholder;
+      const hasPlaceholder = !!driver.getElement().props.placeholder;
       const hasText = !!getValue();
       return hasPlaceholder && (!hasText || (hasText && floatingPlaceholderDriver.exists()));
     };
     const getText = (): string | undefined => {
       if (exists()) {
-        return driver.getElementProps().placeholder;
+        return driver.getElement().props.placeholder;
       }
     };
 

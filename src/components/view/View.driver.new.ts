@@ -4,7 +4,7 @@ export const ViewDriver = (props: ComponentProps) => {
   const driver = useComponentDriver(props);
 
   const getStyle = () => {
-    return driver.getElementProps().style;
+    return driver.getElement().props.style;
   };
   return {...driver, getStyle};
 };

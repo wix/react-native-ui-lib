@@ -9,8 +9,6 @@ export interface ComponentProps {
 export interface ComponentDriverResult {
   getElement: () => ReactTestInstance;
   exists: () => boolean;
-  getElementProps: () => ReactTestInstance['props'];
-  getElementChildren: () => ReactTestInstance['children'];
 }
 
 export const useComponentDriver = (props: ComponentProps): ComponentDriverResult => {
@@ -29,10 +27,6 @@ export const useComponentDriver = (props: ComponentProps): ComponentDriverResult
       throw new Error(`Could not find element with testID: ${testID}`);
     }
   };
-  
-  const getElementChildren = () => {
-    return getElement().children;
-  };
 
   const exists = (): boolean => {
     try {
@@ -43,11 +37,7 @@ export const useComponentDriver = (props: ComponentProps): ComponentDriverResult
     }
   };
 
-  const getElementProps = () => {
-    return getElement().props;
-  };
-
-  return {getElement, getElementChildren, exists, getElementProps};
+  return {getElement, exists};
 };
 
 export const ComponentDriver = (props: ComponentProps): ComponentDriverResult => {

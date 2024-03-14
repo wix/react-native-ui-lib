@@ -6,7 +6,7 @@ export const TextDriver = (props: ComponentProps) => {
   const driver = usePressableDriver(useComponentDriver(props));
 
   const getText = () => {
-    const textChildren = driver.getElementChildren();
+    const textChildren = driver.getElement().children;
     if (textChildren.length === 0) {
       return '';
     }
@@ -17,7 +17,7 @@ export const TextDriver = (props: ComponentProps) => {
   };
 
   const getStyle = () => {
-    return StyleSheet.flatten(driver.getElementProps().style) as TextStyle;
+    return StyleSheet.flatten(driver.getElement().props.style) as TextStyle;
   };
 
   return {...driver, getText, getStyle};

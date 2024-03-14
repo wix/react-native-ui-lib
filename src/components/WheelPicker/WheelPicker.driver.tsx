@@ -11,7 +11,7 @@ export const WheelPickerDriver = (props: ComponentProps) => {
     testID: `${props.testID}.list`
   }));
 
-  const itemsLength = listDriver.getElementProps().data?.length ?? 0;
+  const itemsLength = listDriver.getElement().props.data?.length ?? 0;
 
   const moveToItem = (index: number, itemHeight: number = ITEM_HEIGHT, numberOfRows: number = itemsLength) => {
     listDriver.triggerEvent('onMomentumScrollEnd', {
@@ -22,7 +22,7 @@ export const WheelPickerDriver = (props: ComponentProps) => {
   };
 
   const getListHeight = () => {
-    return listDriver.getElementProps().height;
+    return listDriver.getElement().props.height;
   };
 
   const labelDriver = TextDriver({

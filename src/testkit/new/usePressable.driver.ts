@@ -27,7 +27,7 @@ export const usePressableDriver = <
   };
 
   const hasOnPress = () => {
-    return typeof driver.getElementProps().onPress === 'function';
+    return typeof driver.getElement().props.onPress === 'function';
   };
 
   const onPressIn = () => {
@@ -35,7 +35,7 @@ export const usePressableDriver = <
   };
 
   const hasOnPressIn = () => {
-    return typeof driver.getElementProps().onPressIn === 'function';
+    return typeof driver.getElement().props.onPressIn === 'function';
   };
 
   const onPressOut = () => {
@@ -43,7 +43,7 @@ export const usePressableDriver = <
   };
 
   const hasOnPressOut = () => {
-    return typeof driver.getElementProps().onPressOut === 'function';
+    return typeof driver.getElement().props.onPressOut === 'function';
   };
 
   const onLongPress = () => {
@@ -51,7 +51,7 @@ export const usePressableDriver = <
   };
 
   const hasOnLongPress = () => {
-    return typeof driver.getElementProps().onLongPress === 'function';
+    return typeof driver.getElement().props.onLongPress === 'function';
   };
 
   return {
