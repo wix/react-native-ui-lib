@@ -25,6 +25,14 @@ import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
 
+export type RemoteImageData = {
+  isRemote: true;
+  source: {uri: string};
+  // TODO: We don't need maxWidth and maxHeight currently
+  dimensions: {width?: number; height?: number};
+  size?: number;
+};
+
 export type ImageProps = RNImageProps &
   MarginModifiers &
   RecorderProps & {
@@ -95,6 +103,10 @@ export type ImageProps = RNImageProps &
      * The image height
      */
     height?: string | number;
+    /**
+     * The image source
+     */
+    // source: RNImageProps['source'] | RemoteImageData;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
@@ -211,8 +223,8 @@ class Image extends PureComponent<Props, State> {
     const {
       tintColor,
       style,
-      width,
-      height,
+      width: propsWidth,
+      height: propsHeight,
       supportRTL,
       cover,
       aspectRatio,
@@ -224,8 +236,12 @@ class Image extends PureComponent<Props, State> {
       recorderTag,
       ...others
     } = this.props;
+    const remoteSource = source as RemoteImageData;
+    const isRemote = !!remoteSource?.isRemote;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
+    const width = isRemote ? remoteSource?.dimensions?.width : propsWidth;
+    const height = isRemote ? remoteSource?.dimensions?.height : propsHeight;
     const {margins} = modifiers;
 
     return (
@@ -249,7 +265,7 @@ class Image extends PureComponent<Props, State> {
         fsTagName={recorderTag}
         {...others}
         onError={this.onError}
-        source={source}
+        source={isRemote ? remoteSource.source : source}
       >
         {(overlayType || customOverlayContent) && (
           <Overlay

@@ -1,19 +1,24 @@
 import React, {Component} from 'react';
-import {View, Text, Card, TextField, Button} from 'react-native-ui-lib';
+import {View, Image} from 'react-native-ui-lib';
+
+const remoteImage = {
+  isRemote: true,
+  source: {uri: `https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/one-app-assets/v2/illustrations/addFAQ.png`},
+  dimensions: {width: 160, height: 160}
+};
 
 export default class PlaygroundScreen extends Component {
   render() {
     return (
+      // TODO: fix the type issues!
       <View bg-grey80 flex padding-20>
-        <View marginT-20>
-          <TextField migrate placeholder="Placeholder"/>
-        </View>
-        <Card height={100} center padding-20>
-          <Text text50>Playground Screen</Text>
-        </Card>
-        <View flex center>
-          <Button marginV-20 label="Button"/>
-        </View>
+        <Image source={remoteImage}/>
+        <Image
+          source={{uri: `https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/one-app-assets/v2/illustrations/addFAQ.png`}}
+          width={160}
+          height={160}
+          style={{borderWidth: 1, marginTop: 20}}
+        />
       </View>
     );
   }
