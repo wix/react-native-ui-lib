@@ -51,8 +51,6 @@ interface HintTargetFrame {
 
 type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
 
-type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
-
 type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 
 export interface HintProps {
@@ -151,6 +149,7 @@ interface HintState {
   targetLayout?: HintTargetFrame;
   targetLayoutInWindow?: HintTargetFrame;
   hintUnmounted: boolean;
+  messageLayout?: HintTargetFrame;
 }
 
 /**
@@ -176,7 +175,8 @@ class Hint extends Component<HintProps, HintState> {
   state = {
     targetLayoutInWindow: undefined as {x: number; y: number; width: number; height: number} | undefined,
     targetLayout: this.props.targetFrame,
-    hintUnmounted: !this.props.visible
+    hintUnmounted: !this.props.visible,
+    messageLayout: {} as HintTargetFrame
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
@@ -312,7 +312,7 @@ class Hint extends Component<HintProps, HintState> {
 
   getHintPosition() {
     const {position} = this.props;
-    const hintPositionStyle: HintPositionStyle = {alignItems: 'center'};
+    const hintPositionStyle: Position = {};
 
     if (this.targetLayout?.x !== undefined) {
       hintPositionStyle.left = -this.targetLayout.x;
@@ -323,14 +323,6 @@ class Hint extends Component<HintProps, HintState> {
     } else if (this.targetLayout?.height) {
       hintPositionStyle.top = this.targetLayout.height;
     }
-
-    const targetPositionOnScreen = this.getTargetPositionOnScreen();
-    if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
-      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-start' : 'flex-end';
-    } else if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
-      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-end' : 'flex-start';
-    }
-
     return hintPositionStyle;
   }
 
@@ -436,6 +428,47 @@ class Hint extends Component<HintProps, HintState> {
       );
     }
   }
+  getMessagePosition(): Position {
+    const {position} = this.props;
+    const tipPosition = this.getTipPosition();
+    const locationOnScreen = this.getTargetPositionOnScreen();
+    const {
+      messageLayout: {width: messageWidth, height: messageHeight}
+    } = this.state;
+    const {height: tipHeight, width: tipWidth} = this.tipSize;
+    let messagePosition: Position = {};
+    if (!messageWidth || typeof messageWidth !== 'number') {
+      return {};
+    }
+    if (locationOnScreen === TARGET_POSITIONS.CENTER) {
+      // The message should be centered on the tip
+      messagePosition = {...tipPosition};
+      messagePosition.left -= messageWidth / 2 - tipWidth / 2;
+    } else if (locationOnScreen === TARGET_POSITIONS.LEFT) {
+      // The tip should be on the left side of the message
+      messagePosition = {...tipPosition};
+      if (!this.useSideTip) {
+        messagePosition.left -= tipWidth;
+      }
+    } else {
+      /// The tip should be on the right side of the message.
+      messagePosition = {...tipPosition};
+      messagePosition.right += messageWidth;
+      if (!this.useSideTip) {
+        messagePosition.right -= tipWidth;
+      }
+    }
+    if (position === HintPositions.TOP) {
+      messagePosition.bottom = tipPosition.bottom + tipHeight + messageHeight;
+    } else {
+      messagePosition.top = tipPosition.top + tipHeight;
+    }
+    return messagePosition;
+  }
+
+  onMessageLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
+    this.setState({messageLayout: layout});
+  };
 
   renderHintTip() {
     const {position, color = DEFAULT_COLOR} = this.props;
@@ -463,7 +496,6 @@ class Hint extends Component<HintProps, HintState> {
       visible,
       testID
     } = this.props;
-
     return (
       <View
         testID={`${testID}.message`}
@@ -477,10 +509,15 @@ class Hint extends Component<HintProps, HintState> {
           !_.isUndefined(borderRadius) && {borderRadius}
         ]}
         ref={this.hintRef}
+        onLayout={this.onMessageLayout}
       >
         {customContent}
         {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-        {!customContent && <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>{message}</Text>}
+        {!customContent && (
+          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>
+            {message}
+          </Text>
+        )}
       </View>
     );
   }
@@ -488,7 +525,6 @@ class Hint extends Component<HintProps, HintState> {
   renderHint() {
     const {onPress, testID} = this.props;
     const opacity = onPress ? 0.9 : 1.0;
-
     if (this.showHint) {
       return (
         <View
@@ -503,7 +539,11 @@ class Hint extends Component<HintProps, HintState> {
           pointerEvents="box-none"
           testID={testID}
         >
-          <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
+          <TouchableOpacity
+            activeOpacity={opacity}
+            onPress={onPress}
+            style={[this.getMessagePosition(), styles.message]}
+          >
             {this.renderContent()}
           </TouchableOpacity>
           {this.renderHintTip()}
@@ -635,10 +675,14 @@ const styles = StyleSheet.create({
   hintTip: {
     position: 'absolute'
   },
+  message: {
+    position: 'absolute'
+  },
   hint: {
     maxWidth: Math.min(Constants.windowWidth - 2 * Spacings.s4, 400),
     borderRadius: BorderRadiuses.br60,
-    backgroundColor: DEFAULT_COLOR
+    backgroundColor: DEFAULT_COLOR,
+    position: 'absolute'
   },
   hintPaddings: {
     paddingHorizontal: Spacings.s5,
