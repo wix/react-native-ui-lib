@@ -1,22 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import {HSLColor} from './ColorPickerPresenter';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
+import {ColorPickerContext} from './context/ColorPickerContext';
 
 type SlidersProps = Pick<ColorPickerDialogProps, 'migrate'> & {
   keyboardHeight: number;
-  color: HSLColor;
-  onSliderValueChange: (value: HSLColor) => void;
 };
 
 const Sliders = (props: SlidersProps) => {
-  const {keyboardHeight, color, migrate, onSliderValueChange} = props;
-  const colorValue = color.a === 0 ? Colors.getHSL(Colors.$backgroundInverted) : color;
-  
+  const {keyboardHeight, migrate} = props;
+  const colorPickerContext = useContext(ColorPickerContext);
+  const colorValue =
+    !colorPickerContext || colorPickerContext.statefulColor.a === 0
+      ? Colors.getHSL(Colors.$backgroundInverted)
+      : colorPickerContext.statefulColor;
+  console.log(`Nitzan - sliders colorValue`, colorValue);
   return (
     <ColorSliderGroup<HSLColor>
+      key={Colors.getHexString(colorValue)}
       initialColor={colorValue}
       containerStyle={[styles.sliderGroup, {height: keyboardHeight}]}
       sliderContainerStyle={styles.slider}
@@ -24,7 +28,6 @@ const Sliders = (props: SlidersProps) => {
       labelsStyle={styles.label}
       accessible={false}
       migrate={migrate}
-      onValueChange={onSliderValueChange}
     />
   );
 };

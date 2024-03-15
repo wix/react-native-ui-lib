@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
+import React, {ReactElement, useContext, useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
@@ -139,6 +139,8 @@ export interface SliderProps extends AccessibilityProps {
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
+
+  useWorkletHandlers?: boolean;
 }
 
 type Props = SliderProps & ForwardRefInjectedProps<SliderRef>;
@@ -188,8 +190,10 @@ const Slider = React.memo((props: Props) => {
     useGap = true,
     accessible = true,
     testID,
-    enableThumbShadow = true
+    enableThumbShadow = true,
+    useWorkletHandlers
   } = themeProps;
+
 
   const accessibilityProps = useMemo(() => {
     if (accessible) {
@@ -284,8 +288,16 @@ const Slider = React.memo((props: Props) => {
           minimumValue,
           maximumValue,
           stepXValue.value);
+        if (useWorkletHandlers) {
+          onRangeChange?.({min: value, max: maxValue});
+          return;
+        }
         runOnJS(onRangeChangeThrottled)(value, maxValue);
       } else if (prevOffset) { // don't invoke onChange when setting the slider
+        if (useWorkletHandlers) {
+          onValueChange?.(value);
+          return;
+        }
         runOnJS(onValueChangeThrottled)(value);
       }
     }
@@ -301,6 +313,10 @@ const Slider = React.memo((props: Props) => {
       minimumValue,
       maximumValue,
       stepXValue.value);
+    if (useWorkletHandlers) {
+      onRangeChange?.({min: minValue, max: maxValue});
+      return;
+    }
     runOnJS(onRangeChangeThrottled)(minValue, maxValue);
   });
 

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet} from 'react-native';
 
 import View from '../view';
@@ -8,15 +8,27 @@ import Assets from '../../assets';
 import {Colors} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
 import {BORDER_RADIUS} from './ColorPickerPresenter';
+import {ColorPickerContext} from './context/ColorPickerContext';
+import {runOnJS, useAnimatedReaction} from 'react-native-reanimated';
 
 type HeaderProps = Pick<ColorPickerDialogProps, 'doneButtonColor' | 'accessibilityLabels' | 'testID'> & {
-  valid: boolean;
   onDismiss: () => void;
-  onDonePressed: () => void;
+  onDonePressed: (hex: string) => void;
 };
 
 const Header = (props: HeaderProps) => {
-  const {onDismiss, accessibilityLabels, testID, doneButtonColor, valid, onDonePressed} = props;
+  const {onDismiss, accessibilityLabels, testID, doneButtonColor, onDonePressed} = props;
+  const [valid, setValid] = useState(false);
+  const colorPickerContext = useContext(ColorPickerContext);
+
+  useAnimatedReaction(() => {
+    return colorPickerContext?.isValid.value;
+  },
+  (currentValidity, prevValidity) => {
+    if (currentValidity !== prevValidity) {
+      runOnJS(setValid)(!!currentValidity);
+    }
+  });
 
   return (
     <View row spread bg-$backgroundDefault paddingH-20 style={styles.header}>

@@ -1,64 +1,184 @@
-import React, {useRef} from 'react';
-import {StyleSheet, TextInput, PixelRatio, I18nManager} from 'react-native';
+import React, {useContext, useState, useRef, useEffect} from 'react';
+import {StyleSheet, TextInput, PixelRatio, I18nManager, TextInputProps} from 'react-native';
 
 import {Colors, Typography} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
-import {BORDER_RADIUS, HSLColor, getColorValue, getHexString, getTextColor} from './ColorPickerPresenter';
+import {BORDER_RADIUS, isValidHex} from './ColorPickerPresenter';
+import {ColorPickerContext} from './context/ColorPickerContext';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
-import Text from '../text';
 import {Constants} from '../../commons/new';
+import Animated, {useAnimatedStyle, useAnimatedProps, useDerivedValue} from 'react-native-reanimated';
+import tinycolor from 'tinycolor2';
 
 type PreviewProps = Pick<ColorPickerDialogProps, 'accessibilityLabels' | 'previewInputStyle' | 'testID'> & {
-  color: HSLColor;
-  text: ReturnType<typeof getColorValue>;
-  valid: boolean;
   onChangeText: (value: string) => void;
   onFocus: () => void;
 };
+
+Animated.addWhitelistedNativeProps({text: true, selectionColor: true});
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+
 const Preview = (props: PreviewProps) => {
-  const {color, text, onChangeText, previewInputStyle, onFocus, accessibilityLabels, testID} = props;
-  const textInput = useRef<TextInput>(null);
-
-  const hex = getHexString(color);
-  const textColor = getTextColor(hex);
+  const {previewInputStyle, onFocus, accessibilityLabels, testID} = props;
+  const colorPickerContext = useContext(ColorPickerContext);
+  const {grey10, white} = Colors;
   const fontScale = PixelRatio.getFontScale();
-  const value = Colors.isTransparent(text) ? '000000' : text;
+  const [isFocused, setIsFocused] = useState(false);
+  const [hex, setHex] = useState<string>(colorPickerContext?.hex.value || '#');
 
+  const previewBackgroundColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: colorPickerContext?.hex.value || '#ffffff'
+    };
+  }, [colorPickerContext]);
+
+  const textColor = useDerivedValue(() => {
+    const l = colorPickerContext?.value.value.l;
+    return l && l > 0.45 ? grey10 : white;
+  });
+
+  const textStyle = useAnimatedStyle(() => {
+    return {
+      color: textColor.value,
+      width: 10 * 16.5 * fontScale
+    };
+  });
+
+  const underlineStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: textColor.value
+    };
+  });
+
+  const animatedProps = useAnimatedProps(() => {
+    return {
+      text: colorPickerContext?.hex.value
+      // selectionColor: textColor.value
+    } as any;
+  }, [colorPickerContext]);
+
+  const _onFocus = () => {
+    setIsFocused(true);
+    setHex(colorPickerContext?.hex.value || '#');
+  };
+  const _onChangeText = (value: string) => {
+    if (isFocused) {
+      setHex(value || '#');
+    }
+  };
+
+  const onBlur = () => {
+    if (!isValidHex(hex)) {
+      return;
+    }
+    if (colorPickerContext) {
+      colorPickerContext.setColor(tinycolor(hex).toHsl());
+    }
+    setIsFocused(false);
+    setHex('#');
+  };
+
+  // const TextInputRenderFunction = (props: {focusedProps: Partial<TextInputProps>; notFocusedProps: Partial<TextInputProps>}) => {
+  //   const {focusedProps, notFocusedProps} = props;
+  //   if (!isFocused) {
+  //     return (
+  //       <TouchableOpacity
+  //         center
+  //         bg-red10
+  //         onPress={() => {
+  //           _onFocus();
+  //         }}
+  //         activeOpacity={1}
+  //         accessible={false}
+  //       >
+  //         <AnimatedTextInput
+  //           value={colorPickerContext?.hex.value}
+  //           maxLength={7}
+  //           numberOfLines={1}
+  //           style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
+  //           underlineColorAndroid="transparent"
+  //           autoCorrect={false}
+  //           autoComplete={'off'}
+  //           autoCapitalize={'characters'}
+  //           // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
+  //           returnKeyType={'done'}
+  //           enablesReturnKeyAutomatically
+  //           accessibilityLabel={accessibilityLabels?.input}
+  //           testID={`${testID}.dialog.textInput`}
+  //           editable={false}
+  //           // {...{animatedProps}}
+  //           {...notFocusedProps}
+  //         />
+  //       </TouchableOpacity>
+  //     );
+  //   } else {
+  //     return (
+  //       <AnimatedTextInput
+  //         ref={textInput}
+  //         value={hex}
+  //         maxLength={7}
+  //         numberOfLines={1}
+  //         onChangeText={_onChangeText}
+  //         style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
+  //         underlineColorAndroid="transparent"
+  //         autoCorrect={false}
+  //         autoComplete={'off'}
+  //         autoCapitalize={'characters'}
+  //         // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
+  //         returnKeyType={'done'}
+  //         enablesReturnKeyAutomatically
+  //         accessibilityLabel={accessibilityLabels?.input}
+  //         testID={`${testID}.dialog.textInput`}
+  //         onBlur={onBlur}
+  //         {...focusedProps}
+  //       />
+  //     );
+  //   }
+  // };
+
+  console.log(`Nitzan - isFocused`, isFocused);
   return (
-    <View style={[styles.preview, {backgroundColor: hex}]}>
-      <TouchableOpacity center onPress={textInput.current?.focus} activeOpacity={1} accessible={false}>
-        <View style={styles.inputContainer}>
-          <Text
-            text60
-            white
-            marginL-13
-            marginR-5={Constants.isIOS}
-            style={{
-              color: textColor,
-              transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
+    <Animated.View style={[styles.preview, previewBackgroundColor]}>
+      <View style={styles.inputContainer}>
+        {!isFocused ? (
+          <TouchableOpacity
+            // bg-red10
+            center
+            onPress={() => {
+              _onFocus();
             }}
+            activeOpacity={1}
             accessible={false}
-            recorderTag={'unmask'}
           >
-            #
-          </Text>
-          <TextInput
-            ref={textInput}
-            value={value}
-            maxLength={6}
+            <AnimatedTextInput
+              value={colorPickerContext?.hex.value}
+              maxLength={7}
+              numberOfLines={1}
+              // onChangeText={_onChangeText}
+              style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
+              underlineColorAndroid="transparent"
+              autoCorrect={false}
+              autoComplete={'off'}
+              autoCapitalize={'characters'}
+              // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
+              returnKeyType={'done'}
+              enablesReturnKeyAutomatically
+              accessibilityLabel={accessibilityLabels?.input}
+              testID={`${testID}.dialog.textInput`}
+              editable={false}
+              pointerEvents={'none'}
+              {...{animatedProps}}
+            />
+          </TouchableOpacity>
+        ) : (
+          <AnimatedTextInput
+            value={hex}
+            maxLength={7}
             numberOfLines={1}
-            onChangeText={onChangeText}
-            style={[
-              styles.input,
-              {
-                color: textColor,
-                width: value ? (value.length + 1) * 16.5 * fontScale : undefined
-              },
-              Constants.isAndroid && {padding: 0},
-              previewInputStyle
-            ]}
-            selectionColor={textColor}
+            onChangeText={_onChangeText}
+            style={[styles.input, textStyle, Constants.isAndroid && {padding: 0}, previewInputStyle]}
             underlineColorAndroid="transparent"
             autoCorrect={false}
             autoComplete={'off'}
@@ -66,14 +186,16 @@ const Preview = (props: PreviewProps) => {
             // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
             returnKeyType={'done'}
             enablesReturnKeyAutomatically
-            onFocus={onFocus}
             accessibilityLabel={accessibilityLabels?.input}
             testID={`${testID}.dialog.textInput`}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            autoFocus
           />
-        </View>
-        <View style={[{backgroundColor: textColor}, styles.underline]}/>
-      </TouchableOpacity>
-    </View>
+        )}
+      </View>
+      <Animated.View style={[underlineStyle, styles.underline]}/>
+    </Animated.View>
   );
 };
 
