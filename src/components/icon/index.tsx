@@ -6,7 +6,6 @@ import {ComponentStatics} from '../../typings/common';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import {RecorderProps} from '../../typings/recorderTypes';
 import Badge, {BadgeProps} from '../badge';
-import View from '../view';
 import SvgImage from '../svgImage';
 
 export type IconProps = Omit<ImageProps, 'source'> &
@@ -103,7 +102,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
   }
 
   return (
-    <View>
+    <>
       {isSvg(source) ? renderSvg() : renderImage()}
       {badgeProps && (
         <Badge
@@ -113,7 +112,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
           testID={`${props?.testID}.badge`}
         />
       )}
-    </View>
+    </>
   );
 });
 

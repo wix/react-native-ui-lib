@@ -273,7 +273,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       );
     } else if (fieldType === PickerFieldTypes.settings) {
       return (
-        <View flex row spread>
+        <View flexG row spread>
           <Text text70 style={labelStyle}>
             {others.label}
           </Text>

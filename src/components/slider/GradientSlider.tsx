@@ -151,6 +151,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
 
   return (
     <SliderComponent
+      thumbTintColor={Colors.getHexString(hueColor)}
       {...others}
       ref={forwardedRef}
       onReset={reset}
@@ -158,7 +159,6 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
       step={step}
       maximumValue={maximumValue}
       value={value}
-      thumbTintColor={Colors.getHexString(hueColor)}
       onValueChange={sliderOnValueChange}
       containerStyle={containerStyle}
       disabled={disabled}
