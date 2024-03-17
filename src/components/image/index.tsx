@@ -79,7 +79,7 @@ export type ImageProps = Omit<RNImageProps, 'source'> &
     /**
      * Default image source in case of an error
      */
-    errorSource?: ImagePropTypes.source;
+    errorSource?: ImageSourceType;
     /**
      * An imageId that can be used in sourceTransformer logic
      */
@@ -126,7 +126,7 @@ class Image extends PureComponent<Props, State> {
   public static overlayTypes = Overlay.overlayTypes;
   public static overlayIntensityType = Overlay.intensityTypes;
 
-  sourceTransformer?: (props: any) => ImagePropTypes.source;
+  sourceTransformer?: (props: any) => ImagePropTypes;
 
   constructor(props: Props) {
     super(props);
