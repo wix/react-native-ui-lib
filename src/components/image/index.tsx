@@ -24,8 +24,11 @@ import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
+import {ComponentStatics} from 'src/typings/common';
 
-export type ImageProps = RNImageProps &
+export type ImageSourceType = string | RNImageProps['source'];
+
+export type ImageProps = Omit<RNImageProps, 'source'> &
   MarginModifiers &
   RecorderProps & {
     /**
@@ -95,13 +98,14 @@ export type ImageProps = RNImageProps &
      * The image height
      */
     height?: string | number;
+    source: ImageSourceType;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
 type State = {
   error: boolean;
-  prevSource: ImagePropTypes.source;
+  prevSource: ImageSourceType;
 };
 
 /**
@@ -160,7 +164,7 @@ class Image extends PureComponent<Props, State> {
     return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
-  getVerifiedSource(source?: ImagePropTypes.source) {
+  getVerifiedSource(source?: ImageSourceType) {
     if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       // @ts-ignore
       return {...source, uri: undefined};
@@ -308,4 +312,6 @@ const styles = StyleSheet.create({
 
 hoistNonReactStatic(Image, RNImage);
 export {Image};
-export default asBaseComponent<ImageProps, typeof Image & typeof RNImage>(Image, {modifiersOptions: {margins: true}});
+export default asBaseComponent<ImageProps, ComponentStatics<typeof Image & typeof RNImage>>(Image, {
+  modifiersOptions: {margins: true}
+});
