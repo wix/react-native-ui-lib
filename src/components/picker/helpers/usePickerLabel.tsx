@@ -57,7 +57,7 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
     getLabelsFromArray,
     getLabel: _getLabel,
     accessibilityInfo,
-    label: _getLabel(value)
+    label: _getLabel(value) ?? ''
   };
 };
 
