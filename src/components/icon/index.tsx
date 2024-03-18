@@ -7,6 +7,7 @@ import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import {RecorderProps} from '../../typings/recorderTypes';
 import Badge, {BadgeProps} from '../badge';
 import SvgImage from '../svgImage';
+import type {ImageSourceType} from '../image';
 
 export type IconProps = Omit<ImageProps, 'source'> &
   MarginModifiers &
@@ -35,7 +36,7 @@ export type IconProps = Omit<ImageProps, 'source'> &
      * whether the icon should flip horizontally on RTL
      */
     supportRTL?: boolean;
-    source?: ImageProps['source'];
+    source?: ImageSourceType
   };
 
 /**
