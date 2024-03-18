@@ -480,7 +480,11 @@ class Hint extends Component<HintProps, HintState> {
       >
         {customContent}
         {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-        {!customContent && <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>{message}</Text>}
+        {!customContent && (
+          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]} testID={`${testID}.message.text`}>
+            {message}
+          </Text>
+        )}
       </View>
     );
   }
