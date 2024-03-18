@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React, {PropsWithChildren, useMemo, forwardRef} from 'react';
 import {
   StyleSheet,
-  ImageSourcePropType,
   StyleProp,
   ViewStyle,
   TouchableOpacity,
@@ -16,7 +15,7 @@ import {extractAccessibilityProps} from '../../commons/modifiers';
 import Badge, {BadgeProps} from '../badge';
 import View from '../view';
 import Text from '../text';
-import Image, {ImageProps} from '../image';
+import Image, {ImageProps, ImageSourceType} from '../image';
 // @ts-ignore
 import AnimatedImage, {AnimatedImageProps} from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
@@ -72,7 +71,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
     /**
      * The image source (external or assets)
      */
-    source?: ImageSourcePropType;
+    source?: ImageSourceType;
     /**
      * Image props object
      */
