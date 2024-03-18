@@ -9,8 +9,6 @@ import {
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
-// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
-import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 import {
   Constants,
   asBaseComponent,
@@ -34,7 +32,7 @@ export type ImageProps = Omit<RNImageProps, 'source'> &
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
-    sourceTransformer?: (props: any) => ImagePropTypes.source;
+    sourceTransformer?: (props: any) => ImageSourceType;
     /**
      * if provided image source will be driven from asset name
      */
@@ -126,7 +124,7 @@ class Image extends PureComponent<Props, State> {
   public static overlayTypes = Overlay.overlayTypes;
   public static overlayIntensityType = Overlay.intensityTypes;
 
-  sourceTransformer?: (props: any) => ImagePropTypes;
+  sourceTransformer?: (props: any) => ImageSourceType;
 
   constructor(props: Props) {
     super(props);
