@@ -9,8 +9,6 @@ import {
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
-// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
-import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 import {
   Constants,
   asBaseComponent,
@@ -24,14 +22,17 @@ import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
+import {ComponentStatics} from 'src/typings/common';
 
-export type ImageProps = RNImageProps &
+export type ImageSourceType = string | RNImageProps['source'];
+
+export type ImageProps = Omit<RNImageProps, 'source'> &
   MarginModifiers &
   RecorderProps & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
-    sourceTransformer?: (props: any) => ImagePropTypes.source;
+    sourceTransformer?: (props: any) => ImageSourceType;
     /**
      * if provided image source will be driven from asset name
      */
@@ -76,7 +77,7 @@ export type ImageProps = RNImageProps &
     /**
      * Default image source in case of an error
      */
-    errorSource?: ImagePropTypes.source;
+    errorSource?: ImageSourceType;
     /**
      * An imageId that can be used in sourceTransformer logic
      */
@@ -95,13 +96,14 @@ export type ImageProps = RNImageProps &
      * The image height
      */
     height?: string | number;
+    source: ImageSourceType;
   };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
 type State = {
   error: boolean;
-  prevSource: ImagePropTypes.source;
+  prevSource: ImageSourceType;
 };
 
 /**
@@ -122,7 +124,7 @@ class Image extends PureComponent<Props, State> {
   public static overlayTypes = Overlay.overlayTypes;
   public static overlayIntensityType = Overlay.intensityTypes;
 
-  sourceTransformer?: (props: any) => ImagePropTypes.source;
+  sourceTransformer?: (props: any) => ImageSourceType;
 
   constructor(props: Props) {
     super(props);
@@ -160,7 +162,7 @@ class Image extends PureComponent<Props, State> {
     return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
-  getVerifiedSource(source?: ImagePropTypes.source) {
+  getVerifiedSource(source?: ImageSourceType) {
     if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       // @ts-ignore
       return {...source, uri: undefined};
@@ -308,4 +310,6 @@ const styles = StyleSheet.create({
 
 hoistNonReactStatic(Image, RNImage);
 export {Image};
-export default asBaseComponent<ImageProps, typeof Image & typeof RNImage>(Image, {modifiersOptions: {margins: true}});
+export default asBaseComponent<ImageProps, ComponentStatics<typeof Image & typeof RNImage>>(Image, {
+  modifiersOptions: {margins: true}
+});
