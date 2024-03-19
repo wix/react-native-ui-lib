@@ -58,7 +58,6 @@ export function validateValues(props: SliderProps) {
 export function getStepInterpolated(trackWidth: number, minimumValue: number, maximumValue: number, stepXValue: SharedValue<number>) {
   'worklet';
   const outputRange = [0, trackWidth];
-  const inputRange = minimumValue < 0 ? 
-    [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
+  const inputRange = minimumValue < 0 ? [0, Math.abs(minimumValue)] : [0, maximumValue];
   return interpolate(stepXValue.value, inputRange, outputRange);
 }
