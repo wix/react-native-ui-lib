@@ -335,6 +335,8 @@ const WheelPicker = ({
     );
   }, []);
 
+  const offsets = items.map((_, i) => i * itemHeight);
+
   return (
     <View testID={testID} bg-$backgroundDefault style={style}>
       <View row centerH>
@@ -356,7 +358,7 @@ const WheelPicker = ({
             ref={scrollView}
             // @ts-expect-error
             contentContainerStyle={contentContainerStyle}
-            snapToInterval={itemHeight}
+            snapToOffsets={offsets}
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
             getItemLayout={getItemLayout}
