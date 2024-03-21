@@ -8,7 +8,8 @@ const priceRegEx = /^[0-9]{1,9}([.][0-9]{1,2})?$/;
 
 const validators = {
   required: (value = '') => !_.isEmpty(value),
-  email: (value = '') => {
+  email: (value = '') => new EmailValidator().isValid(value),
+  optionalEmail : (value = '') => {
     // Allow empty strings
     if (_.isEmpty(value)) {
       return true;
