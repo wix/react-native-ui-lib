@@ -335,7 +335,7 @@ const WheelPicker = ({
     );
   }, []);
 
-  const offsets = items.map((_, i) => i * itemHeight);
+  const offsets = useMemo(() => items.map((_, i) => i * itemHeight), [items, itemHeight]);
 
   return (
     <View testID={testID} bg-$backgroundDefault style={style}>
