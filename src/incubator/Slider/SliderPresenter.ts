@@ -70,6 +70,6 @@ export function getStepInterpolated(
   'worklet';
   const outputRange = [0, trackWidth];
   const inputRange =
-    minimumValue < 0 ? [0, Math.abs(minimumValue) - Math.abs(maximumValue)] : [0, maximumValue - minimumValue];
+    minimumValue < 0 ? [0, Math.abs(minimumValue) + maximumValue] : [0, maximumValue - minimumValue];
   return interpolate(stepXValue.value, inputRange, outputRange);
 }
