@@ -16,7 +16,7 @@ const validators = {
     return new EmailValidator().isValid(value);
   },
   url: (value = '') => urlRegEx.test(value),
-  number: (value = '') =>  integerRegEx.test(value) || decimalNumberRegEx.test(value),
+  number: (value = '') => integerRegEx.test(value) || decimalNumberRegEx.test(value),
   price: (value = '') => priceRegEx.test(value)
 };
 
