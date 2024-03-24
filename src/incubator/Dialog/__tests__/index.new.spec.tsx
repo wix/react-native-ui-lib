@@ -89,14 +89,14 @@ describe('Incubator.Dialog sanity checks', () => {
     const onDismiss = jest.fn();
     const component = <TestCase2 onDismiss={onDismiss}/>;
     const {dialogDriver, renderTree} = getDriver(component);
-    expect(dialogDriver.getModal().isVisible()).toBeFalsy();
+    expect(dialogDriver.exists()).toBeFalsy();
     const openButtonDriver = ButtonDriver({renderTree, testID: 'openButton'});
     openButtonDriver.press();
-    expect(dialogDriver.getModal().isVisible()).toBeTruthy();
+    expect(dialogDriver.exists()).toBeTruthy();
     expect(onDismiss).toHaveBeenCalledTimes(0);
     const closeButtonDriver = ButtonDriver({renderTree, testID: 'closeButton'});
     closeButtonDriver.press();
-    expect(dialogDriver.getModal().isVisible()).toBeFalsy();
+    expect(dialogDriver.exists()).toBeFalsy();
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
