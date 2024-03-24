@@ -5,17 +5,13 @@ import {SectionsWheelPickerProps} from './index';
 
 export const SectionsWheelPickerDriver = (props: ComponentProps) => {
   const driver = useComponentDriver<SectionsWheelPickerProps>(props);
-  const sections = driver.getProps().children as SectionsWheelPickerProps;
-  const sectionsDrivers = _.map(sections, (_, index) => {
+  const sections = driver.getElement()?.props?.children as SectionsWheelPickerProps['sections'];
+  const sectionsDrivers = _.map(sections, (section, index) => {
     const sectionTestID = `${props.testID}.${index}`;
     return WheelPickerDriver({
       renderTree: props.renderTree,
-      testID: sectionTestID
+      testID: section?.testID || sectionTestID
     });
   });
-
-  
-
-
   return {...driver, sections, sectionsDrivers};
 };
