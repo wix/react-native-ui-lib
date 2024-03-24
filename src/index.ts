@@ -191,11 +191,3 @@ export {
   WheelPickerItemProps,
   WheelPickerAlign
 } from './components/WheelPicker';
-
-/* ===== TestKit ===== */
-// export {default as TextTestKit} from './components/text/Text.driver';
-// export {default as ImageTestKit} from './components/image/Image.driver';
-// export {default as ButtonTestKit} from './components/button/Button.driver';
-// export {default as TextFieldTestKit} from './incubator/TextField/TextField.driver';
-
-// export {default as ButtonDriverFactory} from './components/button/Button.driver';
