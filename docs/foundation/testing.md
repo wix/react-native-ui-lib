@@ -1,6 +1,6 @@
 ---
 index: 6
-path: "/foundation/modifiers"
+path: "/foundation/testing"
 title: 'Testing'
 ---
 #
