@@ -8,14 +8,14 @@ type ContentOffset = Partial<NativeScrollPoint>;
 
 export type ScrollProps = ContentOffset & {options?: ScrollableDriverOptions};
 
-export interface ScrollableDriverResult<Props> extends ComponentDriverResult<Props> {
+export interface ScrollableDriverResult extends ComponentDriverResult {
   scroll: (contentOffset: ContentOffset, options?: ScrollableDriverOptions) => void;
   triggerEvent: (eventName?: string, event?: Partial<NativeScrollEvent>) => void;
 }
 
 export const useScrollableDriver = 
-<Props, DriverProps extends ComponentDriverResult<Props> = ComponentDriverResult<Props>>(driver: DriverProps): 
-ScrollableDriverResult<Props> & DriverProps => {
+<DriverProps extends ComponentDriverResult = ComponentDriverResult>(driver: DriverProps): 
+ScrollableDriverResult & DriverProps => {
 
   const getContentOffset = async () => await driver.getElement().props.contentOffset;
 
