@@ -1,9 +1,15 @@
 import _ from 'lodash';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {WheelPickerDriver} from '../WheelPicker/WheelPicker.driver';
+import {useComponentDriver, ComponentProps, ComponentDriverResult} from '../../testkit/new/Component.driver';
+import {WheelPickerDriver, WheelPickerDriverInterface} from '../WheelPicker/WheelPicker.driver';
 import {SectionsWheelPickerProps} from './index';
 
-export const SectionsWheelPickerDriver = (props: ComponentProps) => {
+
+export interface SectionsWheelPickerDriverInterface extends ComponentDriverResult {
+  sectionsDrivers: WheelPickerDriverInterface[];
+}
+
+
+export const SectionsWheelPickerDriver = (props: ComponentProps): SectionsWheelPickerDriverInterface => {
   const driver = useComponentDriver(props);
   const sections = driver.getElement().children as SectionsWheelPickerProps;
   const sectionsDrivers = _.map(sections, (_, index) => {
@@ -14,8 +20,5 @@ export const SectionsWheelPickerDriver = (props: ComponentProps) => {
     });
   });
 
-  
-
-
-  return {...driver, sections, sectionsDrivers};
+  return {...driver, sectionsDrivers};
 };

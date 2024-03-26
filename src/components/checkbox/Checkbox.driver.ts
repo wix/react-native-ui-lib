@@ -1,6 +1,10 @@
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {usePressableDriver} from '../../testkit/new/usePressable.driver';
-import {TextDriver} from '../text/Text.driver.new';
+import {PressableDriverResult, usePressableDriver} from '../../testkit/new/usePressable.driver';
+import {TextDriver, TextDriverInterface} from '../text/Text.driver.new';
+
+export interface CheckboxDriverInterface extends PressableDriverResult {
+  getLabel: TextDriverInterface['getText']
+}
 
 export const CheckboxDriver = (props: ComponentProps) => {
   const driver = usePressableDriver(useComponentDriver(props));
@@ -9,10 +13,6 @@ export const CheckboxDriver = (props: ComponentProps) => {
     renderTree: props.renderTree,
     testID: `${props.testID}.label`
   });
-
-  const getLabel = () => {
-    return labelDriver.getText();
-  };
-
-  return {...driver, getLabel};
+  
+  return {...driver, getLabel: labelDriver.getText};
 };

@@ -1,11 +1,24 @@
 import _ from 'lodash';
 import {fireEvent} from '@testing-library/react-native';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {TextDriver} from '../text/Text.driver.new';
-import {usePressableDriver} from '../../testkit/new/usePressable.driver';
+import {TextDriver, TextDriverInterface} from '../text/Text.driver.new';
+import {usePressableDriver, PressableDriverResult} from '../../testkit/new/usePressable.driver';
 
-export const TextFieldDriver = (props: ComponentProps) => {
-  const driver = usePressableDriver(useComponentDriver(props));
+interface TextFieldDriverInterface extends PressableDriverResult {
+  getValue: () => string | undefined;
+  changeText: (text: string) => void;
+  focus: () => void;
+  blur: () => void;
+  isEnabled: () => boolean;
+  getPlaceholder: () => PressableDriverResult;
+  getLabel: () => TextDriverInterface;
+  getValidationMessage: () => TextDriverInterface;
+  getCharCounter: () => TextDriverInterface;
+}
+
+
+export const TextFieldDriver = (props: ComponentProps): TextFieldDriverInterface => {
+  const driver = usePressableDriver(useComponentDriver(props)); 
 
   const floatingPlaceholderDriver = TextDriver({
     renderTree: props.renderTree,

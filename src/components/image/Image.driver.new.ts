@@ -1,6 +1,9 @@
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, ComponentProps, ComponentDriverResult} from '../../testkit/new/Component.driver';
 
-export const ImageDriver = (props: ComponentProps) => {
+// eslint-disable-next-line
+export interface ImageDriverInterface extends ComponentDriverResult {}
+
+export const ImageDriver = (props: ComponentProps): ImageDriverInterface => {
   const driver = useComponentDriver(props);
   return driver;
 };

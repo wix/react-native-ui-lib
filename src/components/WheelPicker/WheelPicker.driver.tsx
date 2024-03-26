@@ -1,9 +1,16 @@
 import {ITEM_HEIGHT} from './index';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {useScrollableDriver} from '../../testkit/new/useScrollable.driver';
-import {TextDriver} from '../../components/text/Text.driver.new';
+import {ScrollableDriverResult, useScrollableDriver} from '../../testkit/new/useScrollable.driver';
+import {TextDriver, TextDriverInterface} from '../../components/text/Text.driver.new';
 
-export const WheelPickerDriver = (props: ComponentProps) => {
+type MoveItemFunction = (index: number, itemHeight?: number, numberOfRows?: number) => void;
+export interface WheelPickerDriverInterface extends ScrollableDriverResult {
+  getListHeight: () => number;
+  moveToItem: MoveItemFunction;
+  getLabel: TextDriverInterface['getText'];
+}
+
+export const WheelPickerDriver = (props: ComponentProps): WheelPickerDriverInterface => {
   const driver = useComponentDriver(props);
 
   const listDriver = useScrollableDriver(useComponentDriver({
@@ -13,7 +20,7 @@ export const WheelPickerDriver = (props: ComponentProps) => {
 
   const itemsLength = listDriver.getElement().props.data?.length ?? 0;
 
-  const moveToItem = (index: number, itemHeight: number = ITEM_HEIGHT, numberOfRows: number = itemsLength) => {
+  const moveToItem: MoveItemFunction = (index, itemHeight = ITEM_HEIGHT, numberOfRows = itemsLength) => {
     listDriver.triggerEvent('onMomentumScrollEnd', {
       contentOffset: {x: 0, y: itemHeight * index},
       contentSize: {height: numberOfRows * itemHeight, width: 400},
@@ -30,9 +37,5 @@ export const WheelPickerDriver = (props: ComponentProps) => {
     testID: `${props.testID}.label`
   });
 
-  const getLabel = () => {
-    return labelDriver.getText();
-  };
-
-  return {...driver, ...listDriver, getListHeight, moveToItem, getLabel};
+  return {...driver, ...listDriver, getListHeight, moveToItem, getLabel: labelDriver.getText};
 };

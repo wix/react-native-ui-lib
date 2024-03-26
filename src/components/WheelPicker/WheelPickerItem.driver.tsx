@@ -1,10 +1,14 @@
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, ComponentProps, ComponentDriverResult} from '../../testkit/new/Component.driver';
 // import {usePressableDriver} from '../../testkit';
-import {TextDriver} from '../../components/text/Text.driver.new';
+import {TextDriver, TextDriverInterface} from '../../components/text/Text.driver.new';
 // import {WheelPickerItemProps} from './index';
 
+export interface WheelPickerItemDriverInterface extends ComponentDriverResult {
+  getLabel: TextDriverInterface['getText'];
+  getLabelStyle: TextDriverInterface['getStyle'];
+}
 
-export const WheelPickerItemDriver = (props: ComponentProps) => {
+export const WheelPickerItemDriver = (props: ComponentProps): WheelPickerItemDriverInterface => {
   const driver = useComponentDriver(props);
   // const driver = usePressableDriver<WheelPickerItemProps>(useComponentDriver(props));
 
@@ -12,14 +16,6 @@ export const WheelPickerItemDriver = (props: ComponentProps) => {
     renderTree: props.renderTree,
     testID: `${props.testID}.text`
   });
-
-  const getLabel = () => {
-    return labelDriver.getText();
-  };
-
-  const getLabelStyle = () => {
-    return labelDriver.getStyle(); // NOTE: when there's active/inactive colors the color will be animated sharedValue instead of string
-  };  
-
-  return {...driver, getLabel, getLabelStyle};
+  
+  return {...driver, getLabel: labelDriver.getText, getLabelStyle: labelDriver.getStyle};
 };
