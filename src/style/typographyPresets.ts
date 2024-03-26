@@ -6,10 +6,7 @@ export const WEIGHT_TYPES: {[key: string]: TextStyle['fontWeight']} = {
   THIN: '200' as const,
   LIGHT: '300' as const,
   REGULAR: '400' as const,
-  MEDIUM:
-    parseFloat(Platform.Version as string) >= 11.2
-      ? '600'
-      : ('500' as '500' | '600'),
+  MEDIUM: parseFloat(Platform.Version as string) >= 11.2 ? '600' : ('500' as '500' | '600'),
   BOLD: '700' as const,
   HEAVY: '800' as const,
   BLACK: '900' as const
@@ -219,13 +216,17 @@ const weightsMap = {
   BLACK: 'BL'
 };
 
-_.forEach(keys, (key) => {
+_.forEach(keys, key => {
   _.forEach(weightsMap, (weightValue, weightKey) => {
     const fontKey = `text${key}` as keyof TypographyKeys;
     const fontWeightKey = `${fontKey}${weightValue}` as keyof TypographyKeys;
     Typography[fontWeightKey] = {
       ...Typography[fontKey],
-      fontWeight: Constants.isIOS ? WEIGHT_TYPES[weightKey] : ['BO', 'H', 'BL'].includes(weightKey) ? 'bold' : undefined
+      fontWeight: Constants.isIOS
+        ? WEIGHT_TYPES[weightKey]
+        : ['BO', 'H', 'BL'].includes(weightValue)
+        ? 'bold'
+        : undefined
     };
   });
 });
