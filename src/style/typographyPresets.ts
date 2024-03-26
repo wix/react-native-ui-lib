@@ -225,8 +225,8 @@ _.forEach(keys, key => {
       fontWeight: Constants.isIOS
         ? WEIGHT_TYPES[weightKey]
         : ['BO', 'H', 'BL'].includes(weightValue)
-        ? 'bold'
-        : undefined
+          ? 'bold'
+          : undefined
     };
   });
 });
