@@ -1,11 +1,10 @@
-import {ViewProps} from './index';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 
 export const ViewDriver = (props: ComponentProps) => {
-  const driver = useComponentDriver<ViewProps>(props);
+  const driver = useComponentDriver(props);
 
   const getStyle = () => {
-    return driver.getProps().style;
+    return driver.getElement().props.style;
   };
   return {...driver, getStyle};
 };

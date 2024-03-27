@@ -15,7 +15,7 @@ function countDecimals(value: number) {
   if (Math.floor(value.valueOf()) === value.valueOf()) {
     return 0;
   }
-  return value.toString().split('.')[1].length || 0; 
+  return value.toString().split('.')[1].length || 0;
 }
 
 export function getValueForOffset(offset: number, span: number, minimum = 0, maximum = 1, step = 0) {
@@ -39,8 +39,10 @@ function inRange(value: number, min: number, max: number) {
 
 export function validateValues(props: SliderProps) {
   const {useRange, value, minimumValue = 0, maximumValue = 1, initialMinimumValue, initialMaximumValue} = props;
-  if (minimumValue > maximumValue || 
-    useRange && initialMinimumValue && initialMaximumValue && initialMinimumValue > initialMaximumValue) {
+  if (
+    minimumValue > maximumValue ||
+    (useRange && initialMinimumValue && initialMaximumValue && initialMinimumValue > initialMaximumValue)
+  ) {
     console.error('Your passed values are invalid. Please check if minimum values are not higher than maximum values');
   }
   if (value !== undefined && minimumValue && maximumValue && !inRange(value, minimumValue, maximumValue)) {
@@ -48,17 +50,26 @@ export function validateValues(props: SliderProps) {
       Please check that it is in range of the minimum (${minimumValue}) and maximum (${maximumValue}) values`);
   }
   if (useRange && initialMinimumValue && initialMaximumValue) {
-    if (!inRange(initialMinimumValue, minimumValue, maximumValue) ||
-      !inRange(initialMaximumValue, minimumValue, maximumValue)) {
-      console.error('Your passed values are invalid. Please check that they are in range of the minimum and maximum values');
+    if (
+      !inRange(initialMinimumValue, minimumValue, maximumValue) ||
+      !inRange(initialMaximumValue, minimumValue, maximumValue)
+    ) {
+      console.error(
+        'Your passed values are invalid. Please check that they are in range of the minimum and maximum values'
+      );
     }
   }
 }
 
-export function getStepInterpolated(trackWidth: number, minimumValue: number, maximumValue: number, stepXValue: SharedValue<number>) {
+export function getStepInterpolated(
+  trackWidth: number,
+  minimumValue: number,
+  maximumValue: number,
+  stepXValue: SharedValue<number>
+) {
   'worklet';
   const outputRange = [0, trackWidth];
-  const inputRange = minimumValue < 0 ? 
-    [Math.abs(maximumValue), Math.abs(minimumValue)] : [minimumValue, maximumValue];
+  const inputRange =
+    minimumValue < 0 ? [0, Math.abs(minimumValue) + maximumValue] : [0, maximumValue - minimumValue];
   return interpolate(stepXValue.value, inputRange, outputRange);
 }

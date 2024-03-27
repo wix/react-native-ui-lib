@@ -197,6 +197,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
     <MaskedInput
       testID={testID}
       ref={ref}
+      maxLength={textFieldProps?.maxLength}
       renderMaskedText={renderNumberInput}
       keyboardType={'numeric'}
       initialValue={initialNumber ? `${initialNumber}` : undefined}

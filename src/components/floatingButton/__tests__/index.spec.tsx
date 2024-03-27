@@ -19,7 +19,7 @@ const TestCase = (props) => {
 };
 export const FloatingButtonDriver = (props: ComponentProps) => {
   const driver = useComponentDriver(props);
-  const getStyle = () => driver.getProps().style as ViewStyle;
+  const getStyle = () => driver.getElement().props.style as ViewStyle;
   return {...driver, getStyle};
 };
 
@@ -72,7 +72,7 @@ describe('FloatingButton', () => {
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
 
-      expect(buttonDriver.getProps()?.style?.marginBottom).toBe(Spacings.s8);
+      expect(buttonDriver.getElement().props.style?.marginBottom).toBe(Spacings.s8);
     });
 
     it('should have default bottom margin for both buttons', () => {
@@ -81,8 +81,8 @@ describe('FloatingButton', () => {
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       const buttonDriver2 = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
 
-      expect(buttonDriver.getProps()?.style?.marginBottom).toBe(Spacings.s4);
-      expect(buttonDriver2.getProps()?.style?.marginBottom).toBe(Spacings.s7);
+      expect(buttonDriver.getElement().props.style?.marginBottom).toBe(Spacings.s4);
+      expect(buttonDriver2.getElement().props.style?.marginBottom).toBe(Spacings.s7);
     });
 
     it('should have bottom margin that match bottomMargin prop', () => {
@@ -90,7 +90,7 @@ describe('FloatingButton', () => {
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
 
-      expect(buttonDriver.getProps()?.style?.marginBottom).toBe(10);
+      expect(buttonDriver.getElement().props.style?.marginBottom).toBe(10);
     });
 
     it('should have bottom margin for secondary button that match bottomMarginProp', () => {
@@ -99,8 +99,8 @@ describe('FloatingButton', () => {
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       const buttonDriver2 = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
 
-      expect(buttonDriver.getProps()?.style?.marginBottom).toBe(Spacings.s4);
-      expect(buttonDriver2.getProps()?.style?.marginBottom).toBe(10);
+      expect(buttonDriver.getElement().props.style?.marginBottom).toBe(Spacings.s4);
+      expect(buttonDriver2.getElement().props.style?.marginBottom).toBe(10);
     });
   });
 

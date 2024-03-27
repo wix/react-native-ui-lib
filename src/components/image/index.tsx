@@ -259,6 +259,7 @@ class Image extends PureComponent<Props, State> {
             intensity={overlayIntensity}
             color={overlayColor}
             customContent={customOverlayContent}
+            borderRadius={others?.borderRadius}
           />
         )}
       </ImageView>
