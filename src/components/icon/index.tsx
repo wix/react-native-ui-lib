@@ -1,15 +1,15 @@
 import isUndefined from 'lodash/isUndefined';
 import React, {useMemo, forwardRef} from 'react';
-import {Image, ImageProps, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {Image, ImageProps as RNImageProps, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import {RecorderProps} from '../../typings/recorderTypes';
 import Badge, {BadgeProps} from '../badge';
-import View from '../view';
 import SvgImage from '../svgImage';
+import type {ImageProps} from '../image';
 
-export type IconProps = Omit<ImageProps, 'source'> &
+export type IconProps = Omit<RNImageProps, 'source'> &
   MarginModifiers &
   RecorderProps & {
     /**
@@ -103,7 +103,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
   }
 
   return (
-    <View>
+    <>
       {isSvg(source) ? renderSvg() : renderImage()}
       {badgeProps && (
         <Badge
@@ -113,7 +113,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
           testID={`${props?.testID}.badge`}
         />
       )}
-    </View>
+    </>
   );
 });
 

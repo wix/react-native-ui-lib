@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React, {PropsWithChildren, useMemo, forwardRef} from 'react';
 import {
   StyleSheet,
-  ImageSourcePropType,
   StyleProp,
   ViewStyle,
   TouchableOpacity,
@@ -72,7 +71,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
     /**
      * The image source (external or assets)
      */
-    source?: ImageSourcePropType;
+    source?: ImageProps['source'];
     /**
      * Image props object
      */

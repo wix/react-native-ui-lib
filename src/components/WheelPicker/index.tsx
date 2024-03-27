@@ -340,6 +340,8 @@ const WheelPicker = <T extends string | number>(props: WheelPickerProps<T>) => {
     );
   }, []);
 
+  const offsets = useMemo(() => items.map((_, i) => i * itemHeight), [items, itemHeight]);
+
   return (
     <View testID={testID} bg-$backgroundDefault style={style}>
       <View row centerH>
@@ -361,7 +363,7 @@ const WheelPicker = <T extends string | number>(props: WheelPickerProps<T>) => {
             ref={scrollView}
             // @ts-expect-error
             contentContainerStyle={contentContainerStyle}
-            snapToInterval={itemHeight}
+            snapToOffsets={offsets}
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
             getItemLayout={getItemLayout}
