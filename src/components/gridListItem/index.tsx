@@ -1,12 +1,21 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import memoize from 'memoize-one';
 import * as Modifiers from '../../commons/modifiers';
 import {Colors, Spacings, Typography} from 'style';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text from '../text';
 import Image, {ImageProps} from '../image';
+
+export enum ItemHorizontalAlignment {
+  left = 'left',
+  center = 'center',
+  right = 'right'
+}
+
+export type ItemHorizontalAlignmentProp = ItemHorizontalAlignment | `${ItemHorizontalAlignment}`;
 
 export interface GridListItemProps {
   /**
@@ -86,6 +95,10 @@ export interface GridListItemProps {
    */
   alignToStart?: boolean;
   /**
+   * Content horizontal alignment (default is center)
+   */
+  horizontalAlignment?: ItemHorizontalAlignmentProp;
+  /**
    * Custom container style
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -121,7 +134,8 @@ class GridListItem extends Component<GridListItemProps> {
   static displayName = 'GridListItem';
 
   static defaultProps = {
-    itemSize: 48
+    itemSize: 48,
+    horizontalAlignment: ItemHorizontalAlignment.center
   };
 
   state = {};
@@ -139,14 +153,33 @@ class GridListItem extends Component<GridListItemProps> {
     return {width: itemSize as number, height: itemSize as number};
   }
 
+  getHorizontalAlignmentStyle = memoize(horizontalAlignment => {
+    switch (horizontalAlignment) {
+      case ItemHorizontalAlignment.left:
+        return {contentStyle: styles.contentAlignedToStart, containerStyle: styles.containerAlignedToStart};
+      case ItemHorizontalAlignment.right:
+        return {contentStyle: styles.contentAlignedToEnd, containerStyle: styles.containerAlignedToEnd};
+      default:
+        return {contentStyle: styles.contentAlignedToCenter, containerStyle: styles.containerAlignedToCenter};
+    }
+  });
+
   renderContent({text, typography, color, numberOfLines = 1, style, testID}: RenderContentType) {
-    const {alignToStart} = this.props;
+    const {alignToStart, horizontalAlignment} = this.props;
+    const horizontalAlignmentStyle = this.getHorizontalAlignmentStyle(horizontalAlignment);
     if (text) {
       return (
         <Text
           testID={testID}
           // @ts-ignore
-          style={[style, Typography[typography], color && {color}, alignToStart && styles.contentAlignedToStart]}
+          style={[
+            style,
+            //@ts-ignore
+            Typography[typography],
+            color && {color},
+            alignToStart && styles.contentAlignedToStart,
+            horizontalAlignmentStyle.contentStyle
+          ]}
           numberOfLines={numberOfLines}
         >
           {text}
@@ -160,6 +193,7 @@ class GridListItem extends Component<GridListItemProps> {
       testID,
       imageProps,
       alignToStart,
+      horizontalAlignment,
       containerStyle,
       containerProps = {},
       renderCustomItem,
@@ -190,10 +224,16 @@ class GridListItem extends Component<GridListItemProps> {
     const textContainerStyle = overlayText ? {style: [styles.overlayText, overlayTextContainerStyle]} : null;
     const imageBorderRadius = imageProps?.borderRadius;
     const {hitSlop, ...otherContainerProps} = containerProps; // eslint-disable-line
+    const horizontalAlignmentStyle = this.getHorizontalAlignmentStyle(horizontalAlignment);
 
     return (
       <Container
-        style={[styles.container, alignToStart && styles.containerAlignedToStart, {width}, containerStyle]}
+        style={[
+          styles.container,
+          alignToStart ? styles.containerAlignedToStart : horizontalAlignmentStyle.containerStyle,
+          {width},
+          containerStyle
+        ]}
         {...otherContainerProps}
         onPress={hasPress ? this.onItemPress : undefined}
         accessible={renderCustomItem ? true : undefined}
@@ -246,6 +286,12 @@ const styles = StyleSheet.create({
   containerAlignedToStart: {
     alignItems: 'flex-start'
   },
+  containerAlignedToCenter: {
+    alignItems: 'center'
+  },
+  containerAlignedToEnd: {
+    alignItems: 'flex-end'
+  },
   title: {
     marginTop: Spacings.s1,
     textAlign: 'center',
@@ -261,6 +307,12 @@ const styles = StyleSheet.create({
   },
   contentAlignedToStart: {
     textAlign: 'left'
+  },
+  contentAlignedToCenter: {
+    textAlign: 'center'
+  },
+  contentAlignedToEnd: {
+    textAlign: 'right'
   },
   overlay: {
     position: 'absolute',
