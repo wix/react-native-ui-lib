@@ -9,7 +9,7 @@ steps:
   - label: ":hammer_and_pick: Build"
     command:
     - "nvm install"
-    - "npm install"
+    - "yarn"
     - "npm run test"
     - "npm run build"
     - "[[ $BUILDKITE_PULL_REQUEST == 'false' ]] && npm run release && npm run demo || true"
