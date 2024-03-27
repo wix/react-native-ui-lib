@@ -1,18 +1,17 @@
-import {FlatListProps} from 'react-native';
-import {WheelPickerProps, WheelPickerItemProps, ITEM_HEIGHT} from './index';
+import {ITEM_HEIGHT} from './index';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {useScrollableDriver} from '../../testkit/new/useScrollable.driver';
 import {TextDriver} from '../../components/text/Text.driver.new';
 
 export const WheelPickerDriver = (props: ComponentProps) => {
-  const driver = useComponentDriver<WheelPickerProps>(props);
+  const driver = useComponentDriver(props);
 
-  const listDriver = useScrollableDriver<FlatListProps<WheelPickerItemProps>>(useComponentDriver({
+  const listDriver = useScrollableDriver(useComponentDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.list`
   }));
 
-  const itemsLength = listDriver.getProps().data?.length ?? 0;
+  const itemsLength = listDriver.getElement().props.data?.length ?? 0;
 
   const moveToItem = (index: number, itemHeight: number = ITEM_HEIGHT, numberOfRows: number = itemsLength) => {
     listDriver.triggerEvent('onMomentumScrollEnd', {
@@ -23,8 +22,7 @@ export const WheelPickerDriver = (props: ComponentProps) => {
   };
 
   const getListHeight = () => {
-    //@ts-expect-error
-    return listDriver.getProps().height;
+    return listDriver.getElement().props.height;
   };
 
   const labelDriver = TextDriver({

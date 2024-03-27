@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {useDraggableDriver} from '../../testkit/new/useDraggable.driver';
-import {SortableListItemProps} from './types';
 import {DEFAULT_LIST_ITEM_SIZE} from './SortableListItem';
 
 export const SortableListItemDriver = (props: ComponentProps) => {
-  const driver = useDraggableDriver<SortableListItemProps>(useComponentDriver(props));
+  const driver = useDraggableDriver(useComponentDriver(props));
 
   const dragUp = async (indices: number) => {
     validateIndices(indices);

@@ -277,6 +277,6 @@ const styles = StyleSheet.create({
 export default GridListItem;
 
 interface ImageSize {
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
 }
