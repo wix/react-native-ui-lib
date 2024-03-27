@@ -12,16 +12,15 @@ export type DragEvent = {
   y?: number;
 };
 
-export interface DraggableDriverResult<Props> extends ComponentDriverResult<Props> {
+export interface DraggableDriverResult extends ComponentDriverResult {
   drag: (distanceOrEvent: DragEvent | DragEvent[] | number) => void;
 }
 
 export const useDraggableDriver = <
-  Props,
-  DriverProps extends ComponentDriverResult<Props> = ComponentDriverResult<Props> // Allows for chaining multiple drivers
+  DriverProps extends ComponentDriverResult = ComponentDriverResult // Allows for chaining multiple drivers
 >(
     driver: DriverProps
-  ): DraggableDriverResult<Props> & DriverProps => {
+  ): DraggableDriverResult & DriverProps => {
   const drag = (distanceOrEvent: DragEvent | DragEvent[] | number) => {
     let data: DragEvent | DragEvent[];
     if (typeof distanceOrEvent === 'number') {
