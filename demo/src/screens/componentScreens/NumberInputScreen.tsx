@@ -152,6 +152,7 @@ const NumberInputScreen = () => {
       label,
       labelStyle: styles.label,
       style: textStyle,
+      maxLength: 6,
       validate,
       validationMessage,
       validationMessageStyle: Typography.text80M,
