@@ -271,7 +271,7 @@ const Slider = React.memo((props: Props) => {
   }, [defaultThumbStyle, thumbStyle]);
 
   const onValueChangeThrottled = useCallback(_.throttle(value => {
-    if (!didValueUpdate.current) { // don't invoke onChange when slider's value changes to prevent updates loop
+    if (!didValueUpdate.current) { // NOTE: fix for GradientSlider (should be removed after fix in the GradientSlider component): don't invoke onChange when slider's value changes to prevent updates loop
       onValueChange?.(value);
     } else {
       didValueUpdate.current = false;
