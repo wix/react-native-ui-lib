@@ -6,7 +6,7 @@ export interface CheckboxDriverInterface extends PressableDriverResult {
   getLabel: TextDriverInterface['getText']
 }
 
-export const CheckboxDriver = (props: ComponentProps) => {
+export const CheckboxDriver = (props: ComponentProps): CheckboxDriverInterface => {
   const driver = usePressableDriver(useComponentDriver(props));
 
   const labelDriver = TextDriver({

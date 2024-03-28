@@ -5,7 +5,7 @@ export interface CarouselDriverInterface extends ScrollableDriverResult {
   scroll: (props: ScrollProps) => void;
 }
 
-export const CarouselDriver = (props: ComponentProps) => {
+export const CarouselDriver = (props: ComponentProps): CarouselDriverInterface => {
   const driver = useScrollableDriver(useComponentDriver(props));
 
   return {...driver, scroll: driver.scroll};

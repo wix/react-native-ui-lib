@@ -5,7 +5,7 @@ export interface DialogDriverInterface extends ComponentDriverResult {
   getModal: () => ModalDriverInterface;
 }
 
-export const DialogDriver = (props: ComponentProps) => {
+export const DialogDriver = (props: ComponentProps): DialogDriverInterface => {
   const {renderTree, testID} = props;
   const driver = useComponentDriver(props);
   const modalDriver = ModalDriver({renderTree, testID: `${testID}.modal`});
