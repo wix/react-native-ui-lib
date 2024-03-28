@@ -155,8 +155,8 @@ function View(props: ViewProps, ref: any) {
   }
 
   return (
-    //@ts-expect-error
     <ViewContainer
+      // @ts-expect-error
       accessibilityElementsHidden={inaccessible}
       importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
       fsTagName={recorderTag}
