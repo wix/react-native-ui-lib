@@ -8,4 +8,4 @@ echo "Building docs site..."
 (cd ./docuilib && npm run build)
 
 echo "Deploying docs..."
-(cd ./docuilib && GIT_USER=$username npm run deploy)
+(cd ./docuilib && GIT_USER=$username USE_SSH=true npm run deploy)

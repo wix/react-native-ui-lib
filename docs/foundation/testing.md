@@ -29,7 +29,7 @@ In order to initialize a test driver you pass it the renderTree and the componen
 ### Example
 Suppose we have a form that takes a `first name`, `last name` and an `address` and we want to test the submitting of this form. Our form component will look something like this:
 ```jsx
-import {Button, TextField, View} from '@wix/wix-react-native-ui-lib';
+import {Button, TextField, View} from 'react-native-ui-lib/testkit';
 
 type OnSubmitHandler = (firstName: string, lastName: string, address: string) => void;
 const MyForm = (props: {onSubmit: OnSubmitHandler}) => {
@@ -51,7 +51,7 @@ const MyForm = (props: {onSubmit: OnSubmitHandler}) => {
 #### In order to test our flow we would do the following steps:
 1. Import the TextField and Button driver from UI-LIB's testkit
 ```javascript
-import {TextFieldDriver, ButtonDriver} from '@wix/react-native-ui-lib/testkit';
+import {TextFieldDriver, ButtonDriver} from 'react-native-ui-lib/testkit';
 ```
 2. render our test case
 ```javascript
