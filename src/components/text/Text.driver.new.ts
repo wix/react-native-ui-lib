@@ -1,8 +1,14 @@
 import {StyleSheet, TextStyle} from 'react-native';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {usePressableDriver} from '../../testkit/new/usePressable.driver';
+import {usePressableDriver, PressableDriverResult} from '../../testkit/new/usePressable.driver';
+import {ReactTestInstance} from 'react-test-renderer';
 
-export const TextDriver = (props: ComponentProps) => {
+export interface TextDriverInterface extends PressableDriverResult {
+  getText: () => string | (string | ReactTestInstance)[];
+  getStyle: () => TextStyle;
+}
+
+export const TextDriver = (props: ComponentProps): TextDriverInterface => {
   const driver = usePressableDriver(useComponentDriver(props));
 
   const getText = () => {

@@ -1,7 +1,11 @@
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {ModalDriver} from '../../testkit/';
+import {useComponentDriver, ComponentProps, ComponentDriverResult} from '../../testkit/new/Component.driver';
+import {ModalDriver, ModalDriverInterface} from '../../components/modal/Modal.driver.new';
 
-export const DialogDriver = (props: ComponentProps) => {
+export interface DialogDriverInterface extends ComponentDriverResult {
+  getModal: () => ModalDriverInterface;
+}
+
+export const DialogDriver = (props: ComponentProps): DialogDriverInterface => {
   const {renderTree, testID} = props;
   const driver = useComponentDriver(props);
   const modalDriver = ModalDriver({renderTree, testID: `${testID}.modal`});

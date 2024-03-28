@@ -1,8 +1,15 @@
 import {ViewStyle} from 'react-native';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {usePressableDriver} from '../../testkit/new/usePressable.driver';
+import {PressableDriverResult, usePressableDriver} from '../../testkit/new/usePressable.driver';
 
-export const SwitchDriver = (props: ComponentProps) => {
+export interface SwitchDriverInterface extends PressableDriverResult {
+  getStyle: () => ViewStyle;
+  getAccessibilityValue: () => boolean;
+  isDisabled: () => boolean;
+  isChecked: () => boolean;
+}
+
+export const SwitchDriver = (props: ComponentProps): SwitchDriverInterface => {
   const driver = usePressableDriver(useComponentDriver(props));
   
   const getStyle = () => driver.getElement().props.style as ViewStyle;
