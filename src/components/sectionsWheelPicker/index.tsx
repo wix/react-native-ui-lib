@@ -4,7 +4,7 @@ import {TextStyle, StyleSheet} from 'react-native';
 import {Constants} from '../../commons/new';
 import {useThemeProps} from '../../hooks';
 import View from '../view';
-import WheelPicker, {WheelPickerProps} from '../WheelPicker';
+import WheelPicker, {WheelPickerProps, WheelPickerItemValue} from '../WheelPicker';
 
 export type SectionsWheelPickerProps<T> = PropsWithChildren<{
   /**
@@ -43,7 +43,7 @@ export type SectionsWheelPickerProps<T> = PropsWithChildren<{
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/SectionsWheelPicker/SectionsWheelPicker.gif?raw=true
  */
 
-const SectionsWheelPicker = <T extends string | number>(props: SectionsWheelPickerProps<T>) => {
+const SectionsWheelPicker = <T extends WheelPickerItemValue>(props: SectionsWheelPickerProps<T>) => {
   const themeProps = useThemeProps(props, 'SectionsWheelPicker');
   const {
     sections,

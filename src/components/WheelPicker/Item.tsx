@@ -5,12 +5,12 @@ import {Colors, Spacings} from '../../style';
 import {useThemeProps} from '../../hooks';
 import Text, {TextProps} from '../text';
 import TouchableOpacity from '../touchableOpacity';
-import {WheelPickerAlign} from './types';
+import {WheelPickerAlign, WheelPickerItemValue} from './types';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-export interface WheelPickerItemProps<T = string | number> {
+export interface WheelPickerItemProps<T = WheelPickerItemValue> {
   label: string;
   value: T;
   align?: WheelPickerAlign;
@@ -32,7 +32,7 @@ interface InternalProps<T> extends WheelPickerItemProps<T> {
   testID?: string;
 }
 
-const WheelPickerItem = <T extends string | number = number>(props: InternalProps<T>) => {
+const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: InternalProps<T>) => {
   const themeProps = useThemeProps(props, 'WheelPickerItem');
   const {
     index,

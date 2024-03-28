@@ -189,7 +189,8 @@ export {
   default as WheelPicker,
   WheelPickerProps,
   WheelPickerItemProps,
-  WheelPickerAlign
+  WheelPickerAlign,
+  WheelPickerItemValue
 } from './components/WheelPicker';
 
 /* ===== TestKit ===== */

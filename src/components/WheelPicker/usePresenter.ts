@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import {LogService} from '../../services';
 import useMiddleIndex from './helpers/useListMiddleIndex';
+import {WheelPickerItemValue} from './types';
 import {WheelPickerItemProps} from './Item';
 
 //TODO: deprecate this type
-export type ItemValueTypes = /* ItemProps |  */number | string;
 
 type PropTypes<T> = {
   initialValue?: T;
@@ -20,7 +20,7 @@ type RowItem<T> = {
   index: number;
 };
 
-const usePresenter = <T extends string | number>({
+const usePresenter = <T extends WheelPickerItemValue>({
   initialValue,
   children,
   items: propItems,

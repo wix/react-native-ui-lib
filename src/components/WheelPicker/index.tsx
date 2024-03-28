@@ -20,12 +20,12 @@ import Text, {TextProps} from '../text';
 import Fader, {FaderPosition, FaderProps} from '../fader';
 import Item, {WheelPickerItemProps} from './Item';
 import usePresenter from './usePresenter';
-import {WheelPickerAlign} from './types';
-export {WheelPickerAlign};
+import {WheelPickerAlign, WheelPickerItemValue} from './types';
+export {WheelPickerAlign, WheelPickerItemValue};
 
 export const ITEM_HEIGHT = 44;
 
-export type WheelPickerProps<T = string | number> = {
+export type WheelPickerProps<T = WheelPickerItemValue> = {
   /**
    * Initial value
    */
@@ -100,7 +100,7 @@ export type WheelPickerProps<T = string | number> = {
   flatListProps?: Partial<FlatListProps<WheelPickerItemProps<T>>>;
 }
 
-const WheelPicker = <T extends string | number>(props: WheelPickerProps<T>) => {
+const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>) => {
   const AnimatedFlatList = 
     useMemo(() => Animated.createAnimatedComponent<FlatListProps<WheelPickerItemProps<T>>>(FlatList), []);
   const themeProps = useThemeProps(props, 'WheelPicker');
