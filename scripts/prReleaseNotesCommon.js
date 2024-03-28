@@ -86,7 +86,8 @@ function getPRsByType(PRs) {
     web = [],
     fixes = [],
     infra = [],
-    others = [];
+    others = [],
+    assets = [];
 
   PRs.forEach(pr => {
     if (isSilent(pr)) {
@@ -99,12 +100,14 @@ function getPRsByType(PRs) {
       fixes.push(pr);
     } else if (pr.branch.startsWith('infra/')) {
       infra.push(pr);
+    } else if (pr.branch.startsWith('assets/') || pr.branch.startsWith('Assets/')) {
+      assets.push(pr);
     } else {
       others.push(pr);
     }
   });
 
-  return {silentPRs, features, web, fixes, infra, others};
+  return {silentPRs, features, web, fixes, infra, others, assets};
 }
 
 function getLine(log, requester, prNumber) {
@@ -160,26 +163,35 @@ async function _generateReleaseNotes(latestVersion, newVersion, githubToken, fil
     return;
   }
 
-  const {silentPRs, features, web, fixes, infra, others} = getPRsByType(PRs);
+  const {silentPRs, features, web, fixes, infra, others, assets} = getPRsByType(PRs);
+
+  const PRsByCategory = [
+    {PRs: features, title: ':gift: Features'},
+    {PRs: web, title: ':spider_web: Web support'},
+    {PRs: fixes, title: ':wrench: Fixes'},
+    {PRs: infra, title: ':gear: Maintenance & Infra'},
+    {
+      PRs: assets,
+      title: ':lower_left_paintbrush: Assets'
+    },
+    {PRs: others, title: 'OTHERS'},
+    {
+      PRs: silentPRs,
+      title: '// Silent - these PRs did not have a changelog or were left out for some other reason, is it on purpose?'
+    }
+  ];
 
   let releaseNotes = header;
 
   releaseNotes += getTitle(':rocket: What’s New?');
 
-  releaseNotes += getReleaseNotesForType(features, ':gift: Features');
-
-  releaseNotes += getReleaseNotesForType(web, ':spider_web: Web support');
-
-  releaseNotes += getReleaseNotesForType(fixes, ':wrench: Fixes');
-
-  releaseNotes += getReleaseNotesForType(infra, ':gear: Maintenance & Infra');
-
   releaseNotes += getTitle(':bulb: Deprecations & Migrations');
 
-  releaseNotes += getReleaseNotesForType(others, 'OTHERS');
-
-  releaseNotes += getReleaseNotesForType(silentPRs,
-    '// Silent - these PRs did not have a changelog or were left out for some other reason, is it on purpose?');
+  PRsByCategory.forEach(({PRs, title}) => {
+    if (!title.includes('Assets') || (title.includes('Assets') && repo.includes('wix-react-native-ui-lib'))) {
+      releaseNotes += getReleaseNotesForType(PRs, title);
+    }
+  });
 
   fs.writeFileSync(`${process.env.HOME}/Downloads/${fileNamePrefix}-release-notes_${newVersion}.txt`, releaseNotes, {
     encoding: 'utf8'
