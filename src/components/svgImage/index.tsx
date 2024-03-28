@@ -26,12 +26,12 @@ function SvgImage(props: SvgImageProps) {
   }
 
   if (isSvgUri(data)) {
-    return <SvgCssUri {...others} uri={data.uri}/>;
+    return <SvgCssUri {...others} uri={data.uri} display={undefined}/>;
   } else if (typeof data === 'string') {
-    return <SvgXml xml={data} {...others}/>;
+    return <SvgXml xml={data} {...others} display={undefined}/>;
   } else if (data) {
     const File = data; // Must be with capital letter
-    return <File {...others}/>;
+    return <File {...others} display={undefined}/>;
   }
 
   return null;
