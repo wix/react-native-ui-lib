@@ -2168,13 +2168,21 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@>=16.9.0", "@types/react@^18.2.15":
+"@types/react@*", "@types/react@>=16.9.0":
   version "18.2.39"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@types/react/-/react-18.2.39.tgz#744bee99e053ad61fe74eb8b897f3ab5b19a7e25"
   integrity sha1-dEvumeBTrWH+dOuLiX86tbGafiU=
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@18.2.72":
+  version "18.2.72"
+  resolved "https://npm.dev.wixpress.com/api/npm/npm-repos/@types/react/-/react-18.2.72.tgz#3341a6d0746d1c7d8510810319323850c04bd6ed"
+  integrity sha512-/e7GWxGzXQF7OJAua7UAYqYi/4VpXEfbGtmYQcAQwP3SjjjAXfybTf/JK5S+SaetB/ChXl8Y2g1hCsj7jDXxcg==
+  dependencies:
+    "@types/prop-types" "*"
     csstype "^3.0.2"
 
 "@types/scheduler@*":
