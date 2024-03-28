@@ -4,7 +4,7 @@ import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.dr
 import {TextDriver, TextDriverInterface} from '../text/Text.driver.new';
 import {usePressableDriver, PressableDriverResult} from '../../testkit/new/usePressable.driver';
 
-interface TextFieldDriverInterface extends PressableDriverResult {
+export interface TextFieldDriverInterface extends PressableDriverResult {
   getValue: () => string | undefined;
   changeText: (text: string) => void;
   focus: () => void;
