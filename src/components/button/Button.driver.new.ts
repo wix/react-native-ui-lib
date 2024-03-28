@@ -3,7 +3,7 @@ import {usePressableDriver, PressableDriverResult} from '../../testkit/new/usePr
 import {TextDriver, TextDriverInterface} from '../text/Text.driver.new';
 import {ImageDriver, ImageDriverInterface} from '../image/Image.driver.new';
 
-interface ButtonDriverInterface extends PressableDriverResult {
+export interface ButtonDriverInterface extends PressableDriverResult {
   getLabel: () => TextDriverInterface;
   getIcon: () => ImageDriverInterface;
 }
