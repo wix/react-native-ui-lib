@@ -21,7 +21,7 @@ import Fader, {FaderPosition, FaderProps} from '../fader';
 import Item, {WheelPickerItemProps} from './Item';
 import usePresenter from './usePresenter';
 import {WheelPickerAlign, WheelPickerItemValue} from './types';
-export {WheelPickerAlign, WheelPickerItemValue};
+export type {WheelPickerAlign, WheelPickerItemValue};
 
 export const ITEM_HEIGHT = 44;
 
