@@ -240,12 +240,14 @@ class GridListItem extends Component<GridListItemProps> {
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
         {imageProps && (
-          <View style={[{borderRadius: imageBorderRadius}, imageStyle]}>
+          <View style={[{borderRadius: imageBorderRadius}, horizontalAlignmentStyle.containerStyle, imageStyle]}>
             <Image {...imageProps} style={[imageStyle, imageProps?.style]}/>
             {children}
           </View>
         )}
-        {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
+        {!_.isNil(renderCustomItem) && (
+          <View style={[horizontalAlignmentStyle.containerStyle, {width}]}>{renderCustomItem()}</View>
+        )}
         {hasOverlay && <View style={[styles.overlay, this.getItemSizeObj()]}>{renderOverlay?.()}</View>}
         <TextContainer {...textContainerStyle}>
           {this.renderContent({
