@@ -1,12 +1,15 @@
-import {ITEM_HEIGHT} from './index';
+import {FlatListProps} from 'react-native';
+import {ITEM_HEIGHT, WheelPickerProps} from './index';
+import {WheelPickerItemProps} from './Item';
+import {WheelPickerItemValue} from './types';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {useScrollableDriver} from '../../testkit/new/useScrollable.driver';
 import {TextDriver} from '../../components/text/Text.driver.new';
 
-export const WheelPickerDriver = (props: ComponentProps) => {
-  const driver = useComponentDriver(props);
+export const WheelPickerDriver = <T extends WheelPickerItemValue>(props: ComponentProps) => {
+  const driver = useComponentDriver<WheelPickerProps<T>>(props);
 
-  const listDriver = useScrollableDriver(useComponentDriver({
+  const listDriver = useScrollableDriver<FlatListProps<WheelPickerItemProps<T>>>(useComponentDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.list`
   }));

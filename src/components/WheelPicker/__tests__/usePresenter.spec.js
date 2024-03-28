@@ -2,6 +2,8 @@ import usePresenter from '../usePresenter';
 import {renderHook} from '@testing-library/react-hooks';
 
 describe('WheelPicker presenter tests', () => {
+  jest.spyOn(global.console, 'warn');
+
   const makeSUT = ({items = makeItems(9), children, initialValue, itemHeight = 10, preferredNumVisibleRows = 20}) => {
     return renderHook(() =>
       usePresenter({
@@ -69,6 +71,7 @@ describe('WheelPicker presenter tests', () => {
   it('Expect to find items by their object of {value, label} types', () => {
     const {result} = makeSUT({items: makeItems(15, 'b'), initialValue: {value: 'b6', label: 'abc'}});
     expect(result.current.index).toEqual(6);
+    expect(console.warn).toHaveBeenCalledWith('UILib WheelPicker will stop supporting initialValue prop type as an object (ItemProps). Please pass string or number only');
   });
 
   it('Expect getRowItemAtOffset to return the right row for offset', () => {

@@ -74,7 +74,7 @@ const SectionsWheelPickerScreen = () => {
     setSelectedMinutes(0);
   }, []);
 
-  const sections: WheelPickerProps[] = useMemo(() => {
+  const sections: WheelPickerProps<string | number>[] = useMemo(() => {
     return [
       {
         items: getItems(DAYS),
