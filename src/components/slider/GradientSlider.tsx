@@ -23,7 +23,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     type = GradientSliderTypes.DEFAULT,
     gradientSteps = 120,
     color: propsColor = Colors.$backgroundPrimaryHeavy, // initialColor
-    onValueChange: _onValueChange,
+    onValueChange,
     migrate,
     containerStyle,
     disabled,
@@ -36,15 +36,15 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
   const initialColor = useMemo((): HSLA => {
     return _.isString(propsColor) ? Colors.getHSL(propsColor) : propsColor;
   }, [propsColor]);
-  const [color, setColor] = useState(initialColor);
+  const [currentColor, setCurrentColor] = useState(initialColor);
   
   useDidUpdate(() => {
-    setColor(initialColor);
+    setCurrentColor(initialColor);
   }, [initialColor]);
 
   const getColor = useCallback(() => {
-    return color || sliderContext.value;
-  }, [color, sliderContext.value]);
+    return currentColor || sliderContext.value;
+  }, [currentColor, sliderContext.value]);
 
   const hueColor = useMemo(() => {
     const color = getColor();
@@ -72,19 +72,13 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     return <Gradient type={Gradient.types.SATURATION} color={hueColor} numberOfSteps={gradientSteps}/>;
   }, [hueColor, gradientSteps]);
 
-  const onValueChange = useCallback((value: string, alpha: number) => {
-    // alpha returns for type.DEFAULT
-    _onValueChange?.(value, alpha);
-  },
-  [_onValueChange]);
-
   const updateColor = useCallback((color: HSLA) => {
     if (!_.isEmpty(sliderContext)) {
       sliderContext.setValue?.(color);
     } else {
-      setColor(color);
+      setCurrentColor(color);
       const hex = Colors.getHexString(color);
-      onValueChange(hex, color.a);
+      onValueChange?.(hex, color.a);
     }
   },
   [sliderContext, onValueChange]);
@@ -119,7 +113,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
 
   let step = 0.01;
   let maximumValue = 1;
-  let value = color.a;
+  let value = currentColor.a;
   let renderTrack = renderDefaultGradient;
   let sliderOnValueChange = updateAlpha;
 
