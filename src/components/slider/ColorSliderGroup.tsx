@@ -54,7 +54,7 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
           </Text>
         )}
         <GradientSlider
-          color={_initialColor}
+          color={value}
           type={type}
           containerStyle={sliderContainerStyle}
           accessible={accessible}
