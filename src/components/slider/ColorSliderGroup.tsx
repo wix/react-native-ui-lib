@@ -17,9 +17,9 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
   const themeProps = useThemeProps(props, 'ColorSliderGroup');
   const {
     initialColor,
+    onValueChange,
     containerStyle,
     sliderContainerStyle,
-    onValueChange,
     showLabels,
     labels = {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation', default: ''},
     labelsStyle,
@@ -32,9 +32,9 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
   }, [initialColor]);
 
   const _onValueChange = useCallback((value: HSLA) => {
-    const _value = _.isString(initialColor) ? Colors.getHexString(value) : value;
-    onValueChange?.(_value as T);
-  }, [onValueChange, initialColor]);
+    const newValue = _.isString(initialColor) ? Colors.getHexString(value) : value;
+    onValueChange?.(newValue as T);
+  }, [initialColor, onValueChange]);
 
   const [value, setValue] = useState(_initialColor);
 
