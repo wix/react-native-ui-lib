@@ -112,7 +112,7 @@ export interface GridListItemProps {
    * Test ID for component
    */
   testID?: string;
-  children?: React.ReactNode;
+  children?: React.ReactElement;
 }
 
 interface RenderContentType {
@@ -158,8 +158,10 @@ class GridListItem extends Component<GridListItemProps> {
         return {contentStyle: styles.contentAlignedToStart, containerStyle: styles.containerAlignedToStart};
       case HorizontalAlignment.right:
         return {contentStyle: styles.contentAlignedToEnd, containerStyle: styles.containerAlignedToEnd};
-      default:
+      case HorizontalAlignment.center:
         return {contentStyle: styles.contentAlignedToCenter, containerStyle: styles.containerAlignedToCenter};
+      default:
+        undefined;
     }
   });
 
@@ -177,7 +179,7 @@ class GridListItem extends Component<GridListItemProps> {
             Typography[typography],
             color && {color},
             alignToStart && styles.contentAlignedToStart,
-            horizontalAlignmentStyle.contentStyle
+            horizontalAlignmentStyle?.contentStyle
           ]}
           numberOfLines={numberOfLines}
         >
@@ -215,10 +217,9 @@ class GridListItem extends Component<GridListItemProps> {
       renderOverlay
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
-    const itemSize = {...this.getItemSizeObj()};
+    const itemSize = this.getItemSizeObj();
     const {width} = itemSize;
     const horizontalAlignmentStyle = this.getHorizontalAlignmentStyle(horizontalAlignment);
-    const TextContainer = overlayText ? View : React.Fragment;
     const textContainerStyle = overlayText && {
       style: [styles.overlayText, overlayTextContainerStyle]
     };
@@ -229,25 +230,19 @@ class GridListItem extends Component<GridListItemProps> {
         style={[
           styles.container,
           alignToStart && styles.containerAlignedToStart,
-          horizontalAlignmentStyle.containerStyle,
+          horizontalAlignmentStyle?.containerStyle,
           {width},
           containerStyle
         ]}
         {...otherContainerProps}
-        onPress={onPress ? this.onItemPress : undefined}
+        onPress={onPress && this.onItemPress}
         accessible={renderCustomItem ? true : undefined}
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
-        {imageProps && (
-          <Image
-            {...imageProps}
-            style={[itemSize, imageProps?.style]}
-            customOverlayContent={<View testID={`${testID}.customOverlayContent`}>{children}</View>}
-          />
-        )}
+        {imageProps && <Image style={itemSize} {...imageProps} customOverlayContent={children}/>}
         {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
-        {renderOverlay && <View style={[styles.overlay, this.getItemSizeObj()]}>{renderOverlay?.()}</View>}
-        <TextContainer {...textContainerStyle}>
+        {renderOverlay && <View style={[styles.overlay, itemSize]}>{renderOverlay()}</View>}
+        <View {...textContainerStyle}>
           {this.renderContent({
             testID: `${testID}.title`,
             text: title,
@@ -272,7 +267,7 @@ class GridListItem extends Component<GridListItemProps> {
             numberOfLines: descriptionLines,
             style: styles.description
           })}
-        </TextContainer>
+        </View>
       </Container>
     );
   }
