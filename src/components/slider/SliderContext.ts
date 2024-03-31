@@ -1,11 +1,11 @@
 import React from 'react';
-import {HSLA} from '../types';
+import {HSLA} from './types';
 
-export interface SliderContextProps {
+export interface SliderContextType {
   value?: HSLA;
   setValue?: (value: HSLA) => void;
 }
 
-const SliderContext: React.Context<SliderContextProps> = React.createContext({});
+const SliderContext: React.Context<SliderContextType> = React.createContext({});
 SliderContext.displayName = 'IGNORE';
 export default SliderContext;
