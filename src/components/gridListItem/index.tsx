@@ -214,48 +214,39 @@ class GridListItem extends Component<GridListItemProps> {
       onPress,
       renderOverlay
     } = this.props;
-    const hasPress = _.isFunction(onPress);
-    const hasOverlay = _.isFunction(renderOverlay);
-    const Container = hasPress ? TouchableOpacity : View;
-    const imageStyle = {...this.getItemSizeObj()};
-    const width = _.get(imageStyle, 'width');
+    const Container = onPress ? TouchableOpacity : View;
+    const itemSize = {...this.getItemSizeObj()};
+    const {width} = itemSize;
     const horizontalAlignmentStyle = this.getHorizontalAlignmentStyle(horizontalAlignment);
     const TextContainer = overlayText ? View : React.Fragment;
-    const textContainerStyle = overlayText
-      ? {
-        style: [
-          horizontalAlignment && styles.overlayAlignmentTextContainer,
-          styles.overlayText,
-          overlayTextContainerStyle
-        ]
-      }
-      : null;
-    const imageBorderRadius = imageProps?.borderRadius;
+    const textContainerStyle = overlayText && {
+      style: [styles.overlayText, overlayTextContainerStyle]
+    };
     const {hitSlop, ...otherContainerProps} = containerProps; // eslint-disable-line
 
     return (
       <Container
         style={[
           styles.container,
-          alignToStart ? styles.containerAlignedToStart : horizontalAlignmentStyle.containerStyle,
+          alignToStart && styles.containerAlignedToStart,
+          horizontalAlignmentStyle.containerStyle,
           {width},
           containerStyle
         ]}
         {...otherContainerProps}
-        onPress={hasPress ? this.onItemPress : undefined}
+        onPress={onPress ? this.onItemPress : undefined}
         accessible={renderCustomItem ? true : undefined}
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
         {imageProps && (
-          <View style={[{borderRadius: imageBorderRadius}, horizontalAlignmentStyle.containerStyle, imageStyle]}>
-            <Image {...imageProps} style={[imageStyle, imageProps?.style]}/>
-            {children}
-          </View>
+          <Image
+            {...imageProps}
+            style={[itemSize, imageProps?.style]}
+            customOverlayContent={<View testID={`${testID}.customOverlayContent`}>{children}</View>}
+          />
         )}
-        {!_.isNil(renderCustomItem) && (
-          <View style={[horizontalAlignmentStyle.containerStyle, {width}]}>{renderCustomItem()}</View>
-        )}
-        {hasOverlay && <View style={[styles.overlay, this.getItemSizeObj()]}>{renderOverlay?.()}</View>}
+        {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
+        {renderOverlay && <View style={[styles.overlay, this.getItemSizeObj()]}>{renderOverlay?.()}</View>}
         <TextContainer {...textContainerStyle}>
           {this.renderContent({
             testID: `${testID}.title`,
@@ -330,11 +321,8 @@ const styles = StyleSheet.create({
   },
   overlayText: {
     position: 'absolute',
-    bottom: 10,
-    left: 10
-  },
-  overlayAlignmentTextContainer: {
-    width: '90%'
+    bottom: 0,
+    padding: Spacings.s3
   }
 });
 
