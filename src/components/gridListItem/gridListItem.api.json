@@ -42,8 +42,8 @@
     {"name": "alignToStart", "type": "boolean", "description": "Should content be align to start", "default": "center"},
     {
       "name": "horizontalAlignment",
-      "type": "ItemHorizontalAlignmentProp",
-      "description": "Content horizontal alignment (default is center)",
+      "type": "HorizontalAlignment",
+      "description": "Content horizontal alignment",
       "default": "center"
     },
     {"name": "containerStyle", "type": "ViewStyle", "description": "Custom container style"},

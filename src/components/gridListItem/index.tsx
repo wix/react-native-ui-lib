@@ -9,13 +9,11 @@ import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text from '../text';
 import Image, {ImageProps} from '../image';
 
-export enum ItemHorizontalAlignment {
+export enum HorizontalAlignment {
   left = 'left',
   center = 'center',
   right = 'right'
 }
-
-export type ItemHorizontalAlignmentProp = ItemHorizontalAlignment | `${ItemHorizontalAlignment}`;
 
 export interface GridListItemProps {
   /**
@@ -97,7 +95,7 @@ export interface GridListItemProps {
   /**
    * Content horizontal alignment (default is center)
    */
-  horizontalAlignment?: ItemHorizontalAlignmentProp;
+  horizontalAlignment?: HorizontalAlignment | `${HorizontalAlignment}`;
   /**
    * Custom container style
    */
@@ -133,9 +131,10 @@ interface RenderContentType {
 class GridListItem extends Component<GridListItemProps> {
   static displayName = 'GridListItem';
 
+  static horizontalAlignment = HorizontalAlignment;
+
   static defaultProps = {
-    itemSize: 48,
-    horizontalAlignment: ItemHorizontalAlignment.center
+    itemSize: 48
   };
 
   state = {};
@@ -155,9 +154,9 @@ class GridListItem extends Component<GridListItemProps> {
 
   getHorizontalAlignmentStyle = memoize(horizontalAlignment => {
     switch (horizontalAlignment) {
-      case ItemHorizontalAlignment.left:
+      case HorizontalAlignment.left:
         return {contentStyle: styles.contentAlignedToStart, containerStyle: styles.containerAlignedToStart};
-      case ItemHorizontalAlignment.right:
+      case HorizontalAlignment.right:
         return {contentStyle: styles.contentAlignedToEnd, containerStyle: styles.containerAlignedToEnd};
       default:
         return {contentStyle: styles.contentAlignedToCenter, containerStyle: styles.containerAlignedToCenter};
@@ -220,11 +219,19 @@ class GridListItem extends Component<GridListItemProps> {
     const Container = hasPress ? TouchableOpacity : View;
     const imageStyle = {...this.getItemSizeObj()};
     const width = _.get(imageStyle, 'width');
+    const horizontalAlignmentStyle = this.getHorizontalAlignmentStyle(horizontalAlignment);
     const TextContainer = overlayText ? View : React.Fragment;
-    const textContainerStyle = overlayText ? {style: [styles.overlayText, overlayTextContainerStyle]} : null;
+    const textContainerStyle = overlayText
+      ? {
+        style: [
+          horizontalAlignment && styles.overlayAlignmentTextContainer,
+          styles.overlayText,
+          overlayTextContainerStyle
+        ]
+      }
+      : null;
     const imageBorderRadius = imageProps?.borderRadius;
     const {hitSlop, ...otherContainerProps} = containerProps; // eslint-disable-line
-    const horizontalAlignmentStyle = this.getHorizontalAlignmentStyle(horizontalAlignment);
 
     return (
       <Container
@@ -325,6 +332,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     left: 10
+  },
+  overlayAlignmentTextContainer: {
+    width: '90%'
   }
 });
 

@@ -12,12 +12,13 @@ import {
   GridListItem
 } from 'react-native-ui-lib';
 import products from '../../data/products';
-import {renderBooleanOption} from '../ExampleScreenPresenter';
+import {renderBooleanOption, renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 class GridListScreen extends Component {
   state = {
     orientation: Constants.orientation,
-    useGridListItem: false
+    useGridListItem: true,
+    horizontalAlignment: GridListItem.horizontalAlignment.left
   };
 
   renderHeader = () => {
@@ -27,12 +28,17 @@ class GridListScreen extends Component {
           GridList
         </Text>
         {renderBooleanOption.call(this, 'UseGridListItem', 'useGridListItem')}
+        {renderMultipleSegmentOptions.call(this, 'Horizontal Alignment:', 'horizontalAlignment', [
+          {label: 'left', value: GridListItem.horizontalAlignment.left},
+          {label: 'center', value: GridListItem.horizontalAlignment.center},
+          {label: 'right', value: GridListItem.horizontalAlignment.right}
+        ])}
       </View>
     );
   };
 
   renderItem: GridListProps<(typeof products)[0]>['renderItem'] = ({item}) => {
-    const {useGridListItem} = this.state;
+    const {useGridListItem, horizontalAlignment} = this.state;
 
     if (useGridListItem) {
       return (
@@ -41,8 +47,9 @@ class GridListScreen extends Component {
           itemSize={{width: '100%', height: 200}}
           imageProps={{source: {uri: item.mediaUrl}}}
           title="Title"
-          subtitle="Subitle"
+          subtitle="Subtile"
           overlayText
+          horizontalAlignment={horizontalAlignment}
         />
       );
     } else {
