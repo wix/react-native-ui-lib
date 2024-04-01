@@ -1,8 +1,7 @@
 import _ from 'lodash';
-import React, {useCallback, useState, useMemo, useContext} from 'react';
+import React, {useCallback, useMemo, useContext} from 'react';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
-import {useDidUpdate} from '../../hooks';
 import {Colors} from '../../style';
 import {Slider as NewSlider} from '../../incubator';
 import Gradient from '../gradient';
@@ -33,18 +32,14 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
   } = props;
   const sliderContext = useContext(SliderContext);
   
+
   const initialColor = useMemo((): HSLA => {
     return _.isString(propsColor) ? Colors.getHSL(propsColor) : propsColor;
   }, [propsColor]);
-  const [currentColor, setCurrentColor] = useState(initialColor);
-  
-  useDidUpdate(() => {
-    setCurrentColor(initialColor);
-  }, [initialColor]);
 
   const getColor = useCallback(() => {
-    return currentColor || sliderContext.value;
-  }, [currentColor, sliderContext.value]);
+    return initialColor || sliderContext.value;
+  }, [initialColor, sliderContext.value]);
 
   const hueColor = useMemo(() => {
     const color = getColor();
@@ -76,7 +71,8 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     if (!_.isEmpty(sliderContext)) {
       sliderContext.setValue?.(color);
     } else {
-      setCurrentColor(color);
+      console.log('updateColor 2: ', color);
+      // currentColor.current = color;
       const hex = Colors.getHexString(color);
       onValueChange?.(hex, color.a);
     }
@@ -113,7 +109,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
 
   let step = 0.01;
   let maximumValue = 1;
-  let value = currentColor.a;
+  let value = initialColor.a;
   let renderTrack = renderDefaultGradient;
   let sliderOnValueChange = updateAlpha;
 
