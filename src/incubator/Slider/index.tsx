@@ -273,8 +273,9 @@ const Slider = React.memo((props: Props) => {
   const onValueChangeThrottled = useCallback(_.throttle(value => {
     if (!didValueUpdate.current) { // NOTE: fix for GradientSlider (should be removed after fix in the GradientSlider component): don't invoke onChange when slider's value changes to prevent updates loop
       onValueChange?.(value);
+    } else {
+      didValueUpdate.current = false;
     }
-    didValueUpdate.current = false;
   }, 200), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
