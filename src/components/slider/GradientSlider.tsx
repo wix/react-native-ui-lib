@@ -71,9 +71,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     if (!_.isEmpty(sliderContext)) {
       sliderContext.setValue?.(color);
     } else {
-      console.log('updateColor 2: ', color);
-      // currentColor.current = color;
-      const hex = Colors.getHexString(color);
+      const hex = Colors.getHexString(color); // alpha returns for type.DEFAULT
       onValueChange?.(hex, color.a);
     }
   },
