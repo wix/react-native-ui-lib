@@ -6,7 +6,7 @@ import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new'
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import {StyleUtils} from 'utils';
-import {useThemeProps} from '../../hooks';
+import {useThemeProps, useDidUpdate} from '../../hooks';
 import View from '../../components/view';
 import {ComponentStatics} from '../../typings/common';
 import {
@@ -258,7 +258,7 @@ const Slider = React.memo((props: Props) => {
     reset: () => reset()
   }));
   
-  useEffect(() => {
+  useDidUpdate(() => {
     didValueUpdate.current = true;
     setInitialPositions(trackSize.value.width);
   }, [value, setInitialPositions]);
