@@ -80,34 +80,30 @@ function isSilent(pr) {
   return false;
 }
 
-function getPRsByType(PRs) {
-  const silentPRs = [],
-    features = [],
-    web = [],
-    fixes = [],
-    infra = [],
-    others = [],
-    assets = [];
+function getPRsByType(PRs, categories) {
+  const categorizedPRs = [];
+
+  categories.forEach(category => {
+    categorizedPRs.push({name: category.name, PRs: [], title: category.title});
+  });
 
   PRs.forEach(pr => {
-    if (isSilent(pr)) {
-      silentPRs.push(pr);
-    } else if (pr.branch.startsWith('feat/')) {
-      features.push(pr);
-    } else if (pr.branch.startsWith('web/')) {
-      web.push(pr);
-    } else if (pr.branch.startsWith('fix/')) {
-      fixes.push(pr);
-    } else if (pr.branch.startsWith('infra/')) {
-      infra.push(pr);
-    } else if (pr.branch.startsWith('assets/') || pr.branch.startsWith('Assets/')) {
-      assets.push(pr);
+    const category = categories.find(category => {
+      return pr.branch.toLowerCase().startsWith(category.branch);
+    });
+    if (category) {
+      const foundCategory = categorizedPRs.find(cat => cat.name === category.name);
+      foundCategory.PRs.push(pr);
+    } else if (isSilent(pr)) {
+      const silentCategory = categorizedPRs.find(cat => cat.name === 'silentPRs');
+      silentCategory.PRs.push(pr);
     } else {
-      others.push(pr);
+      const otherCategory = categorizedPRs.find(cat => cat.name === 'others');
+      otherCategory.PRs.push(pr);
     }
   });
 
-  return {silentPRs, features, web, fixes, infra, others, assets};
+  return categorizedPRs;
 }
 
 function getLine(log, requester, prNumber) {
@@ -156,36 +152,46 @@ function getReleaseNotesForType(PRs, title) {
   return releaseNotes;
 }
 
-async function _generateReleaseNotes(latestVersion, newVersion, githubToken, fileNamePrefix, repo, header, tagPrefix) {
+async function _generateReleaseNotes(latestVersion,
+  newVersion,
+  githubToken,
+  fileNamePrefix,
+  repo,
+  header,
+  tagPrefix,
+  categories) {
   const latestReleaseDate = fetchLatestReleaseDate(tagPrefix, latestVersion);
   const PRs = await fetchMergedPRs(latestReleaseDate, repo, githubToken);
   if (!PRs) {
     return;
   }
 
-  const {silentPRs, features, web, fixes, infra, others, assets} = getPRsByType(PRs);
+  const prCategories = [
+    {name: 'features', branch: 'feat/', title: ':gift: Features'},
+    {name: 'web', branch: 'web/', title: ':spider_web: Web support'},
+    {name: 'fixes', branch: 'fix/', title: ':wrench: Fixes'},
+    {name: 'infra', branch: 'infra/', title: ':gear: Maintenance & Infra'},
+    ...categories,
+    {name: 'others', branch: '', title: 'OTHERS'},
+    {
+      name: 'silentPRs',
+      branch: '',
+      title: '// Silent - these PRs did not have a changelog or were left out for some other reason, is it on purpose?'
+    }
+  ];
 
+  const categorizedPRs = getPRsByType(PRs, prCategories);
   let releaseNotes = header;
 
   releaseNotes += getTitle(':rocket: What’s New?');
 
-  releaseNotes += getReleaseNotesForType(features, ':gift: Features');
-
-  releaseNotes += getReleaseNotesForType(web, ':spider_web: Web support');
-
-  releaseNotes += getReleaseNotesForType(fixes, ':wrench: Fixes');
-
-  releaseNotes += getReleaseNotesForType(infra, ':gear: Maintenance & Infra');
+  categorizedPRs.forEach(({PRs, title}) => {
+    if (PRs.length > 0) {
+      releaseNotes += getReleaseNotesForType(PRs, title);
+    }
+  });
 
   releaseNotes += getTitle(':bulb: Deprecations & Migrations');
-
-  releaseNotes +=
-    repo.includes('wix-react-native-ui-lib') && getReleaseNotesForType(assets, ':lower_left_paintbrush: Assets');
-
-  releaseNotes += getReleaseNotesForType(others, 'OTHERS');
-
-  releaseNotes += getReleaseNotesForType(silentPRs,
-    '// Silent - these PRs did not have a changelog or were left out for some other reason, is it on purpose?');
 
   fs.writeFileSync(`${process.env.HOME}/Downloads/${fileNamePrefix}-release-notes_${newVersion}.txt`, releaseNotes, {
     encoding: 'utf8'
@@ -200,7 +206,8 @@ async function generateReleaseNotes(latestVersion,
   fileNamePrefix,
   repo,
   header = '',
-  tagPrefix = '') {
+  tagPrefix = '',
+  categories = []) {
   let latestVer, newVer;
   const rl = readline.createInterface({
     input: process.stdin,
@@ -218,7 +225,7 @@ async function generateReleaseNotes(latestVersion,
   rl.on('close', () => {
     console.info(`Current latest version is v${latestVer}`);
     console.info(`Generating release notes out or PRs for v${newVer}`);
-    _generateReleaseNotes(latestVer, newVer, githubToken, fileNamePrefix, repo, header, tagPrefix);
+    _generateReleaseNotes(latestVer, newVer, githubToken, fileNamePrefix, repo, header, tagPrefix, categories);
   });
 }
 
