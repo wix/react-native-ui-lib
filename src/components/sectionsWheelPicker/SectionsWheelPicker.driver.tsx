@@ -5,7 +5,7 @@ import {WheelPickerItemValue} from '../WheelPicker';
 import {SectionsWheelPickerProps} from './index';
 
 export const SectionsWheelPickerDriver = <T extends WheelPickerItemValue>(props: ComponentProps) => {
-  const driver = useComponentDriver<SectionsWheelPickerProps<T>>(props);
+  const driver = useComponentDriver(props);
   const sections = driver.getElement().children as SectionsWheelPickerProps<T>;
   const sectionsDrivers = _.map(sections, (_, index) => {
     const sectionTestID = `${props.testID}.${index}`;
