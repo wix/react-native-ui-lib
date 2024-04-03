@@ -1,15 +1,16 @@
 import _ from 'lodash';
 import React, {PropsWithChildren, useMemo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
-import {Constants, asBaseComponent} from '../../commons/new';
+import {Constants} from '../../commons/new';
+import {useThemeProps} from '../../hooks';
 import View from '../view';
-import WheelPicker, {WheelPickerProps} from '../WheelPicker';
+import WheelPicker, {WheelPickerProps, WheelPickerItemValue} from '../WheelPicker';
 
-export type SectionsWheelPickerProps = PropsWithChildren<{
+export type SectionsWheelPickerProps<T> = PropsWithChildren<{
   /**
    * Array of sections.
    */
-  sections?: WheelPickerProps[];
+  sections?: WheelPickerProps<T>[];
   /**
    * Describe the height of each item in the WheelPicker
    * default value: 44
@@ -42,9 +43,18 @@ export type SectionsWheelPickerProps = PropsWithChildren<{
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/SectionsWheelPicker/SectionsWheelPicker.gif?raw=true
  */
 
-const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
-  const {sections, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, disableRTL, testID} =
-    props;
+const SectionsWheelPicker = <T extends WheelPickerItemValue>(props: SectionsWheelPickerProps<T>) => {
+  const themeProps = useThemeProps(props, 'SectionsWheelPicker');
+  const {
+    sections,
+    itemHeight,
+    numberOfVisibleRows,
+    activeTextColor,
+    inactiveTextColor,
+    textStyle,
+    disableRTL,
+    testID
+  } = themeProps;
 
   const wheelPickerProps = {
     itemHeight,
@@ -80,7 +90,7 @@ const SectionsWheelPicker = (props: SectionsWheelPickerProps) => {
 
 SectionsWheelPicker.displayName = 'SectionsWheelPicker';
 
-export default asBaseComponent<SectionsWheelPickerProps>(SectionsWheelPicker);
+export default (SectionsWheelPicker);
 
 const styles = StyleSheet.create({
   disableRTL: {
