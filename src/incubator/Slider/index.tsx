@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
+import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import {StyleUtils} from 'utils';
-import {useThemeProps} from '../../hooks';
+import {useThemeProps, useDidUpdate} from '../../hooks';
 import View from '../../components/view';
 import {ComponentStatics} from '../../typings/common';
 import {
@@ -222,6 +222,8 @@ const Slider = React.memo((props: Props) => {
   const end = useSharedValue(0);
   const defaultThumbOffset = useSharedValue(0);
   const rangeThumbOffset = useSharedValue(0);
+
+  const didValueUpdate = useRef(false);
   
   const thumbBackground: StyleProp<ViewStyle> = useMemo(() => [
     {backgroundColor: disabled ? disabledThumbTintColor : thumbTintColor}
@@ -235,6 +237,32 @@ const Slider = React.memo((props: Props) => {
   const _thumbStyle = useSharedValue(StyleUtils.unpackStyle(customThumbStyle || defaultThumbStyle, {flatten: true}));
   const _activeThumbStyle = useSharedValue(StyleUtils.unpackStyle(activeThumbStyle, {flatten: true}));
 
+  const setInitialPositions = useCallback((trackWidth: number) => {
+    validateValues(props);
+
+    const defaultThumbPosition = getOffsetForValue(useRange ? initialMinimumValue : value,
+      trackWidth,
+      minimumValue,
+      maximumValue);
+    const rangeThumbPosition = getOffsetForValue(initialMaximumValue, trackWidth, minimumValue, maximumValue);
+    defaultThumbOffset.value = defaultThumbPosition;
+    rangeThumbOffset.value = useRange ? rangeThumbPosition : trackWidth;
+  }, [value]);
+
+  const reset = () => {
+    setInitialPositions(trackSize.value.width);
+    onReset?.();
+  };
+
+  useImperativeHandle(forwardedRef, () => ({
+    reset: () => reset()
+  }));
+  
+  useDidUpdate(() => {
+    didValueUpdate.current = true;
+    setInitialPositions(trackSize.value.width);
+  }, [value, setInitialPositions]);
+
   useEffect(() => {
     if (!thumbStyle) {
       _thumbStyle.value = StyleUtils.unpackStyle(defaultThumbStyle, {flatten: true});
@@ -242,30 +270,12 @@ const Slider = React.memo((props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultThumbStyle, thumbStyle]);
 
-  useImperativeHandle(forwardedRef, () => ({
-    reset: () => reset()
-  }));
-
-  const reset = () => {
-    setInitialPositions(trackSize.value.width);
-    onReset?.();
-  };
-
-  const setInitialPositions = (trackWidth: number) => {
-    validateValues(props);
-
-    const defaultThumbPosition = getOffsetForValue(
-      useRange ? initialMinimumValue : value,
-      trackWidth,
-      minimumValue,
-      maximumValue);
-    const rangeThumbPosition = getOffsetForValue(initialMaximumValue, trackWidth, minimumValue, maximumValue);
-    defaultThumbOffset.value = defaultThumbPosition;
-    rangeThumbOffset.value = useRange ? rangeThumbPosition : trackWidth;
-  };
-
   const onValueChangeThrottled = useCallback(_.throttle(value => {
-    onValueChange?.(value);
+    if (!didValueUpdate.current) { // NOTE: fix for GradientSlider (should be removed after fix in the GradientSlider component): don't invoke onChange when slider's value changes to prevent updates loop
+      onValueChange?.(value);
+    } else {
+      didValueUpdate.current = false;
+    }
   }, 200), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
@@ -313,7 +323,7 @@ const Slider = React.memo((props: Props) => {
     end.value = width;
     stepInterpolatedValue.value = Math.abs(getStepInterpolated(width, minimumValue, maximumValue, stepXValue));
     setInitialPositions(width);
-  }, []);
+  }, [minimumValue, maximumValue, value, setInitialPositions]);
 
   const onTrackPress = useCallback((event: GestureResponderEvent) => {
     if (disabled) {
@@ -343,7 +353,7 @@ const Slider = React.memo((props: Props) => {
         }
       }
     }
-  }, []);
+  }, [disabled, useRange, rangeGap, shouldBounceToStep]);
 
   const _onSeekStart = () => {
     'worklet';

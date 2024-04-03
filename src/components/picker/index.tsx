@@ -32,6 +32,8 @@ import {
   PickerModes,
   PickerFieldTypes,
   PickerSearchStyle,
+  RenderCustomModalProps,
+  PickerItemsListProps,
   PickerMethods
 } from './types';
 
@@ -271,7 +273,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       );
     } else if (fieldType === PickerFieldTypes.settings) {
       return (
-        <View flex row spread>
+        <View flexG row spread>
           <Text text70 style={labelStyle}>
             {others.label}
           </Text>
@@ -344,6 +346,16 @@ Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
 
-export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
+export {
+  PickerProps,
+  PickerItemProps,
+  PickerValue,
+  PickerModes,
+  PickerFieldTypes,
+  PickerSearchStyle,
+  RenderCustomModalProps,
+  PickerItemsListProps,
+  PickerMethods
+};
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

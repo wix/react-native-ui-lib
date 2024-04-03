@@ -31,9 +31,9 @@ type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
   : never;
 type RenderPicker = RenderPickerOverloads<PickerValue>;
 
-type RenderCustomModalProps = {
+export type RenderCustomModalProps = {
   visible: boolean;
-  toggleModal: (show: boolean) => void;
+  toggleModal: () => void;
   onSearchChange: (searchValue: string) => void;
   children: ReactNode;
   // onDone is relevant to multi mode only

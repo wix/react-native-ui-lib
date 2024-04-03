@@ -29,6 +29,21 @@ describe('Text', () => {
     const content = textDriver.getText();
     expect(content).toEqual(TEXT_CONTENT);
   });
+  it('should return empty string', () => {
+    const Text = require('../').default;
+    const renderTree = render(<Text testID={TEXT_ID}/>);
+    const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+    const content = textDriver.getText();
+    expect(content).toEqual('');
+  });
+  it('should not return a string as text', () => {
+    const Text = require('../').default;
+    const renderTree = render(<Text testID={TEXT_ID}><Text>This is a text</Text></Text>);
+    const textDriver = TextDriver({renderTree, testID: TEXT_ID});
+    const content = textDriver.getText();
+    expect(content.length).toBe(1);
+    expect(typeof content[0]).not.toBe('string');
+  });
 
   describe('onPress', () => {
     it('should press the text, and run callback', () => {
@@ -55,13 +70,13 @@ describe('Text', () => {
       jest.isolateModules(() => {
         setConstants(true, true);
         const {textDriver} = getDriver();
-        const textStyle = textDriver.getProps().style;
+        const textStyle = textDriver.getElement().props.style;
         expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
       });
       jest.isolateModules(() => {
         setConstants(true, false);
         const {textDriver} = getDriver();
-        const textStyle = textDriver.getProps().style;
+        const textStyle = textDriver.getElement().props.style;
         expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
       });
     });
@@ -70,7 +85,7 @@ describe('Text', () => {
       jest.isolateModules(() => {
         setConstants(false, true);
         const {textDriver} = getDriver();
-        const textStyle = textDriver.getProps().style;
+        const textStyle = textDriver.getElement().props.style;
         expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('rtl');
       });
     });
@@ -78,7 +93,7 @@ describe('Text', () => {
       jest.isolateModules(() => {
         setConstants(false, false);
         const {textDriver} = getDriver();
-        const textStyle = textDriver.getProps().style;
+        const textStyle = textDriver.getElement().props.style;
         expect(StyleSheet.flatten(textStyle).writingDirection).toEqual('ltr');
       });
     });

@@ -15,6 +15,7 @@ const useGridLayout = (props: GridListBaseProps) => {
     listPadding = 0,
     keepItemSize,
     containerWidth,
+    style,
     contentContainerStyle
   } = props;
 
@@ -47,8 +48,12 @@ const useGridLayout = (props: GridListBaseProps) => {
   const listContentStyle = useMemo(() => {
     return [{paddingHorizontal: listPadding}, contentContainerStyle];
   }, [listPadding, contentContainerStyle]);
+  
+  const listStyle = useMemo(() => {
+    return [{paddingHorizontal: listPadding}, style];
+  }, [listPadding, style]);
 
-  return {itemContainerStyle, numberOfColumns, listContentStyle};
+  return {itemContainerStyle, numberOfColumns, listStyle, listContentStyle};
 };
 
 export default useGridLayout;

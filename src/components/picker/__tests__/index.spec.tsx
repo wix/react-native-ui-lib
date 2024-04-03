@@ -78,7 +78,7 @@ describe('Picker', () => {
     describe('Test selection', () => {
       it('Should select a single item', () => {
         const driver = getDriver();
-        expect(driver.getValue()).toEqual(undefined);
+        expect(driver.getValue()).toEqual('');
         expect(driver.isOpen()).toBeFalsy();
         driver.open();
         expect(driver.isOpen()).toBeTruthy();
@@ -89,7 +89,7 @@ describe('Picker', () => {
 
       it('Should select multiple items', () => {
         const driver = getDriver({mode: 'MULTI'});
-        expect(driver.getValue()).toEqual(undefined);
+        expect(driver.getValue()).toEqual('');
         expect(driver.isOpen()).toBeFalsy();
         driver.open();
         expect(driver.isOpen()).toBeTruthy();

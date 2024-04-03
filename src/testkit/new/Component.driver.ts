@@ -6,13 +6,12 @@ export interface ComponentProps {
   testID: string;
 }
 
-export interface ComponentDriverResult<Props> {
+export interface ComponentDriverResult {
   getElement: () => ReactTestInstance;
   exists: () => boolean;
-  getProps: () => Props;
 }
 
-export const useComponentDriver = <Props>(props: ComponentProps): ComponentDriverResult<Props> => {
+export const useComponentDriver = (props: ComponentProps): ComponentDriverResult => {
   const {renderTree, testID} = props;
 
   const getElement = (): ReactTestInstance => {
@@ -38,13 +37,9 @@ export const useComponentDriver = <Props>(props: ComponentProps): ComponentDrive
     }
   };
 
-  const getProps = (): Props => {
-    return getElement().props as Props;
-  };
-
-  return {getElement, exists, getProps};
+  return {getElement, exists};
 };
 
-export const ComponentDriver = <Props>(props: ComponentProps): ComponentDriverResult<Props> => {
+export const ComponentDriver = (props: ComponentProps): ComponentDriverResult => {
   return useComponentDriver(props);
 };

@@ -129,7 +129,9 @@
 {
     _keyboardState = KeyboardStateShown;
     
-    [self invalidateIntrinsicContentSize];
+    if (_keyboardHeight > 0) { //prevent triggering observeValueForKeyPath if an external keyboard is in use
+        [self invalidateIntrinsicContentSize];
+    }
 }
 
 - (void)_keyboardWillHideNotification:(NSNotification*)notification
