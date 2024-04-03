@@ -1,6 +1,15 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Picker, Colors, View, Text, Incubator, PickerProps, PanningProvider} from 'react-native-ui-lib';
+import {
+  Picker,
+  Colors,
+  View,
+  Text,
+  Incubator,
+  PickerProps,
+  RenderCustomModalProps,
+  PanningProvider
+} from 'react-native-ui-lib';
 
 const options = [
   {label: 'JavaScript', value: 'js'},
@@ -29,7 +38,7 @@ const PickerWrapper = () => {
   const [language, setLanguage] = useState(undefined);
   const [filter, setFilter] = useState(undefined);
   const [customModalValues, setCustomModalValues] = useState(undefined);
-  const renderDialog: PickerProps['renderCustomModal'] = (modalProps: any) => {
+  const renderDialog: PickerProps['renderCustomModal'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
 
     return (
@@ -37,7 +46,7 @@ const PickerWrapper = () => {
         visible={visible}
         onDismiss={() => {
           onDone();
-          toggleModal(false);
+          toggleModal();
         }}
         width="40%"
         height="45%"

@@ -31,9 +31,9 @@ type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
   : never;
 type RenderPicker = RenderPickerOverloads<PickerValue>;
 
-type RenderCustomModalProps = {
+export type RenderCustomModalProps = {
   visible: boolean;
-  toggleModal: (show: boolean) => void;
+  toggleModal: () => void;
   onSearchChange: (searchValue: string) => void;
   children: ReactNode;
   // onDone is relevant to multi mode only
@@ -61,7 +61,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Pass for different field type UI (form, filter or settings)
    */
-  fieldType?: PickerFieldTypes;
+  fieldType?: PickerFieldTypes | `${PickerFieldTypes}`;
   /**
    * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
    */
@@ -73,7 +73,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * SINGLE mode or MULTI mode
    */
-  mode?: PickerModes;
+  mode?: PickerModes | `${PickerModes}`;
   /**
    * Limit the number of selected items
    */

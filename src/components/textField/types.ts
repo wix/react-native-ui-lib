@@ -28,7 +28,7 @@ export enum ValidationMessagePosition {
   BOTTOM = 'bottom'
 }
 
-type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
+export type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
 
 export type Validator = Function | keyof typeof formValidators;
 
@@ -54,14 +54,14 @@ export interface FieldStateProps extends InputProps {
   onChangeValidity?: (isValid: boolean) => void;
 }
 
-interface MandatoryIndication {
+export interface MandatoryIndication {
   /**
    * Whether to show a mandatory field indication.
    */
   showMandatoryIndication?: boolean;
 }
 
-export interface LabelProps extends MandatoryIndication {
+export interface LabelProps extends MandatoryIndication, Pick<ValidationMessageProps, 'enableErrors'> {
   /**
    * Field label
    */
@@ -142,7 +142,6 @@ export interface CharCounterProps {
 
 export interface InputProps
   extends Omit<TextInputProps, 'placeholderTextColor'>,
-    Omit<React.ComponentPropsWithRef<typeof TextInput>, 'placeholderTextColor'>,
     MandatoryIndication,
     RecorderProps {
   /**

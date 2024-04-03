@@ -1,5 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {ImageRequireSource} from 'react-native';
+import {IconProps} from '../icon';
 
 export enum StateTypes {
   CURRENT = 'current', // default
@@ -21,17 +22,20 @@ export enum PointTypes {
 
 export type LineProps = {
   state?: StateTypes;
-  type?: LineTypes;
+  type?: LineTypes | `${LineTypes}`;
   color?: string;
   /** to mark as entry point */
   entry?: boolean;
+  width?: number;
 }
 
 export type PointProps = {
-  state?: StateTypes;
-  type?: PointTypes;
+  state?: StateTypes | `${StateTypes}`;
+  type?: PointTypes | `${PointTypes}`;
   color?: string;
   icon?: ImageRequireSource;
+  iconProps?: IconProps;
+  removeIconBackground?: boolean;
   label?: number;
   /** to align point to this view's center */
   anchorRef?: React.MutableRefObject<undefined>;

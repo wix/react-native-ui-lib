@@ -1,120 +1,42 @@
 import _ from 'lodash';
-import React, {PureComponent, GetDerivedStateFromProps} from 'react';
-import {StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
-import GradientSlider, {GradientSliderTypes} from './GradientSlider';
+import React, {useState, useEffect, useCallback, useMemo} from 'react';
+import {Colors} from '../../style';
+import {useThemeProps} from '../../hooks';
+import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
-import Text from '../text';
-
-type SliderOnValueChange = (value: string) => void;
-
-export type ColorSliderGroupProps = {
-  /**
-   * The gradient color
-   */
-  initialColor: string;
-  /**
-   * Callback for onValueChange returns the new hex color
-   */
-  onValueChange?: SliderOnValueChange;
-  /**
-   * Group container style
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Sliders style
-   */
-  sliderContainerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Show the sliders labels (defaults are: Hue, Lightness, Saturation)
-   */
-  showLabels?: boolean;
-  /**
-   * In case you would like to change the default labels (translations etc.), you can provide
-   * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
-   */
-  labels?: {[key in GradientSliderTypes]: string};
-  /**
-   * The labels style
-   */
-  labelsStyle?: StyleProp<TextStyle>;
-  /**
-   * If true the component will have accessibility features enabled
-   */
-  accessible?: boolean;
-  /** 
-   * Whether to use the new Slider implementation using Reanimated
-   */
-  migrate?: boolean;
-};
-
-interface ColorSliderGroupState {
-  initialColor: string;
-}
+import ColorSlider from './ColorSlider';
+import {ColorSliderGroupProps, HSLA} from './types';
 
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
  */
-class ColorSliderGroup extends PureComponent<ColorSliderGroupProps, ColorSliderGroupState> {
-  static displayName = 'ColorSliderGroup';
+const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGroupProps<T>) => {
+  const themeProps = useThemeProps(props, 'ColorSliderGroup');
+  const {initialColor, containerStyle, onValueChange, ...others} = themeProps;
+  const _initialColor = useMemo<HSLA>(() => {
+    return _.isString(initialColor) ? Colors.getHSL(initialColor) : initialColor;
+  }, [initialColor]);
+  const [color, setColor] = useState<HSLA>(_initialColor);
 
-  static defaultProps = {
-    labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
-  };
+  useEffect(() => {
+    setColor(_initialColor);
+  }, [_initialColor]);
 
-  state = {
-    initialColor: this.props.initialColor
-  };
+  const _onValueChange = useCallback((value: HSLA) => {
+    const _value = _.isString(initialColor) ? Colors.getHexString(value) : value;
+    onValueChange?.(_value as T);
+  }, [onValueChange, initialColor]);
 
-  static getDerivedStateFromProps: GetDerivedStateFromProps<ColorSliderGroupProps, ColorSliderGroupState> = (nextProps,
-    prevState) => {
-    if (prevState.initialColor !== nextProps.initialColor) {
-      return {
-        initialColor: nextProps.initialColor
-      };
-    }
-    return null;
-  };
+  return (
+    <SliderGroup style={containerStyle} color={color} onValueChange={_onValueChange}>
+      <ColorSlider type={GradientSlider.types.HUE} initialColor={_initialColor} {...others}/>
+      <ColorSlider type={GradientSlider.types.SATURATION} initialColor={_initialColor} {...others}/>
+      <ColorSlider type={GradientSlider.types.LIGHTNESS} initialColor={_initialColor} {...others}/>
+    </SliderGroup>
+  );
+};
 
-  onValueChange = (value: string) => {
-    _.invoke(this.props, 'onValueChange', value);
-  };
-
-  renderSlider = (type: GradientSliderTypes) => {
-    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels, migrate} = this.props;
-
-    return (
-      <>
-        {showLabels && labels && (
-          <Text recorderTag={'unmask'} $textNeutral text80 style={labelsStyle} accessible={accessible}>
-            {labels[type]}
-          </Text>
-        )}
-        <GradientSlider
-          color={this.props.initialColor}
-          type={type}
-          containerStyle={sliderContainerStyle}
-          accessible={accessible}
-          migrate={migrate}
-        />
-      </>
-    );
-  };
-
-  render() {
-    const {containerStyle} = this.props;
-    const {initialColor} = this.state;
-
-    return (
-      <SliderGroup style={containerStyle} color={initialColor} onValueChange={this.onValueChange}>
-        {this.renderSlider(GradientSlider.types.HUE)}
-        {this.renderSlider(GradientSlider.types.LIGHTNESS)}
-        {this.renderSlider(GradientSlider.types.SATURATION)}
-      </SliderGroup>
-    );
-  }
-}
-
-export default asBaseComponent<ColorSliderGroupProps, typeof ColorSliderGroup>(ColorSliderGroup);
+ColorSliderGroup.displayName = 'ColorSliderGroup';
+export default ColorSliderGroup;

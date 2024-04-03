@@ -29,12 +29,6 @@ import * as Incubator from './incubator';
 export {
   ExpandableOverlayProps,
   ExpandableOverlayMethods,
-  TextFieldProps,
-  TextFieldMethods,
-  TextFieldRef,
-  TextFieldValidationMessagePosition,
-  TextFieldValidator,
-  FieldContextType,
   ToastProps,
   ToastPresets,
   PanViewProps,
@@ -65,7 +59,6 @@ export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPalette';
 export {default as ColorPickerDialog, ColorPickerDialogProps} from './components/colorPicker/ColorPickerDialog';
-export {default as ColorSliderGroup, ColorSliderGroupProps} from './components/slider/ColorSliderGroup';
 export {default as ColorSwatch, ColorSwatchProps, ColorInfo} from './components/colorSwatch';
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Dash, DashProps} from './components/dash';
@@ -77,7 +70,10 @@ export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps, FloatingButtonLayouts} from './components/floatingButton';
 export {default as Gradient, GradientProps, GradientTypes} from './components/gradient';
-export {default as GradientSlider, GradientSliderProps} from './components/slider/GradientSlider';
+export {default as Slider} from './components/slider';
+export {default as GradientSlider} from './components/slider/GradientSlider';
+export {default as ColorSliderGroup} from './components/slider/ColorSliderGroup';
+export type {SliderProps, GradientSliderProps, ColorSliderGroupProps} from './components/slider/types';
 export {default as GridListItem, GridListItemProps} from './components/gridListItem';
 export {default as GridList, GridListProps} from './components/gridList';
 export {default as GridView, GridViewProps} from './components/gridView';
@@ -122,12 +118,15 @@ export {
   PickerModes,
   PickerFieldTypes,
   PickerSearchStyle,
+  RenderCustomModalProps,
+  PickerItemsListProps,
   PickerMethods
 } from './components/picker';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
 export type {RecorderProps} from './typings/recorderTypes';
+export type {ComponentStatics} from './typings/common';
 export {default as ScrollBar, ScrollBarProps} from './components/scrollBar';
 export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './components/sectionsWheelPicker';
 export {
@@ -138,7 +137,6 @@ export {
 // @ts-expect-error
 export {default as SharedTransition} from './components/sharedTransition';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
-export {default as Slider, SliderProps} from './components/slider';
 export {default as SortableGridList, SortableGridListProps} from './components/sortableGridList';
 export {default as SortableList, SortableListProps, SortableListItemProps} from './components/sortableList';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
@@ -148,6 +146,7 @@ export {default as Switch, SwitchProps} from './components/switch';
 export {
   default as TabController,
   TabControllerProps,
+  TabControllerBarProps,
   TabControllerItemProps,
   TabControllerImperativeMethods
 } from './components/tabController';
@@ -163,7 +162,17 @@ export {
 export {default as Text, TextProps} from './components/text';
 // @ts-expect-error
 export {default as TextArea} from './components/textArea';
-export {default as TextField} from './components/textField';
+export {
+  default as TextField,
+  TextFieldProps,
+  TextFieldMethods,
+  TextFieldRef,
+  TextFieldValidationMessagePosition,
+  TextFieldValidationMessagePositionType,
+  TextFieldMandatoryIndication,
+  TextFieldValidator,
+  FieldContextType
+} from './components/textField';
 // @ts-expect-error
 export {default as Toast} from './components/toast';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';

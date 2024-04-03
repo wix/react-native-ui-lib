@@ -13,14 +13,14 @@ const POINT_MARGINS = Spacings.s1;
 const CIRCLE_WIDTH = 2;
 const OUTLINE_WIDTH = 4;
 const OUTLINE_TINT = 70;
-const ICON_SIZE = 12;
+const ICON_SIZE = 16;
 
 type PointPropsInternal = PointProps & {
   onLayout?: (event: LayoutChangeEvent) => void;
 };
 
 const Point = (props: PointPropsInternal) => {
-  const {icon, label, type, color, onLayout} = props;
+  const {icon, iconProps, removeIconBackground, label, type, color, onLayout} = props;
 
   const pointStyle = useMemo(() => {
     const hasOutline = type === PointTypes.OUTLINE;
@@ -38,12 +38,15 @@ const Point = (props: PointPropsInternal) => {
     const circleStyle = !hasContent && isCircle && 
       {backgroundColor: 'transparent', borderWidth: CIRCLE_WIDTH, borderColor: color};
     
-    return [styles.point, pointSizeStyle, pointColorStyle, outlineStyle, circleStyle];
-  }, [type, color, label, icon]);
+    return [styles.point, pointSizeStyle, !removeIconBackground && pointColorStyle, outlineStyle, circleStyle];
+  }, [type, color, label, removeIconBackground, icon]);
 
   const renderPointContent = () => {
+    const {removeIconBackground} = props;
+    const tintColor = removeIconBackground ? Colors.$iconDefault : Colors.$iconDefaultLight;
+    const iconSize = removeIconBackground ? undefined : ICON_SIZE;
     if (icon) {
-      return <Icon source={icon} size={ICON_SIZE} tintColor={Colors.$iconDefaultLight}/>;
+      return <Icon tintColor={tintColor} {...iconProps} size={iconSize} source={icon}/>;
     } else if (label) {
       return <Text recorderTag={'unmask'} $textDefaultLight subtextBold>{label}</Text>;
     }

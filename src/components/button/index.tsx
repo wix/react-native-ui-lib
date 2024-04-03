@@ -4,7 +4,7 @@ import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, Te
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
-import type {Dictionary} from '../../typings/common';
+import type {Dictionary, ComponentStatics} from '../../typings/common';
 import Text from '../text';
 import Image from '../image';
 import Icon from '../icon';
@@ -20,7 +20,6 @@ import {
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
-
 
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
@@ -58,7 +57,7 @@ class Button extends PureComponent<Props, ButtonState> {
       this.setState({size});
     }
 
-    if (Constants.isAndroid && Platform.Version <= 17) {
+    if (Constants.isAndroid && (Platform.Version as number) <= 17) {
       this.setState({borderRadius: height / 2});
     }
   };
@@ -251,12 +250,16 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getIconStyle() {
-    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize} = this.props;
+    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
     const size = propsSize || DEFAULT_SIZE;
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
     };
-    const marginSide = ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size) ? 8 : 4;
+    const marginSide = link
+      ? 4
+      : ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size)
+        ? 8
+        : 4;
 
     if (!this.isIconButton) {
       if (iconOnRight) {
@@ -429,5 +432,6 @@ const modifiersOptions = {
   typography: true,
   color: true
 };
-
-export default asBaseComponent<ButtonProps, typeof Button>(forwardRef<Props>(Button), {modifiersOptions});
+export default asBaseComponent<ButtonProps, ComponentStatics<typeof Button>, {}>(forwardRef(Button), {
+  modifiersOptions
+});

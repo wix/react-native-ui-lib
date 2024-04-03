@@ -24,8 +24,8 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import DialogHeader from './DialogHeader';
-import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
-export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
+import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps} from './types';
+export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps};
 
 const THRESHOLD_VELOCITY = 750;
 
@@ -124,6 +124,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     if (isVertical) {
       return {
@@ -199,6 +200,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
 
   const renderDialog = () => (
     <GestureDetector gesture={panGesture}>
+      {/* @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881) */}
       <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
         {headerProps && <DialogHeader {...headerProps}/>}
         {children}

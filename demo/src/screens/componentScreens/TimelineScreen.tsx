@@ -7,6 +7,7 @@ const contents = [
   'SUCCESS state with label.',
   'ERROR state with icon.',
   'Custom color with icon and outline.\nAligned to title',
+  'Icon without background.',
   'NEXT state with outline.',
   'NEXT state with circle point and entry point.'
 ];
@@ -27,8 +28,10 @@ const TimelineScreen = () => {
   const renderExtraContent = () => {
     return (
       <View style={{flex: 1, marginTop: 10, backgroundColor: Colors.grey70}}>
-        <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry</Text>
+        <Text>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of
+          the printing and typesetting industry
+        </Text>
       </View>
     );
   };
@@ -62,7 +65,7 @@ const TimelineScreen = () => {
         <Timeline
           // key={String(expand)}
           // topLine={{
-          //   type: Timeline.lineTypes.DASHED, 
+          //   type: Timeline.lineTypes.DASHED,
           //   entry: true
           // }}
           bottomLine={{type: Timeline.lineTypes.DASHED}}
@@ -108,9 +111,22 @@ const TimelineScreen = () => {
           {renderContent(3)}
         </Timeline>
         <Timeline
+          topLine={{type: Timeline.lineTypes.DASHED, color: Colors.purple30}}
+          bottomLine={{
+            type: Timeline.lineTypes.DASHED,
+            color: Colors.blue30
+          }}
+          point={{
+            icon: Assets.icons.demo.camera,
+            removeIconBackground: true
+          }}
+        >
+          {renderContent(4)}
+        </Timeline>
+        <Timeline
           topLine={{
             type: Timeline.lineTypes.DASHED,
-            color: Colors.purple30
+            color: Colors.blue30
           }}
           bottomLine={{
             state: Timeline.states.NEXT,
@@ -121,7 +137,7 @@ const TimelineScreen = () => {
             type: Timeline.pointTypes.OUTLINE
           }}
         >
-          {renderContent(4)}
+          {renderContent(5)}
         </Timeline>
 
         <Timeline
@@ -138,7 +154,7 @@ const TimelineScreen = () => {
             type: Timeline.pointTypes.CIRCLE
           }}
         >
-          {renderContent(5)}
+          {renderContent(6)}
         </Timeline>
       </ScrollView>
     </>

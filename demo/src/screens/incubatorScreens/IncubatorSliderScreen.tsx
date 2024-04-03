@@ -21,12 +21,13 @@ const IncubatorSliderScreen = () => {
   const [sliderMaxValue, setSliderMaxValue] = useState(INITIAL_MAX);
 
   const [color, setColor] = useState(COLOR);
+  const [groupColor, setGroupColor] = useState(Colors.yellow30);
   const [alpha, setAlpha] = useState(1);
 
-  const slider = useRef<typeof Incubator.Slider>();
-  const customSlider = useRef<typeof Incubator.Slider>();
-  const negativeSlider = useRef<typeof Incubator.Slider>();
-  const rangeSlider = useRef<typeof Incubator.Slider>();
+  const slider = useRef<Incubator.SliderRef>(null);
+  const customSlider = useRef<Incubator.SliderRef>(null);
+  const negativeSlider = useRef<Incubator.SliderRef>(null);
+  const rangeSlider = useRef<Incubator.SliderRef>(null);
 
   const resetSliders = useCallback(() => {
     slider.current?.reset();
@@ -58,7 +59,7 @@ const IncubatorSliderScreen = () => {
   }, []);
 
   const onGroupValueChange = (value: string) => {
-    console.log('onGroupValueChange: ', value);
+    setGroupColor(value);
   };
 
   const renderValuesBox = (min: number, max?: number) => {
@@ -92,7 +93,6 @@ const IncubatorSliderScreen = () => {
         </Text>
         {renderValuesBox(sliderValue)}
         <Incubator.Slider
-          // @ts-expect-error TODO: need to properly support SliderMethods type to use for ref
           ref={slider}
           onValueChange={onValueChange}
           containerStyle={styles.container}
@@ -124,7 +124,6 @@ const IncubatorSliderScreen = () => {
         </Text>
         {renderValuesBox(customSliderValue)}
         <Incubator.Slider
-          // @ts-expect-error
           ref={customSlider}
           onValueChange={onCustomValueChange}
           value={20}
@@ -152,7 +151,6 @@ const IncubatorSliderScreen = () => {
         </Text>
         {renderValuesBox(negativeSliderValue)}
         <Incubator.Slider
-          // @ts-expect-error
           ref={negativeSlider}
           onValueChange={onNegativeValueChange}
           value={-30}
@@ -175,7 +173,6 @@ const IncubatorSliderScreen = () => {
         <View marginH-20>
           {renderValuesBox(sliderMinValue, sliderMaxValue)}
           <Incubator.Slider
-            // @ts-expect-error
             ref={rangeSlider}
             useRange
             onRangeChange={onRangeChange}
@@ -239,9 +236,9 @@ const IncubatorSliderScreen = () => {
           Color Slider Group
         </Text>
         <ColorSliderGroup
-          initialColor={color}
+          initialColor={groupColor}
           sliderContainerStyle={styles.slider}
-          containerStyle={styles.group}
+          containerStyle={[styles.group, {borderWidth: 12, borderColor: groupColor}]}
           showLabels
           onValueChange={onGroupValueChange}
           migrate

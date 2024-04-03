@@ -1,8 +1,8 @@
 import get from 'lodash/get';
-import {ImageProps} from 'react-native';
 import Assets from '../assets';
+import type {ImageSourceType} from '../components/image';
 
-export function isSvgUri(source?: ImageProps['source']) {
+export function isSvgUri(source?: ImageSourceType) {
   // @ts-expect-error
   return typeof source === 'object' && source?.uri?.endsWith?.('.svg');
 }

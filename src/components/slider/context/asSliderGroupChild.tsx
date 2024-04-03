@@ -29,7 +29,8 @@ function asSliderGroupChild(WrappedComponent: any) {
   const SliderContextConsumer = getConsumer(WrappedComponent);
 
   hoistNonReactStatic(SliderContextConsumer, WrappedComponent);
-
+  //@ts-expect-error
+  SliderContextConsumer.displayName = WrappedComponent.displayName;
   return SliderContextConsumer;
 }
 

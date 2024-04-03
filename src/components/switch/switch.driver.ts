@@ -1,13 +1,14 @@
-import {SwitchProps} from './index';
-import {ComponentDriver} from '../../testkit';
+import {ViewStyle} from 'react-native';
+import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
-export class SwitchDriver extends ComponentDriver<SwitchProps> {
-  getAccessibilityValue = async () => (await this.getElementProps()).accessibilityValue?.text === '1';
-
-  isDisabled = async () => (await this.getElementProps()).accessibilityState?.disabled === true;
-
-  isChecked = async () => (await this.getElementProps()).accessibilityValue?.text === '1';
-
-  // @ts-ignore
-  getColor = async () => (await this.getElementProps()).style.backgroundColor;
-}
+export const SwitchDriver = (props: ComponentProps) => {
+  const driver = usePressableDriver(useComponentDriver(props));
+  
+  const getStyle = () => driver.getElement().props.style as ViewStyle;
+  const getAccessibilityValue = () => driver.getElement().props.accessibilityValue?.text === '1';
+  const isDisabled = () => driver.getElement().props.accessibilityState?.disabled === true;
+  const isChecked = () => driver.getElement().props.accessibilityValue?.text === '1';
+  
+  return {...driver, getStyle, getAccessibilityValue, isDisabled, isChecked};
+};

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, LayoutAnimation, StyleProp, ViewStyle} from 'react-native';
-import {asBaseComponent, forwardRef} from '../../commons/new';
+import {asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
@@ -239,7 +239,8 @@ class PageControl extends PureComponent<PageControlProps, State> {
   }
 }
 
-export default asBaseComponent<PageControlProps>(forwardRef(PageControl));
+// @ts-expect-error
+export default asBaseComponent<PageControlProps>(PageControl);
 
 const styles = StyleSheet.create({
   container: {

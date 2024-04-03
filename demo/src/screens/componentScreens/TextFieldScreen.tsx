@@ -59,9 +59,7 @@ export default class TextFieldScreen extends Component {
           <Text h3 marginV-s4>
             Default
           </Text>
-          {/* @ts-expect-error */}
           <TextField ref={this.input} label="Name" placeholder="Enter full name"/>
-
           <Text h3 marginV-s4>
             Static vs Floating Placeholder
           </Text>
@@ -89,7 +87,6 @@ export default class TextFieldScreen extends Component {
           </Text>
 
           <TextField
-            // @ts-expect-error
             ref={this.input2}
             placeholder="Enter search term"
             text70
@@ -99,7 +96,6 @@ export default class TextFieldScreen extends Component {
           />
 
           <TextField
-            // @ts-expect-error
             ref={this.input2}
             placeholder="Enter URL"
             floatingPlaceholder
@@ -114,7 +110,6 @@ export default class TextFieldScreen extends Component {
           />
 
           <TextField
-            // @ts-expect-error
             ref={this.input2}
             placeholder="Enter weight"
             text70
@@ -166,7 +161,6 @@ export default class TextFieldScreen extends Component {
 
           <View row top marginT-s4>
             <TextField
-              // @ts-expect-error
               ref={this.inputWithValidation}
               placeholder="Enter full name"
               validate="required"

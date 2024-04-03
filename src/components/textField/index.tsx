@@ -19,7 +19,9 @@ import {
   FieldContextType,
   TextFieldMethods,
   TextFieldRef,
-  Validator
+  Validator,
+  ValidationMessagePositionType,
+  MandatoryIndication
 } from './types';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
@@ -137,6 +139,7 @@ const TextField = (props: InternalTextFieldProps) => {
           validationMessagePosition={validationMessagePosition}
           testID={`${props.testID}.label`}
           showMandatoryIndication={showMandatoryIndication}
+          enableErrors={enableErrors}
         />
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
@@ -156,7 +159,7 @@ const TextField = (props: InternalTextFieldProps) => {
             Known Issue: This slightly push the trailing accessory when entering a long text
           */}
           {children || (
-            <View flexG>
+            <View {...(Constants.isWeb ? {flex: true} : {flexG: true})}>
               {/* Note: Render dummy placeholder for Android center issues */}
               {Constants.isAndroid && centered && (
                 <Text marginR-s1 style={dummyPlaceholderStyle}>
@@ -229,9 +232,11 @@ export {
   TextFieldMethods,
   TextFieldRef,
   ValidationMessagePosition as TextFieldValidationMessagePosition,
-  Validator as TextFieldValidator
+  Validator as TextFieldValidator,
+  ValidationMessagePositionType as TextFieldValidationMessagePositionType,
+  MandatoryIndication as TextFieldMandatoryIndication
 };
-export default asBaseComponent<TextFieldProps, StaticMembers>(forwardRef(TextField as any), {
+export default asBaseComponent<TextFieldProps, StaticMembers, TextFieldRef>(forwardRef(TextField as any), {
   modifiersOptions: {
     margins: true,
     paddings: true,
