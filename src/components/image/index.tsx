@@ -73,7 +73,7 @@ export type ImageProps = Omit<RNImageProps, 'source'> &
     /**
      * Render an overlay with custom content
      */
-    customOverlayContent?: React.ReactElement;
+    customOverlayContent?: React.ReactElement | React.ReactElement[];
     /**
      * Default image source in case of an error
      */

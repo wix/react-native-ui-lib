@@ -39,7 +39,7 @@ export type OverlayTypes = Pick<ImageProps, 'borderRadius'> & {
   /**
    * Custom overlay content to be rendered on top of the image
    */
-  customContent?: React.ReactElement;
+  customContent?: React.ReactElement | React.ReactElement[];
 };
 
 /**
