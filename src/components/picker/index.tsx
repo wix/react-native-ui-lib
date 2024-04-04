@@ -268,7 +268,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     if (fieldType === PickerFieldTypes.filter) {
       return (
         <Text text70 numberOfLines={1} style={others.style}>
-          {label ?? others.placeholder}
+          {_.isEmpty(label) ? others.placeholder : label}
         </Text>
       );
     } else if (fieldType === PickerFieldTypes.settings) {
@@ -278,7 +278,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
             {others.label}
           </Text>
           <Text text70 $textPrimary style={others.style}>
-            {label ?? others.placeholder}
+            {_.isEmpty(label) ? others.placeholder : label}
           </Text>
         </View>
       );
