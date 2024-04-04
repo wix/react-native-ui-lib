@@ -9,7 +9,6 @@ import {GradientSliderProps, GradientSliderTypes, HSLA} from './types';
 import Slider from './index';
 import SliderContext from './SliderContext';
 
-
 type Props<T> = GradientSliderProps<T> & ForwardRefInjectedProps;
 
 /**
@@ -31,7 +30,6 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     ...others
   } = props;
   const sliderContext = useContext(SliderContext);
-  
 
   const initialColor = useMemo((): HSLA => {
     return _.isString(propsColor) ? Colors.getHSL(propsColor) : propsColor;
@@ -156,6 +154,4 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
 GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
 // @ts-expect-error
-export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(
-  forwardRef(forwardRef(GradientSlider))
-);
+export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(forwardRef(GradientSlider));
