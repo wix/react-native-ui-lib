@@ -31,17 +31,13 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
     return _.isString(initialColor) ? Colors.getHSL(initialColor) : initialColor;
   }, [initialColor]);
 
-  const _onValueChange = useCallback((value: HSLA) => {
-    const newValue = _.isString(initialColor) ? Colors.getHexString(value) : value;
-    onValueChange?.(newValue as T);
-  }, [initialColor, onValueChange]);
-
   const [value, setValue] = useState(_initialColor);
 
   const _setValue = useCallback((value: HSLA) => {
     setValue(value);
-    _onValueChange?.(value);
-  }, [_onValueChange]);
+    const newValue = _.isString(initialColor) ? Colors.getHexString(value) : value;
+    onValueChange?.(newValue as T);
+  }, [initialColor, onValueChange]);
     
   const contextProviderValue = useMemo(() => ({value, setValue: _setValue}), [value, _setValue]);
 
@@ -54,7 +50,6 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
           </Text>
         )}
         <GradientSlider
-          color={value}
           type={type}
           containerStyle={sliderContainerStyle}
           accessible={accessible}
