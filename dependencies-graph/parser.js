@@ -12,6 +12,10 @@ function isConst(imp) {
   return imp.toUpperCase() === imp;
 }
 
+function isIncubator(path) {
+  return path.includes('incubator');
+}
+
 class Parser {
   _verbose;
   _componentsWithImports = [];
@@ -56,7 +60,17 @@ class Parser {
               from = node.source.raw.replace(/['"]/g, '');
               if (OUR_STATIC_IMPORTS.includes(from) || from.indexOf(`./`) === 0 || from.indexOf(`../`) === 0) {
                 imports = imports.concat(node.specifiers
-                  .map(imp => imp.imported?.name ?? imp.local.name)
+                  .map(imp => {
+                    let importName = imp.imported?.name ?? imp.local.name;
+                    if (
+                      isIncubator(node.source.raw) ||
+                        (isIncubator(fullPath) && !node.source.raw.includes('components'))
+                    ) {
+                      importName = `Incubator.${importName}`;
+                    }
+
+                    return importName;
+                  })
                   .filter(imp => !isType(imp) && !isConst(imp)));
               }
               break;
@@ -124,8 +138,7 @@ class Parser {
         return undefined;
       }
 
-      const incubator = fullPath.includes('incubator') ? {incubator: true} : {};
-      return {defaultExport, imports, ...incubator};
+      return {defaultExport: `${isIncubator(fullPath) ? 'Incubator.' : ''}${defaultExport}`, imports};
     } catch (e) {
       if (this._verbose) {
         console.error('Error parsing content', e);

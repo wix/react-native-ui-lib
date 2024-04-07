@@ -45,7 +45,7 @@ let dotString = '';
 const componentsWithNoOutgoingEdges = [];
 componentsWithImports.forEach(component => {
   let hasOutgoingEdges = false;
-  let label = (component.incubator ? 'Incubator.' : '') + component.defaultExport;
+  let label = component.defaultExport;
   const popular = [];
   component.imports.forEach(imported => {
     if (POPULAR_COMPONENTS.includes(imported)) {
