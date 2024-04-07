@@ -1,8 +1,8 @@
-import React, {useMemo} from 'react';
-import {LayoutAnimation, StyleSheet} from 'react-native';
+import React, {useMemo, useState} from 'react';
+import {LayoutChangeEvent, StyleSheet} from 'react-native';
+import {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
-import {useDidUpdate} from 'hooks';
 
 export type ExpandableSectionProps = {
   /**
@@ -38,36 +38,49 @@ export type ExpandableSectionProps = {
  */
 
 function ExpandableSection(props: ExpandableSectionProps) {
-  const {expanded, sectionHeader, children, top, testID} = props;
+  const {expanded, sectionHeader, onPress, children, top, testID} = props;
+  const [height, setHeight] = useState(0);
+  const animatedHeight = useSharedValue(0);
 
-  /**
-   * TODO: move to reanimated LayoutAnimation after updating to version 2.3.0
-   * after migration, trigger the animation only in useDidUpdate.
-   */
-  const animate = () => {
-    LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 300});
+  const onLayout = (event: LayoutChangeEvent) => {
+    const onLayoutHeight = event.nativeEvent.layout.height;
+
+    if (onLayoutHeight > 0 && height !== onLayoutHeight) {
+      setHeight(onLayoutHeight);
+    }
   };
 
-  const onPress = () => {
-    props.onPress?.();
-    animate();
-  };
+  const expandableStyle = useAnimatedStyle(() => {
+    animatedHeight.value = expanded ? withTiming(height) : withTiming(0);
 
-  useDidUpdate(() => {
-    animate();
-  }, [expanded]);
+    return {
+      height: animatedHeight.value
+    };
+  }, [expanded, height]);
+
+  const style = useMemo(() => [styles.hidden, expandableStyle], [expandableStyle]);
 
   const accessibilityState = useMemo(() => {
     return {expanded};
   }, [expanded]);
 
+  const renderChildren = () => {
+    return (
+      <View reanimated style={style}>
+        <View absH onLayout={onLayout}>
+          {children}
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      {top && expanded && children}
+    <View style={styles.hidden}>
+      {top && renderChildren()}
       <TouchableOpacity onPress={onPress} testID={testID} accessibilityState={accessibilityState}>
         {sectionHeader}
       </TouchableOpacity>
-      {!top && expanded && children}
+      {!top && renderChildren()}
     </View>
   );
 }
@@ -75,7 +88,7 @@ function ExpandableSection(props: ExpandableSectionProps) {
 export default ExpandableSection;
 
 const styles = StyleSheet.create({
-  container: {
+  hidden: {
     overflow: 'hidden'
   }
 });

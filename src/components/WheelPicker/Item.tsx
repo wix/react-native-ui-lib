@@ -1,23 +1,23 @@
 import React, {useCallback, useMemo, memo, useRef} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
-import Text, {TextProps} from '../../components/text';
-import TouchableOpacity from '../../components/touchableOpacity';
-import {Colors, Spacings} from '../../../src/style';
-import {asBaseComponent} from '../../commons/new';
-import {WheelPickerAlign} from './types';
+import {Colors, Spacings} from '../../style';
+import {useThemeProps} from '../../hooks';
+import Text, {TextProps} from '../text';
+import TouchableOpacity from '../touchableOpacity';
+import {WheelPickerAlign, WheelPickerItemValue} from './types';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-export interface ItemProps {
+export interface WheelPickerItemProps<T = WheelPickerItemValue> {
   label: string;
-  value: string | number;
+  value: T;
   align?: WheelPickerAlign;
   disableRTL?: boolean;
 }
 
-interface InternalProps extends ItemProps {
+interface InternalProps<T> extends WheelPickerItemProps<T> {
   index: number;
   offset: Animated.SharedValue<number>;
   itemHeight: number;
@@ -32,23 +32,26 @@ interface InternalProps extends ItemProps {
   testID?: string;
 }
 
-const WheelPickerItem = memo(({
-  index,
-  label,
-  fakeLabel,
-  fakeLabelStyle,
-  fakeLabelProps,
-  itemHeight,
-  onSelect,
-  offset,
-  activeColor = Colors.$textPrimary,
-  inactiveColor = Colors.$textNeutralHeavy,
-  style,
-  testID,
-  centerH = true,
-  align,
-  disableRTL
-}: InternalProps) => {
+const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: InternalProps<T>) => {
+  const themeProps = useThemeProps(props, 'WheelPickerItem');
+  const {
+    index,
+    label,
+    fakeLabel,
+    fakeLabelStyle,
+    fakeLabelProps,
+    itemHeight,
+    onSelect,
+    offset,
+    activeColor = Colors.$textPrimary,
+    inactiveColor = Colors.$textNeutralHeavy,
+    style,
+    testID,
+    centerH = true,
+    align,
+    disableRTL
+  } = themeProps;
+  
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
   const _activeColor = useRef(activeColor.toString());
@@ -99,9 +102,9 @@ const WheelPickerItem = memo(({
       )}
     </AnimatedTouchableOpacity>
   );
-});
+};
 
-export default asBaseComponent<InternalProps>(WheelPickerItem);
+export default memo(WheelPickerItem);
 
 const styles = StyleSheet.create({
   container: {
