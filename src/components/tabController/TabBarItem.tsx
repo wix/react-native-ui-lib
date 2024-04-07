@@ -8,6 +8,7 @@ import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps} from '../badge';
 import View from '../view';
 import TabBarContext from './TabBarContext';
+import Constants from '../../commons/Constants';
 
 const DEFAULT_LABEL_COLOR = Colors.$textDefault;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.$textPrimary;
@@ -193,7 +194,11 @@ export default function TabBarItem({
   });
 
   const _style = useMemo(() => {
-    const constantWidthStyle = itemWidth.current ? {flex: 0, width: itemWidth.current} : undefined;
+    //@ts-ignore
+    const shouldChangeWebFlex = Constants.isWeb && props?.containerWidth !== Constants.windowWidth;
+    const constantWidthStyle = itemWidth.current
+      ? {flex: 0, width: itemWidth.current}
+      : shouldChangeWebFlex && {flex: '0 0 1'};
     return [styles.tabItem, style, constantWidthStyle, pressStyle];
   }, [style]);
 
@@ -219,6 +224,7 @@ export default function TabBarItem({
         reanimated
         // @ts-expect-error
         ref={itemRef}
+        //@ts-ignore
         style={_style}
         onLayout={onLayout}
         testID={testID}
