@@ -95,7 +95,7 @@ function getPRsByType(PRs, categories) {
       const foundCategory = categorizedPRs.find(cat => cat.name === category.name);
       foundCategory.PRs.push(pr);
     } else if (isSilent(pr)) {
-      const silentCategory = categorizedPRs.find(cat => cat.name === 'silentPRs');
+      const silentCategory = categorizedPRs.find(cat => cat.name === 'silent');
       silentCategory.PRs.push(pr);
     } else {
       const otherCategory = categorizedPRs.find(cat => cat.name === 'others');
@@ -174,7 +174,7 @@ async function _generateReleaseNotes(latestVersion,
     ...categories,
     {name: 'others', branch: '', title: 'OTHERS'},
     {
-      name: 'silentPRs',
+      name: 'silent',
       branch: '',
       title: '// Silent - these PRs did not have a changelog or were left out for some other reason, is it on purpose?'
     }
