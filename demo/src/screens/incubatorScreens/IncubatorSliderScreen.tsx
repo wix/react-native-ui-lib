@@ -54,8 +54,11 @@ const IncubatorSliderScreen = () => {
     setSliderMinValue(value.min);
   }, []);
 
-  const onGradientValueChange = useCallback((value: string, alpha: number) => {
+  const onGradientValueChange = useCallback((value: string, _: number) => {
     setColor(value);
+  }, []);
+
+  const onGradientAlphaValueChange = useCallback((_: string, alpha: number) => {
     setAlpha(alpha);
   }, []);
 
@@ -202,7 +205,7 @@ const IncubatorSliderScreen = () => {
           <GradientSlider
             color={color}
             containerStyle={styles.gradientSliderContainer}
-            onValueChange={onGradientValueChange}
+            onValueChange={onGradientAlphaValueChange}
             // @ts-expect-error
             ref={this.gradientSlider}
             migrate
