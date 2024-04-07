@@ -152,14 +152,14 @@ class GridListItem extends Component<GridListItemProps> {
     return {width: itemSize as number, height: itemSize as number};
   }
 
-  getHorizontalAlignmentStyle = memoize(horizontalAlignment => {
+  getContainerHorizontalAlignment = memoize(horizontalAlignment => {
     switch (horizontalAlignment) {
       case HorizontalAlignment.left:
-        return {contentStyle: styles.contentAlignedToStart, containerStyle: styles.containerAlignedToStart};
+        return 'flex-start';
       case HorizontalAlignment.right:
-        return {contentStyle: styles.contentAlignedToEnd, containerStyle: styles.containerAlignedToEnd};
+        return 'flex-end';
       case HorizontalAlignment.center:
-        return {contentStyle: styles.contentAlignedToCenter, containerStyle: styles.containerAlignedToCenter};
+        return 'center';
       default:
         undefined;
     }
@@ -167,7 +167,6 @@ class GridListItem extends Component<GridListItemProps> {
 
   renderContent({text, typography, color, numberOfLines = 1, style, testID}: RenderContentType) {
     const {alignToStart, horizontalAlignment} = this.props;
-    const horizontalAlignmentStyle = this.getHorizontalAlignmentStyle(horizontalAlignment);
     if (text) {
       return (
         <Text
@@ -178,8 +177,7 @@ class GridListItem extends Component<GridListItemProps> {
             //@ts-ignore
             Typography[typography],
             color && {color},
-            alignToStart && styles.contentAlignedToStart,
-            horizontalAlignmentStyle?.contentStyle
+            {textAlign: alignToStart ? 'left' : horizontalAlignment}
           ]}
           numberOfLines={numberOfLines}
         >
@@ -219,7 +217,6 @@ class GridListItem extends Component<GridListItemProps> {
     const Container = onPress ? TouchableOpacity : View;
     const itemSize = this.getItemSizeObj();
     const {width} = itemSize;
-    const horizontalAlignmentStyle = this.getHorizontalAlignmentStyle(horizontalAlignment);
     const textContainerStyle = overlayText && {
       style: [styles.overlayText, overlayTextContainerStyle]
     };
@@ -229,8 +226,7 @@ class GridListItem extends Component<GridListItemProps> {
       <Container
         style={[
           styles.container,
-          alignToStart && styles.containerAlignedToStart,
-          horizontalAlignmentStyle?.containerStyle,
+          {alignItems: alignToStart ? 'flex-start' : this.getContainerHorizontalAlignment(horizontalAlignment)},
           {width},
           containerStyle
         ]}
@@ -278,15 +274,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     alignItems: 'center'
   },
-  containerAlignedToStart: {
-    alignItems: 'flex-start'
-  },
-  containerAlignedToCenter: {
-    alignItems: 'center'
-  },
-  containerAlignedToEnd: {
-    alignItems: 'flex-end'
-  },
   title: {
     marginTop: Spacings.s1,
     textAlign: 'center',
@@ -299,15 +286,6 @@ const styles = StyleSheet.create({
   description: {
     textAlign: 'center',
     ...Typography.subtext
-  },
-  contentAlignedToStart: {
-    textAlign: 'left'
-  },
-  contentAlignedToCenter: {
-    textAlign: 'center'
-  },
-  contentAlignedToEnd: {
-    textAlign: 'right'
   },
   overlay: {
     position: 'absolute',
