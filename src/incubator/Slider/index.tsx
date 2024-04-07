@@ -227,14 +227,15 @@ const Slider = React.memo((props: Props) => {
   
   const thumbBackground: StyleProp<ViewStyle> = useMemo(() => [
     {backgroundColor: disabled ? disabledThumbTintColor : thumbTintColor}
-  ], [disabled, thumbTintColor]);
+  ], [disabled, thumbTintColor, disabledThumbTintColor]);
   const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     styles.thumb, thumbBackground
   ], [thumbBackground]);
   const customThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     thumbStyle, thumbBackground
   ], [thumbStyle, thumbBackground]); 
-  const _thumbStyle = useSharedValue(StyleUtils.unpackStyle(thumbStyle ? customThumbStyle : defaultThumbStyle, {flatten: true}));
+  const _thumbStyle = 
+    useSharedValue(StyleUtils.unpackStyle(thumbStyle ? customThumbStyle : defaultThumbStyle, {flatten: true}));
   const _activeThumbStyle = useSharedValue(StyleUtils.unpackStyle(activeThumbStyle, {flatten: true}));
 
   const setInitialPositions = useCallback((trackWidth: number) => {
