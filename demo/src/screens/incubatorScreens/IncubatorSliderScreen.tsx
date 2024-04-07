@@ -220,7 +220,7 @@ const IncubatorSliderScreen = () => {
           </Text>
           <GradientSlider
             type={GradientSlider.types.HUE}
-            color={COLOR}
+            color={color}
             containerStyle={styles.gradientSliderContainer}
             onValueChange={onGradientValueChange}
             migrate

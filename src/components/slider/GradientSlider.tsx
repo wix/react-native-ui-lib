@@ -106,7 +106,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
 
   let step = 0.01;
   let maximumValue = 1;
-  const initialValue = useMemo(() => getColor(), []); 
+  const initialValue = useMemo(() => getColor(), []);
   let value = initialValue.a;
   let renderTrack = renderDefaultGradient;
   let sliderOnValueChange = updateAlpha;
