@@ -287,6 +287,7 @@ const styles = StyleSheet.create({
   customThumb: {
     width: 14,
     height: 14,
+    borderWidth: 0.5,
     borderRadius: 7,
     backgroundColor: Colors.black,
     borderColor: Colors.black
