@@ -20,7 +20,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
   const {
     type = GradientSliderTypes.DEFAULT,
     gradientSteps = 120,
-    color: propsColor = Colors.$backgroundPrimaryHeavy, // initialColor
+    color,
     onValueChange,
     migrate,
     containerStyle,
@@ -30,14 +30,15 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     ...others
   } = props;
   const sliderContext = useContext(SliderContext);
+  const defaultColor = Colors.getHSL(Colors.$backgroundPrimaryHeavy);
 
-  const initialColor = useMemo((): HSLA => {
-    return _.isString(propsColor) ? Colors.getHSL(propsColor) : propsColor;
-  }, [propsColor]);
+  const initialColor = useMemo((): HSLA | undefined => {
+    return _.isString(color) ? Colors.getHSL(color) : color;
+  }, [color]);
 
   const getColor = useCallback(() => {
-    return initialColor || sliderContext.value;
-  }, [initialColor, sliderContext.value]);
+    return initialColor || sliderContext.value || defaultColor;
+  }, [initialColor, sliderContext.value, defaultColor]);
 
   const hueColor = useMemo(() => {
     const color = getColor();
@@ -76,8 +77,8 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
   [sliderContext, onValueChange]);
 
   const reset = useCallback(() => {
-    updateColor(initialColor);
-  }, [initialColor, updateColor]);
+    updateColor(initialColor || defaultColor);
+  }, [initialColor, updateColor, defaultColor]);
 
   const updateAlpha = useCallback((a: number) => {
     const color = getColor();
@@ -105,7 +106,8 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
 
   let step = 0.01;
   let maximumValue = 1;
-  let value = initialColor.a;
+  const colorValue = getColor();
+  let value = colorValue.a;
   let renderTrack = renderDefaultGradient;
   let sliderOnValueChange = updateAlpha;
 
@@ -113,17 +115,17 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     case GradientSliderTypes.HUE:
       step = 1;
       maximumValue = 359;
-      value = initialColor.h;
+      value = colorValue.h;
       renderTrack = renderHueGradient;
       sliderOnValueChange = updateHue;
       break;
     case GradientSliderTypes.LIGHTNESS:
-      value = initialColor.l;
+      value = colorValue.l;
       renderTrack = renderLightnessGradient;
       sliderOnValueChange = updateLightness;
       break;
     case GradientSliderTypes.SATURATION:
-      value = initialColor.s;
+      value = colorValue.s;
       renderTrack = renderSaturationGradient;
       sliderOnValueChange = updateSaturation;
       break;
