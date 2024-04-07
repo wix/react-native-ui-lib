@@ -7,7 +7,7 @@ import {ModalProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../incubator/Dialog';
 import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, HSLColor} from './ColorPickerPresenter';
 import Header from './ColorPickerDialogHeader';
-import Preview from './ColorPickerPreview';
+import ColorPickerPreview from './ColorPickerPreview';
 import Sliders from './ColorPickerDialogSliders';
 
 export interface ColorPickerDialogProps extends DialogProps {
@@ -173,7 +173,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
         doneButtonColor={doneButtonColor}
         onDismiss={onDismiss}
       />
-      <Preview
+      <ColorPickerPreview
         color={color}
         text={text}
         valid={valid}
