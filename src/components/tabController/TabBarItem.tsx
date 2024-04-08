@@ -8,6 +8,7 @@ import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps} from '../badge';
 import View from '../view';
 import TabBarContext from './TabBarContext';
+import Constants from '../../commons/Constants';
 
 const DEFAULT_LABEL_COLOR = Colors.$textDefault;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.$textPrimary;
@@ -194,7 +195,7 @@ export default function TabBarItem({
 
   const _style = useMemo(() => {
     const constantWidthStyle = itemWidth.current ? {flex: 0, width: itemWidth.current} : undefined;
-    return [styles.tabItem, style, constantWidthStyle, pressStyle];
+    return [styles.tabItem, {flex: !Constants.isWeb ? 1 : undefined}, style, constantWidthStyle, pressStyle];
   }, [style]);
 
   const gesture = Gesture.Tap()
