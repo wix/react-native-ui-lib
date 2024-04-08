@@ -44,6 +44,7 @@ for (let i = 0; i < componentsWithImports.length; ++i) {
 
 let dotString = '';
 const componentsWithNoOutgoingEdges = [];
+const allImports = new Set();
 componentsWithImports.forEach(component => {
   let hasOutgoingEdges = false;
   let label = component.defaultExport;
@@ -66,6 +67,7 @@ componentsWithImports.forEach(component => {
     }
   } else {
     component.imports.forEach(imported => {
+      allImports.add(imported);
       if (!POPULAR_COMPONENTS.includes(imported)) {
         dotString += `${component.defaultExport}[label="${label}"]->${imported}[color="${stringToColor(label)}"];\n`;
       }
@@ -75,6 +77,13 @@ componentsWithImports.forEach(component => {
 
 componentsWithNoOutgoingEdges.forEach(({component, label}) => {
   dotString = dotString.replace(`->${component}[`, `->${label}[`);
+});
+
+componentsWithNoOutgoingEdges.forEach(({component, label}) => {
+  if (!allImports.has(component)) {
+    // No edges at all
+    dotString += `${component}[label=${label}]->OnlyPopularImports[color="${stringToColor(label)}"];\n`;
+  }
 });
 
 dotString = 'digraph {' + dotString + '}';
