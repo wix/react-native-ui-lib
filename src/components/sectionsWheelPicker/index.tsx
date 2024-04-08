@@ -6,7 +6,7 @@ import {useThemeProps} from '../../hooks';
 import View from '../view';
 import WheelPicker, {WheelPickerProps, WheelPickerItemValue} from '../WheelPicker';
 
-export type SectionsWheelPickerProps<T> = PropsWithChildren<{
+export type SectionsWheelPickerProps<T = WheelPickerItemValue> = PropsWithChildren<{
   /**
    * Array of sections.
    */
@@ -45,16 +45,8 @@ export type SectionsWheelPickerProps<T> = PropsWithChildren<{
 
 const SectionsWheelPicker = <T extends WheelPickerItemValue>(props: SectionsWheelPickerProps<T>) => {
   const themeProps = useThemeProps(props, 'SectionsWheelPicker');
-  const {
-    sections,
-    itemHeight,
-    numberOfVisibleRows,
-    activeTextColor,
-    inactiveTextColor,
-    textStyle,
-    disableRTL,
-    testID
-  } = themeProps;
+  const {sections, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, disableRTL, testID} =
+    themeProps;
 
   const wheelPickerProps = {
     itemHeight,
@@ -90,7 +82,7 @@ const SectionsWheelPicker = <T extends WheelPickerItemValue>(props: SectionsWhee
 
 SectionsWheelPicker.displayName = 'SectionsWheelPicker';
 
-export default (SectionsWheelPicker);
+export default SectionsWheelPicker;
 
 const styles = StyleSheet.create({
   disableRTL: {
