@@ -91,6 +91,11 @@
       "type": "boolean",
       "description": "If true the component will have accessibility features enabled"
     },
+    {
+      "name": "disableThrottling",
+      "type": "boolean",
+      "description": "If true the Slider Throttling will be disabled"
+    },
     {"name": "testID", "type": "string", "description": "The component test id"}
   ],
   "snippet": [
