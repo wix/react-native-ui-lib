@@ -167,6 +167,7 @@ class GridListItem extends Component<GridListItemProps> {
 
   renderContent({text, typography, color, numberOfLines = 1, style, testID}: RenderContentType) {
     const {alignToStart, horizontalAlignment} = this.props;
+    const textAlign = alignToStart ? 'left' : horizontalAlignment;
     if (text) {
       return (
         <Text
@@ -177,7 +178,7 @@ class GridListItem extends Component<GridListItemProps> {
             //@ts-ignore
             Typography[typography],
             color && {color},
-            {textAlign: alignToStart ? 'left' : horizontalAlignment}
+            {textAlign}
           ]}
           numberOfLines={numberOfLines}
         >
@@ -215,8 +216,10 @@ class GridListItem extends Component<GridListItemProps> {
       renderOverlay
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
+    const TextContainer = overlayText ? View : React.Fragment;
     const itemSize = this.getItemSizeObj();
     const {width} = itemSize;
+    const alignItems = alignToStart ? 'flex-start' : this.getContainerHorizontalAlignment(horizontalAlignment);
     const textContainerStyle = overlayText && {
       style: [styles.overlayText, overlayTextContainerStyle]
     };
@@ -224,12 +227,7 @@ class GridListItem extends Component<GridListItemProps> {
 
     return (
       <Container
-        style={[
-          styles.container,
-          {alignItems: alignToStart ? 'flex-start' : this.getContainerHorizontalAlignment(horizontalAlignment)},
-          {width},
-          containerStyle
-        ]}
+        style={[styles.container, {alignItems}, {width}, containerStyle]}
         {...otherContainerProps}
         onPress={onPress && this.onItemPress}
         accessible={renderCustomItem ? true : undefined}
@@ -238,7 +236,7 @@ class GridListItem extends Component<GridListItemProps> {
         {imageProps && <Image style={itemSize} {...imageProps} customOverlayContent={children}/>}
         {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
         {renderOverlay && <View style={[styles.overlay, itemSize]}>{renderOverlay()}</View>}
-        <View {...textContainerStyle}>
+        <TextContainer {...textContainerStyle}>
           {this.renderContent({
             testID: `${testID}.title`,
             text: title,
@@ -263,7 +261,7 @@ class GridListItem extends Component<GridListItemProps> {
             numberOfLines: descriptionLines,
             style: styles.description
           })}
-        </View>
+        </TextContainer>
       </Container>
     );
   }

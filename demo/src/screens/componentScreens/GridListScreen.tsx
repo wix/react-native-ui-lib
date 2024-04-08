@@ -19,7 +19,8 @@ class GridListScreen extends Component {
     orientation: Constants.orientation,
     useGridListItem: true,
     horizontalAlignment: GridListItem.horizontalAlignment.left,
-    overlayText: false
+    overlayText: false,
+    alignToStart: false
   };
 
   renderHeader = () => {
@@ -37,13 +38,14 @@ class GridListScreen extends Component {
           {label: 'center', value: GridListItem.horizontalAlignment.center},
           {label: 'right', value: GridListItem.horizontalAlignment.right}
         ])}
+        {renderBooleanOption.call(this, 'Align to start:', 'alignToStart')}
         {renderBooleanOption.call(this, 'Use overlay text:', 'overlayText')}
       </View>
     );
   };
 
   renderItem: GridListProps<(typeof products)[0]>['renderItem'] = ({item}) => {
-    const {useGridListItem, horizontalAlignment, overlayText} = this.state;
+    const {useGridListItem, horizontalAlignment, overlayText, alignToStart} = this.state;
 
     if (useGridListItem) {
       return (
@@ -53,7 +55,7 @@ class GridListScreen extends Component {
           imageProps={{source: {uri: item.mediaUrl}}}
           title="Title"
           subtitle="Subtile"
-          alignToStart
+          alignToStart={alignToStart}
           overlayText={overlayText}
           horizontalAlignment={horizontalAlignment}
         />
