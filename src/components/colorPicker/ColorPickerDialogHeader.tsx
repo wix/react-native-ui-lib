@@ -15,7 +15,7 @@ type HeaderProps = Pick<ColorPickerDialogProps, 'doneButtonColor' | 'accessibili
   onDonePressed: () => void;
 };
 
-const Header = (props: HeaderProps) => {
+const ColorPickerDialogHeader = (props: HeaderProps) => {
   const {onDismiss, accessibilityLabels, testID, doneButtonColor, valid, onDonePressed} = props;
 
   return (
@@ -41,7 +41,7 @@ const Header = (props: HeaderProps) => {
   );
 };
 
-export default Header;
+export default ColorPickerDialogHeader;
 
 const styles = StyleSheet.create({
   header: {
