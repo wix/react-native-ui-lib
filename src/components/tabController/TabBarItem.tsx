@@ -195,11 +195,8 @@ export default function TabBarItem({
 
   const _style = useMemo(() => {
     //@ts-ignore
-    const shouldChangeWebFlex = Constants.isWeb && props?.containerWidth !== Constants.windowWidth;
-    const constantWidthStyle = itemWidth.current
-      ? {flex: 0, width: itemWidth.current}
-      : shouldChangeWebFlex && {flex: '0 0 1'};
-    return [styles.tabItem, style, constantWidthStyle, pressStyle];
+    const constantWidthStyle = itemWidth.current ? {flex: 0, width: itemWidth.current} : undefined;
+    return [styles.tabItem, {flex: !Constants.isWeb ? 1 : undefined}, style, constantWidthStyle, pressStyle];
   }, [style]);
 
   const gesture = Gesture.Tap()
