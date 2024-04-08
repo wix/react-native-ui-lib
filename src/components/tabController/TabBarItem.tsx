@@ -194,7 +194,6 @@ export default function TabBarItem({
   });
 
   const _style = useMemo(() => {
-    //@ts-ignore
     const constantWidthStyle = itemWidth.current ? {flex: 0, width: itemWidth.current} : undefined;
     return [styles.tabItem, {flex: !Constants.isWeb ? 1 : undefined}, style, constantWidthStyle, pressStyle];
   }, [style]);
