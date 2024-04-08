@@ -221,7 +221,6 @@ export default function TabBarItem({
         reanimated
         // @ts-expect-error
         ref={itemRef}
-        //@ts-ignore
         style={_style}
         onLayout={onLayout}
         testID={testID}
