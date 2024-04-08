@@ -44,8 +44,12 @@ export const HintDriver = (props: ComponentProps) => {
     return StyleSheet.flatten(contentDriver.getStyle()).backgroundColor as ViewStyle;
   };
 
-  const getOverlay = () => {
+  const getOnBackgroundPressTouchable = () => {
     return overlayDriver;
+  };
+
+  const getIsModalVisible = () => {
+    return modalDriver.isVisible();
   };
 
   const hintPress = () => {
@@ -59,10 +63,10 @@ export const HintDriver = (props: ComponentProps) => {
   return {
     getBackgroundColor,
     getIcon,
-    getOverlay,
+    getOnBackgroundPressTouchable,
     hintPress,
     pressOnBackground,
-    modalDriver,
+    getIsModalVisible,
     ...driver
   };
 };

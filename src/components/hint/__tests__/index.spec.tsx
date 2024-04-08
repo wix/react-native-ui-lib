@@ -96,7 +96,7 @@ describe('Hint Screen component test', () => {
       const renderTree = render(<HintTestComponent showHint onBackgroundPress={() => {}}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
       expect(await driver.exists()).toBeTruthy();
-      expect(await driver.modalDriver.isVisible()).toBeTruthy();
+      expect(await driver.getIsModalVisible()).toBeTruthy();
     });
   });
 
@@ -124,7 +124,7 @@ describe('Hint Screen component test', () => {
     it('should not create touchable overlay driver when onBackgroundPress isn\'t passed', async () => {
       const renderTree = render(<HintTestComponent showHint/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
-      expect(driver.getOverlay().exists()).toBeFalsy();
+      expect(driver.getOnBackgroundPressTouchable().exists()).toBeFalsy();
     });
   });
 });
