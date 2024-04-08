@@ -4,12 +4,16 @@ const {traverse} = require('eslint/lib/shared/traverser');
 
 const OUR_STATIC_IMPORTS = ['commons', 'helpers', 'utils', 'hooks', 'optionalDeps', 'services', 'style'];
 
-function isType(imp) {
-  return imp.startsWith('import type ') || imp.indexOf('Type') > 0 || imp.indexOf('Prop') >= 0;
+function isType(importName) {
+  return importName.startsWith('import type ') || importName.indexOf('Type') > 0 || importName.indexOf('Prop') >= 0;
 }
 
-function isConst(imp) {
-  return imp.toUpperCase() === imp;
+function isConst(importName) {
+  return importName.toUpperCase() === importName;
+}
+
+function isHook(importName) {
+  return importName.startsWith('use');
 }
 
 function isIncubator(path) {
@@ -21,6 +25,7 @@ class Parser {
   _componentsWithImports = [];
   // Ignoring functions will ignore some components, leaving them for now
   // _functions = new Set();
+  _hooks = new Set();
   _enums = new Set();
   _interfaces = new Set();
   _types = new Set();
@@ -32,6 +37,7 @@ class Parser {
   clear() {
     this._componentsWithImports.length = 0;
     // this._functions.clear();
+    this._hooks.clear();
     this._enums.clear();
     this._interfaces.clear();
     this._types.clear();
@@ -50,6 +56,7 @@ class Parser {
         defaultExport;
       const possibleExports = [],
         // functions = new Set(),
+        hooks = new Set(),
         enums = new Set(),
         interfaces = new Set(),
         types = new Set();
@@ -62,16 +69,21 @@ class Parser {
                 imports = imports.concat(node.specifiers
                   .map(imp => {
                     let importName = imp.imported?.name ?? imp.local.name;
+                    if (isHook(importName)) {
+                      hooks.add(importName);
+                    }
+
                     if (
-                      isIncubator(node.source.raw) ||
-                        (isIncubator(fullPath) && !node.source.raw.includes('components'))
+                      (isIncubator(node.source.raw) ||
+                          (isIncubator(fullPath) && !node.source.raw.includes('components'))) &&
+                        !importName.startsWith('Incubator')
                     ) {
-                      importName = `Incubator.${importName}`;
+                      importName = `Incubator${importName}`;
                     }
 
                     return importName;
                   })
-                  .filter(imp => !isType(imp) && !isConst(imp)));
+                  .filter(importName => !isType(importName) && !isConst(importName) && !isHook(importName)));
               }
               break;
             case AST_NODE_TYPES.ClassDeclaration:
@@ -112,6 +124,7 @@ class Parser {
       });
 
       // functions.forEach(f => this._functions.add(f));
+      hooks.forEach(h => this._hooks.add(h));
       enums.forEach(e => this._enums.add(e));
       interfaces.forEach(i => this._interfaces.add(i));
       types.forEach(t => this._types.add(t));
@@ -123,6 +136,10 @@ class Parser {
             break;
           }
         }
+      }
+
+      if (isHook(defaultExport)) {
+        defaultExport = undefined;
       }
 
       if (!defaultExport) {
@@ -138,7 +155,9 @@ class Parser {
         return undefined;
       }
 
-      return {defaultExport: `${isIncubator(fullPath) ? 'Incubator.' : ''}${defaultExport}`, imports};
+      defaultExport = `${isIncubator(fullPath) ? 'Incubator' : ''}${defaultExport}`;
+
+      return {defaultExport, imports};
     } catch (e) {
       if (this._verbose) {
         console.error('Error parsing content', e);

@@ -25,6 +25,8 @@ for (let i = 2; i < process.argv.length; ++i) {
 }
 
 const componentsWithImports = cloneDeep(MyParser._componentsWithImports);
+
+// TODO: remove duplicates (TextFieldOld)
 const components = componentsWithImports.map(component => component.defaultExport);
 for (let i = 0; i < componentsWithImports.length; ++i) {
   for (let j = componentsWithImports[i].imports.length - 1; j >= 0; --j) {
@@ -73,7 +75,7 @@ componentsWithImports.forEach(component => {
 });
 
 componentsWithNoOutgoingEdges.forEach(({component, label}) => {
-  dotString = dotString.replace(`->${component}`, `->${label}`);
+  dotString = dotString.replace(`->${component}[`, `->${label}[`);
 });
 
 dotString = 'digraph {' + dotString + '}';
