@@ -16,8 +16,16 @@ function isHook(importName) {
   return importName.startsWith('use');
 }
 
+function isUtil(importName) {
+  return importName.toLowerCase().includes('migrator');
+}
+
 function isIncubator(path) {
   return path.includes('incubator');
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 class Parser {
@@ -138,7 +146,7 @@ class Parser {
         }
       }
 
-      if (isHook(defaultExport)) {
+      if (isHook(defaultExport) || isUtil(defaultExport)) {
         defaultExport = undefined;
       }
 
@@ -156,6 +164,17 @@ class Parser {
       }
 
       defaultExport = `${isIncubator(fullPath) ? 'Incubator' : ''}${defaultExport}`;
+      const fileName = fullPath.split('.').slice(-2)[0];
+      const firstFolder = fullPath.split('.').slice(-2)[0].split('/').slice(-2)[0];
+      if (
+        fileName === 'ios' ||
+        fileName === 'android' ||
+        fileName === 'web' /* TODO: we remove web elsewhere, do we want to have them? */
+      ) {
+        defaultExport += capitalizeFirstLetter(fileName);
+      } else if (fileName.toLowerCase().endsWith('old') || firstFolder.toLowerCase().endsWith('old')) {
+        defaultExport += 'Old';
+      }
 
       return {defaultExport, imports};
     } catch (e) {
