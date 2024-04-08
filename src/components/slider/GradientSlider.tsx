@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import React, {useCallback, useMemo, useContext} from 'react';
-import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
+import {useThemeProps} from '../../hooks';
 import {Colors} from '../../style';
 import {Slider as NewSlider} from '../../incubator';
 import Gradient from '../gradient';
@@ -17,6 +18,7 @@ type Props<T> = GradientSliderProps<T> & ForwardRefInjectedProps;
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/GradientSlider/GradientSlider.gif?raw=true
  */
 const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
+  const themeProps = useThemeProps(props, 'GradientSlider');
   const {
     type = GradientSliderTypes.DEFAULT,
     gradientSteps = 120,
@@ -28,7 +30,7 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
     accessible,
     forwardedRef,
     ...others
-  } = props;
+  } = themeProps;
   const sliderContext = useContext(SliderContext);
   const defaultColor = Colors.getHSL(Colors.$backgroundPrimaryHeavy);
 
@@ -155,5 +157,4 @@ const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
 
 GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
-// @ts-expect-error
-export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(forwardRef(GradientSlider));
+export default forwardRef<GradientSliderProps<string | HSLA>, ComponentStatics<typeof GradientSlider>>(GradientSlider);
