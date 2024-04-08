@@ -110,7 +110,7 @@
     "react-native": "0.71.12",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "2.9.0",
-    "react-native-haptic-feedback": "^1.11.0",
+    "react-native-haptic-feedback": "2.2.0",
     "react-native-linear-gradient": "2.6.2",
     "react-native-mmkv": "2.6.1",
     "react-native-navigation": "7.32.1",
