@@ -81,6 +81,20 @@ class Parser {
                       hooks.add(importName);
                     }
 
+                    // MaskedInputOld should import TextFieldOld
+                    if (imp.type === AST_NODE_TYPES.ImportDefaultSpecifier) {
+                      const importedFileNameLast = from.split('/').slice(-1)[0];
+                      // Example:
+                      // import DialogOld from '../../components/dialog';
+                      // import DialogNew from '../Dialog';
+                      if (
+                        importName.toLowerCase() === importedFileNameLast.toLowerCase() + 'old' ||
+                          importName.toLowerCase() === importedFileNameLast.toLowerCase() + 'new'
+                      ) {
+                        importName = capitalizeFirstLetter(importedFileNameLast.toLowerCase());
+                      }
+                    }
+
                     if (
                       (isIncubator(node.source.raw) ||
                           (isIncubator(fullPath) && !node.source.raw.includes('components'))) &&
