@@ -91,6 +91,11 @@
       "type": "boolean",
       "description": "If true the component will have accessibility features enabled"
     },
+    {
+      "name": "throttleTime",
+      "type": "number",
+      "description": "Control the throttle time of the onValueChange and onRangeChange callbacks"
+    },
     {"name": "testID", "type": "string", "description": "The component test id"}
   ],
   "snippet": [
