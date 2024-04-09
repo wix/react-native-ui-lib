@@ -184,9 +184,15 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const renderToastContent = () => {
-    if (!_.isUndefined(children)) {
-      return children;
-    }
+    const content = !_.isUndefined(children) ? (
+      children
+    ) : (
+      <View style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}>
+        {renderIcon()}
+        {renderMessage()}
+        {renderRightElement()}
+      </View>
+    );
 
     return (
       <PanView
@@ -197,11 +203,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
         onDismiss={handleDismiss}
         threshold={THRESHOLD}
       >
-        <View style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}>
-          {renderIcon()}
-          {renderMessage()}
-          {renderRightElement()}
-        </View>
+        {content}
       </PanView>
     );
   };
