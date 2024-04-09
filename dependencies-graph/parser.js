@@ -63,6 +63,31 @@ function isOldComponent(path) {
   return fileName.toLowerCase().endsWith('old') || folderName.toLowerCase().endsWith('old');
 }
 
+function applySuffixToImport(importType, importName, from, fullPath, node) {
+  // TODO: MaskedInputOld should import TextFieldOld
+  if (importType === AST_NODE_TYPES.ImportDefaultSpecifier) {
+    const importedFileNameLast = from.split('/').slice(-1)[0];
+    // Example:
+    // import DialogOld from '../../components/dialog';
+    // import DialogNew from '../Dialog';
+    if (
+      importName.toLowerCase() === importedFileNameLast.toLowerCase() + 'old' ||
+      importName.toLowerCase() === importedFileNameLast.toLowerCase() + 'new'
+    ) {
+      importName = capitalizeFirstLetter(importedFileNameLast.toLowerCase());
+    }
+  }
+
+  if (
+    (isIncubator(node.source.raw) || (isIncubator(fullPath) && !node.source.raw.includes('components'))) &&
+    !importName.startsWith('Incubator')
+  ) {
+    importName = `Incubator${importName}`;
+  }
+
+  return importName;
+}
+
 function applyPrefixAndSuffixToExport(defaultExport, fullPath) {
   defaultExport = `${isIncubator(fullPath) ? 'Incubator' : ''}${defaultExport}`;
   const fileName = getComponentFileName(fullPath);
@@ -132,27 +157,7 @@ class Parser {
                       hooks.add(importName);
                     }
 
-                    // MaskedInputOld should import TextFieldOld
-                    if (imp.type === AST_NODE_TYPES.ImportDefaultSpecifier) {
-                      const importedFileNameLast = from.split('/').slice(-1)[0];
-                      // Example:
-                      // import DialogOld from '../../components/dialog';
-                      // import DialogNew from '../Dialog';
-                      if (
-                        importName.toLowerCase() === importedFileNameLast.toLowerCase() + 'old' ||
-                          importName.toLowerCase() === importedFileNameLast.toLowerCase() + 'new'
-                      ) {
-                        importName = capitalizeFirstLetter(importedFileNameLast.toLowerCase());
-                      }
-                    }
-
-                    if (
-                      (isIncubator(node.source.raw) ||
-                          (isIncubator(fullPath) && !node.source.raw.includes('components'))) &&
-                        !importName.startsWith('Incubator')
-                    ) {
-                      importName = `Incubator${importName}`;
-                    }
+                    importName = applySuffixToImport(imp.type, importName, from, fullPath, node);
 
                     return importName;
                   })
