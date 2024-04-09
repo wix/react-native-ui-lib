@@ -140,9 +140,9 @@ export interface SliderProps extends AccessibilityProps {
    */
   migrate?: boolean;
   /** 
-   * If true the Slider Throttling will be disabled
+   * Control the throttle time of the onValueChange and onRangeChange callbacks
    */
-  disableThrottling?: boolean;
+  throttleTime?: number;
 }
 
 type Props = SliderProps & ForwardRefInjectedProps<SliderRef>;
@@ -193,7 +193,7 @@ const Slider = React.memo((props: Props) => {
     accessible = true,
     testID,
     enableThumbShadow = true,
-    disableThrottling
+    throttleTime
   } = themeProps;
 
   const accessibilityProps = useMemo(() => {
@@ -281,23 +281,11 @@ const Slider = React.memo((props: Props) => {
     } else {
       didValueUpdate.current = false;
     }
-  }, 200), [onValueChange]);
-
-  const _onValueChange = useCallback((value: number) => {
-    if (!didValueUpdate.current) { // NOTE: fix for GradientSlider (should be removed after fix in the GradientSlider component): don't invoke onChange when slider's value changes to prevent updates loop
-      onValueChange?.(value);
-    } else {
-      didValueUpdate.current = false;
-    }
-  }, [onValueChange]);
+  }, throttleTime ?? 200), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
     onRangeChange?.({min, max});
-  }, 100), [onRangeChange]);
-
-  const _onRangeChange = useCallback((min: number, max: number) => {
-    onRangeChange?.({min, max});
-  }, [onRangeChange]);
+  }, throttleTime ?? 100), [onRangeChange]);
 
   useAnimatedReaction(() => {
     return Math.round(defaultThumbOffset.value);
@@ -313,7 +301,7 @@ const Slider = React.memo((props: Props) => {
           stepXValue.value);
         runOnJS(onRangeChangeThrottled)(value, maxValue);
       } else if (prevOffset) { // don't invoke onChange when setting the slider
-        runOnJS(disableThrottling ? _onValueChange : onValueChangeThrottled)(value);
+        runOnJS(onValueChangeThrottled)(value);
       }
     }
   });
@@ -328,7 +316,7 @@ const Slider = React.memo((props: Props) => {
       minimumValue,
       maximumValue,
       stepXValue.value);
-    runOnJS(disableThrottling ? _onRangeChange : onRangeChangeThrottled)(minValue, maxValue);
+    runOnJS(onRangeChangeThrottled)(minValue, maxValue);
   });
 
   /** events */
