@@ -35,9 +35,15 @@ for (let i = 0; i < componentsWithImports.length; ++i) {
       MyParser._enums.has(currentImport) ||
       MyParser._interfaces.has(currentImport) ||
       MyParser._types.has(currentImport) ||
-      !components.includes(currentImport)
+      (!components.includes(currentImport) && !currentImport.endsWith('Old') && !currentImport.endsWith('New'))
     ) {
       componentsWithImports[i].imports.splice(j, 1);
+    } else if (
+      !components.includes(currentImport) &&
+      (currentImport.endsWith('Old') || currentImport.endsWith('New')) &&
+      components.includes(currentImport.slice(0, -3))
+    ) {
+      componentsWithImports[i].imports[j] = currentImport.slice(0, -3);
     }
   }
 }
