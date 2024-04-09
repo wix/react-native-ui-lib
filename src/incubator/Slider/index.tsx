@@ -193,7 +193,7 @@ const Slider = React.memo((props: Props) => {
     accessible = true,
     testID,
     enableThumbShadow = true,
-    throttleTime
+    throttleTime = 200
   } = themeProps;
 
   const accessibilityProps = useMemo(() => {
@@ -281,11 +281,11 @@ const Slider = React.memo((props: Props) => {
     } else {
       didValueUpdate.current = false;
     }
-  }, throttleTime ?? 200), [onValueChange]);
+  }, throttleTime), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
     onRangeChange?.({min, max});
-  }, throttleTime ?? 100), [onRangeChange]);
+  }, throttleTime), [onRangeChange]);
 
   useAnimatedReaction(() => {
     return Math.round(defaultThumbOffset.value);
