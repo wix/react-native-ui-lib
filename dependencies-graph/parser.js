@@ -20,12 +20,63 @@ function isUtil(importName) {
   return importName.toLowerCase().includes('migrator');
 }
 
+function isInvalid(defaultExport, imports, log) {
+  if (isHook(defaultExport) || isUtil(defaultExport)) {
+    return true;
+  }
+
+  if (!defaultExport) {
+    if (log) {
+      console.error('No default export found');
+    }
+    return true;
+  }
+  if (imports.length === 0) {
+    if (log) {
+      console.error('No imports found');
+    }
+    return true;
+  }
+
+  return false;
+}
+
 function isIncubator(path) {
   return path.includes('incubator');
 }
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function getComponentFileName(path) {
+  return path.split('.').slice(-2)[0];
+}
+
+function getComponentFolderName(path) {
+  return path.split('.').slice(-2)[0].split('/').slice(-2)[0];
+}
+
+function isOldComponent(path) {
+  const fileName = getComponentFileName(path);
+  const folderName = getComponentFolderName(path);
+  return fileName.toLowerCase().endsWith('old') || folderName.toLowerCase().endsWith('old');
+}
+
+function applyPrefixAndSuffixToExport(defaultExport, fullPath) {
+  defaultExport = `${isIncubator(fullPath) ? 'Incubator' : ''}${defaultExport}`;
+  const fileName = getComponentFileName(fullPath);
+  if (
+    fileName === 'ios' ||
+    fileName === 'android' ||
+    fileName === 'web' /* TODO: we remove web elsewhere, do we want to have them? */
+  ) {
+    defaultExport += capitalizeFirstLetter(fileName);
+  } else if (isOldComponent(fileName)) {
+    defaultExport += 'Old';
+  }
+
+  return defaultExport;
 }
 
 class Parser {
@@ -160,37 +211,11 @@ class Parser {
         }
       }
 
-      if (isHook(defaultExport) || isUtil(defaultExport)) {
-        defaultExport = undefined;
+      if (isInvalid(defaultExport, imports, this._verbose)) {
+        return;
       }
 
-      if (!defaultExport) {
-        if (this._verbose) {
-          console.error('No default export found');
-        }
-        return undefined;
-      }
-      if (imports.length === 0) {
-        if (this._verbose) {
-          console.error('No imports found');
-        }
-        return undefined;
-      }
-
-      defaultExport = `${isIncubator(fullPath) ? 'Incubator' : ''}${defaultExport}`;
-      const fileName = fullPath.split('.').slice(-2)[0];
-      const firstFolder = fullPath.split('.').slice(-2)[0].split('/').slice(-2)[0];
-      if (
-        fileName === 'ios' ||
-        fileName === 'android' ||
-        fileName === 'web' /* TODO: we remove web elsewhere, do we want to have them? */
-      ) {
-        defaultExport += capitalizeFirstLetter(fileName);
-      } else if (fileName.toLowerCase().endsWith('old') || firstFolder.toLowerCase().endsWith('old')) {
-        defaultExport += 'Old';
-      }
-
-      return {defaultExport, imports};
+      return {defaultExport: applyPrefixAndSuffixToExport(defaultExport, fullPath), imports};
     } catch (e) {
       if (this._verbose) {
         console.error('Error parsing content', e);
