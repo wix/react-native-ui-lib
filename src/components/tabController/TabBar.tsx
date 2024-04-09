@@ -202,6 +202,7 @@ const TabBar = (props: Props) => {
   });
 
   const tabBarItems = useMemo((): ReactNode => {
+    const flex = Constants.isWeb ? (spreadItems ? 1 : undefined) : 1;
     return _.map(items, (item, index) => {
       return (
         <TabBarItem
@@ -216,6 +217,7 @@ const TabBar = (props: Props) => {
           activeBackgroundColor={activeBackgroundColor}
           {...item}
           {...context}
+          style={[{flex}, item?.style]}
           key={`${index}_${item.label}`}
           index={index}
           onLayout={onItemLayout}
@@ -234,7 +236,8 @@ const TabBar = (props: Props) => {
     backgroundColor,
     activeBackgroundColor,
     centerSelected,
-    onItemLayout
+    onItemLayout,
+    spreadItems
   ]);
 
   const _indicatorTransitionStyle = useAnimatedStyle(() => {
