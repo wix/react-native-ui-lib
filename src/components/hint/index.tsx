@@ -425,10 +425,13 @@ class Hint extends Component<HintProps, HintState> {
             }
           ]}
           pointerEvents="box-none"
-          testID={`${testID}.overlay`}
         >
           {onBackgroundPress && (
-            <TouchableWithoutFeedback style={StyleSheet.absoluteFillObject} onPress={onBackgroundPress}>
+            <TouchableWithoutFeedback
+              style={StyleSheet.absoluteFillObject}
+              onPress={onBackgroundPress}
+              testID={`${testID}.overlay`}
+            >
               <View flex/>
             </TouchableWithoutFeedback>
           )}
@@ -479,8 +482,12 @@ class Hint extends Component<HintProps, HintState> {
         ref={this.hintRef}
       >
         {customContent}
-        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-        {!customContent && <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]}>{message}</Text>}
+        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]} testID={`${testID}.icon`}/>}
+        {!customContent && (
+          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]} testID={`${testID}.text`}>
+            {message}
+          </Text>
+        )}
       </View>
     );
   }
@@ -501,9 +508,8 @@ class Hint extends Component<HintProps, HintState> {
             this.getHintAnimatedStyle()
           ]}
           pointerEvents="box-none"
-          testID={testID}
         >
-          <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
+          <TouchableOpacity activeOpacity={opacity} onPress={onPress} testID={`${testID}`}>
             {this.renderContent()}
           </TouchableOpacity>
           {this.renderHintTip()}
@@ -552,7 +558,6 @@ class Hint extends Component<HintProps, HintState> {
 
   renderChildren() {
     const {targetFrame} = this.props;
-
     if (!targetFrame && isValidElement(this.props.children)) {
       return React.cloneElement<any>(this.props.children, {
         key: 'clone',
