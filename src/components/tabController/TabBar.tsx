@@ -201,9 +201,16 @@ const TabBar = (props: Props) => {
     }
   });
 
+  const tabBarItemStyle = useMemo(() =>
+    (item: TabControllerItemProps): StyleProp<ViewStyle> => {
+      const flex = Constants.isWeb ? (spreadItems ? 1 : undefined) : 1;
+      return [{flex}, item?.style];
+    },
+  [spreadItems]);
+
   const tabBarItems = useMemo((): ReactNode => {
-    const flex = Constants.isWeb ? (spreadItems ? 1 : undefined) : 1;
     return _.map(items, (item, index) => {
+      const style: StyleProp<ViewStyle> = tabBarItemStyle(item);
       return (
         <TabBarItem
           labelColor={labelColor}
@@ -217,7 +224,7 @@ const TabBar = (props: Props) => {
           activeBackgroundColor={activeBackgroundColor}
           {...item}
           {...context}
-          style={[{flex}, item?.style]}
+          style={style}
           key={`${index}_${item.label}`}
           index={index}
           onLayout={onItemLayout}
