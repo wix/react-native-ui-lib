@@ -96,7 +96,7 @@ describe('Hint Screen component test', () => {
       const renderTree = render(<HintTestComponent showHint onBackgroundPress={() => {}}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
       expect(await driver.exists()).toBeTruthy();
-      expect(await driver.getIsModalVisible()).toBeTruthy();
+      expect(await driver.isModalVisible()).toBeTruthy();
     });
   });
 
@@ -108,14 +108,14 @@ describe('Hint Screen component test', () => {
     it('should trigger onPress callback', async () => {
       const renderTree = render(<HintTestComponent showHint onPress={onPressCallback}/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
-      driver.hintPress();
+      driver.press();
       await waitFor(() => expect(onPressCallback).toHaveBeenCalledTimes(1));
     });
 
     it('should not trigger onPress callback when onPress isn\'t passed', async () => {
       const renderTree = render(<HintTestComponent showHint/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
-      driver.hintPress();
+      driver.press();
       await waitFor(() => expect(onPressCallback).toHaveBeenCalledTimes(0));
     });
   });
@@ -124,7 +124,7 @@ describe('Hint Screen component test', () => {
     it('should not create touchable overlay driver when onBackgroundPress isn\'t passed', async () => {
       const renderTree = render(<HintTestComponent showHint/>);
       const driver = HintDriver({renderTree, testID: TEST_ID});
-      expect(driver.getOnBackgroundPressTouchable().exists()).toBeFalsy();
+      expect(driver.isBackgroundExists()).toBeFalsy();
     });
   });
 });

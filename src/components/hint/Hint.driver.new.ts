@@ -21,11 +21,6 @@ export const HintDriver = (props: ComponentProps) => {
     testID: `${props.testID}.message`
   });
 
-  const hintPressableDriver = usePressableDriver(useComponentDriver({
-    renderTree: props.renderTree,
-    testID: `${props.testID}`
-  }));
-
   const overlayDriver = usePressableDriver(useComponentDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.overlay`
@@ -44,16 +39,16 @@ export const HintDriver = (props: ComponentProps) => {
     return StyleSheet.flatten(contentDriver.getStyle()).backgroundColor as ViewStyle;
   };
 
-  const getOnBackgroundPressTouchable = () => {
-    return overlayDriver;
+  const isBackgroundExists = () => {
+    return overlayDriver.exists();
   };
 
-  const getIsModalVisible = () => {
+  const isModalVisible = () => {
     return modalDriver.isVisible();
   };
 
-  const hintPress = () => {
-    return hintPressableDriver.press();
+  const press = () => {
+    return driver.press();
   };
 
   const pressOnBackground = () => {
@@ -63,10 +58,10 @@ export const HintDriver = (props: ComponentProps) => {
   return {
     getBackgroundColor,
     getIcon,
-    getOnBackgroundPressTouchable,
-    hintPress,
+    isBackgroundExists,
     pressOnBackground,
-    getIsModalVisible,
-    ...driver
+    isModalVisible,
+    ...driver,
+    press
   };
 };
