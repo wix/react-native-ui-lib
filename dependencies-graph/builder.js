@@ -1,17 +1,37 @@
+const fs = require('fs');
+const path = require('path');
 const Parser = require('./parser');
 
 class Builder {
   _parser;
   _componentsNames;
+  _wasBuilt = false;
 
   constructor(verbose = false) {
     this._parser = new Parser(verbose);
   }
 
   buildComponents() {
+    if (this._wasBuilt) {
+      return;
+    }
+
     this._parse();
     this._componentsNames = this._parser._componentsWithImports.map(component => component.defaultExport);
     this._removeAndRenameComponents();
+    this._wasBuilt = true;
+  }
+
+  writeToFile() {
+    this.buildComponents();
+    fs.writeFileSync(path.join(__dirname, '/components.json'),
+      JSON.stringify(this._parser._componentsWithImports, null, 2));
+  }
+
+  readFromFile(fileName) {
+    this._parser.clear();
+    this._parser._componentsWithImports = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+    this._componentsNames = this._parser._componentsWithImports.map(component => component.defaultExport);
   }
 
   _removeAndRenameComponents() {
@@ -23,7 +43,9 @@ class Builder {
           this._parser._enums.has(currentImport) ||
           this._parser._interfaces.has(currentImport) ||
           this._parser._types.has(currentImport) ||
-          (!this._componentsNames.includes(currentImport) && !currentImport.endsWith('Old') && !currentImport.endsWith('New'))
+          (!this._componentsNames.includes(currentImport) &&
+            !currentImport.endsWith('Old') &&
+            !currentImport.endsWith('New'))
         ) {
           this._parser._componentsWithImports[i].imports.splice(j, 1);
         } else if (
