@@ -2,6 +2,12 @@ const fs = require('fs');
 const {parse, AST_NODE_TYPES} = require('@typescript-eslint/typescript-estree');
 const {traverse} = require('eslint/lib/shared/traverser');
 
+// TODO:
+// Missing components: KeyboardAccessoryView, KeyboardAwareInsetsView, KeyboardTrackingView.ios, KeyboardTrackingView.android
+// Look at: SharedTransition (Area, Source, Target)
+// Remove? CalendarContext, PanningProvider
+// Support dead code detection: NativePicker
+
 const OUR_STATIC_IMPORTS = ['commons', 'helpers', 'utils', 'hooks', 'optionalDeps', 'services', 'style'];
 
 function isType(importName) {
