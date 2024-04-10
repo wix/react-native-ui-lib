@@ -1,12 +1,10 @@
 const Parser = require('./parser');
 
 class Builder {
-  _verbose;
   _parser;
   _componentsNames;
 
   constructor(verbose = false) {
-    this._verbose = verbose;
     this._parser = new Parser(verbose);
   }
 

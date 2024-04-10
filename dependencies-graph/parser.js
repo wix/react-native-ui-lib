@@ -139,7 +139,7 @@ class Parser {
   _interfaces = new Set();
   _types = new Set();
 
-  constructor(verbose = false) {
+  constructor(verbose) {
     this._verbose = verbose;
   }
 
