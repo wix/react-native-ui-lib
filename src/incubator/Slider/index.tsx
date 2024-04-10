@@ -264,7 +264,7 @@ const Slider = React.memo((props: Props) => {
     }
     defaultThumbOffset.value = getOffsetForValue(result.value, result.trackWidth, minimumValue, maximumValue);
   },
-  [minimumValue, maximumValue]);
+  [minimumValue, maximumValue, syncedSlider]);
 
   const reset = () => {
     setInitialPositions(trackSize.value.width);
