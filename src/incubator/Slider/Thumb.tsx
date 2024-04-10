@@ -56,11 +56,11 @@ const Thumb = (props: ThumbProps) => {
 
   const gesture = Gesture.Pan()
     .onBegin(() => {
+      onSeekStart?.();
       isPressed.value = true;
       lastOffset.value = offset.value;
     })
     .onUpdate(e => {
-      onSeekStart?.();
       let newX = lastOffset.value + e.translationX * (shouldDisableRTL ? 1 : rtlFix);
 
       if (newX < start.value) {

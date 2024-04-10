@@ -65,7 +65,7 @@ yarn-error.log
 dist
 dist-ts
 package-lock.json
-docs/**/*.md
+docs/components/**
 
 # Ruby / CocoaPods
 /ios/Pods/

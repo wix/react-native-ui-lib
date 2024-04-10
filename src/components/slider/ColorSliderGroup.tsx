@@ -1,11 +1,12 @@
 import _ from 'lodash';
-import React, {useState, useEffect, useCallback, useMemo} from 'react';
+import React, {useState, useCallback, useMemo} from 'react';
 import {Colors} from '../../style';
 import {useThemeProps} from '../../hooks';
+import View from '../view';
+import Text from '../text';
+import {ColorSliderGroupProps, HSLA, GradientSliderTypes} from './types';
+import SliderContext from './SliderContext';
 import GradientSlider from './GradientSlider';
-import SliderGroup from './context/SliderGroup';
-import ColorSlider from './ColorSlider';
-import {ColorSliderGroupProps, HSLA} from './types';
 
 /**
  * @description: A Gradient Slider component
@@ -14,27 +15,58 @@ import {ColorSliderGroupProps, HSLA} from './types';
  */
 const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGroupProps<T>) => {
   const themeProps = useThemeProps(props, 'ColorSliderGroup');
-  const {initialColor, containerStyle, onValueChange, ...others} = themeProps;
+  const {
+    initialColor,
+    onValueChange,
+    containerStyle,
+    sliderContainerStyle,
+    showLabels,
+    labels = {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation', default: ''},
+    labelsStyle,
+    accessible,
+    migrate
+  } = themeProps;
+  
   const _initialColor = useMemo<HSLA>(() => {
     return _.isString(initialColor) ? Colors.getHSL(initialColor) : initialColor;
   }, [initialColor]);
-  const [color, setColor] = useState<HSLA>(_initialColor);
 
-  useEffect(() => {
-    setColor(_initialColor);
-  }, [_initialColor]);
+  const [value, setValue] = useState(_initialColor);
 
-  const _onValueChange = useCallback((value: HSLA) => {
-    const _value = _.isString(initialColor) ? Colors.getHexString(value) : value;
-    onValueChange?.(_value as T);
-  }, [onValueChange, initialColor]);
+  const _setValue = useCallback((value: HSLA) => {
+    setValue(value);
+    const newValue = _.isString(initialColor) ? Colors.getHexString(value) : value;
+    onValueChange?.(newValue as T);
+  }, [initialColor, onValueChange]);
+    
+  const contextProviderValue = useMemo(() => ({value, setValue: _setValue}), [value, _setValue]);
+
+  const renderSlider = (type: GradientSliderTypes) => {
+    return (
+      <>
+        {showLabels && labels && (
+          <Text recorderTag={'unmask'} $textNeutral text80 style={labelsStyle} accessible={accessible}>
+            {labels[type]}
+          </Text>
+        )}
+        <GradientSlider
+          type={type}
+          containerStyle={sliderContainerStyle}
+          accessible={accessible}
+          migrate={migrate}
+        />
+      </>
+    );
+  };
 
   return (
-    <SliderGroup style={containerStyle} color={color} onValueChange={_onValueChange}>
-      <ColorSlider type={GradientSlider.types.HUE} initialColor={_initialColor} {...others}/>
-      <ColorSlider type={GradientSlider.types.SATURATION} initialColor={_initialColor} {...others}/>
-      <ColorSlider type={GradientSlider.types.LIGHTNESS} initialColor={_initialColor} {...others}/>
-    </SliderGroup>
+    <View style={containerStyle}>
+      <SliderContext.Provider value={contextProviderValue}>
+        {renderSlider(GradientSlider.types.HUE)}
+        {renderSlider(GradientSlider.types.SATURATION)}
+        {renderSlider(GradientSlider.types.LIGHTNESS)}
+      </SliderContext.Provider>
+    </View>
   );
 };
 
