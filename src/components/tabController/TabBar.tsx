@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useMemo, useContext, useState, useRef, ReactNode} from 'react';
+import React, {useMemo, useContext, useState, useCallback, useRef, ReactNode} from 'react';
 import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
@@ -201,11 +201,10 @@ const TabBar = (props: Props) => {
     }
   });
 
-  const tabBarItemStyle = useMemo(() =>
-    (item: TabControllerItemProps): StyleProp<ViewStyle> => {
-      const flex = Constants.isWeb ? (spreadItems ? 1 : undefined) : 1;
-      return [{flex}, item?.style];
-    },
+  const tabBarItemStyle = useCallback((item: TabControllerItemProps): StyleProp<ViewStyle> => {
+    const flex = Constants.isWeb ? (spreadItems ? 1 : undefined) : 1;
+    return [{flex}, item?.style];
+  },
   [spreadItems]);
 
   const tabBarItems = useMemo((): ReactNode => {
@@ -244,7 +243,7 @@ const TabBar = (props: Props) => {
     activeBackgroundColor,
     centerSelected,
     onItemLayout,
-    spreadItems
+    tabBarItemStyle
   ]);
 
   const _indicatorTransitionStyle = useAnimatedStyle(() => {
