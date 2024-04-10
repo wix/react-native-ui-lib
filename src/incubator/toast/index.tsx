@@ -7,7 +7,6 @@ import {
   ViewStyle,
   LayoutChangeEvent
 } from 'react-native';
-import _ from 'lodash';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
 import {Colors, BorderRadiuses, Spacings, Typography, Shadows} from 'style';
