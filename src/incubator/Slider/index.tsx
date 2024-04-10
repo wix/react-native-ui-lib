@@ -1,23 +1,7 @@
 import _ from 'lodash';
 import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
-import {
-  StyleSheet,
-  AccessibilityRole,
-  StyleProp,
-  ViewStyle,
-  GestureResponderEvent,
-  LayoutChangeEvent,
-  ViewProps,
-  AccessibilityProps
-} from 'react-native';
-import {
-  useSharedValue,
-  useAnimatedStyle,
-  runOnJS,
-  useAnimatedReaction,
-  withTiming,
-  SharedValue
-} from 'react-native-reanimated';
+import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
+import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming, SharedValue} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
@@ -25,7 +9,12 @@ import {StyleUtils} from 'utils';
 import {useThemeProps, useDidUpdate} from '../../hooks';
 import View from '../../components/view';
 import {ComponentStatics} from '../../typings/common';
-import {validateValues, getOffsetForValue, getValueForOffset, getStepInterpolated} from './SliderPresenter';
+import {
+  validateValues,
+  getOffsetForValue,
+  getValueForOffset,
+  getStepInterpolated
+} from './SliderPresenter';
 import Thumb from './Thumb';
 import Track from './Track';
 
@@ -67,7 +56,7 @@ export interface SliderProps extends AccessibilityProps {
    */
   onSeekEnd?: () => void;
   /**
-   * Callback that notifies when the reset function was invoked
+   * Callback that notifies when the reset function was invoked 
    */
   onReset?: () => void;
   /**
@@ -130,10 +119,10 @@ export interface SliderProps extends AccessibilityProps {
    * If true the min and max thumbs will not overlap
    */
   useGap?: boolean;
-  /**
+  /** 
    * Callback for onRangeChange. Returns values object with the min and max values
    */
-  onRangeChange?: (values: {min: number; max: number}) => void;
+  onRangeChange?: (values: {min: number, max: number}) => void;
   /**
    * If true the Slider will stay in LTR mode even if the app is on RTL mode
    */
@@ -242,7 +231,6 @@ const Slider = React.memo((props: Props) => {
   const rangeThumbOffset = useSharedValue(0);
 
   const didValueUpdate = useRef(false);
-
   const thumbBackground: StyleProp<ViewStyle> = useMemo(() => [{backgroundColor: disabled ? disabledThumbTintColor : thumbTintColor}],
     [disabled, thumbTintColor, disabledThumbTintColor]);
   const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [styles.thumb, thumbBackground], [thumbBackground]);
