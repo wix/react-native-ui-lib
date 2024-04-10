@@ -2,6 +2,7 @@ import {SharedValue, interpolate} from 'react-native-reanimated';
 import {SliderProps} from './index';
 
 export function getOffsetForValue(value: number, span: number, minimumValue = 0, maximumValue = 1) {
+  'worklet';
   const range = maximumValue - minimumValue;
   const relativeValue = minimumValue - value;
   const v = minimumValue < 0 ? Math.abs(relativeValue) : value - minimumValue; // for negative values
