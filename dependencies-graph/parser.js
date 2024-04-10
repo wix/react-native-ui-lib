@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {parse, AST_NODE_TYPES} = require('@typescript-eslint/typescript-estree');
+const {parse: esParse, AST_NODE_TYPES} = require('@typescript-eslint/typescript-estree');
 const {traverse} = require('eslint/lib/shared/traverser');
 
 // TODO:
@@ -109,6 +109,26 @@ function applyPrefixAndSuffixToExport(defaultExport, fullPath) {
   return defaultExport;
 }
 
+function parseImports(imports, node, fileFullPath, hooks) {
+  const from = node.source.raw.replace(/['"]/g, '');
+  if (OUR_STATIC_IMPORTS.includes(from) || from.indexOf(`./`) === 0 || from.indexOf(`../`) === 0) {
+    imports = imports.concat(node.specifiers
+      .map(imp => {
+        let importName = imp.imported?.name ?? imp.local.name;
+        if (isHook(importName)) {
+          hooks.add(importName);
+        }
+
+        importName = applySuffixToImport(imp.type, importName, from, fileFullPath, node);
+
+        return importName;
+      })
+      .filter(importName => !isType(importName) && !isConst(importName) && !isHook(importName)));
+  }
+
+  return imports;
+}
+
 class Parser {
   _verbose;
   _componentsWithImports = [];
@@ -136,11 +156,11 @@ class Parser {
     this._parseDirectory(path);
   }
 
-  _parseContent(fileContent, fullPath) {
+  _parseFile(fileFullPath) {
+    const fileContent = fs.readFileSync(fileFullPath).toString();
     try {
-      const code = parse(fileContent, {comment: false, jsx: true});
-      let from,
-        imports = [],
+      const code = esParse(fileContent, {comment: false, jsx: true});
+      let imports = [],
         defaultExportString,
         defaultExport;
       const possibleExports = [],
@@ -153,21 +173,7 @@ class Parser {
         enter(node) {
           switch (node.type) {
             case AST_NODE_TYPES.ImportDeclaration:
-              from = node.source.raw.replace(/['"]/g, '');
-              if (OUR_STATIC_IMPORTS.includes(from) || from.indexOf(`./`) === 0 || from.indexOf(`../`) === 0) {
-                imports = imports.concat(node.specifiers
-                  .map(imp => {
-                    let importName = imp.imported?.name ?? imp.local.name;
-                    if (isHook(importName)) {
-                      hooks.add(importName);
-                    }
-
-                    importName = applySuffixToImport(imp.type, importName, from, fullPath, node);
-
-                    return importName;
-                  })
-                  .filter(importName => !isType(importName) && !isConst(importName) && !isHook(importName)));
-              }
+              imports = parseImports(imports, node, fileFullPath, hooks);
               break;
             case AST_NODE_TYPES.ClassDeclaration:
               defaultExport = node.id.name;
@@ -225,7 +231,7 @@ class Parser {
         return;
       }
 
-      return {defaultExport: applyPrefixAndSuffixToExport(defaultExport, fullPath), imports};
+      return {defaultExport: applyPrefixAndSuffixToExport(defaultExport, fileFullPath), imports};
     } catch (e) {
       if (this._verbose) {
         console.error('Error parsing content', e);
@@ -265,8 +271,7 @@ class Parser {
               this._parseDirectory(fileOrDirectoryFullPath);
             }
           } else if (this._isRelevantFile(fileOrDirectory)) {
-            const fileContent = fs.readFileSync(fileOrDirectoryFullPath).toString();
-            const result = this._parseContent(fileContent, fileOrDirectoryFullPath);
+            const result = this._parseFile(fileOrDirectoryFullPath);
             if (result) {
               this._componentsWithImports.push({...result, extraData: {fileOrDirectory, fileOrDirectoryFullPath}});
             }
