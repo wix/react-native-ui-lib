@@ -1,5 +1,4 @@
-const cloneDeep = require('lodash/cloneDeep');
-const Parser = require('./parser');
+const Builder = require('./builder');
 
 const POPULAR_COMPONENTS = ['Button', 'Image', 'Text', 'TouchableOpacity', 'View'];
 
@@ -19,39 +18,13 @@ const stringToColor = str => {
   return color;
 };
 
-const MyParser = new Parser();
-for (let i = 2; i < process.argv.length; ++i) {
-  MyParser.parse(process.argv[i]);
-}
-
-const componentsWithImports = cloneDeep(MyParser._componentsWithImports);
-
-const components = componentsWithImports.map(component => component.defaultExport);
-for (let i = 0; i < componentsWithImports.length; ++i) {
-  for (let j = componentsWithImports[i].imports.length - 1; j >= 0; --j) {
-    const currentImport = componentsWithImports[i].imports[j];
-    if (
-      // MyParser._functions.has(currentImport) ||
-      MyParser._enums.has(currentImport) ||
-      MyParser._interfaces.has(currentImport) ||
-      MyParser._types.has(currentImport) ||
-      (!components.includes(currentImport) && !currentImport.endsWith('Old') && !currentImport.endsWith('New'))
-    ) {
-      componentsWithImports[i].imports.splice(j, 1);
-    } else if (
-      !components.includes(currentImport) &&
-      (currentImport.endsWith('Old') || currentImport.endsWith('New')) &&
-      components.includes(currentImport.slice(0, -3))
-    ) {
-      componentsWithImports[i].imports[j] = currentImport.slice(0, -3);
-    }
-  }
-}
+const builder = new Builder();
+builder.buildComponents();
 
 let dotString = '';
 const componentsWithNoOutgoingEdges = [];
 const allImports = new Set();
-componentsWithImports.forEach(component => {
+builder._parser._componentsWithImports.forEach(component => {
   let hasOutgoingEdges = false;
   let label = component.defaultExport;
   const popular = [];
