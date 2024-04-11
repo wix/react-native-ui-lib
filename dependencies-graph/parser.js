@@ -20,10 +20,12 @@ class Parser {
   _interfaces = new Set();
   _types = new Set();
   _ourStaticImports;
+  _prefix;
 
-  constructor({verbose, staticImports = OUR_STATIC_IMPORTS}) {
+  constructor({verbose, staticImports = OUR_STATIC_IMPORTS, prefix}) {
     this._verbose = verbose;
     this._ourStaticImports = staticImports;
+    this._prefix = prefix;
   }
 
   clear() {
@@ -141,7 +143,8 @@ class Parser {
 
   _parseImports(imports, node, fileFullPath, hooks) {
     const from = node.source.raw.replace(/['"]/g, '');
-    if (this._ourStaticImports.includes(from) || from.indexOf(`./`) === 0 || from.indexOf(`../`) === 0) {
+    const isOurStaticImport = this._ourStaticImports.includes(from);
+    if (isOurStaticImport || from.indexOf(`./`) === 0 || from.indexOf(`../`) === 0) {
       imports = imports.concat(node.specifiers
         .map(imp => {
           let importName = imp.imported?.name ?? imp.local.name;
@@ -150,6 +153,9 @@ class Parser {
           }
 
           importName = this._applySuffixToImport(imp.type, importName, from, fileFullPath, node);
+          if (isOurStaticImport && this._prefix) {
+            importName = this._prefix + importName;
+          }
 
           return importName;
         })

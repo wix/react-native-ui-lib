@@ -1,41 +1,51 @@
 const fs = require('fs');
-const path = require('path');
 
 class Builder {
   _folders;
   _parser;
-  _componentsNames;
-  _wasBuilt = false;
+  _componentsNames = [];
 
   constructor(folders, parser) {
     this._folders = folders;
     this._parser = parser;
   }
 
-  buildComponents() {
-    if (this._wasBuilt) {
+  buildComponents({prefixToAdd, prefixToInclude} = {}) {
+    this._parse();
+    this._componentsNames = this._componentsNames.concat(this._parser._componentsWithImports.map(component => component.defaultExport));
+    this._removeAndRenameComponents(prefixToInclude);
+    this._addPrefix(prefixToAdd);
+  }
+
+  writeToFile(fileFullPath) {
+    if (fs.existsSync(fileFullPath)) {
+      fs.rmSync(fileFullPath);
+    }
+    fs.writeFileSync(fileFullPath, JSON.stringify(this._parser._componentsWithImports, null, 2));
+  }
+
+  readFromFile(fileName, prefix) {
+    this._parser.clear();
+    this._parser._componentsWithImports = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+    this._addPrefix(prefix);
+    this._componentsNames = this._componentsNames.concat(this._parser._componentsWithImports.map(component => component.defaultExport));
+  }
+
+  _addPrefix(prefix) {
+    if (!prefix) {
       return;
     }
 
-    this._parse();
-    this._componentsNames = this._parser._componentsWithImports.map(component => component.defaultExport);
-    this._removeAndRenameComponents();
-    this._wasBuilt = true;
+    for (let i = 0; i < this._parser._componentsWithImports.length; ++i) {
+      this._parser._componentsWithImports[i].defaultExport =
+        prefix + this._parser._componentsWithImports[i].defaultExport;
+      for (let j = 0; j < this._parser._componentsWithImports[i].imports.length; ++j) {
+        this._parser._componentsWithImports[i].imports[j] = prefix + this._parser._componentsWithImports[i].imports[j];
+      }
+    }
   }
 
-  writeToFile() {
-    this.buildComponents();
-    fs.writeFileSync(path.join(__dirname, '/components.json'),
-      JSON.stringify(this._parser._componentsWithImports, null, 2));
-  }
-
-  readFromFile(fileName) {
-    this._parser.clear();
-    this._parser._componentsWithImports = JSON.parse(fs.readFileSync(fileName, 'utf8'));
-    this._componentsNames = this._parser._componentsWithImports.map(component => component.defaultExport);
-  }
-
-  _removeAndRenameComponents() {
+  _removeAndRenameComponents(prefixToInclude) {
     for (let i = 0; i < this._parser._componentsWithImports.length; ++i) {
       for (let j = this._parser._componentsWithImports[i].imports.length - 1; j >= 0; --j) {
         const currentImport = this._parser._componentsWithImports[i].imports[j];
@@ -46,7 +56,8 @@ class Builder {
           this._parser._types.has(currentImport) ||
           (!this._componentsNames.includes(currentImport) &&
             !currentImport.endsWith('Old') &&
-            !currentImport.endsWith('New'))
+            !currentImport.endsWith('New') &&
+            (!prefixToInclude || !currentImport.startsWith(prefixToInclude)))
         ) {
           this._parser._componentsWithImports[i].imports.splice(j, 1);
         } else if (

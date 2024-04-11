@@ -22,8 +22,9 @@ class DOTBuilder {
   _componentsWithNoOutgoingEdges = [];
   _allImports = new Set();
 
-  constructor(builder) {
+  constructor(builder, {additionalPopularComponents, prefix} = {}) {
     this._builder = builder;
+    this._popularComponents = POPULAR_COMPONENTS.map(component => (prefix ?? '') + component).concat(additionalPopularComponents);
   }
 
   buildDOTString() {
@@ -41,7 +42,7 @@ class DOTBuilder {
       let label = component.defaultExport;
       const popular = [];
       component.imports.forEach(imported => {
-        if (POPULAR_COMPONENTS.includes(imported)) {
+        if (this._popularComponents.includes(imported)) {
           popular.push(imported);
         } else {
           hasOutgoingEdges = true;
@@ -53,7 +54,7 @@ class DOTBuilder {
       }
 
       if (!hasOutgoingEdges) {
-        if (!POPULAR_COMPONENTS.includes(component.defaultExport) && component.defaultExport !== label) {
+        if (!this._popularComponents.includes(component.defaultExport) && component.defaultExport !== label) {
           this._componentsWithNoOutgoingEdges.push({
             component: component.defaultExport,
             label: `"${label}"`
@@ -62,7 +63,7 @@ class DOTBuilder {
       } else {
         component.imports.forEach(imported => {
           this._allImports.add(imported);
-          if (!POPULAR_COMPONENTS.includes(imported)) {
+          if (!this._popularComponents.includes(imported)) {
             this._dotString += `${component.defaultExport}[label="${label}"]`;
             this._dotString += '->';
             this._dotString += `${imported}[color="${stringToColor(label)}"]`;
