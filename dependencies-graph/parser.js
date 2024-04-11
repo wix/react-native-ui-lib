@@ -10,125 +10,6 @@ const {traverse} = require('eslint/lib/shared/traverser');
 
 const OUR_STATIC_IMPORTS = ['commons', 'helpers', 'utils', 'hooks', 'optionalDeps', 'services', 'style'];
 
-function isType(importName) {
-  return importName.startsWith('import type ') || importName.indexOf('Type') > 0 || importName.indexOf('Prop') >= 0;
-}
-
-function isConst(importName) {
-  return importName.toUpperCase() === importName;
-}
-
-function isHook(importName) {
-  return importName.startsWith('use');
-}
-
-function isUtil(importName) {
-  return importName.toLowerCase().includes('migrator');
-}
-
-function isInvalid(defaultExport, imports, log) {
-  if (isHook(defaultExport) || isUtil(defaultExport)) {
-    return true;
-  }
-
-  if (!defaultExport) {
-    if (log) {
-      console.error('No default export found');
-    }
-    return true;
-  }
-  if (imports.length === 0) {
-    if (log) {
-      console.error('No imports found');
-    }
-    return true;
-  }
-
-  return false;
-}
-
-function isIncubator(path) {
-  return path.includes('incubator');
-}
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function getComponentFileName(path) {
-  return path.split('.').slice(-2)[0];
-}
-
-function getComponentFolderName(path) {
-  return path.split('.').slice(-2)[0].split('/').slice(-2)[0];
-}
-
-function isOldComponent(path) {
-  const fileName = getComponentFileName(path);
-  const folderName = getComponentFolderName(path);
-  return fileName.toLowerCase().endsWith('old') || folderName.toLowerCase().endsWith('old');
-}
-
-function getImportFileName(path) {
-  return path.split('/').slice(-1)[0];
-}
-
-// eslint-disable-next-line max-params
-function applySuffixToImport(importType, importName, from, fullPath, node) {
-  if (importType === AST_NODE_TYPES.ImportDefaultSpecifier) {
-    const fileName = getImportFileName(from);
-
-    if (fileName.endsWith('Old')) {
-      importName += 'Old';
-    }
-  }
-
-  if (
-    (isIncubator(node.source.raw) || (isIncubator(fullPath) && !node.source.raw.includes('components'))) &&
-    !importName.startsWith('Incubator')
-  ) {
-    importName = `Incubator${importName}`;
-  }
-
-  return importName;
-}
-
-function applyPrefixAndSuffixToExport(defaultExport, fullPath) {
-  defaultExport = `${isIncubator(fullPath) ? 'Incubator' : ''}${defaultExport}`;
-  const fileName = getComponentFileName(fullPath);
-  if (
-    fileName === 'ios' ||
-    fileName === 'android' ||
-    fileName === 'web' /* TODO: we remove web elsewhere, do we want to have them? */
-  ) {
-    defaultExport += capitalizeFirstLetter(fileName);
-  } else if (isOldComponent(fileName)) {
-    defaultExport += 'Old';
-  }
-
-  return defaultExport;
-}
-
-function parseImports(imports, node, fileFullPath, hooks) {
-  const from = node.source.raw.replace(/['"]/g, '');
-  if (OUR_STATIC_IMPORTS.includes(from) || from.indexOf(`./`) === 0 || from.indexOf(`../`) === 0) {
-    imports = imports.concat(node.specifiers
-      .map(imp => {
-        let importName = imp.imported?.name ?? imp.local.name;
-        if (isHook(importName)) {
-          hooks.add(importName);
-        }
-
-        importName = applySuffixToImport(imp.type, importName, from, fileFullPath, node);
-
-        return importName;
-      })
-      .filter(importName => !isType(importName) && !isConst(importName) && !isHook(importName)));
-  }
-
-  return imports;
-}
-
 class Parser {
   _verbose;
   _componentsWithImports = [];
@@ -138,9 +19,11 @@ class Parser {
   _enums = new Set();
   _interfaces = new Set();
   _types = new Set();
+  _ourStaticImports;
 
-  constructor(verbose) {
+  constructor({verbose, staticImports = OUR_STATIC_IMPORTS}) {
     this._verbose = verbose;
+    this._ourStaticImports = staticImports;
   }
 
   clear() {
@@ -154,6 +37,126 @@ class Parser {
 
   parse(path) {
     this._parseDirectory(path);
+  }
+
+  _isType(importName) {
+    return importName.startsWith('import type ') || importName.indexOf('Type') > 0 || importName.indexOf('Prop') >= 0;
+  }
+
+  _isConst(importName) {
+    return importName.toUpperCase() === importName;
+  }
+
+  _isHook(importName) {
+    return importName.startsWith('use');
+  }
+
+  _isUtil(importName) {
+    return importName.toLowerCase().includes('migrator');
+  }
+
+  _isInvalid(defaultExport, imports, log) {
+    if (this._isHook(defaultExport) || this._isUtil(defaultExport)) {
+      return true;
+    }
+
+    if (!defaultExport) {
+      if (log) {
+        console.error('No default export found');
+      }
+      return true;
+    }
+    if (imports.length === 0) {
+      if (log) {
+        console.error('No imports found');
+      }
+      return true;
+    }
+
+    return false;
+  }
+
+  _isIncubator(path) {
+    return path.includes('incubator');
+  }
+
+  _capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  _getComponentFileName(path) {
+    return path.split('.').slice(-2)[0];
+  }
+
+  _getComponentFolderName(path) {
+    return path.split('.').slice(-2)[0].split('/').slice(-2)[0];
+  }
+
+  _isOldComponent(path) {
+    const fileName = this._getComponentFileName(path);
+    const folderName = this._getComponentFolderName(path);
+    return fileName.toLowerCase().endsWith('old') || folderName.toLowerCase().endsWith('old');
+  }
+
+  _getImportFileName(path) {
+    return path.split('/').slice(-1)[0];
+  }
+
+  // eslint-disable-next-line max-params
+  _applySuffixToImport(importType, importName, from, fullPath, node) {
+    if (importType === AST_NODE_TYPES.ImportDefaultSpecifier) {
+      const fileName = this._getImportFileName(from);
+
+      if (fileName.endsWith('Old')) {
+        importName += 'Old';
+      }
+    }
+
+    if (
+      (this._isIncubator(node.source.raw) ||
+        (this._isIncubator(fullPath) && !node.source.raw.includes('components'))) &&
+      !importName.startsWith('Incubator')
+    ) {
+      importName = `Incubator${importName}`;
+    }
+
+    return importName;
+  }
+
+  _applyPrefixAndSuffixToExport(defaultExport, fullPath) {
+    defaultExport = `${this._isIncubator(fullPath) ? 'Incubator' : ''}${defaultExport}`;
+    const fileName = this._getComponentFileName(fullPath);
+    if (
+      fileName === 'ios' ||
+      fileName === 'android' ||
+      fileName === 'web' /* TODO: we remove web elsewhere, do we want to have them? */
+    ) {
+      defaultExport += this._capitalizeFirstLetter(fileName);
+    } else if (this._isOldComponent(fileName)) {
+      defaultExport += 'Old';
+    }
+
+    return defaultExport;
+  }
+
+  _parseImports(imports, node, fileFullPath, hooks) {
+    const from = node.source.raw.replace(/['"]/g, '');
+    if (this._ourStaticImports.includes(from) || from.indexOf(`./`) === 0 || from.indexOf(`../`) === 0) {
+      imports = imports.concat(node.specifiers
+        .map(imp => {
+          let importName = imp.imported?.name ?? imp.local.name;
+          if (this._isHook(importName)) {
+            hooks.add(importName);
+          }
+
+          importName = this._applySuffixToImport(imp.type, importName, from, fileFullPath, node);
+
+          return importName;
+        })
+        .filter(importName => !this._isType(importName) && !this._isConst(importName) && !this._isHook(importName)));
+    }
+
+    return imports;
   }
 
   _parseFile(fileFullPath) {
@@ -170,10 +173,10 @@ class Parser {
         interfaces = new Set(),
         types = new Set();
       traverse(code, {
-        enter(node) {
+        enter: node => {
           switch (node.type) {
             case AST_NODE_TYPES.ImportDeclaration:
-              imports = parseImports(imports, node, fileFullPath, hooks);
+              imports = this._parseImports(imports, node, fileFullPath, hooks);
               break;
             case AST_NODE_TYPES.ClassDeclaration:
               defaultExport = node.id.name;
@@ -227,11 +230,11 @@ class Parser {
         }
       }
 
-      if (isInvalid(defaultExport, imports, this._verbose)) {
+      if (this._isInvalid(defaultExport, imports, this._verbose)) {
         return;
       }
 
-      return {defaultExport: applyPrefixAndSuffixToExport(defaultExport, fileFullPath), imports};
+      return {defaultExport: this._applyPrefixAndSuffixToExport(defaultExport, fileFullPath), imports};
     } catch (e) {
       if (this._verbose) {
         console.error('Error parsing content', e);

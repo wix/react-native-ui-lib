@@ -1,14 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-const Parser = require('./parser');
 
 class Builder {
+  _folders;
   _parser;
   _componentsNames;
   _wasBuilt = false;
 
-  constructor(verbose = false) {
-    this._parser = new Parser(verbose);
+  constructor(folders, parser) {
+    this._folders = folders;
+    this._parser = parser;
   }
 
   buildComponents() {
@@ -60,8 +61,8 @@ class Builder {
   }
 
   _parse() {
-    for (let i = 2; i < process.argv.length; ++i) {
-      this._parser.parse(process.argv[i]);
+    for (let i = 0; i < this._folders.length; ++i) {
+      this._parser.parse(this._folders[i]);
     }
   }
 }

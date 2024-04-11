@@ -1,6 +1,8 @@
 const Builder = require('./builder');
+const Parser = require('./parser');
 const verbose = false;
-const builder = new Builder(verbose);
+const parser = new Parser({verbose});
+const builder = new Builder(process.argv.slice(2), parser);
 
 builder.buildComponents();
 
