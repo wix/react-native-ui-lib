@@ -12,7 +12,7 @@ interface Props extends KeyboardTrackingViewProps {
  * @notes: This view is useful only for iOS.
  */
 const KeyboardAwareInsetsView = (props: Props) => {
-  const {offset, ...others} = props;
+  const {offset = 0.5, ...others} = props;
   return <KeyboardTrackingView {...others} pointerEvents={'none'} style={[styles.insetsView, {height: offset}]} scrollToFocusedInput/>;
 };
 
