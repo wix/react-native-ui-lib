@@ -128,9 +128,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
   } = themeProps;
   const scrollView = useRef<Animated.ScrollView>();
   const offset = useSharedValue(0);
-  const scrollHandler = useAnimatedScrollHandler(e => {
-    offset.value = e.contentOffset.y;
-  });
+  const scrollHandler = useAnimatedScrollHandler();
   const shouldDisableRTL = useMemo(() => {
     return Constants.isRTL && disableRTL;
   }, [disableRTL]);
