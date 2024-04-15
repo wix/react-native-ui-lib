@@ -170,11 +170,12 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
     !isUndefined(initialValue) && scrollToIndex(currentIndex, true);
   }, [currentIndex]);
 
+  useEffect(() => {
+    prevInitialValue.current = initialValue;
+  }, [initialValue]);
+
   const _onChange = useCallback((value: T, index: number) => {
-    if (prevInitialValue.current !== initialValue) {
-      // don't invoke 'onChange' if 'initialValue' changed
-      prevInitialValue.current = initialValue;
-    } else {
+    if (prevInitialValue.current === initialValue) {
       onChange?.(value, index);
     }
   },
