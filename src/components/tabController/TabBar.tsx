@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useMemo, useContext, useState, useCallback, useRef, ReactNode} from 'react';
+import React, {useMemo, useContext, useState, useRef, ReactNode} from 'react';
 import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
@@ -201,15 +201,8 @@ const TabBar = (props: Props) => {
     }
   });
 
-  const tabBarItemStyle = useCallback((item: TabControllerItemProps): StyleProp<ViewStyle> => {
-    const flex = Constants.isWeb ? (spreadItems ? 1 : undefined) : 1;
-    return [{flex}, item?.style];
-  },
-  [spreadItems]);
-
   const tabBarItems = useMemo((): ReactNode => {
     return _.map(items, (item, index) => {
-      const style: StyleProp<ViewStyle> = tabBarItemStyle(item);
       return (
         <TabBarItem
           labelColor={labelColor}
@@ -223,10 +216,10 @@ const TabBar = (props: Props) => {
           activeBackgroundColor={activeBackgroundColor}
           {...item}
           {...context}
-          style={style}
           key={`${index}_${item.label}`}
           index={index}
           onLayout={onItemLayout}
+          spreadItems={spreadItems}
         />
       );
     });
@@ -243,7 +236,7 @@ const TabBar = (props: Props) => {
     activeBackgroundColor,
     centerSelected,
     onItemLayout,
-    tabBarItemStyle
+    spreadItems
   ]);
 
   const _indicatorTransitionStyle = useAnimatedStyle(() => {

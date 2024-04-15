@@ -8,11 +8,13 @@ import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps} from '../badge';
 import View from '../view';
 import TabBarContext from './TabBarContext';
+import Constants from '../../commons/Constants';
+import {TabControllerBarProps} from './TabBar';
 
 const DEFAULT_LABEL_COLOR = Colors.$textDefault;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.$textPrimary;
 
-export interface TabControllerItemProps {
+export interface TabControllerItemProps extends Pick<TabControllerBarProps, 'spreadItems'> {
   /**
    * label of the tab
    */
@@ -132,6 +134,7 @@ export default function TabBarItem({
   testID,
   ignore,
   style,
+  spreadItems,
   ...props
 }: Props) {
   const {currentPage, setCurrentIndex} = useContext(TabBarContext);
@@ -193,9 +196,10 @@ export default function TabBarItem({
   });
 
   const _style = useMemo(() => {
+    const flex = Constants.isWeb ? (spreadItems ? 1 : undefined) : 1;
     const constantWidthStyle = itemWidth.current ? {flex: 0, width: itemWidth.current} : undefined;
-    return [styles.tabItem, style, constantWidthStyle, pressStyle];
-  }, [style]);
+    return [styles.tabItem, {flex}, style, constantWidthStyle, pressStyle];
+  }, [style, spreadItems]);
 
   const gesture = Gesture.Tap()
     .maxDuration(60000)
