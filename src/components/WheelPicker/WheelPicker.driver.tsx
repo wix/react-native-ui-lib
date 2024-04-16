@@ -14,6 +14,7 @@ export const WheelPickerDriver = (props: ComponentProps) => {
   const itemsLength = listDriver.getElement().props.data?.length ?? 0;
 
   const moveToItem = (index: number, itemHeight: number = ITEM_HEIGHT, numberOfRows: number = itemsLength) => {
+    listDriver.triggerEvent('onScrollBeginDrag');
     listDriver.triggerEvent('onMomentumScrollEnd', {
       contentOffset: {x: 0, y: itemHeight * index},
       contentSize: {height: numberOfRows * itemHeight, width: 400},
