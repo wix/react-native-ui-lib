@@ -9,7 +9,7 @@ import Badge, {BadgeProps} from '../badge';
 import View from '../view';
 import TabBarContext from './TabBarContext';
 import Constants from '../../commons/Constants';
-import {TabControllerBarProps} from './TabBar';
+import type {TabControllerBarProps} from './TabBar';
 
 const DEFAULT_LABEL_COLOR = Colors.$textDefault;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.$textPrimary;
