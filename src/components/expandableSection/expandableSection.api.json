@@ -16,7 +16,12 @@
       "type": "() => void",
       "description": "Called when pressing the header of the ExpandableSection"
     },
-    {"name": "testID","type": "string","description": "testing identifier"}
+    {
+      "name": "minHeight",
+      "type": "number",
+      "description": "Set a minimum height for the expandableSection. If the children height is less than the minHeight, the expandableSection will collapse to that height. If the children height is greater than the minHeight, the expandableSection will result with only the children rendered"
+    },
+    {"name": "testID", "type": "string", "description": "testing identifier"}
   ],
   "snippet": [
     "<ExpandableSection",
