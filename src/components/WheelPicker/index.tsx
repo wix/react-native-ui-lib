@@ -143,7 +143,7 @@ const WheelPicker = ({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
-  const prevInitialValue = useRef(initialValue);
+  const shouldSkipNextOnChange = useRef(false);
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
   const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
@@ -162,18 +162,22 @@ const WheelPicker = ({
 
   useEffect(() => {
     // This effect making sure to reset index if initialValue has changed
-    !isUndefined(initialValue) && scrollToIndex(currentIndex, true);
+    if (!isUndefined(initialValue)) {
+      shouldSkipNextOnChange.current = true;
+      scrollToIndex(currentIndex, true);
+    }
   }, [currentIndex]);
 
-  const _onChange = useCallback((value: string | number, index: number) => {
-    if (prevInitialValue.current !== initialValue) {
-      // don't invoke 'onChange' if 'initialValue' changed
-      prevInitialValue.current = initialValue;
-    } else {
+  const _onChange = useCallback((value: number | string, index: number) => {
+    if (!shouldSkipNextOnChange.current) {
       onChange?.(value, index);
     }
   },
-  [initialValue, onChange]);
+  [onChange]);
+
+  const disableOnChangeSkip = useCallback(() => {
+    shouldSkipNextOnChange.current = false;
+  }, []);
 
   const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
@@ -354,6 +358,7 @@ const WheelPicker = ({
             onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
+            onScrollBeginDrag={disableOnChangeSkip} // user dragged wheel.
             // @ts-ignore
             ref={scrollView}
             // @ts-expect-error
