@@ -180,7 +180,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
   },
   [onChange]);
 
-  const invokeNextOnChange = useCallback(() => {
+  const disableOnChangeSkip = useCallback(() => {
     shouldSkipNextOnChange.current = false;
   }, []);
 
@@ -363,7 +363,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
             onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
-            onScrollBeginDrag={invokeNextOnChange} // user dragged wheel.
+            onScrollBeginDrag={disableOnChangeSkip} // user dragged wheel.
             // @ts-ignore
             ref={scrollView}
             // @ts-expect-error
