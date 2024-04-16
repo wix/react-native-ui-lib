@@ -148,7 +148,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
-  const shouldSkipNextOnChange = useRef(true);
+  const shouldSkipNextOnChange = useRef(false);
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
   const keyExtractor = useCallback((item: WheelPickerItemProps<T>, index: number) => `${item}.${index}`, []);
