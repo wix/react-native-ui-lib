@@ -148,7 +148,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
-  const prevInitialValue = useRef(initialValue);
+  const shouldInvokeOnChange = useRef(false);
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
   const keyExtractor = useCallback((item: WheelPickerItemProps<T>, index: number) => `${item}.${index}`, []);
@@ -167,18 +167,22 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
 
   useEffect(() => {
     // This effect making sure to reset index if initialValue has changed
-    !isUndefined(initialValue) && scrollToIndex(currentIndex, true);
+    if (!isUndefined(initialValue)) {
+      shouldInvokeOnChange.current = false;
+      scrollToIndex(currentIndex, true);
+    }
   }, [currentIndex]);
 
   const _onChange = useCallback((value: T, index: number) => {
-    if (prevInitialValue.current !== initialValue) {
-      // don't invoke 'onChange' if 'initialValue' changed
-      prevInitialValue.current = initialValue;
-    } else {
+    if (shouldInvokeOnChange.current) {
       onChange?.(value, index);
     }
   },
-  [initialValue, onChange]);
+  [onChange]);
+
+  const enableOnChangeInvocation = useCallback(() => {
+    shouldInvokeOnChange.current = true;
+  }, []);
 
   const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {value, index} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
@@ -359,6 +363,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
             onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
+            onScrollBeginDrag={enableOnChangeInvocation} // user dragged wheel.
             // @ts-ignore
             ref={scrollView}
             // @ts-expect-error
