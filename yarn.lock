@@ -7717,10 +7717,10 @@ react-native-linear-gradient@2.6.2:
   resolved "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.6.2.tgz#56598a76832724b2afa7889747635b5c80948f38"
   integrity sha512-Z8Xxvupsex+9BBFoSYS87bilNPWcRfRsGC0cpJk72Nxb5p2nEkGSBv73xZbEHnW2mUFvP+huYxrVvjZkr/gRjQ==
 
-react-native-mmkv@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.npmjs.org/react-native-mmkv/-/react-native-mmkv-2.6.1.tgz#0d4873171d69fd648711b6c75562dc2633aba98c"
-  integrity sha512-CqtKCkyH9/ZUyvj2SelE3Ohc1FuTDTxr1cjlbTSS17n3RDod2ucBkzQWRyDqZeLJ5K/ViEvLEJbIwjfmICN6Rw==
+react-native-mmkv@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.11.0.tgz#51b9985f6a5c09fe9c16d8c1861cc2901856ace1"
+  integrity sha512-28PdUHjZJmAw3q+8zJDAAdohnZMpDC7WgRUJxACOMkcmJeqS3u5cKS/lSq2bhf1CvaeIiHYHUWiyatUjMRCDQQ==
 
 react-native-navigation@7.32.1:
   version "7.32.1"
