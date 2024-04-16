@@ -3,7 +3,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 import KeyboardTrackingView, {KeyboardTrackingViewProps} from './KeyboardTrackingView';
 
 interface Props extends KeyboardTrackingViewProps {
-  offset?: number
+  offset?: number;
 }
 /**
  * @description: Used to add an inset when a keyboard is used and might hide part of the screen.
