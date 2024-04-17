@@ -216,6 +216,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
   };
 
   const selectItem = useCallback((index: number) => {
+    shouldSkipNextOnChange.current = false;
     scrollToIndex(index, true);
   },
   [itemHeight]);
