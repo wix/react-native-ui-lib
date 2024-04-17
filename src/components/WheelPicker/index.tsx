@@ -211,6 +211,7 @@ const WheelPicker = ({
   };
 
   const selectItem = useCallback((index: number) => {
+    shouldSkipNextOnChange.current = false;
     scrollToIndex(index, true);
   },
   [itemHeight]);
