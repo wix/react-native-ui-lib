@@ -29,10 +29,10 @@ class ExpandableSectionScreen extends PureComponent {
     const {expanded} = this.state;
     return (
       <View marginH-page marginT-10 row>
-        <Text text80 marginL-40 marginR-5 blue30>
+        <Text text80 marginL-40 marginR-5 $textPrimary>
           Read More
         </Text>
-        <Icon style={styles.icon} source={this.getChevron(expanded)} tintColor={Colors.blue30}/>
+        <Icon style={styles.icon} source={this.getChevron(expanded)} tintColor={Colors.$iconPrimary}/>
       </View>
     );
   };
@@ -79,6 +79,8 @@ class ExpandableSectionScreen extends PureComponent {
           expanded by default.
         </Text>
         <SegmentedControl
+          activeColor={Colors.$textDefaultLight}
+          activeBackgroundColor={Colors.$backgroundInverted}
           segments={[{label: 'Default'}, {label: 'Partially'}, {label: 'Fully Expanded'}]}
           onChangeIndex={index => {
             switch (index) {
