@@ -9,8 +9,8 @@ const BROKEN_URL = 'file:///Desktop/website/img/cupcake.jpg';
 const DEFAULT_SIZE = 100;
 
 const file = Assets.svgs.demo.logo;
-const uri = {uri: 'http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg'};
-const uriWithCss = {uri: 'http://thenewcode.com/assets/svg/accessibility.svg'};
+const uri = {uri: 'https://www.svgrepo.com/show/530581/cell-phone.svg'};
+// const uriWithCss = {uri: ''}; // TODO: find an example
 const xml = `
   <svg width="32" height="32" viewBox="0 0 32 32">
     <path
@@ -43,7 +43,7 @@ enum SizeType {
 enum SvgType {
   File = 'file',
   Uri = 'uri',
-  UriWithCss = 'use_with_css',
+  // UriWithCss = 'use_with_css',
   Xml = 'xml'
 }
 
@@ -79,8 +79,8 @@ class ImageScreen extends Component<{}, State> {
         return file;
       case SvgType.Uri:
         return uri;
-      case SvgType.UriWithCss:
-        return uriWithCss;
+      // case SvgType.UriWithCss:
+      //   return uriWithCss;
       case SvgType.Xml:
       default:
         return xml;
