@@ -115,7 +115,7 @@
     "react-native-reanimated": "3.4.0",
     "react-native-shimmer-placeholder": "^2.0.6",
     "react-native-svg": "^13.7.0",
-    "react-native-svg-transformer": "^0.14.3",
+    "react-native-svg-transformer": "1.1.0",
     "react-test-renderer": "18.2.0",
     "reassure": "^0.4.1",
     "shell-utils": "^1.0.10",
