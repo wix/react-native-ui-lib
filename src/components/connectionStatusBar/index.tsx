@@ -89,7 +89,7 @@ class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, Connec
   }
 
   async getInitialConnectionState() {
-    const isConnected = (await NetInfo?.fetch()).isConnected;
+    const isConnected = (await NetInfo?.fetch())?.isConnected;
 
     this.setState({isConnected});
     if (this.props.onConnectionChange) {
