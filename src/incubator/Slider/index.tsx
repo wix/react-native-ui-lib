@@ -139,6 +139,10 @@ export interface SliderProps extends AccessibilityProps {
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
+  /** 
+   * Control the throttle time of the onValueChange and onRangeChange callbacks
+   */
+  throttleTime?: number;
 }
 
 type Props = SliderProps & ForwardRefInjectedProps<SliderRef>;
@@ -188,7 +192,8 @@ const Slider = React.memo((props: Props) => {
     useGap = true,
     accessible = true,
     testID,
-    enableThumbShadow = true
+    enableThumbShadow = true,
+    throttleTime = 200
   } = themeProps;
 
   const accessibilityProps = useMemo(() => {
@@ -277,11 +282,11 @@ const Slider = React.memo((props: Props) => {
     } else {
       didValueUpdate.current = false;
     }
-  }, 200), [onValueChange]);
+  }, throttleTime), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
     onRangeChange?.({min, max});
-  }, 100), [onRangeChange]);
+  }, throttleTime), [onRangeChange]);
 
   useAnimatedReaction(() => {
     return Math.round(defaultThumbOffset.value);

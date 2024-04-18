@@ -54,7 +54,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     testID,
     children
   } = props;
-  const {overlayBackgroundColor = Colors.rgba(Colors.$backgroundInverted, 0.3), ...otherModalProps} = modalProps;
+  const {overlayBackgroundColor = Colors.rgba(Colors.grey10, 0.65), ...otherModalProps} = modalProps;
 
   const visibility = useSharedValue(0); // value between 0 (closed) and 1 (open)
   const initialTranslation = useSharedValue(0);

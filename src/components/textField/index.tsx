@@ -198,7 +198,7 @@ const TextField = (props: InternalTextFieldProps) => {
           {/* </View> */}
         </View>
         <View row spread>
-          {others.validationMessage && validationMessagePosition === ValidationMessagePosition.BOTTOM && (
+          {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
             <ValidationMessage
               enableErrors={enableErrors}
               validate={others.validate}

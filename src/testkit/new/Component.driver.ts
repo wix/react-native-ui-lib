@@ -1,8 +1,8 @@
 import {ReactTestInstance} from 'react-test-renderer';
-import {RenderResult} from '@testing-library/react-native';
+import {within} from '@testing-library/react-native';
 
 export interface ComponentProps {
-  renderTree: RenderResult;
+  renderTree: ReturnType<typeof within>; // Note: This changed was asked for integration with amino. This still gives all querying functionality.
   testID: string;
 }
 
