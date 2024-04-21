@@ -55,11 +55,18 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>${PRODUCT_NAME} uses Bluetooth to discover nearby Cast devices.</string>
+	<string>UILIB uses Bluetooth to discover nearby Cast devices.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>${PRODUCT_NAME} uses Bluetooth to discover nearby Cast devices.</string>
+	<string>UILIB uses Bluetooth to discover nearby Cast devices.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>${PRODUCT_NAME} uses microphone access to listen for ultrasonic tokens
+	<string>UILIB uses microphone access to listen for ultrasonic tokens
 	when pairing with nearby Cast devices.</string>
+	<key>NSBonjourServices</key>
+	<array>
+	<string>_googlecast._tcp</string>
+	<string>_CC1AD845._googlecast._tcp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>UILIB uses the local network to discover Cast-enabled devices on your WiFi network.</string>
 </dict>
 </plist>
