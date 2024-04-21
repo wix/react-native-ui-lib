@@ -7,6 +7,7 @@ buildscript {
         compileSdkVersion = 33
         targetSdkVersion = 33
         RNNKotlinVersion = "1.8.0"
+        castFrameworkVersion = "21.0.0"
         // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
         ndkVersion = "23.1.7779620"
     }

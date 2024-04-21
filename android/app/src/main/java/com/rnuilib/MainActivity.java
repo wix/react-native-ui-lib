@@ -5,6 +5,11 @@ package com.rnuilib;
 // import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 // import com.facebook.react.defaults.DefaultReactActivityDelegate;
 import com.reactnativenavigation.NavigationActivity;
+import android.os.Bundle;
+import androidx.annotation.Nullable;
+import com.google.android.gms.cast.framework.CastContext;
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
 
 public class MainActivity extends NavigationActivity {
 
@@ -25,6 +30,18 @@ public class MainActivity extends NavigationActivity {
 //    // If you opted-in for the New Architecture, we enable Concurrent React (i.e. React 18).
 //    DefaultNewArchitectureEntryPoint.getConcurrentReactEnabled() // concurrentRootEnabled
 //    );
+
+@Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    try {
+      // lazy load Google Cast context
+      CastContext.getSharedInstance(this);
+    } catch (Exception e) {
+      // cast framework not supported
+    }
+  }
 }
 
 //public class MainActivity extends ReactActivity {

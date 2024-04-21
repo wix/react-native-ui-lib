@@ -154,7 +154,7 @@ dependencies {
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
-
+    implementation "com.google.android.gms:play-services-cast-framework:${safeExtGet('castFrameworkVersion', '+')}"
     implementation project(':react-native-navigation')
     implementation project(':react-native-ui-lib')
     implementation 'com.facebook.fresco:fresco:2.5.0'
@@ -165,6 +165,10 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+}
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

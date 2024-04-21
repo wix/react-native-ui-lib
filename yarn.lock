@@ -6869,6 +6869,11 @@ react-native-gesture-handler@2.9.0:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-google-cast@^4.8.0:
+  version "4.8.0"
+  resolved "https://registry.npmjs.org/react-native-google-cast/-/react-native-google-cast-4.8.0.tgz#7af427bc8a44d1da62e6d2238c3c74136d098297"
+  integrity sha512-1BjHueIWO5NvR9VjJLeB8SvC8cidTJaZopztI8KbBc64GIiF9jWcfoV/MGK+IRsBZ9E8mDJ2syJmS+AAqgWiEA==
+
 react-native-gradle-plugin@^0.71.19:
   version "0.71.19"
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.19.tgz#3379e28341fcd189bc1f4691cefc84c1a4d7d232"
