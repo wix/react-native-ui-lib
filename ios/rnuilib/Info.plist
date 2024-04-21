@@ -54,5 +54,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>${PRODUCT_NAME} uses Bluetooth to discover nearby Cast devices.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>${PRODUCT_NAME} uses Bluetooth to discover nearby Cast devices.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>${PRODUCT_NAME} uses microphone access to listen for ultrasonic tokens
+	when pairing with nearby Cast devices.</string>
 </dict>
 </plist>

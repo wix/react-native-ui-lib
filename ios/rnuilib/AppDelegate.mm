@@ -2,6 +2,7 @@
 #import "AppDelegate.h"
 #import <React/RCTBundleURLProvider.h>
 #import <ReactNativeNavigation/ReactNativeNavigation.h>
+#import <GoogleCast/GoogleCast.h>
 
 @implementation AppDelegate
 
@@ -9,6 +10,11 @@
 {
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   [ReactNativeNavigation bootstrapWithBridge:bridge];
+
+  NSString *receiverAppID = kGCKDefaultMediaReceiverApplicationID; // or @"ABCD1234"
+GCKDiscoveryCriteria *criteria = [[GCKDiscoveryCriteria alloc] initWithApplicationID:receiverAppID];
+GCKCastOptions* options = [[GCKCastOptions alloc] initWithDiscoveryCriteria:criteria];
+[GCKCastContext setSharedInstanceWithOptions:options];
 
 //  self.moduleName = @"rnuilib";
   // You can add your custom initial props in the dictionary below.

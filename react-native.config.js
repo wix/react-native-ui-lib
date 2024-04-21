@@ -1,4 +1,11 @@
 module.exports = {
+  dependencies: {
+    'react-native-google-cast': {
+      platforms: {
+        ios: null // this will disable autolinking for this package on iOS
+      }
+    }
+  },
   dependency: {
     platforms: {
       /* TODO: Once we upgrade to RN69 we should try using podspecPath again, for now I copied ReactNativeUiLib.podspec file to the root - it seems to work

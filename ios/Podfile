@@ -22,7 +22,7 @@ end
 
 target 'rnuilib' do
   pod 'ReactNativeUiLib', :path => "../lib/ReactNativeUiLib.podspec"
-
+  pod 'react-native-google-cast/NoBluetooth', path: '../node_modules/react-native-google-cast/'
   config = use_native_modules!
 
   # Flags change depending on the env values.
