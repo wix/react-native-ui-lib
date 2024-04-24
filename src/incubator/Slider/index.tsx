@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect} from 'react';
+import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import {StyleUtils} from 'utils';
-import {useThemeProps} from '../../hooks';
+import {useThemeProps, useDidUpdate} from '../../hooks';
 import View from '../../components/view';
 import {ComponentStatics} from '../../typings/common';
 import {
@@ -139,6 +139,10 @@ export interface SliderProps extends AccessibilityProps {
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
+  /** 
+   * Control the throttle time of the onValueChange and onRangeChange callbacks
+   */
+  throttleTime?: number;
 }
 
 type Props = SliderProps & ForwardRefInjectedProps<SliderRef>;
@@ -188,7 +192,8 @@ const Slider = React.memo((props: Props) => {
     useGap = true,
     accessible = true,
     testID,
-    enableThumbShadow = true
+    enableThumbShadow = true,
+    throttleTime = 200
   } = themeProps;
 
   const accessibilityProps = useMemo(() => {
@@ -222,18 +227,47 @@ const Slider = React.memo((props: Props) => {
   const end = useSharedValue(0);
   const defaultThumbOffset = useSharedValue(0);
   const rangeThumbOffset = useSharedValue(0);
+
+  const didValueUpdate = useRef(false);
   
   const thumbBackground: StyleProp<ViewStyle> = useMemo(() => [
     {backgroundColor: disabled ? disabledThumbTintColor : thumbTintColor}
-  ], [disabled, thumbTintColor]);
+  ], [disabled, thumbTintColor, disabledThumbTintColor]);
   const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     styles.thumb, thumbBackground
   ], [thumbBackground]);
   const customThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     thumbStyle, thumbBackground
   ], [thumbStyle, thumbBackground]); 
-  const _thumbStyle = useSharedValue(StyleUtils.unpackStyle(customThumbStyle || defaultThumbStyle, {flatten: true}));
+  const _thumbStyle = 
+    useSharedValue(StyleUtils.unpackStyle(thumbStyle ? customThumbStyle : defaultThumbStyle, {flatten: true}));
   const _activeThumbStyle = useSharedValue(StyleUtils.unpackStyle(activeThumbStyle, {flatten: true}));
+
+  const setInitialPositions = useCallback((trackWidth: number) => {
+    validateValues(props);
+
+    const defaultThumbPosition = getOffsetForValue(useRange ? initialMinimumValue : value,
+      trackWidth,
+      minimumValue,
+      maximumValue);
+    const rangeThumbPosition = getOffsetForValue(initialMaximumValue, trackWidth, minimumValue, maximumValue);
+    defaultThumbOffset.value = defaultThumbPosition;
+    rangeThumbOffset.value = useRange ? rangeThumbPosition : trackWidth;
+  }, [value]);
+
+  const reset = () => {
+    setInitialPositions(trackSize.value.width);
+    onReset?.();
+  };
+
+  useImperativeHandle(forwardedRef, () => ({
+    reset: () => reset()
+  }));
+  
+  useDidUpdate(() => {
+    didValueUpdate.current = true;
+    setInitialPositions(trackSize.value.width);
+  }, [value, setInitialPositions]);
 
   useEffect(() => {
     if (!thumbStyle) {
@@ -242,35 +276,17 @@ const Slider = React.memo((props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultThumbStyle, thumbStyle]);
 
-  useImperativeHandle(forwardedRef, () => ({
-    reset: () => reset()
-  }));
-
-  const reset = () => {
-    setInitialPositions(trackSize.value.width);
-    onReset?.();
-  };
-
-  const setInitialPositions = (trackWidth: number) => {
-    validateValues(props);
-
-    const defaultThumbPosition = getOffsetForValue(
-      useRange ? initialMinimumValue : value,
-      trackWidth,
-      minimumValue,
-      maximumValue);
-    const rangeThumbPosition = getOffsetForValue(initialMaximumValue, trackWidth, minimumValue, maximumValue);
-    defaultThumbOffset.value = defaultThumbPosition;
-    rangeThumbOffset.value = useRange ? rangeThumbPosition : trackWidth;
-  };
-
   const onValueChangeThrottled = useCallback(_.throttle(value => {
-    onValueChange?.(value);
-  }, 200), [onValueChange]);
+    if (!didValueUpdate.current) { // NOTE: don't invoke onValueChange when slider's value prop updated programmatically
+      onValueChange?.(value);
+    } else {
+      didValueUpdate.current = false;
+    }
+  }, throttleTime), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
     onRangeChange?.({min, max});
-  }, 100), [onRangeChange]);
+  }, throttleTime), [onRangeChange]);
 
   useAnimatedReaction(() => {
     return Math.round(defaultThumbOffset.value);
@@ -343,7 +359,7 @@ const Slider = React.memo((props: Props) => {
         }
       }
     }
-  }, []);
+  }, [disabled, useRange, rangeGap, shouldBounceToStep]);
 
   const _onSeekStart = () => {
     'worklet';

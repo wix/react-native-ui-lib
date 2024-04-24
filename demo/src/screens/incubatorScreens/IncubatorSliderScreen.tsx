@@ -10,6 +10,7 @@ const MAX = 350;
 const INITIAL_MIN = 30;
 const INITIAL_MAX = 270;
 const COLOR = Colors.blue30;
+const GROUP_COLOR = Colors.yellow30;
 
 const IncubatorSliderScreen = () => {
   const [disableRTL, setDisableRTL] = useState<boolean>(false);
@@ -21,7 +22,7 @@ const IncubatorSliderScreen = () => {
   const [sliderMaxValue, setSliderMaxValue] = useState(INITIAL_MAX);
 
   const [color, setColor] = useState(COLOR);
-  const [groupColor, setGroupColor] = useState(Colors.yellow30);
+  const [groupColor, setGroupColor] = useState(GROUP_COLOR);
   const [alpha, setAlpha] = useState(1);
 
   const slider = useRef<Incubator.SliderRef>(null);
@@ -53,8 +54,11 @@ const IncubatorSliderScreen = () => {
     setSliderMinValue(value.min);
   }, []);
 
-  const onGradientValueChange = useCallback((value: string, alpha: number) => {
+  const onGradientValueChange = useCallback((value: string, _: number) => {
     setColor(value);
+  }, []);
+
+  const onGradientAlphaValueChange = useCallback((_: string, alpha: number) => {
     setAlpha(alpha);
   }, []);
 
@@ -201,7 +205,7 @@ const IncubatorSliderScreen = () => {
           <GradientSlider
             color={color}
             containerStyle={styles.gradientSliderContainer}
-            onValueChange={onGradientValueChange}
+            onValueChange={onGradientAlphaValueChange}
             // @ts-expect-error
             ref={this.gradientSlider}
             migrate
@@ -216,7 +220,7 @@ const IncubatorSliderScreen = () => {
           </Text>
           <GradientSlider
             type={GradientSlider.types.HUE}
-            color={COLOR}
+            color={color}
             containerStyle={styles.gradientSliderContainer}
             onValueChange={onGradientValueChange}
             migrate
@@ -236,7 +240,7 @@ const IncubatorSliderScreen = () => {
           Color Slider Group
         </Text>
         <ColorSliderGroup
-          initialColor={groupColor}
+          initialColor={GROUP_COLOR}
           sliderContainerStyle={styles.slider}
           containerStyle={[styles.group, {borderWidth: 12, borderColor: groupColor}]}
           showLabels
@@ -283,6 +287,7 @@ const styles = StyleSheet.create({
   customThumb: {
     width: 14,
     height: 14,
+    borderWidth: 0.5,
     borderRadius: 7,
     backgroundColor: Colors.black,
     borderColor: Colors.black

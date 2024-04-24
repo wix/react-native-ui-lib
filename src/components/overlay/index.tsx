@@ -1,6 +1,6 @@
 import {isUndefined} from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Image, ImageSourcePropType} from 'react-native';
+import {StyleSheet, Image, ImageProps, ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
 import View from '../view';
 
@@ -23,7 +23,7 @@ export enum OverlayIntensityType {
 
 export type OverlayTypeType = typeof OVERLY_TYPES[keyof typeof OVERLY_TYPES];
 
-export type OverlayTypes = {
+export type OverlayTypes = Pick<ImageProps, 'borderRadius'> & {
   /**
    * The type of overlay to set on top of the image
    */
@@ -39,7 +39,7 @@ export type OverlayTypes = {
   /**
    * Custom overlay content to be rendered on top of the image
    */
-  customContent?: JSX.Element;
+  customContent?: React.ReactElement | React.ReactElement[];
 };
 
 /**
@@ -88,7 +88,8 @@ class Overlay extends PureComponent<OverlayTypes> {
   };
 
   renderImage = (style: any, source: ImageSourcePropType) => {
-    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
+    const {borderRadius} = this.props;
+    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source} borderRadius={borderRadius}/>;
   };
 
   getImageSource = (type?: OverlayTypeType, intensity?: OverlayTypes['intensity']) => {

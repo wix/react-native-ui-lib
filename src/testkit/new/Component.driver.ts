@@ -1,18 +1,17 @@
 import {ReactTestInstance} from 'react-test-renderer';
-import {RenderResult} from '@testing-library/react-native';
+import {within} from '@testing-library/react-native';
 
 export interface ComponentProps {
-  renderTree: RenderResult;
+  renderTree: ReturnType<typeof within>; // Note: This changed was asked for integration with amino. This still gives all querying functionality.
   testID: string;
 }
 
-export interface ComponentDriverResult<Props> {
+export interface ComponentDriverResult {
   getElement: () => ReactTestInstance;
   exists: () => boolean;
-  getProps: () => Props;
 }
 
-export const useComponentDriver = <Props>(props: ComponentProps): ComponentDriverResult<Props> => {
+export const useComponentDriver = (props: ComponentProps): ComponentDriverResult => {
   const {renderTree, testID} = props;
 
   const getElement = (): ReactTestInstance => {
@@ -38,13 +37,9 @@ export const useComponentDriver = <Props>(props: ComponentProps): ComponentDrive
     }
   };
 
-  const getProps = (): Props => {
-    return getElement().props as Props;
-  };
-
-  return {getElement, exists, getProps};
+  return {getElement, exists};
 };
 
-export const ComponentDriver = <Props>(props: ComponentProps): ComponentDriverResult<Props> => {
+export const ComponentDriver = (props: ComponentProps): ComponentDriverResult => {
   return useComponentDriver(props);
 };

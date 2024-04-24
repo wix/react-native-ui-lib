@@ -13,17 +13,19 @@ function GridList<T = any>(props: GridListProps<T>) {
     listPadding = 0,
     keepItemSize,
     containerWidth,
+    style,
     contentContainerStyle,
     ...others
   } = props;
 
-  const {itemContainerStyle, numberOfColumns, listContentStyle} = useGridLayout({
+  const {itemContainerStyle, numberOfColumns, listStyle} = useGridLayout({
     numColumns,
     itemSpacing,
     maxItemWidth,
     listPadding,
     keepItemSize,
     containerWidth,
+    style,
     contentContainerStyle
   });
 
@@ -37,7 +39,10 @@ function GridList<T = any>(props: GridListProps<T>) {
     <FlatList
       key={numberOfColumns}
       {...others}
-      contentContainerStyle={listContentStyle}
+      /* NOTE: Using style instead of contentContainerStyle because of RN issue with a flatlist nested in another flatlist 
+      losing their contentContainerStyle */
+      style={listStyle}
+      // contentContainerStyle={listContentStyle}
       renderItem={_renderItem}
       numColumns={numberOfColumns}
     />

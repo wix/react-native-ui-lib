@@ -1,8 +1,7 @@
-import {ButtonProps} from './ButtonTypes';
 import {useComponentDriver, ComponentProps, usePressableDriver, TextDriver, ImageDriver} from '../../testkit';
 
 export const ButtonDriver = (props: ComponentProps) => {
-  const driver = usePressableDriver<ButtonProps>(useComponentDriver(props));
+  const driver = usePressableDriver(useComponentDriver(props));
 
   const labelDriver = TextDriver({
     renderTree: props.renderTree,

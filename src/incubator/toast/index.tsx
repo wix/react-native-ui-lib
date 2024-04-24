@@ -7,7 +7,6 @@ import {
   ViewStyle,
   LayoutChangeEvent
 } from 'react-native';
-import _ from 'lodash';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
 import {Colors, BorderRadiuses, Spacings, Typography, Shadows} from 'style';
@@ -184,10 +183,6 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   };
 
   const renderToastContent = () => {
-    if (!_.isUndefined(children)) {
-      return children;
-    }
-
     return (
       <PanView
         directions={swipeable ? directions.current : []}
@@ -197,11 +192,13 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
         onDismiss={handleDismiss}
         threshold={THRESHOLD}
       >
-        <View style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}>
-          {renderIcon()}
-          {renderMessage()}
-          {renderRightElement()}
-        </View>
+        {children ?? (
+          <View style={[styles.toastContent, style, backgroundColor ? {backgroundColor} : undefined]}>
+            {renderIcon()}
+            {renderMessage()}
+            {renderRightElement()}
+          </View>
+        )}
       </PanView>
     );
   };

@@ -1,12 +1,19 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import memoize from 'memoize-one';
 import * as Modifiers from '../../commons/modifiers';
 import {Colors, Spacings, Typography} from 'style';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text from '../text';
 import Image, {ImageProps} from '../image';
+
+export enum HorizontalAlignment {
+  left = 'left',
+  center = 'center',
+  right = 'right'
+}
 
 export interface GridListItemProps {
   /**
@@ -86,6 +93,10 @@ export interface GridListItemProps {
    */
   alignToStart?: boolean;
   /**
+   * Content horizontal alignment (default is center)
+   */
+  horizontalAlignment?: HorizontalAlignment | `${HorizontalAlignment}`;
+  /**
    * Custom container style
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -101,7 +112,7 @@ export interface GridListItemProps {
    * Test ID for component
    */
   testID?: string;
-  children?: React.ReactNode;
+  children?: React.ReactElement | React.ReactElement[];
 }
 
 interface RenderContentType {
@@ -119,6 +130,8 @@ interface RenderContentType {
  */
 class GridListItem extends Component<GridListItemProps> {
   static displayName = 'GridListItem';
+
+  static horizontalAlignment = HorizontalAlignment;
 
   static defaultProps = {
     itemSize: 48
@@ -139,14 +152,34 @@ class GridListItem extends Component<GridListItemProps> {
     return {width: itemSize as number, height: itemSize as number};
   }
 
+  getContainerHorizontalAlignment = memoize(horizontalAlignment => {
+    switch (horizontalAlignment) {
+      case HorizontalAlignment.left:
+        return 'flex-start';
+      case HorizontalAlignment.right:
+        return 'flex-end';
+      case HorizontalAlignment.center:
+        return 'center';
+      default:
+        undefined;
+    }
+  });
+
   renderContent({text, typography, color, numberOfLines = 1, style, testID}: RenderContentType) {
-    const {alignToStart} = this.props;
+    const {alignToStart, horizontalAlignment} = this.props;
+    const textAlign = alignToStart ? 'left' : horizontalAlignment;
     if (text) {
       return (
         <Text
           testID={testID}
           // @ts-ignore
-          style={[style, Typography[typography], color && {color}, alignToStart && styles.contentAlignedToStart]}
+          style={[
+            style,
+            //@ts-ignore
+            Typography[typography],
+            color && {color},
+            {textAlign}
+          ]}
           numberOfLines={numberOfLines}
         >
           {text}
@@ -160,6 +193,7 @@ class GridListItem extends Component<GridListItemProps> {
       testID,
       imageProps,
       alignToStart,
+      horizontalAlignment,
       containerStyle,
       containerProps = {},
       renderCustomItem,
@@ -181,32 +215,27 @@ class GridListItem extends Component<GridListItemProps> {
       onPress,
       renderOverlay
     } = this.props;
-    const hasPress = _.isFunction(onPress);
-    const hasOverlay = _.isFunction(renderOverlay);
-    const Container = hasPress ? TouchableOpacity : View;
-    const imageStyle = {...this.getItemSizeObj()};
-    const width = _.get(imageStyle, 'width');
+    const Container = onPress ? TouchableOpacity : View;
     const TextContainer = overlayText ? View : React.Fragment;
-    const textContainerStyle = overlayText ? {style: [styles.overlayText, overlayTextContainerStyle]} : null;
-    const imageBorderRadius = imageProps?.borderRadius;
+    const itemSize = this.getItemSizeObj();
+    const {width} = itemSize;
+    const alignItems = alignToStart ? 'flex-start' : this.getContainerHorizontalAlignment(horizontalAlignment);
+    const textContainerStyle = overlayText && {
+      style: [styles.overlayText, overlayTextContainerStyle]
+    };
     const {hitSlop, ...otherContainerProps} = containerProps; // eslint-disable-line
 
     return (
       <Container
-        style={[styles.container, alignToStart && styles.containerAlignedToStart, {width}, containerStyle]}
+        style={[styles.container, {alignItems}, {width}, containerStyle]}
         {...otherContainerProps}
-        onPress={hasPress ? this.onItemPress : undefined}
+        onPress={onPress && this.onItemPress}
         accessible={renderCustomItem ? true : undefined}
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
-        {imageProps && (
-          <View style={[{borderRadius: imageBorderRadius}, imageStyle]}>
-            <Image {...imageProps} style={[imageStyle, imageProps?.style]}/>
-            {children}
-          </View>
-        )}
+        {imageProps && <Image style={itemSize} {...imageProps} customOverlayContent={children}/>}
         {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
-        {hasOverlay && <View style={[styles.overlay, this.getItemSizeObj()]}>{renderOverlay?.()}</View>}
+        {renderOverlay && <View style={[styles.overlay, itemSize]}>{renderOverlay()}</View>}
         <TextContainer {...textContainerStyle}>
           {this.renderContent({
             testID: `${testID}.title`,
@@ -243,9 +272,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     alignItems: 'center'
   },
-  containerAlignedToStart: {
-    alignItems: 'flex-start'
-  },
   title: {
     marginTop: Spacings.s1,
     textAlign: 'center',
@@ -259,9 +285,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     ...Typography.subtext
   },
-  contentAlignedToStart: {
-    textAlign: 'left'
-  },
   overlay: {
     position: 'absolute',
     left: 0,
@@ -269,14 +292,14 @@ const styles = StyleSheet.create({
   },
   overlayText: {
     position: 'absolute',
-    bottom: 10,
-    left: 10
+    bottom: 0,
+    padding: Spacings.s3
   }
 });
 
 export default GridListItem;
 
 interface ImageSize {
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
 }
