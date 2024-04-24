@@ -163,7 +163,6 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   updateOffset = (animated = false) => {
     const {x, y} = presenter.calcOffset(this.props, this.state);
-
     if (this.carousel?.current) {
       this.carousel.current.scrollTo({x, y, animated});
 
@@ -520,7 +519,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           pagingEnabled={this.shouldEnablePagination()}
           snapToOffsets={snapToOffsets}
           contentOffset={contentOffset}
-          // onContentSizeChange={this.onContentSizeChange}
+          onContentSizeChange={this.onContentSizeChange}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
           style={_style}
         >
