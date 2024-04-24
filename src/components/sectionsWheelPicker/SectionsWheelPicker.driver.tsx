@@ -1,10 +1,9 @@
 import _ from 'lodash';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {WheelPickerDriver} from '../WheelPicker/WheelPicker.driver';
-import {WheelPickerItemValue} from '../WheelPicker';
 import {SectionsWheelPickerProps} from './index';
 
-export const SectionsWheelPickerDriver = <T extends WheelPickerItemValue>(props: ComponentProps) => {
+export const SectionsWheelPickerDriver = (props: ComponentProps) => {
   const driver = useComponentDriver(props);
   const sections = driver.getElement().children as SectionsWheelPickerProps['sections'];
   const sectionsDrivers = _.map(sections, (section, index) => {
