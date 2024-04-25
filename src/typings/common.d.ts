@@ -20,7 +20,7 @@ export type First<T extends any[]> = T extends [infer First, ...any] ? First : n
 export type Rest<T extends any[]> = T extends [any, ...infer Rest] ? Rest : never;
 
 export type RecRecord<TPath extends string[], K extends object = {}> = TPath extends [infer C]
-  ? C extends string | number | symbol
+  ? C extends string
     ? {[P in C]: K}
     : never
   : {[P in First<TPath>] : RecRecord<Rest<TPath>, K>};
