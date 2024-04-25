@@ -1,6 +1,8 @@
 import {Assets} from './Assets';
 
-export default new Assets().loadAssetsGroup('', {
+
+const assets: Assets = new Assets();
+assets.loadAssetsGroup('', {
   get icons() {
     return require('./icons').icons;
   },
@@ -11,3 +13,5 @@ export default new Assets().loadAssetsGroup('', {
     return require('./images').images;
   }
 });
+
+export default assets;
