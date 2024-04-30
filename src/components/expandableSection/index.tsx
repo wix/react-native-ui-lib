@@ -29,7 +29,7 @@ export type ExpandableSectionProps = {
   /**
    * Set a minimum height for the expandableSection
    * If the children height is less than the minHeight, the expandableSection will collapse to that height
-   * If the children height is greater than the minHeight, the expandableSection will result with only the children rendered
+   * If the children height is greater than the minHeight, the expandableSection will result with only the children rendered (sectionHeader will not be rendered)
    */
   minHeight?: number;
   /**
