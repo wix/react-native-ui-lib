@@ -6,14 +6,14 @@ import type {images} from './images';
 
 const assets: Assets = new Assets();
 assets.loadAssetsGroup('', {
-  get icons() {
-    return require('./icons').icons as typeof icons;
+  get icons(): typeof icons {
+    return require('./icons').icons;
   },
-  get emojis() {
-    return require('./emojis').emojis as typeof emojis;
+  get emojis(): typeof emojis {
+    return require('./emojis').emojis;
   },
-  get images() {
-    return require('./images').images as typeof images;
+  get images(): typeof images {
+    return require('./images').images;
   }
 });
 
