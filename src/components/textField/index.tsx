@@ -120,8 +120,9 @@ const TextField = (props: InternalTextFieldProps) => {
     return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
   }, [validationMessageStyle, centered]);
   const hasValue = fieldState.value !== undefined;
+  const hasCenteredValue = fieldState.value ? (centered && styles.centeredInput) : undefined
   const inputStyle = useMemo(() => {
-    return [typographyStyle, colorStyle, others.style, hasValue && centered && styles.centeredInput];
+    return [typographyStyle, colorStyle, others.style, hasCenteredValue];
   }, [typographyStyle, colorStyle, others.style, centered, hasValue]);
   const dummyPlaceholderStyle = useMemo(() => {
     return [inputStyle, styles.dummyPlaceholder];
