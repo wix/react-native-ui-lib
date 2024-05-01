@@ -62,7 +62,7 @@ const Input = ({
   return (
     <TextInput
       fsTagName={recorderTag}
-      style={[styles.input, !!inputColor && {color: inputColor}, style, Constants.isWeb && styles.webStyle]}
+      style={[styles.input, !!inputColor && {color: inputColor}, style, Constants.isWeb ? styles.webStyle : undefined]}
       {...props}
       editable={!disabled}
       value={value}
