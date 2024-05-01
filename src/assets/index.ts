@@ -16,5 +16,5 @@ assets.loadAssetsGroup('', {
     return require('./images').images;
   }
 });
-
-export default assets as typeof assets;
+const ExportedAssets: typeof assets = assets;
+export default ExportedAssets;
