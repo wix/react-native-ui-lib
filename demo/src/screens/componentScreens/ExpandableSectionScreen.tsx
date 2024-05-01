@@ -70,7 +70,7 @@ class ExpandableSectionScreen extends PureComponent {
 
   renderOptions = () => {
     return (
-      <View margin-page>
+      <View marginH-page>
         <Text text70BO marginB-8>
           Minimum Height
         </Text>
@@ -124,6 +124,9 @@ class ExpandableSectionScreen extends PureComponent {
     const {minHeight} = this.state;
     return (
       <ScrollView>
+        <Text text40 margin-20>
+          ExpandableSection
+        </Text>
         {this.renderOptions()}
         {this.renderExpandableSection()}
         {minHeight !== PARTIALLY_EXPANDED_HEIGHT ? this.renderNextItem() : null}
