@@ -1,6 +1,7 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {LayoutChangeEvent, StyleSheet} from 'react-native';
 import {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import {useDidUpdate} from '../../hooks';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 
@@ -26,6 +27,12 @@ export type ExpandableSectionProps = {
    */
   onPress?: () => void;
   /**
+   * Set a minimum height for the expandableSection
+   * If the children height is less than the minHeight, the expandableSection will collapse to that height
+   * If the children height is greater than the minHeight, the expandableSection will result with only the children rendered (sectionHeader will not be rendered)
+   */
+  minHeight?: number;
+  /**
    * Testing identifier
    */
   testID?: string;
@@ -38,25 +45,39 @@ export type ExpandableSectionProps = {
  */
 
 function ExpandableSection(props: ExpandableSectionProps) {
-  const {expanded, sectionHeader, onPress, children, top, testID} = props;
+  const {minHeight, expanded, sectionHeader, onPress, children, top, testID} = props;
   const [height, setHeight] = useState(0);
   const animatedHeight = useSharedValue(0);
+  const shouldShowSectionHeader = !minHeight || height > minHeight;
 
   const onLayout = (event: LayoutChangeEvent) => {
-    const onLayoutHeight = event.nativeEvent.layout.height;
+    const layoutHeight = event.nativeEvent.layout.height;
 
-    if (onLayoutHeight > 0 && height !== onLayoutHeight) {
-      setHeight(onLayoutHeight);
+    if (layoutHeight > 0 && height !== layoutHeight) {
+      setHeight(layoutHeight);
     }
   };
 
-  const expandableStyle = useAnimatedStyle(() => {
-    animatedHeight.value = expanded ? withTiming(height) : withTiming(0);
+  const animateHeight = useCallback((shouldAnimate = true) => {
+    const collapsedHeight = Math.min(minHeight ?? 0, height);
+    const toValue = expanded ? height : collapsedHeight;
+    animatedHeight.value = shouldAnimate ? withTiming(toValue) : toValue;
+  },
+  [animatedHeight, expanded, height, minHeight]);
 
+  useDidUpdate(() => {
+    animateHeight(false);
+  }, [height, minHeight]);
+
+  useDidUpdate(() => {
+    animateHeight();
+  }, [expanded]);
+
+  const expandableStyle = useAnimatedStyle(() => {
     return {
       height: animatedHeight.value
     };
-  }, [expanded, height]);
+  }, []);
 
   const style = useMemo(() => [styles.hidden, expandableStyle], [expandableStyle]);
 
@@ -74,15 +95,19 @@ function ExpandableSection(props: ExpandableSectionProps) {
     );
   };
 
-  return (
-    <View style={styles.hidden}>
-      {top && renderChildren()}
-      <TouchableOpacity onPress={onPress} testID={testID} accessibilityState={accessibilityState}>
-        {sectionHeader}
-      </TouchableOpacity>
-      {!top && renderChildren()}
-    </View>
-  );
+  if (shouldShowSectionHeader) {
+    return (
+      <View style={styles.hidden}>
+        {top && renderChildren()}
+        <TouchableOpacity onPress={onPress} testID={testID} accessibilityState={accessibilityState}>
+          {sectionHeader}
+        </TouchableOpacity>
+        {!top && renderChildren()}
+      </View>
+    );
+  } else {
+    return renderChildren();
+  }
 }
 
 export default ExpandableSection;
