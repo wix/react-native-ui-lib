@@ -1,9 +1,16 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, StyleProp, ViewStyle} from 'react-native';
-import {Colors, BorderRadiuses} from '../../style';
+import {Colors, BorderRadiuses, Shadows} from '../../style';
 // import {PureBaseComponent} from '../../commons';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+  MarginModifiers
+} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Icon from '../icon';
@@ -38,7 +45,8 @@ export interface CardSelectionOptions {
 
 export {CardSectionProps};
 export type CardProps = ViewProps &
-  TouchableOpacityProps & MarginModifiers & {
+  TouchableOpacityProps &
+  MarginModifiers & {
     /**
      * card custom width
      */
@@ -308,10 +316,7 @@ function createStyles({width, height, borderRadius, selectionOptions}: CardProps
     },
     containerShadow: {
       // sh30 bottom
-      shadowColor: Colors.$backgroundNeutralIdle,
-      shadowOpacity: 0.25,
-      shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0}
+      ...Shadows.sh20.bottom
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,

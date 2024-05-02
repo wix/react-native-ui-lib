@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useCallback, useEffect} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import {Colors} from '../../style';
+import {Colors, Shadows} from '../../style';
 import View, {ViewProps} from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Button, {ButtonSize, ButtonProps} from '../button';
@@ -327,10 +327,7 @@ const styles = StyleSheet.create({
   },
   containerShadow: {
     backgroundColor: Colors.white,
-    shadowColor: Colors.grey40,
-    shadowOpacity: 0.25,
-    shadowRadius: 12,
-    shadowOffset: {height: 5, width: 0}
+    ...Shadows.sh20.bottom
   },
   card: {
     overflow: 'hidden',

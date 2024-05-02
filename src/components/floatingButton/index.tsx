@@ -1,7 +1,7 @@
 import React, {PropsWithChildren, PureComponent} from 'react';
 import {StyleSheet, Animated} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
-import {Colors, Spacings} from '../../style';
+import {Colors, Spacings, Shadows} from '../../style';
 import View from '../view';
 import Image from '../image';
 import Button, {ButtonProps} from '../button';
@@ -222,11 +222,7 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   shadow: {
-    shadowColor: Colors.$backgroundNeutralIdle,
-    shadowOffset: {height: 5, width: 0},
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
-    elevation: 2
+    ...Shadows.sh20.bottom
   },
   secondaryMargin: {
     marginTop: Spacings.s4,

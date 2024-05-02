@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {StyleSheet, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {SharedValue, useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
-import {Colors} from '../../style';
+import {Shadows} from '../../style';
 import View from '../../components/view';
 import {Constants} from '../../commons/new';
 
@@ -26,7 +26,6 @@ interface ThumbProps extends ViewProps {
   enableShadow?: boolean;
 }
 
-const SHADOW_RADIUS = 4;
 const THUMB_SIZE = 24;
 
 const Thumb = (props: ThumbProps) => {
@@ -70,9 +69,11 @@ const Thumb = (props: ThumbProps) => {
         // adjust end edge
         newX = end.value;
       }
-      if (!secondary && newX <= gap || 
-        secondary && newX >= end.value - gap || 
-        newX < end.value - gap && newX > start.value + gap) {
+      if (
+        (!secondary && newX <= gap) ||
+        (secondary && newX >= end.value - gap) ||
+        (newX < end.value - gap && newX > start.value + gap)
+      ) {
         offset.value = newX;
       }
     })
@@ -124,11 +125,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   thumbShadow: {
-    shadowColor: Colors.rgba(Colors.black, 0.3),
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 0.9,
-    shadowRadius: SHADOW_RADIUS,
-    elevation: 2
+    ...Shadows.sh10.bottom
   }
 });
 

@@ -12,7 +12,7 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import View from '../view';
-import {Colors, Spacings, Typography} from '../../style';
+import {Colors, Spacings, Typography, Shadows} from '../../style';
 import FadedScrollView, {FadedScrollViewRef} from '../fadedScrollView';
 import {FaderProps} from '../fader';
 import useScrollToItem from './useScrollToItem';
@@ -351,13 +351,10 @@ const styles = StyleSheet.create({
   containerShadow: {
     ...Platform.select({
       ios: {
-        shadowColor: Colors.black,
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
-        shadowOffset: {height: 6, width: 0}
+        ...Shadows.sh10.bottom
       },
       android: {
-        elevation: 5,
+        ...Shadows.sh10.bottom,
         backgroundColor: Colors.$backgroundElevated
       }
     })

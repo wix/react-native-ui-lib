@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
-import {Colors, Typography, BorderRadiuses} from 'style';
+import {Colors, Typography, BorderRadiuses, Shadows} from 'style';
 import TouchableOpacity from '../touchableOpacity';
 import type {Dictionary, ComponentStatics} from '../../typings/common';
 import Text from '../text';
@@ -409,10 +409,7 @@ function createStyles() {
       backgroundColor: undefined
     },
     shadowStyle: {
-      shadowOffset: {height: 5, width: 0},
-      shadowOpacity: 0.35,
-      shadowRadius: 9.5,
-      elevation: 2
+      ...Shadows.sh20.bottom
     },
     text: {
       backgroundColor: 'transparent',
