@@ -22,5 +22,4 @@ Assets.loadAssetsGroup('images.demo', {
 Assets.loadAssetsGroup('svgs.demo', {
   logo: require('./svgs/headerLogo.svg').default
 });
-console.log(`Nitzan - finished loading assets`);
 export default Assets as typeof Assets;
