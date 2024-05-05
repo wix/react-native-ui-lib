@@ -76,7 +76,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     };
   }, [data]);
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{flex: 1}}>
       <SortableListContext.Provider value={context}>
         <FlatList
           {...others}
