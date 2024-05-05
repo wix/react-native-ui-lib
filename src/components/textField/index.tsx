@@ -23,6 +23,7 @@ import {
   ValidationMessagePositionType,
   MandatoryIndication
 } from './types';
+import TextFieldValidators from './validators';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
 import ValidationMessage from './ValidationMessage';
@@ -234,7 +235,8 @@ export {
   ValidationMessagePosition as TextFieldValidationMessagePosition,
   Validator as TextFieldValidator,
   ValidationMessagePositionType as TextFieldValidationMessagePositionType,
-  MandatoryIndication as TextFieldMandatoryIndication
+  MandatoryIndication as TextFieldMandatoryIndication,
+  TextFieldValidators
 };
 export default asBaseComponent<TextFieldProps, StaticMembers, TextFieldRef>(forwardRef(TextField as any), {
   modifiersOptions: {

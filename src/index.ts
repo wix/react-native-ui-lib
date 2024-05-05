@@ -171,7 +171,8 @@ export {
   TextFieldValidationMessagePositionType,
   TextFieldMandatoryIndication,
   TextFieldValidator,
-  FieldContextType
+  FieldContextType,
+  TextFieldValidators
 } from './components/textField';
 // @ts-expect-error
 export {default as Toast} from './components/toast';
