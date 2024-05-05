@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {Assets, Colors, Spacings, View, Text, Button, Keyboard, TextField, TextFieldRef} from 'react-native-ui-lib';
+import {Colors, Spacings, View, Text, Button, Keyboard, TextField, TextFieldRef} from 'react-native-ui-lib';
 const {KeyboardAwareInsetsView} = Keyboard;
-
+import Assets from '../../assets/Assets';
 const priceFormatter = Intl.NumberFormat('en-US');
 
 export default class TextFieldScreen extends Component {
