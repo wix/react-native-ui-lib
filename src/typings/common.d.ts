@@ -11,18 +11,13 @@ export type Dictionary<TYPE> = {[key: string]: TYPE};
 
 export type ComponentStatics<T> = Pick<T, keyof T>;
 
-export type PathArray<S> = S extends `${infer A}.${infer B}`
-  ? B extends `${infer C}.${infer D}`
-    ? [A, C, ...PathArray<D>]
-    : [A, B]
-  : [S];
-export type First<T extends any[]> = T extends [infer First, ...any] ? First : never;
-export type Rest<T extends any[]> = T extends [any, ...infer Rest] ? Rest : never;
+type DotExtendedString<T extends string> = `${T}.`;
+export type PathArray<S extends string> = DotExtendedString<S> extends `${infer A}.${infer B}` ?
+  A extends '' ? [] : [A, ...PathArray<B>]
+  : [];
 
-export type RecRecord<TPath extends string[], K extends object = {}> = TPath extends [infer C]
-  ? C extends string
-    ? {[P in C]: K}
-    : never
-  : {[P in First<TPath>] : RecRecord<Rest<TPath>, K>};
+export type RecRecord<Path extends string[], K = {}> = Path extends [infer Next, ...infer Rest] ?
+  {[P in Next] : RecRecord<Rest, K>}
+  : K;
 
-export type PathRecord<T extends string, K extends object> = T extends '' ? K : RecRecord<PathArray<T>, K>;
+export type PathRecord<T extends string, K = {}> = RecRecord<PathArray<T>, K>;
