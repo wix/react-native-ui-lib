@@ -172,7 +172,7 @@ export {
   TextFieldMandatoryIndication,
   TextFieldValidator,
   FieldContextType,
-  TextFieldValidators
+  textFieldValidators
 } from './components/textField';
 // @ts-expect-error
 export {default as Toast} from './components/toast';
