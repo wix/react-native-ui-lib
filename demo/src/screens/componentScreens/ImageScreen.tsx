@@ -69,7 +69,8 @@ class ImageScreen extends Component<{}, State> {
     showErrorImage: false,
     showSvg: false,
     svgType: SvgType.File,
-    sizeType: SizeType.None
+    sizeType: SizeType.None,
+    borderRadius: 0
   };
 
   getSvgSource() {
@@ -112,7 +113,7 @@ class ImageScreen extends Component<{}, State> {
   }
 
   renderImage() {
-    const {cover, overlayType, overlayIntensity, margin, showErrorImage} = this.state;
+    const {cover, overlayType, overlayIntensity, margin, showErrorImage, borderRadius} = this.state;
     return (
       <Image
         key={`${overlayType}-${overlayIntensity}`}
@@ -126,6 +127,7 @@ class ImageScreen extends Component<{}, State> {
         height={!cover ? DEFAULT_SIZE : undefined}
         customOverlayContent={this.renderOverlayContent()}
         {...{[`margin-${margin}`]: true}}
+        borderRadius={borderRadius}
       />
     );
   }
@@ -156,6 +158,7 @@ class ImageScreen extends Component<{}, State> {
           {renderRadioGroup.call(this, 'Overlay Intensity', 'overlayIntensity', Image.overlayIntensityType)}
         </View>
         {renderSliderOption.call(this, 'Margin(margin-XX)', 'margin', {step: 4, min: 0, max: 40})}
+        {renderSliderOption.call(this, 'Border Radius', 'borderRadius', {step: 5, min: 0, max: 100})}
       </>
     );
   }
