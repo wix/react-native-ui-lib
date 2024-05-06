@@ -3,7 +3,7 @@ import {within} from '@testing-library/react-native';
 
 export interface ComponentProps {
   renderTree: ReturnType<typeof within>; // Note: This changed was asked for integration with amino. This still gives all querying functionality.
-  testID: string;
+  testID: string | RegExp;
 }
 
 export interface ComponentDriverResult {
