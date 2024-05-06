@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {Assets, View, Text, Icon, Colors, Image, Button, Carousel, Picker, PickerValue} from 'react-native-ui-lib';
+import {View, Text, Icon, Colors, Image, Button, Carousel, Picker, PickerValue} from 'react-native-ui-lib';
 import _ from 'lodash';
+import Assets from '../../../assets/Assets';
 
 const colorOptions: {[key: string]: {name: string; color: string}} = {
   red: {name: 'Red', color: Colors.red30},

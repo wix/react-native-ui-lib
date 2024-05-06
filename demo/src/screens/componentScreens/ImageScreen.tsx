@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Icon, Image, Colors, Assets, OverlayTypes} from 'react-native-ui-lib';
+import {View, Text, Icon, Image, Colors, OverlayTypes} from 'react-native-ui-lib';
 import {renderBooleanOption, renderRadioGroup, renderSliderOption} from '../ExampleScreenPresenter';
+import Assets from '../../assets/Assets';
 
 const IMAGE_URL =
   'https://images.pexels.com/photos/748837/pexels-photo-748837.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';

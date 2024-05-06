@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Assets, Colors, Spacings, View, Card, Text, Image, Button, Constants} from 'react-native-ui-lib';
+import {Colors, Spacings, View, Card, Text, Image, Button, Constants} from 'react-native-ui-lib';
 import _ from 'lodash';
+import Assets from '../../../assets/Assets';
 
 import './configurations';
 
