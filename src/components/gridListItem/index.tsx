@@ -227,7 +227,6 @@ class GridListItem extends Component<GridListItemProps> {
           {this.renderContent(subtitle, {
             testID: `${testID}.subtitle`,
             [subtitleTypography]: true,
-            // typography: subtitleTypography,
             color: subtitleColor,
             numberOfLines: subtitleLines,
             style: styles.subtitle
@@ -235,7 +234,6 @@ class GridListItem extends Component<GridListItemProps> {
           {this.renderContent(description, {
             testID: `${testID}.description`,
             [descriptionTypography]: true,
-            // typography: descriptionTypography,
             color: descriptionColor,
             numberOfLines: descriptionLines,
             style: styles.description
