@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -92,7 +92,8 @@ const Segment = React.memo((props: SegmentProps) => {
   }, [style]);
 
   const renderIcon = useCallback(() => {
-    return iconSource && <Reanimated.Image source={iconSource} style={[animatedIconStyle, iconStyle]}/>;
+    const iconTintColor = StyleSheet.flatten(iconStyle)?.tintColor;
+    return iconSource && <Reanimated.Image source={iconSource} style={[!iconTintColor && animatedIconStyle, iconStyle]}/>;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iconSource, iconStyle]);
 

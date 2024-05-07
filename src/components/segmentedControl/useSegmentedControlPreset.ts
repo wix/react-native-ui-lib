@@ -1,30 +1,40 @@
-import {type SegmentedControlProps, BORDER_WIDTH} from './';
+import {type SegmentedControlProps} from './';
 import {BorderRadiuses, Colors} from '../../style/';
 import {SegmentProps} from './segment';
 
-const useSegmentedControlPreset = (props: SegmentedControlProps): SegmentedControlProps & Partial<SegmentProps> => {
-  const {preset = 'default'} = props;
-  return {
+type useSegmentedControlPresetProps = SegmentedControlProps & Partial<SegmentProps>;
+
+const useSegmentedControlPreset = (props: SegmentedControlProps): useSegmentedControlPresetProps => {
+  const {preset = 'default', activeColor, outlineColor} = props;
+  const presetProps = {
     ...defaultsPresetsProps[preset],
     ...props
   };
+  if (activeColor && !outlineColor && preset === 'default') {
+    presetProps.outlineColor = activeColor;
+  }
+
+  return presetProps;
 };
 
-const activeColor = Colors.$textPrimary;
+const defaultActiveColor = Colors.$textPrimary;
+const formTextColor = Colors.$textDefault;
 const defaultsPresetsProps: Record<
   NonNullable<SegmentedControlProps['preset']>,
-  Partial<SegmentedControlProps> & Partial<SegmentProps>
+  useSegmentedControlPresetProps
 > = {
   default: {
-    activeColor,
+    activeColor: defaultActiveColor,
     borderRadius: BorderRadiuses.br100,
     backgroundColor: Colors.$backgroundNeutralLight,
     activeBackgroundColor: Colors.$backgroundDefault,
     inactiveColor: Colors.$textNeutralHeavy,
-    outlineColor: activeColor,
-    outlineWidth: BORDER_WIDTH
+    outlineColor: defaultActiveColor,
+    outlineWidth: 1
   },
   form: {
+    activeColor: formTextColor,
+    inactiveColor: formTextColor,
     backgroundColor: Colors.$backgroundDefault,
     activeBackgroundColor: Colors.$backgroundElevated,
     outlineColor: Colors.$outlinePrimary,
@@ -34,12 +44,3 @@ const defaultsPresetsProps: Record<
   }
 };
 export default useSegmentedControlPreset;
-/**
- * activeColor = Colors.$textPrimary,
-    borderRadius = BorderRadiuses.br100,
-    backgroundColor = Colors.$backgroundNeutralLight,
-    activeBackgroundColor = Colors.$backgroundDefault,
-    inactiveColor = Colors.$textNeutralHeavy,
-    outlineColor = activeColor,
-    outlineWidth = BORDER_WIDTH,
- */

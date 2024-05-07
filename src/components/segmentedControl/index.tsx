@@ -16,7 +16,6 @@ import Segment, {SegmentedControlItemProps} from './segment';
 import useSegmentedControlPreset from './useSegmentedControlPreset';
 
 export const BORDER_WIDTH = 1;
-const FORM_SEGMENT_HEIGHT = 40;
 const TIMING_CONFIG = {
   duration: 300,
   easing: Easing.bezier(0.33, 1, 0.68, 1)
@@ -103,13 +102,13 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     containerStyle,
     style,
     segments,
-    activeColor = Colors.$textPrimary,
-    borderRadius = BorderRadiuses.br100,
-    backgroundColor = Colors.$backgroundNeutralLight,
-    activeBackgroundColor = Colors.$backgroundDefault,
-    inactiveColor = Colors.$textNeutralHeavy,
-    outlineColor = activeColor,
-    outlineWidth = BORDER_WIDTH,
+    activeColor,
+    borderRadius,
+    backgroundColor,
+    activeBackgroundColor,
+    inactiveColor,
+    outlineColor,
+    outlineWidth,
     throttleTime = 0,
     segmentsStyle: segmentsStyleProp,
     segmentLabelStyle,
@@ -194,7 +193,6 @@ const SegmentedControl = (props: SegmentedControlProps) => {
         />
       );
     });
-
   return (
     <View style={containerStyle} testID={testID}>
       <View row center style={[styles.container, style, {borderRadius, backgroundColor}]}>
