@@ -9,13 +9,13 @@ import Reanimated, {
   withTiming,
   runOnJS
 } from 'react-native-reanimated';
-import {Colors, BorderRadiuses, Spacings} from '../../style';
+import {Colors} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps} from './segment';
 import useSegmentedControlPreset from './useSegmentedControlPreset';
 
-export const BORDER_WIDTH = 1;
+const BORDER_WIDTH = 1;
 const TIMING_CONFIG = {
   duration: 300,
   easing: Easing.bezier(0.33, 1, 0.68, 1)
