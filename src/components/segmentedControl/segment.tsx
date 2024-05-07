@@ -130,5 +130,5 @@ const Segment = React.memo((props: SegmentProps) => {
     </TouchableOpacity>
   );
 });
-
+Segment.displayName = 'Segment';
 export default asBaseComponent<SegmentProps>(Segment);

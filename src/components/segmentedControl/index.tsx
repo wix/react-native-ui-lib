@@ -13,8 +13,10 @@ import {Colors, BorderRadiuses, Spacings} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps} from './segment';
+import useSegmentedControlPreset from './useSegmentedControlPreset';
 
-const BORDER_WIDTH = 1;
+export const BORDER_WIDTH = 1;
+const FORM_SEGMENT_HEIGHT = 40;
 const TIMING_CONFIG = {
   duration: 300,
   easing: Easing.bezier(0.33, 1, 0.68, 1)
@@ -84,6 +86,10 @@ export type SegmentedControlProps = {
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  /**
+   * Preset type
+   */
+  preset?: 'default' | 'form'
 };
 
 /**
@@ -107,8 +113,9 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     throttleTime = 0,
     segmentsStyle: segmentsStyleProp,
     segmentLabelStyle,
-    testID
-  } = props;
+    testID,
+    iconStyle: presetIconStyle
+  } = useSegmentedControlPreset(props);
   const animatedSelectedIndex = useSharedValue(initialIndex);
   const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
   const segmentedControlHeight = useSharedValue(0);
@@ -181,6 +188,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           inactiveColor={inactiveColor}
           style={segmentsStyleProp}
           segmentLabelStyle={segmentLabelStyle}
+          iconStyle={presetIconStyle}
           {...segments?.[index]}
           testID={testID}
         />
@@ -216,9 +224,6 @@ const styles = StyleSheet.create({
   },
   selectedSegment: {
     position: 'absolute'
-  },
-  segment: {
-    paddingHorizontal: Spacings.s3
   }
 });
 
