@@ -48,5 +48,5 @@ type PathRecord<T extends string, K = {}> = NestedRecord<PathArray<T>, K>;
  */
 export type AssetRecord<This extends object, Path extends string, Asset extends object = {}> = PathRecord<
   Path,
-  DeepGet<This, T> extends never ? Asset : DeepGet<This, T> & Asset
+  DeepGet<This, Path> extends never ? Asset : (DeepGet<This, Path> & Asset)
 >;
