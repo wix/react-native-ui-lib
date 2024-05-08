@@ -88,7 +88,7 @@ class Overlay extends PureComponent<OverlayTypes> {
   };
 
   renderImage = (style: any, source: ImageSourcePropType) => {
-    return <Image style={[styles.container, style]} source={source}/>;
+    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
   getImageSource = (type?: OverlayTypeType, intensity?: OverlayTypes['intensity']) => {
@@ -109,7 +109,7 @@ class Overlay extends PureComponent<OverlayTypes> {
     const isVertical = type === OVERLY_TYPES.VERTICAL;
 
     return (
-      <View style={{overflow: 'hidden', borderRadius, ...StyleSheet.absoluteFillObject}}>
+      <View flex style={{overflow: 'hidden', borderRadius}}>
         {isVertical ? (
           <>
             {this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], imageSource)}
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
   },
   bottom: {
     top: undefined,
+    transform: [{scaleY: -1}],
     height: '75%'
   },
   vertical: {
