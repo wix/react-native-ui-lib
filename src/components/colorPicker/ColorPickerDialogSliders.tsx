@@ -11,7 +11,7 @@ type SlidersProps = Pick<ColorPickerDialogProps, 'migrate'> & {
   onSliderValueChange: (value: HSLColor) => void;
 };
 
-const Sliders = (props: SlidersProps) => {
+const ColorPickerDialogSliders = (props: SlidersProps) => {
   const {keyboardHeight, color, migrate, onSliderValueChange} = props;
   const colorValue = color.a === 0 ? Colors.getHSL(Colors.$backgroundInverted) : color;
   
@@ -29,7 +29,7 @@ const Sliders = (props: SlidersProps) => {
   );
 };
 
-export default Sliders;
+export default ColorPickerDialogSliders;
 
 const styles = StyleSheet.create({
   sliderGroup: {

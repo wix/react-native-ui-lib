@@ -6,9 +6,9 @@ import {Colors} from '../../style';
 import {ModalProps} from '../../components/modal';
 import Dialog, {DialogProps} from '../../incubator/Dialog';
 import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, HSLColor} from './ColorPickerPresenter';
-import Header from './ColorPickerDialogHeader';
-import Preview from './ColorPickerPreview';
-import Sliders from './ColorPickerDialogSliders';
+import ColorPickerDialogHeader from './ColorPickerDialogHeader';
+import ColorPickerPreview from './ColorPickerPreview';
+import ColorPickerDialogSliders from './ColorPickerDialogSliders';
 
 export interface ColorPickerDialogProps extends DialogProps {
   /**
@@ -165,7 +165,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
       modalProps={MODAL_PROPS}
       {...dialogProps}
     >
-      <Header
+      <ColorPickerDialogHeader
         accessibilityLabels={accessibilityLabels}
         valid={valid}
         onDonePressed={onDonePressed}
@@ -173,7 +173,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
         doneButtonColor={doneButtonColor}
         onDismiss={onDismiss}
       />
-      <Preview
+      <ColorPickerPreview
         color={color}
         text={text}
         valid={valid}
@@ -183,7 +183,12 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
         onFocus={onFocus}
         onChangeText={onChangeText}
       />
-      <Sliders keyboardHeight={keyboardHeight} color={color} onSliderValueChange={updateColor} migrate={migrate}/>
+      <ColorPickerDialogSliders
+        keyboardHeight={keyboardHeight}
+        color={color}
+        onSliderValueChange={updateColor}
+        migrate={migrate}
+      />
     </Dialog>
   );
 };

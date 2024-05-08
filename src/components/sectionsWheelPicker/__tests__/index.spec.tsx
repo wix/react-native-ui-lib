@@ -3,7 +3,7 @@ import React from 'react';
 import SectionsWheelPicker from '../index';
 import {render} from '@testing-library/react-native';
 import {SectionsWheelPickerDriver} from '../SectionsWheelPicker.driver';
-import {sections, labels} from '../mockSections';
+import {sections, labels} from './mockSections';
 
 const testID = 'sectionsWheel';
 const onChange = jest.fn();

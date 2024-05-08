@@ -16,7 +16,7 @@ type PreviewProps = Pick<ColorPickerDialogProps, 'accessibilityLabels' | 'previe
   onChangeText: (value: string) => void;
   onFocus: () => void;
 };
-const Preview = (props: PreviewProps) => {
+const ColorPickerPreview = (props: PreviewProps) => {
   const {color, text, onChangeText, previewInputStyle, onFocus, accessibilityLabels, testID} = props;
   const textInput = useRef<TextInput>(null);
 
@@ -77,7 +77,7 @@ const Preview = (props: PreviewProps) => {
   );
 };
 
-export default Preview;
+export default ColorPickerPreview;
 
 const styles = StyleSheet.create({
   header: {
