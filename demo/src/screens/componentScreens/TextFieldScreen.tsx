@@ -74,6 +74,7 @@ export default class TextFieldScreen extends Component {
           />
           <TextField
             placeholder="Placeholder"
+            // placeholderTextColor={Colors.$textNeutralLight}
             containerStyle={{flex: 1, marginLeft: Spacings.s6}}
           />
         </View>
