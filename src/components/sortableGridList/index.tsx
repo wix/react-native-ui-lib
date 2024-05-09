@@ -18,7 +18,8 @@ function generateItemsOrder(data: SortableGridListProps['data']) {
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   const {renderItem, onOrderChange, ...others} = props;
 
-  const {itemContainerStyle, numberOfColumns, listContentStyle} = useGridLayout(props);
+  const {itemContainerStyle, numberOfColumns, listStyle, listContentStyle, listColumnWrapperStyle} =
+    useGridLayout(props);
   const {itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
   const itemsOrder = useSharedValue<ItemsOrder>(generateItemsOrder(data));
 
@@ -41,14 +42,12 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   }, [onOrderChange, data]);
 
   const _renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps<T>>) => {
-    const lastItemInRow = (index + 1) % numberOfColumns === 0;
-
     return (
       <SortableItem
         key={item.id}
         data={data}
         {...presenter}
-        style={[itemContainerStyle, lastItemInRow && {marginRight: 0}]}
+        style={itemContainerStyle}
         itemsOrder={itemsOrder}
         id={item.id}
         onChange={onChange}
@@ -62,7 +61,10 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
 
   return (
     <GestureHandlerRootView>
-      <ScrollView contentContainerStyle={[styles.listContent, listContentStyle]}>
+      <ScrollView
+        style={listStyle}
+        contentContainerStyle={[styles.listContent, listContentStyle, listColumnWrapperStyle]}
+      >
         {_.map(data, (item, index) => _renderItem({item, index} as ListRenderItemInfo<ItemProps<T>>))}
       </ScrollView>
     </GestureHandlerRootView>

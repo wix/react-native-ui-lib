@@ -16,7 +16,8 @@ const useGridLayout = (props: GridListBaseProps) => {
     keepItemSize,
     containerWidth,
     style,
-    contentContainerStyle
+    contentContainerStyle,
+    columnWrapperStyle
   } = props;
 
   const {orientation} = useOrientation();
@@ -42,18 +43,22 @@ const useGridLayout = (props: GridListBaseProps) => {
   }, [numberOfColumns, itemSpacing, keepItemSize ? undefined : _containerWidth]);
 
   const itemContainerStyle = useMemo(() => {
-    return {width: itemWidth /* + itemSpacing */, marginRight: itemSpacing, marginBottom: itemSpacing};
+    return {width: itemWidth /* , marginRight: itemSpacing, marginBottom: itemSpacing */};
   }, [itemWidth, itemSpacing]);
 
   const listContentStyle = useMemo(() => {
-    return [{paddingHorizontal: listPadding}, contentContainerStyle];
-  }, [listPadding, contentContainerStyle]);
-  
-  const listStyle = useMemo(() => {
-    return [{paddingHorizontal: listPadding}, style];
-  }, [listPadding, style]);
+    return [{/* paddingHorizontal: listPadding, */ rowGap: itemSpacing}, contentContainerStyle];
+  }, [listPadding, itemSpacing, contentContainerStyle]);
 
-  return {itemContainerStyle, numberOfColumns, listStyle, listContentStyle};
+  const listStyle = useMemo(() => {
+    return [{paddingHorizontal: listPadding, rowGap: itemSpacing}, style];
+  }, [listPadding, itemSpacing, style]);
+
+  const listColumnWrapperStyle = useMemo(() => {
+    return [{columnGap: itemSpacing}, columnWrapperStyle];
+  }, [itemSpacing, columnWrapperStyle]);
+
+  return {itemContainerStyle, numberOfColumns, listStyle, listContentStyle, listColumnWrapperStyle};
 };
 
 export default useGridLayout;
