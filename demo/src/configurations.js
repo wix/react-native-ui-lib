@@ -1,4 +1,4 @@
-import {Colors, Typography, Spacings, Incubator} from 'react-native-ui-lib'; // eslint-disable-line
+import {Colors, Typography, Spacings, TextField} from 'react-native-ui-lib'; // eslint-disable-line
 
 export const loadDemoConfigurations = () => {
   require('./assets/Assets');
@@ -33,5 +33,5 @@ export const loadDemoConfigurations = () => {
   });
 
   /* Components */
-  Incubator.TextField.defaultProps = {...Incubator.TextField.defaultProps, preset: 'default'};
+  TextField.defaultProps = {...TextField.defaultProps, preset: TextField.presets.UNDERLINE};
 };

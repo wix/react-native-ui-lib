@@ -28,6 +28,11 @@ export enum ValidationMessagePosition {
   BOTTOM = 'bottom'
 }
 
+export enum Presets {
+  DEFAULT = 'default', // TODO: remove
+  UNDERLINE = 'underline'
+}
+
 export type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
 
 export type Validator = Function | keyof typeof formValidators;
@@ -249,7 +254,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | null | string;
+    preset?: Presets | `${Presets}` | null | string;
     /**
      * Whether to center the TextField - container and label
      */

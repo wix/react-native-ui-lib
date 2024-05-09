@@ -21,7 +21,8 @@ import {
   TextFieldRef,
   Validator,
   ValidationMessagePositionType,
-  MandatoryIndication
+  MandatoryIndication,
+  Presets
 } from './types';
 import TextFieldValidators from './validators';
 import {shouldHidePlaceholder} from './Presenter';
@@ -224,6 +225,7 @@ const TextField = (props: InternalTextFieldProps) => {
 };
 
 TextField.displayName = 'TextField';
+TextField.presets = Presets;
 TextField.validationMessagePositions = ValidationMessagePosition;
 
 export {
