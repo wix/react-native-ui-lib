@@ -175,7 +175,7 @@ export default class TextFieldScreen extends Component {
           // validateOnStart
           // validateOnBlur
         />
-        <View row spread center>
+        <View row spread center marginV-s3>
           <TextField
             ref={this.inputWithValidation}
             label="Name"
