@@ -165,9 +165,12 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     if (segmentsStyle.value.length !== 0) {
-      const insetFix = -CONTAINER_BORDER_WIDTH - segmentDividerWidth;
+      const isFirst = animatedSelectedIndex.value === 0;
+      const isLast = animatedSelectedIndex.value === segmentsStyle.value.length - 1;
+      const isMiddle = !isFirst && !isLast;
+      const insetFix = -CONTAINER_BORDER_WIDTH - (!isFirst ? segmentDividerWidth : 1);
+      const widthFix = isMiddle ? 2 * segmentDividerWidth : (CONTAINER_BORDER_WIDTH + segmentDividerWidth);
       const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x + insetFix, TIMING_CONFIG);
-      const widthFix = 2 * segmentDividerWidth;
       const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width + widthFix, TIMING_CONFIG);
       const height = segmentedControlHeight.value;
       return Constants.isRTL ? {width, right: inset, height} : {width, left: inset, height};
@@ -196,6 +199,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           />
           {!isLastSegment && (
             <View
+              key={`segment.divider-${index}`}
               width={segmentDividerWidth}
               height={'100%'}
               style={{backgroundColor: segmentDividerColor}}
