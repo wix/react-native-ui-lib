@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle, StyleSheet} from 'react-native';
+import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -55,6 +55,7 @@ export type SegmentProps = SegmentedControlItemProps & {
    */
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  iconTintColor?: string;
 };
 
 /**
@@ -74,7 +75,8 @@ const Segment = React.memo((props: SegmentProps) => {
     iconOnRight,
     style,
     segmentLabelStyle,
-    testID
+    testID,
+    iconTintColor
   } = props;
 
   const animatedTextStyle = useAnimatedStyle(() => {
@@ -83,7 +85,7 @@ const Segment = React.memo((props: SegmentProps) => {
   });
 
   const animatedIconStyle = useAnimatedStyle(() => {
-    const tintColor = selectedIndex?.value === index ? activeColor : inactiveColor;
+    const tintColor = selectedIndex?.value === index ? activeColor : (iconTintColor || inactiveColor);
     return {tintColor};
   });
 
@@ -92,8 +94,7 @@ const Segment = React.memo((props: SegmentProps) => {
   }, [style]);
 
   const renderIcon = useCallback(() => {
-    const iconTintColor = StyleSheet.flatten(iconStyle)?.tintColor;
-    return iconSource && <Reanimated.Image source={iconSource} style={[!iconTintColor && animatedIconStyle, iconStyle]}/>;
+    return iconSource && <Reanimated.Image source={iconSource} style={[animatedIconStyle, iconStyle]}/>;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iconSource, iconStyle]);
 

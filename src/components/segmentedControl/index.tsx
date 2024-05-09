@@ -15,7 +15,7 @@ import View from '../view';
 import Segment, {SegmentedControlItemProps} from './segment';
 import useSegmentedControlPreset from './useSegmentedControlPreset';
 
-const BORDER_WIDTH = 1;
+const CONTAINER_BORDER_WIDTH = 1;
 const TIMING_CONFIG = {
   duration: 300,
   easing: Easing.bezier(0.33, 1, 0.68, 1)
@@ -88,7 +88,7 @@ export type SegmentedControlProps = {
   /**
    * Preset type
    */
-  preset?: 'default' | 'form'
+  preset?: 'default' | 'form';
 };
 
 /**
@@ -113,7 +113,9 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     segmentsStyle: segmentsStyleProp,
     segmentLabelStyle,
     testID,
-    iconStyle: presetIconStyle
+    iconTintColor,
+    segmentDividerWidth,
+    segmentDividerColor
   } = useSegmentedControlPreset(props);
   const animatedSelectedIndex = useSharedValue(initialIndex);
   const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
@@ -150,7 +152,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
     const {x, width, height} = event.nativeEvent.layout;
     segmentsStyle.value[index] = {x, width};
-    segmentedControlHeight.value = height + 2 * BORDER_WIDTH;
+    segmentedControlHeight.value = height + 2 * CONTAINER_BORDER_WIDTH;
     segmentsCounter.current++;
 
     if (segmentsCounter.current === segments?.length) {
@@ -163,11 +165,10 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     if (segmentsStyle.value.length !== 0) {
-      const isFirstElementSelected = animatedSelectedIndex.value === 0;
-      const isLastElementSelected = animatedSelectedIndex.value === segmentsStyle.value.length - 1;
-      const xOffset = isFirstElementSelected ? -2 : isLastElementSelected ? 2 : 0;
-      const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x + xOffset, TIMING_CONFIG);
-      const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width * BORDER_WIDTH, TIMING_CONFIG);
+      const insetFix = -CONTAINER_BORDER_WIDTH - segmentDividerWidth;
+      const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x + insetFix, TIMING_CONFIG);
+      const widthFix = 2 * segmentDividerWidth;
+      const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width + widthFix, TIMING_CONFIG);
       const height = segmentedControlHeight.value;
       return Constants.isRTL ? {width, right: inset, height} : {width, left: inset, height};
     }
@@ -176,21 +177,31 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const renderSegments = () =>
     _.map(segments, (_value, index) => {
+      const isLastSegment = index + 1 === segments?.length;
       return (
-        <Segment
-          key={index}
-          onLayout={onLayout}
-          index={index}
-          onPress={onSegmentPress}
-          selectedIndex={animatedSelectedIndex}
-          activeColor={activeColor}
-          inactiveColor={inactiveColor}
-          style={segmentsStyleProp}
-          segmentLabelStyle={segmentLabelStyle}
-          iconStyle={presetIconStyle}
-          {...segments?.[index]}
-          testID={testID}
-        />
+        <>
+          <Segment
+            key={index}
+            onLayout={onLayout}
+            index={index}
+            onPress={onSegmentPress}
+            selectedIndex={animatedSelectedIndex}
+            activeColor={activeColor}
+            inactiveColor={inactiveColor}
+            style={[segmentsStyleProp]}
+            segmentLabelStyle={segmentLabelStyle}
+            iconTintColor={iconTintColor}
+            {...segments?.[index]}
+            testID={testID}
+          />
+          {!isLastSegment && (
+            <View
+              width={segmentDividerWidth}
+              height={'100%'}
+              style={{backgroundColor: segmentDividerColor}}
+            />
+          )}
+        </>
       );
     });
   return (
@@ -200,15 +211,24 @@ const SegmentedControl = (props: SegmentedControlProps) => {
           style={[
             styles.selectedSegment,
             {
-              borderColor: outlineColor,
               borderRadius,
-              backgroundColor: activeBackgroundColor,
-              borderWidth: outlineWidth
+              backgroundColor: activeBackgroundColor
             },
             animatedStyle
           ]}
         />
         {renderSegments()}
+        <Reanimated.View
+          style={[
+            styles.selectedSegment,
+            {
+              borderColor: outlineColor,
+              borderRadius,
+              borderWidth: outlineWidth
+            },
+            animatedStyle
+          ]}
+        />
       </View>
     </View>
   );
@@ -218,7 +238,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.$backgroundNeutralLight,
     borderColor: Colors.$outlineDefault,
-    borderWidth: BORDER_WIDTH
+    borderWidth: CONTAINER_BORDER_WIDTH
   },
   selectedSegment: {
     position: 'absolute'
