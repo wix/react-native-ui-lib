@@ -35,4 +35,8 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
    * List forwarded ref.
    */
   listRef?: ForwardedRef<FlatList<ItemT>>
+  /**
+   * Temporary migration flag for enabling flex on the container of the list (like it should be by default)
+   */
+  flexMigration?: boolean;
 }
