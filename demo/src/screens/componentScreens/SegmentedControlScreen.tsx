@@ -19,7 +19,7 @@ const segments: Record<string, Array<SegmentedControlItemProps>> = {
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
   seventh: [{label: '$'}, {label: '%'}],
   eighth: [
-    {label: `${Assets.emojis.arrow_left} Left`, iconSource: Assets.icons.minusSmall, iconTintColor: 'red'},
+    {label: `${Assets.emojis.arrow_left} Left`},
     {label: `${Assets.emojis.arrow_up} Up`},
     {label: `${Assets.emojis.arrow_down} Down`},
     {label: `${Assets.emojis.arrow_right} Right`}
