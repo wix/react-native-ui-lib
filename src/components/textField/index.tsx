@@ -37,6 +37,7 @@ import CharCounter from './CharCounter';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
+  presets: typeof Presets;
 }
 
 /**

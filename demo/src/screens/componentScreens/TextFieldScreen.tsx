@@ -17,7 +17,7 @@ export default class TextFieldScreen extends Component {
     isReadonly: false,
     value: 'Initial Value',
     isSearching: false,
-    customPreset: 'underline',
+    preset: TextField.presets.UNDERLINE,
     price: ''
   };
 
@@ -44,11 +44,17 @@ export default class TextFieldScreen extends Component {
   renderPresetExample() {
     return (
       <>
-        <Text h3 marginB-s1 marginT-s4>
-          Underline Preset
-        </Text>
+        <View marginV-s3>
+          <Text h3>
+            Presets
+          </Text>
+          <View row centerV>
+            <Text marginR-s4 $textPrimary>Preset:</Text>
+            <SegmentedControl segments={[{label: 'Underline'}, {label: 'Outline'}]} onChangeIndex={this.onChangeIndexFieldStyle}/>
+          </View>
+        </View>
 
-        <TextField ref={this.input} placeholder="Enter full name"/>
+        <TextField ref={this.input} placeholder="Enter full name" preset={this.state.preset}/>
       </>
     );
   }
@@ -65,7 +71,7 @@ export default class TextFieldScreen extends Component {
             placeholder="Floating placeholder"
             floatingPlaceholder
             floatingPlaceholderColor={{
-              focus: Colors.$textDefault,
+              focus: 'green', //Colors.$textDefault,
               default: Colors.$textNeutral
             }}
             // floatingPlaceholderStyle={Typography.text60}
@@ -262,33 +268,50 @@ export default class TextFieldScreen extends Component {
   }
 
   onChangeIndexFieldStyle = (index: number) => {
-    this.setState({customPreset: index === 0 ? 'underline' : 'outline'});
+    this.setState({preset: index === 0 ? 'underline' : 'outline'});
+  };
+
+  getDynamicFieldStyle = (context, props) => {
+    let color = Colors.$outlineNeutral;
+    
+    if (context?.disabled) {
+      color = Colors.$outlineDefault;
+    }
+    if (context?.readonly) {
+      color = Colors.$outlineDisabled;
+    }
+    if (context?.isFocused) {
+      color = Colors.$outlinePrimary;
+    }
+    if (context?.hasValue && context?.isValid === false) {
+      color = Colors.$outlineDanger;
+    }
+    if (context?.hasValue && context?.isValid) {
+      color = Colors.$textSuccess;
+    }
+    
+    return props?.preset === TextField.presets.UNDERLINE ? {borderBottomColor: color} : {borderColor: color};
   };
 
   renderDynamicFieldExample() {
-    const {customPreset, isDisabled, isReadonly} = this.state;
+    const {preset, isDisabled, isReadonly} = this.state;
 
     return (
       <>
-        <View>
-          <Text h3 marginB-s3>
-            Dynamic Field Style
-          </Text>
-          <View row centerV>
-            <Text marginR-s4 $textPrimary>Custom style:</Text>
-            <SegmentedControl segments={[{label: 'Underline'}, {label: 'Outline'}]} onChangeIndex={this.onChangeIndexFieldStyle}/>
-          </View>
-        </View>
+        <Text h3 marginB-s3>
+          Dynamic Field Style
+        </Text>
 
         <TextField
-          label="Label"
-          placeholder="Enter text..."
-          preset={customPreset}
-          dynamicFieldStyle={(_state, {preset}) =>
-            preset === 'underline' ? styles.underline : styles.outline
-          }
+          label="Email"
+          placeholder="Enter valid email"
+          validate={'email'}
+          validateOnChange
+          validationMessage="Email is invalid"
+          preset={preset}
           editable={!isDisabled}
           readonly={isReadonly}
+          dynamicFieldStyle={this.getDynamicFieldStyle}
         />
       </>
     );
@@ -385,10 +408,10 @@ export default class TextFieldScreen extends Component {
           {this.renderPresetExample()}
           {this.renderPlaceholdersExample()}
           {this.renderValidationExample()}
-          {this.renderStateColorsExample()}
           {this.renderHintExample()}
           {this.renderCherCounterExample()}
           {this.renderAccessoriesExample()}
+          {this.renderStateColorsExample()}
           {this.renderDynamicFieldExample()}
           {this.renderFormatterExample()}
           {this.renderCustomAlignmentExample()}
