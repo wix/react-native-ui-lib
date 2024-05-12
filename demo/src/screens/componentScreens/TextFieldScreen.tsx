@@ -274,12 +274,6 @@ export default class TextFieldScreen extends Component {
   getDynamicFieldStyle = (context, props) => {
     let color = Colors.$outlineNeutral;
     
-    if (context?.disabled) {
-      color = Colors.$outlineDefault;
-    }
-    if (context?.readonly) {
-      color = Colors.$outlineDisabled;
-    }
     if (context?.isFocused) {
       color = Colors.$outlinePrimary;
     }
@@ -288,6 +282,12 @@ export default class TextFieldScreen extends Component {
     }
     if (context?.hasValue && context?.isValid) {
       color = Colors.$textSuccess;
+    }
+    if (context?.disabled) {
+      color = Colors.$outlineDefault;
+    }
+    if (context?.readonly) {
+      color = Colors.$outlineDisabled;
     }
 
     return props?.preset === TextField.presets.UNDERLINE ? {borderBottomColor: color} : {borderColor: color};
