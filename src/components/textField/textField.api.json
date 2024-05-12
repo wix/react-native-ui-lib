@@ -81,7 +81,7 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Container style of the whole component"},
     {
       "name": "preset",
-      "type": "'default' | null | string",
+      "type": "Presets | `${Presets}` | null | string",
       "description": "Predefined preset to use for styling the field"
     },
     {
