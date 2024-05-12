@@ -1,9 +1,9 @@
-import defaultPreset from './presets/default';
-import {InternalTextFieldProps} from './types';
+import underlinePreset from './presets/underline';
+import {InternalTextFieldProps, Presets} from './types';
 
-export default function usePreset({preset /*  = 'default' */, ...props}: InternalTextFieldProps) {
-  if (preset === 'default') {
-    return {...defaultPreset, ...props, fieldStyle: [defaultPreset.fieldStyle, props.fieldStyle]};
+export default function usePreset({preset, ...props}: InternalTextFieldProps) {
+  if (preset === Presets.DEFAULT || preset === Presets.UNDERLINE) {
+    return {...underlinePreset, ...props, fieldStyle: [underlinePreset.fieldStyle, props.fieldStyle]};
   }
   return props;
 }
