@@ -71,7 +71,7 @@ export default class TextFieldScreen extends Component {
             placeholder="Floating placeholder"
             floatingPlaceholder
             floatingPlaceholderColor={{
-              focus: 'green', //Colors.$textDefault,
+              focus: Colors.$textDefault,
               default: Colors.$textNeutral
             }}
             // floatingPlaceholderStyle={Typography.text60}
@@ -80,7 +80,7 @@ export default class TextFieldScreen extends Component {
           />
           <TextField
             placeholder="Placeholder"
-            // placeholderTextColor={Colors.$textNeutralLight}
+            placeholderTextColor={Colors.$textNeutralLight}
             containerStyle={{flex: 1, marginLeft: Spacings.s6}}
           />
         </View>
@@ -289,7 +289,7 @@ export default class TextFieldScreen extends Component {
     if (context?.hasValue && context?.isValid) {
       color = Colors.$textSuccess;
     }
-    
+
     return props?.preset === TextField.presets.UNDERLINE ? {borderBottomColor: color} : {borderColor: color};
   };
 
