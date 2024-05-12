@@ -23,6 +23,10 @@ export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabe
    * Should the icon be on right of the label
    */
   iconOnRight?: boolean;
+  /**
+   * Icon tint color
+   */
+  iconTintColor?: string;
 };
 
 export type SegmentProps = SegmentedControlItemProps & {
@@ -55,7 +59,6 @@ export type SegmentProps = SegmentedControlItemProps & {
    */
   style?: StyleProp<ViewStyle>;
   testID?: string;
-  iconTintColor?: string;
 };
 
 /**

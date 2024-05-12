@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses, Typography} from 'react-native-ui-lib';
+import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses, Typography, SegmentedControlItemProps} from 'react-native-ui-lib';
 
-const segments = {
+const segments: Record<string, Array<SegmentedControlItemProps>> = {
   first: [{label: 'Left'}, {label: 'Right'}],
   second: [{label: '1'}, {label: '2'}, {label: '3'}, {label: Assets.emojis.airplane}, {label: '5'}],
   third: [
@@ -17,7 +17,13 @@ const segments = {
   forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Style'}],
   fifth: [{label: 'Full'}, {label: 'Width'}],
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
-  seventh: [{label: '$'}, {label: '%'}]
+  seventh: [{label: '$'}, {label: '%'}],
+  eighth: [
+    {label: `${Assets.emojis.arrow_left} Left`, iconSource: Assets.icons.minusSmall, iconTintColor: 'red'},
+    {label: `${Assets.emojis.arrow_up} Up`},
+    {label: `${Assets.emojis.arrow_down} Down`},
+    {label: `${Assets.emojis.arrow_right} Right`}
+  ]
 };
 
 const SegmentedControlScreen = () => {
@@ -65,6 +71,14 @@ const SegmentedControlScreen = () => {
           containerStyle={styles.container}
           segments={segments.seventh}
           segmentLabelStyle={styles.customTypography}
+        />
+        <Text marginT-s4 center>
+          Form Preset
+        </Text>
+        <SegmentedControl
+          containerStyle={styles.container}
+          segments={segments.eighth}
+          preset={SegmentedControl.presets.form}
         />
       </View>
     </View>

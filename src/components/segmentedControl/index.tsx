@@ -14,12 +14,20 @@ import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps} from './segment';
 import useSegmentedControlPreset from './useSegmentedControlPreset';
+import {ComponentStatics} from '../../typings/common';
 
 const CONTAINER_BORDER_WIDTH = 1;
 const TIMING_CONFIG = {
   duration: 300,
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
+
+const presets = {
+  default: 'default',
+  form: 'form'
+} as const;
+
+export type Presets = (typeof presets)[keyof typeof presets];
 
 export {SegmentedControlItemProps};
 export type SegmentedControlProps = {
@@ -88,14 +96,17 @@ export type SegmentedControlProps = {
   /**
    * Preset type
    */
-  preset?: 'default' | 'form';
+  preset?: Presets;
 };
 
+interface SegmentedControlComponent extends React.FC<SegmentedControlProps> {
+  presets: typeof presets;
+}
 /**
  * @description: SegmentedControl component for toggling two values or more
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SegmentedControlScreen.tsx
  */
-const SegmentedControl = (props: SegmentedControlProps) => {
+const SegmentedControl = ((props: SegmentedControlProps) => {
   const {
     onChangeIndex,
     initialIndex = 0,
@@ -165,10 +176,10 @@ const SegmentedControl = (props: SegmentedControlProps) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     if (segmentsStyle.value.length !== 0) {
-      const isFirst = animatedSelectedIndex.value === 0;
-      const isLast = animatedSelectedIndex.value === segmentsStyle.value.length - 1;
-      const isMiddle = !isFirst && !isLast;
-      const insetFix = -CONTAINER_BORDER_WIDTH - (!isFirst ? segmentDividerWidth : 1);
+      const isFirstElementSelected = animatedSelectedIndex.value === 0;
+      const isLastElementSelected = animatedSelectedIndex.value === segmentsStyle.value.length - 1;
+      const isMiddle = !isFirstElementSelected && !isLastElementSelected;
+      const insetFix = -CONTAINER_BORDER_WIDTH - (!isFirstElementSelected ? segmentDividerWidth : 1);
       const widthFix = isMiddle ? 2 * segmentDividerWidth : (CONTAINER_BORDER_WIDTH + segmentDividerWidth);
       const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x + insetFix, TIMING_CONFIG);
       const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width + widthFix, TIMING_CONFIG);
@@ -236,7 +247,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
       </View>
     </View>
   );
-};
+}) as SegmentedControlComponent;
 
 const styles = StyleSheet.create({
   container: {
@@ -250,5 +261,5 @@ const styles = StyleSheet.create({
 });
 
 SegmentedControl.displayName = 'SegmentedControl';
-
-export default asBaseComponent<SegmentedControlProps>(SegmentedControl);
+SegmentedControl.presets = presets;
+export default asBaseComponent<SegmentedControlProps, ComponentStatics<typeof SegmentedControl>>(SegmentedControl);
