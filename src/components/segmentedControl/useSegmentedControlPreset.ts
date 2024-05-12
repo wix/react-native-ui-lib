@@ -35,7 +35,7 @@ const defaultsPresetsProps: Record<Presets, useSegmentedControlPresetProps> = {
     inactiveColor: Colors.$textNeutralHeavy,
     outlineColor: DEFAULT_ACTIVE_COLOR,
     outlineWidth: 1,
-    segmentDividerWidth: 1,
+    segmentDividerWidth: 0,
     segmentDividerColor: ''
   },
   form: {

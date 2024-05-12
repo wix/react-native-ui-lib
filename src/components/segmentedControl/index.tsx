@@ -193,9 +193,9 @@ const SegmentedControl = ((props: SegmentedControlProps) => {
     _.map(segments, (_value, index) => {
       const isLastSegment = index + 1 === segments?.length;
       return (
-        <>
+        <React.Fragment key={`segment-fragment-${index}`}>
           <Segment
-            key={index}
+            key={`segment-${index}`}
             onLayout={onLayout}
             index={index}
             onPress={onSegmentPress}
@@ -208,7 +208,7 @@ const SegmentedControl = ((props: SegmentedControlProps) => {
             {...segments?.[index]}
             testID={testID}
           />
-          {!isLastSegment && (
+          {!isLastSegment && segmentDividerWidth !== 0 && (
             <View
               key={`segment.divider-${index}`}
               width={segmentDividerWidth}
@@ -216,7 +216,7 @@ const SegmentedControl = ((props: SegmentedControlProps) => {
               style={{backgroundColor: segmentDividerColor}}
             />
           )}
-        </>
+        </React.Fragment>
       );
     });
   return (
