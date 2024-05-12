@@ -4,10 +4,10 @@ import {LogService} from '../../../services';
 import {PickerProps, PickerModes} from '../types';
 
 // @ts-expect-error TODO: Remove this whole file when migration is completed
-type UsePickerMigrationWarnings = Pick<PickerProps, 'value' | 'mode' | 'useNativePicker'>;
+type UsePickerMigrationWarnings = Pick<PickerProps, 'value' | 'mode' | 'useNativePicker' | 'children'>;
 
 const usePickerMigrationWarnings = (props: UsePickerMigrationWarnings) => {
-  const {value, mode, useNativePicker} = props;
+  const {value, mode, useNativePicker, children} = props;
   useEffect(() => {
     if (mode === PickerModes.SINGLE && Array.isArray(value)) {
       LogService.warn('Picker in SINGLE mode cannot accept an array for value');
@@ -22,6 +22,10 @@ const usePickerMigrationWarnings = (props: UsePickerMigrationWarnings) => {
 
     if (useNativePicker) {
       LogService.warn(`UILib Picker will stop supporting the 'useNativePicker' prop soon, please pass instead the 'useWheelPicker' prop and handle relevant TextField migration if required to`);
+    }
+
+    if (children) {
+      LogService.warn(`UILib Picker will stop supporting the 'children' prop soon, please pass 'items' prop instead`);
     }
   }, []);
 };
