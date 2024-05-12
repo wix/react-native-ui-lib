@@ -44,11 +44,11 @@ const useGridLayout = (props: GridListBaseProps) => {
 
   const itemContainerStyle = useMemo(() => {
     return {width: itemWidth /* , marginRight: itemSpacing, marginBottom: itemSpacing */};
-  }, [itemWidth, itemSpacing]);
+  }, [itemWidth]);
 
   const listContentStyle = useMemo(() => {
     return [{/* paddingHorizontal: listPadding, */ rowGap: itemSpacing}, contentContainerStyle];
-  }, [listPadding, itemSpacing, contentContainerStyle]);
+  }, [itemSpacing, contentContainerStyle]);
 
   const listStyle = useMemo(() => {
     return [{paddingHorizontal: listPadding, rowGap: itemSpacing}, style];

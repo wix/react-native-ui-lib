@@ -57,7 +57,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
       </SortableItem>
     );
   },
-  [data]);
+  [data, itemContainerStyle, onChange, renderItem]);
 
   return (
     <GestureHandlerRootView>
