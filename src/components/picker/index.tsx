@@ -15,6 +15,7 @@ import TextField from '../textField';
 import Icon from '../icon';
 import View from '../view';
 import Text from '../text';
+import {LogService} from '../../services';
 // import NativePicker from './NativePicker';
 import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';
@@ -98,6 +99,12 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
   const [selectedItemPosition, setSelectedItemPosition] = useState(0);
   const [items, setItems] = useState(propItems || extractPickerItems(themeProps));
+
+  useEffect(() => {
+    if (children) {
+      LogService.warn(`UILib Picker will stop supporting the 'children' prop in the next major version., please pass 'items' prop instead`);
+    }
+  }, []);
 
   useEffect(() => {
     if (propItems) {
