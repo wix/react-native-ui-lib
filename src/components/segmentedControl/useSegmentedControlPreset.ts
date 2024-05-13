@@ -1,4 +1,4 @@
-import {type SegmentedControlProps, type Presets} from './';
+import {type SegmentedControlProps, Presets} from './';
 import {BorderRadiuses, Colors} from '../../style/';
 import {SegmentProps} from './segment';
 import type {ColorValue} from 'react-native';
@@ -12,7 +12,7 @@ const DEFAULT_ACTIVE_COLOR = Colors.$textPrimary;
 const FORM_TEXT_COLOR = Colors.$textDefault;
 
 const useSegmentedControlPreset = (props: SegmentedControlProps): useSegmentedControlPresetProps => {
-  const {preset = 'default', activeColor, inactiveColor, outlineColor} = props;
+  const {preset = Presets.DEFAULT, activeColor, inactiveColor, outlineColor} = props;
   const presetProps = {
     ...defaultsPresetsProps[preset],
     ...props
@@ -27,7 +27,7 @@ const useSegmentedControlPreset = (props: SegmentedControlProps): useSegmentedCo
 };
 
 const defaultsPresetsProps: Record<Presets, useSegmentedControlPresetProps> = {
-  default: {
+  [Presets.DEFAULT]: {
     activeColor: DEFAULT_ACTIVE_COLOR,
     borderRadius: BorderRadiuses.br100,
     backgroundColor: Colors.$backgroundNeutralLight,
@@ -38,7 +38,7 @@ const defaultsPresetsProps: Record<Presets, useSegmentedControlPresetProps> = {
     segmentDividerWidth: 0,
     segmentDividerColor: ''
   },
-  form: {
+  [Presets.FORM]: {
     activeColor: FORM_TEXT_COLOR,
     inactiveColor: FORM_TEXT_COLOR,
     backgroundColor: Colors.$backgroundDefault,

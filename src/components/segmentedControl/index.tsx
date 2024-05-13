@@ -22,12 +22,10 @@ const TIMING_CONFIG = {
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
 
-const presets = {
-  default: 'default',
-  form: 'form'
-} as const;
-
-export type Presets = (typeof presets)[keyof typeof presets];
+export enum Presets {
+  DEFAULT = 'default',
+  FORM = 'form'
+}
 
 export {SegmentedControlItemProps};
 export type SegmentedControlProps = {
@@ -96,11 +94,11 @@ export type SegmentedControlProps = {
   /**
    * Preset type
    */
-  preset?: Presets;
+  preset?: Presets | `${Presets}`;
 };
 
 interface SegmentedControlComponent extends React.FC<SegmentedControlProps> {
-  presets: typeof presets;
+  presets: typeof Presets;
 }
 /**
  * @description: SegmentedControl component for toggling two values or more
@@ -261,5 +259,5 @@ const styles = StyleSheet.create({
 });
 
 SegmentedControl.displayName = 'SegmentedControl';
-SegmentedControl.presets = presets;
+SegmentedControl.presets = Presets;
 export default asBaseComponent<SegmentedControlProps, ComponentStatics<typeof SegmentedControl>>(SegmentedControl);
