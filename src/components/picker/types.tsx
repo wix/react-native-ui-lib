@@ -141,7 +141,11 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * callback for picker modal search input text change (only when passing showSearch)
    */
-  onSearchChange?: (searchValue: string, filteredChildren?: ReactNode | undefined) => void;
+  onSearchChange?: (
+    searchValue: string,
+    filteredChildren?: ReactNode | undefined,
+    filteredItems?: Pick<PickerItemProps, 'label' | 'value' | 'disabled'>[]
+  ) => void;
   /**
    * Render custom search input (only when passing showSearch)
    */
