@@ -38,7 +38,11 @@ const SegmentedControlScreen = () => {
       <Text center text40 $textDefault>
         Segmented Control
       </Text>
-      <View flex marginT-s8>
+      <View
+        flex
+        marginT-s8
+        key={screenPreset /* added here because changing the preset based on state was causing wrong calculations */}
+      >
         <View center>
           <View row gap-s10 bottom>
             <Text text70>Preset:</Text>
@@ -48,6 +52,7 @@ const SegmentedControlScreen = () => {
               onChangeIndex={index =>
                 setScreenPreset(index === 0 ? SegmentedControl.presets.DEFAULT : SegmentedControl.presets.FORM)
               }
+              initialIndex={screenPreset === SegmentedControl.presets.DEFAULT ? 0 : 1}
             />
           </View>
           <SegmentedControl

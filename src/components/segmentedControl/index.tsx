@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {useRef, useCallback, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent} from 'react-native';
-import Reanimated, {
+import {
   Easing,
   useAnimatedReaction,
   useAnimatedStyle,
@@ -172,9 +172,9 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     if (segmentsStyle.value.length !== 0) {
       const isFirstElementSelected = animatedSelectedIndex.value === 0;
       const isLastElementSelected = animatedSelectedIndex.value === segmentsStyle.value.length - 1;
-      const isMiddle = !isFirstElementSelected && !isLastElementSelected;
+      const isMiddleSelected = !isFirstElementSelected && !isLastElementSelected;
       const insetFix = -CONTAINER_BORDER_WIDTH - (!isFirstElementSelected ? segmentDividerWidth : 1);
-      const widthFix = isMiddle ? 2 * segmentDividerWidth : (CONTAINER_BORDER_WIDTH + segmentDividerWidth);
+      const widthFix = isMiddleSelected ? 2 * segmentDividerWidth : CONTAINER_BORDER_WIDTH + segmentDividerWidth;
       const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x + insetFix, TIMING_CONFIG);
       const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width + widthFix, TIMING_CONFIG);
       const height = segmentedControlHeight.value;
@@ -216,28 +216,34 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   return (
     <View style={containerStyle} testID={testID}>
       <View row center style={[styles.container, style, {borderRadius, backgroundColor}]}>
-        <Reanimated.View
+        <View
+          reanimated
           style={[
             styles.selectedSegment,
             {
               borderRadius,
-              backgroundColor: activeBackgroundColor
+              backgroundColor: activeBackgroundColor,
+              borderWidth: segmentDividerWidth !== 0 ? undefined : outlineWidth,
+              borderColor: segmentDividerWidth !== 0 ? undefined : outlineColor
             },
             animatedStyle
           ]}
         />
         {renderSegments()}
-        <Reanimated.View
-          style={[
-            styles.selectedSegment,
-            {
-              borderColor: outlineColor,
-              borderRadius,
-              borderWidth: outlineWidth
-            },
-            animatedStyle
-          ]}
-        />
+        {segmentDividerWidth !== 0 && (
+          <View
+            reanimated
+            style={[
+              styles.selectedSegment,
+              {
+                borderColor: outlineColor,
+                borderRadius,
+                borderWidth: outlineWidth
+              },
+              animatedStyle
+            ]}
+          />
+        )}
       </View>
     </View>
   );
@@ -254,7 +260,7 @@ const styles = StyleSheet.create({
   }
 });
 interface StaticMembers {
-  presets: typeof Presets
+  presets: typeof Presets;
 }
 
 SegmentedControl.displayName = 'SegmentedControl';
