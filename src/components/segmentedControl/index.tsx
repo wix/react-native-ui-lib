@@ -14,7 +14,6 @@ import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps} from './segment';
 import useSegmentedControlPreset from './useSegmentedControlPreset';
-import {ComponentStatics} from '../../typings/common';
 
 const CONTAINER_BORDER_WIDTH = 1;
 const TIMING_CONFIG = {
@@ -97,14 +96,11 @@ export type SegmentedControlProps = {
   preset?: Presets | `${Presets}`;
 };
 
-interface SegmentedControlComponent extends React.FC<SegmentedControlProps> {
-  presets: typeof Presets;
-}
 /**
  * @description: SegmentedControl component for toggling two values or more
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SegmentedControlScreen.tsx
  */
-const SegmentedControl = ((props: SegmentedControlProps) => {
+const SegmentedControl = (props: SegmentedControlProps) => {
   const {
     onChangeIndex,
     initialIndex = 0,
@@ -245,7 +241,7 @@ const SegmentedControl = ((props: SegmentedControlProps) => {
       </View>
     </View>
   );
-}) as SegmentedControlComponent;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -257,7 +253,10 @@ const styles = StyleSheet.create({
     position: 'absolute'
   }
 });
+interface StaticMembers {
+  presets: typeof Presets
+}
 
 SegmentedControl.displayName = 'SegmentedControl';
 SegmentedControl.presets = Presets;
-export default asBaseComponent<SegmentedControlProps, ComponentStatics<typeof SegmentedControl>>(SegmentedControl);
+export default asBaseComponent<SegmentedControlProps, StaticMembers>(SegmentedControl);
