@@ -102,7 +102,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
   useEffect(() => {
     if (children) {
-      LogService.warn(`UILib Picker will stop supporting the 'children' prop in the next major version., please pass 'items' prop instead`);
+      LogService.warn(`UILib Picker will stop supporting the 'children' prop in the next major version, please pass 'items' prop instead`);
     }
   }, []);
 
