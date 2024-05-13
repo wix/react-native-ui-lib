@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses, Typography, SegmentedControlItemProps} from 'react-native-ui-lib';
 
 const segments: Record<string, Array<SegmentedControlItemProps>> = {
-  first: [{label: 'Left'}, {label: 'Right'}],
+  first: [{label: 'Default'}, {label: 'Form'}],
   second: [{label: '1'}, {label: '2'}, {label: '3'}, {label: Assets.emojis.airplane}, {label: '5'}],
   third: [
     {
