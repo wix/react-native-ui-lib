@@ -106,11 +106,10 @@ class Overlay extends PureComponent<OverlayTypes> {
   render() {
     const {type, intensity, customContent, borderRadius} = this.props;
     const imageSource = this.getImageSource(type, intensity);
-    const isVertical = type === OVERLY_TYPES.VERTICAL;
 
     return (
       <View flex style={{overflow: 'hidden', borderRadius}}>
-        {isVertical ? (
+        {type === OVERLY_TYPES.VERTICAL ? (
           <>
             {this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], imageSource)}
             {this.renderImage([this.getStyleByType(OVERLY_TYPES.BOTTOM), styles.vertical], imageSource)}
