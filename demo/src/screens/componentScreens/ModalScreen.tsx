@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Alert, StyleSheet} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {Colors, Carousel, PageControl, Modal, View, Text, Assets} from 'react-native-ui-lib'; // eslint-disable-line
+import {Colors, Carousel, PageControl, Modal, View, Text} from 'react-native-ui-lib'; // eslint-disable-line
+import Assets from '../../assets/Assets';
 
 const BUTTONS_HIT_SLOP = {right: 5, left: 5, top: 10, bottom: 10};
 interface ModalScreenProps {

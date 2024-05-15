@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert, ViewStyle} from 'react-native';
-import {Colors, View, Text, Hint, Button, Assets, Incubator} from 'react-native-ui-lib';
+import {Colors, View, Text, Hint, Button, Incubator} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions, renderBooleanOption} from '../ExampleScreenPresenter';
+import Assets from '../../assets/Assets';
 
 const settingsIcon = require('../../assets/icons/settings.png');
 const reactions = ['❤️', '😮', '😔', '😂', '😡'];

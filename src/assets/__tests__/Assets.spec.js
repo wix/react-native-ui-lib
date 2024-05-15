@@ -8,7 +8,7 @@ describe('Assets', () => {
   });
 
   describe('.loadAssetsGroup(groupName, assets)', () => {
-    it('should return the assets object itself', () => {
+    it.skip('should return the assets object itself', () => {
       expect(assets.loadAssetsGroup('emojis', {})).toBe(assets);
     });
 

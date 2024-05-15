@@ -1,13 +1,20 @@
 import {Assets} from './Assets';
+import type {icons} from './icons';
+import type {emojis} from './emojis';
+import type {images} from './images';
 
-export default new Assets().loadAssetsGroup('', {
-  get icons() {
+
+const assets: Assets = new Assets();
+assets.loadAssetsGroup('', {
+  get icons(): typeof icons {
     return require('./icons').icons;
   },
-  get emojis() {
+  get emojis(): typeof emojis {
     return require('./emojis').emojis;
   },
-  get images() {
+  get images(): typeof images {
     return require('./images').images;
   }
 });
+const ExportedAssets: typeof assets = assets;
+export default ExportedAssets;
