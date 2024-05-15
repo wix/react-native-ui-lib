@@ -100,6 +100,7 @@ class SortableGridListScreen extends Component {
         </View>
         <View flex>
           <SortableGridList
+            flexMigration
             data={items}
             renderItem={this.renderItem}
             // numColumns={2}
