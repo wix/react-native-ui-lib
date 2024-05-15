@@ -21,7 +21,7 @@ export enum OverlayIntensityType {
   HIGH = 'high'
 }
 
-export type OverlayTypeType = typeof OVERLY_TYPES[keyof typeof OVERLY_TYPES];
+export type OverlayTypeType = (typeof OVERLY_TYPES)[keyof typeof OVERLY_TYPES];
 
 export type OverlayTypes = Pick<ImageProps, 'borderRadius'> & {
   /**
@@ -88,8 +88,7 @@ class Overlay extends PureComponent<OverlayTypes> {
   };
 
   renderImage = (style: any, source: ImageSourcePropType) => {
-    const {borderRadius} = this.props;
-    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source} borderRadius={borderRadius}/>;
+    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
   getImageSource = (type?: OverlayTypeType, intensity?: OverlayTypes['intensity']) => {
@@ -105,24 +104,24 @@ class Overlay extends PureComponent<OverlayTypes> {
   };
 
   render() {
-    const {type, intensity, customContent} = this.props;
+    const {type, intensity, customContent, borderRadius} = this.props;
     const imageSource = this.getImageSource(type, intensity);
 
-    if (type === OVERLY_TYPES.VERTICAL) {
-      return (
-        <>
-          {this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], imageSource)}
-          {this.renderImage([this.getStyleByType(OVERLY_TYPES.BOTTOM), styles.vertical], imageSource)}
-          {customContent && this.renderCustomContent()}
-        </>
-      );
-    }
-
     return (
-      <>
-        {type && this.renderImage(this.getStyleByType(), imageSource)}
-        {customContent && this.renderCustomContent()}
-      </>
+      <View flex style={{overflow: 'hidden', borderRadius}}>
+        {type === OVERLY_TYPES.VERTICAL ? (
+          <>
+            {this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], imageSource)}
+            {this.renderImage([this.getStyleByType(OVERLY_TYPES.BOTTOM), styles.vertical], imageSource)}
+            {customContent && this.renderCustomContent()}
+          </>
+        ) : (
+          <>
+            {type && this.renderImage(this.getStyleByType(), imageSource)}
+            {customContent && this.renderCustomContent()}
+          </>
+        )}
+      </View>
     );
   }
 }
@@ -134,14 +133,12 @@ const styles = StyleSheet.create({
   },
   top: {
     bottom: undefined,
-    top: 0,
     height: '75%'
   },
   bottom: {
-    bottom: 0,
     top: undefined,
-    height: '75%',
-    transform: [{scaleY: -1}]
+    transform: [{scaleY: -1}],
+    height: '75%'
   },
   vertical: {
     height: '40%'
