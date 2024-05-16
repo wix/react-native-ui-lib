@@ -4,7 +4,7 @@
   "description": "A chips input",
   "extends": ["form/TextField"],
   "modifiers": ["margin", "color", "typography"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorChipsInputScreen.tsx",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.tsx",
   "images": [],
   "props": [
     {"name": "chips", "type": "ChipProps[]", "description": "List of chips to render"},
