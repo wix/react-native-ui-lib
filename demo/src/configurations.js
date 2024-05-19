@@ -33,5 +33,5 @@ export const loadDemoConfigurations = () => {
   });
 
   /* Components */
-  TextField.defaultProps = {...TextField.defaultProps, preset: TextField.presets.UNDERLINE};
+  TextField.defaultProps = {preset: TextField.presets.UNDERLINE, ...TextField.defaultProps};
 };
