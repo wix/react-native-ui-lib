@@ -30,7 +30,8 @@ export enum ValidationMessagePosition {
 
 export enum Presets {
   DEFAULT = 'default', // TODO: remove
-  UNDERLINE = 'underline'
+  UNDERLINE = 'underline',
+  OUTLINE = 'outline'
 }
 
 export type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
