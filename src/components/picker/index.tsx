@@ -1,4 +1,6 @@
 // TODO: deprecate all places where we check if _.isPlainObject
+// TODO: deprecate getItemValue prop
+// TODO: deprecate getItemLabel prop
 // TODO: Add initialValue prop
 // TODO: consider deprecating renderCustomModal prop
 // TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
@@ -80,6 +82,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     listProps,
     value,
     getLabel,
+    getItemLabel,
+    getItemValue,
     renderItem,
     children,
     useSafeArea,
@@ -111,12 +115,13 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     filteredChildren,
     setSearchValue,
     onSearchChange: _onSearchChange
-  } = usePickerSearch({showSearch, onSearchChange, children});
+  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
   const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
     migrate,
     value,
     onChange,
     pickerExpandableRef: pickerExpandable,
+    getItemValue,
     topBarProps,
     setSearchValue,
     mode
@@ -125,6 +130,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const {label, accessibilityInfo} = usePickerLabel({
     value,
     items,
+    getItemLabel,
     getLabel,
     accessibilityLabel,
     accessibilityHint,
@@ -144,6 +150,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       value: mode === PickerModes.MULTI ? multiDraftValue : pickerValue,
       onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
       isMultiMode: mode === PickerModes.MULTI,
+      getItemValue,
+      getItemLabel,
       onSelectedLayout: onSelectedItemLayout,
       renderItem,
       selectionLimit
@@ -154,6 +162,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     value,
     multiDraftValue,
     renderItem,
+    getItemValue,
+    getItemLabel,
     selectionLimit,
     onSelectedItemLayout,
     toggleItemSelection,

@@ -3,10 +3,10 @@ import _ from 'lodash';
 import {PickerProps} from '../types';
 import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from '../PickerPresenter';
 
-type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children'>;
+type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel'>;
 
 const usePickerSearch = (props: UsePickerSearchProps) => {
-  const {showSearch, onSearchChange, children} = props;
+  const {showSearch, onSearchChange, children, getItemLabel} = props;
   const [searchValue, setSearchValue] = useState('');
 
   const filteredChildren = useMemo(() => {
@@ -15,7 +15,7 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
       return _.filter(children, child => {
         // @ts-expect-error need to fix children type to be based on PickerItemProps
         const {label, value, getItemLabel: childGetItemLabel} = child.props;
-        const itemLabel = getItemLabelPresenter(label, value, childGetItemLabel);
+        const itemLabel = getItemLabelPresenter(label, value, childGetItemLabel || getItemLabel);
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
