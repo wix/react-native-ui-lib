@@ -25,6 +25,7 @@ export enum PickerFieldTypes {
 export type PickerSingleValue = string | number;
 export type PickerMultiValue = PickerSingleValue[];
 export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
+type PickerFilteredItems = ReactNode | Pick<PickerItemProps, 'label' | 'value' | 'disabled'>[] | undefined;
 
 type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
   ? (value?: ValueType, label?: string) => React.ReactElement
@@ -141,11 +142,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * callback for picker modal search input text change (only when passing showSearch)
    */
-  onSearchChange?: (
-    searchValue: string,
-    filteredChildren?: ReactNode | undefined,
-    filteredItems?: Pick<PickerItemProps, 'label' | 'value' | 'disabled'>[]
-  ) => void;
+  onSearchChange?: (searchValue: string, filteredItems?: PickerFilteredItems) => void;
   /**
    * Render custom search input (only when passing showSearch)
    */
@@ -153,7 +150,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Render a custom header for Picker's dialog
    */
-  renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   // /**
   //  * @deprecated pass useWheelPicker prop instead
   //  * Allow to use the native picker solution (different style for iOS and Android)
