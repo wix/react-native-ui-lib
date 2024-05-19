@@ -221,7 +221,7 @@ const itemsToRender: ItemToRender[] = [
             containerStyle={{marginBottom: 10}}
             placeholder="Enter your email..."
             validationMessage={['Email is required', 'Email is invalid']}
-            validationMessagePosition={'top'}
+            validationMessagePosition={'bottom'}
             enableErrors
             validate={['required', 'email']}
             validateOnStart={false}
