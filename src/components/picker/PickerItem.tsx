@@ -34,7 +34,7 @@ const PickerItem = (props: PickerItemProps) => {
   // @ts-expect-error TODO: fix after removing migrate prop completely
   const itemValue = !migrate && typeof value === 'object' ? value?.value : value;
   const isSelected = isItemSelected(itemValue, context.value);
-  const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
+  const itemLabel = getItemLabel(label, value, props.getItemLabel);
   const selectedCounter = context.selectionLimit && _.isArray(context.value) && context.value?.length;
   const accessibilityProps = {
     accessibilityState: isSelected ? {selected: true} : undefined,
