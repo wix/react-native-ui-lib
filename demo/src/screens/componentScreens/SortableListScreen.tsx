@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   Text,
   Icon,
-  Assets,
   Colors,
   Button
 } from 'react-native-ui-lib';
+import Assets from '../../assets/Assets';
 import {renderHeader} from '../ExampleScreenPresenter';
 
 interface Item extends SortableListItemProps {
@@ -112,6 +112,7 @@ const SortableListScreen = () => {
       </View>
       <View flex useSafeArea>
         <SortableList
+          flexMigration
           data={items}
           renderItem={renderItem}
           keyExtractor={keyExtractor}

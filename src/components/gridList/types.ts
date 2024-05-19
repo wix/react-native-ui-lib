@@ -1,6 +1,6 @@
-import {FlatListProps, ScrollViewProps} from 'react-native';
+import {FlatListProps} from 'react-native';
 
-export interface GridListBaseProps extends Pick<ScrollViewProps, 'style' | 'contentContainerStyle'> {
+export interface GridListBaseProps extends Pick<FlatListProps<any>, 'style' | 'contentContainerStyle' | 'columnWrapperStyle'> {
   /**
    * Allow a responsive item width to the maximum item width
    */

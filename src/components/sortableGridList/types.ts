@@ -12,6 +12,10 @@ export interface SortableGridListProps<T = any> extends GridListBaseProps, Scrol
   renderItem: FlatListProps<ItemProps<T>>['renderItem'];
   onOrderChange?: (newData: ItemProps<T>[], newOrder: ItemsOrder) => void;
   extraData?: any;
+  /**
+   * Temporary migration flag for enabling flex on the container of the list (like it should be by default)
+   */
+  flexMigration?: boolean;
 }
 
 export interface SortableItemProps {

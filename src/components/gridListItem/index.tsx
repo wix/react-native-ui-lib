@@ -3,10 +3,10 @@ import React, {Component} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import memoize from 'memoize-one';
 import * as Modifiers from '../../commons/modifiers';
-import {Colors, Spacings, Typography} from 'style';
+import {Spacings} from 'style';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
-import Text from '../text';
+import Text, {type TextProps} from '../text';
 import Image, {ImageProps} from '../image';
 
 export enum HorizontalAlignment {
@@ -115,15 +115,6 @@ export interface GridListItemProps {
   children?: React.ReactElement | React.ReactElement[];
 }
 
-interface RenderContentType {
-  text?: string | React.ReactElement;
-  typography?: string;
-  color?: string;
-  numberOfLines?: number;
-  style?: StyleProp<ViewStyle>;
-  testID?: string;
-}
-
 /**
  * @description: A single grid view/list item component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/GridViewScreen.tsx
@@ -165,23 +156,12 @@ class GridListItem extends Component<GridListItemProps> {
     }
   });
 
-  renderContent({text, typography, color, numberOfLines = 1, style, testID}: RenderContentType) {
+  renderContent(text: string | React.ReactElement | undefined, textProps: Partial<TextProps>) {
     const {alignToStart, horizontalAlignment} = this.props;
     const textAlign = alignToStart ? 'left' : horizontalAlignment;
     if (text) {
       return (
-        <Text
-          testID={testID}
-          // @ts-ignore
-          style={[
-            style,
-            //@ts-ignore
-            Typography[typography],
-            color && {color},
-            {textAlign}
-          ]}
-          numberOfLines={numberOfLines}
-        >
+        <Text {...textProps} style={[textProps.style, {textAlign}]}>
           {text}
         </Text>
       );
@@ -199,18 +179,18 @@ class GridListItem extends Component<GridListItemProps> {
       renderCustomItem,
       children,
       title,
-      titleTypography,
-      titleColor = Colors.$textDefault,
+      titleTypography = 'bodySmallBold',
+      titleColor,
       titleLines,
       overlayText,
       overlayTextContainerStyle,
       subtitle,
-      subtitleTypography,
-      subtitleColor = Colors.$textDefault,
+      subtitleTypography = 'subtext',
+      subtitleColor,
       subtitleLines,
       description,
-      descriptionTypography,
-      descriptionColor = Colors.$textDefault,
+      descriptionTypography = 'subtext',
+      descriptionColor,
       descriptionLines,
       onPress,
       renderOverlay
@@ -237,26 +217,23 @@ class GridListItem extends Component<GridListItemProps> {
         {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
         {renderOverlay && <View style={[styles.overlay, itemSize]}>{renderOverlay()}</View>}
         <TextContainer {...textContainerStyle}>
-          {this.renderContent({
+          {this.renderContent(title, {
             testID: `${testID}.title`,
-            text: title,
-            typography: titleTypography,
+            [titleTypography]: true,
             color: titleColor,
             numberOfLines: titleLines,
             style: styles.title
           })}
-          {this.renderContent({
+          {this.renderContent(subtitle, {
             testID: `${testID}.subtitle`,
-            text: subtitle,
-            typography: subtitleTypography,
+            [subtitleTypography]: true,
             color: subtitleColor,
             numberOfLines: subtitleLines,
             style: styles.subtitle
           })}
-          {this.renderContent({
+          {this.renderContent(description, {
             testID: `${testID}.description`,
-            text: description,
-            typography: descriptionTypography,
+            [descriptionTypography]: true,
             color: descriptionColor,
             numberOfLines: descriptionLines,
             style: styles.description
@@ -274,16 +251,13 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: Spacings.s1,
-    textAlign: 'center',
-    ...Typography.bodySmallBold
+    textAlign: 'center'
   },
   subtitle: {
-    textAlign: 'center',
-    ...Typography.subtext
+    textAlign: 'center'
   },
   description: {
-    textAlign: 'center',
-    ...Typography.subtext
+    textAlign: 'center'
   },
   overlay: {
     position: 'absolute',
