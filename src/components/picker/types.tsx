@@ -109,16 +109,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   onPress?: () => void;
   /**
-   * @deprecated
-   * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemValue?: (value: PickerValue) => any;
-  /**
-   * @deprecated
-   * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemLabel?: (value: PickerValue) => string;
-  /**
    * A function that returns the label to show for the selected Picker value
    */
   getLabel?: (value: PickerValue) => string;
@@ -218,11 +208,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   /**
    * Custom function for the item label (e.g (value) => customLabel)
    */
-  getItemLabel?: PickerProps['getItemLabel'];
-  /**
-   * @deprecated Function to return the value out of the item value prop when value is custom shaped.
-   */
-  getItemValue?: PickerProps['getItemValue'];
+  getItemLabel?: (value: PickerValue) => string;
   /**
    * Render custom item
    */
@@ -251,8 +237,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   testID?: string;
 }
 
-export interface PickerContextProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
+export interface PickerContextProps extends Pick<PickerProps, 'migrate' | 'value' | 'renderItem' | 'selectionLimit'> {
   onPress: (value: PickerSingleValue) => void;
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
