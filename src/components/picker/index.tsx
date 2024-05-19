@@ -88,7 +88,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     children,
     useSafeArea,
     // TODO: Remove migrate props and migrate code
-    migrate = true,
     accessibilityLabel,
     accessibilityHint,
     items: propItems,
@@ -117,7 +116,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     onSearchChange: _onSearchChange
   } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
   const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
-    migrate,
     value,
     onChange,
     pickerExpandableRef: pickerExpandable,
@@ -143,10 +141,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   }, []);
 
   const contextValue = useMemo(() => {
-    // @ts-expect-error cleanup after removing migrate prop
-    const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? value?.value : value;
+    const pickerValue = value;
     return {
-      migrate,
       value: mode === PickerModes.MULTI ? multiDraftValue : pickerValue,
       onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
       isMultiMode: mode === PickerModes.MULTI,
@@ -157,7 +153,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       selectionLimit
     };
   }, [
-    migrate,
     mode,
     value,
     multiDraftValue,

@@ -55,10 +55,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   useDialog?: boolean;
   /**
-   * Temporary prop required for migration to Picker's new API
-   */
-  migrate?: boolean;
-  /**
    * Pass for different field type UI (form, filter or settings)
    */
   fieldType?: PickerFieldTypes | `${PickerFieldTypes}`;
@@ -149,7 +145,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Render a custom header for Picker's dialog
    */
-  renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   // /**
   //  * @deprecated pass useWheelPicker prop instead
   //  * Allow to use the native picker solution (different style for iOS and Android)
@@ -252,7 +248,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
 }
 
 export interface PickerContextProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
+  extends Pick<PickerProps, 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
   onPress: (value: PickerSingleValue) => void;
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;

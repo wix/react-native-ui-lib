@@ -75,7 +75,6 @@ class Product extends Component {
 
           <View marginT-s2>
             <Picker
-              migrate
               value={selectedColor}
               onChange={(value: PickerValue) => this.setState({selectedColor: value})}
               trailingAccessory={
@@ -94,7 +93,6 @@ class Product extends Component {
               })}
             </Picker>
             <Picker
-              migrate
               value={selectedSize}
               onChange={(value: PickerValue) => this.setState({selectedSize: value})}
             >
