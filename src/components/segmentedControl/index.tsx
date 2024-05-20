@@ -264,6 +264,6 @@ interface StaticMembers {
   presets: typeof Presets;
 }
 
-SegmentedControl.displayName = 'SegmentedControl.Segment';
+SegmentedControl.displayName = 'SegmentedControl';
 SegmentedControl.presets = Presets;
 export default asBaseComponent<SegmentedControlProps, StaticMembers>(SegmentedControl);
