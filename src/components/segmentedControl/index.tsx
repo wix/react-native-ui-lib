@@ -182,6 +182,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     }
     return {};
   });
+  const shouldRenderDividers = segmentDividerWidth !== 0;
 
   const renderSegments = () =>
     _.map(segments, (_value, index) => {
@@ -202,7 +203,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
             {...segments?.[index]}
             testID={testID}
           />
-          {!isLastSegment && segmentDividerWidth !== 0 && (
+          {!isLastSegment && shouldRenderDividers && (
             <View
               key={`segment.divider-${index}`}
               width={segmentDividerWidth}
@@ -223,14 +224,14 @@ const SegmentedControl = (props: SegmentedControlProps) => {
             {
               borderRadius,
               backgroundColor: activeBackgroundColor,
-              borderWidth: segmentDividerWidth !== 0 ? undefined : outlineWidth,
-              borderColor: segmentDividerWidth !== 0 ? undefined : outlineColor
+              borderWidth: shouldRenderDividers ? undefined : outlineWidth,
+              borderColor: shouldRenderDividers ? undefined : outlineColor
             },
             animatedStyle
           ]}
         />
         {renderSegments()}
-        {segmentDividerWidth !== 0 && (
+        {shouldRenderDividers && (
           <View
             reanimated
             style={[
