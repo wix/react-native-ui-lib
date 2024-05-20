@@ -63,7 +63,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   fieldType?: PickerFieldTypes | `${PickerFieldTypes}`;
   /**
-   * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
+   * Picker value
    */
   value?: PickerValue;
   /**
