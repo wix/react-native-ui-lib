@@ -68,18 +68,6 @@ const SegmentedControlScreen = () => {
             segments={segments.third}
             preset={screenPreset}
           />
-          <SegmentedControl
-            containerStyle={styles.container}
-            segments={segments.forth}
-            activeColor={Colors.$textDefault}
-            borderRadius={BorderRadiuses.br20}
-            backgroundColor={Colors.$backgroundInverted}
-            activeBackgroundColor={Colors.$backgroundNeutralIdle}
-            inactiveColor={Colors.$textDisabled}
-            style={styles.customStyle}
-            segmentsStyle={styles.customSegmentsStyle}
-            preset={screenPreset}
-          />
         </View>
         <SegmentedControl containerStyle={styles.container} segments={segments.fifth} preset={screenPreset}/>
         <SegmentedControl containerStyle={styles.container} segments={segments.sixth} preset={screenPreset}/>
@@ -91,6 +79,20 @@ const SegmentedControlScreen = () => {
           segments={segments.seventh}
           segmentLabelStyle={styles.customTypography}
           preset={screenPreset}
+        />
+        <Text marginT-s4 center>
+          Custom Styling
+        </Text>
+        <SegmentedControl
+          containerStyle={styles.container}
+          segments={segments.forth}
+          activeColor={Colors.$textDefault}
+          borderRadius={BorderRadiuses.br20}
+          backgroundColor={Colors.$backgroundInverted}
+          activeBackgroundColor={Colors.$backgroundNeutralIdle}
+          inactiveColor={Colors.$textDisabled}
+          style={styles.customStyle}
+          segmentsStyle={styles.customSegmentsStyle}
         />
       </View>
     </View>
