@@ -1,6 +1,18 @@
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {Colors, Spacings, View, Text, Button, Keyboard, TextField, TextFieldRef, SegmentedControl} from 'react-native-ui-lib';
+import {ScrollView, ActivityIndicator} from 'react-native';
+import {
+  Colors,
+  Spacings,
+  View,
+  Text,
+  Button,
+  Keyboard,
+  TextField,
+  TextFieldRef,
+  FieldContextType,
+  TextFieldProps,
+  SegmentedControl
+} from 'react-native-ui-lib';
 import Assets from '../../assets/Assets';
 const {KeyboardAwareInsetsView} = Keyboard;
 const priceFormatter = Intl.NumberFormat('en-US');
@@ -270,7 +282,7 @@ export default class TextFieldScreen extends Component {
     this.setState({preset: index === 0 ? 'underline' : 'outline'});
   };
 
-  getDynamicFieldStyle = (context, props) => {
+  getDynamicFieldStyle = (context: FieldContextType, props: TextFieldProps) => {
     let color = Colors.$outlineNeutral;
     
     if (context?.isFocused) {
@@ -420,17 +432,3 @@ export default class TextFieldScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  underline: {
-    borderBottomWidth: 1,
-    borderColor: Colors.cyan20,
-    paddingBottom: 4
-  },
-  outline: {
-    borderWidth: 1,
-    borderColor: Colors.cyan20,
-    padding: 4,
-    borderRadius: 4
-  }
-});
