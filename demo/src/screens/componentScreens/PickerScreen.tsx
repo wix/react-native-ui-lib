@@ -27,11 +27,11 @@ const dropdownIcon = <Icon source={dropdown} tintColor={Colors.$iconDefault}/>;
 const contacts = _.map(contactsData, (c, index) => ({...c, value: index, label: c.name}));
 
 const options = [
-  {label: 'JavaScript', value: 'js'},
-  {label: 'Java', value: 'java'},
-  {label: 'Python', value: 'python'},
-  {label: 'C++', value: 'c++', disabled: true},
-  {label: 'Perl', value: 'perl'}
+  {label: 'JavaScript', value: 'js', labelStyle: Typography.text65},
+  {label: 'Java', value: 'java', labelStyle: Typography.text65},
+  {label: 'Python', value: 'python', labelStyle: Typography.text65},
+  {label: 'C++', value: 'c++', disabled: true, labelStyle: Typography.text65},
+  {label: 'Perl', value: 'perl', labelStyle: Typography.text65}
 ];
 
 const filters = [
@@ -165,17 +165,8 @@ export default class PickerScreen extends Component {
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
             renderCustomModal={this.renderDialog}
-          >
-            {_.map(options, option => (
-              <Picker.Item
-                key={option.value}
-                value={option.value}
-                label={option.label}
-                labelStyle={Typography.text65}
-                disabled={option.disabled}
-              />
-            ))}
-          </Picker>
+            items={options}
+          />
 
           <Picker
             label="Dialog Picker"
