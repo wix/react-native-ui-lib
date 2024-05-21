@@ -55,6 +55,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   useDialog?: boolean;
   /**
+   * @deprecated
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
@@ -187,6 +188,9 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Component test id
    */
   testID?: string;
+  /**
+   * @deprecated
+   */
   children?: ReactNode | undefined;
 };
 
