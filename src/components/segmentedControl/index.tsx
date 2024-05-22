@@ -96,6 +96,19 @@ export type SegmentedControlProps = {
   preset?: Presets | `${Presets}`;
 };
 
+const nonAreUndefined = <T, >(array: Array<T | undefined>): array is Array<T> => {
+  for (const item of array) {
+    if (item === undefined) {
+      return false;
+    }
+  }
+  return true;
+};
+
+function getInitialSegmentsDimensionsArray(length: number) {
+  return Array<{x: number; width: number} | undefined>(length).fill(undefined);
+}
+
 /**
  * @description: SegmentedControl component for toggling two values or more
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SegmentedControlScreen.tsx
@@ -125,7 +138,8 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const animatedSelectedIndex = useSharedValue(initialIndex);
   const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
   const segmentedControlHeight = useSharedValue(0);
-  const segmentsCounter = useRef(0);
+  // const shouldResetOnDimensionsOnNextLayout = useRef(false); // use this flag if there bugs with onLayout being called more than once.
+  const segmentsDimensions = useRef(getInitialSegmentsDimensionsArray(segments?.length || 0));
 
   useEffect(() => {
     animatedSelectedIndex.value = initialIndex;
@@ -155,14 +169,17 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   }, []);
 
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
+    // if (shouldResetOnDimensionsOnNextLayout.current) {
+    //   shouldResetOnDimensionsOnNextLayout.current = false;
+    //   // segmentsDimensions.current = getInitialSegmentsDimensionsArray(segments?.length || 0);
+    // }
     const {x, width, height} = event.nativeEvent.layout;
-    segmentsStyle.value[index] = {x, width};
+    segmentsDimensions.current[index] = {x, width};
     segmentedControlHeight.value = height + 2 * CONTAINER_BORDER_WIDTH;
-    segmentsCounter.current++;
 
-    if (segmentsCounter.current === segments?.length) {
-      segmentsStyle.value = [...segmentsStyle.value];
-      segmentsCounter.current = 0; // in case onLayout will be called again (orientation change etc.)
+    if (nonAreUndefined(segmentsDimensions.current)) {
+      segmentsStyle.value = [...segmentsDimensions.current];
+      // shouldResetOnDimensionsOnNextLayout.current = true;// in case onLayout will be called again (orientation change etc.)
     }
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
