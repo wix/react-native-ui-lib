@@ -24,7 +24,6 @@ const SegmentedControlScreen = () => {
   const onChangeIndex = useCallback((index: number) => {
     console.warn('Index ' + index + ' of the second segmentedControl was pressed');
   }, []);
-
   const [screenPreset, setScreenPreset] = useState(SegmentedControl.presets.DEFAULT);
 
   return (
@@ -32,10 +31,7 @@ const SegmentedControlScreen = () => {
       <Text center text40 $textDefault>
         Segmented Control
       </Text>
-      <View
-        flex
-        marginT-s8
-      >
+      <View flex marginT-s8>
         <View center>
           <View row gap-s10 bottom>
             <Text text70>Preset:</Text>
