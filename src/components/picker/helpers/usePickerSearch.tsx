@@ -12,15 +12,15 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
   const filterItems = (items: any, getItemLabelFunction: any) => {
     if (showSearch && !_.isEmpty(searchValue)) {
       return _.filter(items, item => {
-        const {label, value, getItemLabel: itemGetItemLabel} = item.props || item;
-        const itemLabel = getItemLabelPresenter(label, value, itemGetItemLabel || getItemLabelFunction);
+        const {label, value, getItemLabel} = item.props || item;
+        const itemLabel = getItemLabelPresenter(label, value, getItemLabel || getItemLabelFunction);
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
     return items;
   };
 
-  const filteredItems = useMemo(() => filterItems(children || items, getItemLabel), [showSearch, searchValue, items]);
+  const filteredItems = useMemo(() => filterItems(children || items, getItemLabel), [showSearch, searchValue, items, children]);
 
   const _onSearchChange = useCallback((searchValue: string) => {
     setSearchValue(searchValue);
