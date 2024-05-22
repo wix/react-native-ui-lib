@@ -17,13 +17,7 @@ const segments: Record<string, Array<SegmentedControlItemProps>> = {
   forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Style'}],
   fifth: [{label: 'Full'}, {label: 'Width'}],
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
-  seventh: [{label: '$'}, {label: '%'}],
-  eighth: [
-    {label: `${Assets.emojis.arrow_left} Left`},
-    {label: `${Assets.emojis.arrow_up} Up`},
-    {label: `${Assets.emojis.arrow_down} Down`},
-    {label: `${Assets.emojis.arrow_right} Right`}
-  ]
+  seventh: [{label: '$'}, {label: '%'}]
 };
 
 const SegmentedControlScreen = () => {
@@ -41,7 +35,6 @@ const SegmentedControlScreen = () => {
       <View
         flex
         marginT-s8
-        key={screenPreset /* added here because changing the preset based on state was causing wrong calculations */}
       >
         <View center>
           <View row gap-s10 bottom>
@@ -65,6 +58,7 @@ const SegmentedControlScreen = () => {
           <SegmentedControl
             containerStyle={styles.container}
             activeColor={Colors.$textDangerLight}
+            outlineColor={Colors.$textDangerLight}
             segments={segments.third}
             preset={screenPreset}
           />
