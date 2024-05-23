@@ -10,8 +10,8 @@ type DotExtendedString<T extends string> = `${T}.`;
  *
  * Example: PathArray<'path1.path2.path3'> --> ['path1', 'path2', 'path3']
  */
-type PathArray<S extends string> =
-  DotExtendedString<S> extends `${infer A}.${infer B}` ? (A extends '' ? [] : [A, ...PathArray<B>]) : [];
+type PathToStringsArray<S extends string> =
+  DotExtendedString<S> extends `${infer A}.${infer B}` ? (A extends '' ? [] : [A, ...PathToStringsArray<B>]) : [];
 
 /**
  * Creates a nested record with the nesting of path of the strings in the array that ends with object K.
@@ -19,17 +19,17 @@ type PathArray<S extends string> =
  * Example: NestedRecord<'path1.path2', {last: number}> --> {path1: { path2: {last: number}}}
  */
 type NestedRecord<Path extends string[], K extends object = {}> = Path extends [infer Next, ...infer Rest]
-  ? {[P in Next]: NestedRecord<Rest, K>}
+  ? Next extends string ? Rest extends string[] ? {[P in Next]: NestedRecord<Rest, K>} : never : never
   : K;
 
 /**
  * Gets type of K at Path.
  */
-type DeepGet<K extends object, Path extends string> = _DeepGet<K, PathArray<Path>>;
+type DeepGet<K extends object, Path extends string> = _DeepGet<K, PathToStringsArray<Path>>;
 
-type _DeepGet<K extends object, T extends Array<string>> = T extends [infer First, ...infer Rest]
-  ? First extends keyof K
-    ? _DeepGet<K[First], Rest>
+type _DeepGet<K extends {} | unknown, T extends Array<string>> = T extends [infer First, ...infer Rest]
+  ? First extends keyof K ? Rest extends string[]
+    ? _DeepGet<K[First], Rest> : never
     : never
   : K;
 
@@ -38,7 +38,7 @@ type _DeepGet<K extends object, T extends Array<string>> = T extends [infer Firs
  *
  * Example: PathRecord<'path1.path2', {last: number}> --> {path1: { path2: {last: number}}}
  */
-type PathRecord<T extends string, K = {}> = NestedRecord<PathArray<T>, K>;
+type PathRecord<T extends string, K extends object> = NestedRecord<PathToStringsArray<T>, K>;
 
 
 /**
