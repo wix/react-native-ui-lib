@@ -23,6 +23,10 @@ export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabe
    * Should the icon be on right of the label
    */
   iconOnRight?: boolean;
+  /**
+   * Icon tint color
+   */
+  iconTintColor?: string;
 };
 
 export type SegmentProps = SegmentedControlItemProps & {
@@ -74,7 +78,8 @@ const Segment = React.memo((props: SegmentProps) => {
     iconOnRight,
     style,
     segmentLabelStyle,
-    testID
+    testID,
+    iconTintColor
   } = props;
 
   const animatedTextStyle = useAnimatedStyle(() => {
@@ -83,7 +88,7 @@ const Segment = React.memo((props: SegmentProps) => {
   });
 
   const animatedIconStyle = useAnimatedStyle(() => {
-    const tintColor = selectedIndex?.value === index ? activeColor : inactiveColor;
+    const tintColor = selectedIndex?.value === index ? activeColor : (iconTintColor || inactiveColor);
     return {tintColor};
   });
 
@@ -130,5 +135,5 @@ const Segment = React.memo((props: SegmentProps) => {
     </TouchableOpacity>
   );
 });
-
+Segment.displayName = 'SegmentedControl.Segment';
 export default asBaseComponent<SegmentProps>(Segment);
