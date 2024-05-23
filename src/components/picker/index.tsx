@@ -15,7 +15,6 @@ import TextField from '../textField';
 import Icon from '../icon';
 import View from '../view';
 import Text from '../text';
-// import NativePicker from './NativePicker';
 import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
@@ -63,7 +62,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchPlaceholder,
     renderCustomSearch,
     renderCustomDialogHeader,
-    // useNativePicker,
     useWheelPicker,
     useDialog,
     renderPicker,
@@ -284,10 +282,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       );
     }
   };
-
-  // if (useNativePicker) {
-  //   return <NativePicker {...themeProps}/>;
-  // }
 
   return (
     //TODO : fix the ExpandableOverlay ts error

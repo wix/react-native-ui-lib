@@ -150,11 +150,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Render a custom header for Picker's dialog
    */
   renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
-  // /**
-  //  * @deprecated pass useWheelPicker prop instead
-  //  * Allow to use the native picker solution (different style for iOS and Android)
-  //  */
-  // useNativePicker?: boolean;
   /**
    * Use wheel picker instead of a list picker
    */
