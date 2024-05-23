@@ -4,13 +4,7 @@ import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses, 
 
 const segments = {
   first: [{label: 'Left'}, {label: 'Right'}],
-  second: [
-    {label: '1'},
-    {label: '2'},
-    {label: '3'},
-    {label: '4', iconSource: Assets.icons.search, iconOnRight: true},
-    {label: '5'}
-  ],
+  second: [{label: '1'}, {label: '2'}, {label: '3'}, {label: Assets.emojis.airplane}, {label: '5'}],
   third: [
     {
       label: 'Very Long Label with icon',
