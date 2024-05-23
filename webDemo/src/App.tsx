@@ -18,14 +18,7 @@ import AnimatedImage from 'react-native-ui-lib/AnimatedImage';
 import Avatar from 'react-native-ui-lib/Avatar';
 import Drawer from 'react-native-ui-lib/Drawer';
 
-import {
-  Colors,
-  Spacings,
-  Typography,
-  Assets,
-  Text,
-  Incubator
-} from 'react-native-ui-lib';
+import {Colors, Spacings, Typography, Assets, Text, Incubator, SegmentedControl} from 'react-native-ui-lib';
 
 import Picker from './examples/Picker';
 import RadioGroup from './examples/RadioButtonGroup';
@@ -233,6 +226,20 @@ const itemsToRender: ItemToRender[] = [
           />
         </>
       );
+    }
+  },
+  {
+    title: 'SegmentedControl',
+    FC: () => {
+      const segments = [
+        {label: '1'},
+        {label: '2'},
+        {label: '3'},
+        {label: '4', iconSource: Assets.icons.search, iconOnRight: true},
+        {label: '5'}
+      ];
+
+      return <SegmentedControl segments={segments} />;
     }
   },
   {

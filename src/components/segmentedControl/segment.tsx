@@ -1,10 +1,11 @@
 import React, {useCallback, useMemo} from 'react';
-import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ImageStyle, StyleProp, ViewStyle} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import {SegmentedControlProps} from './index';
+import Icon, {IconProps} from '../icon';
 
 export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabelStyle'> & {
   /**
@@ -14,7 +15,7 @@ export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabe
   /**
    * An icon for the segment.
    */
-  iconSource?: ImageSourcePropType;
+  iconSource?: IconProps['source'];
   /**
    * An icon for the segment.
    */
@@ -82,6 +83,8 @@ const Segment = React.memo((props: SegmentProps) => {
     iconTintColor
   } = props;
 
+  const AnimatedUIIcon = Reanimated.createAnimatedComponent(Icon);
+
   const animatedTextStyle = useAnimatedStyle(() => {
     const color = selectedIndex?.value === index ? activeColor : inactiveColor;
     return {color};
@@ -97,8 +100,7 @@ const Segment = React.memo((props: SegmentProps) => {
   }, [style]);
 
   const renderIcon = useCallback(() => {
-    return iconSource && <Reanimated.Image source={iconSource} style={[animatedIconStyle, iconStyle]}/>;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return iconSource && <AnimatedUIIcon source={iconSource} style={[animatedIconStyle, iconStyle]}/>;
   }, [iconSource, iconStyle]);
 
   const onSegmentPress = useCallback(() => {
