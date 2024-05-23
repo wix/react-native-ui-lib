@@ -17,7 +17,7 @@ export function isBase64ImageContent(data: string) {
   return base64regex.test(base64Content);
 }
 
-export function getAsset(assetName = '', assetGroup = '') {
+export function getAsset(assetName = '', assetGroup = ''): any {
   return get(Assets, `${assetGroup}.${assetName}`);
 }
 
