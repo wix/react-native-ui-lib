@@ -193,11 +193,13 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
 export type PickerPropsWithSingle = PickerBaseProps & {
   mode?: PickerModes.SINGLE;
   value?: PickerSingleValue;
+  onChange?: (value: PickerSingleValue) => void;
 };
 
 export type PickerPropsWithMulti = PickerBaseProps & {
   mode?: PickerModes.MULTI;
   value?: PickerMultiValue;
+  onChange?: (value: PickerMultiValue) => void;
 };
 
 export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
