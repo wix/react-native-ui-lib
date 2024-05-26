@@ -27,7 +27,9 @@ const getDriver = (props?: any) => {
   return PickerDriver({renderTree: render(<TestCase {...props}/>), testID});
 };
 
+const onPress = jest.fn();
 const onDismiss = jest.fn();
+// const onShow = jest.fn();
 
 describe('Picker', () => {
   beforeEach(() => {
@@ -35,6 +37,31 @@ describe('Picker', () => {
   });
 
   describe('Modal', () => {
+    describe('Test open', () => {
+      it('Should open when enabled', () => {
+        const driver = getDriver();
+        expect(driver.isOpen()).toBeFalsy();
+        driver.open();
+        expect(driver.isOpen()).toBeTruthy();
+      });
+
+      it('Should not open when disabled', () => {
+        const driver = getDriver({editable: false});
+        expect(driver.isOpen()).toBeFalsy();
+        driver.open();
+        expect(driver.isOpen()).toBeFalsy();
+      });
+    });
+
+    it('Test close', () => {
+      const driver = getDriver();
+      expect(driver.isOpen()).toBeFalsy();
+      driver.open();
+      expect(driver.isOpen()).toBeTruthy();
+      driver.cancel();
+      expect(driver.isOpen()).toBeFalsy();
+    });
+
     describe('Test value', () => {
       it('Get correct value of a single item', () => {
         const driver = getDriver({value: countries[2].value});
@@ -45,34 +72,6 @@ describe('Picker', () => {
         const driver = getDriver({value: [countries[2].value, countries[4].value]});
         expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
       });
-    });
-
-    describe('Test open', () => {
-      it('Should open when enabled', () => {
-        const driver = getDriver();
-
-        expect(driver.isOpen()).toBeFalsy();
-        driver.open();
-        expect(driver.isOpen()).toBeTruthy();
-      });
-
-      it('Should not open when disabled', () => {
-        const driver = getDriver({editable: false});
-
-        expect(driver.isOpen()).toBeFalsy();
-        driver.open();
-        expect(driver.isOpen()).toBeFalsy();
-      });
-    });
-
-    it('Test close', () => {
-      const driver = getDriver();
-
-      expect(driver.isOpen()).toBeFalsy();
-      driver.open();
-      expect(driver.isOpen()).toBeTruthy();
-      driver.cancel();
-      expect(driver.isOpen()).toBeFalsy();
     });
 
     describe('Test selection', () => {
@@ -100,19 +99,60 @@ describe('Picker', () => {
       });
     });
 
-    it('Test onDismiss', () => {
-      const driver = getDriver({
-        pickerModalProps: {
-          onDismiss
-        }
-      });
-
+    it('Test onPress', () => {
+      const driver = getDriver({onPress});
       expect(driver.isOpen()).toBeFalsy();
       driver.open();
       expect(driver.isOpen()).toBeTruthy();
       driver.cancel();
       expect(driver.isOpen()).toBeFalsy();
-      expect(onDismiss).toHaveBeenCalledTimes(2); // TODO: this should be 1
+      expect(onPress).toHaveBeenCalled();
+    });
+
+    describe('Test pickerModalProps', () => {
+      it('Test onDismiss', () => {
+        const driver = getDriver({
+          pickerModalProps: {
+            onDismiss
+          }
+        });
+        expect(driver.isOpen()).toBeFalsy();
+        driver.open();
+        expect(driver.isOpen()).toBeTruthy();
+        driver.cancel();
+        expect(driver.isOpen()).toBeFalsy();
+        expect(onDismiss).toHaveBeenCalledTimes(2); // TODO: this should be 1
+      });
+
+      // TODO: this test is not passing yet
+      // it('Test onShow passed via pickerModalProps', async () => {
+      //   const driver = getDriver({
+      //     pickerModalProps: {
+      //       onShow
+      //     }
+      //   });
+      //   expect(driver.isOpen()).toBeFalsy();
+      //   jest.useFakeTimers();
+      //   expect(driver.isOpen()).toBeTruthy();
+      //   expect(onShow).toHaveBeenCalled();
+      // });
+
+      it('Test Modal TopBar', () => {
+        const driver = getDriver({mode: 'MULTI', topBarProps: {cancelLabel: 'Cancel'}});
+        expect(driver.isOpen()).toBeFalsy();
+        driver.open();
+        expect(driver.isOpen()).toBeTruthy();
+        driver.selectItem(countries[2].label);
+        driver.selectItem(countries[4].label);
+        driver.done();
+        expect(driver.isOpen()).toBeFalsy();
+        expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
+        driver.open();
+        expect(driver.isOpen()).toBeTruthy();
+        driver.cancel();
+        expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
+        expect(driver.isOpen()).toBeFalsy();
+      });
     });
   });
 
