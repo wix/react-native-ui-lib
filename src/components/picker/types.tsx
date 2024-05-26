@@ -6,6 +6,7 @@ import {ModalTopBarProps} from '../modal/TopBar';
 // import {TextFieldProps} from '../../../typings/components/Inputs';
 import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
+import {ModalProps} from '../modal';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -166,7 +167,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Pass props to the picker modal
    */
-  pickerModalProps?: ExpandableOverlayProps['modalProps'];
+  pickerModalProps?: ModalProps;
   /**
    * Custom container style
    */
