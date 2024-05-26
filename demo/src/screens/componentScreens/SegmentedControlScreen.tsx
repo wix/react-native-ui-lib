@@ -17,7 +17,8 @@ const segments: Record<string, Array<SegmentedControlItemProps>> = {
   forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Style'}],
   fifth: [{label: 'Full'}, {label: 'Width'}],
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
-  seventh: [{label: '$'}, {label: '%'}]
+  seventh: [{label: '$'}, {label: '%'}],
+  eighth: [{label: 'Plus', iconSource: Assets.icons.plusSmall}, {label: 'Minus', iconSource: Assets.icons.minusSmall}, {label: 'Check', iconSource: Assets.icons.checkSmall}]
 };
 
 const SegmentedControlScreen = () => {
@@ -70,6 +71,8 @@ const SegmentedControlScreen = () => {
           segmentLabelStyle={styles.customTypography}
           preset={screenPreset}
         />
+        <Text center marginT-s4>With Icons</Text>
+        <SegmentedControl segments={segments.eighth} preset={screenPreset}/>
         <Text marginT-s4 center>
           Custom Styling
         </Text>
