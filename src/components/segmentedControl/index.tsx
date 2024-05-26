@@ -31,7 +31,7 @@ export type SegmentedControlProps = {
   /**
    * Array on segments.
    */
-  segments?: SegmentedControlItemProps[];
+  segments: SegmentedControlItemProps[];
   /**
    * The color of the active segment label.
    */

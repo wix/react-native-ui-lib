@@ -26,7 +26,7 @@ const useSegmentedControlPreset = (props: SegmentedControlProps): useSegmentedCo
   return presetProps;
 };
 
-const defaultsPresetsProps: Record<`${Presets}`, useSegmentedControlPresetProps> = {
+const defaultsPresetsProps: Record<`${Presets}`, Omit<useSegmentedControlPresetProps, 'segments'>> = {
   default: {
     activeColor: DEFAULT_ACTIVE_COLOR,
     borderRadius: BorderRadiuses.br100,
