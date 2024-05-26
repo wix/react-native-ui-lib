@@ -3,9 +3,7 @@ import type {icons} from './icons';
 import type {emojis} from './emojis';
 import type {images} from './images';
 
-
-const assets: Assets = new Assets();
-assets.loadAssetsGroup('', {
+const assetsStructure = {
   get icons(): typeof icons {
     return require('./icons').icons;
   },
@@ -15,6 +13,8 @@ assets.loadAssetsGroup('', {
   get images(): typeof images {
     return require('./images').images;
   }
-});
-const ExportedAssets: typeof assets = assets;
-export default ExportedAssets;
+};
+
+const assets: Assets = new Assets();
+assets.loadAssetsGroup('', assetsStructure);
+export default assets as typeof assets;
