@@ -166,7 +166,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Pass props to the picker modal
    */
-  pickerModalProps?: object;
+  pickerModalProps?: ExpandableOverlayProps['modalProps'];
   /**
    * Custom container style
    */
