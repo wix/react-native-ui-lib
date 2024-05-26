@@ -1,4 +1,5 @@
-import {Assets} from 'react-native-ui-lib';
+import {Assets as UIAssets} from 'react-native-ui-lib';
+const Assets: typeof UIAssets = UIAssets;
 Assets.loadAssetsGroup('icons.demo', {
   chevronDown: require('./icons/chevronDown.png'),
   chevronRight: require('./icons/chevronRight.png'),
