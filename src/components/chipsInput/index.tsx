@@ -146,6 +146,10 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
     );
   }, [chips, leadingAccessory, defaultChipProps, removeMarkedChip, markedForRemoval, maxChips]);
 
+  const validateChipsInput = useCallback(() => {
+    return (chips?.length ?? 0) > 0;
+  }, [chips]);
+
   return (
     <TextField
       // @ts-expect-error
@@ -159,6 +163,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
       fieldStyle={[fieldStyle, styles.fieldStyle]}
       onKeyPress={onKeyPress}
       accessibilityHint={props.editable ? 'press keyboard delete button to remove last tag' : undefined}
+      validate={validateChipsInput}
     />
   );
 });
