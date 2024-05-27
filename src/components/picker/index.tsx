@@ -199,6 +199,11 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     return <PickerItem {...item}/>;
   }, []);
 
+  const renderItems = useCallback((items: PickerProps['items']) => {
+    return items && _.map(items, item => renderPickerItem(item));
+  },
+  [renderPickerItem]);
+
   const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
     visible,
     closeExpandable,
@@ -210,7 +215,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         closeModal: closeExpandable,
         toggleModal: toggleExpandable,
         onSearchChange: _onSearchChange,
-        children: children || (items && _.map(items, item => renderPickerItem(item))),
+        children: children || renderItems(items),
         // onDone is relevant to multi mode only
         onDone: () => onDoneSelecting(multiDraftValue),
         onCancel: cancelSelect
