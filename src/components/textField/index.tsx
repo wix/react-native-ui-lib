@@ -61,6 +61,8 @@ const TextField = (props: InternalTextFieldProps) => {
     floatOnFocus,
     placeholderTextColor,
     hint,
+    helperText,
+    validationIcon,
     // Label
     label,
     labelColor,
@@ -74,7 +76,7 @@ const TextField = (props: InternalTextFieldProps) => {
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
-    retainValidationSpace = true,
+    retainValidationSpace = !helperText,
     // Char Counter
     showCharCounter,
     charCounterStyle,
@@ -106,6 +108,8 @@ const TextField = (props: InternalTextFieldProps) => {
       });
     }
   }, [leadingAccessory]);
+
+  const _helperText = <Text $textNeutralHeavy subtext>{helperText}</Text>;
 
   const {margins, paddings, typography, positionStyle, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
@@ -206,6 +210,7 @@ const TextField = (props: InternalTextFieldProps) => {
               enableErrors={enableErrors}
               validate={others.validate}
               validationMessage={others.validationMessage}
+              validationIcon={validationIcon}
               validationMessageStyle={_validationMessageStyle}
               retainValidationSpace={retainValidationSpace}
               testID={`${props.testID}.validationMessage`}
@@ -220,6 +225,7 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
+        {_helperText}
       </View>
     </FieldContext.Provider>
   );
