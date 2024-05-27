@@ -3,7 +3,6 @@
 // TODO: deprecate getItemLabel prop
 // TODO: Add initialValue prop
 // TODO: consider deprecating renderCustomModal prop
-// TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
 import {LayoutChangeEvent} from 'react-native';

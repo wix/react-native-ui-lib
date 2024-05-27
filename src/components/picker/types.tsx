@@ -173,6 +173,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
+   * @deprecated
    * Callback for modal onShow event
    */
   onShow?: () => void;
