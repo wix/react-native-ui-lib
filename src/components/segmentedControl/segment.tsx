@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {LayoutChangeEvent, ImageStyle, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ImageStyle, StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -112,7 +112,7 @@ const Segment = React.memo((props: SegmentProps) => {
     onLayout?.(index, event);
   },
   [onLayout, index]);
-
+  const labelAndIconSpacings = iconSource ? (iconOnRight ? styles.rightMargin : styles.leftMargin) : {};
   return (
     <TouchableOpacity
       onLayout={segmentOnLayout}
@@ -128,7 +128,7 @@ const Segment = React.memo((props: SegmentProps) => {
         <Reanimated.Text
           fsTagName={'unmasked'}
           numberOfLines={1}
-          style={[Typography.text90, segmentLabelStyle, animatedTextStyle]}
+          style={[Typography.text90, segmentLabelStyle, animatedTextStyle, labelAndIconSpacings]}
         >
           {label}
         </Reanimated.Text>
@@ -138,4 +138,15 @@ const Segment = React.memo((props: SegmentProps) => {
   );
 });
 Segment.displayName = 'SegmentedControl.Segment';
+
+const ICON_SPACING = Spacings.s1;
+const styles = StyleSheet.create({
+  leftMargin: {
+    marginLeft: ICON_SPACING
+  },
+  rightMargin: {
+    marginRight: ICON_SPACING
+  }
+});
+
 export default asBaseComponent<SegmentProps>(Segment);
