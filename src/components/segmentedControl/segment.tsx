@@ -112,7 +112,7 @@ const Segment = React.memo((props: SegmentProps) => {
     onLayout?.(index, event);
   },
   [onLayout, index]);
-  const labelAndIconSpacings = !!iconSource && (iconOnRight ? styles.rightMargin : styles.leftMargin);
+  const labelMargins = !!iconSource && (iconOnRight ? styles.rightMargin : styles.leftMargin);
   return (
     <TouchableOpacity
       onLayout={segmentOnLayout}
@@ -128,7 +128,7 @@ const Segment = React.memo((props: SegmentProps) => {
         <Reanimated.Text
           fsTagName={'unmasked'}
           numberOfLines={1}
-          style={[Typography.text90, segmentLabelStyle, animatedTextStyle, labelAndIconSpacings]}
+          style={[Typography.text90, segmentLabelStyle, animatedTextStyle, labelMargins]}
         >
           {label}
         </Reanimated.Text>
