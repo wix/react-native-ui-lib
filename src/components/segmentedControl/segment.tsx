@@ -7,6 +7,8 @@ import TouchableOpacity from '../touchableOpacity';
 import {SegmentedControlProps} from './index';
 import Icon, {IconProps} from '../icon';
 
+const ICON_SPACING = Spacings.s1;
+
 export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabelStyle'> & {
   /**
    * The label of the segment.
@@ -139,7 +141,6 @@ const Segment = React.memo((props: SegmentProps) => {
 });
 Segment.displayName = 'SegmentedControl.Segment';
 
-const ICON_SPACING = Spacings.s1;
 const styles = StyleSheet.create({
   leftMargin: {
     marginLeft: ICON_SPACING
