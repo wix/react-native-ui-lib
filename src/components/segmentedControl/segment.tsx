@@ -112,7 +112,7 @@ const Segment = React.memo((props: SegmentProps) => {
     onLayout?.(index, event);
   },
   [onLayout, index]);
-  const labelAndIconSpacings = iconSource ? (iconOnRight ? styles.rightMargin : styles.leftMargin) : {};
+  const labelAndIconSpacings = !!iconSource && (iconOnRight ? styles.rightMargin : styles.leftMargin);
   return (
     <TouchableOpacity
       onLayout={segmentOnLayout}
