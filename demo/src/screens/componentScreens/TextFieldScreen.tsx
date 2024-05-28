@@ -201,7 +201,7 @@ export default class TextFieldScreen extends Component {
             placeholder="Enter full name"
             validate="required"
             validationMessage="This field is required. That means you have to enter some value"
-            containerStyle={{flexGrow: 1, flex: 1}}
+            containerStyle={{flex: 1}}
             validationMessagePosition={errorPosition}
             helperText={'Enter first and last name'}
             validationIcon={validationIcon}
