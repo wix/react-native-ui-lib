@@ -161,9 +161,11 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
   }, [isRequired, chips]);
 
   useDidUpdate(() => {
-    // @ts-expect-error
-    fieldRef.current?.validate();
-  }, [chips]);
+    if (others.validateOnChange) {
+      // @ts-expect-error
+      fieldRef.current?.validate();
+    }
+  }, [chips, others.validateOnChange]);
 
   return (
     <TextField
