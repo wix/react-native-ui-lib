@@ -156,9 +156,20 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
     return inputValidators.includes('required');
   }, [validate]);
 
-  const validateChipsInput = useCallback(() => {
+  const requiredValidator = useCallback(() => {
     return !isRequired || (chips?.length ?? 0) > 0;
   }, [isRequired, chips]);
+
+  const _validate = useMemo(() => {
+    if (!validate) {
+      return undefined;
+    } else if (isRequired) {
+      const inputValidators = Array.isArray(validate) ? validate : [validate];
+      return inputValidators.map(validator => (validator === 'required' ? requiredValidator : validator));
+    } else {
+      return validate;
+    }
+  }, [validate, isRequired, requiredValidator]);
 
   useDidUpdate(() => {
     if (others.validateOnChange) {
@@ -180,7 +191,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
       fieldStyle={[fieldStyle, styles.fieldStyle]}
       onKeyPress={onKeyPress}
       accessibilityHint={props.editable ? 'press keyboard delete button to remove last tag' : undefined}
-      validate={validateChipsInput}
+      validate={_validate}
     />
   );
 });
