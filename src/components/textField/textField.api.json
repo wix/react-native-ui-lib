@@ -20,6 +20,7 @@
     {"name": "labelStyle", "type": "TextStyle", "description": "Custom style for the field label"},
     {"name": "labelProps", "type": "TextProps", "description": "Pass extra props to the label Text element"},
     {"name": "hint", "type": "string", "description": "A hint text to display when focusing the field"},
+    {"name": "helperText", "type": "string", "description": "Text to display under the input"},
     {"name": "placeholder", "type": "string", "description": "The placeholder for the field"},
     {"name": "placeholderTextColor", "type": "ColorType", "description": "Placeholder text color"},
     {"name": "floatingPlaceholder", "type": "boolean", "description": "Pass to add floating placeholder support"},
@@ -47,6 +48,7 @@
       "type": "string | string[]",
       "description": "The validation message to display when field is invalid (depends on validate)"
     },
+    {"name": "validationIcon", "type": "ImageProps['source']", "description": "Icon left to the validation message"},
     {
       "name": "validationMessagePosition",
       "type": "ValidationMessagePosition",
