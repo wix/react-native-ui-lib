@@ -223,7 +223,7 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
-        <Text $textNeutralHeavy subtext>{helperText}</Text>
+        <Text $textNeutralHeavy subtext marginT-s1>{helperText}</Text>
       </View>
     </FieldContext.Provider>
   );
