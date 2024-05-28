@@ -3,7 +3,6 @@
 // TODO: deprecate getItemLabel prop
 // TODO: Add initialValue prop
 // TODO: consider deprecating renderCustomModal prop
-// TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
 import {LayoutChangeEvent} from 'react-native';
@@ -23,7 +22,7 @@ import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
-// import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
 import {extractPickerItems} from './PickerPresenter';
 import {
   PickerProps,
@@ -107,8 +106,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
-  // TODO: Remove
-  // usePickerMigrationWarnings({value, mode});
+  // TODO:  Remove this when migration is completed, starting of v8
+  usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
 
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
   const {
