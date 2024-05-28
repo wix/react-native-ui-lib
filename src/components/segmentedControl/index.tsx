@@ -139,7 +139,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const animatedSelectedIndex = useSharedValue(initialIndex);
   const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
   // const shouldResetOnDimensionsOnNextLayout = useRef(false); // use this flag if there bugs with onLayout being called more than once.
-  const segmentsDimensions = useRef(getInitialSegmentsDimensionsArray(segments.length || 0));
+  const segmentsDimensions = useRef<{x: number; width: number}[]>([]);
   const containerHeight = useSharedValue(0);
 
   useEffect(() => {
