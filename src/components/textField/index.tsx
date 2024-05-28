@@ -109,8 +109,6 @@ const TextField = (props: InternalTextFieldProps) => {
     }
   }, [leadingAccessory]);
 
-  const _helperText = <Text $textNeutralHeavy subtext>{helperText}</Text>;
-
   const {margins, paddings, typography, positionStyle, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
@@ -225,7 +223,7 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
-        {_helperText}
+        <Text $textNeutralHeavy subtext>{helperText}</Text>
       </View>
     </FieldContext.Provider>
   );

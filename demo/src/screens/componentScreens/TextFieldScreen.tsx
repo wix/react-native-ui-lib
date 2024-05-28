@@ -16,7 +16,7 @@ import {
 import Assets from '../../assets/Assets';
 const {KeyboardAwareInsetsView} = Keyboard;
 const priceFormatter = Intl.NumberFormat('en-US');
-const validationIcon = require('../../assets/icons/star.png');
+const validationIcon = require('../../assets/icons/exclamationFillSmall.png');
 
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextFieldRef>();
