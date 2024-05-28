@@ -2,6 +2,7 @@
   "name": "Dash",
   "category": "infra",
   "description": "Dashed line Component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TimelineScreen.tsx",
   "images": [],
   "props": [
     {

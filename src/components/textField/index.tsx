@@ -37,6 +37,7 @@ import CharCounter from './CharCounter';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
+  presets: typeof Presets;
 }
 
 /**
@@ -60,6 +61,8 @@ const TextField = (props: InternalTextFieldProps) => {
     floatOnFocus,
     placeholderTextColor,
     hint,
+    helperText,
+    validationIcon,
     // Label
     label,
     labelColor,
@@ -73,7 +76,7 @@ const TextField = (props: InternalTextFieldProps) => {
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
-    retainValidationSpace = true,
+    retainValidationSpace = !helperText,
     // Char Counter
     showCharCounter,
     charCounterStyle,
@@ -199,12 +202,13 @@ const TextField = (props: InternalTextFieldProps) => {
           {trailingAccessory}
           {/* </View> */}
         </View>
-        <View row spread>
+        <View row spread marginT-s1>
           {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
             <ValidationMessage
               enableErrors={enableErrors}
               validate={others.validate}
               validationMessage={others.validationMessage}
+              validationIcon={validationIcon}
               validationMessageStyle={_validationMessageStyle}
               retainValidationSpace={retainValidationSpace}
               testID={`${props.testID}.validationMessage`}
@@ -219,6 +223,7 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
+        <Text $textNeutralHeavy subtext marginT-s1>{helperText}</Text>
       </View>
     </FieldContext.Provider>
   );

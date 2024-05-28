@@ -3,7 +3,6 @@
 // TODO: deprecate getItemLabel prop
 // TODO: Add initialValue prop
 // TODO: consider deprecating renderCustomModal prop
-// TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
 import {LayoutChangeEvent} from 'react-native';
@@ -23,7 +22,7 @@ import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
-// import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
 import {extractPickerItems} from './PickerPresenter';
 import {
   PickerProps,
@@ -96,8 +95,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   } = themeProps;
   const {preset} = others;
 
-  const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items, setItems] = useState(propItems || extractPickerItems(themeProps));
+  const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
+  const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
 
   useEffect(() => {
     if (propItems) {
@@ -107,8 +106,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
-  // TODO: Remove
-  // usePickerMigrationWarnings({value, mode});
+  // TODO:  Remove this when migration is completed, starting of v8
+  usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
 
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
   const {
@@ -195,6 +194,15 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [fieldType, preset, themeProps.trailingAccessory]);
 
+  const renderPickerItem = useCallback((item: PickerItemProps): React.ReactElement => {
+    return <PickerItem {...item}/>;
+  }, []);
+
+  const renderItems = useCallback((items: PickerProps['items']) => {
+    return items && _.map(items, item => renderPickerItem(item));
+  },
+  [renderPickerItem]);
+
   const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
     visible,
     closeExpandable,
@@ -206,7 +214,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         closeModal: closeExpandable,
         toggleModal: toggleExpandable,
         onSearchChange: _onSearchChange,
-        children,
+        children: children || renderItems(items),
         // onDone is relevant to multi mode only
         onDone: () => onDoneSelecting(multiDraftValue),
         onCancel: cancelSelect
