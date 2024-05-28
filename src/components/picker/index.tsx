@@ -95,8 +95,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   } = themeProps;
   const {preset} = others;
 
-  const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items, setItems] = useState(propItems || extractPickerItems(themeProps));
+  const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
+  const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
 
   useEffect(() => {
     if (propItems) {
@@ -194,6 +194,15 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [fieldType, preset, themeProps.trailingAccessory]);
 
+  const renderPickerItem = useCallback((item: PickerItemProps): React.ReactElement => {
+    return <PickerItem {...item}/>;
+  }, []);
+
+  const renderItems = useCallback((items: PickerProps['items']) => {
+    return items && _.map(items, item => renderPickerItem(item));
+  },
+  [renderPickerItem]);
+
   const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
     visible,
     closeExpandable,
@@ -205,7 +214,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         closeModal: closeExpandable,
         toggleModal: toggleExpandable,
         onSearchChange: _onSearchChange,
-        children,
+        children: children || renderItems(items),
         // onDone is relevant to multi mode only
         onDone: () => onDoneSelecting(multiDraftValue),
         onCancel: cancelSelect

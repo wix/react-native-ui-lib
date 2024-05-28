@@ -171,17 +171,8 @@ export default class PickerScreen extends Component {
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
             renderCustomModal={this.renderDialog}
-          >
-            {_.map(options, option => (
-              <Picker.Item
-                key={option.value}
-                value={option.value}
-                label={option.label}
-                labelStyle={Typography.text65}
-                disabled={option.disabled}
-              />
-            ))}
-          </Picker>
+            items={options}
+          />
 
           <Picker
             label="Dialog Picker"
