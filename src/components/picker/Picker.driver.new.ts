@@ -56,12 +56,17 @@ export const PickerDriver = (props: ComponentProps) => {
     itemDriver.press();
   };
 
+  const isValidationMessage = (): boolean => {
+    return textFieldDriver.getValidationMessage().exists();
+  };
+
   return {
     getValue,
     open,
     cancel,
     done,
     isOpen,
-    selectItem
+    selectItem,
+    isValidationMessage
   };
 };
