@@ -194,14 +194,14 @@ export default class TextFieldScreen extends Component {
           // validateOnStart
           // validateOnBlur
         />
-        <View row spread centerV>
+        <View row spread center>
           <TextField
             ref={this.inputWithValidation}
             label="Name"
             placeholder="Enter full name"
             validate="required"
             validationMessage="This field is required. That means you have to enter some value"
-            containerStyle={{width: 300}}
+            containerStyle={{flexGrow: 1, flex: 1}}
             validationMessagePosition={errorPosition}
             helperText={'Enter first and last name'}
             validationIcon={validationIcon}
