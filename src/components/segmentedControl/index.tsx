@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useRef, useCallback, useEffect, useState} from 'react';
+import React, {useRef, useCallback, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent} from 'react-native';
 import {
   Easing,
@@ -260,8 +260,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
               {
                 borderColor: outlineColor,
                 borderRadius,
-                borderWidth: outlineWidth,
-                height: containerHeight
+                borderWidth: outlineWidth
               },
               animatedStyle
             ]}
