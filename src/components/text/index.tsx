@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
+import React, {Fragment, PureComponent} from 'react';
 import {
   Text as RNText,
   StyleSheet,
@@ -110,8 +110,8 @@ class Text extends PureComponent<PropsTypes> {
 
     if (!_.isEmpty(highlightString)) {
       if (_.isArray(children)) {
-        return _.map(children, child => {
-          return this.renderText(child);
+        return _.map(children, (child, index) => {
+          return <Fragment key={index}>{this.renderText(child)}</Fragment>;
         });
       }
 
