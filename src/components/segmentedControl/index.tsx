@@ -106,10 +106,6 @@ const nonAreUndefined = <T, >(array: Array<T | undefined>): array is Array<T> =>
   return true;
 };
 
-function getInitialSegmentsDimensionsArray(length: number) {
-  return Array<{x: number; width: number} | undefined>(length).fill(undefined);
-}
-
 /**
  * @description: SegmentedControl component for toggling two values or more
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SegmentedControlScreen.tsx
