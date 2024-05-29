@@ -51,6 +51,12 @@ export const PickerDriver = (props: ComponentProps) => {
     }
   };
 
+  const dismissDialog = (useDialog?: boolean): void => {
+    if (useDialog) {
+      dialogDriver.getModal().pressOnBackground();
+    }
+  };
+
   const selectItem = (testID: string): void => {
     const itemDriver = ButtonDriver({renderTree: props.renderTree, testID});
     itemDriver.press();
@@ -62,6 +68,7 @@ export const PickerDriver = (props: ComponentProps) => {
     cancel,
     done,
     isOpen,
+    dismissDialog,
     selectItem
   };
 };
