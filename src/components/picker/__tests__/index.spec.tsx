@@ -157,12 +157,12 @@ describe('Picker', () => {
   });
 
   // TODO: this is a work in progress, the tests are not passing yet
-  describe.skip('Dialog', () => {
+  describe('Dialog', () => {
+    const dialogProps = {useDialog: true, customPickerProps: {migrateDialog: true}};
     describe('Test value', () => {
       it('Get correct value of a single item', () => {
         const driver = getDriver({
-          useDialog: true,
-          customPickerProps: {migrateDialog: true},
+          ...dialogProps,
           value: countries[2].value
         });
         expect(driver.getValue()).toEqual(countries[2].label);
@@ -170,88 +170,81 @@ describe('Picker', () => {
 
       it('Get correct value of multiple selected items', () => {
         const driver = getDriver({
-          useDialog: true,
-          customPickerProps: {migrateDialog: true},
+          ...dialogProps,
           value: [countries[2].value, countries[4].value]
         });
         expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
       });
     });
 
-    describe('Test open', () => {
+    describe('Test open/close', () => {
       it('Should open when enabled', async () => {
-        const driver = getDriver({useDialog: true, customPickerProps: {migrateDialog: true}});
-
+        const driver = getDriver(dialogProps);
         expect(driver.isOpen()).toBeFalsy();
-        // driver.open();
-        // expect(driver.isOpen()).toBeTruthy();
         jest.useFakeTimers();
         act(() => driver.open());
         jest.runAllTimers();
-        // advanceAnimationByTime(10000);
-        // await new Promise(r => setTimeout(r, 1000));
-        await waitFor(() => expect(driver.isOpen()).toBeTruthy());
+        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
       });
 
-      it('Should not open when disabled', () => {
-        const driver = getDriver({useDialog: true, customPickerProps: {migrateDialog: true}, editable: false});
-
+      it('Should not open when disabled', async () => {
+        const driver = getDriver({...dialogProps, editable: false});
         expect(driver.isOpen()).toBeFalsy();
-        driver.open();
-        expect(driver.isOpen()).toBeFalsy();
+        act(() => driver.open());
+        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeFalsy());
       });
-    });
 
-    it('Test close', () => {
-      const driver = getDriver({useDialog: true, customPickerProps: {migrateDialog: true}});
-
-      expect(driver.isOpen()).toBeFalsy();
-      driver.open();
-      expect(driver.isOpen()).toBeTruthy();
-      driver.cancel();
-      expect(driver.isOpen()).toBeFalsy();
+      it('Test close', async () => {
+        const driver = getDriver(dialogProps);
+        expect(driver.isOpen()).toBeFalsy();
+        act(() => driver.open());
+        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
+        act(() => driver.dismissDialog());
+        await waitFor(() => expect(driver.dismissDialog(dialogProps.useDialog)).toBeFalsy());
+      });
     });
 
     describe('Test selection', () => {
-      it('Should select a single item', () => {
-        const driver = getDriver({useDialog: true, customPickerProps: {migrateDialog: true}});
-        expect(driver.getValue()).toEqual(undefined);
-        expect(driver.isOpen()).toBeFalsy();
-        driver.open();
-        expect(driver.isOpen()).toBeTruthy();
+      it('Should select a single item', async () => {
+        const driver = getDriver(dialogProps);
+        expect(driver.getValue()).toEqual('');
+        act(() => driver.open());
+        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
         driver.selectItem(countries[2].label);
-        expect(driver.isOpen()).toBeFalsy();
+        act(() => driver.dismissDialog());
+        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeFalsy());
         expect(driver.getValue()).toEqual(countries[2].label);
       });
 
-      it('Should select multiple items', () => {
-        const driver = getDriver({useDialog: true, customPickerProps: {migrateDialog: true}, mode: 'MULTI'});
-        expect(driver.getValue()).toEqual(undefined);
+      it('Should select multiple items', async () => {
+        const driver = getDriver({...dialogProps, mode: 'MULTI'});
+        expect(driver.getValue()).toEqual('');
         expect(driver.isOpen()).toBeFalsy();
-        driver.open();
-        expect(driver.isOpen()).toBeTruthy();
+        act(() => driver.open());
+        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
         driver.selectItem(countries[2].label);
         driver.selectItem(countries[4].label);
         driver.done();
+        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeFalsy());
         expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
       });
     });
 
-    it('Test onDismiss', () => {
+    it('Test onDismiss', async () => {
       const driver = getDriver({
-        useDialog: true,
-        customPickerProps: {migrateDialog: true},
-        pickerModalProps: {
-          onDismiss
+        ...dialogProps,
+        customPickerProps: {
+          dialogProps: {
+            onDismiss
+          }
         }
       });
-
       expect(driver.isOpen()).toBeFalsy();
-      driver.open();
-      expect(driver.isOpen()).toBeTruthy();
-      driver.cancel();
-      expect(driver.isOpen()).toBeFalsy();
-      expect(onDismiss).toHaveBeenCalledTimes(2); // TODO: this should be 1
+      act(() => driver.open());
+      await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
+      act(() => driver.dismissDialog());
+      await waitFor(() => expect(driver.dismissDialog(dialogProps.useDialog)).toBeFalsy());
+      expect(onDismiss).toHaveBeenCalledTimes(1);
     });
   });
 
