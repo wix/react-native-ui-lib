@@ -42,7 +42,7 @@ function GridList<T = any>(props: GridListProps<T>) {
       /* NOTE: Using style with contentContainerStyle because of RN issue with a flatlist nested in another flatlist 
       losing their contentContainerStyle */
       style={listStyle}
-      columnWrapperStyle={listColumnWrapperStyle}
+      columnWrapperStyle={numberOfColumns > 1 ? listColumnWrapperStyle : undefined}
       contentContainerStyle={listContentStyle}
       renderItem={_renderItem}
       numColumns={numberOfColumns}
