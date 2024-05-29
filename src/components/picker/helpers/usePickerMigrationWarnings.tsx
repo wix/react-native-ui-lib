@@ -1,27 +1,34 @@
 import {useEffect} from 'react';
-import _ from 'lodash';
 import {LogService} from '../../../services';
-import {PickerProps, PickerModes} from '../types';
+import {PickerProps} from '../types';
 
-// @ts-expect-error TODO: Remove this whole file when migration is completed
-type UsePickerMigrationWarnings = Pick<PickerProps, 'value' | 'mode' | 'useNativePicker'>;
+// TODO: Remove this whole file when migration is completed
+type UsePickerMigrationWarnings = Pick<
+  PickerProps,
+  'children' | 'migrate' | 'getItemLabel' | 'getItemValue' | 'onShow'
+>;
 
 const usePickerMigrationWarnings = (props: UsePickerMigrationWarnings) => {
-  const {value, mode, useNativePicker} = props;
+  const {children, migrate, getItemLabel, getItemValue, onShow} = props;
   useEffect(() => {
-    if (mode === PickerModes.SINGLE && Array.isArray(value)) {
-      LogService.warn('Picker in SINGLE mode cannot accept an array for value');
-    }
-    if (mode === PickerModes.MULTI && !Array.isArray(value)) {
-      LogService.warn('Picker in MULTI mode must accept an array for value');
+    if (children) {
+      LogService.warn(`UILib Picker will stop supporting the 'children' prop in the next major version, please pass 'items' prop instead`);
     }
 
-    if (_.isPlainObject(value)) {
-      LogService.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
+    if (migrate) {
+      LogService.warn(`UILib Picker will stop supporting the 'migrate' prop in the next major version, please stop using it. The picker uses the new implementation by default.`);
     }
 
-    if (useNativePicker) {
-      LogService.warn(`UILib Picker will stop supporting the 'useNativePicker' prop soon, please pass instead the 'useWheelPicker' prop and handle relevant TextField migration if required to`);
+    if (getItemLabel) {
+      LogService.warn(`UILib Picker will stop supporting the 'getItemLabel' prop in the next major version, please pass the 'getItemLabel' prop to the specific item instead`);
+    }
+
+    if (getItemValue) {
+      LogService.warn(`UILib Picker will stop supporting the 'getItemValue' prop in the next major version, please stop using it. The value will be extract from 'items' prop instead`);
+    }
+
+    if (onShow) {
+      LogService.warn(`UILib Picker will stop supporting the 'onShow' prop in the next major version, please pass the 'onShow' prop from the 'pickerModalProps' instead`);
     }
   }, []);
 };

@@ -16,6 +16,7 @@ import {
 import Assets from '../../assets/Assets';
 const {KeyboardAwareInsetsView} = Keyboard;
 const priceFormatter = Intl.NumberFormat('en-US');
+const validationIcon = require('../../assets/icons/exclamationFillSmall.png');
 
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextFieldRef>();
@@ -199,9 +200,11 @@ export default class TextFieldScreen extends Component {
             label="Name"
             placeholder="Enter full name"
             validate="required"
-            validationMessage="This field is required"
-            containerStyle={{flexGrow: 1}}
+            validationMessage="This field is required. That means you have to enter some value"
+            containerStyle={{flex: 1}}
             validationMessagePosition={errorPosition}
+            helperText={'Enter first and last name'}
+            validationIcon={validationIcon}
           />
           <Button
             outline
@@ -351,7 +354,7 @@ export default class TextFieldScreen extends Component {
   renderHintExample() {
     return (
       <>
-        <Text h3>
+        <Text h3 marginT-s4>
           Hint
         </Text>
 

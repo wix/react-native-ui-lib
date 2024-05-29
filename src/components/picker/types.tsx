@@ -55,6 +55,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   useDialog?: boolean;
   /**
+   * @deprecated
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
@@ -172,6 +173,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
+   * @deprecated
    * Callback for modal onShow event
    */
   onShow?: () => void;
@@ -182,11 +184,14 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Data source for Picker
    */
-  items?: Pick<PickerItemProps, 'label' | 'value' | 'disabled'>[];
+  items?: PickerItemProps[];
   /**
    * Component test id
    */
   testID?: string;
+  /**
+   * @deprecated
+   */
   children?: ReactNode | undefined;
 };
 

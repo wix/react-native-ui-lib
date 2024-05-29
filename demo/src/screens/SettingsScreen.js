@@ -80,11 +80,8 @@ class SettingsScreen extends Component {
             value={defaultScreen?.value}
             label={'Default Screen'}
             onChange={this.setDefaultScreen}
-          >
-            {_.map(filteredScreens, screen => (
-              <Picker.Item key={screen.value} value={screen.value} label={screen.label}/>
-            ))}
-          </Picker>
+            items={filteredScreens}
+          />
 
           <View style={{borderWidth: 1, borderColor: Colors.grey70, marginTop: 40}}>
             <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>
