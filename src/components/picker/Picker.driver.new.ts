@@ -42,12 +42,16 @@ export const PickerDriver = (props: ComponentProps) => {
     doneButtonDriver.press();
   };
 
-  const isOpen = (): boolean => {
-    // TODO: we should find a better solution for when using useDialog (maybe in the refactor)
-    if (modalDriver.exists()) {
-      return modalDriver.isVisible();
-    } else {
+  const isOpen = (useDialog?: boolean): boolean => {
+    if (useDialog) {
       return dialogDriver.getModal().isVisible();
+    }
+    return modalDriver.exists() && modalDriver.isVisible();
+  };
+
+  const dismissDialog = (useDialog?: boolean): void => {
+    if (useDialog) {
+      dialogDriver.getModal().pressOnBackground();
     }
   };
 
@@ -66,6 +70,7 @@ export const PickerDriver = (props: ComponentProps) => {
     cancel,
     done,
     isOpen,
+    dismissDialog,
     selectItem,
     isValidationMessage
   };
