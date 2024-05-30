@@ -250,7 +250,8 @@ describe('Picker', () => {
     });
   });
 
-  // TODO: add tests for WheelPicker as well
+  // TODO: add tests for WheelPicker
+  // Note: the picker dialog should be opened and then the wheel picker should be rendered, this is the main issue with testing it for now
   // describe.skip('WheelPicker', () => {
   // });
 
