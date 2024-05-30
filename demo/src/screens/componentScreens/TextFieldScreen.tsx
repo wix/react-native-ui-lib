@@ -11,7 +11,8 @@ import {
   TextFieldRef,
   FieldContextType,
   TextFieldProps,
-  SegmentedControl
+  SegmentedControl,
+  Icon
 } from 'react-native-ui-lib';
 import Assets from '../../assets/Assets';
 const {KeyboardAwareInsetsView} = Keyboard;
@@ -28,7 +29,7 @@ export default class TextFieldScreen extends Component {
     errorPosition: TextField.validationMessagePositions.BOTTOM,
     isDisabled: false,
     isReadonly: false,
-    value: 'Initial Value',
+    value: 'Initial Value is a very long initial value to see if the trailing elements are being pushed out', // is a very long initial value to see if the trailing elements are being pushed out
     isSearching: false,
     preset: TextField.presets.UNDERLINE,
     price: ''
@@ -351,6 +352,26 @@ export default class TextFieldScreen extends Component {
     );
   }
 
+  renderClearButtonExample() {
+    return (
+      <>
+        <Text h3 marginB-s3>
+          Clear Button
+        </Text>
+        
+        <TextField
+          label="Description"
+          placeholder="Enter text..."
+          showClearButton
+          value={this.state.value}
+          onChangeText={value => this.setState({value})}
+          trailingAccessory={<Icon source={Assets.icons.search}/>}
+          multiline
+        />
+      </>
+    );
+  }
+
   renderHintExample() {
     return (
       <>
@@ -414,6 +435,11 @@ export default class TextFieldScreen extends Component {
 
   render() {
     return (
+      <View padding-page>
+        {this.renderClearButtonExample()}
+      </View>
+    );
+    return (
       <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
         <View flex padding-page>
           <Text h1 marginB-s4>TextField</Text>
@@ -423,6 +449,7 @@ export default class TextFieldScreen extends Component {
           {this.renderPlaceholdersExample()}
           {this.renderValidationExample()}
           {this.renderHintExample()}
+          {this.renderClearButtonExample()}
           {this.renderCherCounterExample()}
           {this.renderAccessoriesExample()}
           {this.renderStateColorsExample()}

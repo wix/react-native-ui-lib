@@ -34,6 +34,7 @@ import useFieldState from './useFieldState';
 import usePreset from './usePreset';
 import FloatingPlaceholder from './FloatingPlaceholder';
 import CharCounter from './CharCounter';
+import ClearButton from './ClearButton';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
@@ -72,6 +73,8 @@ const TextField = (props: InternalTextFieldProps) => {
     leadingAccessory,
     trailingAccessory,
     bottomAccessory,
+    showClearButton,
+    onClear,
     // Validation
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
@@ -199,6 +202,7 @@ const TextField = (props: InternalTextFieldProps) => {
               />
             </View>
           )}
+          {showClearButton && <ClearButton onClear={onClear} testID={`${props.testID}.clearButton`} onChangeText={onChangeText}/>}
           {trailingAccessory}
           {/* </View> */}
         </View>

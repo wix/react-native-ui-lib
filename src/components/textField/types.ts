@@ -206,6 +206,14 @@ export type TextFieldProps = MarginModifiers &
      */
     bottomAccessory?: ReactElement;
     /**
+     * Should show a clear button when there is a value
+     */
+    showClearButton?: boolean;
+    /**
+     * On clear button callback
+     */
+    onClear?: () => void;
+    /**
      * Text to display under the input
      */
     helperText?: string;

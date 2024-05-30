@@ -93,6 +93,16 @@
     },
     {"name": "charCounterStyle", "type": "TextStyle", "description": "Pass custom style to character counter text"},
     {
+      "name": "showClearButton",
+      "type": "boolean",
+      "description": "Should show a clear button when there is a value"
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "description": "On clear button callback"
+    },
+    {
       "name": "formatter",
       "type": "(value) => string | undefined",
       "description": "Custom formatter for the input value (used only when input if not focused)"
