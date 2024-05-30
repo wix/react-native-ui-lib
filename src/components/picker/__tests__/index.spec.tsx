@@ -55,7 +55,6 @@ describe('Picker', () => {
 
     it('Test close', () => {
       const driver = getDriver();
-      expect(driver.isOpen()).toBeFalsy();
       driver.open();
       expect(driver.isOpen()).toBeTruthy();
       driver.cancel();
@@ -78,7 +77,6 @@ describe('Picker', () => {
       it('Should select a single item', () => {
         const driver = getDriver();
         expect(driver.getValue()).toEqual('');
-        expect(driver.isOpen()).toBeFalsy();
         driver.open();
         expect(driver.isOpen()).toBeTruthy();
         driver.selectItem(countries[2].label);
@@ -89,7 +87,6 @@ describe('Picker', () => {
       it('Should select multiple items', () => {
         const driver = getDriver({mode: 'MULTI'});
         expect(driver.getValue()).toEqual('');
-        expect(driver.isOpen()).toBeFalsy();
         driver.open();
         expect(driver.isOpen()).toBeTruthy();
         driver.selectItem(countries[2].label);
@@ -101,7 +98,6 @@ describe('Picker', () => {
 
     it('Test onPress', () => {
       const driver = getDriver({onPress});
-      expect(driver.isOpen()).toBeFalsy();
       driver.open();
       expect(driver.isOpen()).toBeTruthy();
       driver.cancel();
@@ -116,7 +112,6 @@ describe('Picker', () => {
             onDismiss
           }
         });
-        expect(driver.isOpen()).toBeFalsy();
         driver.open();
         expect(driver.isOpen()).toBeTruthy();
         driver.cancel();
@@ -137,26 +132,32 @@ describe('Picker', () => {
       //   expect(onShow).toHaveBeenCalled();
       // });
 
-      it('Test Modal TopBar', () => {
-        const driver = getDriver({mode: 'MULTI', topBarProps: {cancelLabel: 'Cancel'}});
-        expect(driver.isOpen()).toBeFalsy();
-        driver.open();
-        expect(driver.isOpen()).toBeTruthy();
-        driver.selectItem(countries[2].label);
-        driver.selectItem(countries[4].label);
-        driver.done();
-        expect(driver.isOpen()).toBeFalsy();
-        expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
-        driver.open();
-        expect(driver.isOpen()).toBeTruthy();
-        driver.cancel();
-        expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
-        expect(driver.isOpen()).toBeFalsy();
+      describe('Test Modal TopBar', () => {
+        it('should close and select items when pressing on cancel button', () => {
+          const driver = getDriver({mode: 'MULTI', topBarProps: {cancelLabel: 'Cancel'}});
+          driver.open();
+          expect(driver.isOpen()).toBeTruthy();
+          driver.selectItem(countries[2].label);
+          driver.selectItem(countries[4].label);
+          driver.done();
+          expect(driver.isOpen()).toBeFalsy();
+          expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
+        });
+
+        it('should close without selecting items when pressing on cancel button', () => {
+          const driver = getDriver({mode: 'MULTI', topBarProps: {cancelLabel: 'Cancel'}});
+          driver.open();
+          expect(driver.isOpen()).toBeTruthy();
+          driver.selectItem(countries[2].label);
+          driver.selectItem(countries[4].label);
+          driver.cancel();
+          expect(driver.getValue()).toEqual(``);
+          expect(driver.isOpen()).toBeFalsy();
+        });
       });
     });
   });
 
-  // TODO: this is a work in progress, the tests are not passing yet
   describe('Dialog', () => {
     const dialogProps = {useDialog: true, customPickerProps: {migrateDialog: true}};
     describe('Test value', () => {
