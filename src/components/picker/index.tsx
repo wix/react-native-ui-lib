@@ -184,7 +184,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         preset: preset || null,
         containerStyle: {flexDirection: 'row'},
         labelStyle: Typography.text70,
-        trailingAccessory: themeProps.trailingAccessory ?? <Icon marginL-s1 source={dropdown}/>
+        trailingAccessory: themeProps.trailingAccessory ?? (
+          <Icon marginL-s1 source={dropdown} testID={`${testID}.input.icon`}/>
+        )
       };
     } else if (fieldType === PickerFieldTypes.settings) {
       return {
@@ -275,14 +277,14 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const renderPickerInnerInput = () => {
     if (fieldType === PickerFieldTypes.filter) {
       return (
-        <Text text70 numberOfLines={1} style={others.style}>
+        <Text text70 numberOfLines={1} style={others.style} testID={`${testID}.input`}>
           {_.isEmpty(label) ? others.placeholder : label}
         </Text>
       );
     } else if (fieldType === PickerFieldTypes.settings) {
       return (
         <View flexG row spread>
-          <Text text70 style={labelStyle}>
+          <Text text70 style={labelStyle} testID={`${testID}.input`}>
             {others.label}
           </Text>
           <Text text70 $textPrimary style={others.style}>

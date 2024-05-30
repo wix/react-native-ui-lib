@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {act, render, waitFor} from '@testing-library/react-native';
+import {act, render, waitFor, screen} from '@testing-library/react-native';
+import {Typography} from '../../../style';
 import Picker from '../index';
 import {PickerDriver} from '../Picker.driver.new';
 const countries = [
@@ -252,4 +253,28 @@ describe('Picker', () => {
   // TODO: add tests for WheelPicker as well
   // describe.skip('WheelPicker', () => {
   // });
+
+  //TODO: add more tests for different props
+  describe('Picker field types', () => {
+    it('should render a form picker', () => {
+      const driver = getDriver({fieldType: 'form'});
+      const textFieldDriver = driver.getInput();
+      act(() => expect(textFieldDriver.exists()).toBeTruthy());
+      expect(textFieldDriver.getStyle()).toEqual(expect.objectContaining({textAlign: 'left'}));
+    });
+    it('should render a filter picker', () => {
+      const driver = getDriver({fieldType: 'filter'});
+      screen.debug();
+      const textFieldDriver = driver.getInput();
+      act(() => expect(textFieldDriver.exists()).toBeTruthy());
+      expect(textFieldDriver.getStyle()).toEqual(expect.objectContaining(Typography.text70));
+    });
+    it('should render a settings picker', async () => {
+      const driver = getDriver({fieldType: 'settings'});
+      const textFieldDriver = driver.getInput();
+      act(() => expect(textFieldDriver.exists()).toBeTruthy());
+      console.log(`textFieldDriver.getStyle():`, textFieldDriver.getStyle());
+      expect(textFieldDriver.getStyle()).toEqual(expect.objectContaining(Typography.text70));
+    });
+  });
 });

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {StyleSheet, TextStyle} from 'react-native';
 import {fireEvent} from '@testing-library/react-native';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
 import {TextDriver} from '../text/Text.driver.new';
@@ -79,6 +80,10 @@ export const TextFieldDriver = (props: ComponentProps) => {
     return charCounterDriver;
   };
 
+  const getStyle = () => {
+    return StyleSheet.flatten(driver.getElement().props.style) as TextStyle;
+  };
+
   return {
     ...driver,
     getValue,
@@ -89,6 +94,7 @@ export const TextFieldDriver = (props: ComponentProps) => {
     getPlaceholder,
     getLabel,
     getValidationMessage,
-    getCharCounter
+    getCharCounter,
+    getStyle
   };
 };
