@@ -122,11 +122,11 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   renderButton() {
-    const {bottomMargin, button, testID} = this.props;
+    const {bottomMargin, button, fullWidth, testID} = this.props;
 
     const bottom = this.isSecondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8;
-    const left = this.isSecondaryHorizontal ? Spacings.s4 : undefined;
-    const right = this.isSecondaryHorizontal ? 20 : undefined;
+    const left = this.isSecondaryHorizontal || fullWidth ? Spacings.s4 : undefined;
+    const right = this.isSecondaryHorizontal ? 20 : fullWidth ? Spacings.s4 : undefined;
     const shadowStyle = !button?.outline && !button?.link && styles.shadow;
     const marginStyle = {marginTop: 16, marginBottom: bottom, marginLeft: left, marginRight: right};
 
@@ -195,7 +195,6 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
       <View
         row={this.isSecondaryHorizontal}
         center={this.isSecondaryHorizontal || !fullWidth}
-        paddingH-16={!this.isSecondaryHorizontal && fullWidth}
         pointerEvents="box-none"
         animated
         style={[styles.container, this.getAnimatedStyle()]}
