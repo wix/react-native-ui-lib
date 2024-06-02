@@ -11,9 +11,9 @@ import {
   TextFieldRef,
   FieldContextType,
   TextFieldProps,
-  SegmentedControl
+  SegmentedControl,
+  Assets
 } from 'react-native-ui-lib';
-import Assets from '../../assets/Assets';
 const {KeyboardAwareInsetsView} = Keyboard;
 const priceFormatter = Intl.NumberFormat('en-US');
 const validationIcon = require('../../assets/icons/exclamationFillSmall.png');
