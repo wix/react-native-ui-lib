@@ -14,17 +14,6 @@ import Storage, {DEFAULT_SCREEN} from './storage';
 //   gold: '#FFD700',
 // });
 
-// ThemeManager.setComponentTheme('Picker', (props) => {
-//   if (props.useNativePicker) {
-//     return {
-//       topBarProps: {
-//         doneLabel: Constants.isIOS ? 'Done2' : 'OK2',
-//         cancelLabel: Constants.isIOS ? 'Cancel2' : 'CANCEL2',
-//       },
-//     };
-//   }
-// });
-
 // const customAnimationsDefinitions = {
 //   customAnimation1: {
 //     from: {opacity: 0, translateY: 20},
