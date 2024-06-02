@@ -204,7 +204,7 @@ export default class TextFieldScreen extends Component {
             containerStyle={{flex: 1}}
             validationMessagePosition={errorPosition}
             helperText={'Enter first and last name'}
-            validationIcon={validationIcon}
+            validationIcon={{source: validationIcon, style: {marginTop: 1}}}
           />
           <Button
             outline
