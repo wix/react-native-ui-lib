@@ -1,7 +1,7 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, Timeline, View, Card, Text, Button} from 'react-native-ui-lib';
-import Assets from '../../assets/Assets';
+import {Assets, Colors, Timeline, View, Card, Text, Button} from 'react-native-ui-lib';
+
 const contents = [
   'CURRENT (default) state with dashed line.\nAligned to title',
   'SUCCESS state with label.',

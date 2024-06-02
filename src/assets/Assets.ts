@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import {PathRecord} from '..//typings/common';
 
 interface CustomObject {
   [key: string]: any;
@@ -42,7 +41,7 @@ function ensurePath(obj: CustomObject, path: string) {
 export class Assets {
   [key: string]: any;
 
-  loadAssetsGroup<T extends string, K extends object>(groupName: T, assets: K): asserts this is PathRecord<T, K> {
+  loadAssetsGroup(groupName: string, assets: object) {
     if (!_.isString(groupName)) {
       throw new Error('group name should be a string');
     }
@@ -56,6 +55,8 @@ export class Assets {
     } else {
       assignProperties(ensurePath(this, groupName), assets);
     }
+
+    return this;
   }
 
   getAssetByPath(path: string) {
