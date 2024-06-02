@@ -1,8 +1,20 @@
 import React, {Component} from 'react';
 import {ScrollView, ActivityIndicator} from 'react-native';
-import {Assets, Colors, Spacings, View, Text, Button, Keyboard, TextField, TextFieldRef} from 'react-native-ui-lib';
+import {
+  Colors,
+  Spacings,
+  View,
+  Text,
+  Button,
+  Keyboard,
+  TextField,
+  TextFieldRef,
+  FieldContextType,
+  TextFieldProps,
+  SegmentedControl,
+  Assets
+} from 'react-native-ui-lib';
 const {KeyboardAwareInsetsView} = Keyboard;
-
 const priceFormatter = Intl.NumberFormat('en-US');
 const validationIcon = require('../../assets/icons/exclamationFillSmall.png');
 
