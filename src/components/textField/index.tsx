@@ -164,7 +164,7 @@ const TextField = (props: InternalTextFieldProps) => {
           {leadingAccessoryClone}
 
           {/* Note: We're passing flexG to the View to support properly inline behavior - so the input will be rendered correctly in a row container.
-            Known Issue: This slightly push the trailing accessory when entering a long text
+            Known Issue: This slightly push the trailing accessory and clear button when entering a long text
           */}
           {children || (
             <View {...(Constants.isWeb ? {flex: true} : {flexG: true})}>

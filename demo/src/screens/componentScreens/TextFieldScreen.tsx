@@ -366,7 +366,7 @@ export default class TextFieldScreen extends Component {
           value={this.state.value}
           onChangeText={value => this.setState({value})}
           trailingAccessory={<Icon source={Assets.icons.search}/>}
-          multiline
+          // multiline
         />
       </>
     );
@@ -435,12 +435,7 @@ export default class TextFieldScreen extends Component {
 
   render() {
     return (
-      <View padding-page>
-        {this.renderClearButtonExample()}
-      </View>
-    );
-    return (
-      <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View flex padding-page>
           <Text h1 marginB-s4>TextField</Text>
 
