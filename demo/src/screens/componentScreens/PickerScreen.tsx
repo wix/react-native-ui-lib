@@ -91,7 +91,7 @@ export default class PickerScreen extends Component {
     language2: options[2].value,
     languages: [],
     option: undefined,
-    nativePickerValue: 'java',
+    wheelPickerValue: 'java',
     dialogPickerValue: 'java',
     customModalValues: [],
     filter: filters[0].value,
@@ -157,8 +157,8 @@ export default class PickerScreen extends Component {
             label="Wheel Picker"
             placeholder="Pick a Language"
             useWheelPicker
-            value={this.state.nativePickerValue}
-            onChange={nativePickerValue => this.setState({nativePickerValue})}
+            value={this.state.wheelPickerValue}
+            onChange={wheelPickerValue => this.setState({wheelPickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
             items={options}
           />
