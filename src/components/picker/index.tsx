@@ -33,7 +33,7 @@ import {
   RenderCustomModalProps,
   PickerItemsListProps,
   PickerMethods,
-  PickerTypes
+  PickerModeTypes
 } from './types';
 
 const dropdown = require('./assets/dropdown.png');
@@ -49,7 +49,7 @@ type PickerStatics = {
   modes: typeof PickerModes;
   fieldTypes: typeof PickerFieldTypes;
   extractPickerItems: typeof extractPickerItems;
-  type: typeof PickerTypes;
+  type: typeof PickerModeTypes;
 };
 
 const Picker = React.forwardRef((props: PickerProps, ref) => {
@@ -376,7 +376,7 @@ export {
   RenderCustomModalProps,
   PickerItemsListProps,
   PickerMethods,
-  PickerTypes
+  PickerModeTypes
 };
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

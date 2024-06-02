@@ -19,7 +19,7 @@ export enum PickerFieldTypes {
   settings = 'settings'
 }
 
-export enum PickerTypes {
+export enum PickerModeTypes {
   Modal = 'modal',
   Dialog = 'dialog',
   WheelPicker = 'wheelPicker',
@@ -32,7 +32,7 @@ export enum PickerTypes {
 export type PickerSingleValue = string | number;
 export type PickerMultiValue = PickerSingleValue[];
 export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
-export type PickerType = PickerTypes | `${PickerTypes}`;
+export type PickerType = PickerModeTypes | `${PickerModeTypes}`;
 
 type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
   ? (value?: ValueType, label?: string) => React.ReactElement
@@ -60,7 +60,7 @@ interface PickerDialogProps {
   /**
    * Type of picker to render
    */
-  pickerType: PickerTypes.Dialog;
+  pickerType: PickerModeTypes.Dialog;
   dialogProps?: ExpandableOverlayProps['dialogProps'];
 }
 
@@ -68,7 +68,7 @@ interface WheelPickerProps {
   /**
    * Type of picker to render
    */
-  pickerType: PickerTypes.WheelPicker;
+  pickerType: PickerModeTypes.WheelPicker;
   listProps?: PickerBaseProps['listProps'];
 }
 
@@ -76,11 +76,16 @@ interface CustomPickerProps {
   /**
    * Type of picker to render
    */
-  pickerType: PickerTypes.Custom;
+  pickerType: PickerModeTypes.Custom;
   renderCustomModal?: PickerBaseProps['renderCustomModal'];
 }
 
-type PickerModesPropDeprecation = {
+type PickerModeProps = (PickerDialogProps | WheelPickerProps | CustomPickerProps) & {
+  useDialog: never;
+  useWheelPicker: never;
+};
+
+type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Use wheel picker instead of a modal picker
@@ -91,22 +96,41 @@ type PickerModesPropDeprecation = {
    * Use dialog instead of modal picker
    */
   useDialog?: boolean;
-};
-
-type PickerModeProps = (PickerDialogProps | WheelPickerProps | CustomPickerProps) & {
-  useDialog: never;
-  useWheelPicker: never;
-};
-
-type PickerModesFinally = PickerModesPropDeprecation | PickerModeProps;
-
-export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
-  /* ...TextField.propTypes, */
   /**
    * @deprecated
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
+  /**
+   * @deprecated
+   * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
+   */
+  getItemValue?: (value: PickerValue) => any;
+  /**
+   * @deprecated
+   * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
+   */
+  getItemLabel?: (value: PickerValue) => string;
+  /**
+   * @deprecated
+   * The picker modal top bar props
+   */
+  topBarProps?: ModalTopBarProps;
+  /**
+   * @deprecated
+   * Callback for modal onShow event
+   */
+  onShow?: () => void;
+  /**
+   * @deprecated
+   */
+  children?: ReactNode | undefined;
+};
+
+type PickerTypes = Pick<PickerPropsDeprecation, 'useDialog' | 'useWheelPicker'> | PickerModeProps;
+
+export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
+  /* ...TextField.propTypes, */
   /**
    * Pass for different field type UI (form, filter or settings)
    */
@@ -158,23 +182,9 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   onPress?: () => void;
   /**
-   * @deprecated
-   * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemValue?: (value: PickerValue) => any;
-  /**
-   * @deprecated
-   * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemLabel?: (value: PickerValue) => string;
-  /**
    * A function that returns the label to show for the selected Picker value
    */
   getLabel?: (value: PickerValue) => string;
-  /**
-   * The picker modal top bar props
-   */
-  topBarProps?: ModalTopBarProps;
   /**
    * Show search input to filter picker items by label
    */
@@ -212,11 +222,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
-   * @deprecated
-   * Callback for modal onShow event
-   */
-  onShow?: () => void;
-  /**
    * Add safe area in the Picker modal view
    */
   useSafeArea?: boolean;
@@ -228,10 +233,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Component test id
    */
   testID?: string;
-  /**
-   * @deprecated
-   */
-  children?: ReactNode | undefined;
 };
 
 export type PickerPropsWithSingle = {
@@ -246,7 +247,10 @@ export type PickerPropsWithMulti = {
   onChange?: (value: PickerMultiValue) => void;
 };
 
-export type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti) & PickerBaseProps & PickerModesFinally;
+export type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti) &
+  PickerBaseProps &
+  PickerPropsDeprecation &
+  PickerTypes;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**
