@@ -19,12 +19,20 @@ export enum PickerFieldTypes {
   settings = 'settings'
 }
 
+export enum PickerTypes {
+  Modal = 'modal',
+  Dialog = 'dialog',
+  WheelPicker = 'wheelPicker',
+  Custom = 'custom'
+}
+
 // TODO: Remove type
 // type PickerValueDeprecated = {value: string | number; label: string};
 
 export type PickerSingleValue = string | number;
 export type PickerMultiValue = PickerSingleValue[];
 export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
+export type PickerType = PickerTypes | `${PickerTypes}`;
 
 type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
   ? (value?: ValueType, label?: string) => React.ReactElement
@@ -48,12 +56,43 @@ export interface PickerSearchStyle {
   selectionColor?: string;
 }
 
-export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
-  /* ...TextField.propTypes, */
+interface PickerDialogProps {
+  pickerType: PickerTypes.Dialog;
+  dialogProps?: ExpandableOverlayProps['dialogProps'];
+}
+
+interface WheelPickerProps {
+  pickerType: PickerTypes.WheelPicker;
+  listProps?: PickerBaseProps['listProps'];
+}
+
+interface CustomPickerProps {
+  pickerType: PickerTypes.Custom;
+  renderCustomModal?: PickerBaseProps['renderCustomModal'];
+}
+
+type PickerModesPropDeprecation = {
   /**
+   * @deprecated
+   * Use wheel picker instead of a modal picker
+   */
+  useWheelPicker?: boolean;
+  /**
+   * @deprecated
    * Use dialog instead of modal picker
    */
   useDialog?: boolean;
+};
+
+type PickerModeProps = (PickerDialogProps | WheelPickerProps | CustomPickerProps) & {
+  useDialog: never;
+  useWheelPicker: never;
+};
+
+type PickerModesFinally = PickerModesPropDeprecation | PickerModeProps;
+
+export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
+  /* ...TextField.propTypes, */
   /**
    * @deprecated
    * Temporary prop required for migration to Picker's new API
@@ -150,11 +189,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Render a custom header for Picker's dialog
    */
-  renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
-  /**
-   * Use wheel picker instead of a list picker
-   */
-  useWheelPicker?: boolean;
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
    * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
    */
@@ -190,19 +225,19 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   children?: ReactNode | undefined;
 };
 
-export type PickerPropsWithSingle = PickerBaseProps & {
+export type PickerPropsWithSingle = {
   mode?: PickerModes.SINGLE;
   value?: PickerSingleValue;
   onChange?: (value: PickerSingleValue) => void;
 };
 
-export type PickerPropsWithMulti = PickerBaseProps & {
+export type PickerPropsWithMulti = {
   mode?: PickerModes.MULTI;
   value?: PickerMultiValue;
   onChange?: (value: PickerMultiValue) => void;
 };
 
-export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
+export type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti) & PickerBaseProps & PickerModesFinally;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**

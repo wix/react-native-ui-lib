@@ -156,7 +156,8 @@ export default class PickerScreen extends Component {
           <Picker
             label="Wheel Picker"
             placeholder="Pick a Language"
-            useWheelPicker
+            // useWheelPicker
+            pickerType={Picker.type.WheelPicker}
             value={this.state.wheelPickerValue}
             onChange={wheelPickerValue => this.setState({wheelPickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
@@ -182,7 +183,8 @@ export default class PickerScreen extends Component {
             enableModalBlur={false}
             onChange={item => this.setState({option: item})}
             topBarProps={{title: 'Languages'}}
-            useDialog
+            // useDialog
+            pickerType={Picker.type.Dialog}
             renderCustomDialogHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
                 <Button link label="Cancel" onPress={onCancel}/>
