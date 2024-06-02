@@ -202,6 +202,10 @@ export type TextFieldProps = MarginModifiers &
      */
     trailingAccessory?: ReactElement;
     /**
+     * Pass to render a top trailing element
+     */
+    topTrailingAccessory?: ReactElement;
+    /**
      * Pass to render a bottom element below the input
      */
     bottomAccessory?: ReactElement;

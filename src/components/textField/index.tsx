@@ -72,6 +72,7 @@ const TextField = (props: InternalTextFieldProps) => {
     // Accessory Buttons
     leadingAccessory,
     trailingAccessory,
+    topTrailingAccessory,
     bottomAccessory,
     showClearButton,
     onClear,
@@ -138,27 +139,32 @@ const TextField = (props: InternalTextFieldProps) => {
   return (
     <FieldContext.Provider value={context}>
       <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
-        <Label
-          label={label}
-          labelColor={labelColor}
-          labelStyle={_labelStyle}
-          labelProps={labelProps}
-          floatingPlaceholder={floatingPlaceholder}
-          validationMessagePosition={validationMessagePosition}
-          testID={`${props.testID}.label`}
-          showMandatoryIndication={showMandatoryIndication}
-          enableErrors={enableErrors}
-        />
-        {validationMessagePosition === ValidationMessagePosition.TOP && (
-          <ValidationMessage
+        <View row spread>
+          <Label
+            label={label}
+            labelColor={labelColor}
+            labelStyle={_labelStyle}
+            labelProps={labelProps}
+            floatingPlaceholder={floatingPlaceholder}
+            validationMessagePosition={validationMessagePosition}
+            testID={`${props.testID}.label`}
+            showMandatoryIndication={showMandatoryIndication}
             enableErrors={enableErrors}
-            validate={others.validate}
-            validationMessage={others.validationMessage}
-            validationMessageStyle={_validationMessageStyle}
-            retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
-            testID={`${props.testID}.validationMessage`}
           />
-        )}
+          {validationMessagePosition === ValidationMessagePosition.TOP && (
+            <ValidationMessage
+              enableErrors={enableErrors}
+              validate={others.validate}
+              validationMessage={others.validationMessage}
+              validationMessageStyle={_validationMessageStyle}
+              retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
+              testID={`${props.testID}.validationMessage`}
+            />
+          )}
+          <View marginL-s2 marginT-s1>
+            {topTrailingAccessory}
+          </View>
+        </View>
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}

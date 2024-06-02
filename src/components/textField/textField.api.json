@@ -37,6 +37,7 @@
     },
     {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
     {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
+    {"name": "topTrailingAccessory", "type": "ReactElement", "description": "Pass to render a top trailing element"},
     {"name": "enableErrors", "type": "boolean", "description": "Should support showing validation error message"},
     {
       "name": "validate",

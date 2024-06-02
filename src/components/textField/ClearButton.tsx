@@ -2,13 +2,13 @@ import React, {useContext, useCallback, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
 import {useDidUpdate} from '../../hooks';
+import Assets from '../../assets';
 import {Spacings, Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
 import FieldContext from './FieldContext';
 import {TextFieldProps} from './types';
 
-const clearIcon = require('../../assets/icons/xFlat.png');
 const hitSlop = {top: 20, bottom: 20, left: 20, right: 20};
 const NON_VISIBLE_POSITION = 100;
 const VISIBLE_POSITION = 0;
@@ -50,7 +50,7 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
     <View reanimated style={style}>
       <Button
         link
-        iconSource={clearIcon}
+        iconSource={Assets.icons.xFlat}
         iconStyle={styles.clearIcon}
         onPress={clear}
         hitSlop={hitSlop}

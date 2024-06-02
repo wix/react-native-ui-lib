@@ -17,7 +17,6 @@ import {
 import Assets from '../../assets/Assets';
 const {KeyboardAwareInsetsView} = Keyboard;
 const priceFormatter = Intl.NumberFormat('en-US');
-const validationIcon = require('../../assets/icons/exclamationFillSmall.png');
 
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextFieldRef>();
@@ -29,7 +28,7 @@ export default class TextFieldScreen extends Component {
     errorPosition: TextField.validationMessagePositions.BOTTOM,
     isDisabled: false,
     isReadonly: false,
-    value: 'Initial Value is a very long initial value to see if the trailing elements are being pushed out', // is a very long initial value to see if the trailing elements are being pushed out
+    value: 'Initial Value',
     isSearching: false,
     preset: TextField.presets.UNDERLINE,
     price: ''
@@ -205,7 +204,8 @@ export default class TextFieldScreen extends Component {
             containerStyle={{flex: 1}}
             validationMessagePosition={errorPosition}
             helperText={'Enter first and last name'}
-            validationIcon={validationIcon}
+            validationIcon={Assets.icons.demo.exclamation}
+            topTrailingAccessory={<Icon source={Assets.icons.demo.exclamation}/>}
           />
           <Button
             outline
@@ -365,7 +365,7 @@ export default class TextFieldScreen extends Component {
           showClearButton
           value={this.state.value}
           onChangeText={value => this.setState({value})}
-          trailingAccessory={<Icon source={Assets.icons.search}/>}
+          trailingAccessory={<Icon source={Assets.icons.demo.search}/>}
           // multiline
         />
       </>
@@ -435,8 +435,8 @@ export default class TextFieldScreen extends Component {
 
   render() {
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View flex padding-page>
+      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
+        <View padding-page>
           <Text h1 marginB-s4>TextField</Text>
 
           {this.renderDefaultExample()}
