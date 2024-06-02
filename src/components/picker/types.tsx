@@ -57,16 +57,25 @@ export interface PickerSearchStyle {
 }
 
 interface PickerDialogProps {
+  /**
+   * Type of picker to render
+   */
   pickerType: PickerTypes.Dialog;
   dialogProps?: ExpandableOverlayProps['dialogProps'];
 }
 
 interface WheelPickerProps {
+  /**
+   * Type of picker to render
+   */
   pickerType: PickerTypes.WheelPicker;
   listProps?: PickerBaseProps['listProps'];
 }
 
 interface CustomPickerProps {
+  /**
+   * Type of picker to render
+   */
   pickerType: PickerTypes.Custom;
   renderCustomModal?: PickerBaseProps['renderCustomModal'];
 }

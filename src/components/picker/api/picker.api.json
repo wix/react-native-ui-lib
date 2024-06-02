@@ -31,7 +31,12 @@
       "default": "Picker.fieldTypes.FORM"
     },
     {"name": "selectionLimit", "type": "number", "description": "Limit the number of selected items"},
-    {"name": "enableModalBlur", "type": "boolean", "description": "Adds blur effect to picker modal", "note": "iOS only"},
+    {
+      "name": "enableModalBlur",
+      "type": "boolean",
+      "description": "Adds blur effect to picker modal",
+      "note": "iOS only"
+    },
     {
       "name": "renderPicker",
       "type": "(selectedItem, itemLabel) => void",
@@ -92,7 +97,13 @@
     },
     {"name": "pickerModalProps", "type": "ModalProps", "description": "Pass props to the picker modal"},
     {"name": "useSafeArea", "type": "boolean", "description": "Add safe area in the Picker modal view"},
-    {"name": "items", "type": "{label: string, value: string | number}[]", "description": "Data source for Picker"}
+    {"name": "items", "type": "{label: string, value: string | number}[]", "description": "Data source for Picker"},
+    {
+      "name": "pickerType",
+      "type": "PickerTypes",
+      "description": "Type of picker to render",
+      "default": "PickerType.Modal"
+    }
   ],
   "snippet": [
     "<Picker",
@@ -106,4 +117,3 @@
     "</Picker>"
   ]
 }
-   
