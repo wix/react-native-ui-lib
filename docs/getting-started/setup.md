@@ -44,7 +44,6 @@ The following are optional dependencies:
 - @react-native-community/blur
 - @react-native-community/datetimepicker
 - @react-native-community/netinfo
-- @react-native-picker/picker
 
 
 ## Install Native Dependencies
@@ -60,7 +59,6 @@ Some of the components are using the native dependencies listed below - those ar
 - "@react-native-community/blur": ">=3.4.1" (required for Card component when passing `enableBlur` prop)
 - "@react-native-community/datetimepicker": "^2.1.0"
 - "@react-native-community/netinfo": "^5.6.2" (required for ConnectionStatusBar component)
-- "@react-native-picker/picker": "^1.9.4" (required for Picker component when passing `useWheelPicker` prop)
 
 ## Demo App
 
