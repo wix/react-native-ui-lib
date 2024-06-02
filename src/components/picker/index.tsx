@@ -93,7 +93,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items: propItems,
     //TODO: Remove this when migration is completed, starting of v8 (remove of useDialog and useWheelPicker)
     //@ts-expect-error
-    pickerType = PickerTypes.Modal,
+    pickerType = PickerModeTypes.Modal,
     ...others
   } = themeProps;
   const {preset} = others;
@@ -364,7 +364,7 @@ Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
 // @ts-expect-error
-Picker.type = PickerTypes;
+Picker.type = PickerModeTypes;
 
 export {
   PickerProps,
