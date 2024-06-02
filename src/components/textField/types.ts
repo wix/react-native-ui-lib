@@ -12,7 +12,7 @@ import {TextProps} from '../text';
 import {RecorderProps} from '../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
 import {ViewProps} from '../view';
-import type {ImageProps} from '../image';
+import type {IconProps} from '../icon';
 
 export type ColorType =
   | string
@@ -129,7 +129,7 @@ export interface ValidationMessageProps {
   /** 
    * Icon left to the validation message
    */
-  validationIcon?: ImageProps['source'];
+  validationIcon?: IconProps;
   /**
    * Keep the validation space even if there is no validation message
    */
