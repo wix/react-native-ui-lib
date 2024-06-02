@@ -39,7 +39,7 @@ const ValidationMessage = ({
   if (validationIcon) {
     return (
       <View row>
-        <Icon source={validationIcon} tintColor={Colors.$textDangerLight} size={14} marginR-s1 marginT-1/>
+        {showValidationMessage && <Icon source={validationIcon} tintColor={Colors.$textDangerLight} size={14} marginR-s1 marginT-1/>}
         {renderMessage()}
       </View>
     );
