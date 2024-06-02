@@ -137,7 +137,9 @@ describe('FloatingButton', () => {
       expect(driver.getStyle()?.flexDirection).toBe(undefined);
       expect(driver.getStyle()?.alignItems).toBe(undefined);
       expect(driver.getStyle()?.justifyContent).toBe(undefined);
-      expect(driver.getStyle()?.paddingHorizontal).toBe(16);
+      const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
+      expect(buttonDriver.getElement().props.style.marginLeft).toBe(16);
+      expect(buttonDriver.getElement().props.style.marginRight).toBe(16);
     });
 
     it('should style horizontal layout when fullWidth is true', () => {
