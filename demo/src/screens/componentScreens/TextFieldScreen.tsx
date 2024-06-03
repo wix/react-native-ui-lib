@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ScrollView, ActivityIndicator} from 'react-native';
 import {
+  Assets,
   Colors,
   Spacings,
   View,
@@ -14,7 +15,6 @@ import {
   SegmentedControl,
   Icon
 } from 'react-native-ui-lib';
-import Assets from '../../assets/Assets';
 const {KeyboardAwareInsetsView} = Keyboard;
 const priceFormatter = Intl.NumberFormat('en-US');
 
