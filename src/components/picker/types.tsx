@@ -6,6 +6,8 @@ import {ModalTopBarProps} from '../modal/TopBar';
 // import {TextFieldProps} from '../../../typings/components/Inputs';
 import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
+import {DialogProps as DialogPropsOld} from '../dialog';
+import {DialogProps as DialogPropsNew} from '../../incubator/Dialog';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -19,12 +21,19 @@ export enum PickerFieldTypes {
   settings = 'settings'
 }
 
+export enum PickerModeTypes {
+  Modal = 'modal',
+  Dialog = 'dialog',
+  WheelPicker = 'wheelPicker',
+  Custom = 'custom'
+}
+
 // TODO: Remove type
 // type PickerValueDeprecated = {value: string | number; label: string};
-
 export type PickerSingleValue = string | number;
 export type PickerMultiValue = PickerSingleValue[];
 export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
+export type PickerType = PickerModeTypes | `${PickerModeTypes}`;
 
 type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
   ? (value?: ValueType, label?: string) => React.ReactElement
@@ -47,6 +56,51 @@ export interface PickerSearchStyle {
   placeholderTextColor?: string;
   selectionColor?: string;
 }
+
+type OldDialogHeaderType = {
+  headerProps?: DialogPropsOld['pannableHeaderProps'];
+  migrateDialog: false;
+};
+
+type NewDialogHeaderType = {
+  headerProps?: DialogPropsNew['headerProps'];
+  migrateDialog: true;
+};
+
+type DialogHeaderProps = NewDialogHeaderType | OldDialogHeaderType;
+
+export type DialogPickerProps = DialogHeaderProps & {
+  /**
+   * Type of picker to render
+   */
+  pickerType: PickerModeTypes.Dialog | `${PickerModeTypes.Dialog}`;
+};
+
+export type WheelPickerProps = DialogHeaderProps & {
+  /**
+   * Type of picker to render
+   */
+  pickerType: PickerModeTypes.WheelPicker | `${PickerModeTypes.WheelPicker}`;
+};
+
+export interface ModalPickerProps {
+  /**
+   * Type of picker to render
+   */
+  pickerType: PickerModeTypes.Modal | `${PickerModeTypes.Modal}`;
+  headerProps?: ModalTopBarProps;
+  modalProps?: ExpandableOverlayProps['modalProps'];
+}
+
+export interface CustomPickerProps {
+  /**
+   * Type of picker to render
+   */
+  pickerType: PickerModeTypes.Custom | `${PickerModeTypes.Custom}`;
+  renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+}
+
+export type PickerModeProps = ModalPickerProps | DialogPickerProps | WheelPickerProps | CustomPickerProps;
 
 export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /* ...TextField.propTypes, */
@@ -150,7 +204,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Render a custom header for Picker's dialog
    */
-  renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
    * Use wheel picker instead of a list picker
    */
