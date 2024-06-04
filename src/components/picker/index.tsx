@@ -22,6 +22,7 @@ import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
 // import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+import usePickerMode from './helpers/usePickerMode';
 import {extractPickerItems} from './PickerPresenter';
 import {
   PickerProps,
@@ -78,7 +79,6 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     renderCustomModal,
     enableModalBlur,
     topBarProps,
-    pickerModalProps,
     listProps,
     value,
     getLabel,
@@ -96,6 +96,18 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
   } = themeProps;
   const {preset} = others;
 
+  const {
+    type,
+    headerProps,
+    renderCustomModal: typeRenderCustomModal,
+    dialogProps,
+    pickerModalProps
+  } = usePickerMode({
+    pickerType: PickerModeTypes.Modal,
+    ...themeProps
+  });
+  const isDialog = useDialog || type.dialog;
+  const isWheelPicker = useWheelPicker || type.wheelPicker;
   const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
 
@@ -123,6 +135,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     pickerExpandableRef: pickerExpandable,
     getItemValue,
     topBarProps,
+    headerProps: type.modal && headerProps,
     setSearchValue,
     mode
   });
@@ -174,7 +187,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     animationType: 'slide',
     transparent: Constants.isIOS && enableModalBlur,
     enableModalBlur: Constants.isIOS && enableModalBlur,
-    onRequestClose: topBarProps?.onCancel,
+    onRequestClose: topBarProps?.onCancel || headerProps?.onCancel,
     onShow,
     ...pickerModalProps
   };
@@ -209,7 +222,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     closeExpandable,
     toggleExpandable
   }) => {
-    if (renderCustomModal) {
+    if (renderCustomModal || typeRenderCustomModal) {
       const modalProps = {
         visible,
         closeModal: closeExpandable,
@@ -221,21 +234,22 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
         onCancel: cancelSelect
       };
 
-      return renderCustomModal(modalProps);
+      return renderCustomModal ? renderCustomModal(modalProps) : typeRenderCustomModal?.(modalProps);
     }
   };
 
   const expandableModalContent = useMemo(() => {
-    const useItems = useWheelPicker || propItems;
+    const useItems = isWheelPicker || propItems;
+    const listTopBarProps = type.modal ? headerProps : topBarProps;
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
-        useWheelPicker={useWheelPicker}
+        useWheelPicker={isWheelPicker}
         mode={mode}
-        useDialog={useDialog}
+        useDialog={isDialog}
         items={useItems ? items : undefined}
         topBarProps={{
-          ...topBarProps,
+          ...listTopBarProps,
           onCancel: cancelSelect,
           onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
         }}
@@ -270,7 +284,9 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     filteredChildren,
     useSafeArea,
     useWheelPicker,
-    items
+    items,
+    type,
+    headerProps
   ]);
 
   const renderPickerInnerInput = () => {
@@ -301,14 +317,14 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
         /* @ts-expect-error */
         <ExpandableOverlay
           ref={pickerExpandable}
-          useDialog={useDialog || useWheelPicker}
+          useDialog={isDialog || isWheelPicker}
           modalProps={modalProps}
-          dialogProps={customPickerProps?.dialogProps || DIALOG_PROPS}
           expandableContent={expandableModalContent}
-          renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
+          renderCustomOverlay={renderCustomModal || typeRenderCustomModal ? _renderCustomModal : undefined}
           onPress={onPress}
           testID={testID}
           {...customPickerProps}
+          dialogProps={dialogProps || DIALOG_PROPS}
           disabled={themeProps.editable === false}
         >
           {renderPicker ? (
@@ -341,7 +357,8 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
 // @ts-expect-error
 Picker.Item = PickerItem;
 Picker.defaultProps = {
-  mode: PickerModes.SINGLE
+  mode: PickerModes.SINGLE,
+  pickerType: PickerModeTypes.Modal
 };
 Picker.displayName = 'Picker';
 // @ts-expect-error

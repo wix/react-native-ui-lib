@@ -134,7 +134,8 @@ export default class PickerScreen extends Component {
             value={this.state.language}
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
-            topBarProps={{title: 'Languages'}}
+            // topBarProps={{title: 'Languages'}}
+            headerProps={{title: 'Languages'}}
             // style={{color: Colors.red20}}
             showSearch
             searchPlaceholder={'Search a language'}
@@ -156,7 +157,8 @@ export default class PickerScreen extends Component {
           <Picker
             label="Wheel Picker"
             placeholder="Pick a Language"
-            useWheelPicker
+            // useWheelPicker
+            pickerType="wheelPicker"
             value={this.state.wheelPickerValue}
             onChange={wheelPickerValue => this.setState({wheelPickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
@@ -171,6 +173,7 @@ export default class PickerScreen extends Component {
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
             renderCustomModal={this.renderDialog}
+            pickerType="custom"
             items={options}
           />
 
@@ -181,8 +184,10 @@ export default class PickerScreen extends Component {
             value={this.state.option}
             enableModalBlur={false}
             onChange={item => this.setState({option: item})}
-            topBarProps={{title: 'Languages'}}
-            useDialog
+            // topBarProps={{title: 'Languages'}}
+            // useDialog
+            headerProps={{title: 'Languages'}}
+            pickerType="dialog"
             renderCustomDialogHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
                 <Button link label="Cancel" onPress={onCancel}/>
