@@ -79,7 +79,6 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     renderCustomModal,
     enableModalBlur,
     topBarProps,
-    pickerModalProps,
     listProps,
     value,
     getLabel,
@@ -101,7 +100,8 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     type,
     headerProps,
     renderCustomModal: typeRenderCustomModal,
-    dialogProps
+    dialogProps,
+    pickerModalProps
   } = usePickerMode({
     pickerType: PickerModeTypes.Modal,
     ...themeProps

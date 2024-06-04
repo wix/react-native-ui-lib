@@ -14,6 +14,7 @@ const usePickerMode = (props: PickerProps) => {
   let headerProps: any;
   let renderCustomModal: CustomPickerProps['renderCustomModal'];
   let dialogProps: ExpandableOverlayProps['dialogProps'];
+  let pickerModalProps: ExpandableOverlayProps['modalProps'];
   if ('pickerType' in props) {
     const {pickerType} = props;
     if (pickerType) {
@@ -22,18 +23,19 @@ const usePickerMode = (props: PickerProps) => {
     switch (pickerType) {
       case PickerModeTypes.Modal:
         headerProps = props.headerProps;
+        //@ts-ignore
+        pickerModalProps = props.pickerModalProps || props.modalProps;
         break;
       case PickerModeTypes.Dialog:
       case PickerModeTypes.WheelPicker:
         headerProps = props.headerProps;
-        // {"bottom": true, "height": "45%", "width": "100%"}
         dialogProps = headerProps && {...props?.customPickerProps?.dialogProps, headerProps: props.headerProps};
         break;
       case PickerModeTypes.Custom:
         renderCustomModal = props.renderCustomModal;
         break;
     }
-    return {type, headerProps, renderCustomModal, dialogProps};
+    return {type, headerProps, renderCustomModal, dialogProps, pickerModalProps};
   } else {
     const {useDialog, useWheelPicker} = props;
     type = {dialog: !!useDialog, wheelPicker: !!useWheelPicker, modal: !useDialog && !useWheelPicker, custom: false};

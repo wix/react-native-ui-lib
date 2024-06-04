@@ -90,6 +90,7 @@ export interface ModalPickerProps {
    */
   pickerType: PickerModeTypes.Modal | `${PickerModeTypes.Modal}`;
   headerProps?: ModalTopBarProps;
+  modalProps?: ExpandableOverlayProps['modalProps'];
 }
 
 export interface CustomPickerProps {
@@ -144,9 +145,15 @@ export type PickerPropsDeprecation = {
    */
   children?: ReactNode | undefined;
   /**
+   * @deprecated
    * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
    */
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  /**
+   * @deprecated
+   * Pass props to the picker modal
+   */
+  pickerModalProps?: object;
 };
 
 export type PickerTypes = PickerModeProps | PickerPropsDeprecation;
@@ -235,10 +242,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
    */
   listProps?: Partial<FlatListProps<any>>;
-  /**
-   * Pass props to the picker modal
-   */
-  pickerModalProps?: object;
   /**
    * Custom container style
    */
