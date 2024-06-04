@@ -12,13 +12,13 @@ import {
   Assets,
   PanningProvider,
   Typography,
-  PickerProps,
   RenderCustomModalProps,
   PickerMethods,
   Button
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import {longOptions} from './PickerScreenLongOptions';
+import {PickerPropsDeprecation} from 'src/components/picker/types';
 
 const tagIcon = require('../../assets/icons/tags.png');
 const dropdown = require('../../assets/icons/chevronDown.png');
@@ -99,7 +99,7 @@ export default class PickerScreen extends Component {
     contact: 0
   };
 
-  renderDialog: PickerProps['renderCustomModal'] = (modalProps: RenderCustomModalProps) => {
+  renderDialog: PickerPropsDeprecation['renderCustomModal'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
     return (
       <Incubator.Dialog
@@ -134,7 +134,8 @@ export default class PickerScreen extends Component {
             value={this.state.language}
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
-            topBarProps={{title: 'Languages'}}
+            // topBarProps={{title: 'Languages'}}
+            headerProps={{title: 'Languages'}}
             // style={{color: Colors.red20}}
             showSearch
             searchPlaceholder={'Search a language'}
@@ -147,6 +148,7 @@ export default class PickerScreen extends Component {
             placeholder="Favorite Languages (up to 3)"
             value={this.state.languages}
             onChange={items => this.setState({languages: items})}
+            headerProps={{title: 'Multi Languages'}}
             mode={Picker.modes.MULTI}
             selectionLimit={3}
             trailingAccessory={dropdownIcon}
@@ -156,7 +158,9 @@ export default class PickerScreen extends Component {
           <Picker
             label="Wheel Picker"
             placeholder="Pick a Language"
-            useWheelPicker
+            // useWheelPicker
+            pickerType="wheelPicker"
+            customPickerProps={{migrateDialog: true, dialogProps: {bottom: true, width: '100%', height: '45%'}}}
             value={this.state.wheelPickerValue}
             onChange={wheelPickerValue => this.setState({wheelPickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
@@ -170,6 +174,7 @@ export default class PickerScreen extends Component {
             onChange={items => this.setState({customModalValues: items})}
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
+            pickerType="custom"
             renderCustomModal={this.renderDialog}
             items={options}
           />
@@ -181,8 +186,10 @@ export default class PickerScreen extends Component {
             value={this.state.option}
             enableModalBlur={false}
             onChange={item => this.setState({option: item})}
-            topBarProps={{title: 'Languages'}}
-            useDialog
+            // topBarProps={{title: 'Languages'}}
+            // useDialog
+            headerProps={{title: 'Languages'}}
+            pickerType="dialog"
             renderCustomDialogHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
                 <Button link label="Cancel" onPress={onCancel}/>

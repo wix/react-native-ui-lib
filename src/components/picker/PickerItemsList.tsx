@@ -42,7 +42,10 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     const shouldFlex = true;
     const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
     return style;
-  }, [/* useDialog */]);
+  },
+  [
+    /* useDialog */
+  ]);
 
   const renderSearchInput = () => {
     if (showSearch) {
