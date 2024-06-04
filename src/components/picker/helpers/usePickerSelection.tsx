@@ -1,12 +1,21 @@
 import {RefObject, useCallback, useState, useEffect} from 'react';
 import _ from 'lodash';
-import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
+import {
+  PickerProps,
+  PickerValue,
+  PickerSingleValue,
+  PickerMultiValue,
+  PickerModes,
+  PickerPropsDeprecation
+} from '../types';
+import {ModalTopBarProps} from '../../modal/TopBar';
 
-interface UsePickerSelectionProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
-  pickerExpandableRef: RefObject<any>;
-  setSearchValue: (searchValue: string) => void;
-}
+type UsePickerSelectionProps = Pick<PickerProps, 'value' | 'onChange' | 'mode'> &
+  Pick<PickerPropsDeprecation, 'migrate' | 'getItemValue' | 'topBarProps'> & {
+    headerProps?: ModalTopBarProps;
+    pickerExpandableRef: RefObject<any>;
+    setSearchValue: (searchValue: string) => void;
+  };
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
   const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} = props;

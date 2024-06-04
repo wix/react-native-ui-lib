@@ -21,7 +21,7 @@ import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
-import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+// import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
 import {extractPickerItems} from './PickerPresenter';
 import {
   PickerProps,
@@ -33,7 +33,8 @@ import {
   RenderCustomModalProps,
   PickerItemsListProps,
   PickerMethods,
-  PickerModeTypes
+  PickerModeTypes,
+  PickerPropsDeprecation
 } from './types';
 
 const dropdown = require('./assets/dropdown.png');
@@ -49,9 +50,10 @@ type PickerStatics = {
   modes: typeof PickerModes;
   fieldTypes: typeof PickerFieldTypes;
   extractPickerItems: typeof extractPickerItems;
+  picketType: typeof PickerModeTypes;
 };
 
-const Picker = React.forwardRef((props: PickerProps, ref) => {
+const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, ref) => {
   const themeProps = useThemeProps(props, 'Picker');
   const {
     mode,
@@ -106,7 +108,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
   // TODO:  Remove this when migration is completed, starting of v8
-  usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
+  // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
 
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
   const {
@@ -348,6 +350,8 @@ Picker.modes = PickerModes;
 Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
+// @ts-expect-error
+Picker.pickerType = PickerModeTypes;
 
 export {
   PickerProps,

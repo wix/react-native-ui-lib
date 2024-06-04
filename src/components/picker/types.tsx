@@ -137,6 +137,21 @@ export type PickerPropsDeprecation = {
    * @deprecated
    */
   children?: ReactNode | undefined;
+  /**
+   * @deprecated
+   * The picker modal top bar props
+   */
+  topBarProps?: ModalTopBarProps;
+  /**
+   * @deprecated
+   * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
+   */
+  renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  /**
+   * @deprecated
+   * Pass props to the picker modal
+   */
+  pickerModalProps?: object;
 };
 
 export type PickerTypes = PickerModeProps | PickerPropsDeprecation;
