@@ -100,6 +100,7 @@ export interface CustomPickerProps {
   renderCustomModal?: PickerPropsDeprecation['renderCustomModal'];
 }
 
+type PickerHeaderProps = ModalTopBarProps | DialogPropsOld['pannableHeaderProps'] | DialogPropsNew['headerProps'];
 export type PickerModeProps = ModalPickerProps | DialogPickerProps | WheelPickerProps | CustomPickerProps;
 
 export type PickerPropsDeprecation = {
@@ -348,8 +349,9 @@ export type PickerItemsListProps = Pick<
   | 'mode'
   | 'testID'
 > &
-  Pick<PickerPropsDeprecation, 'topBarProps' | 'useWheelPicker' | 'useDialog'> & {
+  Pick<PickerPropsDeprecation, 'useWheelPicker' | 'useDialog'> & {
     items?: {value: any; label: any}[];
+    topBarProps: PickerHeaderProps;
   };
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;

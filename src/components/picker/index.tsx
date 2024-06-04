@@ -187,7 +187,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     animationType: 'slide',
     transparent: Constants.isIOS && enableModalBlur,
     enableModalBlur: Constants.isIOS && enableModalBlur,
-    onRequestClose: topBarProps?.onCancel,
+    onRequestClose: topBarProps?.onCancel || headerProps?.onCancel,
     onShow,
     ...pickerModalProps
   };
@@ -240,6 +240,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
 
   const expandableModalContent = useMemo(() => {
     const useItems = isWheelPicker || propItems;
+    const listTopBarProps = type.modal ? headerProps : topBarProps;
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
@@ -248,8 +249,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
         useDialog={isDialog}
         items={useItems ? items : undefined}
         topBarProps={{
-          ...topBarProps,
-          ...headerProps,
+          ...listTopBarProps,
           onCancel: cancelSelect,
           onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
         }}
