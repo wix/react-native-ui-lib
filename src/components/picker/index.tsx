@@ -32,7 +32,8 @@ import {
   PickerSearchStyle,
   RenderCustomModalProps,
   PickerItemsListProps,
-  PickerMethods
+  PickerMethods,
+  PickerModeTypes
 } from './types';
 
 const dropdown = require('./assets/dropdown.png');
@@ -357,7 +358,8 @@ export {
   PickerSearchStyle,
   RenderCustomModalProps,
   PickerItemsListProps,
-  PickerMethods
+  PickerMethods,
+  PickerModeTypes
 };
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;
