@@ -102,9 +102,14 @@ export interface CustomPickerProps {
 
 export type PickerModeProps = ModalPickerProps | DialogPickerProps | WheelPickerProps | CustomPickerProps;
 
-export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
-  /* ...TextField.propTypes, */
+export type PickerPropsDeprecation = {
   /**
+   * @deprecated
+   * Use wheel picker instead of a modal picker
+   */
+  useWheelPicker?: boolean;
+  /**
+   * @deprecated
    * Use dialog instead of modal picker
    */
   useDialog?: boolean;
@@ -113,6 +118,32 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
+  /**
+   * @deprecated
+   * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
+   */
+  getItemValue?: (value: PickerValue) => any;
+  /**
+   * @deprecated
+   * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
+   */
+  getItemLabel?: (value: PickerValue) => string;
+  /**
+   * @deprecated
+   * Callback for modal onShow event
+   */
+  onShow?: () => void;
+  /**
+   * @deprecated
+   */
+  children?: ReactNode | undefined;
+};
+
+export type PickerTypes = PickerModeProps | PickerPropsDeprecation;
+
+export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
+  /* ...TextField.propTypes, */
+
   /**
    * Pass for different field type UI (form, filter or settings)
    */
@@ -163,16 +194,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Add onPress callback for when pressing the picker
    */
   onPress?: () => void;
-  /**
-   * @deprecated
-   * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemValue?: (value: PickerValue) => any;
-  /**
-   * @deprecated
-   * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemLabel?: (value: PickerValue) => string;
+
   /**
    * A function that returns the label to show for the selected Picker value
    */
@@ -206,10 +228,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
-   * Use wheel picker instead of a list picker
-   */
-  useWheelPicker?: boolean;
-  /**
    * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
    */
   listProps?: Partial<FlatListProps<any>>;
@@ -221,11 +239,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Custom container style
    */
   containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * @deprecated
-   * Callback for modal onShow event
-   */
-  onShow?: () => void;
+
   /**
    * Add safe area in the Picker modal view
    */
@@ -238,25 +252,28 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Component test id
    */
   testID?: string;
-  /**
-   * @deprecated
-   */
-  children?: ReactNode | undefined;
 };
 
-export type PickerPropsWithSingle = PickerBaseProps & {
+export type PickerPropsWithSingle = {
   mode?: PickerModes.SINGLE;
   value?: PickerSingleValue;
   onChange?: (value: PickerSingleValue) => void;
 };
 
-export type PickerPropsWithMulti = PickerBaseProps & {
+export type PickerPropsWithMulti = {
   mode?: PickerModes.MULTI;
   value?: PickerMultiValue;
   onChange?: (value: PickerMultiValue) => void;
 };
 
-export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
+//TODO: Remove PickerPropsOld type in v8
+export type PickerPropsOld = PickerPropsDeprecation &
+  PickerBaseProps &
+  (PickerPropsWithSingle | PickerPropsWithMulti) & {pickerType?: never};
+
+export type PickerPropsNew = PickerBaseProps & (PickerPropsWithSingle | PickerPropsWithMulti) & PickerTypes;
+
+export type PickerProps = PickerPropsOld | PickerPropsNew;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**
@@ -274,11 +291,11 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   /**
    * Custom function for the item label (e.g (value) => customLabel)
    */
-  getItemLabel?: PickerProps['getItemLabel'];
+  getItemLabel?: PickerPropsDeprecation['getItemLabel'];
   /**
    * @deprecated Function to return the value out of the item value prop when value is custom shaped.
    */
-  getItemValue?: PickerProps['getItemValue'];
+  getItemValue?: PickerPropsDeprecation['getItemValue'];
   /**
    * Render custom item
    */
@@ -307,13 +324,13 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   testID?: string;
 }
 
-export interface PickerContextProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
-  onPress: (value: PickerSingleValue) => void;
-  isMultiMode: boolean;
-  onSelectedLayout: (event: any) => any;
-  selectionLimit: PickerProps['selectionLimit'];
-}
+export type PickerContextProps = Pick<PickerProps, 'value' | 'renderItem' | 'selectionLimit'> &
+  Pick<PickerPropsDeprecation, 'migrate' | 'getItemValue' | 'getItemLabel'> & {
+    onPress: (value: PickerSingleValue) => void;
+    isMultiMode: boolean;
+    onSelectedLayout: (event: any) => any;
+    selectionLimit: PickerProps['selectionLimit'];
+  };
 
 export type PickerItemsListProps = Pick<
   PropsWithChildren<PickerProps>,
@@ -327,12 +344,11 @@ export type PickerItemsListProps = Pick<
   | 'renderCustomSearch'
   | 'renderCustomDialogHeader'
   | 'useSafeArea'
-  | 'useWheelPicker'
-  | 'useDialog'
   | 'mode'
   | 'testID'
-> & {
-  items?: {value: any; label: any}[];
-};
+> &
+  Pick<PickerPropsDeprecation, 'useWheelPicker' | 'useDialog'> & {
+    items?: {value: any; label: any}[];
+  };
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;
