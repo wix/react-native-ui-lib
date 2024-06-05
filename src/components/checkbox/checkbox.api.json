@@ -39,6 +39,16 @@
       "name": "containerStyle",
       "type": "ViewStyle",
       "description": "Custom styling for the checkbox and label container"
+    },
+    {
+      "name": "validateOnStart",
+      "type": "boolean",
+      "description": "Whether it should validate on start"
+    },
+    {
+      "name": "validateOnChange",
+      "type": "boolean",
+      "description": "Whether it should validate on change"
     }
   ],
   "snippet": [
