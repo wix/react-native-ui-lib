@@ -100,7 +100,7 @@ export interface CustomPickerProps {
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
 }
 
-export type PickerModeProps = ModalPickerProps | DialogPickerProps | WheelPickerProps | CustomPickerProps;
+export type PickerModeProps = Partial<ModalPickerProps | DialogPickerProps | WheelPickerProps | CustomPickerProps>;
 
 export type PickerPropsDeprecation = {
   /**
@@ -215,10 +215,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   getLabel?: (value: PickerValue) => string;
   /**
-   * The picker modal top bar props
-   */
-  topBarProps?: ModalTopBarProps;
-  /**
    * Show search input to filter picker items by label
    */
   showSearch?: boolean;
@@ -281,14 +277,10 @@ export type PickerPropsWithMulti = {
   onChange?: (value: PickerMultiValue) => void;
 };
 
-//TODO: Remove PickerPropsOld type in v8
-export type PickerPropsOld = PickerPropsDeprecation &
-  PickerBaseProps &
-  (PickerPropsWithSingle | PickerPropsWithMulti) & {pickerType?: never};
+type PickerCommonProps = PickerBaseProps & (PickerPropsWithSingle | PickerPropsWithMulti);
 
-export type PickerPropsNew = PickerBaseProps & (PickerPropsWithSingle | PickerPropsWithMulti) & PickerTypes;
-
-export type PickerProps = PickerPropsOld | PickerPropsNew;
+//TODO: Remove PickerPropsDeprecation type in v8
+export type PickerProps = PickerCommonProps & PickerModeProps & PickerPropsDeprecation;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**
@@ -349,9 +341,7 @@ export type PickerContextProps = Pick<PickerProps, 'value' | 'renderItem' | 'sel
 
 export type PickerItemsListProps = Pick<
   PropsWithChildren<PickerProps>,
-  | 'topBarProps'
   | 'listProps'
-  | 'children'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
@@ -362,7 +352,7 @@ export type PickerItemsListProps = Pick<
   | 'mode'
   | 'testID'
 > &
-  Pick<PickerPropsDeprecation, 'useWheelPicker' | 'useDialog'> & {
+  Pick<PickerPropsDeprecation, 'useWheelPicker' | 'useDialog' | 'topBarProps' | 'children'> & {
     items?: {value: any; label: any}[];
   };
 

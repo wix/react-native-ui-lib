@@ -102,8 +102,9 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     renderCustomModal: typeRenderCustomModal,
     dialogProps,
     pickerModalProps
+    //@ts-expect-error
   } = usePickerMode({
-    pickerType: PickerModeTypes.Modal,
+    pickerType: 'modal',
     ...themeProps
   });
   const isDialog = useDialog || type.dialog;
@@ -357,8 +358,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
 // @ts-expect-error
 Picker.Item = PickerItem;
 Picker.defaultProps = {
-  mode: PickerModes.SINGLE,
-  pickerType: PickerModeTypes.Modal
+  mode: PickerModes.SINGLE
 };
 Picker.displayName = 'Picker';
 // @ts-expect-error
