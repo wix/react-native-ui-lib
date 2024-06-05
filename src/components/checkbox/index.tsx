@@ -92,6 +92,14 @@ export interface CheckboxProps extends TouchableOpacityProps {
    */
   containerStyle?: StyleProp<ViewStyle>;
   indeterminate?: boolean;
+  /**
+   * Whether it should validate on start
+   */
+  validateOnStart?: boolean;
+  /**
+   * Whether it should validate on change
+   */
+  validateOnChange?: boolean;
 }
 
 interface CheckboxMethods {
@@ -163,6 +171,16 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   validationState = false;
+
+  componentDidMount(): void {
+    const {validateOnStart, validateOnChange} = this.props;
+    if (validateOnStart) {
+      this.validate();
+    }
+    if (validateOnChange) {
+      this.validationState = true;
+    }
+  }
 
   componentDidUpdate(prevProps: CheckboxProps) {
     const {value} = this.props;
