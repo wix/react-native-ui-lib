@@ -77,4 +77,70 @@ describe('TextField:Presenter', () => {
       expect(uut.shouldHidePlaceholder({floatingPlaceholder: true, hint: 'Hint text', floatOnFocus: false}, true)).toBe(true);
     });
   });
+
+  describe('Should float placeholder', () => {
+    it('should not float when isFocused is false', () => {
+      const props = {floatOnFocus: true};
+      const isFocused = false;
+      const hasValue = undefined;
+      const value = undefined;
+      expect(uut.shouldPlaceholderFloat(props, isFocused, hasValue, value)).toBe(false);
+    });
+
+    it('should not float when isFocused is false', () => {
+      const props = {floatOnFocus: false};
+      const isFocused = true;
+      const hasValue = undefined;
+      const value = undefined;
+      expect(uut.shouldPlaceholderFloat(props, isFocused, hasValue, value)).toBe(false);
+    });
+
+    it('should float when floatOnFocus and isFocused is true', () => {
+      const props = {floatOnFocus: true};
+      const isFocused = true;
+      const hasValue = undefined;
+      const value = undefined;
+      expect(uut.shouldPlaceholderFloat(props, isFocused, hasValue, value)).toBe(true);
+    });
+
+    it('should float when hasValue is true', () => {
+      const props = {floatOnFocus: false};
+      const isFocused = false;
+      const hasValue = true;
+      const value = undefined;
+      expect(uut.shouldPlaceholderFloat(props, isFocused, hasValue, value)).toBe(true);
+    });
+
+    it('should not float when hasValue is false', () => {
+      const props = {floatOnFocus: false};
+      const isFocused = false;
+      const hasValue = false;
+      const value = undefined;
+      expect(uut.shouldPlaceholderFloat(props, isFocused, hasValue, value)).toBe(false);
+    });
+
+    it('should float when defaultValue and value is undefined', () => {
+      const props = {floatOnFocus: false, defaultValue: 'default value'};
+      const isFocused = false;
+      const hasValue = false;
+      const value = undefined;
+      expect(uut.shouldPlaceholderFloat(props, isFocused, hasValue, value)).toBe(true);
+    });
+
+    it('should not float when defaultValue and value', () => {
+      const props = {floatOnFocus: false, defaultValue: 'default value'};
+      const isFocused = false;
+      const hasValue = false;
+      const value = 'value';
+      expect(uut.shouldPlaceholderFloat(props, isFocused, hasValue, value)).toBe(false);
+    });
+
+    it('should not float when no defaultValue and value', () => {
+      const props = {floatOnFocus: false, defaultValue: undefined};
+      const isFocused = false;
+      const hasValue = false;
+      const value = 'value';
+      expect(uut.shouldPlaceholderFloat(props, isFocused, hasValue, value)).toBe(false);
+    });
+  });
 });
