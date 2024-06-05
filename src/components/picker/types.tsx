@@ -59,7 +59,7 @@ export interface PickerSearchStyle {
 
 type OldDialogHeaderType = {
   headerProps?: DialogPropsOld['pannableHeaderProps'];
-  migrateDialog?: false;
+  migrateDialog: false;
 };
 
 type NewDialogHeaderType = {
@@ -73,21 +73,21 @@ export type DialogPickerProps = DialogHeaderProps & {
   /**
    * Type of picker to render
    */
-  pickerType?: PickerModeTypes.Dialog | `${PickerModeTypes.Dialog}`;
+  pickerType: PickerModeTypes.Dialog | `${PickerModeTypes.Dialog}`;
 };
 
 export type WheelPickerProps = DialogHeaderProps & {
   /**
    * Type of picker to render
    */
-  pickerType?: PickerModeTypes.WheelPicker | `${PickerModeTypes.WheelPicker}`;
+  pickerType: PickerModeTypes.WheelPicker | `${PickerModeTypes.WheelPicker}`;
 };
 
 export interface ModalPickerProps {
   /**
    * Type of picker to render
    */
-  pickerType?: PickerModeTypes.Modal | `${PickerModeTypes.Modal}`;
+  pickerType: PickerModeTypes.Modal | `${PickerModeTypes.Modal}`;
   headerProps?: ModalTopBarProps;
   modalProps?: ExpandableOverlayProps['modalProps'];
 }
@@ -96,7 +96,7 @@ export interface CustomPickerProps {
   /**
    * Type of picker to render
    */
-  pickerType?: PickerModeTypes.Custom | `${PickerModeTypes.Custom}`;
+  pickerType: PickerModeTypes.Custom | `${PickerModeTypes.Custom}`;
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
 }
 
@@ -215,6 +215,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   getLabel?: (value: PickerValue) => string;
   /**
+   * The picker modal top bar props
+   */
+  topBarProps?: ModalTopBarProps;
+  /**
    * Show search input to filter picker items by label
    */
   showSearch?: boolean;
@@ -277,10 +281,14 @@ export type PickerPropsWithMulti = {
   onChange?: (value: PickerMultiValue) => void;
 };
 
-type PickerCommonsProps = PickerBaseProps & (PickerPropsWithSingle | PickerPropsWithMulti);
+//TODO: Remove PickerPropsOld type in v8
+export type PickerPropsOld = PickerPropsDeprecation &
+  PickerBaseProps &
+  (PickerPropsWithSingle | PickerPropsWithMulti) & {pickerType?: never};
 
-//TODO: Remove PickerPropsDeprecation type in v8
-export type PickerProps = PickerCommonsProps & PickerModeProps & PickerPropsDeprecation;
+export type PickerPropsNew = PickerBaseProps & (PickerPropsWithSingle | PickerPropsWithMulti) & PickerTypes;
+
+export type PickerProps = PickerPropsOld | PickerPropsNew;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**
@@ -341,7 +349,9 @@ export type PickerContextProps = Pick<PickerProps, 'value' | 'renderItem' | 'sel
 
 export type PickerItemsListProps = Pick<
   PropsWithChildren<PickerProps>,
+  | 'topBarProps'
   | 'listProps'
+  | 'children'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
@@ -352,7 +362,7 @@ export type PickerItemsListProps = Pick<
   | 'mode'
   | 'testID'
 > &
-  Pick<PickerPropsDeprecation, 'useWheelPicker' | 'useDialog' | 'topBarProps' | 'children'> & {
+  Pick<PickerPropsDeprecation, 'useWheelPicker' | 'useDialog'> & {
     items?: {value: any; label: any}[];
   };
 

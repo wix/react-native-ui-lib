@@ -23,6 +23,7 @@ const usePickerMode = (props: PickerProps) => {
     switch (pickerType) {
       case PickerModeTypes.Modal:
         headerProps = props.headerProps;
+        //@ts-ignore
         pickerModalProps = props.pickerModalProps || props.modalProps;
         break;
       case PickerModeTypes.Dialog:
@@ -34,14 +35,13 @@ const usePickerMode = (props: PickerProps) => {
         renderCustomModal = props.renderCustomModal;
         break;
     }
-    //@ts-expect-error
-    return {type, headerProps, renderCustomModal, dialogProps, pickerModalProps, migrateDialog: props.migrateDialog};
+    return {type, headerProps, renderCustomModal, dialogProps, pickerModalProps};
   } else {
     const {useDialog, useWheelPicker} = props;
     type = {dialog: !!useDialog, wheelPicker: !!useWheelPicker, modal: !useDialog && !useWheelPicker, custom: false};
-
-    return {type};
   }
+
+  return {type};
 };
 
 export default usePickerMode;
