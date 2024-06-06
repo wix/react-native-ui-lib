@@ -6,8 +6,8 @@ import Assets from '../../assets';
 import {Spacings, Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
-import FieldContext from './FieldContext';
 import {TextFieldProps} from './types';
+import FieldContext from './FieldContext';
 
 const hitSlop = {top: 20, bottom: 20, left: 20, right: 20};
 const NON_VISIBLE_POSITION = 100;
@@ -22,7 +22,6 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{translateX: animatedValue.value}, {translateY: 0}]
-      // opacity: 1
     };
   });
 

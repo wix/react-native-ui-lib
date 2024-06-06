@@ -233,7 +233,8 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
-        {helperText && <Text $textNeutralHeavy subtext marginT-s1>{helperText}</Text>}
+        {helperText && 
+          <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>{helperText}</Text>}
       </View>
     </FieldContext.Provider>
   );
