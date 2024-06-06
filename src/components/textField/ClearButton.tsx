@@ -44,16 +44,15 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
 
   return (
     //@ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
-    <View reanimated style={style}>
+    <View reanimated style={style} testID={testID}>
       <Button
         link
         iconSource={Assets.icons.xFlat}
         iconStyle={styles.clearIcon}
         onPress={clear}
         hitSlop={hitSlop}
-        accessible={Boolean(hasValue)}
+        accessible={hasValue}
         accessibilityLabel={'clear'}
-        testID={`${testID}.clearButton`}
       />
     </View>
   );
@@ -64,9 +63,9 @@ const styles = StyleSheet.create({
     marginHorizontal: Spacings.s3
   },
   clearIcon: {
-    tintColor: Colors.grey40
+    tintColor: Colors.$textNeutralLight
   }
 });
 
-ClearButton.displayName = 'Incubator.TextField';
+ClearButton.displayName = 'IGNORE';
 export default ClearButton;

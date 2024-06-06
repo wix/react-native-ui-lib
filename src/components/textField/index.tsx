@@ -208,7 +208,8 @@ const TextField = (props: InternalTextFieldProps) => {
               />
             </View>
           )}
-          {showClearButton && <ClearButton onClear={onClear} testID={`${props.testID}.clearButton`} onChangeText={onChangeText}/>}
+          {showClearButton && 
+            <ClearButton onClear={onClear} testID={`${props.testID}.clearButton`} onChangeText={onChangeText}/>}
           {trailingAccessory}
           {/* </View> */}
         </View>
