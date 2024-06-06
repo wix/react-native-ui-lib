@@ -205,7 +205,7 @@ export default class TextFieldScreen extends Component {
             validationMessagePosition={errorPosition}
             helperText={'Enter first and last name'}
             validationIcon={{source: Assets.icons.demo.exclamation, style: {marginTop: 1}}}
-            topTrailingAccessory={<Icon source={Assets.icons.demo.info}/>}
+            topTrailingAccessory={<Icon source={Assets.icons.demo.info} size={16}/>}
             preset={preset}
           />
           <Button
