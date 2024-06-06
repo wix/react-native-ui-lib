@@ -167,7 +167,7 @@ export default class TextFieldScreen extends Component {
   };
 
   renderValidationExample() {
-    const {errorPosition} = this.state;
+    const {errorPosition, preset} = this.state;
     
     return (
       <>
@@ -178,7 +178,7 @@ export default class TextFieldScreen extends Component {
             <SegmentedControl segments={[{label: 'Bottom'}, {label: 'Top'}]} onChangeIndex={this.onChangeIndexValidation}/>
           </View>
         </View>
-        
+
         <TextField
           value={this.state.value}
           onChangeText={value => this.setState({value})}
@@ -206,6 +206,7 @@ export default class TextFieldScreen extends Component {
             helperText={'Enter first and last name'}
             validationIcon={{source: Assets.icons.demo.exclamation, style: {marginTop: 1}}}
             topTrailingAccessory={<Icon source={Assets.icons.demo.info}/>}
+            preset={preset}
           />
           <Button
             outline
