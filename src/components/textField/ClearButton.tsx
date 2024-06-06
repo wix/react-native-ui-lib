@@ -6,8 +6,8 @@ import Assets from '../../assets';
 import {Spacings, Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
-import {TextFieldProps} from './types';
 import FieldContext from './FieldContext';
+import {TextFieldProps} from './types';
 
 const hitSlop = {top: 20, bottom: 20, left: 20, right: 20};
 const NON_VISIBLE_POSITION = 100;
@@ -15,7 +15,7 @@ const VISIBLE_POSITION = 0;
 const SPRING_ANIMATION_CONFIG = {velocity: 300, damping: 20, stiffness: 300, mass: 0.8};
 
 const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onClear' | 'testID' | 'onChangeText'>) => {
-  const {hasValue, value} = useContext(FieldContext);
+  const {hasValue} = useContext(FieldContext);
   const animatedValue = useSharedValue(hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION);
 
   // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
@@ -29,13 +29,11 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
 
   const animate = useCallback(() => {
     const toValue = hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION;
-    console.warn('ClearButton: ', hasValue, value, toValue);
     animatedValue.value = withSpring(toValue, SPRING_ANIMATION_CONFIG);
   },
   [animatedValue, hasValue]);
 
   useDidUpdate(() => {
-    console.warn('ClearButton Update: ', hasValue, value);
     animate();
   }, [hasValue, animate]);
 
