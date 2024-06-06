@@ -212,7 +212,7 @@ const TextField = (props: InternalTextFieldProps) => {
           {trailingAccessory}
           {/* </View> */}
         </View>
-        <View row spread marginT-s1>
+        <View row spread>
           {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
             <ValidationMessage
               enableErrors={enableErrors}

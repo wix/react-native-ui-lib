@@ -1,11 +1,13 @@
 import React from 'react';
-import NumberInput from '../index';
+import {render} from '@testing-library/react-native';
 import {NumberInputDriver} from '../NumberInput.driver';
+import NumberInput from '../index';
 
+const TEST_ID = 'numberInput';
 const onChangeNumber = () => {};
 
 const defaultProps = {
-  testID: 'field',
+  testID: TEST_ID,
   placeholder: 'Placeholder',
   centered: true,
   onChangeNumber
@@ -16,22 +18,24 @@ const TestCase = props => {
 };
 
 describe('NumberInput', () => {
-  it('Should update number when fractionDigits changes', async () => {
-    const component = <TestCase/>;
-    const numberInputDriver = new NumberInputDriver({component, testID: 'field'});
-    expect(await numberInputDriver.exists()).toBe(true);
+  it('Should display formatted number', async () => {
+    const renderTree = render(<TestCase/>);
+    const numberInputDriver = NumberInputDriver({renderTree, testID: TEST_ID});
+    
+    expect(numberInputDriver.exists()).toBe(true);
+
     numberInputDriver.changeText('1234567');
-    expect(await numberInputDriver.getText()).toEqual('12,345.67');
-    // TODO: add changing fractionDigits once we support rerender in our drivers
+    expect(await numberInputDriver.getValue()).toEqual('12,345.67');
+  });
 
+  it('Should update number when fractionDigits change', async () => {
+    const renderTree = render(<TestCase/>);
+    const numberInputDriver = NumberInputDriver({renderTree, testID: TEST_ID});
 
-    // const renderTree = render(<TestCase/>);
-    // const input = renderTree.getByTestId('field');
-    // fireEvent(input, 'focus');
-    // fireEvent.changeText(input, '1234567');
-    // fireEvent(input, 'blur');
-    // renderTree.getByDisplayValue('1,234.67');
-    // renderTree.rerender(<TestCase fractionDigits={3}/>);
-    // renderTree.getByDisplayValue('123.457');
+    numberInputDriver.changeText('1234567');
+    expect(await numberInputDriver.getValue()).toEqual('12,345.67');
+
+    renderTree.rerender(<TestCase fractionDigits={4}/>);
+    expect(await numberInputDriver.getValue()).toEqual('123.4567');
   });
 });
