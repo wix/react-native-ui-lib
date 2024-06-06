@@ -1,8 +1,12 @@
 import _ from 'lodash';
+import {StyleSheet} from 'react-native';
 import {fireEvent} from '@testing-library/react-native';
 import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {TextDriver} from '../text/Text.driver.new';
 import {usePressableDriver} from '../../testkit/new/usePressable.driver';
+import {TextDriver} from '../text/Text.driver.new';
+import {ImageDriver} from '../image/Image.driver.new';
+import {ButtonDriver} from '../button/Button.driver.new';
+import {ViewDriver} from '../view/View.driver.new';
 
 export const TextFieldDriver = (props: ComponentProps) => {
   const driver = usePressableDriver(useComponentDriver(props));
@@ -22,6 +26,22 @@ export const TextFieldDriver = (props: ComponentProps) => {
   const charCounterDriver = TextDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.charCounter`
+  });
+  const helperTextDriver = TextDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.helperText`
+  });
+  const validationIconDriver = ImageDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.validationMessage.icon`
+  });
+  const clearButtonDriver = ButtonDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.clearButton`
+  });
+  const clearButtonContainerDriver = ViewDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.clearButton.container`
   });
 
   const getValue = (): string | undefined => {
@@ -79,6 +99,24 @@ export const TextFieldDriver = (props: ComponentProps) => {
     return charCounterDriver;
   };
 
+  const getHelperText = () => {
+    return helperTextDriver;
+  };
+
+  const getValidationIcon = () => {
+    return validationIconDriver;
+  };
+
+  const getClearButton = () => {
+    const visible = (): boolean => {
+      const transform = StyleSheet.flatten(clearButtonContainerDriver.getStyle()).transform;
+      const translate = StyleSheet.flatten(transform);
+      const translateX = translate.translateX;
+      return translateX === 0;
+    };
+    return {...clearButtonDriver, visible};
+  };
+
   return {
     ...driver,
     getValue,
@@ -89,6 +127,9 @@ export const TextFieldDriver = (props: ComponentProps) => {
     getPlaceholder,
     getLabel,
     getValidationMessage,
-    getCharCounter
+    getCharCounter,
+    getHelperText,
+    getValidationIcon,
+    getClearButton
   };
 };

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {render} from '@testing-library/react-native';
 import Constants from '../../../commons/Constants';
+import Assets from '../../../assets';
 import View from '../../../components/view';
 import {TextFieldDriver} from '../TextField.driver.new';
 import TextField from '../index';
@@ -10,6 +11,7 @@ const TEXT_FIELD_TEST_ID = 'text_field_test_id';
 const placeholder = 'Placeholder';
 const label = 'Label';
 const hint = 'Hint';
+const helperText = 'Helper Text';
 
 function TestCase(textFieldProps?: TextFieldProps) {
   const [value, setValue] = useState(textFieldProps?.value);
@@ -223,6 +225,24 @@ describe('TextField', () => {
     });
   });
 
+  describe('validationIcon', () => {
+    it('should display validationIcon', () => {
+      const renderTree = render(<TestCase enableErrors validateOnStart validate={'required'} validationMessage={'This field is required'} validationIcon={{source: Assets.icons.check}}/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+
+      expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+      expect(textFieldDriver.getValidationIcon().exists()).toBe(true);
+    });
+
+    it('should not display validationIcon', () => {
+      const renderTree = render(<TestCase enableErrors validateOnStart validate={'required'} validationMessage={'This field is required'}/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+
+      expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+      expect(textFieldDriver.getValidationIcon().exists()).toBe(false);
+    });
+  });
+
   describe('defaultValue', () => {
     const props = {
       testID: TEXT_FIELD_TEST_ID,
@@ -327,6 +347,84 @@ describe('TextField', () => {
       
       textFieldDriver.focus();
       expect(textFieldDriver.getPlaceholder().getText()).toEqual(placeholder);
+    });
+  });
+
+  describe('helperText', () => {
+    it('should display helperText', () => {
+      const renderTree = render(<TestCase placeholder={placeholder} hint={hint} helperText={helperText}/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+
+      expect(textFieldDriver.getHelperText().exists()).toBe(true);
+    });
+
+    it('should not display helperText', () => {
+      const renderTree = render(<TestCase placeholder={placeholder}/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+      
+      expect(textFieldDriver.getHelperText().exists()).toBe(false);
+    });
+  });
+
+  describe('clear button', () => {
+    it('should not render clear button', async () => {
+      const renderTree = render(<TestCase/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+      
+      expect(await textFieldDriver.getClearButton().exists()).toBe(false);
+    });
+
+    it('should not display clear button when value is undefined', async () => {
+      const renderTree = render(<TestCase showClearButton/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+      const clearButtonDriver = textFieldDriver.getClearButton();
+
+      expect(await clearButtonDriver.exists()).toBe(true);
+      expect(await clearButtonDriver.visible()).toBe(false);
+    });
+
+    it('should not display clear button when value is empty', async () => {
+      const renderTree = render(<TestCase showClearButton value={''}/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+      const clearButtonDriver = textFieldDriver.getClearButton();
+
+      expect(await clearButtonDriver.exists()).toBe(true);
+      expect(await clearButtonDriver.visible()).toBe(false);
+    });
+
+    it('should display clear button when has value', async () => {
+      const renderTree = render(<TestCase showClearButton value={'value'}/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+      const clearButtonDriver = textFieldDriver.getClearButton();
+      
+      expect(await clearButtonDriver.exists()).toBe(true);
+      expect(await clearButtonDriver.visible()).toBe(true);
+    });
+
+    it('should toggle clear button when value changes', async () => {
+      const renderTree = render(<TestCase showClearButton/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+      const clearButtonDriver = textFieldDriver.getClearButton();
+
+      expect(clearButtonDriver.exists()).toBe(true);
+      expect(await clearButtonDriver.visible()).toBe(false);
+
+      textFieldDriver.changeText('b');
+      expect(await clearButtonDriver.visible()).toBe(true);
+
+      textFieldDriver.changeText('');
+      expect(await clearButtonDriver.visible()).toBe(false);
+    });
+
+    it('should clear value when pressed', () => {
+      const renderTree = render(<TestCase showClearButton value={'value'}/>);
+      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+      const clearButtonDriver = textFieldDriver.getClearButton();
+
+      expect(clearButtonDriver.exists()).toBe(true);
+
+      clearButtonDriver.press();
+      expect(textFieldDriver.getValue()).toEqual('');
     });
   });
 
