@@ -6,6 +6,7 @@ import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import DialogOld from '../../components/dialog';
 import DialogNew, {DialogMigrationProps} from '../Dialog';
 import {Colors} from 'style';
+import {Constants} from '../../commons/new';
 
 export interface ExpandableOverlayMethods {
   openExpandable: () => void;
@@ -94,6 +95,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         {...modalProps}
         visible={visible}
         onDismiss={closeExpandable}
+        onRequestClose={Constants.isAndroid ? closeExpandable : undefined}
       >
         {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
         {expandableContent}
