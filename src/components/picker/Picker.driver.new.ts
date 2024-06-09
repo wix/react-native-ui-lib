@@ -60,10 +60,6 @@ export const PickerDriver = (props: ComponentProps) => {
     itemDriver.press();
   };
 
-  const getInput = () => {
-    return textFieldDriver;
-  };
-
   return {
     getValue,
     open,
@@ -71,7 +67,6 @@ export const PickerDriver = (props: ComponentProps) => {
     done,
     isOpen,
     dismissDialog,
-    selectItem,
-    getInput
+    selectItem
   };
 };

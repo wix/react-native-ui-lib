@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {act, render, waitFor, screen} from '@testing-library/react-native';
-import {Typography} from '../../../style';
 import Picker from '../index';
 import {PickerDriver} from '../Picker.driver.new';
 const countries = [
@@ -134,8 +133,9 @@ describe('Picker', () => {
       // });
 
       describe('Test Modal TopBar', () => {
-        it('should close and select items when pressing on cancel button', () => {
-          const driver = getDriver({mode: 'MULTI', topBarProps: {cancelLabel: 'Cancel'}});
+        const modalProps = {mode: 'MULTI', topBarProps: {cancelLabel: 'Cancel'}};
+        it('should close and select items when pressing on done button', () => {
+          const driver = getDriver(modalProps);
           driver.open();
           expect(driver.isOpen()).toBeTruthy();
           driver.selectItem(countries[2].label);
@@ -146,7 +146,7 @@ describe('Picker', () => {
         });
 
         it('should close without selecting items when pressing on cancel button', () => {
-          const driver = getDriver({mode: 'MULTI', topBarProps: {cancelLabel: 'Cancel'}});
+          const driver = getDriver(modalProps);
           driver.open();
           expect(driver.isOpen()).toBeTruthy();
           driver.selectItem(countries[2].label);
@@ -257,25 +257,30 @@ describe('Picker', () => {
 
   //TODO: add more tests for different props
   describe('Picker field types', () => {
-    it('should render a form picker', () => {
-      const driver = getDriver({fieldType: 'form'});
-      const textFieldDriver = driver.getInput();
-      act(() => expect(textFieldDriver.exists()).toBeTruthy());
-      expect(textFieldDriver.getStyle()).toEqual(expect.objectContaining({textAlign: 'left'}));
+    describe('Test filter field type', () => {
+      const placeholderText = 'Select a Filter';
+      it('should render a filter picker', () => {
+        const driver = getDriver({fieldType: 'filter', placeholder: placeholderText});
+        expect(driver.isOpen()).toBeFalsy();
+        screen.debug();
+        const label = screen.getByTestId(`${testID}.filter.type.label`);
+        expect(label).toBeTruthy();
+        expect(label.props.children).toEqual(placeholderText);
+      });
     });
-    it('should render a filter picker', () => {
-      const driver = getDriver({fieldType: 'filter'});
-      screen.debug();
-      const textFieldDriver = driver.getInput();
-      act(() => expect(textFieldDriver.exists()).toBeTruthy());
-      expect(textFieldDriver.getStyle()).toEqual(expect.objectContaining(Typography.text70));
-    });
-    it('should render a settings picker', async () => {
-      const driver = getDriver({fieldType: 'settings'});
-      const textFieldDriver = driver.getInput();
-      act(() => expect(textFieldDriver.exists()).toBeTruthy());
-      console.log(`textFieldDriver.getStyle():`, textFieldDriver.getStyle());
-      expect(textFieldDriver.getStyle()).toEqual(expect.objectContaining(Typography.text70));
+    describe('Test settings field type', () => {
+      const labelText = 'Settings';
+      const placeholderText = 'Select a setting';
+      it('should render a settings picker', async () => {
+        const driver = getDriver({fieldType: 'settings', label: labelText, placeholder: placeholderText});
+        expect(driver.isOpen()).toBeFalsy();
+        const label = screen.getByTestId(`${testID}.settings.type.label`);
+        const placeholder = screen.getByTestId(`${testID}.settings.type.placeholder`);
+        expect(label).toBeTruthy();
+        expect(placeholder).toBeTruthy();
+        expect(label.props.children).toEqual(labelText);
+        expect(placeholder.props.children).toEqual(placeholderText);
+      });
     });
   });
 });
