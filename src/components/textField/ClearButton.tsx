@@ -68,5 +68,4 @@ const styles = StyleSheet.create({
   }
 });
 
-ClearButton.displayName = 'IGNORE';
 export default ClearButton;
