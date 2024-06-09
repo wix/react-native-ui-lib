@@ -1,9 +1,9 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses} from 'react-native-ui-lib';
+import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses, Typography, SegmentedControlItemProps} from 'react-native-ui-lib';
 
-const segments = {
-  first: [{label: 'Left'}, {label: 'Right'}],
+const segments: Record<string, Array<SegmentedControlItemProps>> = {
+  first: [{label: 'Default'}, {label: 'Form'}],
   second: [{label: '1'}, {label: '2'}, {label: '3'}, {label: Assets.emojis.airplane}, {label: '5'}],
   third: [
     {
@@ -16,55 +16,78 @@ const segments = {
   ],
   forth: [{label: 'With'}, {label: 'Custom'}, {label: 'Style'}],
   fifth: [{label: 'Full'}, {label: 'Width'}],
-  sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}]
+  sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
+  seventh: [{label: '$'}, {label: '%'}],
+  eighth: [{label: 'Plus', iconSource: Assets.icons.plusSmall}, {label: 'Minus', iconSource: Assets.icons.minusSmall}, {label: 'Check', iconSource: Assets.icons.checkSmall}]
 };
 
 const SegmentedControlScreen = () => {
-
   const onChangeIndex = useCallback((index: number) => {
     console.warn('Index ' + index + ' of the second segmentedControl was pressed');
   }, []);
+  const [screenPreset, setScreenPreset] = useState(SegmentedControl.presets.DEFAULT);
 
   return (
     <View flex bottom padding-page>
-      <View flex centerV>
+      <Text center text40 $textDefault>
+        Segmented Control
+      </Text>
+      <View flex marginT-s8>
         <View center>
-          <SegmentedControl segments={segments.first}/>
+          <View row gap-s10 bottom>
+            <Text text70>Preset:</Text>
+            <SegmentedControl
+              segments={segments.first}
+              preset={screenPreset}
+              onChangeIndex={index =>
+                setScreenPreset(index === 0 ? SegmentedControl.presets.DEFAULT : SegmentedControl.presets.FORM)
+              }
+              initialIndex={screenPreset === SegmentedControl.presets.DEFAULT ? 0 : 1}
+            />
+          </View>
           <SegmentedControl
             onChangeIndex={onChangeIndex}
             containerStyle={styles.container}
             segments={segments.second}
             initialIndex={2}
+            preset={screenPreset}
           />
           <SegmentedControl
             containerStyle={styles.container}
             activeColor={Colors.$textDangerLight}
+            outlineColor={Colors.$textDangerLight}
             segments={segments.third}
-          />
-          <SegmentedControl
-            containerStyle={styles.container}
-            segments={segments.forth}
-            activeColor={Colors.$textDefault}
-            borderRadius={BorderRadiuses.br20}
-            backgroundColor={Colors.$backgroundInverted}
-            activeBackgroundColor={Colors.$backgroundNeutralIdle}
-            inactiveColor={Colors.$textDisabled}
-            style={styles.customStyle}
-            segmentsStyle={styles.customSegmentsStyle}
+            preset={screenPreset}
           />
         </View>
+        <SegmentedControl containerStyle={styles.container} segments={segments.fifth} preset={screenPreset}/>
+        <SegmentedControl containerStyle={styles.container} segments={segments.sixth} preset={screenPreset}/>
+        <Text marginT-s4 center>
+          Custom Typography
+        </Text>
         <SegmentedControl
           containerStyle={styles.container}
-          segments={segments.fifth}
+          segments={segments.seventh}
+          segmentLabelStyle={styles.customTypography}
+          preset={screenPreset}
         />
+        <Text center marginT-s4>With Icons</Text>
+        <SegmentedControl segments={segments.eighth} preset={screenPreset}/>
+        <Text marginT-s4 center>
+          Custom Styling
+        </Text>
         <SegmentedControl
           containerStyle={styles.container}
-          segments={segments.sixth}
+          segments={segments.forth}
+          activeColor={Colors.$textDefault}
+          borderRadius={BorderRadiuses.br20}
+          backgroundColor={Colors.$backgroundInverted}
+          activeBackgroundColor={Colors.$backgroundNeutralIdle}
+          inactiveColor={Colors.$textDisabled}
+          style={styles.customStyle}
+          segmentsStyle={styles.customSegmentsStyle}
         />
       </View>
-      <Text text40 $textDefault>
-        Segmented Control
-      </Text>
     </View>
   );
 };
@@ -79,6 +102,9 @@ const styles = StyleSheet.create({
   },
   customSegmentsStyle: {
     height: 50
+  },
+  customTypography: {
+    ...Typography.text80BO
   }
 });
 

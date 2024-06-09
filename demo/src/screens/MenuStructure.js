@@ -51,7 +51,7 @@ export const navigationData = {
     title: 'Form',
     screens: [
       {title: 'Checkbox', tags: 'checkbox toggle controls', screen: 'unicorn.components.CheckboxScreen'},
-      {title: 'Color Picker', tags: 'color picker control', screen: 'unicorn.components.ColorPickerScreen'},
+      {title: 'ColorPicker', tags: 'color picker control', screen: 'unicorn.components.ColorPickerScreen'},
       {title: 'Color Swatch', tags: 'color swatch and palette', screen: 'unicorn.components.ColorSwatchScreen'},
       {title: 'TextField', tags: 'text input field form', screen: 'unicorn.components.TextFieldScreen'},
       {title: 'NumberInput', tags: 'number input', screen: 'unicorn.components.NumberInputScreen'},

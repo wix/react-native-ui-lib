@@ -40,6 +40,12 @@
       "description": "Custom container styling for inline text"
     },
     {"name": "alignToStart", "type": "boolean", "description": "Should content be align to start", "default": "center"},
+    {
+      "name": "horizontalAlignment",
+      "type": "HorizontalAlignment",
+      "description": "Content horizontal alignment",
+      "default": "center"
+    },
     {"name": "containerStyle", "type": "ViewStyle", "description": "Custom container style"},
     {"name": "onPress", "type": "TouchableOpacityProps['onPress']", "description": "The item's action handler"},
     {

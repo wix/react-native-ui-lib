@@ -21,8 +21,10 @@ import {
   TextFieldRef,
   Validator,
   ValidationMessagePositionType,
-  MandatoryIndication
+  MandatoryIndication,
+  Presets
 } from './types';
+import TextFieldValidators from './validators';
 import {shouldHidePlaceholder} from './Presenter';
 import Input from './Input';
 import ValidationMessage from './ValidationMessage';
@@ -35,6 +37,7 @@ import CharCounter from './CharCounter';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
+  presets: typeof Presets;
 }
 
 /**
@@ -58,6 +61,8 @@ const TextField = (props: InternalTextFieldProps) => {
     floatOnFocus,
     placeholderTextColor,
     hint,
+    helperText,
+    validationIcon,
     // Label
     label,
     labelColor,
@@ -71,7 +76,7 @@ const TextField = (props: InternalTextFieldProps) => {
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
-    retainValidationSpace = true,
+    retainValidationSpace = !helperText,
     // Char Counter
     showCharCounter,
     charCounterStyle,
@@ -139,6 +144,7 @@ const TextField = (props: InternalTextFieldProps) => {
           validationMessagePosition={validationMessagePosition}
           testID={`${props.testID}.label`}
           showMandatoryIndication={showMandatoryIndication}
+          enableErrors={enableErrors}
         />
         {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
@@ -202,6 +208,7 @@ const TextField = (props: InternalTextFieldProps) => {
               enableErrors={enableErrors}
               validate={others.validate}
               validationMessage={others.validationMessage}
+              validationIcon={validationIcon}
               validationMessageStyle={_validationMessageStyle}
               retainValidationSpace={retainValidationSpace}
               testID={`${props.testID}.validationMessage`}
@@ -216,12 +223,14 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
+        {helperText && <Text $textNeutralHeavy subtext marginT-s1>{helperText}</Text>}
       </View>
     </FieldContext.Provider>
   );
 };
 
 TextField.displayName = 'TextField';
+TextField.presets = Presets;
 TextField.validationMessagePositions = ValidationMessagePosition;
 
 export {
@@ -233,7 +242,8 @@ export {
   ValidationMessagePosition as TextFieldValidationMessagePosition,
   Validator as TextFieldValidator,
   ValidationMessagePositionType as TextFieldValidationMessagePositionType,
-  MandatoryIndication as TextFieldMandatoryIndication
+  MandatoryIndication as TextFieldMandatoryIndication,
+  TextFieldValidators
 };
 export default asBaseComponent<TextFieldProps, StaticMembers, TextFieldRef>(forwardRef(TextField as any), {
   modifiersOptions: {

@@ -1,6 +1,6 @@
 import {isUndefined} from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Image, ImageSourcePropType} from 'react-native';
+import {StyleSheet, Image, ImageProps, ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
 import View from '../view';
 
@@ -21,9 +21,9 @@ export enum OverlayIntensityType {
   HIGH = 'high'
 }
 
-export type OverlayTypeType = typeof OVERLY_TYPES[keyof typeof OVERLY_TYPES];
+export type OverlayTypeType = (typeof OVERLY_TYPES)[keyof typeof OVERLY_TYPES];
 
-export type OverlayTypes = {
+export type OverlayTypes = Pick<ImageProps, 'borderRadius'> & {
   /**
    * The type of overlay to set on top of the image
    */
@@ -39,7 +39,7 @@ export type OverlayTypes = {
   /**
    * Custom overlay content to be rendered on top of the image
    */
-  customContent?: JSX.Element;
+  customContent?: React.ReactElement | React.ReactElement[];
 };
 
 /**
@@ -104,24 +104,24 @@ class Overlay extends PureComponent<OverlayTypes> {
   };
 
   render() {
-    const {type, intensity, customContent} = this.props;
+    const {type, intensity, customContent, borderRadius} = this.props;
     const imageSource = this.getImageSource(type, intensity);
 
-    if (type === OVERLY_TYPES.VERTICAL) {
-      return (
-        <>
-          {this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], imageSource)}
-          {this.renderImage([this.getStyleByType(OVERLY_TYPES.BOTTOM), styles.vertical], imageSource)}
-          {customContent && this.renderCustomContent()}
-        </>
-      );
-    }
-
     return (
-      <>
-        {type && this.renderImage(this.getStyleByType(), imageSource)}
-        {customContent && this.renderCustomContent()}
-      </>
+      <View flex style={{overflow: 'hidden', borderRadius}}>
+        {type === OVERLY_TYPES.VERTICAL ? (
+          <>
+            {this.renderImage([this.getStyleByType(OVERLY_TYPES.TOP), styles.vertical], imageSource)}
+            {this.renderImage([this.getStyleByType(OVERLY_TYPES.BOTTOM), styles.vertical], imageSource)}
+            {customContent && this.renderCustomContent()}
+          </>
+        ) : (
+          <>
+            {type && this.renderImage(this.getStyleByType(), imageSource)}
+            {customContent && this.renderCustomContent()}
+          </>
+        )}
+      </View>
     );
   }
 }
@@ -133,14 +133,12 @@ const styles = StyleSheet.create({
   },
   top: {
     bottom: undefined,
-    top: 0,
     height: '75%'
   },
   bottom: {
-    bottom: 0,
     top: undefined,
-    height: '75%',
-    transform: [{scaleY: -1}]
+    transform: [{scaleY: -1}],
+    height: '75%'
   },
   vertical: {
     height: '40%'

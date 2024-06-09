@@ -1,103 +1,59 @@
 import _ from 'lodash';
-import tinycolor from 'tinycolor2';
-import React, {useCallback, useEffect, useState} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
-import {Colors} from '../../style';
-import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import React, {useCallback, useMemo, useContext} from 'react';
+import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
-import Slider, {SliderProps} from './index';
+import {useThemeProps} from '../../hooks';
+import {Colors} from '../../style';
 import {Slider as NewSlider} from '../../incubator';
-import {SliderContextProps} from './context/SliderContext';
-import asSliderGroupChild from './context/asSliderGroupChild';
 import Gradient from '../gradient';
+import {GradientSliderProps, GradientSliderTypes, HSLA} from './types';
+import Slider from './index';
+import SliderContext from './SliderContext';
 
-type SliderOnValueChange = (value: string, alfa: number) => void;
-
-export enum GradientSliderTypes {
-  DEFAULT = 'default',
-  HUE = 'hue',
-  LIGHTNESS = 'lightness',
-  SATURATION = 'saturation'
-}
-
-export type GradientSliderProps = Omit<
-  SliderProps,
-  'onValueChange' | 'value' | 'minimumValue' | 'maximumValue' | 'step' | 'thumbHitSlop' | 'useGap'
-> & {
-  /**
-   * The gradient color
-   */
-  color?: string;
-  /**
-   * The gradient type (default, hue, lightness, saturation)
-   */
-  type?: GradientSliderTypes | `${GradientSliderTypes}`;
-  /**
-   * The gradient steps
-   */
-  gradientSteps?: number;
-  /**
-   * Callback for onValueChange, returns the updated color
-   */
-  onValueChange?: SliderOnValueChange;
-  /**
-   * If true the component will have accessibility features enabled
-   */
-  accessible?: boolean;
-  /**
-   * The container style
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * If true the Slider will be disabled and will appear in disabled color
-   */
-  disabled?: boolean;
-} & Partial<Pick<SliderProps, 'value' | 'minimumValue' | 'maximumValue' | 'step' | 'thumbHitSlop' | 'useGap'>>; // Fixes typing errors with the old slider.
-
-type GradientSliderComponentProps = {
-  /**
-   * Context of the slider group
-   */
-  sliderContext: SliderContextProps;
-} & GradientSliderProps;
-
-type Props = GradientSliderComponentProps & ForwardRefInjectedProps;
+type Props<T> = GradientSliderProps<T> & ForwardRefInjectedProps;
 
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/GradientSlider/GradientSlider.gif?raw=true
  */
-const GradientSlider = (props: Props) => {
+const GradientSlider = <T extends string | HSLA = string>(props: Props<T>) => {
+  const themeProps = useThemeProps(props, 'GradientSlider');
   const {
     type = GradientSliderTypes.DEFAULT,
     gradientSteps = 120,
-    color: propsColors = Colors.$backgroundPrimaryHeavy,
-    sliderContext,
-    onValueChange: _onValueChange,
+    color,
+    onValueChange,
     migrate,
     containerStyle,
     disabled,
     accessible,
     forwardedRef,
     ...others
-  } = props;
+  } = themeProps;
+  const sliderContext = useContext(SliderContext);
+  const defaultColor = Colors.getHSL(Colors.$backgroundPrimaryHeavy);
 
-  const [initialColor] = useState(Colors.getHSL(propsColors));
-  const [color, setColor] = useState(Colors.getHSL(propsColors));
-
-  useEffect(() => {
-    setColor(Colors.getHSL(propsColors));
-  }, [propsColors]);
+  const initialColor = useMemo((): HSLA | undefined => {
+    return _.isString(color) ? Colors.getHSL(color) : color;
+  }, [color]);
 
   const getColor = useCallback(() => {
-    return color || sliderContext.value;
-  }, [color, sliderContext.value]);
+    return initialColor || sliderContext.value || defaultColor;
+  }, [initialColor, sliderContext.value, defaultColor]);
+
+  const hueColor = useMemo(() => {
+    const color = getColor();
+    return {
+      h: color.h,
+      s: 1,
+      l: 0.5,
+      a: 1
+    };
+  }, [getColor]);
 
   const renderDefaultGradient = useCallback(() => {
-    const color = getColor();
-
-    return <Gradient color={color} numberOfSteps={gradientSteps}/>;
+    return <Gradient color={getColor()} numberOfSteps={gradientSteps}/>;
   }, [getColor, gradientSteps]);
 
   const renderHueGradient = useCallback(() => {
@@ -105,35 +61,26 @@ const GradientSlider = (props: Props) => {
   }, [gradientSteps]);
 
   const renderLightnessGradient = useCallback(() => {
-    const color = getColor();
-    return <Gradient type={Gradient.types.LIGHTNESS} color={color} numberOfSteps={gradientSteps}/>;
-  }, [getColor, gradientSteps]);
+    return <Gradient type={Gradient.types.LIGHTNESS} color={hueColor} numberOfSteps={gradientSteps}/>;
+  }, [hueColor, gradientSteps]);
 
   const renderSaturationGradient = useCallback(() => {
-    const color = getColor();
-    return <Gradient type={Gradient.types.SATURATION} color={color} numberOfSteps={gradientSteps}/>;
-  }, [getColor, gradientSteps]);
+    return <Gradient type={Gradient.types.SATURATION} color={hueColor} numberOfSteps={gradientSteps}/>;
+  }, [hueColor, gradientSteps]);
 
-  const onValueChange = useCallback((value: string, alpha: number) => {
-    // alpha returns for type.DEFAULT
-    _onValueChange?.(value, alpha);
-  },
-  [_onValueChange]);
-
-  const updateColor = useCallback((color: tinycolor.ColorFormats.HSLA) => {
+  const updateColor = useCallback((color: HSLA) => {
     if (!_.isEmpty(sliderContext)) {
       sliderContext.setValue?.(color);
     } else {
-      setColor(color);
-      const hex = Colors.getHexString(color);
-      onValueChange(hex, color.a);
+      const hex = Colors.getHexString(color); // alpha returns for type.DEFAULT
+      onValueChange?.(hex, color.a);
     }
   },
   [sliderContext, onValueChange]);
 
   const reset = useCallback(() => {
-    updateColor(initialColor);
-  }, [initialColor, updateColor]);
+    updateColor(initialColor || defaultColor);
+  }, [initialColor, updateColor, defaultColor]);
 
   const updateAlpha = useCallback((a: number) => {
     const color = getColor();
@@ -159,11 +106,10 @@ const GradientSlider = (props: Props) => {
   },
   [getColor, updateColor]);
 
-  const _color = getColor();
-  const thumbTintColor = Colors.getHexString(_color);
   let step = 0.01;
   let maximumValue = 1;
-  let value = color.a;
+  const initialValue = useMemo(() => getColor(), []);
+  let value = initialValue.a;
   let renderTrack = renderDefaultGradient;
   let sliderOnValueChange = updateAlpha;
 
@@ -171,17 +117,17 @@ const GradientSlider = (props: Props) => {
     case GradientSliderTypes.HUE:
       step = 1;
       maximumValue = 359;
-      value = initialColor.h;
+      value = initialValue.h;
       renderTrack = renderHueGradient;
       sliderOnValueChange = updateHue;
       break;
     case GradientSliderTypes.LIGHTNESS:
-      value = initialColor.l;
+      value = initialValue.l;
       renderTrack = renderLightnessGradient;
       sliderOnValueChange = updateLightness;
       break;
     case GradientSliderTypes.SATURATION:
-      value = initialColor.s;
+      value = initialValue.s;
       renderTrack = renderSaturationGradient;
       sliderOnValueChange = updateSaturation;
       break;
@@ -192,6 +138,7 @@ const GradientSlider = (props: Props) => {
 
   return (
     <SliderComponent
+      thumbTintColor={Colors.getHexString(hueColor)}
       {...others}
       ref={forwardedRef}
       onReset={reset}
@@ -199,7 +146,6 @@ const GradientSlider = (props: Props) => {
       step={step}
       maximumValue={maximumValue}
       value={value}
-      thumbTintColor={thumbTintColor}
       onValueChange={sliderOnValueChange}
       containerStyle={containerStyle}
       disabled={disabled}
@@ -211,7 +157,4 @@ const GradientSlider = (props: Props) => {
 
 GradientSlider.displayName = 'GradientSlider';
 GradientSlider.types = GradientSliderTypes;
-
-// eslint-disable-next-line max-len
-// @ts-expect-error
-export default asBaseComponent<GradientSliderProps, ComponentStatics<typeof GradientSlider>>(forwardRef(asSliderGroupChild(forwardRef(GradientSlider))));
+export default forwardRef<GradientSliderProps<string | HSLA>, ComponentStatics<typeof GradientSlider>>(GradientSlider);

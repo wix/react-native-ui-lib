@@ -3,7 +3,6 @@
 // TODO: deprecate getItemLabel prop
 // TODO: Add initialValue prop
 // TODO: consider deprecating renderCustomModal prop
-// TODO: deprecate onShow cause it's already supported by passing it in pickerModalProps
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
 import {LayoutChangeEvent} from 'react-native';
@@ -15,7 +14,6 @@ import TextField from '../textField';
 import Icon from '../icon';
 import View from '../view';
 import Text from '../text';
-// import NativePicker from './NativePicker';
 import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
@@ -32,6 +30,8 @@ import {
   PickerModes,
   PickerFieldTypes,
   PickerSearchStyle,
+  RenderCustomModalProps,
+  PickerItemsListProps,
   PickerMethods
 } from './types';
 
@@ -61,7 +61,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchPlaceholder,
     renderCustomSearch,
     renderCustomDialogHeader,
-    // useNativePicker,
     useWheelPicker,
     useDialog,
     renderPicker,
@@ -94,8 +93,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   } = themeProps;
   const {preset} = others;
 
-  const [selectedItemPosition, setSelectedItemPosition] = useState(0);
-  const [items, setItems] = useState(propItems || extractPickerItems(themeProps));
+  const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
+  const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
 
   useEffect(() => {
     if (propItems) {
@@ -105,8 +104,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
 
-  // TODO: Remove
-  // usePickerMigrationWarnings({value, mode});
+  // TODO:  Remove this when migration is completed, starting of v8
+  // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
 
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
   const {
@@ -193,6 +192,15 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [fieldType, preset, themeProps.trailingAccessory]);
 
+  const renderPickerItem = useCallback((item: PickerItemProps): React.ReactElement => {
+    return <PickerItem {...item}/>;
+  }, []);
+
+  const renderItems = useCallback((items: PickerProps['items']) => {
+    return items && _.map(items, item => renderPickerItem(item));
+  },
+  [renderPickerItem]);
+
   const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
     visible,
     closeExpandable,
@@ -204,7 +212,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         closeModal: closeExpandable,
         toggleModal: toggleExpandable,
         onSearchChange: _onSearchChange,
-        children,
+        children: children || renderItems(items),
         // onDone is relevant to multi mode only
         onDone: () => onDoneSelecting(multiDraftValue),
         onCancel: cancelSelect
@@ -266,26 +274,22 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     if (fieldType === PickerFieldTypes.filter) {
       return (
         <Text text70 numberOfLines={1} style={others.style}>
-          {label ?? others.placeholder}
+          {_.isEmpty(label) ? others.placeholder : label}
         </Text>
       );
     } else if (fieldType === PickerFieldTypes.settings) {
       return (
-        <View flex row spread>
+        <View flexG row spread>
           <Text text70 style={labelStyle}>
             {others.label}
           </Text>
           <Text text70 $textPrimary style={others.style}>
-            {label ?? others.placeholder}
+            {_.isEmpty(label) ? others.placeholder : label}
           </Text>
         </View>
       );
     }
   };
-
-  // if (useNativePicker) {
-  //   return <NativePicker {...themeProps}/>;
-  // }
 
   return (
     //TODO : fix the ExpandableOverlay ts error
@@ -344,6 +348,16 @@ Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
 
-export {PickerProps, PickerItemProps, PickerValue, PickerModes, PickerFieldTypes, PickerSearchStyle, PickerMethods};
+export {
+  PickerProps,
+  PickerItemProps,
+  PickerValue,
+  PickerModes,
+  PickerFieldTypes,
+  PickerSearchStyle,
+  RenderCustomModalProps,
+  PickerItemsListProps,
+  PickerMethods
+};
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

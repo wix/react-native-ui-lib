@@ -17,4 +17,4 @@ export {default as Slider, SliderRef} from './Slider';
 export {default as Dialog, DialogProps, DialogHeaderProps, DialogStatics, DialogImperativeMethods} from './Dialog';
 // TODO: delete exports after fully removing from private
 export {default as ChipsInput, ChipsInputProps, ChipsInputChangeReason, ChipsInputChipProps} from '../components/chipsInput';
-export {default as WheelPicker, WheelPickerProps, WheelPickerItemProps, WheelPickerAlign} from '../components/WheelPicker';
+export {default as WheelPicker, WheelPickerProps, WheelPickerItemProps, WheelPickerAlign, WheelPickerItemValue} from '../components/WheelPicker';

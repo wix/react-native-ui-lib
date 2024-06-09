@@ -1,10 +1,10 @@
 import React, {PropsWithChildren, PureComponent} from 'react';
 import {StyleSheet, Animated} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
-import {Colors, Spacings} from '../../style';
+import {Colors, Shadows, Spacings} from '../../style';
 import View from '../view';
-import Button, {ButtonProps} from '../button';
 import Image from '../image';
+import Button, {ButtonProps} from '../button';
 
 export enum FloatingButtonLayouts {
   VERTICAL = 'Vertical',
@@ -28,6 +28,14 @@ export interface FloatingButtonProps {
    */
   bottomMargin?: number;
   /**
+   * Whether the buttons get the container's full with (vertical layout only)
+   */
+  fullWidth?: boolean;
+  /**
+   * Button layout direction: vertical or horizontal
+   */
+  buttonLayout?: FloatingButtonLayouts | `${FloatingButtonLayouts}`;
+  /**
    * The duration of the button's animations (show/hide)
    */
   duration?: number;
@@ -46,10 +54,6 @@ export interface FloatingButtonProps {
    * <TestID>.secondaryButton - the floatingButton secondaryButton
    */
   testID?: string;
-  /**
-   * Button layout direction: vertical or horizontal
-   */
-  buttonLayout?: FloatingButtonLayouts | `${FloatingButtonLayouts}`;
 }
 
 const gradientImage = () => require('./gradient.png');
@@ -118,11 +122,11 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   renderButton() {
-    const {bottomMargin, button, testID} = this.props;
+    const {bottomMargin, button, fullWidth, testID} = this.props;
 
     const bottom = this.isSecondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8;
-    const left = this.isSecondaryHorizontal ? Spacings.s4 : undefined;
-    const right = this.isSecondaryHorizontal ? 20 : undefined;
+    const left = this.isSecondaryHorizontal || fullWidth ? Spacings.s4 : undefined;
+    const right = this.isSecondaryHorizontal ? 20 : fullWidth ? Spacings.s4 : undefined;
     const shadowStyle = !button?.outline && !button?.link && styles.shadow;
     const marginStyle = {marginTop: 16, marginBottom: bottom, marginLeft: left, marginRight: right};
 
@@ -156,35 +160,26 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     const {secondaryButton, bottomMargin, testID, buttonLayout} = this.props;
 
     const bgColor = secondaryButton?.backgroundColor || Colors.$backgroundDefault;
-
-    if (buttonLayout === FloatingButtonLayouts.HORIZONTAL) {
-      return (
-        <Button
-          outline
-          flex
-          size={Button.sizes.large}
-          testID={`${testID}.secondaryButton`}
-          {...secondaryButton}
-          style={[styles.shadow, styles.secondaryMargin, {backgroundColor: bgColor}]}
-          enableShadow={false}
-        />
-      );
-    }
-
+    const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL;
+    const buttonStyle = isHorizontal ? 
+      [styles.shadow, styles.secondaryMargin, {backgroundColor: bgColor}] : {marginBottom: bottomMargin || Spacings.s7};
+    
     return (
       <Button
-        link
+        outline={isHorizontal}
+        flex={isHorizontal}
+        link={!isHorizontal}
         size={Button.sizes.large}
         testID={`${testID}.secondaryButton`}
         {...secondaryButton}
-        style={{marginBottom: bottomMargin || Spacings.s7}}
+        style={buttonStyle}
         enableShadow={false}
       />
     );
   }
 
   render() {
-    const {withoutAnimation, visible, testID} = this.props;
+    const {withoutAnimation, visible, fullWidth, testID} = this.props;
     // NOTE: keep this.firstLoad as true as long as the visibility changed to true
     this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
 
@@ -198,8 +193,8 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
     return (
       <View
-        row={!!this.isSecondaryHorizontal}
-        center={!!this.isSecondaryHorizontal}
+        row={this.isSecondaryHorizontal}
+        center={this.isSecondaryHorizontal || !fullWidth}
         pointerEvents="box-none"
         animated
         style={[styles.container, this.getAnimatedStyle()]}
@@ -218,7 +213,6 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     top: undefined,
-    alignItems: 'center',
     zIndex: Constants.isAndroid ? 99 : undefined
   },
   image: {
@@ -227,11 +221,7 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   shadow: {
-    shadowColor: Colors.$backgroundNeutralIdle,
-    shadowOffset: {height: 5, width: 0},
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
-    elevation: 2
+    ...Shadows.sh20.bottom
   },
   secondaryMargin: {
     marginTop: Spacings.s4,

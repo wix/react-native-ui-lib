@@ -19,8 +19,8 @@ export interface SvgImageProps {
 }
 
 function SvgImage(props: SvgImageProps) {
-  const {data, style = [], tintColor, width, height, ...others} = props;
-  const [className] = useState(`svg-${new Date().getTime().toString()}`);
+  const {id, data, style = [], tintColor, width, height, ...others} = props;
+  const [className] = useState(`svg-${id ? id : new Date().getTime().toString()}`);
   const [svgStyleCss, setSvgStyleCss] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -30,8 +30,8 @@ function SvgImage(props: SvgImageProps) {
       postcss()
         .process({width, height, ...styleObj}, {parser: cssjs})
         .then((style: {css: any}) => {
-          const svgPathCss = styleObj?.tintColor ? `.${className} > svg path {fill: ${styleObj?.tintColor}}` : '';
-          setSvgStyleCss(`.${className} > svg {${style.css}} ${svgPathCss}}`);
+          const svgPathCss = styleObj?.tintColor ? `path {fill: ${styleObj?.tintColor}}` : '';
+          setSvgStyleCss(`.${className} > svg {${style.css}; ${svgPathCss}}`);
         });
     }
   }, [style, className, width, height]);
@@ -54,8 +54,12 @@ function SvgImage(props: SvgImageProps) {
   } else if (data && svgStyleCss) {
     const svgStyleTag = `<style> ${svgStyleCss} </style>`;
     return (
-      <div 
-        {...others}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexShrink: 0
+        }}
         className={className}
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{__html: svgStyleTag + data}}

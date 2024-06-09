@@ -4399,7 +4399,7 @@ exports[`Button outline should return disabled color for outline if button is di
     {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#D2D6D8",
+      "borderColor": "#E8ECF0",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",

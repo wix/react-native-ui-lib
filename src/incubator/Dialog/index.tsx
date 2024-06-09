@@ -24,8 +24,8 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import DialogHeader from './DialogHeader';
-import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
-export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
+import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps} from './types';
+export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps};
 
 const THRESHOLD_VELOCITY = 750;
 
@@ -54,7 +54,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     testID,
     children
   } = props;
-  const {overlayBackgroundColor = Colors.rgba(Colors.$backgroundInverted, 0.3), ...otherModalProps} = modalProps;
+  const {overlayBackgroundColor = Colors.rgba(Colors.grey10, 0.65), ...otherModalProps} = modalProps;
 
   const visibility = useSharedValue(0); // value between 0 (closed) and 1 (open)
   const initialTranslation = useSharedValue(0);

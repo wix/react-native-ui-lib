@@ -223,8 +223,8 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         <Text
           recorderTag={'unmask'} 
           flexS
-          marginL-10={!contentOnLeft}
-          marginR-10={contentOnLeft}
+          marginL-s3={!contentOnLeft}
+          marginR-s3={contentOnLeft}
           $textDefault
           style={labelStyle}
           testID={`${testID}.label`}

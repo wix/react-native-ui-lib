@@ -12,27 +12,28 @@ import {
 } from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {FlatList} from 'react-native-gesture-handler';
-import {Colors, Spacings} from 'style';
-import {Constants, asBaseComponent} from '../../commons/new';
-import View from '../../components/view';
-import Fader, {FaderPosition, FaderProps} from '../../components/fader';
-import Item, {ItemProps} from './Item';
-import Text, {TextProps} from '../../components/text';
+import {Colors, Spacings} from '../../style';
+import {Constants} from '../../commons/new';
+import {useThemeProps} from '../../hooks';
+import View from '../view';
+import Text, {TextProps} from '../text';
+import Fader, {FaderPosition, FaderProps} from '../fader';
+import Item, {WheelPickerItemProps} from './Item';
 import usePresenter from './usePresenter';
-import {WheelPickerAlign} from './types';
-export {WheelPickerAlign};
+import {WheelPickerAlign, WheelPickerItemValue} from './types';
+export {WheelPickerAlign, WheelPickerItemValue};
 
-const AnimatedFlatList = Animated.createAnimatedComponent<FlatListProps<ItemProps>>(FlatList);
+export const ITEM_HEIGHT = 44;
 
-export interface WheelPickerProps {
+export type WheelPickerProps<T = WheelPickerItemValue> = {
   /**
    * Initial value
    */
-  initialValue?: ItemProps | number | string;
+  initialValue?: T;
   /**
    * Data source for WheelPicker
    */
-  items?: ItemProps[];
+  items?: WheelPickerItemProps<T>[];
   /**
    * Describe the height of each item in the WheelPicker
    * default value: 44
@@ -70,7 +71,7 @@ export interface WheelPickerProps {
   /**
    * Event, on active row change
    */
-  onChange?: (item: string | number, index: number) => void;
+  onChange?: (item: T, index: number) => void;
   /**
    * Container's ViewStyle, height is computed according to itemHeight * numberOfVisibleRows
    */
@@ -96,30 +97,35 @@ export interface WheelPickerProps {
   /**
    * Props to be sent to the FlatList
    */
-  flatListProps?: Partial<FlatListProps<ItemProps>>;
+  flatListProps?: Partial<FlatListProps<WheelPickerItemProps<T>>>;
 }
 
-const WheelPicker = ({
-  items: propItems,
-  itemHeight = 44,
-  numberOfVisibleRows = 5,
-  activeTextColor = Colors.$textPrimary,
-  inactiveTextColor,
-  textStyle,
-  label,
-  labelStyle,
-  labelProps,
-  onChange,
-  align = WheelPickerAlign.CENTER,
-  disableRTL,
-  style,
-  children,
-  initialValue = 0,
-  separatorsStyle,
-  testID,
-  faderProps,
-  flatListProps
-}: WheelPickerProps) => {
+const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>) => {
+  const AnimatedFlatList = 
+    useMemo(() => Animated.createAnimatedComponent<FlatListProps<WheelPickerItemProps<T>>>(FlatList), []);
+  const themeProps = useThemeProps(props, 'WheelPicker');
+
+  const {
+    items: propItems,
+    itemHeight = ITEM_HEIGHT,
+    numberOfVisibleRows = 5,
+    activeTextColor = Colors.$textPrimary,
+    inactiveTextColor,
+    textStyle,
+    label,
+    labelStyle,
+    labelProps,
+    onChange,
+    align = WheelPickerAlign.CENTER,
+    disableRTL,
+    style,
+    children,
+    initialValue,
+    separatorsStyle,
+    testID,
+    faderProps,
+    flatListProps
+  } = themeProps;
   const scrollView = useRef<Animated.ScrollView>();
   const offset = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(e => {
@@ -132,7 +138,7 @@ const WheelPicker = ({
   const {
     height,
     items,
-    index: currentIndex,
+    index: currentIndex = 0,
     getRowItemAtOffset
   } = usePresenter({
     initialValue,
@@ -142,10 +148,10 @@ const WheelPicker = ({
     preferredNumVisibleRows: numberOfVisibleRows
   });
 
-  const prevInitialValue = useRef(initialValue);
+  const shouldSkipNextOnChange = useRef(false);
   const prevIndex = useRef(currentIndex);
   const [flatListWidth, setFlatListWidth] = useState(0);
-  const keyExtractor = useCallback((item: ItemProps, index: number) => `${item}.${index}`, []);
+  const keyExtractor = useCallback((item: WheelPickerItemProps<T>, index: number) => `${item}.${index}`, []);
   const androidFlatListProps = useMemo(() => {
     if (Constants.isAndroid) {
       return {
@@ -155,27 +161,31 @@ const WheelPicker = ({
   }, [items]);
 
   useEffect(() => {
-    //This effect should replace the onLyout function in the flatlist, should happen only once
+    // This effect should replace the onLayout function in the FlatList, should happen only once
     scrollToIndex(currentIndex, true);
   }, []);
 
   useEffect(() => {
     // This effect making sure to reset index if initialValue has changed
-    !isUndefined(initialValue) && scrollToIndex(currentIndex, true);
+    if (!isUndefined(initialValue)) {
+      shouldSkipNextOnChange.current = true;
+      scrollToIndex(currentIndex, true);
+    }
   }, [currentIndex]);
 
-  const _onChange = useCallback((value: string | number, index: number) => {
-    if (prevInitialValue.current !== initialValue) {
-      // don't invoke 'onChange' if 'initialValue' changed
-      prevInitialValue.current = initialValue;
-    } else {
+  const _onChange = useCallback((value: T, index: number) => {
+    if (!shouldSkipNextOnChange.current) {
       onChange?.(value, index);
     }
   },
-  [initialValue, onChange]);
+  [onChange]);
+
+  const disableOnChangeSkip = useCallback(() => {
+    shouldSkipNextOnChange.current = false;
+  }, []);
 
   const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
+    const {value, index} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
     _onChange(value, index);
   },
   [_onChange, getRowItemAtOffset]);
@@ -206,6 +216,7 @@ const WheelPicker = ({
   };
 
   const selectItem = useCallback((index: number) => {
+    shouldSkipNextOnChange.current = false;
     scrollToIndex(index, true);
   },
   [itemHeight]);
@@ -223,7 +234,7 @@ const WheelPicker = ({
     return {...labelMargins, ...labelProps};
   }, [labelMargins, labelProps]);
 
-  const renderItem = useCallback(({item, index}: ListRenderItemInfo<ItemProps>) => {
+  const renderItem = useCallback(({item, index}: ListRenderItemInfo<WheelPickerItemProps<T>>) => {
     return (
       <Item
         index={index}
@@ -334,6 +345,8 @@ const WheelPicker = ({
     );
   }, []);
 
+  const offsets = useMemo(() => items.map((_, i) => i * itemHeight), [items, itemHeight]);
+
   return (
     <View testID={testID} bg-$backgroundDefault style={style}>
       <View row centerH>
@@ -351,11 +364,12 @@ const WheelPicker = ({
             onScroll={scrollHandler}
             onMomentumScrollEnd={onValueChange}
             showsVerticalScrollIndicator={false}
+            onScrollBeginDrag={disableOnChangeSkip} // user dragged wheel.
             // @ts-ignore
             ref={scrollView}
             // @ts-expect-error
             contentContainerStyle={contentContainerStyle}
-            snapToInterval={itemHeight}
+            snapToOffsets={offsets}
             decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
             renderItem={renderItem}
             getItemLayout={getItemLayout}
@@ -375,8 +389,8 @@ const WheelPicker = ({
 };
 
 WheelPicker.alignments = WheelPickerAlign;
-export default asBaseComponent<WheelPickerProps, typeof WheelPicker>(WheelPicker);
-export {ItemProps as WheelPickerItemProps};
+export default WheelPicker;
+export {WheelPickerItemProps};
 
 const styles = StyleSheet.create({
   separators: {

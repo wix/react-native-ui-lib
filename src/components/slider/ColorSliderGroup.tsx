@@ -1,77 +1,74 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
-import GradientSlider, {GradientSliderTypes} from './GradientSlider';
-import SliderGroup from './context/SliderGroup';
-import ColorSlider from './ColorSlider';
-
-type SliderOnValueChange = (value: string) => void;
-
-export type ColorSliderGroupProps = {
-  /**
-   * The gradient color
-   */
-  initialColor: string;
-  /**
-   * Callback for onValueChange returns the new hex color
-   */
-  onValueChange?: SliderOnValueChange;
-  /**
-   * Group container style
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Sliders style
-   */
-  sliderContainerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Show the sliders labels (defaults are: Hue, Lightness, Saturation)
-   */
-  showLabels?: boolean;
-  /**
-   * In case you would like to change the default labels (translations etc.), you can provide
-   * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
-   */
-  labels?: {[key in GradientSliderTypes]: string};
-  /**
-   * The labels style
-   */
-  labelsStyle?: StyleProp<TextStyle>;
-  /**
-   * If true the component will have accessibility features enabled
-   */
-  accessible?: boolean;
-  /**
-   * Whether to use the new Slider implementation using Reanimated
-   */
-  migrate?: boolean;
-};
+import _ from 'lodash';
+import React, {useState, useCallback, useMemo} from 'react';
+import {Colors} from '../../style';
+import {useThemeProps} from '../../hooks';
+import View from '../view';
+import Text from '../text';
+import {ColorSliderGroupProps, HSLA, GradientSliderTypes} from './types';
+import SliderContext from './SliderContext';
+import GradientSlider from './GradientSlider';
 
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorSliderGroup/ColorSliderGroup.gif?raw=true
  */
-const ColorSliderGroup = (props: ColorSliderGroupProps) => {
-  const {initialColor, containerStyle, ...others} = props;
-  const [color, setColor] = useState(initialColor);
-  useEffect(() => {
-    setColor(initialColor);
+const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGroupProps<T>) => {
+  const themeProps = useThemeProps(props, 'ColorSliderGroup');
+  const {
+    initialColor,
+    onValueChange,
+    containerStyle,
+    sliderContainerStyle,
+    showLabels,
+    labels = {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation', default: ''},
+    labelsStyle,
+    accessible,
+    migrate
+  } = themeProps;
+  
+  const _initialColor = useMemo<HSLA>(() => {
+    return _.isString(initialColor) ? Colors.getHSL(initialColor) : initialColor;
   }, [initialColor]);
 
-  const onValueChange = useCallback((value: string) => {
-    props?.onValueChange?.(value);
-  },
-  [props]);
+  const [value, setValue] = useState(_initialColor);
+
+  const _setValue = useCallback((value: HSLA) => {
+    setValue(value);
+    const newValue = _.isString(initialColor) ? Colors.getHexString(value) : value;
+    onValueChange?.(newValue as T);
+  }, [initialColor, onValueChange]);
+    
+  const contextProviderValue = useMemo(() => ({value, setValue: _setValue}), [value, _setValue]);
+
+  const renderSlider = (type: GradientSliderTypes) => {
+    return (
+      <>
+        {showLabels && labels && (
+          <Text recorderTag={'unmask'} $textNeutral text80 style={labelsStyle} accessible={accessible}>
+            {labels[type]}
+          </Text>
+        )}
+        <GradientSlider
+          type={type}
+          containerStyle={sliderContainerStyle}
+          accessible={accessible}
+          migrate={migrate}
+        />
+      </>
+    );
+  };
 
   return (
-    <SliderGroup style={containerStyle} color={color} onValueChange={onValueChange}>
-      <ColorSlider type={GradientSlider.types.HUE} initialColor={initialColor} {...others}/>
-      <ColorSlider type={GradientSlider.types.LIGHTNESS} initialColor={initialColor} {...others}/>
-      <ColorSlider type={GradientSlider.types.SATURATION} initialColor={initialColor} {...others}/>
-    </SliderGroup>
+    <View style={containerStyle}>
+      <SliderContext.Provider value={contextProviderValue}>
+        {renderSlider(GradientSlider.types.HUE)}
+        {renderSlider(GradientSlider.types.SATURATION)}
+        {renderSlider(GradientSlider.types.LIGHTNESS)}
+      </SliderContext.Provider>
+    </View>
   );
 };
 
 ColorSliderGroup.displayName = 'ColorSliderGroup';
-export default asBaseComponent<ColorSliderGroupProps, typeof ColorSliderGroup>(ColorSliderGroup);
+export default ColorSliderGroup;

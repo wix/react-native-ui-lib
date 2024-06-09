@@ -1,23 +1,32 @@
-import {NumberInputProps} from './index';
-import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
-import {TextFieldDriver} from '../textField/TextField.driver';
+import {ComponentProps} from '../../testkit/new/Component.driver';
+import {TextFieldDriver} from '../textField/TextField.driver.new';
 
-export class NumberInputDriver extends ComponentDriver<NumberInputProps> {
-  private readonly maskedInputDriver: TextFieldDriver;
-  private readonly visualTextFieldDriver: TextFieldDriver;
+export const NumberInputDriver = (props: ComponentProps) => {
+  const maskedInputDriver = TextFieldDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}`
+  });
 
-  constructor(componentDriverArgs: ComponentDriverArgs) {
-    super(componentDriverArgs);
-
-    this.maskedInputDriver = new TextFieldDriver({...componentDriverArgs, testID: `${this.testID}`});
-    this.visualTextFieldDriver = new TextFieldDriver({...componentDriverArgs, testID: `${this.testID}.visual`});
-  }
-
-  changeText = async (text: string) => {
-    await this.maskedInputDriver.changeText(text);
+  const textFieldDriver = TextFieldDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.visual`
+  });
+  
+  const exists = (): boolean => {
+    return maskedInputDriver.exists();
   };
 
-  getText = async () => {
-    return await this.visualTextFieldDriver.getText();
+  const changeText = async (text: string) => {
+    await maskedInputDriver.changeText(text);
   };
-}
+
+  const getValue = (): string | undefined => {
+    return textFieldDriver.getValue();
+  };
+
+  return {
+    exists,
+    changeText,
+    getValue
+  };
+};

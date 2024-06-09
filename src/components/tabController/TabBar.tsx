@@ -219,6 +219,7 @@ const TabBar = (props: Props) => {
           key={`${index}_${item.label}`}
           index={index}
           onLayout={onItemLayout}
+          spreadItems={spreadItems}
         />
       );
     });
@@ -234,7 +235,8 @@ const TabBar = (props: Props) => {
     backgroundColor,
     activeBackgroundColor,
     centerSelected,
-    onItemLayout
+    onItemLayout,
+    spreadItems
   ]);
 
   const _indicatorTransitionStyle = useAnimatedStyle(() => {

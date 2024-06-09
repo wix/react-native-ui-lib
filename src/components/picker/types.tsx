@@ -31,9 +31,9 @@ type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
   : never;
 type RenderPicker = RenderPickerOverloads<PickerValue>;
 
-type RenderCustomModalProps = {
+export type RenderCustomModalProps = {
   visible: boolean;
-  toggleModal: (show: boolean) => void;
+  toggleModal: () => void;
   onSearchChange: (searchValue: string) => void;
   children: ReactNode;
   // onDone is relevant to multi mode only
@@ -55,6 +55,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   useDialog?: boolean;
   /**
+   * @deprecated
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
@@ -150,11 +151,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Render a custom header for Picker's dialog
    */
   renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
-  // /**
-  //  * @deprecated pass useWheelPicker prop instead
-  //  * Allow to use the native picker solution (different style for iOS and Android)
-  //  */
-  // useNativePicker?: boolean;
   /**
    * Use wheel picker instead of a list picker
    */
@@ -172,6 +168,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
+   * @deprecated
    * Callback for modal onShow event
    */
   onShow?: () => void;
@@ -182,22 +179,27 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Data source for Picker
    */
-  items?: Pick<PickerItemProps, 'label' | 'value' | 'disabled'>[];
+  items?: PickerItemProps[];
   /**
    * Component test id
    */
   testID?: string;
+  /**
+   * @deprecated
+   */
   children?: ReactNode | undefined;
 };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
   mode?: PickerModes.SINGLE;
   value?: PickerSingleValue;
+  onChange?: (value: PickerSingleValue) => void;
 };
 
 export type PickerPropsWithMulti = PickerBaseProps & {
   mode?: PickerModes.MULTI;
   value?: PickerMultiValue;
+  onChange?: (value: PickerMultiValue) => void;
 };
 
 export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;

@@ -1,6 +1,15 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Picker, Colors, View, Text, Incubator, PickerProps, PanningProvider} from 'react-native-ui-lib';
+import {
+  Picker,
+  Colors,
+  View,
+  Text,
+  Incubator,
+  PickerProps,
+  RenderCustomModalProps,
+  PanningProvider
+} from 'react-native-ui-lib';
 
 const options = [
   {label: 'JavaScript', value: 'js'},
@@ -29,7 +38,7 @@ const PickerWrapper = () => {
   const [language, setLanguage] = useState(undefined);
   const [filter, setFilter] = useState(undefined);
   const [customModalValues, setCustomModalValues] = useState(undefined);
-  const renderDialog: PickerProps['renderCustomModal'] = (modalProps: any) => {
+  const renderDialog: PickerProps['renderCustomModal'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
 
     return (
@@ -37,7 +46,7 @@ const PickerWrapper = () => {
         visible={visible}
         onDismiss={() => {
           onDone();
-          toggleModal(false);
+          toggleModal();
         }}
         width="40%"
         height="45%"
@@ -68,11 +77,8 @@ const PickerWrapper = () => {
           showSearch
           searchPlaceholder={'Search a language'}
           searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
-        >
-          {options.map(option => (
-            <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-          ))}
-        </Picker>
+          items={options}
+        />
       </View>
       <Text text80BO center>
         Multi Value Picker
@@ -89,11 +95,8 @@ const PickerWrapper = () => {
           showSearch
           searchPlaceholder={'Search a filter'}
           searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
-        >
-          {filters.map(filter => (
-            <Picker.Item key={filter.value} value={filter.value} label={filter.label} disabled={filter.disabled}/>
-          ))}
-        </Picker>
+          items={filters}
+        />
       </View>
       <Text text80BO center>
         Dialog Picker
@@ -105,11 +108,8 @@ const PickerWrapper = () => {
           onChange={items => setCustomModalValues(items)}
           mode={Picker.modes.MULTI}
           renderCustomModal={renderDialog}
-        >
-          {schemes.map(option => (
-            <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-          ))}
-        </Picker>
+          items={schemes}
+        />
       </View>
     </View>
   );

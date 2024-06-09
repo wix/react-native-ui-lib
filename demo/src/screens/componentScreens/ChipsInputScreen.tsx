@@ -45,6 +45,10 @@ export default class ChipsInputScreen extends Component {
 
             this.setState({chips: newChips});
           }}
+          validate={'required'}
+          validateOnChange
+          validationMessage={'You must add at least one chip'}
+          marginB-10
         />
 
         <ChipsInput

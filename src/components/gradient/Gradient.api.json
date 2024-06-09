@@ -2,6 +2,7 @@
   "name": "Gradient",
   "category": "infra",
   "description": "Gradient Component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx",
   "images": [],
   "props": [
     {

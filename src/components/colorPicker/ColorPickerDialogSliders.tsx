@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-
 import {Colors} from '../../style';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import {HSLColor} from './ColorPickerPresenter';
@@ -9,14 +8,15 @@ import {ColorPickerDialogProps} from './ColorPickerDialog';
 type SlidersProps = Pick<ColorPickerDialogProps, 'migrate'> & {
   keyboardHeight: number;
   color: HSLColor;
-  onSliderValueChange: (value: string) => void;
+  onSliderValueChange: (value: HSLColor) => void;
 };
 
 const Sliders = (props: SlidersProps) => {
   const {keyboardHeight, color, migrate, onSliderValueChange} = props;
-  const colorValue = color.a === 0 ? Colors.$backgroundInverted : Colors.getHexString(color);
+  const colorValue = color.a === 0 ? Colors.getHSL(Colors.$backgroundInverted) : color;
+  
   return (
-    <ColorSliderGroup
+    <ColorSliderGroup<HSLColor>
       initialColor={colorValue}
       containerStyle={[styles.sliderGroup, {height: keyboardHeight}]}
       sliderContainerStyle={styles.slider}

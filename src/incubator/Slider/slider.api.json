@@ -1,0 +1,109 @@
+{
+  "name": "Slider",
+  "category": "incubator",
+  "description": "A Slider component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorSliderScreen.tsx",
+  "images": [],
+  "props": [
+    {"name": "value", "type": "number", "description": "Initial value"},
+    {"name": "minimumValue", "type": "number", "description": "Track minimum value"},
+    {"name": "maximumValue", "type": "number", "description": "Track maximum value"},
+    {"name": "initialMinimumValue", "type": "number", "description": "Initial minimum value", "note": "Only when `useRange` is true"},
+    {"name": "initialMaximumValue", "type": "number", "description": "Initial maximum value", "note": "Only when `useRange` is true"},
+    {
+      "name": "step",
+      "type": "number",
+      "description": "Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)"
+    },
+    {
+      "name": "useRange",
+      "type": "boolean",
+      "description": "If true the Slider will display a second thumb for the min value"
+    },
+    {
+      "name": "useGap",
+      "type": "boolean",
+      "description": "If true the min and max thumbs will not overlap",
+      "default": "true"
+    },
+    {"name": "onValueChange", "type": "SliderOnValueChange", "description": "Callback for onValueChange"},
+    {
+      "name": "onRangeChange",
+      "type": "SliderOnRangeChange",
+      "description": "Callback for onRangeChange. Returns values object with the min and max values"
+    },
+    {
+      "name": "onSeekStart",
+      "type": "() => void",
+      "description": "Callback that notifies about slider seeking is started"
+    },
+    {
+      "name": "onSeekEnd",
+      "type": "() => void",
+      "description": "Callback that notifies about slider seeking is finished"
+    },
+    {
+      "name": "onReset",
+      "type": "() => void",
+      "description": "Callback that notifies when the reset function was invoked"
+    },
+    {"name": "containerStyle", "type": "ViewStyle", "description": "The container style"},
+    {
+      "name": "minimumTrackTintColor",
+      "type": "string",
+      "description": "The color used for the track from minimum value to current value"
+    },
+    {"name": "maximumTrackTintColor", "type": "string", "description": "The track color"},
+    {"name": "trackStyle", "type": "ViewStyle", "description": "The track style"},
+    {
+      "name": "renderTrack",
+      "type": "() => ReactElement | ReactElement[]",
+      "description": "Custom render instead of rendering the track"
+    },
+    {"name": "thumbTintColor", "type": "string", "description": "Thumb color"},
+    {"name": "disabledThumbTintColor", "type": "string", "description": "Disabled thumb color"},
+    {"name": "thumbStyle", "type": "ViewStyle", "description": "The thumb style"},
+    {"name": "activeThumbStyle", "type": "ViewStyle", "description": "The active (during press) thumb style"},
+    {
+      "name": "enableThumbShadow",
+      "type": "boolean",
+      "description": "Whether the thumb will have a shadow (with 'migrate' true only)",
+      "default": "true"
+    },
+    {"name": "thumbHitSlop", "type": "number", "description": "Defines how far a touch event can start away from the thumb"},
+    {
+      "name": "disableActiveStyling",
+      "type": "boolean",
+      "description": "If true the Slider will not change it's style on press"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "If true the Slider will be disabled and will appear in disabled color"
+    },
+    {
+      "name": "disableRTL",
+      "type": "boolean",
+      "description": "If true the Slider will stay in LTR mode even if the app is on RTL mode"
+    },
+    {
+      "name": "accessible",
+      "type": "boolean",
+      "description": "If true the component will have accessibility features enabled"
+    },
+    {
+      "name": "throttleTime",
+      "type": "number",
+      "description": "Control the throttle time of the onValueChange and onRangeChange callbacks"
+    },
+    {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<Incubator.Slider",
+    "  value={0$1}",
+    "  minimumValue={0$2}",
+    "  maximumValue={10$3}",
+    "  onValueChange={() => console.log('value changed')$4}",
+    "/>"
+  ]
+}

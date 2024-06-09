@@ -3,3 +3,5 @@ export enum WheelPickerAlign {
   RIGHT = 'right',
   LEFT = 'left'
 }
+
+export type WheelPickerItemValue = number | string;
