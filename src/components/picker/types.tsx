@@ -58,11 +58,17 @@ export interface PickerSearchStyle {
 }
 
 type OldDialogHeaderType = {
+  /**
+   * Picker header props depends on the picker type - DialogHeaderProps in case of Dialog or WheelPicker
+   */
   headerProps?: DialogPropsOld['pannableHeaderProps'];
   migrateDialog: false;
 };
 
 type NewDialogHeaderType = {
+  /**
+   * Picker header props depends on the picker type - DialogHeaderProps in case of Dialog or WheelPicker
+   */
   headerProps?: DialogPropsNew['headerProps'];
   migrateDialog: true;
 };
@@ -88,6 +94,9 @@ export interface ModalPickerProps {
    * Type of picker to render
    */
   pickerType: PickerModeTypes.Modal | `${PickerModeTypes.Modal}`;
+  /**
+   * Picker header props depends on the picker type - ModalTopBarProps in case of Modal
+   */
   headerProps?: ModalTopBarProps;
   modalProps?: ExpandableOverlayProps['modalProps'];
 }
