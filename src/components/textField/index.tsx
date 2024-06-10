@@ -161,9 +161,7 @@ const TextField = (props: InternalTextFieldProps) => {
               testID={`${props.testID}.validationMessage`}
             />
           )}
-          <View marginL-s2>
-            {topTrailingAccessory}
-          </View>
+          {topTrailingAccessory}
         </View>
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
@@ -208,8 +206,9 @@ const TextField = (props: InternalTextFieldProps) => {
               />
             </View>
           )}
-          {showClearButton && 
-            <ClearButton onClear={onClear} testID={`${props.testID}.clearButton`} onChangeText={onChangeText}/>}
+          {showClearButton && (
+            <ClearButton onClear={onClear} testID={`${props.testID}.clearButton`} onChangeText={onChangeText}/>
+          )}
           {trailingAccessory}
           {/* </View> */}
         </View>
@@ -234,8 +233,11 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
-        {helperText && 
-          <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>{helperText}</Text>}
+        {helperText && (
+          <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
+            {helperText}
+          </Text>
+        )}
       </View>
     </FieldContext.Provider>
   );
