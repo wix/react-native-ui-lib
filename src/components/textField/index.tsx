@@ -34,6 +34,7 @@ import useFieldState from './useFieldState';
 import usePreset from './usePreset';
 import FloatingPlaceholder from './FloatingPlaceholder';
 import CharCounter from './CharCounter';
+import ClearButton from './ClearButton';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
@@ -71,7 +72,10 @@ const TextField = (props: InternalTextFieldProps) => {
     // Accessory Buttons
     leadingAccessory,
     trailingAccessory,
+    topTrailingAccessory,
     bottomAccessory,
+    showClearButton,
+    onClear,
     // Validation
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
@@ -135,33 +139,36 @@ const TextField = (props: InternalTextFieldProps) => {
   return (
     <FieldContext.Provider value={context}>
       <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
-        <Label
-          label={label}
-          labelColor={labelColor}
-          labelStyle={_labelStyle}
-          labelProps={labelProps}
-          floatingPlaceholder={floatingPlaceholder}
-          validationMessagePosition={validationMessagePosition}
-          testID={`${props.testID}.label`}
-          showMandatoryIndication={showMandatoryIndication}
-          enableErrors={enableErrors}
-        />
-        {validationMessagePosition === ValidationMessagePosition.TOP && (
-          <ValidationMessage
+        <View row spread>
+          <Label
+            label={label}
+            labelColor={labelColor}
+            labelStyle={_labelStyle}
+            labelProps={labelProps}
+            floatingPlaceholder={floatingPlaceholder}
+            validationMessagePosition={validationMessagePosition}
+            testID={`${props.testID}.label`}
+            showMandatoryIndication={showMandatoryIndication}
             enableErrors={enableErrors}
-            validate={others.validate}
-            validationMessage={others.validationMessage}
-            validationMessageStyle={_validationMessageStyle}
-            retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
-            testID={`${props.testID}.validationMessage`}
           />
-        )}
+          {validationMessagePosition === ValidationMessagePosition.TOP && (
+            <ValidationMessage
+              enableErrors={enableErrors}
+              validate={others.validate}
+              validationMessage={others.validationMessage}
+              validationMessageStyle={_validationMessageStyle}
+              retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
+              testID={`${props.testID}.validationMessage`}
+            />
+          )}
+          {topTrailingAccessory}
+        </View>
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
 
           {/* Note: We're passing flexG to the View to support properly inline behavior - so the input will be rendered correctly in a row container.
-            Known Issue: This slightly push the trailing accessory when entering a long text
+            Known Issue: This slightly push the trailing accessory and clear button when entering a long text
           */}
           {children || (
             <View {...(Constants.isWeb ? {flex: true} : {flexG: true})}>
@@ -199,6 +206,9 @@ const TextField = (props: InternalTextFieldProps) => {
               />
             </View>
           )}
+          {showClearButton && (
+            <ClearButton onClear={onClear} testID={`${props.testID}.clearButton`} onChangeText={onChangeText}/>
+          )}
           {trailingAccessory}
           {/* </View> */}
         </View>
@@ -223,7 +233,11 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
-        {helperText && <Text $textNeutralHeavy subtext marginT-s1>{helperText}</Text>}
+        {helperText && (
+          <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
+            {helperText}
+          </Text>
+        )}
       </View>
     </FieldContext.Provider>
   );

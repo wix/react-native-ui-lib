@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ScrollView, ActivityIndicator} from 'react-native';
 import {
+  Assets,
   Colors,
   Spacings,
   View,
@@ -12,11 +13,10 @@ import {
   FieldContextType,
   TextFieldProps,
   SegmentedControl,
-  Assets
+  Icon
 } from 'react-native-ui-lib';
 const {KeyboardAwareInsetsView} = Keyboard;
 const priceFormatter = Intl.NumberFormat('en-US');
-const validationIcon = require('../../assets/icons/exclamationFillSmall.png');
 
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextFieldRef>();
@@ -167,7 +167,7 @@ export default class TextFieldScreen extends Component {
   };
 
   renderValidationExample() {
-    const {errorPosition} = this.state;
+    const {errorPosition, preset} = this.state;
     
     return (
       <>
@@ -178,7 +178,7 @@ export default class TextFieldScreen extends Component {
             <SegmentedControl segments={[{label: 'Bottom'}, {label: 'Top'}]} onChangeIndex={this.onChangeIndexValidation}/>
           </View>
         </View>
-        
+
         <TextField
           value={this.state.value}
           onChangeText={value => this.setState({value})}
@@ -204,7 +204,9 @@ export default class TextFieldScreen extends Component {
             containerStyle={{flex: 1}}
             validationMessagePosition={errorPosition}
             helperText={'Enter first and last name'}
-            validationIcon={{source: validationIcon, style: {marginTop: 1}}}
+            validationIcon={{source: Assets.icons.demo.exclamation, style: {marginTop: 1}}}
+            topTrailingAccessory={<Icon source={Assets.icons.demo.info} size={16}/>}
+            preset={preset}
           />
           <Button
             outline
@@ -351,6 +353,26 @@ export default class TextFieldScreen extends Component {
     );
   }
 
+  renderClearButtonExample() {
+    return (
+      <>
+        <Text h3 marginB-s3>
+          Clear Button
+        </Text>
+        
+        <TextField
+          label="Description"
+          placeholder="Enter text..."
+          showClearButton
+          value={this.state.value}
+          onChangeText={value => this.setState({value})}
+          trailingAccessory={<Icon source={Assets.icons.demo.search}/>}
+          // multiline
+        />
+      </>
+    );
+  }
+
   renderHintExample() {
     return (
       <>
@@ -414,8 +436,8 @@ export default class TextFieldScreen extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
-        <View flex padding-page>
+      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
+        <View padding-page>
           <Text h1 marginB-s4>TextField</Text>
 
           {this.renderDefaultExample()}
@@ -423,6 +445,7 @@ export default class TextFieldScreen extends Component {
           {this.renderPlaceholdersExample()}
           {this.renderValidationExample()}
           {this.renderHintExample()}
+          {this.renderClearButtonExample()}
           {this.renderCherCounterExample()}
           {this.renderAccessoriesExample()}
           {this.renderStateColorsExample()}
