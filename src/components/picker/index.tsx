@@ -192,12 +192,12 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [fieldType, preset, themeProps.trailingAccessory]);
 
-  const renderPickerItem = useCallback((item: PickerItemProps): React.ReactElement => {
-    return <PickerItem {...item}/>;
+  const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
+    return <PickerItem {...item} key={`${index}-${item.value}`}/>;
   }, []);
 
   const renderItems = useCallback((items: PickerProps['items']) => {
-    return items && _.map(items, item => renderPickerItem(item));
+    return items && _.map(items, (item, index) => renderPickerItem(item, index));
   },
   [renderPickerItem]);
 
