@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {useRef, useCallback, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent} from 'react-native';
-import Reanimated, {
+import {
   Easing,
   useAnimatedReaction,
   useAnimatedStyle,
@@ -9,23 +9,29 @@ import Reanimated, {
   withTiming,
   runOnJS
 } from 'react-native-reanimated';
-import {Colors, BorderRadiuses, Spacings} from '../../style';
+import {Colors} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps} from './segment';
+import useSegmentedControlPreset from './useSegmentedControlPreset';
 
-const BORDER_WIDTH = 1;
+const CONTAINER_BORDER_WIDTH = 1;
 const TIMING_CONFIG = {
   duration: 300,
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
+
+export enum Presets {
+  DEFAULT = 'default',
+  FORM = 'form'
+}
 
 export {SegmentedControlItemProps};
 export type SegmentedControlProps = {
   /**
    * Array on segments.
    */
-  segments?: SegmentedControlItemProps[];
+  segments: SegmentedControlItemProps[];
   /**
    * The color of the active segment label.
    */
@@ -84,6 +90,20 @@ export type SegmentedControlProps = {
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  /**
+   * Preset type
+   */
+  preset?: Presets | `${Presets}`;
+};
+
+const nonAreUndefined = <T, >(array: Array<T | undefined>): array is Array<T> => {
+  'worklet';
+  for (const item of array) {
+    if (item === undefined) {
+      return false;
+    }
+  }
+  return true;
 };
 
 /**
@@ -97,22 +117,26 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     containerStyle,
     style,
     segments,
-    activeColor = Colors.$textPrimary,
-    borderRadius = BorderRadiuses.br100,
-    backgroundColor = Colors.$backgroundNeutralLight,
-    activeBackgroundColor = Colors.$backgroundDefault,
-    inactiveColor = Colors.$textNeutralHeavy,
-    outlineColor = activeColor,
-    outlineWidth = BORDER_WIDTH,
+    activeColor,
+    borderRadius,
+    backgroundColor,
+    activeBackgroundColor,
+    inactiveColor,
+    outlineColor,
+    outlineWidth,
     throttleTime = 0,
     segmentsStyle: segmentsStyleProp,
     segmentLabelStyle,
-    testID
-  } = props;
+    testID,
+    iconTintColor,
+    segmentDividerWidth,
+    segmentDividerColor
+  } = useSegmentedControlPreset(props);
   const animatedSelectedIndex = useSharedValue(initialIndex);
   const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
-  const segmentedControlHeight = useSharedValue(0);
-  const segmentsCounter = useRef(0);
+  // const shouldResetOnDimensionsOnNextLayout = useRef(false); // use this flag if there bugs with onLayout being called more than once.
+  const segmentsDimensions = useRef<{x: number; width: number}[]>([]);
+  const containerHeight = useSharedValue(0);
 
   useEffect(() => {
     animatedSelectedIndex.value = initialIndex;
@@ -142,67 +166,102 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   }, []);
 
   const onLayout = useCallback((index: number, event: LayoutChangeEvent) => {
-    const {x, width, height} = event.nativeEvent.layout;
-    segmentsStyle.value[index] = {x, width};
-    segmentedControlHeight.value = height + 2 * BORDER_WIDTH;
-    segmentsCounter.current++;
-
-    if (segmentsCounter.current === segments?.length) {
-      segmentsStyle.value = [...segmentsStyle.value];
-      segmentsCounter.current = 0; // in case onLayout will be called again (orientation change etc.)
+    // if (shouldResetOnDimensionsOnNextLayout.current) {
+    //   shouldResetOnDimensionsOnNextLayout.current = false;
+    //   segmentsDimensions.current = getInitialSegmentsDimensionsArray(segments.length || 0);
+    // }
+    const {x, width} = event.nativeEvent.layout;
+    segmentsDimensions.current[index] = {x, width};
+    if (segmentsDimensions.current.length === segments.length && nonAreUndefined(segmentsDimensions.current)) {
+      segmentsStyle.value = [...segmentsDimensions.current];
+      // shouldResetOnDimensionsOnNextLayout.current = true;// in case onLayout will be called again (orientation change etc.)
     }
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  [initialIndex, segments?.length]);
+  [initialIndex, segments.length]);
+
+  const containerOnLayout = useCallback(({nativeEvent: {layout: {height}}} : LayoutChangeEvent) => {
+    containerHeight.value = height;
+  }, [containerHeight]);
 
   const animatedStyle = useAnimatedStyle(() => {
-    if (segmentsStyle.value.length !== 0) {
+    const {value} = segmentsStyle;
+    const {value: height} = containerHeight;
+    if (height !== 0 && value.length === segments.length && nonAreUndefined(value)) {
       const isFirstElementSelected = animatedSelectedIndex.value === 0;
-      const isLastElementSelected = animatedSelectedIndex.value === segmentsStyle.value.length - 1;
-      const xOffset = isFirstElementSelected ? -2 : isLastElementSelected ? 2 : 0;
-      const inset = withTiming(segmentsStyle.value[animatedSelectedIndex.value].x + xOffset, TIMING_CONFIG);
-      const width = withTiming(segmentsStyle.value[animatedSelectedIndex.value].width * BORDER_WIDTH, TIMING_CONFIG);
-      const height = segmentedControlHeight.value;
-      return Constants.isRTL ? {width, right: inset, height} : {width, left: inset, height};
+      const isLastElementSelected = animatedSelectedIndex.value === value.length - 1;
+      const isMiddleSelected = !isFirstElementSelected && !isLastElementSelected;
+      const insetFix = -CONTAINER_BORDER_WIDTH - (!isFirstElementSelected ? segmentDividerWidth : 1);
+      const widthFix = isMiddleSelected ? 2 * segmentDividerWidth : CONTAINER_BORDER_WIDTH + segmentDividerWidth;
+      const inset = withTiming(value[animatedSelectedIndex.value].x + insetFix, TIMING_CONFIG);
+      const width = withTiming(value[animatedSelectedIndex.value].width + widthFix, TIMING_CONFIG);
+      return Constants.isRTL ? {width, height, right: inset} : {width, height, left: inset};
     }
     return {};
   });
+  const shouldRenderDividers = segmentDividerWidth !== 0;
 
   const renderSegments = () =>
     _.map(segments, (_value, index) => {
+      const isLastSegment = index + 1 === segments.length;
       return (
-        <Segment
-          key={index}
-          onLayout={onLayout}
-          index={index}
-          onPress={onSegmentPress}
-          selectedIndex={animatedSelectedIndex}
-          activeColor={activeColor}
-          inactiveColor={inactiveColor}
-          style={segmentsStyleProp}
-          segmentLabelStyle={segmentLabelStyle}
-          {...segments?.[index]}
-          testID={testID}
-        />
+        <React.Fragment key={`segment-fragment-${index}`}>
+          <Segment
+            key={`segment-${index}`}
+            onLayout={onLayout}
+            index={index}
+            onPress={onSegmentPress}
+            selectedIndex={animatedSelectedIndex}
+            activeColor={activeColor}
+            inactiveColor={inactiveColor}
+            style={[segmentsStyleProp]}
+            segmentLabelStyle={segmentLabelStyle}
+            iconTintColor={iconTintColor}
+            {...segments[index]}
+            testID={testID}
+          />
+          {!isLastSegment && shouldRenderDividers && (
+            <View
+              key={`segment.divider-${index}`}
+              width={segmentDividerWidth}
+              height={'100%'}
+              style={{backgroundColor: segmentDividerColor}}
+            />
+          )}
+        </React.Fragment>
       );
     });
-
   return (
     <View style={containerStyle} testID={testID}>
-      <View row center style={[styles.container, style, {borderRadius, backgroundColor}]}>
-        <Reanimated.View
+      <View row center onLayout={containerOnLayout} style={[styles.container, style, {borderRadius, backgroundColor}]}>
+        <View
+          reanimated
           style={[
             styles.selectedSegment,
             {
-              borderColor: outlineColor,
               borderRadius,
               backgroundColor: activeBackgroundColor,
-              borderWidth: outlineWidth
+              borderWidth: shouldRenderDividers ? undefined : outlineWidth,
+              borderColor: shouldRenderDividers ? undefined : outlineColor
             },
             animatedStyle
           ]}
         />
         {renderSegments()}
+        {shouldRenderDividers && (
+          <View
+            reanimated
+            style={[
+              styles.selectedSegment,
+              {
+                borderColor: outlineColor,
+                borderRadius,
+                borderWidth: outlineWidth
+              },
+              animatedStyle
+            ]}
+          />
+        )}
       </View>
     </View>
   );
@@ -212,16 +271,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.$backgroundNeutralLight,
     borderColor: Colors.$outlineDefault,
-    borderWidth: BORDER_WIDTH
+    borderWidth: CONTAINER_BORDER_WIDTH
   },
   selectedSegment: {
     position: 'absolute'
-  },
-  segment: {
-    paddingHorizontal: Spacings.s3
   }
 });
+interface StaticMembers {
+  presets: typeof Presets;
+}
 
 SegmentedControl.displayName = 'SegmentedControl';
-
-export default asBaseComponent<SegmentedControlProps>(SegmentedControl);
+SegmentedControl.presets = Presets;
+export default asBaseComponent<SegmentedControlProps, StaticMembers>(SegmentedControl);

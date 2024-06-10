@@ -12,6 +12,7 @@ import {TextProps} from '../text';
 import {RecorderProps} from '../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
 import {ViewProps} from '../view';
+import type {IconProps} from '../icon';
 
 export type ColorType =
   | string
@@ -30,7 +31,8 @@ export enum ValidationMessagePosition {
 
 export enum Presets {
   DEFAULT = 'default', // TODO: remove
-  UNDERLINE = 'underline'
+  UNDERLINE = 'underline',
+  OUTLINE = 'outline'
 }
 
 export type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
@@ -124,6 +126,10 @@ export interface ValidationMessageProps {
    * Custom style for the validation message
    */
   validationMessageStyle?: StyleProp<TextStyle>;
+  /** 
+   * Icon left to the validation message
+   */
+  validationIcon?: IconProps;
   /**
    * Keep the validation space even if there is no validation message
    */
@@ -199,6 +205,10 @@ export type TextFieldProps = MarginModifiers &
      * Pass to render a bottom element below the input
      */
     bottomAccessory?: ReactElement;
+    /**
+     * Text to display under the input
+     */
+    helperText?: string;
     /**
      * Pass to add floating placeholder support
      */

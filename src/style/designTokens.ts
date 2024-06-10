@@ -62,7 +62,7 @@ export default {
 
   // OUTLINE
   $outlineDefault: colorsPalette.grey60,
-  $outlineDisabled: colorsPalette.grey50,
+  $outlineDisabled: colorsPalette.grey60,
   $outlineDisabledHeavy: colorsPalette.grey30,
   $outlineNeutral: colorsPalette.grey50,
   $outlineNeutralHeavy: colorsPalette.grey10,

@@ -22,6 +22,11 @@
       "name": "extraData",
       "type": "any",
       "description": "Pass any extra data that should trigger a re-render"
+    },
+    {
+      "name": "flexMigration",
+      "type": "boolean",
+      "description": "A temporary migration flag for enabling flex on the list's container (like it should be by default)"
     }
   ],
   "snippet": [

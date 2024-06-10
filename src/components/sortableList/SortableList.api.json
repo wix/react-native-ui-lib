@@ -35,6 +35,11 @@
       "name": "itemProps",
       "type": "{margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}}",
       "description": "Extra props for the item."
+    },
+    {
+      "name": "flexMigration",
+      "type": "boolean",
+      "description": "A temporary migration flag for enabling flex on the list's container (like it should be by default)"
     }
   ],
   "snippet": [

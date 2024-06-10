@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Colors, View, Button, Text, Incubator} from 'react-native-ui-lib';
+import {Assets, Colors, View, Button, Text, Incubator} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions, renderBooleanOption, renderRadioGroup} from '../ExampleScreenPresenter';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import Assets from '../../assets/Assets';
+
 const {Toast} = Incubator;
 
 const TOAST_ACTIONS = {

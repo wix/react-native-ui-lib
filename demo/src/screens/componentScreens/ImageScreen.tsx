@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Icon, Image, Colors, OverlayTypes} from 'react-native-ui-lib';
+import {View, Text, Icon, Image, Colors, Assets, OverlayTypes} from 'react-native-ui-lib';
 import {renderBooleanOption, renderRadioGroup, renderSliderOption} from '../ExampleScreenPresenter';
-import Assets from '../../assets/Assets';
 
 const IMAGE_URL =
   'https://images.pexels.com/photos/748837/pexels-photo-748837.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
@@ -70,7 +69,8 @@ class ImageScreen extends Component<{}, State> {
     showErrorImage: false,
     showSvg: false,
     svgType: SvgType.File,
-    sizeType: SizeType.None
+    sizeType: SizeType.None,
+    borderRadius: 0
   };
 
   getSvgSource() {
@@ -113,7 +113,7 @@ class ImageScreen extends Component<{}, State> {
   }
 
   renderImage() {
-    const {cover, overlayType, overlayIntensity, margin, showErrorImage} = this.state;
+    const {cover, overlayType, overlayIntensity, margin, showErrorImage, borderRadius} = this.state;
     return (
       <Image
         key={`${overlayType}-${overlayIntensity}`}
@@ -127,6 +127,7 @@ class ImageScreen extends Component<{}, State> {
         height={!cover ? DEFAULT_SIZE : undefined}
         customOverlayContent={this.renderOverlayContent()}
         {...{[`margin-${margin}`]: true}}
+        borderRadius={borderRadius}
       />
     );
   }
@@ -157,6 +158,7 @@ class ImageScreen extends Component<{}, State> {
           {renderRadioGroup.call(this, 'Overlay Intensity', 'overlayIntensity', Image.overlayIntensityType)}
         </View>
         {renderSliderOption.call(this, 'Margin(margin-XX)', 'margin', {step: 4, min: 0, max: 40})}
+        {renderSliderOption.call(this, 'Border Radius', 'borderRadius', {step: 5, min: 0, max: 100})}
       </>
     );
   }

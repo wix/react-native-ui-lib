@@ -77,11 +77,8 @@ const PickerWrapper = () => {
           showSearch
           searchPlaceholder={'Search a language'}
           searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
-        >
-          {options.map(option => (
-            <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-          ))}
-        </Picker>
+          items={options}
+        />
       </View>
       <Text text80BO center>
         Multi Value Picker
@@ -98,11 +95,8 @@ const PickerWrapper = () => {
           showSearch
           searchPlaceholder={'Search a filter'}
           searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
-        >
-          {filters.map(filter => (
-            <Picker.Item key={filter.value} value={filter.value} label={filter.label} disabled={filter.disabled}/>
-          ))}
-        </Picker>
+          items={filters}
+        />
       </View>
       <Text text80BO center>
         Dialog Picker
@@ -114,11 +108,8 @@ const PickerWrapper = () => {
           onChange={items => setCustomModalValues(items)}
           mode={Picker.modes.MULTI}
           renderCustomModal={renderDialog}
-        >
-          {schemes.map(option => (
-            <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-          ))}
-        </Picker>
+          items={schemes}
+        />
       </View>
     </View>
   );

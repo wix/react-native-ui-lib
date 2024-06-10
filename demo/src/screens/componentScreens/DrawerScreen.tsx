@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, LayoutAnimation} from 'react-native';
-import {Colors, Typography, View, Drawer, Text, Button, Avatar, Badge, DrawerProps} from 'react-native-ui-lib';
+import {Assets, Colors, Typography, View, Drawer, Text, Button, Avatar, Badge, DrawerProps} from 'react-native-ui-lib';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import conversations from '../../data/conversations';
-import Assets from '../../assets/Assets';
 
 import {renderBooleanOption, renderSliderOption, renderColorOption} from '../ExampleScreenPresenter';
 

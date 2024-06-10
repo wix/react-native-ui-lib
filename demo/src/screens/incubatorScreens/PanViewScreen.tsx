@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {GestureHandlerRootView, FlatList} from 'react-native-gesture-handler';
 import {
+  Assets,
   View,
   Text,
   Colors,
@@ -14,7 +15,7 @@ import {
   TouchableOpacity
 } from 'react-native-ui-lib';
 const {PanView} = Incubator;
-import Assets from '../../assets/Assets';
+
 interface Item {
   value: string;
   label: string;
