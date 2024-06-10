@@ -139,7 +139,7 @@ const TextField = (props: InternalTextFieldProps) => {
   return (
     <FieldContext.Provider value={context}>
       <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
-        <View row spread>
+        <View row spread style={centeredContainerStyle}>
           <Label
             label={label}
             labelColor={labelColor}
@@ -161,7 +161,7 @@ const TextField = (props: InternalTextFieldProps) => {
               testID={`${props.testID}.validationMessage`}
             />
           )}
-          {topTrailingAccessory}
+          {topTrailingAccessory && <View marginL-s2>{topTrailingAccessory}</View>}
         </View>
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
@@ -196,7 +196,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 value={fieldState.value}
                 {...others}
                 readonly={readonly}
-                style={inputStyle}
+                style={[inputStyle, centeredContainerStyle]}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChangeText}
