@@ -44,7 +44,7 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
 
   return (
     //@ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
-    <View reanimated style={style}>
+    <View reanimated style={style} testID={`${testID}.container`}>
       <Button
         link
         iconSource={Assets.icons.xFlat}
