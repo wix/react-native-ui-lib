@@ -186,23 +186,23 @@ describe('Picker', () => {
         jest.useFakeTimers();
         act(() => driver.open());
         jest.runAllTimers();
-        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
+        await waitFor(() => expect(driver.isOpen()).toBeTruthy());
       });
 
       it('Should not open when disabled', async () => {
         const driver = getDriver({...dialogProps, editable: false});
         expect(driver.isOpen()).toBeFalsy();
         act(() => driver.open());
-        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeFalsy());
+        await waitFor(() => expect(driver.isOpen()).toBeFalsy());
       });
 
       it('Test close', async () => {
         const driver = getDriver(dialogProps);
         expect(driver.isOpen()).toBeFalsy();
         act(() => driver.open());
-        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
+        await waitFor(() => expect(driver.isOpen()).toBeTruthy());
         act(() => driver.dismissDialog());
-        await waitFor(() => expect(driver.dismissDialog(dialogProps.useDialog)).toBeFalsy());
+        await waitFor(() => expect(driver.dismissDialog()).toBeFalsy());
       });
     });
 
@@ -211,10 +211,10 @@ describe('Picker', () => {
         const driver = getDriver(dialogProps);
         expect(driver.getValue()).toEqual('');
         act(() => driver.open());
-        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
+        await waitFor(() => expect(driver.isOpen()).toBeTruthy());
         driver.selectItem(countries[2].label);
         act(() => driver.dismissDialog());
-        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeFalsy());
+        await waitFor(() => expect(driver.isOpen()).toBeFalsy());
         expect(driver.getValue()).toEqual(countries[2].label);
       });
 
@@ -223,11 +223,11 @@ describe('Picker', () => {
         expect(driver.getValue()).toEqual('');
         expect(driver.isOpen()).toBeFalsy();
         act(() => driver.open());
-        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
+        await waitFor(() => expect(driver.isOpen()).toBeTruthy());
         driver.selectItem(countries[2].label);
         driver.selectItem(countries[4].label);
         driver.done();
-        await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeFalsy());
+        await waitFor(() => expect(driver.isOpen()).toBeFalsy());
         expect(driver.getValue()).toEqual(`${countries[2].label}, ${countries[4].label}`);
       });
     });
@@ -243,9 +243,9 @@ describe('Picker', () => {
       });
       expect(driver.isOpen()).toBeFalsy();
       act(() => driver.open());
-      await waitFor(() => expect(driver.isOpen(dialogProps.useDialog)).toBeTruthy());
+      await waitFor(() => expect(driver.isOpen()).toBeTruthy());
       act(() => driver.dismissDialog());
-      await waitFor(() => expect(driver.dismissDialog(dialogProps.useDialog)).toBeFalsy());
+      await waitFor(() => expect(driver.dismissDialog()).toBeFalsy());
       expect(onDismiss).toHaveBeenCalledTimes(1);
     });
   });
