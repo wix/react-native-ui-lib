@@ -67,7 +67,7 @@ export interface HintProps {
   /**
    * The hint message
    */
-  message?: string | ReactElement;
+  message?: string | ReactElement | (string | ReactElement)[];
   /**
    * The hint message custom style
    */
