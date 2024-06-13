@@ -30,7 +30,7 @@ const PickerItem = (props: PickerItemProps) => {
   } = props;
   const context = useContext(PickerContext);
   const {migrate} = context;
-  const customRenderItem = context.renderItem || props.renderItem;
+  const customRenderItem = props.renderItem || context.renderItem;
   // @ts-expect-error TODO: fix after removing migrate prop completely
   const itemValue = !migrate && typeof value === 'object' ? value?.value : value;
   const isSelected = isItemSelected(itemValue, context.value);

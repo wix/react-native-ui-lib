@@ -91,12 +91,12 @@ function getPRsByType(PRs, categories) {
     const category = categories.find(category => {
       return pr.branch.toLowerCase().startsWith(category.branch);
     });
-    if (category) {
-      const foundCategory = categorizedPRs.find(cat => cat.name === category.name);
-      foundCategory.PRs.push(pr);
-    } else if (isSilent(pr)) {
+    if (isSilent(pr)) {
       const silentCategory = categorizedPRs.find(cat => cat.name === 'silent');
       silentCategory.PRs.push(pr);
+    } else if (category) {
+      const foundCategory = categorizedPRs.find(cat => cat.name === category.name);
+      foundCategory.PRs.push(pr);
     } else {
       const otherCategory = categorizedPRs.find(cat => cat.name === 'others');
       otherCategory.PRs.push(pr);

@@ -2,7 +2,7 @@ import React, {useCallback, useMemo, useRef, useState, forwardRef} from 'react';
 import {StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
 import {isUndefined, map} from 'lodash';
 import {Constants} from '../../commons/new';
-import {useCombinedRefs} from '../../hooks';
+import {useCombinedRefs, useDidUpdate} from '../../hooks';
 import TextField, {TextFieldProps} from '../textField';
 import Chip, {ChipProps} from '../chip';
 
@@ -50,6 +50,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
     onChange,
     fieldStyle,
     maxChips,
+    validate,
     ...others
   } = props;
   const [markedForRemoval, setMarkedForRemoval] = useState<number | undefined>(undefined);
@@ -146,6 +147,37 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
     );
   }, [chips, leadingAccessory, defaultChipProps, removeMarkedChip, markedForRemoval, maxChips]);
 
+  const isRequired = useMemo(() => {
+    if (!validate) {
+      return false;
+    }
+
+    const inputValidators = Array.isArray(validate) ? validate : [validate];
+    return inputValidators.includes('required');
+  }, [validate]);
+
+  const requiredValidator = useCallback(() => {
+    return !isRequired || (chips?.length ?? 0) > 0;
+  }, [isRequired, chips]);
+
+  const _validate = useMemo(() => {
+    if (!validate) {
+      return undefined;
+    } else if (isRequired) {
+      const inputValidators = Array.isArray(validate) ? validate : [validate];
+      return inputValidators.map(validator => (validator === 'required' ? requiredValidator : validator));
+    } else {
+      return validate;
+    }
+  }, [validate, isRequired, requiredValidator]);
+
+  useDidUpdate(() => {
+    if (others.validateOnChange) {
+      // @ts-expect-error
+      fieldRef.current?.validate();
+    }
+  }, [chips, others.validateOnChange]);
+
   return (
     <TextField
       // @ts-expect-error
@@ -159,6 +191,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
       fieldStyle={[fieldStyle, styles.fieldStyle]}
       onKeyPress={onKeyPress}
       accessibilityHint={props.editable ? 'press keyboard delete button to remove last tag' : undefined}
+      validate={_validate}
     />
   );
 });
