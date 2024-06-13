@@ -422,7 +422,16 @@ export default class TextFieldScreen extends Component {
         </Text>
 
         <Text marginB-s1 $textPrimary>Centered:</Text>
-        <TextField label="PIN" placeholder="XXXX" centered/>
+        <TextField
+          label="PIN"
+          placeholder="XXXX"
+          centered
+          topTrailingAccessory={<Icon source={Assets.icons.demo.info} size={16}/>}
+          validate={'required'}
+          validationMessage={'This field is required'}
+          validateOnBlur
+          validationMessagePosition={this.state.errorPosition}
+        />
         
         <Text marginB-s1 $textPrimary>Inline:</Text>
         <View row>
