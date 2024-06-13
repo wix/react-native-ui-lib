@@ -5,9 +5,9 @@
  * 3. Passing typography preset that includes lineHeight usually cause alignment issues with
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
+import {isEmpty, trim, omit} from 'lodash';
 import React, {useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import {isEmpty, trim, omit} from 'lodash';
 import {asBaseComponent, Constants, forwardRef} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
@@ -92,6 +92,7 @@ const TextField = (props: InternalTextFieldProps) => {
     showMandatoryIndication,
     ...others
   } = usePreset(props);
+
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
   const {onFocus, onBlur, onChangeText, fieldState, validateField, checkValidity} = useFieldState(others);
 
@@ -118,28 +119,23 @@ const TextField = (props: InternalTextFieldProps) => {
   const colorStyle = useMemo(() => color && {color}, [color]);
   const _floatingPlaceholderStyle = useMemo(() => [typographyStyle, floatingPlaceholderStyle],
     [typographyStyle, floatingPlaceholderStyle]);
-
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
   const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
   const centeredContainerStyle = centered && styles.centeredContainer;
-  const _labelStyle = useMemo(() => (centered ? [labelStyle, styles.centeredLabel] : labelStyle),
-    [labelStyle, centered]);
-  const _validationMessageStyle = useMemo(() => {
-    return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
-  }, [validationMessageStyle, centered]);
+  const centeredTextStyle = centered && styles.centeredText;
+  const _labelStyle = useMemo(() => [labelStyle, centeredTextStyle], [labelStyle, centeredTextStyle]);
+  const _validationMessageStyle = useMemo(() => [validationMessageStyle, centeredTextStyle],
+    [validationMessageStyle, centeredTextStyle]);
   // const hasValue = fieldState.value !== undefined;
-  const inputStyle = useMemo(() => {
-    return [typographyStyle, colorStyle, others.style, /* hasValue &&  */centered && styles.centeredInput];
-  }, [typographyStyle, colorStyle, others.style, centered/* , hasValue */]);
-  const dummyPlaceholderStyle = useMemo(() => {
-    return [inputStyle, styles.dummyPlaceholder];
-  }, [inputStyle]);
+  const inputStyle = useMemo(() => [typographyStyle, colorStyle, others.style, /* hasValue &&  */centeredTextStyle],
+    [typographyStyle, colorStyle, others.style, centeredTextStyle/* , hasValue */]);
+  const dummyPlaceholderStyle = useMemo(() => [inputStyle, styles.dummyPlaceholder], [inputStyle]);
 
   return (
     <FieldContext.Provider value={context}>
       <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
-        <View row spread style={centeredContainerStyle}>
+        <View row spread centerV={Constants.isAndroid} style={centeredContainerStyle}>
           <Label
             label={label}
             labelColor={labelColor}
@@ -259,6 +255,7 @@ export {
   MandatoryIndication as TextFieldMandatoryIndication,
   TextFieldValidators
 };
+
 export default asBaseComponent<TextFieldProps, StaticMembers, TextFieldRef>(forwardRef(TextField as any), {
   modifiersOptions: {
     margins: true,
@@ -273,13 +270,7 @@ const styles = StyleSheet.create({
   centeredContainer: {
     alignSelf: 'center'
   },
-  centeredLabel: {
-    textAlign: 'center'
-  },
-  centeredInput: {
-    textAlign: 'center'
-  },
-  centeredValidationMessage: {
+  centeredText: {
     textAlign: 'center'
   },
   dummyPlaceholder: {
