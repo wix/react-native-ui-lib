@@ -14,7 +14,9 @@ export const loadDemoConfigurations = () => {
     refresh: require('./assets/icons/refresh.png'),
     search: require('./assets/icons/search.png'),
     settings: require('./assets/icons/settings.png'),
-    share: require('./assets/icons/share.png')
+    share: require('./assets/icons/share.png'),
+    info: require('./assets/icons/info.png'),
+    exclamation: require('./assets/icons/exclamationFillSmall.png')
   });
 
   Assets.loadAssetsGroup('images.demo', {
