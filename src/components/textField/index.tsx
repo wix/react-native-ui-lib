@@ -157,7 +157,7 @@ const TextField = (props: InternalTextFieldProps) => {
               testID={`${props.testID}.validationMessage`}
             />
           )}
-          {topTrailingAccessory && <View marginL-s2>{topTrailingAccessory}</View>}
+          {topTrailingAccessory && <View>{topTrailingAccessory}</View>}
         </View>
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
