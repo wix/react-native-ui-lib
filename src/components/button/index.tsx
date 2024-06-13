@@ -303,7 +303,7 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        if (Constants.isWeb) {
+        if (Constants.isWeb && typeof iconSource === 'string') {
           return (
             <Icon
               style={iconStyle}
