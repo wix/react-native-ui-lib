@@ -128,10 +128,10 @@ const TextField = (props: InternalTextFieldProps) => {
   const _validationMessageStyle = useMemo(() => {
     return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
   }, [validationMessageStyle, centered]);
-  const hasValue = fieldState.value !== undefined;
+  // const hasValue = fieldState.value !== undefined;
   const inputStyle = useMemo(() => {
-    return [typographyStyle, colorStyle, others.style, hasValue && centered && styles.centeredInput];
-  }, [typographyStyle, colorStyle, others.style, centered, hasValue]);
+    return [typographyStyle, colorStyle, others.style, /* hasValue &&  */centered && styles.centeredInput];
+  }, [typographyStyle, colorStyle, others.style, centered/* , hasValue */]);
   const dummyPlaceholderStyle = useMemo(() => {
     return [inputStyle, styles.dummyPlaceholder];
   }, [inputStyle]);
@@ -196,7 +196,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 value={fieldState.value}
                 {...others}
                 readonly={readonly}
-                style={[inputStyle, centeredContainerStyle]}
+                style={inputStyle}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChangeText}
