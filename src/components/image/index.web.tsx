@@ -4,106 +4,30 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import {
   StyleSheet,
   Image as RNImage,
-  ImageProps as RNImageProps,
-  ImageBackground,
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
+// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
+import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 import {
   Constants,
   asBaseComponent,
   ForwardRefInjectedProps,
-  BaseComponentInjectedProps,
-  MarginModifiers
+  BaseComponentInjectedProps
 } from '../../commons/new';
-import {RecorderProps} from '../../typings/recorderTypes';
 import {getAsset, isSvg} from '../../utils/imageUtils';
-import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
+import Overlay from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
-import {ComponentStatics} from 'src/typings/common';
+import {ImageProps} from './index';
 
-export type ImageSourceType = string | RNImageProps['source'];
-
-export type ImageProps = Omit<RNImageProps, 'source'> &
-  MarginModifiers &
-  RecorderProps & {
-    /**
-     * custom source transform handler for manipulating the image source (great for size control)
-     */
-    sourceTransformer?: (props: any) => ImageSourceType;
-    /**
-     * if provided image source will be driven from asset name
-     */
-    assetName?: string;
-    /**
-     * the asset group, default is "icons"
-     */
-    assetGroup?: string;
-    /**
-     * the asset tint
-     */
-    tintColor?: string;
-    /**
-     * whether the image should flip horizontally on RTL locals
-     */
-    supportRTL?: boolean;
-    /**
-     * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
-     */
-    cover?: boolean;
-    /**
-     * The aspect ratio for the image
-     */
-    aspectRatio?: number;
-    /**
-     * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
-     * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
-     */
-    overlayType?: OverlayTypeType;
-    /**
-     * The intensity of the overlay ('LOW' | 'MEDIUM' | 'HIGH'), default is 'LOW'.
-     */
-    overlayIntensity?: OverlayIntensityType;
-    /**
-     * Pass a custom color for the overlay
-     */
-    overlayColor?: string;
-    /**
-     * Render an overlay with custom content
-     */
-    customOverlayContent?: React.ReactElement | React.ReactElement[];
-    /**
-     * Default image source in case of an error
-     */
-    errorSource?: ImageSourceType;
-    /**
-     * An imageId that can be used in sourceTransformer logic
-     */
-    imageId?: string;
-    /**
-     * Use a container for the Image, this can solve issues on
-     * Android when animation needs to be performed on the same
-     * view; i.e. animation related crashes on Android.
-     */
-    useBackgroundContainer?: boolean;
-    /**
-     * The image width
-     */
-    width?: string | number;
-    /**
-     * The image height
-     */
-    height?: string | number;
-    source: ImageSourceType;
-  };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
 type State = {
   error: boolean;
-  prevSource: ImageSourceType;
+  prevSource: ImagePropTypes.source;
 };
 
 /**
@@ -124,7 +48,7 @@ class Image extends PureComponent<Props, State> {
   public static overlayTypes = Overlay.overlayTypes;
   public static overlayIntensityType = Overlay.intensityTypes;
 
-  sourceTransformer?: (props: any) => ImageSourceType;
+  sourceTransformer?: (props: any) => ImagePropTypes.source;
 
   constructor(props: Props) {
     super(props);
@@ -162,7 +86,7 @@ class Image extends PureComponent<Props, State> {
     return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
-  getVerifiedSource(source?: ImageSourceType) {
+  getVerifiedSource(source?: ImagePropTypes.source) {
     if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       // @ts-ignore
       return {...source, uri: undefined};
@@ -209,7 +133,6 @@ class Image extends PureComponent<Props, State> {
   renderImage = (useImageInsideContainer: boolean) => {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
-
     const {
       tintColor,
       style,
@@ -223,11 +146,9 @@ class Image extends PureComponent<Props, State> {
       overlayColor,
       customOverlayContent,
       modifiers,
-      recorderTag,
       ...others
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
-    const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
     const {margins} = modifiers;
     const imageViewStyle = [
       tintColor && {tintColor},
@@ -243,27 +164,35 @@ class Image extends PureComponent<Props, State> {
       useImageInsideContainer && styles.shrink
     ];
 
+    let finalSource;
+    if (source.uri) {
+      finalSource = source.uri;
+    } else if (!_.isEmpty(source)) {
+      finalSource = source;
+    }
+
+    let component;
+    if (finalSource) {
+      // @ts-expect-error
+      component = <img {...others} src={finalSource} style={StyleSheet.flatten([imageViewStyle, styles.containImage])} alt={''}/>;
+    } else {
+      // @ts-expect-error
+      component = <View style={StyleSheet.flatten([imageViewStyle, styles.containImage])}/>;
+    }
+
     return (
-      // @ts-ignore
-      <ImageView
-        style={imageViewStyle}
-        accessible={false}
-        accessibilityRole={'image'}
-        fsTagName={recorderTag}
-        {...others}
-        onError={this.onError}
-        source={source}
-      >
-        {(overlayType || customOverlayContent) && (
-          <Overlay
-            type={overlayType}
-            intensity={overlayIntensity}
-            color={overlayColor}
+      // @ts-expect-error
+      <View style={imageViewStyle}>
+        {component}
+        {(overlayType || customOverlayContent) && 
+          <Overlay 
+            type={overlayType} 
+            intensity={overlayIntensity} 
+            color={overlayColor} 
             customContent={customOverlayContent}
-            borderRadius={others?.borderRadius}
           />
-        )}
-      </ImageView>
+        }
+      </View>
     );
   };
 
@@ -306,12 +235,11 @@ const styles = StyleSheet.create({
     flexShrink: 1
   },
   containImage: {
-    resizeMode: 'contain'
+    objectFit: 'cover',
+    height: '100%'
   }
 });
 
 hoistNonReactStatic(Image, RNImage);
 export {Image};
-export default asBaseComponent<ImageProps, ComponentStatics<typeof Image & typeof RNImage>>(Image, {
-  modifiersOptions: {margins: true}
-});
+export default asBaseComponent<ImageProps, typeof Image & typeof RNImage>(Image, {modifiersOptions: {margins: true}});

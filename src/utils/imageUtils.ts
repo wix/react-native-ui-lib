@@ -7,8 +7,8 @@ export function isSvgUri(source?: ImageSourceType) {
   return typeof source === 'object' && source?.uri?.endsWith?.('.svg');
 }
 
-export function isSvg(source?: ImageSourceType) {
-  return typeof source === 'function' || isSvgUri(source) || isSvgData(source);
+export function isSvg(source?: ImageProps['source']) {
+  return typeof source === 'function' || isSvgData(source) || isSvgUri(source);
 }
 
 export function isBase64ImageContent(data: string) {
@@ -21,9 +21,7 @@ export function getAsset(assetName = '', assetGroup = '') {
   return get(Assets, `${assetGroup}.${assetName}`);
 }
 
-function isSvgData(source?: ImageSourceType) {
-  if (typeof source === 'string') {
-    const sourceString = source;
-    return sourceString.includes('</svg>') || sourceString.includes('data:image/svg');
-  }
+function isSvgData(source?: ImageProps['source']) {
+  const sourceString = (source as string);
+  return typeof source === 'string' && (sourceString.includes('</svg>') || sourceString.includes('data:image/svg'));
 }
