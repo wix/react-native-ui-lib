@@ -159,7 +159,7 @@ const TextField = (props: InternalTextFieldProps) => {
           )}
           {topTrailingAccessory && <View>{topTrailingAccessory}</View>}
         </View>
-        <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
+        <View style={[paddings, fieldStyle, {overflow: 'hidden'}]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
 
