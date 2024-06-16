@@ -182,12 +182,12 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     ...pickerModalProps
   };
 
-  const renderPickerItem = useCallback((item: PickerItemProps): React.ReactElement => {
-    return <PickerItem {...item}/>;
+  const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
+    return <PickerItem key={`${index}-${item.value}`} {...item}/>;
   }, []);
 
   const renderItems = useCallback((items: PickerProps['items']) => {
-    return items && _.map(items, item => renderPickerItem(item));
+    return items && _.map(items, (item, index) => renderPickerItem(item, index));
   },
   [renderPickerItem]);
 

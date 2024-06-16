@@ -22,7 +22,7 @@ const {Toast} = Incubator;
 const SYSTEM_COLORS = ['grey', 'violet', 'blue', 'green', 'red', 'yellow', 'orange'];
 const INITIAL_COLOR = Colors.white;
 const BASE_PALETTE = ['1', '5', '10', '20', '30', '40', '50', '60', '70', '80'];
-const TOKENS_CATEGORIES = ['Background', 'Text', 'Icon', 'Outline'];
+const TOKENS_CATEGORIES = ['Background', 'Text', 'Icon', 'Outline', 'System'];
 const TOKENS_ARRAYS = {};
 TOKENS_CATEGORIES.map(category => (TOKENS_ARRAYS[category] = []));
 
@@ -35,11 +35,12 @@ for (const key in Colors) {
     TOKENS_ARRAYS.Icon.push(key);
   } else if (key.startsWith('$outline')) {
     TOKENS_ARRAYS.Outline.push(key);
+  } else if (key.startsWith('$black') || key.startsWith('$white')) {
+    TOKENS_ARRAYS.System.push(key);
   }
 }
 
 class ColorsScreen extends Component {
-
   state = {
     selectedColor: INITIAL_COLOR,
     searchValue: '',
@@ -297,11 +298,11 @@ class ColorsScreen extends Component {
     this.setState({showPicker: true});
   };
 
-  onValueChange = (color) => {
+  onValueChange = color => {
     this.setState({currentColor: color});
   };
 
-  onSubmit = (color) => {
+  onSubmit = color => {
     this.setState({currentColor: color});
   };
 
@@ -310,8 +311,18 @@ class ColorsScreen extends Component {
   };
 
   setDefaultOptions = () => {
-    const designKitsOptions = {adjustLightness: false, adjustSaturation: false, addDarkestTints: true, avoidReverseOnDark: true};
-    const defaultOptions = {adjustLightness: true, adjustSaturation: true, addDarkestTints: false, avoidReverseOnDark: false};
+    const designKitsOptions = {
+      adjustLightness: false,
+      adjustSaturation: false,
+      addDarkestTints: true,
+      avoidReverseOnDark: true
+    };
+    const defaultOptions = {
+      adjustLightness: true,
+      adjustSaturation: true,
+      addDarkestTints: false,
+      avoidReverseOnDark: false
+    };
     if (this.state.isDefaultOptions) {
       this.setState({...designKitsOptions, isDefaultOptions: false});
     } else {
@@ -339,7 +350,10 @@ class ColorsScreen extends Component {
         {renderBooleanOption.call(this, 'adjustSaturation', 'adjustSaturation')}
         {renderBooleanOption.call(this, 'addDarkestTints', 'addDarkestTints')}
         {renderBooleanOption.call(this, 'avoidReverseOnDark', 'avoidReverseOnDark')}
-        <Button label={this.state.isDefaultOptions ? 'Reset example' : 'Set defaults'} onPress={this.setDefaultOptions}/>
+        <Button
+          label={this.state.isDefaultOptions ? 'Reset example' : 'Set defaults'}
+          onPress={this.setDefaultOptions}
+        />
       </View>
     );
   };
@@ -353,8 +367,8 @@ class ColorsScreen extends Component {
         {this.renderOptions()}
         <View center row>
           <TouchableOpacity
-            marginH-10 
-            style={[styles.colorBox, {backgroundColor: currentColor}]} 
+            marginH-10
+            style={[styles.colorBox, {backgroundColor: currentColor}]}
             onPress={this.showColorPicker}
           />
           <ColorPalette
@@ -372,7 +386,9 @@ class ColorsScreen extends Component {
   renderColorPaletteExample = () => {
     return (
       <>
-        <Text text50 marginL-20>Generate Color Palette</Text>
+        <Text text50 marginL-20>
+          Generate Color Palette
+        </Text>
         {this.renderColorPalette()}
         {this.renderColorPicker()}
       </>
@@ -413,7 +429,7 @@ const styles = StyleSheet.create({
     width: 18,
     height: 40,
     borderRadius: 10,
-    marginLeft: 4, 
+    marginLeft: 4,
     marginRight: 4
   }
 });
