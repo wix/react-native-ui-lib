@@ -1,17 +1,10 @@
 import {ExpandableOverlayProps} from 'src/incubator';
 import {PickerProps, PickerModeTypes} from '../index';
-import {CustomPickerProps} from '../types';
-
-type PickerType = {
-  dialog?: boolean;
-  wheelPicker?: boolean;
-  modal?: boolean;
-  custom?: boolean;
-};
+import {CustomPickerProps, PickerModeBooleans} from '../types';
 
 const usePickerType = (props: PickerProps) => {
   const {pickerType} = props;
-  let type: PickerType = {dialog: false, wheelPicker: false, modal: false, custom: false};
+  let type: PickerModeBooleans = {dialog: false, wheelPicker: false, modal: false, custom: false};
   let headerProps: any;
   let renderCustomModal: CustomPickerProps['renderCustomModal'];
   let dialogProps: ExpandableOverlayProps['dialogProps'];

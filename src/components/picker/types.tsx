@@ -28,6 +28,10 @@ export enum PickerModeTypes {
   Custom = 'custom'
 }
 
+export type PickerModeBooleans = {
+  [key in PickerModeTypes]: boolean;
+};
+
 // TODO: Remove type
 // type PickerValueDeprecated = {value: string | number; label: string};
 export type PickerSingleValue = string | number;
@@ -361,8 +365,9 @@ export type PickerItemsListProps = Pick<
   | 'mode'
   | 'testID'
 > &
-  Pick<PickerPropsDeprecation, 'useWheelPicker' | 'useDialog' | 'topBarProps' | 'children'> & {
+  Pick<PickerPropsDeprecation, 'topBarProps' | 'children'> & {
     items?: {value: any; label: any}[];
+    type: PickerModeBooleans;
   };
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;

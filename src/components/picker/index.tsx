@@ -245,9 +245,10 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
-        useWheelPicker={isWheelPicker}
+        // useWheelPicker={isWheelPicker}
         mode={mode}
-        useDialog={isDialog}
+        type={type}
+        // useDialog={isDialog}
         items={useItems ? items : undefined}
         topBarProps={{
           ...listTopBarProps,
