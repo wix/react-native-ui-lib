@@ -113,7 +113,7 @@ export interface CustomPickerProps {
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
 }
 
-export type PickerModeProps = Partial<ModalPickerProps | DialogPickerProps | WheelPickerProps | CustomPickerProps>;
+export type PickerTypeProps = Partial<ModalPickerProps | DialogPickerProps | WheelPickerProps | CustomPickerProps>;
 
 export type PickerPropsDeprecation = {
   /**
@@ -167,7 +167,7 @@ export type PickerPropsDeprecation = {
   pickerModalProps?: object;
 };
 
-export type PickerTypes = PickerModeProps | PickerPropsDeprecation;
+export type PickerTypes = PickerTypeProps | PickerPropsDeprecation;
 
 export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /* ...TextField.propTypes, */
@@ -293,7 +293,7 @@ export type PickerPropsWithMulti = {
 type PickerCommonProps = PickerBaseProps & (PickerPropsWithSingle | PickerPropsWithMulti);
 
 //TODO: Remove PickerPropsDeprecation type in v8
-export type PickerProps = PickerCommonProps & PickerModeProps & PickerPropsDeprecation;
+export type PickerProps = PickerCommonProps & PickerTypeProps & PickerPropsDeprecation;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**
