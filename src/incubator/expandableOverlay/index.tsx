@@ -95,7 +95,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         {...modalProps}
         visible={visible}
         onDismiss={closeExpandable}
-        onRequestClose={Constants.isAndroid ? closeExpandable : undefined}
+        onRequestClose={closeExpandable}
       >
         {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
         {expandableContent}
