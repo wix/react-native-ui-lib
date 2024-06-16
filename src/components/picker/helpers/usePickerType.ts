@@ -10,9 +10,7 @@ const usePickerType = (props: PickerProps) => {
   let dialogProps: ExpandableOverlayProps['dialogProps'];
   let pickerModalProps: ExpandableOverlayProps['modalProps'];
   if (pickerType) {
-    if (pickerType) {
-      type[pickerType] = true;
-    }
+    type[pickerType] = true;
     switch (pickerType) {
       case PickerModeTypes.Modal:
         headerProps = props.headerProps;
