@@ -8,11 +8,9 @@ import {
   PickerModes,
   PickerPropsDeprecation
 } from '../types';
-import {ModalTopBarProps} from '../../modal/TopBar';
 
 type UsePickerSelectionProps = Pick<PickerProps, 'value' | 'onChange' | 'mode'> &
   Pick<PickerPropsDeprecation, 'migrate' | 'getItemValue' | 'topBarProps'> & {
-    headerProps?: ModalTopBarProps;
     pickerExpandableRef: RefObject<any>;
     setSearchValue: (searchValue: string) => void;
   };
