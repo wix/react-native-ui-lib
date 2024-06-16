@@ -56,7 +56,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     setMultiDraftValue(multiFinalValue);
     pickerExpandableRef.current?.closeExpandable?.();
     topBarProps ? topBarProps?.onCancel?.() : headerProps?.onCancel?.();
-  }, [multiFinalValue, topBarProps]);
+  }, [multiFinalValue, topBarProps, headerProps]);
 
   return {
     multiDraftValue,
