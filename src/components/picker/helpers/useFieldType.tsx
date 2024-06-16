@@ -32,7 +32,7 @@ const useFieldType = (props: UseFieldTypeProps) => {
     }
   }, [fieldType, preset, trailingAccessory]);
 
-  const renderPickerInnerInput = useMemo(() => {
+  const pickerInnerInput = useMemo(() => {
     if (fieldType === PickerFieldTypes.filter) {
       return (
         <Text text70 numberOfLines={1} style={style}>
@@ -53,7 +53,7 @@ const useFieldType = (props: UseFieldTypeProps) => {
     }
   }, [style, labelStyle, fieldType, placeholder, label]);
 
-  return {propsByFieldType, renderPickerInnerInput};
+  return {propsByFieldType, pickerInnerInput};
 };
 
 export default useFieldType;

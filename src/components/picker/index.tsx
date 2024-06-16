@@ -130,7 +130,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   });
 
   const {placeholder, style, trailingAccessory} = themeProps;
-  const {propsByFieldType, renderPickerInnerInput} = useFieldType({
+  const {propsByFieldType, pickerInnerInput} = useFieldType({
     fieldType,
     preset,
     trailingAccessory,
@@ -295,7 +295,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
               value={label}
               selection={Constants.isAndroid ? {start: 0} : undefined}
             >
-              {renderPickerInnerInput}
+              {pickerInnerInput}
             </TextField>
           )}
         </ExpandableOverlay>
