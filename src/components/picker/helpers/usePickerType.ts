@@ -9,14 +9,14 @@ type PickerType = {
   custom?: boolean;
 };
 
-const usePickerMode = (props: PickerProps) => {
+const usePickerType = (props: PickerProps) => {
+  const {pickerType} = props;
   let type: PickerType = {dialog: false, wheelPicker: false, modal: false, custom: false};
   let headerProps: any;
   let renderCustomModal: CustomPickerProps['renderCustomModal'];
   let dialogProps: ExpandableOverlayProps['dialogProps'];
   let pickerModalProps: ExpandableOverlayProps['modalProps'];
-  if ('pickerType' in props) {
-    const {pickerType} = props;
+  if (pickerType) {
     if (pickerType) {
       type[pickerType] = true;
     }
@@ -44,4 +44,4 @@ const usePickerMode = (props: PickerProps) => {
   return {type};
 };
 
-export default usePickerMode;
+export default usePickerType;

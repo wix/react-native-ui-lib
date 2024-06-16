@@ -22,7 +22,7 @@ import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
 // import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
-import usePickerMode from './helpers/usePickerMode';
+import usePickerType from './helpers/usePickerType';
 import {extractPickerItems} from './PickerPresenter';
 import {
   PickerProps,
@@ -103,7 +103,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     dialogProps,
     pickerModalProps
     //@ts-expect-error
-  } = usePickerMode({
+  } = usePickerType({
     pickerType: 'modal',
     ...themeProps
   });
