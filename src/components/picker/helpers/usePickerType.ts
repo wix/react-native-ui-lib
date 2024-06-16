@@ -2,37 +2,53 @@ import {ExpandableOverlayProps} from 'src/incubator';
 import {PickerProps, PickerModeTypes} from '../index';
 import {CustomPickerProps, PickerModeBooleans} from '../types';
 
+type ComponentPropsType = {
+  headerProps: any;
+  customModal: CustomPickerProps['renderCustomModal'];
+  dialogProps: ExpandableOverlayProps['dialogProps'];
+  pickerModalProps: ExpandableOverlayProps['modalProps'];
+};
+
 const usePickerType = (props: PickerProps) => {
   const {pickerType} = props;
   let type: PickerModeBooleans = {dialog: false, wheelPicker: false, modal: false, custom: false};
-  let headerProps: any;
-  let renderCustomModal: CustomPickerProps['renderCustomModal'];
-  let dialogProps: ExpandableOverlayProps['dialogProps'];
-  let pickerModalProps: ExpandableOverlayProps['modalProps'];
+  const componentProps: ComponentPropsType = {
+    headerProps: undefined,
+    customModal: undefined,
+    dialogProps: undefined,
+    pickerModalProps: undefined
+  };
   if (pickerType) {
     type[pickerType] = true;
     switch (pickerType) {
       case PickerModeTypes.Modal:
-        headerProps = props.headerProps;
+        componentProps.headerProps = props.headerProps;
         //@ts-ignore
-        pickerModalProps = props.pickerModalProps || props.modalProps;
+        componentProps.pickerModalProps = props.pickerModalProps || props.modalProps;
         break;
       case PickerModeTypes.Dialog:
       case PickerModeTypes.WheelPicker:
-        headerProps = props.headerProps;
-        dialogProps = headerProps && {...props?.customPickerProps?.dialogProps, headerProps: props.headerProps};
+        componentProps.headerProps = props.headerProps;
+        componentProps.dialogProps = componentProps.headerProps && {
+          ...props?.customPickerProps?.dialogProps,
+          headerProps: props.headerProps
+        };
         break;
       case PickerModeTypes.Custom:
-        renderCustomModal = props.renderCustomModal;
+        componentProps.customModal = props.renderCustomModal;
         break;
     }
-    return {type, headerProps, renderCustomModal, dialogProps, pickerModalProps};
   } else {
-    const {useDialog, useWheelPicker} = props;
+    const {useDialog, useWheelPicker, topBarProps, pickerModalProps, customPickerProps} = props;
     type = {dialog: !!useDialog, wheelPicker: !!useWheelPicker, modal: !useDialog && !useWheelPicker, custom: false};
+    componentProps.pickerModalProps = pickerModalProps;
+    componentProps.headerProps =
+      //@ts-expect-error
+      topBarProps || customPickerProps?.dialogProps?.pannableHeaderProps || customPickerProps?.dialogProps?.headerProps;
+    componentProps.customModal = props.renderCustomModal;
+    componentProps.dialogProps = props?.customPickerProps?.dialogProps;
   }
-
-  return {type};
+  return {type, componentProps};
 };
 
 export default usePickerType;

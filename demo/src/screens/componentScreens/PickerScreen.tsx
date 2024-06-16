@@ -136,6 +136,7 @@ export default class PickerScreen extends Component {
             onChange={item => this.setState({language: item})}
             // topBarProps={{title: 'Languages'}}
             headerProps={{title: 'Languages'}}
+            pickerType="modal"
             // style={{color: Colors.red20}}
             showSearch
             searchPlaceholder={'Search a language'}
@@ -148,6 +149,7 @@ export default class PickerScreen extends Component {
             placeholder="Favorite Languages (up to 3)"
             value={this.state.languages}
             onChange={items => this.setState({languages: items})}
+            pickerType="modal"
             mode={Picker.modes.MULTI}
             selectionLimit={3}
             trailingAccessory={dropdownIcon}
@@ -184,9 +186,8 @@ export default class PickerScreen extends Component {
             value={this.state.option}
             enableModalBlur={false}
             onChange={item => this.setState({option: item})}
-            // topBarProps={{title: 'Languages'}}
             // useDialog
-            headerProps={{title: 'Languages'}}
+            headerProps={{title: 'Dialog Picker'}}
             pickerType="dialog"
             renderCustomDialogHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
@@ -194,7 +195,10 @@ export default class PickerScreen extends Component {
                 <Button link label="Done" onPress={onDone}/>
               </View>
             )}
-            customPickerProps={{migrateDialog: true, dialogProps: {bottom: true, width: '100%', height: '45%'}}}
+            customPickerProps={{
+              migrateDialog: true,
+              dialogProps: {bottom: true, width: '100%', height: '45%'}
+            }}
             showSearch
             searchPlaceholder={'Search a language'}
             items={dialogOptions}
