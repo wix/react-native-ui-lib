@@ -109,10 +109,10 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
   const {
-    filteredChildren,
+    filteredItems,
     setSearchValue,
     onSearchChange: _onSearchChange
-  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
+  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
   const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
     migrate,
     value,
@@ -230,7 +230,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         useWheelPicker={useWheelPicker}
         mode={mode}
         useDialog={useDialog}
-        items={useItems ? items : undefined}
+        items={useItems ? filteredItems : undefined}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
@@ -245,7 +245,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         listProps={listProps}
         useSafeArea={useSafeArea}
       >
-        {filteredChildren}
+        {filteredItems}
       </PickerItemsList>
     );
   }, [
@@ -264,7 +264,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     renderCustomSearch,
     renderCustomDialogHeader,
     listProps,
-    filteredChildren,
+    filteredItems,
     useSafeArea,
     useWheelPicker,
     items
