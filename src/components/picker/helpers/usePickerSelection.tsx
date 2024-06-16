@@ -8,15 +8,18 @@ import {
   PickerModes,
   PickerPropsDeprecation
 } from '../types';
+import {ModalTopBarProps} from '../../modal/TopBar';
 
 type UsePickerSelectionProps = Pick<PickerProps, 'value' | 'onChange' | 'mode'> &
   Pick<PickerPropsDeprecation, 'migrate' | 'getItemValue' | 'topBarProps'> & {
+    headerProps?: ModalTopBarProps;
     pickerExpandableRef: RefObject<any>;
     setSearchValue: (searchValue: string) => void;
   };
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
-  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} = props;
+  const {migrate, value, onChange, topBarProps, headerProps, pickerExpandableRef, getItemValue, setSearchValue, mode} =
+    props;
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
 
@@ -52,7 +55,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     setSearchValue('');
     setMultiDraftValue(multiFinalValue);
     pickerExpandableRef.current?.closeExpandable?.();
-    topBarProps?.onCancel?.();
+    topBarProps ? topBarProps?.onCancel?.() : headerProps?.onCancel?.();
   }, [multiFinalValue, topBarProps]);
 
   return {
