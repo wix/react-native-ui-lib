@@ -262,7 +262,6 @@ describe('Picker', () => {
       it('should render a filter picker', () => {
         const driver = getDriver({fieldType: 'filter', placeholder: placeholderText});
         expect(driver.isOpen()).toBeFalsy();
-        screen.debug();
         const label = screen.getByTestId(`${testID}.filter.type.label`);
         expect(label).toBeTruthy();
         expect(label.props.children).toEqual(placeholderText);
@@ -271,7 +270,7 @@ describe('Picker', () => {
     describe('Test settings field type', () => {
       const labelText = 'Settings';
       const placeholderText = 'Select a setting';
-      it('should render a settings picker', async () => {
+      it('should render a settings picker with label', async () => {
         const driver = getDriver({fieldType: 'settings', label: labelText, placeholder: placeholderText});
         expect(driver.isOpen()).toBeFalsy();
         const label = screen.getByTestId(`${testID}.settings.type.label`);
@@ -279,6 +278,17 @@ describe('Picker', () => {
         expect(label).toBeTruthy();
         expect(placeholder).toBeTruthy();
         expect(label.props.children).toEqual(labelText);
+        expect(placeholder.props.children).toEqual(labelText);
+      });
+      
+      it('should render a settings picker with placeholder', async () => {
+        const driver = getDriver({fieldType: 'settings', placeholder: placeholderText});
+        expect(driver.isOpen()).toBeFalsy();
+        const label = screen.getByTestId(`${testID}.settings.type.label`);
+        const placeholder = screen.getByTestId(`${testID}.settings.type.placeholder`);
+        expect(label).toBeTruthy();
+        expect(placeholder).toBeTruthy();
+        expect(label.props.children).toEqual(undefined);
         expect(placeholder.props.children).toEqual(placeholderText);
       });
     });
