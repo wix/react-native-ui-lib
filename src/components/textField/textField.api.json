@@ -37,6 +37,7 @@
     },
     {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
     {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
+    {"name": "topTrailingAccessory", "type": "ReactElement", "description": "Pass to render a top trailing element"},
     {"name": "enableErrors", "type": "boolean", "description": "Should support showing validation error message"},
     {
       "name": "validate",
@@ -48,7 +49,7 @@
       "type": "string | string[]",
       "description": "The validation message to display when field is invalid (depends on validate)"
     },
-    {"name": "validationIcon", "type": "ImageProps['source']", "description": "Icon left to the validation message"},
+    {"name": "validationIcon", "type": "IconProps", "description": "Icon left to the validation message"},
     {
       "name": "validationMessagePosition",
       "type": "ValidationMessagePosition",
@@ -92,6 +93,16 @@
       "description": "Should show a character counter (works only with maxLength)"
     },
     {"name": "charCounterStyle", "type": "TextStyle", "description": "Pass custom style to character counter text"},
+    {
+      "name": "showClearButton",
+      "type": "boolean",
+      "description": "Should show a clear button when there is a value"
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "description": "On clear button callback"
+    },
     {
       "name": "formatter",
       "type": "(value) => string | undefined",

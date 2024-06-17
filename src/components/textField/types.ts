@@ -12,7 +12,7 @@ import {TextProps} from '../text';
 import {RecorderProps} from '../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
 import {ViewProps} from '../view';
-import type {ImageProps} from '../image';
+import type {IconProps} from '../icon';
 
 export type ColorType =
   | string
@@ -129,7 +129,7 @@ export interface ValidationMessageProps {
   /** 
    * Icon left to the validation message
    */
-  validationIcon?: ImageProps['source'];
+  validationIcon?: IconProps;
   /**
    * Keep the validation space even if there is no validation message
    */
@@ -202,9 +202,21 @@ export type TextFieldProps = MarginModifiers &
      */
     trailingAccessory?: ReactElement;
     /**
+     * Pass to render a top trailing element
+     */
+    topTrailingAccessory?: ReactElement;
+    /**
      * Pass to render a bottom element below the input
      */
     bottomAccessory?: ReactElement;
+    /**
+     * Should show a clear button when there is a value
+     */
+    showClearButton?: boolean;
+    /**
+     * On clear button callback
+     */
+    onClear?: () => void;
     /**
      * Text to display under the input
      */

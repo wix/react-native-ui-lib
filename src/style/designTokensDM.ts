@@ -62,13 +62,18 @@ export default {
 
   // OUTLINE
   $outlineDefault: colorsPalette.grey5,
-  $outlineDisabled: colorsPalette.grey20,
+  $outlineDisabled: colorsPalette.grey5,
   $outlineDisabledHeavy: colorsPalette.grey40,
   $outlineNeutral: colorsPalette.grey20,
   $outlineNeutralHeavy: colorsPalette.grey40,
   $outlinePrimary: colorsPalette.violet50,
+  $outlinePrimaryMedium: colorsPalette.blue5,
   $outlineGeneral: colorsPalette.blue50,
   $outlineWarning: colorsPalette.yellow40,
   $outlineDanger: colorsPalette.red40,
-  $outlineInverted: colorsPalette.grey10
+  $outlineInverted: colorsPalette.grey10,
+
+  // BLACK AND WHITE
+  $black: colorsPalette.white,
+  $white: colorsPalette.black
 };
