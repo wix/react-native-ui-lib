@@ -69,9 +69,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     testID,
     onChange,
     onPress,
-    onShow,
     onSearchChange,
-    enableModalBlur,
     listProps,
     value,
     getLabel,
@@ -177,14 +175,8 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     onDoneSelecting
   ]);
 
-  const modalProps: ExpandableOverlayProps['modalProps'] = {
-    animationType: 'slide',
-    transparent: Constants.isIOS && enableModalBlur,
-    enableModalBlur: Constants.isIOS && enableModalBlur,
-    onRequestClose: componentProps.headerProps?.onCancel,
-    onShow,
-    ...componentProps.pickerModalProps
-  };
+  const modalProps: ExpandableOverlayProps['modalProps'] = componentProps.pickerModalProps;
+  console.log(`modalProps:`, modalProps);
 
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
     return <PickerItem key={`${index}-${item.value}`} {...item}/>;

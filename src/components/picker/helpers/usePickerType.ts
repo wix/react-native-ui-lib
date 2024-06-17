@@ -1,12 +1,25 @@
+import Constants from '../../../commons/Constants';
 import {ExpandableOverlayProps} from 'src/incubator';
-import {PickerProps, PickerModeTypes} from '../index';
-import {CustomPickerProps, PickerModeBooleans} from '../types';
+import {CustomPickerProps, PickerModeBooleans, PickerProps, PickerModeTypes} from '../types';
 
 type ComponentPropsType = {
   headerProps: any;
   customModal: CustomPickerProps['renderCustomModal'];
   dialogProps: ExpandableOverlayProps['dialogProps'];
   pickerModalProps: ExpandableOverlayProps['modalProps'];
+};
+
+//TODO: remove onShow when migration is finished, the prop should be passed via modalProps in pickerType='modal' mode
+const modalProps = (props: PickerProps,
+  pickerModalProps: ComponentPropsType['pickerModalProps']): ExpandableOverlayProps['modalProps'] => {
+  const {onShow, enableModalBlur} = props;
+  return {
+    animationType: 'slide',
+    transparent: Constants.isIOS && enableModalBlur,
+    enableModalBlur: Constants.isIOS && enableModalBlur,
+    onShow,
+    ...pickerModalProps
+  };
 };
 
 const usePickerType = (props: PickerProps) => {
@@ -24,7 +37,7 @@ const usePickerType = (props: PickerProps) => {
       case PickerModeTypes.Modal:
         componentProps.headerProps = props.headerProps;
         //@ts-ignore
-        componentProps.pickerModalProps = props.pickerModalProps || props.modalProps;
+        componentProps.pickerModalProps = modalProps(props, props.modalProps || props.pickerModalProps);
         break;
       case PickerModeTypes.Dialog:
       case PickerModeTypes.WheelPicker:
@@ -41,7 +54,7 @@ const usePickerType = (props: PickerProps) => {
   } else {
     const {useDialog, useWheelPicker, topBarProps, pickerModalProps, customPickerProps} = props;
     type = {dialog: !!useDialog, wheelPicker: !!useWheelPicker, modal: !useDialog && !useWheelPicker, custom: false};
-    componentProps.pickerModalProps = pickerModalProps;
+    componentProps.pickerModalProps = modalProps(props, pickerModalProps);
     componentProps.headerProps =
       //@ts-expect-error
       topBarProps || customPickerProps?.dialogProps?.pannableHeaderProps || customPickerProps?.dialogProps?.headerProps;

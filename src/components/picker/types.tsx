@@ -256,10 +256,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   listProps?: Partial<FlatListProps<any>>;
   /**
-   * Pass props to the picker modal
-   */
-  pickerModalProps?: object;
-  /**
    * Custom container style
    */
   containerStyle?: StyleProp<ViewStyle>;
