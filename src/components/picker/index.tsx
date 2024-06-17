@@ -176,7 +176,6 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
   ]);
 
   const modalProps: ExpandableOverlayProps['modalProps'] = componentProps.pickerModalProps;
-  console.log(`modalProps:`, modalProps);
 
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
     return <PickerItem key={`${index}-${item.value}`} {...item}/>;
