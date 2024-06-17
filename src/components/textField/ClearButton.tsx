@@ -1,6 +1,6 @@
 import React, {useContext, useCallback, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import {useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
+import {useAnimatedStyle, useSharedValue, withTiming, Easing} from 'react-native-reanimated';
 import {useDidUpdate} from '../../hooks';
 import Assets from '../../assets';
 import {Spacings, Colors} from '../../style';
@@ -10,18 +10,23 @@ import FieldContext from './FieldContext';
 import {TextFieldProps} from './types';
 
 const hitSlop = {top: 20, bottom: 20, left: 20, right: 20};
-const NON_VISIBLE_POSITION = 100;
+const NON_VISIBLE_POSITION = 18;
 const VISIBLE_POSITION = 0;
-const SPRING_ANIMATION_CONFIG = {velocity: 300, damping: 20, stiffness: 300, mass: 0.8};
+const TIMING_CONFIG = {
+  duration: 200,
+  easing: Easing.bezier(0.33, 1, 0.68, 1)
+};
 
 const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onClear' | 'testID' | 'onChangeText'>) => {
   const {hasValue} = useContext(FieldContext);
   const animatedValue = useSharedValue(hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION);
+  const animatedOpacity = useSharedValue(hasValue ? 1 : 0);
 
   // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{translateX: animatedValue.value}, {translateY: 0}]
+      transform: [{translateY: animatedValue.value}, {translateX: 0}],
+      opacity: animatedOpacity.value
     };
   });
 
@@ -29,9 +34,10 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
 
   const animate = useCallback(() => {
     const toValue = hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION;
-    animatedValue.value = withSpring(toValue, SPRING_ANIMATION_CONFIG);
+    animatedValue.value = withTiming(toValue, TIMING_CONFIG);
+    animatedOpacity.value = withTiming(hasValue ? 1 : 0, TIMING_CONFIG);
   },
-  [animatedValue, hasValue]);
+  [animatedValue, animatedOpacity, hasValue]);
 
   useDidUpdate(() => {
     animate();
