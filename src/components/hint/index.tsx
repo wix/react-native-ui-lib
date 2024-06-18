@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
+import React, {Component, ReactNode, isValidElement, ElementRef} from 'react';
 import {
   Animated,
   StyleSheet,
