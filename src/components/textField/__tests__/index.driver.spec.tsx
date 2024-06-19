@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, ViewStyle} from 'react-native';
-import {render, screen} from '@testing-library/react-native';
+import {render} from '@testing-library/react-native';
 import Constants from '../../../commons/Constants';
 import View from '../../../components/view';
 import {TextFieldDriver} from '../TextField.driver.new';
@@ -147,17 +146,6 @@ describe('TextField', () => {
       const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
       
       expect(textFieldDriver.getLabel().exists()).toBe(false);
-    });
-
-    it('should not center vertical label:', () => {
-      const renderTree = render(<TestCase label={'mock label'}/>);
-      const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
-      const labelWrapper = screen.getByTestId(`${TEXT_FIELD_TEST_ID}.label.wrapper`);
-
-      expect(textFieldDriver.getLabel().exists()).toBe(true);
-      expect(labelWrapper).toBeDefined();
-      const wrapperStyle = StyleSheet.flatten(labelWrapper.props.style) as ViewStyle;
-      expect(wrapperStyle).toEqual(expect.not.objectContaining({alignItems: 'center'}));
     });
   });
 

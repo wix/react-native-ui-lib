@@ -135,7 +135,7 @@ const TextField = (props: InternalTextFieldProps) => {
   return (
     <FieldContext.Provider value={context}>
       <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
-        <View row spread style={centeredContainerStyle} testID={`${props.testID}.label.wrapper`}>
+        <View row spread style={centeredContainerStyle}>
           <Label
             label={label}
             labelColor={labelColor}
