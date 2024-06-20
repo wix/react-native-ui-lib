@@ -943,7 +943,7 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                   testID="undefined.floatingPlaceholder"
                 >
-                  Floating placeholder
+                  FloatingPlaceholder
                 </Text>
               </View>
               <TextInput
@@ -956,7 +956,7 @@ exports[`TextField Screen renders screen 1`] = `
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
-                placeholder="Floating placeholder"
+                placeholder="FloatingPlaceholder"
                 placeholderTextColor="transparent"
                 style={
                   [
@@ -1782,6 +1782,7 @@ exports[`TextField Screen renders screen 1`] = `
       </View>
       <View
         center={true}
+        marginT-20={true}
         row={true}
         spread={true}
         style={
@@ -1792,7 +1793,9 @@ exports[`TextField Screen renders screen 1`] = `
             undefined,
             undefined,
             {},
-            {},
+            {
+              "marginTop": 20,
+            },
             {
               "alignItems": "center",
               "flexDirection": "row",
@@ -5393,6 +5396,7 @@ exports[`TextField Screen renders screen 1`] = `
             }
           >
             <Image
+              marginL-s1={true}
               source={
                 {
                   "testUri": "../../../demo/src/assets/icons/info.png",
@@ -5401,7 +5405,9 @@ exports[`TextField Screen renders screen 1`] = `
               style={
                 [
                   undefined,
-                  undefined,
+                  {
+                    "marginLeft": 4,
+                  },
                   {
                     "height": 16,
                     "width": 16,
@@ -5806,6 +5812,7 @@ exports[`TextField Screen renders screen 1`] = `
         <Text
           marginH-s1={true}
           marginT-s1={true}
+          marginT-s2={false}
           style={
             [
               {
