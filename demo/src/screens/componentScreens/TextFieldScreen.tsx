@@ -81,7 +81,7 @@ export default class TextFieldScreen extends Component {
         
         <View row bottom>
           <TextField
-            placeholder="Floating placeholder"
+            placeholder="FloatingPlaceholder"
             floatingPlaceholder
             floatingPlaceholderColor={{
               focus: Colors.$textDefault,
@@ -90,10 +90,12 @@ export default class TextFieldScreen extends Component {
             // floatingPlaceholderStyle={Typography.text60}
             // style={Typography.text60}
             containerStyle={{flex: 1}}
+            preset={this.state.preset}
           />
           <TextField
             placeholder="Placeholder"
             containerStyle={{flex: 1, marginLeft: Spacings.s6}}
+            preset={this.state.preset}
           />
         </View>
       </>
@@ -135,6 +137,7 @@ export default class TextFieldScreen extends Component {
           ref={this.input2}
           placeholder="Enter search term"
           trailingAccessory={this.renderTrailingAccessory()}
+          preset={this.state.preset}
         />
         <TextField
           ref={this.input2}
@@ -145,6 +148,7 @@ export default class TextFieldScreen extends Component {
               Kg.
             </Text>
           }
+          preset={this.state.preset}
         />
 
         <Text marginB-s2 $textPrimary>Leading Accessory:</Text>
@@ -156,6 +160,7 @@ export default class TextFieldScreen extends Component {
               Https://
             </Text>
           }
+          preset={this.state.preset}
         />
       </>
     );
@@ -167,7 +172,7 @@ export default class TextFieldScreen extends Component {
   };
 
   renderValidationExample() {
-    const {errorPosition, preset} = this.state;
+    const {errorPosition, preset, value} = this.state;
     
     return (
       <>
@@ -180,7 +185,7 @@ export default class TextFieldScreen extends Component {
         </View>
 
         <TextField
-          value={this.state.value}
+          value={value}
           onChangeText={value => this.setState({value})}
           label="Email"
           placeholder="Enter email"
@@ -191,10 +196,11 @@ export default class TextFieldScreen extends Component {
           validate={['required', 'email']}
           validateOnChange
           onChangeValidity={(isValid: boolean) => console.warn('validity changed:', isValid, Date.now())}
-          // validateOnStart
+          validateOnStart
           // validateOnBlur
+          preset={preset}
         />
-        <View row spread center>
+        <View row spread center marginT-20>
           <TextField
             ref={this.inputWithValidation}
             label="Name"
@@ -249,7 +255,7 @@ export default class TextFieldScreen extends Component {
   };
 
   renderStateColorsExample() {
-    const {isReadonly, isDisabled} = this.state;
+    const {isReadonly, isDisabled, preset} = this.state;
 
     return (
       <>
@@ -278,6 +284,7 @@ export default class TextFieldScreen extends Component {
           validateOnChange
           readonly={isReadonly}
           editable={!isDisabled}
+          preset={preset}
         />
       </>
     );
@@ -333,7 +340,7 @@ export default class TextFieldScreen extends Component {
     );
   }
 
-  renderCherCounterExample() {
+  renderCharCounterExample() {
     return (
       <>
         <Text h3 marginB-s3>
@@ -348,6 +355,7 @@ export default class TextFieldScreen extends Component {
           bottomAccessory={<Text text100>{Assets.emojis.grapes} {Assets.emojis.melon} {Assets.emojis.banana}</Text>}
           charCounterStyle={{color: Colors.$textGeneral}}
           maxLength={20}
+          preset={this.state.preset}
         />
       </>
     );
@@ -368,6 +376,7 @@ export default class TextFieldScreen extends Component {
           onChangeText={value => this.setState({value})}
           trailingAccessory={<Icon source={Assets.icons.demo.search}/>}
           // multiline
+          preset={this.state.preset}
         />
       </>
     );
@@ -385,13 +394,14 @@ export default class TextFieldScreen extends Component {
           floatingPlaceholder
           floatOnFocus
           hint="1-6 chars including numeric chars"
+          preset={this.state.preset}
         />
       </>
     );
   }
 
   renderFormatterExample() {
-    const {price} = this.state;
+    const {price, preset} = this.state;
 
     return (
       <>
@@ -409,12 +419,15 @@ export default class TextFieldScreen extends Component {
           // @ts-expect-error
           formatter={value => (isNaN(value) ? value : priceFormatter.format(Number(value)))}
           leadingAccessory={<Text marginR-s1 $textNeutral>$</Text>}
+          preset={preset}
         />
       </>
     );
   }
 
   renderCustomAlignmentExample() {
+    const {preset, errorPosition} = this.state;
+
     return (
       <>
         <Text h3 marginB-3>
@@ -426,18 +439,25 @@ export default class TextFieldScreen extends Component {
           label="PIN"
           placeholder="XXXX"
           centered
-          topTrailingAccessory={<Icon source={Assets.icons.demo.info} size={16}/>}
+          topTrailingAccessory={<Icon source={Assets.icons.demo.info} size={16} marginL-s1/>}
           validate={'required'}
           validationMessage={'This field is required'}
           validateOnBlur
-          validationMessagePosition={this.state.errorPosition}
+          validationMessagePosition={errorPosition}
+          preset={preset}
         />
         
         <Text marginB-s1 $textPrimary>Inline:</Text>
         <View row>
-          <TextField placeholder="hours"/>
-          <Text marginT-s1 marginH-s1>:</Text>
-          <TextField placeholder="minutes"/>
+          <TextField placeholder="hours" preset={preset}/>
+          <Text 
+            marginT-s1={preset === TextField.presets.UNDERLINE} 
+            marginT-s2={preset === TextField.presets.OUTLINE} 
+            marginH-s1
+          >
+            :
+          </Text>
+          <TextField placeholder="minutes" preset={preset}/>
         </View>
       </>
     );
@@ -455,7 +475,7 @@ export default class TextFieldScreen extends Component {
           {this.renderValidationExample()}
           {this.renderHintExample()}
           {this.renderClearButtonExample()}
-          {this.renderCherCounterExample()}
+          {this.renderCharCounterExample()}
           {this.renderAccessoriesExample()}
           {this.renderStateColorsExample()}
           {this.renderDynamicFieldExample()}
