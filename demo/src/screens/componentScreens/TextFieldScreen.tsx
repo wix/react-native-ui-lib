@@ -194,9 +194,9 @@ export default class TextFieldScreen extends Component {
           // validationMessageStyle={Typography.text90R}
           validationMessagePosition={errorPosition}
           validate={['required', 'email']}
-          validateOnChange
           onChangeValidity={(isValid: boolean) => console.warn('validity changed:', isValid, Date.now())}
-          validateOnStart
+          validateOnChange
+          // validateOnStart
           // validateOnBlur
           preset={preset}
         />
