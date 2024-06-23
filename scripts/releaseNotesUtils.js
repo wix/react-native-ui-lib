@@ -21,7 +21,7 @@ async function getLatestVersionFromGithub(repoUrl) {
     });
 }
 
-function bumpVersion(pathToPackageJson, bumpType = 'patch', latestVersion) {
+function bumpVersion(pathToPackageJson, bumpType = 'minor', latestVersion) {
   try {
     const packageJson = JSON.parse(fs.readFileSync(pathToPackageJson, 'utf8'));
     if (!semver.valid(packageJson.version)) {
