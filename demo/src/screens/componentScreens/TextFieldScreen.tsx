@@ -15,9 +15,10 @@ import {
   SegmentedControl,
   Icon
 } from 'react-native-ui-lib';
+const {loadDemoConfigurations} = require('../../../src/configurations.js');
 const {KeyboardAwareInsetsView} = Keyboard;
 const priceFormatter = Intl.NumberFormat('en-US');
-
+loadDemoConfigurations();
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextFieldRef>();
   input2 = React.createRef<TextFieldRef>();
