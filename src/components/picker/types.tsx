@@ -307,7 +307,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   /**
    * Custom function for the item label (e.g (value) => customLabel)
    */
-  getItemLabel?: PickerPropsDeprecation['getItemLabel'];
+  getItemLabel?: (value: PickerValue) => string;
   /**
    * @deprecated Function to return the value out of the item value prop when value is custom shaped.
    */

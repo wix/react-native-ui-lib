@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
+import React, {Component, ReactNode, isValidElement, ElementRef} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -67,7 +67,7 @@ export interface HintProps {
   /**
    * The hint message
    */
-  message?: string | ReactElement;
+  message?: ReactNode | ReactNode[];
   /**
    * The hint message custom style
    */
