@@ -944,6 +944,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
+              undefined,
               false,
               [
                 {
@@ -1195,6 +1196,7 @@ exports[`AvatarScreen renders screen 1`] = `
               {
                 "height": 40,
               },
+              undefined,
               undefined,
               undefined,
               undefined,
@@ -1467,6 +1469,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
+                undefined,
                 false,
                 [
                   [
@@ -1655,6 +1658,7 @@ exports[`AvatarScreen renders screen 1`] = `
               {
                 "height": 70,
               },
+              undefined,
               undefined,
               undefined,
               undefined,
@@ -1914,6 +1918,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
+              undefined,
               false,
               [
                 {
@@ -2032,6 +2037,7 @@ exports[`AvatarScreen renders screen 1`] = `
               style={
                 [
                   null,
+                  undefined,
                   undefined,
                   undefined,
                   undefined,
@@ -2209,6 +2215,7 @@ exports[`AvatarScreen renders screen 1`] = `
               {
                 "height": 48,
               },
+              undefined,
               undefined,
               undefined,
               undefined,
@@ -2441,6 +2448,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
+              undefined,
               false,
               [
                 {
@@ -2669,6 +2677,7 @@ exports[`AvatarScreen renders screen 1`] = `
               undefined,
               undefined,
               undefined,
+              undefined,
               false,
               [
                 {
@@ -2851,6 +2860,7 @@ exports[`AvatarScreen renders screen 1`] = `
               {
                 "height": 50,
               },
+              undefined,
               undefined,
               undefined,
               undefined,

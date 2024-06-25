@@ -233,6 +233,7 @@ class Image extends PureComponent<Props, State> {
       customOverlayContent,
       modifiers,
       recorderTag,
+      borderRadius,
       ...others
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
@@ -247,6 +248,7 @@ class Image extends PureComponent<Props, State> {
           shouldFlipRTL && styles.rtlFlipped,
           width && {width},
           height && {height},
+          borderRadius && {borderRadius},
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
@@ -270,7 +272,7 @@ class Image extends PureComponent<Props, State> {
             intensity={overlayIntensity}
             color={overlayColor}
             customContent={customOverlayContent}
-            borderRadius={others?.borderRadius}
+            borderRadius={borderRadius}
           />
         )}
       </ImageView>
