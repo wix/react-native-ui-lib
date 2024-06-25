@@ -52,6 +52,7 @@ const usePickerType = (props: PickerProps) => {
         break;
     }
   } else {
+    //TODO: remove this block when migration is finished
     const {useDialog, useWheelPicker, topBarProps, pickerModalProps, customPickerProps} = props;
     type = {dialog: !!useDialog, wheelPicker: !!useWheelPicker, modal: !useDialog && !useWheelPicker, custom: false};
     componentProps.pickerModalProps = modalProps(props, pickerModalProps);

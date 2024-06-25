@@ -191,7 +191,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     closeExpandable,
     toggleExpandable
   }) => {
-    if (componentProps.customModal) {
+    if (componentProps.customModal && type.custom) {
       const modalProps = {
         visible,
         closeModal: closeExpandable,
@@ -203,7 +203,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
         onCancel: cancelSelect
       };
 
-      return componentProps?.customModal && componentProps.customModal?.(modalProps);
+      return componentProps.customModal?.(modalProps);
     }
   };
 
@@ -313,7 +313,7 @@ Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
 // @ts-expect-error
-Picker.pickerType = PickerModeTypes;
+Picker.pickerTypes = PickerModeTypes;
 
 export {
   PickerProps,
