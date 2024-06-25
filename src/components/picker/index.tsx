@@ -35,12 +35,6 @@ import {
   PickerPropsDeprecation
 } from './types';
 
-const DIALOG_PROPS = {
-  bottom: true,
-  width: '100%',
-  height: 250
-};
-
 type PickerStatics = {
   Item: typeof PickerItem;
   modes: typeof PickerModes;
@@ -175,7 +169,6 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     onDoneSelecting
   ]);
 
-
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
     return <PickerItem key={`${index}-${item.value}`} {...item}/>;
   }, []);
@@ -268,7 +261,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
           onPress={onPress}
           testID={testID}
           {...customPickerProps}
-          dialogProps={componentProps.dialogProps || DIALOG_PROPS}
+          dialogProps={componentProps.dialogProps}
           disabled={themeProps.editable === false}
         >
           {renderPicker ? (

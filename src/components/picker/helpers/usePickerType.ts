@@ -22,6 +22,12 @@ const modalProps = (props: PickerProps,
   };
 };
 
+const DIALOG_PROPS = {
+  bottom: true,
+  width: '100%',
+  height: 250
+};
+
 const usePickerType = (props: PickerProps) => {
   const {pickerType} = props;
   let type: PickerModeBooleans = {dialog: false, wheelPicker: false, modal: false, custom: false};
@@ -42,10 +48,12 @@ const usePickerType = (props: PickerProps) => {
       case PickerModeTypes.Dialog:
       case PickerModeTypes.WheelPicker:
         componentProps.headerProps = props.headerProps;
-        componentProps.dialogProps = componentProps.headerProps && {
-          ...props?.customPickerProps?.dialogProps,
-          headerProps: props.headerProps
-        };
+        componentProps.dialogProps =
+          (componentProps.headerProps && {
+            ...props?.customPickerProps?.dialogProps,
+            headerProps: props.headerProps
+          }) ||
+          DIALOG_PROPS;
         break;
       case PickerModeTypes.Custom:
         componentProps.customModal = props.renderCustomModal;
@@ -60,7 +68,7 @@ const usePickerType = (props: PickerProps) => {
       //@ts-expect-error
       topBarProps || customPickerProps?.dialogProps?.pannableHeaderProps || customPickerProps?.dialogProps?.headerProps;
     componentProps.customModal = props.renderCustomModal;
-    componentProps.dialogProps = props?.customPickerProps?.dialogProps;
+    componentProps.dialogProps = props?.customPickerProps?.dialogProps || DIALOG_PROPS;
   }
   return {type, componentProps};
 };
