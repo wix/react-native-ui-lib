@@ -183,20 +183,18 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     closeExpandable,
     toggleExpandable
   }) => {
-    if (componentProps.customModal && type.custom) {
-      const modalProps = {
-        visible,
-        closeModal: closeExpandable,
-        toggleModal: toggleExpandable,
-        onSearchChange: _onSearchChange,
-        children: children || renderItems(items),
-        // onDone is relevant to multi mode only
-        onDone: () => onDoneSelecting(multiDraftValue),
-        onCancel: cancelSelect
-      };
+    const modalProps = {
+      visible,
+      closeModal: closeExpandable,
+      toggleModal: toggleExpandable,
+      onSearchChange: _onSearchChange,
+      children: children || renderItems(items),
+      // onDone is relevant to multi mode only
+      onDone: () => onDoneSelecting(multiDraftValue),
+      onCancel: cancelSelect
+    };
 
-      return componentProps.customModal?.(modalProps);
-    }
+    return componentProps.customModal?.(modalProps);
   };
 
   const expandableModalContent = useMemo(() => {
@@ -257,7 +255,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
           useDialog={type.dialog || type.wheelPicker}
           modalProps={componentProps.pickerModalProps}
           expandableContent={expandableModalContent}
-          renderCustomOverlay={componentProps.customModal ? _renderCustomModal : undefined}
+          renderCustomOverlay={type.custom ? _renderCustomModal : undefined}
           onPress={onPress}
           testID={testID}
           {...customPickerProps}

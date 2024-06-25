@@ -75,7 +75,6 @@ const usePickerType = (props: PickerProps) => {
     componentProps.customModal = props.renderCustomModal;
     componentProps.dialogProps = props?.customPickerProps?.dialogProps || DIALOG_PROPS;
   }
-  console.log(`type:`, type);
   return {type, componentProps};
 };
 
