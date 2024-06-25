@@ -61,8 +61,13 @@ const usePickerType = (props: PickerProps) => {
     }
   } else {
     //TODO: remove this block when migration is finished
-    const {useDialog, useWheelPicker, topBarProps, pickerModalProps, customPickerProps} = props;
-    type = {dialog: !!useDialog, wheelPicker: !!useWheelPicker, modal: !useDialog && !useWheelPicker, custom: false};
+    const {useDialog, useWheelPicker, topBarProps, pickerModalProps, customPickerProps, renderCustomModal} = props;
+    type = {
+      dialog: !!useDialog,
+      wheelPicker: !!useWheelPicker,
+      modal: !useDialog && !useWheelPicker && !renderCustomModal,
+      custom: !!renderCustomModal
+    };
     componentProps.pickerModalProps = modalProps(props, pickerModalProps);
     componentProps.headerProps =
       //@ts-expect-error
@@ -70,6 +75,7 @@ const usePickerType = (props: PickerProps) => {
     componentProps.customModal = props.renderCustomModal;
     componentProps.dialogProps = props?.customPickerProps?.dialogProps || DIALOG_PROPS;
   }
+  console.log(`type:`, type);
   return {type, componentProps};
 };
 
