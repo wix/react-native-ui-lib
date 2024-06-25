@@ -31,7 +31,7 @@ import {
   RenderCustomModalProps,
   PickerItemsListProps,
   PickerMethods,
-  PickerModeTypes,
+  PickerTypes,
   PickerPropsDeprecation
 } from './types';
 
@@ -40,7 +40,7 @@ type PickerStatics = {
   modes: typeof PickerModes;
   fieldTypes: typeof PickerFieldTypes;
   extractPickerItems: typeof extractPickerItems;
-  picketType: typeof PickerModeTypes;
+  picketType: typeof PickerTypes;
 };
 
 const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, ref) => {
@@ -302,7 +302,7 @@ Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
 // @ts-expect-error
-Picker.pickerTypes = PickerModeTypes;
+Picker.pickerTypes = PickerTypes;
 
 export {
   PickerProps,
@@ -314,7 +314,7 @@ export {
   RenderCustomModalProps,
   PickerItemsListProps,
   PickerMethods,
-  PickerModeTypes
+  PickerTypes
 };
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

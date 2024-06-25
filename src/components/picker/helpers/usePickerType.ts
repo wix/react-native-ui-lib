@@ -1,6 +1,6 @@
 import Constants from '../../../commons/Constants';
 import {ExpandableOverlayProps} from 'src/incubator';
-import {CustomPickerProps, PickerModeBooleans, PickerProps, PickerModeTypes} from '../types';
+import {CustomPickerProps, PickerModeBooleans, PickerProps, PickerTypes} from '../types';
 
 type ComponentPropsType = {
   headerProps: any;
@@ -40,13 +40,13 @@ const usePickerType = (props: PickerProps) => {
   if (pickerType) {
     type[pickerType] = true;
     switch (pickerType) {
-      case PickerModeTypes.Modal:
+      case PickerTypes.Modal:
         componentProps.headerProps = props.headerProps;
         //@ts-ignore
         componentProps.pickerModalProps = modalProps(props, props.modalProps || props.pickerModalProps);
         break;
-      case PickerModeTypes.Dialog:
-      case PickerModeTypes.WheelPicker:
+      case PickerTypes.Dialog:
+      case PickerTypes.WheelPicker:
         componentProps.headerProps = props.headerProps;
         componentProps.dialogProps =
           (componentProps.headerProps && {
@@ -55,7 +55,7 @@ const usePickerType = (props: PickerProps) => {
           }) ||
           DIALOG_PROPS;
         break;
-      case PickerModeTypes.Custom:
+      case PickerTypes.Custom:
         componentProps.customModal = props.renderCustomModal;
         break;
     }

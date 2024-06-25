@@ -98,7 +98,7 @@
     {"name": "pickerModalProps", "type": "ModalProps", "description": "Pass props to the picker modal"},
     {"name": "useSafeArea", "type": "boolean", "description": "Add safe area in the Picker modal view"},
     {"name": "items", "type": "{label: string, value: string | number}[]", "description": "Data source for Picker"},
-    {"name": "pickerType", "type": "PickerModeTypes", "description": "Type of picker to render"},
+    {"name": "pickerType", "type": "PickerTypes", "description": "Type of picker to render"},
     {
       "name": "headerProps",
       "type": "ModalTopBarProps | DialogHeaderProps",

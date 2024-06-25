@@ -21,7 +21,7 @@ export enum PickerFieldTypes {
   settings = 'settings'
 }
 
-export enum PickerModeTypes {
+export enum PickerTypes {
   Modal = 'modal',
   Dialog = 'dialog',
   WheelPicker = 'wheelPicker',
@@ -29,7 +29,7 @@ export enum PickerModeTypes {
 }
 
 export type PickerModeBooleans = {
-  [key in PickerModeTypes]: boolean;
+  [key in PickerTypes]: boolean;
 };
 
 // TODO: Remove type
@@ -37,7 +37,7 @@ export type PickerModeBooleans = {
 export type PickerSingleValue = string | number;
 export type PickerMultiValue = PickerSingleValue[];
 export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
-export type PickerType = PickerModeTypes | `${PickerModeTypes}`;
+export type PickerType = PickerTypes | `${PickerTypes}`;
 
 type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
   ? (value?: ValueType, label?: string) => React.ReactElement
@@ -83,21 +83,21 @@ export type DialogPickerProps = DialogHeaderProps & {
   /**
    * Type of picker to render
    */
-  pickerType: PickerModeTypes.Dialog | `${PickerModeTypes.Dialog}`;
+  pickerType: PickerTypes.Dialog | `${PickerTypes.Dialog}`;
 };
 
 export type WheelPickerProps = DialogHeaderProps & {
   /**
    * Type of picker to render
    */
-  pickerType: PickerModeTypes.WheelPicker | `${PickerModeTypes.WheelPicker}`;
+  pickerType: PickerTypes.WheelPicker | `${PickerTypes.WheelPicker}`;
 };
 
 export interface ModalPickerProps {
   /**
    * Type of picker to render
    */
-  pickerType: PickerModeTypes.Modal | `${PickerModeTypes.Modal}`;
+  pickerType: PickerTypes.Modal | `${PickerTypes.Modal}`;
   /**
    * Picker header props depends on the picker type - ModalTopBarProps in case of Modal
    */
@@ -109,7 +109,7 @@ export interface CustomPickerProps {
   /**
    * Type of picker to render
    */
-  pickerType: PickerModeTypes.Custom | `${PickerModeTypes.Custom}`;
+  pickerType: PickerTypes.Custom | `${PickerTypes.Custom}`;
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
 }
 
@@ -167,7 +167,6 @@ export type PickerPropsDeprecation = {
   pickerModalProps?: object;
 };
 
-export type PickerTypes = PickerTypeProps | PickerPropsDeprecation;
 
 export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /* ...TextField.propTypes, */
