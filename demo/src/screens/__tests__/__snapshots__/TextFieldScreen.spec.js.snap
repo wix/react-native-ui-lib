@@ -2770,6 +2770,7 @@ exports[`TextField Screen renders screen 1`] = `
                     undefined,
                     undefined,
                     undefined,
+                    undefined,
                     false,
                     [
                       {
@@ -3435,6 +3436,7 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
+                  undefined,
                   undefined,
                   undefined,
                   undefined,

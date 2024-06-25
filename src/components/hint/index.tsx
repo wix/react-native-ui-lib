@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component, ReactNode, isValidElement, ElementRef} from 'react';
+import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -55,6 +55,8 @@ type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
 
 type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 
+type ContentType = string | ReactElement;
+
 export interface HintProps {
   /**
    * Control the visibility of the hint
@@ -67,7 +69,7 @@ export interface HintProps {
   /**
    * The hint message
    */
-  message?: ReactNode | ReactNode[];
+  message?: ContentType | ContentType[];
   /**
    * The hint message custom style
    */
