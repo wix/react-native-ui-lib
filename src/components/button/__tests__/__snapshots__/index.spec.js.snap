@@ -1134,6 +1134,7 @@ exports[`Button container size should have no padding of button is an icon butto
         undefined,
         undefined,
         undefined,
+        undefined,
         false,
         [
           {
@@ -2266,6 +2267,7 @@ exports[`Button icon should apply color on icon 1`] = `
         undefined,
         undefined,
         undefined,
+        undefined,
         false,
         [
           {
@@ -2342,6 +2344,7 @@ exports[`Button icon should apply color on icon 2`] = `
         undefined,
         undefined,
         undefined,
+        undefined,
         false,
         [
           {
@@ -2410,6 +2413,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
     source={12}
     style={
       [
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2499,6 +2503,7 @@ exports[`Button icon should return icon style according to different variations 
         undefined,
         undefined,
         undefined,
+        undefined,
         false,
         [
           {
@@ -2575,6 +2580,7 @@ exports[`Button icon should return icon style according to different variations 
         undefined,
         undefined,
         undefined,
+        undefined,
         false,
         [
           {
@@ -2643,6 +2649,7 @@ exports[`Button icon should return icon style according to different variations 
     source={12}
     style={
       [
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -3893,6 +3900,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
     source={12}
     style={
       [
+        undefined,
         undefined,
         undefined,
         undefined,
