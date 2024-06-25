@@ -175,7 +175,6 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     onDoneSelecting
   ]);
 
-  const modalProps: ExpandableOverlayProps['modalProps'] = componentProps.pickerModalProps;
 
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
     return <PickerItem key={`${index}-${item.value}`} {...item}/>;
@@ -209,7 +208,6 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
 
   const expandableModalContent = useMemo(() => {
     const useItems = type.wheelPicker || propItems;
-    const listTopBarProps = componentProps.headerProps;
     return (
       <PickerItemsList
         testID={`${testID}.modal`}
@@ -217,7 +215,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
         type={type}
         items={useItems ? items : undefined}
         topBarProps={{
-          ...listTopBarProps,
+          ...componentProps.headerProps,
           onCancel: cancelSelect,
           onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
         }}
@@ -264,7 +262,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={type.dialog || type.wheelPicker}
-          modalProps={modalProps}
+          modalProps={componentProps.pickerModalProps}
           expandableContent={expandableModalContent}
           renderCustomOverlay={componentProps.customModal ? _renderCustomModal : undefined}
           onPress={onPress}
