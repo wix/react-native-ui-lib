@@ -1,0 +1,6055 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextField Screen renders screen 1`] = `
+<RCTScrollView
+  keyboardShouldPersistTaps="always"
+  showsVerticalScrollIndicator={false}
+>
+  <View>
+    <View
+      padding-page={true}
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "padding": 20,
+          },
+          {},
+          {},
+          undefined,
+        ]
+      }
+    >
+      <Text
+        h1={true}
+        marginB-s4={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 28,
+              "fontWeight": "800",
+              "lineHeight": 32,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 16,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        TextField
+      </Text>
+      <Text
+        h3={true}
+        marginB-s1={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 4,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Default
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        />
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                undefined,
+                [
+                  undefined,
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter full name"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    undefined,
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        />
+      </View>
+      <View
+        marginV-s3={true}
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {},
+            {
+              "marginVertical": 12,
+            },
+            {},
+            undefined,
+          ]
+        }
+      >
+        <Text
+          h3={true}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "color": "#20303C",
+                "writingDirection": "ltr",
+              },
+              {
+                "fontFamily": "System",
+                "fontSize": 16,
+                "fontWeight": "500",
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              {},
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          Presets
+        </Text>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textPrimary={true}
+            marginR-s4={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#5A48F5",
+                },
+                undefined,
+                undefined,
+                {
+                  "marginRight": 16,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Preset:
+          </Text>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              center={true}
+              onLayout={[Function]}
+              row={true}
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {},
+                  {},
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  [
+                    {
+                      "backgroundColor": "#F8f9FA",
+                      "borderColor": "#E8ECF0",
+                      "borderWidth": 1,
+                    },
+                    undefined,
+                    {
+                      "backgroundColor": "#F8f9FA",
+                      "borderRadius": 999,
+                    },
+                  ],
+                ]
+              }
+            >
+              <View
+                style={
+                  [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    {},
+                    {},
+                    {},
+                    [
+                      {
+                        "position": "absolute",
+                      },
+                      {
+                        "backgroundColor": "#FFFFFF",
+                        "borderColor": "#5A48F5",
+                        "borderRadius": 999,
+                        "borderWidth": 1,
+                      },
+                      {},
+                    ],
+                  ]
+                }
+              />
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.0"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#5A48F5",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Underline
+                </Text>
+              </View>
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.1"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#4D5963",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Outline
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        />
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                undefined,
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter full name"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validateOnBlur={true}
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <Text
+        h3={true}
+        marginB-s1={true}
+        marginT-s4={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 4,
+              "marginTop": 16,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Static vs Floating Placeholder
+      </Text>
+      <View
+        row={true}
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {},
+            {},
+            {
+              "alignItems": "flex-end",
+              "flexDirection": "row",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {},
+                undefined,
+                {
+                  "flex": 1,
+                },
+                undefined,
+              ],
+            ]
+          }
+        >
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              color="#20303C"
+              fsTagName="unmask"
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#20303C",
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                    {
+                      "opacity": 0,
+                    },
+                  ],
+                ]
+              }
+              testID="undefined.label"
+            />
+          </View>
+          <View
+            centerV={true}
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                [
+                  {},
+                  [
+                    [
+                      {
+                        "borderBottomColor": "#E8ECF0",
+                        "borderBottomWidth": 1,
+                        "paddingBottom": 8,
+                      },
+                      undefined,
+                    ],
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              flexG={true}
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "flexGrow": 1,
+                  },
+                  undefined,
+                  {},
+                  {},
+                  {},
+                  undefined,
+                ]
+              }
+            >
+              <View
+                absF={true}
+                pointerEvents="none"
+                style={
+                  [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    {},
+                    {},
+                    {},
+                    false,
+                  ]
+                }
+              >
+                <Text
+                  animated={true}
+                  collapsable={false}
+                  color="#6E7881"
+                  fsTagName="unmask"
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#6E7881",
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "lineHeight": 24,
+                      "opacity": 0,
+                      "writingDirection": "ltr",
+                    }
+                  }
+                  testID="undefined.floatingPlaceholder"
+                >
+                  FloatingPlaceholder
+                </Text>
+              </View>
+              <TextInput
+                accessibilityState={
+                  {
+                    "disabled": false,
+                  }
+                }
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="FloatingPlaceholder"
+                placeholderTextColor="transparent"
+                style={
+                  [
+                    {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    {
+                      "color": "#20303C",
+                    },
+                    [
+                      {},
+                      undefined,
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "height": 24,
+                        "lineHeight": undefined,
+                      },
+                      false,
+                    ],
+                    false,
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                validateOnBlur={true}
+              />
+            </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+        </View>
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                undefined,
+                undefined,
+                {
+                  "flex": 1,
+                  "marginLeft": 24,
+                },
+                undefined,
+              ],
+            ]
+          }
+        >
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          />
+          <View
+            centerV={true}
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                [
+                  undefined,
+                  [
+                    [
+                      {
+                        "borderBottomColor": "#E8ECF0",
+                        "borderBottomWidth": 1,
+                        "paddingBottom": 8,
+                      },
+                      undefined,
+                    ],
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              flexG={true}
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "flexGrow": 1,
+                  },
+                  undefined,
+                  {},
+                  {},
+                  {},
+                  undefined,
+                ]
+              }
+            >
+              <TextInput
+                accessibilityState={
+                  {
+                    "disabled": false,
+                  }
+                }
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="Placeholder"
+                placeholderTextColor="#6E7881"
+                style={
+                  [
+                    {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    {
+                      "color": "#20303C",
+                    },
+                    [
+                      {},
+                      undefined,
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "height": 24,
+                        "lineHeight": undefined,
+                      },
+                      false,
+                    ],
+                    false,
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                validateOnBlur={true}
+              />
+            </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        <Text
+          h3={true}
+          marginB-s1={true}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "color": "#20303C",
+                "writingDirection": "ltr",
+              },
+              {
+                "fontFamily": "System",
+                "fontSize": 16,
+                "fontWeight": "500",
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              {
+                "marginBottom": 4,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          Validation
+        </Text>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textPrimary={true}
+            marginR-s4={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#5A48F5",
+                },
+                undefined,
+                undefined,
+                {
+                  "marginRight": 16,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Error Position:
+          </Text>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              center={true}
+              onLayout={[Function]}
+              row={true}
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {},
+                  {},
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  [
+                    {
+                      "backgroundColor": "#F8f9FA",
+                      "borderColor": "#E8ECF0",
+                      "borderWidth": 1,
+                    },
+                    undefined,
+                    {
+                      "backgroundColor": "#F8f9FA",
+                      "borderRadius": 999,
+                    },
+                  ],
+                ]
+              }
+            >
+              <View
+                style={
+                  [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    {},
+                    {},
+                    {},
+                    [
+                      {
+                        "position": "absolute",
+                      },
+                      {
+                        "backgroundColor": "#FFFFFF",
+                        "borderColor": "#5A48F5",
+                        "borderRadius": 999,
+                        "borderWidth": 1,
+                      },
+                      {},
+                    ],
+                  ]
+                }
+              />
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.0"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#5A48F5",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Bottom
+                </Text>
+              </View>
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.1"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#4D5963",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Top
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              {},
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Email
+          </Text>
+        </View>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {},
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onChangeValidity={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter email"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    undefined,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validate={
+                [
+                  "required",
+                  "email",
+                ]
+              }
+              validateOnBlur={true}
+              validateOnChange={true}
+              validationMessage={
+                [
+                  "Email is required",
+                  "Email is invalid",
+                ]
+              }
+              value="Initial Value"
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <View
+        center={true}
+        marginT-20={true}
+        row={true}
+        spread={true}
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {},
+            {
+              "marginTop": 20,
+            },
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                undefined,
+                undefined,
+                {
+                  "flex": 1,
+                },
+                undefined,
+              ],
+            ]
+          }
+        >
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              color="#20303C"
+              fsTagName="unmask"
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#20303C",
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                    undefined,
+                  ],
+                ]
+              }
+              testID="undefined.label"
+            >
+              Name
+            </Text>
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <Image
+                source={
+                  {
+                    "testUri": "../../../demo/src/assets/icons/info.png",
+                  }
+                }
+                style={
+                  [
+                    undefined,
+                    undefined,
+                    {
+                      "height": 16,
+                      "width": 16,
+                    },
+                    undefined,
+                    false,
+                  ]
+                }
+              />
+            </View>
+          </View>
+          <View
+            centerV={true}
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                [
+                  undefined,
+                  [
+                    [
+                      {
+                        "borderBottomColor": "#E8ECF0",
+                        "borderBottomWidth": 1,
+                        "paddingBottom": 8,
+                      },
+                      undefined,
+                    ],
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              flexG={true}
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "flexGrow": 1,
+                  },
+                  undefined,
+                  {},
+                  {},
+                  {},
+                  undefined,
+                ]
+              }
+            >
+              <TextInput
+                accessibilityState={
+                  {
+                    "disabled": false,
+                  }
+                }
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="Enter full name"
+                placeholderTextColor="#6E7881"
+                style={
+                  [
+                    {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    {
+                      "color": "#20303C",
+                    },
+                    [
+                      {},
+                      undefined,
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "height": 24,
+                        "lineHeight": undefined,
+                      },
+                      false,
+                    ],
+                    false,
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                validate="required"
+                validateOnBlur={true}
+                validationMessage="This field is required. That means you have to enter some value"
+              />
+            </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          />
+          <Text
+            $textNeutralHeavy={true}
+            marginT-s1={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#4D5963",
+                },
+                undefined,
+                undefined,
+                {
+                  "marginTop": 4,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            subtext={true}
+            testID="undefined.helperText"
+          >
+            Enter first and last name
+          </Text>
+        </View>
+        <View
+          accessibilityRole="button"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onLayout={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#5A48F5",
+              "borderRadius": 999,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginLeft": 20,
+              "minWidth": 66,
+              "opacity": 1,
+              "paddingHorizontal": 10,
+              "paddingVertical": 2,
+            }
+          }
+        >
+          <Text
+            fsTagName="unmask"
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "flexDirection": "row",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#5A48F5",
+                  },
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "400",
+                    "lineHeight": 20,
+                  },
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Validate
+          </Text>
+        </View>
+      </View>
+      <Text
+        h3={true}
+        marginT-s4={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginTop": 16,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Hint
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              {},
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                  {
+                    "opacity": 0,
+                  },
+                ],
+              ]
+            }
+            testID="undefined.label"
+          />
+        </View>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {},
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <View
+              absF={true}
+              pointerEvents="none"
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {},
+                  {},
+                  {},
+                  false,
+                ]
+              }
+            >
+              <Text
+                animated={true}
+                collapsable={false}
+                color="#20303C"
+                fsTagName="unmask"
+                numberOfLines={1}
+                onLayout={[Function]}
+                style={
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                    "opacity": 0,
+                    "writingDirection": "ltr",
+                  }
+                }
+                testID="undefined.floatingPlaceholder"
+              >
+                Enter password
+              </Text>
+            </View>
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter password"
+              placeholderTextColor="transparent"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validateOnBlur={true}
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <Text
+        h3={true}
+        marginB-s3={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 12,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Clear Button
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              {},
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Description
+          </Text>
+        </View>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {},
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter text..."
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    undefined,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validateOnBlur={true}
+              value="Initial Value"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {},
+                [
+                  {
+                    "marginHorizontal": 12,
+                  },
+                  {
+                    "opacity": 1,
+                    "transform": [
+                      {
+                        "translateY": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
+                  },
+                ],
+              ]
+            }
+          >
+            <View
+              accessibilityLabel="clear"
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "left": 20,
+                  "right": 20,
+                  "top": 20,
+                }
+              }
+              onClick={[Function]}
+              onLayout={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "transparent",
+                  "borderRadius": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "minWidth": undefined,
+                  "opacity": 1,
+                  "paddingHorizontal": undefined,
+                  "paddingVertical": undefined,
+                }
+              }
+              testID="undefined.clearButton"
+            >
+              <Image
+                accessibilityRole="image"
+                accessible={false}
+                assetGroup="icons"
+                onError={[Function]}
+                source={
+                  {
+                    "testUri": "../../../src/assets/icons/xFlat.png",
+                  }
+                }
+                style={
+                  [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    false,
+                    [
+                      {
+                        "tintColor": "#5A48F5",
+                      },
+                      {
+                        "tintColor": "#A6ACB1",
+                      },
+                    ],
+                    false,
+                  ]
+                }
+                testID="undefined.clearButton.icon"
+              />
+            </View>
+          </View>
+          <Image
+            source={
+              {
+                "testUri": "../../../demo/src/assets/icons/search.png",
+              }
+            }
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+          />
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <Text
+        h3={true}
+        marginB-s3={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 12,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Char Counter
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              {},
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Description
+          </Text>
+        </View>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {},
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              maxLength={20}
+              multiline={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter text..."
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validateOnBlur={true}
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+          <Text
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                {
+                  "fontFamily": "System",
+                  "fontSize": 10,
+                  "fontWeight": "700",
+                  "lineHeight": 16,
+                },
+                undefined,
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            text100={true}
+          >
+            🍇
+             
+            🍈
+             
+            🍌
+          </Text>
+          <Text
+            $textNeutral={true}
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#6E7881",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexGrow": 1,
+                    "textAlign": "right",
+                  },
+                  {
+                    "color": "#116DFF",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.charCounter"
+          >
+            0/20
+          </Text>
+        </View>
+      </View>
+      <Text
+        h3={true}
+        marginB-s3={true}
+        marginT-s4={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 12,
+              "marginTop": 16,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Accessories
+      </Text>
+      <Text
+        $textPrimary={true}
+        marginB-s2={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            {
+              "marginBottom": 8,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Trailing Accessory:
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        />
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                undefined,
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter search term"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validateOnBlur={true}
+            />
+          </View>
+          <View
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onLayout={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "borderRadius": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginLeft": 8,
+                "minWidth": undefined,
+                "opacity": 1,
+                "paddingHorizontal": undefined,
+                "paddingVertical": undefined,
+              }
+            }
+          >
+            <Image
+              accessibilityRole="image"
+              accessible={false}
+              assetGroup="icons"
+              onError={[Function]}
+              source={
+                {
+                  "testUri": "../../../demo/src/assets/icons/search.png",
+                }
+              }
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  false,
+                  [
+                    {
+                      "tintColor": "#20303C",
+                    },
+                    undefined,
+                  ],
+                  false,
+                ]
+              }
+              testID="undefined.icon"
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        />
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                undefined,
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              keyboardType="numeric"
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter weight"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validateOnBlur={true}
+            />
+          </View>
+          <Text
+            $textNeutral={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                {
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                  "fontWeight": "400",
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#6E7881",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            text70={true}
+          >
+            Kg.
+          </Text>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <Text
+        $textPrimary={true}
+        marginB-s2={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            {
+              "marginBottom": 8,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Leading Accessory:
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        />
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                undefined,
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <Text
+            blue30={true}
+            marginR-2={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                {
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                  "fontWeight": "400",
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#116DFF",
+                },
+                undefined,
+                undefined,
+                {
+                  "marginRight": 2,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            text70={true}
+          >
+            Https://
+          </Text>
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter URL"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validateOnBlur={true}
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <View
+        centerV={true}
+        row={true}
+        spread={true}
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {},
+            {},
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          marginB-s3={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {
+                "marginBottom": 12,
+              },
+              {},
+              undefined,
+            ]
+          }
+        >
+          <Text
+            h3={true}
+            marginB-s2={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                {
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                  "fontWeight": "500",
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "marginBottom": 8,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Colors By State
+          </Text>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              center={true}
+              onLayout={[Function]}
+              row={true}
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {},
+                  {},
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  [
+                    {
+                      "backgroundColor": "#F8f9FA",
+                      "borderColor": "#E8ECF0",
+                      "borderWidth": 1,
+                    },
+                    undefined,
+                    {
+                      "backgroundColor": "#F8f9FA",
+                      "borderRadius": 999,
+                    },
+                  ],
+                ]
+              }
+            >
+              <View
+                style={
+                  [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    {},
+                    {},
+                    {},
+                    [
+                      {
+                        "position": "absolute",
+                      },
+                      {
+                        "backgroundColor": "#FFFFFF",
+                        "borderColor": "#5A48F5",
+                        "borderRadius": 999,
+                        "borderWidth": 1,
+                      },
+                      {},
+                    ],
+                  ]
+                }
+              />
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.0"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#5A48F5",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Empty
+                </Text>
+              </View>
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.1"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#4D5963",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Focus
+                </Text>
+              </View>
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.2"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#4D5963",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Error
+                </Text>
+              </View>
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.3"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#4D5963",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Readonly
+                </Text>
+              </View>
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onLayout={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                  }
+                }
+                testID="undefined.4"
+              >
+                <Text
+                  fsTagName="unmasked"
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      undefined,
+                      {
+                        "color": "#4D5963",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Disable
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              {},
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            color="#791c96"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#791c96",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Email
+          </Text>
+        </View>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {},
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter valid email"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validate="email"
+              validateOnBlur={true}
+              validateOnChange={true}
+              validationMessage="Email is invalid"
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <Text
+        h3={true}
+        marginB-s3={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 12,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Dynamic Field Style
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              {},
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Email
+          </Text>
+        </View>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {},
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  {
+                    "borderBottomColor": "#D2D6D8",
+                  },
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter valid email"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validate="email"
+              validateOnBlur={true}
+              validateOnChange={true}
+              validationMessage="Email is invalid"
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <Text
+        h3={true}
+        marginB-s3={true}
+        marginT-s4={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 12,
+              "marginTop": 16,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Formatter
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Price
+          </Text>
+        </View>
+        <View
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                undefined,
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <Text
+            $textNeutral={true}
+            marginR-s1={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#6E7881",
+                },
+                undefined,
+                undefined,
+                {
+                  "marginRight": 4,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            $
+          </Text>
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Enter price"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    undefined,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validate="number"
+              validateOnBlur={true}
+              validationMessage="Invalid price"
+              value="0"
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <Text
+        h3={true}
+        marginB-3={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            {
+              "marginBottom": 3,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Custom Alignments
+      </Text>
+      <Text
+        $textPrimary={true}
+        marginB-s1={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            {
+              "marginBottom": 4,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Centered:
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            [
+              {},
+              undefined,
+              undefined,
+              {
+                "alignSelf": "center",
+              },
+            ],
+          ]
+        }
+      >
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              {
+                "alignSelf": "center",
+              },
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    {
+                      "textAlign": "center",
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            PIN
+          </Text>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Image
+              marginL-s1={true}
+              source={
+                {
+                  "testUri": "../../../demo/src/assets/icons/info.png",
+                }
+              }
+              style={
+                [
+                  undefined,
+                  {
+                    "marginLeft": 4,
+                  },
+                  {
+                    "height": 16,
+                    "width": 16,
+                  },
+                  undefined,
+                  false,
+                ]
+              }
+            />
+          </View>
+        </View>
+        <View
+          centerH={true}
+          centerV={true}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              [
+                {},
+                [
+                  [
+                    {
+                      "borderBottomColor": "#E8ECF0",
+                      "borderBottomWidth": 1,
+                      "paddingBottom": 8,
+                    },
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ],
+            ]
+          }
+        >
+          <View
+            flexG={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flexGrow": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          >
+            <TextInput
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              editable={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="XXXX"
+              placeholderTextColor="#6E7881"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                    "textAlign": "left",
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                  [
+                    {},
+                    undefined,
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "height": 24,
+                      "lineHeight": undefined,
+                    },
+                    false,
+                  ],
+                  false,
+                ]
+              }
+              underlineColorAndroid="transparent"
+              validate="required"
+              validateOnBlur={true}
+              validationMessage="This field is required"
+            />
+          </View>
+        </View>
+        <View
+          row={true}
+          spread={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text
+            $textDangerLight={true}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#FC3D2F",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "flexShrink": 1,
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    {
+                      "textAlign": "center",
+                    },
+                  ],
+                ],
+              ]
+            }
+            testID="undefined.validationMessage"
+          />
+        </View>
+      </View>
+      <Text
+        $textPrimary={true}
+        marginB-s1={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            {
+              "marginBottom": 4,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Inline:
+      </Text>
+      <View
+        row={true}
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {},
+            {},
+            {
+              "flexDirection": "row",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ],
+            ]
+          }
+        >
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          />
+          <View
+            centerV={true}
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                [
+                  undefined,
+                  [
+                    [
+                      {
+                        "borderBottomColor": "#E8ECF0",
+                        "borderBottomWidth": 1,
+                        "paddingBottom": 8,
+                      },
+                      undefined,
+                    ],
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              flexG={true}
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "flexGrow": 1,
+                  },
+                  undefined,
+                  {},
+                  {},
+                  {},
+                  undefined,
+                ]
+              }
+            >
+              <TextInput
+                accessibilityState={
+                  {
+                    "disabled": false,
+                  }
+                }
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="hours"
+                placeholderTextColor="#6E7881"
+                style={
+                  [
+                    {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    {
+                      "color": "#20303C",
+                    },
+                    [
+                      {},
+                      undefined,
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "height": 24,
+                        "lineHeight": undefined,
+                      },
+                      false,
+                    ],
+                    false,
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                validateOnBlur={true}
+              />
+            </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+        </View>
+        <Text
+          marginH-s1={true}
+          marginT-s1={true}
+          marginT-s2={false}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "color": "#20303C",
+                "writingDirection": "ltr",
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "marginHorizontal": 4,
+                "marginTop": 4,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          :
+        </Text>
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ],
+            ]
+          }
+        >
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          />
+          <View
+            centerV={true}
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                [
+                  undefined,
+                  [
+                    [
+                      {
+                        "borderBottomColor": "#E8ECF0",
+                        "borderBottomWidth": 1,
+                        "paddingBottom": 8,
+                      },
+                      undefined,
+                    ],
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              flexG={true}
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "flexGrow": 1,
+                  },
+                  undefined,
+                  {},
+                  {},
+                  {},
+                  undefined,
+                ]
+              }
+            >
+              <TextInput
+                accessibilityState={
+                  {
+                    "disabled": false,
+                  }
+                }
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="minutes"
+                placeholderTextColor="#6E7881"
+                style={
+                  [
+                    {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    {
+                      "color": "#20303C",
+                    },
+                    [
+                      {},
+                      undefined,
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "height": 24,
+                        "lineHeight": undefined,
+                      },
+                      false,
+                    ],
+                    false,
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                validateOnBlur={true}
+              />
+            </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <KeyboardTrackingViewTemp
+      pointerEvents="none"
+      scrollToFocusedInput={true}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "height": 0.5,
+            "left": 0,
+            "position": "absolute",
+            "width": 750,
+          },
+          {
+            "height": 0.5,
+          },
+        ]
+      }
+      useSafeArea={false}
+    />
+  </View>
+</RCTScrollView>
+`;
