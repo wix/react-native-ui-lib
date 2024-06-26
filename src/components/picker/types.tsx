@@ -101,6 +101,12 @@ export type PickerPropsDeprecation = {
    * instead pass modalProps via customPickerProps.modalProps
    */
   pickerModalProps?: ExpandableOverlayProps['modalProps'];
+  /**
+   * @deprecated
+   * Custom container style
+   * instead use inputContainerStyle
+   */
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 type PickerSearchProps = {
@@ -219,7 +225,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
     /**
      * Custom picker input container style
      */
-    containerStyle?: StyleProp<ViewStyle>;
+    inputContainerStyle?: StyleProp<ViewStyle>;
     /**
      * Data source for Picker
      */
