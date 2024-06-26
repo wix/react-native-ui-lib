@@ -231,7 +231,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         searchPlaceholder={searchPlaceholder}
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
-        renderCustomDialogHeader={renderCustomDialogHeader}
+        renderCustomOverlayHeader={renderCustomDialogHeader}
         listProps={listProps}
         useSafeArea={useSafeArea}
       >

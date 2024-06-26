@@ -74,6 +74,12 @@ export type PickerPropsDeprecation = {
    * @deprecated
    */
   children?: ReactNode | undefined;
+  /**
+   * @deprecated
+   * Render a custom header for Picker's dialog
+   * instead use renderCustomOverlayHeader
+   */
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
 };
 
 type PickerSearchProps = {
@@ -100,7 +106,7 @@ type PickerSearchProps = {
 };
 
 export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & 
-PickerSearchProps & {
+PickerSearchProps & PickerPropsDeprecation & {
   /* ...TextField.propTypes, */
   /**
    * Use dialog instead of modal picker
@@ -165,9 +171,9 @@ PickerSearchProps & {
    */
   topBarProps?: ModalTopBarProps;
   /**
-   * Render a custom header for Picker's dialog
+   * Render a custom header for Picker's Overlay
    */
-  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
+  renderCustomOverlayHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
    * Use wheel picker instead of a list picker
    */
@@ -210,7 +216,7 @@ export type PickerPropsWithMulti = PickerBaseProps & {
   onChange?: (value: PickerMultiValue) => void;
 };
 
-export type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti) & PickerPropsDeprecation;
+export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**
@@ -279,7 +285,7 @@ export type PickerItemsListProps = Pick<
   | 'searchPlaceholder'
   | 'onSearchChange'
   | 'renderCustomSearch'
-  | 'renderCustomDialogHeader'
+  | 'renderCustomOverlayHeader'
   | 'useSafeArea'
   | 'useWheelPicker'
   | 'useDialog'
