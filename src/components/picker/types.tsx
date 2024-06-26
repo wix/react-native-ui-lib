@@ -1,7 +1,7 @@
 import React, {PropsWithChildren, ReactNode} from 'react';
 import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
-import {ModalTopBarProps} from '../modal/TopBar';
+import {ModalProps, ModalTopBarProps} from '../../components/modal';
 // TODO: Replace with new TextField Props after migration to new TextField has completed
 // import {TextFieldProps} from '../../../typings/components/Inputs';
 import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../textField';
@@ -193,7 +193,7 @@ PickerSearchProps & PickerPropsDeprecation & {
   /**
    * Pass props to the picker modal
    */
-  pickerModalProps?: object;
+  pickerModalProps?: ModalProps;
   /**
    * Custom container style
    */
