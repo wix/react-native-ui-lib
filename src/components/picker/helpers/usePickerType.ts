@@ -50,10 +50,11 @@ const usePickerType = (props: PickerProps) => {
       case PickerTypes.WheelPicker:
         componentProps.headerProps = props.headerProps;
         componentProps.dialogProps =
-          {
+          (componentProps.headerProps && {
             ...props?.customPickerProps?.dialogProps,
             headerProps: props.headerProps
-          } || DIALOG_PROPS;
+          }) ||
+          DIALOG_PROPS;
         break;
       case PickerTypes.Custom:
         componentProps.customModal = props.renderCustomModal;
