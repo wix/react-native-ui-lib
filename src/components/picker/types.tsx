@@ -76,7 +76,31 @@ export type PickerPropsDeprecation = {
   children?: ReactNode | undefined;
 };
 
-export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
+type PickerSearchProps = {
+  /**
+   * Show search input to filter picker items by label
+   */
+  showSearch?: boolean;
+  /**
+   * Style object for the search input (only when passing showSearch)
+   */
+  searchStyle?: PickerSearchStyle;
+  /**
+   * Placeholder text for the search input (only when passing showSearch)
+   */
+  searchPlaceholder?: string;
+  /**
+   * callback for picker modal search input text change (only when passing showSearch)
+   */
+  onSearchChange?: (searchValue: string, filteredChildren?: ReactNode | undefined) => void;
+  /**
+   * Render custom search input (only when passing showSearch)
+   */
+  renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
+};
+
+export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & 
+PickerSearchProps & {
   /* ...TextField.propTypes, */
   /**
    * Use dialog instead of modal picker
@@ -140,26 +164,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * The picker modal top bar props
    */
   topBarProps?: ModalTopBarProps;
-  /**
-   * Show search input to filter picker items by label
-   */
-  showSearch?: boolean;
-  /**
-   * Style object for the search input (only when passing showSearch)
-   */
-  searchStyle?: PickerSearchStyle;
-  /**
-   * Placeholder text for the search input (only when passing showSearch)
-   */
-  searchPlaceholder?: string;
-  /**
-   * callback for picker modal search input text change (only when passing showSearch)
-   */
-  onSearchChange?: (searchValue: string, filteredChildren?: ReactNode | undefined) => void;
-  /**
-   * Render custom search input (only when passing showSearch)
-   */
-  renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
   /**
    * Render a custom header for Picker's dialog
    */
