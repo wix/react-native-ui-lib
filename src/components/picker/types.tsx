@@ -28,7 +28,7 @@ export enum PickerTypes {
   Custom = 'custom'
 }
 
-export type PickerModeBooleans = {
+export type PickerTypesBooleans = {
   [key in PickerTypes]: boolean;
 };
 
@@ -366,7 +366,7 @@ export type PickerItemsListProps = Pick<
 > &
   Pick<PickerPropsDeprecation, 'topBarProps' | 'children'> & {
     items?: {value: any; label: any}[];
-    type: PickerModeBooleans;
+    type: PickerTypesBooleans;
   };
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;
