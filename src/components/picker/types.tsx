@@ -80,6 +80,14 @@ export type PickerPropsDeprecation = {
    * instead use renderCustomOverlayHeader
    */
   renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
+  /**
+   * @deprecated
+   * Render custom picker - input will be value (see above)
+   * Example:
+   * renderPicker = (selectedItem) => {...}
+   * instead use renderInput
+   */
+  renderPicker?: RenderPicker;
 };
 
 type PickerSearchProps = {
@@ -137,11 +145,11 @@ PickerSearchProps & PickerPropsDeprecation & {
    */
   enableModalBlur?: boolean;
   /**
-   * Render custom picker - input will be value (see above)
+   * Render custom picker input
    * Example:
-   * renderPicker = (selectedItem) => {...}
+   * renderInput = (selectedItem) => {...}
    */
-  renderPicker?: RenderPicker;
+  renderInput?: RenderPicker;
   /**
    * Render custom picker item
    */

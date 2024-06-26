@@ -200,7 +200,7 @@ export default class PickerScreen extends Component {
           <Picker
             value={this.state.filter}
             onChange={filter => this.setState({filter})}
-            renderPicker={(_value?: any, label?: string) => {
+            renderInput={(_value?: any, label?: string) => {
               return (
                 <View row>
                   <Icon
@@ -225,7 +225,7 @@ export default class PickerScreen extends Component {
             onChange={contact => {
               this.setState({contact});
             }}
-            renderPicker={(contactValue?: number) => {
+            renderInput={(contactValue?: number) => {
               const contact = contacts[contactValue!] ?? undefined;
               return (
                 <View row>
