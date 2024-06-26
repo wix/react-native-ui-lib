@@ -48,17 +48,40 @@ export interface PickerSearchStyle {
   selectionColor?: string;
 }
 
+export type PickerPropsDeprecation = {
+  /**
+   * @deprecated
+   * Temporary prop required for migration to Picker's new API
+   */
+  migrate?: boolean;
+  /**
+   * @deprecated
+   * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
+   */
+  getItemValue?: (value: PickerValue) => any;
+  /**
+   * @deprecated
+   * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
+   */
+  getItemLabel?: (value: PickerValue) => string;
+  /**
+   * @deprecated
+   * Callback for modal onShow event
+   * Instead pass onShow via pickerModalProps
+   */
+  onShow?: () => void;
+  /**
+   * @deprecated
+   */
+  children?: ReactNode | undefined;
+};
+
 export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /* ...TextField.propTypes, */
   /**
    * Use dialog instead of modal picker
    */
   useDialog?: boolean;
-  /**
-   * @deprecated
-   * Temporary prop required for migration to Picker's new API
-   */
-  migrate?: boolean;
   /**
    * Pass for different field type UI (form, filter or settings)
    */
@@ -110,16 +133,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   onPress?: () => void;
   /**
-   * @deprecated
-   * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemValue?: (value: PickerValue) => any;
-  /**
-   * @deprecated
-   * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemLabel?: (value: PickerValue) => string;
-  /**
    * A function that returns the label to show for the selected Picker value
    */
   getLabel?: (value: PickerValue) => string;
@@ -150,7 +163,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
   /**
    * Render a custom header for Picker's dialog
    */
-  renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
    * Use wheel picker instead of a list picker
    */
@@ -168,11 +181,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   containerStyle?: StyleProp<ViewStyle>;
   /**
-   * @deprecated
-   * Callback for modal onShow event
-   */
-  onShow?: () => void;
-  /**
    * Add safe area in the Picker modal view
    */
   useSafeArea?: boolean;
@@ -184,10 +192,6 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Component test id
    */
   testID?: string;
-  /**
-   * @deprecated
-   */
-  children?: ReactNode | undefined;
 };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
@@ -202,7 +206,7 @@ export type PickerPropsWithMulti = PickerBaseProps & {
   onChange?: (value: PickerMultiValue) => void;
 };
 
-export type PickerProps = PickerPropsWithSingle | PickerPropsWithMulti;
+export type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti) & PickerPropsDeprecation;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**
@@ -224,7 +228,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   /**
    * @deprecated Function to return the value out of the item value prop when value is custom shaped.
    */
-  getItemValue?: PickerProps['getItemValue'];
+  getItemValue?: PickerPropsDeprecation['getItemValue'];
   /**
    * Render custom item
    */
