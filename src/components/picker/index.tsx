@@ -18,6 +18,7 @@ import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
 import useFieldType from './helpers/useFieldType';
+import useNewPickerProps from './helpers/useNewPickerProps';
 // import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
 import {extractPickerItems} from './PickerPresenter';
 import {
@@ -55,22 +56,14 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchStyle,
     searchPlaceholder,
     renderCustomSearch,
-    renderCustomDialogHeader,
     useWheelPicker,
     useDialog,
-    renderPicker,
-    customPickerProps,
-    containerStyle,
     labelStyle,
     testID,
     onChange,
     onPress,
-    onShow,
     onSearchChange,
-    renderCustomModal,
-    enableModalBlur,
     topBarProps,
-    pickerModalProps,
     listProps,
     value,
     getLabel,
@@ -87,6 +80,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     ...others
   } = themeProps;
   const {preset} = others;
+  const {renderCustomOverlayHeader, renderInput, renderPickerOverlay, customPickerProps, inputContainerStyle} =
+    useNewPickerProps(themeProps);
 
   const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
@@ -173,15 +168,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     onDoneSelecting
   ]);
 
-  const modalProps: ExpandableOverlayProps['modalProps'] = {
-    animationType: 'slide',
-    transparent: Constants.isIOS && enableModalBlur,
-    enableModalBlur: Constants.isIOS && enableModalBlur,
-    onRequestClose: topBarProps?.onCancel,
-    onShow,
-    ...pickerModalProps
-  };
-
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
     return <PickerItem key={`${index}-${item.value}`} {...item}/>;
   }, []);
@@ -191,12 +177,12 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   },
   [renderPickerItem]);
 
-  const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
+  const _renderPickerOverlay: ExpandableOverlayProps['renderCustomOverlay'] = ({
     visible,
     closeExpandable,
     toggleExpandable
   }) => {
-    if (renderCustomModal) {
+    if (renderPickerOverlay) {
       const modalProps = {
         visible,
         closeModal: closeExpandable,
@@ -208,7 +194,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         onCancel: cancelSelect
       };
 
-      return renderCustomModal(modalProps);
+      return renderPickerOverlay(modalProps);
     }
   };
 
@@ -231,7 +217,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         searchPlaceholder={searchPlaceholder}
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
-        renderCustomOverlayHeader={renderCustomDialogHeader}
+        renderCustomOverlayHeader={renderCustomOverlayHeader}
         listProps={listProps}
         useSafeArea={useSafeArea}
       >
@@ -252,7 +238,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchPlaceholder,
     _onSearchChange,
     renderCustomSearch,
-    renderCustomDialogHeader,
+    renderCustomOverlayHeader,
     listProps,
     filteredChildren,
     useSafeArea,
@@ -264,22 +250,20 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     //TODO : fix the ExpandableOverlay ts error
     <PickerContext.Provider value={contextValue}>
       {
-        /* @ts-expect-error */
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
-          modalProps={modalProps}
-          dialogProps={customPickerProps?.dialogProps || DIALOG_PROPS}
+          dialogProps={DIALOG_PROPS}
           expandableContent={expandableModalContent}
-          renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
+          renderCustomOverlay={renderPickerOverlay ? _renderPickerOverlay : undefined}
           onPress={onPress}
           testID={testID}
           {...customPickerProps}
           disabled={themeProps.editable === false}
         >
-          {renderPicker ? (
+          {renderInput ? (
             // @ts-expect-error - hopefully will be solved after the picker migration ends
-            renderPicker(value, label)
+            renderInput(value, label)
           ) : (
             <TextField
               // @ts-expect-error
@@ -288,7 +272,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
               {...propsByFieldType}
               testID={`${testID}.input`}
               // @ts-expect-error
-              containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
+              containerStyle={[inputContainerStyle, propsByFieldType?.containerStyle]}
               labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
               {...accessibilityInfo}
               importantForAccessibility={'no-hide-descendants'}
