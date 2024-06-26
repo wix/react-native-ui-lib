@@ -62,6 +62,7 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     labelStyle,
     testID,
     onChange,
+    onCancel,
     onPress,
     onSearchChange,
     listProps,
@@ -104,13 +105,15 @@ const Picker = React.forwardRef((props: PickerProps & PickerPropsDeprecation, re
     setSearchValue,
     onSearchChange: _onSearchChange
   } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
+  //TODO: remove topBarProps passing to usePickerSelection after migration is completed
   const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
     migrate,
     value,
     onChange,
+    onCancel,
     pickerExpandableRef: pickerExpandable,
+    topBarProps: componentProps.headerProps,
     getItemValue,
-    headerProps: type.modal && componentProps.headerProps,
     setSearchValue,
     mode
   });

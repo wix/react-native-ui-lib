@@ -101,7 +101,7 @@ export interface ModalPickerProps {
   /**
    * Picker header props depends on the picker type - ModalTopBarProps in case of Modal
    */
-  headerProps?: ModalTopBarProps;
+  headerProps?: Omit<ModalTopBarProps, 'onCancel'>;
   modalProps?: ExpandableOverlayProps['modalProps'];
 }
 
@@ -183,6 +183,10 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Callback for when picker value change
    */
   onChange?: (value: PickerValue) => void;
+  /**
+   * cancel action callback
+   */
+  onCancel?: ModalTopBarProps['onCancel'];
   /**
    * SINGLE mode or MULTI mode
    */
