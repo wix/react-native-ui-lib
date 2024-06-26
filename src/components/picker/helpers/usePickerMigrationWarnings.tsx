@@ -1,10 +1,10 @@
 import {useEffect} from 'react';
 import {LogService} from '../../../services';
-import {PickerProps} from '../types';
+import {PickerPropsDeprecation} from '../types';
 
 // TODO: Remove this whole file when migration is completed
 type UsePickerMigrationWarnings = Pick<
-  PickerProps,
+PickerPropsDeprecation,
   'children' | 'migrate' | 'getItemLabel' | 'getItemValue' | 'onShow'
 >;
 

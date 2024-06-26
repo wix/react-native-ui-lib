@@ -1,10 +1,11 @@
 import {useCallback, useState, useMemo} from 'react';
 import _ from 'lodash';
-import {PickerProps} from '../types';
+import {PickerProps, PickerPropsDeprecation} from '../types';
 import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from '../PickerPresenter';
 
-type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel'>;
-
+type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange'> &
+  Pick<PickerPropsDeprecation, 'children' | 'getItemLabel'>;
+  
 const usePickerSearch = (props: UsePickerSearchProps) => {
   const {showSearch, onSearchChange, children, getItemLabel} = props;
   const [searchValue, setSearchValue] = useState('');

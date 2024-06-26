@@ -18,7 +18,6 @@ const keyExtractor = (_item: string, index: number) => index.toString();
 
 const PickerItemsList = (props: PickerItemsListProps) => {
   const {
-    useWheelPicker,
     topBarProps,
     listProps,
     children,
@@ -30,7 +29,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     renderCustomSearch,
     renderCustomDialogHeader,
     useSafeArea,
-    useDialog,
+    type,
     mode,
     testID
   } = props;
@@ -42,7 +41,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     const shouldFlex = true;
     const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
     return style;
-  }, [/* useDialog */]);
+  }, []);
 
   const renderSearchInput = () => {
     if (showSearch) {
@@ -149,14 +148,14 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   const renderPickerHeader = () => {
     if (renderCustomDialogHeader) {
       return renderCustomDialogHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
-    } else if (!useDialog || mode === PickerModes.MULTI) {
+    } else if (!type.dialog || mode === PickerModes.MULTI) {
       return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
     }
   };
 
   return (
     <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
-      {!useWheelPicker && (
+      {!type.wheelPicker && (
         <>
           {renderPickerHeader()}
           {renderSearchInput()}
@@ -164,7 +163,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         </>
       )}
 
-      {useWheelPicker && renderWheel()}
+      {type.wheelPicker && renderWheel()}
     </View>
   );
 };

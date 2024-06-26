@@ -134,7 +134,9 @@ export default class PickerScreen extends Component {
             value={this.state.language}
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
-            topBarProps={{title: 'Languages'}}
+            // topBarProps={{title: 'Languages'}}
+            headerProps={{title: 'Languages'}}
+            pickerType="modal"
             // style={{color: Colors.red20}}
             showSearch
             searchPlaceholder={'Search a language'}
@@ -147,6 +149,7 @@ export default class PickerScreen extends Component {
             placeholder="Favorite Languages (up to 3)"
             value={this.state.languages}
             onChange={items => this.setState({languages: items})}
+            pickerType="modal"
             mode={Picker.modes.MULTI}
             selectionLimit={3}
             trailingAccessory={dropdownIcon}
@@ -156,7 +159,8 @@ export default class PickerScreen extends Component {
           <Picker
             label="Wheel Picker"
             placeholder="Pick a Language"
-            useWheelPicker
+            // useWheelPicker
+            pickerType="wheelPicker"
             value={this.state.wheelPickerValue}
             onChange={wheelPickerValue => this.setState({wheelPickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
@@ -171,6 +175,7 @@ export default class PickerScreen extends Component {
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
             renderCustomModal={this.renderDialog}
+            pickerType="custom"
             items={options}
           />
 
@@ -181,15 +186,19 @@ export default class PickerScreen extends Component {
             value={this.state.option}
             enableModalBlur={false}
             onChange={item => this.setState({option: item})}
-            topBarProps={{title: 'Languages'}}
-            useDialog
+            // useDialog
+            headerProps={{title: 'Dialog Picker'}}
+            pickerType="dialog"
             renderCustomDialogHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
                 <Button link label="Cancel" onPress={onCancel}/>
                 <Button link label="Done" onPress={onDone}/>
               </View>
             )}
-            customPickerProps={{migrateDialog: true, dialogProps: {bottom: true, width: '100%', height: '45%'}}}
+            customPickerProps={{
+              migrateDialog: true,
+              dialogProps: {bottom: true, width: '100%', height: '45%'}
+            }}
             showSearch
             searchPlaceholder={'Search a language'}
             items={dialogOptions}

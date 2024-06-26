@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
-import {PickerProps, PickerSingleValue, PickerValue} from './types';
+import {PickerProps, PickerSingleValue, PickerValue, PickerPropsDeprecation} from './types';
 
-export function extractPickerItems(props: PickerProps) {
+export function extractPickerItems(props: PickerProps & PickerPropsDeprecation) {
   const {children} = props;
   const items = React.Children.map(children, child => ({
     // @ts-expect-error handle use PickerItemProps once exist
@@ -37,7 +37,7 @@ export function isItemSelected(childValue: PickerSingleValue, selectedValue?: Pi
 //   return _.invoke(props, 'getItemValue', props.value) || _.get(props.value, 'value');
 // }
 
-export function getItemLabel(label: string, value: PickerValue, getItemLabel: PickerProps['getItemLabel']) {
+export function getItemLabel(label: string, value: PickerValue, getItemLabel: PickerPropsDeprecation['getItemLabel']) {
   if (_.isObject(value)) {
     if (getItemLabel) {
       return getItemLabel(value);

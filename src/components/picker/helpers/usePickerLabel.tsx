@@ -1,14 +1,14 @@
 import {useCallback, useMemo} from 'react';
 import _ from 'lodash';
-import {PickerProps, PickerValue} from '../types';
+import {PickerProps, PickerValue, PickerPropsDeprecation} from '../types';
 
-interface UsePickerLabelProps
-  extends Pick<
-    PickerProps,
-    'value' | 'getLabel' | 'getItemLabel' | 'placeholder' | 'accessibilityLabel' | 'accessibilityHint'
-  > {
-  items: {value: string | number; label: string}[] | null | undefined;
-}
+type UsePickerLabelProps = Pick<
+  PickerProps,
+  'value' | 'getLabel' | 'placeholder' | 'accessibilityLabel' | 'accessibilityHint'
+> &
+  Pick<PickerPropsDeprecation, 'getItemLabel'> & {
+    items: {value: string | number; label: string}[] | null | undefined;
+  };
 
 const usePickerLabel = (props: UsePickerLabelProps) => {
   const {value, items, getLabel, getItemLabel, placeholder, accessibilityLabel, accessibilityHint} = props;

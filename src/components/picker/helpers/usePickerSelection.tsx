@@ -1,15 +1,23 @@
 import {RefObject, useCallback, useState, useEffect} from 'react';
 import _ from 'lodash';
-import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
+import {
+  PickerProps,
+  PickerValue,
+  PickerSingleValue,
+  PickerMultiValue,
+  PickerModes,
+  PickerPropsDeprecation
+} from '../types';
 
-interface UsePickerSelectionProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
-  pickerExpandableRef: RefObject<any>;
-  setSearchValue: (searchValue: string) => void;
-}
+type UsePickerSelectionProps = Pick<PickerProps, 'value' | 'onChange' | 'mode' | 'onCancel'> &
+  Pick<PickerPropsDeprecation, 'migrate' | 'getItemValue' | 'topBarProps'> & {
+    pickerExpandableRef: RefObject<any>;
+    setSearchValue: (searchValue: string) => void;
+  };
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
-  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} = props;
+  const {migrate, value, onChange, onCancel, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} =
+    props;
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
 
@@ -45,8 +53,12 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     setSearchValue('');
     setMultiDraftValue(multiFinalValue);
     pickerExpandableRef.current?.closeExpandable?.();
-    topBarProps?.onCancel?.();
-  }, [multiFinalValue, topBarProps]);
+    if (onCancel) {
+      onCancel();
+    } else {
+      topBarProps?.onCancel?.();
+    }
+  }, [multiFinalValue, topBarProps, onCancel, setSearchValue, pickerExpandableRef]);
 
   return {
     multiDraftValue,
