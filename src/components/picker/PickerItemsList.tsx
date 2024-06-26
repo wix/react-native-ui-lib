@@ -28,7 +28,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     searchPlaceholder = 'Search...',
     onSearchChange,
     renderCustomSearch,
-    renderCustomDialogHeader,
+    renderCustomOverlayHeader,
     useSafeArea,
     useDialog,
     mode,
@@ -147,8 +147,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   const renderPickerHeader = () => {
-    if (renderCustomDialogHeader) {
-      return renderCustomDialogHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
+    if (renderCustomOverlayHeader) {
+      return renderCustomOverlayHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
     } else if (!useDialog || mode === PickerModes.MULTI) {
       return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
     }
