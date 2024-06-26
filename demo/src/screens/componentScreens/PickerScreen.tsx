@@ -183,7 +183,7 @@ export default class PickerScreen extends Component {
             onChange={item => this.setState({option: item})}
             topBarProps={{title: 'Languages'}}
             useDialog
-            renderCustomOverlayHeader={({onDone, onCancel}) => (
+            renderCustomDialogHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
                 <Button link label="Cancel" onPress={onCancel}/>
                 <Button link label="Done" onPress={onDone}/>
