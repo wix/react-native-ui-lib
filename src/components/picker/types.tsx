@@ -67,11 +67,12 @@ export type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Callback for modal onShow event
-   * Instead pass onShow via pickerModalProps
+   * Instead pass onShow via customPickerProps.modalProp | pickerModalProps
    */
   onShow?: () => void;
   /**
    * @deprecated
+   * instead pass items
    */
   children?: ReactNode | undefined;
   /**
