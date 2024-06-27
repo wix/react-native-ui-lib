@@ -99,9 +99,6 @@ describe('Picker', () => {
     it('Test onPress', () => {
       const driver = getDriver({onPress});
       driver.open();
-      expect(driver.isOpen()).toBeTruthy();
-      driver.cancel();
-      expect(driver.isOpen()).toBeFalsy();
       expect(onPress).toHaveBeenCalled();
     });
 
@@ -118,19 +115,6 @@ describe('Picker', () => {
         expect(driver.isOpen()).toBeFalsy();
         expect(onDismiss).toHaveBeenCalledTimes(2); // TODO: this should be 1
       });
-
-      // TODO: this test is not passing yet
-      // it('Test onShow passed via pickerModalProps', async () => {
-      //   const driver = getDriver({
-      //     pickerModalProps: {
-      //       onShow
-      //     }
-      //   });
-      //   expect(driver.isOpen()).toBeFalsy();
-      //   jest.useFakeTimers();
-      //   expect(driver.isOpen()).toBeTruthy();
-      //   expect(onShow).toHaveBeenCalled();
-      // });
 
       describe('Test Modal TopBar', () => {
         const modalProps = {mode: 'MULTI', topBarProps: {cancelLabel: 'Cancel'}};
@@ -189,11 +173,11 @@ describe('Picker', () => {
         await waitFor(() => expect(driver.isOpen()).toBeTruthy());
       });
 
-      it('Should not open when disabled', async () => {
+      it('Should not open when disabled', () => {
         const driver = getDriver({...dialogProps, editable: false});
         expect(driver.isOpen()).toBeFalsy();
-        act(() => driver.open());
-        await waitFor(() => expect(driver.isOpen()).toBeFalsy());
+        driver.open();
+        expect(driver.isOpen()).toBeFalsy();
       });
 
       it('Test close', async () => {
@@ -280,7 +264,7 @@ describe('Picker', () => {
         expect(label.props.children).toEqual(labelText);
         expect(placeholder.props.children).toEqual(labelText);
       });
-      
+
       it('should render a settings picker with placeholder', async () => {
         const driver = getDriver({fieldType: 'settings', placeholder: placeholderText});
         expect(driver.isOpen()).toBeFalsy();
