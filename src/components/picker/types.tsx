@@ -124,21 +124,6 @@ type PickerSearchProps = {
   renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
 };
 
-type PickerExpandableOverlayProps = {
-  /**
-   * Custom picker overlay props
-   */
-  customPickerProps?: ExpandableOverlayProps;
-  /**
-   * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
-   */
-  renderOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement;
-  /**
-   * Add blur effect to picker modal (iOS only)
-   */
-  enableModalBlur?: boolean;
-};
-
 type PickerListProps = PickerSearchProps & {
   /**
    * Render a custom header for Picker's Overlay
@@ -156,6 +141,21 @@ type PickerListProps = PickerSearchProps & {
    * Add safe area in the Picker modal view
    */
   useSafeArea?: boolean;
+};
+
+type PickerExpandableOverlayProps = {
+  /**
+   * Custom picker overlay props
+   */
+  customPickerProps?: ExpandableOverlayProps;
+  /**
+   * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
+   */
+  renderOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  /**
+   * Add blur effect to picker modal (iOS only)
+   */
+  enableModalBlur?: boolean;
 };
 
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
@@ -302,14 +302,14 @@ export type PickerItemsListProps = Pick<
   PropsWithChildren<PickerProps>,
   | 'topBarProps'
   | 'listProps'
-  | 'children'
+  | 'renderHeader'
+  | 'useSafeArea'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
   | 'onSearchChange'
   | 'renderCustomSearch'
-  | 'renderHeader'
-  | 'useSafeArea'
+  | 'children'
   | 'useWheelPicker'
   | 'useDialog'
   | 'mode'
