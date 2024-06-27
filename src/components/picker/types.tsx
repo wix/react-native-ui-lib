@@ -65,7 +65,7 @@ export type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Callback for modal onShow event
-   * Instead pass onShow via customPickerProps.modalProp | pickerModalProps
+   * Instead pass onShow via customPickerProps.modalProps.onShow
    */
   onShow?: () => void;
   /**
