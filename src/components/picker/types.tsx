@@ -46,7 +46,7 @@ export interface PickerSearchStyle {
   selectionColor?: string;
 }
 
-export type PickerPropsDeprecation = {
+type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Temporary prop required for migration to Picker's new API
@@ -172,7 +172,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     useWheelPicker?: boolean;
     /**
-     * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
+     * Picker value
      */
     value?: PickerValue;
     /**
@@ -261,7 +261,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   /**
    * @deprecated Function to return the value out of the item value prop when value is custom shaped.
    */
-  getItemValue?: PickerPropsDeprecation['getItemValue'];
+  getItemValue?: PickerProps['getItemValue'];
   /**
    * Render custom item
    */
@@ -310,11 +310,13 @@ export type PickerItemsListProps = Pick<
   | 'onSearchChange'
   | 'renderCustomSearch'
   | 'children'
-  | 'items'
   | 'useWheelPicker'
   | 'useDialog'
   | 'mode'
   | 'testID'
->;
+> & {
+  //TODO: after finish Picker props migration, items should be taken from PickerProps
+  items?: {value: any; label: any}[];
+};
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;

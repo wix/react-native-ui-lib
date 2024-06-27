@@ -35,7 +35,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     testID
   } = props;
   const context = useContext(PickerContext);
-  //@ts-expect-error
+
   const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0].value);
   // TODO: Might not need this memoized style, instead we can move it to a stylesheet
   const wrapperContainerStyle = useMemo(() => {
