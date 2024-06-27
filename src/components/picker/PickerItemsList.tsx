@@ -3,13 +3,12 @@ import React, {useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet, FlatList, TextInput, ListRenderItemInfo} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
-import Modal from '../modal';
 import View from '../view';
 import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
-import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
+import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';
@@ -30,8 +29,6 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     renderCustomSearch,
     renderHeader,
     useSafeArea,
-    useDialog,
-    mode,
     testID
   } = props;
   const context = useContext(PickerContext);
@@ -42,7 +39,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     const shouldFlex = true;
     const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
     return style;
-  }, [/* useDialog */]);
+  }, []);
 
   const renderSearchInput = () => {
     if (showSearch) {
@@ -147,11 +144,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   const renderPickerHeader = () => {
-    if (renderHeader) {
-      return renderHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
-    } else if (!useDialog || mode === PickerModes.MULTI) {
-      return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
-    }
+    return renderHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
   };
 
   return (
