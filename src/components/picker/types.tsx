@@ -76,7 +76,7 @@ export type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Render a custom header for Picker's dialog
-   * instead use renderCustomOverlayHeader
+   * instead use renderHeader
    */
   renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
