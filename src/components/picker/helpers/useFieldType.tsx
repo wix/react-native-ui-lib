@@ -8,13 +8,13 @@ import {Typography} from '../../../style';
 
 type UseFieldTypeProps = Pick<
   PickerProps,
-  'fieldType' | 'preset' | 'trailingAccessory' | 'label' | 'placeholder' | 'style' | 'labelStyle'
+  'fieldType' | 'preset' | 'trailingAccessory' | 'label' | 'placeholder' | 'style' | 'labelStyle' | 'testID'
 >;
 
 const dropdown = require('../assets/dropdown.png');
 
 const useFieldType = (props: UseFieldTypeProps) => {
-  const {fieldType, preset, trailingAccessory, label, placeholder, style, labelStyle} = props;
+  const {fieldType, preset, trailingAccessory, label, placeholder, style, labelStyle, testID} = props;
 
   const propsByFieldType = useMemo(() => {
     if (fieldType === PickerFieldTypes.filter) {
@@ -35,17 +35,17 @@ const useFieldType = (props: UseFieldTypeProps) => {
   const pickerInnerInput = useMemo(() => {
     if (fieldType === PickerFieldTypes.filter) {
       return (
-        <Text text70 numberOfLines={1} style={style}>
+        <Text text70 numberOfLines={1} style={style} testID={`${testID}.filter.type.label`}>
           {_.isEmpty(label) ? placeholder : label}
         </Text>
       );
     } else if (fieldType === PickerFieldTypes.settings) {
       return (
         <View flexG row spread>
-          <Text text70 style={labelStyle}>
+          <Text text70 style={labelStyle} testID={`${testID}.settings.type.label`}>
             {label}
           </Text>
-          <Text text70 $textPrimary style={style}>
+          <Text text70 $textPrimary style={style} testID={`${testID}.settings.type.placeholder`}>
             {_.isEmpty(label) ? placeholder : label}
           </Text>
         </View>

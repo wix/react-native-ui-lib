@@ -6,7 +6,7 @@ import {Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import {Constants, asBaseComponent} from '../../commons/new';
-import {ConnectionStatusBarProps, ConnectionStatusBarState, DEFAULT_PROPS} from './Types';
+import {ConnectionStatusBarProps, ConnectionStatusBarState, DEFAULT_PROPS} from './types';
 export {ConnectionStatusBarProps};
 
 /**

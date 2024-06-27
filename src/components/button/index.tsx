@@ -16,7 +16,7 @@ import {
   Props,
   DEFAULT_PROPS,
   ButtonSizeProp
-} from './ButtonTypes';
+} from './types';
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};

@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, ReactNode} from 'react';
+import {PropsWithChildren, ReactNode} from 'react';
 import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
@@ -46,7 +46,7 @@ export interface PickerSearchStyle {
   selectionColor?: string;
 }
 
-export type PickerPropsDeprecation = {
+type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Temporary prop required for migration to Picker's new API
@@ -65,7 +65,7 @@ export type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Callback for modal onShow event
-   * Instead pass onShow via customPickerProps.modalProp | pickerModalProps
+   * Instead pass onShow via customPickerProps.modalProps.onShow
    */
   onShow?: () => void;
   /**
@@ -76,7 +76,7 @@ export type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Render a custom header for Picker's dialog
-   * instead use renderCustomOverlayHeader
+   * instead use renderHeader
    */
   renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
@@ -90,7 +90,7 @@ export type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
-   * instead use renderPickerOverlay
+   * instead use renderOverlay
    */
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
   /**
@@ -124,21 +124,6 @@ type PickerSearchProps = {
   renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
 };
 
-type PickerExpandableOverlayProps = {
-  /**
-   * Custom picker overlay props
-   */
-  customPickerProps?: ExpandableOverlayProps;
-  /**
-   * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
-   */
-  renderOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement;
-  /**
-   * Add blur effect to picker modal (iOS only)
-   */
-  enableModalBlur?: boolean;
-};
-
 type PickerListProps = PickerSearchProps & {
   /**
    * Render a custom header for Picker's Overlay
@@ -158,6 +143,21 @@ type PickerListProps = PickerSearchProps & {
   useSafeArea?: boolean;
 };
 
+type PickerExpandableOverlayProps = {
+  /**
+   * Custom picker overlay props
+   */
+  customPickerProps?: ExpandableOverlayProps;
+  /**
+   * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
+   */
+  renderOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  /**
+   * Add blur effect to picker modal (iOS only)
+   */
+  enableModalBlur?: boolean;
+};
+
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
   PickerExpandableOverlayProps &
@@ -172,7 +172,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     useWheelPicker?: boolean;
     /**
-     * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
+     * Picker value
      */
     value?: PickerValue;
     /**
@@ -261,7 +261,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   /**
    * @deprecated Function to return the value out of the item value prop when value is custom shaped.
    */
-  getItemValue?: PickerPropsDeprecation['getItemValue'];
+  getItemValue?: PickerProps['getItemValue'];
   /**
    * Render custom item
    */
@@ -302,19 +302,20 @@ export type PickerItemsListProps = Pick<
   PropsWithChildren<PickerProps>,
   | 'topBarProps'
   | 'listProps'
-  | 'children'
+  | 'renderHeader'
+  | 'useSafeArea'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
   | 'onSearchChange'
   | 'renderCustomSearch'
-  | 'renderHeader'
-  | 'useSafeArea'
+  | 'children'
   | 'useWheelPicker'
   | 'useDialog'
   | 'mode'
   | 'testID'
 > & {
+  //TODO: after finish Picker props migration, items should be taken from PickerProps
   items?: {value: any; label: any}[];
 };
 

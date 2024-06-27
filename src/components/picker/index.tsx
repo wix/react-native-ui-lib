@@ -136,7 +136,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     placeholder: themeProps.placeholder
   });
 
-  const {placeholder, style, trailingAccessory} = themeProps;
+  const {placeholder, style, trailingAccessory, label: propsLabel} = themeProps;
   const {propsByFieldType, pickerInnerInput} = useFieldType({
     fieldType,
     preset,
@@ -144,7 +144,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     style,
     placeholder,
     labelStyle,
-    label
+    label: propsLabel,
+    testID
   });
 
   const onSelectedItemLayout = useCallback((event: LayoutChangeEvent) => {
