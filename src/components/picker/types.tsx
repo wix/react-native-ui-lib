@@ -90,7 +90,7 @@ export type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
-   * instead use renderPickerOverlay
+   * instead use renderOverlay
    */
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
   /**
