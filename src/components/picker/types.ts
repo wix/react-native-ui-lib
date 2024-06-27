@@ -2,9 +2,7 @@ import {PropsWithChildren, ReactNode} from 'react';
 import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
-// TODO: Replace with new TextField Props after migration to new TextField has completed
-// import {TextFieldProps} from '../../../typings/components/Inputs';
-import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../textField';
+import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
 // Note: enum values are uppercase due to legacy
@@ -48,67 +46,12 @@ export interface PickerSearchStyle {
   selectionColor?: string;
 }
 
-export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
-  /* ...TextField.propTypes, */
-  /**
-   * Use dialog instead of modal picker
-   */
-  useDialog?: boolean;
+type PickerPropsDeprecation = {
   /**
    * @deprecated
    * Temporary prop required for migration to Picker's new API
    */
   migrate?: boolean;
-  /**
-   * Pass for different field type UI (form, filter or settings)
-   */
-  fieldType?: PickerFieldTypes | `${PickerFieldTypes}`;
-  /**
-   * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
-   */
-  value?: PickerValue;
-  /**
-   * Callback for when picker value change
-   */
-  onChange?: (value: PickerValue) => void;
-  /**
-   * SINGLE mode or MULTI mode
-   */
-  mode?: PickerModes | `${PickerModes}`;
-  /**
-   * Limit the number of selected items
-   */
-  selectionLimit?: number;
-  /**
-   * Adds blur effect to picker modal (iOS only)
-   */
-  enableModalBlur?: boolean;
-  /**
-   * Render custom picker - input will be value (see above)
-   * Example:
-   * renderPicker = (selectedItem) => {...}
-   */
-  renderPicker?: RenderPicker;
-  /**
-   * Render custom picker item
-   */
-  renderItem?: (
-    value: PickerValue,
-    itemProps: PickerItemProps & {isSelected: boolean; isItemDisabled: boolean},
-    label?: string
-  ) => React.ReactElement;
-  /**
-   * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
-   */
-  renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
-  /**
-   * Custom picker props (when using renderPicker, will apply on the button wrapper)
-   */
-  customPickerProps?: ExpandableOverlayProps;
-  /**
-   * Add onPress callback for when pressing the picker
-   */
-  onPress?: () => void;
   /**
    * @deprecated
    * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
@@ -120,13 +63,45 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    */
   getItemLabel?: (value: PickerValue) => string;
   /**
-   * A function that returns the label to show for the selected Picker value
+   * @deprecated
+   * Callback for modal onShow event
+   * Instead pass onShow via customPickerProps.modalProps.onShow
    */
-  getLabel?: (value: PickerValue) => string;
+  onShow?: () => void;
   /**
-   * The picker modal top bar props
+   * @deprecated
+   * instead pass items
    */
-  topBarProps?: ModalTopBarProps;
+  children?: ReactNode | undefined;
+  /**
+   * @deprecated
+   * Render a custom header for Picker's dialog
+   * instead use renderHeader
+   */
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
+  /**
+   * @deprecated
+   * Render custom picker input (the value will be passed)
+   * Example:
+   * renderPicker = (selectedItem) => {...}
+   * instead use renderInput
+   */
+  renderPicker?: RenderPicker;
+  /**
+   * @deprecated
+   * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
+   * instead use renderOverlay
+   */
+  renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  /**
+   * @deprecated
+   * Pass props to the picker modal
+   * instead pass modalProps via customPickerProps.modalProps
+   */
+  pickerModalProps?: ExpandableOverlayProps['modalProps'];
+};
+
+type PickerSearchProps = {
   /**
    * Show search input to filter picker items by label
    */
@@ -147,48 +122,110 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> & {
    * Render custom search input (only when passing showSearch)
    */
   renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
+};
+
+type PickerListProps = PickerSearchProps & {
   /**
-   * Render a custom header for Picker's dialog
+   * Render a custom header for Picker's Overlay
    */
-  renderCustomDialogHeader?: (callbacks: {onDone?: () => void, onCancel?: ()=> void}) => React.ReactElement;
+  renderHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
-   * Use wheel picker instead of a list picker
-   */
-  useWheelPicker?: boolean;
-  /**
-   * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
+   * Pass props to the list component that wraps the picker items (allows to control FlatList behavior)
    */
   listProps?: Partial<FlatListProps<any>>;
   /**
-   * Pass props to the picker modal
+   * The picker modal top bar props
    */
-  pickerModalProps?: object;
-  /**
-   * Custom container style
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * @deprecated
-   * Callback for modal onShow event
-   */
-  onShow?: () => void;
+  topBarProps?: ModalTopBarProps;
   /**
    * Add safe area in the Picker modal view
    */
   useSafeArea?: boolean;
-  /**
-   * Data source for Picker
-   */
-  items?: PickerItemProps[];
-  /**
-   * Component test id
-   */
-  testID?: string;
-  /**
-   * @deprecated
-   */
-  children?: ReactNode | undefined;
 };
+
+type PickerExpandableOverlayProps = {
+  /**
+   * Custom picker overlay props
+   */
+  customPickerProps?: ExpandableOverlayProps;
+  /**
+   * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
+   */
+  renderOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  /**
+   * Add blur effect to picker modal (iOS only)
+   */
+  enableModalBlur?: boolean;
+};
+
+export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
+  PickerPropsDeprecation &
+  PickerExpandableOverlayProps &
+  PickerListProps & {
+    /* ...TextField.propTypes, */
+    /**
+     * Use dialog instead of modal picker
+     */
+    useDialog?: boolean;
+    /**
+     * Use wheel picker instead of a list picker
+     */
+    useWheelPicker?: boolean;
+    /**
+     * Picker value
+     */
+    value?: PickerValue;
+    /**
+     * Callback for when picker value change
+     */
+    onChange?: (value: PickerValue) => void;
+    /**
+     * SINGLE or MULTI selection mode
+     */
+    mode?: PickerModes | `${PickerModes}`;
+    /**
+     * Limit the number of selected items
+     */
+    selectionLimit?: number;
+    /**
+     * Pass for different field type UI (form, filter or settings)
+     */
+    fieldType?: PickerFieldTypes | `${PickerFieldTypes}`;
+    /**
+     * Render custom picker input (the value will be passed)
+     * Example:
+     * renderInput = (selectedItem) => {...}
+     */
+    renderInput?: RenderPicker;
+    /**
+     * Render custom picker item
+     */
+    renderItem?: (
+      value: PickerValue,
+      itemProps: PickerItemProps & {isSelected: boolean; isItemDisabled: boolean},
+      label?: string
+    ) => React.ReactElement;
+    /**
+     * Add onPress callback for when pressing the picker
+     */
+    onPress?: () => void;
+    /**
+     * A function that returns the label to show for the selected Picker value
+     */
+    getLabel?: (value: PickerValue) => string;
+    /**
+     * Custom picker input container style
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Data source for Picker
+     */
+    items?: PickerItemProps[];
+    /**
+     * Component test id
+     */
+    testID?: string;
+  };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
   mode?: PickerModes.SINGLE;
@@ -265,19 +302,20 @@ export type PickerItemsListProps = Pick<
   PropsWithChildren<PickerProps>,
   | 'topBarProps'
   | 'listProps'
-  | 'children'
+  | 'renderHeader'
+  | 'useSafeArea'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
   | 'onSearchChange'
   | 'renderCustomSearch'
-  | 'renderCustomDialogHeader'
-  | 'useSafeArea'
+  | 'children'
   | 'useWheelPicker'
   | 'useDialog'
   | 'mode'
   | 'testID'
 > & {
+  //TODO: after finish Picker props migration, items should be taken from PickerProps
   items?: {value: any; label: any}[];
 };
 
