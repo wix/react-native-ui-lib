@@ -99,12 +99,6 @@ export type PickerPropsDeprecation = {
    * instead pass modalProps via customPickerProps.modalProps
    */
   pickerModalProps?: ExpandableOverlayProps['modalProps'];
-  /**
-   * @deprecated
-   * Custom container style
-   * instead use inputContainerStyle
-   */
-  containerStyle?: StyleProp<ViewStyle>;
 };
 
 type PickerSearchProps = {
