@@ -29,7 +29,7 @@ const getDriver = (props?: any) => {
 
 const onPress = jest.fn();
 const onDismiss = jest.fn();
-// const onShow = jest.fn();
+const onShow = jest.fn();
 
 describe('Picker', () => {
   beforeEach(() => {
@@ -114,6 +114,20 @@ describe('Picker', () => {
         driver.cancel();
         expect(driver.isOpen()).toBeFalsy();
         expect(onDismiss).toHaveBeenCalledTimes(2); // TODO: this should be 1
+      });
+
+      // TODO: this test is not passing yet
+      // The onShow function get's called when the Modal is fully opened, tried to use act and waitFor to wait for fully open but it didn't work
+      it.skip('Test onShow passed via pickerModalProps', async () => {
+        const driver = getDriver({
+          pickerModalProps: {
+            onShow
+          }
+        });
+        expect(driver.isOpen()).toBeFalsy();
+        jest.useFakeTimers();
+        expect(driver.isOpen()).toBeTruthy();
+        expect(onShow).toHaveBeenCalled();
       });
 
       describe('Test Modal TopBar', () => {
