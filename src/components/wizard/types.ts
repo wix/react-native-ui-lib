@@ -1,4 +1,3 @@
-import React from 'react';
 import {ImageProps} from '../image';
 import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 
@@ -92,22 +91,4 @@ export interface WizardProps {
   containerStyle?: StyleProp<ViewStyle>;
   testID?: string;
   children?: React.ReactNode;
-}
-
-// @ts-ignore
-class WizardTypesForDocs extends React.Component<WizardProps> { // eslint-disable-line
-  static displayName = 'Wizard';
-
-  render() {
-    return null;
-  }
-}
-
-// @ts-ignore
-class WizardStepTypesForDocs extends React.Component<WizardStepProps> { // eslint-disable-line
-  static displayName = 'Wizard.Step';
-
-  render() {
-    return null;
-  }
 }
