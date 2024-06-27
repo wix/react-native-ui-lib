@@ -310,12 +310,11 @@ export type PickerItemsListProps = Pick<
   | 'onSearchChange'
   | 'renderCustomSearch'
   | 'children'
+  | 'items'
   | 'useWheelPicker'
   | 'useDialog'
   | 'mode'
   | 'testID'
-> & {
-  items?: {value: any; label: any}[];
-};
+>;
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;
