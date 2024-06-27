@@ -99,7 +99,7 @@ export default class PickerScreen extends Component {
     contact: 0
   };
 
-  renderDialog: PickerProps['renderPickerOverlay'] = (modalProps: RenderCustomModalProps) => {
+  renderDialog: PickerProps['renderOverlay'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
     return (
       <Incubator.Dialog
@@ -170,7 +170,7 @@ export default class PickerScreen extends Component {
             onChange={items => this.setState({customModalValues: items})}
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
-            renderPickerOverlay={this.renderDialog}
+            renderOverlay={this.renderDialog}
             items={options}
           />
 
@@ -183,7 +183,7 @@ export default class PickerScreen extends Component {
             onChange={item => this.setState({option: item})}
             topBarProps={{title: 'Languages'}}
             useDialog
-            renderCustomOverlayHeader={({onDone, onCancel}) => (
+            renderHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
                 <Button link label="Cancel" onPress={onCancel}/>
                 <Button link label="Done" onPress={onDone}/>

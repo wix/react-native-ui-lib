@@ -1,10 +1,8 @@
 import React, {PropsWithChildren, ReactNode} from 'react';
 import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
-import {ModalTopBarProps} from '../../components/modal';
-// TODO: Replace with new TextField Props after migration to new TextField has completed
-// import {TextFieldProps} from '../../../typings/components/Inputs';
-import {TextFieldMethods, TextFieldProps as NewTextFieldProps} from '../textField';
+import {ModalTopBarProps} from '../modal/TopBar';
+import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
 // Note: enum values are uppercase due to legacy
@@ -83,7 +81,7 @@ export type PickerPropsDeprecation = {
   renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
    * @deprecated
-   * Render custom picker - input will be value (see above)
+   * Render custom picker input (the value will be passed)
    * Example:
    * renderPicker = (selectedItem) => {...}
    * instead use renderInput
@@ -91,7 +89,7 @@ export type PickerPropsDeprecation = {
   renderPicker?: RenderPicker;
   /**
    * @deprecated
-   * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
+   * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
    * instead use renderPickerOverlay
    */
   renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
@@ -134,36 +132,39 @@ type PickerSearchProps = {
 
 type PickerExpandableOverlayProps = {
   /**
-   * Custom picker props (when using renderPicker, will apply on the button wrapper)
+   * Custom picker overlay props
    */
   customPickerProps?: ExpandableOverlayProps;
   /**
-   * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
+   * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
    */
-  renderPickerOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  renderOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement;
   /**
-   * Adds blur effect to picker modal (iOS only)
+   * Add blur effect to picker modal (iOS only)
    */
   enableModalBlur?: boolean;
 };
 
-type PickerListProps = {
+type PickerListProps = PickerSearchProps & {
   /**
    * Render a custom header for Picker's Overlay
    */
-  renderCustomOverlayHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
+  renderHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
   /**
-   * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
+   * Pass props to the list component that wraps the picker items (allows to control FlatList behavior)
    */
   listProps?: Partial<FlatListProps<any>>;
+  /**
+   * The picker modal top bar props
+   */
+  topBarProps?: ModalTopBarProps;
   /**
    * Add safe area in the Picker modal view
    */
   useSafeArea?: boolean;
 };
 
-export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
-  PickerSearchProps &
+export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
   PickerExpandableOverlayProps &
   PickerListProps & {
@@ -173,9 +174,9 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     useDialog?: boolean;
     /**
-     * Pass for different field type UI (form, filter or settings)
+     * Use wheel picker instead of a list picker
      */
-    fieldType?: PickerFieldTypes | `${PickerFieldTypes}`;
+    useWheelPicker?: boolean;
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
      */
@@ -185,7 +186,7 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     onChange?: (value: PickerValue) => void;
     /**
-     * SINGLE mode or MULTI mode
+     * SINGLE or MULTI selection mode
      */
     mode?: PickerModes | `${PickerModes}`;
     /**
@@ -193,7 +194,11 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     selectionLimit?: number;
     /**
-     * Render custom picker input
+     * Pass for different field type UI (form, filter or settings)
+     */
+    fieldType?: PickerFieldTypes | `${PickerFieldTypes}`;
+    /**
+     * Render custom picker input (the value will be passed)
      * Example:
      * renderInput = (selectedItem) => {...}
      */
@@ -215,17 +220,9 @@ export type PickerBaseProps = Omit<NewTextFieldProps, 'value' | 'onChange'> &
      */
     getLabel?: (value: PickerValue) => string;
     /**
-     * The picker modal top bar props
-     */
-    topBarProps?: ModalTopBarProps;
-    /**
-     * Use wheel picker instead of a list picker
-     */
-    useWheelPicker?: boolean;
-    /**
      * Custom picker input container style
      */
-    inputContainerStyle?: StyleProp<ViewStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
     /**
      * Data source for Picker
      */
@@ -317,7 +314,7 @@ export type PickerItemsListProps = Pick<
   | 'searchPlaceholder'
   | 'onSearchChange'
   | 'renderCustomSearch'
-  | 'renderCustomOverlayHeader'
+  | 'renderHeader'
   | 'useSafeArea'
   | 'useWheelPicker'
   | 'useDialog'

@@ -9,14 +9,12 @@ const useNewPickerProps = (props: PickerProps) => {
     renderCustomModal,
     onShow,
     pickerModalProps,
-    containerStyle,
     customPickerProps,
     topBarProps,
     enableModalBlur,
     renderInput,
-    renderCustomOverlayHeader,
-    renderPickerOverlay,
-    inputContainerStyle
+    renderHeader,
+    renderOverlay
   } = props;
 
   const modalProps: ExpandableOverlayProps['modalProps'] = {
@@ -27,11 +25,10 @@ const useNewPickerProps = (props: PickerProps) => {
   };
 
   const newProps: PickerProps = {
-    renderCustomOverlayHeader: renderCustomDialogHeader || renderCustomOverlayHeader,
+    renderHeader: renderCustomDialogHeader || renderHeader,
     renderInput: renderPicker || renderInput,
-    renderPickerOverlay: renderCustomModal || renderPickerOverlay,
-    customPickerProps: {modalProps: {onShow, ...modalProps, ...pickerModalProps}, ...customPickerProps},
-    inputContainerStyle: containerStyle || inputContainerStyle
+    renderOverlay: renderCustomModal || renderOverlay,
+    customPickerProps: {modalProps: {onShow, ...modalProps, ...pickerModalProps}, ...customPickerProps}
   };
   return newProps;
 };
