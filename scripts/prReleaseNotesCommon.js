@@ -2,7 +2,8 @@ const fs = require('fs');
 const _ = require('lodash');
 const childProcess = require('child_process');
 const fetch = require('node-fetch');
-const readline = require('readline');
+
+const {handleVersionBump} = require('./releaseNotesUtils');
 
 function fetchLatestReleaseDate(tagPrefix, version) {
   const relesae = childProcess.execSync(`gh release view ${tagPrefix}${version}`).toString();
@@ -200,33 +201,15 @@ async function _generateReleaseNotes(latestVersion,
   console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32m${fileNamePrefix}-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
 }
 
-async function generateReleaseNotes(latestVersion,
-  newVersion,
-  githubToken,
+async function generateReleaseNotes(githubToken,
   fileNamePrefix,
   repo,
   header = '',
   tagPrefix = '',
-  categories = []) {
-  let latestVer, newVer;
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-
-  rl.question(`What is the current version? `, currentV => {
-    rl.question('What is the next version for release? ', newV => {
-      latestVer = currentV || latestVersion;
-      newVer = newV || newVersion;
-      rl.close();
-    });
-  });
-
-  rl.on('close', () => {
-    console.info(`Current latest version is v${latestVer}`);
-    console.info(`Generating release notes out or PRs for v${newVer}`);
-    _generateReleaseNotes(latestVer, newVer, githubToken, fileNamePrefix, repo, header, tagPrefix, categories);
-  });
+  categories = [],
+  packageToUpdate) {
+  const {latestVersion, newVersion} = await handleVersionBump(repo, packageToUpdate);
+  _generateReleaseNotes(latestVersion, newVersion, githubToken, fileNamePrefix, repo, header, tagPrefix, categories);
 }
 
 module.exports = {generateReleaseNotes};
