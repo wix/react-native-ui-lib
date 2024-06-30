@@ -43,15 +43,15 @@ export const PickerDriver = (props: ComponentProps) => {
   };
 
   const isOpen = (): boolean => {
-    if (dialogDriver.getModal().exists()) {
-      return dialogDriver.getModal().isVisible();
+    if (dialogDriver.exists()) {
+      return dialogDriver.isVisible();
     }
     return modalDriver.exists() && modalDriver.isVisible();
   };
 
   const dismissDialog = (): void => {
-    if (dialogDriver.getModal().isVisible()) {
-      dialogDriver.getModal().pressOnBackground();
+    if (dialogDriver.isVisible()) {
+      dialogDriver.pressOnBackground();
     }
   };
 

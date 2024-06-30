@@ -58,16 +58,16 @@ const getDriver = (Element: React.JSX.Element) => {
 describe('Incubator.Dialog sanity checks', () => {
   it('Should show dialog', () => {
     const {dialogDriver} = getDriver(<TestCase1 visible/>);
-    expect(dialogDriver.getModal().isVisible()).toBeTruthy();
+    expect(dialogDriver.isVisible()).toBeTruthy();
   });
 
   it('Should dismiss dialog on background press', () => {
     const dismissFn = jest.fn();
     const {dialogDriver} = getDriver(<TestCase1 visible onDismiss={dismissFn}/>);
     expect(dismissFn).not.toHaveBeenCalled();
-    expect(dialogDriver.getModal().isVisible()).toBeTruthy();
-    dialogDriver.getModal().pressOnBackground();
-    expect(dialogDriver.getModal().isVisible()).toBeFalsy();
+    expect(dialogDriver.isVisible()).toBeTruthy();
+    dialogDriver.pressOnBackground();
+    expect(dialogDriver.isVisible()).toBeFalsy();
     expect(dismissFn).toHaveBeenCalledTimes(1);
   });
 
@@ -78,25 +78,25 @@ describe('Incubator.Dialog sanity checks', () => {
       return <Dialog testID={testID} visible ref={dialogRef}/>;
     };
     const {dialogDriver} = getDriver(<RefTestCase/>);
-    expect(dialogDriver.getModal().isVisible()).toBeTruthy();
+    expect(dialogDriver.isVisible()).toBeTruthy();
     act(() => {
       dialogRef.current?.dismiss();
     });
-    expect(dialogDriver.getModal().isVisible()).toBeFalsy();
+    expect(dialogDriver.isVisible()).toBeFalsy();
   });
 
   it('Should exist only if visible', () => {
     const onDismiss = jest.fn();
     const component = <TestCase2 onDismiss={onDismiss}/>;
     const {dialogDriver, renderTree} = getDriver(component);
-    expect(dialogDriver.exists()).toBeFalsy();
+    expect(dialogDriver.isVisible()).toBeFalsy();
     const openButtonDriver = ButtonDriver({renderTree, testID: 'openButton'});
     openButtonDriver.press();
-    expect(dialogDriver.exists()).toBeTruthy();
+    expect(dialogDriver.isVisible()).toBeTruthy();
     expect(onDismiss).toHaveBeenCalledTimes(0);
     const closeButtonDriver = ButtonDriver({renderTree, testID: 'closeButton'});
     closeButtonDriver.press();
-    expect(dialogDriver.exists()).toBeFalsy();
+    expect(dialogDriver.isVisible()).toBeFalsy();
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
@@ -104,6 +104,7 @@ describe('Incubator.Dialog sanity checks', () => {
     const onDismiss = jest.fn();
     const component = <TestCase2 onDismiss={onDismiss}/>;
     const {dialogDriver} = getDriver(component);
-    expect(dialogDriver.getModal().exists()).toBeTruthy();
+    expect(dialogDriver.exists()).toBeTruthy();
+    expect(dialogDriver.isVisible()).toBeFalsy();
   });
 });
