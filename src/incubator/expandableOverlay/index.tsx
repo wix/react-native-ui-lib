@@ -1,4 +1,4 @@
-import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperativeHandle} from 'react';
+import React, {useCallback, useMemo, useState, forwardRef, PropsWithChildren, useImperativeHandle} from 'react';
 
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
@@ -86,6 +86,9 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     toggleExpandable
   }));
 
+  const modalTopBar = useMemo(() => showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>,
+    [showTopBar, closeExpandable, topBarProps]);
+
   const renderModal = () => {
     return (
       <Modal
@@ -96,7 +99,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         onDismiss={closeExpandable}
         onRequestClose={closeExpandable}
       >
-        {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
+        {modalTopBar}
         {expandableContent}
       </Modal>
     );
@@ -107,6 +110,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     return (
       // @ts-expect-error
       <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={closeExpandable}>
+        {modalTopBar}
         {expandableContent}
       </Dialog>
     );
