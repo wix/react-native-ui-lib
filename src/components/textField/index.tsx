@@ -5,9 +5,9 @@
  * 3. Passing typography preset that includes lineHeight usually cause alignment issues with
  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
  */
+import {isEmpty, trim, omit} from 'lodash';
 import React, {useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import {isEmpty, trim, omit} from 'lodash';
 import {asBaseComponent, Constants, forwardRef} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
@@ -34,6 +34,7 @@ import useFieldState from './useFieldState';
 import usePreset from './usePreset';
 import FloatingPlaceholder from './FloatingPlaceholder';
 import CharCounter from './CharCounter';
+import ClearButton from './ClearButton';
 
 interface StaticMembers {
   validationMessagePositions: typeof ValidationMessagePosition;
@@ -44,7 +45,7 @@ interface StaticMembers {
  * @description: A controlled, customizable TextField with validation support
  * @extends: TextInput
  * @extendsLink: https://reactnative.dev/docs/textinput
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorTextFieldScreen.tsx
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/FloatingPlaceholder.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Validation.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/ColorByState.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/CharCounter.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Hint.gif?raw=true
  */
 const TextField = (props: InternalTextFieldProps) => {
@@ -71,7 +72,10 @@ const TextField = (props: InternalTextFieldProps) => {
     // Accessory Buttons
     leadingAccessory,
     trailingAccessory,
+    topTrailingAccessory,
     bottomAccessory,
+    showClearButton,
+    onClear,
     // Validation
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
@@ -88,6 +92,7 @@ const TextField = (props: InternalTextFieldProps) => {
     showMandatoryIndication,
     ...others
   } = usePreset(props);
+
   const {ref: leadingAccessoryRef, measurements: leadingAccessoryMeasurements} = useMeasure();
   const {onFocus, onBlur, onChangeText, fieldState, validateField, checkValidity} = useFieldState(others);
 
@@ -114,54 +119,52 @@ const TextField = (props: InternalTextFieldProps) => {
   const colorStyle = useMemo(() => color && {color}, [color]);
   const _floatingPlaceholderStyle = useMemo(() => [typographyStyle, floatingPlaceholderStyle],
     [typographyStyle, floatingPlaceholderStyle]);
-
   const fieldStyle = [fieldStyleProp, dynamicFieldStyle?.(context, {preset: props.preset})];
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
   const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
   const centeredContainerStyle = centered && styles.centeredContainer;
-  const _labelStyle = useMemo(() => (centered ? [labelStyle, styles.centeredLabel] : labelStyle),
-    [labelStyle, centered]);
-  const _validationMessageStyle = useMemo(() => {
-    return centered ? [validationMessageStyle, styles.centeredValidationMessage] : validationMessageStyle;
-  }, [validationMessageStyle, centered]);
+  const centeredTextStyle = centered && styles.centeredText;
+  const _labelStyle = useMemo(() => [labelStyle, centeredTextStyle], [labelStyle, centeredTextStyle]);
+  const _validationMessageStyle = useMemo(() => [validationMessageStyle, centeredTextStyle],
+    [validationMessageStyle, centeredTextStyle]);
   const hasValue = fieldState.value !== undefined;
-  const inputStyle = useMemo(() => {
-    return [typographyStyle, colorStyle, others.style, hasValue && centered && styles.centeredInput];
-  }, [typographyStyle, colorStyle, others.style, centered, hasValue]);
-  const dummyPlaceholderStyle = useMemo(() => {
-    return [inputStyle, styles.dummyPlaceholder];
-  }, [inputStyle]);
+  const inputStyle = useMemo(() => [typographyStyle, colorStyle, others.style, hasValue && centeredTextStyle],
+    [typographyStyle, colorStyle, others.style, centeredTextStyle, hasValue]);
+  const dummyPlaceholderStyle = useMemo(() => [inputStyle, styles.dummyPlaceholder], [inputStyle]);
 
   return (
     <FieldContext.Provider value={context}>
       <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
-        <Label
-          label={label}
-          labelColor={labelColor}
-          labelStyle={_labelStyle}
-          labelProps={labelProps}
-          floatingPlaceholder={floatingPlaceholder}
-          validationMessagePosition={validationMessagePosition}
-          testID={`${props.testID}.label`}
-          showMandatoryIndication={showMandatoryIndication}
-          enableErrors={enableErrors}
-        />
-        {validationMessagePosition === ValidationMessagePosition.TOP && (
-          <ValidationMessage
+        <View row spread style={centeredContainerStyle}>
+          <Label
+            label={label}
+            labelColor={labelColor}
+            labelStyle={_labelStyle}
+            labelProps={labelProps}
+            floatingPlaceholder={floatingPlaceholder}
+            validationMessagePosition={validationMessagePosition}
+            testID={`${props.testID}.label`}
+            showMandatoryIndication={showMandatoryIndication}
             enableErrors={enableErrors}
-            validate={others.validate}
-            validationMessage={others.validationMessage}
-            validationMessageStyle={_validationMessageStyle}
-            retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
-            testID={`${props.testID}.validationMessage`}
           />
-        )}
+          {validationMessagePosition === ValidationMessagePosition.TOP && (
+            <ValidationMessage
+              enableErrors={enableErrors}
+              validate={others.validate}
+              validationMessage={others.validationMessage}
+              validationMessageStyle={_validationMessageStyle}
+              retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
+              testID={`${props.testID}.validationMessage`}
+            />
+          )}
+          {topTrailingAccessory && <View>{topTrailingAccessory}</View>}
+        </View>
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
           {leadingAccessoryClone}
 
           {/* Note: We're passing flexG to the View to support properly inline behavior - so the input will be rendered correctly in a row container.
-            Known Issue: This slightly push the trailing accessory when entering a long text
+            Known Issue: This slightly push the trailing accessory and clear button when entering a long text
           */}
           {children || (
             <View {...(Constants.isWeb ? {flex: true} : {flexG: true})}>
@@ -199,6 +202,9 @@ const TextField = (props: InternalTextFieldProps) => {
               />
             </View>
           )}
+          {showClearButton && (
+            <ClearButton onClear={onClear} testID={`${props.testID}.clearButton`} onChangeText={onChangeText}/>
+          )}
           {trailingAccessory}
           {/* </View> */}
         </View>
@@ -223,7 +229,11 @@ const TextField = (props: InternalTextFieldProps) => {
             />
           )}
         </View>
-        {helperText && <Text $textNeutralHeavy subtext marginT-s1>{helperText}</Text>}
+        {helperText && (
+          <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
+            {helperText}
+          </Text>
+        )}
       </View>
     </FieldContext.Provider>
   );
@@ -245,6 +255,7 @@ export {
   MandatoryIndication as TextFieldMandatoryIndication,
   TextFieldValidators
 };
+
 export default asBaseComponent<TextFieldProps, StaticMembers, TextFieldRef>(forwardRef(TextField as any), {
   modifiersOptions: {
     margins: true,
@@ -259,13 +270,7 @@ const styles = StyleSheet.create({
   centeredContainer: {
     alignSelf: 'center'
   },
-  centeredLabel: {
-    textAlign: 'center'
-  },
-  centeredInput: {
-    textAlign: 'center'
-  },
-  centeredValidationMessage: {
+  centeredText: {
     textAlign: 'center'
   },
   dummyPlaceholder: {
