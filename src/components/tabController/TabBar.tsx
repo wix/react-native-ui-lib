@@ -142,8 +142,8 @@ const TabBar = (props: Props) => {
     enableShadow,
     shadowStyle: propsShadowStyle,
     indicatorStyle,
-    labelStyle,
-    selectedLabelStyle,
+    labelStyle = DEFAULT_LABEL_STYLE,
+    selectedLabelStyle = DEFAULT_SELECTED_LABEL_STYLE,
     labelColor,
     selectedLabelColor,
     uppercase,
@@ -151,10 +151,10 @@ const TabBar = (props: Props) => {
     selectedIconColor,
     activeBackgroundColor,
     backgroundColor = Colors.$backgroundElevated,
-    faderProps,
+    faderProps = DEFAULT_FADER_PROPS,
     containerWidth: propsContainerWidth,
     centerSelected,
-    spreadItems,
+    spreadItems = true,
     indicatorInsets = Spacings.s4,
     indicatorWidth,
     containerStyle,
@@ -319,12 +319,6 @@ const TabBar = (props: Props) => {
 };
 
 TabBar.displayName = 'TabController.TabBar';
-TabBar.defaultProps = {
-  labelStyle: DEFAULT_LABEL_STYLE,
-  selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE,
-  faderProps: DEFAULT_FADER_PROPS,
-  spreadItems: true
-};
 
 const styles = StyleSheet.create({
   container: {
