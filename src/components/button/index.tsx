@@ -309,6 +309,7 @@ class Button extends PureComponent<Props, ButtonState> {
             source={iconSource}
             supportRTL={supportRTL}
             testID={`${testID}.icon`}
+            // Note Passing tintColor as prop is required for Web
             // @ts-expect-error RN ImageStyle conflicts with ImageProps in tintColor type
             tintColor={iconStyle[0]?.tintColor}
             {...iconProps}
