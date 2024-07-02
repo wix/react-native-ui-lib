@@ -111,8 +111,8 @@ export const TextFieldDriver = (props: ComponentProps) => {
     const visible = (): boolean => {
       const transform = StyleSheet.flatten(clearButtonContainerDriver.getStyle()).transform;
       const translate = StyleSheet.flatten(transform);
-      const translateX = translate.translateX;
-      return translateX === 0;
+      const translateY = translate.translateY;
+      return translateY === 0;
     };
     return {...clearButtonDriver, visible};
   };
