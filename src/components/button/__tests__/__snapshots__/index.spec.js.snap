@@ -1121,21 +1121,9 @@ exports[`Button container size should have no padding of button is an icon butto
   <Image
     accessibilityRole="image"
     accessible={false}
-    assetGroup="icons"
-    onError={[Function]}
     source={14}
     style={
       [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
         [
           {
             "marginRight": 8,
@@ -1143,7 +1131,12 @@ exports[`Button container size should have no padding of button is an icon butto
           },
           undefined,
         ],
-        false,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#FFFFFF",
+        },
       ]
     }
     testID="undefined.icon"
@@ -2254,28 +2247,21 @@ exports[`Button icon should apply color on icon 1`] = `
   <Image
     accessibilityRole="image"
     accessible={false}
-    assetGroup="icons"
-    onError={[Function]}
     source={12}
     style={
       [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
         [
           {
             "tintColor": "green",
           },
           undefined,
         ],
-        false,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "green",
+        },
       ]
     }
     testID="undefined.icon"
@@ -2331,28 +2317,21 @@ exports[`Button icon should apply color on icon 2`] = `
   <Image
     accessibilityRole="image"
     accessible={false}
-    assetGroup="icons"
-    onError={[Function]}
     source={12}
     style={
       [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
         [
           {
             "tintColor": "#FC3D2F",
           },
           undefined,
         ],
-        false,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#FC3D2F",
+        },
       ]
     }
     testID="undefined.icon"
@@ -2408,21 +2387,9 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
   <Image
     accessibilityRole="image"
     accessible={false}
-    assetGroup="icons"
-    onError={[Function]}
     source={12}
     style={
       [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
         [
           {
             "tintColor": "#FFFFFF",
@@ -2432,7 +2399,12 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
             "tintColor": "red",
           },
         ],
-        false,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#FFFFFF",
+        },
       ]
     }
     testID="undefined.icon"
@@ -2490,28 +2462,21 @@ exports[`Button icon should return icon style according to different variations 
   <Image
     accessibilityRole="image"
     accessible={false}
-    assetGroup="icons"
-    onError={[Function]}
     source={12}
     style={
       [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
         [
           {
             "tintColor": "#5A48F5",
           },
           undefined,
         ],
-        false,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#5A48F5",
+        },
       ]
     }
     testID="undefined.icon"
@@ -2567,28 +2532,21 @@ exports[`Button icon should return icon style according to different variations 
   <Image
     accessibilityRole="image"
     accessible={false}
-    assetGroup="icons"
-    onError={[Function]}
     source={12}
     style={
       [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
         [
           {
             "tintColor": "#5A48F5",
           },
           undefined,
         ],
-        false,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#5A48F5",
+        },
       ]
     }
     testID="undefined.icon"
@@ -2644,28 +2602,21 @@ exports[`Button icon should return icon style according to different variations 
   <Image
     accessibilityRole="image"
     accessible={false}
-    assetGroup="icons"
-    onError={[Function]}
     source={12}
     style={
       [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
         [
           {
             "tintColor": "#FFFFFF",
           },
           undefined,
         ],
-        false,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#FFFFFF",
+        },
       ]
     }
     testID="undefined.icon"
@@ -3895,28 +3846,21 @@ exports[`Button labelColor should return undefined color if this is an icon butt
   <Image
     accessibilityRole="image"
     accessible={false}
-    assetGroup="icons"
-    onError={[Function]}
     source={12}
     style={
       [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
         [
           {
             "tintColor": "#FFFFFF",
           },
           undefined,
         ],
-        false,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#FFFFFF",
+        },
       ]
     }
     testID="undefined.icon"
