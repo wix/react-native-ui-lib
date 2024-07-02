@@ -19,6 +19,7 @@ function run() {
   if (!validateEnv()) {
     return;
   }
+  copyNative();
   createNpmRc();
   versionTagAndPublish();
 }
@@ -28,6 +29,11 @@ function validateEnv() {
     throw new Error('releasing is only available from CI');
   }
   return true;
+}
+
+function copyNative() {
+  exec.execSync(`cp -rf ../ios .`);
+  exec.execSync(`cp -rf ../android .`);
 }
 
 function createNpmRc() {
