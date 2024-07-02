@@ -116,10 +116,11 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const overlayTopBarProps = useMemo(() => {
     return {
       ...topBarProps,
+      testID: `${testID}.modal.topBar`,
       onCancel: cancelSelect,
       onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
     };
-  }, [topBarProps, cancelSelect, onDoneSelecting, multiDraftValue, mode]);
+  }, [topBarProps, cancelSelect, onDoneSelecting, multiDraftValue, mode, testID]);
 
   const {renderHeader, renderInput, renderOverlay, customPickerProps} = useNewPickerProps({
     ...themeProps,
@@ -254,6 +255,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         mode={mode}
         useDialog={useDialog}
         items={useItems ? items : undefined}
+        topBarProps={topBarProps}
         showSearch={showSearch}
         searchStyle={searchStyle}
         searchPlaceholder={searchPlaceholder}

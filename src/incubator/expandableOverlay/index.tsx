@@ -86,7 +86,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     toggleExpandable
   }));
 
-  const modalTopBar = useMemo(() => showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>,
+  const topBar = useMemo(() => showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>,
     [showTopBar, closeExpandable, topBarProps]);
 
   const renderModal = () => {
@@ -99,7 +99,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         onDismiss={closeExpandable}
         onRequestClose={closeExpandable}
       >
-        {modalTopBar}
+        {topBar}
         {expandableContent}
       </Modal>
     );
@@ -110,7 +110,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     return (
       // @ts-expect-error
       <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={closeExpandable}>
-        {modalTopBar}
+        {topBar}
         {expandableContent}
       </Dialog>
     );

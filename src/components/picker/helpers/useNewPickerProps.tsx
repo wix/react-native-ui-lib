@@ -16,8 +16,7 @@ const useNewPickerProps = (props: PickerProps) => {
     renderHeader,
     renderOverlay,
     useDialog,
-    mode,
-    testID
+    mode
   } = props;
 
   const modalProps: ExpandableOverlayProps['modalProps'] = {
@@ -28,7 +27,6 @@ const useNewPickerProps = (props: PickerProps) => {
   };
 
   const showTopBar = (!useDialog || mode === PickerModes.MULTI) && !renderHeader;
-  const overlayTopBarProps = showTopBar ? {testID: `${testID}.modal.topBar`, ...topBarProps} : undefined;
 
   const newProps: PickerProps = {
     renderHeader: renderCustomDialogHeader || renderHeader,
@@ -37,7 +35,7 @@ const useNewPickerProps = (props: PickerProps) => {
     customPickerProps: {
       modalProps: {onShow, ...modalProps, ...pickerModalProps},
       showTopBar,
-      topBarProps: overlayTopBarProps,
+      topBarProps,
       ...customPickerProps
     }
   };
