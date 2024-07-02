@@ -46,7 +46,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     itemsOrder.value = generateItemsOrder(data);
   }, [data]);
 
-  const onChange = useCallback(() => {
+  const onChange = useCallback((from: number, to: number) => {
     const newData: ItemT[] = [];
     const dataByIds = mapKeys(data, 'id');
     if (data?.length) {
@@ -55,7 +55,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
       });
     }
 
-    onOrderChange?.(newData);
+    onOrderChange?.(newData, from, to);
   }, [onOrderChange, data]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent) => {
