@@ -66,6 +66,16 @@
       "name": "display",
       "type": "string",
       "description": "Defines the visual display of the picker. The default value is 'spinner' on iOS and 'default' on Android. The list of all possible values are default, spinner, calendar or clock on Android and default, spinner, compact or inline for iOS. Full list can be found here: https://github.com/react-native-datetimepicker/datetimepicker#display-optional"
+    },
+    {
+      "name": "confirmButtonProps",
+      "type": "ButtonProps",
+      "description": "Confirm button props"
+    },
+    {
+      "name": "cancelButtonProps",
+      "type": "ButtonProps",
+      "description": "Cancel button props"
     }
   ],
   "snippet": ["<DateTimePicker title={'Select time'$1} placeholder={'Placeholder'$2} mode={'time'$3}/>"]
