@@ -2695,6 +2695,7 @@ exports[`TextField Screen renders screen 1`] = `
                 ],
               ]
             }
+            testID="undefined.clearButton.container"
           >
             <View
               accessibilityLabel="clear"
