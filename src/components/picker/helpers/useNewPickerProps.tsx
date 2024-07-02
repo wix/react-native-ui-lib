@@ -1,4 +1,4 @@
-import {PickerProps} from '../types';
+import {PickerProps, PickerModes} from '../types';
 import {ExpandableOverlayProps} from '../../../incubator/expandableOverlay';
 import {Constants} from '../../../commons/new';
 
@@ -14,7 +14,9 @@ const useNewPickerProps = (props: PickerProps) => {
     enableModalBlur,
     renderInput,
     renderHeader,
-    renderOverlay
+    renderOverlay,
+    useDialog,
+    mode
   } = props;
 
   const modalProps: ExpandableOverlayProps['modalProps'] = {
@@ -24,11 +26,18 @@ const useNewPickerProps = (props: PickerProps) => {
     onRequestClose: topBarProps?.onCancel
   };
 
+  const showTopBar = (!useDialog || mode === PickerModes.MULTI) && !renderHeader;
+
   const newProps: PickerProps = {
     renderHeader: renderCustomDialogHeader || renderHeader,
     renderInput: renderPicker || renderInput,
     renderOverlay: renderCustomModal || renderOverlay,
-    customPickerProps: {modalProps: {onShow, ...modalProps, ...pickerModalProps}, ...customPickerProps}
+    customPickerProps: {
+      modalProps: {onShow, ...modalProps, ...pickerModalProps},
+      showTopBar,
+      topBarProps,
+      ...customPickerProps
+    }
   };
   return newProps;
 };

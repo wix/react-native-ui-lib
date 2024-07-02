@@ -81,7 +81,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     ...others
   } = themeProps;
   const {preset} = others;
-  const {renderHeader, renderInput, renderOverlay, customPickerProps} = useNewPickerProps(themeProps);
 
   const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
@@ -112,6 +111,20 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     topBarProps,
     setSearchValue,
     mode
+  });
+
+  const overlayTopBarProps = useMemo(() => {
+    return {
+      ...topBarProps,
+      testID: `${testID}.modal.topBar`,
+      onCancel: cancelSelect,
+      onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
+    };
+  }, [topBarProps, cancelSelect, onDoneSelecting, multiDraftValue, mode, testID]);
+
+  const {renderHeader, renderInput, renderOverlay, customPickerProps} = useNewPickerProps({
+    ...themeProps,
+    topBarProps: overlayTopBarProps
   });
 
   const {label, accessibilityInfo} = usePickerLabel({
@@ -242,11 +255,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         mode={mode}
         useDialog={useDialog}
         items={useItems ? items : undefined}
-        topBarProps={{
-          ...topBarProps,
-          onCancel: cancelSelect,
-          onDone: mode === PickerModes.MULTI ? () => onDoneSelecting(multiDraftValue) : undefined
-        }}
+        topBarProps={topBarProps}
         showSearch={showSearch}
         searchStyle={searchStyle}
         searchPlaceholder={searchPlaceholder}
