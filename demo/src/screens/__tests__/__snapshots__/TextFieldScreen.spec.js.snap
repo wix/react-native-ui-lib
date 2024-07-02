@@ -1899,6 +1899,8 @@ exports[`TextField Screen renders screen 1`] = `
               }
             >
               <Image
+                accessibilityRole="image"
+                accessible={false}
                 source={
                   {
                     "testUri": "../../../demo/src/assets/icons/info.png",
@@ -2754,8 +2756,6 @@ exports[`TextField Screen renders screen 1`] = `
               <Image
                 accessibilityRole="image"
                 accessible={false}
-                assetGroup="icons"
-                onError={[Function]}
                 source={
                   {
                     "testUri": "../../../src/assets/icons/xFlat.png",
@@ -2763,16 +2763,6 @@ exports[`TextField Screen renders screen 1`] = `
                 }
                 style={
                   [
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    false,
                     [
                       {
                         "tintColor": "#5A48F5",
@@ -2781,7 +2771,12 @@ exports[`TextField Screen renders screen 1`] = `
                         "tintColor": "#A6ACB1",
                       },
                     ],
-                    false,
+                    undefined,
+                    undefined,
+                    undefined,
+                    {
+                      "tintColor": "#5A48F5",
+                    },
                   ]
                 }
                 testID="undefined.clearButton.icon"
@@ -2789,6 +2784,8 @@ exports[`TextField Screen renders screen 1`] = `
             </View>
           </View>
           <Image
+            accessibilityRole="image"
+            accessible={false}
             source={
               {
                 "testUri": "../../../demo/src/assets/icons/search.png",
@@ -3428,8 +3425,6 @@ exports[`TextField Screen renders screen 1`] = `
             <Image
               accessibilityRole="image"
               accessible={false}
-              assetGroup="icons"
-              onError={[Function]}
               source={
                 {
                   "testUri": "../../../demo/src/assets/icons/search.png",
@@ -3437,23 +3432,18 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  false,
                   [
                     {
                       "tintColor": "#20303C",
                     },
                     undefined,
                   ],
-                  false,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "tintColor": "#20303C",
+                  },
                 ]
               }
               testID="undefined.icon"
@@ -5399,6 +5389,8 @@ exports[`TextField Screen renders screen 1`] = `
             }
           >
             <Image
+              accessibilityRole="image"
+              accessible={false}
               marginL-s1={true}
               source={
                 {
