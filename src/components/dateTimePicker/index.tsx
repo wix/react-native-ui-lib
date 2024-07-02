@@ -18,7 +18,7 @@ import TextField, {TextFieldProps, TextFieldMethods} from '../textField';
 import type {DialogMigrationProps} from '../../incubator/Dialog';
 import {DialogProps} from '../dialog';
 import View from '../view';
-import Button from '../button';
+import Button, {ButtonProps} from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
 import useOldApi, {OldApiProps} from './useOldApi';
 
@@ -93,6 +93,14 @@ export type DateTimePickerProps = OldApiProps &
      * Allows changing the visual display of the picker
      */
     display?: string;
+    /**
+     * Confirm button props
+     */
+    confirmButtonProps?: ButtonProps;
+    /**
+     * Cancel button props
+     */
+    cancelButtonProps?: ButtonProps;
   };
 
 type DateTimePickerPropsInternal = DateTimePickerProps & BaseComponentInjectedProps;
@@ -131,6 +139,8 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     headerStyle,
     testID,
     display = Constants.isIOS ? 'spinner' : undefined,
+    confirmButtonProps,
+    cancelButtonProps,
     ...others
   } = props;
 
@@ -233,8 +243,15 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
           iconStyle={{tintColor: Colors.$iconDefault}}
           onPress={toggleExpandableOverlay}
           testID={`${testID}.cancel`}
+          {...cancelButtonProps}
         />
-        <Button link iconSource={Assets.icons.check} onPress={onDonePressed} testID={`${testID}.done`}/>
+        <Button
+          link
+          iconSource={Assets.icons.check}
+          onPress={onDonePressed}
+          testID={`${testID}.done`}
+          {...confirmButtonProps}
+        />
       </View>
     );
   };
