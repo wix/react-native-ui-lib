@@ -34,7 +34,7 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
       return _.get(selectedItem, 'label');
     }
 
-    if (_.isUndefined(value) || typeof value === 'string') {
+    if (typeof value === 'string') {
       return value;
     }
   }, [getLabel, getLabelsFromArray, items]);
