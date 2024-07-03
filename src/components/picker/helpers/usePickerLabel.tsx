@@ -36,12 +36,14 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
     //   return value?.label;
     // }
 
-    // otherwise, extract from picker items
-    const selectedItem = _.find(items, {value});
+    if (!_.isEmpty(items)) {
+      const selectedItem = _.find(items, {value});
+      return _.get(selectedItem, 'label');
+    }
 
-    return _.get(selectedItem, 'label');
+    return value;
   },
-  [getLabelsFromArray, items]);
+  [getLabel, getLabelsFromArray, items]);
 
   const accessibilityInfo = useMemo(() => {
     const label = _getLabel(value);
@@ -51,7 +53,7 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
       accessibilityHint:
         accessibilityHint ?? (label ? 'Double tap to edit' : `Goes to ${placeholder}. Suggestions will be provided`)
     };
-  }, [value, accessibilityLabel, accessibilityHint]);
+  }, [value, placeholder, accessibilityLabel, accessibilityHint, _getLabel]);
 
   return {
     getLabelsFromArray,
