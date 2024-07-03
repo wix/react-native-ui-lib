@@ -14,9 +14,21 @@ export const ExpandableOverlayDriver = (props: ComponentProps) => {
     testID: `${testID}.overlay`
   });
 
-  const getOverlay = () => {
-    return overlayDriver;
+  const exists = () => {
+    return overlayDriver.exists();
   };
 
-  return {...driver, getOverlay};
+  const open = () => {
+    driver.press();
+  };
+
+  const isOpen = () => {
+    return overlayDriver.isVisible();
+  };
+
+  const pressOnBackground = () => {
+    overlayDriver.pressOnBackground();
+  };
+
+  return {exists, open, isOpen, pressOnBackground};
 };

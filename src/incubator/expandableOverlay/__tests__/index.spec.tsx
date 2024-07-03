@@ -13,11 +13,12 @@ import {ExpandableOverlayDriver} from '../ExpandableOverlay.driver';
 
 const testID = 'expandableOverylayTest';
 const helloWorld = 'Hello World';
+const universe = 'Hello Universe';
 
 const TestCase = (props: Omit<ExpandableOverlayProps, 'testID'>) => {
   return (
     //@ts-expect-error
-    <ExpandableOverlay migrateDialog {...props} testID={testID}>
+    <ExpandableOverlay migrateDialog expandableContent={<Text>{universe}</Text>} {...props} testID={testID}>
       <View>
         <Text>{helloWorld}</Text>
       </View>
@@ -27,48 +28,68 @@ const TestCase = (props: Omit<ExpandableOverlayProps, 'testID'>) => {
 
 const getDriver = <T extends ExpandableOverlayProps>(props: T) => {
   const renderTree = render(<TestCase {...props}/>);
-  const driver = ExpandableOverlayDriver<T>({renderTree, testID});
+  const driver = ExpandableOverlayDriver({renderTree, testID});
   return {driver, renderTree};
 };
 
 describe('ExpandableOverlay', () => {
-  describe('basic functionality', () => {
-    it('should render', () => {
-      render(<TestCase/>);
+  describe('With Dialog (useDialog)', () => {
+    it('Sanity', () => {
+      const {driver} = getDriver({useDialog: true});
+      expect(driver.exists()).toBeTruthy();
     });
-    describe('with useDialog true', () => {
-      it('should open dialog when pressed', () => {
-        const {driver} = getDriver({useDialog: true});
-        expect(driver.getOverlay().getModal().isVisible()).toBeFalsy();
-        driver.press();
-        expect(driver.getOverlay().getModal().isVisible()).toBeTruthy();
-      });
-      const universe = 'Hello Universe';
-      it(`should render ${helloWorld} on starting view and ${universe} in the dialog only after pressing`, () => {
-        const content = <Text>{universe}</Text>;
-        const {driver, renderTree} = getDriver({useDialog: true, expandableContent: content});
-        expect(renderTree.queryByText(helloWorld)).toBeTruthy();
-        expect(renderTree.queryByText(universe)).toBeFalsy();
-        driver.press();
-        expect(renderTree.queryByText(universe)).toBeTruthy();
-      });
+
+    it('Test open', () => {
+      const {driver} = getDriver({useDialog: true});
+      expect(driver.isOpen()).toBeFalsy();
+      driver.open();
+      expect(driver.isOpen()).toBeTruthy();
     });
-    describe('with useDialog false', () => {
-      it('should open modal when pressed', () => {
-        const {driver} = getDriver({useDialog: false});
-        expect(driver.getOverlay().isVisible()).toBeFalsy();
-        driver.press();
-        expect(driver.getOverlay().isVisible()).toBeTruthy();
-      });
-      const universe = 'Hello Universe';
-      it(`should render ${helloWorld} on starting view and ${universe} in the modal only after pressing`, () => {
-        const content = <Text>{universe}</Text>;
-        const {driver, renderTree} = getDriver({useDialog: false, expandableContent: content});
-        expect(renderTree.queryByText(helloWorld)).toBeTruthy();
-        expect(renderTree.queryByText(universe)).toBeFalsy();
-        driver.press();
-        expect(renderTree.queryByText(universe)).toBeTruthy();
-      });
+
+    it('Test pressOnBackground', () => {
+      const {driver} = getDriver({useDialog: true});
+      driver.open();
+      expect(driver.isOpen()).toBeTruthy();
+      driver.pressOnBackground();
+      expect(driver.isOpen()).toBeFalsy();
+    });
+
+    it(`should render ${helloWorld} on starting view and ${universe} in the dialog only after pressing`, () => {
+      const {driver, renderTree} = getDriver({useDialog: true});
+      expect(renderTree.queryByText(helloWorld)).toBeTruthy();
+      expect(renderTree.queryByText(universe)).toBeFalsy();
+      driver.open();
+      expect(renderTree.queryByText(universe)).toBeTruthy();
+    });
+  });
+
+  describe('With Modal', () => {
+    it('Sanity', () => {
+      const {driver} = getDriver({});
+      expect(driver.exists()).toBeTruthy();
+    });
+
+    it('Test open', () => {
+      const {driver} = getDriver({});
+      expect(driver.isOpen()).toBeFalsy();
+      driver.open();
+      expect(driver.isOpen()).toBeTruthy();
+    });
+
+    it('Test pressOnBackground', () => {
+      const {driver} = getDriver({});
+      driver.open();
+      expect(driver.isOpen()).toBeTruthy();
+      driver.pressOnBackground();
+      expect(driver.isOpen()).toBeFalsy();
+    });
+
+    it(`should render ${helloWorld} on starting view and ${universe} in the dialog only after pressing`, () => {
+      const {driver, renderTree} = getDriver({});
+      expect(renderTree.queryByText(helloWorld)).toBeTruthy();
+      expect(renderTree.queryByText(universe)).toBeFalsy();
+      driver.open();
+      expect(renderTree.queryByText(universe)).toBeTruthy();
     });
   });
 });
