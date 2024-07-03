@@ -1,5 +1,5 @@
-import {useCallback, useMemo} from 'react';
 import _ from 'lodash';
+import {useCallback, useMemo} from 'react';
 import {PickerProps, PickerValue} from '../types';
 
 interface UsePickerLabelProps
@@ -15,12 +15,10 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
 
   const getLabelsFromArray = useCallback((value: PickerValue) => {
     const itemsByValue = _.keyBy(items, 'value');
-
     return _.flow(arr =>
       _.map(arr, item => (_.isPlainObject(item) ? getItemLabel?.(item) || item?.label : itemsByValue[item]?.label)),
     arr => _.join(arr, ', '))(value);
-  },
-  [getItemLabel, items]);
+  }, [getItemLabel, items]);
 
   const _getLabel = useCallback((value: PickerValue) => {
     if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
@@ -31,19 +29,13 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
       return getLabelsFromArray(value);
     }
 
-    // TODO: Remove
-    // if (typeof value === 'object') {
-    //   return value?.label;
-    // }
-
     if (!_.isEmpty(items)) {
       const selectedItem = _.find(items, {value});
       return _.get(selectedItem, 'label');
     }
 
     return value;
-  },
-  [getLabel, getLabelsFromArray, items]);
+  }, [getLabel, getLabelsFromArray, items]);
 
   const accessibilityInfo = useMemo(() => {
     const label = _getLabel(value);
