@@ -16,6 +16,7 @@ const useNewPickerProps = (props: PickerProps) => {
     renderHeader,
     renderOverlay,
     useDialog,
+    useWheelPicker,
     mode
   } = props;
 
@@ -26,7 +27,7 @@ const useNewPickerProps = (props: PickerProps) => {
     onRequestClose: topBarProps?.onCancel
   };
 
-  const showTopBar = (!useDialog || mode === PickerModes.MULTI) && !renderHeader;
+  const showTopBar = (!useDialog || mode === PickerModes.MULTI) && !renderHeader && !useWheelPicker;
 
   const newProps: PickerProps = {
     renderHeader: renderCustomDialogHeader || renderHeader,

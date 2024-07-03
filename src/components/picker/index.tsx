@@ -255,7 +255,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         mode={mode}
         useDialog={useDialog}
         items={useItems ? items : undefined}
-        topBarProps={topBarProps}
+        topBarProps={overlayTopBarProps}
         showSearch={showSearch}
         searchStyle={searchStyle}
         searchPlaceholder={searchPlaceholder}
