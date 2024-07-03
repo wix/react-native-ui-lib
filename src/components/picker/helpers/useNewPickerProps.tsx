@@ -27,7 +27,11 @@ const useNewPickerProps = (props: PickerProps) => {
     onRequestClose: topBarProps?.onCancel
   };
 
-  const showTopBar = (!useDialog || mode === PickerModes.MULTI) && !renderHeader && !useWheelPicker;
+  const showTopBar = !!renderHeader || ((!useDialog || mode === PickerModes.MULTI) && !useWheelPicker);
+
+  const renderPickerHeader = () => {
+    return renderHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
+  };
 
   const newProps: PickerProps = {
     renderHeader: renderCustomDialogHeader || renderHeader,
@@ -36,6 +40,7 @@ const useNewPickerProps = (props: PickerProps) => {
     customPickerProps: {
       modalProps: {onShow, ...modalProps, ...pickerModalProps},
       showTopBar,
+      renderHeader: renderPickerHeader(),
       topBarProps,
       ...customPickerProps
     }

@@ -45,6 +45,10 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
      */
     renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement | undefined | null;
     /**
+     * Render a custom header for Picker's Overlay
+     */
+    renderHeader?: React.ReactElement;
+    /**
      * Disabled opening expandable overlay
      */
     disabled?: boolean;
@@ -61,6 +65,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     showTopBar,
     topBarProps,
     renderCustomOverlay,
+    renderHeader,
     disabled,
     onPress,
     customValue,
@@ -86,8 +91,11 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     toggleExpandable
   }));
 
-  const topBar = useMemo(() => showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>,
-    [showTopBar, closeExpandable, topBarProps]);
+  const topBar = useMemo(() => {
+    if (showTopBar) {
+      return renderHeader ? renderHeader : <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>;
+    }
+  }, [showTopBar, closeExpandable, topBarProps, renderHeader]);
 
   const renderModal = () => {
     return (

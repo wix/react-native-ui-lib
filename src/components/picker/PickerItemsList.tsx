@@ -27,7 +27,6 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     searchPlaceholder = 'Search...',
     onSearchChange,
     renderCustomSearch,
-    renderHeader,
     useSafeArea,
     testID
   } = props;
@@ -144,15 +143,10 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
-  const renderPickerHeader = () => {
-    return renderHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
-  };
-
   return (
     <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {!useWheelPicker && (
         <>
-          {renderPickerHeader()}
           {renderSearchInput()}
           {renderList()}
         </>
