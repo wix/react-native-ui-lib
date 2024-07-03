@@ -21,6 +21,10 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
   }, [getItemLabel, items]);
 
   const _getLabel = useCallback((value: PickerValue) => {
+    if (_.isUndefined(value) || typeof value === 'string') {
+      return value;
+    }
+
     if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
       return getLabel(value);
     }
@@ -33,8 +37,6 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
       const selectedItem = _.find(items, {value});
       return _.get(selectedItem, 'label');
     }
-
-    return value;
   }, [getLabel, getLabelsFromArray, items]);
 
   const accessibilityInfo = useMemo(() => {
