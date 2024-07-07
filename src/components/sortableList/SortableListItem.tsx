@@ -54,7 +54,7 @@ const SortableListItem = (props: Props) => {
   const id: string = data[index].id;
   const locked: boolean = data[index].locked;
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
-  const lastSwap = useSharedValue<{from?: number, to?: number} | undefined>(undefined);
+  const lastSwap = useSharedValue({from: -1, to: -1});
   const currIndex = useSharedValue(initialIndex.value);
   const translation = useSharedValue<number>(0);
 
@@ -103,7 +103,7 @@ const SortableListItem = (props: Props) => {
     .onStart(() => {
       isDragging.value = true;
       translation.value = getTranslationByIndexChange(currIndex.value, initialIndex.value, itemSize.value);
-      lastSwap.value = {from: currIndex.value};
+      lastSwap.value = {...lastSwap.value, from: currIndex.value};
       tempTranslation.value = translation.value;
       tempItemsOrder.value = itemsOrder.value;
     })
@@ -153,7 +153,7 @@ const SortableListItem = (props: Props) => {
 
       translation.value = withTiming(tempTranslation.value + _translation, animationConfig, () => {
         if (tempItemsOrder.value.toString() !== itemsOrder.value.toString()) {
-          runOnJS(onChange)(lastSwap.value?.from, lastSwap.value?.to);
+          runOnJS(onChange)(lastSwap.value.from, lastSwap.value.to);
         }
       });
     })
