@@ -124,10 +124,11 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   const renderPickerHeader = () => {
+    const {cancelButtonProps, cancelLabel, doneLabel, title, titleStyle, containerStyle, onDone, onCancel} =
+      topBarProps ?? {};
     if (renderHeader) {
-      return renderHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
+      return renderHeader?.({onDone, onCancel});
     } else if (useWheelPicker) {
-      const {cancelButtonProps, cancelLabel, doneLabel, title, titleStyle, containerStyle} = topBarProps ?? {};
       return (
         <View row spread padding-page style={containerStyle}>
           {(cancelButtonProps || cancelLabel) && renderCancel()}
@@ -143,7 +144,6 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   const renderWheel = () => {
-    const {useSafeArea} = topBarProps ?? {};
     return (
       <View useSafeArea={useSafeArea}>
         <WheelPicker
