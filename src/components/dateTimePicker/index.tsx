@@ -241,16 +241,16 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
           link
           iconSource={Assets.icons.x}
           iconStyle={{tintColor: Colors.$iconDefault}}
-          onPress={toggleExpandableOverlay}
           testID={`${testID}.cancel`}
           {...cancelButtonProps}
+          onPress={toggleExpandableOverlay}
         />
         <Button
           link
           iconSource={Assets.icons.check}
-          onPress={onDonePressed}
           testID={`${testID}.done`}
           {...confirmButtonProps}
+          onPress={onDonePressed}
         />
       </View>
     );
