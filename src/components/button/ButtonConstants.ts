@@ -1,4 +1,4 @@
-import {ButtonSize} from './ButtonTypes';
+import {ButtonSize} from './types';
 
 
 export const PADDINGS = {

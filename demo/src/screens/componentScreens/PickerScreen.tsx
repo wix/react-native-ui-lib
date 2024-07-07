@@ -99,7 +99,7 @@ export default class PickerScreen extends Component {
     contact: 0
   };
 
-  renderDialog: PickerProps['renderCustomModal'] = (modalProps: RenderCustomModalProps) => {
+  renderDialog: PickerProps['renderOverlay'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
     return (
       <Incubator.Dialog
@@ -170,7 +170,7 @@ export default class PickerScreen extends Component {
             onChange={items => this.setState({customModalValues: items})}
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
-            renderCustomModal={this.renderDialog}
+            renderOverlay={this.renderDialog}
             items={options}
           />
 
@@ -183,7 +183,7 @@ export default class PickerScreen extends Component {
             onChange={item => this.setState({option: item})}
             topBarProps={{title: 'Languages'}}
             useDialog
-            renderCustomDialogHeader={({onDone, onCancel}) => (
+            renderHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
                 <Button link label="Cancel" onPress={onCancel}/>
                 <Button link label="Done" onPress={onDone}/>
@@ -200,7 +200,7 @@ export default class PickerScreen extends Component {
           <Picker
             value={this.state.filter}
             onChange={filter => this.setState({filter})}
-            renderPicker={(_value?: any, label?: string) => {
+            renderInput={(_value?: any, label?: string) => {
               return (
                 <View row>
                   <Icon
@@ -225,7 +225,7 @@ export default class PickerScreen extends Component {
             onChange={contact => {
               this.setState({contact});
             }}
-            renderPicker={(contactValue?: number) => {
+            renderInput={(contactValue?: number) => {
               const contact = contacts[contactValue!] ?? undefined;
               return (
                 <View row>

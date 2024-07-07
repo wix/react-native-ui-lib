@@ -28,13 +28,14 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     searchPlaceholder = 'Search...',
     onSearchChange,
     renderCustomSearch,
-    renderCustomDialogHeader,
+    renderHeader,
     useSafeArea,
     useDialog,
     mode,
     testID
   } = props;
   const context = useContext(PickerContext);
+
   const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0].value);
   // TODO: Might not need this memoized style, instead we can move it to a stylesheet
   const wrapperContainerStyle = useMemo(() => {
@@ -147,8 +148,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   const renderPickerHeader = () => {
-    if (renderCustomDialogHeader) {
-      return renderCustomDialogHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
+    if (renderHeader) {
+      return renderHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
     } else if (!useDialog || mode === PickerModes.MULTI) {
       return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
     }
