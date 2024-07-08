@@ -110,7 +110,6 @@ const PickerItemsList = (props: PickerItemsListProps) => {
 
   const renderCancel = () => {
     const {cancelButtonProps, cancelLabel, onCancel} = topBarProps ?? {};
-
     return (
       <>
         {cancelLabel ? (
@@ -124,12 +123,13 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
-  const renderWheel = () => {
-    const {cancelButtonProps, cancelLabel, doneLabel, title, titleStyle, containerStyle, useSafeArea} =
+  const renderPickerHeader = () => {
+    const {cancelButtonProps, cancelLabel, doneLabel, title, titleStyle, containerStyle, onDone, onCancel} =
       topBarProps ?? {};
-
-    return (
-      <View useSafeArea={useSafeArea}>
+    if (renderHeader) {
+      return renderHeader?.({onDone, onCancel});
+    } else if (useWheelPicker) {
+      return (
         <View row spread padding-page style={containerStyle}>
           {(cancelButtonProps || cancelLabel) && renderCancel()}
           <Text style={titleStyle}>{title}</Text>
@@ -137,6 +137,15 @@ const PickerItemsList = (props: PickerItemsListProps) => {
             {doneLabel ?? 'Select'}
           </Text>
         </View>
+      );
+    } else if (!useDialog || mode === PickerModes.MULTI) {
+      return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
+    }
+  };
+
+  const renderWheel = () => {
+    return (
+      <View useSafeArea={useSafeArea}>
         <WheelPicker
           flatListProps={listProps}
           initialValue={context.value as PickerSingleValue}
@@ -147,25 +156,21 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
-  const renderPickerHeader = () => {
-    if (renderHeader) {
-      return renderHeader?.({onDone: topBarProps?.onDone, onCancel: topBarProps?.onCancel});
-    } else if (!useDialog || mode === PickerModes.MULTI) {
-      return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
-    }
+  const renderContent = () => {
+    return useWheelPicker ? (
+      renderWheel()
+    ) : (
+      <>
+        {renderSearchInput()}
+        {renderList()}
+      </>
+    );
   };
 
   return (
     <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
-      {!useWheelPicker && (
-        <>
-          {renderPickerHeader()}
-          {renderSearchInput()}
-          {renderList()}
-        </>
-      )}
-
-      {useWheelPicker && renderWheel()}
+      {renderPickerHeader()}
+      {renderContent()}
     </View>
   );
 };
