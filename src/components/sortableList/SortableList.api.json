@@ -17,7 +17,7 @@
     {
       "name": "onOrderChange",
       "type": "(data: ItemT[], info: OrderChangeInfo) => void",
-      "description": "A callback to get the new order (or swapped items) and changed indexes.",
+      "description": "A callback to get the new order (or swapped items) and info about the change (from and to indices).",
       "required": true
     },
     {
