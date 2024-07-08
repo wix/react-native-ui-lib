@@ -1,4 +1,4 @@
-import {ButtonProps} from './ButtonTypes';
+import {ButtonProps} from './types';
 import {ImageDriver} from '../image/Image.driver';
 import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
 import {TextDriver} from '../text/Text.driver';

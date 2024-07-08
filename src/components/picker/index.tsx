@@ -6,14 +6,10 @@
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
 import {LayoutChangeEvent} from 'react-native';
-import {Typography} from 'style';
 import {useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 import TextField from '../textField';
-import Icon from '../icon';
-import View from '../view';
-import Text from '../text';
 import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
@@ -21,6 +17,8 @@ import usePickerSelection from './helpers/usePickerSelection';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
+import useFieldType from './helpers/useFieldType';
+import useNewPickerProps from './helpers/useNewPickerProps';
 // import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
 import {extractPickerItems} from './PickerPresenter';
 import {
@@ -34,8 +32,6 @@ import {
   PickerItemsListProps,
   PickerMethods
 } from './types';
-
-const dropdown = require('./assets/dropdown.png');
 
 const DIALOG_PROPS = {
   bottom: true,
@@ -60,22 +56,15 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchStyle,
     searchPlaceholder,
     renderCustomSearch,
-    renderCustomDialogHeader,
     useWheelPicker,
     useDialog,
-    renderPicker,
-    customPickerProps,
     containerStyle,
     labelStyle,
     testID,
     onChange,
     onPress,
-    onShow,
     onSearchChange,
-    renderCustomModal,
-    enableModalBlur,
     topBarProps,
-    pickerModalProps,
     listProps,
     value,
     getLabel,
@@ -92,6 +81,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     ...others
   } = themeProps;
   const {preset} = others;
+  const {renderHeader, renderInput, renderOverlay, customPickerProps} = useNewPickerProps(themeProps);
 
   const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
@@ -134,6 +124,18 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     placeholder: themeProps.placeholder
   });
 
+  const {placeholder, style, trailingAccessory, label: propsLabel} = themeProps;
+  const {propsByFieldType, pickerInnerInput} = useFieldType({
+    fieldType,
+    preset,
+    trailingAccessory,
+    style,
+    placeholder,
+    labelStyle,
+    label: propsLabel,
+    testID
+  });
+
   const onSelectedItemLayout = useCallback((event: LayoutChangeEvent) => {
     const y = event.nativeEvent.layout.y;
     setSelectedItemPosition(y);
@@ -167,31 +169,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     onDoneSelecting
   ]);
 
-  const modalProps: ExpandableOverlayProps['modalProps'] = {
-    animationType: 'slide',
-    transparent: Constants.isIOS && enableModalBlur,
-    enableModalBlur: Constants.isIOS && enableModalBlur,
-    onRequestClose: topBarProps?.onCancel,
-    onShow,
-    ...pickerModalProps
-  };
-
-  const propsByFieldType = useMemo(() => {
-    if (fieldType === PickerFieldTypes.filter) {
-      return {
-        preset: preset || null,
-        containerStyle: {flexDirection: 'row'},
-        labelStyle: Typography.text70,
-        trailingAccessory: themeProps.trailingAccessory ?? <Icon marginL-s1 source={dropdown}/>
-      };
-    } else if (fieldType === PickerFieldTypes.settings) {
-      return {
-        preset: preset || null,
-        label: undefined
-      };
-    }
-  }, [fieldType, preset, themeProps.trailingAccessory]);
-
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
     return <PickerItem key={`${index}-${item.value}`} {...item}/>;
   }, []);
@@ -201,12 +178,12 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   },
   [renderPickerItem]);
 
-  const _renderCustomModal: ExpandableOverlayProps['renderCustomOverlay'] = ({
+  const _renderOverlay: ExpandableOverlayProps['renderCustomOverlay'] = ({
     visible,
     closeExpandable,
     toggleExpandable
   }) => {
-    if (renderCustomModal) {
+    if (renderOverlay) {
       const modalProps = {
         visible,
         closeModal: closeExpandable,
@@ -218,9 +195,43 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         onCancel: cancelSelect
       };
 
-      return renderCustomModal(modalProps);
+      return renderOverlay(modalProps);
     }
   };
+
+  const renderTextField = useCallback(() => {
+    return renderInput ? (
+      // @ts-expect-error - hopefully will be solved after the picker migration ends
+      renderInput(value, label)
+    ) : (
+      <TextField
+        // @ts-expect-error
+        ref={pickerRef}
+        {...others}
+        {...propsByFieldType}
+        testID={`${testID}.input`}
+        // @ts-expect-error
+        containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
+        labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
+        {...accessibilityInfo}
+        importantForAccessibility={'no-hide-descendants'}
+        value={label}
+        selection={Constants.isAndroid ? {start: 0} : undefined}
+      >
+        {pickerInnerInput}
+      </TextField>
+    );
+  }, [
+    renderInput,
+    pickerRef,
+    propsByFieldType,
+    containerStyle,
+    labelStyle,
+    accessibilityInfo,
+    label,
+    pickerInnerInput,
+    testID
+  ]);
 
   const expandableModalContent = useMemo(() => {
     const useItems = useWheelPicker || propItems;
@@ -241,7 +252,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         searchPlaceholder={searchPlaceholder}
         onSearchChange={_onSearchChange}
         renderCustomSearch={renderCustomSearch}
-        renderCustomDialogHeader={renderCustomDialogHeader}
+        renderHeader={renderHeader}
         listProps={listProps}
         useSafeArea={useSafeArea}
       >
@@ -262,7 +273,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     searchPlaceholder,
     _onSearchChange,
     renderCustomSearch,
-    renderCustomDialogHeader,
+    renderHeader,
     listProps,
     filteredItems,
     useSafeArea,
@@ -270,65 +281,21 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items
   ]);
 
-  const renderPickerInnerInput = () => {
-    if (fieldType === PickerFieldTypes.filter) {
-      return (
-        <Text text70 numberOfLines={1} style={others.style}>
-          {_.isEmpty(label) ? others.placeholder : label}
-        </Text>
-      );
-    } else if (fieldType === PickerFieldTypes.settings) {
-      return (
-        <View flexG row spread>
-          <Text text70 style={labelStyle}>
-            {others.label}
-          </Text>
-          <Text text70 $textPrimary style={others.style}>
-            {_.isEmpty(label) ? others.placeholder : label}
-          </Text>
-        </View>
-      );
-    }
-  };
-
   return (
-    //TODO : fix the ExpandableOverlay ts error
     <PickerContext.Provider value={contextValue}>
       {
-        /* @ts-expect-error */
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
-          modalProps={modalProps}
-          dialogProps={customPickerProps?.dialogProps || DIALOG_PROPS}
+          dialogProps={DIALOG_PROPS}
           expandableContent={expandableModalContent}
-          renderCustomOverlay={renderCustomModal ? _renderCustomModal : undefined}
+          renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}
           testID={testID}
           {...customPickerProps}
           disabled={themeProps.editable === false}
         >
-          {renderPicker ? (
-            // @ts-expect-error - hopefully will be solved after the picker migration ends
-            renderPicker(value, label)
-          ) : (
-            <TextField
-              // @ts-expect-error
-              ref={pickerRef}
-              {...others}
-              {...propsByFieldType}
-              testID={`${testID}.input`}
-              // @ts-expect-error
-              containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
-              labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
-              {...accessibilityInfo}
-              importantForAccessibility={'no-hide-descendants'}
-              value={label}
-              selection={Constants.isAndroid ? {start: 0} : undefined}
-            >
-              {renderPickerInnerInput()}
-            </TextField>
-          )}
+          {renderTextField()}
         </ExpandableOverlay>
       }
     </PickerContext.Provider>

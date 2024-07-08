@@ -70,7 +70,14 @@ const AnimatedImage = (props: AnimatedImageProps) => {
 
   return (
     <View style={containerStyle}>
-      <UIAnimatedImage {...others} style={_style} source={source} onLoad={onLoad} testID={testID}/>
+      <UIAnimatedImage
+        {...others}
+        style={_style}
+        source={source}
+        onLoad={onLoad}
+        testID={testID}
+        imageStyle={undefined}
+      />
       {isLoading && loader && <View style={styles.loader}>{loader}</View>}
     </View>
   );
