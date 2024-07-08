@@ -53,7 +53,7 @@ describe('SortableList', () => {
       {id: '1', text: '1'},
       {id: '3', text: '3'},
       {id: '4', text: '4'}
-    ], 1, 2);
+    ], {from: 1, to: 2});
   });
 
   it('SortableList onOrderChange is called - up', async () => {
@@ -72,6 +72,6 @@ describe('SortableList', () => {
       {id: '1', text: '1'},
       {id: '2', text: '2'},
       {id: '3', text: '3'}
-    ], 4, 1);
+    ], {from: 4, to: 1});
   });
 });

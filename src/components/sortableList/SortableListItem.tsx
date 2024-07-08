@@ -153,7 +153,7 @@ const SortableListItem = (props: Props) => {
 
       translation.value = withTiming(tempTranslation.value + _translation, animationConfig, () => {
         if (tempItemsOrder.value.toString() !== itemsOrder.value.toString()) {
-          runOnJS(onChange)(lastSwap.value.from, lastSwap.value.to);
+          runOnJS(onChange)({...lastSwap.value});
         }
       });
     })
