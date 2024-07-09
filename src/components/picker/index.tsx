@@ -114,6 +114,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     mode
   });
 
+  const {placeholder, style, trailingAccessory, label: propsLabel} = themeProps;
+
   const {label, accessibilityInfo} = usePickerLabel({
     value,
     items,
@@ -121,10 +123,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     getLabel,
     accessibilityLabel,
     accessibilityHint,
-    placeholder: themeProps.placeholder
+    placeholder
   });
 
-  const {placeholder, style, trailingAccessory, label: propsLabel} = themeProps;
   const {propsByFieldType, pickerInnerInput} = useFieldType({
     fieldType,
     preset,
@@ -132,7 +133,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     style,
     placeholder,
     labelStyle,
-    label: propsLabel,
+    label: label || propsLabel,
     testID
   });
 
