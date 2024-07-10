@@ -27,7 +27,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     getIdByItemOrder,
     getTranslationByOrderChange,
     updateItemLayout,
-    reorderByIndex
+    orderByIndex
   } = props;
   const initialIndex = useSharedValue(_.map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
@@ -134,7 +134,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
 
         if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
-          if (reorderByIndex) {
+          if (orderByIndex) {
             const shouldMoveOthersDown = newOrder > oldOrder;
             if (shouldMoveOthersDown) {
               for (let i = oldOrder; i < newOrder; i++) {
