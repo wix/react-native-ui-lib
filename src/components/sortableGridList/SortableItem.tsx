@@ -134,7 +134,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
 
         if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
-          console.log(`Nitzan - reoder`, reorderByIndex);
           if (reorderByIndex) {
             const shouldMoveOthersDown = newOrder > oldOrder;
             if (shouldMoveOthersDown) {

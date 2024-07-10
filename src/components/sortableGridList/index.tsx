@@ -60,14 +60,14 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
         itemsOrder={itemsOrder}
         id={item.id}
         onChange={onChange}
-        shouldMoveItemsByIndex={shouldOrderItemsByIndex}
+        reorderByIndex={shouldOrderItemsByIndex}
       >
         {/* @ts-expect-error */}
         {renderItem({item, index})}
       </SortableItem>
     );
   },
-  [data, itemContainerStyle, onChange, renderItem]);
+  [data, itemContainerStyle, onChange, renderItem, shouldOrderItemsByIndex]);
 
   return (
     <GestureHandlerRootView style={flexMigration ? styles.container : undefined}>
