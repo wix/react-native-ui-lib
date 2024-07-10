@@ -1,4 +1,3 @@
-import React from 'react';
 import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, Animated} from 'react-native';
 // @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
 import {PointPropType} from 'deprecated-react-native-prop-types';
@@ -108,13 +107,4 @@ export interface CarouselState {
   pageHeight: number;
   initialOffset: PointPropType;
   prevProps: CarouselProps;
-}
-
-// @ts-ignore
-class CarouselTypesForDocs extends React.Component<CarouselProps> { // eslint-disable-line
-  static displayName = 'Carousel';
-
-  render() {
-    return null;
-  }
 }

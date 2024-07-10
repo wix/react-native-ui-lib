@@ -1,12 +1,11 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
 import type {Dictionary, ComponentStatics} from '../../typings/common';
 import Text from '../text';
-import Image from '../image';
 import Icon from '../icon';
 import {
   ButtonSize,
@@ -16,7 +15,7 @@ import {
   Props,
   DEFAULT_PROPS,
   ButtonSizeProp
-} from './ButtonTypes';
+} from './types';
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
@@ -249,7 +248,7 @@ class Button extends PureComponent<Props, ButtonState> {
     }
   }
 
-  getIconStyle() {
+  getIconStyle(): [ImageStyle, StyleProp<ImageStyle>] {
     const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
     const size = propsSize || DEFAULT_SIZE;
     const iconStyle: ImageStyle = {
@@ -303,26 +302,29 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        if (Constants.isWeb) {
-          return (
-            <Icon
-              style={iconStyle}
-              tintColor={Colors.$iconDefault}
-              source={iconSource}
-              testID={`${testID}.icon`}
-              {...iconProps}
-            />
-          );
-        }
+        // if (Constants.isWeb) {
         return (
-          <Image
+          <Icon
+            style={iconStyle}
             source={iconSource}
             supportRTL={supportRTL}
-            style={iconStyle}
             testID={`${testID}.icon`}
+            // Note Passing tintColor as prop is required for Web
+            // @ts-expect-error RN ImageStyle conflicts with ImageProps in tintColor type
+            tintColor={iconStyle[0]?.tintColor}
             {...iconProps}
           />
         );
+        // }
+        // return (
+        //   <Image
+        //     source={iconSource}
+        //     supportRTL={supportRTL}
+        //     style={iconStyle}
+        //     testID={`${testID}.icon`}
+        //     {...iconProps}
+        //   />
+        // );
       }
     }
     return null;

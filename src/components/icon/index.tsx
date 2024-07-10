@@ -88,6 +88,8 @@ const Icon = forwardRef((props: Props, ref: any) => {
 
   const renderImage = () => (
     <Image
+      accessible={false}
+      accessibilityRole={'image'}
       fsTagName={recorderTag}
       {...others}
       ref={ref}

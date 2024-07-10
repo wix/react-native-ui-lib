@@ -15,8 +15,12 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/react-native-ui-lib.svg?style=flat)](https://www.npmjs.com/package/react-native-ui-lib)
 <a href="https://twitter.com/rnuilib"><img src="https://img.shields.io/twitter/follow/rnuilib.svg?style=flat&colorA=1DA1F2&colorB=20303C&label=Follow%20us%20on%20Twitter" alt="Follow on Twitter"></a>
 
-Check out our [Docs](https://wix.github.io/react-native-ui-lib/). <br>
-Our [Discord Channel](https://discord.gg/2eW4g6Z)
+
+## Links
+- [Docs](https://wix.github.io/react-native-ui-lib/)
+- [Figma library](https://www.figma.com/community/file/1379775092983284111/rnui-library)
+- [Discord Channel](https://discord.gg/2eW4g6Z)
+
 
 Download our Expo demo app <br>
 <img height="120" src="https://qr.expo.dev/expo-go?owner=vn.chemgio&slug=rnuilib&releaseChannel=default&host=exp.host"> <br>
