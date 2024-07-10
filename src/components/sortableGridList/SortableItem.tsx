@@ -26,7 +26,8 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     getOrderByPosition,
     getIdByItemOrder,
     getTranslationByOrderChange,
-    updateItemLayout
+    updateItemLayout,
+    reorderByIndex
   } = props;
   const initialIndex = useSharedValue(_.map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
@@ -112,7 +113,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     .activateAfterLongPress(250)
     .onStart(() => {
       isDragging.value = true;
-
       const translation = getTranslationByOrderChange(currIndex.value, initialIndex.value);
       translateX.value = translation.x;
       translateY.value = translation.y;
@@ -134,8 +134,24 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
 
         if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
-          newItemsOrder[newOrder] = id;
-          newItemsOrder[oldOrder] = itemIdToSwap;
+          console.log(`Nitzan - reoder`, reorderByIndex);
+          if (reorderByIndex) {
+            const shouldMoveOthersDown = newOrder > oldOrder;
+            if (shouldMoveOthersDown) {
+              for (let i = oldOrder; i < newOrder; i++) {
+                newItemsOrder[i] = itemsOrder.value[i + 1];
+              }
+            } else {
+              for (let i = oldOrder; i > newOrder; i--) {
+                newItemsOrder[i] = itemsOrder.value[i - 1];
+              }
+            }
+            newItemsOrder[newOrder] = id;
+          } else {
+            newItemsOrder[newOrder] = id;
+            newItemsOrder[oldOrder] = itemIdToSwap;
+          }
+
           itemsOrder.value = newItemsOrder;
         }
       }

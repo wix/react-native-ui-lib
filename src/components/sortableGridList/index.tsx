@@ -17,7 +17,7 @@ function generateItemsOrder(data: SortableGridListProps['data']) {
 }
 
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
-  const {renderItem, onOrderChange, flexMigration, ...others} = props;
+  const {renderItem, onOrderChange, flexMigration, shouldOrderItemsByIndex = false, ...others} = props;
 
   const {itemContainerStyle, numberOfColumns, listStyle, listContentStyle, listColumnWrapperStyle} =
     useGridLayout(props);
@@ -60,6 +60,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
         itemsOrder={itemsOrder}
         id={item.id}
         onChange={onChange}
+        shouldMoveItemsByIndex={shouldOrderItemsByIndex}
       >
         {/* @ts-expect-error */}
         {renderItem({item, index})}

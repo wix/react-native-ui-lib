@@ -16,6 +16,11 @@ export interface SortableGridListProps<T = any> extends GridListBaseProps, Scrol
    * Temporary migration flag for enabling flex on the container of the list (like it should be by default)
    */
   flexMigration?: boolean;
+  /**
+   * Wether to reorder the items by index instead of by replacing locations.
+   * Items will move to the new index by pushing other items a ahead or aback instead of swapping places with the item at the new index.
+   */
+  shouldOrderItemsByIndex?: boolean
 }
 
 export interface SortableItemProps {
@@ -24,4 +29,5 @@ export interface SortableItemProps {
   itemsOrder: Animated.SharedValue<ItemsOrder>;
   onChange: () => void;
   style: StyleProp<ViewStyle>;
+  reorderByIndex: boolean;
 }
