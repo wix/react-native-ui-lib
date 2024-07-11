@@ -1,13 +1,13 @@
 import {isEmpty} from 'lodash';
 import React, {useMemo, useCallback, useState, useRef} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
+import {StyleSheet, type StyleProp, type ViewStyle, type TextStyle} from 'react-native';
 import {useDidUpdate, useThemeProps} from '../../hooks';
 import {Colors} from '../../style';
 import MaskedInput from '../maskedInput/new';
-import TextField, {TextFieldProps, TextFieldRef} from '../textField';
+import TextField, {type TextFieldProps, type TextFieldRef} from '../textField';
 import View from '../view';
 import Text from '../text';
-import {parseInput, generateOptions, getInitialNumber, Options, NumberInputData} from './Presenter';
+import {parseInput, generateOptions, getInitialNumber, type Options, NumberInputData} from './Presenter';
 
 export {NumberInputData};
 

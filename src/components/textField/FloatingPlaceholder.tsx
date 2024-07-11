@@ -1,7 +1,7 @@
 import React, {useContext, useRef, useCallback, useState, useMemo} from 'react';
-import {Animated, LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
+import {Animated, type LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
 import {useDidUpdate} from 'hooks';
-import {FloatingPlaceholderProps, ValidationMessagePosition} from './types';
+import {type FloatingPlaceholderProps, ValidationMessagePosition} from './types';
 import {getColorByState, shouldPlaceholderFloat} from './Presenter';
 import {Colors} from '../../style';
 import {Constants} from '../../commons/new';

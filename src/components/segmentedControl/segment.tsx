@@ -1,11 +1,11 @@
 import React, {useCallback, useMemo} from 'react';
-import {LayoutChangeEvent, ImageStyle, StyleProp, ViewStyle, StyleSheet} from 'react-native';
+import {type LayoutChangeEvent, type ImageStyle, type StyleProp, type ViewStyle, StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
-import {SegmentedControlProps} from './index';
-import Icon, {IconProps} from '../icon';
+import {type SegmentedControlProps} from './index';
+import Icon, {type IconProps} from '../icon';
 
 const ICON_SPACING = Spacings.s1;
 

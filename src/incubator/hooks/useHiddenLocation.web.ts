@@ -1,8 +1,8 @@
 import {isEqual} from 'lodash';
-import {useCallback, useRef, useState, RefCallback} from 'react';
-import {View, LayoutChangeEvent, LayoutRectangle} from 'react-native';
+import {useCallback, useRef, useState, type RefCallback} from 'react';
+import {type View, type LayoutChangeEvent, type LayoutRectangle} from 'react-native';
 import {Constants} from '../../commons/new';
-import {PanningDirectionsEnum} from '../panView';
+import {type PanningDirectionsEnum} from '../panView';
 
 type HiddenLocationRecord = Record<PanningDirectionsEnum, number>;
 

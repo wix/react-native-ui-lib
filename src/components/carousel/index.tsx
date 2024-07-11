@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import React, {Component, RefObject, ReactNode, Key} from 'react';
+import React, {Component, type RefObject, type ReactNode, type Key} from 'react';
 import {
   Animated,
   ScrollView,
   StyleSheet,
-  LayoutChangeEvent,
-  NativeSyntheticEvent,
-  NativeScrollEvent
+  type LayoutChangeEvent,
+  type NativeSyntheticEvent,
+  type NativeScrollEvent
 } from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
@@ -14,7 +14,7 @@ import View from '../view';
 import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
-import {CarouselProps, CarouselState, PageControlPosition} from './types';
+import {CarouselProps, type CarouselState, PageControlPosition} from './types';
 export {CarouselProps, PageControlPosition};
 
 type DefaultProps = Partial<CarouselProps>;

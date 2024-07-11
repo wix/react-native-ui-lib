@@ -1,4 +1,4 @@
-import {HintProps} from './index';
+import {type HintProps} from './index';
 import {ComponentDriver} from '../../testkit/Component.driver';
 
 export class HintDriver extends ComponentDriver<HintProps> {

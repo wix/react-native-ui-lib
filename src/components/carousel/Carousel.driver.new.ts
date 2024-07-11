@@ -1,5 +1,5 @@
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
-import {useScrollableDriver, ScrollProps} from '../../testkit/new/useScrollable.driver';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
+import {useScrollableDriver, type ScrollProps} from '../../testkit/new/useScrollable.driver';
 
 export const CarouselDriver = (props: ComponentProps) => {
   const driver = useScrollableDriver(useComponentDriver(props));

@@ -5,7 +5,7 @@ import Assets from '../../../assets';
 import View from '../../../components/view';
 import {TextFieldDriver} from '../TextField.driver.new';
 import TextField from '../index';
-import {TextFieldProps} from '../types';
+import {type TextFieldProps} from '../types';
 
 const TEXT_FIELD_TEST_ID = 'text_field_test_id';
 const placeholder = 'Placeholder';
@@ -200,17 +200,15 @@ describe('TextField', () => {
       });
 
       it('should remove validation error message after entering a valid input', () => {
-        const renderTree = render(
-          <TestCase
-            {...defaultProps}
-            value={'invalid'}
-            validate={'email'}
-            validationMessage={'email is invalid'}
-            enableErrors
-            validateOnStart
-            validateOnChange
-          />
-        );
+        const renderTree = render(<TestCase
+          {...defaultProps}
+          value={'invalid'}
+          validate={'email'}
+          validationMessage={'email is invalid'}
+          enableErrors
+          validateOnStart
+          validateOnChange
+                                  />);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getValidationMessage().getText()).toEqual('email is invalid');
@@ -247,16 +245,14 @@ describe('TextField', () => {
 
     describe('validationIcon', () => {
       it('should display validationIcon', () => {
-        const renderTree = render(
-          <TestCase
-            {...defaultProps}
-            enableErrors
-            validateOnStart
-            validate={'required'}
-            validationMessage={'This field is required'}
-            validationIcon={{source: Assets.icons.check}}
-          />
-        );
+        const renderTree = render(<TestCase
+          {...defaultProps}
+          enableErrors
+          validateOnStart
+          validate={'required'}
+          validationMessage={'This field is required'}
+          validationIcon={{source: Assets.icons.check}}
+                                  />);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getValidationMessage().exists()).toBe(true);

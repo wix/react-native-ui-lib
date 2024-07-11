@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet, type ViewStyle} from 'react-native';
 import View from '../view';
 import Dash from '../dash';
-import {LineProps, LineTypes} from './types';
+import {type LineProps, LineTypes} from './types';
 
 const LINE_WIDTH = 2;
 const ENTRY_POINT_HEIGHT = 2;

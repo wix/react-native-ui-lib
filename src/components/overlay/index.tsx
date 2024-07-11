@@ -1,6 +1,6 @@
 import {isUndefined} from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Image, ImageProps, ImageSourcePropType} from 'react-native';
+import {StyleSheet, Image, type ImageProps, type ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
 import View from '../view';
 

@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {getDaysOfWeekNumber} from './helpers/DateUtils';
-import {WeekProps} from './types';
+import {type WeekProps} from './types';
 import CalendarContext from './CalendarContext';
 import Day from './Day';
 

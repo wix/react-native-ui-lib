@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Animated, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
+import {Animated, type LayoutChangeEvent, type StyleProp, type ViewStyle} from 'react-native';
 import {Constants} from '../../commons/new';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {
-  PanningDirections,
-  PanAmountsProps,
-  PanDirectionsProps
+  type PanningDirections,
+  type PanAmountsProps,
+  type PanDirectionsProps
 } from './panningProvider';
 
 export interface DismissibleAnimationProps {

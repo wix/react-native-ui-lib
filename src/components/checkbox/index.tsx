@@ -3,18 +3,18 @@ import {
   Animated,
   Easing,
   StyleSheet,
-  StyleProp,
-  TouchableOpacityProps,
-  ViewStyle,
-  TextStyle,
-  ImageStyle
+  type StyleProp,
+  type TouchableOpacityProps,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle
 } from 'react-native';
 import {Colors, Spacings} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
-import Text, {TextProps} from '../text';
+import Text, {type TextProps} from '../text';
 import View from '../view';
 import Icon from '../icon';
 import Constants from '../../commons/Constants';

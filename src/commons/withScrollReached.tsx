@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react';
-import {FlatListProps, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
-import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
+import {type FlatListProps, type ScrollViewProps, type NativeSyntheticEvent, type NativeScrollEvent} from 'react-native';
+import forwardRef, {type ForwardRefInjectedProps} from './forwardRef';
 import hoistStatics from 'hoist-non-react-statics';
 import Constants from './Constants';
 

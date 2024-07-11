@@ -2,7 +2,7 @@ import {useCallback, useState, useEffect, useMemo} from 'react';
 import _ from 'lodash';
 import * as Presenter from './Presenter';
 import {useDidUpdate} from 'hooks';
-import {FieldStateProps} from './types';
+import {type FieldStateProps} from './types';
 import {Constants} from '../../commons/new';
 
 export default function useFieldState({

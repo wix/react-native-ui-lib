@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Animated, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Animated, type StyleProp, type ViewStyle} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers} from '../../commons/new';
-import View, {ViewProps} from '../view';
-import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
+import {Constants, asBaseComponent, forwardRef, type BaseComponentInjectedProps, type ForwardRefInjectedProps, type MarginModifiers} from '../../commons/new';
+import View, {type ViewProps} from '../view';
+import TouchableOpacity, {type TouchableOpacityProps} from '../touchableOpacity';
 import Icon from '../icon';
 import CardImage from './CardImage';
 import CardSection, {CardSectionProps} from './CardSection';

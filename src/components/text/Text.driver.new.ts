@@ -1,5 +1,5 @@
-import {StyleSheet, TextStyle} from 'react-native';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {StyleSheet, type TextStyle} from 'react-native';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
 import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
 export const TextDriver = (props: ComponentProps) => {

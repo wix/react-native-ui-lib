@@ -1,7 +1,7 @@
 import Colors from '../../style/colors';
 const checkMarkSmall = require('./assets/checkMarkSmall.png');
 const exclamationSmall = require('./assets/exclamationSmall.png');
-import {WizardStepsConfig} from './types';
+import {type WizardStepsConfig} from './types';
 
 export const StatesConfig: WizardStepsConfig = {
   enabled: {color: Colors.$textNeutralHeavy, circleColor: Colors.$outlineDisabled, enabled: true},

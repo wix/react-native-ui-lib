@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {SortableListProps, SortableListItemProps} from './types';
+import {type SortableListProps, type SortableListItemProps} from './types';
 import {ComponentDriver} from '../../testkit/Component.driver';
 
 /**

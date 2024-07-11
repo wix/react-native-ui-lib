@@ -3,23 +3,23 @@ import React, {PureComponent} from 'react';
 import {
   Text as RNText,
   StyleSheet,
-  TextProps as RNTextProps,
-  TextStyle,
+  type TextProps as RNTextProps,
+  type TextStyle,
   Animated,
-  StyleProp
+  type StyleProp
 } from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
-  MarginModifiers,
-  TypographyModifiers,
-  ColorsModifiers,
-  FlexModifiers,
+  type BaseComponentInjectedProps,
+  type ForwardRefInjectedProps,
+  type MarginModifiers,
+  type TypographyModifiers,
+  type ColorsModifiers,
+  type FlexModifiers,
   Constants
 } from '../../commons/new';
-import {RecorderProps} from '../../typings/recorderTypes';
+import {type RecorderProps} from '../../typings/recorderTypes';
 import {Colors} from 'style';
 import {TextUtils} from 'utils';
 

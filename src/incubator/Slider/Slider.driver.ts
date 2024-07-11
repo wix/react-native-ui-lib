@@ -1,4 +1,4 @@
-import {SliderProps} from './index';
+import {type SliderProps} from './index';
 import {ComponentDriver} from '../../testkit/Component.driver';
 
 export class SliderDriver extends ComponentDriver<SliderProps> {

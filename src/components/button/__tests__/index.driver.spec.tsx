@@ -3,7 +3,7 @@ import {waitFor, render} from '@testing-library/react-native';
 import View from '../../view';
 import Text from '../../text';
 import Button from '../index';
-import {ImageSourcePropType} from 'react-native';
+import {type ImageSourcePropType} from 'react-native';
 import {ButtonDriver} from '../Button.driver.new';
 import {TextDriver} from '../../text/Text.driver.new';
 

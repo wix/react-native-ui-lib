@@ -5,9 +5,9 @@ import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
-import ColorPalette, {ColorPaletteProps} from '../colorPalette';
+import ColorPalette, {type ColorPaletteProps} from '../colorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
-import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
+import ColorPickerDialog, {type ColorPickerDialogProps} from './ColorPickerDialog';
 
 interface Props extends ColorPickerDialogProps, Pick<ColorPaletteProps, 'onValueChange'> {
   /**

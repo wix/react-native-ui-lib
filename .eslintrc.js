@@ -24,6 +24,7 @@ module.exports = {
         allowBind: false
       }
     ],
+    '@typescript-eslint/consistent-type-imports': ['error', {fixStyle: 'inline-type-imports'}],
     'function-paren-newline': ['warn', 'never'],
     'new-cap': ['off'], // TODO: fix this in colors.js and remove this
     'default-case': ['off'],

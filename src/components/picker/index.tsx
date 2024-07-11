@@ -5,10 +5,10 @@
 // TODO: consider deprecating renderCustomModal prop
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import {type LayoutChangeEvent} from 'react-native';
 import {useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
-import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
+import ExpandableOverlay, {type ExpandableOverlayProps, type ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 import TextField from '../textField';
 import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';

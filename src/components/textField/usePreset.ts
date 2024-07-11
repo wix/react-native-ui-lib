@@ -1,6 +1,6 @@
 import underlinePreset from './presets/underline';
 import outlinePreset from './presets/outline';
-import {InternalTextFieldProps, Presets} from './types';
+import {type InternalTextFieldProps, Presets} from './types';
 
 export default function usePreset({preset, ...props}: InternalTextFieldProps) {
   let presetConfig;

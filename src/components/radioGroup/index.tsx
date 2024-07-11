@@ -1,11 +1,11 @@
-import React, {PureComponent, GetDerivedStateFromProps} from 'react';
+import React, {PureComponent, type GetDerivedStateFromProps} from 'react';
 import {
   asBaseComponent,
   forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps
+  type BaseComponentInjectedProps,
+  type ForwardRefInjectedProps
 } from '../../commons/new';
-import View, {ViewProps} from '../view';
+import View, {type ViewProps} from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
 export type RadioGroupProps = ViewProps & {

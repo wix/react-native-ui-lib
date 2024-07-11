@@ -1,5 +1,6 @@
-import React, {useContext, useImperativeHandle, useRef} from 'react';
-import {TextInput, TextInputProps} from 'react-native';
+import type React from 'react';
+import {useContext, useImperativeHandle, useRef} from 'react';
+import {type TextInput, type TextInputProps} from 'react-native';
 import FieldContext from './FieldContext';
 
 const useImperativeInputHandle = (ref: React.Ref<any>, props: Pick<TextInputProps, 'onChangeText'>) => {

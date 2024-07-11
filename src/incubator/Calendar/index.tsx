@@ -1,11 +1,11 @@
-import React, {PropsWithChildren, useCallback, useMemo, useRef, useState} from 'react';
+import React, {type PropsWithChildren, useCallback, useMemo, useRef, useState} from 'react';
 import {useSharedValue, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import {FlashListPackage} from 'optionalDeps';
 import {Constants} from '../../commons/new';
 import {generateMonthItems} from './helpers/CalendarProcessor';
 import {addHeaders} from './helpers/DataProcessor';
 import {isSameMonth, /* addYears, */ getDateObject} from './helpers/DateUtils';
-import {CalendarContextProps, CalendarProps, FirstDayOfWeek, UpdateSource, DateObjectWithOptionalDay} from './types';
+import {type CalendarContextProps, type CalendarProps, FirstDayOfWeek, UpdateSource, type DateObjectWithOptionalDay} from './types';
 import CalendarContext from './CalendarContext';
 import CalendarItem from './CalendarItem';
 import Agenda from './Agenda';

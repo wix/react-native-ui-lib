@@ -1,7 +1,7 @@
-import tinycolor from 'tinycolor2';
-import {ReactElement} from 'react';
-import {StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {ThumbProps} from './Thumb';
+import type tinycolor from 'tinycolor2';
+import {type ReactElement} from 'react';
+import {type StyleProp, type ViewStyle, type TextStyle} from 'react-native';
+import {type ThumbProps} from './Thumb';
 
 export type HSLA = tinycolor.ColorFormats.HSLA;
 

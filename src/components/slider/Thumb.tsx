@@ -2,12 +2,12 @@ import _ from 'lodash';
 import React, {forwardRef, useRef} from 'react';
 import {
   StyleSheet,
-  StyleProp,
-  ViewStyle,
-  ViewProps,
-  View as RNView,
+  type StyleProp,
+  type ViewStyle,
+  type ViewProps,
+  type View as RNView,
   Animated,
-  GestureResponderEvent
+  type GestureResponderEvent
 } from 'react-native';
 import {useCombinedRefs} from 'hooks';
 import {Colors} from '../../style';

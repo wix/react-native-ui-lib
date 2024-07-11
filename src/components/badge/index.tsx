@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {
-  ImageSourcePropType,
-  ImageStyle,
-  StyleProp,
+  type ImageSourcePropType,
+  type ImageStyle,
+  type StyleProp,
   StyleSheet,
-  TextStyle,
-  TouchableOpacityProps,
-  ViewStyle,
-  ViewProps
+  type TextStyle,
+  type TouchableOpacityProps,
+  type ViewStyle,
+  type ViewProps
 } from 'react-native';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';

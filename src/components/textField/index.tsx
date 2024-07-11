@@ -14,7 +14,7 @@ import Text from '../text';
 import {useMeasure} from '../../hooks';
 import {
   TextFieldProps,
-  InternalTextFieldProps,
+  type InternalTextFieldProps,
   ValidationMessagePosition,
   FieldContextType,
   TextFieldMethods,

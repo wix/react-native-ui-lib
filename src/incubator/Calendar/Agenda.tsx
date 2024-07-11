@@ -7,7 +7,7 @@ import {BorderRadiuses, Colors} from 'style';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {isSameDay, isSameMonth} from './helpers/DateUtils';
-import {AgendaProps, InternalEvent, Event, DateSectionHeader, UpdateSource} from './types';
+import {type AgendaProps, type InternalEvent, type Event, type DateSectionHeader, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 const FlashList = FlashListPackage?.FlashList;

@@ -1,11 +1,11 @@
 import React, {useCallback, useMemo, memo, useRef} from 'react';
-import {TextStyle, StyleSheet} from 'react-native';
+import {type TextStyle, StyleSheet} from 'react-native';
 import Animated, {interpolateColor, useAnimatedStyle} from 'react-native-reanimated';
 import {Colors, Spacings} from '../../style';
 import {useThemeProps} from '../../hooks';
-import Text, {TextProps} from '../text';
+import Text, {type TextProps} from '../text';
 import TouchableOpacity from '../touchableOpacity';
-import {WheelPickerAlign, WheelPickerItemValue} from './types';
+import {WheelPickerAlign, type WheelPickerItemValue} from './types';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const AnimatedText = Animated.createAnimatedComponent(Text);

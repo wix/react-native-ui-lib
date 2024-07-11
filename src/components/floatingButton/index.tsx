@@ -1,10 +1,10 @@
-import React, {PropsWithChildren, PureComponent} from 'react';
+import React, {type PropsWithChildren, PureComponent} from 'react';
 import {StyleSheet, Animated} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {Colors, Shadows, Spacings} from '../../style';
 import View from '../view';
 import Image from '../image';
-import Button, {ButtonProps} from '../button';
+import Button, {type ButtonProps} from '../button';
 
 export enum FloatingButtonLayouts {
   VERTICAL = 'Vertical',

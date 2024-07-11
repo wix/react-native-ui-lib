@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
 import {useDraggableDriver} from '../../testkit/new/useDraggable.driver';
 import {DEFAULT_LIST_ITEM_SIZE} from './SortableListItem';
 

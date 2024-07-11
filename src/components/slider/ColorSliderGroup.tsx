@@ -4,7 +4,7 @@ import {Colors} from '../../style';
 import {useThemeProps} from '../../hooks';
 import View from '../view';
 import Text from '../text';
-import {ColorSliderGroupProps, HSLA, GradientSliderTypes} from './types';
+import {type ColorSliderGroupProps, type HSLA, type GradientSliderTypes} from './types';
 import SliderContext from './SliderContext';
 import GradientSlider from './GradientSlider';
 

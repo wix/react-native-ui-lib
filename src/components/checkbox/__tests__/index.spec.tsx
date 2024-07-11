@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react';
 import {render} from '@testing-library/react-native';
-import Checkbox, {CheckboxProps, CheckboxRef} from '../index';
+import Checkbox, {type CheckboxProps, type CheckboxRef} from '../index';
 import {CheckboxDriver} from '../Checkbox.driver';
 
 const testID = 'checkbox';
@@ -42,8 +42,7 @@ describe('Checkbox renderer test', () => {
       checkboxInitialValue | checkboxExpectedValue
       ${false}             | ${true}
       ${true}              | ${false}
-    `(
-      'Send value ($checkboxInitialValue)',
+    `('Send value ($checkboxInitialValue)',
       async ({
         checkboxInitialValue,
         checkboxExpectedValue
@@ -59,8 +58,7 @@ describe('Checkbox renderer test', () => {
 
         expect(onValueChange).toHaveBeenCalledTimes(1);
         expect(onValueChange).toHaveBeenCalledWith(checkboxExpectedValue);
-      }
-    );
+      });
   });
 
   describe('Press', () => {

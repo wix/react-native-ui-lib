@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {createContext} from 'react';
-import {FieldContextType} from './types';
+import {type FieldContextType} from './types';
 
 const FieldContext = createContext<FieldContextType>({
   isFocused: false,

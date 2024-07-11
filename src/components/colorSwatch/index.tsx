@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Animated, Easing, type LayoutChangeEvent, type StyleProp, type ViewStyle} from 'react-native';
 import Assets from '../../assets';
 import {BorderRadiuses, Colors} from '../../style';
 import {Constants} from '../../commons/new';

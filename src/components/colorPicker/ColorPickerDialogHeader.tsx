@@ -6,7 +6,7 @@ import View from '../view';
 import Button from '../button';
 import Assets from '../../assets';
 import {Colors} from '../../style';
-import {ColorPickerDialogProps} from './ColorPickerDialog';
+import {type ColorPickerDialogProps} from './ColorPickerDialog';
 import {BORDER_RADIUS} from './ColorPickerPresenter';
 
 type HeaderProps = Pick<ColorPickerDialogProps, 'doneButtonColor' | 'accessibilityLabels' | 'testID'> & {

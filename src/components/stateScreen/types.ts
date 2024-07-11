@@ -1,4 +1,4 @@
-import {ImageURISource} from 'react-native';
+import {type ImageURISource} from 'react-native';
 
 export type StateScreenProps = {
   /**

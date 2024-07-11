@@ -1,4 +1,4 @@
-import React, {ComponentType, ForwardedRef} from 'react';
+import React, {type ComponentType, type ForwardedRef} from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 
 export interface ForwardRefInjectedProps<T = any> {

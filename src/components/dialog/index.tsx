@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps} from 'react-native';
+import {StyleSheet, type StyleProp, type ViewStyle, type ModalPropsIOS, type AccessibilityProps} from 'react-native';
 import {Colors} from '../../style';
-import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
+import {type AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {Constants, asBaseComponent} from '../../commons/new';
-import Modal, {ModalProps} from '../modal';
+import Modal, {type ModalProps} from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';

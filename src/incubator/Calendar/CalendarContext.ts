@@ -1,5 +1,5 @@
 import {createContext} from 'react';
-import {CalendarContextProps, FirstDayOfWeek} from './types';
+import {type CalendarContextProps, FirstDayOfWeek} from './types';
 
 // @ts-ignore
 const CalendarContext = createContext<CalendarContextProps>({

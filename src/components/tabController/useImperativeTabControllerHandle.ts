@@ -1,4 +1,5 @@
-import React, {useImperativeHandle} from 'react';
+import type React from 'react';
+import {useImperativeHandle} from 'react';
 
 export interface TabControllerImperativeMethods {
   setTab: (index: number) => void;

@@ -1,8 +1,8 @@
-import {TextStyle} from 'react-native';
+import {type TextStyle} from 'react-native';
 import _ from 'lodash';
 import Constants from '../commons/Constants';
 
-import TypographyPresets, {TypographyKeys} from './typographyPresets';
+import TypographyPresets, {type TypographyKeys} from './typographyPresets';
 export type {TypographyKeys};
 import type {Dictionary, ExtendTypeWith} from '../typings/common';
 

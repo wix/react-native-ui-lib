@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, type LayoutChangeEvent, type ImageStyle, type TextStyle, type StyleProp} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
@@ -11,10 +11,10 @@ import {
   ButtonSize,
   ButtonAnimationDirection,
   ButtonProps,
-  ButtonState,
-  Props,
+  type ButtonState,
+  type Props,
   DEFAULT_PROPS,
-  ButtonSizeProp
+  type ButtonSizeProp
 } from './types';
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 

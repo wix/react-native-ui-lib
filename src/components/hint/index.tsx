@@ -1,19 +1,19 @@
 import _ from 'lodash';
-import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
+import React, {Component, type ReactElement, isValidElement, type ElementRef} from 'react';
 import {
   Animated,
   StyleSheet,
   AccessibilityInfo,
   findNodeHandle,
-  GestureResponderEvent,
-  ImageSourcePropType,
+  type GestureResponderEvent,
+  type ImageSourcePropType,
   TouchableWithoutFeedback,
-  ImageStyle,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
-  LayoutChangeEvent,
-  View as RNView
+  type ImageStyle,
+  type StyleProp,
+  type TextStyle,
+  type ViewStyle,
+  type LayoutChangeEvent,
+  type View as RNView
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';

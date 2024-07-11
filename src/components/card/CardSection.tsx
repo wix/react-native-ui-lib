@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
+import {StyleSheet, type ViewStyle, type ImageStyle, type ImageSourcePropType, type StyleProp} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
-import View, {ViewProps} from '../view';
-import Text, {TextProps} from '../text';
-import Image, {ImageProps} from '../image';
-import asCardChild, {asCardChildProps} from './asCardChild';
+import View, {type ViewProps} from '../view';
+import Text, {type TextProps} from '../text';
+import Image, {type ImageProps} from '../image';
+import asCardChild, {type asCardChildProps} from './asCardChild';
 
 
 type ContentType = TextProps & {text?: string};

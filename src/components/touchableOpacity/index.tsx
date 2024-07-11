@@ -1,21 +1,21 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {
-  GestureResponderEvent,
+  type GestureResponderEvent,
   TouchableOpacity as RNTouchableOpacity,
-  TouchableOpacityProps as RNTouchableOpacityProps
+  type TouchableOpacityProps as RNTouchableOpacityProps
 } from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
-  ContainerModifiers,
-  BackgroundColorModifier
+  type BaseComponentInjectedProps,
+  type ForwardRefInjectedProps,
+  type ContainerModifiers,
+  type BackgroundColorModifier
 } from '../../commons/new';
-import {RecorderProps} from '../../typings/recorderTypes';
+import {type RecorderProps} from '../../typings/recorderTypes';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
-import {ViewProps} from '../view';
+import {type ViewProps} from '../view';
 
 export interface TouchableOpacityProps
   extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'>,

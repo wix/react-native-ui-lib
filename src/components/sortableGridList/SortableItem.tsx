@@ -1,5 +1,5 @@
-import React, {PropsWithChildren, useCallback} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import React, {type PropsWithChildren, useCallback} from 'react';
+import {type LayoutChangeEvent} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {
   runOnJS,
@@ -11,8 +11,9 @@ import {
 } from 'react-native-reanimated';
 import _ from 'lodash';
 import {useDidUpdate} from 'hooks';
-import usePresenter, {animationConfig} from './usePresenter';
-import {SortableItemProps} from './types';
+import type usePresenter from './usePresenter';
+import {animationConfig} from './usePresenter';
+import {type SortableItemProps} from './types';
 import View from '../view';
 
 function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<typeof usePresenter>>) {

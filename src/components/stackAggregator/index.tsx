@@ -1,9 +1,9 @@
 import React, {useState, useMemo, useCallback, useEffect} from 'react';
-import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, Animated, Easing, LayoutAnimation, type StyleProp, type ViewStyle, type LayoutChangeEvent} from 'react-native';
 import {Colors} from '../../style';
-import View, {ViewProps} from '../view';
+import View, {type ViewProps} from '../view';
 import TouchableOpacity from '../touchableOpacity';
-import Button, {ButtonSize, ButtonProps} from '../button';
+import Button, {ButtonSize, type ButtonProps} from '../button';
 import Card from '../card';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';

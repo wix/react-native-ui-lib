@@ -1,20 +1,20 @@
 import _ from 'lodash';
-import React, {useMemo, useContext, useState, useRef, ReactNode} from 'react';
-import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
+import React, {useMemo, useContext, useState, useRef, type ReactNode} from 'react';
+import {StyleSheet, Platform, type StyleProp, type ViewStyle} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
-import TabBarItem, {TabControllerItemProps} from './TabBarItem';
+import TabBarItem, {type TabControllerItemProps} from './TabBarItem';
 import {
   Constants,
   asBaseComponent,
   forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps
+  type BaseComponentInjectedProps,
+  type ForwardRefInjectedProps
 } from '../../commons/new';
 import View from '../view';
 import {Colors, Spacings, Typography} from '../../style';
-import FadedScrollView, {FadedScrollViewRef} from '../fadedScrollView';
-import {FaderProps} from '../fader';
+import FadedScrollView, {type FadedScrollViewRef} from '../fadedScrollView';
+import {type FaderProps} from '../fader';
 import useScrollToItem from './useScrollToItem';
 import {useDidUpdate} from 'hooks';
 

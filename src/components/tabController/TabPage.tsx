@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
+import React, {type PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 // import {Freeze} from 'react-freeze';

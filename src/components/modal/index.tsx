@@ -4,11 +4,11 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {
   StyleSheet,
   Modal as RNModal,
-  ModalProps as RNModalProps,
+  type ModalProps as RNModalProps,
   TouchableWithoutFeedback,
-  GestureResponderEvent,
+  type GestureResponderEvent,
   KeyboardAvoidingView,
-  KeyboardAvoidingViewProps
+  type KeyboardAvoidingViewProps
 } from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';

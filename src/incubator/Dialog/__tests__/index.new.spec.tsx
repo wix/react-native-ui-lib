@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
 import {render, act} from '@testing-library/react-native';
-import Dialog, {DialogProps} from '../index';
+import Dialog, {type DialogProps} from '../index';
 import {DialogDriver} from '../Dialog.driver.new';
 import View from '../../../components/view';
 import Button from '../../../components/button';

@@ -1,8 +1,8 @@
 import React, {useContext, useMemo} from 'react';
 import {StyleSheet, Platform} from 'react-native';
 import {TextInput as RNTextInput} from './textInput';
-import {Constants, ForwardRefInjectedProps} from '../../commons/new';
-import {InputProps} from './types';
+import {Constants, type ForwardRefInjectedProps} from '../../commons/new';
+import {type InputProps} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
 import FieldContext from './FieldContext';

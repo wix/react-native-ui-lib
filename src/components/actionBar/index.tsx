@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet, type ViewStyle} from 'react-native';
 import {Colors, Shadows} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
-import Button, {ButtonProps} from '../button';
+import Button, {type ButtonProps} from '../button';
 
 export type ActionBarProps = {
   /**

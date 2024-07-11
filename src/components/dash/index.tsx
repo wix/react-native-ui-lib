@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useMemo} from 'react';
-import {StyleSheet, StyleProp, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, type StyleProp, type ViewProps, type ViewStyle, type LayoutChangeEvent} from 'react-native';
 import View from '../view';
 
 //TODO: move to some global types (shared with Timeline component)

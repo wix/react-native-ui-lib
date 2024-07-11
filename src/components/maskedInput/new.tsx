@@ -5,10 +5,10 @@ import React, {
   useState,
   useImperativeHandle,
   forwardRef,
-  ForwardedRef
+  type ForwardedRef
 } from 'react';
 import _ from 'lodash';
-import {StyleSheet, Keyboard, TextInput, TextInputProps, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Keyboard, TextInput, type TextInputProps, type StyleProp, type ViewStyle} from 'react-native';
 import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';

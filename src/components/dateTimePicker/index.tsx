@@ -6,21 +6,21 @@ import React, {
   useState,
   useImperativeHandle,
   forwardRef,
-  ForwardedRef
+  type ForwardedRef
 } from 'react';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {type StyleProp, StyleSheet, type ViewStyle} from 'react-native';
 import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
 import {useDidUpdate} from '../../hooks';
 import {Colors} from '../../style';
 import Assets from '../../assets';
-import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
-import TextField, {TextFieldProps, TextFieldMethods} from '../textField';
+import {Constants, asBaseComponent, type BaseComponentInjectedProps} from '../../commons/new';
+import TextField, {type TextFieldProps, type TextFieldMethods} from '../textField';
 import type {DialogMigrationProps} from '../../incubator/Dialog';
-import {DialogProps} from '../dialog';
+import {type DialogProps} from '../dialog';
 import View from '../view';
-import Button, {ButtonProps} from '../button';
-import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
-import useOldApi, {OldApiProps} from './useOldApi';
+import Button, {type ButtonProps} from '../button';
+import ExpandableOverlay, {type ExpandableOverlayMethods, type RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
+import useOldApi, {type OldApiProps} from './useOldApi';
 
 export type DateTimePickerMode = 'date' | 'time';
 

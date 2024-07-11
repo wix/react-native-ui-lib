@@ -1,8 +1,8 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
+import {View as RNView, SafeAreaView, Animated, type ViewProps as RNViewProps, type StyleProp, type ViewStyle} from 'react-native';
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
-import {Constants, ContainerModifiers} from '../../commons/new';
+import {Constants, type ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
 
 /**

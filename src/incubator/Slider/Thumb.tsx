@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
-import {SharedValue, useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
+import {StyleSheet, type ViewProps, type ViewStyle, type LayoutChangeEvent} from 'react-native';
+import {type SharedValue, useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
 import View from '../../components/view';

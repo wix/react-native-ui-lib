@@ -1,7 +1,7 @@
 import React, {useContext, useMemo} from 'react';
 import View from '../../components/view';
 import {getWeekNumbersOfMonth} from './helpers/DateUtils';
-import {MonthProps} from './types';
+import {type MonthProps} from './types';
 import CalendarContext from './CalendarContext';
 import Week from './Week';
 

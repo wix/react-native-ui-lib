@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import Switch, {SwitchProps} from '../index';
+import Switch, {type SwitchProps} from '../index';
 import {SwitchDriver} from '../Switch.driver';
 
 const testID = 'switch';

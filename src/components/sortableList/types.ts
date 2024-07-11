@@ -1,6 +1,6 @@
-import {ForwardedRef} from 'react';
-import {FlatListProps, FlatList} from 'react-native';
-import {SortableListContextType} from './SortableListContext';
+import {type ForwardedRef} from 'react';
+import {type FlatListProps, type FlatList} from 'react-native';
+import {type SortableListContextType} from './SortableListContext';
 
 export interface SortableListItemProps {
   id: string;

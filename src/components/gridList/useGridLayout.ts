@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {Spacings} from 'style';
 import {useOrientation} from 'hooks';
 import {Constants} from '../../commons/new';
-import {GridListBaseProps} from './types';
+import {type GridListBaseProps} from './types';
 
 export const DEFAULT_NUM_COLUMNS = 3;
 export const DEFAULT_ITEM_SPACINGS = Spacings.s4;

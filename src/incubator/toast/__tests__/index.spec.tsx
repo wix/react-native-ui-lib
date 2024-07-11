@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import Toast, {ToastProps} from '../index';
+import Toast, {type ToastProps} from '../index';
 import {ToastDriver} from '../Toast.driver.new';
 
 const testID = 'toast';

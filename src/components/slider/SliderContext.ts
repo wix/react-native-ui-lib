@@ -1,5 +1,5 @@
 import React from 'react';
-import {HSLA} from './types';
+import {type HSLA} from './types';
 
 export interface SliderContextType {
   value?: HSLA;

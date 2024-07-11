@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useRef, useCallback, useEffect} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, type StyleProp, type ViewStyle, type TextStyle, type LayoutChangeEvent} from 'react-native';
 import {
   Easing,
   useAnimatedReaction,

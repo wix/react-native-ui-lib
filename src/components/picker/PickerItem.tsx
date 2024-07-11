@@ -11,7 +11,7 @@ import Image from '../image';
 import Text from '../text';
 import {getItemLabel, isItemSelected} from './PickerPresenter';
 import PickerContext from './PickerContext';
-import {PickerItemProps, PickerSingleValue} from './types';
+import {type PickerItemProps, type PickerSingleValue} from './types';
 
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options

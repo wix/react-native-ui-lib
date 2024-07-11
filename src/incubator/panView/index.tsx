@@ -1,14 +1,14 @@
 import {isEmpty} from 'lodash';
 import React from 'react';
-import {StyleProp, View as RNView, ViewStyle} from 'react-native';
+import {type StyleProp, type View as RNView, type ViewStyle} from 'react-native';
 import {useAnimatedStyle} from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {asBaseComponent} from '../../commons/new';
-import View, {ViewProps} from '../../components/view';
+import View, {type ViewProps} from '../../components/view';
 import {PanningDirections, PanningDirectionsEnum} from './panningUtil';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import usePanGesture, {
-  PanGestureProps,
+  type PanGestureProps,
   PanViewDirections,
   PanViewDirectionsEnum,
   PanViewDismissThreshold,

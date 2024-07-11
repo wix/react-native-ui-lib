@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import {StyleSheet} from 'react-native';
-import {Typography, Colors, DesignTokens, BorderRadiuses, Spacings, ThemeManager} from '../style';
-import {BorderRadiusesLiterals} from '../style/borderRadiuses';
-import TypographyPresets from '../style/typographyPresets';
-import {SpacingLiterals} from '../style/spacings';
-import {colorsPalette} from '../style/colorsPalette';
+import {Typography, Colors, type DesignTokens, BorderRadiuses, Spacings, ThemeManager} from '../style';
+import {type BorderRadiusesLiterals} from '../style/borderRadiuses';
+import type TypographyPresets from '../style/typographyPresets';
+import {type SpacingLiterals} from '../style/spacings';
+import {type colorsPalette} from '../style/colorsPalette';
 import type {Dictionary} from '../typings/common';
 
 export const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;

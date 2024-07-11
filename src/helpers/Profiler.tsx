@@ -6,7 +6,7 @@
 // Profiler callback
 // https://reactjs.org/docs/profiler.html#onrender-callback
 
-import React, {Profiler as RProfiler, ProfilerProps as RProfilerProps, PropsWithChildren} from 'react';
+import React, {Profiler as RProfiler, type ProfilerProps as RProfilerProps, type PropsWithChildren} from 'react';
 
 export type ProfilerProps = Pick<RProfilerProps, 'id'>;
 

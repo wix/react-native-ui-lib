@@ -1,13 +1,13 @@
 import _ from 'lodash';
-import React, {PureComponent, ReactNode, RefObject} from 'react';
+import React, {PureComponent, type ReactNode, type RefObject} from 'react';
 import memoize from 'memoize-one';
-import {Animated, Easing, StyleSheet, ViewStyle, TextStyle, AccessibilityActionEvent} from 'react-native';
+import {Animated, Easing, StyleSheet, type ViewStyle, type TextStyle, type AccessibilityActionEvent} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors} from '../../style';
 import View from '../view';
-import Swipeable, {SwipeableProps} from './Swipeable';
+import Swipeable, {type SwipeableProps} from './Swipeable';
 
 const DEFAULT_BG = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_BOUNCINESS = 0;

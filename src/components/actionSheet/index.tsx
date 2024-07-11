@@ -1,17 +1,17 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ActionSheetIOS, StyleSheet, StyleProp, ViewStyle, ImageProps, ImageSourcePropType} from 'react-native';
+import {ActionSheetIOS, StyleSheet, type StyleProp, type ViewStyle, type ImageProps, type ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
-import Dialog, {DialogProps} from '../dialog';
+import Dialog, {type DialogProps} from '../dialog';
 import View from '../view';
 import Text from '../text';
-import {ButtonProps} from '../button';
+import {type ButtonProps} from '../button';
 import Image from '../image';
 //@ts-ignore
 import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
-import {Dialog as IncubatorDialog, DialogProps as IncubatorDialogProps} from '../../incubator';
+import {Dialog as IncubatorDialog, type DialogProps as IncubatorDialogProps} from '../../incubator';
 import {LogService} from '../../services';
 
 const VERTICAL_PADDING = 8;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {RadioButtonDriver} from '../RadioButton.driver';
-import {Assets, RadioButton, RadioButtonProps} from '../../../index';
+import {Assets, RadioButton, type RadioButtonProps} from '../../../index';
 
 const testID = 'checkbox';
 

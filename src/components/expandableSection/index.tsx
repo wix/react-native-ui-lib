@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {LayoutChangeEvent, StyleSheet} from 'react-native';
+import {type LayoutChangeEvent, StyleSheet} from 'react-native';
 import {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {useDidUpdate} from '../../hooks';
 import View from '../view';

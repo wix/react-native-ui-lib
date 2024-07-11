@@ -4,26 +4,26 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import {
   StyleSheet,
   Image as RNImage,
-  ImageProps as RNImageProps,
+  type ImageProps as RNImageProps,
   ImageBackground,
-  ImageBackgroundProps,
-  NativeSyntheticEvent,
-  ImageErrorEventData
+  type ImageBackgroundProps,
+  type NativeSyntheticEvent,
+  type ImageErrorEventData
 } from 'react-native';
 import {
   Constants,
   asBaseComponent,
-  ForwardRefInjectedProps,
-  BaseComponentInjectedProps,
-  MarginModifiers
+  type ForwardRefInjectedProps,
+  type BaseComponentInjectedProps,
+  type MarginModifiers
 } from '../../commons/new';
-import {RecorderProps} from '../../typings/recorderTypes';
+import {type RecorderProps} from '../../typings/recorderTypes';
 import {getAsset, isSvg} from '../../utils/imageUtils';
-import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
+import Overlay, {type OverlayTypeType, type OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
-import {ComponentStatics} from 'src/typings/common';
+import {type ComponentStatics} from 'src/typings/common';
 
 export type ImageSourceType = string | RNImageProps['source'];
 

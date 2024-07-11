@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import View, {ViewProps} from '../view';
+import View, {type ViewProps} from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
-import {PanLocationProps, PanAmountsProps} from './panningProvider';
+import {type PanLocationProps, type PanAmountsProps} from './panningProvider';
 
 export interface PanResponderViewProps extends ViewProps {
     /**

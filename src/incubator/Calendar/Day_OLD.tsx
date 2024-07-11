@@ -7,7 +7,7 @@ import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
 import {getDateObject, isSameDay} from './helpers/DateUtils';
-import {DayProps, UpdateSource} from './types';
+import {type DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 const DAY_SIZE = 32;

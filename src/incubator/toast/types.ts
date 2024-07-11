@@ -1,7 +1,7 @@
-import {ReactElement, ReactNode} from 'react';
-import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle} from 'react-native';
-import {ButtonProps} from '../../components/button';
-import {TextProps} from '../../components/text';
+import {type ReactElement, type ReactNode} from 'react';
+import {type ImageSourcePropType, type StyleProp, type TextStyle, type ViewStyle} from 'react-native';
+import {type ButtonProps} from '../../components/button';
+import {type TextProps} from '../../components/text';
 
 export enum ToastPresets {
   GENERAL = 'general',

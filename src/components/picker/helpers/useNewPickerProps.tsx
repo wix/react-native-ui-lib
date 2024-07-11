@@ -1,5 +1,5 @@
-import {PickerProps} from '../types';
-import {ExpandableOverlayProps} from '../../../incubator/expandableOverlay';
+import {type PickerProps} from '../types';
+import {type ExpandableOverlayProps} from '../../../incubator/expandableOverlay';
 import {Constants} from '../../../commons/new';
 
 const useNewPickerProps = (props: PickerProps) => {

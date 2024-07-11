@@ -1,12 +1,12 @@
 import throttle from 'lodash/throttle';
 import React, {useContext, useCallback} from 'react';
-import {StyleSheet, TextInput, Text, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, TextInput, Text, type LayoutChangeEvent} from 'react-native';
 import Reanimated, {useAnimatedProps} from 'react-native-reanimated';
 import {Colors, Typography} from 'style';
 import View from '../../components/view';
 import Button from '../../components/button';
 import {getDateObject, getMonthForIndex, addMonths} from './helpers/DateUtils';
-import {HeaderProps, DayNamesFormat, UpdateSource} from './types';
+import {type HeaderProps, DayNamesFormat, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
 

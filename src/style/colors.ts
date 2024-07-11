@@ -1,14 +1,14 @@
 import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
-import {OpaqueColorValue} from 'react-native';
+import {type OpaqueColorValue} from 'react-native';
 import tinycolor from 'tinycolor2';
 import {colorsPalette} from './colorsPalette';
 import DesignTokens from './designTokens';
 import DesignTokensDM from './designTokensDM';
 //@ts-ignore
 import ColorName from './colorName';
-import Scheme, {Schemes, SchemeType} from './scheme';
+import Scheme, {type Schemes, type SchemeType} from './scheme';
 import type {ExtendTypeWith} from '../typings/common';
 import LogService from '../services/LogService';
 

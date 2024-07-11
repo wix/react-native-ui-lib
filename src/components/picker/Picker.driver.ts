@@ -1,4 +1,4 @@
-import {PickerProps} from './types';
+import {type PickerProps} from './types';
 import {ComponentDriver} from '../../testkit/Component.driver';
 
 export class PickerDriver extends ComponentDriver<PickerProps> {

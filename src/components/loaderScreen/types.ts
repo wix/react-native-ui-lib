@@ -1,4 +1,4 @@
-import {ActivityIndicatorProps, TextStyle, ViewStyle} from 'react-native';
+import {type ActivityIndicatorProps, type TextStyle, type ViewStyle} from 'react-native';
 
 export type LoaderScreenProps = ActivityIndicatorProps & {
     /**

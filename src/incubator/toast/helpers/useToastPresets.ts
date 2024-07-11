@@ -1,6 +1,6 @@
 import 'react';
 import {Colors} from 'style';
-import {ToastProps, ToastPresets} from '../types';
+import {type ToastProps, ToastPresets} from '../types';
 
 const checkMarkIcon = require('../assets/checkmarkFlat.png');
 const exclamationIcon = require('../assets/exclamationFill.png');

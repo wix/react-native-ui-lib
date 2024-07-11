@@ -4,7 +4,7 @@ import {
   NativeModules,
   I18nManager,
   AccessibilityInfo,
-  AccessibilityChangeEvent
+  type AccessibilityChangeEvent
 } from 'react-native';
 
 export enum orientations {

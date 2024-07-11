@@ -1,11 +1,11 @@
 // TODO: support commented props
-import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement} from 'react';
-import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle, TextProps} from 'react-native';
+import React, {useCallback, useContext, useEffect, useRef, useMemo, type ReactElement} from 'react';
+import {StyleSheet, type TextStyle, type LayoutChangeEvent, type StyleProp, type ViewStyle, type TextProps} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {runOnJS, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {Colors, Typography, Spacings} from '../../style';
-import Badge, {BadgeProps} from '../badge';
+import Badge, {type BadgeProps} from '../badge';
 import View from '../view';
 import TabBarContext from './TabBarContext';
 import Constants from '../../commons/Constants';

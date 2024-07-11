@@ -1,4 +1,4 @@
-import {PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
+import {type PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import {Constants} from '../../commons/new';
 
 export enum PanningDirectionsEnum {

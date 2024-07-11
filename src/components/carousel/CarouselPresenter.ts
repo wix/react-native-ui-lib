@@ -1,6 +1,6 @@
-import React, {PropsWithChildren} from 'react';
+import React, {type PropsWithChildren} from 'react';
 import _ from 'lodash';
-import {CarouselProps, CarouselState} from './types';
+import {type CarouselProps, type CarouselState} from './types';
 
 export function getChildrenLength(props: PropsWithChildren<CarouselProps>): number {
   return React.Children.count(props.children);

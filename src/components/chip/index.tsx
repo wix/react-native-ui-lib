@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
+import {StyleSheet, type StyleProp, type ViewStyle, type ViewProps, type ImageStyle, type TextStyle, type ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings, Colors} from 'style';
-import Avatar, {AvatarProps} from '../avatar';
-import Badge, {BadgeProps} from '../badge';
+import Avatar, {type AvatarProps} from '../avatar';
+import Badge, {type BadgeProps} from '../badge';
 import Text from '../text';
-import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
+import TouchableOpacity, {type TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
-import Icon, {IconProps} from '../icon';
+import Icon, {type IconProps} from '../icon';
 
 export type ChipProps = ViewProps &
   TouchableOpacityProps & {

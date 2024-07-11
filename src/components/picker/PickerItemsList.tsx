@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useCallback, useContext, useState, useMemo} from 'react';
-import {StyleSheet, FlatList, TextInput, ListRenderItemInfo} from 'react-native';
+import {StyleSheet, FlatList, TextInput, type ListRenderItemInfo} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
 import Modal from '../modal';
@@ -9,7 +9,7 @@ import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
-import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
+import {type PickerItemProps, type PickerItemsListProps, type PickerSingleValue, PickerModes} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';

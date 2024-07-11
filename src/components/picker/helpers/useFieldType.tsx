@@ -3,7 +3,7 @@ import React, {useMemo} from 'react';
 import Icon from '../../icon';
 import Text from '../../text';
 import View from '../../view';
-import {PickerProps, PickerFieldTypes} from '../types';
+import {type PickerProps, PickerFieldTypes} from '../types';
 import {Typography} from '../../../style';
 
 type UseFieldTypeProps = Pick<

@@ -5,21 +5,21 @@ import {
   PanResponder,
   AccessibilityInfo,
   Animated,
-  StyleProp,
-  ViewStyle,
-  PanResponderGestureState,
-  GestureResponderEvent,
-  LayoutChangeEvent,
-  AccessibilityActionEvent,
-  AccessibilityRole,
-  View as RNView
+  type StyleProp,
+  type ViewStyle,
+  type PanResponderGestureState,
+  type GestureResponderEvent,
+  type LayoutChangeEvent,
+  type AccessibilityActionEvent,
+  type AccessibilityRole,
+  type View as RNView
 } from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors} from '../../style';
 import View from '../view';
 import IncubatorSlider from '../../incubator/Slider';
-import {SliderProps} from './types';
+import {type SliderProps} from './types';
 import Thumb from './Thumb';
 
 const TRACK_SIZE = 6;

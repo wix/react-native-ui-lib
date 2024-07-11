@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {
   PanResponder,
   Animated,
-  PanResponderInstance,
-  GestureResponderEvent,
-  PanResponderGestureState,
-  LayoutChangeEvent,
-  LayoutRectangle,
-  StyleProp,
-  ViewStyle
+  type PanResponderInstance,
+  type GestureResponderEvent,
+  type PanResponderGestureState,
+  type LayoutChangeEvent,
+  type LayoutRectangle,
+  type StyleProp,
+  type ViewStyle
 } from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 

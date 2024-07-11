@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, TouchableWithoutFeedback} from 'react-native';
 import {useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 import {Colors} from 'style';
 import {getDateObject, isSameDay} from './helpers/DateUtils';
-import {DayProps, UpdateSource} from './types';
+import {type DayProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 const DAY_SIZE = 32;
