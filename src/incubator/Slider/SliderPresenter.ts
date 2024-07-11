@@ -1,5 +1,5 @@
-import {SharedValue, interpolate} from 'react-native-reanimated';
-import {SliderProps} from './index';
+import {type SharedValue, interpolate} from 'react-native-reanimated';
+import {type SliderProps} from './index';
 
 export function getOffsetForValue(value: number, span: number, minimumValue = 0, maximumValue = 1) {
   const range = maximumValue - minimumValue;
@@ -54,19 +54,15 @@ export function validateValues(props: SliderProps) {
       !inRange(initialMinimumValue, minimumValue, maximumValue) ||
       !inRange(initialMaximumValue, minimumValue, maximumValue)
     ) {
-      console.error(
-        'Your passed values are invalid. Please check that they are in range of the minimum and maximum values'
-      );
+      console.error('Your passed values are invalid. Please check that they are in range of the minimum and maximum values');
     }
   }
 }
 
-export function getStepInterpolated(
-  trackWidth: number,
+export function getStepInterpolated(trackWidth: number,
   minimumValue: number,
   maximumValue: number,
-  stepXValue: SharedValue<number>
-) {
+  stepXValue: SharedValue<number>) {
   'worklet';
   const outputRange = [0, trackWidth];
   const inputRange =

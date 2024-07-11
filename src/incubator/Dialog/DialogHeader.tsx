@@ -6,7 +6,7 @@ import {Spacings, Colors, BorderRadiuses, Dividers} from 'style';
 import View from '../../components/view';
 import TouchableOpacity from '../../components/touchableOpacity';
 import Text from '../../components/text';
-import {DialogHeaderProps} from './types';
+import {type DialogHeaderProps} from './types';
 
 const DialogHeader = (props: DialogHeaderProps = {}) => {
   const {

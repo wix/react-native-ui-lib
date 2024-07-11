@@ -1,4 +1,4 @@
-import {useEffect, useRef, DependencyList} from 'react';
+import {useEffect, useRef, type DependencyList} from 'react';
 
 /**
  * This hook avoid calling useEffect on the initial value of his dependency array

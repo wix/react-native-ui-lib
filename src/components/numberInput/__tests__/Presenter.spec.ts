@@ -1,4 +1,4 @@
-import {getInitialNumber, parseInput, Options} from '../Presenter';
+import {getInitialNumber, parseInput, type Options} from '../Presenter';
 
 const EN_OPTIONS: Options = {
   localeOptions: {

@@ -1,4 +1,4 @@
-import {DateObjectWithOptionalDay} from '../types';
+import {type DateObjectWithOptionalDay} from '../types';
 
 export function generateMonthItems(date: number, pastRange: number, futureRange: number) {
   const currentYear = new Date(date).getFullYear();

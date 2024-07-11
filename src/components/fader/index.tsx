@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../view';
-import Image, {ImageProps} from '../image';
+import Image, {type ImageProps} from '../image';
 import {Colors} from 'style';
 
 export enum FaderPosition {

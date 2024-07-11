@@ -1,9 +1,9 @@
 // TODO: consider unify this component functionality with our Image component
 import React, {useState, useCallback, useMemo} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, ImageLoadEventData} from 'react-native';
+import {StyleSheet, type StyleProp, type ViewStyle, type NativeSyntheticEvent, type ImageLoadEventData} from 'react-native';
 import Animated, {useSharedValue, useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import View from '../../components/view';
-import Image, {ImageProps} from '../../components/image';
+import Image, {type ImageProps} from '../../components/image';
 import {useDidUpdate} from '../../hooks';
 
 const UIAnimatedImage = Animated.createAnimatedComponent<ImageProps>(Image);

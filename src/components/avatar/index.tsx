@@ -1,23 +1,23 @@
 import _ from 'lodash';
-import React, {PropsWithChildren, useMemo, forwardRef} from 'react';
+import React, {type PropsWithChildren, useMemo, forwardRef} from 'react';
 import {
   StyleSheet,
-  StyleProp,
-  ViewStyle,
+  type StyleProp,
+  type ViewStyle,
   TouchableOpacity,
-  ImagePropsBase,
-  ImageStyle,
-  TextStyle,
-  AccessibilityProps
+  type ImagePropsBase,
+  type ImageStyle,
+  type TextStyle,
+  type AccessibilityProps
 } from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {extractAccessibilityProps} from '../../commons/modifiers';
-import Badge, {BadgeProps} from '../badge';
+import Badge, {type BadgeProps} from '../badge';
 import View from '../view';
 import Text from '../text';
-import Image, {ImageProps} from '../image';
+import Image, {type ImageProps} from '../image';
 // @ts-ignore
-import AnimatedImage, {AnimatedImageProps} from '../animatedImage';
+import AnimatedImage, {type AnimatedImageProps} from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
 import {useThemeProps} from '../../hooks';
 import {isSvg} from '../../utils/imageUtils';

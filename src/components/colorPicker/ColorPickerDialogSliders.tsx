@@ -2,8 +2,8 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
-import {HSLColor} from './ColorPickerPresenter';
-import {ColorPickerDialogProps} from './ColorPickerDialog';
+import {type HSLColor} from './ColorPickerPresenter';
+import {type ColorPickerDialogProps} from './ColorPickerDialog';
 
 type SlidersProps = Pick<ColorPickerDialogProps, 'migrate'> & {
   keyboardHeight: number;

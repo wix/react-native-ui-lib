@@ -1,10 +1,10 @@
 import React, {useCallback, useMemo, useEffect, useState, useRef} from 'react';
-import {StyleSheet, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, type MeasureOnSuccessCallback, type LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Point from './Point';
 import Line from './Line';
-import {TimelineProps, PointProps, LineProps, StateTypes, PointTypes, LineTypes, Layout} from './types';
+import {TimelineProps, PointProps, LineProps, StateTypes, PointTypes, LineTypes, type Layout} from './types';
 export {
   TimelineProps,
   PointProps as TimelinePointProps,

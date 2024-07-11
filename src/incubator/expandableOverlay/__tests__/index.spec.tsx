@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import ExpandableOverlay, {ExpandableOverlayProps} from '../index';
+import ExpandableOverlay, {type ExpandableOverlayProps} from '../index';
 import View from '../../../components/view';
 import Text from '../../../components/text';
 import {ExpandableOverlayDriver} from '../ExpandableOverlay.driver';

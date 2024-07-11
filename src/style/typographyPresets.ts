@@ -1,4 +1,4 @@
-import {Platform, TextStyle} from 'react-native';
+import {Platform, type TextStyle} from 'react-native';
 import _ from 'lodash';
 import Constants from '../commons/Constants';
 

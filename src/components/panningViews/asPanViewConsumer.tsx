@@ -1,4 +1,4 @@
-import React, {Component, Ref} from 'react';
+import React, {Component, type Ref} from 'react';
 import PanningContext from './panningContext';
 
 function asPanViewConsumer<PROPS>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS> {

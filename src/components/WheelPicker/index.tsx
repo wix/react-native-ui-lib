@@ -2,13 +2,13 @@
 import {isFunction, isUndefined} from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {
-  TextStyle,
-  ViewStyle,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
+  type TextStyle,
+  type ViewStyle,
+  type NativeSyntheticEvent,
+  type NativeScrollEvent,
   StyleSheet,
-  ListRenderItemInfo,
-  FlatListProps
+  type ListRenderItemInfo,
+  type FlatListProps
 } from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
 import {FlatList} from 'react-native-gesture-handler';
@@ -16,8 +16,8 @@ import {Colors, Spacings} from '../../style';
 import {Constants} from '../../commons/new';
 import {useThemeProps} from '../../hooks';
 import View from '../view';
-import Text, {TextProps} from '../text';
-import Fader, {FaderPosition, FaderProps} from '../fader';
+import Text, {type TextProps} from '../text';
+import Fader, {FaderPosition, type FaderProps} from '../fader';
 import Item, {WheelPickerItemProps} from './Item';
 import usePresenter from './usePresenter';
 import {WheelPickerAlign, WheelPickerItemValue} from './types';

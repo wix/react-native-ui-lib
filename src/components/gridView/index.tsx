@@ -7,7 +7,7 @@ import UIComponent from '../../commons/UIComponent';
 import View from '../view';
 import Text from '../text';
 import {Constants} from '../../commons/new';
-import GridListItem, {GridListItemProps} from '../gridListItem';
+import GridListItem, {type GridListItemProps} from '../gridListItem';
 import {formatLastItemLabel} from '../../helpers/FormattingPresenter';
 
 const DEFAULT_NUM_COLUMNS = 3;

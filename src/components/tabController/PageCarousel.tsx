@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useMemo, useEffect} from 'react';
-import {NativeSyntheticEvent, NativeScrollEvent, ScrollViewProps} from 'react-native';
+import {type NativeSyntheticEvent, type NativeScrollEvent, type ScrollViewProps} from 'react-native';
 import TabBarContext from './TabBarContext';
 import Reanimated, {
   runOnJS,

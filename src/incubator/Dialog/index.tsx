@@ -1,5 +1,5 @@
-import React, {useMemo, useCallback, useImperativeHandle, forwardRef, ForwardedRef, useEffect, useState} from 'react';
-import {StyleSheet, View as RNView} from 'react-native';
+import React, {useMemo, useCallback, useImperativeHandle, forwardRef, type ForwardedRef, useEffect, useState} from 'react';
+import {StyleSheet, type View as RNView} from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
 import {
   Extrapolation,
@@ -13,8 +13,8 @@ import {
 import {
   Gesture,
   GestureDetector,
-  GestureStateChangeEvent,
-  PanGestureHandlerEventPayload
+  type GestureStateChangeEvent,
+  type PanGestureHandlerEventPayload
 } from 'react-native-gesture-handler';
 import {Spacings, Colors, BorderRadiuses} from '../../style';
 import {useDidUpdate} from '../../hooks';

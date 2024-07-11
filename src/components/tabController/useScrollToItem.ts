@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import {useState, useCallback, useEffect, useRef, RefObject} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import {useState, useCallback, useEffect, useRef, type RefObject} from 'react';
+import {type LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
-import {useScrollTo, ScrollToSupportedViews, ScrollToResultProps} from 'hooks';
+import {useScrollTo, type ScrollToSupportedViews, type ScrollToResultProps} from 'hooks';
 
 export enum OffsetType {
   CENTER = 'CENTER',

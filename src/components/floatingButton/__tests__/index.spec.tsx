@@ -1,10 +1,10 @@
 import React from 'react';
-import {ViewStyle} from 'react-native';
+import {type ViewStyle} from 'react-native';
 import {render} from '@testing-library/react-native';
 import {Spacings} from '../../../style';
 import FloatingButton, {FloatingButtonLayouts} from '../index';
 import {ButtonDriver} from '../../button/Button.driver.new';
-import {useComponentDriver, ComponentProps} from '../../../testkit/new/Component.driver';
+import {useComponentDriver, type ComponentProps} from '../../../testkit/new/Component.driver';
 
 const TEST_ID = 'floating_button';
 const button = {

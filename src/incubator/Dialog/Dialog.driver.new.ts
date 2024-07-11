@@ -1,4 +1,4 @@
-import {ComponentProps} from '../../testkit/new/Component.driver';
+import {type ComponentProps} from '../../testkit/new/Component.driver';
 import {ModalDriver} from '../../testkit/';
 
 export const DialogDriver = (props: ComponentProps) => {

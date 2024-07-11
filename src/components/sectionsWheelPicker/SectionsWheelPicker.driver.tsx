@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
 import {WheelPickerDriver} from '../WheelPicker/WheelPicker.driver';
-import {SectionsWheelPickerProps} from './index';
+import {type SectionsWheelPickerProps} from './index';
 
 export const SectionsWheelPickerDriver = (props: ComponentProps) => {
   const driver = useComponentDriver(props);

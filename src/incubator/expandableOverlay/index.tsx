@@ -1,10 +1,10 @@
-import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperativeHandle} from 'react';
+import React, {useCallback, useState, forwardRef, type PropsWithChildren, useImperativeHandle} from 'react';
 
-import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
+import TouchableOpacity, {type TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
-import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
+import Modal, {type ModalProps, type ModalTopBarProps} from '../../components/modal';
 import DialogOld from '../../components/dialog';
-import DialogNew, {DialogMigrationProps} from '../Dialog';
+import DialogNew, {type DialogMigrationProps} from '../Dialog';
 import {Colors} from 'style';
 
 export interface ExpandableOverlayMethods {

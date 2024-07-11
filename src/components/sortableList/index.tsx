@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {map, mapKeys, filter, reduce} from 'lodash';
 import React, {useMemo, useCallback, useEffect} from 'react';
-import {StyleSheet, FlatList, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, FlatList, type LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {LogService} from 'services';

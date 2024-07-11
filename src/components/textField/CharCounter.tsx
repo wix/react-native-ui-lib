@@ -3,7 +3,7 @@ import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import Text from '../text';
 import FieldContext from './FieldContext';
-import {CharCounterProps} from './types';
+import {type CharCounterProps} from './types';
 
 const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) => {
   const {value} = useContext(FieldContext);

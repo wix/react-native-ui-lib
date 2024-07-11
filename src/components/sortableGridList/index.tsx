@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {StyleSheet, ScrollView, ListRenderItemInfo} from 'react-native';
+import {StyleSheet, ScrollView, type ListRenderItemInfo} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useSharedValue} from 'react-native-reanimated';
 import _ from 'lodash';
@@ -8,7 +8,7 @@ import {LogService} from 'services';
 
 import SortableItem from './SortableItem';
 import usePresenter from './usePresenter';
-import {ItemsOrder, SortableGridListProps, ItemProps} from './types';
+import {type ItemsOrder, SortableGridListProps, type ItemProps} from './types';
 
 import useGridLayout, {DEFAULT_ITEM_SPACINGS} from '../gridList/useGridLayout';
 

@@ -1,4 +1,4 @@
-import {useComponentDriver, ComponentProps, usePressableDriver, TextDriver, ImageDriver} from '../../testkit';
+import {useComponentDriver, type ComponentProps, usePressableDriver, TextDriver, ImageDriver} from '../../testkit';
 
 export const ButtonDriver = (props: ComponentProps) => {
   const driver = usePressableDriver(useComponentDriver(props));

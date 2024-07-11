@@ -1,14 +1,14 @@
 import _ from 'lodash';
-import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
-import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
+import React, {type ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
+import {StyleSheet, type AccessibilityRole, type StyleProp, type ViewStyle, type GestureResponderEvent, type LayoutChangeEvent, type ViewProps, type AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
-import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
+import {forwardRef, type ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import {StyleUtils} from 'utils';
 import {useThemeProps, useDidUpdate} from '../../hooks';
 import View from '../../components/view';
-import {ComponentStatics} from '../../typings/common';
+import {type ComponentStatics} from '../../typings/common';
 import {
   validateValues,
   getOffsetForValue,

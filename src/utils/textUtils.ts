@@ -1,5 +1,5 @@
 import {isEmpty, toLower} from 'lodash';
-import {HighlightString, HighlightStringProps} from '../components/text';
+import {type HighlightString, type HighlightStringProps} from '../components/text';
 
 interface TextPartByHighlight extends HighlightStringProps {
   shouldHighlight: boolean;

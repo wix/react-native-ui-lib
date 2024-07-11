@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {useState, useCallback, useEffect, useRef} from 'react';
-import {LayoutChangeEvent} from 'react-native';
-import useScrollTo, {ScrollToProps, ScrollToSupportedViews, ScrollToResultProps} from '../useScrollTo';
+import {type LayoutChangeEvent} from 'react-native';
+import useScrollTo, {type ScrollToProps, type ScrollToSupportedViews, type ScrollToResultProps} from '../useScrollTo';
 import {Constants} from '../../commons/new';
 
 export enum OffsetType {

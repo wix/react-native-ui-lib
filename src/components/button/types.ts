@@ -1,15 +1,15 @@
-import {ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {type ImageStyle, type TextStyle, type StyleProp} from 'react-native';
 import {
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
-  TypographyModifiers,
-  ColorsModifiers,
-  BackgroundColorModifier,
-  MarginModifiers
+  type BaseComponentInjectedProps,
+  type ForwardRefInjectedProps,
+  type TypographyModifiers,
+  type ColorsModifiers,
+  type BackgroundColorModifier,
+  type MarginModifiers
 } from '../../commons/new';
-import {TouchableOpacityProps} from '../touchableOpacity';
-import {TextProps} from '../text';
-import {ImageProps} from '../image';
+import {type TouchableOpacityProps} from '../touchableOpacity';
+import {type TextProps} from '../text';
+import {type ImageProps} from '../image';
 
 export enum ButtonSize {
   xSmall = 'xSmall',

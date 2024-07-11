@@ -1,4 +1,4 @@
-import {DragData, UniDriver, UniDriverClass} from './UniDriver';
+import {type DragData, type UniDriver, type UniDriverClass} from './UniDriver';
 import {TestingLibraryDriver} from './drivers/TestingLibraryDriver';
 
 export type ComponentDriverArgs = {

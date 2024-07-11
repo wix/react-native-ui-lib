@@ -1,4 +1,4 @@
-import {SchemeType} from '../style';
+import {type SchemeType} from '../style';
 
 interface ConfigOptions {
   /**

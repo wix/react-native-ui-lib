@@ -7,7 +7,7 @@ import {Spacings, Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
 import FieldContext from './FieldContext';
-import {TextFieldProps} from './types';
+import {type TextFieldProps} from './types';
 
 const hitSlop = {top: 20, bottom: 20, left: 20, right: 20};
 const NON_VISIBLE_POSITION = 18;

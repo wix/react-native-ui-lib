@@ -1,7 +1,7 @@
 import {useRef, useState, useMemo} from 'react';
 import {Animated, Easing} from 'react-native';
 import {HapticService, HapticType} from 'services';
-import {ToastProps} from '../types';
+import {type ToastProps} from '../types';
 
 type UseToastAnimationProps = Pick<ToastProps, 'visible' | 'position' | 'onAnimationEnd' | 'enableHapticFeedback'> & {
   toastHeight?: number;

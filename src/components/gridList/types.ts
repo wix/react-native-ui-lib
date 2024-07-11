@@ -1,4 +1,4 @@
-import {FlatListProps} from 'react-native';
+import {type FlatListProps} from 'react-native';
 
 export interface GridListBaseProps extends Pick<FlatListProps<any>, 'style' | 'contentContainerStyle' | 'columnWrapperStyle'> {
   /**

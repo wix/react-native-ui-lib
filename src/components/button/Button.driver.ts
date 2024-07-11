@@ -1,6 +1,6 @@
-import {ButtonProps} from './types';
+import {type ButtonProps} from './types';
 import {ImageDriver} from '../image/Image.driver';
-import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
+import {ComponentDriver, type ComponentDriverArgs} from '../../testkit/Component.driver';
 import {TextDriver} from '../text/Text.driver';
 
 /**

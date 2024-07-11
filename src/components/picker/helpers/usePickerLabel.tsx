@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {useCallback, useMemo} from 'react';
-import {PickerProps, PickerValue} from '../types';
+import {type PickerProps, type PickerValue} from '../types';
 
 interface UsePickerLabelProps
   extends Pick<

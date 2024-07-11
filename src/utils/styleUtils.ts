@@ -1,4 +1,4 @@
-import {StyleProp, ViewStyle, StyleSheet} from 'react-native';
+import {type StyleProp, type ViewStyle, StyleSheet} from 'react-native';
 
 interface UnpackStyleOptions {
   flatten?: boolean;

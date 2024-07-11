@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import getWeek from 'date-fns/getWeek';
-import {FirstDayOfWeek, DayNamesFormat, DateObjectWithOptionalDay, DateObjectWithDate, DateObject} from '../types';
+import {type FirstDayOfWeek, type DayNamesFormat, type DateObjectWithOptionalDay, type DateObjectWithDate, type DateObject} from '../types';
 
 export const HOUR_IN_MS = 60 * 60 * 1000;
 const DAY_IN_MS = 24 * HOUR_IN_MS;

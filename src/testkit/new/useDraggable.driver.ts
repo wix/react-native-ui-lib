@@ -1,5 +1,5 @@
 import {fireEvent} from '@testing-library/react-native';
-import {ComponentDriverResult} from './Component.driver';
+import {type ComponentDriverResult} from './Component.driver';
 
 export type DragEvent = {
   absoluteX?: number;

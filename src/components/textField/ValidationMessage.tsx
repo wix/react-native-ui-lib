@@ -6,7 +6,7 @@ import Text from '../text';
 import Icon from '../icon';
 import FieldContext from './FieldContext';
 import {getRelevantValidationMessage} from './Presenter';
-import {ValidationMessageProps} from './types';
+import {type ValidationMessageProps} from './types';
 
 const ValidationMessage = ({
   validationMessage,

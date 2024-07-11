@@ -1,5 +1,5 @@
-import React, {PropsWithChildren, useCallback, useMemo} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import React, {type PropsWithChildren, useCallback, useMemo} from 'react';
+import {type LayoutChangeEvent} from 'react-native';
 import Reanimated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -9,9 +9,9 @@ import Reanimated, {
   interpolateColor,
   runOnJS
 } from 'react-native-reanimated';
-import {TapGestureHandler, LongPressGestureHandler, State} from 'react-native-gesture-handler';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
-import View, {ViewProps} from '../components/view';
+import {TapGestureHandler, LongPressGestureHandler, type State} from 'react-native-gesture-handler';
+import {asBaseComponent, forwardRef, type BaseComponentInjectedProps, type ForwardRefInjectedProps} from '../commons/new';
+import View, {type ViewProps} from '../components/view';
 import {Colors} from '../../src/style';
 
 export type TouchableOpacityProps = {

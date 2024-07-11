@@ -2,8 +2,8 @@ import _ from 'lodash';
 import React from 'react';
 import {LogService} from '../../services';
 import useMiddleIndex from './helpers/useListMiddleIndex';
-import {WheelPickerItemValue} from './types';
-import {WheelPickerItemProps} from './Item';
+import {type WheelPickerItemValue} from './types';
+import {type WheelPickerItemProps} from './Item';
 
 //TODO: deprecate this type
 

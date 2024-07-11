@@ -1,4 +1,4 @@
-import {CarouselProps} from './types';
+import {type CarouselProps} from './types';
 import {ComponentDriver} from '../../testkit/Component.driver';
 
 export class CarouselDriver extends ComponentDriver<CarouselProps> {

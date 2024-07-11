@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {LogService} from '../../../services';
-import {PickerProps} from '../types';
+import {type PickerProps} from '../types';
 
 // TODO: Remove this whole file when migration is completed
 type UsePickerMigrationWarnings = Pick<

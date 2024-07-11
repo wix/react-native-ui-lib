@@ -1,11 +1,11 @@
 import {useCallback} from 'react';
-import {PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
+import {type PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
 import {useSharedValue, withSpring, withTiming, useAnimatedGestureHandler, runOnJS} from 'react-native-reanimated';
 import {
-  PanningDirections,
+  type PanningDirections,
   PanningDirectionsEnum,
-  PanningDismissThreshold,
-  Frame,
+  type PanningDismissThreshold,
+  type Frame,
   getTranslation,
   getDismissVelocity,
   DEFAULT_THRESHOLD

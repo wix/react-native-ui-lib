@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {getWeekDayNames} from './helpers/DateUtils';
-import {WeekDaysNamesProps} from './types';
+import {type WeekDaysNamesProps} from './types';
 import CalendarContext from './CalendarContext';
 
 

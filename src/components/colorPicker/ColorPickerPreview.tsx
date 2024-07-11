@@ -2,8 +2,8 @@ import React, {useRef} from 'react';
 import {StyleSheet, TextInput, PixelRatio, I18nManager} from 'react-native';
 
 import {Colors, Typography} from '../../style';
-import {ColorPickerDialogProps} from './ColorPickerDialog';
-import {BORDER_RADIUS, HSLColor, getColorValue, getHexString, getTextColor} from './ColorPickerPresenter';
+import {type ColorPickerDialogProps} from './ColorPickerDialog';
+import {BORDER_RADIUS, type HSLColor, type getColorValue, getHexString, getTextColor} from './ColorPickerPresenter';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';

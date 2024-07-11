@@ -1,5 +1,5 @@
 import {useCallback, useRef} from 'react';
-import {ToastProps} from '../types';
+import {type ToastProps} from '../types';
 
 export default ({autoDismiss, onDismiss}: Pick<ToastProps, 'autoDismiss' | 'onDismiss'>) => {
   const timer = useRef<ReturnType<typeof setTimeout>>();

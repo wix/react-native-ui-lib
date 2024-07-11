@@ -1,4 +1,4 @@
-import {Event, Data, InternalData} from '../types';
+import {type Event, type Data, type InternalData} from '../types';
 
 function eventComparator(a: Event, b: Event) {
   return a.start - b.start;

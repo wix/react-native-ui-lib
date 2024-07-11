@@ -1,5 +1,5 @@
 import {useState, useCallback} from 'react';
-import {NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {type NativeSyntheticEvent, type NativeScrollEvent} from 'react-native';
 import {Constants} from '../../commons/new';
 
 export type ScrollEnablerProps = {

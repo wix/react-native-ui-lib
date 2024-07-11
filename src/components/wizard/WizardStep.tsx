@@ -9,7 +9,7 @@ import {asBaseComponent} from '../../commons/new';
 import Colors from '../../style/colors';
 import BorderRadiuses from '../../style/borderRadiuses';
 import Spacings from '../../style/spacings';
-import {WizardStepProps, WizardProps} from './types';
+import {type WizardStepProps, type WizardProps} from './types';
 import {StatesConfig} from './WizardStates';
 
 // Includes private props from the Wizard

@@ -1,6 +1,6 @@
 import isFunction from 'lodash/isFunction';
-import React, {ReactElement} from 'react';
-import {StyleSheet, ViewProps, StyleProp, ViewStyle, GestureResponderEvent} from 'react-native';
+import React, {type ReactElement} from 'react';
+import {StyleSheet, type ViewProps, type StyleProp, type ViewStyle, type GestureResponderEvent} from 'react-native';
 import {Colors} from '../../style';
 import View from '../../components/view';
 

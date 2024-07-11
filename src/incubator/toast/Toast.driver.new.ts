@@ -1,4 +1,4 @@
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
 import {TextDriver} from '../../components/text/Text.driver.new';
 import {ButtonDriver} from '../../components/button/Button.driver.new';
 

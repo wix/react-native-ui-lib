@@ -1,9 +1,9 @@
 import React from 'react';
 import View from '../../view';
-import Text, {HighlightString} from '../index';
+import Text, {type HighlightString} from '../index';
 import {TextDriver} from '../Text.driver';
 import {Colors} from '../../../style';
-import {TextStyle} from 'react-native';
+import {type TextStyle} from 'react-native';
 
 const TEXT_ID = 'text_test_id';
 const TEXT_CONTENT = 'text content';

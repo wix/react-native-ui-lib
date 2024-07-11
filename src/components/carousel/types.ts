@@ -1,7 +1,7 @@
-import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, Animated} from 'react-native';
+import {type ScrollViewProps, type StyleProp, type ViewStyle, type NativeSyntheticEvent, type NativeScrollEvent, type Animated} from 'react-native';
 // @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
-import {PointPropType} from 'deprecated-react-native-prop-types';
-import {PageControlProps} from '../pageControl';
+import {type PointPropType} from 'deprecated-react-native-prop-types';
+import {type PageControlProps} from '../pageControl';
 
 export enum PageControlPosition {
   OVER = 'over',

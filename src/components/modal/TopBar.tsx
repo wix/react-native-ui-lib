@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, StyleProp, TextStyle, ImageSourcePropType, AccessibilityProps} from 'react-native';
+import {StyleSheet, type StyleProp, type TextStyle, type ImageSourcePropType, type AccessibilityProps} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
-import View, {ViewProps} from '../../components/view';
-import Button, {ButtonProps} from '../../components/button';
+import View, {type ViewProps} from '../../components/view';
+import Button, {type ButtonProps} from '../../components/button';
 import Text from '../../components/text';
 
 export interface ModalTopBarProps {

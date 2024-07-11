@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {type StyleProp, StyleSheet, type ViewStyle} from 'react-native';
 import memoize from 'memoize-one';
 import * as Modifiers from '../../commons/modifiers';
 import {Spacings} from 'style';
-import View, {ViewProps} from '../view';
-import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
+import View, {type ViewProps} from '../view';
+import TouchableOpacity, {type TouchableOpacityProps} from '../touchableOpacity';
 import Text, {type TextProps} from '../text';
-import Image, {ImageProps} from '../image';
+import Image, {type ImageProps} from '../image';
 
 export enum HorizontalAlignment {
   left = 'left',

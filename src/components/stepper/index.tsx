@@ -1,6 +1,6 @@
 import {isUndefined} from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, AccessibilityInfo, AccessibilityProps, AccessibilityActionEvent} from 'react-native';
+import {StyleSheet, AccessibilityInfo, type AccessibilityProps, type AccessibilityActionEvent} from 'react-native';
 import {Typography, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';

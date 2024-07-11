@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {render} from '@testing-library/react-native';
-import Modal, {ModalProps} from '../';
+import Modal, {type ModalProps} from '../';
 import {ModalDriver} from '../Modal.driver.new';
 import View from '../../view';
 import Button from '../../button';

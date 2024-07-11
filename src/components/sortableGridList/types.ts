@@ -1,6 +1,6 @@
-import {FlatListProps, ScrollViewProps, StyleProp, ViewStyle} from 'react-native';
-import Animated from 'react-native-reanimated';
-import {GridListBaseProps} from '../gridList';
+import {type FlatListProps, type ScrollViewProps, type StyleProp, type ViewStyle} from 'react-native';
+import type Animated from 'react-native-reanimated';
+import {type GridListBaseProps} from '../gridList';
 
 export type ItemLayout = {width: number; height: number} | undefined;
 export type ItemsOrder = string[];

@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, {useCallback, useMemo, useContext} from 'react';
-import {forwardRef, ForwardRefInjectedProps} from '../../commons/new';
-import {ComponentStatics} from '../../typings/common';
+import {forwardRef, type ForwardRefInjectedProps} from '../../commons/new';
+import {type ComponentStatics} from '../../typings/common';
 import {useThemeProps} from '../../hooks';
 import {Colors} from '../../style';
 import {Slider as NewSlider} from '../../incubator';
 import Gradient from '../gradient';
-import {GradientSliderProps, GradientSliderTypes, HSLA} from './types';
+import {type GradientSliderProps, GradientSliderTypes, type HSLA} from './types';
 import Slider from './index';
 import SliderContext from './SliderContext';
 

@@ -1,4 +1,4 @@
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
 
 export const ImageDriver = (props: ComponentProps) => {
   const driver = useComponentDriver(props);

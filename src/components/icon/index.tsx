@@ -1,11 +1,11 @@
 import isUndefined from 'lodash/isUndefined';
 import React, {useMemo, forwardRef} from 'react';
-import {Image, ImageProps as RNImageProps, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
-import {ComponentStatics} from '../../typings/common';
+import {Image, type ImageProps as RNImageProps, StyleSheet, type StyleProp, type ViewStyle} from 'react-native';
+import {asBaseComponent, type BaseComponentInjectedProps, type MarginModifiers, Constants} from '../../commons/new';
+import {type ComponentStatics} from '../../typings/common';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
-import {RecorderProps} from '../../typings/recorderTypes';
-import Badge, {BadgeProps} from '../badge';
+import {type RecorderProps} from '../../typings/recorderTypes';
+import Badge, {type BadgeProps} from '../badge';
 import SvgImage from '../svgImage';
 import type {ImageProps} from '../image';
 

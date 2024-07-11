@@ -5,7 +5,7 @@
     // "outDir": "dist",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "jsx": "react-native",
+    "jsx": "react",
     "skipLibCheck": true,
     // "resolveJsonModule": true,
     "strict": true,

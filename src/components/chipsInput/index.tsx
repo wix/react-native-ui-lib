@@ -1,10 +1,10 @@
 import React, {useCallback, useMemo, useRef, useState, forwardRef} from 'react';
-import {StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData} from 'react-native';
+import {StyleSheet, type NativeSyntheticEvent, type TextInputKeyPressEventData} from 'react-native';
 import {isUndefined, map} from 'lodash';
 import {Constants} from '../../commons/new';
 import {useCombinedRefs, useDidUpdate} from '../../hooks';
-import TextField, {TextFieldProps} from '../textField';
-import Chip, {ChipProps} from '../chip';
+import TextField, {type TextFieldProps} from '../textField';
+import Chip, {type ChipProps} from '../chip';
 
 const removeIcon = require('./assets/xSmall.png');
 

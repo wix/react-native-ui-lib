@@ -1,21 +1,21 @@
-import React, {Component, ElementRef} from 'react';
+import React, {Component, type ElementRef} from 'react';
 import {
   StyleSheet,
   findNodeHandle,
   TouchableWithoutFeedback,
   Animated,
   AccessibilityInfo,
-  StyleProp,
-  TextStyle,
-  TouchableWithoutFeedbackProps,
-  LayoutChangeEvent
+  type StyleProp,
+  type TextStyle,
+  type TouchableWithoutFeedbackProps,
+  type LayoutChangeEvent
 } from 'react-native';
 import {Colors, Typography} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
-import Button, {ButtonProps, ButtonSize} from '../button';
-import PageControl, {PageControlProps} from '../pageControl';
+import Button, {type ButtonProps, ButtonSize} from '../button';
+import PageControl, {type PageControlProps} from '../pageControl';
 //@ts-expect-error
 import {HighlighterOverlayView} from '../../nativeComponents';
 
@@ -223,8 +223,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
         toValue, // Animate to value
         duration: toValue ? 100 : 0, // Make it take a while
         useNativeDriver: true
-      }
-    ).start(); // Starts the animation
+      }).start(); // Starts the animation
   }
 
   setTargetPosition(props = this.props) {
@@ -260,9 +259,7 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
       topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + minRectHeight / 2 + innerPadding / 2;
     }
     if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
-      console.warn(
-        `Content is too long and might appear off screen. Please adjust the message length for better results.`
-      );
+      console.warn(`Content is too long and might appear off screen. Please adjust the message length for better results.`);
     }
     return topPosition;
   }

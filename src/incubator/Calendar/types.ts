@@ -1,6 +1,6 @@
-import {StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {SharedValue} from 'react-native-reanimated';
-import {ButtonProps} from '../../components/button';
+import {type StyleProp, type ViewStyle, type TextStyle} from 'react-native';
+import {type SharedValue} from 'react-native-reanimated';
+import {type ButtonProps} from '../../components/button';
 
 export interface DateObject {
   timestamp: number;

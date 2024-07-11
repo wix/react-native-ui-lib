@@ -1,6 +1,6 @@
 import {fireEvent} from '@testing-library/react-native';
-import {ComponentDriverResult} from './Component.driver';
-import {NativeScrollEvent, NativeScrollPoint} from 'react-native';
+import {type ComponentDriverResult} from './Component.driver';
+import {type NativeScrollEvent, type NativeScrollPoint} from 'react-native';
 
 type ScrollableDriverOptions = Omit<NativeScrollEvent, 'contentOffset'>;
 

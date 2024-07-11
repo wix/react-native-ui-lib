@@ -1,11 +1,11 @@
 
 import React, {useMemo} from 'react';
-import {StyleSheet, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, type LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
 import Icon from '../icon';
 import Text from '../text';
-import {PointProps, PointTypes} from './types';
+import {type PointProps, PointTypes} from './types';
 
 const POINT_SIZE = 12;
 const CONTENT_POINT_SIZE = 20;

@@ -1,6 +1,6 @@
 import type {SegmentedControlProps, Presets} from './';
 import {BorderRadiuses, Colors} from '../../style/';
-import {SegmentProps} from './segment';
+import {type SegmentProps} from './segment';
 import type {ColorValue} from 'react-native';
 
 interface useSegmentedControlPresetProps extends SegmentedControlProps, Partial<SegmentProps> {

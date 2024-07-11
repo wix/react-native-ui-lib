@@ -1,6 +1,6 @@
-import React, {PropsWithChildren} from 'react';
-import {ImageRequireSource} from 'react-native';
-import {IconProps} from '../icon';
+import {type MutableRefObject, type PropsWithChildren} from 'react';
+import {type ImageRequireSource} from 'react-native';
+import {type IconProps} from '../icon';
 
 export enum StateTypes {
   CURRENT = 'current', // default
@@ -27,7 +27,7 @@ export type LineProps = {
   /** to mark as entry point */
   entry?: boolean;
   width?: number;
-}
+};
 
 export type PointProps = {
   state?: StateTypes | `${StateTypes}`;
@@ -38,8 +38,8 @@ export type PointProps = {
   removeIconBackground?: boolean;
   label?: number;
   /** to align point to this view's center */
-  anchorRef?: React.MutableRefObject<undefined>;
-}
+  anchorRef?: MutableRefObject<undefined>;
+};
 
 export type Layout = {
   x: number;
@@ -48,7 +48,7 @@ export type Layout = {
   height: number;
 };
 
-export type TimelineProps = & PropsWithChildren< {
+export type TimelineProps = PropsWithChildren<{
   topLine?: LineProps;
   bottomLine?: LineProps;
   point?: PointProps;

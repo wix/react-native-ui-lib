@@ -1,8 +1,8 @@
 import React from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
-import {Scheme, SchemeChangeListener, ThemeManager} from '../style';
-import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
+import {Scheme, type SchemeChangeListener, ThemeManager} from '../style';
+import forwardRef, {type ForwardRefInjectedProps} from './forwardRef';
 import UIComponent from './UIComponent';
 
 export interface BaseComponentInjectedProps {

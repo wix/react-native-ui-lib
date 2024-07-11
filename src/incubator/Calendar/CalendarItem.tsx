@@ -2,7 +2,7 @@ import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Constants} from '../../commons/new';
 import View from '../../components/view';
-import {CalendarItemProps} from './types';
+import {type CalendarItemProps} from './types';
 import CalendarContext from './CalendarContext';
 import Month from './Month';
 import Header from './Header';

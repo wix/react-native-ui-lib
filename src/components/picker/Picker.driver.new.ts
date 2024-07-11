@@ -1,4 +1,4 @@
-import {ComponentProps} from '../../testkit/new/Component.driver';
+import {type ComponentProps} from '../../testkit/new/Component.driver';
 import {TextFieldDriver} from '../textField/TextField.driver.new';
 import {ModalDriver} from '../modal/Modal.driver.new';
 import {DialogDriver} from '../../incubator/Dialog/Dialog.driver.new';

@@ -1,5 +1,5 @@
-import {RadioGroupProps} from './index';
-import {ComponentDriver, ComponentDriverArgs} from '../../testkit/Component.driver';
+import {type RadioGroupProps} from './index';
+import {ComponentDriver, type ComponentDriverArgs} from '../../testkit/Component.driver';
 import {RadioButtonDriver} from '../radioButton/RadioButton.driver';
 
 type RadioGroupDriverArgs = ComponentDriverArgs & {testIDs: {[key: string]: string}}

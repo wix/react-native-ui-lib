@@ -1,4 +1,4 @@
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
 import {ButtonDriver} from '../button/Button.driver.new';
 
 export const ModalDriver = (props: ComponentProps) => {

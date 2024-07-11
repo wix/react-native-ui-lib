@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import React, {PropsWithChildren, useMemo} from 'react';
-import {TextStyle, StyleSheet} from 'react-native';
+import React, {type PropsWithChildren, useMemo} from 'react';
+import {type TextStyle, StyleSheet} from 'react-native';
 import {Constants} from '../../commons/new';
 import {useThemeProps} from '../../hooks';
 import View from '../view';
-import WheelPicker, {WheelPickerProps, WheelPickerItemValue} from '../WheelPicker';
+import WheelPicker, {type WheelPickerProps, type WheelPickerItemValue} from '../WheelPicker';
 
 export type SectionsWheelPickerProps<T = WheelPickerItemValue> = PropsWithChildren<{
   /**

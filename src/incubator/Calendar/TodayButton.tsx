@@ -1,11 +1,11 @@
 import React, {useContext, useCallback} from 'react';
-import {StyleSheet, GestureResponderEvent} from 'react-native';
+import {StyleSheet, type GestureResponderEvent} from 'react-native';
 import {/* Animated,  */ useAnimatedStyle /* , useSharedValue */} from 'react-native-reanimated';
 import {Colors} from '../../style';
 import View from '../../components/view';
 import Button from '../../components/button';
 import {isSameDay /*, isPastDate*/} from './helpers/DateUtils';
-import {TodayButtonProps, UpdateSource} from './types';
+import {type TodayButtonProps, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 
 const UP_ICON = require('./assets/up.png');

@@ -1,6 +1,6 @@
 // TODO: support commented props
 import _ from 'lodash';
-import React, {PropsWithChildren, useMemo, useEffect, useState, useCallback} from 'react';
+import React, {type PropsWithChildren, useMemo, useEffect, useState, useCallback} from 'react';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 import {useOrientation, useThemeProps} from '../../hooks';
 import {Constants} from '../../commons/new';

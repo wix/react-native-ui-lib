@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {MeasureOnSuccessCallback, View as RNView} from 'react-native';
+import {type MeasureOnSuccessCallback, type View as RNView} from 'react-native';
 
 interface Measurements {
   x: number;

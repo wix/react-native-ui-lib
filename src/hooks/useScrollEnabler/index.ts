@@ -1,5 +1,5 @@
 import {useState, useCallback, useRef} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import {type LayoutChangeEvent} from 'react-native';
 
 export type ScrollEnablerProps = {
   /**

@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import React, {useEffect, useRef, useCallback, useContext} from 'react';
-import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {Animated, Easing, StyleSheet, type StyleProp, type ViewStyle, type LayoutChangeEvent} from 'react-native';
 import {Constants} from '../../commons/new';
 import View from '../view';
 import PanningContext from '../panningViews/panningContext';
 import PanningProvider, {
-  PanningDirections,
-  PanAmountsProps,
-  PanDirectionsProps,
-  PanLocationProps
+  type PanningDirections,
+  type PanAmountsProps,
+  type PanDirectionsProps,
+  type PanLocationProps
 } from '../panningViews/panningProvider';
 import PanResponderView from '../panningViews/panResponderView';
 

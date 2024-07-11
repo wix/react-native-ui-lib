@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import memoize from 'memoize-one';
 import React, {PureComponent} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, type StyleProp, type ViewStyle} from 'react-native';
 import {Colors} from '../../style';
 import {Constants} from '../../commons/new';
 import View from '../view';
 import Carousel from '../carousel';
 import ScrollBar from '../scrollBar';
 import PageControl from '../pageControl';
-import ColorSwatch, {ColorSwatchProps, ColorInfo, SWATCH_SIZE, SWATCH_MARGIN} from '../colorSwatch';
+import ColorSwatch, {type ColorSwatchProps, type ColorInfo, SWATCH_SIZE, SWATCH_MARGIN} from '../colorSwatch';
 
 interface Props {
   /**

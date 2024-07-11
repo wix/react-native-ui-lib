@@ -1,9 +1,9 @@
-import {PropsWithChildren, ReactNode} from 'react';
-import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
-import {ModalTopBarProps} from '../modal/TopBar';
-import {TextFieldMethods, TextFieldProps} from '../textField';
-import {TouchableOpacityProps} from '../touchableOpacity';
+import {type PropsWithChildren, type ReactNode} from 'react';
+import {type FlatListProps, type StyleProp, type ViewStyle, type TextStyle} from 'react-native';
+import {type ExpandableOverlayProps, type ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
+import {type ModalTopBarProps} from '../modal/TopBar';
+import {type TextFieldMethods, type TextFieldProps} from '../textField';
+import {type TouchableOpacityProps} from '../touchableOpacity';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {

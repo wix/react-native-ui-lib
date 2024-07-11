@@ -2,17 +2,17 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {
   PanResponder,
-  PanResponderInstance,
-  GestureResponderEvent,
-  PanResponderGestureState
+  type PanResponderInstance,
+  type GestureResponderEvent,
+  type PanResponderGestureState
 } from 'react-native';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {
-  PanningDirections,
-  PanDirectionsProps,
-  PanAmountsProps
+  type PanningDirections,
+  type PanDirectionsProps,
+  type PanAmountsProps
 } from './panningProvider';
-import View, {ViewProps} from '../view';
+import View, {type ViewProps} from '../view';
 
 interface PanningProps {
     /**
@@ -134,13 +134,11 @@ class PanListenerView extends PureComponent<Props> {
     const {dy, dx} = gestureState;
     const {directions, panSensitivity = DEFAULT_PAN_SENSITIVITY} = this.props;
 
-    return Boolean(
-      directions &&
+    return Boolean(directions &&
       ((directions.includes(PanningProvider.Directions.UP) && dy < -panSensitivity) ||
         (directions.includes(PanningProvider.Directions.DOWN) && dy > panSensitivity) ||
         (directions.includes(PanningProvider.Directions.LEFT) && dx < -panSensitivity) ||
-        (directions.includes(PanningProvider.Directions.RIGHT) && dx > panSensitivity))
-    );
+        (directions.includes(PanningProvider.Directions.RIGHT) && dx > panSensitivity)));
   };
 
   handlePanStart = () => {

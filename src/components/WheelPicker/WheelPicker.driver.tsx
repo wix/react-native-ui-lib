@@ -1,5 +1,5 @@
 import {ITEM_HEIGHT} from './index';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
 import {useScrollableDriver} from '../../testkit/new/useScrollable.driver';
 import {TextDriver} from '../../components/text/Text.driver.new';
 

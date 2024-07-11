@@ -3,20 +3,20 @@ import {
   StyleSheet,
   Animated,
   Easing,
-  TextStyle,
-  StyleProp,
-  ImageSourcePropType,
-  ImageStyle,
-  ViewStyle
+  type TextStyle,
+  type StyleProp,
+  type ImageSourcePropType,
+  type ImageStyle,
+  type ViewStyle
 } from 'react-native';
 import {Colors} from '../../style';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {asBaseComponent, forwardRef, type BaseComponentInjectedProps, type ForwardRefInjectedProps} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
-import View, {ViewProps} from '../view';
+import View, {type ViewProps} from '../view';
 import Text from '../text';
 import Image from '../image';
 import asRadioGroupChild from '../radioGroup/asRadioGroupChild';
-import {RadioGroupContextProps} from '../radioGroup/RadioGroupContext';
+import {type RadioGroupContextProps} from '../radioGroup/RadioGroupContext';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;

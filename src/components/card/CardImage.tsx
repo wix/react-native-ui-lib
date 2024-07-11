@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import {View, StyleSheet} from 'react-native';
-import Image, {ImageProps} from '../image';
+import Image, {type ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
-import asCardChild, {asCardChildProps} from './asCardChild';
+import asCardChild, {type asCardChildProps} from './asCardChild';
 
 export type CardImageProps = ImageProps & {
   /**

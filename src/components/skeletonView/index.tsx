@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} from 'react-native';
+import {StyleSheet, Animated, Easing, type StyleProp, type ViewStyle, type AccessibilityProps} from 'react-native';
 import memoize from 'memoize-one';
 import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
-import {Constants, AlignmentModifiers, PaddingModifiers, MarginModifiers} from '../../commons/new';
+import {Constants, type AlignmentModifiers, type PaddingModifiers, type MarginModifiers} from '../../commons/new';
 
 const LinearGradient = LinearGradientPackage?.default;
 

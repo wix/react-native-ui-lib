@@ -1,6 +1,6 @@
-import {RefObject, useCallback, useState, useEffect} from 'react';
+import {type RefObject, useCallback, useState, useEffect} from 'react';
 import _ from 'lodash';
-import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
+import {type PickerProps, type PickerValue, type PickerSingleValue, type PickerMultiValue, PickerModes} from '../types';
 
 interface UsePickerSelectionProps
   extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {

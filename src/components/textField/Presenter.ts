@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import {Colors} from '../../style';
-import {ColorType, Validator, FieldContextType, FloatingPlaceholderProps} from './types';
+import {type ColorType, type Validator, type FieldContextType, type FloatingPlaceholderProps} from './types';
 // TODO: Fix this import after moving all TextField types to a single file after we move to the new docs
-import {TextFieldProps} from './index';
+import {type TextFieldProps} from './index';
 import formValidators from './validators';
 
 export function getColorByState(color?: ColorType, context?: FieldContextType) {

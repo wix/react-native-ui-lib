@@ -1,6 +1,6 @@
-import {PropsWithChildren} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
-import {TouchableOpacityProps} from '../touchableOpacity';
+import {type PropsWithChildren} from 'react';
+import {type StyleProp, type ViewStyle} from 'react-native';
+import {type TouchableOpacityProps} from '../touchableOpacity';
 
 export type ListItemProps = TouchableOpacityProps &
   PropsWithChildren<{

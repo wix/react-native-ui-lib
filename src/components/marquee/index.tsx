@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {LayoutChangeEvent, LayoutRectangle, StyleSheet} from 'react-native';
+import {type LayoutChangeEvent, type LayoutRectangle, StyleSheet} from 'react-native';
 import {useSharedValue, useAnimatedStyle, withTiming, withRepeat, Easing} from 'react-native-reanimated';
 import View from '../view';
 import Text from '../text';

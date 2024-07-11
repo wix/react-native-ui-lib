@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import {PickerProps, PickerSingleValue, PickerValue} from './types';
+import {type PickerProps, type PickerSingleValue, type PickerValue} from './types';
 
 export function extractPickerItems(props: PickerProps) {
   const {children} = props;

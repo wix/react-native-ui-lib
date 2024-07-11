@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, LayoutAnimation, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, LayoutAnimation, type StyleProp, type ViewStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
-import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
+import TouchableOpacity, {type TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 
 const MAX_SHOWN_PAGES = 7;
@@ -114,14 +114,12 @@ class PageControl extends PureComponent<PageControlProps, State> {
 
     if (Array.isArray(props.size)) {
       if (props.size[0] >= props.size[1] || props.size[1] >= props.size[2]) {
-        console.warn(
-          'It is recommended that largeSize > mediumSize > smallSize, currently: smallSize=',
+        console.warn('It is recommended that largeSize > mediumSize > smallSize, currently: smallSize=',
           props.size[0],
           'mediumSize=',
           props.size[1],
           'largeSize=',
-          props.size[2]
-        );
+          props.size[2]);
       }
     }
   }

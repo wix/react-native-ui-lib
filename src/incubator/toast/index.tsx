@@ -1,11 +1,11 @@
-import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {type PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
   findNodeHandle,
   AccessibilityInfo,
-  ViewStyle,
-  LayoutChangeEvent
+  type ViewStyle,
+  type LayoutChangeEvent
 } from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';

@@ -2,16 +2,16 @@ import _ from 'lodash';
 import React, {Component, useCallback} from 'react';
 import {
   Animated,
-  FlatListProps,
-  ImageSourcePropType,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-  LayoutChangeEvent
+  type FlatListProps,
+  type ImageSourcePropType,
+  type NativeSyntheticEvent,
+  type NativeScrollEvent,
+  type LayoutChangeEvent
 } from 'react-native';
 import {ScrollView, FlatList} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
-import {Constants, asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
-import {ComponentStatics} from '../../typings/common';
+import {Constants, asBaseComponent, forwardRef, type ForwardRefInjectedProps} from '../../commons/new';
+import {type ComponentStatics} from '../../typings/common';
 import View from '../view';
 import Image from '../image';
 

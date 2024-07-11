@@ -1,17 +1,17 @@
-import {StyleProp, TextInput, TextInputProps, TextStyle, ViewStyle} from 'react-native';
-import formValidators from './validators';
+import {type StyleProp, type TextInput, type TextInputProps, type TextStyle, type ViewStyle} from 'react-native';
+import type formValidators from './validators';
 import {
-  MarginModifiers,
-  PaddingModifiers,
-  TypographyModifiers,
-  ColorsModifiers,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps
+  type MarginModifiers,
+  type PaddingModifiers,
+  type TypographyModifiers,
+  type ColorsModifiers,
+  type BaseComponentInjectedProps,
+  type ForwardRefInjectedProps
 } from '../../commons/new';
-import {TextProps} from '../text';
-import {RecorderProps} from '../../typings/recorderTypes';
-import {PropsWithChildren, ReactElement} from 'react';
-import {ViewProps} from '../view';
+import {type TextProps} from '../text';
+import {type RecorderProps} from '../../typings/recorderTypes';
+import {type PropsWithChildren, type ReactElement} from 'react';
+import {type ViewProps} from '../view';
 import type {IconProps} from '../icon';
 
 export type ColorType =

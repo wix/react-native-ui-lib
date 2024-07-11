@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider, {SliderProps} from '../index';
+import Slider, {type SliderProps} from '../index';
 // import View from '../../view';
 import {SliderDriver} from '../Slider.driver';
 

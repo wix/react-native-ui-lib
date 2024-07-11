@@ -1,5 +1,5 @@
-import {ViewStyle} from 'react-native';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {type ViewStyle} from 'react-native';
+import {useComponentDriver, type ComponentProps} from '../../testkit/new/Component.driver';
 import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
 export const SwitchDriver = (props: ComponentProps) => {

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
+import {StyleSheet, Animated, Easing, type StyleProp, type ViewStyle, type ColorValue} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
-import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
+import TouchableOpacity, {type TouchableOpacityProps} from '../touchableOpacity';
 
 const INNER_PADDING = 2;
 const DEFAULT_WIDTH = 42;

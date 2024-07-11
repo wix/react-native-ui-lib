@@ -1,5 +1,5 @@
-import {ImageProps} from '../image';
-import {StyleProp, TextStyle, ViewStyle} from 'react-native';
+import {type ImageProps} from '../image';
+import {type StyleProp, type TextStyle, type ViewStyle} from 'react-native';
 
 export enum WizardStepStates {
   ENABLED = 'enabled',

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {map} from 'lodash';
-import React, {PropsWithChildren, useContext} from 'react';
+import React, {type PropsWithChildren, useContext} from 'react';
 import {
   useSharedValue,
   useAnimatedReaction,

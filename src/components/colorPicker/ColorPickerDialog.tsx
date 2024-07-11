@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
-import {LayoutAnimation, StyleSheet, Keyboard, StyleProp, ViewStyle} from 'react-native';
+import {LayoutAnimation, StyleSheet, Keyboard, type StyleProp, type ViewStyle} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
-import {ModalProps} from '../../components/modal';
-import Dialog, {DialogProps} from '../../incubator/Dialog';
-import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, HSLColor} from './ColorPickerPresenter';
+import {type ModalProps} from '../../components/modal';
+import Dialog, {type DialogProps} from '../../incubator/Dialog';
+import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, type HSLColor} from './ColorPickerPresenter';
 import ColorPickerDialogHeader from './ColorPickerDialogHeader';
 import ColorPickerPreview from './ColorPickerPreview';
 import ColorPickerDialogSliders from './ColorPickerDialogSliders';
