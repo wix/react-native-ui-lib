@@ -27,6 +27,11 @@
       "name": "flexMigration",
       "type": "boolean",
       "description": "A temporary migration flag for enabling flex on the list's container (like it should be by default)"
+    },
+    {
+      "name": "orderItemsByIndex",
+      "type": "boolean",
+      "description": "Wether to reorder the items by index instead of by replacing locations."
     }
   ],
   "snippet": [
