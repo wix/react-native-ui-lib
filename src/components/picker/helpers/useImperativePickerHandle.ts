@@ -1,9 +1,8 @@
-import type React from 'react';
-import {useImperativeHandle, useRef} from 'react';
+import {type Ref, useImperativeHandle, useRef} from 'react';
 import {type ExpandableOverlayMethods} from '../../../incubator/expandableOverlay';
 import {type TextFieldMethods} from '../../textField';
 
-const useImperativePickerHandle = (ref: React.Ref<any>,
+const useImperativePickerHandle = (ref: Ref<any>,
   expandableRef: React.MutableRefObject<ExpandableOverlayMethods | null>) => {
   const pickerRef = useRef<TextFieldMethods>();
   useImperativeHandle(ref, () => {

@@ -1,6 +1,13 @@
 import {useModifiers, useThemeProps} from 'hooks';
-import React, {useEffect, useMemo, useState} from 'react';
-import {View as RNView, SafeAreaView, Animated, type ViewProps as RNViewProps, type StyleProp, type ViewStyle} from 'react-native';
+import React, {forwardRef, useEffect, useMemo, useState} from 'react';
+import {
+  View as RNView,
+  SafeAreaView,
+  Animated,
+  type ViewProps as RNViewProps,
+  type StyleProp,
+  type ViewStyle
+} from 'react-native';
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, type ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
@@ -169,4 +176,4 @@ function View(props: ViewProps, ref: any) {
   );
 }
 
-export default React.forwardRef<RNView, ViewProps>(View);
+export default forwardRef<RNView, ViewProps>(View);

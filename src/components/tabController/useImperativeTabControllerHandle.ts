@@ -1,11 +1,10 @@
-import type React from 'react';
-import {useImperativeHandle} from 'react';
+import {type Ref, useImperativeHandle} from 'react';
 
 export interface TabControllerImperativeMethods {
   setTab: (index: number) => void;
 }
 
-const useImperativeTabControllerHandle = (ref: React.Ref<TabControllerImperativeMethods>,
+const useImperativeTabControllerHandle = (ref: Ref<TabControllerImperativeMethods>,
   setCurrentIndex: (index: number) => void) => {
   useImperativeHandle(ref, () => {
     return {

@@ -11,8 +11,8 @@ import {
 } from 'react-native-reanimated';
 import _ from 'lodash';
 import {useDidUpdate} from 'hooks';
-import type usePresenter from './usePresenter';
-import {animationConfig} from './usePresenter';
+//eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import usePresenter, {animationConfig} from './usePresenter';
 import {type SortableItemProps} from './types';
 import View from '../view';
 
