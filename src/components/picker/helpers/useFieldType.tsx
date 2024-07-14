@@ -21,7 +21,7 @@ const useFieldType = (props: UseFieldTypeProps) => {
       return {
         preset: preset || null,
         containerStyle: {flexDirection: 'row'},
-        label: `${label}: `,
+        label: label && `${label}: `,
         labelStyle: {...Typography.text70, color: Colors.$textNeutral},
         trailingAccessory: trailingAccessory ?? <Icon marginL-s1 source={dropdown}/>
       };
