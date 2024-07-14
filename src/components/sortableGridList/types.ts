@@ -29,5 +29,5 @@ export interface SortableItemProps {
   itemsOrder: Animated.SharedValue<ItemsOrder>;
   onChange: () => void;
   style: StyleProp<ViewStyle>;
-  orderByIndex: boolean;
+  orderByIndex?: boolean;
 }

@@ -27,7 +27,7 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     getIdByItemOrder,
     getTranslationByOrderChange,
     updateItemLayout,
-    orderByIndex
+    orderByIndex = false
   } = props;
   const initialIndex = useSharedValue(_.map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
