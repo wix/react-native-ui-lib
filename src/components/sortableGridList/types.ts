@@ -18,7 +18,7 @@ export interface SortableGridListProps<T = any> extends GridListBaseProps, Scrol
   flexMigration?: boolean;
   /**
    * Wether to reorder the items by index instead of by replacing locations.
-   * Items will move to the new index by pushing other items a ahead or aback instead of swapping places with the item at the new index.
+   * Items will move to the new index by pushing other items ahead or aback instead of swapping places with the item at the new index.
    */
   orderItemsByIndex?: boolean
 }
