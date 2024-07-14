@@ -1,6 +1,4 @@
 // TODO: deprecate all places where we check if _.isPlainObject
-// TODO: deprecate getItemValue prop
-// TODO: deprecate getItemLabel prop
 // TODO: Add initialValue prop
 // TODO: consider deprecating renderCustomModal prop
 import _ from 'lodash';
@@ -80,29 +78,28 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items: propItems,
     ...others
   } = themeProps;
-  const {preset} = others;
+  const {preset, placeholder, style, trailingAccessory, label: propsLabel} = others;
   const {renderHeader, renderInput, renderOverlay, customPickerProps} = useNewPickerProps(themeProps);
-
   const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
-
+  const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
+  const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
+  
+  // TODO: Remove this when migration is completed, starting of v8
+  // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
+  
   useEffect(() => {
     if (propItems) {
       setItems(propItems);
     }
   }, [propItems]);
 
-  const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
-
-  // TODO:  Remove this when migration is completed, starting of v8
-  // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
-
-  const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
   const {
     filteredChildren,
     setSearchValue,
     onSearchChange: _onSearchChange
   } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
+  
   const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
     migrate,
     value,
@@ -113,8 +110,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     setSearchValue,
     mode
   });
-
-  const {placeholder, style, trailingAccessory, label: propsLabel} = themeProps;
 
   const {label, accessibilityInfo} = usePickerLabel({
     value,
@@ -133,7 +128,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     style,
     placeholder,
     labelStyle,
-    label: label || propsLabel,
+    label: propsLabel,
+    value: label,
     testID
   });
 
