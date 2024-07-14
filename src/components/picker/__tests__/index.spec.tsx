@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {act, render, waitFor, screen} from '@testing-library/react-native';
 import Picker from '../index';
 import {PickerDriver} from '../Picker.driver.new';
+
 const countries = [
   {label: 'Israel', value: 'IL'},
   {label: 'United States', value: 'US'},
@@ -9,7 +10,6 @@ const countries = [
   {label: 'Italy', value: 'IT'},
   {label: 'Spain', value: 'ES '}
 ];
-
 const testID = 'picker';
 
 const TestCase = (props?: any) => {
@@ -159,6 +159,7 @@ describe('Picker', () => {
 
   describe('Dialog', () => {
     const dialogProps = {useDialog: true, customPickerProps: {migrateDialog: true}};
+    
     describe('Test value', () => {
       it('Get correct value of a single item', () => {
         const driver = getDriver({
@@ -257,6 +258,7 @@ describe('Picker', () => {
   describe('Picker field types', () => {
     describe('Test filter field type', () => {
       const placeholderText = 'Select a Filter';
+      
       it('should render a filter picker', () => {
         const driver = getDriver({fieldType: 'filter', placeholder: placeholderText});
         expect(driver.isOpen()).toBeFalsy();
@@ -265,28 +267,32 @@ describe('Picker', () => {
         expect(label.props.children).toEqual(placeholderText);
       });
     });
+    
     describe('Test settings field type', () => {
       const labelText = 'Settings';
       const placeholderText = 'Select a setting';
+      
       it('should render a settings picker with label', async () => {
         const driver = getDriver({fieldType: 'settings', label: labelText, placeholder: placeholderText});
-        expect(driver.isOpen()).toBeFalsy();
         const label = screen.getByTestId(`${testID}.settings.type.label`);
         const placeholder = screen.getByTestId(`${testID}.settings.type.placeholder`);
+
+        expect(driver.isOpen()).toBeFalsy();
         expect(label).toBeTruthy();
         expect(placeholder).toBeTruthy();
         expect(label.props.children).toEqual(labelText);
-        expect(placeholder.props.children).toEqual(labelText);
+        expect(placeholder.props.children).toEqual(placeholderText);
       });
 
       it('should render a settings picker with placeholder', async () => {
         const driver = getDriver({fieldType: 'settings', placeholder: placeholderText});
-        expect(driver.isOpen()).toBeFalsy();
         const label = screen.getByTestId(`${testID}.settings.type.label`);
         const placeholder = screen.getByTestId(`${testID}.settings.type.placeholder`);
+
+        expect(driver.isOpen()).toBeFalsy();
         expect(label).toBeTruthy();
         expect(placeholder).toBeTruthy();
-        expect(label.props.children).toEqual(undefined);
+        expect(label.props.children).toEqual(placeholderText);
         expect(placeholder.props.children).toEqual(placeholderText);
       });
     });
