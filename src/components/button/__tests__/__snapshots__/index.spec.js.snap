@@ -1124,6 +1124,12 @@ exports[`Button container size should have no padding of button is an icon butto
     source={14}
     style={
       [
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#FFFFFF",
+        },
         [
           {
             "marginRight": 8,
@@ -1131,12 +1137,6 @@ exports[`Button container size should have no padding of button is an icon butto
           },
           undefined,
         ],
-        undefined,
-        undefined,
-        undefined,
-        {
-          "tintColor": "#FFFFFF",
-        },
       ]
     }
     testID="undefined.icon"
@@ -2250,18 +2250,18 @@ exports[`Button icon should apply color on icon 1`] = `
     source={12}
     style={
       [
-        [
-          {
-            "tintColor": "green",
-          },
-          undefined,
-        ],
         undefined,
         undefined,
         undefined,
         {
           "tintColor": "green",
         },
+        [
+          {
+            "tintColor": "green",
+          },
+          undefined,
+        ],
       ]
     }
     testID="undefined.icon"
@@ -2320,18 +2320,18 @@ exports[`Button icon should apply color on icon 2`] = `
     source={12}
     style={
       [
-        [
-          {
-            "tintColor": "#FC3D2F",
-          },
-          undefined,
-        ],
         undefined,
         undefined,
         undefined,
         {
           "tintColor": "#FC3D2F",
         },
+        [
+          {
+            "tintColor": "#FC3D2F",
+          },
+          undefined,
+        ],
       ]
     }
     testID="undefined.icon"
@@ -2390,6 +2390,12 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
     source={12}
     style={
       [
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#FFFFFF",
+        },
         [
           {
             "tintColor": "#FFFFFF",
@@ -2399,12 +2405,6 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
             "tintColor": "red",
           },
         ],
-        undefined,
-        undefined,
-        undefined,
-        {
-          "tintColor": "#FFFFFF",
-        },
       ]
     }
     testID="undefined.icon"
@@ -2465,18 +2465,18 @@ exports[`Button icon should return icon style according to different variations 
     source={12}
     style={
       [
-        [
-          {
-            "tintColor": "#5A48F5",
-          },
-          undefined,
-        ],
         undefined,
         undefined,
         undefined,
         {
           "tintColor": "#5A48F5",
         },
+        [
+          {
+            "tintColor": "#5A48F5",
+          },
+          undefined,
+        ],
       ]
     }
     testID="undefined.icon"
@@ -2535,18 +2535,18 @@ exports[`Button icon should return icon style according to different variations 
     source={12}
     style={
       [
-        [
-          {
-            "tintColor": "#5A48F5",
-          },
-          undefined,
-        ],
         undefined,
         undefined,
         undefined,
         {
           "tintColor": "#5A48F5",
         },
+        [
+          {
+            "tintColor": "#5A48F5",
+          },
+          undefined,
+        ],
       ]
     }
     testID="undefined.icon"
@@ -2605,18 +2605,18 @@ exports[`Button icon should return icon style according to different variations 
     source={12}
     style={
       [
-        [
-          {
-            "tintColor": "#FFFFFF",
-          },
-          undefined,
-        ],
         undefined,
         undefined,
         undefined,
         {
           "tintColor": "#FFFFFF",
         },
+        [
+          {
+            "tintColor": "#FFFFFF",
+          },
+          undefined,
+        ],
       ]
     }
     testID="undefined.icon"
@@ -3849,18 +3849,18 @@ exports[`Button labelColor should return undefined color if this is an icon butt
     source={12}
     style={
       [
-        [
-          {
-            "tintColor": "#FFFFFF",
-          },
-          undefined,
-        ],
         undefined,
         undefined,
         undefined,
         {
           "tintColor": "#FFFFFF",
         },
+        [
+          {
+            "tintColor": "#FFFFFF",
+          },
+          undefined,
+        ],
       ]
     }
     testID="undefined.icon"
