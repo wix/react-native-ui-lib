@@ -221,6 +221,11 @@ const TextField = (props: InternalTextFieldProps) => {
                 testID={`${props.testID}.validationMessage`}
               />
             )}
+            {helperText && (
+              <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
+                {helperText}
+              </Text>
+            )}
             {bottomAccessory}
           </View>
           <View>
@@ -233,11 +238,6 @@ const TextField = (props: InternalTextFieldProps) => {
             )}
           </View>
         </View>
-        {helperText && (
-          <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
-            {helperText}
-          </Text>
-        )}
       </View>
     </FieldContext.Provider>
   );
